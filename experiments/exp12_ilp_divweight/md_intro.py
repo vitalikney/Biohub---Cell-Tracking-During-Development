@@ -1,0 +1,1 @@
+# exp12 - ILP division-weight sweep (0.3, 0.6; 1.2 = current) with exp03B weights on divset36 + hold12 (48 videos). Goal: let the ILP create forks itself so more GT divisions become recoverable. Predictions zipped for local post-proc tuning.

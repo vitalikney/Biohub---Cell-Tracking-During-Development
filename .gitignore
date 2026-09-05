@@ -1,0 +1,9 @@
+kaggle.json
+*.zarr/
+*.geff/
+/biohub-cell-tracking-during-development/
+experiments/**/tracking_repo/
+experiments/**/secondary_seed_weights/
+experiments/**/train_repo/
+__pycache__/
+*.pyc

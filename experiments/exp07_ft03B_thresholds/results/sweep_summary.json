@@ -1,0 +1,38 @@
+{
+ "thr093": {
+  "n": 12.0,
+  "edge_jaccard": 0.9461405529953917,
+  "division_jaccard": 0.0,
+  "division_tp": 0.0,
+  "division_fp": 0.0,
+  "division_fn": 14.0,
+  "node_recall": 0.9854771225786134,
+  "adj_edge_jaccard": 0.9559265259904527,
+  "n_adj": 12.0,
+  "score": 0.9559265259904527
+ },
+ "thr0965": {
+  "n": 12.0,
+  "edge_jaccard": 0.9468452895419187,
+  "division_jaccard": 0.0,
+  "division_tp": 0.0,
+  "division_fp": 0.0,
+  "division_fn": 14.0,
+  "node_recall": 0.9857111841225544,
+  "adj_edge_jaccard": 0.9574686649782735,
+  "n_adj": 12.0,
+  "score": 0.9574686649782735
+ },
+ "thr0985": {
+  "n": 12.0,
+  "edge_jaccard": 0.9458914951791625,
+  "division_jaccard": 0.0,
+  "division_tp": 0.0,
+  "division_fp": 0.0,
+  "division_fn": 14.0,
+  "node_recall": 0.983713939070772,
+  "adj_edge_jaccard": 0.9582146130408509,
+  "n_adj": 12.0,
+  "score": 0.9582146130408509
+ }
+}

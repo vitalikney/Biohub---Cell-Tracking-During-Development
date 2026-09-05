@@ -1,0 +1,57 @@
+# Experiment log
+
+Metric: adjusted edge Jaccard + 0.1 * division Jaccard (micro-averaged). "val4" = baseline notebook's 4-video validator
+(44b6_12dfb391, 44b6_267148e4, 6bba_062c8d37, 6bba_07e24132). "hold12" = fixed 12-video holdout (`_lib/holdout_split.json`).
+Caveat: the pretrained pilkwang weights saw ALL train videos, so val4/hold12 are optimistic for them.
+
+| exp | what | val4 | hold12 | GPU time | notes |
+|---|---|---|---|---|---|
+| exp00 | user's baseline (public 0.933) re-run as private kernel via API | 0.9360 (adj_edge 0.9194, div 0.1667) | - | 37 min | reproduced exactly; test predict 9.5 min, validator predict 8 min (4 videos, 2xT4) |
+| exp01 | training-speed profile, 150 it, batch 8, window 2, ds 1,4,4 | - | - | 9.5 min | 3.4 s/it (backward 73%, grad ckpt); full epoch on 183 videos ~2.1 h -> training from scratch infeasible, fine-tune instead |
+| exp01b | same + `--amp --no-grad-ckpt` | - | - | 6 min | 2.05 s/it (1.65x faster), losses on par (edge 0.0083, acc 0.998); full epoch ~1.3 h |
+| exp02 | public 0.941 notebook (analyticaobscura), full pipeline + post-proc, on hold12 | - | **0.9632** (edge 0.9256, div 1/7/13) | ~60 min | notebook's own validator code; adj includes node-count BONUS (t_pred 232k vs t_true 360k); per-video 44b6_87bba6c4 collapses to 0.53 (54 FP) where raw model gets 0.85 |
+| exp03 A | pretrained raw model (predict+ILP, det 0.965, no notebook post-proc) on hold12 | - | **0.9527** (edge 0.9417, node recall 0.984, div 0/14) | 12 min | v1 crashed in training (OOM: notebook process held 6.4 GB from GPU-side scoring); scoring moved to subprocess |
+| exp03 B | +1200 it fine-tune from pretrained (bce, lr 5e-5, amp, no ckpt), 27 min train | - | **0.9575** (edge 0.9468, recall 0.986, div 0/14) | 45 min | +0.0048 vs A; note B never saw the holdout while A did => real gain. Per-video: 44b6_1d530831 +0.058, 87bba6c4 +0.035, f20478e9 +0.019; worse on 9be80b04 -0.030, e28840c6 -0.035 (dense, more FP) |
+| exp04 | as exp03 B but `--det-loss gauss_focal` (sigma 2.5 um) | - | 0.9094 (edge 0.8826, recall 0.940) | 45 min | WORSE at det 0.965: node ratio drops (-0.5..-0.9) => heatmap calibration changed; would need threshold re-sweep; parked |
+| exp07 | det-threshold sweep of exp03B raw model on hold12 (0.93/0.965/0.985) | - | 0.9559 / 0.9575 / 0.9582 | 30 min | flat: model robust to threshold; predictions zipped -> local post-proc (tools/postproc.py, tools/score_geffs.py) |
+| exp07+pp | local post-proc on thr0.965 graphs: gap closing 5um/1 frame, mutual-NN midpoint | - | **0.9619** (edge 0.9516) | CPU | +0.0044; gap 2 frames 0.9583, gap 8um 0.9586, min-len 3 = 0.9575 (neutral), min-len 6 0.9610 (hurts recall) |
+| exp07+pp+div | + post-hoc divisions (parent<=5um to an orphan track start at t+1, mutual NN, sisters<=10-12um) | - | **0.9728** (adj 0.9606, div 6/35/8) | CPU | +0.011 from the division term: most added forks sit on unannotated cells (free), 6/14 GT divisions recovered. Sweep: parent 3um 0.9658, 4um 0.9708, 6um 0.9661; sisters 6um 0.9639, 8um 0.9693. Only 14 GT divisions => noisy, do not over-tune |
+| exp07+pp+vel | gap closing with EMA-velocity projection (0.5 / 1.0) | - | 0.9619 / 0.9621 | CPU | neutral; gap 4um+vel 0.9601, 2-frame 0.9602 |
+| exp07+pp+steal | divisions may 'steal' a weakly linked daughter (edge_prob < 0.6/0.7/0.8) | - | 0.9710 / 0.9717 / 0.9693 | CPU | no new TP, more edge damage -> keep steal off (base 0.9728) |
+| pp direct link | residual end(t)->start(t+1) linking, mutual NN, radius 4/6/8 um (after gap5) | - | hold12 0.9634/0.9645/0.9654; divset36 0.9041/0.9051/0.9056 | CPU | consistent gain on both sets (fragmentation fix); radius sweep continues |
+| exp08 | fine-tune FULL epoch (~2265 it) from pretrained, workers=0 | - | 0.9539 (edge 0.9398, recall 0.981) | 95 min | WORSE than exp03B 0.9575: more training => fewer nodes (ratio -0.09..-0.72) and fewer TP edges; per-video swings ±0.03 (e28840c6 +0.041, 1d530831 -0.033). Sweet spot <= 1200 it. Weights kept for a possible 2-model ensemble |
+| exp09 | exp03B raw predictions on 36 division-rich videos (92 GT divisions; 32 are 6bba) | - | raw 0.8997 (edge 0.8987, recall 0.977, div 0/92) on divset36 | 30 min | division-rich videos are much harder than hold12 (0.9575); predictions in $TEMP/exp09pred/all; sweep running |
+| exp10 | submission notebook (exp03B -> ILP -> postproc gap5 + div 5/12) with hold12 self-check | - | raw 0.9575 / pp **0.9728** (exact match with local) | 20 min | valid submission.csv (4 dummy videos: 125k nodes, 119k edges); 12 videos predicted in 8.1 min => ~200 hidden videos ≈ 2.5 h. Ready for an LB probe |
+| exp06 | full 0.941 pipeline with PRIMARY weights := exp03B (dataset vitaliineibauer/biohub-ft-weights) on hold12 | - | 0.9615 (edge 0.9279, div 1/10/13, t_pred 245k) | ~60 min | vs exp02 0.9632: neutral. edge +0.002 but t_pred +13k (smaller node bonus) and +3 div FP. Fine-tuned primary is diluted: SECONDARY_DETECTION_WEIGHT 0.8 blends in pilkwang seed model; post-proc thresholds tuned for those weights. Per-video +0.059 on 1d530831, +0.054 on 87bba6c4, -0.033 on 9be80b04 |
+| exp05 | as exp03 B but `--window-size 3` (workers=0) | - | 0.9526 (edge 0.9409, recall 0.983) | 75 min | WORSE than exp03B 0.9575; train 60 min (3 s/it). Per-video mixed: +0.058 on 9be80b04, -0.03..-0.04 on 4 other 44b6. v1/v2 died of /dev/shm leak in DataLoader workers |
+
+## Per-video observations (exp00 validator)
+- 44b6_267148e4: adj_edge 0.81 because t_pred 20957 > t_true 19130 (over-count penalty) and edge_jaccard 0.82 (33 FP / 23 FN / 254 TP).
+- 44b6_12dfb391: edge_jaccard 0.913, t_pred 42555 < t_true 58672 (no penalty).
+- Division jaccard on val4 = 1/6 (1 TP, 1 FP, ...) - division term is basically untouched upside (max +0.1).
+
+## Per-video (exp03 A, raw pretrained model on hold12)
+44b6 videos are the weak spot: edge_jaccard 0.79-0.92 (1d530831 0.786, 87bba6c4 0.853, 9be80b04 0.862, e28840c6 0.874),
+6bba videos 0.93-0.99. Node ratio on dense 44b6 is strongly negative (-0.33..-0.69 => far fewer nodes predicted than
+estimated), yet GT node recall is 0.94-1.0 => annotated nuclei are found; the losses are linking/fragmentation in dense
+regions and under-detection of unannotated cells. Divisions: raw ILP gives 0 TP / 14 (division_weight 1.2).
+
+## Key finding (2026-09-05 evening)
+The adjusted-Jaccard penalty is signed: predicting FEWER nodes than `estimated_number_of_nodes` gives a bonus
+(factor 1 + 0.1*(T_true-T_pred)/T_true). On hold12 the full public pipeline has a lower raw edge Jaccard than the
+raw fine-tuned model (0.9256 vs 0.9468) but wins on the adjusted score (0.9632 vs 0.9575) because its post-processing
+(short-track filter etc.) cuts t_pred to 232k vs 360k estimated (+3.5% bonus). => Combine: fine-tuned weights
+(better edges) inside the pipeline (node reduction) - tested in exp06. Per-video the pipeline is bad on
+44b6_87bba6c4 (0.53, 54 FP edges) where raw gets 0.85; worth inspecting which post-proc stage adds those FPs.
+Caveat: hold12 = same embryos as train; LB test is split by embryo.
+
+## Decision (2026-09-05 23:00)
+Swapping weights inside the public pipeline gives noise-level changes; the raw-model gains (+0.005 edge J) are measurable.
+=> Build our own clean pipeline: fine-tuned model + ILP + light node-reduction post-processing (short-track filter,
+isolated-node prune, gap closing), scored with the OFFICIAL repo metric on hold12; keep prediction geffs (zipped)
+so post-processing sweeps run locally on CPU. Then one LB probe to calibrate against the public pipeline.
+
+## Clean pipeline v1 (2026-09-05 23:50)
+exp03B weights -> predict (det 0.965, ILP app 0 / disapp 2 / div 1.2) -> tools/postproc.py gap_um=5 max_gap=1,
+div_parent_um=5 div_sister_um=12 -> hold12 official score 0.9728 (raw 0.9575). Next: better weights (exp05 window 3,
+exp08 full epoch), then a Kaggle inference notebook producing submission.csv with this pipeline (for one LB probe).

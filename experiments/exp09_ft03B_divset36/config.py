@@ -1,0 +1,5 @@
+import os, json
+os.environ["BIOHUB_HOLDOUT_JSON"] = json.dumps({"divset36": ["6bba_48816121", "6bba_09961292", "6bba_debd7bfa", "6bba_df673a83", "6bba_afb141ff", "6bba_bb9f20c3", "6bba_57b7cc1e", "6bba_786893ac", "6bba_5c039895", "6bba_12665c0e", "6bba_7f87b3d8", "6bba_20852818", "6bba_4ffd3da3", "6bba_969618f6", "6bba_9a41d029", "6bba_337b1b3a", "6bba_ef7b4f7e", "6bba_7d3058ae", "6bba_ab78413d", "6bba_2312ac41", "6bba_7af54fde", "6bba_4f99ce20", "6bba_d2b9fc0c", "44b6_d5e7d891", "6bba_78a7bd97", "6bba_ebdf3b34", "6bba_3c5691b6", "6bba_8b7818bf", "6bba_fe670320", "6bba_c328f2fd", "6bba_fc5f39dc", "6bba_f8ffd5e7", "6bba_07e24132", "44b6_c50204e0", "44b6_a21120c2", "44b6_d2f34f90"]})
+os.environ.setdefault("BIOHUB_SWEEP_THRESHOLDS", "0.965")
+os.environ.setdefault("BIOHUB_WEIGHTS_SUB", "exp03B")
+print("divset36", os.environ["BIOHUB_WEIGHTS_SUB"])

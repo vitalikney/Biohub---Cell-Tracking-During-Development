@@ -1,0 +1,1 @@
+# exp11 - leave-one-embryo-out check: fine-tune on 6bba videos only (126), evaluate raw model on 12 44b6 videos. A = pretrained (saw everything), B = fine-tuned on 6bba only. Predictions zipped for local post-proc transfer test.

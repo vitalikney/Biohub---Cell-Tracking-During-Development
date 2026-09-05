@@ -1,0 +1,1 @@
+# exp09 - exp03B raw predictions on 36 division-rich train videos (~92 GT divisions) for robust local tuning of post-processing (gap closing, post-hoc divisions). Caveat: these videos were in the fine-tuning set.
