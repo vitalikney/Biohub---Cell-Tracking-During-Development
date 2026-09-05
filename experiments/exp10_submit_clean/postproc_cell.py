@@ -48,7 +48,26 @@ def _pos(d) -> np.ndarray:
     return np.array([d["z"], d["y"], d["x"]], dtype=float) * VOXEL
 
 
-def gap_close(g: nx.DiGraph, gap_um: float, max_gap: int = 1, min_prob: float | None = None) -> int:
+def _velocity(g: nx.DiGraph, n, k: int = 3) -> np.ndarray:
+    """EMA-like mean displacement (um/frame) over the last k edges ending at n; zeros if none."""
+    disp = []
+    cur = n
+    for _ in range(k):
+        preds = list(g.predecessors(cur))
+        if not preds:
+            break
+        prev = preds[0]
+        disp.append(_pos(g.nodes[cur]) - _pos(g.nodes[prev]))
+        cur = prev
+    if not disp:
+        return np.zeros(3)
+    w = np.array([0.5 ** i for i in range(len(disp))]); w /= w.sum()
+    return (np.stack(disp) * w[:, None]).sum(axis=0)
+
+
+def gap_close(g: nx.DiGraph, gap_um: float, max_gap: int = 1, min_prob: float | None = None,
+              velocity: float = 0.0, direct_um: float = 0.0) -> int:
+    """direct_um > 0 additionally links track ends at t to track starts at t+1 (no gap) within direct_um (mutual NN)."""
     """Connect track ends (out-degree 0) at t to track starts (in-degree 0) at t+gap+1 by nearest neighbour
     within gap_um (um, per frame step scaled by gap+1), inserting synthetic midpoint nodes. Greedy, mutual-NN."""
     added = 0
@@ -60,7 +79,7 @@ def gap_close(g: nx.DiGraph, gap_um: float, max_gap: int = 1, min_prob: float | 
             ends.setdefault(int(d["t"]), []).append(n)
         if g.in_degree(n) == 0:
             starts.setdefault(int(d["t"]), []).append(n)
-    for gap in range(1, max_gap + 1):
+    for gap in range(0 if direct_um > 0 else 1, max_gap + 1):
         for t, e_nodes in sorted(ends.items()):
             s_nodes = starts.get(t + gap + 1, [])
             e_nodes = [n for n in e_nodes if g.out_degree(n) == 0]
@@ -68,8 +87,10 @@ def gap_close(g: nx.DiGraph, gap_um: float, max_gap: int = 1, min_prob: float | 
             if not e_nodes or not s_nodes:
                 continue
             ep = np.stack([_pos(g.nodes[n]) for n in e_nodes]); sp = np.stack([_pos(g.nodes[n]) for n in s_nodes])
+            if velocity > 0:  # project track ends forward by their recent velocity
+                ep = ep + velocity * (gap + 1) * np.stack([_velocity(g, n) for n in e_nodes])
             te = cKDTree(ep); ts = cKDTree(sp)
-            r = gap_um * (gap + 1)
+            r = direct_um if gap == 0 else gap_um * (gap + 1)
             d_es, i_es = ts.query(ep, k=1, distance_upper_bound=r)
             d_se, i_se = te.query(sp, k=1, distance_upper_bound=r)
             for ei, (dist, si) in enumerate(zip(d_es, i_es)):
@@ -93,7 +114,8 @@ def gap_close(g: nx.DiGraph, gap_um: float, max_gap: int = 1, min_prob: float | 
     return added
 
 
-def add_divisions(g: nx.DiGraph, parent_um: float = 7.0, sister_um: float = 12.0, max_frac: float = 0.01) -> int:
+def add_divisions(g: nx.DiGraph, parent_um: float = 7.0, sister_um: float = 12.0, max_frac: float = 0.01,
+                  steal_prob: float = 0.0) -> int:
     """Post-hoc divisions: a node p at t with exactly one child c (t+1) gets a second child q if q is a
     track START at t+1 (in-degree 0), q is p's nearest unclaimed start within parent_um, the sisters c,q are within
     sister_um, and p is q's nearest single-child parent. Caps additions to max_frac of nodes. Returns #added."""
@@ -103,6 +125,11 @@ def add_divisions(g: nx.DiGraph, parent_um: float = 7.0, sister_um: float = 12.0
         t = int(d["t"])
         if g.in_degree(n) == 0 and g.out_degree(n) >= 1:
             starts.setdefault(t, []).append(n)
+        elif steal_prob > 0 and g.in_degree(n) == 1 and g.out_degree(n) >= 1:
+            # weakly linked node: eligible to be re-assigned as a second daughter
+            pr = next(iter(g.predecessors(n)))
+            if float(g.edges[pr, n].get("edge_prob", 1.0)) < steal_prob:
+                starts.setdefault(t, []).append(n)
         if g.out_degree(n) == 1:
             parents.setdefault(t, []).append(n)
     cap = max(1, int(max_frac * g.number_of_nodes()))
@@ -119,11 +146,16 @@ def add_divisions(g: nx.DiGraph, parent_um: float = 7.0, sister_um: float = 12.0
             if not np.isfinite(dist) or si >= len(s_nodes) or i_sp[si] != pi:
                 continue
             p, q = p_nodes[pi], s_nodes[si]
-            if g.in_degree(q) != 0 or g.out_degree(p) != 1:
+            if g.out_degree(p) != 1 or g.in_degree(q) > 1:
                 continue
             c = next(iter(g.successors(p)))
-            if np.linalg.norm(_pos(g.nodes[c]) - _pos(g.nodes[q])) > sister_um:
+            if c == q or np.linalg.norm(_pos(g.nodes[c]) - _pos(g.nodes[q])) > sister_um:
                 continue
+            if g.in_degree(q) == 1:  # steal: q currently has a weak parent
+                old_p = next(iter(g.predecessors(q)))
+                if old_p == p or g.out_degree(old_p) > 1:
+                    continue
+                g.remove_edge(old_p, q)
             g.add_edge(p, q, edge_prob=0.5); added += 1
             if added >= cap:
                 return added
@@ -148,12 +180,13 @@ def filter_short(g: nx.DiGraph, min_len: int, keep_div: bool = True) -> int:
 
 
 def process(g: nx.DiGraph, min_len: int = 0, gap_um: float = 0.0, max_gap: int = 1, keep_div: bool = True,
-            div_parent_um: float = 0.0, div_sister_um: float = 12.0, div_max_frac: float = 0.01) -> dict:
+            div_parent_um: float = 0.0, div_sister_um: float = 12.0, div_max_frac: float = 0.01,
+            gap_velocity: float = 0.0, div_steal_prob: float = 0.0, direct_um: float = 0.0) -> dict:
     stats = {}
-    if gap_um > 0:
-        stats["gaps_closed"] = gap_close(g, gap_um, max_gap)
+    if gap_um > 0 or direct_um > 0:
+        stats["gaps_closed"] = gap_close(g, max(gap_um, 1e-6), max_gap if gap_um > 0 else 0, velocity=gap_velocity, direct_um=direct_um)
     if div_parent_um > 0:
-        stats["divisions_added"] = add_divisions(g, div_parent_um, div_sister_um, div_max_frac)
+        stats["divisions_added"] = add_divisions(g, div_parent_um, div_sister_um, div_max_frac, steal_prob=div_steal_prob)
     stats["isolated"] = prune_isolated(g)
     if min_len > 1:
         stats["short_removed"] = filter_short(g, min_len, keep_div)

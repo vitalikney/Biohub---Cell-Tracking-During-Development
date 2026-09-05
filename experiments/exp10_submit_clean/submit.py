@@ -9,7 +9,8 @@ ILP_ARGS = ["--use-ilp", "--ilp-edge-weight", "-1.0", "--ilp-appearance-weight",
             "--ilp-division-weight", E("BIOHUB_ILP_DIVISION_WEIGHT", "1.2")]
 PP = dict(gap_um=float(E("BIOHUB_PP_GAP_UM", "5.0")), max_gap=int(E("BIOHUB_PP_MAX_GAP", "1")),
           div_parent_um=float(E("BIOHUB_PP_DIV_PARENT_UM", "5.0")), div_sister_um=float(E("BIOHUB_PP_DIV_SISTER_UM", "12.0")),
-          div_max_frac=float(E("BIOHUB_PP_DIV_MAX_FRAC", "0.01")), min_len=int(E("BIOHUB_PP_MIN_LEN", "0")))
+          div_max_frac=float(E("BIOHUB_PP_DIV_MAX_FRAC", "0.01")), min_len=int(E("BIOHUB_PP_MIN_LEN", "0")),
+          direct_um=float(E("BIOHUB_PP_DIRECT_UM", "8.0")))
 VALIDATE = E("BIOHUB_SUBMIT_VALIDATE", "0") != "0"
 HOLDOUT = json.loads(E("BIOHUB_HOLDOUT_JSON", "{}")).get("holdout", [])
 N_GPU = int(E("BIOHUB_N_GPU", "2"))

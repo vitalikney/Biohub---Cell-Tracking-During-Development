@@ -1,6 +1,6 @@
 # CONTEXT — Biohub Cell Tracking (Kaggle) research project
 
-Living document. Everything needed to continue the work without the chat history. Updated 2026-09-06 01:42.
+Living document. Everything needed to continue the work without the chat history. Updated 2026-09-06 02:05.
 
 ## 1. Goal and constraints
 - Competition: https://www.kaggle.com/competitions/biohub-cell-tracking-during-development — detect nuclei, link them
@@ -50,8 +50,9 @@ pilkwang support pack: TemporalUNet3D (XY downsample 4x, window 2) + node transf
 Current best config: exp03B weights (1200 it fine-tune, lr 5e-5) -> predict det 0.965, ILP app 0 / disapp 2 / div 1.2
 -> gap closing 5 um (1 frame, mutual NN, midpoint node) -> post-hoc divisions (parent<=5 um to orphan start at t+1,
 sisters <=12 um, cap 1% nodes). **hold12 official score 0.9728** (raw 0.9575).
-Candidate upgrade (2026-09-06 01:40): add residual direct end(t)->start(t+1) linking (`direct_um` 8-10 um) before
-divisions: hold12 0.9654 without divisions (vs 0.9619); combination with divisions being evaluated.
+**Pipeline v2 (2026-09-06 02:05):** gap closing 5 um -> residual direct end(t)->start(t+1) linking 8 um (mutual NN)
+-> post-hoc divisions (5/12 um). hold12 **0.9780** (adj 0.9646, div 6/31/8), divset36 **0.9117** (vs v1 0.9728 / 0.9056).
+Radius 10 um slightly worse, 12 um worse. exp10 notebook updated to v2 (BIOHUB_PP_DIRECT_UM=8).
 
 ## 6. Results so far (hold12 = 12 held-out train videos, official metric unless noted)
 | exp | what | score | note |
@@ -73,7 +74,8 @@ divisions: hold12 0.9654 without divisions (vs 0.9619); combination with divisio
 | exp11 | LOEO: fine-tune on 6bba, eval 12x 44b6 | pending | post-proc transfer test |
 | pp velocity | EMA-velocity projection in gap closing | 0.9621 | neutral |
 | pp steal | divisions may steal weakly linked daughters | 0.9710 | worse than 0.9728; off |
-| pp direct link | end(t)->start(t+1) residual linking 4/6/8 um | hold12 0.9634/0.9645/0.9654; divset36 0.9041/0.9051/0.9056 | consistent gain on both sets |
+| pp direct link | end(t)->start(t+1) residual linking 4/6/8/10/12 um | hold12 0.9634/0.9645/0.9654/0.9652/0.9626; divset36 0.9041/0.9051/0.9056/0.9045/0.9034 | 8 um best on both sets |
+| pp v2 | gap5 + direct8 + div 5/12 | hold12 **0.9780**, divset36 **0.9117** | new default (exp10 updated) |
 | exp09 | exp03B predictions on 36 division-rich videos (92 GT divisions; 32 are 6bba) | raw 0.8997 (divset36) | harder set. Post-proc on it: gap5 +0.0005 (0.9002), 2-frame gaps hurt, divisions d5s12 0.9056 (17/156/75, divJ 0.069). Gains 5x smaller than on hold12 => model quality is the lever |
 
 ## 7. Caveats / validation strategy
@@ -103,7 +105,7 @@ divisions: hold12 0.9654 without divisions (vs 0.9619); combination with divisio
 - [ ] LOEO check: exp11 RUNNING (pushed 01:30); built (`experiments/exp11_loeo_6bba_to_44b6`, split `_lib/loeo_train6bba_val44b6.json`: 126 6bba train, 12 44b6 val, 15 divisions); push when a GPU slot frees; then local post-proc transfer test on its zipped predictions.
 - [x] Division ranker prototype (tools/divranker.py) - weak; candidate recall is the bottleneck.
 - [x] Error decomposition on divset36 (tools/errdecomp.py): recovered 93.3% of GT edges; lost to detection 3.6% (missed GT nodes 2.6%), fragmented 3.1%, wrong association ~0. Detection misses concentrate in 2 dim videos (6bba_57b7cc1e 237/1659 nodes missed, 6bba_786893ac 156/1465) = 43% of all detection losses. Fragmentation: 468 src-no-successor, 566 tgt-no-predecessor, 274 both linked elsewhere.
-- [x] Residual direct end->start linking (`direct_um`, mutual NN, t->t+1): hold12 0.9619 -> 0.9634/0.9645/0.9654 (4/6/8 um), divset36 0.9002 -> 0.9041/0.9051/0.9056. Works on both sets. Testing 10-12 um and combination with divisions (order matters: links consume orphan starts).
+- [x] Residual direct end->start linking (`direct_um`, mutual NN, t->t+1): hold12 0.9619 -> 0.9634/0.9645/0.9654 (4/6/8 um), divset36 0.9002 -> 0.9041/0.9051/0.9056. Works on both sets. 10/12 um worse; with divisions: hold12 0.9780, divset36 0.9117 => pipeline v2 adopted.
 - [ ] Inspect the two dim videos (intensity stats) -> detector robustness to dim nuclei.
 - [ ] exp12 running: ILP division-weight sweep (0.3/0.6) with exp03B weights on divset36 + hold12 -> re-tune post-hoc divisions on top.
 - [ ] Dense pseudo-labels for the detector (FOCUS-3D or Zebrahub crops) - feasibility test first.
