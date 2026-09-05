@@ -5,6 +5,7 @@ os.environ.setdefault("BIOHUB_SUBMIT_VALIDATE", "1")   # self-check on hold12 (s
 os.environ.setdefault("BIOHUB_DET_THRESHOLD", "0.965")
 os.environ.setdefault("BIOHUB_PP_GAP_UM", "5.0")
 os.environ.setdefault("BIOHUB_PP_DIRECT_UM", "8.0")
-os.environ.setdefault("BIOHUB_PP_DIV_PARENT_UM", "5.0")
+os.environ.setdefault("BIOHUB_ILP_DIVISION_WEIGHT", "0.6")   # v2.1: ILP creates divisions itself
+os.environ.setdefault("BIOHUB_PP_DIV_PARENT_UM", "0")      # v2.1: post-hoc divisions OFF
 os.environ.setdefault("BIOHUB_PP_DIV_SISTER_UM", "12.0")
 print({k: v for k, v in os.environ.items() if k.startswith("BIOHUB_") and k != "BIOHUB_HOLDOUT_JSON"})
