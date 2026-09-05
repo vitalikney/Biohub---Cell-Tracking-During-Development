@@ -1,0 +1,1 @@
+# exp13 - ILP disappearance/appearance cost sweep (d1.0/a0, d3.0/a0, d2.0/a0.5; current d2.0/a0) with exp03B weights on the same 48 videos as exp12. Predictions zipped for local scoring with pipeline v2.

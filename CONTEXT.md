@@ -1,6 +1,6 @@
 # CONTEXT — Biohub Cell Tracking (Kaggle) research project
 
-Living document. Everything needed to continue the work without the chat history. Updated 2026-09-06 02:05.
+Living document. Everything needed to continue the work without the chat history. Updated 2026-09-06 02:50.
 
 ## 1. Goal and constraints
 - Competition: https://www.kaggle.com/competitions/biohub-cell-tracking-during-development — detect nuclei, link them
@@ -70,8 +70,9 @@ Radius 10 um slightly worse, 12 um worse. exp10 notebook updated to v2 (BIOHUB_P
 | exp07+pp+div | + post-hoc divisions | 0.9728 | 6/14 GT divisions, 35 FP (mostly free) |
 | exp08 | full-epoch fine-tune (2265 it) | 0.9539 | worse than 1200 it; over-training under-detects; per-video ±0.03 swings => single-run differences <0.01 are partly noise |
 | exp10 | submission notebook self-check | raw 0.9575 / pp 0.9728 | matches local; ready for LB probe |
-| exp12 | ILP division weight 0.3/0.6 on 48 videos | pending | candidate recall for divisions |
-| exp11 | LOEO: fine-tune on 6bba, eval 12x 44b6 | pending | post-proc transfer test |
+| exp12 | ILP division weight 0.3/0.6 on 48 videos (hold12+divset36, 106 GT div) | raw 0.9204 (div 36/205/70) / 0.9210 (24/104/82) | ILP now creates forks itself; baseline div 1.2 on the same 48 videos + v2 post-proc being scored locally |
+| exp13 | ILP disappearance/appearance sweep (d1/a0, d3/a0, d2/a0.5) on 48 videos | pending | pushed 02:45 |
+| exp11 | LOEO: fine-tune on 6bba only (126 videos, 1200 it), eval raw on 12x 44b6 | A pretrained 0.8798 (edge 0.8585) / B 6bba-only 0.8825 (edge 0.8570, recall 0.977->0.987) | fine-tuning on the other embryo does not hurt. **Post-proc transfers to the unseen embryo**: B raw 0.8825 -> gap5 0.8934 -> +direct8 0.9014 -> v2 (+div) 0.9059 (div 3/45/12); A: 0.8798 -> 0.8850 -> 0.8944 -> 0.8963 |
 | pp velocity | EMA-velocity projection in gap closing | 0.9621 | neutral |
 | pp steal | divisions may steal weakly linked daughters | 0.9710 | worse than 0.9728; off |
 | pp direct link | end(t)->start(t+1) residual linking 4/6/8/10/12 um | hold12 0.9634/0.9645/0.9654/0.9652/0.9626; divset36 0.9041/0.9051/0.9056/0.9045/0.9034 | 8 um best on both sets |
@@ -102,12 +103,13 @@ Radius 10 um slightly worse, 12 um worse. exp10 notebook updated to v2 (BIOHUB_P
 - [x] exp10 submission notebook built (`experiments/exp10_submit_clean`), self-check on hold12 enabled; CSV writer dry-run OK locally (251k nodes / 237k edges on hold12, no dangling refs).
 - [x] exp10 ran on Kaggle: hold12 self-check raw 0.9575 / pp 0.9728 (exact), valid submission.csv, ~2.5 h projected for hidden test. Output saved in experiments/exp10_submit_clean/results/.
 - [ ] LB probe with exp10 output (user decision 01:35: wait for exp11 + exp12 first); compare with public 0.941 pipeline.
-- [ ] LOEO check: exp11 RUNNING (pushed 01:30); built (`experiments/exp11_loeo_6bba_to_44b6`, split `_lib/loeo_train6bba_val44b6.json`: 126 6bba train, 12 44b6 val, 15 divisions); push when a GPU slot frees; then local post-proc transfer test on its zipped predictions.
+- [x] LOEO check: exp11 done (A 0.8798 vs B 0.8825 on 44b6); post-proc v2 transfers (+0.023 on unseen embryo, every stage positive). Built (`experiments/exp11_loeo_6bba_to_44b6`, split `_lib/loeo_train6bba_val44b6.json`: 126 6bba train, 12 44b6 val, 15 divisions); push when a GPU slot frees; then local post-proc transfer test on its zipped predictions.
 - [x] Division ranker prototype (tools/divranker.py) - weak; candidate recall is the bottleneck.
 - [x] Error decomposition on divset36 (tools/errdecomp.py): recovered 93.3% of GT edges; lost to detection 3.6% (missed GT nodes 2.6%), fragmented 3.1%, wrong association ~0. Detection misses concentrate in 2 dim videos (6bba_57b7cc1e 237/1659 nodes missed, 6bba_786893ac 156/1465) = 43% of all detection losses. Fragmentation: 468 src-no-successor, 566 tgt-no-predecessor, 274 both linked elsewhere.
 - [x] Residual direct end->start linking (`direct_um`, mutual NN, t->t+1): hold12 0.9619 -> 0.9634/0.9645/0.9654 (4/6/8 um), divset36 0.9002 -> 0.9041/0.9051/0.9056. Works on both sets. 10/12 um worse; with divisions: hold12 0.9780, divset36 0.9117 => pipeline v2 adopted.
 - [ ] Inspect the two dim videos (intensity stats) -> detector robustness to dim nuclei.
-- [ ] exp12 running: ILP division-weight sweep (0.3/0.6) with exp03B weights on divset36 + hold12 -> re-tune post-hoc divisions on top.
+- [ ] exp12 done on Kaggle (div weight 0.3: 36 TP/205 FP; 0.6: 24/104 on 48 videos); local comparison vs 1.2 with pipeline v2 running -> pick ILP division weight.
+- [ ] exp13 running: ILP disappearance/appearance sweep on 48 videos -> score locally with v2.
 - [ ] Dense pseudo-labels for the detector (FOCUS-3D or Zebrahub crops) - feasibility test first.
 Rules: max 2 GPU kernels at once; keep outputs zipped; log every result in RESULTS.md and §6.
 

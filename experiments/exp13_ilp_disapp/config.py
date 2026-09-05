@@ -1,0 +1,5 @@
+import os, json
+os.environ["BIOHUB_HOLDOUT_JSON"] = json.dumps({"videos": ["44b6_1d530831", "44b6_74d0c52e", "44b6_7a302da0", "44b6_87bba6c4", "44b6_9be80b04", "44b6_a21120c2", "44b6_c50204e0", "44b6_d2f34f90", "44b6_d5e7d891", "44b6_e28840c6", "6bba_07e24132", "6bba_09961292", "6bba_12665c0e", "6bba_20852818", "6bba_2312ac41", "6bba_337b1b3a", "6bba_3c5691b6", "6bba_43fea39d", "6bba_48816121", "6bba_4f99ce20", "6bba_4ffd3da3", "6bba_57b7cc1e", "6bba_5c039895", "6bba_74686d6a", "6bba_786893ac", "6bba_78a7bd97", "6bba_7af54fde", "6bba_7d3058ae", "6bba_7f87b3d8", "6bba_8b7818bf", "6bba_969618f6", "6bba_9a41d029", "6bba_ab78413d", "6bba_afb141ff", "6bba_b204cac7", "6bba_bb9f20c3", "6bba_c328f2fd", "6bba_cdcfe533", "6bba_d2b9fc0c", "6bba_debd7bfa", "6bba_df673a83", "6bba_ebdf3b34", "6bba_ef7b4f7e", "6bba_f20478e9", "6bba_f8ffd5e7", "6bba_fbc898dc", "6bba_fc5f39dc", "6bba_fe670320"]})
+os.environ.setdefault("BIOHUB_SWEEP_ILP", "d1.0_a0.0,d3.0_a0.0,d2.0_a0.5")
+os.environ.setdefault("BIOHUB_WEIGHTS_SUB", "exp03B")
+print("exp12 videos", 48)
