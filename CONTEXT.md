@@ -8,6 +8,7 @@ Living document. Everything needed to continue the work without the chat history
 - Deadline 2026-09-29 (entry 22 Sep). User (Kaggle `vitaliineibauer`) started at rank 611/3140 with public 0.933.
   LB top 0.970, top-20 >= 0.947. Public LB ≈ 29% of test.
 - Metric: score = adj_edge_J + 0.1*div_J (see §4). Official code: github.com/royerlab/kaggle-cell-tracking-competition.
+- LB rank after probe 2: **46 / 3174** (2026-09-06 17:10).
 - Compute: no local GPU. Kaggle 30 GPU-h/week (2x T4), max 2 concurrent GPU sessions. Code requirements: notebook
   rerun <= 12 h (GPU or CPU), internet off, public external data/pretrained models allowed, output `submission.csv`.
   Scoring time observed: clean pipeline ~2 h, public 0.941 pipeline ~6 h (hidden test ≈ 100-130 videos by that ratio). Experiments run as private
@@ -201,7 +202,7 @@ Order of execution (GPU queue: max 2 kernels; CPU work in parallel):
 - Each probe = exactly ONE change vs the public 0.941 pipeline, so the result is interpretable.
 - Candidate order (each chosen after the previous results): (1) primary weights := exp03B [DONE: 0.945, adopted];
   (2) ILP division weight 1.2 -> 0.9 [DONE: 0.941, neutral, dropped]; (3) det threshold 0.965 -> 0.95 [probe #4 pending];
-  (4) SECONDARY_DETECTION_WEIGHT 0.8 -> 0.5; (5) secondary := fine-tuned weights (if (1) positive);
+  (4) SECONDARY_DETECTION_WEIGHT 0.8 -> 0.5 on the exp06 base [exp20 kernel running; probe tomorrow ~03:00 MSK reset]; (5) secondary := fine-tuned weights (if (1) positive);
   (6) OUTPUT_MIN_TRACK_LEN 6 -> 4. Positive changes are then combined into one notebook and verified by a joint probe
   (effects may not add up).
 - Rules (user 11:00): do NOT launch new Kaggle kernels or submissions until the first pending probe is scored;
