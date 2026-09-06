@@ -279,6 +279,18 @@ Pending right now:
   graphs at det 0.965), `--no-det-tta`, BIOHUB_PREDICTIONS_DIR / BIOHUB_DATA_DIR env overrides in dataspec/score_geffs.
   Dataset state 2026-09-06 19:40: exp03B/, exp08/ only. Friend A's branch merged into main at b3786d7 (Windows fixes,
   notebook moved to repo root; full 5-epoch run not started yet).
+- PLAN APPROVED by the user (2026-09-06 23:50, "stick to it; submit probes 6 and 7 without me"):
+  1. When probe #5 is scored: log it (§11, §14, RESULTS), push.
+  2. Probe #5 >= 0.947 -> SECONDARY_DETECTION_WEIGHT=0.5 becomes the base (add `--env BIOHUB_SECONDARY_DETECTION_WEIGHT=0.5`
+     to every later build); < 0.947 -> base stays exp06 (0.945). Either way build exp21 = base + `BIOHUB_OUTPUT_MIN_TRACK_LEN=4`
+     and exp22 = base + `--secondary-override exp08` with make_probe, push both kernels (2 GPU slots, ~25 min each,
+     validator off), and at the ~03:00 MSK reset submit them as probes #6 and #7 (no user confirmation needed).
+  3. Remaining 3 daily slots: if #6 and #7 are both >= +0.002 -> their combination; else next single knobs on the
+     public pipeline: gap-closing radius, motion-relink radius, DeepCenter veto threshold (one knob per probe).
+  4. GPU: a probe kernel costs ~25 min (the ~5.5 h is Kaggle's scoring time), so 5 probes/day ~ 2 GPU-h; ~10 h left this week.
+  5. Team in parallel: friend A continues the 6bba scratch recipe to 30 epochs with an official score every 5 epochs
+     (validator usable from ~0.85; the all-199 model goes into a probe as primary once it beats exp03B there);
+     friend B ports the public pipeline's post-processing locally.
 - Decision tree after probes #4 (det 0.95) and #5 (secdet 0.5) are scored (user 18:20: do not pre-build, combine
   positives): both >= 0.947 -> next probe = combination `exp23_ft03B_det095_secdet05`; exactly one positive -> it becomes
   the base (add its env to every later build) and the next single knobs go on top; none -> next knobs on the exp06 base.
