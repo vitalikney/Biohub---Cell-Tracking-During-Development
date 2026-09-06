@@ -1,6 +1,6 @@
 # CONTEXT — Biohub Cell Tracking (Kaggle) research project
 
-Living document. Everything needed to continue the work without the chat history. Updated 2026-09-06 06:45.
+Living document. Everything needed to continue the work without the chat history. Updated 2026-09-06 07:10.
 
 ## 1. Goal and constraints
 - Competition: https://www.kaggle.com/competitions/biohub-cell-tracking-during-development — detect nuclei, link them
@@ -164,7 +164,7 @@ Order of execution (GPU queue: max 2 kernels; CPU work in parallel):
 | 16 | Synthetic data (Freitas CC0, 18.5 GB) for division model pretraining | later | only if item 2 is data-starved |
 
 
-## 11. LB probe post-mortem (2026-09-06 06:40) and revised strategy — AWAITING USER DECISION
+## 11. LB probe post-mortem (2026-09-06 06:40) and revised strategy — APPROVED by the user 07:00
 - Clean pipeline v2.1: hold12 0.9902, LOEO 0.906, **LB 0.899**. The public 0.941 pipeline scores 0.933-0.941 on LB.
   Raw UNet+ILP reproductions on LB are ~0.89-0.90 (discussion), so our LB is consistent with "raw model + light post-proc".
 - Why the local numbers lied: every model we evaluate is initialised from pilkwang weights trained on ALL 199 videos,
@@ -177,7 +177,7 @@ Order of execution (GPU queue: max 2 kernels; CPU work in parallel):
 - Conclusions: (1) hold12/LOEO with pilkwang-initialised weights cannot validate linking/division aggressiveness;
   (2) the LB (2-4 probes/day) is the only trustworthy signal for post-processing; (3) a leak-free local validator
   would need a model trained from scratch on one embryo (≈1.3 GPU-h/epoch, 5+ epochs) - possible next week.
-- Proposed revised plan (needs the user's OK):
+- Revised plan (approved; probes 1-2/day):
   a. Base = public 0.941 pipeline (exp02 notebook, kernel-validated). Keep our infrastructure (API runs, local metric).
   b. Change ONE thing per LB probe, 1-2 probes/day: (i) primary weights := exp03B (exp06 config; local neutral,
      LB unknown), (ii) add our direct end->start linking stage (conservative radius 5-6 um) after its post-proc,
@@ -185,6 +185,8 @@ Order of execution (GPU queue: max 2 kernels; CPU work in parallel):
   c. In parallel (GPU, next week's quota): from-scratch 6bba-only model for a leak-free LOEO validator; then
      pseudo-label / loss experiments can be judged locally.
   d. Stop spending GPU on fine-tune variants (seed noise ±0.005 > effects).
+- LB probe log: #1 06:30 clean v2.1 = 0.899. #2 07:06 exp06 (public pipeline + exp03B primary) = pending (id 56049333).
+  Next: #3 exp18 = public pipeline + direct end->start linking on the final CSV (conservative 5 um).
 
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
