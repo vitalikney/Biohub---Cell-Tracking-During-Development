@@ -213,6 +213,12 @@ Order of execution (GPU queue: max 2 kernels; CPU work in parallel):
   from 26 Sep only final-submission probes, no new ideas.
 - GPU: each probe needs one prior notebook run (15-40 min) => ~2-2.5 GPU-h/day at 4 probes; ~11 h left this week - enough for ~4 days, then next week's quota.
   Heavy model work (from-scratch model for a leak-free validator) moves to next week's quota.
+- Submission limit is per TEAM, not per account (checked on the official rules page 2026-09-06 18:50): 5/day, max team
+  size 5, team merger deadline **2026-09-22**, final deadline 2026-09-29. Rules 3.5.a / 3.5.d / 3.6.a: submitting through
+  another account acting as a proxy = disqualification; privately sharing code outside a Kaggle Team = disqualification.
+  => the "3 accounts = 15 probes/day" idea is REJECTED (user asked, 18:40). Correct move: merge sasyami + gsfatakhov into
+  one Kaggle Team before 22 Sep (legalises our code/weights sharing; gives 3 GPU quotas for probe-prep kernels, each
+  member pushes kernels under their own account; submissions stay 5/day for the whole team, still made by Vitalii).
 
 ## 13. Status summary for the team (2026-09-06 17:30)
 What is proven on the LB (the only trustworthy signal):
