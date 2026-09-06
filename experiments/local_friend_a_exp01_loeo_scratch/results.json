@@ -1,0 +1,8 @@
+{
+  "experiment": "local_friend_a_exp01_loeo_scratch",
+  "status": "prepared_not_run",
+  "validation_set": "LOEO-44b6",
+  "official_metric": null,
+  "checkpoint_sha256": null,
+  "note": "Replace this file with the run results after Friend B completes official evaluation."
+}
