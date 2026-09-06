@@ -20,3 +20,5 @@ add a row to `experiments/RESULTS.md`, and update `CONTEXT.md` as required by `T
 
 Configuration overrides use `BIOHUB_FRIEND_A_*` environment variables; the notebook prints and records the exact
 command. `BIOHUB_DATA_DIR` must point to the train directory containing paired `.zarr` and `.geff` directories.
+On Windows the notebook defaults to `num_workers=0` to avoid `spawn` duplicating PyTorch/CUDA DLL mappings and
+exhausting the pagefile. Set `BIOHUB_FRIEND_A_WORKERS` only after increasing the Windows pagefile and re-running a smoke test.

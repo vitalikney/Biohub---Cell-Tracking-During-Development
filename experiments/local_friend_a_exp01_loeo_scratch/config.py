@@ -21,7 +21,10 @@ METHOD = "friend_a_scratch_bce_w2"
 RUN_TRAINING = os.environ.get("BIOHUB_RUN_TRAINING", "1") != "0"
 EPOCHS = int(os.environ.get("BIOHUB_FRIEND_A_EPOCHS", "5"))
 BATCH_SIZE = int(os.environ.get("BIOHUB_FRIEND_A_BATCH", "4"))
-NUM_WORKERS = int(os.environ.get("BIOHUB_FRIEND_A_WORKERS", "4"))
+# Windows spawn makes every worker import the CUDA runtime and can exhaust the pagefile.
+# Local timing showed data loading was only ~8% of a batch, so zero workers is the safe default.
+default_workers = "0" if os.name == "nt" else "4"
+NUM_WORKERS = int(os.environ.get("BIOHUB_FRIEND_A_WORKERS", default_workers))
 LEARNING_RATE = float(os.environ.get("BIOHUB_FRIEND_A_LR", "1e-4"))
 SEED = int(os.environ.get("BIOHUB_FRIEND_A_SEED", "42"))
 WINDOW_SIZE = int(os.environ.get("BIOHUB_FRIEND_A_WINDOW", "2"))
