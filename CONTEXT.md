@@ -1,6 +1,6 @@
 # CONTEXT — Biohub Cell Tracking (Kaggle) research project
 
-Living document. Everything needed to continue the work without the chat history. Updated 2026-09-06 07:10.
+Living document. Everything needed to continue the work without the chat history. Updated 2026-09-06 10:15.
 
 ## 1. Goal and constraints
 - Competition: https://www.kaggle.com/competitions/biohub-cell-tracking-during-development — detect nuclei, link them
@@ -186,7 +186,9 @@ Order of execution (GPU queue: max 2 kernels; CPU work in parallel):
      pseudo-label / loss experiments can be judged locally.
   d. Stop spending GPU on fine-tune variants (seed noise ±0.005 > effects).
 - LB probe log: #1 06:30 clean v2.1 = 0.899. #2 07:06 exp06 (public pipeline + exp03B primary) = pending (id 56049333).
-  Next: #3 exp18 = public pipeline + direct end->start linking on the final CSV (conservative 5 um).
+  Direct linking on top of the public pipeline is useless (its motion-relink leaves 0 end->start pairs within 5 um).
+  Next: #3 exp18 = public pipeline + ILP division weight 0.9 (validator off) - kernel running, submit tomorrow morning.
+  Candidates after: det threshold 0.965->0.95; secondary := fine-tuned too (if #2 positive); SECONDARY_DETECTION_WEIGHT 0.8->0.5.
 
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
