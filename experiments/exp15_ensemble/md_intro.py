@@ -1,0 +1,1 @@
+# exp15 - inference-time ensemble of fine-tuned models (exp03B + exp08): average detection logits and edge logits; predict hold12 with ILP div 0.6; compare with single exp03B (raw 0.9820 at div 0.6). Predictions zipped.
