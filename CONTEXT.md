@@ -194,16 +194,18 @@ Order of execution (GPU queue: max 2 kernels; CPU work in parallel):
   #2 = **0.945** (public pipeline + exp03B primary; +0.004 vs public 0.941, +0.012 vs user's 0.933). #3 exp18 (ILP div 0.9) = 0.941 (neutral).
   Both scored in parallel (submitted 28 min apart, completed together at 17:06 MSK; ~6 h each).
   #4 17:10 exp19 (public pipeline, det 0.95, validator off) = pending. New base for stacking = exp06 config (0.945).
+  #5 17:57 exp20 (exp06 base, SECONDARY_DETECTION_WEIGHT 0.5, validator off) = pending (id 56057989). Day's 5 slots used.
   Candidates after: det threshold 0.965->0.95; secondary := fine-tuned too (if #2 positive); SECONDARY_DETECTION_WEIGHT 0.8->0.5.
 
 ### 11a. LB-probe protocol (agreed 2026-09-06 10:30)
-- Cadence: **4 probes/day + 1 in reserve** (user 11:10). Daily limit per the API counter is 5, resets ~03:00 MSK.
+- Cadence: **5 probes/day, no reserve** (user 2026-09-06 18:00, replaces the earlier 4+1). Daily limit per the API counter
+  is 5, shared by the whole Kaggle team, resets ~03:00 MSK (00:00 UTC).
   Scoring takes 3-5 h. Whether Kaggle scores two submissions in parallel is to be verified with the next pair
   (exp18 submitted while probe #2 is still pending); if sequential, stagger them.
 - Each probe = exactly ONE change vs the public 0.941 pipeline, so the result is interpretable.
 - Candidate order (each chosen after the previous results): (1) primary weights := exp03B [DONE: 0.945, adopted];
   (2) ILP division weight 1.2 -> 0.9 [DONE: 0.941, neutral, dropped]; (3) det threshold 0.965 -> 0.95 [probe #4 pending];
-  (4) SECONDARY_DETECTION_WEIGHT 0.8 -> 0.5 on the exp06 base [exp20 kernel running; probe tomorrow ~03:00 MSK reset]; (5) secondary := fine-tuned weights (if (1) positive);
+  (4) SECONDARY_DETECTION_WEIGHT 0.8 -> 0.5 on the exp06 base [probe #5 pending, id 56057989]; (5) secondary := fine-tuned weights (if (1) positive);
   (6) OUTPUT_MIN_TRACK_LEN 6 -> 4.
 - Combination rule (user 18:15): as soon as TWO positive single changes (>= +0.002 each) exist on top of the current
   base, the very next probe is their combination; if it holds, it becomes the new base. So far only (1) is positive
@@ -236,7 +238,7 @@ What this means for the team:
 - Friend B (re-prioritised 18:00): FIRST port the public pipeline's post-processing to a local script (CPU, no wait),
   THEN honest evaluation on friend A's checkpoint (12 44b6 videos, pipeline stages vs ours), pseudo-labels last
   (FOCUS-3D ≈ 2-3 days on a 5070, long payoff chain).
-- Vitalii: 4 LB probes/day on the public pipeline (one knob each), weights from friend A into the pipeline as soon as
+- Vitalii: 5 LB probes/day on the public pipeline (one knob each), weights from friend A into the pipeline as soon as
   they beat exp03B on the honest validator.
 
 ## 12. Team (2026-09-06)
@@ -246,13 +248,14 @@ validator), friend B (RTX 5070: inference/evaluation/pseudo-labels). Roles, onbo
 - 2026-09-06: Friend A launch notebook prepared at `experiments/local_friend_a_exp01_loeo_scratch/`; dry preflight
   passed on RTX 5070 Ti/CUDA 12.8, full 5-epoch training has not been run yet.
 
-## 14. Operational state for session resume (2026-09-06 18:30) — READ THIS FIRST AFTER A CONTEXT RESET
+## 14. Operational state for session resume (2026-09-06 18:00 MSK) — READ THIS FIRST AFTER A CONTEXT RESET
 Pending right now:
 - LB probe #4 = kernel `vitaliineibauer/biohub-exp19-pub941-det095` v1 (public pipeline, det 0.95), submitted 17:10 MSK,
   scoring ~6 h -> expect ~23:00 MSK. Check: `python -m kaggle competitions submissions biohub-cell-tracking-during-development`.
-- exp20 = kernel `vitaliineibauer/biohub-exp20-ft03b-secdet05` v1 (exp06 base + SECONDARY_DETECTION_WEIGHT 0.5, validator
-  off) has COMPLETED and is ready to submit as the first probe after the daily reset (~03:00 MSK; today 4 used, 1 reserve).
-  Submit: `python -m kaggle competitions submit biohub-cell-tracking-during-development -k vitaliineibauer/biohub-exp20-ft03b-secdet05 -v 1 -f submission.csv -m "probe 5: exp06 base, secondary det weight 0.5"`.
+- LB probe #5 = kernel `vitaliineibauer/biohub-exp20-ft03b-secdet05` v1 (exp06 base + SECONDARY_DETECTION_WEIGHT 0.5,
+  validator off), submitted 17:57 MSK, id 56057989, expect ~00:00 MSK. Today's 5 slots are used; next slots ~03:00 MSK.
+  Submit template: `python -m kaggle competitions submit biohub-cell-tracking-during-development -k <kernel> -v 1 -f submission.csv -m "probe N: ..."`.
+- Rule (user): when a probe-ready kernel is COMPLETE and a daily slot is free, submit immediately, do not wait.
 - Next probe candidates (one knob each, on the exp06 base 0.945): secondary := fine-tuned weights (exp08 or exp16 in the
   dataset); OUTPUT_MIN_TRACK_LEN 6 -> 4; combination of positives per §11a rule. Build them like exp18-exp20: copy
   `experiments/exp06_pipeline_ft03B/exp06-pipeline-ft03B.ipynb`, edit the env line in the config/setup cell (mind that the

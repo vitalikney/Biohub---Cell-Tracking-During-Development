@@ -33,7 +33,8 @@ Caveat: the pretrained pilkwang weights saw ALL train videos, so val4/hold12 are
 | LB probe 1 | kernel exp10 v2 (config v2.1) submitted 2026-09-06 04:30, id 56044199 | - | **LB 0.899** | - | vs user's 0.933 / public 0.941; hold12 0.9902 did not transfer (leaky validation); see CONTEXT §11 |
 | LB probe 2 | exp06 = public 0.941 pipeline + primary := exp03B (id 56049333) | - | **LB 0.945** | ~6 h scoring | +0.004 vs public; adopted as new base |
 | LB probe 3 | exp18 = public pipeline, ILP division weight 0.9 (id 56049863) | - | LB 0.941 | ~6 h | neutral; dropped |
-| LB probe 4 | exp19 = public pipeline, det threshold 0.95 | - | pending | | submitted 17:10 |
+| LB probe 4 | exp19 = public pipeline, det threshold 0.95 (id 56056939) | - | pending | | submitted 17:10 |
+| LB probe 5 | exp20 = exp06 base, SECONDARY_DETECTION_WEIGHT 0.8->0.5 (id 56057989) | - | pending | | submitted 17:57 |
 | exp15 | inference ensemble exp03B+exp08 (avg det logits + edge logits), hold12, ILP div 0.6 | - | raw 0.9708 (edge 0.9454, recall 0.984, div 5/24/9) | 20 min | worse than single exp03B raw 0.9820; rejected |
 | exp17 | fine-tune 600 it (exp03B recipe) | - | 0.9556 (edge 0.9418, recall 0.986) | 40 min | within noise of exp03B (1200 it, 0.9575); per-video deltas -0.08..+0.06 |
 | exp16 | fine-tune 1200 it, seed 7 | - | 0.9502 (edge 0.9346, recall 0.972) | 50 min | worse than seed 42 (exp03B 0.9575); seed variance ±0.005 |
