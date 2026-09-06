@@ -36,6 +36,6 @@ def _default_dataset_path() -> Path:
 
 
 DATASET_PATH = _default_dataset_path()
-PREDICTIONS_PATH = _BASE / "predictions"
+PREDICTIONS_PATH = Path(os.environ.get("BIOHUB_PREDICTIONS_DIR", _BASE / "predictions"))
 RESULTS_PATH = _BASE / "results"
 WEIGHTS_PATH = _BASE / "weights"

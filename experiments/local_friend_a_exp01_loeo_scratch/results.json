@@ -1,12 +1,32 @@
 {
   "experiment": "local_friend_a_exp01_loeo_scratch",
-  "status": "trained_not_officially_scored",
+  "status": "evaluated_official_loeo",
   "run_id": "20260906_182311",
   "wall_seconds": 9214.053379,
   "train_videos": 126,
   "validation_videos": 12,
   "validation_set": "LOEO-44b6",
-  "official_metric": null,
+  "official_metric": {
+    "evaluation_set": "LOEO-44b6",
+    "n": 12,
+    "score": 0.6706197269911452,
+    "adj_edge_jaccard": 0.6706197269911452,
+    "edge_jaccard": 0.6687950566426365,
+    "edge_tp": 3247,
+    "edge_fp": 492,
+    "edge_fn": 1116,
+    "division_jaccard": 0.0,
+    "division_tp": 0,
+    "division_fp": 0,
+    "division_fn": 15,
+    "node_recall": 0.85999309367508,
+    "num_pred_nodes": 514623,
+    "det_threshold": 0.965,
+    "ilp_appearance_weight": 0.0,
+    "ilp_disappearance_weight": 2.0,
+    "ilp_division_weight": 1.2
+  },
+  "official_metrics_file": "official_loeo_metrics.json",
   "best_epoch": 4,
   "best_internal_score": 0.8943,
   "best_validation_recall": 0.8944,
@@ -14,5 +34,5 @@
   "final_detection_loss": 0.011,
   "final_edge_loss": 0.0005,
   "checkpoint_sha256": "283ae5b9d9197342e34e0cebfa29511b740a0166f660f5bd9fe9725a8d44bbc9",
-  "note": "Internal sparse-GT diagnostics only. Friend B still needs to run prediction and the official metric."
+  "note": "Official local LOEO score on all 12 held-out 44b6 videos; no leaderboard submission."
 }

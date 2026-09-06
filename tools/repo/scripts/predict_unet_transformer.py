@@ -32,7 +32,7 @@ from train_unet_transformer import (
     extract_pos_features,
     _POS_EMBED_DIM,
 )
-from biohub_tracking.models import TemporalUNet3D
+from biohub_tracking.models.temporal_unet import TemporalUNet3D
 
 from dataspec import USERNAME, INTERACTIVE, WEIGHTS_PATH
 from evaluate import evaluate_run
