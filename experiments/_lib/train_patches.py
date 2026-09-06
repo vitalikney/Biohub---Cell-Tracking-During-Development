@@ -216,6 +216,34 @@ PATCHES = [
         "        optimizer.zero_grad()\n        SCALER.scale(loss).backward()\n        SCALER.unscale_(optimizer)\n        torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)\n        SCALER.step(optimizer)\n        SCALER.update()\n",
         "scaler backward",
     ),
+    # --- intensity augmentation (gain / background offset / gamma) for robustness to low-contrast, high-background videos
+    (
+        "DEFAULT_AUGMENTATIONS = [brightness_augment, flip_augment]\n",
+        "DEFAULT_AUGMENTATIONS = [brightness_augment, flip_augment]\n"
+        "AUG_INTENSITY = False\n\n"
+        "def intensity_augment(imgs, coords, masks, *, rng):\n"
+        "    # imgs: (W, *spatial) normalised to ~[0, 1]; simulate gain, additive haze and gamma changes\n"
+        "    gain = float(rng.uniform(0.5, 1.6)); offset = float(rng.uniform(-0.15, 0.45)); gamma = float(rng.uniform(0.6, 1.5))\n"
+        "    x = imgs.clamp(min=0.0)\n"
+        "    x = torch.pow(x + 1e-6, gamma) * gain + offset\n"
+        "    if rng.random() < 0.3:  # haze: add a smooth positive background\n"
+        "        x = x + float(rng.uniform(0.2, 0.8))\n"
+        "    return x, coords, masks\n",
+        "intensity aug def",
+    ),
+    (
+        "    parser.add_argument(\"--seed\", type=int, default=None)\n",
+        "    parser.add_argument(\"--seed\", type=int, default=None)\n"
+        "    parser.add_argument(\"--aug-intensity\", action=\"store_true\", help=\"add gain/offset/gamma intensity augmentation\")\n",
+        "intensity aug cli",
+    ),
+    (
+        "    USE_AMP = bool(args.amp); NO_GRAD_CKPT = bool(args.no_grad_ckpt)\n",
+        "    USE_AMP = bool(args.amp); NO_GRAD_CKPT = bool(args.no_grad_ckpt)\n"
+        "    if args.aug_intensity:\n"
+        "        DEFAULT_AUGMENTATIONS.append(intensity_augment); print(\"intensity augmentation ON\", flush=True)\n",
+        "intensity aug apply",
+    ),
 ]
 
 
