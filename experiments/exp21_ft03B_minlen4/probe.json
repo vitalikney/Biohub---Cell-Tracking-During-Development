@@ -1,0 +1,10 @@
+{
+ "name": "exp21_ft03B_minlen4",
+ "base": "exp06_pipeline_ft03B",
+ "env": {
+  "BIOHUB_OUTPUT_MIN_TRACK_LEN": "4",
+  "BIOHUB_VALIDATOR_ENABLE": "0"
+ },
+ "secondary_override": null,
+ "note": "probe 6: exp06 base, OUTPUT_MIN_TRACK_LEN 6 -> 4"
+}

@@ -1,0 +1,10 @@
+{
+ "name": "exp22_ft03B_sec-exp08",
+ "base": "exp06_pipeline_ft03B",
+ "env": {
+  "BIOHUB_SECONDARY_OVERRIDE": "exp08",
+  "BIOHUB_VALIDATOR_ENABLE": "0"
+ },
+ "secondary_override": "exp08",
+ "note": "probe 7: exp06 base, secondary weights := exp08 fine-tune"
+}

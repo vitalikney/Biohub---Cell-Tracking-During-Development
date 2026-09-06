@@ -196,7 +196,8 @@ Order of execution (GPU queue: max 2 kernels; CPU work in parallel):
   Both scored in parallel (submitted 28 min apart, completed together at 17:06 MSK; ~6 h each).
   #4 17:10 exp19 (public pipeline, det 0.95, validator off) = **0.940** (scored 22:40; vs 0.941 = neutral/noise, DROPPED;
   det threshold stays 0.965). New base for stacking = exp06 config (0.945).
-  #5 17:57 exp20 (exp06 base, SECONDARY_DETECTION_WEIGHT 0.5, validator off) = pending (id 56057989). Day's 5 slots used.
+  #5 17:57 exp20 (exp06 base, SECONDARY_DETECTION_WEIGHT 0.5, validator off) = **0.943** (scored 2026-09-07 00:15; vs base
+  0.945 = -0.002, NEGATIVE, dropped; secondary weight stays 0.8). Base for stacking stays exp06 (0.945).
   Candidates after: det threshold 0.965->0.95; secondary := fine-tuned too (if #2 positive); SECONDARY_DETECTION_WEIGHT 0.8->0.5.
 
 ### 11a. LB-probe protocol (agreed 2026-09-06 10:30)
@@ -207,7 +208,7 @@ Order of execution (GPU queue: max 2 kernels; CPU work in parallel):
 - Each probe = exactly ONE change vs the public 0.941 pipeline, so the result is interpretable.
 - Candidate order (each chosen after the previous results): (1) primary weights := exp03B [DONE: 0.945, adopted];
   (2) ILP division weight 1.2 -> 0.9 [DONE: 0.941, neutral, dropped]; (3) det threshold 0.965 -> 0.95 [DONE: 0.940, neutral, dropped];
-  (4) SECONDARY_DETECTION_WEIGHT 0.8 -> 0.5 on the exp06 base [probe #5 pending, id 56057989]; (5) secondary := fine-tuned weights (if (1) positive);
+  (4) SECONDARY_DETECTION_WEIGHT 0.8 -> 0.5 on the exp06 base [DONE: 0.943, negative, dropped]; (5) secondary := fine-tuned weights (if (1) positive);
   (6) OUTPUT_MIN_TRACK_LEN 6 -> 4.
 - Combination rule (user 18:15): as soon as TWO positive single changes (>= +0.002 each) exist on top of the current
   base, the very next probe is their combination; if it holds, it becomes the new base. So far only (1) is positive
@@ -230,7 +231,7 @@ What is proven on the LB (the only trustworthy signal):
 - Public 0.941 pipeline + our fine-tuned primary weights (exp03B) = **0.945**, rank 46/3174. This is the production base.
 - Our clean pipeline (fine-tuned model + ILP + light post-proc) = 0.899: the public pipeline's conservative heuristics
   (dual-seed detection blend, DeepCenter veto, short-track filter, safe divisions) are worth +0.046 on unseen embryos.
-- ILP division weight 0.9 = 0.941 (neutral); det threshold 0.95 = 0.940 (neutral). Pending: secondary detection weight 0.5 (probe 5).
+- ILP division weight 0.9 = 0.941 (neutral); det threshold 0.95 = 0.940 (neutral). Secondary detection weight 0.5 = 0.943 (negative). Next: min track len 4 (probe 6), secondary := exp08 (probe 7).
 What is proven locally but does NOT transfer: everything measured on train videos with pilkwang-initialised models
 (hold12 0.99, LOEO 0.906) - leaky. Local numbers are only useful to compare post-proc variants relative to each other.
 What this means for the team:
@@ -257,7 +258,7 @@ Pending right now:
 - LB probe #4 = kernel `vitaliineibauer/biohub-exp19-pub941-det095` v1 (public pipeline, det 0.95) = 0.940, scored 22:40 MSK
   (neutral, dropped). Check: `python -m kaggle competitions submissions biohub-cell-tracking-during-development`.
 - LB probe #5 = kernel `vitaliineibauer/biohub-exp20-ft03b-secdet05` v1 (exp06 base + SECONDARY_DETECTION_WEIGHT 0.5,
-  validator off), submitted 17:57 MSK, id 56057989, expect ~00:00 MSK. Today's 5 slots are used; next slots ~03:00 MSK.
+  validator off) = 0.943, scored 2026-09-07 00:15 MSK (negative, dropped). Next slots ~03:00 MSK 2026-09-07.
   Submit template: `python -m kaggle competitions submit biohub-cell-tracking-during-development -k <kernel> -v 1 -f submission.csv -m "probe N: ..."`.
 - Rule (user): when a probe-ready kernel is COMPLETE and a daily slot is free, submit immediately, do not wait.
 - Background watch (session-local, restart after a session restart): ONLY the LB submissions watch until #4/#5 are
