@@ -1,6 +1,6 @@
 # CONTEXT — Biohub Cell Tracking (Kaggle) research project
 
-Living document. Everything needed to continue the work without the chat history. Updated 2026-09-06 10:15.
+Living document. Everything needed to continue the work without the chat history. Updated 2026-09-06 10:35.
 
 ## 1. Goal and constraints
 - Competition: https://www.kaggle.com/competitions/biohub-cell-tracking-during-development — detect nuclei, link them
@@ -189,6 +189,20 @@ Order of execution (GPU queue: max 2 kernels; CPU work in parallel):
   Direct linking on top of the public pipeline is useless (its motion-relink leaves 0 end->start pairs within 5 um).
   Next: #3 exp18 = public pipeline + ILP division weight 0.9 (validator off) - kernel running, submit tomorrow morning.
   Candidates after: det threshold 0.965->0.95; secondary := fine-tuned too (if #2 positive); SECONDARY_DETECTION_WEIGHT 0.8->0.5.
+
+### 11a. LB-probe protocol (agreed 2026-09-06 10:30)
+- Cadence: **2 probes/day** (Kaggle limit 4/day, resets ~03:00 MSK). Morning probe ~09:00, afternoon probe ~15:00;
+  the night slot stays in reserve for urgent re-checks. Scoring takes 3-5 h.
+- Each probe = exactly ONE change vs the public 0.941 pipeline, so the result is interpretable.
+- Candidate order (each chosen after the previous results): (1) primary weights := exp03B [running, probe #2];
+  (2) ILP division weight 1.2 -> 0.9 [exp18, tomorrow morning]; (3) det threshold 0.965 -> 0.95;
+  (4) SECONDARY_DETECTION_WEIGHT 0.8 -> 0.5; (5) secondary := fine-tuned weights (if (1) positive);
+  (6) OUTPUT_MIN_TRACK_LEN 6 -> 4. Positive changes are then combined into one notebook and verified by a joint probe
+  (effects may not add up).
+- Rules: differences < 0.002 = noise, not adopted; every probe logged in §11 (probe log) with kernel, change, LB;
+  from 26 Sep only final-submission probes, no new ideas.
+- GPU: each probe needs one prior notebook run (15-40 min) => ~1-1.5 GPU-h/day; ~11 h left this week - enough.
+  Heavy model work (from-scratch model for a leak-free validator) moves to next week's quota.
 
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
