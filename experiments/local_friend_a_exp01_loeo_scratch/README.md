@@ -1,6 +1,6 @@
 # Friend A experiment 01: scratch LOEO validator
 
-Open `friend-a-loeo-scratch.ipynb` from the repository root and run all cells in the Python 3.12 project environment.
+Open the root-level `friend-a-loeo-scratch.ipynb` and run all cells in the Python 3.12 project environment.
 The default recipe trains for five full epochs on the fixed 126-video `6bba` manifest and validates internally on
 12 `44b6` videos. The two other local `6bba` datasets are dummy-test copies and are intentionally outside the manifest.
 
