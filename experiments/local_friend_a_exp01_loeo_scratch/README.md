@@ -12,6 +12,8 @@ patches, streams `train.log`, and produces:
 - `artifact/config.json`
 - `artifact/run_config.json`
 - `artifact/results.json`
+- `artifact/history.csv`
+- `artifact/training_curves.svg`
 - `artifact/handoff.json`
 
 Send the artifact directory to Friend B/Vitalii. Friend B owns predictions and official evaluation. Do not submit to

@@ -1,5 +1,7 @@
 # Stream the long-running process to the notebook and to train.log.
 
+import csv
+import math
 import re
 
 
@@ -22,6 +24,119 @@ def print_subprocess_line(line: str) -> None:
     encoding = getattr(sys.stdout, "encoding", None) or "utf-8"
     safe_line = line.encode(encoding, errors="replace").decode(encoding, errors="replace")
     print(safe_line, end="", flush=True)
+
+
+def write_training_history(epoch_rows: list[dict], output_dir: Path) -> tuple[Path, Path | None]:
+    """Save per-epoch CSV and a dependency-free SVG diagnostic plot."""
+    history_csv = output_dir / "history.csv"
+    fields = ["epoch", "edge", "det", "test_loss", "acc", "recall", "best"]
+    with history_csv.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, fieldnames=fields)
+        writer.writeheader()
+        writer.writerows([{**row, "epoch": row["epoch"] + 1} for row in epoch_rows])
+    if not epoch_rows:
+        return history_csv, None
+
+    width, height = 960, 680
+    left, right = 95.0, 900.0
+    loss_top, loss_bottom = 105.0, 325.0
+    metric_top, metric_bottom = 420.0, 620.0
+    epochs = [row["epoch"] + 1 for row in epoch_rows]
+
+    def x_pos(index: int) -> float:
+        return (left + right) / 2 if len(epoch_rows) == 1 else left + index * (right - left) / (len(epoch_rows) - 1)
+
+    positive_losses = [
+        float(row[key]) for row in epoch_rows for key in ("edge", "det", "test_loss") if float(row[key]) > 0
+    ]
+    log_low = math.floor(math.log10(min(positive_losses)))
+    log_high = math.ceil(math.log10(max(positive_losses)))
+    if log_low == log_high:
+        log_low -= 1
+
+    def loss_y(value: float) -> float:
+        value = max(float(value), 10 ** log_low)
+        ratio = (log_high - math.log10(value)) / (log_high - log_low)
+        return loss_top + ratio * (loss_bottom - loss_top)
+
+    metric_values = [float(row[key]) for row in epoch_rows for key in ("recall", "best")]
+    metric_low = max(0.0, min(metric_values) - 0.01)
+    metric_high = min(1.0, max(metric_values) + 0.01)
+    if metric_high - metric_low < 0.02:
+        metric_low = max(0.0, metric_low - 0.01)
+        metric_high = min(1.0, metric_high + 0.01)
+
+    def metric_y(value: float) -> float:
+        ratio = (metric_high - float(value)) / (metric_high - metric_low)
+        return metric_top + ratio * (metric_bottom - metric_top)
+
+    svg = [
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}">',
+        '<rect width="100%" height="100%" fill="#ffffff"/>',
+        '<style>text{font-family:Segoe UI,Arial,sans-serif;fill:#202124}.axis{stroke:#5f6368;stroke-width:1}.grid{stroke:#dfe3e8;stroke-width:1}.series{fill:none;stroke-width:3}.dot{stroke:#fff;stroke-width:1.5}</style>',
+        '<text x="480" y="34" text-anchor="middle" font-size="21" font-weight="600">Friend A scratch LOEO training</text>',
+        '<text x="480" y="58" text-anchor="middle" font-size="14" fill="#5f6368">Internal sparse-GT diagnostics — not the official competition metric</text>',
+        '<text x="95" y="88" font-size="16" font-weight="600">Losses (log scale)</text>',
+        '<text x="95" y="403" font-size="16" font-weight="600">Validation metrics</text>',
+    ]
+
+    for exponent in range(log_high, log_low - 1, -1):
+        y = loss_y(10 ** exponent)
+        svg.extend([
+            f'<line class="grid" x1="{left}" y1="{y:.1f}" x2="{right}" y2="{y:.1f}"/>',
+            f'<text x="{left - 12}" y="{y + 5:.1f}" text-anchor="end" font-size="12">1e{exponent}</text>',
+        ])
+    for tick_index in range(5):
+        value = metric_low + tick_index * (metric_high - metric_low) / 4
+        y = metric_y(value)
+        svg.extend([
+            f'<line class="grid" x1="{left}" y1="{y:.1f}" x2="{right}" y2="{y:.1f}"/>',
+            f'<text x="{left - 12}" y="{y + 5:.1f}" text-anchor="end" font-size="12">{value:.3f}</text>',
+        ])
+    svg.extend([
+        f'<line class="axis" x1="{left}" y1="{loss_top}" x2="{left}" y2="{loss_bottom}"/>',
+        f'<line class="axis" x1="{left}" y1="{loss_bottom}" x2="{right}" y2="{loss_bottom}"/>',
+        f'<line class="axis" x1="{left}" y1="{metric_top}" x2="{left}" y2="{metric_bottom}"/>',
+        f'<line class="axis" x1="{left}" y1="{metric_bottom}" x2="{right}" y2="{metric_bottom}"/>',
+    ])
+
+    loss_series = [("det", "Detection loss", "#d97706"), ("edge", "Edge loss", "#2563eb"), ("test_loss", "Validation loss", "#7c3aed")]
+    for key, label, colour in loss_series:
+        points = " ".join(f"{x_pos(i):.1f},{loss_y(row[key]):.1f}" for i, row in enumerate(epoch_rows))
+        svg.append(f'<polyline class="series" points="{points}" stroke="{colour}"/>')
+        for i, row in enumerate(epoch_rows):
+            svg.append(f'<circle class="dot" cx="{x_pos(i):.1f}" cy="{loss_y(row[key]):.1f}" r="4" fill="{colour}"/>')
+
+    metric_series = [("recall", "Validation recall", "#059669"), ("best", "Best internal score", "#dc2626")]
+    for key, label, colour in metric_series:
+        points = " ".join(f"{x_pos(i):.1f},{metric_y(row[key]):.1f}" for i, row in enumerate(epoch_rows))
+        svg.append(f'<polyline class="series" points="{points}" stroke="{colour}"/>')
+        for i, row in enumerate(epoch_rows):
+            svg.append(f'<circle class="dot" cx="{x_pos(i):.1f}" cy="{metric_y(row[key]):.1f}" r="4" fill="{colour}"/>')
+
+    best_index = max(range(len(epoch_rows)), key=lambda index: epoch_rows[index]["best"])
+    best_x = x_pos(best_index)
+    svg.extend([
+        f'<line x1="{best_x:.1f}" y1="{metric_top}" x2="{best_x:.1f}" y2="{metric_bottom}" stroke="#111827" stroke-dasharray="5 5"/>',
+        f'<text x="{best_x + 7:.1f}" y="{metric_top + 18:.1f}" font-size="12">saved checkpoint</text>',
+    ])
+    for i, epoch in enumerate(epochs):
+        x = x_pos(i)
+        svg.append(f'<text x="{x:.1f}" y="{metric_bottom + 25}" text-anchor="middle" font-size="12">{epoch}</text>')
+    svg.append(f'<text x="{(left + right) / 2:.1f}" y="{metric_bottom + 52}" text-anchor="middle" font-size="14">Epoch</text>')
+
+    legend_items = [*loss_series, *metric_series]
+    for i, (_, label, colour) in enumerate(legend_items):
+        x = 105 + (i % 3) * 260
+        y = 348 + (i // 3) * 24
+        svg.extend([
+            f'<line x1="{x}" y1="{y}" x2="{x + 28}" y2="{y}" stroke="{colour}" stroke-width="3"/>',
+            f'<text x="{x + 36}" y="{y + 5}" font-size="13">{label}</text>',
+        ])
+    svg.append('</svg>')
+    curve_svg = output_dir / "training_curves.svg"
+    curve_svg.write_text("\n".join(svg), encoding="utf-8")
+    return history_csv, curve_svg
 
 
 if RUN_TRAINING:
@@ -122,6 +237,7 @@ if RUN_TRAINING:
         epoch_rows.append(row)
 
     checkpoint_sha256 = hashlib.sha256(checkpoint_target.read_bytes()).hexdigest()
+    history_csv, curve_svg = write_training_history(epoch_rows, ARTIFACT_DIR)
     results = {
         "experiment": EXPERIMENT,
         "run_id": RUN_ID,
@@ -136,6 +252,8 @@ if RUN_TRAINING:
         "checkpoint": str(checkpoint_target),
         "checkpoint_sha256": checkpoint_sha256,
         "model_config": str(model_config_target),
+        "history_csv": str(history_csv),
+        "training_curve_svg": str(curve_svg) if curve_svg is not None else None,
         "internal_sparse_validation": epoch_rows,
         "official_metric": None,
         "note": "Internal acc/recall is diagnostic only; Friend B must run prediction and the official metric.",

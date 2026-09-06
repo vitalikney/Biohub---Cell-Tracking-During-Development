@@ -9,6 +9,8 @@ if results["status"] == "trained_not_officially_scored":
         ARTIFACT_DIR / "config.json",
         ARTIFACT_DIR / "run_config.json",
         ARTIFACT_DIR / "results.json",
+        ARTIFACT_DIR / "history.csv",
+        ARTIFACT_DIR / "training_curves.svg",
     ]
     missing_artifacts = [str(path) for path in required_artifacts if not path.exists()]
     if missing_artifacts:
@@ -25,6 +27,8 @@ if results["status"] == "trained_not_officially_scored":
         "supporting_files": [
             str(ARTIFACT_DIR / "run_config.json"),
             str(ARTIFACT_DIR / "results.json"),
+            str(ARTIFACT_DIR / "history.csv"),
+            str(ARTIFACT_DIR / "training_curves.svg"),
             str(RUN_DIR / "train.log"),
         ],
         "evaluation_request": {
