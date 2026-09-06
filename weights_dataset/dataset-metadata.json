@@ -1,5 +1,19 @@
 {
   "title": "biohub-ft-weights",
   "id": "vitaliineibauer/biohub-ft-weights",
-  "licenses": [{"name": "CC0-1.0"}]
+  "licenses": [
+    {
+      "name": "CC0-1.0"
+    }
+  ],
+  "collaborators": [
+    {
+      "username": "sasyami",
+      "role": "writer"
+    },
+    {
+      "username": "gsfatakhov",
+      "role": "writer"
+    }
+  ]
 }

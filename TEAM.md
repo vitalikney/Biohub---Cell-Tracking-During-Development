@@ -16,8 +16,16 @@ Read `CONTEXT.md` first (goal, metric facts, results, plan). This file says who 
 2. Python 3.12, PyTorch with CUDA 12.8+ (Blackwell), then
    `pip install tracksdata "geff>=1.1.3.1.1" "polars>=1.36" "rustworkx>=0.17.1" "zarr>=3.0.10,<4" scipy scikit-image tqdm dask networkx pandas scikit-learn pyscipopt ilpy blosc2`.
 3. Pretrained weights + code: Kaggle dataset `pilkwang/biohub-tracking-support-pack-50ep-v1` (repo/ and weights/);
-   our fine-tuned weights: private dataset `vitaliineibauer/biohub-ft-weights` (ask Vitalii to add you as collaborator).
-   The support-pack code is also in `tools/repo/` (scripts + src) without weights.
+   the support-pack code is also in `tools/repo/` (scripts + src) without weights.
+   **Our weights: private Kaggle dataset `vitaliineibauer/biohub-ft-weights`** — sasyami and gsfatakhov are collaborators
+   with edit rights (added 2026-09-06). Layout: one subfolder per experiment (`exp03B/`, `exp08/`, ...) with
+   `edge_predictor_best.pth` + `config.json` (written by the training script). To upload a new checkpoint:
+   `kaggle datasets download -d vitaliineibauer/biohub-ft-weights --unzip -p ds` -> add your folder -> write
+   `ds/dataset-metadata.json` with `{"id": "vitaliineibauer/biohub-ft-weights", "title": "biohub-ft-weights"}` ->
+   `kaggle datasets version -p ds --dir-mode zip -m "<exp name>: <recipe>"`. Or just send the two files to Vitalii.
+   Every checkpoint gets a row in `experiments/RESULTS.md` (recipe, data split, iterations, seed, and which video
+   set it was scored on). Note: local scores on train videos are leaky for pilkwang-initialised models (they saw
+   all 199 videos) — our 0.96-0.99 holdout numbers gave 0.899 on the LB; see CONTEXT.md §11.
 4. Smoke test: `python tools/score_geffs.py <dir with prediction .geff files>` (needs the train folder) — must print a score.
 5. Training locally: `tools/repo/scripts/train_unet_transformer.py` with our patches applied by
    `experiments/_lib/train_patches.py` (`apply_train_patches(path)`), e.g.
