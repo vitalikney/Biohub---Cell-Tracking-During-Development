@@ -1,6 +1,6 @@
 # CONTEXT — Biohub Cell Tracking (Kaggle) research project
 
-Living document. Everything needed to continue the work without the chat history. Updated 2026-09-06 03:35.
+Living document. Everything needed to continue the work without the chat history. Updated 2026-09-06 04:25.
 
 ## 1. Goal and constraints
 - Competition: https://www.kaggle.com/competitions/biohub-cell-tracking-during-development — detect nuclei, link them
@@ -75,6 +75,7 @@ Radius 10 um slightly worse, 12 um worse. exp10 notebook updated to v2 (BIOHUB_P
 | exp10 v1 | submission notebook self-check (v2 config, ILP div 1.2) | raw 0.9575 / pp 0.9728 | matches local |
 | exp10 v2 | self-check with config v2.1 (ILP div 0.6, gap5, direct8) | raw **0.9820** / pp **0.9902** (div 8/19/6) | LB-probe candidate (kernel version 2) |
 | exp12 | ILP division weight sweep on 48 videos (hold12+divset36, 106 GT div), scored locally | div1.2: raw 0.9096 / v2 0.9229 / v2-nodiv 0.9158; div0.6: 0.9210 / 0.9249 / **0.9271**; div0.3: 0.9204 / 0.9248 / 0.9266 | ILP div 0.6 + gap5 + direct8, NO post-hoc divisions = config v2.1 (ILP forks: 24 TP/103 FP vs heuristic 23/172) |
+| exp14 | fine-tune + intensity augmentation (gain/offset/gamma/haze) | 0.9345 | WORSE than exp03B 0.9575 (det loss 0.0022 -> 0.017; per-video -0.02..-0.09); augmentation too aggressive; not adopted |
 | exp13 | ILP disappearance/appearance sweep (d1/a0, d3/a0, d2/a0.5) on 48 videos | pending | pushed 02:45 |
 | exp11 | LOEO: fine-tune on 6bba only (126 videos, 1200 it), eval raw on 12x 44b6 | A pretrained 0.8798 (edge 0.8585) / B 6bba-only 0.8825 (edge 0.8570, recall 0.977->0.987) | fine-tuning on the other embryo does not hurt. **Post-proc transfers to the unseen embryo**: B raw 0.8825 -> gap5 0.8934 -> +direct8 0.9014 -> v2 (+div) 0.9059 (div 3/45/12); A: 0.8798 -> 0.8850 -> 0.8944 -> 0.8963 |
 | pp velocity | EMA-velocity projection in gap closing | 0.9621 | neutral |
@@ -114,7 +115,7 @@ Radius 10 um slightly worse, 12 um worse. exp10 notebook updated to v2 (BIOHUB_P
 - [x] 'Dim' videos are actually LOW-CONTRAST / high-background: 6bba_57b7cc1e q0.1=893 vs q0.999=1993 (ratio 1.7; 6bba median ratio 24), 6bba_786893ac q0.1=750 (ratio 4.5). Quantile normalisation (q0.001..q0.999) compresses the signal. => exp14: fine-tune with intensity augmentation (gain/offset/gamma) for background robustness; evaluate on hold12 + these 4 low-contrast videos.
 - [x] exp12 scored: ILP division weight 0.6 + gap5 + direct8 without post-hoc divisions = 0.9271 (48 videos) => config v2.1; exp10 updated (BIOHUB_ILP_DIVISION_WEIGHT=0.6, BIOHUB_PP_DIV_PARENT_UM=0), self-check re-run pushed.
 - [ ] exp13 running: ILP disappearance/appearance sweep on 48 videos -> score locally with v2.
-- [ ] exp14 built (fine-tune + intensity augmentation): queued as step 3 of §10b; push when a GPU slot frees.
+- [x] exp14 intensity augmentation: worse (0.9345 vs 0.9575) - rejected. If low-contrast robustness is revisited: milder ranges (gain 0.8-1.25, offset ±0.1, no haze) or per-video background subtraction in normalisation (5c).
 - [ ] Dense pseudo-labels for the detector (FOCUS-3D or Zebrahub crops) - feasibility test first.
 Rules: max 2 GPU kernels at once; keep outputs zipped; log every result in RESULTS.md and §6.
 
@@ -123,7 +124,7 @@ Order of execution (GPU queue: max 2 kernels; CPU work in parallel):
 1. [done] exp10 v2 = config v2.1 self-check on hold12: raw 0.9820 / pp 0.9902 (kernel version 2).
 2. [running] exp13 = ILP disappearance/appearance sweep on 48 videos -> score locally with v2.1; if a setting beats
    d2/a0 by > 0.003 on 48 videos AND on LOEO, fold it into v2.1 (and re-run the exp10 self-check).
-3. [running since 03:16] **exp14** = fine-tune with intensity augmentation (item 3c: low-contrast/high-background videos).
+3. [done: rejected] **exp14** = fine-tune with intensity augmentation (item 3c: low-contrast/high-background videos).
    Evaluate: hold12 raw vs exp03B (0.9575), then the 4 low-contrast 6bba videos (57b7cc1e, 786893ac, 78a7bd97,
    ab78413d) raw and with v2.1; adopt if hold12 >= exp03B - 0.003 and low-contrast videos improve.
 4. **LB probe** with the exp10 v2.1 submission — **APPROVED by the user (2026-09-06 03:30) for ONE submission, to be made
