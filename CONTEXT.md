@@ -1,6 +1,6 @@
 # CONTEXT — Biohub Cell Tracking (Kaggle) research project
 
-Living document. Everything needed to continue the work without the chat history. Updated 2026-09-06 17:35.
+Living document. Everything needed to continue the work without the chat history. Updated 2026-09-06 18:00.
 
 ## 1. Goal and constraints
 - Competition: https://www.kaggle.com/competitions/biohub-cell-tracking-during-development — detect nuclei, link them
@@ -222,9 +222,11 @@ What is proven locally but does NOT transfer: everything measured on train video
 (hold12 0.99, LOEO 0.906) - leaky. Local numbers are only useful to compare post-proc variants relative to each other.
 What this means for the team:
 - Friend A: the from-scratch 6bba model is the key enabler - it gives the first honest local validator. Expect a weak
-  absolute score (~0.85 on 44b6); what matters is that relative comparisons on it will be trustworthy.
-- Friend B: once that checkpoint exists, run predictions on the 12 44b6 videos with the public pipeline's stages vs our
-  clean pipeline, and re-check our post-proc findings (gap 5, direct link 8, ILP div 0.6) on it. Then dense pseudo-labels.
+  absolute score (~0.85 on 44b6); what matters is that relative comparisons on it will be trustworthy. Next for A:
+  from-scratch on all 199 videos, 30-50 epochs (1-2 days) as a candidate primary/secondary for the public pipeline.
+- Friend B (re-prioritised 18:00): FIRST port the public pipeline's post-processing to a local script (CPU, no wait),
+  THEN honest evaluation on friend A's checkpoint (12 44b6 videos, pipeline stages vs ours), pseudo-labels last
+  (FOCUS-3D ≈ 2-3 days on a 5070, long payoff chain).
 - Vitalii: 4 LB probes/day on the public pipeline (one knob each), weights from friend A into the pipeline as soon as
   they beat exp03B on the honest validator.
 
