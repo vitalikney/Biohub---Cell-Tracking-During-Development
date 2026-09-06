@@ -20,6 +20,12 @@ Send the artifact directory to Friend B/Vitalii. Friend B owns predictions and o
 the Kaggle leaderboard. Once official metrics are available, copy the final result into this folder's `results.json`,
 add a row to `experiments/RESULTS.md`, and update `CONTEXT.md` as required by `TEAM.md`.
 
+Recorded run `20260906_182311` has now completed that follow-up on all 12 videos. Raw official LOEO-44b6 score is
+`0.6706197269911452`; the fixed post-processing v2 result is `0.689091112421061` (adjusted edge
+`0.686917199377582`, raw edge `0.685598377281947`, division `1/31/14`, node recall `0.864856246988022`). Exact
+per-video values are in `official_loeo_metrics.json` and `official_loeo_metrics_postproc_v2.json`; no leaderboard
+submission was made.
+
 Configuration overrides use `BIOHUB_FRIEND_A_*` environment variables; the notebook prints and records the exact
 command. `BIOHUB_DATA_DIR` must point to the train directory containing paired `.zarr` and `.geff` directories.
 On Windows the notebook defaults to `num_workers=0` to avoid `spawn` duplicating PyTorch/CUDA DLL mappings and

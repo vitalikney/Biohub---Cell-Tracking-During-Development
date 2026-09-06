@@ -5,7 +5,13 @@ import argparse, json, os, sys, warnings
 from pathlib import Path
 ROOT = Path(__file__).resolve().parent / "repo"
 sys.path.insert(0, str(ROOT / "src")); sys.path.insert(0, str(ROOT / "scripts"))
-DATA = Path(__file__).resolve().parent.parent / "biohub-cell-tracking-during-development" / "train"
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+DATA = Path(
+    os.environ.get(
+        "BIOHUB_DATA_DIR",
+        PROJECT_ROOT / "biohub-cell-tracking-during-development" / "train",
+    )
+)
 os.environ["BIOHUB_DATA_DIR"] = str(DATA)
 warnings.filterwarnings("ignore")
 import tracksdata as td
