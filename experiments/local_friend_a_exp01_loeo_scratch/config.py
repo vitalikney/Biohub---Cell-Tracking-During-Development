@@ -47,8 +47,10 @@ if DET_LOSS not in {"bce", "gauss_focal"}:
 def find_project_root(start: Path) -> Path:
     candidates = [start.resolve(), *start.resolve().parents]
     for candidate in candidates:
-        if (candidate / "TEAM.md").exists() and (candidate / "tools" / "repo" / "scripts").exists():
-            return candidate
+        repo_candidates = [candidate, candidate / ".github-push-worktree"]
+        for repo_candidate in repo_candidates:
+            if (repo_candidate / "TEAM.md").exists() and (repo_candidate / "tools" / "repo" / "scripts").exists():
+                return repo_candidate
     raise FileNotFoundError("Repository root not found. Start Jupyter inside the cloned project.")
 
 
@@ -70,7 +72,10 @@ if DATA_DIR is None:
     )
 
 RUN_ID = os.environ.get("BIOHUB_RUN_ID", datetime.now().strftime("%Y%m%d_%H%M%S"))
-OUTPUT_ROOT = Path(os.environ.get("BIOHUB_OUTPUT_DIR", PROJECT_ROOT / "outputs")).expanduser().resolve()
+default_output_root = (
+    PROJECT_ROOT.parent / "outputs" if PROJECT_ROOT.name == ".github-push-worktree" else PROJECT_ROOT / "outputs"
+)
+OUTPUT_ROOT = Path(os.environ.get("BIOHUB_OUTPUT_DIR", default_output_root)).expanduser().resolve()
 RUN_DIR = OUTPUT_ROOT / EXPERIMENT / RUN_ID
 TRAIN_REPO = RUN_DIR / "train_repo"
 ARTIFACT_DIR = RUN_DIR / "artifact"
