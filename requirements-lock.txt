@@ -1,0 +1,16 @@
+# Tested top-level environment for biohub_cell_tracking.ipynb.
+# Install only inside .venv: .\\.venv\\Scripts\\python.exe -m pip install -r requirements-lock.txt
+# The tracksdata commit is intentionally pinned: do not replace it with @main.
+# CUDA 12.8 wheel for RTX 5070 Ti; install this requirement from the official PyTorch index.
+--extra-index-url https://download.pytorch.org/whl/cu128
+torch==2.9.1+cu128
+numpy==2.3.3
+pandas==2.3.3
+polars==1.36.1
+zarr==3.1.2
+scipy==1.16.2
+tqdm==4.67.1
+nbformat==5.10.4
+nbclient==0.10.2
+ipykernel==7.0.1
+git+https://github.com/royerlab/tracksdata.git@63a1912f3b6ebd1536a2e8a8adfdf7f5eb84efa4
