@@ -245,8 +245,8 @@ What this means for the team:
 Three people (Kaggle team: Vitalii = leader, friend A = Sasyami, friend B = gsfatakhov): Vitalii (Kaggle + LB probes + coordination), friend A (RTX 5070 Ti: training, first the from-scratch 6bba
 validator), friend B (RTX 5070: inference/evaluation/pseudo-labels). Roles, onboarding and rules in `TEAM.md`.
 
-- 2026-09-06: Friend A launch notebook prepared at `experiments/local_friend_a_exp01_loeo_scratch/`; dry preflight
-  passed on RTX 5070 Ti/CUDA 12.8, full 5-epoch training has not been run yet.
+- 2026-09-06: Friend A launch notebook prepared as root-level `friend-a-loeo-scratch.ipynb`; one-step CUDA
+  train/validation/checkpoint/handoff smoke passed on Windows RTX 5070 Ti with workers=0. Full 5-epoch training has not run.
 
 ## 14. Operational state for session resume (2026-09-06 18:00 MSK) — READ THIS FIRST AFTER A CONTEXT RESET
 Pending right now:

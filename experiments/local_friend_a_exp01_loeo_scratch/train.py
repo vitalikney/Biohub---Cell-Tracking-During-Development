@@ -7,6 +7,23 @@ def write_results(payload: dict) -> None:
     (RUN_DIR / "results.json").write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
+def terminate_process(process: subprocess.Popen) -> None:
+    if process.poll() is not None:
+        return
+    process.terminate()
+    try:
+        process.wait(timeout=30)
+    except subprocess.TimeoutExpired:
+        process.kill()
+        process.wait(timeout=30)
+
+
+def print_subprocess_line(line: str) -> None:
+    encoding = getattr(sys.stdout, "encoding", None) or "utf-8"
+    safe_line = line.encode(encoding, errors="replace").decode(encoding, errors="replace")
+    print(safe_line, end="", flush=True)
+
+
 if RUN_TRAINING:
     started_at = datetime.now().astimezone()
     train_log = RUN_DIR / "train.log"
@@ -35,18 +52,29 @@ if RUN_TRAINING:
         try:
             assert process.stdout is not None
             for line in process.stdout:
-                print(line, end="", flush=True)
                 log_handle.write(line)
                 log_handle.flush()
+                print_subprocess_line(line)
             return_code = process.wait()
         except KeyboardInterrupt:
-            process.terminate()
-            process.wait(timeout=30)
+            terminate_process(process)
             write_results(
                 {
                     "experiment": EXPERIMENT,
                     "run_id": RUN_ID,
                     "status": "interrupted",
+                    "official_metric": None,
+                    "log": str(train_log),
+                }
+            )
+            raise
+        except BaseException:
+            terminate_process(process)
+            write_results(
+                {
+                    "experiment": EXPERIMENT,
+                    "run_id": RUN_ID,
+                    "status": "notebook_stream_failed",
                     "official_metric": None,
                     "log": str(train_log),
                 }

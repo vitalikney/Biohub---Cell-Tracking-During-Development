@@ -21,7 +21,10 @@ METHOD = "friend_a_scratch_bce_w2"
 RUN_TRAINING = os.environ.get("BIOHUB_RUN_TRAINING", "1") != "0"
 EPOCHS = int(os.environ.get("BIOHUB_FRIEND_A_EPOCHS", "5"))
 BATCH_SIZE = int(os.environ.get("BIOHUB_FRIEND_A_BATCH", "4"))
-NUM_WORKERS = int(os.environ.get("BIOHUB_FRIEND_A_WORKERS", "4"))
+# Windows spawn makes every worker import the CUDA runtime and can exhaust the pagefile.
+# Local timing showed data loading was only ~8% of a batch, so zero workers is the safe default.
+default_workers = "0" if os.name == "nt" else "4"
+NUM_WORKERS = int(os.environ.get("BIOHUB_FRIEND_A_WORKERS", default_workers))
 LEARNING_RATE = float(os.environ.get("BIOHUB_FRIEND_A_LR", "1e-4"))
 SEED = int(os.environ.get("BIOHUB_FRIEND_A_SEED", "42"))
 WINDOW_SIZE = int(os.environ.get("BIOHUB_FRIEND_A_WINDOW", "2"))
@@ -47,8 +50,10 @@ if DET_LOSS not in {"bce", "gauss_focal"}:
 def find_project_root(start: Path) -> Path:
     candidates = [start.resolve(), *start.resolve().parents]
     for candidate in candidates:
-        if (candidate / "TEAM.md").exists() and (candidate / "tools" / "repo" / "scripts").exists():
-            return candidate
+        repo_candidates = [candidate, candidate / ".github-push-worktree"]
+        for repo_candidate in repo_candidates:
+            if (repo_candidate / "TEAM.md").exists() and (repo_candidate / "tools" / "repo" / "scripts").exists():
+                return repo_candidate
     raise FileNotFoundError("Repository root not found. Start Jupyter inside the cloned project.")
 
 
@@ -70,7 +75,10 @@ if DATA_DIR is None:
     )
 
 RUN_ID = os.environ.get("BIOHUB_RUN_ID", datetime.now().strftime("%Y%m%d_%H%M%S"))
-OUTPUT_ROOT = Path(os.environ.get("BIOHUB_OUTPUT_DIR", PROJECT_ROOT / "outputs")).expanduser().resolve()
+default_output_root = (
+    PROJECT_ROOT.parent / "outputs" if PROJECT_ROOT.name == ".github-push-worktree" else PROJECT_ROOT / "outputs"
+)
+OUTPUT_ROOT = Path(os.environ.get("BIOHUB_OUTPUT_DIR", default_output_root)).expanduser().resolve()
 RUN_DIR = OUTPUT_ROOT / EXPERIMENT / RUN_ID
 TRAIN_REPO = RUN_DIR / "train_repo"
 ARTIFACT_DIR = RUN_DIR / "artifact"

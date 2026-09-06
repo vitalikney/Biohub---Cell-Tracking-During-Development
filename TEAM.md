@@ -29,9 +29,10 @@ Read `CONTEXT.md` first (goal, metric facts, results, plan). This file says who 
 4. Smoke test: `python tools/score_geffs.py <dir with prediction .geff files>` (needs the train folder) — must print a score.
 5. Training locally: `tools/repo/scripts/train_unet_transformer.py` with our patches applied by
    `experiments/_lib/train_patches.py` (`apply_train_patches(path)`), e.g.
-   `--init-weights <pth> --amp --no-grad-ckpt --seed 42 --det-loss bce --num-workers 4` (see `experiments/exp03_finetune_ab/finetune_ab.py`
+   `--init-weights <pth> --amp --no-grad-ckpt --seed 42 --det-loss bce --num-workers 0` on Windows (see `experiments/exp03_finetune_ab/finetune_ab.py`
    for the exact command line and `--splits` JSON format). Set `BIOHUB_DATA_DIR` to the train folder; run from the repo copy with `PYTHONPATH=src`.
-   16 GB: batch 4-6 without grad checkpointing, or batch 8 with it.
+   16 GB: batch 4-6 without grad checkpointing, or batch 8 with it. Windows workers use `spawn`; each imports
+   PyTorch/CUDA DLLs and may exhaust the pagefile (`WinError 1455`), so keep workers at 0 unless a larger pagefile is verified.
 6. Prediction: `scripts/predict_unet_transformer.py --data-dir <train> --splits <json> --split 0 --weights <pth> --det-threshold 0.965 --use-ilp --ilp-appearance-weight 0 --ilp-disappearance-weight 2 --ilp-division-weight 1.2`
    (ensemble option via `experiments/_lib/predict_patches.py`, env `BIOHUB_ENSEMBLE_WEIGHTS`). Post-process with `tools/postproc.py`.
 

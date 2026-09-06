@@ -117,6 +117,13 @@ DEFAULT_METHOD = "unet_transformer"
 _POS_EMBED_DIM = 8   # per axis; total = 4 axes × _POS_EMBED_DIM = 32
 
 
+def seed_dataloader_worker(worker_id: int) -> None:
+    """Seed a DataLoader subprocess with a module-level, Windows-picklable callback."""
+    del worker_id
+    worker_seed = torch.initial_seed() % 2**32
+    np.random.seed(worker_seed)
+
+
 # =============================================================================
 # Data structures
 # =============================================================================
@@ -1082,14 +1089,10 @@ def train(
     train_ds = FrameWindowDataset(train_video_data, max_nodes=max_nodes, augmentations=augmentations)
     test_ds = FrameWindowDataset(test_video_data, max_nodes=max_nodes)
     g = None
-    worker_init_fn = None
+    worker_init_fn = seed_dataloader_worker if seed is not None else None
     if seed is not None:
         g = torch.Generator()
         g.manual_seed(seed)
-
-        def worker_init_fn(worker_id: int) -> None:
-            worker_seed = torch.initial_seed() % 2**32
-            np.random.seed(worker_seed)
 
     train_loader = DataLoader(
         train_ds, batch_size=batch_size, shuffle=True,
