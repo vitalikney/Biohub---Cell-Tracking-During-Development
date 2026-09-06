@@ -1,6 +1,6 @@
 # CONTEXT — Biohub Cell Tracking (Kaggle) research project
 
-Living document. Everything needed to continue the work without the chat history. Updated 2026-09-06 11:30.
+Living document. Everything needed to continue the work without the chat history. Updated 2026-09-06 17:10.
 
 ## 1. Goal and constraints
 - Competition: https://www.kaggle.com/competitions/biohub-cell-tracking-during-development — detect nuclei, link them
@@ -189,7 +189,9 @@ Order of execution (GPU queue: max 2 kernels; CPU work in parallel):
   d. Stop spending GPU on fine-tune variants (seed noise ±0.005 > effects).
 - LB probe log: #1 06:30 clean v2.1 = 0.899. #2 07:06 exp06 (public pipeline + exp03B primary) = pending (id 56049333).
   Direct linking on top of the public pipeline is useless (its motion-relink leaves 0 end->start pairs within 5 um).
-  #3 10:35 exp18 (public pipeline, ILP div 0.9, validator off) = pending (id 56049863), submitted while #2 pending -> parallel-scoring check.
+  #2 = **0.945** (public pipeline + exp03B primary; +0.004 vs public 0.941, +0.012 vs user's 0.933). #3 exp18 (ILP div 0.9) = 0.941 (neutral).
+  Both scored in parallel (submitted 28 min apart, completed together at 17:06 MSK; ~6 h each).
+  #4 17:10 exp19 (public pipeline, det 0.95, validator off) = pending. New base for stacking = exp06 config (0.945).
   Candidates after: det threshold 0.965->0.95; secondary := fine-tuned too (if #2 positive); SECONDARY_DETECTION_WEIGHT 0.8->0.5.
 
 ### 11a. LB-probe protocol (agreed 2026-09-06 10:30)
@@ -197,8 +199,8 @@ Order of execution (GPU queue: max 2 kernels; CPU work in parallel):
   Scoring takes 3-5 h. Whether Kaggle scores two submissions in parallel is to be verified with the next pair
   (exp18 submitted while probe #2 is still pending); if sequential, stagger them.
 - Each probe = exactly ONE change vs the public 0.941 pipeline, so the result is interpretable.
-- Candidate order (each chosen after the previous results): (1) primary weights := exp03B [running, probe #2];
-  (2) ILP division weight 1.2 -> 0.9 [exp18, today as soon as its run finishes]; (3) det threshold 0.965 -> 0.95 [exp19, kernel running];
+- Candidate order (each chosen after the previous results): (1) primary weights := exp03B [DONE: 0.945, adopted];
+  (2) ILP division weight 1.2 -> 0.9 [DONE: 0.941, neutral, dropped]; (3) det threshold 0.965 -> 0.95 [probe #4 pending];
   (4) SECONDARY_DETECTION_WEIGHT 0.8 -> 0.5; (5) secondary := fine-tuned weights (if (1) positive);
   (6) OUTPUT_MIN_TRACK_LEN 6 -> 4. Positive changes are then combined into one notebook and verified by a joint probe
   (effects may not add up).

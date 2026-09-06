@@ -30,7 +30,10 @@ Caveat: the pretrained pilkwang weights saw ALL train videos, so val4/hold12 are
 | exp10 v2 | submission notebook, config v2.1 (ILP div 0.6, gap5, direct8, no post-hoc div), hold12 self-check | - | raw **0.9820** (div 8/19/6) / pp **0.9902** (adj 0.9660, edge 0.9554) | 20 min | LB-probe candidate; 4 dummy test videos: 124.9k nodes / 119.4k edges |
 | exp14 | fine-tune 1200 it + intensity augmentation (gain 0.5-1.6, offset -0.15..0.45, gamma 0.6-1.5, haze p=0.3) | - | 0.9345 (edge 0.9358, recall 0.982) | 65 min | WORSE than exp03B; det loss 0.017 vs 0.0022; rejected |
 | exp13+pp | ILP disappearance/appearance costs x v2.1 post-proc, 48 videos (div weight 1.2) | - | d1/a0 0.9149, d3/a0 0.9110, d2/a0.5 0.9216 | 100 min | reference d2/a0 0.9158; a0.5 gain comes from divisions (12 TP) that div 0.6 captures better; keep d2/a0 |
-| LB probe | kernel exp10 v2 (config v2.1) submitted 2026-09-06 04:30, id 56044199 | - | **LB 0.899** | - | vs user's 0.933 / public 0.941; hold12 0.9902 did not transfer (leaky validation); see CONTEXT §11 |
+| LB probe 1 | kernel exp10 v2 (config v2.1) submitted 2026-09-06 04:30, id 56044199 | - | **LB 0.899** | - | vs user's 0.933 / public 0.941; hold12 0.9902 did not transfer (leaky validation); see CONTEXT §11 |
+| LB probe 2 | exp06 = public 0.941 pipeline + primary := exp03B (id 56049333) | - | **LB 0.945** | ~6 h scoring | +0.004 vs public; adopted as new base |
+| LB probe 3 | exp18 = public pipeline, ILP division weight 0.9 (id 56049863) | - | LB 0.941 | ~6 h | neutral; dropped |
+| LB probe 4 | exp19 = public pipeline, det threshold 0.95 | - | pending | | submitted 17:10 |
 | exp15 | inference ensemble exp03B+exp08 (avg det logits + edge logits), hold12, ILP div 0.6 | - | raw 0.9708 (edge 0.9454, recall 0.984, div 5/24/9) | 20 min | worse than single exp03B raw 0.9820; rejected |
 | exp17 | fine-tune 600 it (exp03B recipe) | - | 0.9556 (edge 0.9418, recall 0.986) | 40 min | within noise of exp03B (1200 it, 0.9575); per-video deltas -0.08..+0.06 |
 | exp16 | fine-tune 1200 it, seed 7 | - | 0.9502 (edge 0.9346, recall 0.972) | 50 min | worse than seed 42 (exp03B 0.9575); seed variance ±0.005 |
