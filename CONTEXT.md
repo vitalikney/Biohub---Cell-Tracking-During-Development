@@ -1,6 +1,6 @@
 # CONTEXT — Biohub Cell Tracking (Kaggle) research project
 
-Living document. Everything needed to continue the work without the chat history. Updated 2026-09-06 18:00.
+Living document. Everything needed to continue the work without the chat history. Updated 2026-09-06 18:15.
 
 ## 1. Goal and constraints
 - Competition: https://www.kaggle.com/competitions/biohub-cell-tracking-during-development — detect nuclei, link them
@@ -204,8 +204,10 @@ Order of execution (GPU queue: max 2 kernels; CPU work in parallel):
 - Candidate order (each chosen after the previous results): (1) primary weights := exp03B [DONE: 0.945, adopted];
   (2) ILP division weight 1.2 -> 0.9 [DONE: 0.941, neutral, dropped]; (3) det threshold 0.965 -> 0.95 [probe #4 pending];
   (4) SECONDARY_DETECTION_WEIGHT 0.8 -> 0.5 on the exp06 base [exp20 kernel running; probe tomorrow ~03:00 MSK reset]; (5) secondary := fine-tuned weights (if (1) positive);
-  (6) OUTPUT_MIN_TRACK_LEN 6 -> 4. Positive changes are then combined into one notebook and verified by a joint probe
-  (effects may not add up).
+  (6) OUTPUT_MIN_TRACK_LEN 6 -> 4.
+- Combination rule (user 18:15): as soon as TWO positive single changes (>= +0.002 each) exist on top of the current
+  base, the very next probe is their combination; if it holds, it becomes the new base. So far only (1) is positive
+  and it is already the base (exp06 = 0.945).
 - Rules (user 11:00): do NOT launch new Kaggle kernels or submissions until the first pending probe is scored;
   differences < 0.002 = noise, not adopted; every probe logged in §11 (probe log) with kernel, change, LB;
   from 26 Sep only final-submission probes, no new ideas.
