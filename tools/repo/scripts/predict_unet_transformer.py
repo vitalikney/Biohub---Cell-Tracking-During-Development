@@ -67,7 +67,9 @@ class PredictConfig:
     # Detection
     det_threshold: float = 0.5
     det_tta: bool = True  # flip-xy TTA for detection logits
-    pool_kernel_um: float = 3.0  # max-pool kernel size in µm for detection peak extraction
+    # None means: read the value saved next to the checkpoint. Older checkpoints
+    # without this field keep the historical 3 µm prediction default.
+    pool_kernel_um: float | None = None
     # Edge filtering
     edge_activation: str = "softmax"  # "sigmoid" or "softmax"
     threshold: float = 0.5
@@ -536,6 +538,10 @@ def predict(
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model, window_size, downsample = load_model(weights_path, device)
+    if cfg.pool_kernel_um is None:
+        config_path = weights_path.parent / "config.json"
+        saved_config = json.loads(config_path.read_text()) if config_path.exists() else {}
+        cfg.pool_kernel_um = float(saved_config.get("pool_kernel_um", 3.0))
     print(
         f"Fold {fold}: {len(test_names)} datasets | "
         f"weights={weights_path} | device={device} | window_size={window_size} | pool_kernel_um={cfg.pool_kernel_um}",
@@ -620,6 +626,10 @@ def main() -> None:
                              "Default 0.99: the detector is poorly calibrated because the "
                              "ground truth is sparse (only some cells annotated), so a high "
                              "threshold keeps precision up. Sweep it for your model.")
+    parser.add_argument("--pool-kernel-um", type=float, default=None,
+                        help="Physical NMS kernel. Default: value saved in config.json, or 3.0 for legacy checkpoints.")
+    parser.add_argument("--no-det-tta", dest="det_tta", action="store_false",
+                        help="Disable flip-XY detection TTA (useful for matching training-time validation exactly).")
     parser.add_argument("--use-ilp", action="store_true",
                         help="Post-process the predicted graph with the tracksdata ILP "
                              "solver (global, flow-consistent linking) instead of greedy "
@@ -645,6 +655,8 @@ def main() -> None:
     )
     cfg = PredictConfig(
         det_threshold=args.det_threshold,
+        det_tta=args.det_tta,
+        pool_kernel_um=args.pool_kernel_um,
         use_ilp=args.use_ilp,
         ilp_edge_weight=args.ilp_edge_weight,
         ilp_appearance_weight=args.ilp_appearance_weight,
