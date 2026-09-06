@@ -41,7 +41,8 @@ Read `CONTEXT.md` first (goal, metric facts, results, plan). This file says who 
 - Validation truth: anything initialised from pilkwang weights is leaky on train videos (they trained on all 199). Until the from-scratch 6bba model exists, only the LB is trustworthy for linking/division aggressiveness; model comparisons need >= 48 videos (seed noise ±0.005).
 - Do not submit to the LB yourself; send the candidate (kernel or weights) to Vitalii — LB slots are budgeted (4/day).
 - Kaggle rules (checked 2026-09-06): the 5 submissions/day limit is per Team; submitting from several accounts or sharing
-  code outside an official Kaggle Team is a disqualification offence. We merge into one Kaggle Team before the merger
-  deadline **2026-09-22** (Vitalii invites via the competition's Team tab; accept the invite in your Kaggle account).
+  code outside an official Kaggle Team is a disqualification offence. We are already one Kaggle Team (leader Vitalii,
+  members Sasyami + gsfatakhov), so sharing code/weights inside the team is fine. The 5/day limit is shared by the team:
+  a submission from your account counts against it, so still leave submissions to Vitalii.
   Running probe-prep kernels under your own account is fine and welcome (each member has their own 30 GPU-h/week).
 - Update `CONTEXT.md` §6 (results) and §10/§11 (plan) when you finish something; keep entries short and dated.
