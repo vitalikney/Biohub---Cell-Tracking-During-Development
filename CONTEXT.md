@@ -233,8 +233,8 @@ What is proven on the LB (the only trustworthy signal):
 What is proven locally but does NOT transfer: everything measured on train videos with pilkwang-initialised models
 (hold12 0.99, LOEO 0.906) - leaky. Local numbers are only useful to compare post-proc variants relative to each other.
 What this means for the team:
-- Friend A: the from-scratch 6bba model is the key enabler - it gives the first honest local validator. Expect a weak
-  absolute score (~0.85 on 44b6); what matters is that relative comparisons on it will be trustworthy. Next for A:
+- Friend A: the from-scratch 6bba model is the key enabler - it gives the first honest local validator. First result
+  (22:15): 0.671 raw / 0.689 with pp v2 after 5 epochs - undertrained; continue to 30 epochs with official score every 5. Next for A:
   from-scratch on all 199 videos, 30-50 epochs (1-2 days) as a candidate primary/secondary for the public pipeline.
 - Friend B (re-prioritised 18:00): FIRST port the public pipeline's post-processing to a local script (CPU, no wait),
   THEN honest evaluation on friend A's checkpoint (12 44b6 videos, pipeline stages vs ours), pseudo-labels last
@@ -264,10 +264,18 @@ Pending right now:
   the Fable limit: the user tells us when a friend pushes or uploads weights. On such a message: review the diff and merge
   into main / add a RESULTS row, and if the friend's validator says the weights beat exp03B, one LB probe with them as
   primary (make_probe: edit BIOHUB_PRIMARY_OVERRIDE).
-  2026-09-06 21:30: friend A's from-scratch checkpoint EXISTS (branch merged, see root `result.md`: 5 epochs, best epoch 4,
-  internal sparse recall 0.894 on 44b6, sha256 283ae5b9...). Asked friend A to upload it to the dataset as `friend_a_exp01/`
-  (edge_predictor_best.pth + config.json). Then: official score on the 12 44b6 videos = first honest validator number
-  (friend B locally, or one Kaggle kernel ~20 min GPU if B is slower), then re-run our post-proc sweep on it.
+  2026-09-06 22:15: FIRST HONEST NUMBER. Friend A's from-scratch checkpoint (126 6bba videos, 5 epochs, best epoch 4)
+  scored with the official metric on the 12 unseen 44b6 videos: raw 0.6706 (edge J 0.669, node recall 0.86, div 0/0/15);
+  with our post-proc v2 0.6891 (+0.016 adj edge from gap closing + direct linking; post-hoc divisions 1 TP / 31 FP =
+  +0.002 only -> confirms DIV_PARENT_UM=0 as the safe LB setting). Files: `result.md`,
+  `experiments/local_friend_a_exp01_loeo_scratch/official_loeo_metrics*.json`. Interpretation: far below the ~0.85 we
+  guessed; 5 epochs x 126 videos vs pilkwang's 50 epochs x 199 -> undertrained, not a linker design problem. A 0.69 model
+  is a different error regime from the 0.94 LB pipeline, so post-proc conclusions on it do NOT transfer yet. Validator
+  becomes useful for relative decisions once the scratch model reaches ~0.85. Weights NOT needed in the dataset yet.
+  Next for friend A (asked 22:30): continue the SAME 6bba-only recipe to 30 epochs (~15 h on the 5070 Ti), checkpoint
+  every 5 epochs, official score each -> honest learning curve; then the all-199 model for the pipeline.
+  Friend A's tool fixes merged: predictor reads pool_kernel_um (NMS 5 um) from config.json (was silently 3 um; identical
+  graphs at det 0.965), `--no-det-tta`, BIOHUB_PREDICTIONS_DIR / BIOHUB_DATA_DIR env overrides in dataspec/score_geffs.
   Dataset state 2026-09-06 19:40: exp03B/, exp08/ only. Friend A's branch merged into main at b3786d7 (Windows fixes,
   notebook moved to repo root; full 5-epoch run not started yet).
 - Decision tree after probes #4 (det 0.95) and #5 (secdet 0.5) are scored (user 18:20: do not pre-build, combine
