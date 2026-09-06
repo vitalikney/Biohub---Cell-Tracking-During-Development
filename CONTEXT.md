@@ -240,7 +240,7 @@ What this means for the team:
   they beat exp03B on the honest validator.
 
 ## 12. Team (2026-09-06)
-Three people: Vitalii (Kaggle + LB probes + coordination), friend A (RTX 5070 Ti: training, first the from-scratch 6bba
+Three people (Kaggle team: Vitalii = leader, friend A = Sasyami, friend B = gsfatakhov): Vitalii (Kaggle + LB probes + coordination), friend A (RTX 5070 Ti: training, first the from-scratch 6bba
 validator), friend B (RTX 5070: inference/evaluation/pseudo-labels). Roles, onboarding and rules in `TEAM.md`.
 
 - 2026-09-06: Friend A launch notebook prepared at `experiments/local_friend_a_exp01_loeo_scratch/`; dry preflight
