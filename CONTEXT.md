@@ -1,6 +1,6 @@
 # CONTEXT — Biohub Cell Tracking (Kaggle) research project
 
-Living document. Everything needed to continue the work without the chat history. Updated 2026-09-06 10:50.
+Living document. Everything needed to continue the work without the chat history. Updated 2026-09-06 11:00.
 
 ## 1. Goal and constraints
 - Competition: https://www.kaggle.com/competitions/biohub-cell-tracking-during-development — detect nuclei, link them
@@ -200,7 +200,8 @@ Order of execution (GPU queue: max 2 kernels; CPU work in parallel):
   (4) SECONDARY_DETECTION_WEIGHT 0.8 -> 0.5; (5) secondary := fine-tuned weights (if (1) positive);
   (6) OUTPUT_MIN_TRACK_LEN 6 -> 4. Positive changes are then combined into one notebook and verified by a joint probe
   (effects may not add up).
-- Rules: differences < 0.002 = noise, not adopted; every probe logged in §11 (probe log) with kernel, change, LB;
+- Rules (user 11:00): do NOT launch new Kaggle kernels or submissions until the first pending probe is scored;
+  differences < 0.002 = noise, not adopted; every probe logged in §11 (probe log) with kernel, change, LB;
   from 26 Sep only final-submission probes, no new ideas.
 - GPU: each probe needs one prior notebook run (15-40 min) => ~1.5-2 GPU-h/day at 3 probes; ~11 h left this week - enough.
   Heavy model work (from-scratch model for a leak-free validator) moves to next week's quota.
