@@ -1,6 +1,6 @@
 # CONTEXT — Biohub Cell Tracking (Kaggle) research project
 
-Living document. Everything needed to continue the work without the chat history. Updated 2026-09-06 03:20.
+Living document. Everything needed to continue the work without the chat history. Updated 2026-09-06 03:35.
 
 ## 1. Goal and constraints
 - Competition: https://www.kaggle.com/competitions/biohub-cell-tracking-during-development — detect nuclei, link them
@@ -51,7 +51,8 @@ Current best config: exp03B weights (1200 it fine-tune, lr 5e-5) -> predict det 
 -> gap closing 5 um (1 frame, mutual NN, midpoint node) -> post-hoc divisions (parent<=5 um to orphan start at t+1,
 sisters <=12 um, cap 1% nodes). **hold12 official score 0.9728** (raw 0.9575).
 **Pipeline v2.1 (2026-09-06 03:05):** ILP division weight 0.6 (was 1.2), gap closing 5 um, direct linking 8 um, post-hoc
-divisions OFF: 48 videos 0.9271 (v2 0.9229). exp13 (disappearance/appearance costs) may refine further.
+divisions OFF: 48 videos 0.9271 (v2 0.9229). exp10 self-check on hold12: raw **0.9820** (div 8/19/6), pp **0.9902**
+(adj 0.9660, edge 0.9554). Kernel biohub-exp10-submit-clean version 2 = the LB-probe candidate.
 **Pipeline v2 (2026-09-06 02:05):** gap closing 5 um -> residual direct end(t)->start(t+1) linking 8 um (mutual NN)
 -> post-hoc divisions (5/12 um). hold12 **0.9780** (adj 0.9646, div 6/31/8), divset36 **0.9117** (vs v1 0.9728 / 0.9056).
 Radius 10 um slightly worse, 12 um worse. exp10 notebook updated to v2 (BIOHUB_PP_DIRECT_UM=8).
@@ -71,7 +72,8 @@ Radius 10 um slightly worse, 12 um worse. exp10 notebook updated to v2 (BIOHUB_P
 | exp07+pp | + gap closing 5 um | 0.9619 | 2-frame gaps / short-track filter don't help |
 | exp07+pp+div | + post-hoc divisions | 0.9728 | 6/14 GT divisions, 35 FP (mostly free) |
 | exp08 | full-epoch fine-tune (2265 it) | 0.9539 | worse than 1200 it; over-training under-detects; per-video ±0.03 swings => single-run differences <0.01 are partly noise |
-| exp10 | submission notebook self-check | raw 0.9575 / pp 0.9728 | matches local; ready for LB probe |
+| exp10 v1 | submission notebook self-check (v2 config, ILP div 1.2) | raw 0.9575 / pp 0.9728 | matches local |
+| exp10 v2 | self-check with config v2.1 (ILP div 0.6, gap5, direct8) | raw **0.9820** / pp **0.9902** (div 8/19/6) | LB-probe candidate (kernel version 2) |
 | exp12 | ILP division weight sweep on 48 videos (hold12+divset36, 106 GT div), scored locally | div1.2: raw 0.9096 / v2 0.9229 / v2-nodiv 0.9158; div0.6: 0.9210 / 0.9249 / **0.9271**; div0.3: 0.9204 / 0.9248 / 0.9266 | ILP div 0.6 + gap5 + direct8, NO post-hoc divisions = config v2.1 (ILP forks: 24 TP/103 FP vs heuristic 23/172) |
 | exp13 | ILP disappearance/appearance sweep (d1/a0, d3/a0, d2/a0.5) on 48 videos | pending | pushed 02:45 |
 | exp11 | LOEO: fine-tune on 6bba only (126 videos, 1200 it), eval raw on 12x 44b6 | A pretrained 0.8798 (edge 0.8585) / B 6bba-only 0.8825 (edge 0.8570, recall 0.977->0.987) | fine-tuning on the other embryo does not hurt. **Post-proc transfers to the unseen embryo**: B raw 0.8825 -> gap5 0.8934 -> +direct8 0.9014 -> v2 (+div) 0.9059 (div 3/45/12); A: 0.8798 -> 0.8850 -> 0.8944 -> 0.8963 |
@@ -112,24 +114,28 @@ Radius 10 um slightly worse, 12 um worse. exp10 notebook updated to v2 (BIOHUB_P
 - [x] 'Dim' videos are actually LOW-CONTRAST / high-background: 6bba_57b7cc1e q0.1=893 vs q0.999=1993 (ratio 1.7; 6bba median ratio 24), 6bba_786893ac q0.1=750 (ratio 4.5). Quantile normalisation (q0.001..q0.999) compresses the signal. => exp14: fine-tune with intensity augmentation (gain/offset/gamma) for background robustness; evaluate on hold12 + these 4 low-contrast videos.
 - [x] exp12 scored: ILP division weight 0.6 + gap5 + direct8 without post-hoc divisions = 0.9271 (48 videos) => config v2.1; exp10 updated (BIOHUB_ILP_DIVISION_WEIGHT=0.6, BIOHUB_PP_DIV_PARENT_UM=0), self-check re-run pushed.
 - [ ] exp13 running: ILP disappearance/appearance sweep on 48 videos -> score locally with v2.
-- [ ] exp14 built (fine-tune 1200 it + intensity augmentation gain/offset/gamma/haze, `--aug-intensity` in train_patches.py): push when a GPU slot frees; evaluate on hold12 and the 4 low-contrast videos.
+- [ ] exp14 built (fine-tune + intensity augmentation): queued as step 3 of §10b; push when a GPU slot frees.
 - [ ] Dense pseudo-labels for the detector (FOCUS-3D or Zebrahub crops) - feasibility test first.
 Rules: max 2 GPU kernels at once; keep outputs zipped; log every result in RESULTS.md and §6.
 
-### 10b. Plan agreed with the user (2026-09-06 02:55) — after the ILP cost sweeps (exp12 local scoring, exp13)
-1. Freeze config **v2.1** = best ILP division/disappearance costs + post-proc v2 (early signal: ILP div weight 0.6
-   WITHOUT post-hoc divisions = 0.9271 on 48 videos vs current 0.9229; ILP finds divisions more precisely than the
-   heuristic: 24 TP/103 FP vs 23/172). Update exp10, re-run the hold12 self-check (~20 min GPU).
-2. **LB probe** with that submission (needs the user's OK). Calibration point: where the clean pipeline stands vs the
-   public 0.941 pipeline on unseen embryos. Without it, further decisions are blind.
-3. Then the model is the main lever (post-processing is nearly exhausted, +0.02-0.03 already taken). Priority:
-   a. **Ensemble of 2-3 fine-tuned models** (exp03B + exp08 + one more seed): average detection heatmaps and edge
-      logits; per-video swings of ±0.03 between runs suggest a clear gain. Needs a predict-script patch (~1 GPU-h/exp).
-   b. **Detector loss for sparse labels** (nnPU / ignore-unlabelled voxels, early stopping on the real metric): 45 min fine-tune.
-   c. **Dim videos**: analyse the two videos causing 43% of detection losses (intensity normalisation, brightness
-      augmentation, adaptive threshold in low-signal frames).
-   d. **Dense pseudo-labels** (FOCUS-3D / Zebrahub): most expensive, biggest detection upside; compatibility check on ~50 crops first.
-4. Every model improvement goes through the same ladder: hold12 -> 48 videos (divset36+hold12) -> LOEO (exp11 split) -> exp10.
+### 10b. Plan agreed with the user (2026-09-06 02:55; revised 03:25)
+Order of execution (GPU queue: max 2 kernels; CPU work in parallel):
+1. [done] exp10 v2 = config v2.1 self-check on hold12: raw 0.9820 / pp 0.9902 (kernel version 2).
+2. [running] exp13 = ILP disappearance/appearance sweep on 48 videos -> score locally with v2.1; if a setting beats
+   d2/a0 by > 0.003 on 48 videos AND on LOEO, fold it into v2.1 (and re-run the exp10 self-check).
+3. [running since 03:16] **exp14** = fine-tune with intensity augmentation (item 3c: low-contrast/high-background videos).
+   Evaluate: hold12 raw vs exp03B (0.9575), then the 4 low-contrast 6bba videos (57b7cc1e, 786893ac, 78a7bd97,
+   ab78413d) raw and with v2.1; adopt if hold12 >= exp03B - 0.003 and low-contrast videos improve.
+4. **LB probe** with the exp10 v2.1 submission — **APPROVED by the user (2026-09-06 03:30) for ONE submission, to be made
+   automatically after exp10, exp13 and exp14 finish** (scoring takes 5-6 h on Kaggle). Calibration vs the public 0.941.
+5. Model improvements, in priority (each through the ladder hold12 -> 48 videos -> LOEO -> exp10):
+   a. Ensemble of 2-3 fine-tuned models (exp03B + exp08 + exp14/seed): average detection heatmaps + edge logits
+      (predict-script patch, ~1 GPU-h per experiment).
+   b. Detector loss for sparse labels (nnPU / ignore-unlabelled voxels, early stopping): 45 min fine-tune.
+   c. Low-contrast robustness beyond augmentation if exp14 is not enough: per-video contrast normalisation
+      (q0.1 background subtraction) applied consistently in train and predict.
+   d. Dense pseudo-labels (FOCUS-3D / Zebrahub): compatibility check on ~50 crops first; biggest but costliest.
+6. Keep CONTEXT.md/RESULTS.md/GitHub updated after every result.
 
 ### 10a. Ideas from papers + discussions: implementation queue (priority order; cost = GPU-h per experiment)
 | # | idea (source) | status | plan / cost |
