@@ -1,6 +1,6 @@
 # CONTEXT — Biohub Cell Tracking (Kaggle) research project
 
-Living document. Everything needed to continue the work without the chat history. Updated 2026-09-06 05:30.
+Living document. Everything needed to continue the work without the chat history. Updated 2026-09-06 06:45.
 
 ## 1. Goal and constraints
 - Competition: https://www.kaggle.com/competitions/biohub-cell-tracking-during-development — detect nuclei, link them
@@ -130,8 +130,8 @@ Order of execution (GPU queue: max 2 kernels; CPU work in parallel):
 3. [done: rejected] **exp14** = fine-tune with intensity augmentation (item 3c: low-contrast/high-background videos).
    Evaluate: hold12 raw vs exp03B (0.9575), then the 4 low-contrast 6bba videos (57b7cc1e, 786893ac, 78a7bd97,
    ab78413d) raw and with v2.1; adopt if hold12 >= exp03B - 0.003 and low-contrast videos improve.
-4. [SUBMITTED 2026-09-06 04:30] **LB probe**: kernel biohub-exp10-submit-clean v2 (config v2.1), submission id 56044199,
-   status PENDING (scoring 5-6 h). Compare with the user's previous 0.933 and the public 0.941. Approved by the user for ONE submission.
+4. [DONE 06:30] **LB probe = 0.899** (kernel biohub-exp10-submit-clean v2, config v2.1, submission 56044199) vs the user's
+   0.933 (public pipeline) and hold12 0.9902. **Local validation does not transfer** (see §11).
 5. Model improvements, in priority (each through the ladder hold12 -> 48 videos -> LOEO -> exp10):
    a. Ensemble of 2-3 fine-tuned models (exp03B + exp08 + exp14/seed): average detection heatmaps + edge logits
       (predict-script patch, ~1 GPU-h per experiment).
@@ -163,6 +163,28 @@ Order of execution (GPU queue: max 2 kernels; CPU work in parallel):
 | 15 | Frozen/duplicated frames (discussion 724283/729082) | scanned: only 6bba, 114/128 videos, ~8 frames each (947 total, 7%) | identical input => identical detections, zero-displacement links; no rule needed. Test embryos may have it too (`$TEMP/frozen_frames.json`) |
 | 16 | Synthetic data (Freitas CC0, 18.5 GB) for division model pretraining | later | only if item 2 is data-starved |
 
+
+## 11. LB probe post-mortem (2026-09-06 06:40) and revised strategy — AWAITING USER DECISION
+- Clean pipeline v2.1: hold12 0.9902, LOEO 0.906, **LB 0.899**. The public 0.941 pipeline scores 0.933-0.941 on LB.
+  Raw UNet+ILP reproductions on LB are ~0.89-0.90 (discussion), so our LB is consistent with "raw model + light post-proc".
+- Why the local numbers lied: every model we evaluate is initialised from pilkwang weights trained on ALL 199 videos,
+  so hold12 and even LOEO (fine-tuned on 6bba, but base saw 44b6) are memorised. On memorised videos aggressive
+  linking (ILP div 0.6, direct 8 um) adds almost only correct edges; on unseen embryos it adds errors.
+- Structural diff on the 4 dummy test videos (mine vs public 0.941): divisions 63/92/12/180 vs 51/10/6/27 (5-7x more
+  forks), short components (<=5 nodes) 51/539/50/276 vs 0/28/0/0, nodes on 44b6_0b24845f 25.0k vs 18.5k, track ends
+  795/2090/242/2720 vs 772/1234/204/2154. The public pipeline is far more conservative: fewer forks, no short tracks,
+  fewer nodes (node-count bonus) and fewer fragments.
+- Conclusions: (1) hold12/LOEO with pilkwang-initialised weights cannot validate linking/division aggressiveness;
+  (2) the LB (2-4 probes/day) is the only trustworthy signal for post-processing; (3) a leak-free local validator
+  would need a model trained from scratch on one embryo (≈1.3 GPU-h/epoch, 5+ epochs) - possible next week.
+- Proposed revised plan (needs the user's OK):
+  a. Base = public 0.941 pipeline (exp02 notebook, kernel-validated). Keep our infrastructure (API runs, local metric).
+  b. Change ONE thing per LB probe, 1-2 probes/day: (i) primary weights := exp03B (exp06 config; local neutral,
+     LB unknown), (ii) add our direct end->start linking stage (conservative radius 5-6 um) after its post-proc,
+     (iii) its ILP division weight 1.2 -> 0.9, (iv) DeepCenter/safe-division thresholds untouched.
+  c. In parallel (GPU, next week's quota): from-scratch 6bba-only model for a leak-free LOEO validator; then
+     pseudo-label / loss experiments can be judged locally.
+  d. Stop spending GPU on fine-tune variants (seed noise ±0.005 > effects).
 
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
