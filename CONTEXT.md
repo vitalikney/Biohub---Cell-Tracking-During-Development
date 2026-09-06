@@ -210,5 +210,8 @@ Order of execution (GPU queue: max 2 kernels; CPU work in parallel):
 Three people: Vitalii (Kaggle + LB probes + coordination), friend A (RTX 5070 Ti: training, first the from-scratch 6bba
 validator), friend B (RTX 5070: inference/evaluation/pseudo-labels). Roles, onboarding and rules in `TEAM.md`.
 
+- 2026-09-06: Friend A launch notebook prepared at `experiments/local_friend_a_exp01_loeo_scratch/`; dry preflight
+  passed on RTX 5070 Ti/CUDA 12.8, full 5-epoch training has not been run yet.
+
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
