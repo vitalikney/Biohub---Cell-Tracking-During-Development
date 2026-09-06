@@ -262,6 +262,10 @@ Pending right now:
   the Fable limit: the user tells us when a friend pushes or uploads weights. On such a message: review the diff and merge
   into main / add a RESULTS row, and if the friend's validator says the weights beat exp03B, one LB probe with them as
   primary (make_probe: edit BIOHUB_PRIMARY_OVERRIDE).
+  2026-09-06 21:30: friend A's from-scratch checkpoint EXISTS (branch merged, see root `result.md`: 5 epochs, best epoch 4,
+  internal sparse recall 0.894 on 44b6, sha256 283ae5b9...). Asked friend A to upload it to the dataset as `friend_a_exp01/`
+  (edge_predictor_best.pth + config.json). Then: official score on the 12 44b6 videos = first honest validator number
+  (friend B locally, or one Kaggle kernel ~20 min GPU if B is slower), then re-run our post-proc sweep on it.
   Dataset state 2026-09-06 19:40: exp03B/, exp08/ only. Friend A's branch merged into main at b3786d7 (Windows fixes,
   notebook moved to repo root; full 5-epoch run not started yet).
 - Decision tree after probes #4 (det 0.95) and #5 (secdet 0.5) are scored (user 18:20: do not pre-build, combine
