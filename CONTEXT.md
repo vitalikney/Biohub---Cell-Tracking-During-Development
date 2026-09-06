@@ -191,7 +191,8 @@ Order of execution (GPU queue: max 2 kernels; CPU work in parallel):
   Candidates after: det threshold 0.965->0.95; secondary := fine-tuned too (if #2 positive); SECONDARY_DETECTION_WEIGHT 0.8->0.5.
 
 ### 11a. LB-probe protocol (agreed 2026-09-06 10:30)
-- Cadence: **3 probes/day** (user 10:40; Kaggle limit 4/day, resets ~03:00 MSK), the 4th slot in reserve.
+- Cadence: **3 probes/day** (user 10:40). Daily limit per the API counter is **5** (after 3 probes today: '2 submissions
+  remaining today'), resets ~03:00 MSK; the remaining slots stay in reserve.
   Scoring takes 3-5 h. Whether Kaggle scores two submissions in parallel is to be verified with the next pair
   (exp18 submitted while probe #2 is still pending); if sequential, stagger them.
 - Each probe = exactly ONE change vs the public 0.941 pipeline, so the result is interpretable.
