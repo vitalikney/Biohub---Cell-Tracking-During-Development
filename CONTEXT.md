@@ -1,6 +1,6 @@
 # CONTEXT — Biohub Cell Tracking (Kaggle) research project
 
-Living document. Everything needed to continue the work without the chat history. Updated 2026-09-06 18:15.
+Living document. Everything needed to continue the work without the chat history. Updated 2026-09-06 18:30.
 
 ## 1. Goal and constraints
 - Competition: https://www.kaggle.com/competitions/biohub-cell-tracking-during-development — detect nuclei, link them
@@ -238,6 +238,29 @@ validator), friend B (RTX 5070: inference/evaluation/pseudo-labels). Roles, onbo
 
 - 2026-09-06: Friend A launch notebook prepared at `experiments/local_friend_a_exp01_loeo_scratch/`; dry preflight
   passed on RTX 5070 Ti/CUDA 12.8, full 5-epoch training has not been run yet.
+
+## 14. Operational state for session resume (2026-09-06 18:30) — READ THIS FIRST AFTER A CONTEXT RESET
+Pending right now:
+- LB probe #4 = kernel `vitaliineibauer/biohub-exp19-pub941-det095` v1 (public pipeline, det 0.95), submitted 17:10 MSK,
+  scoring ~6 h -> expect ~23:00 MSK. Check: `python -m kaggle competitions submissions biohub-cell-tracking-during-development`.
+- exp20 = kernel `vitaliineibauer/biohub-exp20-ft03b-secdet05` v1 (exp06 base + SECONDARY_DETECTION_WEIGHT 0.5, validator
+  off) has COMPLETED and is ready to submit as the first probe after the daily reset (~03:00 MSK; today 4 used, 1 reserve).
+  Submit: `python -m kaggle competitions submit biohub-cell-tracking-during-development -k vitaliineibauer/biohub-exp20-ft03b-secdet05 -v 1 -f submission.csv -m "probe 5: exp06 base, secondary det weight 0.5"`.
+- Next probe candidates (one knob each, on the exp06 base 0.945): secondary := fine-tuned weights (exp08 or exp16 in the
+  dataset); OUTPUT_MIN_TRACK_LEN 6 -> 4; combination of positives per §11a rule. Build them like exp18-exp20: copy
+  `experiments/exp06_pipeline_ft03B/exp06-pipeline-ft03B.ipynb`, edit the env line in the config/setup cell (mind that the
+  setup cell overrides some env vars, e.g. SECONDARY_DETECTION_WEIGHT), set BIOHUB_VALIDATOR_ENABLE=0, push with a new
+  kernel id, wait COMPLETE (~25 min), then submit that kernel version.
+- Friend A is training the from-scratch 6bba validator on his RTX 5070 Ti (branch merged; folder
+  `experiments/local_friend_a_exp01_loeo_scratch/`); friend B ports the public pipeline locally (TEAM.md).
+How-tos:
+- Kernel status: `python -m kaggle kernels status <id>`; outputs: `python -m kaggle kernels output <id> -p <dir>` (retry on
+  timeouts; large outputs are slow — keep notebooks' outputs small).
+- Local scoring: `python tools/score_geffs.py <dir of .geff>`; post-proc: `tools/postproc.py`; error split: `tools/errdecomp.py`.
+- Weights dataset upload: see TEAM.md §Onboarding 3. Commit as the user (no Claude co-author), push to origin main.
+- GPU quota this week: ≈20/30 h used (resets in ~5 days); only probe-prep kernels (15-40 min each) from now on.
+Numbers to remember: LB probes 0.899 (clean v2.1) / 0.945 (public + exp03B primary, rank 46) / 0.941 (ILP div 0.9);
+the user's original 0.933; public notebook 0.941; LB top 0.970.
 
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
