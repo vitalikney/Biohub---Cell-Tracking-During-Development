@@ -256,6 +256,12 @@ Pending right now:
   validator off), submitted 17:57 MSK, id 56057989, expect ~00:00 MSK. Today's 5 slots are used; next slots ~03:00 MSK.
   Submit template: `python -m kaggle competitions submit biohub-cell-tracking-during-development -k <kernel> -v 1 -f submission.csv -m "probe N: ..."`.
 - Rule (user): when a probe-ready kernel is COMPLETE and a daily slot is free, submit immediately, do not wait.
+- Background watches (session-local, restart after a session restart; user 19:40): (a) LB submissions until #4/#5 are
+  scored; (b) GitHub branch heads every 30 min -> on a friend's push: review the diff, merge into main, note in CONTEXT;
+  (c) dataset vitaliineibauer/biohub-ft-weights file list every 30 min -> on new weights: add a RESULTS row, and if the
+  friend's validator says they beat exp03B, one LB probe with them as primary (make_probe: edit BIOHUB_PRIMARY_OVERRIDE).
+  Dataset state 2026-09-06 19:40: exp03B/, exp08/ only. Friend A's branch merged into main at b3786d7 (Windows fixes,
+  notebook moved to repo root; full 5-epoch run not started yet).
 - Decision tree after probes #4 (det 0.95) and #5 (secdet 0.5) are scored (user 18:20: do not pre-build, combine
   positives): both >= 0.947 -> next probe = combination `exp23_ft03B_det095_secdet05`; exactly one positive -> it becomes
   the base (add its env to every later build) and the next single knobs go on top; none -> next knobs on the exp06 base.
