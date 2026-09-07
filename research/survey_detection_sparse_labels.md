@@ -54,3 +54,38 @@ Baseline detector: TemporalUNet3D, BCE heatmap on GT points (negatives weighted 
 3. HOCT-style linking (#14, #15).
 4. TTA + SWA + small ensemble on heatmaps (#17, #5).
 5. In-domain 3D-CNN MAE self-pretraining (#10, #7, #9).
+
+## Update 2026-09-07 04:20 — second literature pass (only what is NOT already in the queue)
+Searched: transformer/GNN linking 2025-26, sparse-point detection losses, division detection, test-time adaptation,
+foundation models for video tracking, dense pseudo-labels / distillation. Most hits are already covered (Trackastra,
+HOCT, linajea, Ultrack, ELEPHANT, PU-learning, MAE pretraining, SAM-family). Two ideas are new and cheap enough:
+
+**N1. Dense self-distillation from our own pipeline ("Dense Teacher" / noisy-student).**
+Dense Teacher (Zhou et al., ECCV 2022, https://dl.acm.org/doi/abs/10.1007/978-3-031-20077-9_3) and DTG-SSOD (NeurIPS 2022)
+show that dense pseudo-labels from a teacher beat sparse thresholded ones for semi-supervised detection; MUSE (arXiv
+2511.05170) applies dense self-distillation to nucleus detection. For us: the public pipeline already detects ~98% of
+GT nuclei; its NMS'd detections on all 199 train videos are dense point labels (plus GT points, GT wins on conflicts).
+Training a from-scratch student on dense labels removes the "unlabelled nucleus = negative" failure that makes sparse-GT
+detectors peak at epoch 5-10 (discussion 738773; hengck23 trains 200 epochs on dense FOCUS-3D labels without
+overfitting). Cheaper than queue item 8 (no FOCUS-3D/Zebrahub): predictions for 199 videos = ~1.5 GPU-h on Kaggle 2xT4
+or ~3-4 h on a 5070. Variant: distil the teacher's soft heatmap instead of points (needs the teacher on the fly).
+Honest check: LOEO (teacher pseudo-labels on 6bba only -> student -> score on 44b6). Risk: the student inherits the
+teacher's misses on faint nuclei; mitigate by keeping GT points and by using the dual-seed blend as teacher.
+
+**N2. Test-time adaptation on the hidden test embryos (DARTH-style).**
+DARTH (Segu et al., ICCV 2023, https://arxiv.org/abs/2310.01926): adapt a detector on unlabelled target video with a
+detection-consistency loss under photometric augmentation, teacher = EMA of the student; +association via patch
+contrastive loss. Zero labels, so it is legal under the "no hand labelling of test data" rule. For us: a few hundred
+fine-tune iterations of the primary detector on each test embryo inside the submission kernel (~30 min per embryo on
+2xT4, fits the 12 h limit), with the node-count guard (stop if N_pred grows > x%). This is the only idea that attacks
+the actual failure mode (weights that generalise poorly to unseen embryos, 0.99 local vs 0.899 LB). Honest check: LOEO
+(adapt the 6bba-trained model on 44b6 images without labels, score on 44b6 GT). Simplest first version: self-training
+with the model's own confident detections (pseudo-labels) + photometric aug, no contrastive head.
+
+Seen and rejected / already covered:
+- SAM2 zero-shot cell tracking (arXiv 2509.09943): unsupervised, competitive on CTC, but heavy for 3D+t at Kaggle
+  time budget and far below a trained detector here; at most a diversity source later.
+- NuDetect conformal thresholding (2025): principled per-dataset threshold, but needs a labelled calibration set
+  from the target domain; our threshold is already LB-tuned (0.965 vs 0.95 = neutral).
+- CTransformer (arXiv 2512.14472): membrane tracking, not nuclei.
+- 3D nnU-Net cardiomyocyte tracking (2026): segmentation-first pipeline, no new linking idea.

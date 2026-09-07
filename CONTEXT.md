@@ -167,6 +167,8 @@ Order of execution (GPU queue: max 2 kernels; CPU work in parallel):
 | 14 | In-domain 3D-CNN MAE pretraining of the UNet encoder (Wald 2025, CANVAS weighting) | later | 1-2 GPU-h, gain +1-3% expected, after 5/8 |
 | 15 | Frozen/duplicated frames (discussion 724283/729082) | scanned: only 6bba, 114/128 videos, ~8 frames each (947 total, 7%) | identical input => identical detections, zero-displacement links; no rule needed. Test embryos may have it too (`$TEMP/frozen_frames.json`) |
 | 16 | Synthetic data (Freitas CC0, 18.5 GB) for division model pretraining | later | only if item 2 is data-starved |
+| 17 | Dense self-distillation: train the from-scratch model on the public pipeline's NMS'd detections of all 199 videos + GT points (Dense Teacher / MUSE; survey A update 2026-09-07) | NEW 2026-09-07, proposed to friend A | teacher predictions ~1.5 GPU-h (Kaggle) or 3-4 h on a 5070; then the all-199 scratch run on dense labels; LOEO check first (6bba teacher labels -> 44b6 score) |
+| 18 | Test-time adaptation of the detector on the hidden test embryos (DARTH-style self-training/consistency, no labels; survey A update 2026-09-07) | NEW 2026-09-07 | ~1 day engineering + LOEO check (adapt on 44b6 images, score on 44b6 GT); then one LB probe; node-count guard mandatory |
 
 
 ## 11. LB probe post-mortem (2026-09-06 06:40) and revised strategy — APPROVED by the user 07:00
@@ -280,6 +282,9 @@ Pending right now:
   2 weeks with no gain -> synthetic dataset removed from friend B's queue; (c) sparse-GT detectors peak at epoch 5-10 and
   then over-detect -> friend A's 30-epoch run must keep the best official-metric checkpoint and log N_pred/N_est per
   epoch; if the peak is early, go to all-199 data instead of more epochs.
+- Literature pass 2026-09-07 04:20 (research/survey_detection_sparse_labels.md, "Update 2026-09-07"): two new ideas added
+  to §10a as items 17 (dense self-distillation from our own pipeline -> friend A's all-199 run) and 18 (test-time
+  adaptation on the test embryos, DARTH-style). Both get an honest LOEO check before any LB probe.
   Submit template: `python -m kaggle competitions submit biohub-cell-tracking-during-development -k <kernel> -v 1 -f submission.csv -m "probe N: ..."`.
 - Rule (user): when a probe-ready kernel is COMPLETE and a daily slot is free, submit immediately, do not wait.
 - Background watch (session-local, restart after a session restart): ONLY the LB submissions watch until #4/#5 are
