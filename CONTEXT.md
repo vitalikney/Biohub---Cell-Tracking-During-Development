@@ -264,6 +264,16 @@ Pending right now:
 - LB probes #6 (exp21, min track len 4, id 56065251) and #7 (exp22, secondary := exp08, id 56065255) submitted
   2026-09-07 03:08 MSK, expect scores ~09:00 MSK. 3 daily slots left. After scoring: both >= +0.002 -> combination
   probe; else next single knobs (gap-closing radius, motion-relink radius, DeepCenter veto threshold) via make_probe.
+- CONTINGENCY PLAN if #6/#7 are flat (discussed with the user 2026-09-07 03:30): post-proc knobs are saturated (3 flat
+  probes; LB noise +-0.002; the only real gain, +0.004, came from weights). (1) Today's 3 slots: two DIRECTION probes
+  only - OUTPUT_MIN_TRACK_LEN 8 (if 4 was negative; fewer nodes = metric bonus) and gap-closing radius; 3rd slot reserve.
+  Then STOP single post-proc knobs. (2) Model-side probes only, each expected >= +0.003: exp23 = fine-tune the pilkwang
+  seed314159 SECONDARY with the exp03B recipe (1200 it, ~30 min GPU) and probe it as secondary [note: probe #7's exp08 is a
+  fine-tune of the same PRIMARY as exp03B -> little diversity, so a negative #7 does not settle this]; seed ensemble
+  (exp03B + exp16) as primary if the public notebook's inference can average logits (check first); friend A's all-199
+  scratch model as secondary = biggest lever (independent model = diversity in the blend). (3) Escape the 5/day limit:
+  friend A's validator at >= 0.85 + friend B's local port of the post-processing -> sweep knobs locally, LB confirms.
+  (4) From 26 Sep: two final submissions = best LB config + one conservative variant.
   Submit template: `python -m kaggle competitions submit biohub-cell-tracking-during-development -k <kernel> -v 1 -f submission.csv -m "probe N: ..."`.
 - Rule (user): when a probe-ready kernel is COMPLETE and a daily slot is free, submit immediately, do not wait.
 - Background watch (session-local, restart after a session restart): ONLY the LB submissions watch until #4/#5 are
