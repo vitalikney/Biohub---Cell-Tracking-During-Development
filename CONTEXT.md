@@ -223,7 +223,8 @@ ideas first, honest LOEO check before any LB probe, one change per probe, differ
   0.945 = -0.002, NEGATIVE, dropped; secondary weight stays 0.8). Base for stacking stays exp06 (0.945).
   #6 2026-09-07 03:08 exp21 (exp06 base, OUTPUT_MIN_TRACK_LEN 4, validator off) = **0.943** (scored ~10:00; -0.002, negative:
   more short tracks = more nodes, no gain). Direction => try min len 8 (exp25, probe #9).
-  #8 2026-09-07 10:12 exp24 (exp06 base, GAP_CLOSE_UM 6.5, validator off) = pending (id 56071497). 2 slots left today.
+  #8 2026-09-07 10:12 exp24 (exp06 base, GAP_CLOSE_UM 6.5, validator off) = pending (id 56071497).
+  #9 2026-09-07 11:07 exp25 (exp06 base, OUTPUT_MIN_TRACK_LEN 8, validator off) = pending (id 56072510). 1 slot left today (reserve).
   #7 2026-09-07 03:08 exp22 (exp06 base, secondary weights := exp08, validator off) = **0.929** (scored ~09:00; -0.016 vs 0.945,
   STRONGLY NEGATIVE, dropped). Lesson: the blend needs a DIFFERENT model as secondary; exp08 is a fine-tune of the same
   pilkwang primary as exp03B (no diversity) and the public post-proc thresholds are tuned for the seed314159 model. 3 slots left today.
@@ -291,7 +292,8 @@ Pending right now:
 - LB probe #7 (exp22, secondary := exp08, id 56065255) = 0.929 (-0.016, dropped). Probe #6 (exp21, min track len 4,
   id 56065251) = 0.943 (-0.002, dropped). exp25 = min track len 8 built and pushed ~10:05 as probe #9 candidate. 3 daily slots left.
 - exp24 = exp06 base + BIOHUB_GAP_CLOSE_UM 5.0 -> 6.5 (direction probe) kernel `vitaliineibauer/biohub-exp24-ft03b-gap65`
-  pushed 2026-09-07 ~09:20 MSK; SUBMITTED as probe #8 at 10:12 MSK (id 56071497, pending). exp25 (min len 8) kernel running -> probe #9. After probe #6: if min len 4 is
+  pushed 2026-09-07 ~09:20 MSK; SUBMITTED as probe #8 at 10:12 MSK (id 56071497, pending). exp25 (min len 8) SUBMITTED as probe #9 at 11:07 MSK
+  (id 56072510, pending). These are the LAST post-proc probes; next = exp23 training (after #8/#9 results, per user), LB only after friend B's check. After probe #6: if min len 4 is
   negative -> build exp25 with BIOHUB_OUTPUT_MIN_TRACK_LEN=8 (probe #9); if positive -> it becomes part of the base.
   Then post-proc probes STOP (see §10a B1) and the queue moves to B2-B5 (model side). After scoring: both >= +0.002 -> combination
   probe; else next single knobs (gap-closing radius, motion-relink radius, DeepCenter veto threshold) via make_probe.
