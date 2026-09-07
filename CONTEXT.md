@@ -98,16 +98,8 @@ Radius 10 um slightly worse, 12 um worse. exp10 notebook updated to v2 (BIOHUB_P
 - Differences < 0.005 on hold12 are noise; divisions on 14 GT events are very noisy.
 - Rule-based divisions have hurt LB for others while raising CV: validate division precision under LOEO.
 
-## 8. Ideas backlog (from papers + discussions), ranked
-1. Dense pseudo-labels for detection: FOCUS-3D instance segmentation / Zebrahub (allowed) -> train point detector
-   with near-100% recall of annotated nodes and N_pred <= N_est; two-head domain shift trick (FOCUS zyx + delta).
-2. Longer temporal window (3-6) for the link transformer with dense pseudo-tracks (Trackastra/HOCT); association
-   consistency across views for ambiguous parents.
-3. Division ranker (small MLP on parent/daughter geometry + features), trained on 151 real + synthetic divisions
-   (José Freitas CC0 dataset), time-reversed clips as negatives.
-4. Parent-offset / flow head (linajea, ELEPHANT) as motion prior for linking and gap closing.
-5. Node-count control: learn to predict N_est-like density; drop low-confidence nodes not on tracks.
-6. TTA/SWA/seed ensembles for the detector (merge detections, never union without dedup).
+## 8. Ideas backlog
+Merged into §10a (single prioritised list with tried/queued/parked status). Do not maintain a second list here.
 
 ## 10. Next steps (checklist; re-check after every CONTEXT update, run independent items in parallel)
 - [x] exp08 full epoch: worse (0.9539). Keep exp03B. Consider shorter (600 it) / lower-LR run and 2-3 seed ensemble later.
@@ -148,28 +140,55 @@ Order of execution (GPU queue: max 2 kernels; CPU work in parallel):
 7. Model-selection noise: fine-tune seeds span 0.950-0.958 on hold12; hold12 cannot resolve < 0.01 model effects.
    Use divset36+hold12 (48 videos) for model comparisons; post-proc/ILP effects are robust (confirmed on LOEO).
 
-### 10a. Ideas from papers + discussions: implementation queue (priority order; cost = GPU-h per experiment)
-| # | idea (source) | status | plan / cost |
-|---|---|---|---|
-| 1 | Post-hoc divisions + gap closing (public notebooks, Kaiser MHT delayed decisions) | done, +0.015 hold12 | robustness check on exp09 (92 div) and LOEO (exp11) |
-| 2 | Division ranker on candidate forks (Zyss 2025, Nishimura 2023) | prototype `tools/divranker.py` (15 geometry/track features, grouped-CV GBM) | hold12 too small: 4 positives / 9898 candidates, only 4/14 GT divisions reachable as (parent, child, orphan start) => tried 'steal' of weakly linked daughters (edge_prob<0.6-0.8): no gain (0.971 vs 0.9728); of 14 GT divisions: 7 reachable as orphan-start, 5 second daughter linked elsewhere (prob 0.54-0.65), 1 parent without successors, 1 daughter undetected. On divset36 (92 GT div): only 32 reachable as orphan-start candidates (35% candidate recall) among 30.5k candidates; GBM ranker top-200 holds 8 TP vs geometric rule 12 TP in 5.2k forks. Bottleneck = candidate recall (ILP links the 2nd daughter elsewhere) => exp12: ILP division weight sweep (1.2 -> 0.6 / 0.3) on divset36+hold12 |
-| 3 | Velocity-projected gap closing (EMA velocity, discussion 739570; Ultrack flow compensation) | tried: neutral (0.9619 -> 0.9621 on hold12) | implemented in tools/postproc.py (`gap_velocity`); re-check on exp09/LOEO only |
-| 4 | Metric-aware ILP cost calibration (appearance/disappearance/division, edge power transform) (Hirsch 2022, Ultrack) | todo | GPU 0.5 h: predict once per setting on hold12; or cache candidate graphs |
-| 5 | Detector: nnPU / ignore-unlabelled loss instead of neg_weight BCE (Zhou 2025, Zhao 2023, ELEPHANT); learnable neighbourhood-softmax peak loss (hengck23) | todo | patch train_patches.py; 45 min fine-tune each; early-stop on real metric (overfit after ~10 epochs) |
-| 6 | Gaussian/anisotropic heatmap targets + NMS matched to 7 um (PAC-MAP, nnLandmark) | tried (exp04) | failed at fixed threshold; retry with threshold re-sweep on exp04 weights (0.5 h) |
-| 7 | Detector TTA (8 flips, in-plane rotations) + seed/SWA ensemble with dedup merge (Moshkov 2020, discussion 733877) | todo | predict-time only; +0.5 h per variant; never union without merge |
-| 8 | Dense pseudo-labels: FOCUS-3D centroids / open-source trackers (hengck23), Zebrahub crops+tracks (allowed) | todo, feasibility | Zebrahub bucket public.czbiohub.org/royerlab/zebrahub/imaging/single-objective/: full videos are TB-scale (ZSNS001: 791x448x2174x2423 uint16 ≈ 3.7 TB raw, voxel 1.24x0.439x0.439 um, zarr v2 chunks 1x128x362x362), tracks CSVs 0.2-0.85 GB each. Plan: download tracks.csv + HTTP-read ~50 crops 64x256x256 around tracks, resample to our voxel, measure recall vs our GT |
-| 9 | Longer temporal window 3-6 for the linker (Trackastra, HOCT) | tried (exp05 window 3: worse) | revisit only with dense pseudo-tracks (item 8) |
-| 10 | Parent-offset / movement-vector head (linajea, ELEPHANT, MPM) as edge feature + gap-closing prior | todo | extra 3-channel head + loss at annotated nodes; 1 h fine-tune |
-| 11 | Edge-centric transformer with line-distance attention bias, two-pass ILP with learned long-range edges (HOCT) | todo, large | after 8/10; ~2-3 GPU-h |
-| 12 | Node-count control: predict <= N_est (density head or confidence pruning off-track nodes) (hengck23, metric) | analysed: no free lunch | hold12: components of 4-6 nodes = 11.7% of nodes but 1.8% of GT-matched nodes; 7-15 = 29% / 9%. Dropping short components gives bonus ≈ loss (min-len 6: 0.9610 vs 0.9619). Would need a confidence signal, not length |
-| 13 | Association consistency: examine ambiguous parent links from multiple views/models, use extra view only where they disagree (FOYSAL 730924) | todo | needs 2 models: exp03B + exp08 -> compare edge_prob disagreement |
-| 14 | In-domain 3D-CNN MAE pretraining of the UNet encoder (Wald 2025, CANVAS weighting) | later | 1-2 GPU-h, gain +1-3% expected, after 5/8 |
-| 15 | Frozen/duplicated frames (discussion 724283/729082) | scanned: only 6bba, 114/128 videos, ~8 frames each (947 total, 7%) | identical input => identical detections, zero-displacement links; no rule needed. Test embryos may have it too (`$TEMP/frozen_frames.json`) |
-| 16 | Synthetic data (Freitas CC0, 18.5 GB) for division model pretraining | later | only if item 2 is data-starved |
-| 17 | Dense self-distillation: train the from-scratch model on the public pipeline's NMS'd detections of all 199 videos + GT points (Dense Teacher / MUSE; survey A update 2026-09-07) | NEW 2026-09-07, proposed to friend A | teacher predictions ~1.5 GPU-h (Kaggle) or 3-4 h on a 5070; then the all-199 scratch run on dense labels; LOEO check first (6bba teacher labels -> 44b6 score) |
-| 18 | Test-time adaptation of the detector on the hidden test embryos (DARTH-style self-training/consistency, no labels; survey A update 2026-09-07) | NEW 2026-09-07 | ~1 day engineering + LOEO check (adapt on 44b6 images, score on 44b6 GT); then one LB probe; node-count guard mandatory |
+### 10a. Ideas queue — prioritised, with what was already tried (rewritten 2026-09-07 04:40)
+Ordering rule (from §11 + discussions 2026-09-07): the only LB gain so far came from WEIGHTS (+0.004); post-processing
+and linker knobs are saturated on the public pipeline and local linking gains do not transfer to LB. So: model/detection
+ideas first, honest LOEO check before any LB probe, one change per probe, differences < 0.002 = noise.
 
+**A. Already tried (do not repeat without a new angle)**
+| # | idea | where | result |
+|---|---|---|---|
+| A1 | primary weights := our fine-tune exp03B (1200 it, lr 5e-5) | LB probe 2 (exp06) | **+0.004 (0.941 -> 0.945), adopted as base** |
+| A2 | ILP division weight 1.2 -> 0.9 | LB probe 3 | 0.941, neutral, dropped |
+| A3 | detection threshold 0.965 -> 0.95 | LB probe 4 | 0.940, neutral, dropped |
+| A4 | secondary detection weight 0.8 -> 0.5 | LB probe 5 | 0.943, -0.002, dropped |
+| A5 | clean pipeline (exp03B + ILP div 0.6 + gap 5 + direct 8, no public post-proc) | LB probe 1 (exp10) | 0.899 vs local 0.990: leaky validation; public heuristics worth +0.046 on unseen embryos |
+| A6 | post-hoc divisions + gap closing (item 1 old numbering) | local hold12/divset36 | +0.015 local; on the public pipeline direct linking finds 0 pairs, divisions 1 TP / 31 FP on the honest validator -> keep DIV_PARENT_UM=0 |
+| A7 | velocity-projected gap closing (discussion 739570) | local | neutral (0.9619 -> 0.9621) |
+| A8 | division ranker on candidate forks (tools/divranker.py) | local divset36 | candidate recall 35% is the bottleneck; GBM top-200 = 8 TP vs rule 12 TP; parked |
+| A9 | ILP div weight 0.6 / disappearance-appearance sweep (exp12/exp13) | local 48 videos | v2.1 config; does not transfer (A5) |
+| A10 | gauss-focal heatmap loss (exp04) | local | 0.909 vs 0.958: calibration shifts; only worth retrying with a threshold re-sweep |
+| A11 | linker window 3 (exp05) | local | 0.953 vs 0.958, worse; revisit only with dense pseudo-tracks |
+| A12 | full-epoch fine-tune 2265 it (exp08), 600 it (exp17), seed 7 (exp16) | local | 0.954 / 0.956 / 0.950 vs 0.958: 1200 it seed 42 stays; seed noise +-0.005 |
+| A13 | intensity augmentation for low-contrast videos (exp14) | local | 0.935, worse; milder ranges only if revisited |
+| A14 | inference ensemble exp03B+exp08 (exp15) | local | 0.971 vs 0.982 raw, worse (both from the same pilkwang primary -> no diversity) |
+| A15 | node-count control by dropping short components | local analysis | bonus = loss (0.9610 vs 0.9619); needs a confidence signal, not length; LB direction probe pending (min len 4 / 8) |
+| A16 | frozen/duplicated frames | scan | only 6bba, 7% of frames; identical input => identical detections; no rule needed |
+| A17 | from-scratch 6bba model, 5 epochs (friend A) | honest LOEO 44b6 | 0.671 raw / 0.689 pp: undertrained; validator not usable yet |
+
+**B. Queue, priority order**
+| P | # | idea (source) | owner | next step / cost | gate before LB |
+|---|---|---|---|---|---|
+| P1 | B1 | LB direction probes: OUTPUT_MIN_TRACK_LEN 4 (probe 6, pending) and secondary := exp08 (probe 7, pending); then min len 8 and gap-closing radius as the LAST post-proc probes | Vitalii | 25 min kernel each | none (LB is the test) |
+| P1 | B2 | fine-tune the pilkwang seed314159 SECONDARY with the exp03B recipe (exp23) -> probe as secondary (true diversity: different init than exp03B/exp08) | Vitalii | 30 min train + 25 min kernel | leaky-val sanity only |
+| P1 | B3 (was 17) | dense self-distillation: teacher = public pipeline detections on all 199 videos + GT points; student = from-scratch model (Dense Teacher / MUSE) | friend A (+ friend B for teacher predictions) | teacher preds 1.5 GPU-h Kaggle or 3-4 h on a 5070; then the all-199 scratch run | LOEO: 6bba teacher labels -> score on 44b6 >= exp03B raw 0.88 |
+| P1 | B4 | friend A's all-199 scratch model (dense labels if B3 ready, else sparse with official-metric early stopping every 5 epochs) as SECONDARY in the blend | friend A -> Vitalii | 1-2 days on 5070 Ti + 1 probe | beats pilkwang secondary on LOEO 44b6 |
+| P1 | B5 (was 18) | test-time adaptation of the primary detector on the test embryos (DARTH-style self-training + photometric consistency, EMA teacher, node-count guard) | Vitalii | ~1 day engineering; ~30 min GPU per embryo inside the submission kernel | LOEO: adapt on 44b6 images without labels, score on 44b6 GT >= +0.005 |
+| P2 | B6 (was 7) | detector TTA / seed-ensemble as primary with dedup merge (exp03B + exp16 + pilkwang) | Vitalii | check how the public notebook runs inference first; +0.5 h | LOEO |
+| P2 | B7 (was 5) | ignore-unlabelled / nnPU detection loss, neighbourhood-softmax peak loss | friend A | patch train_patches.py; 45 min per fine-tune | LOEO |
+| P2 | B8 (was 10) | parent-offset / movement-vector head as edge feature + gap-closing prior (linajea, ELEPHANT) | friend A | 1 h fine-tune + linker feature | LOEO |
+| P2 | B9 (was 4, 13) | metric-aware ILP cost calibration; association consistency between two models where they disagree | friend B (after the local port) | CPU sweeps on cached candidate graphs | LOEO (linker gains transfer poorly - be strict) |
+| P2 | B10 (was 12) | node-count control with a confidence signal (density head or off-track low-confidence pruning) | friend B | CPU on cached predictions | LOEO + LB direction probes (B1) |
+| P3 | B11 (was 8) | dense pseudo-labels from FOCUS-3D / Zebrahub (hengck23; no LB proof yet) | friend B | 2-3 days; only if B3 fails or saturates | LOEO |
+| P3 | B12 (was 9, 11) | longer linker window 3-6 and HOCT-style edge-centric transformer | friend A | needs dense tracks (B3/B11); 2-3 GPU-h | LOEO |
+| P3 | B13 (was 14) | in-domain MAE pretraining of the UNet encoder | friend A | 1-2 GPU-h; +1-3% expected | LOEO |
+| P3 | B14 (was 6) | gauss/anisotropic heatmap targets, retry with threshold re-sweep on exp04 weights | anyone | 0.5 h | LOEO |
+| P3 | B15 (was 2) | division ranker with more candidates (lower ILP div cost) | parked | data-starved (151 GT divisions) | - |
+
+**C. Dropped**
+- Synthetic data (Freitas CC0; item 16): 1st place tried synthetic volumes 2 weeks, no gain (discussion 739731).
+- More post-proc knobs beyond B1 (motion-relink radius, DeepCenter veto, etc.): saturated, noise-level.
+- Hand labelling of test data: forbidden; SAM2 zero-shot tracking: too heavy/weak for 3D+t here.
 
 ## 11. LB probe post-mortem (2026-09-06 06:40) and revised strategy — APPROVED by the user 07:00
 - Clean pipeline v2.1: hold12 0.9902, LOEO 0.906, **LB 0.899**. The public 0.941 pipeline scores 0.933-0.941 on LB.
