@@ -7,3 +7,5 @@ experiments/**/secondary_seed_weights/
 experiments/**/train_repo/
 __pycache__/
 *.pyc
+experiments/**/predictions.zip
+experiments/**/*.pth

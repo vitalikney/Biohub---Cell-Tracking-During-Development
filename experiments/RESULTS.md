@@ -39,6 +39,7 @@ Caveat: the pretrained pilkwang weights saw ALL train videos, so val4/hold12 are
 | LB probe 7 | exp22 = exp06 base, secondary weights := exp08 fine-tune (id 56065255) | - | **LB 0.929** | ~6 h scoring | -0.016 vs exp06 0.945: strongly negative; exp08 shares init with exp03B (no diversity) and the public post-proc is tuned for the seed314159 secondary; dropped |
 | LB probe 8 | exp24 = exp06 base, GAP_CLOSE_UM 5.0->6.5 (id 56071497) | - | pending | | submitted 2026-09-07 10:12 |
 | LB probe 9 | exp25 = exp06 base, OUTPUT_MIN_TRACK_LEN 6->8 (id 56072510) | - | pending | | submitted 2026-09-07 11:07 |
+| exp23 | fine-tune the pilkwang seed314159 SECONDARY, exp03B recipe (1200 it, batch 8, lr 5e-5, bce, seed 42) | - | hold12 raw A 0.9469 (edge 0.9346, recall 0.982) -> B **0.9551** (edge 0.9409, recall 0.982); leaky sanity only | 50 min | weights in dataset `vitaliineibauer/biohub-ft-weights/exp23`; NOT probed on LB until friend B checks it as secondary in the full public pipeline on LOEO-44b6 (probe 7 lesson) |
 | exp15 | inference ensemble exp03B+exp08 (avg det logits + edge logits), hold12, ILP div 0.6 | - | raw 0.9708 (edge 0.9454, recall 0.984, div 5/24/9) | 20 min | worse than single exp03B raw 0.9820; rejected |
 | exp17 | fine-tune 600 it (exp03B recipe) | - | 0.9556 (edge 0.9418, recall 0.986) | 40 min | within noise of exp03B (1200 it, 0.9575); per-video deltas -0.08..+0.06 |
 | exp16 | fine-tune 1200 it, seed 7 | - | 0.9502 (edge 0.9346, recall 0.972) | 50 min | worse than seed 42 (exp03B 0.9575); seed variance ±0.005 |

@@ -1,0 +1,1 @@
+SCORE A_pretrained {"n": 12.0, "edge_jaccard": 0.9346181299072092, "division_jaccard": 0.0, "division_tp": 0.0, "division_fp": 0.0, "division_fn": 14.0, "node_recall": 0.9821743770138114, "adj_edge_jaccard": 0.9469164111925027, "n_adj": 12.0, "score": 0.9469164111925027}

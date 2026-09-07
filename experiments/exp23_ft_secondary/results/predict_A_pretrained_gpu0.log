@@ -1,0 +1,6 @@
+/usr/local/lib/python3.12/dist-packages/dask/array/image.py:7: FutureWarning: `find_available_plugins` is deprecated since version 0.25 and will be removed in version 0.27. The plugin infrastructure of `skimage.io` is deprecated. Instead, use `imageio` or other I/O packages directly.
+  from skimage.io import imread as sk_imread
+/usr/lib/python3.12/importlib/__init__.py:90: FutureWarning: `reset_plugins` is deprecated since version 0.25 and will be removed in version 0.27. The plugin infrastructure of `skimage.io` is deprecated. Instead, use `imageio` or other I/O packages directly.
+  return _bootstrap._gcd_import(name[level:], package, level)
+Fold 0: 6 datasets | weights=/kaggle/working/train_repo/weights/secondary_init/split_0/edge_predictor_best.pth | device=cuda | window_size=2 | pool_kernel_um=3.0
+Saved 6 predictions to /kaggle/working/train_repo/predictions/unknown/A_pretrained_gpu0/split_0

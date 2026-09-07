@@ -1,0 +1,41 @@
+{
+ "config": {
+  "BIOHUB_FT_EPOCHS": "1",
+  "BIOHUB_FT_MAX_ITERS": "1200",
+  "BIOHUB_FT_EXTRA_FLAGS": "--amp --no-grad-ckpt",
+  "BIOHUB_FT_BATCH": "8",
+  "BIOHUB_FT_LR": "5e-5",
+  "BIOHUB_FT_DET_LOSS": "bce",
+  "BIOHUB_FT_WINDOW": "2",
+  "BIOHUB_FT_DOWNSAMPLE": "1,4,4",
+  "BIOHUB_FT_INIT": "pretrained",
+  "BIOHUB_FT_INIT_DATASET": "biohub-temporal-unet3d-seed314159-v1",
+  "BIOHUB_DET_THRESHOLD": "0.965"
+ },
+ "results": {
+  "A_pretrained": {
+   "n": 12.0,
+   "edge_jaccard": 0.9346181299072092,
+   "division_jaccard": 0.0,
+   "division_tp": 0.0,
+   "division_fp": 0.0,
+   "division_fn": 14.0,
+   "node_recall": 0.9821743770138114,
+   "adj_edge_jaccard": 0.9469164111925027,
+   "n_adj": 12.0,
+   "score": 0.9469164111925027
+  },
+  "B_finetuned": {
+   "n": 12.0,
+   "edge_jaccard": 0.9409149576939624,
+   "division_jaccard": 0.0,
+   "division_tp": 0.0,
+   "division_fp": 0.0,
+   "division_fn": 14.0,
+   "node_recall": 0.9822544104444674,
+   "adj_edge_jaccard": 0.9550653676082855,
+   "n_adj": 12.0,
+   "score": 0.9550653676082855
+  }
+ }
+}
