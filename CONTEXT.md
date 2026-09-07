@@ -309,7 +309,12 @@ Pending right now:
   the last epochs and will stop ~20:00 if no improvement. Stop rule agreed: judge by the OFFICIAL metric on the 12 44b6
   videos at checkpoints 10/15/20/25 (not the training-log recall) + N_pred/N_est per checkpoint; continue only if 25 beats
   20 by >= 0.005; keep the best checkpoint -> dataset `friend_a_exp02/` + RESULTS row. A plateau at 15-20 epochs is the
-  expected sparse-GT behaviour: next gain comes from data (dense teacher labels, all 199 videos), not epochs. Friend B joins ~21:00 MSK today -> the local
+  expected sparse-GT behaviour: next gain comes from data (dense teacher labels, all 199 videos), not epochs.
+- Work split for model experiments (friend A, 18:00): the UNet detector can be trained on ANY GPU and plugged into the joint
+  training with `train_unet_transformer.py --unet-weights <pth>` (linker then trained/fine-tuned on top). So detector
+  experiments (§10a B3 dense labels, B7 ignore-unlabelled loss, B5 test-time adaptation) run in parallel on Kaggle (Vitalii,
+  ~1 h/epoch on T4, a few epochs per run) and on friend A's GPU; only the full 199-video 30+ epoch joint run stays with
+  friend A. Every detector result = UNet weights file + official score on the 12 44b6 videos after a linker fine-tune. Friend B joins ~21:00 MSK today -> the local
   port is realistically tomorrow; exp23's check therefore cannot come from him today. Option on the table: exp26 = exp06
   notebook with validator ON + secondary := exp23 on hold12 (~60 min GPU). DECLINED by the user (13:20): wait for friend B's
   local check, do NOT spend GPU on exp26. Nothing else to launch today; remaining work = log probes #8/#9 when scored. After probe #6: if min len 4 is
