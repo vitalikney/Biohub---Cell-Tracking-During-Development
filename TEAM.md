@@ -7,7 +7,7 @@ Read `CONTEXT.md` first (goal, metric facts, results, plan). This file says who 
 |---|---|---|
 | Vitalii (+ Claude) | Kaggle 2xT4 (30 GPU-h/week) | LB probes (5/day, one change each, log in CONTEXT §11), submission notebooks, Kaggle weights dataset, merging results, CONTEXT/RESULTS upkeep |
 | Friend A (Kaggle: Sasyami) | RTX 5070 Ti 16 GB | **Training.** (1) leak-free validator: train from scratch on 6bba only (split `experiments/_lib/loeo_train6bba_val44b6.json`), 5-10 epochs [running]; (2) then the same recipe from scratch on ALL 199 videos for 30-50 epochs (1-2 days) as a candidate primary/secondary for the public pipeline; (3) model-recipe experiments judged on the validator (sparse-label loss, window 3, augmentation, epochs) |
-| Friend B (Kaggle: gsfatakhov) | RTX 5070 12 GB | **Local public pipeline + honest evaluation.** (1) [start now, CPU] port the public 0.941 notebook's post-processing (cell 14: dual-seed blend, motion relink, gap closing, safe divisions, DeepCenter veto, short-track filter; env knobs BIOHUB_*) into a local script that takes prediction .geff + GT so its ~40 knobs can be tuned locally; (2) when Friend A's checkpoint exists: predictions on the 12 44b6 videos (+ 48-video set), official metric, compare pipeline stages and our post-proc findings honestly; (3) only if time remains: dense pseudo-labels feasibility (FOCUS-3D first with stop criteria; Zebrahub only as a one-day fallback; synthetic volumes dropped - 1st place found no gain) — est. 2-3 days on the 5070 |
+| Friend B (Kaggle: gsfatakhov) | RTX 5070 12 GB | **Local public pipeline + honest evaluation.** (1) [start now, CPU] port the public 0.941 notebook's post-processing (cell 14: dual-seed blend, motion relink, gap closing, safe divisions, DeepCenter veto, short-track filter; env knobs BIOHUB_*) into a local script that takes prediction .geff + GT so its ~40 knobs can be tuned locally (see 'Friend B start kit' below for the exact steps and the order of work after it); (2) when Friend A's checkpoint exists: predictions on the 12 44b6 videos (+ 48-video set), official metric, compare pipeline stages and our post-proc findings honestly; (3) only if time remains: dense pseudo-labels feasibility (FOCUS-3D first with stop criteria; Zebrahub only as a one-day fallback; synthetic volumes dropped - 1st place found no gain) — est. 2-3 days on the 5070 |
 
 ## Onboarding (local machine)
 1. `pip install kaggle` and put your `kaggle.json` in `~/.kaggle/`. Download the data:
@@ -53,6 +53,27 @@ Goal: run the public 0.941 pipeline locally on the 12 LOEO 44b6 videos and expos
    raw ILP / +relink / +gap / +divisions / +veto / +short-track filter on the 12 videos with exp03B primary.
 5. Expected cost on a 5070: GPU stages ~30-40 min for 12 videos (two UNets + DeepCenter + ILP), then each knob sweep
    is minutes on CPU. First check request: exp23 (fine-tuned seed314159 secondary) vs the pilkwang secondary.
+
+**Friend B — order of work after the port (from CONTEXT §10a; report each result as a RESULTS.md row + short CONTEXT note):**
+1. [now] The port itself (steps 1-5 above). Post the stage table for the 12 44b6 videos with exp03B primary.
+2. [as soon as Vitalii uploads `exp23/` to the weights dataset] Check exp23 (fine-tuned seed314159) as SECONDARY vs the
+   pilkwang secondary in the full pipeline on the 12 videos. Verdict >= +0.003 -> Vitalii probes it on the LB; else dropped.
+3. [next] Teacher predictions for dense self-distillation (§10a B3): run the public pipeline's DETECTION stage (dual-seed
+   blend after NMS, before linking) on all 126 6bba train videos and save the point lists (t, z, y, x, score) per video;
+   ~3-4 h on the 5070. Hand them to Friend A (dataset subfolder `teacher_6bba/` or a zip).
+4. [then, CPU] Knob sweeps on the cached 12-video predictions: ILP cost calibration and association consistency between two
+   models (§10a B9), node-count control with a confidence signal (§10a B10). Be strict: linking gains rarely transfer to LB.
+5. [only if 3 fails or saturates] FOCUS-3D dense labels feasibility with stop criteria (§10a B11). Synthetic data is dropped.
+
+**Friend A — order of work (from CONTEXT §10a):**
+1. [now] Same 6bba scratch recipe to 30 epochs, official metric every 5 epochs, keep the best checkpoint, log N_pred/N_est
+   per epoch (sparse-GT detectors peak at epoch 5-10 and then over-detect). Upload the best checkpoint to the weights dataset
+   as `friend_a_exp02/` when the score on 44b6 passes ~0.85.
+2. [when teacher points from Friend B exist, else with sparse GT] From-scratch on ALL 199 videos on dense labels (teacher
+   points + GT, GT wins on conflicts), 30-50 epochs, official-metric early stopping on the 12 44b6 videos (leaky once 44b6
+   is in the training set -> use the LOEO run from step 1 as the honest reference). Candidate SECONDARY for the blend (§10a B4).
+3. [after 2] Recipe experiments judged on the honest validator: ignore-unlabelled / nnPU loss (B7), parent-offset head (B8),
+   MAE pretraining (B13), longer window only with dense tracks (B12).
 
 ## Rules
 - One experiment = one folder `experiments/local_<name>_expNN_<slug>/` with the command line / config and a results JSON; one row in `experiments/RESULTS.md` (state the video set: hold12 / divset36 / 48 / LOEO-44b6 / LB).
