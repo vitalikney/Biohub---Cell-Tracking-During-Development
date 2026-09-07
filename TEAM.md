@@ -65,15 +65,21 @@ Goal: run the public 0.941 pipeline locally on the 12 LOEO 44b6 videos and expos
    models (§10a B9), node-count control with a confidence signal (§10a B10). Be strict: linking gains rarely transfer to LB.
 5. [only if 3 fails or saturates] FOCUS-3D dense labels feasibility with stop criteria (§10a B11). Synthetic data is dropped.
 
-**Friend A — order of work (from CONTEXT §10a):**
-1. [now] Same 6bba scratch recipe to 30 epochs, official metric every 5 epochs, keep the best checkpoint, log N_pred/N_est
-   per epoch (sparse-GT detectors peak at epoch 5-10 and then over-detect). Upload the best checkpoint to the weights dataset
-   as `friend_a_exp02/` when the score on 44b6 passes ~0.85.
-2. [when teacher points from Friend B exist, else with sparse GT] From-scratch on ALL 199 videos on dense labels (teacher
-   points + GT, GT wins on conflicts), 30-50 epochs, official-metric early stopping on the 12 44b6 videos (leaky once 44b6
-   is in the training set -> use the LOEO run from step 1 as the honest reference). Candidate SECONDARY for the blend (§10a B4).
-3. [after 2] Recipe experiments judged on the honest validator: ignore-unlabelled / nnPU loss (B7), parent-offset head (B8),
-   MAE pretraining (B13), longer window only with dense tracks (B12).
+**Friend A — order of work (updated 2026-09-07 23:10 after the all-199 epoch-21 checkpoint):**
+1. [tonight] Resume the all-199 run 21 -> 30 (`friend-a-full199-resume-ep21-to30.ipynb`); upload the epoch-30 weights as
+   `friend_a_full199_ep30/`; RESULTS.md row for the run (21 epochs, ~45 min/epoch, crash, leaky monitor - say so).
+2. [2026-09-08 morning] LB probe 10 (secondary := ep21) decides: positive (>= 0.948) -> ep30 as the next probe, then a second
+   seed of the same recipe for a 3-model blend; neutral/negative -> the model is not wrong, its detection calibration
+   differs from the public post-proc thresholds; diagnose locally, not on the LB.
+3. [next GPU job, ~15 h] Honest validator: the 6bba-only scratch recipe to ~20 epochs with `--checkpoint-every 5`, official
+   score per checkpoint on the 12 44b6 videos (`tools/score_geffs.py`), N_pred/N_est per checkpoint. Needed for every
+   later comparison (dense labels, losses, secondary choice) regardless of probe 10.
+4. [when teacher points from Friend B exist] From scratch on all 199 on DENSE labels (teacher detections + GT, GT wins),
+   30 epochs, `--max-detections 0`, checkpoints every 5; the same recipe on 6bba-only for the honest comparison.
+5. [after 4] One recipe change at a time on the honest validator: ignore-unlabelled / nnPU loss (§10a B7), parent-offset
+   head (B8), MAE pretraining (B13); a change goes to the LB only as a swapped secondary/primary after it beats the
+   current model on 44b6 by >= 0.005.
+6. [from ~2026-09-20] Freeze: no new recipes; only re-training the chosen recipe with a second seed for the final blend.
 
 ## Rules
 - One experiment = one folder `experiments/local_<name>_expNN_<slug>/` with the command line / config and a results JSON; one row in `experiments/RESULTS.md` (state the video set: hold12 / divset36 / 48 / LOEO-44b6 / LB).
