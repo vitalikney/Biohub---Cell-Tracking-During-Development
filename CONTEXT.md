@@ -229,6 +229,8 @@ ideas first, honest LOEO check before any LB probe, one change per probe, differ
   gap radius stays 5.0).
   #9 2026-09-07 11:07 exp25 (exp06 base, OUTPUT_MIN_TRACK_LEN 8, validator off) = **0.944** (scored ~18:30; -0.001 = noise,
   dropped; min track len stays 6). POST-PROC PROBES CLOSED: 7 knobs, none >= +0.002; only weights moved the LB. 1 slot left today.
+  #10 2026-09-07 23:58 exp27 (exp06 base, SECONDARY := friend_a_full199_ep21, validator off) = pending (id 56084358).
+  First model-side probe (§10a B4): independent from-scratch model in the blend. Expect ~06:00 MSK 2026-09-08.
   #7 2026-09-07 03:08 exp22 (exp06 base, secondary weights := exp08, validator off) = **0.929** (scored ~09:00; -0.016 vs 0.945,
   STRONGLY NEGATIVE, dropped). Lesson: the blend needs a DIFFERENT model as secondary; exp08 is a fine-tune of the same
   pilkwang primary as exp03B (no diversity) and the public post-proc thresholds are tuned for the seed314159 model. 3 slots left today.
@@ -329,7 +331,7 @@ Pending right now:
   `friend-a-full199-resume-ep21-to30.ipynb`, ~7-8 h, cosine 2.85e-5 -> 1e-5, checkpoint every epoch). No honest local
   score is possible for a full-199 model (it saw 44b6); the only test is the LB. Probe folder READY (not pushed):
   `experiments/exp27_ft03B_sec-friendA21` = exp06 base + SECONDARY := friend_a_full199_ep21 (§10a B4). Awaiting the
-  user's go: 25 min kernel + 1 LB slot (reserve slot tonight or one of tomorrow's 5). Friend B joins ~21:00 MSK today -> the local
+  user's go: GIVEN 23:15 -> kernel pushed, SUBMITTED as probe #10 at 23:58 MSK (id 56084358, pending). Day's slots used; 5 new at 03:00. Friend B joins ~21:00 MSK today -> the local
   port is realistically tomorrow; exp23's check therefore cannot come from him today. Option on the table: exp26 = exp06
   notebook with validator ON + secondary := exp23 on hold12 (~60 min GPU). DECLINED by the user (13:20): wait for friend B's
   local check, do NOT spend GPU on exp26. Nothing else to launch today; remaining work = log probes #8/#9 when scored. After probe #6: if min len 4 is
