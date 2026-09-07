@@ -198,6 +198,8 @@ Order of execution (GPU queue: max 2 kernels; CPU work in parallel):
   det threshold stays 0.965). New base for stacking = exp06 config (0.945).
   #5 17:57 exp20 (exp06 base, SECONDARY_DETECTION_WEIGHT 0.5, validator off) = **0.943** (scored 2026-09-07 00:15; vs base
   0.945 = -0.002, NEGATIVE, dropped; secondary weight stays 0.8). Base for stacking stays exp06 (0.945).
+  #6 2026-09-07 03:08 exp21 (exp06 base, OUTPUT_MIN_TRACK_LEN 4, validator off) = pending (id 56065251).
+  #7 2026-09-07 03:08 exp22 (exp06 base, secondary weights := exp08, validator off) = pending (id 56065255). 3 slots left today.
   Candidates after: det threshold 0.965->0.95; secondary := fine-tuned too (if #2 positive); SECONDARY_DETECTION_WEIGHT 0.8->0.5.
 
 ### 11a. LB-probe protocol (agreed 2026-09-06 10:30)
@@ -259,6 +261,9 @@ Pending right now:
   (neutral, dropped). Check: `python -m kaggle competitions submissions biohub-cell-tracking-during-development`.
 - LB probe #5 = kernel `vitaliineibauer/biohub-exp20-ft03b-secdet05` v1 (exp06 base + SECONDARY_DETECTION_WEIGHT 0.5,
   validator off) = 0.943, scored 2026-09-07 00:15 MSK (negative, dropped). Next slots ~03:00 MSK 2026-09-07.
+- LB probes #6 (exp21, min track len 4, id 56065251) and #7 (exp22, secondary := exp08, id 56065255) submitted
+  2026-09-07 03:08 MSK, expect scores ~09:00 MSK. 3 daily slots left. After scoring: both >= +0.002 -> combination
+  probe; else next single knobs (gap-closing radius, motion-relink radius, DeepCenter veto threshold) via make_probe.
   Submit template: `python -m kaggle competitions submit biohub-cell-tracking-during-development -k <kernel> -v 1 -f submission.csv -m "probe N: ..."`.
 - Rule (user): when a probe-ready kernel is COMPLETE and a daily slot is free, submit immediately, do not wait.
 - Background watch (session-local, restart after a session restart): ONLY the LB submissions watch until #4/#5 are
