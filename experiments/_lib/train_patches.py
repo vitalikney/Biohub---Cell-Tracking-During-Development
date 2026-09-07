@@ -96,6 +96,34 @@ def compute_detection_loss_gauss_focal(
 '''
 
 PATCHES = [
+    # --- Keep Zarr/Blosc decompression bounded on 16 GB Windows hosts.  Reopening
+    # a Zarr hierarchy for every sample also creates avoidable async/thread-pool
+    # churn during multi-day runs, so each DataLoader process caches array handles.
+    (
+        "import zarr\n",
+        "import zarr\n"
+        "import numcodecs.blosc as _blosc\n"
+        "zarr.config.set({\"async.concurrency\": 2, \"threading.max_workers\": 2})\n"
+        "_blosc.set_nthreads(2)\n",
+        "bounded zarr and blosc concurrency",
+    ),
+    (
+        "        self.max_nodes = max_nodes\n"
+        "        self.augmentations = augmentations or []\n",
+        "        self.max_nodes = max_nodes\n"
+        "        self.augmentations = augmentations or []\n"
+        "        self._zarr_arrays: dict[str, object] = {}\n",
+        "per-process zarr handle cache",
+    ),
+    (
+        "        z = zarr.open_group(str(vm.zarr_path), mode=\"r\")[\"0\"]\n",
+        "        zarr_key = str(vm.zarr_path)\n"
+        "        z = self._zarr_arrays.get(zarr_key)\n"
+        "        if z is None:\n"
+        "            z = zarr.open_group(zarr_key, mode=\"r\")[\"0\"]\n"
+        "            self._zarr_arrays[zarr_key] = z\n",
+        "reuse zarr array handles",
+    ),
     # --- DataLoader workers: avoid /dev/shm exhaustion on Kaggle (window>=3 batches are large)
     (
         "from itertools import cycle as _cycle\n",
