@@ -316,7 +316,13 @@ Pending right now:
   training with `train_unet_transformer.py --unet-weights <pth>` (linker then trained/fine-tuned on top). So detector
   experiments (§10a B3 dense labels, B7 ignore-unlabelled loss, B5 test-time adaptation) run in parallel on Kaggle (Vitalii,
   ~1 h/epoch on T4, a few epochs per run) and on friend A's GPU; only the full 199-video 30+ epoch joint run stays with
-  friend A. Every detector result = UNet weights file + official score on the 12 44b6 videos after a linker fine-tune. Friend B joins ~21:00 MSK today -> the local
+  friend A. Every detector result = UNet weights file + official score on the 12 44b6 videos after a linker fine-tune.
+- 22:10 friend A pushed (merged into main): `friend-a-full199-scratch-30ep.ipynb` (root) = from-scratch joint training on all
+  199 videos, 30 epochs, cosine lr 1e-4 -> 1e-5, batch 4, seed 42, checkpoints every 5 epochs, leaky 12-video monitor;
+  shared `experiments/_lib/train_patches.py` now has `--max-detections` (caps local maxima per frame before the O(N^2)
+  transformer, GT-near peaks protected; set 0 for dense labels), `--lr-schedule/--min-lr`, `--checkpoint-every`, bounded
+  zarr/blosc threads. Verified: 26 patches still apply + compile on the base script (Kaggle kernels unaffected). Waiting
+  for the 6bba run's official scores at 10/15/20 before he starts the 199-video run (~70 min/epoch, ~1.5 days). Friend B joins ~21:00 MSK today -> the local
   port is realistically tomorrow; exp23's check therefore cannot come from him today. Option on the table: exp26 = exp06
   notebook with validator ON + secondary := exp23 on hold12 (~60 min GPU). DECLINED by the user (13:20): wait for friend B's
   local check, do NOT spend GPU on exp26. Nothing else to launch today; remaining work = log probes #8/#9 when scored. After probe #6: if min len 4 is
