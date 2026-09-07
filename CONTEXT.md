@@ -305,7 +305,11 @@ Pending right now:
   DONE 13:00 MSK: exp23 hold12 raw 0.9469 -> fine-tuned 0.9551 (leaky sanity, +0.008 like exp03B); weights uploaded to the
   dataset as `exp23/` (verified). Waiting for friend B's honest check; results in experiments/exp23_ft_secondary/results/.
 - Team timing (user 13:10 MSK 2026-09-07): friend A's 30-epoch 6bba run is at epoch 13, ~45 min/epoch -> finishes ~02:00
-  MSK 2026-09-08 (official scores every 5 epochs expected in his branch). Friend B joins ~21:00 MSK today -> the local
+  MSK 2026-09-08 (official scores every 5 epochs expected in his branch). 17:15: friend A (Ваня, Sasyami) sees no gain in
+  the last epochs and will stop ~20:00 if no improvement. Stop rule agreed: judge by the OFFICIAL metric on the 12 44b6
+  videos at checkpoints 10/15/20/25 (not the training-log recall) + N_pred/N_est per checkpoint; continue only if 25 beats
+  20 by >= 0.005; keep the best checkpoint -> dataset `friend_a_exp02/` + RESULTS row. A plateau at 15-20 epochs is the
+  expected sparse-GT behaviour: next gain comes from data (dense teacher labels, all 199 videos), not epochs. Friend B joins ~21:00 MSK today -> the local
   port is realistically tomorrow; exp23's check therefore cannot come from him today. Option on the table: exp26 = exp06
   notebook with validator ON + secondary := exp23 on hold12 (~60 min GPU). DECLINED by the user (13:20): wait for friend B's
   local check, do NOT spend GPU on exp26. Nothing else to launch today; remaining work = log probes #8/#9 when scored. After probe #6: if min len 4 is
