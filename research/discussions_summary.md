@@ -67,3 +67,31 @@
 3. Detection is the biggest lever and transfers to LB: dense pseudo-labels (FOCUS-3D / Zebrahub), early stopping,
    node-count control (predict <= N_est).
 4. Linking: longer temporal window with dense pseudo-tracks; association consistency across views.
+
+## Update 2026-09-07 03:50 (threads with new comments since the first read)
+- **Linking gains do not transfer to LB, even cross-embryo** (739352): Pavel's edge-weight model gives +0.02..0.04 on each
+  of 5 folds *including train-on-one-embryo/test-on-the-other*, yet +0.000 on LB. sghwr (38th): his local CV is
+  pessimistic vs LB by 0.013-0.02 (edge J only). hengck23: always break CV down (edge J, adj factor, node recall,
+  N_pred vs estimate, divisions, breaks vs wrong links) instead of quoting one number. => Even an honest LOEO validator
+  may over-reward linker tweaks; LB is dominated by detection quality + node count. Our post-proc knob probes (3 flat)
+  fit this picture.
+- **Synthetic volumes: negative from the leader** (739731): Sergio Alvarez (1st) spent ~2 weeks on synthetic volumes
+  (PolNet-style, as in CZII) with no clear gain and dropped it. hengck23 keeps exploring (PSF generators, DaXi paper,
+  differentiable rendering deltaMic, NISNet3D). => drop the José Freitas synthetic dataset from friend B's queue.
+- **"Metric problem"** (739686, Antonoof 6th): two submissions differing only by deleting 45% of nodes/edges scored the
+  same 0.954; Sergio (1st) says every node/edge removal he made did move the LB; Antonoof later retracted ("maybe I was
+  mistaken"). Hosts confirmed elsewhere that the unbounded node factor is intended. Not actionable; our min-track-len
+  direction probes (4 vs 8) will show whether the node bonus is real on the LB.
+- **Detector overfits past ~epoch 5-10 on sparse GT** (738773, nusrati + hengck23): loss keeps falling, node recall
+  stays 0.98-0.99, but peaks/frame climb (1800 -> 2100+) and adj edge J collapses (0.40 -> 0.07 by epoch 120); cause:
+  unlabelled nuclei become negatives; faint nuclei in the GT are the hardest. => For friend A's 30-epoch run: official
+  score every 5 epochs and keep the best; track N_pred/N_est per epoch; if the peak is <= 10 epochs, more DATA (all 199
+  videos), not more epochs, is the way up. His 5-epoch curve (best at epoch 4, worse at 5) already hints at this.
+- **hengck23's FOCUS-3D line** (738217, still 222nd - no LB proof): dense FOCUS-3D labels + augmented frame pairs let a
+  SuperGlue-style link transformer train 200 epochs without overfitting; on unseen 6bba_337b1b3a with Kaggle GT: node
+  recall 1.0, edge recall given nodes 0.964 (divisions excluded). Extra tricks: two-head domain calibration (FOCUS zyx +
+  dzyx in um), refining GT by +dzyx within the 7 um tolerance to sharpen link targets, sub-voxel coords via grid_sample.
+  He admits it "does not help if the gap is more than one missing frame". Rishabh Roy's claim that the LB is scored on
+  dense labels is unsupported (hosts: sparse, same as train).
+- **">0.94 line" thread** (738276): no one above 0.94 answered; the only advice (hengck23) is the ultrack toolchain +
+  manual annotation rounds. PROXY_SCORE of the public notebook is sparse-GT and barely penalises over-detection.

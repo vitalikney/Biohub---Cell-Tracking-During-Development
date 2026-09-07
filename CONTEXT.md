@@ -274,6 +274,12 @@ Pending right now:
   scratch model as secondary = biggest lever (independent model = diversity in the blend). (3) Escape the 5/day limit:
   friend A's validator at >= 0.85 + friend B's local port of the post-processing -> sweep knobs locally, LB confirms.
   (4) From 26 Sep: two final submissions = best LB config + one conservative variant.
+- Discussion re-read 2026-09-07 03:50 (research/discussions_summary.md, "Update 2026-09-07"): no new probe-worthy idea.
+  Three signals that CONFIRM the plan: (a) linking gains do not transfer to LB even cross-embryo (Pavel: +0.02-0.04 on
+  5 folds, +0.000 LB) -> spend probes on weights/detection, not linker tweaks; (b) 1st place tried synthetic volumes for
+  2 weeks with no gain -> synthetic dataset removed from friend B's queue; (c) sparse-GT detectors peak at epoch 5-10 and
+  then over-detect -> friend A's 30-epoch run must keep the best official-metric checkpoint and log N_pred/N_est per
+  epoch; if the peak is early, go to all-199 data instead of more epochs.
   Submit template: `python -m kaggle competitions submit biohub-cell-tracking-during-development -k <kernel> -v 1 -f submission.csv -m "probe N: ..."`.
 - Rule (user): when a probe-ready kernel is COMPLETE and a daily slot is free, submit immediately, do not wait.
 - Background watch (session-local, restart after a session restart): ONLY the LB submissions watch until #4/#5 are
