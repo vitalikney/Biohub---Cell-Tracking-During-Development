@@ -1,0 +1,10 @@
+{
+ "name": "exp27_ft03B_sec-friendA21",
+ "base": "exp06_pipeline_ft03B",
+ "env": {
+  "BIOHUB_SECONDARY_OVERRIDE": "friend_a_full199_ep21",
+  "BIOHUB_VALIDATOR_ENABLE": "0"
+ },
+ "secondary_override": "friend_a_full199_ep21",
+ "note": "probe: exp06 base, SECONDARY := friend A from-scratch all-199 epoch 21"
+}

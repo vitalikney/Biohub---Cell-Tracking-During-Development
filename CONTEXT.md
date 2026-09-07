@@ -322,7 +322,14 @@ Pending right now:
   shared `experiments/_lib/train_patches.py` now has `--max-detections` (caps local maxima per frame before the O(N^2)
   transformer, GT-near peaks protected; set 0 for dense labels), `--lr-schedule/--min-lr`, `--checkpoint-every`, bounded
   zarr/blosc threads. Verified: 26 patches still apply + compile on the base script (Kaggle kernels unaffected). Waiting
-  for the 6bba run's official scores at 10/15/20 before he starts the 199-video run (~70 min/epoch, ~1.5 days). Friend B joins ~21:00 MSK today -> the local
+  for the 6bba run's official scores at 10/15/20 before he starts the 199-video run (~70 min/epoch, ~1.5 days).
+  CORRECTION 22:50: the run friend A had going all day WAS the all-199 from-scratch run (45 min/epoch); it crashed after
+  epoch 21 (host RAM -> the zarr fix). Best-by-leaky-monitor checkpoint uploaded to the dataset as `friend_a_full199_ep21/`
+  (config identical to ours: 32/32-64-128, ds 1,4,4, window 2, NMS 5). He resumes 21 -> 30 overnight (root
+  `friend-a-full199-resume-ep21-to30.ipynb`, ~7-8 h, cosine 2.85e-5 -> 1e-5, checkpoint every epoch). No honest local
+  score is possible for a full-199 model (it saw 44b6); the only test is the LB. Probe folder READY (not pushed):
+  `experiments/exp27_ft03B_sec-friendA21` = exp06 base + SECONDARY := friend_a_full199_ep21 (§10a B4). Awaiting the
+  user's go: 25 min kernel + 1 LB slot (reserve slot tonight or one of tomorrow's 5). Friend B joins ~21:00 MSK today -> the local
   port is realistically tomorrow; exp23's check therefore cannot come from him today. Option on the table: exp26 = exp06
   notebook with validator ON + secondary := exp23 on hold12 (~60 min GPU). DECLINED by the user (13:20): wait for friend B's
   local check, do NOT spend GPU on exp26. Nothing else to launch today; remaining work = log probes #8/#9 when scored. After probe #6: if min len 4 is
