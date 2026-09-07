@@ -4,6 +4,10 @@
 #   --det-loss {bce,gauss_focal}: detection loss variant. gauss_focal = anisotropic Gaussian heatmap
 #                                targets + CenterNet-style penalty-reduced focal loss (PAC-MAP / nnLandmark ideas)
 #   --det-sigma-um FLOAT       : Gaussian sigma in microns for gauss_focal (default 2.5)
+#   --max-detections INT       : keep only the strongest local maxima per frame before the
+#                                quadratic transformer (prevents scratch-start OOMs)
+#   --lr-schedule {constant,cosine}, --min-lr FLOAT: optional epoch-level LR decay
+#   --checkpoint-every INT     : additionally save numbered model weights every N epochs
 #   --seed INT                 : torch/numpy seed
 # Usage in notebook:  apply_train_patches(TRAIN_REPO / "scripts" / "train_unet_transformer.py")
 from pathlib import Path
@@ -113,6 +117,41 @@ PATCHES = [
         "            compute_detection_loss(\n                det_logits[i], coords[:, i], masks[:, i],\n                det_neg_weight, voxel_size=voxel_size,\n            )\n            for i in range(W)\n",
         "det-loss voxel_size",
     ),
+    # --- bound the quadratic transformer input.  A scratch detector can emit
+    # thousands of random local maxima before the detection head has learned;
+    # the linker attention/edge tensors then scale as O(N^2) and exhaust 16 GB.
+    (
+        "        peak_idx = torch.nonzero(is_peak[:, 0])\n",
+        "        peak_idx = torch.nonzero(is_peak[:, 0])\n"
+        "        if MAX_DETECTIONS is not None and peak_idx.numel():\n"
+        "            capped_idx = []\n"
+        "            for b in range(B):\n"
+        "                sample_idx = torch.nonzero(peak_idx[:, 0] == b, as_tuple=False).flatten()\n"
+        "                if sample_idx.numel() > MAX_DETECTIONS:\n"
+        "                    sample_peaks = peak_idx[sample_idx]\n"
+        "                    sample_scores = det_logits[\n"
+        "                        sample_peaks[:, 0], 0, sample_peaks[:, 1],\n"
+        "                        sample_peaks[:, 2], sample_peaks[:, 3]\n"
+        "                    ].float()\n"
+        "                    # Sparse labelled cells must survive the memory cap even before\n"
+        "                    # the scratch detector has learned to rank them above random peaks.\n"
+        "                    nt = int(mask[b].sum().item())\n"
+        "                    if nt > 0:\n"
+        "                        det_xyz = sample_peaks[:, 1:].float()\n"
+        "                        gt_xyz = gt_coords[b, :nt]\n"
+        "                        cap_dists = torch.cdist(\n"
+        "                            det_xyz * vs if vs is not None else det_xyz,\n"
+        "                            gt_xyz * vs if vs is not None else gt_xyz,\n"
+        "                        )\n"
+        "                        protected = cap_dists.min(dim=1).values <= max_match_distance\n"
+        "                        sample_scores = sample_scores.clone()\n"
+        "                        sample_scores[protected] = torch.inf\n"
+        "                    keep = torch.topk(sample_scores, MAX_DETECTIONS, sorted=False).indices\n"
+        "                    sample_idx = sample_idx[keep]\n"
+        "                capped_idx.append(sample_idx)\n"
+        "            peak_idx = peak_idx[torch.cat(capped_idx)] if capped_idx else peak_idx[:0]\n",
+        "max detections per frame",
+    ),
     # --- init weights: train() signature
     (
         "    pool_kernel_um: float = 5.0,\n    data_parallel: bool = True,\n) -> UNetNodeTransformer:\n",
@@ -137,7 +176,14 @@ PATCHES = [
         "    parser.add_argument(\"--init-weights\", type=str, default=None, help=\"Full model checkpoint to fine-tune from.\")\n"
         "    parser.add_argument(\"--det-loss\", type=str, default=\"bce\", choices=[\"bce\", \"gauss_focal\"])\n"
         "    parser.add_argument(\"--det-sigma-um\", type=float, default=2.5)\n"
-        "    parser.add_argument(\"--seed\", type=int, default=None)\n",
+        "    parser.add_argument(\"--seed\", type=int, default=None)\n"
+        "    parser.add_argument(\"--max-detections\", type=int, default=0,\n"
+        "                        help=\"Keep the strongest local maxima per frame before transformer linking.\")\n"
+        "    parser.add_argument(\"--lr-schedule\", choices=[\"constant\", \"cosine\"], default=\"constant\")\n"
+        "    parser.add_argument(\"--min-lr\", type=float, default=1e-5,\n"
+        "                        help=\"Final learning rate for the cosine schedule.\")\n"
+        "    parser.add_argument(\"--checkpoint-every\", type=int, default=0,\n"
+        "                        help=\"Save edge_predictor_epoch_NNN.pth every N epochs; 0 disables.\")\n",
         "cli args",
     ),
     # --- apply CLI args in main
@@ -162,7 +208,7 @@ PATCHES = [
     # ================= speed: AMP (fp16 autocast + GradScaler) and optional no-grad-checkpointing =================
     (
         "DET_LOSS_MODE = \"bce\"\nDET_SIGMA_UM = 2.5\n",
-        "DET_LOSS_MODE = \"bce\"\nDET_SIGMA_UM = 2.5\nUSE_AMP = False\nNO_GRAD_CKPT = False\nSCALER = torch.amp.GradScaler(\"cuda\", enabled=False)\n",
+        "DET_LOSS_MODE = \"bce\"\nDET_SIGMA_UM = 2.5\nMAX_DETECTIONS = None\nLR_SCHEDULE = \"constant\"\nMIN_LR = 1e-5\nCHECKPOINT_EVERY = 0\nUSE_AMP = False\nNO_GRAD_CKPT = False\nSCALER = torch.amp.GradScaler(\"cuda\", enabled=False)\n",
         "amp globals",
     ),
     (
@@ -174,11 +220,64 @@ PATCHES = [
     ),
     (
         "    global DET_LOSS_MODE, DET_SIGMA_UM\n",
-        "    global DET_LOSS_MODE, DET_SIGMA_UM, USE_AMP, NO_GRAD_CKPT, SCALER\n"
+        "    global DET_LOSS_MODE, DET_SIGMA_UM, MAX_DETECTIONS, LR_SCHEDULE, MIN_LR, CHECKPOINT_EVERY, USE_AMP, NO_GRAD_CKPT, SCALER\n"
         "    USE_AMP = bool(args.amp); NO_GRAD_CKPT = bool(args.no_grad_ckpt)\n"
+        "    MAX_DETECTIONS = int(args.max_detections) if args.max_detections > 0 else None\n"
+        "    LR_SCHEDULE = args.lr_schedule; MIN_LR = float(args.min_lr)\n"
+        "    CHECKPOINT_EVERY = int(args.checkpoint_every)\n"
+        "    if CHECKPOINT_EVERY < 0:\n"
+        "        raise ValueError(f\"--checkpoint-every must be non-negative, got {CHECKPOINT_EVERY}\")\n"
+        "    if LR_SCHEDULE == \"cosine\" and (MIN_LR < 0 or MIN_LR > args.lr):\n"
+        "        raise ValueError(f\"--min-lr must be between 0 and --lr ({args.lr}), got {MIN_LR}\")\n"
         "    SCALER = torch.amp.GradScaler(\"cuda\", enabled=USE_AMP)\n"
-        "    print(f\"amp={USE_AMP} no_grad_ckpt={NO_GRAD_CKPT}\", flush=True)\n",
+        "    print(f\"amp={USE_AMP} no_grad_ckpt={NO_GRAD_CKPT} max_detections={MAX_DETECTIONS} lr_schedule={LR_SCHEDULE} min_lr={MIN_LR:g} checkpoint_every={CHECKPOINT_EVERY}\", flush=True)\n",
         "amp apply",
+    ),
+    # --- optional epoch-level learning-rate decay; constant remains the default
+    (
+        "    optimizer = torch.optim.AdamW(model.parameters(), lr=lr)\n"
+        "    print(f\"Starting training for {n_epochs} epochs (batch_size={batch_size})...\", flush=True)\n",
+        "    optimizer = torch.optim.AdamW(model.parameters(), lr=lr)\n"
+        "    scheduler = (\n"
+        "        torch.optim.lr_scheduler.CosineAnnealingLR(\n"
+        "            optimizer, T_max=max(n_epochs, 1), eta_min=MIN_LR\n"
+        "        )\n"
+        "        if LR_SCHEDULE == \"cosine\" else None\n"
+        "    )\n"
+        "    print(\n"
+        "        f\"Starting training for {n_epochs} epochs (batch_size={batch_size}, \"\n"
+        "        f\"lr={lr:g}, schedule={LR_SCHEDULE}, min_lr={MIN_LR:g})...\",\n"
+        "        flush=True,\n"
+        "    )\n",
+        "learning-rate scheduler setup",
+    ),
+    (
+        "    for epoch in pbar:\n        t0 = time.monotonic()\n",
+        "    for epoch in pbar:\n"
+        "        current_lr = optimizer.param_groups[0][\"lr\"]\n"
+        "        t0 = time.monotonic()\n",
+        "capture epoch learning rate",
+    ),
+    (
+        "        marker = \"*\" if is_best else \" \"\n"
+        "        pbar.set_postfix(edge=f\"{edge_loss:.4f}\", det=f\"{det_loss:.4f}\", acc=f\"{test_acc:.4f}\")\n",
+        "        if CHECKPOINT_EVERY and (epoch + 1) % CHECKPOINT_EVERY == 0:\n"
+        "            periodic_path = output_dir / f\"edge_predictor_epoch_{epoch + 1:03d}.pth\"\n"
+        "            torch.save(\n"
+        "                {k.replace(\"unet.module.\", \"unet.\", 1): v for k, v in model.state_dict().items()},\n"
+        "                periodic_path,\n"
+        "            )\n"
+        "            print(f\"  Periodic checkpoint saved: {periodic_path}\", flush=True)\n"
+        "        if scheduler is not None:\n"
+        "            scheduler.step()\n"
+        "        marker = \"*\" if is_best else \" \"\n"
+        "        pbar.set_postfix(edge=f\"{edge_loss:.4f}\", det=f\"{det_loss:.4f}\", acc=f\"{test_acc:.4f}\", lr=f\"{current_lr:.2e}\")\n",
+        "periodic checkpoints and learning-rate scheduler",
+    ),
+    (
+        "            f\"  Epoch {epoch:3d}/{n_epochs} | edge={edge_loss:.4f} | det={det_loss:.4f} | \"\n",
+        "            f\"  Epoch {epoch:3d}/{n_epochs} | lr={current_lr:.2e} | edge={edge_loss:.4f} | det={det_loss:.4f} | \"\n",
+        "log epoch learning rate",
     ),
     # wrap encode/predict_edges in autocast; disable checkpointing; placed right after init-weights loading
     (
