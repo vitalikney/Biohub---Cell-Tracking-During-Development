@@ -176,7 +176,7 @@ ideas first, honest LOEO check before any LB probe, one change per probe, differ
 |---|---|---|---|---|---|
 | P1 | B1 | LB direction probes: OUTPUT_MIN_TRACK_LEN 4 (probe 6, pending) and secondary := exp08 (probe 7, pending); then min len 8 and gap-closing radius as the LAST post-proc probes | Vitalii | 25 min kernel each | none (LB is the test) |
 | P1 | B2 | fine-tune the pilkwang seed314159 SECONDARY with the exp03B recipe (exp23) -> probe as secondary (different init than exp03B/exp08). CAUTION after probe 7 (-0.016 with exp08 as secondary): a fine-tuned secondary shifts detection calibration vs the public post-proc thresholds; probe only if the LOEO check is clearly positive | Vitalii | 30 min train + 25 min kernel | LOEO on 44b6 with the full public pipeline (friend B's port) |
-| P1 | B3 (was 17) | dense self-distillation: teacher = public pipeline detections on all 199 videos + GT points; student = from-scratch model (Dense Teacher / MUSE) | friend A (+ friend B for teacher predictions) | teacher preds 1.5 GPU-h Kaggle or 3-4 h on a 5070; then the all-199 scratch run | LOEO: 6bba teacher labels -> score on 44b6 >= exp03B raw 0.88 |
+| P1 | B3 (was 17) | dense self-distillation: teacher = exp03B + seed314159 ensemble detections on all 199 videos + GT points; student = from-scratch model (Dense Teacher / MUSE) | friend B (teacher + dense geff set + dense 6bba run on the 5070), friend A (sparse 6bba run in parallel, then all-199 on the winner) | teacher ~4 h on the 5070; dense 6bba run ~15 h | LOEO: dense beats sparse on 44b6 by >= 0.02 |
 | P1 | B4 | friend A's all-199 scratch model (dense labels if B3 ready, else sparse with official-metric early stopping every 5 epochs) as SECONDARY in the blend | friend A -> Vitalii | 1-2 days on 5070 Ti + 1 probe | beats pilkwang secondary on LOEO 44b6 |
 | P1 | B5 (was 18) | test-time adaptation of the primary detector on the test embryos (DARTH-style self-training + photometric consistency, EMA teacher, node-count guard) | Vitalii | ~1 day engineering; ~30 min GPU per embryo inside the submission kernel | LOEO: adapt on 44b6 images without labels, score on 44b6 GT >= +0.005 |
 | P2 | B6 (was 7) | detector TTA / seed-ensemble as primary with dedup merge (exp03B + exp16 + pilkwang) | Vitalii | check how the public notebook runs inference first; +0.5 h | LOEO |
@@ -339,6 +339,11 @@ Pending right now:
   score is possible for a full-199 model (it saw 44b6); the only test is the LB. Probe folder READY (not pushed):
   `experiments/exp27_ft03B_sec-friendA21` = exp06 base + SECONDARY := friend_a_full199_ep21 (§10a B4). Awaiting the
   user's go: GIVEN 23:15 -> probe #10 = 0.920 (-0.025, dropped). No more blind probes of friend A's all-199 checkpoints (ep30 included)
+- 2026-09-08 07:30: TEAM.md now holds self-contained step lists for BOTH friends (A: sparse 6bba validator -> recipe changes;
+  B: teacher detections -> dense geff set `train_dense/` -> dense 6bba run on the 5070 -> local port). Split of GPU work: the
+  sparse-vs-dense comparison runs in parallel on the two cards; the winner is retrained on all 199 by friend A and probed once
+  as secondary (blend weight 0.5 first). Plumbing verified: predict script works without --use-ilp (nodes only), the trainer
+  reads GT from `<stem>.geff` next to `<stem>.zarr` (io.py from_geff) so a dense-label dataset is just another data dir.
   until the honest 6bba->44b6 raw comparison exists. Leaky-but-useful local check for any full-pipeline kernel: the kernel's
   interactive run writes submission.csv for the 4 dummy test videos (train copies) -> `python tools/csv2geff.py <csv> <dir>`
   -> `python tools/score_geffs.py <dir>`; exp06 = 0.8961 on them (reference). Friend B joins ~21:00 MSK today -> the local
