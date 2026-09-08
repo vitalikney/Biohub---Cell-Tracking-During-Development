@@ -54,16 +54,48 @@ Goal: run the public 0.941 pipeline locally on the 12 LOEO 44b6 videos and expos
 5. Expected cost on a 5070: GPU stages ~30-40 min for 12 videos (two UNets + DeepCenter + ILP), then each knob sweep
    is minutes on CPU. First check request: exp23 (fine-tuned seed314159 secondary) vs the pilkwang secondary.
 
-**Friend B — order of work after the port (from CONTEXT §10a; report each result as a RESULTS.md row + short CONTEXT note):**
-1. [now] The port itself (steps 1-5 above). Post the stage table for the 12 44b6 videos with exp03B primary.
-2. [as soon as Vitalii uploads `exp23/` to the weights dataset] Check exp23 (fine-tuned seed314159) as SECONDARY vs the
-   pilkwang secondary in the full pipeline on the 12 videos. Verdict >= +0.003 -> Vitalii probes it on the LB; else dropped.
-3. [next] Teacher predictions for dense self-distillation (§10a B3): run the public pipeline's DETECTION stage (dual-seed
-   blend after NMS, before linking) on all 126 6bba train videos and save the point lists (t, z, y, x, score) per video;
-   ~3-4 h on the 5070. Hand them to Friend A (dataset subfolder `teacher_6bba/` or a zip).
-4. [then, CPU] Knob sweeps on the cached 12-video predictions: ILP cost calibration and association consistency between two
-   models (§10a B9), node-count control with a confidence signal (§10a B10). Be strict: linking gains rarely transfer to LB.
-5. [only if 3 fails or saturates] FOCUS-3D dense labels feasibility with stop criteria (§10a B11). Synthetic data is dropped.
+**Friend B — order of work (updated 2026-09-08 07:30). Self-contained: an assistant given TEAM.md + CONTEXT.md §10a/§14 can execute it.**
+
+Background: the team's main bet is DENSE pseudo-labels (CONTEXT §10a B3): detectors trained on the sparse GT (6% of nuclei
+labelled) collapse after 5-10 epochs because unlabelled nuclei act as negatives; the public pipeline's own detections
+(node recall 0.98 on GT) are a good dense teacher. Your GPU (5070, 12 GB) produces the teacher and runs the dense-label
+run on 6bba while Friend A runs the sparse one, so the sparse-vs-dense comparison exists a day earlier.
+
+STEP 1 (now, ~4 h GPU): teacher detections for all 199 train videos.
+  - Code: `tools/repo/` (support-pack scripts + src) with `experiments/_lib/predict_patches.py` applied
+    (`apply_predict_patches(Path("scripts/predict_unet_transformer.py"))`) so that `BIOHUB_ENSEMBLE_WEIGHTS` averages models.
+  - Weights: primary = `vitaliineibauer/biohub-ft-weights/exp03B`, extra = pilkwang seed314159
+    (`pilkwang/biohub-temporal-unet3d-seed314159-v1`, `weights/unet_transformer/split_0/edge_predictor_best.pth` + config.json).
+  - Command (from the repo copy, `PYTHONPATH=src`, `BIOHUB_DATA_DIR=<train>`, splits JSON = `[{"split":0,"train":[],"test":[all 199 stems]}]`):
+    `BIOHUB_ENSEMBLE_WEIGHTS=<seed314159 pth> python scripts/predict_unet_transformer.py --data-dir <train> --splits <json> --split 0
+     --weights <exp03B pth> --det-threshold 0.965 --method teacher` (NO `--use-ilp`; we only need nodes). ~1 min/video on a 5070.
+  - Output: `predictions/teacher/split_0/<stem>.geff` (nodes t,z,y,x). Zip -> Kaggle dataset `vitaliineibauer/biohub-ft-weights/teacher_geff/`.
+
+STEP 2 (CPU, same day): build the dense training set `train_dense/` next to the real train folder.
+  - For each video: nodes = teacher nodes UNION GT nodes, deduplicated within 5 um (GT node wins, teacher node dropped);
+    edges = GT edges only (re-mapped to the kept GT node ids); copy the GT geff metadata (incl. `estimated_number_of_nodes`).
+    Write `<stem>.geff` with `tools/repo/src/biohub_tracking/io.py` helpers (tracksdata graph -> `to_geff`).
+  - `<stem>.zarr` = directory junction to the real zarr (`mklink /J` on Windows), no copy.
+  - Checks per video (write `train_dense/dense_stats.csv`): GT node recall inside the dense set = 1.0 by construction;
+    teacher recall of GT within 5 um (expect ~0.98); N_dense / estimated_number_of_nodes (expect 0.9-1.1; flag outliers).
+  - Commit the builder script as `tools/build_dense_gt.py` + the stats CSV; the geff files go to the dataset as `train_dense_geff/`.
+
+STEP 3 (~15 h GPU): dense-label validator run on your card.
+  - Same recipe as Friend A's STEP 1 (6bba-only split `experiments/_lib/loeo_train6bba_val44b6.json`, BCE, window 2, ds 1,4,4,
+    lr 1e-4 cosine -> 1e-5, seed 42, 20 epochs, `--checkpoint-every 5`) but `BIOHUB_DATA_DIR=train_dense` and `--max-detections 0`.
+    12 GB: `--batch-size 2` or 3 without grad checkpointing, or batch 4 with it (drop `--no-grad-ckpt`). `--num-workers 0` on Windows.
+  - Score every checkpoint on the 12 44b6 videos exactly like Friend A's STEP 1 (raw predict at det 0.965 + ILP, `tools/score_geffs.py`),
+    log score / edge_jaccard / node_recall / N_pred/N_est. Folder `experiments/local_friend_b_exp01_loeo_dense_20ep/`, RESULTS row,
+    best checkpoint to the dataset as `friend_b_exp01_loeo_dense/`.
+  - Decision: dense beats sparse (Friend A STEP 1) by >= 0.02 on 44b6 -> dense becomes the team recipe; Friend A retrains it on
+    all 199 (his STEP 5). If not, report the detection numbers (node_recall, N_pred/N_est) - they say whether the teacher was too
+    conservative (raise recall: det threshold 0.95 for the teacher) or too noisy.
+
+STEP 4 (CPU, in parallel with STEP 3): local port of the public 0.941 pipeline's post-processing (the 'Friend B start kit'
+  above, steps 1-5): cached GPU stages + CPU knob sweeps, stage table on the 12 44b6 videos. Needed to test any new secondary
+  locally before an LB slot (probe 7 = -0.016 and probe 10 = -0.025 were both blind). First customer: exp23 as secondary.
+
+STEP 5 (later): knob sweeps on the cached predictions (§10a B9/B10); FOCUS-3D (B11) only if the dense-label bet fails.
 
 **Friend A — order of work (updated 2026-09-08 07:00). Self-contained: an assistant given TEAM.md + CONTEXT.md §10a/§14 can execute it.**
 
