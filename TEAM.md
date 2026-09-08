@@ -65,22 +65,48 @@ Goal: run the public 0.941 pipeline locally on the 12 LOEO 44b6 videos and expos
    models (§10a B9), node-count control with a confidence signal (§10a B10). Be strict: linking gains rarely transfer to LB.
 5. [only if 3 fails or saturates] FOCUS-3D dense labels feasibility with stop criteria (§10a B11). Synthetic data is dropped.
 
-**Friend A — order of work (updated 2026-09-07 23:10 after the all-199 epoch-21 checkpoint):**
-1. [tonight] Resume the all-199 run 21 -> 30 (`friend-a-full199-resume-ep21-to30.ipynb`); upload the epoch-30 weights as
-   `friend_a_full199_ep30/`; RESULTS.md row for the run (21 epochs, ~45 min/epoch, crash, leaky monitor - say so).
-2. [DONE 2026-09-08] LB probe 10 (secondary := ep21) = 0.920 (-0.025). The 21-epoch scratch model is weaker than pilkwang's
-   50-epoch secondary (also -0.007 on the 4 dummy test videos it trained on) and the 0.8 blend weight amplifies that. No
-   more LB probes of all-199 checkpoints (ep30 included) until step 3 shows the raw model beats the pilkwang secondary
-   on the honest split.
-3. [next GPU job, ~15 h] Honest validator: the 6bba-only scratch recipe to ~20 epochs with `--checkpoint-every 5`, official
-   score per checkpoint on the 12 44b6 videos (`tools/score_geffs.py`), N_pred/N_est per checkpoint. Needed for every
-   later comparison (dense labels, losses, secondary choice) regardless of probe 10.
-4. [when teacher points from Friend B exist] From scratch on all 199 on DENSE labels (teacher detections + GT, GT wins),
-   30 epochs, `--max-detections 0`, checkpoints every 5; the same recipe on 6bba-only for the honest comparison.
-5. [after 4] One recipe change at a time on the honest validator: ignore-unlabelled / nnPU loss (§10a B7), parent-offset
-   head (B8), MAE pretraining (B13); a change goes to the LB only as a swapped secondary/primary after it beats the
-   current model on 44b6 by >= 0.005.
-6. [from ~2026-09-20] Freeze: no new recipes; only re-training the chosen recipe with a second seed for the final blend.
+**Friend A — order of work (updated 2026-09-08 07:00). Self-contained: an assistant given TEAM.md + CONTEXT.md §10a/§14 can execute it.**
+
+Background: LB probe 10 (your all-199 epoch-21 checkpoint as SECONDARY in the public pipeline) scored 0.920 vs 0.945.
+The 21-epoch scratch model is weaker than pilkwang's 50-epoch model, and a weaker model in the blend adds errors, not
+diversity. So no model goes to the LB again until it wins on an honest local comparison. Your job now is to build that
+comparison and then improve the model on it. The all-199 resume (21 -> 30) is NOT needed; if it is running, let it finish
+but do not upload/probe it.
+
+STEP 1 (now, ~15 h GPU): the honest validator = a from-scratch model that never saw embryo 44b6.
+  - Recipe: exactly your `local_friend_a_exp01_loeo_scratch` run (126 6bba videos from `experiments/_lib/loeo_train6bba_val44b6.json`,
+    BCE, window 2, ds 1,4,4, batch 4, lr 1e-4, seed 42, `--max-detections 1024`) but 20 epochs, `--lr-schedule cosine --min-lr 1e-5`,
+    `--checkpoint-every 5`. Output folder: `experiments/local_friend_a_exp02_loeo_scratch_20ep/`.
+  - For EACH checkpoint (5/10/15/20 + best): predict the 12 `holdout` videos of that JSON with
+    `scripts/predict_unet_transformer.py --det-threshold 0.965 --use-ilp --ilp-appearance-weight 0 --ilp-disappearance-weight 2 --ilp-division-weight 1.2`
+    (raw graphs, no post-processing), then `python tools/score_geffs.py <dir> --out <json>`. Record per checkpoint: score,
+    edge_jaccard, node_recall, N_pred/N_est (sum of predicted nodes / sum of estimated_number_of_nodes over the 12 videos).
+  - Reference on the SAME 12 videos, same predict command: (a) pilkwang PRIMARY `weights/unet_transformer/split_0` from the
+    support pack, (b) pilkwang SECONDARY from `pilkwang/biohub-temporal-unet3d-seed314159-v1` (`weights/unet_transformer/split_0`).
+    Both are leaky (they trained on 44b6) but they are the bar a candidate secondary must clear on the LB, so log them.
+    Known numbers: pilkwang primary raw on these 12 videos = 0.8798 (exp11 A); your 5-epoch model = 0.6706.
+  - Deliverables: `results.json` with the table, RESULTS.md row, CONTEXT.md one-line note, best checkpoint to the Kaggle dataset
+    as `friend_a_exp02_loeo20/` (edge_predictor_best.pth + config.json). Stop rule: if score(20) - score(15) < 0.005, 20 epochs is enough.
+
+STEP 2 (after step 1, and it decides the branch):
+  - If the best 6bba-only checkpoint reaches >= 0.85 on 44b6: the validator is usable. Go to step 3.
+  - If it stays < 0.80: sparse GT is the limit (unlabelled nuclei become negatives after ~10 epochs). Skip to step 4 (dense labels)
+    and do not spend more epochs on sparse GT.
+
+STEP 3 (only with a usable validator): one recipe change at a time, each = a new 6bba-only run scored on 44b6; keep a change only
+  if it beats the current best by >= 0.005 (12 videos, seed noise ~0.005). Order: (a) ignore-unlabelled / nnPU detection loss
+  (CONTEXT §10a B7), (b) parent-offset head (B8), (c) 40 epochs if the curve is still rising, (d) MAE pretraining (B13).
+  Judge DETECTION numbers first (node_recall, N_pred/N_est, edge FN caused by missed nodes); linker-only gains do not transfer to the LB.
+
+STEP 4 (when Friend B has produced teacher detections for the 126 6bba videos, dataset subfolder `teacher_6bba/`): the same
+  scratch recipe on DENSE labels (teacher points + GT points, GT wins within 5 um), `--max-detections 0`, 30 epochs, checkpoints
+  every 5, scored on 44b6 exactly as in step 1. This is the main bet: dense labels let the detector train 30+ epochs without
+  the sparse-GT collapse. Compare against step 1's best.
+
+STEP 5 (only for a recipe that won on 44b6): retrain it on all 199 videos with the same settings, upload as `friend_a_full199_<recipe>/`,
+  and tell Vitalii; he runs ONE LB probe with it as secondary (blend weight will be probed at 0.5 first, not 0.8).
+
+STEP 6 (from ~2026-09-20): freeze recipes; only a second seed of the winning recipe for the final blend.
 
 ## Rules
 - One experiment = one folder `experiments/local_<name>_expNN_<slug>/` with the command line / config and a results JSON; one row in `experiments/RESULTS.md` (state the video set: hold12 / divset36 / 48 / LOEO-44b6 / LB).
