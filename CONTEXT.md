@@ -180,6 +180,7 @@ ideas first, honest LOEO check before any LB probe, one change per probe, differ
 | P1 | B4 | friend A's all-199 scratch model (dense labels if B3 ready, else sparse with official-metric early stopping every 5 epochs) as SECONDARY in the blend | friend A -> Vitalii | 1-2 days on 5070 Ti + 1 probe | beats pilkwang secondary on LOEO 44b6 |
 | P1 | B5 (was 18) | test-time adaptation of the primary detector on the test embryos (DARTH-style self-training + photometric consistency, EMA teacher, node-count guard) | Vitalii | ~1 day engineering; ~30 min GPU per embryo inside the submission kernel | LOEO: adapt on 44b6 images without labels, score on 44b6 GT >= +0.005 |
 | P2 | B6 (was 7) | detector TTA / seed-ensemble as primary with dedup merge (exp03B + exp16 + pilkwang) | Vitalii | check how the public notebook runs inference first; +0.5 h | LOEO |
+| P2 | B16 | edge-feature TTA (`BIOHUB_EDGE_FEATURE_TTA=1`, from the public 0.946/0.942 forks: average UNet features over the 8 TTA views before edge prediction) | Vitalii / friend B | inference-only patch, exists in `$TMP/pub/biohub-harmonic-fusion` cell 4; unmeasurable on LB at +-0.003 noise -> judge on the honest validator with friend B's port; adopt for the final if >= 0 there | LOEO |
 | P2 | B7 (was 5) | ignore-unlabelled / nnPU detection loss, neighbourhood-softmax peak loss | friend A | patch train_patches.py; 45 min per fine-tune | LOEO |
 | P2 | B8 (was 10) | parent-offset / movement-vector head as edge feature + gap-closing prior (linajea, ELEPHANT) | friend A | 1 h fine-tune + linker feature | LOEO |
 | P2 | B9 (was 4, 13) | metric-aware ILP cost calibration; association consistency between two models where they disagree | friend B (after the local port) | CPU sweeps on cached candidate graphs | LOEO (linker gains transfer poorly - be strict) |
@@ -193,6 +194,7 @@ ideas first, honest LOEO check before any LB probe, one change per probe, differ
 **C. Dropped**
 - Synthetic data (Freitas CC0; item 16): 1st place tried synthetic volumes 2 weeks, no gain (discussion 739731).
 - More post-proc knobs beyond B1 (motion-relink radius, DeepCenter veto, etc.): saturated, noise-level.
+- The public forks' in-kernel post-proc sweep (7 candidates selected on 8 leaky train videos, margin 0.001): noise-chasing; the 0.946 vs 0.942 of two identical notebooks proves it.
 - Hand labelling of test data: forbidden; SAM2 zero-shot tracking: too heavy/weak for 3D+t here.
 
 ## 11. LB probe post-mortem (2026-09-06 06:40) and revised strategy — APPROVED by the user 07:00
@@ -256,6 +258,11 @@ ideas first, honest LOEO check before any LB probe, one change per probe, differ
 - Combination rule (user 18:15): as soon as TWO positive single changes (>= +0.002 each) exist on top of the current
   base, the very next probe is their combination; if it holds, it becomes the new base. So far only (1) is positive
   and it is already the base (exp06 = 0.945).
+- NOISE FLOOR (2026-09-08 15:40, from two byte-identical public notebooks scoring 0.946 and 0.942): a single run of
+  this pipeline family varies by ~+-0.003 on the public LB (GPU non-determinism through 8-view TTA + ILP). Consequences:
+  (1) probe deltas < 0.005 are NOT decisions - this includes exp03B primary (+0.004, kept as base because it is also
+  principled, but unproven); (2) a calibration probe = re-run exp06 unchanged (exp28) measures OUR run-to-run variance
+  and is worth one slot; (3) never pick finals by the max public score over many runs.
 - Rules (user 11:00): do NOT launch new Kaggle kernels or submissions until the first pending probe is scored;
   differences < 0.002 = noise, not adopted; every probe logged in §11 (probe log) with kernel, change, LB;
   from 26 Sep only final-submission probes, no new ideas.
@@ -339,6 +346,12 @@ Pending right now:
   score is possible for a full-199 model (it saw 44b6); the only test is the LB. Probe folder READY (not pushed):
   `experiments/exp27_ft03B_sec-friendA21` = exp06 base + SECONDARY := friend_a_full199_ep21 (§10a B4). Awaiting the
   user's go: GIVEN 23:15 -> probe #10 = 0.920 (-0.025, dropped). No more blind probes of friend A's all-199 checkpoints (ep30 included)
+- 2026-09-08 15:40 discussion/notebook re-read (research/discussions_summary.md "Update 2026-09-08"): public 0.946 is the
+  same 0.941 pipeline; two identical copies score 0.946 and 0.942 -> LB noise +-0.003 per run. Plan changes: (1) exp28 =
+  exp06 re-run unchanged as a CALIBRATION probe (folder built, not pushed; 25 min + 1 slot, user's go needed); (2) edge-feature
+  TTA added to §10a as B16, judged locally, not on LB; (3) FINAL-SUBMISSION RULE: sub 1 = exp06-family config, sub 2 = the
+  config that is best on the honest validator (friend A/B), never the max-over-runs public score; public notebooks are LB-tuned
+  and a private shake-up against them is likely (Yubo: 0.946 public notebook is 0.015 worse on 5-fold CV than his 0.942).
 - 2026-09-08 07:30: TEAM.md now holds self-contained step lists for BOTH friends (A: sparse 6bba validator -> recipe changes;
   B: teacher detections -> dense geff set `train_dense/` -> dense 6bba run on the 5070 -> local port). Split of GPU work: the
   sparse-vs-dense comparison runs in parallel on the two cards; the winner is retrained on all 199 by friend A and probed once

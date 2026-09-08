@@ -95,3 +95,24 @@
   dense labels is unsupported (hosts: sparse, same as train).
 - **">0.94 line" thread** (738276): no one above 0.94 answered; the only advice (hengck23) is the ultrack toolchain +
   manual annotation rounds. PROXY_SCORE of the public notebook is sparse-GT and barely penalises over-detection.
+
+## Update 2026-09-08 15:40 (discussion + public notebooks re-read)
+- **Public 0.946 = 0.941 pipeline + run-to-run luck.** `flexonafft/biohub-harmonic-fusion` (0.946, version 29) and
+  `redoctopusk/biohub-942tta` (0.942) are byte-identical in config AND code (same env values, same inference cell with an
+  "edge-feature TTA" patch, same in-kernel post-proc sweep, deterministic validator stems). So identical notebooks differ by
+  0.004 on the public LB: GPU non-determinism through 8-view TTA + ILP + a leaky-validator sweep that selects among 7 knob
+  candidates with a 0.001 margin. The 0.946 is the max over 29 versions. => the public-LB resolution for a SINGLE run of
+  this pipeline family is about +-0.003; our probe deltas below 0.005 (incl. exp03B primary +0.004) are not proven.
+- What the forks add vs 0.941: (a) `BIOHUB_EDGE_FEATURE_TTA=1` - averages the UNet feature maps over the 8 TTA views
+  before edge prediction (base only averaged detection logits); principled, inference-only, effect unmeasurable on LB at
+  this noise; (b) PP sweep on 8 leaky train videos (gap 4.5, tight relink 5.5, relaxed 9, learned bonus 1.25, gap2 step 4,
+  reuse 2.8, DeepCenter gap 0.35) with margin 0.001 - noise-chasing, do not adopt; (c) VALIDATOR_N_PER_TYPE 2 -> 4.
+- **Linker gains still do not transfer** (739685): Mark (7th place) - any smarter motion linker = exactly +0.001 LB while CV
+  moves 0.01-0.03; Yubo WANG - +0.012 on 5-fold CV -> +0.001 LB, and the public 0.946 notebook is 0.015 WORSE than his
+  0.942 one on the same 5-fold CV => public notebooks are tuned to the public LB; expect a private shake-up against them.
+  hengck23 suggests online test-time training and "smart encoding" of submissions to probe the test distribution (the
+  encoding part is a grey area we will not use; test-time adaptation itself is legal and is our §10a B5).
+- Mark (7th) asks "why train the UNet for >100 epochs?" - a hint that top teams train long (only possible with dense labels).
+- Division thread (739516): nearest-parent candidate graph covers 88% of the 151 GT forks vs 99.7% of continuation edges;
+  candidate recall is the division bottleneck (matches our divranker finding).
+- "Post-processing plateau at 0.942" (740103), no answers: everyone hits the same wall.
