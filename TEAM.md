@@ -68,9 +68,10 @@ Goal: run the public 0.941 pipeline locally on the 12 LOEO 44b6 videos and expos
 **Friend A — order of work (updated 2026-09-07 23:10 after the all-199 epoch-21 checkpoint):**
 1. [tonight] Resume the all-199 run 21 -> 30 (`friend-a-full199-resume-ep21-to30.ipynb`); upload the epoch-30 weights as
    `friend_a_full199_ep30/`; RESULTS.md row for the run (21 epochs, ~45 min/epoch, crash, leaky monitor - say so).
-2. [2026-09-08 morning] LB probe 10 (secondary := ep21) decides: positive (>= 0.948) -> ep30 as the next probe, then a second
-   seed of the same recipe for a 3-model blend; neutral/negative -> the model is not wrong, its detection calibration
-   differs from the public post-proc thresholds; diagnose locally, not on the LB.
+2. [DONE 2026-09-08] LB probe 10 (secondary := ep21) = 0.920 (-0.025). The 21-epoch scratch model is weaker than pilkwang's
+   50-epoch secondary (also -0.007 on the 4 dummy test videos it trained on) and the 0.8 blend weight amplifies that. No
+   more LB probes of all-199 checkpoints (ep30 included) until step 3 shows the raw model beats the pilkwang secondary
+   on the honest split.
 3. [next GPU job, ~15 h] Honest validator: the 6bba-only scratch recipe to ~20 epochs with `--checkpoint-every 5`, official
    score per checkpoint on the 12 44b6 videos (`tools/score_geffs.py`), N_pred/N_est per checkpoint. Needed for every
    later comparison (dense labels, losses, secondary choice) regardless of probe 10.

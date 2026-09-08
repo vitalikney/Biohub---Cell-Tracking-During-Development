@@ -163,6 +163,7 @@ ideas first, honest LOEO check before any LB probe, one change per probe, differ
 | A13 | intensity augmentation for low-contrast videos (exp14) | local | 0.935, worse; milder ranges only if revisited |
 | A14 | inference ensemble exp03B+exp08 (exp15) | local | 0.971 vs 0.982 raw, worse (both from the same pilkwang primary -> no diversity) |
 | A21 | OUTPUT_MIN_TRACK_LEN 6 -> 8 | LB probe 9 (exp25) | 0.944, -0.001: noise; with A19 (4 -> 0.943) the node-count bonus is not exploitable via track length |
+| A22 | secondary := friend A from-scratch all-199 epoch 21 | LB probe 10 (exp27) | **0.920, -0.025**: weaker than pilkwang secondary (4 dummy videos: -0.007, recall/edge FP worse); blend weight 0.8 amplifies it; needs honest raw comparison first |
 | A20 | GAP_CLOSE_UM 5.0 -> 6.5 | LB probe 8 (exp24) | 0.944, -0.001: noise; gap closing already saturated in the public pipeline |
 | A19 | OUTPUT_MIN_TRACK_LEN 6 -> 4 | LB probe 6 (exp21) | 0.943, -0.002: shorter tracks hurt; opposite direction (8) queued as probe 9 |
 | A18 | secondary weights := exp08 (fine-tune of the same primary as exp03B) | LB probe 7 (exp22) | **0.929, -0.016**: no diversity + post-proc thresholds tuned for the seed314159 secondary; keep pilkwang secondary |
@@ -230,7 +231,13 @@ ideas first, honest LOEO check before any LB probe, one change per probe, differ
   #9 2026-09-07 11:07 exp25 (exp06 base, OUTPUT_MIN_TRACK_LEN 8, validator off) = **0.944** (scored ~18:30; -0.001 = noise,
   dropped; min track len stays 6). POST-PROC PROBES CLOSED: 7 knobs, none >= +0.002; only weights moved the LB. 1 slot left today.
   #10 2026-09-07 23:58 exp27 (exp06 base, SECONDARY := friend_a_full199_ep21, validator off) = pending (id 56084358).
-  First model-side probe (§10a B4): independent from-scratch model in the blend. Expect ~06:00 MSK 2026-09-08.
+  = **0.920** (scored 2026-09-08 ~05:30; -0.025 vs 0.945, STRONGLY NEGATIVE, dropped).
+  Diagnosis (tools/csv2geff.py + tools/score_geffs.py on the 4 dummy test videos = train videos, leaky but same for both):
+  exp06 0.8961 vs exp27 0.8889 (-0.007) even on videos friend A's model trained on; on 6bba_05b6850b edge FP 16->26,
+  FN 16->31, node recall 0.994->0.985. On unseen test embryos the gap grows to -0.025 => the 21-epoch scratch model is
+  weaker than pilkwang's 50-epoch secondary and, blended at SECONDARY_DETECTION_WEIGHT 0.8, drags the blend down. A
+  weaker model does not add "diversity", it adds its errors. Rule: a candidate secondary must first beat the pilkwang
+  secondary RAW on the honest 6bba->44b6 split (friend A roadmap step 3) before any LB probe.
   #7 2026-09-07 03:08 exp22 (exp06 base, secondary weights := exp08, validator off) = **0.929** (scored ~09:00; -0.016 vs 0.945,
   STRONGLY NEGATIVE, dropped). Lesson: the blend needs a DIFFERENT model as secondary; exp08 is a fine-tune of the same
   pilkwang primary as exp03B (no diversity) and the public post-proc thresholds are tuned for the seed314159 model. 3 slots left today.
@@ -331,7 +338,10 @@ Pending right now:
   `friend-a-full199-resume-ep21-to30.ipynb`, ~7-8 h, cosine 2.85e-5 -> 1e-5, checkpoint every epoch). No honest local
   score is possible for a full-199 model (it saw 44b6); the only test is the LB. Probe folder READY (not pushed):
   `experiments/exp27_ft03B_sec-friendA21` = exp06 base + SECONDARY := friend_a_full199_ep21 (§10a B4). Awaiting the
-  user's go: GIVEN 23:15 -> kernel pushed, SUBMITTED as probe #10 at 23:58 MSK (id 56084358, pending). Day's slots used; 5 new at 03:00. Friend B joins ~21:00 MSK today -> the local
+  user's go: GIVEN 23:15 -> probe #10 = 0.920 (-0.025, dropped). No more blind probes of friend A's all-199 checkpoints (ep30 included)
+  until the honest 6bba->44b6 raw comparison exists. Leaky-but-useful local check for any full-pipeline kernel: the kernel's
+  interactive run writes submission.csv for the 4 dummy test videos (train copies) -> `python tools/csv2geff.py <csv> <dir>`
+  -> `python tools/score_geffs.py <dir>`; exp06 = 0.8961 on them (reference). Friend B joins ~21:00 MSK today -> the local
   port is realistically tomorrow; exp23's check therefore cannot come from him today. Option on the table: exp26 = exp06
   notebook with validator ON + secondary := exp23 on hold12 (~60 min GPU). DECLINED by the user (13:20): wait for friend B's
   local check, do NOT spend GPU on exp26. Nothing else to launch today; remaining work = log probes #8/#9 when scored. After probe #6: if min len 4 is
