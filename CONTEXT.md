@@ -348,6 +348,23 @@ Pending right now:
   score is possible for a full-199 model (it saw 44b6); the only test is the LB. Probe folder READY (not pushed):
   `experiments/exp27_ft03B_sec-friendA21` = exp06 base + SECONDARY := friend_a_full199_ep21 (§10a B4). Awaiting the
   user's go: GIVEN 23:15 -> probe #10 = 0.920 (-0.025, dropped). No more blind probes of friend A's all-199 checkpoints (ep30 included)
+- 2026-09-09 16:30 FRIEND A STEP 1 DONE (branch merged; `experiments/local_friend_a_exp02_loeo_scratch_20ep/`, dataset
+  `friend_a_exp02_loeo20/`): scratch on 126 6bba -> official metric on 12 unseen 44b6 videos, cosine 1e-4 -> 1e-5:
+  ep5 0.6635 (node recall 0.877, N/N_est 0.99) | ep10 0.5547 (recall 0.687, N/N_est 0.82 - mid-run instability) |
+  ep15 0.6772 (0.866, 1.01) | ep20 0.6803 (0.853, 1.00). References on the same videos: pilkwang primary 0.8807,
+  secondary 0.8691 (both leaky). Divisions 0/15 at every checkpoint. Stop rule hit (20-15 = +0.003).
+  READING: the curve is flat from epoch 5; node recall on the unseen embryo caps at ~0.85-0.88 while N_pred matches N_est,
+  i.e. the detector finds the right NUMBER of nuclei but not the annotated ones (faint/hard nuclei) -> sparse-GT limit
+  and/or 6bba->44b6 shift. Decision (his + ours): STEP 4 dense labels; no more sparse-GT epochs. Validator gate (0.85)
+  NOT reached, so the honest validator is still not usable for fine comparisons; it IS usable for the big question
+  "dense vs sparse" (delta expected >> 0.02). Also uploaded: `friend_a_full199_ep30/` (resume 21 -> 31 done; leaky
+  monitor only; NOT probed per the probe-10 rule).
+  Cheap diagnostic asked of friend A (STEP 1b, ~20 min GPU): score the ep20 model with the official metric on 12 of its
+  own TRAIN 6bba videos. ~0.9 there => the gap is embryo shift / over-fit to 6bba; ~0.7 there => under-fit / sparse-label
+  limit. Either way dense labels are next, but the answer decides whether STEP 4 must also include cross-embryo
+  augmentation (intensity/scale) or not.
+  CRITICAL PATH = teacher detections (friend B STEP 1). If friend B has not started by tonight, Vitalii runs the teacher
+  for the 126 6bba videos on Kaggle (exp03B + seed314159 ensemble, det 0.965, no ILP; ~1.5 GPU-h of the ~5.5 h left).
 - 2026-09-08 15:40 discussion/notebook re-read (research/discussions_summary.md "Update 2026-09-08"): public 0.946 is the
   same 0.941 pipeline; two identical copies score 0.946 and 0.942 -> LB noise +-0.003 per run. Plan changes: (1) exp28 =
   exp06 re-run unchanged as a CALIBRATION probe (folder built, not pushed; 25 min + 1 slot, user's go needed); (2) edge-feature

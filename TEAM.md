@@ -120,6 +120,10 @@ STEP 1 (now, ~15 h GPU): the honest validator = a from-scratch model that never 
   - Deliverables: `results.json` with the table, RESULTS.md row, CONTEXT.md one-line note, best checkpoint to the Kaggle dataset
     as `friend_a_exp02_loeo20/` (edge_predictor_best.pth + config.json). Stop rule: if score(20) - score(15) < 0.005, 20 epochs is enough.
 
+STEP 1 RESULT (2026-09-09): best 0.6803 at epoch 20 (ep5 0.6635, ep10 0.5547, ep15 0.6772); node recall 0.85-0.88,
+  N_pred/N_est ~1.0; references pilkwang primary 0.8807 / secondary 0.8691. Sparse-GT limit -> STEP 4 next. Before that:
+STEP 1b (~20 min GPU): score the epoch-20 model with the official metric on 12 of its own TRAIN 6bba videos (same predict
+  command). Report score + node_recall. ~0.9 = embryo shift / fit to 6bba; ~0.7 = sparse-label under-fit. Add to results.json.
 STEP 2 (after step 1, and it decides the branch):
   - If the best 6bba-only checkpoint reaches >= 0.85 on 44b6: the validator is usable. Go to step 3.
   - If it stays < 0.80: sparse GT is the limit (unlabelled nuclei become negatives after ~10 epochs). Skip to step 4 (dense labels)
