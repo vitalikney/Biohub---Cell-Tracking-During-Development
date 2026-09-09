@@ -124,6 +124,10 @@ STEP 1 RESULT (2026-09-09): best 0.6803 at epoch 20 (ep5 0.6635, ep10 0.5547, ep
   N_pred/N_est ~1.0; references pilkwang primary 0.8807 / secondary 0.8691. Sparse-GT limit -> STEP 4 next. Before that:
 STEP 1b (~20 min GPU): score the epoch-20 model with the official metric on 12 of its own TRAIN 6bba videos (same predict
   command). Report score + node_recall. ~0.9 = embryo shift / fit to 6bba; ~0.7 = sparse-label under-fit. Add to results.json.
+STEP 1c (right after 1b, do NOT wait for anyone): if the dataset has no `teacher_geff/` / `train_dense_geff/` yet, produce
+  the teacher yourself - follow "Friend B STEP 1 + STEP 2" below for the 126 6bba training videos + the 12 44b6 holdout
+  videos only (138 videos, ~2.5 h on the 5070 Ti; the 44b6 teacher points are needed only for the dense_stats check, never
+  for training). Upload `teacher_geff/` and `train_dense_geff/` to the dataset and note it in CONTEXT §14 so Friend B skips it.
 STEP 2 (after step 1, and it decides the branch):
   - If the best 6bba-only checkpoint reaches >= 0.85 on 44b6: the validator is usable. Go to step 3.
   - If it stays < 0.80: sparse GT is the limit (unlabelled nuclei become negatives after ~10 epochs). Skip to step 4 (dense labels)
@@ -134,11 +138,14 @@ STEP 3 (only with a usable validator): one recipe change at a time, each = a new
   (CONTEXT §10a B7), (b) parent-offset head (B8), (c) 40 epochs if the curve is still rising, (d) MAE pretraining (B13).
   Judge DETECTION numbers first (node_recall, N_pred/N_est, edge FN caused by missed nodes); linker-only gains do not transfer to the LB.
 
-STEP 4 (when Friend B has produced teacher detections for the 126 6bba videos, dataset subfolder `teacher_6bba/`): the same
+STEP 4 (as soon as `train_dense/` exists - from Friend B or from your own STEP 1c): the same
   scratch recipe on DENSE labels (teacher points + GT points, GT wins within 5 um), `--max-detections 0`, 30 epochs, checkpoints
   every 5, scored on 44b6 exactly as in step 1. This is the main bet: dense labels let the detector train 30+ epochs without
   the sparse-GT collapse. Compare against step 1's best.
 
+STEP 4 decision: dense >= sparse + 0.02 on 44b6 (i.e. >= 0.70) -> dense is the team recipe, go to STEP 5 with it;
+  dense < sparse + 0.02 -> report node_recall and N_pred/N_est of both; then one cheap sparse-side test while we think:
+  `--det-neg-weight 0.001` (10x weaker penalty on unlabelled voxels) on 6bba-only, 10 epochs, scored on 44b6.
 STEP 5 (only for a recipe that won on 44b6): retrain it on all 199 videos with the same settings, upload as `friend_a_full199_<recipe>/`,
   and tell Vitalii; he runs ONE LB probe with it as secondary (blend weight will be probed at 0.5 first, not 0.8).
 
