@@ -48,6 +48,7 @@ Caveat: the pretrained pilkwang weights saw ALL train videos, so val4/hold12 are
 | exp05 | as exp03 B but `--window-size 3` (workers=0) | - | 0.9526 (edge 0.9409, recall 0.983) | 75 min | WORSE than exp03B 0.9575; train 60 min (3 s/it). Per-video mixed: +0.058 on 9be80b04, -0.03..-0.04 on 4 other 44b6. v1/v2 died of /dev/shm leak in DataLoader workers |
 | local Friend A exp01 | from-scratch validator, fixed 6bba manifest -> LOEO-44b6, 5 epochs, BCE, window 2, seed 42 | - | raw **0.6706** (edge 0.6688, div 0/0/15, recall 0.8600); fixed pp v2 **0.6891** (adj edge 0.6869, raw edge 0.6856, div 1/31/14, recall 0.8649); internal sparse recall best 0.8944 at epoch 4 | 2 h 33 min train + ~8 min predict | no pretrained weights; 12/12 LOEO; det 0.965, TTA, NMS5, ILP app 0 / disapp 2 / div 1.2; validator-aligned diagnostic 0.6603; no LB submission |
 
+| local Friend A exp02 | scratch 20ep, 126x6bba -> LOEO-44b6; BCE, w2, ds1,4,4, cosine 1e-4->1e-5, seed42 | - | best **0.6803** at epoch_020 (edge 0.6809, recall 0.8531, Npred/Nest 0.998); primary ref 0.8807, secondary ref 0.8691 | 9.7 h train + 0.7 h eval | 12/12 honest videos; milestones 5/10/15/20 + training-best; dataset `friend_a_exp02_loeo20/`; stop delta20-15=+0.0031; no LB submission |
 ## Per-video observations (exp00 validator)
 - 44b6_267148e4: adj_edge 0.81 because t_pred 20957 > t_true 19130 (over-count penalty) and edge_jaccard 0.82 (33 FP / 23 FN / 254 TP).
 - 44b6_12dfb391: edge_jaccard 0.913, t_pred 42555 < t_true 58672 (no penalty).

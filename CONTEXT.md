@@ -304,6 +304,8 @@ validator), friend B (RTX 5070: inference/evaluation/pseudo-labels). Roles, onbo
   node recall 0.8649, divisions 1/31/14). Predictor now reads NMS5 from checkpoint config. No LB submission.
 
 ## 14. Operational state for session resume (2026-09-06 18:00 MSK) — READ THIS FIRST AFTER A CONTEXT RESET
+<!-- friend-a-exp02-loeo20-result -->
+- 2026-09-09 Friend A STEP 1 complete: 20-epoch scratch 6bba->44b6 official best 0.6803 (epoch_020, edge 0.6809, recall 0.8531, N_pred/N_est 0.998); delta20-15 +0.0031; decision `STEP_4_dense_labels_sparse_limit`; weights `friend_a_exp02_loeo20/`, no LB submission.
 Pending right now:
 - LB probe #4 = kernel `vitaliineibauer/biohub-exp19-pub941-det095` v1 (public pipeline, det 0.95) = 0.940, scored 22:40 MSK
   (neutral, dropped). Check: `python -m kaggle competitions submissions biohub-cell-tracking-during-development`.
