@@ -67,3 +67,52 @@
 3. Detection is the biggest lever and transfers to LB: dense pseudo-labels (FOCUS-3D / Zebrahub), early stopping,
    node-count control (predict <= N_est).
 4. Linking: longer temporal window with dense pseudo-tracks; association consistency across views.
+
+## Update 2026-09-07 03:50 (threads with new comments since the first read)
+- **Linking gains do not transfer to LB, even cross-embryo** (739352): Pavel's edge-weight model gives +0.02..0.04 on each
+  of 5 folds *including train-on-one-embryo/test-on-the-other*, yet +0.000 on LB. sghwr (38th): his local CV is
+  pessimistic vs LB by 0.013-0.02 (edge J only). hengck23: always break CV down (edge J, adj factor, node recall,
+  N_pred vs estimate, divisions, breaks vs wrong links) instead of quoting one number. => Even an honest LOEO validator
+  may over-reward linker tweaks; LB is dominated by detection quality + node count. Our post-proc knob probes (3 flat)
+  fit this picture.
+- **Synthetic volumes: negative from the leader** (739731): Sergio Alvarez (1st) spent ~2 weeks on synthetic volumes
+  (PolNet-style, as in CZII) with no clear gain and dropped it. hengck23 keeps exploring (PSF generators, DaXi paper,
+  differentiable rendering deltaMic, NISNet3D). => drop the José Freitas synthetic dataset from friend B's queue.
+- **"Metric problem"** (739686, Antonoof 6th): two submissions differing only by deleting 45% of nodes/edges scored the
+  same 0.954; Sergio (1st) says every node/edge removal he made did move the LB; Antonoof later retracted ("maybe I was
+  mistaken"). Hosts confirmed elsewhere that the unbounded node factor is intended. Not actionable; our min-track-len
+  direction probes (4 vs 8) will show whether the node bonus is real on the LB.
+- **Detector overfits past ~epoch 5-10 on sparse GT** (738773, nusrati + hengck23): loss keeps falling, node recall
+  stays 0.98-0.99, but peaks/frame climb (1800 -> 2100+) and adj edge J collapses (0.40 -> 0.07 by epoch 120); cause:
+  unlabelled nuclei become negatives; faint nuclei in the GT are the hardest. => For friend A's 30-epoch run: official
+  score every 5 epochs and keep the best; track N_pred/N_est per epoch; if the peak is <= 10 epochs, more DATA (all 199
+  videos), not more epochs, is the way up. His 5-epoch curve (best at epoch 4, worse at 5) already hints at this.
+- **hengck23's FOCUS-3D line** (738217, still 222nd - no LB proof): dense FOCUS-3D labels + augmented frame pairs let a
+  SuperGlue-style link transformer train 200 epochs without overfitting; on unseen 6bba_337b1b3a with Kaggle GT: node
+  recall 1.0, edge recall given nodes 0.964 (divisions excluded). Extra tricks: two-head domain calibration (FOCUS zyx +
+  dzyx in um), refining GT by +dzyx within the 7 um tolerance to sharpen link targets, sub-voxel coords via grid_sample.
+  He admits it "does not help if the gap is more than one missing frame". Rishabh Roy's claim that the LB is scored on
+  dense labels is unsupported (hosts: sparse, same as train).
+- **">0.94 line" thread** (738276): no one above 0.94 answered; the only advice (hengck23) is the ultrack toolchain +
+  manual annotation rounds. PROXY_SCORE of the public notebook is sparse-GT and barely penalises over-detection.
+
+## Update 2026-09-08 15:40 (discussion + public notebooks re-read)
+- **Public 0.946 = 0.941 pipeline + run-to-run luck.** `flexonafft/biohub-harmonic-fusion` (0.946, version 29) and
+  `redoctopusk/biohub-942tta` (0.942) are byte-identical in config AND code (same env values, same inference cell with an
+  "edge-feature TTA" patch, same in-kernel post-proc sweep, deterministic validator stems). So identical notebooks differ by
+  0.004 on the public LB: GPU non-determinism through 8-view TTA + ILP + a leaky-validator sweep that selects among 7 knob
+  candidates with a 0.001 margin. The 0.946 is the max over 29 versions. => the public-LB resolution for a SINGLE run of
+  this pipeline family is about +-0.003; our probe deltas below 0.005 (incl. exp03B primary +0.004) are not proven.
+- What the forks add vs 0.941: (a) `BIOHUB_EDGE_FEATURE_TTA=1` - averages the UNet feature maps over the 8 TTA views
+  before edge prediction (base only averaged detection logits); principled, inference-only, effect unmeasurable on LB at
+  this noise; (b) PP sweep on 8 leaky train videos (gap 4.5, tight relink 5.5, relaxed 9, learned bonus 1.25, gap2 step 4,
+  reuse 2.8, DeepCenter gap 0.35) with margin 0.001 - noise-chasing, do not adopt; (c) VALIDATOR_N_PER_TYPE 2 -> 4.
+- **Linker gains still do not transfer** (739685): Mark (7th place) - any smarter motion linker = exactly +0.001 LB while CV
+  moves 0.01-0.03; Yubo WANG - +0.012 on 5-fold CV -> +0.001 LB, and the public 0.946 notebook is 0.015 WORSE than his
+  0.942 one on the same 5-fold CV => public notebooks are tuned to the public LB; expect a private shake-up against them.
+  hengck23 suggests online test-time training and "smart encoding" of submissions to probe the test distribution (the
+  encoding part is a grey area we will not use; test-time adaptation itself is legal and is our §10a B5).
+- Mark (7th) asks "why train the UNet for >100 epochs?" - a hint that top teams train long (only possible with dense labels).
+- Division thread (739516): nearest-parent candidate graph covers 88% of the 151 GT forks vs 99.7% of continuation edges;
+  candidate recall is the division bottleneck (matches our divranker finding).
+- "Post-processing plateau at 0.942" (740103), no answers: everyone hits the same wall.

@@ -1,14 +1,11 @@
 kaggle.json
 *.zarr/
 *.geff/
-/.venv/
-/outputs/
-/train/
-/test/
-/*.log
 /biohub-cell-tracking-during-development/
 experiments/**/tracking_repo/
 experiments/**/secondary_seed_weights/
 experiments/**/train_repo/
 __pycache__/
 *.pyc
+experiments/**/predictions.zip
+experiments/**/*.pth

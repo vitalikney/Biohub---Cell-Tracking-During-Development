@@ -1,0 +1,10 @@
+{
+ "name": "exp24_ft03B_gap65",
+ "base": "exp06_pipeline_ft03B",
+ "env": {
+  "BIOHUB_GAP_CLOSE_UM": "6.5",
+  "BIOHUB_VALIDATOR_ENABLE": "0"
+ },
+ "secondary_override": null,
+ "note": "probe 8: exp06 base, GAP_CLOSE_UM 5.0 -> 6.5 (direction probe)"
+}

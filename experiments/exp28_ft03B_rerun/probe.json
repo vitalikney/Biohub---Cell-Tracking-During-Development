@@ -1,0 +1,9 @@
+{
+ "name": "exp28_ft03B_rerun",
+ "base": "exp06_pipeline_ft03B",
+ "env": {
+  "BIOHUB_VALIDATOR_ENABLE": "0"
+ },
+ "secondary_override": null,
+ "note": "calibration probe: exp06 config unchanged, measures run-to-run LB variance"
+}
