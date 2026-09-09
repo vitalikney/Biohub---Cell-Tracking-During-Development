@@ -394,7 +394,9 @@ Pending right now:
   (exp03B + exp16) as primary if the public notebook's inference can average logits (check first); friend A's all-199
   scratch model as secondary = biggest lever (independent model = diversity in the blend). (3) Escape the 5/day limit:
   friend A's validator at >= 0.85 + friend B's local port of the post-processing -> sweep knobs locally, LB confirms.
-  (4) From 26 Sep: two final submissions = best LB config + one conservative variant.
+  (4) Schedule (user check 2026-09-09; final deadline 29 Sep 23:59 UTC): recipe experiments until 24 Sep; STEP 5 all-199
+  retrain of the winner starts by 24 Sep; second seed by 26 Sep; from 26 Sep only final-submission probes; 28-29 Sep pick
+  the two finals = best LB config + one conservative (honest-validator) variant.
 - Discussion re-read 2026-09-07 03:50 (research/discussions_summary.md, "Update 2026-09-07"): no new probe-worthy idea.
   Three signals that CONFIRM the plan: (a) linking gains do not transfer to LB even cross-embryo (Pavel: +0.02-0.04 on
   5 folds, +0.000 LB) -> spend probes on weights/detection, not linker tweaks; (b) 1st place tried synthetic volumes for

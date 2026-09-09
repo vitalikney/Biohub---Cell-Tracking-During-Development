@@ -149,7 +149,10 @@ STEP 4 decision: dense >= sparse + 0.02 on 44b6 (i.e. >= 0.70) -> dense is the t
 STEP 5 (only for a recipe that won on 44b6): retrain it on all 199 videos with the same settings, upload as `friend_a_full199_<recipe>/`,
   and tell Vitalii; he runs ONE LB probe with it as secondary (blend weight will be probed at 0.5 first, not 0.8).
 
-STEP 6 (from ~2026-09-20): freeze recipes; only a second seed of the winning recipe for the final blend.
+STEP 6 (from 2026-09-24): freeze recipes. Backward schedule from the final deadline 2026-09-29 23:59 UTC: final selection
+  + last control probes 28-29 Sep; second seed of the winning recipe on all 199 (1.5 days + 6 h scoring) must start by 26 Sep;
+  the winning recipe on all 199 (STEP 5, 1.5 days + probe) must start by 24 Sep => recipe experiments end 24 Sep. (If the
+  team drops the second seed, recipe selection may run until 26 Sep.)
 
 ## Rules
 - One experiment = one folder `experiments/local_<name>_expNN_<slug>/` with the command line / config and a results JSON; one row in `experiments/RESULTS.md` (state the video set: hold12 / divset36 / 48 / LOEO-44b6 / LB).
