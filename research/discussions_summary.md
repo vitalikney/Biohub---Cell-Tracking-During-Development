@@ -116,3 +116,20 @@
 - Division thread (739516): nearest-parent candidate graph covers 88% of the 151 GT forks vs 99.7% of continuation edges;
   candidate recall is the division bottleneck (matches our divranker finding).
 - "Post-processing plateau at 0.942" (740103), no answers: everyone hits the same wall.
+
+## Update 2026-09-10 (Code tab: all new notebooks pulled via API and diffed against the 0.941 base)
+Public scores read from the notebook pages (single-run notebooks unless noted):
+| notebook | LB | what it is |
+|---|---|---|
+| sjlee101/biohub-lf-dctta-v020 | **0.947** (v1) | Harmonic Fusion + `BIOHUB_DEEPCENTER_TTA=1` (8-view D4 averaging of the DeepCenter veto logits, the last single-view stage) + `SECONDARY_EDGE_FEATURE_TTA=1` weight 0.75 (secondary model's UNet features also TTA-averaged and blended into edge features) + DeepCenter safe-div threshold 0.25 -> 0.20 |
+| sjlee101/biohub-lf-sectta-w1 | 0.946 (v1) | Harmonic Fusion + secondary edge-feature TTA weight 1.0 only |
+| flexonafft/biohub-harmonic-fusion | 0.946 (v29) | 0.941 + primary edge-feature TTA + leaky PP sweep (max over 29 runs) |
+| reyhanksatria/"0.946 LB" | 0.944 | same lineage; title overstates |
+| analyticaobscura/biohub-lb-942 | 0.942 (v1) | byte-identical to Harmonic Fusion -> run-to-run noise ~0.004 |
+| busyaprime/"one knob" | 0.942 (v2) | 0.941 with det threshold 0.96; author reports a "0.948"-titled notebook scored 0.935 when re-run |
+| evgendvorkin, hanklin | 0.942 (titles) | knob combos (gap 5.8, relink 5.5, secondary edge weight 0.20-0.25) |
+| raykkretzschmar/harmonic-bidirectional-association | 0.915 | harmonic-mean fusion of forward/backward edge probabilities + many knob changes: clearly worse |
+Take-aways: every gain since 0.941 is inference-time TTA at more stages (edge features, secondary features, DeepCenter);
+knob combos stay at 0.942; a fusion-rule change lost 0.03. The sjlee101 stack is a principled, single-run 0.947 and does not
+touch the model -> it composes with our fine-tuned primary. Chosen to run: exp29 = sjlee101 lf-dctta-v020 verbatim
+(reproduce 0.947, validator + sweep on) and exp30 = the same + PRIMARY := exp03B, validator off (our candidate base).

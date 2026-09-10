@@ -180,6 +180,7 @@ ideas first, honest LOEO check before any LB probe, one change per probe, differ
 | P1 | B4 | friend A's all-199 scratch model (dense labels if B3 ready, else sparse with official-metric early stopping every 5 epochs) as SECONDARY in the blend | friend A -> Vitalii | 1-2 days on 5070 Ti + 1 probe | beats pilkwang secondary on LOEO 44b6 |
 | P1 | B5 (was 18) | test-time adaptation of the primary detector on the test embryos (DARTH-style self-training + photometric consistency, EMA teacher, node-count guard) | Vitalii | ~1 day engineering; ~30 min GPU per embryo inside the submission kernel | LOEO: adapt on 44b6 images without labels, score on 44b6 GT >= +0.005 |
 | P2 | B6 (was 7) | detector TTA / seed-ensemble as primary with dedup merge (exp03B + exp16 + pilkwang) | Vitalii | check how the public notebook runs inference first; +0.5 h | LOEO |
+| P1 | B17 | full TTA stack from sjlee101 (edge-feature TTA + secondary edge-feature TTA 0.75 + DeepCenter TTA + DC div thr 0.20), public 0.947 single run | Vitalii | exp29 (verbatim) + exp30 (+exp03B primary) kernels running 2026-09-10 | LB probes #11/#12 |
 | P2 | B16 | edge-feature TTA (`BIOHUB_EDGE_FEATURE_TTA=1`, from the public 0.946/0.942 forks: average UNet features over the 8 TTA views before edge prediction) | Vitalii / friend B | inference-only patch, exists in `$TMP/pub/biohub-harmonic-fusion` cell 4; unmeasurable on LB at +-0.003 noise -> judge on the honest validator with friend B's port; adopt for the final if >= 0 there | LOEO |
 | P2 | B7 (was 5) | ignore-unlabelled / nnPU detection loss, neighbourhood-softmax peak loss | friend A | patch train_patches.py; 45 min per fine-tune | LOEO |
 | P2 | B8 (was 10) | parent-offset / movement-vector head as edge feature + gap-closing prior (linajea, ELEPHANT) | friend A | 1 h fine-tune + linker feature | LOEO |
@@ -348,6 +349,14 @@ Pending right now:
   score is possible for a full-199 model (it saw 44b6); the only test is the LB. Probe folder READY (not pushed):
   `experiments/exp27_ft03B_sec-friendA21` = exp06 base + SECONDARY := friend_a_full199_ep21 (§10a B4). Awaiting the
   user's go: GIVEN 23:15 -> probe #10 = 0.920 (-0.025, dropped). No more blind probes of friend A's all-199 checkpoints (ep30 included)
+- 2026-09-10 16:00 NEW PUBLIC BASE CANDIDATE (research/discussions_summary.md "Update 2026-09-10"): sjlee101/biohub-lf-dctta-v020
+  = public 0.947 in ONE run: Harmonic Fusion + DeepCenter TTA (8-view averaging of the veto model) + secondary edge-feature TTA
+  (weight 0.75) + DC safe-div threshold 0.20. Inference-only, no model change -> composes with exp03B. Kernels pushed 15:50 MSK:
+  exp29 = verbatim (validator+sweep on, ~70 min) to reproduce 0.947; exp30 = + PRIMARY_OVERRIDE exp03B, validator off (~30 min).
+  Submit both when COMPLETE (probes #11, #12; 5 slots today). Decision: exp30 >= 0.948 -> exp30 becomes the new base for the
+  final (all later probes on it); exp30 <= exp29 -> the fine-tuned primary does not compose with the TTA stack, keep whichever
+  is higher as final candidate 1. Remember the +-0.003 run-to-run noise: treat < 0.005 differences as ties.
+  Other new notebooks: 0.942-0.944 knob combos (nothing new), rayk's harmonic-mean edge fusion 0.915 (rejected).
 - 2026-09-09 16:30 FRIEND A STEP 1 DONE (branch merged; `experiments/local_friend_a_exp02_loeo_scratch_20ep/`, dataset
   `friend_a_exp02_loeo20/`): scratch on 126 6bba -> official metric on 12 unseen 44b6 videos, cosine 1e-4 -> 1e-5:
   ep5 0.6635 (node recall 0.877, N/N_est 0.99) | ep10 0.5547 (recall 0.687, N/N_est 0.82 - mid-run instability) |
