@@ -54,30 +54,32 @@ Goal: run the public 0.941 pipeline locally on the 12 LOEO 44b6 videos and expos
 5. Expected cost on a 5070: GPU stages ~30-40 min for 12 videos (two UNets + DeepCenter + ILP), then each knob sweep
    is minutes on CPU. First check request: exp23 (fine-tuned seed314159 secondary) vs the pilkwang secondary.
 
-**Friend B — order of work (revised 2026-09-10 18:00 after the audit in CONTEXT §14). Self-contained.**
+**Friend B — order of work (revised 2026-09-10 21:30; supersedes the 18:00 version). Self-contained.**
 
-Why the revision: on the LB only two kinds of change have transferred - fine-tuned weights (+0.004) and inference-time TTA
-stacks (+0.006, public 0.947). A from-scratch model must beat pilkwang's 50-epoch model to help and is at 0.68 honest; with
-the recipe freeze on 24 Sep that is a long shot. So dense pseudo-labels are now used to FINE-TUNE pilkwang, not to train
-from scratch. Scratch runs become optional research.
+What changed since 18:00: Vitalii already probed the first TTA-stack variants on the LB (probes 11-14: exp30 = 0.947 stack +
+exp03B primary; exp31 = + Z-flip TTA; exp32 = + secondary := exp23; exp29 = public 0.947 verbatim), so those are no longer
+"first customers" for the local port - they are its CALIBRATION SET. Friend A's dense pipeline (`friend-a-dense-pipeline.ipynb`,
+`tools/build_dense_gt.py`) produces the teacher for the 126 6bba + 12 44b6 videos; check the dataset before doing it again.
 
-STEP 1 (now, ~4 h GPU): teacher detections for all 199 train videos - unchanged (exp03B + seed314159 ensemble, det 0.965,
-  no ILP, `BIOHUB_ENSEMBLE_WEIGHTS`; output `predictions/teacher/split_0/<stem>.geff`; zip -> dataset `teacher_geff/`).
-  Coordinate with Friend A: whoever starts first does it; the other skips.
-STEP 2 (CPU, same day): dense training set `train_dense/` - unchanged (teacher UNION GT, dedupe 5 um GT wins, GT edges only,
-  zarr junctions, `dense_stats.csv`, `tools/build_dense_gt.py`, geff to the dataset as `train_dense_geff/`).
-STEP 3 (~1 h GPU per run, 12 GB is enough at batch 4 + grad ckpt): DENSE FINE-TUNE of the SECONDARY (pilkwang seed314159) on
-  6bba only: `--init-weights <seed314159 pth>`, `BIOHUB_DATA_DIR=train_dense`, `--max-iters 1200 --lr 5e-5 --det-loss bce
-  --max-detections 0 --seed 42`, split `experiments/_lib/loeo_train6bba_val44b6.json`. Score raw on the 12 44b6 videos (det 0.965 +
-  ILP, `tools/score_geffs.py`). References on the same videos: sparse fine-tune of the primary = 0.8825 (exp11 B), pretrained
-  primary 0.8798, pretrained secondary 0.8691 (rows in RESULTS.md). Also run the SPARSE fine-tune of the secondary on 6bba
-  (same command with the real train dir) so the dense-vs-sparse delta is measured on the same model. Keep the dense variant only
-  if it beats sparse by >= 0.005 on 44b6. Folder `experiments/local_friend_b_exp01_dense_ft_secondary/`, RESULTS row.
-STEP 4 (CPU + short GPU, in parallel with 3): local port of the public pipeline post-processing ('Friend B start kit' above).
-  Its value went UP: the TTA stack variants (Z-flip views, secondary edge-TTA weight 0.5/0.75/1.0, DeepCenter threshold,
-  replacing rot90/transpose views by the training-consistent axis-flip group) can be compared locally on cached graphs
-  instead of one LB slot each. First customers: exp31 (Z-flip) and exp32 (secondary exp23) configs.
-STEP 5 (optional research, only if 1-4 are done): dense scratch run on 6bba (20 epochs) - the old bet, now low priority.
+STEP 1 (only if the dataset `vitaliineibauer/biohub-ft-weights` still has NO `teacher_geff/` and `train_dense_geff/` when you start):
+  teacher detections (exp03B + seed314159 ensemble, det 0.965, no ILP, `BIOHUB_ENSEMBLE_WEIGHTS`) for the 138 videos of
+  `experiments/_lib/loeo_train6bba_val44b6.json` (126 train + 12 holdout). If Friend A's folders exist: skip, download them.
+  The remaining 61 44b6 videos are needed only for the final all-183 fine-tune - do them last (STEP 5).
+STEP 2 (CPU): `train_dense/` with `tools/build_dense_gt.py` (teacher UNION GT, dedupe 5 um GT wins, GT edges only, zarr junctions,
+  `dense_stats.csv`). Skip if `train_dense_geff/` exists.
+STEP 3 (~1 h GPU per run; 12 GB: batch 4 + grad checkpointing): fine-tune the SECONDARY (pilkwang seed314159) on 6bba ONLY, twice:
+  (a) sparse (real train dir) and (b) dense (`BIOHUB_DATA_DIR=train_dense`, `--max-detections 0`); both `--init-weights <seed314159 pth>
+  --max-iters 1200 --lr 5e-5 --det-loss bce --seed 42`, split `loeo_train6bba_val44b6.json`. Score both raw on the 12 44b6 videos
+  (det 0.965 + ILP, `tools/score_geffs.py`): score, edge_jaccard, node_recall, N_pred/N_est. Note: exp23 in the dataset is the
+  sparse fine-tune of the same weights on 183 videos INCLUDING 44b6 - it is NOT a valid reference here, do (a) yourself.
+  Keep dense only if (b) >= (a) + 0.005. Folder `experiments/local_friend_b_exp01_dense_ft_secondary/`, RESULTS rows.
+STEP 4 (CPU + short GPU, in parallel with 3): local port of the public pipeline post-processing ('Friend B start kit' above) with
+  cached GPU stages. FIRST use = calibration: reproduce the four LB-probed configs of 2026-09-10 (exp29/exp30/exp31/exp32, folders
+  in `experiments/`, LB scores in RESULTS.md) on the 12 44b6 videos and report whether the local ranking matches the LB ranking.
+  THEN the next variants nobody has probed: secondary edge-feature TTA weight 0.5 and 1.0 (currently 0.75), DeepCenter safe-div
+  threshold 0.15 / 0.25 (currently 0.20), Z-flip in the DeepCenter TTA, and replacing the rot90/transpose views by the
+  training-consistent 8-axis-flip group. Report deltas vs exp30 on the 12 videos; Vitalii probes the best 1-2 on the LB.
+STEP 5 (later): teacher for the remaining 61 44b6 videos (for all-183 dense fine-tunes); optional dense scratch run only if 1-4 are done.
 
 **Friend A — order of work (revised 2026-09-10 18:00 after the audit in CONTEXT §14). Self-contained.**
 
