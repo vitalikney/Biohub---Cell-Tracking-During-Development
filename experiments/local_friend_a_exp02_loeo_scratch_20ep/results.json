@@ -360,6 +360,66 @@
     "videos": 12,
     "wall_seconds": 438.094000000041
   },
+  "step1b_train_fit_diagnostic": {
+    "status": "complete_official_own_train12",
+    "completed_at": "2026-09-10T02:50:19.368552+03:00",
+    "checkpoint": "epoch_020",
+    "checkpoint_sha256": "db95fa080f4313ab2f89ff1300879eb79b9adbf4e8b6d3bf737684040b354dcf",
+    "set": "12 own training videos from the 6bba side",
+    "selection": {
+      "method": "random sample without replacement, then sorted",
+      "seed": 42,
+      "source": "experiments/_lib/loeo_train6bba_val44b6.json:train",
+      "split_file": "step1b_train12_split.json",
+      "videos": [
+        "6bba_085bf656",
+        "6bba_207c6aaf",
+        "6bba_20852818",
+        "6bba_2540cd90",
+        "6bba_3c5691b6",
+        "6bba_43fea39d",
+        "6bba_4f99ce20",
+        "6bba_825bd1c6",
+        "6bba_ab78413d",
+        "6bba_afb141ff",
+        "6bba_c328f2fd",
+        "6bba_eebc57a5"
+      ]
+    },
+    "prediction": {
+      "det_threshold": 0.965,
+      "use_ilp": true,
+      "ilp_appearance_weight": 0.0,
+      "ilp_disappearance_weight": 2.0,
+      "ilp_division_weight": 1.2,
+      "post_processing": null
+    },
+    "smoke_test": {
+      "videos": 2,
+      "score": 0.8333723035807085,
+      "node_recall": 0.8550654599771549,
+      "passed": true
+    },
+    "metrics": {
+      "videos": 12,
+      "score": 0.8331736377635188,
+      "adj_edge_jaccard": 0.8331736377635188,
+      "edge_jaccard": 0.8454939759036144,
+      "division_jaccard": 0.0,
+      "division_tp": 0,
+      "division_fp": 0,
+      "division_fn": 17,
+      "node_recall": 0.9360939478984852,
+      "n_pred": 134989,
+      "n_est": 115430.0,
+      "n_pred_over_n_est": 1.1694446850905311
+    },
+    "comparison_to_loeo_44b6": {
+      "score_delta": 0.1528384018508729,
+      "node_recall_delta": 0.0830153232169266,
+      "interpretation": "Mixed diagnostic: the much better own-6bba result shows a substantial embryo-domain shift, while score below 0.9 and node over-counting show remaining sparse-label/calibration limitations. Continue to dense labels without changing the fixed STEP-4 recipe."
+    }
+  },
   "official_best_checkpoint_sha256": "db95fa080f4313ab2f89ff1300879eb79b9adbf4e8b6d3bf737684040b354dcf",
   "artifact_dir": "C:\\Projects\\CellTracker\\outputs\\local_friend_a_exp02_loeo_scratch_20ep\\active\\artifact",
   "weights_dataset": "vitaliineibauer/biohub-ft-weights",

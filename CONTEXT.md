@@ -307,6 +307,8 @@ validator), friend B (RTX 5070: inference/evaluation/pseudo-labels). Roles, onbo
 ## 14. Operational state for session resume (2026-09-06 18:00 MSK) — READ THIS FIRST AFTER A CONTEXT RESET
 <!-- friend-a-exp02-loeo20-result -->
 - 2026-09-09 Friend A STEP 1 complete: 20-epoch scratch 6bba->44b6 official best 0.6803 (epoch_020, edge 0.6809, recall 0.8531, N_pred/N_est 0.998); delta20-15 +0.0031; decision `STEP_4_dense_labels_sparse_limit`; weights `friend_a_exp02_loeo20/`, no LB submission.
+<!-- friend-a-step1b-result -->
+- 2026-09-10 Friend A STEP 1b complete: epoch-20 scored on a fixed seed-42 sample of 12 own 6bba training videos: official score 0.8332, edge 0.8455, node recall 0.9361, N_pred/N_est 1.169 (vs LOEO-44b6 0.6803/0.8531/0.998). Mixed diagnosis: a substantial 6bba->44b6 domain shift plus residual sparse-label/calibration limitations; proceed to the fixed dense STEP 4 without recipe changes. Smoke 2/2 passed; no LB submission.
 Pending right now:
 - LB probe #4 = kernel `vitaliineibauer/biohub-exp19-pub941-det095` v1 (public pipeline, det 0.95) = 0.940, scored 22:40 MSK
   (neutral, dropped). Check: `python -m kaggle competitions submissions biohub-cell-tracking-during-development`.
