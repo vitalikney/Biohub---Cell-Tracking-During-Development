@@ -1,0 +1,6 @@
+{
+ "base": "sjlee101/biohub-lf-dctta-v020 (public 0.947, v1)",
+ "primary_override": true,
+ "validator": false,
+ "note": "sjlee101 lf-dctta-v020 + PRIMARY := exp03B, validator off (no sweep)"
+}
