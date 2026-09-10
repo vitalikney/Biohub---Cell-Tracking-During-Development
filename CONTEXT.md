@@ -391,6 +391,13 @@ Pending right now:
   candidates within +-0.0001 of base, `relaxed9` -0.001. So probe #14's submission = sjlee stack + relink 5.5, whereas
   sjlee's own 0.947 run may have selected something else -> another source of run-to-run spread. Our exp30-32 runs have
   the sweep off (base config).
+- 21:30 friend B's tasks re-cut (TEAM.md + PROMPT_FRIEND_B.md): the TTA variants I already probed (exp29-32) become the
+  CALIBRATION set for his local port (does local ranking match LB?); his next variants = secondary edge-TTA weight 0.5/1.0,
+  DeepCenter threshold 0.15/0.25, Z-flip in DeepCenter TTA, axis-flip TTA group. Teacher/dense set only if friend A's pipeline
+  has not uploaded `teacher_geff/`/`train_dense_geff/` (dataset check 21:20: not there yet). exp23 is not a valid sparse
+  reference for his LOEO comparison (it saw 44b6); he runs the 6bba-only sparse fine-tune himself.
+- 21:35 friend A merged: his dense pipeline is redirected to PRIMARY fine-tunes (step1c teacher -> step2 variants -> step3 winner
+  on 183 videos), matching TEAM.md; the teacher is not in the dataset yet.
   Prompts for the friends' assistants now live in the repo: PROMPT_FRIEND_A.md, PROMPT_FRIEND_B.md (keep them current).
 - TEAM PLANS REVISED 18:00 (TEAM.md): dense labels now feed 1-hour FINE-TUNES of pilkwang (A: primary, B: secondary), honest
   check by the exp11 scheme; scratch 30-epoch runs and their LB probes are stopped. Friend B's local port gains priority as the
