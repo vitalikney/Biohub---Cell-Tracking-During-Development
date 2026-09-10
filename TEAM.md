@@ -87,12 +87,17 @@ demoted to research. Your 5070 Ti takes the primary side; Friend B takes the sec
 STEP 1b (20 min GPU): score the epoch-20 scratch model on 12 of its own TRAIN 6bba videos - unchanged (tells shift vs under-fit).
 STEP 1c (if `teacher_geff/` / `train_dense_geff/` are not in the dataset yet): make the teacher + `train_dense/` yourself
   (Friend B STEP 1-2). Coordinate in the chat so it is done once.
+STEP 1b RESULT (2026-09-10): own-train 6bba 0.833 vs unseen 44b6 0.680 -> embryo shift dominates. Your dense pipeline
+  (`friend-a-dense-pipeline.ipynb`, `tools/build_dense_gt.py`) is merged and is the tool for STEP 1c; its STEP 4 must be
+  redirected from scratch to the fine-tune below (add `--init-weights <pilkwang primary pth>`, replace epochs by
+  `--max-iters 1200`, lr 5e-5 constant; drop the >= 0.70 scratch branch and the all-199 scratch retrain).
 STEP 2 (~1 h GPU per run): DENSE FINE-TUNE of the PRIMARY (pilkwang support-pack `weights/unet_transformer/split_0`) on 6bba only:
   `--init-weights <pth>`, `BIOHUB_DATA_DIR=train_dense`, `--max-iters 1200 --lr 5e-5 --det-loss bce --max-detections 0 --seed 42`,
   LOEO split, raw score on the 12 44b6 videos. Reference: the SPARSE fine-tune of the same weights on the same split = 0.8825
   (exp11 B, RESULTS.md); re-run it yourself once so both numbers come from your machine. Variants, one at a time, each ~1 h:
   (a) dense 1200 it; (b) dense 2400 it; (c) dense 1200 it + `--det-neg-weight 0.1` (dense labels make a stronger negative
-  weight safe). Keep a variant only if it beats the sparse fine-tune by >= 0.005 on 44b6. Folder
+  weight safe); (d) dense 1200 it + `--aug-intensity` (cross-embryo robustness; STEP 1b showed the shift is the main gap).
+  Keep a variant only if it beats the sparse fine-tune by >= 0.005 on 44b6. Folder
   `experiments/local_friend_a_exp03_dense_ft_primary/`, RESULTS rows.
 STEP 3 (only for a winning variant): the same fine-tune on all 183 non-holdout videos (exp03B's split, `experiments/exp03_finetune_ab/config.py`
   holds the list) -> dataset `friend_a_ft_dense_primary/` -> Vitalii probes it as PRIMARY on the TTA base (one LB slot).

@@ -383,6 +383,15 @@ Pending right now:
 - TEAM PLANS REVISED 18:00 (TEAM.md): dense labels now feed 1-hour FINE-TUNES of pilkwang (A: primary, B: secondary), honest
   check by the exp11 scheme; scratch 30-epoch runs and their LB probes are stopped. Friend B's local port gains priority as the
   place to compare TTA-stack variants without LB slots.
+- 2026-09-10 18:30 friend A merged (branch): STEP 1b = the 20-epoch 6bba scratch model scores **0.833** on 12 of its own
+  training videos (recall 0.936, N/N_est 1.17) vs 0.680 on unseen 44b6 -> the 6bba->44b6 EMBRYO SHIFT (+0.15) dominates;
+  the sparse-label limit is secondary. Consequences: (1) models must see both embryos (fine-tunes on all 183 do; scratch on
+  6bba never will) - supports the revised fine-tune route; (2) cross-embryo robustness ideas move up: `--aug-intensity` /
+  scale augmentation as a fine-tune variant, and test-time adaptation on the test embryos (§10a B5, Vitalii); (3) the test
+  set = two further unseen embryos, so LB gaps between our models are largely shift, not capacity.
+  He also delivered a resumable dense pipeline (`friend-a-dense-pipeline.ipynb`, `tools/build_dense_gt.py`, teacher step,
+  atomic checkpoints) written for the OLD plan (scratch dense 20 ep -> all-199 scratch if >= 0.70). Asked to redirect its
+  STEP 4 to the revised plan: `--init-weights` pilkwang primary, `--max-iters 1200 --lr 5e-5` (keep teacher + builder as is).
 - 2026-09-09 16:30 FRIEND A STEP 1 DONE (branch merged; `experiments/local_friend_a_exp02_loeo_scratch_20ep/`, dataset
   `friend_a_exp02_loeo20/`): scratch on 126 6bba -> official metric on 12 unseen 44b6 videos, cosine 1e-4 -> 1e-5:
   ep5 0.6635 (node recall 0.877, N/N_est 0.99) | ep10 0.5547 (recall 0.687, N/N_est 0.82 - mid-run instability) |
