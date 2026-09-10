@@ -1,7 +1,7 @@
-# Friend A dense pipeline
+# Friend A dense scratch pipeline (historical, superseded)
 
-Run the root-level `friend-a-dense-pipeline.ipynb` from `C:\Projects\CellTracker` with the project Python 3.12 kernel.
-It is the sole entry point for STEP 1c, the user-requested 20-epoch dense STEP 4, and the conditional follow-up.
+Do not launch this experiment from scratch. The 2026-09-10 plan moved dense labels to primary pilkwang fine-tuning;
+the active root notebook is assembled from `experiments/local_friend_a_exp03_dense_ft_primary/`.
 
-Large teacher graphs, dense labels, checkpoints and predictions remain outside Git. Runtime results and the requested
-`dense_stats.csv` are written and committed by the notebook after each completed step.
+Keep `outputs/local_friend_a_exp03_loeo_dense_20ep/active/teacher_geff/`: the current notebook reuses its completed
+teacher graphs for STEP 1c. Large data remain outside Git.
