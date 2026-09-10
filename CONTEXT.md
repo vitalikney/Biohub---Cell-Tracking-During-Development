@@ -357,6 +357,12 @@ Pending right now:
   final (all later probes on it); exp30 <= exp29 -> the fine-tuned primary does not compose with the TTA stack, keep whichever
   is higher as final candidate 1. Remember the +-0.003 run-to-run noise: treat < 0.005 differences as ties.
   Other new notebooks: 0.942-0.944 knob combos (nothing new), rayk's harmonic-mean edge fusion 0.915 (rejected).
+  LESSON (user question 16:30): we missed the TTA stack ourselves because (1) detection TTA already existed in the base and I
+  treated TTA as "done" (queued only seed-ensembles, B6); (2) I lumped inference-compute changes with post-proc knobs when
+  closing the knob probes; (3) after the noise-floor finding I parked edge-feature TTA as "unmeasurable" while three stacked
+  TTA steps gave +0.006 together. Rule going forward: any inference stage that still sees ONE view (linker features,
+  secondary features, DeepCenter, ILP inputs) is a cheap, LB-transferable candidate - check those before any heuristic.
+  Hardware is not the reason: TTA runs inside the Kaggle kernel; the 5070/5070 Ti stay on training.
 - 2026-09-09 16:30 FRIEND A STEP 1 DONE (branch merged; `experiments/local_friend_a_exp02_loeo_scratch_20ep/`, dataset
   `friend_a_exp02_loeo20/`): scratch on 126 6bba -> official metric on 12 unseen 44b6 videos, cosine 1e-4 -> 1e-5:
   ep5 0.6635 (node recall 0.877, N/N_est 0.99) | ep10 0.5547 (recall 0.687, N/N_est 0.82 - mid-run instability) |
