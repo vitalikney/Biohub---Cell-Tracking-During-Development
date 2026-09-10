@@ -177,6 +177,7 @@ ideas first, honest LOEO check before any LB probe, one change per probe, differ
 | P1 | B1 | LB direction probes: OUTPUT_MIN_TRACK_LEN 4 (probe 6, pending) and secondary := exp08 (probe 7, pending); then min len 8 and gap-closing radius as the LAST post-proc probes | Vitalii | 25 min kernel each | none (LB is the test) |
 | P1 | B2 | fine-tune the pilkwang seed314159 SECONDARY with the exp03B recipe (exp23) -> probe as secondary (different init than exp03B/exp08). CAUTION after probe 7 (-0.016 with exp08 as secondary): a fine-tuned secondary shifts detection calibration vs the public post-proc thresholds; probe only if the LOEO check is clearly positive | Vitalii | 30 min train + 25 min kernel | LOEO on 44b6 with the full public pipeline (friend B's port) |
 | P1 | B3 (was 17) | dense pseudo-labels (teacher = exp03B + seed314159 ensemble on all 199 videos + GT) used to FINE-TUNE pilkwang primary (friend A) and secondary (friend B) - 1200 it runs, honest check by the exp11 scheme (6bba-only fine-tune -> 44b6 vs sparse fine-tune 0.8825); scratch-on-dense demoted to research (revised 2026-09-10) | friend B: teacher + dense set + secondary; friend A: primary | teacher ~4 h; each fine-tune ~1 h | dense beats sparse fine-tune by >= 0.005 on 44b6 -> all-183 fine-tune -> one LB probe on the TTA base |
+| P2 | B3b | temporal filtering of the teacher labels: keep points where primary and secondary agree within 3-5 um, persist >= 3 frames, fwd/bwd mutual match; keep teacher_score/disagreement; pseudo-edges from stable tracklets only after that (review 2026-09-10) | friend B (after the first dense fine-tune result) | CPU on cached teacher predictions | dense-filtered beats dense-raw on 44b6 |
 | P1 | B4 | friend A's all-199 scratch model (dense labels if B3 ready, else sparse with official-metric early stopping every 5 epochs) as SECONDARY in the blend | friend A -> Vitalii | 1-2 days on 5070 Ti + 1 probe | beats pilkwang secondary on LOEO 44b6 |
 | P1 | B5 (was 18) | test-time adaptation of the primary detector on the test embryos (DARTH-style self-training + photometric consistency, EMA teacher, node-count guard) | Vitalii | ~1 day engineering; ~30 min GPU per embryo inside the submission kernel | LOEO: adapt on 44b6 images without labels, score on 44b6 GT >= +0.005 |
 | P2 | B6 (was 7) | detector TTA / seed-ensemble as primary with dedup merge (exp03B + exp16 + pilkwang) | Vitalii | check how the public notebook runs inference first; +0.5 h | LOEO |
@@ -399,6 +400,28 @@ Pending right now:
 - 21:35 friend A merged: his dense pipeline is redirected to PRIMARY fine-tunes (step1c teacher -> step2 variants -> step3 winner
   on 183 videos), matching TEAM.md; the teacher is not in the dataset yet.
   Prompts for the friends' assistants now live in the repo: PROMPT_FRIEND_A.md, PROMPT_FRIEND_B.md (keep them current).
+- 2026-09-10 23:30 REVIEW of the dense fine-tune (external summary via the user) - checked against the code:
+  Linker loss (`compute_loss`): mask = rows with a GT child | columns with a GT parent; softmax over dim 0; BCE-focal on the
+  masked block. Targets are mapped from GT nodes onto DETECTIONS via `build_matched_edge_targets` (unmatched detections ->
+  target 0). VERDICT: the reviewer's reading of the mask is correct, the conclusion is not. A teacher node has no edges, so
+  its row/column is inactive; it only appears as a 0-target column inside a GT parent's row - but the SAME nucleus already
+  appears there as an unmatched detection in sparse-GT training (target 0 as well). Dense labels therefore change NOTHING in
+  the edge supervision; they only add detection positives. No hidden "linker degradation" mechanism; the running dense
+  baseline is a valid A/B and needs no provenance masking for correctness. (Only division daughters that are unannotated are
+  wrongly negative - identical in both regimes.)
+  Still worth an A/B, as an experiment not a fix: two-stage "dense detector -> sparse linker recalibration". Implemented as
+  optional flags in `experiments/_lib/train_patches.py` (defaults unchanged, 33 patches apply + compile): `--edge-loss-weight`
+  (0 = detector-only) and `--freeze {linker,detector}` (optimizer over trainable params only). Recipe: stage A
+  `--init-weights <pilkwang> --freeze linker --edge-loss-weight 0 --max-iters 1200` on train_dense; stage B
+  `--init-weights <stageA> --freeze detector --max-iters 600` on the sparse train dir. Added as friend A variant (e).
+  Other review points: temporal filtering of pseudo-labels (primary/secondary agreement 3-5 um, >= 3-frame persistence,
+  fwd/bwd mutual match, keep teacher_score) - AGREE, queued as B3b (friend B/A after the first dense result); pseudo-EDGES
+  from stable tracklets - only after B3b; nnPU / masked-unknown detection loss = B7 (already queued, after the dense result);
+  softer intensity aug / background subtraction for the 6bba->44b6 shift - AGREE, variant (d) already uses `--aug-intensity`
+  with the old ranges -> friend A should halve the ranges (gain 0.8-1.25, offset +-0.1, gamma 0.8-1.25, no haze) - note added;
+  window-3 was not a Trackastra-style multi-frame LINKER test - AGREE (the transformer still links t->t+1 pairs), but
+  error decomposition says detection + fragmentation dominate, wrong association ~0, so a multi-frame linker stays P3;
+  parent-offset head for divisions = B8 (queued).
 - TEAM PLANS REVISED 18:00 (TEAM.md): dense labels now feed 1-hour FINE-TUNES of pilkwang (A: primary, B: secondary), honest
   check by the exp11 scheme; scratch 30-epoch runs and their LB probes are stopped. Friend B's local port gains priority as the
   place to compare TTA-stack variants without LB slots.

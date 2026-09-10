@@ -1,4 +1,4 @@
-# Промпт для ассистента Friend A (Sasyami, RTX 5070 Ti 16 ГБ) — актуален на 2026-09-10 20:00
+# Промпт для ассистента Friend A (Sasyami, RTX 5070 Ti 16 ГБ) — актуален на 2026-09-10 23:30
 
 Скопировать целиком в ассистента, запущенного в клоне репозитория (ветка `detector-baseline-v2`).
 
@@ -28,7 +28,11 @@
 1. плотные метки, 1200 итераций;
 2. плотные метки, 2400 итераций;
 3. плотные метки, 1200 итераций, `--det-neg-weight 0.1`;
-4. плотные метки, 1200 итераций, `--aug-intensity`.
+4. плотные метки, 1200 итераций, `--aug-intensity` с УМЕНЬШЕННЫМИ вдвое диапазонами (в train_patches.py: gain 0.8–1.25,
+   offset ±0.1, gamma 0.8–1.25, без haze; старые диапазоны были слишком агрессивными);
+5. двухстадийный: стадия A `--init-weights <pilkwang primary> --freeze linker --edge-loss-weight 0 --max-iters 1200` на train_dense,
+   затем стадия B `--init-weights <лучший чекпоинт стадии A> --freeze detector --max-iters 600 --lr 5e-5` на обычной папке train
+   (флаги `--freeze` и `--edge-loss-weight` уже есть в `experiments/_lib/train_patches.py` после `git pull`).
 Вариант считается победившим, если он лучше эталона 0 на 0.005 и больше.
 
 Папка `experiments/local_friend_a_exp03_dense_ft_primary/`, по строке в experiments/RESULTS.md на каждый прогон, короткая заметка

@@ -374,6 +374,63 @@ PATCHES = [
 ]
 
 
+# --- stage flags for "dense detector -> sparse linker recalibration" (2026-09-10, review of the dense fine-tune) ---
+#   --edge-loss-weight FLOAT   : multiplier on the linker (edge) loss; 0 = detector-only training
+#   --freeze {none,linker,detector}: linker = freeze model.transformer; detector = freeze model.unet + model.detect_head.
+#                                The optimizer is built over trainable parameters only. Defaults keep behaviour unchanged.
+STAGE_PATCHES = [
+    (
+        "    parser.add_argument(\"--init-weights\", type=str, default=None, help=\"Full model checkpoint to fine-tune from.\")\n",
+        "    parser.add_argument(\"--init-weights\", type=str, default=None, help=\"Full model checkpoint to fine-tune from.\")\n"
+        "    parser.add_argument(\"--edge-loss-weight\", type=float, default=1.0, help=\"Multiplier on the linker loss (0 = detector-only).\")\n"
+        "    parser.add_argument(\"--freeze\", choices=[\"none\", \"linker\", \"detector\"], default=\"none\",\n"
+        "                        help=\"Freeze the linker (transformer) or the detector (UNet + detect_head).\")\n",
+        "stage flags",
+    ),
+    (
+        "CHECKPOINT_EVERY = 0\n",
+        "CHECKPOINT_EVERY = 0\nEDGE_LOSS_WEIGHT = 1.0\nFREEZE = \"none\"\n",
+        "stage globals",
+    ),
+    (
+        "    global DET_LOSS_MODE, DET_SIGMA_UM, MAX_DETECTIONS, LR_SCHEDULE, MIN_LR, CHECKPOINT_EVERY, USE_AMP, NO_GRAD_CKPT, SCALER\n",
+        "    global DET_LOSS_MODE, DET_SIGMA_UM, MAX_DETECTIONS, LR_SCHEDULE, MIN_LR, CHECKPOINT_EVERY, USE_AMP, NO_GRAD_CKPT, SCALER, EDGE_LOSS_WEIGHT, FREEZE\n",
+        "stage global statement",
+    ),
+    (
+        "    CHECKPOINT_EVERY = int(args.checkpoint_every)\n",
+        "    CHECKPOINT_EVERY = int(args.checkpoint_every)\n"
+        "    EDGE_LOSS_WEIGHT = float(args.edge_loss_weight); FREEZE = args.freeze\n",
+        "stage globals from args",
+    ),
+    (
+        "        loss = edge_loss + det_loss_weight * det_loss\n",
+        "        loss = EDGE_LOSS_WEIGHT * edge_loss + det_loss_weight * det_loss\n",
+        "edge loss weight",
+    ),
+    (
+        "    n_params = sum(p.numel() for p in model.parameters() if p.requires_grad)\n",
+        "    if FREEZE == \"linker\":\n"
+        "        for _p in model.transformer.parameters():\n"
+        "            _p.requires_grad_(False)\n"
+        "    elif FREEZE == \"detector\":\n"
+        "        for _m in (model.unet, model.detect_head):\n"
+        "            for _p in _m.parameters():\n"
+        "                _p.requires_grad_(False)\n"
+        "    if FREEZE != \"none\":\n"
+        "        print(f\"FREEZE={FREEZE}: trainable params only\", flush=True)\n"
+        "    n_params = sum(p.numel() for p in model.parameters() if p.requires_grad)\n",
+        "freeze modules",
+    ),
+    (
+        "    optimizer = torch.optim.AdamW(model.parameters(), lr=lr)\n",
+        "    optimizer = torch.optim.AdamW([p for p in model.parameters() if p.requires_grad], lr=lr)\n",
+        "optimizer over trainable params",
+    ),
+]
+PATCHES = PATCHES + STAGE_PATCHES
+
+
 def apply_train_patches(script_path: Path) -> None:
     script_path = Path(script_path)
     src = script_path.read_text(encoding="utf-8")

@@ -98,7 +98,12 @@ STEP 2 (~1 h GPU per run): DENSE FINE-TUNE of the PRIMARY (pilkwang support-pack
   LOEO split, raw score on the 12 44b6 videos. Reference: the SPARSE fine-tune of the same weights on the same split = 0.8825
   (exp11 B, RESULTS.md); re-run it yourself once so both numbers come from your machine. Variants, one at a time, each ~1 h:
   (a) dense 1200 it; (b) dense 2400 it; (c) dense 1200 it + `--det-neg-weight 0.1` (dense labels make a stronger negative
-  weight safe); (d) dense 1200 it + `--aug-intensity` (cross-embryo robustness; STEP 1b showed the shift is the main gap).
+  weight safe); (d) dense 1200 it + `--aug-intensity` with HALVED ranges (edit train_patches: gain 0.8-1.25, offset +-0.1,
+  gamma 0.8-1.25, no haze; the old ranges were too aggressive); (e) two-stage: stage A `--init-weights <pilkwang primary>
+  --freeze linker --edge-loss-weight 0 --max-iters 1200` on train_dense, then stage B `--init-weights <stage A best>
+  --freeze detector --max-iters 600 --lr 5e-5` on the sparse train dir (flags exist in `experiments/_lib/train_patches.py`).
+  Note (code check 2026-09-10): dense labels do NOT change the linker supervision (teacher nodes have no edges and were already
+  0-target detections in sparse training), so (e) is an experiment, not a bug fix.
   Keep a variant only if it beats the sparse fine-tune by >= 0.005 on 44b6. Folder
   `experiments/local_friend_a_exp03_dense_ft_primary/`, RESULTS rows.
 STEP 3 (only for a winning variant): the same fine-tune on all 183 non-holdout videos (exp03B's split, `experiments/exp03_finetune_ab/config.py`
