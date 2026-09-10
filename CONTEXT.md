@@ -381,6 +381,8 @@ Pending right now:
   PROBE PLAN 2026-09-10/11 (5 slots/day): #11 exp29, #12 exp30, then #13 exp31 (Z-flip) and #14 exp32 (secondary exp23)
   on whichever of exp29/exp30 is the better base; kernels pushed as GPU slots free (max 2 concurrent).
   #11 SUBMITTED 2026-09-10 16:28 MSK: exp30 (id 56145113, pending). exp31 (Z-flip) kernel pushed 16:30; exp29 still running.
+  #12 SUBMITTED 2026-09-10 17:08 MSK: exp31 = exp30 + Z-flip TTA views (id 56145851, pending). exp32 (secondary := exp23)
+  kernel pushed 17:08; exp29 (verbatim, validator on) still running. 3 slots left today.
   Prompts for the friends' assistants now live in the repo: PROMPT_FRIEND_A.md, PROMPT_FRIEND_B.md (keep them current).
 - TEAM PLANS REVISED 18:00 (TEAM.md): dense labels now feed 1-hour FINE-TUNES of pilkwang (A: primary, B: secondary), honest
   check by the exp11 scheme; scratch 30-epoch runs and their LB probes are stopped. Friend B's local port gains priority as the
