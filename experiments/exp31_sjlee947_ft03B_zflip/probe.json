@@ -1,0 +1,4 @@
+{
+ "base": "exp30 (sjlee101 0.947 stack + exp03B primary)",
+ "change": "Z-flip TTA views added to the flip loop of primary and secondary UNet TTA (7 flip views + 2 rot90 + transpose = 11 views instead of 7); DeepCenter TTA unchanged"
+}

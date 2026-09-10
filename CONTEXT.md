@@ -363,6 +363,21 @@ Pending right now:
   TTA steps gave +0.006 together. Rule going forward: any inference stage that still sees ONE view (linker features,
   secondary features, DeepCenter, ILP inputs) is a cheap, LB-transferable candidate - check those before any heuristic.
   Hardware is not the reason: TTA runs inside the Kaggle kernel; the 5070/5070 Ti stay on training.
+- AUDIT of past conclusions (user 2026-09-10 17:00, "re-examine your results"):
+  STILL VALID: (1) post-proc KNOB probes are flat - all 6 single knobs were <= 0 (none positive to stack), and the public
+  knob-combo forks (busyaprime/evgendvorkin/hanklin) also sit at 0.942; (2) exp08 as secondary -0.016 and friend A ep21 as
+  secondary -0.025 are far outside noise; (3) clean pipeline 0.899 vs public 0.941; (4) linker gains do not transfer (7th
+  place confirms). WRONG/INCOMPLETE: (a) I closed "inference" together with "knobs" - TTA is extra compute, not a threshold,
+  and it stacks: 3 TTA stages = +0.006 public; (b) queue item 7 (TTA, from the survey, day 1) was never executed because
+  the base "already had TTA" - I never enumerated which stages were single-view; (c) "unmeasurable at +-0.003" is not a
+  reason to skip a principled step - stack several and measure the stack; (d) exp23 (fine-tuned secondary, the second step
+  of the fine-tune stack) has been idle 3 days waiting for a local check that is not coming. NEW STACK CANDIDATES found by
+  enumerating single-view stages against the TRAINING augmentation (augmentations.py flips Z, Y and X independently; the
+  public TTA uses only in-plane XY views): Z-flip TTA views for primary + secondary edge features (exp31, built);
+  exp23 as secondary on the TTA stack (exp32, built). Later: rot90/transpose views are NOT in the training distribution -
+  a training-consistent 8-axis-flip TTA group could replace them (exp33 candidate).
+  PROBE PLAN 2026-09-10/11 (5 slots/day): #11 exp29, #12 exp30, then #13 exp31 (Z-flip) and #14 exp32 (secondary exp23)
+  on whichever of exp29/exp30 is the better base; kernels pushed as GPU slots free (max 2 concurrent).
 - 2026-09-09 16:30 FRIEND A STEP 1 DONE (branch merged; `experiments/local_friend_a_exp02_loeo_scratch_20ep/`, dataset
   `friend_a_exp02_loeo20/`): scratch on 126 6bba -> official metric on 12 unseen 44b6 videos, cosine 1e-4 -> 1e-5:
   ep5 0.6635 (node recall 0.877, N/N_est 0.99) | ep10 0.5547 (recall 0.687, N/N_est 0.82 - mid-run instability) |

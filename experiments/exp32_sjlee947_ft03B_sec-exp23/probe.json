@@ -1,0 +1,4 @@
+{
+ "base": "exp30",
+ "change": "SECONDARY := exp23 (seed314159 fine-tuned 1200 it, exp03B recipe)"
+}
