@@ -1,0 +1,25 @@
+{
+  "entry_notebook": "friend-a-dense-pipeline.ipynb",
+  "plan_revision": "2026-09-10 20:00",
+  "initialization": "pilkwang primary",
+  "loeo_train_videos": 126,
+  "loeo_validation_videos": 12,
+  "batch_size": 4,
+  "epochs_per_variant": 1,
+  "learning_rate": 0.00005,
+  "learning_rate_schedule": "constant",
+  "seed": 42,
+  "max_detections": 0,
+  "variants": [
+    {"name": "sparse_1200", "data": "sparse", "max_iters": 1200, "det_neg_weight": 0.01},
+    {"name": "dense_1200", "data": "dense", "max_iters": 1200, "det_neg_weight": 0.01},
+    {"name": "dense_2400", "data": "dense", "max_iters": 2400, "det_neg_weight": 0.01},
+    {"name": "dense_1200_neg0p1", "data": "dense", "max_iters": 1200, "det_neg_weight": 0.1},
+    {"name": "dense_1200_aug", "data": "dense", "max_iters": 1200, "det_neg_weight": 0.01, "aug_intensity": true}
+  ],
+  "winning_delta": 0.005,
+  "step3_train_videos": 183,
+  "step3_weights_folder": "friend_a_ft_dense_primary",
+  "leaderboard_submission": false,
+  "scratch_training": false
+}
