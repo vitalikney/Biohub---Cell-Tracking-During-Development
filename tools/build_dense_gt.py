@@ -265,7 +265,10 @@ def build_one(
         shutil.rmtree(dense_path) if dense_path.is_dir() else dense_path.unlink()
 
     if not dense_path.exists():
-        added = add_teacher_nodes(gt, teacher, keep_mask)
+        # Keep ``gt`` immutable for the checks below.  ``bulk_add_nodes`` mutates
+        # an IndexedRXGraph in place, so build on a fresh graph instance.
+        dense_graph, _ = read_graph(gt_path)
+        added = add_teacher_nodes(dense_graph, teacher, keep_mask)
         if added != n_kept:
             raise RuntimeError(f"{dataset_id}: added {added} teacher nodes, expected {n_kept}")
         provenance = {
@@ -275,13 +278,13 @@ def build_one(
             "gt_wins": True,
             "edges": "competition GT only",
         }
-        dense_metadata = metadata_with_dense_bounds(gt_metadata, gt, provenance)
+        dense_metadata = metadata_with_dense_bounds(gt_metadata, dense_graph, provenance)
         temporary = output_dir / f".{dataset_id}.geff.building"
         if temporary.exists():
             if not temporary.resolve().is_relative_to(output_dir.resolve()):
                 raise RuntimeError(f"Refusing to remove unexpected temporary path: {temporary}")
             shutil.rmtree(temporary) if temporary.is_dir() else temporary.unlink()
-        gt.to_geff(temporary, geff_metadata=dense_metadata, overwrite=True)
+        dense_graph.to_geff(temporary, geff_metadata=dense_metadata, overwrite=True)
         temporary.replace(dense_path)
 
     dense, dense_metadata = read_graph(dense_path)
