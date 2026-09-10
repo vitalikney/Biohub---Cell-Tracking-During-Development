@@ -23,7 +23,8 @@ dense build, two validations, and upload. These are estimates; the notebook prin
 
 - Teacher inference is saved in 6-video chunks and dense GEFFs are saved per video.
 - Each completed fine-tune variant and official evaluation is recorded and skipped on rerun.
-- If interrupted inside a roughly one-hour variant, only that active variant restarts; earlier variants remain complete.
+- If interrupted inside a variant, only that active variant restarts; earlier variants remain complete. This loses at most
+  about 1 hour for a 1200-iteration run or about 2 hours for the 2400-iteration run.
 - Keep `outputs/local_friend_a_exp03_loeo_dense_20ep/active/` (the existing 138 teacher files),
   `outputs/local_friend_a_exp03_dense_ft_primary/active/`, and `train_dense/`.
 
