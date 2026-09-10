@@ -384,6 +384,8 @@ Pending right now:
   #12 SUBMITTED 2026-09-10 17:08 MSK: exp31 = exp30 + Z-flip TTA views (id 56145851, pending). exp32 (secondary := exp23)
   kernel pushed 17:08; exp29 (verbatim, validator on) still running. 3 slots left today.
   #13 SUBMITTED 2026-09-10 17:34 MSK: exp32 = exp30 + SECONDARY := exp23 (id 56146281, pending). 2 slots left; exp29 still running.
+  #14 SUBMITTED 2026-09-10 17:49 MSK: exp29 = sjlee101 verbatim, validator + sweep on (id 56146538, pending). 1 slot left today.
+  Scoring takes 5.5-7 h -> all four expected between 22:00 and 01:00 MSK.
   Prompts for the friends' assistants now live in the repo: PROMPT_FRIEND_A.md, PROMPT_FRIEND_B.md (keep them current).
 - TEAM PLANS REVISED 18:00 (TEAM.md): dense labels now feed 1-hour FINE-TUNES of pilkwang (A: primary, B: secondary), honest
   check by the exp11 scheme; scratch 30-epoch runs and their LB probes are stopped. Friend B's local port gains priority as the
