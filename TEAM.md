@@ -54,105 +54,53 @@ Goal: run the public 0.941 pipeline locally on the 12 LOEO 44b6 videos and expos
 5. Expected cost on a 5070: GPU stages ~30-40 min for 12 videos (two UNets + DeepCenter + ILP), then each knob sweep
    is minutes on CPU. First check request: exp23 (fine-tuned seed314159 secondary) vs the pilkwang secondary.
 
-**Friend B — order of work (updated 2026-09-08 07:30). Self-contained: an assistant given TEAM.md + CONTEXT.md §10a/§14 can execute it.**
+**Friend B — order of work (revised 2026-09-10 18:00 after the audit in CONTEXT §14). Self-contained.**
 
-Background: the team's main bet is DENSE pseudo-labels (CONTEXT §10a B3): detectors trained on the sparse GT (6% of nuclei
-labelled) collapse after 5-10 epochs because unlabelled nuclei act as negatives; the public pipeline's own detections
-(node recall 0.98 on GT) are a good dense teacher. Your GPU (5070, 12 GB) produces the teacher and runs the dense-label
-run on 6bba while Friend A runs the sparse one, so the sparse-vs-dense comparison exists a day earlier.
+Why the revision: on the LB only two kinds of change have transferred - fine-tuned weights (+0.004) and inference-time TTA
+stacks (+0.006, public 0.947). A from-scratch model must beat pilkwang's 50-epoch model to help and is at 0.68 honest; with
+the recipe freeze on 24 Sep that is a long shot. So dense pseudo-labels are now used to FINE-TUNE pilkwang, not to train
+from scratch. Scratch runs become optional research.
 
-STEP 1 (now, ~4 h GPU): teacher detections for all 199 train videos.
-  - Code: `tools/repo/` (support-pack scripts + src) with `experiments/_lib/predict_patches.py` applied
-    (`apply_predict_patches(Path("scripts/predict_unet_transformer.py"))`) so that `BIOHUB_ENSEMBLE_WEIGHTS` averages models.
-  - Weights: primary = `vitaliineibauer/biohub-ft-weights/exp03B`, extra = pilkwang seed314159
-    (`pilkwang/biohub-temporal-unet3d-seed314159-v1`, `weights/unet_transformer/split_0/edge_predictor_best.pth` + config.json).
-  - Command (from the repo copy, `PYTHONPATH=src`, `BIOHUB_DATA_DIR=<train>`, splits JSON = `[{"split":0,"train":[],"test":[all 199 stems]}]`):
-    `BIOHUB_ENSEMBLE_WEIGHTS=<seed314159 pth> python scripts/predict_unet_transformer.py --data-dir <train> --splits <json> --split 0
-     --weights <exp03B pth> --det-threshold 0.965 --method teacher` (NO `--use-ilp`; we only need nodes). ~1 min/video on a 5070.
-  - Output: `predictions/teacher/split_0/<stem>.geff` (nodes t,z,y,x). Zip -> Kaggle dataset `vitaliineibauer/biohub-ft-weights/teacher_geff/`.
+STEP 1 (now, ~4 h GPU): teacher detections for all 199 train videos - unchanged (exp03B + seed314159 ensemble, det 0.965,
+  no ILP, `BIOHUB_ENSEMBLE_WEIGHTS`; output `predictions/teacher/split_0/<stem>.geff`; zip -> dataset `teacher_geff/`).
+  Coordinate with Friend A: whoever starts first does it; the other skips.
+STEP 2 (CPU, same day): dense training set `train_dense/` - unchanged (teacher UNION GT, dedupe 5 um GT wins, GT edges only,
+  zarr junctions, `dense_stats.csv`, `tools/build_dense_gt.py`, geff to the dataset as `train_dense_geff/`).
+STEP 3 (~1 h GPU per run, 12 GB is enough at batch 4 + grad ckpt): DENSE FINE-TUNE of the SECONDARY (pilkwang seed314159) on
+  6bba only: `--init-weights <seed314159 pth>`, `BIOHUB_DATA_DIR=train_dense`, `--max-iters 1200 --lr 5e-5 --det-loss bce
+  --max-detections 0 --seed 42`, split `experiments/_lib/loeo_train6bba_val44b6.json`. Score raw on the 12 44b6 videos (det 0.965 +
+  ILP, `tools/score_geffs.py`). References on the same videos: sparse fine-tune of the primary = 0.8825 (exp11 B), pretrained
+  primary 0.8798, pretrained secondary 0.8691 (rows in RESULTS.md). Also run the SPARSE fine-tune of the secondary on 6bba
+  (same command with the real train dir) so the dense-vs-sparse delta is measured on the same model. Keep the dense variant only
+  if it beats sparse by >= 0.005 on 44b6. Folder `experiments/local_friend_b_exp01_dense_ft_secondary/`, RESULTS row.
+STEP 4 (CPU + short GPU, in parallel with 3): local port of the public pipeline post-processing ('Friend B start kit' above).
+  Its value went UP: the TTA stack variants (Z-flip views, secondary edge-TTA weight 0.5/0.75/1.0, DeepCenter threshold,
+  replacing rot90/transpose views by the training-consistent axis-flip group) can be compared locally on cached graphs
+  instead of one LB slot each. First customers: exp31 (Z-flip) and exp32 (secondary exp23) configs.
+STEP 5 (optional research, only if 1-4 are done): dense scratch run on 6bba (20 epochs) - the old bet, now low priority.
 
-STEP 2 (CPU, same day): build the dense training set `train_dense/` next to the real train folder.
-  - For each video: nodes = teacher nodes UNION GT nodes, deduplicated within 5 um (GT node wins, teacher node dropped);
-    edges = GT edges only (re-mapped to the kept GT node ids); copy the GT geff metadata (incl. `estimated_number_of_nodes`).
-    Write `<stem>.geff` with `tools/repo/src/biohub_tracking/io.py` helpers (tracksdata graph -> `to_geff`).
-  - `<stem>.zarr` = directory junction to the real zarr (`mklink /J` on Windows), no copy.
-  - Checks per video (write `train_dense/dense_stats.csv`): GT node recall inside the dense set = 1.0 by construction;
-    teacher recall of GT within 5 um (expect ~0.98); N_dense / estimated_number_of_nodes (expect 0.9-1.1; flag outliers).
-  - Commit the builder script as `tools/build_dense_gt.py` + the stats CSV; the geff files go to the dataset as `train_dense_geff/`.
+**Friend A — order of work (revised 2026-09-10 18:00 after the audit in CONTEXT §14). Self-contained.**
 
-STEP 3 (~15 h GPU): dense-label validator run on your card.
-  - Same recipe as Friend A's STEP 1 (6bba-only split `experiments/_lib/loeo_train6bba_val44b6.json`, BCE, window 2, ds 1,4,4,
-    lr 1e-4 cosine -> 1e-5, seed 42, 20 epochs, `--checkpoint-every 5`) but `BIOHUB_DATA_DIR=train_dense` and `--max-detections 0`.
-    12 GB: `--batch-size 2` or 3 without grad checkpointing, or batch 4 with it (drop `--no-grad-ckpt`). `--num-workers 0` on Windows.
-  - Score every checkpoint on the 12 44b6 videos exactly like Friend A's STEP 1 (raw predict at det 0.965 + ILP, `tools/score_geffs.py`),
-    log score / edge_jaccard / node_recall / N_pred/N_est. Folder `experiments/local_friend_b_exp01_loeo_dense_20ep/`, RESULTS row,
-    best checkpoint to the dataset as `friend_b_exp01_loeo_dense/`.
-  - Decision: dense beats sparse (Friend A STEP 1) by >= 0.02 on 44b6 -> dense becomes the team recipe; Friend A retrains it on
-    all 199 (his STEP 5). If not, report the detection numbers (node_recall, N_pred/N_est) - they say whether the teacher was too
-    conservative (raise recall: det threshold 0.95 for the teacher) or too noisy.
+Same reasoning as for Friend B above: dense labels now feed FINE-TUNING of pilkwang (proven to transfer), scratch training is
+demoted to research. Your 5070 Ti takes the primary side; Friend B takes the secondary side.
 
-STEP 4 (CPU, in parallel with STEP 3): local port of the public 0.941 pipeline's post-processing (the 'Friend B start kit'
-  above, steps 1-5): cached GPU stages + CPU knob sweeps, stage table on the 12 44b6 videos. Needed to test any new secondary
-  locally before an LB slot (probe 7 = -0.016 and probe 10 = -0.025 were both blind). First customer: exp23 as secondary.
+STEP 1b (20 min GPU): score the epoch-20 scratch model on 12 of its own TRAIN 6bba videos - unchanged (tells shift vs under-fit).
+STEP 1c (if `teacher_geff/` / `train_dense_geff/` are not in the dataset yet): make the teacher + `train_dense/` yourself
+  (Friend B STEP 1-2). Coordinate in the chat so it is done once.
+STEP 2 (~1 h GPU per run): DENSE FINE-TUNE of the PRIMARY (pilkwang support-pack `weights/unet_transformer/split_0`) on 6bba only:
+  `--init-weights <pth>`, `BIOHUB_DATA_DIR=train_dense`, `--max-iters 1200 --lr 5e-5 --det-loss bce --max-detections 0 --seed 42`,
+  LOEO split, raw score on the 12 44b6 videos. Reference: the SPARSE fine-tune of the same weights on the same split = 0.8825
+  (exp11 B, RESULTS.md); re-run it yourself once so both numbers come from your machine. Variants, one at a time, each ~1 h:
+  (a) dense 1200 it; (b) dense 2400 it; (c) dense 1200 it + `--det-neg-weight 0.1` (dense labels make a stronger negative
+  weight safe). Keep a variant only if it beats the sparse fine-tune by >= 0.005 on 44b6. Folder
+  `experiments/local_friend_a_exp03_dense_ft_primary/`, RESULTS rows.
+STEP 3 (only for a winning variant): the same fine-tune on all 183 non-holdout videos (exp03B's split, `experiments/exp03_finetune_ab/config.py`
+  holds the list) -> dataset `friend_a_ft_dense_primary/` -> Vitalii probes it as PRIMARY on the TTA base (one LB slot).
+  Weights uploaded with config.json; RESULTS row with the 44b6 and hold12 numbers.
+STEP 4 (if time remains before 24 Sep): second seed of the winning fine-tune (seed 7) for a 3-model blend; scratch dense run
+  (old plan) only as research.
+STOP doing: scratch 30-epoch runs on all 199, resumes of them, probes of scratch checkpoints on the LB.
 
-STEP 5 (later): knob sweeps on the cached predictions (§10a B9/B10); FOCUS-3D (B11) only if the dense-label bet fails.
-
-**Friend A — order of work (updated 2026-09-08 07:00). Self-contained: an assistant given TEAM.md + CONTEXT.md §10a/§14 can execute it.**
-
-Background: LB probe 10 (your all-199 epoch-21 checkpoint as SECONDARY in the public pipeline) scored 0.920 vs 0.945.
-The 21-epoch scratch model is weaker than pilkwang's 50-epoch model, and a weaker model in the blend adds errors, not
-diversity. So no model goes to the LB again until it wins on an honest local comparison. Your job now is to build that
-comparison and then improve the model on it. The all-199 resume (21 -> 30) is NOT needed; if it is running, let it finish
-but do not upload/probe it.
-
-STEP 1 (now, ~15 h GPU): the honest validator = a from-scratch model that never saw embryo 44b6.
-  - Recipe: exactly your `local_friend_a_exp01_loeo_scratch` run (126 6bba videos from `experiments/_lib/loeo_train6bba_val44b6.json`,
-    BCE, window 2, ds 1,4,4, batch 4, lr 1e-4, seed 42, `--max-detections 1024`) but 20 epochs, `--lr-schedule cosine --min-lr 1e-5`,
-    `--checkpoint-every 5`. Output folder: `experiments/local_friend_a_exp02_loeo_scratch_20ep/`.
-  - For EACH checkpoint (5/10/15/20 + best): predict the 12 `holdout` videos of that JSON with
-    `scripts/predict_unet_transformer.py --det-threshold 0.965 --use-ilp --ilp-appearance-weight 0 --ilp-disappearance-weight 2 --ilp-division-weight 1.2`
-    (raw graphs, no post-processing), then `python tools/score_geffs.py <dir> --out <json>`. Record per checkpoint: score,
-    edge_jaccard, node_recall, N_pred/N_est (sum of predicted nodes / sum of estimated_number_of_nodes over the 12 videos).
-  - Reference on the SAME 12 videos, same predict command: (a) pilkwang PRIMARY `weights/unet_transformer/split_0` from the
-    support pack, (b) pilkwang SECONDARY from `pilkwang/biohub-temporal-unet3d-seed314159-v1` (`weights/unet_transformer/split_0`).
-    Both are leaky (they trained on 44b6) but they are the bar a candidate secondary must clear on the LB, so log them.
-    Known numbers: pilkwang primary raw on these 12 videos = 0.8798 (exp11 A); your 5-epoch model = 0.6706.
-  - Deliverables: `results.json` with the table, RESULTS.md row, CONTEXT.md one-line note, best checkpoint to the Kaggle dataset
-    as `friend_a_exp02_loeo20/` (edge_predictor_best.pth + config.json). Stop rule: if score(20) - score(15) < 0.005, 20 epochs is enough.
-
-STEP 1 RESULT (2026-09-09): best 0.6803 at epoch 20 (ep5 0.6635, ep10 0.5547, ep15 0.6772); node recall 0.85-0.88,
-  N_pred/N_est ~1.0; references pilkwang primary 0.8807 / secondary 0.8691. Sparse-GT limit -> STEP 4 next. Before that:
-STEP 1b (~20 min GPU): score the epoch-20 model with the official metric on 12 of its own TRAIN 6bba videos (same predict
-  command). Report score + node_recall. ~0.9 = embryo shift / fit to 6bba; ~0.7 = sparse-label under-fit. Add to results.json.
-STEP 1c (right after 1b, do NOT wait for anyone): if the dataset has no `teacher_geff/` / `train_dense_geff/` yet, produce
-  the teacher yourself - follow "Friend B STEP 1 + STEP 2" below for the 126 6bba training videos + the 12 44b6 holdout
-  videos only (138 videos, ~2.5 h on the 5070 Ti; the 44b6 teacher points are needed only for the dense_stats check, never
-  for training). Upload `teacher_geff/` and `train_dense_geff/` to the dataset and note it in CONTEXT §14 so Friend B skips it.
-STEP 2 (after step 1, and it decides the branch):
-  - If the best 6bba-only checkpoint reaches >= 0.85 on 44b6: the validator is usable. Go to step 3.
-  - If it stays < 0.80: sparse GT is the limit (unlabelled nuclei become negatives after ~10 epochs). Skip to step 4 (dense labels)
-    and do not spend more epochs on sparse GT.
-
-STEP 3 (only with a usable validator): one recipe change at a time, each = a new 6bba-only run scored on 44b6; keep a change only
-  if it beats the current best by >= 0.005 (12 videos, seed noise ~0.005). Order: (a) ignore-unlabelled / nnPU detection loss
-  (CONTEXT §10a B7), (b) parent-offset head (B8), (c) 40 epochs if the curve is still rising, (d) MAE pretraining (B13).
-  Judge DETECTION numbers first (node_recall, N_pred/N_est, edge FN caused by missed nodes); linker-only gains do not transfer to the LB.
-
-STEP 4 (as soon as `train_dense/` exists - from Friend B or from your own STEP 1c): the same
-  scratch recipe on DENSE labels (teacher points + GT points, GT wins within 5 um), `--max-detections 0`, 30 epochs, checkpoints
-  every 5, scored on 44b6 exactly as in step 1. This is the main bet: dense labels let the detector train 30+ epochs without
-  the sparse-GT collapse. Compare against step 1's best.
-
-STEP 4 decision: dense >= sparse + 0.02 on 44b6 (i.e. >= 0.70) -> dense is the team recipe, go to STEP 5 with it;
-  dense < sparse + 0.02 -> report node_recall and N_pred/N_est of both; then one cheap sparse-side test while we think:
-  `--det-neg-weight 0.001` (10x weaker penalty on unlabelled voxels) on 6bba-only, 10 epochs, scored on 44b6.
-STEP 5 (only for a recipe that won on 44b6): retrain it on all 199 videos with the same settings, upload as `friend_a_full199_<recipe>/`,
-  and tell Vitalii; he runs ONE LB probe with it as secondary (blend weight will be probed at 0.5 first, not 0.8).
-
-STEP 6 (from 2026-09-24): freeze recipes. Backward schedule from the final deadline 2026-09-29 23:59 UTC: final selection
-  + last control probes 28-29 Sep; second seed of the winning recipe on all 199 (1.5 days + 6 h scoring) must start by 26 Sep;
-  the winning recipe on all 199 (STEP 5, 1.5 days + probe) must start by 24 Sep => recipe experiments end 24 Sep. (If the
-  team drops the second seed, recipe selection may run until 26 Sep.)
 
 ## Rules
 - One experiment = one folder `experiments/local_<name>_expNN_<slug>/` with the command line / config and a results JSON; one row in `experiments/RESULTS.md` (state the video set: hold12 / divset36 / 48 / LOEO-44b6 / LB).
