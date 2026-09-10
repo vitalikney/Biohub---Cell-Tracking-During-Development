@@ -9,3 +9,5 @@ __pycache__/
 *.pyc
 experiments/**/predictions.zip
 experiments/**/*.pth
+experiments/**/submission.csv
+experiments/**/checkpoint_last.pth
