@@ -186,6 +186,9 @@ ideas first, honest LOEO check before any LB probe, one change per probe, differ
 | P1 | B5 (was 18) | test-time adaptation of the primary detector on the test embryos (DARTH-style self-training + photometric consistency, EMA teacher, node-count guard) | Vitalii | ~1 day engineering; ~30 min GPU per embryo inside the submission kernel | LOEO: adapt on 44b6 images without labels, score on 44b6 GT >= +0.005 |
 | P2 | B6 (was 7) | detector TTA / seed-ensemble as primary with dedup merge (exp03B + exp16 + pilkwang) | Vitalii | check how the public notebook runs inference first; +0.5 h | LOEO |
 | DONE | B17 | full TTA stack from sjlee101 -> A23 (0.947 reproduced, adopted as base); its exp03B / Z-flip / exp23 add-ons -> A24-A26 (no gain / negative) | Vitalii | exp33 deconfound pending | - |
+| P1 | B18 | weight soup primary: 0.5*pilkwang + 0.5*exp03B (same init, 1200-it fine-tune -> linear interpolation valid); halves the +3.2% node shift of exp03B; `soup03B_50/` uploaded 2026-09-11 | Vitalii | exp35 kernel pushed 09:55; 1 probe after exp33 scores | LB (one change on exp29) |
+| P1 | B19 | det-threshold re-calibration for a fine-tuned primary on the TTA stack (0.965 -> 0.97/0.975) so N_pred matches pilkwang's; mechanism: adj = J*(1-0.1*(N_pred-N_est)/N_est), +3.2% nodes = -0.003 = exactly exp30's loss | Vitalii | 1 probe, only if exp33 >= 0.946 (weights not worse at equal node count) | LB |
+| P2 | B20 | divisions: the biggest untapped term (div_J 0.05-0.23 locally, each +0.1 = +0.01 LB). Diagnosis 2026-09-11 on the 4 dummy videos (3 GT divisions, all 3 parents + 6 daughters DETECTED, 0 divisions predicted): parent linked to one daughter; the other daughter is an orphan (1) or already claimed by a neighbouring track passing 0.8-1.7 um from it (2). Not a threshold problem (symmetry tau 0.6 would also reject: pred |P-D1| 1.7 vs |P-D2| 8.6) -> needs a division classifier that can steal a daughter from a straight track; 151 GT events; hold12 public pipeline = 1 TP / 7 FP / 13 FN | friend A/B (research) | 2-3 days; LOEO on divisions only | LOEO div_J, then LB |
 | P2 | B16 | edge-feature TTA (`BIOHUB_EDGE_FEATURE_TTA=1`, from the public 0.946/0.942 forks: average UNet features over the 8 TTA views before edge prediction) | Vitalii / friend B | inference-only patch, exists in `$TMP/pub/biohub-harmonic-fusion` cell 4; unmeasurable on LB at +-0.003 noise -> judge on the honest validator with friend B's port; adopt for the final if >= 0 there | LOEO |
 | P2 | B7 (was 5) | ignore-unlabelled / nnPU detection loss, neighbourhood-softmax peak loss | friend A | patch train_patches.py; 45 min per fine-tune | LOEO |
 | P2 | B8 (was 10) | parent-offset / movement-vector head as edge feature + gap-closing prior (linajea, ELEPHANT) | friend A | 1 h fine-tune + linker feature | LOEO |
@@ -606,6 +609,16 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   Mechanism found in the kernel stats: every losing variant put 3-4% more nodes through det 0.965 than exp29 -> node-count
   bonus shrinks; det threshold re-calibration for the fine-tuned primary is the next mechanism-driven probe if exp33 <= 0.947.
   Lesson (again): write "tie" when the delta is inside the noise floor; a tie on a confounded base is not a verdict.
+- 2026-09-11 09:55 MSK "what other knobs" pass (user request). Inference/model-side ideas NOT yet tried on the exp29 base, ranked:
+  (1) B18 weight soup primary -> exp35 pushed (submit after exp33; both are "one change vs exp29"); (2) B19 det-threshold
+  re-calibration for the fine-tuned primary (node-count mechanism, quantified: adj factor 1-0.1*dN/N, exp30's +3.2% nodes
+  = -0.003 = its whole loss); (3) friend B's inference variants (secondary edge-TTA weight 0.5/1.0, DC safe-div threshold
+  0.15/0.25, Z-flip in DC TTA, axis-flip group) - LB-tuned by the author, low expected value; (4) B20 divisions = the
+  only big untapped term but not a knob (diagnosis above). Checked and rejected: linker window TTA (W=2, stride 1: every
+  pair is scored exactly once, no alternative context); temporal reversal TTA (not in training aug); the unused env
+  switches of the notebook (SINGLE_CHILD_REPAIR, DIVISION_GEOMETRY_FILTER, VELOCITY_WEIGHT, RETENTION 0.90) are
+  post-proc knobs = noise-level class, closed. Kernel exp35 runs; exp34 (Z-flip) runs; exp33 scoring (id 56160334).
+  Dataset biohub-ft-weights now has 7 weight folders (friend_a_* preserved; local mirror ignored by git).
 
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
