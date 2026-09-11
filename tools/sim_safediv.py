@@ -65,7 +65,7 @@ GLOBAL_FRAC_CAP = 0.00375
 EXIST_CHILD_MAXU = 10.0
 
 
-def add_safe_divisions(nodes, edges, scale, tau=0.6, max_um=9.0, sister_um=14.0, diverge_um=2.25):
+def add_safe_divisions(nodes, edges, scale, tau=0.6, max_um=9.0, sister_um=14.0, diverge_um=2.25, min_sister_um=0.0):
     """Return (added_edges, stats) for the gate applied to one prediction graph."""
     pos = {int(i): np.array([r.z, r.y, r.x]) * scale for i, r in nodes.iterrows()}
     tt = {int(i): int(r.t) for i, r in nodes.iterrows()}
@@ -82,7 +82,7 @@ def add_safe_divisions(nodes, edges, scale, tau=0.6, max_um=9.0, sister_um=14.0,
         by_t.setdefault(t, []).append(n)
     added, used_src, used_tgt = [], set(), set()
     global_cap = max(1, int(round(len(nodes) * GLOBAL_FRAC_CAP)))
-    stats = dict(mutual_rejected=0, divergence_rejected=0, symmetry_rejected=0, geometric=0)
+    stats = dict(mutual_rejected=0, divergence_rejected=0, symmetry_rejected=0, geometric=0, min_sister_rejected=0)
     for t in sorted(by_t):
         child_ids = by_t.get(t + 1, [])
         if not child_ids:
@@ -109,6 +109,9 @@ def add_safe_divisions(nodes, edges, scale, tau=0.6, max_um=9.0, sister_um=14.0,
                     continue
                 sister_dist = dist(ec, q)
                 if sister_dist > sister_um:
+                    continue
+                if sister_dist < min_sister_um:
+                    stats["min_sister_rejected"] += 1
                     continue
                 if q != mutual:
                     stats["mutual_rejected"] += 1
@@ -151,6 +154,8 @@ def main():
     ap.add_argument("--max-um", type=float, default=9.0)
     ap.add_argument("--sister-um", type=float, default=14.0)
     ap.add_argument("--diverge-um", type=float, default=2.25)
+    ap.add_argument("--min-sister-um", type=float, nargs="*", default=[0.0],
+                    help="lower bound on sister separation; real divisions have median 8.85 um, duplicate detections have near-zero")
     ap.add_argument("--baseline", action="store_true", help="also score the graphs unchanged")
     ap.add_argument("--out")
     a = ap.parse_args()
@@ -175,13 +180,14 @@ def main():
     tmp = Path(os.environ.get("TEMP", ".")) / "sim_safediv_tmp"
     tmp.mkdir(parents=True, exist_ok=True)
     results = []
-    for tau in ([None] if a.baseline else []) + list(a.tau):
+    combos = [(t, m) for t in (([None] if a.baseline else []) + list(a.tau)) for m in a.min_sister_um]
+    for tau, min_sis in combos:
         rows, tot = [], 0
         for name, (n, e) in cache.items():
             ds = dss[name]
             sc = np.array(ds.scale)
             extra = [] if tau is None else add_safe_divisions(
-                n, e, sc, tau, a.max_um, a.sister_um, a.diverge_um
+                n, e, sc, tau, a.max_um, a.sister_um, a.diverge_um, min_sis
             )[0]
             tot += len(extra)
             g2 = nx.DiGraph()
@@ -203,9 +209,10 @@ def main():
             )
         s = summarise(rows)
         print(
-            "tau=%s: score=%.4f adj_edge=%.4f div_J=%.4f tp/fp/fn=%d/%d/%d added=%d"
+            "tau=%s min_sister=%s: score=%.4f adj_edge=%.4f div_J=%.4f tp/fp/fn=%d/%d/%d added=%d"
             % (
                 tau,
+                min_sis,
                 s["score"],
                 s["adj_edge_jaccard"],
                 s["division_jaccard"],
@@ -219,6 +226,7 @@ def main():
         results.append(
             {
                 "tau": tau,
+                "min_sister_um": min_sis,
                 "added": tot,
                 **{k: (float(v) if isinstance(v, (int, float)) else v) for k, v in s.items()},
             }

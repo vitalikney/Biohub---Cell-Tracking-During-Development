@@ -133,3 +133,78 @@ Take-aways: every gain since 0.941 is inference-time TTA at more stages (edge fe
 knob combos stay at 0.942; a fusion-rule change lost 0.03. The sjlee101 stack is a principled, single-run 0.947 and does not
 touch the model -> it composes with our fine-tuned primary. Chosen to run: exp29 = sjlee101 lf-dctta-v020 verbatim
 (reproduce 0.947, validator + sweep on) and exp30 = the same + PRIMARY := exp03B, validator off (our candidate base).
+
+## Update 2026-09-11 (discussion tab re-read; the division threads are the useful ones)
+
+**740573 "Division steps are not long steps" (Lê Quang Cảnh, base rates measured on the TRAINING LABELS, no model).**
+73 label files, 36 divisions, 25,661 continuation edges, every labelled edge spans exactly one timepoint.
+
+| quantity | n | median | IQR | p90 | p99 |
+|---|---|---|---|---|---|
+| continuation step | 25,661 | 1.724 um | 0.908-2.188 | 3.350 | 6.906 |
+| division (parent->daughter) step | 72 | 4.569 um | 3.300-6.214 | 7.081 | 10.619 |
+| sister separation | 36 | 8.849 um | 7.196-10.235 | 11.866 | 13.896 |
+
+Continuations sitting above a distance gate, per division admitted: 5 um 24:1, 7 um 30:1, 9 um 27:1, 10 um 38:1.
+=> The division IQR lies entirely inside the ordinary continuation range. A parent-distance gate wide enough for the
+median division admits ~30 continuations for each division it catches. **This is a base rate, not an overlap you can
+tune away** - independent confirmation of our own conclusion that the safe-division RANKER, not its gates, is the
+problem. The author's caveat: labels cover segments, not whole lineages (351 of 572 tracks start after frame 0), so
+the 36 divisions are a labelled subset and the short displacement is partly selection.
+
+**The one quantity that does separate is sister separation: median 8.85 um vs 1.72 um for continuations.** It is a
+property of a candidate PAIR, so it can only be used after the pair is proposed. DIRECT CONSEQUENCE FOR US: the public
+ranker sorts candidates by `parent_dist + 0.15 * sister_dist` ASCENDING, i.e. it prefers pairs whose two children are
+CLOSE together - the opposite of a real division, and exactly the signature of a duplicate detection. The gate has an
+upper bound on sister separation (14 um) and no lower bound. A minimum sister separation around the 25th percentile of
+real divisions (7.2 um) is a new, base-rate-backed knob that nobody has tried.
+
+**Trap flagged by the same author:** he first measured these steps between his own PREDICTED nodes. On seven divisions
+the longest parent-to-daughter step reads median 6.36 / max 7.37 um on labels but median 8.47 / max 13.65 um between
+the matched predicted nodes. A predicted node may sit up to 7 um from the label it matches and two such errors compound
+across one edge, so tuning a division gate on predicted positions calibrates your DETECTOR ERROR, not cell motion.
+Our `tools/sim_safediv.py` works on predicted positions - remember this when reading its absolute thresholds.
+
+**Appearance signal (hengck23 claim, measured by the topic author).** hengck23: "bright thin lines at time t are new
+cell divisions that happened a few frames before; very good clue". Measured on 5 films (8 parents, 16 daughters per
+offset, 299 ordinary nodes), patch ~5 x 3.7 x 3.7 um: peak intensity AUC 0.73 at the parent's split frame, 0.68/0.70/0.70
+for daughters at t+1..t+3; local contrast 0.55/0.65/0.69/0.64; intensity-weighted elongation 0.34/0.48/0.58/0.56 =
+chance. So brightness is a real but moderate signal and "thin" is not measurable at 1.625 um z spacing. Labelled
+divisions do NOT cluster in time (median spread 32 of 100 frames), contradicting "when you find one you find many".
+
+**ILP event weights vs the Ultrack reference.** Both zebrafish configs in royerlab/ultrack_supplementary use
+max_distance 10.0, max_neighbors 5 and small balanced event penalties (large_zebrafish: appear 0.002, disappear 0.001,
+division 0.001; sparse_zebrafish: all three 0.1). The public lineage we fork runs division 1.2, disappearance 1.5-2,
+appearance 0; the author computes that a fork can never be optimal at those values. Our probe 3 moved division weight
+1.2 -> 0.9 (neutral) - a 25% move, where the reference suggests one to three ORDERS OF MAGNITUDE.
+
+**External data with the Kaggle voxel scale.** hengck23 posted that
+`https://public.czbiohub.org/royerlab/ultrack/zebrafish_embryo.ome.zarr/` reports scale (1.625, 0.40625, 0.40625) -
+exactly ours - 522 timepoints, 505 x 2217 x 2170. The single-objective Zebrahub files are 1.24 x 0.439 x 0.439 and do
+NOT match. Ultrack also ships pretrained node detectors (`unet-daxi.pt`, `unet-simview.pt`). Freely and publicly
+available external data is explicitly allowed by the rules.
+
+**739516 "I measured my own division_jaccard (0.22)".** hikaggler ran the same pipeline with division creation off:
+LB 0.929 -> 0.907, so 0.022 = 0.1 x div_J => div_J ~ 0.22. A commenter correctly notes the ablation is confounded
+(parent->daughter edges count as edges too, so the delta splits between the edge and division terms) and points at
+the official `evaluate_datasets()` for an exact local split. His illustration is the useful part: two teams both at
+0.948 can need opposite work - div_J 0.30 needs adj_edge 0.918, div_J 0.15 needs 0.933. Our own official-metric div_J
+on 12 hold-out videos with the gate on is 0.111, so there is plausibly room to roughly double the division term.
+Same thread: a nearest-parent candidate graph (R ~ 9.9 um, K <= 10) covers only ~88% of the 151 GT division forks
+against ~99.7% of continuation edges - a candidate-recall ceiling before any classifier runs.
+
+**739685 "Problems with edge connection" - independent confirmation that linker gains do not transfer.**
+Mark (10th place): any smarter motion linker gives "an increase of exactly 0.001" while local CV moves 0.01-0.03.
+Yubo WANG: +0.012 on 5-fold CV -> +0.001 LB, and the public 0.946 notebook scored 0.015 WORSE than his own private
+0.942 notebook on the same 5-fold CV. This is exactly our finding, reported by people above us on the leaderboard.
+
+**739570 "Meta Trap, Private LB Shake-ups" and 740103 "Post-Processing Plateau?".** Community consensus: most of the
+leaderboard is post-processing the same public detections, so a large private shake-up is expected; "trust your local
+CV" (Mendrika Ramarlina, 146th). The plateau thread reports the same 0.942 wall with zero answers. Supports our plan
+of one public-config submission and one honest-validator submission.
+
+**What we take from this read (queued in CONTEXT §10a):**
+1. minimum sister separation in the safe-division gate (base rate 7.2-10.2 um vs ~0 for duplicates) - testable offline;
+2. re-rank division candidates on evidence (sister separation, parent brightness) instead of `parent_dist + 0.15*sister_dist`;
+3. ILP division weight 1.2 -> 0.1 or lower, i.e. the Ultrack scale, not our earlier 25% move;
+4. external Ultrack zebrafish volume at our exact voxel scale as extra division examples / pretraining.
