@@ -82,6 +82,13 @@ STEP 4 (CPU + short GPU, in parallel with 3): local port of the public pipeline 
   threshold 0.15 / 0.25 (currently 0.20), Z-flip in the DeepCenter TTA, and replacing the rot90/transpose views by the
   training-consistent 8-axis-flip group. Report deltas vs exp29 (the current base; exp30's fine-tuned primary did not
   help on the LB) on the 12 videos; Vitalii probes the best 1-2 on the LB.
+STEP 4b (CPU, cheap, do it whenever a GPU run is busy): division-gate sweep on ALL 199 videos with `tools/sim_safediv.py`
+  (new, 2026-09-11). On 12 videos it is useless - 14 GT divisions quantise the metric, one recovered division = +-0.004 score,
+  and the observed threshold spread (symmetry tau, parent radius, divergence) is 2 events wide. On all 199 videos there are
+  151 GT divisions, which is the first set that can actually resolve these knobs. Input = the teacher/prediction geffs you
+  produce in STEP 1-2. Report: score / div_J / TP-FP-FN per setting, and whether any setting beats the public one by more than
+  1.5 recovered divisions. Vitalii probes at most ONE winner on the LB. Known ceiling: the gate adds ~4 FP per TP, so if div_J
+  stays near 0.11-0.14 for every setting, say so and stop - the answer is then a division classifier, not a threshold.
 STEP 5 (later): teacher for the remaining 61 44b6 videos (for all-183 dense fine-tunes); optional dense scratch run only if 1-4 are done.
 
 **Friend A — order of work (revised 2026-09-10 18:00 after the audit in CONTEXT §14). Self-contained.**

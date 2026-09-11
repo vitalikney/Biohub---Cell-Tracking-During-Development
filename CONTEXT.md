@@ -187,8 +187,8 @@ ideas first, honest LOEO check before any LB probe, one change per probe, differ
 | P2 | B6 (was 7) | detector TTA / seed-ensemble as primary with dedup merge (exp03B + exp16 + pilkwang) | Vitalii | check how the public notebook runs inference first; +0.5 h | LOEO |
 | DONE | B17 | full TTA stack from sjlee101 -> A23 (0.947 reproduced, adopted as base); its exp03B / Z-flip / exp23 add-ons -> A24-A26 (no gain / negative) | Vitalii | exp33 deconfound pending | - |
 | P1 | B18 | weight soup primary: 0.5*pilkwang + 0.5*exp03B (same init, 1200-it fine-tune -> linear interpolation valid); halves the +3.2% node shift of exp03B; `soup03B_50/` uploaded 2026-09-11 | Vitalii | exp35 kernel pushed 09:55; 1 probe after exp33 scores | LB (one change on exp29) |
-| P1 | B19 | det-threshold re-calibration for a fine-tuned primary on the TTA stack (0.965 -> 0.97/0.975) so N_pred matches pilkwang's; mechanism: adj = J*(1-0.1*(N_pred-N_est)/N_est), +3.2% nodes = -0.003 = exactly exp30's loss | Vitalii | 1 probe, only if exp33 >= 0.946 (weights not worse at equal node count) | LB |
-| P2 | B20 | divisions: the biggest untapped term (div_J 0.05-0.23 locally, each +0.1 = +0.01 LB). Diagnosis 2026-09-11 on the 4 dummy videos (3 GT divisions, all 3 parents + 6 daughters DETECTED, 0 divisions predicted): parent linked to one daughter; the other daughter is an orphan (1) or already claimed by a neighbouring track passing 0.8-1.7 um from it (2). Not a threshold problem (symmetry tau 0.6 would also reject: pred |P-D1| 1.7 vs |P-D2| 8.6) -> needs a division classifier that can steal a daughter from a straight track; 151 GT events; hold12 public pipeline = 1 TP / 7 FP / 13 FN | friend A/B (research) | 2-3 days; LOEO on divisions only | LOEO div_J, then LB |
+| P1 | B19 | det-threshold re-calibration for a fine-tuned primary on the TTA stack (0.965 -> 0.97/0.975) so N_pred matches pilkwang's; mechanism: adj = J*(1-0.1*(N_pred-N_est)/N_est), +3.2% nodes = -0.003 = exactly exp30's loss | Vitalii | 1 probe, only if exp33 >= 0.946 (weights not worse at equal node count). PRIOR IS WEAK: threshold 0.93-0.985 was flat locally and probe 4 (0.965 -> 0.95) was flat on the LB, so the node-count gain may cancel against lost detections | LB |
+| P1 | B20 | divisions = the only big untapped term. LOCAL SWEEP 2026-09-11 (`tools/sim_safediv.py`, 12 hold-out videos, 14 GT divisions, raw-ILP graphs): turning the safe-division gate ON is worth **+0.010** (0.9469 -> 0.9567) but its ceiling is a 4:1 FP:TP ratio (3 TP / 13 FP), so div_J saturates at 0.11-0.14. Every THRESHOLD move (symmetry tau 0.3/0.45/0.6/0.8/1.0, parent radius 7.5/10.5, divergence 1.0/1.5/3.0) lands inside single-event noise: with 14 GT divisions one recovered division = +-0.004 score, and the whole observed spread is 2 events. Knob tuning is therefore CLOSED here too; the lever is a division CLASSIFIER that can steal a daughter from a straight track (diagnosis: of 3 missed GT divisions, parents and all daughters ARE detected; 1 daughter is an orphan with wildly asymmetric geometry, 2 are already claimed by a neighbouring track passing 0.8-1.7 um away) | friend A/B (research) | resolve on the FULL 199-video train set (151 GT divisions) once teacher predictions exist; then classifier | LOEO div_J, then LB |
 | P2 | B16 | edge-feature TTA (`BIOHUB_EDGE_FEATURE_TTA=1`, from the public 0.946/0.942 forks: average UNet features over the 8 TTA views before edge prediction) | Vitalii / friend B | inference-only patch, exists in `$TMP/pub/biohub-harmonic-fusion` cell 4; unmeasurable on LB at +-0.003 noise -> judge on the honest validator with friend B's port; adopt for the final if >= 0 there | LOEO |
 | P2 | B7 (was 5) | ignore-unlabelled / nnPU detection loss, neighbourhood-softmax peak loss | friend A | patch train_patches.py; 45 min per fine-tune | LOEO |
 | P2 | B8 (was 10) | parent-offset / movement-vector head as edge feature + gap-closing prior (linajea, ELEPHANT) | friend A | 1 h fine-tune + linker feature | LOEO |
@@ -619,6 +619,22 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   switches of the notebook (SINGLE_CHILD_REPAIR, DIVISION_GEOMETRY_FILTER, VELOCITY_WEIGHT, RETENTION 0.90) are
   post-proc knobs = noise-level class, closed. Kernel exp35 runs; exp34 (Z-flip) runs; exp33 scoring (id 56160334).
   Dataset biohub-ft-weights now has 7 weight folders (friend_a_* preserved; local mirror ignored by git).
+- 2026-09-11 10:30 MSK DIVISION KNOBS SWEPT LOCALLY AND CLOSED (new tool `tools/sim_safediv.py`: re-implements the
+  notebook's safe-division gate offline - existing-child/parent/sister radii, mutual NN, divergence, symmetry, caps,
+  ranking - applies it to prediction geffs and scores with the official metric; no DeepCenter veto offline, so it
+  over-adds and is only valid for COMPARING settings). Run on the 12 hold-out videos of exp23 (A_pretrained arm, raw
+  ILP graphs, 14 GT divisions):
+    gate OFF 0.9469 (div 0/0/14) | tau 0.3 0.9515 (1/6/13) | 0.45 0.9550 (2/9/12) | 0.6 (public) 0.9567 (3/13/11) |
+    0.8 0.9550 (3/17/11) | 1.0 0.9591 (4/15/10) | 1.4 0.9554 (4/21/10) | 2.0 0.9545 (4/24/10)
+    parent radius 7.5 -> 0.9573, 10.5 -> 0.9567 (at tau 0.6); divergence 1.0 -> 0.9577, 3.0 -> 0.9547 (at tau 0.8).
+  VERDICT: the response is JAGGED, not unimodal (0.8 sits BELOW 0.6, then 1.0 jumps above it) because 14 GT divisions
+  quantise the metric: one recovered division = +-0.004 score / +-0.03 div_J, and the full observed spread is 2 events.
+  No division threshold is resolvable on this set -> division knobs join the closed post-proc class; no LB probe.
+  What IS solid and new: the gate as a whole is worth +0.010, and its ceiling is the 4:1 FP:TP ratio -> the remaining
+  value is a division CLASSIFIER (B20), and any future knob claim must be sweept on all 199 videos (151 GT divisions).
+  CORRECTION to my own interim message to the user 10:10: I called the tau response "unimodal with a peak at 1.0" after
+  seeing only 5 points; the fuller sweep shows it is single-event noise. Same error class as the exp31 "negative" call:
+  state the resolution of the evidence before ranking configurations.
 
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
