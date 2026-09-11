@@ -87,10 +87,11 @@ STEP 4 (CPU + short GPU, in parallel with 3): local port of the public pipeline 
   in `experiments/`) on the 12 44b6 videos and report whether the local ranking matches the LB ranking, which is now known
   (scored 2026-09-11): exp29 0.947 > exp30 0.944 > exp31 0.941 > exp32 0.937. A port that reproduces this order (and the
   ~0.010 spread) is calibrated; if it ranks exp30-32 above exp29, tell Vitalii before running any variant.
-  THEN the next variants nobody has probed: secondary edge-feature TTA weight 0.5 and 1.0 (currently 0.75), DeepCenter safe-div
-  threshold 0.15 / 0.25 (currently 0.20), Z-flip in the DeepCenter TTA, and replacing the rot90/transpose views by the
-  training-consistent 8-axis-flip group. Report deltas vs exp29 (the current base; exp30's fine-tuned primary did not
-  help on the LB) on the 12 videos; Vitalii probes the best 1-2 on the LB.
+  THEN the ONE inference variant still unanswered: replace the rot90/transpose views by the training-consistent
+  8-axis-flip group. The others are already settled and must NOT be re-run - sjlee101 published his own forks of them and
+  every one is a tie with 0.947 (secondary edge-TTA weight 1.0 = 0.947, DC safe-div 0.25 = 0.947, sister radius 16 =
+  0.947, DC safe-div 0.15 = 0.946), and Vitalii's exp34 covers the Z-flip idea. Report the axis-flip delta vs exp29 (the
+  current base; exp30's fine-tuned primary did not help on the LB) on the 12 videos; Vitalii probes it if it wins.
 STEP 4b (CPU, cheap, do it whenever a GPU run is busy): division-gate sweep on ALL 199 videos with `tools/sim_safediv.py`
   (new, 2026-09-11). On 12 videos it is useless - 14 GT divisions quantise the metric, one recovered division = +-0.004 score,
   and the observed threshold spread (symmetry tau, parent radius, divergence) is 2 events wide. On all 199 videos there are

@@ -667,6 +667,19 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   0.949 -> ~rank 40, 0.950 -> ~rank 33, 0.953 -> ~rank 19. Top: 0.970, then 0.966, 0.966, 0.964, 0.963. 19 days to go.
   Public LB = 29% of test, so that plateau will scramble on the private split - all the more reason for final submission 2
   to be the honest-validator pick rather than a second public-LB config.
+- 2026-09-11 14:20 MSK FRIEND B's INFERENCE VARIANTS ARE ALREADY ANSWERED by the notebook's own author. sjlee101
+  published his own single-knob forks of the 0.947 stack and their public scores are visible:
+    biohub-lf-dctta020-sectta1 (secondary edge-feature TTA weight 0.75 -> 1.0) = 0.947
+    biohub-lf-dctta025-sectta1 (DeepCenter safe-div threshold 0.20 -> 0.25, with sectta1) = 0.947
+    biohub-lf-dctta020-sectta1-sister16 (sister radius 14 -> 16) = 0.947
+    biohub-lf-dctta-v015 (DeepCenter safe-div threshold 0.20 -> 0.15) = 0.946
+  All ties with the 0.947 base. That is 3 of the 4 variants I had queued for friend B (weights 0.5/1.0, thresholds
+  0.15/0.25) plus a sister-radius one, settled at zero cost to us. Only the axis-flip TTA group (replacing rot90 and
+  transpose by the training-consistent 8 axis flips) remains untested, and our own exp34 already tests the Z-flip half
+  of that idea. CONSEQUENCE: friend B's STEP 4 variant list is cut to the axis-flip group only; his calibration step
+  (reproduce exp29/30/31/32 locally) and the 199-video division sweep become his main work, and the division RANKER
+  becomes the team's highest-value research item. Lesson for probe planning: check whether the notebook's author has
+  already forked the knob before spending a slot or a friend's GPU day on it.
 
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
