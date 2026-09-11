@@ -264,7 +264,7 @@ ideas first, honest LOEO check before any LB probe, one change per probe, differ
   pending (kernel pushed; submit when COMPLETE). Purpose: probe #11 differed from #14 in TWO things (primary weights AND the
   sweep pick tight55, proxy +0.002); exp33 isolates the weights. exp33 >= 0.949 -> fine-tuned primary composes after all;
   <= 0.947 -> fine-tuned weights do not compose with the TTA stack, final candidate 1 = exp29 as is.
-  #16 2026-09-11 10:40 exp34 (exp29 realised config incl. tight55, pilkwang primary, + Z-flip views in both edge-feature TTA
+  #16 2026-09-11 09:40 exp34 (exp29 realised config incl. tight55, pilkwang primary, + Z-flip views in both edge-feature TTA
   loops = 12 views) = pending (kernel pushed; submit when COMPLETE). One change vs the submitted exp29. Rule: >= 0.950 real
   gain (adopt); 0.945-0.949 tie (keep the 8-view public group); <= 0.944 negative.
   RE-EXAMINATION of #11-#13 (2026-09-11, after the user's challenge) with the kernel outputs (run_stats + submission.csv scored
@@ -590,7 +590,7 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   Caveat on probe 11: exp30 ran with the sweep OFF (base pp config) while exp29's sweep picked tight55 (proxy +0.002), so
   probe 11 = two changes. Deconfound probe #15 = exp33 (`experiments/exp33_sjlee947_tight55_ft03B`: exp29 config +
   MOTION_RELINK_TIGHT_UM 5.5 hard-coded + PRIMARY := exp03B, validator off) - kernel pushed 09:15, ~30 min; SUBMIT WHEN
-  COMPLETE (id to be logged here). Rule: >= 0.949 -> weights compose, exp33 becomes candidate 1 and friend A's primary
+  COMPLETE -> SUBMITTED 2026-09-11 09:35 MSK as probe #15 (id 56160334, pending; 4 slots left). Rule: >= 0.949 -> weights compose, exp33 becomes candidate 1 and friend A's primary
   fine-tunes stay on track; <= 0.947 -> weights do not compose; the value of friend A's/B's fine-tunes then rests on the
   honest validator + final candidate 2 only, and further LB probes go to inference-side changes on exp29 (friend B's
   variants: secondary edge-TTA weight 0.5/1.0, DC threshold 0.15/0.25, axis-flip group) and to test-time adaptation (B5).
@@ -598,11 +598,11 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   exp29 reproducing 0.947 exactly already answers the run-to-run question for this base.
   Friend B's calibration set now has LB numbers: exp29 0.947 > exp30 0.944 > exp31 0.941 > exp32 0.937 (spread 0.010,
   ranking is the test of his local port). TEAM.md / PROMPT_FRIEND_B.md updated with the numbers.
-- 2026-09-11 10:40 MSK user challenge "re-examine exp31/exp32, maybe dropped wrongly like the TTA stack was": done, see §11
+- 2026-09-11 09:40 MSK user challenge "re-examine exp31/exp32, maybe dropped wrongly like the TTA stack was": done, see §11
   #12/#16 and the RE-EXAMINATION block. Corrections: exp31 was a TIE by my own noise rule (I had written "negative");
   the Z-flip is dimensionally right (imgs (B,W,Z,Y,X), -3 = Z; training flip_augment flips Z/Y/X independently) and the
   kernel log confirms 12 views. Probe #16 = exp34 (`experiments/exp34_sjlee947_tight55_zflip`: exp29 config + tight55 +
-  Z-flip, pilkwang primary) pushed 10:40, ~35 min; SUBMIT WHEN COMPLETE. exp33 still running. After both: 3 slots left today.
+  Z-flip, pilkwang primary) pushed 09:40, ~35 min; SUBMIT WHEN COMPLETE (monitor bp39sezlx). exp33 submitted (#15). After both: 3 slots left today.
   Mechanism found in the kernel stats: every losing variant put 3-4% more nodes through det 0.965 than exp29 -> node-count
   bonus shrinks; det threshold re-calibration for the fine-tuned primary is the next mechanism-driven probe if exp33 <= 0.947.
   Lesson (again): write "tie" when the delta is inside the noise floor; a tie on a confounded base is not a verdict.
