@@ -43,7 +43,11 @@ Living document. Everything needed to continue the work without the chat history
   when an endpoint matches a GT node linked elsewhere => edges/forks among UNANNOTATED cells are free.
 - adj_edge_J per video = J * (1 - 0.1*(N_pred - N_est)/N_est), weighted by GT edge count; fewer nodes than N_est is a
   BONUS (no ceiling). Dense 44b6 videos already get +3..7%.
-- Division J = TP/(TP+FP+FN) on genuine parent->2 daughters forks near GT divisions (patched metric). A one-to-one
+- Division J = TP/(TP+FP+FN) on genuine parent->2 daughters forks near GT divisions. OFFICIAL RULE (metrics.md of
+  github.com/royerlab/kaggle-cell-tracking-competition, verified 2026-09-11): local parent anchor (the predicted fork
+  must be a matched parent-side node or the immediate successor of one), two GT daughter lineages matched to two
+  DISTINCT predicted child branches, directed local topology, no merged branches, then a max-cardinality bipartite
+  pairing. Literally: "Merely sharing a weakly connected component is not sufficient." A one-to-one
   linker scores 0 here. On LB a good pipeline has div_J ≈ 0.2 (worth ~0.02).
 
 ## 5. Pipeline we build on ("clean pipeline")
@@ -188,7 +192,7 @@ ideas first, honest LOEO check before any LB probe, one change per probe, differ
 | DONE | B17 | full TTA stack from sjlee101 -> A23 (0.947 reproduced, adopted as base); its exp03B / Z-flip / exp23 add-ons -> A24-A26 (no gain / negative) | Vitalii | exp33 deconfound pending | - |
 | P1 | B18 | weight soup primary: 0.5*pilkwang + 0.5*exp03B (same init, 1200-it fine-tune -> linear interpolation valid); halves the +3.2% node shift of exp03B; `soup03B_50/` uploaded 2026-09-11 | Vitalii | exp35 kernel pushed 09:55; 1 probe after exp33 scores | LB (one change on exp29) |
 | P1 | B19 | det-threshold re-calibration for a fine-tuned primary on the TTA stack (0.965 -> 0.97/0.975) so N_pred matches pilkwang's; mechanism: adj = J*(1-0.1*(N_pred-N_est)/N_est), +3.2% nodes = -0.003 = exactly exp30's loss | Vitalii | 1 probe, only if exp33 >= 0.946 (weights not worse at equal node count). PRIOR IS WEAK: threshold 0.93-0.985 was flat locally and probe 4 (0.965 -> 0.95) was flat on the LB, so the node-count gain may cancel against lost detections | LB |
-| P1 | B20 | divisions = the only big untapped term. LOCAL SWEEP 2026-09-11 (`tools/sim_safediv.py`, 12 hold-out videos, 14 GT divisions, raw-ILP graphs): turning the safe-division gate ON is worth **+0.010** (0.9469 -> 0.9567) but its ceiling is a 4:1 FP:TP ratio (3 TP / 13 FP), so div_J saturates at 0.11-0.14. Every THRESHOLD move (symmetry tau 0.3/0.45/0.6/0.8/1.0, parent radius 7.5/10.5, divergence 1.0/1.5/3.0) lands inside single-event noise: with 14 GT divisions one recovered division = +-0.004 score, and the whole observed spread is 2 events. Knob tuning is therefore CLOSED here too; the lever is a division CLASSIFIER that can steal a daughter from a straight track (diagnosis: of 3 missed GT divisions, parents and all daughters ARE detected; 1 daughter is an orphan with wildly asymmetric geometry, 2 are already claimed by a neighbouring track passing 0.8-1.7 um away) | friend A/B (research) | resolve on the FULL 199-video train set (151 GT divisions) once teacher predictions exist; then classifier | LOEO div_J, then LB |
+| P1 | B20 | divisions = the only big untapped term. LOCAL SWEEP 2026-09-11, RE-SCORED WITH THE OFFICIAL METRIC (`tools/score_geffs_official.py`; 12 hold-out videos, 14 GT divisions, raw-ILP graphs): gate OFF 0.9469 (0/0/14) -> public tau 0.6 **0.9567** (3/13/11) -> tau 1.0 0.9553 (3/16/11) -> 1.4 0.9523 (3/22/11) -> 2.0 0.9517 (3/25/11). Under the official metric the public setting is the BEST tested and the response is monotone above it, so the gate thresholds are settled; the gate as a whole is worth +0.010 and its ceiling is a 4:1 FP:TP ratio. The lever is a division CLASSIFIER: the binding constraint is the RANKING (`parent_dist + 0.15*sister_dist` ascending picks the tightest pair = duplicate detections, and the ~5-slot per-frame budget is spent before a real division is reached), not the gates. Diagnosis: of 3 missed GT divisions all parents and daughters ARE detected; 1 daughter is an orphan with asymmetric geometry, 2 are claimed by a neighbouring track passing 0.8-1.7 um away | friend A/B (research) | resolve on the FULL 199-video train set (151 GT divisions); then a fork scorer that ranks on evidence | official metric div_J, then LB |
 | P2 | B16 | edge-feature TTA (`BIOHUB_EDGE_FEATURE_TTA=1`, from the public 0.946/0.942 forks: average UNet features over the 8 TTA views before edge prediction) | Vitalii / friend B | inference-only patch, exists in `$TMP/pub/biohub-harmonic-fusion` cell 4; unmeasurable on LB at +-0.003 noise -> judge on the honest validator with friend B's port; adopt for the final if >= 0 there | LOEO |
 | P2 | B7 (was 5) | ignore-unlabelled / nnPU detection loss, neighbourhood-softmax peak loss | friend A | patch train_patches.py; 45 min per fine-tune | LOEO |
 | P2 | B8 (was 10) | parent-offset / movement-vector head as edge feature + gap-closing prior (linajea, ELEPHANT) | friend A | 1 h fine-tune + linker feature | LOEO |
@@ -635,6 +639,34 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   CORRECTION to my own interim message to the user 10:10: I called the tau response "unimodal with a peak at 1.0" after
   seeing only 5 points; the fuller sweep shows it is single-event noise. Same error class as the exp31 "negative" call:
   state the resolution of the evidence before ranking configurations.
+- 2026-09-11 14:00 MSK **OUR LOCAL METRIC WAS THE WRONG ONE** (found while reading new public notebooks; verified against
+  the organisers' source, not taken on trust). `tools/repo/` is pilkwang's support-pack fork, and its
+  `division_metrics.py` credits a GT division to ANY predicted fork merely REACHABLE in the same weakly connected component
+  (`div_candidates |= visited & pred_div_nodes`). The official metric, metrics.md at
+  github.com/royerlab/kaggle-cell-tracking-competition (linked from the competition's Evaluation page), says in as many
+  words "Merely sharing a weakly connected component is not sufficient" and requires a local parent anchor plus two
+  distinct daughter branches. Edge-side code is IDENTICAL between the two (io.py and img_proc.py byte-for-byte), so only
+  the division term was affected - but score = adj_edge + 0.1*div_J, so every local score with division TPs was inflated.
+  MEASURED IMPACT on today's own sweep (same graphs, two metrics): at the public tau 0.6 both agree (3 TP), at tau 1.0 the
+  fork says 4 TP / 0.9591 and the official says 3 TP / 0.9553. The fork's extra TP REVERSED the ranking: tau 1.0 looked
+  like an improvement over the public setting and is actually worse than it. My 10:30 conclusion ("jagged, unresolvable")
+  is superseded: under the official metric the curve is clean and the public 0.6 is the best tested value.
+  FIXED: `tools/official/` = verbatim copy of the organisers' package `tracking_cellmot` (metrics, division_metrics, io,
+  img_proc, models, scripts/evaluate.py); `tools/score_geffs.py` now scores with it (old behaviour kept as
+  `tools/score_geffs_fork.py`, deprecated header); `tools/sim_safediv.py` switched over. ALL LOCAL NUMBERS WITH DIVISION
+  TPs PREDATING THIS ARE SUSPECT - in particular friend A's LOEO rows that reported division TPs (e.g. "div 1/31/14").
+  Rows where div was 0/0/N are unaffected, which is most of ours.
+  Context for the leaderboard: a public notebook (megayak, "The 0.966 Notebooks Used A Patched Metric Bug") reports that
+  the July public notebooks scoring 0.963-0.966 - their titles literally say "metric hack" - wired one hub node at
+  t=-1000 to every track root plus a chain of fake forks, which satisfied the old weakly-connected-component rule for
+  every division at once and drove div_J to ~1.0. Patched 2026-07-17 (commit aa65e90). Their claim about those notebooks
+  is THEIRS and unverified by us; what we verified independently is the metric difference above. Today's leaderboard
+  leaders (0.970 / 0.966 with submissions hours old) are scoring under the current metric, so their scores are real.
+- 2026-09-11 13:35 MSK leaderboard read: we are **160 / 3372** at 0.947 (silver), team D: Discipline. The 0.947 plateau is
+  the public-notebook crowd (ranks ~150 to well past 169 all at 0.947), so +0.001 = about 110 places: 0.948 -> ~rank 46,
+  0.949 -> ~rank 40, 0.950 -> ~rank 33, 0.953 -> ~rank 19. Top: 0.970, then 0.966, 0.966, 0.964, 0.963. 19 days to go.
+  Public LB = 29% of test, so that plateau will scramble on the private split - all the more reason for final submission 2
+  to be the honest-validator pick rather than a second public-LB config.
 
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.

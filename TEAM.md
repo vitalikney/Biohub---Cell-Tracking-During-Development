@@ -54,6 +54,15 @@ Goal: run the public 0.941 pipeline locally on the 12 LOEO 44b6 videos and expos
 5. Expected cost on a 5070: GPU stages ~30-40 min for 12 videos (two UNets + DeepCenter + ILP), then each knob sweep
    is minutes on CPU. First check request: exp23 (fine-tuned seed314159 secondary) vs the pilkwang secondary.
 
+**METRIC ALERT (2026-09-11, applies to BOTH friends, read before any local scoring).**
+`tools/repo/` is pilkwang's fork and its division metric is the PRE-PATCH one: it credits a ground-truth division to any
+predicted fork merely reachable in the same weakly connected component. The organisers removed that rule on 2026-07-17
+(metrics.md: "Merely sharing a weakly connected component is not sufficient"). The official package is now vendored at
+`tools/official/` and `tools/score_geffs.py` uses it - just `git pull` and re-run. Edge numbers are unaffected (io and
+image code are byte-identical); only division TPs change, and score = adj_edge + 0.1*div_J. Concretely, on one of my own
+sweeps the fork reported 4 division TPs where the official metric reports 3, which flipped which setting looked best.
+If you have ANY local row that reported division TPs, re-score it before drawing a conclusion from it.
+
 **Friend B — order of work (revised 2026-09-10 21:30; supersedes the 18:00 version). Self-contained.**
 
 What changed since 18:00: Vitalii already probed the first TTA-stack variants on the LB (probes 11-14: exp30 = 0.947 stack +

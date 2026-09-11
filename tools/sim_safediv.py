@@ -12,6 +12,12 @@ Usage:
     python tools/sim_safediv.py <geff_dir_or_glob> [--tau 0.3 0.6 1.0] [--max-um 9.0]
                                 [--sister-um 14.0] [--diverge-um 2.25] [--baseline]
 
+SCORING: uses the OFFICIAL metric package (tools/official, tracking_cellmot). Do not
+switch this back to tools/repo - that fork credits a GT division to any predicted fork
+merely reachable in the same weakly connected component, which the organisers patched
+out on 2026-07-17, and it changed the ranking of this very sweep (tau 1.0 looked like
+the best setting under the fork and is worse than the public 0.6 under the official one).
+
 WARNING on statistics: the 12-video hold-out set contains only 14 GT divisions, so a
 single recovered division moves the score by ~0.004 and div_J by ~0.03. Differences
 below ~0.01 on a set that small are single-event noise - sweep on the full 199-video
@@ -27,8 +33,8 @@ from pathlib import Path
 
 warnings.filterwarnings("ignore")
 ROOT = Path(__file__).resolve().parent
-sys.path.insert(0, str(ROOT / "repo" / "src"))
-sys.path.insert(0, str(ROOT / "repo" / "scripts"))
+sys.path.insert(0, str(ROOT / "official" / "src"))
+sys.path.insert(0, str(ROOT / "official" / "scripts"))
 sys.path.insert(0, str(ROOT))
 PROJECT_ROOT = ROOT.parent
 DATA = Path(
@@ -45,8 +51,8 @@ import tracksdata as td
 from scipy.spatial import cKDTree
 
 import postproc
-from biohub_tracking.io import open_dataset
-from biohub_tracking.metrics import (
+from tracking_cellmot.io import open_dataset
+from tracking_cellmot.metrics import (
     evaluate as compute_metric,
     node_recall,
     per_sample_metrics,
