@@ -165,9 +165,9 @@ ideas first, honest LOEO check before any LB probe, one change per probe, differ
 | A21 | OUTPUT_MIN_TRACK_LEN 6 -> 8 | LB probe 9 (exp25) | 0.944, -0.001: noise; with A19 (4 -> 0.943) the node-count bonus is not exploitable via track length |
 | A22 | secondary := friend A from-scratch all-199 epoch 21 | LB probe 10 (exp27) | **0.920, -0.025**: weaker than pilkwang secondary (4 dummy videos: -0.007, recall/edge FP worse); blend weight 0.8 amplifies it; needs honest raw comparison first |
 | A23 | sjlee101 full TTA stack verbatim (B17) | LB probe 14 (exp29) | **0.947 reproduced** -> ADOPTED as base / final candidate 1 |
-| A24 | exp03B primary on the sjlee TTA stack (sweep off) | LB probe 11 (exp30) | 0.944, -0.003 vs exp29: no gain; deconfound probe 15 (exp33) pending |
-| A25 | Z-flip views added to both edge-feature TTA loops | LB probe 12 (exp31) | 0.941, -0.003 vs exp30: negative, dropped |
-| A26 | secondary := exp23 (fine-tuned seed314159) on the TTA stack | LB probe 13 (exp32) | **0.937, -0.007**: negative, dropped; all three secondary swaps hurt |
+| A24 | exp03B primary on the sjlee TTA stack (sweep off) | LB probe 11 (exp30) | 0.944, -0.003 vs exp29: no gain; +3.2% nodes at det 0.965 (node-count bonus shrinks); deconfound probe 15 (exp33) pending; next: det threshold re-calibration 0.97/0.975 |
+| A25 | Z-flip views added to both edge-feature TTA loops (on the exp03B/sweep-off base) | LB probe 12 (exp31) | 0.941, -0.003 vs exp30 = tie (noise floor), not a negative; leaky local +0.010; RE-TEST on the clean exp29 base = probe 16 (exp34) |
+| A26 | secondary := exp23 (fine-tuned seed314159) on the TTA stack, with exp03B primary | LB probe 13 (exp32) | **0.937, -0.007**: negative (beyond noise), dropped; +3.9% nodes; untested with the pilkwang primary (queued low) |
 | A20 | GAP_CLOSE_UM 5.0 -> 6.5 | LB probe 8 (exp24) | 0.944, -0.001: noise; gap closing already saturated in the public pipeline |
 | A19 | OUTPUT_MIN_TRACK_LEN 6 -> 4 | LB probe 6 (exp21) | 0.943, -0.002: shorter tracks hurt; opposite direction (8) queued as probe 9 |
 | A18 | secondary weights := exp08 (fine-tune of the same primary as exp03B) | LB probe 7 (exp22) | **0.929, -0.016**: no diversity + post-proc thresholds tuned for the seed314159 secondary; keep pilkwang secondary |
@@ -253,8 +253,9 @@ ideas first, honest LOEO check before any LB probe, one change per probe, differ
   #11 2026-09-10 16:28 exp30 (sjlee101 0.947 TTA stack + PRIMARY := exp03B, validator off = base pp config) = **0.944**
   (scored 2026-09-11 ~02:00; -0.003 vs #14, tie by the noise rule but NO gain: the +0.004 of the fine-tuned primary on the
   0.941 base does not carry over to the TTA stack; confounded by the sweep pick, see #15).
-  #12 17:08 exp31 (exp30 + Z-flip views in both edge-feature TTA loops) = **0.941** (-0.003 vs exp30, -0.006 vs #14; NEGATIVE,
-  dropped: the public XY-only views are the right group even though training flipped Z).
+  #12 17:08 exp31 (exp30 + Z-flip views in both edge-feature TTA loops) = **0.941** (-0.003 vs exp30 = INSIDE the +-0.003 noise
+  floor -> a TIE, not a proven negative; my first write-up said "negative, dropped" - corrected 2026-09-11 after the user's
+  challenge. Tested only on top of the exp03B-primary/sweep-off base, never on exp29 itself -> re-test = #16 exp34).
   #13 17:34 exp32 (exp30 + SECONDARY := exp23) = **0.937** (-0.007 vs exp30; NEGATIVE, dropped: third secondary swap in a row
   that hurts - exp08 -0.016, friend A ep21 -0.025, exp23 -0.007; the seed314159 secondary + its tuned thresholds stay).
   #14 17:49 exp29 (sjlee101 verbatim, validator + sweep on -> tight55) = **0.947** (REPRODUCED the public score exactly ->
@@ -263,6 +264,23 @@ ideas first, honest LOEO check before any LB probe, one change per probe, differ
   pending (kernel pushed; submit when COMPLETE). Purpose: probe #11 differed from #14 in TWO things (primary weights AND the
   sweep pick tight55, proxy +0.002); exp33 isolates the weights. exp33 >= 0.949 -> fine-tuned primary composes after all;
   <= 0.947 -> fine-tuned weights do not compose with the TTA stack, final candidate 1 = exp29 as is.
+  #16 2026-09-11 10:40 exp34 (exp29 realised config incl. tight55, pilkwang primary, + Z-flip views in both edge-feature TTA
+  loops = 12 views) = pending (kernel pushed; submit when COMPLETE). One change vs the submitted exp29. Rule: >= 0.950 real
+  gain (adopt); 0.945-0.949 tie (keep the 8-view public group); <= 0.944 negative.
+  RE-EXAMINATION of #11-#13 (2026-09-11, after the user's challenge) with the kernel outputs (run_stats + submission.csv scored
+  with tools/csv2geff.py + tools/score_geffs.py on the 4 dummy test videos = train copies, leaky but identical for all):
+    exp29 raw nodes 125305, leaky local 0.8932 | exp30 129340 (+3.2%), 0.8936 | exp31 130220 (+3.9%), 0.9034 | exp32 130146 (+3.9%), 0.8969.
+    (a) MECHANISM for exp30/32/31 losing on the LB: all three put 3-4% MORE nodes than exp29 through the same det threshold
+    0.965 (the fine-tuned models are more confident; the extra TTA views too). The metric's node-count factor rewards fewer
+    nodes than the estimate (local ratio on 44b6_0b24845f -0.368 -> -0.245, adj 0.976 -> 0.964 with identical edges), so on
+    unseen embryos the surplus nodes eat the bonus. Cheap, mechanism-driven follow-up if exp33 <= 0.947: re-calibrate the det
+    threshold for the fine-tuned primary (0.965 -> 0.97/0.975) so its node count matches pilkwang's, ONE probe.
+    (b) The leaky local set ranks exp31 first (+0.010 over exp30, edge FP 116 -> 106, FN 86 -> 73 on 6bba_05db0fb1) while the
+    LB ranks it last-but-one: the same local-vs-LB contradiction as before (the 4 videos are training videos of exp03B/exp23).
+    Local numbers on these videos are NOT evidence for the LB in either direction.
+    (c) exp32 stays dropped for now: -0.007 is beyond the noise floor and it is the 4th secondary swap in a row that hurts; but
+    it was tested with exp03B as primary (both fine-tuned with the same recipe on the same 183 videos -> correlated errors).
+    exp23 as secondary with the PILKWANG primary is untested; queued behind exp34 (only if exp34/exp33 leave slots idle).
 
 ### 11a. LB-probe protocol (agreed 2026-09-06 10:30)
 - Cadence: **5 probes/day, no reserve** (user 2026-09-06 18:00, replaces the earlier 4+1). Daily limit per the API counter
@@ -580,6 +598,14 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   exp29 reproducing 0.947 exactly already answers the run-to-run question for this base.
   Friend B's calibration set now has LB numbers: exp29 0.947 > exp30 0.944 > exp31 0.941 > exp32 0.937 (spread 0.010,
   ranking is the test of his local port). TEAM.md / PROMPT_FRIEND_B.md updated with the numbers.
+- 2026-09-11 10:40 MSK user challenge "re-examine exp31/exp32, maybe dropped wrongly like the TTA stack was": done, see §11
+  #12/#16 and the RE-EXAMINATION block. Corrections: exp31 was a TIE by my own noise rule (I had written "negative");
+  the Z-flip is dimensionally right (imgs (B,W,Z,Y,X), -3 = Z; training flip_augment flips Z/Y/X independently) and the
+  kernel log confirms 12 views. Probe #16 = exp34 (`experiments/exp34_sjlee947_tight55_zflip`: exp29 config + tight55 +
+  Z-flip, pilkwang primary) pushed 10:40, ~35 min; SUBMIT WHEN COMPLETE. exp33 still running. After both: 3 slots left today.
+  Mechanism found in the kernel stats: every losing variant put 3-4% more nodes through det 0.965 than exp29 -> node-count
+  bonus shrinks; det threshold re-calibration for the fine-tuned primary is the next mechanism-driven probe if exp33 <= 0.947.
+  Lesson (again): write "tie" when the delta is inside the noise floor; a tie on a confounded base is not a verdict.
 
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
