@@ -75,16 +75,23 @@ STEP 3 (~1 h GPU per run; 12 GB: batch 4 + grad checkpointing): fine-tune the SE
   Keep dense only if (b) >= (a) + 0.005. Folder `experiments/local_friend_b_exp01_dense_ft_secondary/`, RESULTS rows.
 STEP 4 (CPU + short GPU, in parallel with 3): local port of the public pipeline post-processing ('Friend B start kit' above) with
   cached GPU stages. FIRST use = calibration: reproduce the four LB-probed configs of 2026-09-10 (exp29/exp30/exp31/exp32, folders
-  in `experiments/`, LB scores in RESULTS.md) on the 12 44b6 videos and report whether the local ranking matches the LB ranking.
+  in `experiments/`) on the 12 44b6 videos and report whether the local ranking matches the LB ranking, which is now known
+  (scored 2026-09-11): exp29 0.947 > exp30 0.944 > exp31 0.941 > exp32 0.937. A port that reproduces this order (and the
+  ~0.010 spread) is calibrated; if it ranks exp30-32 above exp29, tell Vitalii before running any variant.
   THEN the next variants nobody has probed: secondary edge-feature TTA weight 0.5 and 1.0 (currently 0.75), DeepCenter safe-div
   threshold 0.15 / 0.25 (currently 0.20), Z-flip in the DeepCenter TTA, and replacing the rot90/transpose views by the
-  training-consistent 8-axis-flip group. Report deltas vs exp30 on the 12 videos; Vitalii probes the best 1-2 on the LB.
+  training-consistent 8-axis-flip group. Report deltas vs exp29 (the current base; exp30's fine-tuned primary did not
+  help on the LB) on the 12 videos; Vitalii probes the best 1-2 on the LB.
 STEP 5 (later): teacher for the remaining 61 44b6 videos (for all-183 dense fine-tunes); optional dense scratch run only if 1-4 are done.
 
 **Friend A — order of work (revised 2026-09-10 18:00 after the audit in CONTEXT §14). Self-contained.**
 
 Same reasoning as for Friend B above: dense labels now feed FINE-TUNING of pilkwang (proven to transfer), scratch training is
 demoted to research. Your 5070 Ti takes the primary side; Friend B takes the secondary side.
+LB update 2026-09-11: on the new base (sjlee101 TTA stack, 0.947 reproduced) the exp03B primary gave 0.944, i.e. the +0.004 of
+the fine-tune on the old base did not carry over (deconfound probe exp33 pending). The bar for a fine-tuned primary is
+therefore higher than "beats exp03B on the honest split": it must beat exp03B clearly (>= +0.01 on the honest 12 44b6
+videos) to earn an LB probe; otherwise it goes to final candidate 2 (honest-validator pick) only.
 
 STEP 1b (20 min GPU): score the epoch-20 scratch model on 12 of its own TRAIN 6bba videos - unchanged (tells shift vs under-fit).
 STEP 1c (if `teacher_geff/` / `train_dense_geff/` are not in the dataset yet): make the teacher + `train_dense/` yourself

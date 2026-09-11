@@ -164,6 +164,10 @@ ideas first, honest LOEO check before any LB probe, one change per probe, differ
 | A14 | inference ensemble exp03B+exp08 (exp15) | local | 0.971 vs 0.982 raw, worse (both from the same pilkwang primary -> no diversity) |
 | A21 | OUTPUT_MIN_TRACK_LEN 6 -> 8 | LB probe 9 (exp25) | 0.944, -0.001: noise; with A19 (4 -> 0.943) the node-count bonus is not exploitable via track length |
 | A22 | secondary := friend A from-scratch all-199 epoch 21 | LB probe 10 (exp27) | **0.920, -0.025**: weaker than pilkwang secondary (4 dummy videos: -0.007, recall/edge FP worse); blend weight 0.8 amplifies it; needs honest raw comparison first |
+| A23 | sjlee101 full TTA stack verbatim (B17) | LB probe 14 (exp29) | **0.947 reproduced** -> ADOPTED as base / final candidate 1 |
+| A24 | exp03B primary on the sjlee TTA stack (sweep off) | LB probe 11 (exp30) | 0.944, -0.003 vs exp29: no gain; deconfound probe 15 (exp33) pending |
+| A25 | Z-flip views added to both edge-feature TTA loops | LB probe 12 (exp31) | 0.941, -0.003 vs exp30: negative, dropped |
+| A26 | secondary := exp23 (fine-tuned seed314159) on the TTA stack | LB probe 13 (exp32) | **0.937, -0.007**: negative, dropped; all three secondary swaps hurt |
 | A20 | GAP_CLOSE_UM 5.0 -> 6.5 | LB probe 8 (exp24) | 0.944, -0.001: noise; gap closing already saturated in the public pipeline |
 | A19 | OUTPUT_MIN_TRACK_LEN 6 -> 4 | LB probe 6 (exp21) | 0.943, -0.002: shorter tracks hurt; opposite direction (8) queued as probe 9 |
 | A18 | secondary weights := exp08 (fine-tune of the same primary as exp03B) | LB probe 7 (exp22) | **0.929, -0.016**: no diversity + post-proc thresholds tuned for the seed314159 secondary; keep pilkwang secondary |
@@ -181,7 +185,7 @@ ideas first, honest LOEO check before any LB probe, one change per probe, differ
 | P1 | B4 | friend A's all-199 scratch model (dense labels if B3 ready, else sparse with official-metric early stopping every 5 epochs) as SECONDARY in the blend | friend A -> Vitalii | 1-2 days on 5070 Ti + 1 probe | beats pilkwang secondary on LOEO 44b6 |
 | P1 | B5 (was 18) | test-time adaptation of the primary detector on the test embryos (DARTH-style self-training + photometric consistency, EMA teacher, node-count guard) | Vitalii | ~1 day engineering; ~30 min GPU per embryo inside the submission kernel | LOEO: adapt on 44b6 images without labels, score on 44b6 GT >= +0.005 |
 | P2 | B6 (was 7) | detector TTA / seed-ensemble as primary with dedup merge (exp03B + exp16 + pilkwang) | Vitalii | check how the public notebook runs inference first; +0.5 h | LOEO |
-| P1 | B17 | full TTA stack from sjlee101 (edge-feature TTA + secondary edge-feature TTA 0.75 + DeepCenter TTA + DC div thr 0.20), public 0.947 single run | Vitalii | exp29 (verbatim) + exp30 (+exp03B primary) kernels running 2026-09-10 | LB probes #11/#12 |
+| DONE | B17 | full TTA stack from sjlee101 -> A23 (0.947 reproduced, adopted as base); its exp03B / Z-flip / exp23 add-ons -> A24-A26 (no gain / negative) | Vitalii | exp33 deconfound pending | - |
 | P2 | B16 | edge-feature TTA (`BIOHUB_EDGE_FEATURE_TTA=1`, from the public 0.946/0.942 forks: average UNet features over the 8 TTA views before edge prediction) | Vitalii / friend B | inference-only patch, exists in `$TMP/pub/biohub-harmonic-fusion` cell 4; unmeasurable on LB at +-0.003 noise -> judge on the honest validator with friend B's port; adopt for the final if >= 0 there | LOEO |
 | P2 | B7 (was 5) | ignore-unlabelled / nnPU detection loss, neighbourhood-softmax peak loss | friend A | patch train_patches.py; 45 min per fine-tune | LOEO |
 | P2 | B8 (was 10) | parent-offset / movement-vector head as edge feature + gap-closing prior (linajea, ELEPHANT) | friend A | 1 h fine-tune + linker feature | LOEO |
@@ -246,6 +250,19 @@ ideas first, honest LOEO check before any LB probe, one change per probe, differ
   STRONGLY NEGATIVE, dropped). Lesson: the blend needs a DIFFERENT model as secondary; exp08 is a fine-tune of the same
   pilkwang primary as exp03B (no diversity) and the public post-proc thresholds are tuned for the seed314159 model. 3 slots left today.
   Candidates after: det threshold 0.965->0.95; secondary := fine-tuned too (if #2 positive); SECONDARY_DETECTION_WEIGHT 0.8->0.5.
+  #11 2026-09-10 16:28 exp30 (sjlee101 0.947 TTA stack + PRIMARY := exp03B, validator off = base pp config) = **0.944**
+  (scored 2026-09-11 ~02:00; -0.003 vs #14, tie by the noise rule but NO gain: the +0.004 of the fine-tuned primary on the
+  0.941 base does not carry over to the TTA stack; confounded by the sweep pick, see #15).
+  #12 17:08 exp31 (exp30 + Z-flip views in both edge-feature TTA loops) = **0.941** (-0.003 vs exp30, -0.006 vs #14; NEGATIVE,
+  dropped: the public XY-only views are the right group even though training flipped Z).
+  #13 17:34 exp32 (exp30 + SECONDARY := exp23) = **0.937** (-0.007 vs exp30; NEGATIVE, dropped: third secondary swap in a row
+  that hurts - exp08 -0.016, friend A ep21 -0.025, exp23 -0.007; the seed314159 secondary + its tuned thresholds stay).
+  #14 17:49 exp29 (sjlee101 verbatim, validator + sweep on -> tight55) = **0.947** (REPRODUCED the public score exactly ->
+  the 0.947 is not a lucky run; exp29 = final candidate 1 as of 2026-09-11).
+  #15 2026-09-11 09:15 exp33 (exp29 realised config incl. MOTION_RELINK_TIGHT_UM 5.5 + PRIMARY := exp03B, validator off) =
+  pending (kernel pushed; submit when COMPLETE). Purpose: probe #11 differed from #14 in TWO things (primary weights AND the
+  sweep pick tight55, proxy +0.002); exp33 isolates the weights. exp33 >= 0.949 -> fine-tuned primary composes after all;
+  <= 0.947 -> fine-tuned weights do not compose with the TTA stack, final candidate 1 = exp29 as is.
 
 ### 11a. LB-probe protocol (agreed 2026-09-06 10:30)
 - Cadence: **5 probes/day, no reserve** (user 2026-09-06 18:00, replaces the earlier 4+1). Daily limit per the API counter
@@ -547,6 +564,22 @@ How-tos:
 - GPU quota this week: ≈20/30 h used (resets in ~5 days); only probe-prep kernels (15-40 min each) from now on.
 Numbers to remember: LB probes 0.899 (clean v2.1) / 0.945 (public + exp03B primary, rank 46) / 0.941 (ILP div 0.9);
 the user's original 0.933; public notebook 0.941; LB top 0.970.
+- 2026-09-11 09:15 MSK PROBES 11-14 SCORED (all COMPLETE ~02:00): exp29 verbatim **0.947** (reproduced), exp30 (+exp03B
+  primary) **0.944**, exp31 (+Z-flip) **0.941**, exp32 (+exp23 secondary) **0.937**. Decision per the rule of 2026-09-10 16:00:
+  exp30 <= exp29 -> the fine-tuned primary does not compose with the TTA stack; FINAL CANDIDATE 1 = exp29 (sjlee stack as is,
+  in-kernel sweep on). Both stack add-ons are negative and dropped. The two proven levers of the 0.941 base (fine-tuned
+  primary +0.004, TTA +0.006) are NOT additive: the TTA stack already captures what the fine-tune fixed.
+  Caveat on probe 11: exp30 ran with the sweep OFF (base pp config) while exp29's sweep picked tight55 (proxy +0.002), so
+  probe 11 = two changes. Deconfound probe #15 = exp33 (`experiments/exp33_sjlee947_tight55_ft03B`: exp29 config +
+  MOTION_RELINK_TIGHT_UM 5.5 hard-coded + PRIMARY := exp03B, validator off) - kernel pushed 09:15, ~30 min; SUBMIT WHEN
+  COMPLETE (id to be logged here). Rule: >= 0.949 -> weights compose, exp33 becomes candidate 1 and friend A's primary
+  fine-tunes stay on track; <= 0.947 -> weights do not compose; the value of friend A's/B's fine-tunes then rests on the
+  honest validator + final candidate 2 only, and further LB probes go to inference-side changes on exp29 (friend B's
+  variants: secondary edge-TTA weight 0.5/1.0, DC threshold 0.15/0.25, axis-flip group) and to test-time adaptation (B5).
+  Slots: 5 available today (11 Sep, reset 03:00 MSK); 1 used by exp33 when submitted. exp28 (exp06 re-run) stays unpushed:
+  exp29 reproducing 0.947 exactly already answers the run-to-run question for this base.
+  Friend B's calibration set now has LB numbers: exp29 0.947 > exp30 0.944 > exp31 0.941 > exp32 0.937 (spread 0.010,
+  ranking is the test of his local port). TEAM.md / PROMPT_FRIEND_B.md updated with the numbers.
 
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.

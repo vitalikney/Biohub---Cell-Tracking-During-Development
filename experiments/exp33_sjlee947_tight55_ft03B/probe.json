@@ -1,0 +1,6 @@
+{
+ "base": "exp29 realised config = sjlee101 lf-dctta-v020 + MOTION_RELINK_TIGHT_UM 5.5 (probe #14, LB 0.947)",
+ "primary_override": true,
+ "validator": false,
+ "note": "deconfound probe #11: exactly one change (PRIMARY := exp03B) vs the submitted exp29 config"
+}
