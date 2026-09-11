@@ -703,6 +703,30 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   final-submission plan: one best-public-config, one honest-validator config.
   Benchmark for our division term: hikaggler measured div_J ~ 0.22 by ablation at LB 0.929 (confounded, see summary);
   ours is 0.111 on 12 hold-out videos with the official metric, so the term plausibly has room to roughly double.
+- 2026-09-11 16:00 MSK **DIVISION BASE RATES AND GATE FUNNEL MEASURED ON OUR OWN 199 TRAINING VIDEOS** (151 GT
+  divisions), ground truth only, no model. Two new tools: `tools/division_base_rates.py` and
+  `tools/division_gate_funnel.py`. This supersedes the forum numbers (they came from 73 files / 36 divisions).
+    continuation step   n=128581  median 1.817  p25 0.908  p75 2.725  p90 4.143  p99 8.367
+    division step       n=302     median 5.745  p25 4.001  p75 7.355  p90 9.066  p99 12.842
+    sister separation   n=151     median 10.570 p25 8.006  p75 12.682 p90 14.357 p99 17.135
+  CUMULATIVE survival of the 151 real divisions through the public safe-division gate stack, best case on GT
+  geometry (a model can only do worse):
+    start 151 -> existing-child <=10um: 150 -> parent <=9um: 121 -> sister <=14um: 114
+    -> divergence (gc_dist - sister >= 2.25): 61 -> symmetry <=0.6: **35 of 151 = 23.2%**
+  Individually: divergence rejects 75 (49.7%), symmetry rejects 57 (37.7%), parent radius 30 (19.9%), sister upper
+  bound 19 (12.6%). So the shipped gate stack throws away three quarters of all real divisions BEFORE any ranking.
+  (This reproduces exactly the "35 reachable" figure claimed in the public metric-bug notebook, which is a useful
+  independent check on that source.)
+  THE ALTERNATIVE STACK: drop symmetry and divergence, add a LOWER bound on sister separation (the public gate has
+  only an upper bound at 14um). Reachable real divisions: min_sister 0 -> 114, 5 -> 109, 6 -> 103, 7 -> 92, i.e.
+  about 3x the current ceiling of 35. And the floor is cheap in precision: only 6.2% of ordinary continuation steps
+  exceed 5um and 3.5% exceed 6um, so it removes the duplicate-detection pairs that currently eat the per-frame
+  budget of ~5 acceptances.
+  First empirical check (12 hold-out videos, official metric, public tau 0.6 kept): min_sister 5 gives 0.9579
+  (3 TP / 11 FP) against 0.9567 (3 TP / 13 FP) at min_sister 0 - right direction, small because the symmetry gate
+  is still discarding most divisions. The decisive runs (gates open + floor, and a ranker that prefers LARGE sister
+  separation instead of the public `parent_dist + 0.15*sister_dist` ascending) are running; `tools/sim_safediv.py`
+  now has `--no-divergence`, `--min-sister-um` and `--rank-mode public|sister|balanced`.
 
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.

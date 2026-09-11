@@ -65,7 +65,8 @@ GLOBAL_FRAC_CAP = 0.00375
 EXIST_CHILD_MAXU = 10.0
 
 
-def add_safe_divisions(nodes, edges, scale, tau=0.6, max_um=9.0, sister_um=14.0, diverge_um=2.25, min_sister_um=0.0):
+def add_safe_divisions(nodes, edges, scale, tau=0.6, max_um=9.0, sister_um=14.0, diverge_um=2.25, min_sister_um=0.0,
+                       require_divergence=True, rank_mode='public'):
     """Return (added_edges, stats) for the gate applied to one prediction graph."""
     pos = {int(i): np.array([r.z, r.y, r.x]) * scale for i, r in nodes.iterrows()}
     tt = {int(i): int(r.t) for i, r in nodes.iterrows()}
@@ -116,23 +117,30 @@ def add_safe_divisions(nodes, edges, scale, tau=0.6, max_um=9.0, sister_um=14.0,
                 if q != mutual:
                     stats["mutual_rejected"] += 1
                     continue
-                c1s, qs = out.get(ec, []), out.get(q, [])
-                if len(c1s) != 1 or len(qs) != 1:
-                    stats["divergence_rejected"] += 1
-                    continue
-                g1, g2 = c1s[0], qs[0]
-                if tt.get(g1) != t + 2 or tt.get(g2) != t + 2:
-                    stats["divergence_rejected"] += 1
-                    continue
-                if dist(g1, g2) - sister_dist < diverge_um:
-                    stats["divergence_rejected"] += 1
-                    continue
+                if require_divergence:
+                    c1s, qs = out.get(ec, []), out.get(q, [])
+                    if len(c1s) != 1 or len(qs) != 1:
+                        stats["divergence_rejected"] += 1
+                        continue
+                    g1, g2 = c1s[0], qs[0]
+                    if tt.get(g1) != t + 2 or tt.get(g2) != t + 2:
+                        stats["divergence_rejected"] += 1
+                        continue
+                    if dist(g1, g2) - sister_dist < diverge_um:
+                        stats["divergence_rejected"] += 1
+                        continue
                 stats["geometric"] += 1
                 denom = max((child_dist + parent_dist) / 2.0, 1e-6)
                 if tau > 0.0 and abs(child_dist - parent_dist) / denom > tau:
                     stats["symmetry_rejected"] += 1
                     continue
-                props.append((parent_dist + 0.15 * sister_dist, s, q))
+                if rank_mode == "sister":
+                    key = -sister_dist
+                elif rank_mode == "balanced":
+                    key = parent_dist - 0.15 * sister_dist
+                else:
+                    key = parent_dist + 0.15 * sister_dist
+                props.append((key, s, q))
         props.sort()
         n_frame = 0
         for _, s, q in props:
@@ -156,6 +164,11 @@ def main():
     ap.add_argument("--diverge-um", type=float, default=2.25)
     ap.add_argument("--min-sister-um", type=float, nargs="*", default=[0.0],
                     help="lower bound on sister separation; real divisions have median 8.85 um, duplicate detections have near-zero")
+    ap.add_argument("--no-divergence", action="store_true",
+                    help="disable the divergence gate entirely (on GT it alone rejects 49.7%% of real divisions)")
+    ap.add_argument("--rank-mode", default="public", choices=["public", "sister", "balanced"],
+                    help="public = parent+0.15*sister ascending (prefers tight pairs = duplicates); "
+                         "sister = largest sister separation first; balanced = parent-0.15*sister")
     ap.add_argument("--baseline", action="store_true", help="also score the graphs unchanged")
     ap.add_argument("--out")
     a = ap.parse_args()
@@ -187,7 +200,8 @@ def main():
             ds = dss[name]
             sc = np.array(ds.scale)
             extra = [] if tau is None else add_safe_divisions(
-                n, e, sc, tau, a.max_um, a.sister_um, a.diverge_um, min_sis
+                n, e, sc, tau, a.max_um, a.sister_um, a.diverge_um, min_sis,
+                not a.no_divergence, a.rank_mode
             )[0]
             tot += len(extra)
             g2 = nx.DiGraph()
@@ -209,10 +223,12 @@ def main():
             )
         s = summarise(rows)
         print(
-            "tau=%s min_sister=%s: score=%.4f adj_edge=%.4f div_J=%.4f tp/fp/fn=%d/%d/%d added=%d"
+            "tau=%s min_sister=%s div=%s rank=%s: score=%.4f adj_edge=%.4f div_J=%.4f tp/fp/fn=%d/%d/%d added=%d"
             % (
                 tau,
                 min_sis,
+                "off" if a.no_divergence else a.diverge_um,
+                a.rank_mode,
                 s["score"],
                 s["adj_edge_jaccard"],
                 s["division_jaccard"],
