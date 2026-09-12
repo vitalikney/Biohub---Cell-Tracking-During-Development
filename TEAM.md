@@ -65,6 +65,16 @@ If you have ANY local row that reported division TPs, re-score it before drawing
 
 **Friend B — order of work (revised 2026-09-10 21:30; supersedes the 18:00 version). Self-contained.**
 
+UPDATE 2026-09-12 (read first): the alternative division stack was measured on 12 videos with the official metric:
+gates open + sister floor 0.9523-0.9543 and a sister-first ranker 0.9475, against 0.9567 for the public setting. Reachable
+is not recovered - without a learned ranker the false forks explode and the ~5-per-frame budget is spent on them. So the
+division GATE stays public; STEP 4b (199-video sweep) is now low-priority CPU filler only. The task with real value left
+on the division side is a learned fork RANKER (score each candidate fork on evidence: sister separation, parent intensity
+at the split frame, per-branch motion, detector confidence; 151 positives on all 199 videos, LOEO; go/no-go = div_J on the
+official metric before any LB probe). Take it only after your local port and calibration (STEP 4) work. Closed on the LB
+meanwhile: fine-tuned primaries (0.944/0.943 vs 0.947) and Z-flip TTA (0.938).
+
+
 What changed since 18:00: Vitalii already probed the first TTA-stack variants on the LB (probes 11-14: exp30 = 0.947 stack +
 exp03B primary; exp31 = + Z-flip TTA; exp32 = + secondary := exp23; exp29 = public 0.947 verbatim), so those are no longer
 "first customers" for the local port - they are its CALIBRATION SET. Friend A's dense pipeline (`friend-a-dense-pipeline.ipynb`,
@@ -102,6 +112,14 @@ STEP 4b (CPU, cheap, do it whenever a GPU run is busy): division-gate sweep on A
 STEP 5 (later): teacher for the remaining 61 44b6 videos (for all-183 dense fine-tunes); optional dense scratch run only if 1-4 are done.
 
 **Friend A — order of work (revised 2026-09-10 18:00 after the audit in CONTEXT §14). Self-contained.**
+
+UPDATE 2026-09-12 (read first): LB probes 15 and 17 are in - a fine-tuned primary on the public 0.947 TTA stack scores
+0.944 (exp03B) and 0.943 (weight soup) against 0.947 for the untouched public weights. So NO fine-tuned primary goes into
+final submission 1 any more, and there will be no further LB probes of them. Your STEP 2/3 work is still wanted, but its
+target changed: it is the candidate for FINAL SUBMISSION 2, chosen on the HONEST validator (leave-one-embryo-out, official
+metric via `tools/score_geffs.py` after `git pull`). Report honest-validator numbers only; the LB is not the judge here.
+Also closed: Z-flip TTA (probe 16 = 0.938), do not spend time on it.
+
 
 Same reasoning as for Friend B above: dense labels now feed FINE-TUNING of pilkwang (proven to transfer), scratch training is
 demoted to research. Your 5070 Ti takes the primary side; Friend B takes the secondary side.

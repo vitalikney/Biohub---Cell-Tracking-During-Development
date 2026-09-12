@@ -169,9 +169,10 @@ ideas first, honest LOEO check before any LB probe, one change per probe, differ
 | A21 | OUTPUT_MIN_TRACK_LEN 6 -> 8 | LB probe 9 (exp25) | 0.944, -0.001: noise; with A19 (4 -> 0.943) the node-count bonus is not exploitable via track length |
 | A22 | secondary := friend A from-scratch all-199 epoch 21 | LB probe 10 (exp27) | **0.920, -0.025**: weaker than pilkwang secondary (4 dummy videos: -0.007, recall/edge FP worse); blend weight 0.8 amplifies it; needs honest raw comparison first |
 | A23 | sjlee101 full TTA stack verbatim (B17) | LB probe 14 (exp29) | **0.947 reproduced** -> ADOPTED as base / final candidate 1 |
-| A24 | exp03B primary on the sjlee TTA stack (sweep off) | LB probe 11 (exp30) | 0.944, -0.003 vs exp29: no gain; +3.2% nodes at det 0.965 (node-count bonus shrinks); deconfound probe 15 (exp33) pending; next: det threshold re-calibration 0.97/0.975 |
-| A25 | Z-flip views added to both edge-feature TTA loops (on the exp03B/sweep-off base) | LB probe 12 (exp31) | 0.941, -0.003 vs exp30 = tie (noise floor), not a negative; leaky local +0.010; RE-TEST on the clean exp29 base = probe 16 (exp34) |
+| A24 | exp03B primary on the sjlee TTA stack (sweep off) | LB probe 11 (exp30) | 0.944, -0.003 vs exp29: no gain; +3.2% nodes at det 0.965 (node-count bonus shrinks); deconfound probe 15 (exp33) pending; next: det threshold re-calibration 0.97/0.975 ; CONFIRMED by probe 15 (exp33, one change: 0.944) - closed |
+| A25 | Z-flip views added to both edge-feature TTA loops (on the exp03B/sweep-off base) | LB probe 12 (exp31) | 0.941, -0.003 vs exp30 = tie (noise floor), not a negative; leaky local +0.010; RE-TEST on the clean exp29 base = probe 16 (exp34) ; RE-TEST probe 16 (exp34, clean base) = **0.938, -0.009**: real negative, closed |
 | A26 | secondary := exp23 (fine-tuned seed314159) on the TTA stack, with exp03B primary | LB probe 13 (exp32) | **0.937, -0.007**: negative (beyond noise), dropped; +3.9% nodes; untested with the pilkwang primary (queued low) |
+| A27 | primary := weight soup 0.5 pilkwang + 0.5 exp03B (`soup03B_50/`) on the exp29 config | LB probe 17 (exp35) | **0.943, -0.004**: no gain, interpolates between 0.947 and 0.944; closed |
 | A20 | GAP_CLOSE_UM 5.0 -> 6.5 | LB probe 8 (exp24) | 0.944, -0.001: noise; gap closing already saturated in the public pipeline |
 | A19 | OUTPUT_MIN_TRACK_LEN 6 -> 4 | LB probe 6 (exp21) | 0.943, -0.002: shorter tracks hurt; opposite direction (8) queued as probe 9 |
 | A18 | secondary weights := exp08 (fine-tune of the same primary as exp03B) | LB probe 7 (exp22) | **0.929, -0.016**: no diversity + post-proc thresholds tuned for the seed314159 secondary; keep pilkwang secondary |
@@ -190,8 +191,8 @@ ideas first, honest LOEO check before any LB probe, one change per probe, differ
 | P1 | B5 (was 18) | test-time adaptation of the primary detector on the test embryos (DARTH-style self-training + photometric consistency, EMA teacher, node-count guard) | Vitalii | ~1 day engineering; ~30 min GPU per embryo inside the submission kernel | LOEO: adapt on 44b6 images without labels, score on 44b6 GT >= +0.005 |
 | P2 | B6 (was 7) | detector TTA / seed-ensemble as primary with dedup merge (exp03B + exp16 + pilkwang) | Vitalii | check how the public notebook runs inference first; +0.5 h | LOEO |
 | DONE | B17 | full TTA stack from sjlee101 -> A23 (0.947 reproduced, adopted as base); its exp03B / Z-flip / exp23 add-ons -> A24-A26 (no gain / negative) | Vitalii | exp33 deconfound pending | - |
-| P1 | B18 | weight soup primary: 0.5*pilkwang + 0.5*exp03B (same init, 1200-it fine-tune -> linear interpolation valid); halves the +3.2% node shift of exp03B; `soup03B_50/` uploaded 2026-09-11 | Vitalii | exp35 kernel pushed 09:55; 1 probe after exp33 scores | LB (one change on exp29) |
-| P1 | B19 | det-threshold re-calibration for a fine-tuned primary on the TTA stack (0.965 -> 0.97/0.975) so N_pred matches pilkwang's; mechanism: adj = J*(1-0.1*(N_pred-N_est)/N_est), +3.2% nodes = -0.003 = exactly exp30's loss | Vitalii | 1 probe, only if exp33 >= 0.946 (weights not worse at equal node count). PRIOR IS WEAK: threshold 0.93-0.985 was flat locally and probe 4 (0.965 -> 0.95) was flat on the LB, so the node-count gain may cancel against lost detections | LB |
+| DONE (negative) | B18 | weight soup primary: 0.5*pilkwang + 0.5*exp03B (same init, 1200-it fine-tune -> linear interpolation valid); halves the +3.2% node shift of exp03B; `soup03B_50/` uploaded 2026-09-11 | Vitalii | exp35 kernel pushed 09:55; 1 probe after exp33 scores | LB (one change on exp29)  -> probe 17 = 0.943 |
+| DROPPED | B19 | det-threshold re-calibration for a fine-tuned primary on the TTA stack (0.965 -> 0.97/0.975) so N_pred matches pilkwang's; mechanism: adj = J*(1-0.1*(N_pred-N_est)/N_est), +3.2% nodes = -0.003 = exactly exp30's loss | Vitalii | 1 probe, only if exp33 >= 0.946 (weights not worse at equal node count). PRIOR IS WEAK: threshold 0.93-0.985 was flat locally and probe 4 (0.965 -> 0.95) was flat on the LB, so the node-count gain may cancel against lost detections | LB  -> exp33 = 0.944 < 0.946 gate, not run |
 | P1 | B20 | divisions = the only big untapped term. LOCAL SWEEP 2026-09-11, RE-SCORED WITH THE OFFICIAL METRIC (`tools/score_geffs_official.py`; 12 hold-out videos, 14 GT divisions, raw-ILP graphs): gate OFF 0.9469 (0/0/14) -> public tau 0.6 **0.9567** (3/13/11) -> tau 1.0 0.9553 (3/16/11) -> 1.4 0.9523 (3/22/11) -> 2.0 0.9517 (3/25/11). Under the official metric the public setting is the BEST tested and the response is monotone above it, so the gate thresholds are settled; the gate as a whole is worth +0.010 and its ceiling is a 4:1 FP:TP ratio. The lever is a division CLASSIFIER: the binding constraint is the RANKING (`parent_dist + 0.15*sister_dist` ascending picks the tightest pair = duplicate detections, and the ~5-slot per-frame budget is spent before a real division is reached), not the gates. Diagnosis: of 3 missed GT divisions all parents and daughters ARE detected; 1 daughter is an orphan with asymmetric geometry, 2 are claimed by a neighbouring track passing 0.8-1.7 um away | friend A/B (research) | resolve on the FULL 199-video train set (151 GT divisions); then a fork scorer that ranks on evidence | official metric div_J, then LB |
 | P1 | B21 | MINIMUM sister separation in the safe-division gate. Base rates from the training labels (discussion 740573): real divisions have sister separation median 8.85 um (IQR 7.20-10.24), ordinary continuation steps 1.72 um, and duplicate detections sit near zero. The public gate has an UPPER bound (14 um) and NO lower bound, and its ranker `parent_dist + 0.15*sister_dist` ASCENDING actively prefers the close pairs = duplicates. A lower bound near the 25th percentile of real divisions (7.2 um) should cut false positives without touching true ones | Vitalii | offline sweep with `tools/sim_safediv.py --min-sister-um` (FP side has good statistics: 13 FP vs 3 TP on 12 videos), then 1 LB probe | official metric div_J |
 | P1 | B22 | re-rank division candidates on EVIDENCE instead of geometry: sister separation (the only separating geometric quantity), parent peak intensity (AUC 0.73 at the split frame, daughters 0.68-0.70 at t+1..t+3; elongation is chance at our z spacing), learned edge score. This is B20's ranker, now with measured signals | friend A/B | needs the 199-video candidate dump | official metric div_J |
@@ -276,8 +277,17 @@ ideas first, honest LOEO check before any LB probe, one change per probe, differ
   sweep pick tight55, proxy +0.002); exp33 isolates the weights. exp33 >= 0.949 -> fine-tuned primary composes after all;
   <= 0.947 -> fine-tuned weights do not compose with the TTA stack, final candidate 1 = exp29 as is.
   #16 2026-09-11 09:40 exp34 (exp29 realised config incl. tight55, pilkwang primary, + Z-flip views in both edge-feature TTA
-  loops = 12 views) = pending (kernel pushed; submit when COMPLETE). One change vs the submitted exp29. Rule: >= 0.950 real
+  loops = 12 views) = **0.938** (-0.009 vs exp29: REAL NEGATIVE, beyond noise; Z-flip TTA is dropped for good - the -0.003 of exp31 was the same effect masked by noise). One change vs the submitted exp29. Rule: >= 0.950 real
   gain (adopt); 0.945-0.949 tie (keep the 8-view public group); <= 0.944 negative.
+  #15 (exp33, exp29 config + PRIMARY := exp03B, one change) = **0.944** (-0.003 vs exp29 = exactly probe 11's number again:
+  the fine-tuned primary does NOT compose with the TTA stack; the lever "fine-tuned weights +0.004" existed only on the
+  0.941 pipeline).
+  #17 (exp35, exp29 config + PRIMARY := soup03B_50, 0.5 pilkwang + 0.5 exp03B) = **0.943** (-0.004: the soup sits where the
+  interpolation predicts, between 0.947 and 0.944 - no free lunch from the node-count mechanism).
+  VERDICT 2026-09-12 (scored overnight): all three probes negative or null. exp29 (public sjlee101 stack, 0.947) stays
+  the base and FINAL SUBMISSION 1 as is. Fine-tuned-primary family closed on the LB (probes 11, 15, 17); Z-flip closed
+  (12, 16); secondary swaps closed (7, 10, 13). 17 probes total; 5 slots/day unused today because nothing mechanism-backed
+  is left on the inference side. Slots today: 5.
   RE-EXAMINATION of #11-#13 (2026-09-11, after the user's challenge) with the kernel outputs (run_stats + submission.csv scored
   with tools/csv2geff.py + tools/score_geffs.py on the 4 dummy test videos = train copies, leaky but identical for all):
     exp29 raw nodes 125305, leaky local 0.8932 | exp30 129340 (+3.2%), 0.8936 | exp31 130220 (+3.9%), 0.9034 | exp32 130146 (+3.9%), 0.8969.
@@ -727,6 +737,20 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   is still discarding most divisions. The decisive runs (gates open + floor, and a ranker that prefers LARGE sister
   separation instead of the public `parent_dist + 0.15*sister_dist` ascending) are running; `tools/sim_safediv.py`
   now has `--no-divergence`, `--min-sister-um` and `--rank-mode public|sister|balanced`.
-
+- 2026-09-12 09:00 MSK PROBES 15-17 SCORED (see §11): exp33 0.944, exp34 0.938, exp35 0.943 -> exp29 stays base and
+  final 1; fine-tuned primaries, Z-flip and secondary swaps are all closed on the LB. LOCAL DIVISION SWEEPS FINISHED
+  (12 videos, official metric): public gates + sister floor 5um 0.9579 (3 TP/11 FP) vs public 0.9567 (3/13) = one FP,
+  inside single-event noise; floors 6/7/8 lose a TP; gates OPEN + floor + public ranker 0.9523/0.9495/0.9543 (27-29 FP);
+  sister-first ranker 0.9475 (1 TP). VERDICT: "reachable" (109 of 151 on GT geometry) is not "recovered" - without a
+  learned ranker the FP explosion and the ~5-per-frame budget dominate, so the division gate stays at the public
+  setting; B20 (learned fork ranker) is the only route left to the division term and is a research project, not a knob.
+  Literature/forum sweep (workflow wf_4466359e-bb8) was PAUSED by the user to save tokens - do not resume it; the
+  discussion digest of 2026-09-11 and the base-rate tools are what we have. Doc-audit workflow wf_08b2e86f-7e2 died
+  with the session; its job (keep TEAM/prompts consistent) was done by hand in this commit.
+  PLAN NOW: (1) no more LB probes until something new exists; (2) final 1 = exp29 verbatim (already submitted as
+  probe 14, id 56146538); (3) final 2 = best config on the HONEST validator (LOEO, official metric via
+  tools/score_geffs.py) - candidates come from friend A's primary fine-tunes and friend B's dense/sparse secondary
+  fine-tune; (4) if any friend takes B20, the go/no-go is div_J on all 199 videos with the official metric before
+  one LB probe; (5) freeze 24 Sep unchanged.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
