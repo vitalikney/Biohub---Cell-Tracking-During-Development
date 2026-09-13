@@ -120,6 +120,15 @@ target changed: it is the candidate for FINAL SUBMISSION 2, chosen on the HONEST
 metric via `tools/score_geffs.py` after `git pull`). Report honest-validator numbers only; the LB is not the judge here.
 Also closed: Z-flip TTA (probe 16 = 0.938), do not spend time on it.
 
+UPDATE 2026-09-13, dense fine-tune order changed by new evidence (Lê Quang Cảnh, rank 39, official scorer, five held-out
+films): fine-tuning the DETECTOR on dense labels costs -0.003 if only the detection head moves and **-0.038 if the encoder
+moves while the linker is frozen**, because the linker reads the encoder. Therefore: variant (e) two-stage (freeze linker,
+move encoder on train_dense, recalibrate) is DROPPED - it is exactly the harmful case. Run the dense variants (a)/(b) ONLY
+as the joint fine-tune (edge loss on) with the teacher's EDGES included in train_dense, so the linker co-adapts; if
+train_dense has nodes only, do not run them - do the sparse reference (0) and the softer-augmentation variant (d) instead.
+A head-only run (freeze everything but detect_head) is allowed as a 20-minute sanity check and is expected to be ~0.
+
+
 
 Same reasoning as for Friend B above: dense labels now feed FINE-TUNING of pilkwang (proven to transfer), scratch training is
 demoted to research. Your 5070 Ti takes the primary side; Friend B takes the secondary side.

@@ -208,3 +208,47 @@ of one public-config submission and one honest-validator submission.
 2. re-rank division candidates on evidence (sister separation, parent brightness) instead of `parent_dist + 0.15*sister_dist`;
 3. ILP division weight 1.2 -> 0.1 or lower, i.e. the Ultrack scale, not our earlier 25% move;
 4. external Ultrack zebrafish volume at our exact voxel scale as extra division examples / pretraining.
+
+## Update 2026-09-13 (discussion + code tab re-read; browser)
+
+**738217 "focus3d" thread, new comment by Lê Quang Cảnh (rank 39, official scorer, five held-out films, one variable
+each).** The most useful controlled numbers anyone has posted:
+- Dense-label fine-tuning of the DETECTOR: detection head only (33 params) = -0.0033; head + encoder = **-0.0377**, with the
+  edge transformer frozen and reading that encoder. Quote of the mechanism: extra detections are nearly free, moving the
+  representation underneath the linker is what hurts. => any dense fine-tune must either leave the encoder alone or
+  co-train the linker on top of the moved encoder. Our two-stage variant (e) (freeze linker, move encoder on dense
+  labels, then recalibrate) is exactly the harmful configuration and is dropped; see TEAM/PROMPT_FRIEND_A.
+- Annotation bias vs a detector: mean residual dz -0.57, dy -0.24, dx -0.20 um over 15,693 matched pairs (48/31/26
+  standard errors), median match distance 1.50 um; correcting with a CONSTANT loses 0.0031 because matching is an
+  assignment on relative distance; the bias is embryo-dependent (dz ~0 for one embryo, -0.61 for the other). A learned
+  per-node offset is the only version that can pay.
+- Refining annotations inside the 7 um tolerance (hengck23's trick): the link model already puts a median 0.9968 on the
+  true link at the annotated position; only 3% sit below 0.90. Low value.
+- Contested links (both endpoints detected and matched, link went elsewhere; 381 cases / 15 films): velocity
+  extrapolation over 4 frames picks the true child in 0 of them; the link model prefers the true child in 44 of 290
+  (15%). Both parents sit ~1.5 um from the node they linked (= their 1.16 um/frame step) while the truth asks for a ~9 um
+  jump. So the true assignment loses on appearance AND on trajectory consistency; a structured loss can recover about
+  +0.005 edge Jaccard; the rest needs the node and link models to move. Consistent with our "linker gains do not
+  transfer" finding.
+- Elastic augmentation: their own test was mis-targeted (fine-tuned the secondary), correct run queued; paired top-1
+  92.90 (primary) vs 92.46 (elastic-from-secondary), p = 0.0028 / 0.2342 - unresolved.
+
+**740145 "magic or overfitting?" (hengck23, rank 495).** A "refine_prob" head at threshold 0.0888 removes 13.13% of
+peak detections while keeping 99.45% recall of Kaggle-annotated nodes; localisation error 1.18 -> 0.97 canonical
+voxels. He uses it only to build better dense training samples, but for OUR metric it is the node-budget lever: the
+adjusted-Jaccard factor is 1 - 0.1*(N_pred - N_est)/N_est, so -13% nodes at ~no recall loss is worth about +0.012.
+Queued as B25. Also: many "false positive" detections sit very close to a true node (localisation, not existence),
+and Ultrack's pretrained UNet weights are public (public.czbiohub.org/royerlab/ultrack/unet_weights/unet-daxi.pt,
+unet-simview.pt) - allowed as external pretrained models if uploaded as a dataset; unverified against Kaggle points.
+
+**Later hengck23 comments (2-4 days ago):** he now argues the right frame is hypothesis generation + scoring over a
+long window (ultrack-style multiple hypotheses, differentiable ILP over T=5-10), and that "instead of learning perfect
+predictors, generate hypotheses and test". Research direction, not a 16-day item. Ultrack over-segmentation did not
+work for him; Satwik: Ultrack segmentation worse than own detector, useful only to generate dense tracks.
+
+**Code tab (API list sorted by score + spot checks in the browser):** nothing public above 0.947. Newcomers checked:
+sjlee101/biohub-lf-hoctveto-div-b 0.947 (v1, 21 votes), flexonafft/biohub-harmonic-fusion v30 0.947 (207 votes).
+Everything listed above the 0.947 group is still the July metric-hack set. Leaderboard: we are 355 / 3494 at 0.947
+(160 / 3372 two days ago); the top is 0.970 / 0.968 / 0.966 / 0.966; rank 49 = 0.949; ranks 50-344 are collapsed, so
+about 200 teams moved to 0.948-0.949 or ahead of us on tie-break in two days. Whatever they did is not a visible
+public notebook.
