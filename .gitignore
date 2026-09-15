@@ -15,3 +15,9 @@ experiments/**/checkpoint_last.pth
 /archive.zip
 # Kaggle dependency datasets fetched by tools/get_kaggle_datasets.py (pointers = the slugs in that script)
 /external/
+
+# friend uploads mirrored locally only to keep dataset versions complete (they live in the Kaggle dataset)
+weights_dataset/friend_a_*/
+
+# Friend B local pipeline port (cached raw graphs + post-processed graphs)
+.public_local_cache/

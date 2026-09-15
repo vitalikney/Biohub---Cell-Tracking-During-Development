@@ -99,7 +99,13 @@ def main():
     geffs = []
     for p in a.paths:
         path = Path(p)
-        geffs.extend(sorted(path.glob("*.geff")) if path.is_dir() else [path])
+        # A .geff store is itself a directory, so check the suffix before globbing.
+        if path.suffix == ".geff":
+            geffs.append(path)
+        elif path.is_dir():
+            geffs.extend(sorted(path.glob("*.geff")))
+        else:
+            geffs.append(path)
     s, rows = score(geffs, quiet=a.quiet)
     print(
         "== OFFICIAL score=%.4f adj_edge=%.4f edge=%.4f div=%.4f (%d/%d/%d) node_recall=%.4f n=%d"
