@@ -138,9 +138,10 @@ def main() -> None:
     report(data, args.label, "CLEAN: never fine-tuned on by exp03B/exp23", lambda d: d not in LEAKY_FOR_FT)
     report(data, args.label, "LEAKY: inside exp03B/exp23 training data", lambda d: d in LEAKY_FOR_FT)
 
-    print("\nRead the CLEAN block for the calibration verdict. A port that reproduces the LB order there is "
-          "calibrated;\nan inversion that appears only in the LEAKY block is the fine-tune scoring on its own "
-          "training data, not a port defect.")
+    print("\nVERDICT IS READ ON 'ALL' (with the leave-one-video-out check in calibration_12videos_pervideo.txt)."
+          "\nThe CLEAN/LEAKY split is DIAGNOSTIC ONLY: on 12 videos it came out the opposite of the leakage"
+          "\nprediction (exp03B configs beat exp29 on 4/6 clean and 1/6 leaky videos), so fine-tune leakage does"
+          "\nnot drive local rankings; per-video swings of +-0.04 against a 0.003 LB effect do (CONTEXT_FRIEND_B §28).")
 
 
 if __name__ == "__main__":

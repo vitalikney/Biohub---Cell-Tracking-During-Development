@@ -844,5 +844,17 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   linking at all, only the detections that post-processing consumes. B25 iteration 2: image size features add nothing to
   the pruner (annotated and unannotated nuclei are the same objects); ceiling = false-peak fraction; the size feature
   belongs to B20. 12-video calibration and B25 chain running on his machine.
+- 2026-09-15 14:30 FRIEND B: 12-VIDEO CALIBRATION DONE (CONTEXT_FRIEND_B.md §28, RESULTS row). ALL 12, official metric:
+  exp29 0.9001 > exp31 0.8975 > exp30 0.8867 > exp32 0.8760 vs LB 0.947 > 0.944 > 0.941 > 0.937: Spearman +0.80, the only
+  inversion is exp30/exp31 whose LB gap (0.003) is the noise floor; exp29 first and exp32 last as on the LB; stable under
+  leave-one-video-out (exp29 first in 10/12); the division term does not change the order; spread 0.024 = 2.4x the LB's.
+  PORT CALIBRATED (order yes, magnitude no). CORRECTION to his §10 / our §14 entry of this morning: the CLEAN/LEAKY split
+  came out the OPPOSITE of the leakage prediction - exp03B configs beat exp29 on 4 of 6 clean videos and 1 of 6 leaky ones
+  - so fine-tune leakage (real as a fact) does NOT drive local rankings; per-video weight-swap swings of -0.037..+0.039
+  against a 0.003 LB effect do, and the two heaviest videos (893/773 GT edges) go against exp03B ('worse on dense videos').
+  Consequence: the 'honest validator must exclude those 6 videos' rule is withdrawn; weight swaps are unresolvable in
+  MAGNITUDE on any 12-video set (>= 48 videos, as we already said), while the ORDER is reproduced. The TTA-memorisation
+  finding stands - it rests on the scratch-model tests, not on the split. Next from his chain: B25 on 12 videos, local
+  prediction for probe 18 (exp36) before its LB score, per-stage table for the 87bba6c4 collapse.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
