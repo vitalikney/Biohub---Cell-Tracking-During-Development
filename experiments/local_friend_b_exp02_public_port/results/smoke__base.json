@@ -1,0 +1,35 @@
+{
+  "tag": "smoke",
+  "label": "base",
+  "notebook": "/home/georgii/Documents/Biohub---Cell-Tracking-During-Development/experiments/exp29_sjlee947_verbatim/exp29-sjlee947-verbatim.ipynb",
+  "primary": null,
+  "secondary": null,
+  "env_overrides": [],
+  "videos": [
+    "44b6_12dfb391"
+  ],
+  "summary": {
+    "n": 1.0,
+    "edge_jaccard": 0.9255583126550868,
+    "division_jaccard": 0.0,
+    "division_tp": 0.0,
+    "division_fp": 0.0,
+    "division_fn": 1.0,
+    "node_recall": 0.9923857868020305,
+    "adj_edge_jaccard": 0.9471891682303638,
+    "n_adj": 1.0,
+    "score": 0.9471891682303638
+  },
+  "per_video": [
+    {
+      "dataset": "44b6_12dfb391",
+      "raw_nodes": 45357,
+      "nodes": 44960,
+      "raw_edges": 42876,
+      "edges": 43501,
+      "safe_divisions_added": 24,
+      "gap_added_nodes": 514,
+      "short_track_nodes_removed": 1051
+    }
+  ]
+}

@@ -72,4 +72,10 @@ comparison needs.
 - `summarise.py` — per-set tables, Spearman rank correlation against the leaderboard, ranking inversions.
 - `rescore.py` — backfills per-video metric rows into results produced before they were stored; reads the
   post-processed graphs already on disk, so it costs seconds.
-- `results/` — the calibration tables as produced.
+- `collect_results.py` — copies every run's summary + per-video metric rows out of the git-ignored cache into
+  `results/<tag>__<label>.json` and builds `results/all_runs.md`. Run it after every batch of runs; the graphs
+  stay out of git, the numbers go in.
+- `run_stage_table.sh` — cumulative post-processing ablation (raw / +relink / +gap / +divisions / +veto /
+  +short-track / +linefit), CPU-only off the cached raw graphs.
+- `run_tta_bias_test.sh` — B26: the Z-flip TTA delta on a scratch-trained primary vs on pilkwang.
+- `results/` — one JSON per run plus `all_runs.md`; the numbers behind every RESULTS.md row of this folder.

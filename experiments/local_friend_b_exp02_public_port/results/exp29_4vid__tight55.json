@@ -1,0 +1,129 @@
+{
+  "tag": "exp29_4vid",
+  "label": "tight55",
+  "notebook": "/home/georgii/Documents/Biohub---Cell-Tracking-During-Development/experiments/exp29_sjlee947_verbatim/exp29-sjlee947-verbatim.ipynb",
+  "primary": null,
+  "secondary": null,
+  "tta_group": "public",
+  "env_overrides": [
+    "BIOHUB_MOTION_RELINK_TIGHT_UM=5.5"
+  ],
+  "videos": [
+    "44b6_12dfb391",
+    "44b6_1d530831",
+    "44b6_2a2eff9f",
+    "44b6_74d0c52e"
+  ],
+  "summary": {
+    "n": 4.0,
+    "edge_jaccard": 0.8884408602150538,
+    "division_jaccard": 0.0,
+    "division_tp": 0.0,
+    "division_fp": 2.0,
+    "division_fn": 3.0,
+    "node_recall": 0.9935674611932612,
+    "adj_edge_jaccard": 0.9075663182833934,
+    "n_adj": 4.0,
+    "score": 0.9075663182833934
+  },
+  "per_video": [
+    {
+      "dataset": "44b6_12dfb391",
+      "raw_nodes": 45357,
+      "nodes": 44966,
+      "raw_edges": 42876,
+      "edges": 43504,
+      "safe_divisions_added": 24,
+      "gap_added_nodes": 515,
+      "short_track_nodes_removed": 1046
+    },
+    {
+      "dataset": "44b6_1d530831",
+      "raw_nodes": 36885,
+      "nodes": 36273,
+      "raw_edges": 34584,
+      "edges": 34833,
+      "safe_divisions_added": 41,
+      "gap_added_nodes": 275,
+      "short_track_nodes_removed": 1021
+    },
+    {
+      "dataset": "44b6_2a2eff9f",
+      "raw_nodes": 40941,
+      "nodes": 40135,
+      "raw_edges": 38171,
+      "edges": 38434,
+      "safe_divisions_added": 40,
+      "gap_added_nodes": 380,
+      "short_track_nodes_removed": 1331
+    },
+    {
+      "dataset": "44b6_74d0c52e",
+      "raw_nodes": 8968,
+      "nodes": 8695,
+      "raw_edges": 8373,
+      "edges": 8344,
+      "safe_divisions_added": 9,
+      "gap_added_nodes": 84,
+      "short_track_nodes_removed": 410
+    }
+  ],
+  "metric_rows": [
+    {
+      "dataset": "44b6_12dfb391",
+      "edge_tp": 746,
+      "edge_fp": 33,
+      "edge_fn": 27,
+      "division_tp": 0,
+      "division_fp": 0,
+      "division_fn": 1,
+      "num_pred_nodes": 44966,
+      "node_recall": 0.9923857868020305,
+      "total_node_ratio": -0.23360376329424598,
+      "edge_jaccard": 0.9255583126550868,
+      "adj_edge_jaccard": 0.9471797031535368
+    },
+    {
+      "dataset": "44b6_1d530831",
+      "edge_tp": 245,
+      "edge_fp": 35,
+      "edge_fn": 26,
+      "division_tp": 0,
+      "division_fp": 1,
+      "division_fn": 0,
+      "num_pred_nodes": 36273,
+      "node_recall": 0.9818840579710145,
+      "total_node_ratio": 0.012505233775296581,
+      "edge_jaccard": 0.8006535947712419,
+      "adj_edge_jaccard": 0.7996523587336773
+    },
+    {
+      "dataset": "44b6_2a2eff9f",
+      "edge_tp": 198,
+      "edge_fp": 21,
+      "edge_fn": 12,
+      "division_tp": 0,
+      "division_fp": 1,
+      "division_fn": 1,
+      "num_pred_nodes": 40135,
+      "node_recall": 1.0,
+      "total_node_ratio": -0.287969911473025,
+      "edge_jaccard": 0.8571428571428571,
+      "adj_edge_jaccard": 0.8818259924119736
+    },
+    {
+      "dataset": "44b6_74d0c52e",
+      "edge_tp": 133,
+      "edge_fp": 6,
+      "edge_fn": 6,
+      "division_tp": 0,
+      "division_fp": 0,
+      "division_fn": 1,
+      "num_pred_nodes": 8695,
+      "node_recall": 1.0,
+      "total_node_ratio": -0.42379058979456596,
+      "edge_jaccard": 0.9172413793103448,
+      "adj_edge_jaccard": 0.956113205822536
+    }
+  ]
+}
