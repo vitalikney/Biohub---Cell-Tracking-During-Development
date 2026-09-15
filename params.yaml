@@ -1,0 +1,63 @@
+# Single place for paths and the parameters of the current base recipe.
+# Plain YAML on purpose: readable by DVC (`dvc params`), Hydra (`hydra.compose` over a dir) or `yaml.safe_load`.
+# Environment variables override paths: BIOHUB_DATA_DIR (tools/*.py), BIOHUB_* knobs (notebooks).
+
+data:
+  # Competition data (zarr videos + .geff labels). NOT in git: tens of GB, and Kaggle is the source of truth.
+  # Download once: `kaggle competitions download biohub-cell-tracking-during-development` and unzip here.
+  competition_dir: biohub-cell-tracking-during-development
+  train_dir: biohub-cell-tracking-during-development/train
+  test_dir: biohub-cell-tracking-during-development/test
+  kaggle_competition: biohub-cell-tracking-during-development
+
+weights:
+  # Team weights dataset. Fully mirrored IN GIT (54 MB, byte-identical to the Kaggle dataset as of 2026-09-15).
+  # `git pull` is the fast way to get it; the Kaggle dataset exists for the notebooks (no internet in kernels).
+  dir: weights_dataset
+  kaggle_dataset: vitaliineibauer/biohub-ft-weights
+  # Publish a new version from the same folder (keeps every subfolder, so nobody's upload is dropped):
+  #   python -m kaggle datasets version -p weights_dataset --dir-mode zip -m "<what changed>"
+  entries:
+    exp03B: pilkwang primary fine-tuned 1200 it on the 183 sparse-label videos (probe 2: +0.004 on the 0.941 base)
+    exp08: earlier fine-tune, secondary swap probe 7 (negative)
+    exp23: seed314159 secondary fine-tuned (probe 13 negative)
+    soup03B_50: 0.5 pilkwang primary + 0.5 exp03B weight average (probe 17: 0.943)
+    friend_a_exp02_loeo20: friend A scratch, leave-one-embryo-out, 20 epochs
+    friend_a_full199_ep21: friend A scratch on all 199 videos, epoch 21 (probe 10 as secondary: 0.920)
+    friend_a_full199_ep30: friend A scratch on all 199 videos, epoch 30
+
+external:
+  # Third-party Kaggle datasets the kernels read (hundreds of MB). Not in git. Manifest + fetcher:
+  #   python tools/get_kaggle_datasets.py   -> external/<owner>__<name>/ (git-ignored, skip if present)
+  dir: external
+  manifest: tools/get_kaggle_datasets.py
+
+metric:
+  official_package: tools/official        # royerlab/kaggle-cell-tracking-competition, vendored 2026-09-11
+  scorer: tools/score_geffs.py            # official metric; tools/score_geffs_fork.py = pilkwang fork, deprecated
+  match_radius_um: 7.0
+  division_weight: 0.1
+  node_count_penalty_a: 0.1
+  voxel_scale_um: [1.625, 0.40625, 0.40625]
+
+base:
+  # Final submission 1 = this exact configuration (LB probe 14, id 56146538, public 0.947).
+  experiment: exp29_sjlee947_verbatim
+  public_notebook: sjlee101/biohub-lf-dctta-v020
+  realised_env:
+    BIOHUB_MOTION_RELINK_TIGHT_UM: 5.5      # chosen by the in-kernel sweep ("tight55")
+    BIOHUB_DEEPCENTER_SAFE_DIV_THRESHOLD: 0.20
+    BIOHUB_SECONDARY_EDGE_FEATURE_TTA_WEIGHT: 0.75
+    BIOHUB_SAFE_DIV_SISTER_SYMMETRY_TAU: 0.6
+    BIOHUB_SAFE_DIV_DIVERGE_UM: 2.25
+    BIOHUB_SAFE_DIV_MAX_UM: 9.0
+    BIOHUB_SAFE_DIV_SISTER_MAX_UM: 14.0
+    detection_threshold: 0.965
+
+lb:
+  submissions_per_day_per_team: 5
+  reset_utc: "00:00"
+  noise_floor: 0.003          # two byte-identical public notebooks scored 0.946 / 0.942
+  tie_below: 0.005
+  final_submission_deadline: "2026-09-29T23:59:00Z"
+  recipe_freeze: "2026-09-24"

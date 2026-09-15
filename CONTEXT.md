@@ -30,6 +30,7 @@ Living document. Everything needed to continue the work without the chat history
   `train_unet_transformer.py`), `holdout_split.json` (12-video holdout).
 - `experiments/RESULTS.md` — experiment log with numbers. `research/` — literature surveys + discussion digest.
 - `tools/repo/` — local copy of the pilkwang support-pack code (metric, io, models, predict/train scripts).
+- `weights_dataset/` — the team weights dataset, fully in git (mirror of Kaggle `vitaliineibauer/biohub-ft-weights`); `params.yaml` — paths, slugs, base recipe knobs, LB rules (2026-09-15).
 - `tools/score_geffs.py` — official metric on local GT (CPU, ~50 s / 12 videos).
 - `tools/postproc.py` — our post-processing (gap closing, direct end->start linking, post-hoc divisions, pruning) on prediction .geff.
 - `tools/errdecomp.py` — error decomposition (detection / fragmentation / wrong association) per video.
@@ -762,6 +763,21 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   but a constant correction loses 0.003; contested links are lost on appearance AND motion (velocity picks the truth
   0/381) => linker work stays closed. (3) hengck23's refine head (-13% peaks at 99.45% recall) is the node-budget lever
   we quantified on the 11th => queued as B25, the most concrete new item. (4) Browser stopped after these reads to save
-  the user's tokens; no probes spent (0/5 today).
+  the user's tokens; no probes spent (0/5 today).- 2026-09-15 DATA LAYOUT DECISION (user request "store the dataset in the repo, DVC or Hydra").
+  What the user downloaded (`archive.zip`, 54 MB) is the TEAM WEIGHTS dataset `vitaliineibauer/biohub-ft-weights`, not the
+  competition data; every file in it is byte-identical to `weights_dataset/` in the repo. Done: the whole weights dataset
+  is now tracked in git, including friend A's three checkpoints that were git-ignored before (repo +25 MB), so `git pull`
+  is the fast way to get all weights; the Kaggle dataset stays as the copy the notebooks read (no internet in kernels).
+  Publishing a new version from the same folder keeps every subfolder. `params.yaml` at the repo root is the single
+  place for paths, dataset slugs, the base recipe's knobs and the LB rules (plain YAML: DVC- and Hydra-readable).
+  COMPETITION DATA STAYS OUT OF GIT: the local copy is 82 GB (199 train + test zarr videos). GitHub refuses files over
+  100 MB and repos of a few GB; Git LFS free tier is 1 GB; a DVC remote would need 82 GB of storage plus bandwidth for
+  three people (Google Drive free 15 GB, Yandex Disk free 5-10 GB), which is slower and dearer than one Kaggle download
+  per person, and inside Kaggle kernels the data is mounted anyway. DVC/Hydra are therefore NOT set up now; the trigger
+  for DVC would be a team artefact over ~1 GB that Kaggle cannot hold (e.g. teacher/dense geff sets), and it needs the
+  user to choose and authorise a remote first.
+  Third-party packs (pilkwang support pack, seed314159, DeepCenter - the ones the user means by "other participants'
+  datasets, ~900 MB") stay on Kaggle too: `tools/get_kaggle_datasets.py` is the manifest + fetcher into git-ignored
+  `external/` (skip-if-present). Pointers in git, bytes fetched once - DVC's mechanism without needing a remote.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
