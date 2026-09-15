@@ -1,0 +1,7 @@
+{
+ "base": "exp29 realised config (tight55, pilkwang primary, validator off) = LB 0.947",
+ "change": "TTA group: rot90/transpose views REPLACED by the 8 training-consistent axis flips (Z, Y, X independently), view count unchanged; primary + secondary edge-feature/detection TTA loops (friend B apply_axis_flip_tta, verbatim)",
+ "local": "friend B port, 12 LOEO videos, official metric: +0.0214 on pilkwang (0.9001 -> 0.9215, edge +0.015, raw node count flat), +0.0187 on a scratch 6bba-only primary that never saw 44b6",
+ "risk": "embryo difference sank Z-flip on the LB twice (exp31 -0.003, exp34 -0.009, with +7% nodes); this variant adds no nodes and removes the rot90/transpose views the model never saw in training",
+ "rule": ">= 0.950 real gain -> adopt into final 1; 0.945-0.949 tie; <= 0.944 drop"
+}
