@@ -844,5 +844,39 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   linking at all, only the detections that post-processing consumes. B25 iteration 2: image size features add nothing to
   the pruner (annotated and unannotated nuclei are the same objects); ceiling = false-peak fraction; the size feature
   belongs to B20. 12-video calibration and B25 chain running on his machine.
+- 2026-09-15 14:30 FRIEND B: 12-VIDEO CALIBRATION DONE (CONTEXT_FRIEND_B.md §28, RESULTS row). ALL 12, official metric:
+  exp29 0.9001 > exp31 0.8975 > exp30 0.8867 > exp32 0.8760 vs LB 0.947 > 0.944 > 0.941 > 0.937: Spearman +0.80, the only
+  inversion is exp30/exp31 whose LB gap (0.003) is the noise floor; exp29 first and exp32 last as on the LB; stable under
+  leave-one-video-out (exp29 first in 10/12); the division term does not change the order; spread 0.024 = 2.4x the LB's.
+  PORT CALIBRATED (order yes, magnitude no). CORRECTION to his §10 / our §14 entry of this morning: the CLEAN/LEAKY split
+  came out the OPPOSITE of the leakage prediction - exp03B configs beat exp29 on 4 of 6 clean videos and 1 of 6 leaky ones
+  - so fine-tune leakage (real as a fact) does NOT drive local rankings; per-video weight-swap swings of -0.037..+0.039
+  against a 0.003 LB effect do, and the two heaviest videos (893/773 GT edges) go against exp03B ('worse on dense videos').
+  Consequence: the 'honest validator must exclude those 6 videos' rule is withdrawn; weight swaps are unresolvable in
+  MAGNITUDE on any 12-video set (>= 48 videos, as we already said), while the ORDER is reproduced. The TTA-memorisation
+  finding stands - it rests on the scratch-model tests, not on the split. Next from his chain: B25 on 12 videos, local
+  prediction for probe 18 (exp36) before its LB score, per-stage table for the 87bba6c4 collapse.
+- 2026-09-15 15:00 FRIEND B: B25 CLOSED on 12 videos (CONTEXT_FRIEND_B.md §29). Learned pruner, official metric, ALL 12:
+  every fraction is negative (5% -0.0023, 8% -0.0036, 10% -0.0020, 12% -0.0062, 13% -0.0078) and recall after
+  post-processing at 10% is 0.9826, below the 0.99 gate; the 4-video +0.004 was one over-budget video. Mechanism: even a
+  5% cut that keeps 99.6% of annotated nodes loses edges (0.8756 -> 0.8702) because pruned nodes sit inside tracks, so
+  the node bonus never beats the edge loss. The free part of the node budget is already taken by prune-isolated and the
+  short-track filter. Not a threshold, not a probe. Remaining from his chain: local prediction for probe 18 (exp36),
+  per-stage table for the 87bba6c4 collapse, then B26 + axis-flip on 12 videos with pilkwang and scratch primaries.
+- 2026-09-15 15:05 FRIEND B: LOCAL PREDICTION FOR PROBE 18 (exp36), written before its LB score: on the 12 LOEO videos with
+  the full stack (DeepCenter veto on), exp36's post-processing on the exp29 raw graphs scores 0.9004 vs 0.8993 for
+  exp29/tight55 = +0.0011, division 1/7/14 -> 1/4/14 (TP unchanged, 3 FP removed), edge +0.0003. Pre-registered as
+  +0.001 +-0.0005 and met. Predicted LB: 0.947-0.948 (tie -> adopt). A LB <= 0.944 would falsify the port's claim that
+  post-processing changes are locally measurable - that pair is the real test. B25 closed (see 15:00). Remaining: per-stage
+  table for 87bba6c4, then B26 + axis-flip on 12 videos with pilkwang and scratch primaries.
+- 2026-09-15 15:30 FRIEND B: PER-STAGE TABLE of the public post-processing on 12 videos (CONTEXT_FRIEND_B.md §31, RESULTS
+  row, results/stage_table_exp29_12videos.log). Cumulative: edge filter 0.8740 -> +relink 0.8673 (-0.0067) -> +gap 0.8802
+  (+0.0130) -> +divisions 0.8886 (+0.0084) -> +veto 0.8851 (-0.0035, one division event) -> +short-track 0.8856 -> +LINEFIT
+  0.9001 (+0.0145). Two things we did not know: (1) linefit smoothing (OUTPUT_LINEFIT_WEIGHT 0.8, WINDOW 2) is the single
+  largest post-processing stage and is in no sweep key and no probe; (2) motion relink is net NEGATIVE on 12 videos and is
+  the stage that collapses 44b6_87bba6c4 (0.636 -> 0.511, FP edges 32 -> 53, never recovered) - the exp02 mystery. Both are
+  post-processing-class comparisons, i.e. the locally measurable class. Queued (CPU, behind his GPU chain): relink OFF with
+  the full stack, veto OFF, and a linefit weight x window grid. If relink-off or a linefit setting wins on 12 videos, it
+  is a candidate in the same class as exp36 - to be read against probe 18's local-vs-LB pair first.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.

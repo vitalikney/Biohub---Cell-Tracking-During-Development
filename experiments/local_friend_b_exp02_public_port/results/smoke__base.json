@@ -31,5 +31,21 @@
       "gap_added_nodes": 514,
       "short_track_nodes_removed": 1051
     }
+  ],
+  "metric_rows": [
+    {
+      "dataset": "44b6_12dfb391",
+      "edge_tp": 746,
+      "edge_fp": 33,
+      "edge_fn": 27,
+      "division_tp": 0,
+      "division_fp": 0,
+      "division_fn": 1,
+      "num_pred_nodes": 44960,
+      "node_recall": 0.9923857868020305,
+      "total_node_ratio": -0.2337060267248432,
+      "edge_jaccard": 0.9255583126550868,
+      "adj_edge_jaccard": 0.9471891682303638
+    }
   ]
 }
