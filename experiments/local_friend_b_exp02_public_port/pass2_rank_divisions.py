@@ -126,11 +126,13 @@ def main():
     ap.add_argument("--ranker", choices=["public", "gbm"], default="public"); ap.add_argument("--mode", choices=["add", "steal"], default="add")
     ap.add_argument("--parent-um", type=float, default=9.0); ap.add_argument("--k", type=int, default=3); ap.add_argument("--label", default=None)
     ap.add_argument("--min-score", type=float, default=None, help="gbm only: accept a candidate only if its OOF probability >= this (default: caps only)")
+    ap.add_argument("--scores-file", default=None, help="npz from b20_train_ranker.py: use its out-of-fold scores instead of fitting here")
+    ap.add_argument("--scores-key", default="oof_video", choices=["oof_video", "oof_embryo"])
     a = ap.parse_args()
     import public_local as pl, divranker, postproc, networkx as nx
     cache = pl.DEFAULT_CACHE / a.tag
     stems = a.stems or sorted(p.stem for p in (cache / "ckpt").glob("*.npz"))
-    label_ = a.label or f"p2_{a.ranker}_{a.mode}" + (f"_t{a.min_score:g}" if (a.ranker == "gbm" and a.min_score is not None) else "")
+    label_ = a.label or f"p2_{a.ranker}_{a.mode}" + ("_oof" if a.scores_file else "") + (f"_t{a.min_score:g}" if (a.ranker == "gbm" and a.min_score is not None) else "")
     out_dir = cache / "pp" / label_; out_dir.mkdir(parents=True, exist_ok=True)
     # notebook tail (prune-isolated, short-track, linefit) through the real functions
     os.environ["BIOHUB_OUTPUT_SAFE_DIVISIONS"] = "0"; os.environ["BIOHUB_OUTPUT_MOTION_RELINK"] = "0"; os.environ["BIOHUB_OUTPUT_GAP_CLOSE"] = "0"; os.environ["BIOHUB_OUTPUT_GAP2_RECOVERY"] = "0"
@@ -154,6 +156,11 @@ def main():
         F = np.array([f for *_, f in cands], float) if cands else np.zeros((0, len(NAMES)))
         if a.ranker == "public" or not cands:
             sc = np.array([(-k if (k := public_key(f)) is not None else -np.inf) for *_, f in cands]) if cands else np.zeros(0)
+        elif a.scores_file:
+            if "oof" not in globals():
+                z = np.load(a.scores_file, allow_pickle=False)
+                globals()["oof"] = {(str(st), int(pp_), int(cc), int(qq)): float(v) for st, pp_, cc, qq, v in zip(z["stem"], z["p"], z["c"], z["q"], z[a.scores_key])}
+            sc = np.array([oof.get((s, p, c, q), np.nan) for p, c, q, t, f in cands]); sc = np.where(np.isnan(sc), -np.inf, sc)   # subsampled-out negatives: never accepted
         else:
             from sklearn.ensemble import HistGradientBoostingClassifier
             Xtr = np.concatenate([np.array([f for *_, f in C[o][0]], float) for o in stems if o != s and C[o][0]])
