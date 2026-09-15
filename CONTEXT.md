@@ -905,5 +905,14 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   term moves +0.0014, positive on 4/12 videos; it does repair 87bba6c4 (0.535 -> 0.607). veto OFF +0.0024,
   again one division event. Neither clears the +0.005 gate on the robust (edge) term; no probe requested. Open question
   no local test answers: the public author kept relink ON for the hidden embryos and swept its radius, never OFF.
+- 2026-09-15 18:30 FRIEND B: B20 STEP (b) DONE - size profile on OUR labels (CONTEXT_FRIEND_B.md §37, RESULTS row,
+  results/b20_size_profile_12videos.txt). With same-frame DETECTION controls (GT controls unusable in 44b6: 4/15
+  divisions had >= 3), zhincez's post-split shrinkage reproduces: daughter half-max volume -0.17/-0.20/-0.20 at lags
+  0/+1/+2 with CIs excluding zero (his -0.27 at +3; ours fades by +3). His PRE-split claim (-2/-1) is not seen at n=14
+  (fraction below control 0.50). The relative peak (+0.2..+0.4 at every lag) is annotation bias, not a signal. Ranker
+  feature for B20 is therefore daughter size at +1/+2 vs the frame's detection median, available at ranking time; its
+  power against false forks cannot be measured on 12 videos (~5 reachable positives) - it needs the 199-video in-kernel
+  feature table he designed (§33). B28 closed, B29 below the gate, B26/axis-flip done on 12: his queue is empty until
+  probes 18 and 19 score; probe 19's kernel was verified to produce the same predict script as his local axisflip run.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
