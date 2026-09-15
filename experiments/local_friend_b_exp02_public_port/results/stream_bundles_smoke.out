@@ -5,3 +5,7 @@
 17:42:52 $ kaggle kernels status gsfatakhov/biohub-loeo44b6-missing-videos
 17:43:37 $ kaggle kernels status gsfatakhov/biohub-loeo44b6-missing-videos
 17:44:23 $ kaggle kernels status gsfatakhov/biohub-loeo44b6-missing-videos
+17:45:09 $ kaggle kernels status gsfatakhov/biohub-loeo44b6-missing-videos
+17:45:55 $ kaggle kernels status gsfatakhov/biohub-loeo44b6-missing-videos
+17:45:55 kernel complete in 3.8 min
+17:45:55 $ kaggle kernels output gsfatakhov/biohub-loeo44b6-missing-videos -p /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/.public_local_cache/_bundle

@@ -935,5 +935,13 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
     axis-flip (+ hygiene) if probe 19 is a tie (strong local evidence on an unseen embryo, LB neutral); if probe 19 wins,
     final 2 = exp29 verbatim as the safe fallback. Both must be selected by hand on the Submissions page by 28 Sep.
   VITALII/ME: merge friends, run at most one follow-up probe per decisive result, prepare the two finals, no sweeps.
+- 2026-09-15 19:00 FRIEND B: B20 DECISION POINT (CONTEXT_FRIEND_B.md §38.4, RESULTS row). On the 12 videos' predicted
+  graphs the orphan-start candidate set reaches only 4/15 GT divisions (27%) at any radius; the missing daughters are
+  not orphans. Per-daughter audit of all 30: 14 already linked to the parent, 6 orphans, 7 CLAIMED BY AN UNMATCHED NODE,
+  3 undetected; all 15 parents detected. So a 'steal' from an unmatched predecessor removes an FP edge and adds a TP
+  edge - it costs nothing on the edge term - and the ranker's ceiling becomes 13/15 (87%). exp07's steal lost edges
+  because it thresholded edge_prob without labels. B20 scope: candidates = orphan OR low-quality-linked node at t+1,
+  ranker learns which steals are right; expected ~130 positives on 199 videos. Streaming pass 1 (10-video bundles via
+  the private kernel, inference with peak_prob, videos deleted after) is running: first bundle in progress.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
