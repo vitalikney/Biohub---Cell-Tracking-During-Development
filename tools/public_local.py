@@ -381,13 +381,19 @@ def postprocess_and_write(ns: dict, raw_dir: Path, out_dir: Path) -> list[dict]:
     return rows
 
 
-def score_dir(out_dir: Path, data_dir: Path) -> dict:
+def score_dir(out_dir: Path, data_dir: Path) -> tuple[dict, list[dict]]:
+    """Official metric over a directory of prediction graphs.
+
+    The per-video rows are returned as well as the summary: the metric is weighted by GT edge count, so a
+    subset score (e.g. only the videos a fine-tuned checkpoint never trained on) has to be re-summarised from
+    the rows rather than averaged from the totals.
+    """
     os.environ["BIOHUB_DATA_DIR"] = str(data_dir)
     sys.path.insert(0, str(TOOLS))
     import importlib
     scorer = importlib.import_module("score_geffs")
-    summary, _rows = scorer.score(sorted(out_dir.glob("*.geff")), quiet=False)
-    return summary
+    summary, rows = scorer.score(sorted(out_dir.glob("*.geff")), quiet=False)
+    return summary, rows
 
 
 # ------------------------------------------------------------------------------------------------------------- main
@@ -465,7 +471,7 @@ def main() -> None:
     if ns.get("DEEPCENTER_VETO_DETECTOR") is None:
         ns["DEEPCENTER_VETO_DETECTOR"] = ns["load_deepcenter_veto_detector"]()
     rows = postprocess_and_write(ns, raw_dir, out_dir)
-    summary = score_dir(out_dir, data_dir)
+    summary, metric_rows = score_dir(out_dir, data_dir)
 
     print("\n== %s/%s  score=%.4f adj_edge=%.4f edge=%.4f div=%.4f (%d/%d/%d) recall=%.4f n=%d"
           % (args.tag, args.label, summary["score"], summary["adj_edge_jaccard"], summary["edge_jaccard"],
@@ -476,7 +482,8 @@ def main() -> None:
         "tag": args.tag, "label": args.label, "notebook": args.notebook,
         "primary": args.primary, "secondary": args.secondary, "tta_group": args.tta_group,
         "pool_kernel_um": args.pool_kernel_um,
-        "env_overrides": args.env, "videos": stems, "summary": summary, "per_video": rows,
+        "env_overrides": args.env, "videos": stems, "summary": summary,
+        "per_video": rows, "metric_rows": metric_rows,
     }
     result_path = cache / "pp" / f"{args.label}.json"
     result_path.write_text(json.dumps(result, indent=2))
