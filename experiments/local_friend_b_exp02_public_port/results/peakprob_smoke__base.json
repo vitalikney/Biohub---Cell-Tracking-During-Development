@@ -1,0 +1,54 @@
+{
+  "tag": "peakprob_smoke",
+  "label": "base",
+  "notebook": "/home/georgii/Documents/Biohub---Cell-Tracking-During-Development/experiments/exp29_sjlee947_verbatim/exp29-sjlee947-verbatim.ipynb",
+  "primary": null,
+  "secondary": null,
+  "tta_group": "public",
+  "pool_kernel_um": null,
+  "keep_peak_prob": true,
+  "env_overrides": [],
+  "videos": [
+    "44b6_74d0c52e"
+  ],
+  "summary": {
+    "n": 1.0,
+    "edge_jaccard": 0.9172413793103448,
+    "division_jaccard": 0.0,
+    "division_tp": 0.0,
+    "division_fp": 0.0,
+    "division_fn": 1.0,
+    "node_recall": 1.0,
+    "adj_edge_jaccard": 0.9561132058225361,
+    "n_adj": 1.0,
+    "score": 0.9561132058225361
+  },
+  "per_video": [
+    {
+      "dataset": "44b6_74d0c52e",
+      "raw_nodes": 8968,
+      "nodes": 8695,
+      "raw_edges": 8373,
+      "edges": 8344,
+      "safe_divisions_added": 9,
+      "gap_added_nodes": 84,
+      "short_track_nodes_removed": 410
+    }
+  ],
+  "metric_rows": [
+    {
+      "dataset": "44b6_74d0c52e",
+      "edge_tp": 133,
+      "edge_fp": 6,
+      "edge_fn": 6,
+      "division_tp": 0,
+      "division_fp": 0,
+      "division_fn": 1,
+      "num_pred_nodes": 8695,
+      "node_recall": 1.0,
+      "total_node_ratio": -0.42379058979456596,
+      "edge_jaccard": 0.9172413793103448,
+      "adj_edge_jaccard": 0.956113205822536
+    }
+  ]
+}

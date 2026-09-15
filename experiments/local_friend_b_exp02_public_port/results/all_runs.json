@@ -171,6 +171,25 @@
     "out_nodes": 140620
   },
   {
+    "tag": "peakprob_smoke",
+    "label": "base",
+    "videos": 1,
+    "clean_videos": 1,
+    "primary": "pilkwang",
+    "secondary": "seed314159",
+    "tta": "public",
+    "pool_kernel_um": 3.0,
+    "env": "",
+    "score": 0.9561132058225361,
+    "adj_edge": 0.9561132058225361,
+    "edge": 0.9172413793103448,
+    "div_J": 0.0,
+    "div": "0/0/1",
+    "recall": 1.0,
+    "raw_nodes": 8968,
+    "out_nodes": 8695
+  },
+  {
     "tag": "poolk4.0_4vid",
     "label": "base",
     "videos": 4,
