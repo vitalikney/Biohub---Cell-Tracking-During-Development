@@ -228,6 +228,25 @@
     "out_nodes": 119318
   },
   {
+    "tag": "scratch_axisflip_4vid",
+    "label": "base",
+    "videos": 4,
+    "clean_videos": 2,
+    "primary": "friend_a_exp02_loeo20",
+    "secondary": "seed314159",
+    "tta": "axisflip",
+    "pool_kernel_um": 3.0,
+    "env": "",
+    "score": 0.8527220142312077,
+    "adj_edge": 0.8527220142312077,
+    "edge": 0.8646666666666667,
+    "div_J": 0.0,
+    "div": "0/4/3",
+    "recall": 0.9658330421090648,
+    "raw_nodes": 192968,
+    "out_nodes": 191030
+  },
+  {
     "tag": "scratch_publicTTA_4vid",
     "label": "base",
     "videos": 4,
