@@ -1,5 +1,24 @@
 [
   {
+    "tag": "axisflip_4vid",
+    "label": "base",
+    "videos": 4,
+    "clean_videos": 2,
+    "primary": "pilkwang",
+    "secondary": "seed314159",
+    "tta": "axisflip",
+    "pool_kernel_um": 3.0,
+    "env": "",
+    "score": 0.9326153213624786,
+    "adj_edge": 0.9326153213624786,
+    "edge": 0.9133697135061392,
+    "div_J": 0.0,
+    "div": "0/3/3",
+    "recall": 0.9960595527109541,
+    "raw_nodes": 132106,
+    "out_nodes": 130240
+  },
+  {
     "tag": "exp29_4vid",
     "label": "base",
     "videos": 4,
