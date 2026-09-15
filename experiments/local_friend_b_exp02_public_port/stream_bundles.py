@@ -95,7 +95,8 @@ def main() -> None:
 
     idx_sizes = {f["name"]: f["size"] for f in json.loads((DATA / "_file_index.json").read_text())}
     stems = all_stems()
-    done = {p.stem for p in RAW.glob("*.geff")} if RAW.is_dir() else set()
+    CK = RAW.parent / "ckpt"; DC = RAW.parent / "dc"
+    done = {p.stem for p in RAW.glob("*.geff") if (CK / f"{p.stem}.npz").is_file() and (DC / f"{p.stem}.npz").is_file()} if RAW.is_dir() else set()
     todo = [s for s in stems if s not in done]
     local = [s for s in todo if complete_locally(s, idx_sizes)]
     remote = [s for s in todo if s not in local]
@@ -128,6 +129,14 @@ def main() -> None:
         got = [s for s in stems_b if (RAW / f"{s}.geff").is_dir()]
         if len(got) != len(stems_b):
             raise RuntimeError(f"raw graphs missing after inference: {set(stems_b) - set(got)}")
+        # pass-1 extras while the frames are on disk: post-gap checkpoint + DeepCenter score per raw node (§38.6)
+        r = run([PY, str(Path(__file__).resolve().parent / "pass1_extras.py"), "--tag", TAG, "--stems", *stems_b], capture_output=True, text=True)
+        log(f"extras exit={r.returncode}: " + "\n".join(l for l in r.stdout.splitlines() if l.startswith("44b6") or l.startswith("6bba"))[-600:])
+        if r.returncode != 0:
+            log(r.stderr[-2000:]); raise RuntimeError("pass1 extras failed")
+        miss = [s for s in stems_b if not ((CK / f"{s}.npz").is_file() and (DC / f"{s}.npz").is_file())]
+        if miss:
+            raise RuntimeError(f"extras missing: {miss}")
         if not is_local:
             for s in stems_b:
                 shutil.rmtree(TRAIN / f"{s}.zarr", ignore_errors=True)
