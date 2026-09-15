@@ -14,3 +14,6 @@ experiments/**/checkpoint_last.pth
 
 # friend uploads mirrored locally only to keep dataset versions complete (they live in the Kaggle dataset)
 weights_dataset/friend_a_*/
+
+# Friend B local pipeline port (cached raw graphs + post-processed graphs)
+.public_local_cache/
