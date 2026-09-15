@@ -863,5 +863,11 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   the node bonus never beats the edge loss. The free part of the node budget is already taken by prune-isolated and the
   short-track filter. Not a threshold, not a probe. Remaining from his chain: local prediction for probe 18 (exp36),
   per-stage table for the 87bba6c4 collapse, then B26 + axis-flip on 12 videos with pilkwang and scratch primaries.
+- 2026-09-15 15:05 FRIEND B: LOCAL PREDICTION FOR PROBE 18 (exp36), written before its LB score: on the 12 LOEO videos with
+  the full stack (DeepCenter veto on), exp36's post-processing on the exp29 raw graphs scores 0.9004 vs 0.8993 for
+  exp29/tight55 = +0.0011, division 1/7/14 -> 1/4/14 (TP unchanged, 3 FP removed), edge +0.0003. Pre-registered as
+  +0.001 +-0.0005 and met. Predicted LB: 0.947-0.948 (tie -> adopt). A LB <= 0.944 would falsify the port's claim that
+  post-processing changes are locally measurable - that pair is the real test. B25 closed (see 15:00). Remaining: per-stage
+  table for 87bba6c4, then B26 + axis-flip on 12 videos with pilkwang and scratch primaries.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
