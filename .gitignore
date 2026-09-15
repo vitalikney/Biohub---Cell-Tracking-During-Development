@@ -11,6 +11,5 @@ experiments/**/predictions.zip
 experiments/**/*.pth
 experiments/**/submission.csv
 experiments/**/checkpoint_last.pth
-
-# friend uploads mirrored locally only to keep dataset versions complete (they live in the Kaggle dataset)
-weights_dataset/friend_a_*/
+# raw download of the weights dataset; its contents are tracked under weights_dataset/
+/archive.zip

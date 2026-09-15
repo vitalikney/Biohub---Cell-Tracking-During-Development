@@ -54,6 +54,13 @@ Goal: run the public 0.941 pipeline locally on the 12 LOEO 44b6 videos and expos
 5. Expected cost on a 5070: GPU stages ~30-40 min for 12 videos (two UNets + DeepCenter + ILP), then each knob sweep
    is minutes on CPU. First check request: exp23 (fine-tuned seed314159 secondary) vs the pilkwang secondary.
 
+**DATA LAYOUT (2026-09-15).** All team weights are in git: `weights_dataset/<name>/edge_predictor_best.pth` + `config.json`
+(exp03B, exp08, exp23, soup03B_50, friend_a_*). `git pull` gets them; the Kaggle dataset `vitaliineibauer/biohub-ft-weights`
+is the same content for the notebooks. When you add a checkpoint: put it in `weights_dataset/<your_name>/`, commit, push, and
+publish the dataset from that folder (`python -m kaggle datasets version -p weights_dataset --dir-mode zip -m "..."`) so both
+copies stay identical. The competition data (82 GB of zarr) is NOT in git and will not be: download it once from Kaggle.
+Paths, slugs, the base recipe's knobs and the LB rules live in `params.yaml`.
+
 **METRIC ALERT (2026-09-11, applies to BOTH friends, read before any local scoring).**
 `tools/repo/` is pilkwang's fork and its division metric is the PRE-PATCH one: it credits a ground-truth division to any
 predicted fork merely reachable in the same weakly connected component. The organisers removed that rule on 2026-07-17
