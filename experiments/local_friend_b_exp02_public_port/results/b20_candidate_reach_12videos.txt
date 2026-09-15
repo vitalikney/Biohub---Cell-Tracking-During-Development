@@ -1,0 +1,6 @@
+candidate set                              cands  pos GT div  reach cands/pos
+orphan starts, 9 um, k=3 (team divranker)   28493    4     15    27%      7123
+orphan starts, 12 um, k=5                  71094    4     15    27%     17774
+ANY node at t+1, 9 um, k=3                377819    8     15    53%     47227
+ANY node at t+1, 12 um, k=5              1073949   10     15    67%    107395
+ANY node at t+1, 14 um, k=8              1836627   11     15    73%    166966

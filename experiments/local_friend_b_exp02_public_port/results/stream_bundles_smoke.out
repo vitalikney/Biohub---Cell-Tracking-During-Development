@@ -1,0 +1,4 @@
+17:49:44 199 stems | done 12 | todo 187 (local 0, to fetch 187)
+17:49:44 === bundle 1/1: 10 videos : 44b6_0113de3b 44b6_0b24845f 44b6_0c582fdc 44b6_0db75fae 44b6_144b256d 44b6_1574802b 44b6_18ced818 44b6_24264f12 44b6_267148e4 44b6_2f31fc2f
+17:49:44 $ kaggle kernels push -p /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/experiments/local_friend_b_exp02_public_port/kernel_fetch_missing
+17:49:46 $ kaggle kernels status gsfatakhov/biohub-loeo44b6-missing-videos

@@ -1,0 +1,33 @@
+  44b6_12dfb391: 2628 candidates, 0 positive (GT divisions 1)
+  44b6_1d530831: 2858 candidates, 0 positive (GT divisions 0)
+  44b6_2a2eff9f: 2809 candidates, 0 positive (GT divisions 1)
+  44b6_74d0c52e: 353 candidates, 0 positive (GT divisions 1)
+  44b6_7a302da0: 3389 candidates, 0 positive (GT divisions 1)
+  44b6_87bba6c4: 2603 candidates, 0 positive (GT divisions 0)
+  44b6_9be80b04: 1737 candidates, 0 positive (GT divisions 1)
+  44b6_a21120c2: 778 candidates, 2 positive (GT divisions 2)
+  44b6_c50204e0: 4009 candidates, 0 positive (GT divisions 2)
+  44b6_d2f34f90: 1177 candidates, 2 positive (GT divisions 2)
+  44b6_d5e7d891: 4603 candidates, 0 positive (GT divisions 2)
+  44b6_e28840c6: 1549 candidates, 0 positive (GT divisions 2)
+
+12 videos | GT divisions 15 | candidates 28493 | positives 4 (reach 27%)
+public key       AP=0.000 AUC=0.659
+sister-first key AP=0.000 AUC=0.531
+GBM ranker (LOO-video OOF): AP=0.001 AUC=0.561 | per-fold AP [0.007, 0.002]
+  precision@5: 0.00 (0 of 5); recall@5: 0.00
+  precision@10: 0.00 (0 of 10); recall@10: 0.00
+  precision@20: 0.00 (0 of 20); recall@20: 0.00
+  precision@50: 0.00 (0 of 50); recall@50: 0.00
+feature importance (permutation, AP):
+  peak_p         +0.843
+  peak_c         +0.279
+  len_p_back     +0.134
+  d_pc           +0.000
+  d_pq           +0.000
+  d_cq           +0.000
+  asym           +0.000
+  cos_pc_pq      +0.000
+  speed_p        +0.000
+  len_c_fwd      +0.000
+wrote /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/experiments/local_friend_b_exp02_public_port/results/b20_ranker_exp29pp.json

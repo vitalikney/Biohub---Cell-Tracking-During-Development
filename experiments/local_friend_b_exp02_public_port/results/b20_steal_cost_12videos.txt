@@ -1,0 +1,22 @@
+44b6_12dfb391 div@  parent detected    | daughter already linked to parent ; daughter claimed by UNMATCHED node (steal is free)
+44b6_2a2eff9f div@  parent detected    | daughter already linked to parent ; daughter claimed by UNMATCHED node (steal is free)
+44b6_74d0c52e div@  parent detected    | daughter already linked to parent ; daughter claimed by UNMATCHED node (steal is free)
+44b6_7a302da0 div@  parent detected    | daughter claimed by UNMATCHED node (steal is free) ; daughter already linked to parent
+44b6_9be80b04 div@  parent detected    | daughter UNDETECTED ; daughter already linked to parent
+44b6_a21120c2 div@  parent detected    | daughter already linked to parent ; daughter ORPHAN
+44b6_a21120c2 div@  parent detected    | daughter already linked to parent ; daughter ORPHAN
+44b6_c50204e0 div@  parent detected    | daughter claimed by UNMATCHED node (steal is free) ; daughter already linked to parent
+44b6_c50204e0 div@  parent detected    | daughter claimed by UNMATCHED node (steal is free) ; daughter already linked to parent
+44b6_d2f34f90 div@  parent detected    | daughter ORPHAN ; daughter already linked to parent
+44b6_d2f34f90 div@  parent detected    | daughter already linked to parent ; daughter ORPHAN
+44b6_d5e7d891 div@  parent detected    | daughter ORPHAN ; daughter ORPHAN
+44b6_d5e7d891 div@  parent detected    | daughter UNDETECTED ; daughter already linked to parent
+44b6_e28840c6 div@  parent detected    | daughter already linked to parent ; daughter UNDETECTED
+44b6_e28840c6 div@  parent detected    | daughter already linked to parent ; daughter claimed by UNMATCHED node (steal is free)
+
+DAUGHTER STATUS over 30 GT daughters of 15 GT divisions:
+   14  daughter already linked to parent
+    7  daughter claimed by UNMATCHED node (steal is free)
+    6  daughter ORPHAN
+    3  daughter UNDETECTED
+parents undetected: 0
