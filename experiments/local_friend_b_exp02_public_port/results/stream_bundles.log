@@ -237,3 +237,133 @@ cached 68 raw graphs in /home/georgii/Documents/Biohub---Cell-Tracking-During-De
 20:40:02 $ kaggle kernels status gsfatakhov/biohub-loeo44b6-missing-videos
 20:40:47 $ kaggle kernels status gsfatakhov/biohub-loeo44b6-missing-videos
 20:41:33 $ kaggle kernels status gsfatakhov/biohub-loeo44b6-missing-videos
+20:42:19 $ kaggle kernels status gsfatakhov/biohub-loeo44b6-missing-videos
+20:42:20 kernel complete in 5.3 min
+20:42:20 $ kaggle kernels output gsfatakhov/biohub-loeo44b6-missing-videos -p /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/.public_local_cache/_bundle
+20:47:19 downloaded loeo44b6_missing.zip 3.47 GB
+20:47:21 bundle unpacked (8 videos)
+20:47:21 $ /home/georgii/anaconda3/envs/biohub/bin/python /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/tools/public_local.py --tag exp29pp --label base --stage infer --keep-peak-prob --stems 44b6_e57ff5c6 44b6_eb2880fc 44b6_f28707c6 6bba_05b6850b 6bba_05db0fb1 6bba_062c8d37 6bba_07477033 6bba_07e24132
+20:54:17 inference (8 videos) exit=0: Saved 8 predictions to /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/.public_local_cache/exp29pp/work/tracking_repo/predictions/georgii/unet_transformer/split_0
+inference finished in 6.9 min
+cached 76 raw graphs in /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/.public_local_cache/exp29pp/raw
+20:54:17 $ /home/georgii/anaconda3/envs/biohub/bin/python /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/experiments/local_friend_b_exp02_public_port/pass1_extras.py --tag exp29pp --stems 44b6_e57ff5c6 44b6_eb2880fc 44b6_f28707c6 6bba_05b6850b 6bba_05db0fb1 6bba_062c8d37 6bba_07477033 6bba_07e24132
+20:57:07 extras exit=0: 9 nodes / 17389 edges; dc scores 18490
+44b6_eb2880fc: raw 38297 nodes -> ckpt 38297 nodes / 36659 edges; dc scores 37854
+44b6_f28707c6: raw 22162 nodes -> ckpt 22162 nodes / 21221 edges; dc scores 21944
+6bba_05b6850b: raw 6340 nodes -> ckpt 6340 nodes / 6090 edges; dc scores 6309
+6bba_05db0fb1: raw 71112 nodes -> ckpt 71112 nodes / 68770 edges; dc scores 70686
+6bba_062c8d37: raw 6048 nodes -> ckpt 6048 nodes / 5740 edges; dc scores 5997
+6bba_07477033: raw 4799 nodes -> ckpt 4799 nodes / 4607 edges; dc scores 4777
+6bba_07e24132: raw 30089 nodes -> ckpt 30089 nodes / 28827 edges; dc scores 29757
+20:57:07 bundle videos deleted (GT geffs kept)
+20:57:07 === bundle 9/24: 8 videos : 6bba_085bf656 6bba_09961292 6bba_0c7fa718 6bba_0e7c0d07 6bba_12665c0e 6bba_13f19531 6bba_15403b9a 6bba_1d0d8384
+20:57:07 $ kaggle kernels push -p /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/experiments/local_friend_b_exp02_public_port/kernel_fetch_missing
+20:57:09 $ kaggle kernels status gsfatakhov/biohub-loeo44b6-missing-videos
+20:57:55 $ kaggle kernels status gsfatakhov/biohub-loeo44b6-missing-videos
+20:58:41 $ kaggle kernels status gsfatakhov/biohub-loeo44b6-missing-videos
+20:59:27 $ kaggle kernels status gsfatakhov/biohub-loeo44b6-missing-videos
+20:59:27 kernel complete in 2.3 min
+20:59:27 $ kaggle kernels output gsfatakhov/biohub-loeo44b6-missing-videos -p /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/.public_local_cache/_bundle
+21:05:31 downloaded loeo44b6_missing.zip 3.05 GB
+21:05:33 bundle unpacked (8 videos)
+21:05:33 $ /home/georgii/anaconda3/envs/biohub/bin/python /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/tools/public_local.py --tag exp29pp --label base --stage infer --keep-peak-prob --stems 6bba_085bf656 6bba_09961292 6bba_0c7fa718 6bba_0e7c0d07 6bba_12665c0e 6bba_13f19531 6bba_15403b9a 6bba_1d0d8384
+21:11:48 inference (8 videos) exit=0: Saved 8 predictions to /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/.public_local_cache/exp29pp/work/tracking_repo/predictions/georgii/unet_transformer/split_0
+inference finished in 6.2 min
+cached 84 raw graphs in /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/.public_local_cache/exp29pp/raw
+21:11:48 $ /home/georgii/anaconda3/envs/biohub/bin/python /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/experiments/local_friend_b_exp02_public_port/pass1_extras.py --tag exp29pp --stems 6bba_085bf656 6bba_09961292 6bba_0c7fa718 6bba_0e7c0d07 6bba_12665c0e 6bba_13f19531 6bba_15403b9a 6bba_1d0d8384
+21:13:23 extras exit=0: 435 nodes / 8128 edges; dc scores 8414
+6bba_09961292: raw 30171 nodes -> ckpt 30171 nodes / 29207 edges; dc scores 29955
+6bba_0c7fa718: raw 13131 nodes -> ckpt 13131 nodes / 12192 edges; dc scores 13021
+6bba_0e7c0d07: raw 23276 nodes -> ckpt 23276 nodes / 21833 edges; dc scores 23134
+6bba_12665c0e: raw 8253 nodes -> ckpt 8253 nodes / 7840 edges; dc scores 8237
+6bba_13f19531: raw 5877 nodes -> ckpt 5877 nodes / 5600 edges; dc scores 5863
+6bba_15403b9a: raw 6438 nodes -> ckpt 6438 nodes / 6097 edges; dc scores 6413
+6bba_1d0d8384: raw 17726 nodes -> ckpt 17726 nodes / 16915 edges; dc scores 17613
+21:13:23 bundle videos deleted (GT geffs kept)
+21:13:23 === bundle 10/24: 8 videos : 6bba_1ebfb80d 6bba_1f58c2f6 6bba_207c6aaf 6bba_20852818 6bba_2312ac41 6bba_23af9eeb 6bba_2540cd90 6bba_2646afc7
+21:13:23 $ kaggle kernels push -p /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/experiments/local_friend_b_exp02_public_port/kernel_fetch_missing
+21:13:25 $ kaggle kernels status gsfatakhov/biohub-loeo44b6-missing-videos
+21:14:11 $ kaggle kernels status gsfatakhov/biohub-loeo44b6-missing-videos
+21:14:57 $ kaggle kernels status gsfatakhov/biohub-loeo44b6-missing-videos
+21:15:42 $ kaggle kernels status gsfatakhov/biohub-loeo44b6-missing-videos
+21:15:43 kernel complete in 2.3 min
+21:15:43 $ kaggle kernels output gsfatakhov/biohub-loeo44b6-missing-videos -p /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/.public_local_cache/_bundle
+21:20:25 downloaded loeo44b6_missing.zip 3.04 GB
+21:20:27 bundle unpacked (8 videos)
+21:20:27 $ /home/georgii/anaconda3/envs/biohub/bin/python /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/tools/public_local.py --tag exp29pp --label base --stage infer --keep-peak-prob --stems 6bba_1ebfb80d 6bba_1f58c2f6 6bba_207c6aaf 6bba_20852818 6bba_2312ac41 6bba_23af9eeb 6bba_2540cd90 6bba_2646afc7
+21:26:37 inference (8 videos) exit=0: Saved 8 predictions to /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/.public_local_cache/exp29pp/work/tracking_repo/predictions/georgii/unet_transformer/split_0
+inference finished in 6.1 min
+cached 92 raw graphs in /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/.public_local_cache/exp29pp/raw
+21:26:37 $ /home/georgii/anaconda3/envs/biohub/bin/python /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/experiments/local_friend_b_exp02_public_port/pass1_extras.py --tag exp29pp --stems 6bba_1ebfb80d 6bba_1f58c2f6 6bba_207c6aaf 6bba_20852818 6bba_2312ac41 6bba_23af9eeb 6bba_2540cd90 6bba_2646afc7
+21:28:07 extras exit=0: 25 nodes / 11167 edges; dc scores 11667
+6bba_1f58c2f6: raw 32995 nodes -> ckpt 32995 nodes / 31453 edges; dc scores 32700
+6bba_207c6aaf: raw 18315 nodes -> ckpt 18315 nodes / 17255 edges; dc scores 18114
+6bba_20852818: raw 10275 nodes -> ckpt 10275 nodes / 9782 edges; dc scores 10242
+6bba_2312ac41: raw 12576 nodes -> ckpt 12576 nodes / 12191 edges; dc scores 12532
+6bba_23af9eeb: raw 4288 nodes -> ckpt 4288 nodes / 4116 edges; dc scores 4269
+6bba_2540cd90: raw 3499 nodes -> ckpt 3499 nodes / 3429 edges; dc scores 3490
+6bba_2646afc7: raw 5407 nodes -> ckpt 5407 nodes / 5189 edges; dc scores 5379
+21:28:07 bundle videos deleted (GT geffs kept)
+21:28:07 === bundle 11/24: 8 videos : 6bba_268e1230 6bba_2819ca14 6bba_283bf9f1 6bba_312f0dc3 6bba_32db13fc 6bba_337b1b3a 6bba_372c8cb8 6bba_3a1849c2
+21:28:07 $ kaggle kernels push -p /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/experiments/local_friend_b_exp02_public_port/kernel_fetch_missing
+21:28:09 $ kaggle kernels status gsfatakhov/biohub-loeo44b6-missing-videos
+21:28:55 $ kaggle kernels status gsfatakhov/biohub-loeo44b6-missing-videos
+21:29:40 $ kaggle kernels status gsfatakhov/biohub-loeo44b6-missing-videos
+21:30:26 $ kaggle kernels status gsfatakhov/biohub-loeo44b6-missing-videos
+21:31:12 $ kaggle kernels status gsfatakhov/biohub-loeo44b6-missing-videos
+21:31:57 $ kaggle kernels status gsfatakhov/biohub-loeo44b6-missing-videos
+21:32:43 $ kaggle kernels status gsfatakhov/biohub-loeo44b6-missing-videos
+21:33:29 $ kaggle kernels status gsfatakhov/biohub-loeo44b6-missing-videos
+21:33:30 kernel complete in 5.3 min
+21:33:30 $ kaggle kernels output gsfatakhov/biohub-loeo44b6-missing-videos -p /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/.public_local_cache/_bundle
+21:39:25 downloaded loeo44b6_missing.zip 3.13 GB
+21:39:26 bundle unpacked (8 videos)
+21:39:26 $ /home/georgii/anaconda3/envs/biohub/bin/python /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/tools/public_local.py --tag exp29pp --label base --stage infer --keep-peak-prob --stems 6bba_268e1230 6bba_2819ca14 6bba_283bf9f1 6bba_312f0dc3 6bba_32db13fc 6bba_337b1b3a 6bba_372c8cb8 6bba_3a1849c2
+21:45:48 inference (8 videos) exit=0: Saved 8 predictions to /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/.public_local_cache/exp29pp/work/tracking_repo/predictions/georgii/unet_transformer/split_0
+inference finished in 6.4 min
+cached 100 raw graphs in /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/.public_local_cache/exp29pp/raw
+21:45:48 $ /home/georgii/anaconda3/envs/biohub/bin/python /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/experiments/local_friend_b_exp02_public_port/pass1_extras.py --tag exp29pp --stems 6bba_268e1230 6bba_2819ca14 6bba_283bf9f1 6bba_312f0dc3 6bba_32db13fc 6bba_337b1b3a 6bba_372c8cb8 6bba_3a1849c2
+21:47:38 extras exit=0: pt 5073 nodes / 4665 edges; dc scores 5055
+6bba_2819ca14: raw 5080 nodes -> ckpt 5080 nodes / 4814 edges; dc scores 5066
+6bba_283bf9f1: raw 22027 nodes -> ckpt 22027 nodes / 21055 edges; dc scores 21963
+6bba_312f0dc3: raw 9898 nodes -> ckpt 9898 nodes / 9316 edges; dc scores 9870
+6bba_32db13fc: raw 46011 nodes -> ckpt 46011 nodes / 43604 edges; dc scores 45615
+6bba_337b1b3a: raw 29727 nodes -> ckpt 29727 nodes / 28584 edges; dc scores 29666
+6bba_372c8cb8: raw 6802 nodes -> ckpt 6802 nodes / 6596 edges; dc scores 6785
+6bba_3a1849c2: raw 6776 nodes -> ckpt 6776 nodes / 6526 edges; dc scores 6742
+21:47:38 bundle videos deleted (GT geffs kept)
+21:47:38 === bundle 12/24: 8 videos : 6bba_3abfe10a 6bba_3c5691b6 6bba_3db54e20 6bba_3fda6b25 6bba_43fea39d 6bba_474be664 6bba_48816121 6bba_4aa14c89
+21:47:38 $ kaggle kernels push -p /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/experiments/local_friend_b_exp02_public_port/kernel_fetch_missing
+21:47:40 $ kaggle kernels status gsfatakhov/biohub-loeo44b6-missing-videos
+21:48:25 $ kaggle kernels status gsfatakhov/biohub-loeo44b6-missing-videos
+21:49:11 $ kaggle kernels status gsfatakhov/biohub-loeo44b6-missing-videos
+21:49:57 $ kaggle kernels status gsfatakhov/biohub-loeo44b6-missing-videos
+21:49:58 kernel complete in 2.3 min
+21:49:58 $ kaggle kernels output gsfatakhov/biohub-loeo44b6-missing-videos -p /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/.public_local_cache/_bundle
+21:54:41 downloaded loeo44b6_missing.zip 3.38 GB
+21:54:42 bundle unpacked (8 videos)
+21:54:42 $ /home/georgii/anaconda3/envs/biohub/bin/python /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/tools/public_local.py --tag exp29pp --label base --stage infer --keep-peak-prob --stems 6bba_3abfe10a 6bba_3c5691b6 6bba_3db54e20 6bba_3fda6b25 6bba_43fea39d 6bba_474be664 6bba_48816121 6bba_4aa14c89
+22:01:18 inference (8 videos) exit=0: Saved 8 predictions to /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/.public_local_cache/exp29pp/work/tracking_repo/predictions/georgii/unet_transformer/split_0
+inference finished in 6.6 min
+cached 108 raw graphs in /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/.public_local_cache/exp29pp/raw
+22:01:18 $ /home/georgii/anaconda3/envs/biohub/bin/python /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/experiments/local_friend_b_exp02_public_port/pass1_extras.py --tag exp29pp --stems 6bba_3abfe10a 6bba_3c5691b6 6bba_3db54e20 6bba_3fda6b25 6bba_43fea39d 6bba_474be664 6bba_48816121 6bba_4aa14c89
+22:03:35 extras exit=0: 56141 nodes / 53448 edges; dc scores 55771
+6bba_3c5691b6: raw 6348 nodes -> ckpt 6348 nodes / 6163 edges; dc scores 6328
+6bba_3db54e20: raw 24123 nodes -> ckpt 24123 nodes / 22670 edges; dc scores 23997
+6bba_3fda6b25: raw 8583 nodes -> ckpt 8583 nodes / 8247 edges; dc scores 8528
+6bba_43fea39d: raw 5661 nodes -> ckpt 5661 nodes / 5372 edges; dc scores 5640
+6bba_474be664: raw 28042 nodes -> ckpt 28042 nodes / 26755 edges; dc scores 27735
+6bba_48816121: raw 25501 nodes -> ckpt 25501 nodes / 24688 edges; dc scores 25377
+6bba_4aa14c89: raw 7403 nodes -> ckpt 7403 nodes / 7073 edges; dc scores 7362
+22:03:35 bundle videos deleted (GT geffs kept)
+22:03:35 === bundle 13/24: 8 videos : 6bba_4f99ce20 6bba_4ffd3da3 6bba_55b7eebe 6bba_55c70843 6bba_57b7cc1e 6bba_5a4d9360 6bba_5b28472a 6bba_5c039895
+22:03:35 $ kaggle kernels push -p /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/experiments/local_friend_b_exp02_public_port/kernel_fetch_missing
+22:03:37 $ kaggle kernels status gsfatakhov/biohub-loeo44b6-missing-videos
+22:04:23 $ kaggle kernels status gsfatakhov/biohub-loeo44b6-missing-videos
+22:05:09 $ kaggle kernels status gsfatakhov/biohub-loeo44b6-missing-videos
+22:05:55 $ kaggle kernels status gsfatakhov/biohub-loeo44b6-missing-videos
+22:05:55 kernel complete in 2.3 min
+22:05:55 $ kaggle kernels output gsfatakhov/biohub-loeo44b6-missing-videos -p /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/.public_local_cache/_bundle
+22:10:38 downloaded loeo44b6_missing.zip 3.24 GB
+22:10:40 bundle unpacked (8 videos)
+22:10:40 $ /home/georgii/anaconda3/envs/biohub/bin/python /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/tools/public_local.py --tag exp29pp --label base --stage infer --keep-peak-prob --stems 6bba_4f99ce20 6bba_4ffd3da3 6bba_55b7eebe 6bba_55c70843 6bba_57b7cc1e 6bba_5a4d9360 6bba_5b28472a 6bba_5c039895
