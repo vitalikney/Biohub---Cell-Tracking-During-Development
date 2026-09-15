@@ -856,5 +856,12 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   MAGNITUDE on any 12-video set (>= 48 videos, as we already said), while the ORDER is reproduced. The TTA-memorisation
   finding stands - it rests on the scratch-model tests, not on the split. Next from his chain: B25 on 12 videos, local
   prediction for probe 18 (exp36) before its LB score, per-stage table for the 87bba6c4 collapse.
+- 2026-09-15 15:00 FRIEND B: B25 CLOSED on 12 videos (CONTEXT_FRIEND_B.md §29). Learned pruner, official metric, ALL 12:
+  every fraction is negative (5% -0.0023, 8% -0.0036, 10% -0.0020, 12% -0.0062, 13% -0.0078) and recall after
+  post-processing at 10% is 0.9826, below the 0.99 gate; the 4-video +0.004 was one over-budget video. Mechanism: even a
+  5% cut that keeps 99.6% of annotated nodes loses edges (0.8756 -> 0.8702) because pruned nodes sit inside tracks, so
+  the node bonus never beats the edge loss. The free part of the node budget is already taken by prune-isolated and the
+  short-track filter. Not a threshold, not a probe. Remaining from his chain: local prediction for probe 18 (exp36),
+  per-stage table for the 87bba6c4 collapse, then B26 + axis-flip on 12 videos with pilkwang and scratch primaries.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
