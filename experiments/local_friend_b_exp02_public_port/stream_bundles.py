@@ -35,6 +35,17 @@ def run(cmd, **kw):
     return subprocess.run(cmd, cwd=ROOT, **kw)
 
 
+def run_retry(cmd, ok, tries=6, wait=60, **kw):
+    """Run a network command until `ok(result)` is true; the Kaggle endpoints time out transiently."""
+    for k in range(tries):
+        r = run(cmd, capture_output=True, text=True, **kw)
+        if ok(r):
+            return r
+        log(f"attempt {k + 1}/{tries} failed: {(r.stdout + r.stderr).strip()[-300:]}")
+        time.sleep(wait * (k + 1))
+    raise RuntimeError(f"gave up after {tries} attempts: {' '.join(map(str, cmd))}")
+
+
 def all_stems() -> list[str]:
     idx = json.loads((DATA / "_file_index.json").read_text())
     return sorted({f["name"].split("/")[1].rsplit(".", 1)[0] for f in idx if f["name"].startswith("train/")})
@@ -51,12 +62,10 @@ def fetch_bundle(stems: list[str], out: Path) -> Path:
     import re
     src = re.sub(r'STEMS = "[^"]*"\.split\(\)', f'STEMS = "{" ".join(stems)}".split()', src, count=1)
     script.write_text(src)
-    r = run(["kaggle", "kernels", "push", "-p", str(KDIR)], capture_output=True, text=True)
-    if r.returncode != 0 or "pushed" not in r.stdout.lower():
-        raise RuntimeError(f"kernel push failed: {r.stdout} {r.stderr}")
+    run_retry(["kaggle", "kernels", "push", "-p", str(KDIR)], lambda r: r.returncode == 0 and "pushed" in r.stdout.lower())
     t0 = time.time()
     while True:
-        st = run(["kaggle", "kernels", "status", KID], capture_output=True, text=True).stdout
+        st = run_retry(["kaggle", "kernels", "status", KID], lambda r: "KernelWorkerStatus" in r.stdout, tries=10, wait=30).stdout
         if "COMPLETE" in st:
             break
         if "ERROR" in st or "CANCEL" in st:
@@ -68,11 +77,13 @@ def fetch_bundle(stems: list[str], out: Path) -> Path:
     if out.exists():
         shutil.rmtree(out)
     out.mkdir(parents=True)
-    r = run(["kaggle", "kernels", "output", KID, "-p", str(out)], capture_output=True, text=True)
-    zips = list(out.glob("*.zip"))
-    if not zips:
-        raise RuntimeError(f"no zip in kernel output: {r.stdout} {r.stderr}")
-    return zips[0]
+    def got_zip(r):
+        zs = list(out.glob("*.zip"))
+        return bool(zs) and zs[0].stat().st_size > 1e8
+    run_retry(["kaggle", "kernels", "output", KID, "-p", str(out)], got_zip, tries=8, wait=90)
+    z = list(out.glob("*.zip"))[0]
+    log(f"downloaded {z.name} {z.stat().st_size / 1e9:.2f} GB")
+    return z
 
 
 def main() -> None:
