@@ -1,0 +1,6 @@
+{
+ "base": "exp29 realised config (sjlee101 lf-dctta-v020 + MOTION_RELINK_TIGHT_UM 5.5, pilkwang primary, validator off) = LB 0.947",
+ "change": "division FP hygiene, one probe: (a) already-divided fork filter (ancestor divided -> keep nearest child; 0/151 GT divisions chain), (b) sister-separation floor 5 um in safe-division",
+ "local": "12 hold-out videos, official metric: (a) FP 13->11 +0.0009, (b) FP 13->11 +0.0012, TP unchanged",
+ "rule": ">= 0.947 adopt into final 1; <= 0.944 drop"
+}
