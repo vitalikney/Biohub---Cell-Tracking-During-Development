@@ -13,3 +13,6 @@
 17:56:38 $ kaggle kernels status gsfatakhov/biohub-loeo44b6-missing-videos
 17:56:39 kernel complete in 6.9 min
 17:56:39 $ kaggle kernels output gsfatakhov/biohub-loeo44b6-missing-videos -p /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/.public_local_cache/_bundle
+18:03:36 downloaded loeo44b6_missing.zip 4.76 GB
+18:03:40 bundle unpacked (10 videos)
+18:03:40 $ /home/georgii/anaconda3/envs/biohub/bin/python /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/tools/public_local.py --tag exp29pp --label base --stage infer --keep-peak-prob --stems 44b6_0113de3b 44b6_0b24845f 44b6_0c582fdc 44b6_0db75fae 44b6_144b256d 44b6_1574802b 44b6_18ced818 44b6_24264f12 44b6_267148e4 44b6_2f31fc2f
