@@ -952,5 +952,10 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   threshold was added so a weak model cannot spend the budget. Streaming over the 187 remaining videos in 10-video
   bundles via the private kernel is starting (first bundle in flight); ~2.5 min/video -> ~8 h unattended, expected
   ~130 positives. Then: LOO ranker, threshold, official div_J on all 199.
+- 2026-09-15 18:15 FRIEND B: B20 STREAM RUNNING - 24 bundles x 8 videos via the private kernel, ~25 min/bundle, ~10 h
+  unattended (log in experiments/local_friend_b_exp02_public_port/results/stream_bundles.log); nothing else heavy on his
+  machine meanwhile (kaggle kernels output buffers the whole zip in RAM). Output per video: raw graph with peak_prob,
+  post-gap checkpoint, DeepCenter score per node. Next, on the light CPU: the 199-video ranker trainer (negative
+  subsampling, LOO by embryo and by video, probability threshold, OOF scores for pass 2 -> official div_J on all 199).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.

@@ -8,7 +8,7 @@ Private kernel, own account, data stays inside the team - allowed per TEAM.md.
 import shutil, zipfile, os, time
 from pathlib import Path
 
-STEMS = "44b6_0113de3b 44b6_0b24845f 44b6_0c582fdc 44b6_0db75fae 44b6_144b256d 44b6_1574802b 44b6_18ced818 44b6_24264f12 44b6_267148e4 44b6_2f31fc2f".split()
+STEMS = "44b6_0113de3b 44b6_0b24845f 44b6_0c582fdc 44b6_0db75fae 44b6_144b256d 44b6_1574802b 44b6_18ced818 44b6_24264f12".split()
 CANDIDATES = [Path("/kaggle/input/competitions/biohub-cell-tracking-during-development/train"),
               Path("/kaggle/input/biohub-cell-tracking-during-development/train")]
 train = next((p for p in CANDIDATES if p.exists()), None)
