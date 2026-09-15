@@ -73,7 +73,7 @@ def gt_nodes(stem: str) -> np.ndarray:
     return np.stack([a["t"].to_numpy(), a["z"].to_numpy(), a["y"].to_numpy(), a["x"].to_numpy()], 1).astype(float)
 
 
-def features_and_labels(stem: str, raw_dir: Path):
+def features_and_labels(stem: str, raw_dir: Path, image_features: bool = False):
     from scipy.spatial import cKDTree
     import networkx as nx
 
@@ -125,9 +125,20 @@ def features_and_labels(stem: str, raw_dir: Path):
             dg, _ = gtree.query(pos_um[m])
             label[m] = dg <= MATCH_UM
 
-    X = np.stack([prob, np.log1p(d_stronger), np.log1p(d_nn), n8, in_deg, out_deg, np.log1p(comp_len),
-                  pos_um[:, 0]], 1)
+    cols = [prob, np.log1p(d_stronger), np.log1p(d_nn), n8, in_deg, out_deg, np.log1p(comp_len), pos_um[:, 0]]
     names = ["peak_prob", "log_d_stronger", "log_d_nn", "n_within_8um", "in_deg", "out_deg", "log_comp_len", "z_um"]
+    if image_features:
+        # size-not-brightness features from b25_image_features.py (zhincez): half-max volume relative to the
+        # same-frame control, its temporal profile, and the peak above local background
+        f = np.load(Path(__file__).resolve().parent / "results" / "imgfeat" / f"{stem}.npz")
+        if not np.array_equal(f["node_id"].astype(int), ids.astype(int)):
+            raise SystemExit(f"{stem}: image-feature cache does not match the graph's node ids; re-run b25_image_features.py")
+        vol = f["vol_halfmax"]; vrel = f["vol_rel"]
+        cols += [np.log1p(vol), np.log(np.clip(vrel, 1e-3, None)),
+                 np.log1p(f["vol_prev"]) - np.log1p(vol), np.log1p(f["vol_next"]) - np.log1p(vol),
+                 np.log1p(f["peak"])]
+        names += ["log_vol_halfmax", "log_vol_rel_frame", "dlog_vol_prev", "dlog_vol_next", "log_peak_above_bg"]
+    X = np.stack(cols, 1)
     return ids, X, label, names
 
 
@@ -136,6 +147,9 @@ def main() -> None:
     ap.add_argument("--tag", required=True, help="cache tag whose raw/ graphs carry peak_prob")
     ap.add_argument("--fractions", type=float, nargs="+", default=[0.05, 0.10, 0.13, 0.20])
     ap.add_argument("--stems", nargs="*", default=[])
+    ap.add_argument("--image-features", action="store_true",
+                    help="add the size-not-brightness image features cached by b25_image_features.py")
+    ap.add_argument("--suffix", default="", help="suffix for the pruned-set tags, e.g. _img")
     args = ap.parse_args()
 
     from sklearn.linear_model import LogisticRegression
@@ -144,7 +158,7 @@ def main() -> None:
 
     raw_dir = CACHE / args.tag / "raw"
     stems = args.stems or sorted(p.stem for p in raw_dir.glob("*.geff"))
-    data = {s: features_and_labels(s, raw_dir) for s in stems}
+    data = {s: features_and_labels(s, raw_dir, args.image_features) for s in stems}
     names = data[stems[0]][3]
     print(f"{len(stems)} videos | features: {names}")
     for s in stems:
@@ -170,7 +184,7 @@ def main() -> None:
     # prune and write
     summary = []
     for frac in args.fractions:
-        out_tag = f"{args.tag}_prune{int(round(frac * 100)):02d}"
+        out_tag = f"{args.tag}_prune{int(round(frac * 100)):02d}{args.suffix}"
         out_raw = CACHE / out_tag / "raw"
         if out_raw.exists():
             shutil.rmtree(out_raw)
@@ -190,7 +204,7 @@ def main() -> None:
                         "annotated_recall_after_prune": rec})
         print(f"prune {frac:.0%}: {tot_n} -> {tot_kept} nodes | recall on annotated nodes {rec:.4f}"
               f"  -> {out_tag}/raw")
-    (CACHE / args.tag / "b25_prune_summary.json").write_text(json.dumps(
+    (CACHE / args.tag / f"b25_prune_summary{args.suffix}.json").write_text(json.dumps(
         {"features": names, "mean_coef": coef.tolist(), "pruning": summary}, indent=2))
     print("next: run the pp stage on each pruned tag and compare official adj_edge with the unpruned base")
 
