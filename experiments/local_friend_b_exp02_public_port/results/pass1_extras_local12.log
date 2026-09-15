@@ -1,0 +1,120 @@
+BIOHUB_PRESET: exp29_sjlee947_verbatim
+BIOHUB_SCORE_AXIS: public 0.939 base + holdout-selected post-process configuration
+Biohub learned UNet + node-transformer + ILP submission
+COMP_DIR: /kaggle/input/competitions/biohub-cell-tracking-during-development exists: False
+TEST_DIR: /kaggle/input/competitions/biohub-cell-tracking-during-development/test exists: False
+{
+  "adaptive_short_track_rescue": true,
+  "allow_artifact_fallback": false,
+  "allow_pip_install": false,
+  "deepcenter_checkpoint_default": "/kaggle/input/biohub-deepcenter-unet3d-center-prior-v1/weights/full_frame_center/best.pt",
+  "deepcenter_expected_epoch": 2,
+  "deepcenter_gap_add_gate": true,
+  "deepcenter_gap_confirm_min_span_um": 8.5,
+  "deepcenter_gap_threshold": 0.25,
+  "deepcenter_safe_div_add_gate": true,
+  "deepcenter_safe_div_threshold": 0.2,
+  "det_threshold": 0.965,
+  "div_drop_to_single_if_bad": true,
+  "div_parent_max_um": 10.5,
+  "div_sister_max_um": 8.0,
+  "experiment_tag": "selected_101_dual_seed_near_balanced_center_confirmed_synthetic_gap",
+  "gap2_frame_frac_cap": 0.006,
+  "gap2_max_links_abs": 180,
+  "gap2_max_links_frac": 0.0045,
+  "gap2_max_step_um": 4.4,
+  "gap2_max_total_um": 10.2,
+  "gap2_require_context": true,
+  "gap_close_effective_max_gap": 1,
+  "gap_close_max_added_abs": 2000,
+  "gap_close_max_added_frac": 0.05,
+  "gap_close_max_gap": 2,
+  "gap_close_reuse_existing": true,
+  "gap_close_reuse_um": 3.2,
+  "gap_close_um": 5.0,
+  "gap_density_adaptive": true,
+  "gap_density_gain": 0.04,
+  "gap_density_max_step_delta_um": 0.125,
+  "gap_density_neighbors": 3,
+  "gap_density_reference_um": 6.5,
+  "gap_refine_max_shift_um": 3.2,
+  "gap_refine_synthetic": true,
+  "gap_refine_win_yx": 3,
+  "gap_refine_win_z": 1,
+  "ilp_appearance_weight": 0.0,
+  "ilp_disappearance_weight": 2.0,
+  "ilp_division_weight": 1.2,
+  "ilp_edge_weight": -1.0,
+  "method": "unet_transformer",
+  "motion_relink_learned_bonus": 1.0,
+  "motion_relink_max_frame_nodes": 2600,
+  "motion_relink_relaxed_um": 10.0,
+  "motion_relink_tight_um": 6.0,
+  "motion_relink_velocity_weight": 0.5,
+  "output_division_geometry_filter": false,
+  "output_edge_max_um": 14.0,
+  "output_enforce_next_frame": true,
+  "output_filter_short_tracks": false,
+  "output_gap2_recovery": true,
+  "output_gap_close": true,
+  "output_keep_division_components": true,
+  "output_linefit_smooth": false,
+  "output_linefit_weight": 0.8,
+  "output_linefit_window": 2,
+  "output_min_track_len": 6,
+  "output_motion_relink": true,
+  "output_prune_isolated": false,
+  "output_safe_divisions": false,
+  "output_single_child_repair": false,
+  "output_single_parent_repair": true,
+  "primary_artifact_manifest": "/kaggle/input/datasets/pilkwang/biohub-tracking-support-pack-50ep-v1/ARTIFACT_MANIFEST.json",
+  "safe_div_existing_child_max_um": 10.0,
+  "safe_div_frame_frac_cap": 0.0076,
+  "safe_div_global_frac_cap": 0.00375,
+  "safe_div_max_um": 9.0,
+  "safe_div_sister_max_um": 14.0,
+  "short_track_rescue_max_mean_edge_dist_um": 3.0,
+  "short_track_rescue_max_nodes_abs": 120,
+  "short_track_rescue_max_nodes_frac": 0.012,
+  "short_track_rescue_min_len": 4,
+  "short_track_rescue_min_mean_edge_prob": 0.88,
+  "short_track_rescue_trigger_removed_frac": 0.1,
+  "slice": "",
+  "target_artifact_slug": "biohub-tracking-support-pack-50ep-v1",
+  "unet_batch_size": 4,
+  "use_deepcenter_add_only_gate": true,
+  "use_ilp": true,
+  "weights": "weights/unet_transformer/split_0/edge_predictor_best.pth"
+}
+Trying DeepCenter add-only gate checkpoint: /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/external/pilkwang__biohub-deepcenter-unet3d-center-prior-v1/weights/full_frame_center/best.pt
+Loaded DeepCenter add-only gate checkpoint: /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/external/pilkwang__biohub-deepcenter-unet3d-center-prior-v1/weights/full_frame_center/best.pt
+DeepCenter checkpoint epoch: 2 best_score: -0.04500306242456039
+DEEPCENTER_TTA_ACTIVE views= 8 mean_abs_logit_delta= 0.129817
+  [44b6_12dfb391] after edge-filter+motion-relink: 45357 nodes, 43050 edges
+  [44b6_12dfb391] after gap-closing (single-frame + gap2): 46013 nodes, 44291 edges
+  [44b6_12dfb391] after safe-division repair: 46013 nodes, 44291 edges (geometric_candidates=0, deepcenter_rejected=0, post_veto_candidates=0, added=0, cap_skipped=0, mutual_nn_rejected=0, divergence_rejected=0)
+  [44b6_12dfb391] after division-geometry-filter+prune-isolated: 46013 nodes, 44291 edges
+  [44b6_12dfb391] after short-track filtering: 46013 nodes, 44291 edges (components_removed=0)
+  [44b6_12dfb391] FINAL: 46013 nodes, 44291 edges
+44b6_12dfb391: raw 46013 nodes -> ckpt 46013 nodes / 44291 edges; dc scores 45357
+  [44b6_1d530831] after edge-filter+motion-relink: 36885 nodes, 34821 edges
+  [44b6_1d530831] after gap-closing (single-frame + gap2): 37300 nodes, 35582 edges
+  [44b6_1d530831] after safe-division repair: 37300 nodes, 35582 edges (geometric_candidates=0, deepcenter_rejected=0, post_veto_candidates=0, added=0, cap_skipped=0, mutual_nn_rejected=0, divergence_rejected=0)
+  [44b6_1d530831] after division-geometry-filter+prune-isolated: 37300 nodes, 35582 edges
+  [44b6_1d530831] after short-track filtering: 37300 nodes, 35582 edges (components_removed=0)
+  [44b6_1d530831] FINAL: 37300 nodes, 35582 edges
+44b6_1d530831: raw 37300 nodes -> ckpt 37300 nodes / 35582 edges; dc scores 36885
+  [44b6_2a2eff9f] after edge-filter+motion-relink: 40941 nodes, 38443 edges
+  [44b6_2a2eff9f] after gap-closing (single-frame + gap2): 41469 nodes, 39424 edges
+  [44b6_2a2eff9f] after safe-division repair: 41469 nodes, 39424 edges (geometric_candidates=0, deepcenter_rejected=0, post_veto_candidates=0, added=0, cap_skipped=0, mutual_nn_rejected=0, divergence_rejected=0)
+  [44b6_2a2eff9f] after division-geometry-filter+prune-isolated: 41469 nodes, 39424 edges
+  [44b6_2a2eff9f] after short-track filtering: 41469 nodes, 39424 edges (components_removed=0)
+  [44b6_2a2eff9f] FINAL: 41469 nodes, 39424 edges
+44b6_2a2eff9f: raw 41469 nodes -> ckpt 41469 nodes / 39424 edges; dc scores 40941
+  [44b6_74d0c52e] after edge-filter+motion-relink: 8968 nodes, 8400 edges
+  [44b6_74d0c52e] after gap-closing (single-frame + gap2): 9108 nodes, 8652 edges
+  [44b6_74d0c52e] after safe-division repair: 9108 nodes, 8652 edges (geometric_candidates=0, deepcenter_rejected=0, post_veto_candidates=0, added=0, cap_skipped=0, mutual_nn_rejected=0, divergence_rejected=0)
+  [44b6_74d0c52e] after division-geometry-filter+prune-isolated: 9108 nodes, 8652 edges
+  [44b6_74d0c52e] after short-track filtering: 9108 nodes, 8652 edges (components_removed=0)
+  [44b6_74d0c52e] FINAL: 9108 nodes, 8652 edges
+44b6_74d0c52e: raw 9108 nodes -> ckpt 9108 nodes / 8652 edges; dc scores 8968
