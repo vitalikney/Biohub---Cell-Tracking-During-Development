@@ -74,6 +74,20 @@ If you have ANY local row that reported division TPs, re-score it before drawing
 
 **Friend B — order of work (revised 2026-09-10 21:30; supersedes the 18:00 version). Self-contained.**
 
+UPDATE 2026-09-15 (read first; your 17 commits are merged into main, thank you - the port, the leak split and the
+memorised-views finding are all recorded in CONTEXT §14). Order of work now:
+1. B26 - the falsification test you designed in §13.5 (PRIMARY := friend_a_exp02_loeo20 from `weights_dataset/`, public
+   TTA vs Z-flip, 12 videos, compare the delta with the pilkwang pair). ~25 min GPU. Report the two deltas and your verdict.
+2. The axis-flip variant: measure it, but read it with your asymmetric rule (a local loss closes it; a local gain is
+   not evidence). Do not ask for an LB probe on a local gain alone.
+3. B25 on your port - the node-budget lever (CONTEXT §10a B25): a learned second-stage score that removes ~10-13% of
+   detected peaks while keeping recall on annotated nodes; by your own §14.1 table this is a within-model comparison,
+   so it is measurable locally. Cheapest first version: features from the cached raw graphs (peak prob if you can cache
+   it, distance to the nearest stronger peak, primary/secondary agreement), a logistic model, LOEO over videos, and the
+   official metric's node ratio + edge TP as the readout.
+4. STEP 3 (secondary fine-tune) only if disk frees up; it is a final-2 candidate at most (probe 13 was -0.007 on the LB).
+Always round node coordinates as the submission writer does before scoring (your §16.1, +0.0006).
+
 UPDATE 2026-09-12 (read first): the alternative division stack was measured on 12 videos with the official metric:
 gates open + sister floor 0.9523-0.9543 and a sister-first ranker 0.9475, against 0.9567 for the public setting. Reachable
 is not recovered - without a learned ranker the false forks explode and the ~5-per-frame budget is spent on them. So the

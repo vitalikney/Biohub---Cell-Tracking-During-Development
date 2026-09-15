@@ -189,6 +189,7 @@ ideas first, honest LOEO check before any LB probe, one change per probe, differ
 | P1 | B3 (was 17) | dense pseudo-labels (teacher = exp03B + seed314159 ensemble on all 199 videos + GT) used to FINE-TUNE pilkwang primary (friend A) and secondary (friend B) - 1200 it runs, honest check by the exp11 scheme (6bba-only fine-tune -> 44b6 vs sparse fine-tune 0.8825); scratch-on-dense demoted to research (revised 2026-09-10) | friend B: teacher + dense set + secondary; friend A: primary | teacher ~4 h; each fine-tune ~1 h | dense beats sparse fine-tune by >= 0.005 on 44b6 -> all-183 fine-tune -> one LB probe on the TTA base  CAVEAT 2026-09-13 (Lê Quang Cảnh, rank 39, official scorer): dense-label fine-tune of head only = -0.003, of the encoder with the linker frozen = -0.038; only a JOINT fine-tune whose dense set includes teacher EDGES keeps the linker consistent with the moved encoder |
 | P2 | B3b | temporal filtering of the teacher labels: keep points where primary and secondary agree within 3-5 um, persist >= 3 frames, fwd/bwd mutual match; keep teacher_score/disagreement; pseudo-edges from stable tracklets only after that (review 2026-09-10) | friend B (after the first dense fine-tune result) | CPU on cached teacher predictions | dense-filtered beats dense-raw on 44b6 |
 | P1 | B25 | learned peak pruning / "refine" head on the detector output (hengck23: -13.1% peaks at 99.45% recall of annotated nodes, localisation 1.18 -> 0.97 vox). For OUR metric this is the node-budget lever, worth ~+0.012 via the adjusted-Jaccard factor if recall on annotated nodes holds; thresholding alone was flat (probe 4, local 0.93-0.985) so it must be a learned second-stage score (features: peak prob, local contrast, distance to nearest stronger peak, primary/secondary agreement). Validate on hold12 with the official metric: node ratio down, edge TP unchanged | Vitalii (CPU features) / friend A (if a small net) | 2-3 days | official metric, then 1 LB probe |
+| P1 | B26 | FALSIFICATION TEST of the "memorised views" explanation (friend B §13.5): run the public stack on the 12 LOEO-44b6 videos with PRIMARY := friend_a_exp02_loeo20 (never saw 44b6) twice, public TTA vs Z-flip TTA, and compare the delta with the same pair on the pilkwang primary (+0.059 on CLEAN). Delta halves or flips -> confirmed: every local TTA measurement on pilkwang-initialised models is biased upward and local TTA screening is closed for good. ~25 min GPU on friend B's port | friend B | 1 h | local only (that is the point) |
 | P1 | B4 | friend A's all-199 scratch model (dense labels if B3 ready, else sparse with official-metric early stopping every 5 epochs) as SECONDARY in the blend | friend A -> Vitalii | 1-2 days on 5070 Ti + 1 probe | beats pilkwang secondary on LOEO 44b6 |
 | P1 | B5 (was 18) | test-time adaptation of the primary detector on the test embryos (DARTH-style self-training + photometric consistency, EMA teacher, node-count guard) | Vitalii | ~1 day engineering; ~30 min GPU per embryo inside the submission kernel | LOEO: adapt on 44b6 images without labels, score on 44b6 GT >= +0.005 |
 | P2 | B6 (was 7) | detector TTA / seed-ensemble as primary with dedup merge (exp03B + exp16 + pilkwang) | Vitalii | check how the public notebook runs inference first; +0.5 h | LOEO |
@@ -778,6 +779,32 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   user to choose and authorise a remote first.
   Third-party packs (pilkwang support pack, seed314159, DeepCenter - the ones the user means by "other participants'
   datasets, ~900 MB") stay on Kaggle too: `tools/get_kaggle_datasets.py` is the manifest + fetcher into git-ignored
-  `external/` (skip-if-present). Pointers in git, bytes fetched once - DVC's mechanism without needing a remote.
+  `external/` (skip-if-present). Pointers in git, bytes fetched once - DVC's mechanism without needing a remote.- 2026-09-15 FRIEND B MERGED (17 commits, branch `friend-b`, journal `CONTEXT_FRIEND_B.md`, port `tools/public_local.py`,
+  driver `experiments/local_friend_b_exp02_public_port/`). What he established, all with the official metric:
+  (1) The local port of the 0.947 stack executes the notebook's own cells with only the I/O replaced; it is byte-
+  deterministic run-to-run (two independent inference runs identical to 6 decimals), so LOCAL deltas are never run
+  noise - the +-0.003 floor is an LB-only phenomenon. Raw edge Jaccard 0.8588 matches exp11's 0.8585 independently.
+  (2) The LOEO-44b6 calibration set is HALF-LEAKY for our fine-tunes: exp03B and exp23 were trained on the 183 videos
+  of holdout_split.json, which contain 6 of the 12 LOEO-44b6 videos (12dfb391, 2a2eff9f, a21120c2, c50204e0, d2f34f90,
+  d5e7d891). Verdicts must be read on the CLEAN 6. Consequence for FINAL SUBMISSION 2: any honest validator for
+  exp03B-lineage or friend A's 183-video fine-tunes must exclude those 6 videos (or use a 6bba-only holdout).
+  (3) Weight leakage explains exp30/exp32 but NOT exp31: with the same exp03B primary, Z-flip TTA gives +0.059 on CLEAN
+  locally vs -0.003 on the LB (and our clean re-test exp34 = -0.009). His explanation: pilkwang trained on all 199
+  videos WITH random Z/Y/X flips, so averaging over that group on training embryos averages memorised views (node
+  recall 0.9994 vs 0.9936), while on unseen embryos it only blurs the map and adds nodes. => LOEO-44b6 is NOT a valid
+  bench for ranking inference variants on pilkwang-initialised models (weights swaps or TTA); it IS valid for
+  post-processing knobs and for from-scratch 6bba models. This is the mechanism behind our "linker/TTA gains do not
+  transfer" pattern. Falsification test queued as B26 (cheap, decisive).
+  (4) Post-processing contributes +0.031 on 4 videos (raw ILP 0.8763 -> 0.9076); the whole TTA stack barely moves the
+  raw edge Jaccard - its LB value appears only through post-processing, i.e. through better DETECTIONS feeding motion
+  relink. Same conclusion as ours: detections and node budget are the levers, linking is not.
+  (5) pool_kernel_um 3/4/5 all map to a (3,3,3) kernel (odd-rounding) - hypothesis refuted, not a knob. Rounding node
+  coordinates as the submission writer does is worth +0.0006 locally (scorer inputs must be rounded to match the LB).
+  (6) STEP 3 (secondary fine-tune) is blocked by disk on his machine; given probe 13 (exp23 secondary -0.007) it is
+  demoted to a final-2 candidate only. His remaining STEP 4 variant (axis-flip TTA group) is measured but read with
+  an asymmetric rule: a local loss is believable, a local gain is not (the bias only creates false wins).
+  His tools tweak (score_geffs*: a .geff store is a directory, check the suffix before globbing) is merged.
+  NEXT FOR HIM (written into TEAM/PROMPT): B26 falsification test; then B25 on his port (learned peak pruning, the
+  node-budget lever, comparable locally per his own table); STEP 3 only if disk frees up.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
