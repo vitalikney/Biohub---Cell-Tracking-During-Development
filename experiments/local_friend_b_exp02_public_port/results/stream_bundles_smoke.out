@@ -9,3 +9,13 @@
 17:45:55 $ kaggle kernels status gsfatakhov/biohub-loeo44b6-missing-videos
 17:45:55 kernel complete in 3.8 min
 17:45:55 $ kaggle kernels output gsfatakhov/biohub-loeo44b6-missing-videos -p /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/.public_local_cache/_bundle
+Traceback (most recent call last):
+  File "/home/georgii/Documents/Biohub---Cell-Tracking-During-Development/experiments/local_friend_b_exp02_public_port/stream_bundles.py", line 128, in <module>
+    main()
+  File "/home/georgii/Documents/Biohub---Cell-Tracking-During-Development/experiments/local_friend_b_exp02_public_port/stream_bundles.py", line 102, in main
+    z = fetch_bundle(stems_b, ROOT / ".public_local_cache" / "_bundle")
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/georgii/Documents/Biohub---Cell-Tracking-During-Development/experiments/local_friend_b_exp02_public_port/stream_bundles.py", line 74, in fetch_bundle
+    raise RuntimeError(f"no zip in kernel output: {r.stdout} {r.stderr}")
+RuntimeError: no zip in kernel output: HTTPSConnectionPool(host='www.kaggleusercontent.com', port=443): Max retries exceeded with url: /kf/350093887/eyJhbGciOiJkaXIiLCJlbmMiOiJBMTI4Q0JDLUhTMjU2In0..nnRYzTAn7sOvBpSyhXu4TQ.SXeMTgE-VfxxQveCkY7RiHT5ltwWQ-nw3-T_sWSmiMOqcTr5CUPu3Q-qoPi8e_OH428rsAxGs7bkLriXt8enPV8nz11_nmg17sKFLDT1p573JngNYFnrRz0SODa62BFlyiUPXEBRD3IUEOozGMiR19LrOXWN3iMmJPGojuOS2GpGzZTstVdzQ-4LLq5VTFD2wPxf1Bn48gRi1kQ7sAW5iRguRWiURTNPAR0vCKZO-8BA-Q277eUwnwEL9e2GPSNNpgieBx48TuU_wio9bWpAST-4gsbRtGAUrxqSFhb155fFgKYd7jDPb93Y6Q2GsJxL7Hlxvp3Gp-XbWjDT4SF6oeWWXgj7wDmx-JDbVxxx27mWl1dgxkeM6Ks_ewpfqn9yz3afBX0y1xqXb3ZtOdhTHCoIDoTaBxFqKXhq7u2kyW3bqErDgt9YiY7Q53qmfEEKwKzF9xhse87sJ1foq_KtJJ-5pZJKJFSF3RHnTuwOZGaidDrNXjIaSwTyBfHUBMrTEAleXqHXHC2VxLb_31SO5_KkCJ8OUl8PigMXFyFUaEyqlmpGVdlnDWozpDNHLqYz3VkHSyy2gbvCwylpNIcP_TCWDCX4R3ml9xXh-Jq-CMGVQFM1-qXGedhm8gTzdY3SAXTf5C_847LJk7lMFVouAQ.V9JsnSp69tBECIai8Vvjrw/loeo44b6_missing.zip (Caused by ConnectTimeoutError(<urllib3.connection.HTTPSConnection object at 0x718a7f60f9a0>, 'Connection to www.kaggleusercontent.com timed out. (connect timeout=None)'))
+ 

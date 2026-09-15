@@ -56,19 +56,63 @@ def image_feats(stem, g, cands, det_by_t, rz=2, ryx=6):
     return np.array(out, float)
 
 
+def candidates_steal(g, parent_um=9.0, k_starts=3):
+    """Like divranker.candidates but the pool at t+1 is EVERY node (orphans and claimed ones). For a claimed node
+    q the extra features describe the link it would be stolen from: its edge_prob, the predecessor's peak_prob and
+    backward track length, and the predecessor-to-q distance. For orphans these are set to sentinel values."""
+    from scipy.spatial import cKDTree
+    by_t = {}
+    for n, d in g.nodes(data=True): by_t.setdefault(int(d["t"]), []).append(n)
+    for t, nodes in sorted(by_t.items()):
+        pool = by_t.get(t + 1, [])
+        if not pool: continue
+        tree = cKDTree(np.stack([postproc._pos(g.nodes[n]) for n in pool]))
+        for p in nodes:
+            if g.out_degree(p) != 1: continue
+            c = next(iter(g.successors(p)))
+            P, C = postproc._pos(g.nodes[p]), postproc._pos(g.nodes[c])
+            d, i = tree.query(P, k=min(k_starts + 1, len(pool)), distance_upper_bound=parent_um)
+            for dd, ii in zip(np.atleast_1d(d), np.atleast_1d(i)):
+                if not np.isfinite(dd) or ii >= len(pool): continue
+                q = pool[ii]
+                if q == c: continue
+                Q = postproc._pos(g.nodes[q])
+                d_pc = float(np.linalg.norm(C - P)); d_pq = float(dd); d_cq = float(np.linalg.norm(C - Q))
+                asym = abs(d_pc - d_pq) / max(d_pc + d_pq, 1e-6)
+                cos = float(np.dot(C - P, Q - P) / max(np.linalg.norm(C - P) * np.linalg.norm(Q - P), 1e-6))
+                cs = list(g.successors(c)); qs = list(g.successors(q))
+                div_next = float(np.linalg.norm(postproc._pos(g.nodes[cs[0]]) - postproc._pos(g.nodes[qs[0]])) - d_cq) if len(cs) == 1 and len(qs) == 1 else -1.0
+                preds = list(g.predecessors(q))
+                if preds:
+                    r = preds[0]; e = g.edges[r, q]
+                    steal = [1.0, float(e.get("edge_prob") or 0.0), float(g.nodes[r].get("peak_prob", np.nan)),
+                             float(divranker._back_len(g, r)), float(np.linalg.norm(postproc._pos(g.nodes[r]) - Q))]
+                else:
+                    steal = [0.0, -1.0, -1.0, -1.0, -1.0]
+                feats = [d_pc, d_pq, d_cq, asym, cos, float(np.linalg.norm(postproc._velocity(g, p))), divranker._back_len(g, p),
+                         divranker._fwd_len(g, c), divranker._fwd_len(g, q), div_next, float(P[0]), t / 100.0] + steal
+                yield p, c, q, feats
+
+
+STEAL_NAMES = ["d_pc", "d_pq", "d_cq", "asym", "cos_pc_pq", "speed_p", "len_p_back", "len_c_fwd", "len_q_fwd", "div_next",
+               "z_um", "t_frac", "q_claimed", "q_in_prob", "q_pred_peak", "q_pred_backlen", "q_pred_dist"]
+
+
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--tag", default="exp29pp"); ap.add_argument("--stems", nargs="*", default=[])
     ap.add_argument("--parent-um", type=float, default=9.0); ap.add_argument("--k-starts", type=int, default=3)
-    ap.add_argument("--no-image", action="store_true"); a = ap.parse_args()
+    ap.add_argument("--no-image", action="store_true"); ap.add_argument("--steal", action="store_true",
+                    help="candidate pool = every node at t+1 (orphan OR claimed), with steal features"); a = ap.parse_args()
     raw = CACHE / a.tag / "raw"
     stems = a.stems or sorted(p.stem for p in raw.glob("*.geff"))
     X, Y, G, meta = [], [], [], []; n_gt = 0; n_lab = 0
-    names = list(divranker.FEATURE_NAMES) + ["peak_p", "peak_c", "peak_q"] + ([] if a.no_image else ["vol_c", "vol_q", "vol_c2", "vol_q2"])
+    base_names = STEAL_NAMES if a.steal else list(divranker.FEATURE_NAMES)
+    names = base_names + ["peak_p", "peak_c", "peak_q"] + ([] if a.no_image else ["vol_c", "vol_q", "vol_c2", "vol_q2"])
     for stem in stems:
         g = postproc.load(raw / f"{stem}.geff")
         gt = divranker._load_gt(DATA / f"{stem}.geff")
         n_gt += sum(1 for n in gt.nodes if gt.out_degree(n) >= 2)
-        cands = list(divranker.candidates(g, parent_um=a.parent_um, k_starts=a.k_starts))
+        cands = list((candidates_steal if a.steal else divranker.candidates)(g, parent_um=a.parent_um, k_starts=a.k_starts))
         y = divranker.label_candidates(g, gt, cands)
         if not cands: continue
         pk = lambda n: float(g.nodes[n].get("peak_prob", np.nan))
@@ -100,7 +144,7 @@ def main():
         print("feature importance (permutation, AP):")
         for n_, v in sorted(zip(names, imp), key=lambda kv: -kv[1])[:10]: print(f"  {n_:14s} {v:+.3f}")
     except Exception as e: print("importance failed:", e)
-    out = Path(__file__).resolve().parent / "results" / f"b20_ranker_{a.tag}.json"
+    out = Path(__file__).resolve().parent / "results" / f"b20_ranker_{a.tag}{'_steal' if a.steal else ''}.json"
     out.write_text(json.dumps({"videos": stems, "n_gt": n_gt, "n_cand": int(len(Y)), "n_pos": int(Y.sum()), "names": names,
                                "ap_public": float(average_precision_score(Y, base)), "ap_gbm_oof": float(average_precision_score(Y, oof))}, indent=2))
     print("wrote", out)
