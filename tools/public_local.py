@@ -85,19 +85,24 @@ def find_cell(cells: list[str], *needles: str) -> int:
 
 # ------------------------------------------------------------------------------------------- local materialisation
 def materialise_repo(weights_root: Path, work: Path, primary_override: str | None,
-                     secondary_override: str | None) -> tuple[Path, Path]:
-    """Recreate the Kaggle `REPO_DIR` layout locally; return (repo_dir, deepcenter_checkpoint)."""
+                     secondary_override: str | None, materialise_code: bool = True) -> tuple[Path, Path]:
+    """Recreate the Kaggle `REPO_DIR` layout locally; return (repo_dir, deepcenter_checkpoint).
+
+    `materialise_code=False` only resolves paths and exports the environment variables cell 3 exports -
+    used for CPU-only post-processing runs, which never touch the inference code or the model weights.
+    """
     support = weights_root / SUPPORT_PACK
     if not (support / "repo" / "scripts").is_dir():
         raise FileNotFoundError(f"support pack not found under {support}")
     repo = work / "tracking_repo"
-    if repo.exists():
-        shutil.rmtree(repo)
-    shutil.copytree(support / "repo", repo)
-    shutil.copytree(support / "weights", repo / "weights")
+    if materialise_code:
+        if repo.exists():
+            shutil.rmtree(repo)
+        shutil.copytree(support / "repo", repo)
+        shutil.copytree(support / "weights", repo / "weights")
 
     primary_dir = repo / "weights" / "unet_transformer" / "split_0"
-    if primary_override:
+    if primary_override and materialise_code:
         src = weights_root / FT_WEIGHTS / primary_override
         if not (src / "edge_predictor_best.pth").is_file():
             raise FileNotFoundError(f"primary override weights not found: {src}")
@@ -111,8 +116,9 @@ def materialise_repo(weights_root: Path, work: Path, primary_override: str | Non
             raise FileNotFoundError(f"secondary override weights not found: {src}")
         secondary = work / "secondary_seed_weights" / "unet_transformer" / "split_0"
         secondary.mkdir(parents=True, exist_ok=True)
-        for name in ("edge_predictor_best.pth", "config.json"):
-            shutil.copy(src / name, secondary / name)
+        if materialise_code:
+            for name in ("edge_predictor_best.pth", "config.json"):
+                shutil.copy(src / name, secondary / name)
         secondary_weights = secondary / "edge_predictor_best.pth"
         print(f"SECONDARY OVERRIDE: {secondary_override} -> {secondary_weights}")
     else:
@@ -201,9 +207,10 @@ def run_inference(ns: dict, repo: Path, work: Path, data_dir: Path, stems: list[
     splits_path.write_text(json.dumps([{"split": 0, "train": [], "test": stems}], indent=2))
 
     method = ns["METHOD"]
+    # The support pack's `dataspec.py` hard-codes PREDICTIONS_PATH = <repo>/predictions (our `tools/repo/`
+    # copy is patched to honour BIOHUB_PREDICTIONS_DIR, the shipped one is not), so set the variable for the
+    # patched case and locate the output by globbing both roots afterwards.
     predictions_root = work / "predictions"
-    username = os.environ.get("USER", "unknown")
-    out_dir = predictions_root / username / method / "split_0"
 
     cmd = [
         sys.executable, "scripts/predict_unet_transformer.py",
@@ -227,8 +234,14 @@ def run_inference(ns: dict, repo: Path, work: Path, data_dir: Path, stems: list[
     subprocess.run(cmd, cwd=repo, env=env, check=True)
     print(f"inference finished in {(time.time() - t0) / 60:.1f} min", flush=True)
 
+    produced = sorted({p for root in (repo, work)
+                       for p in root.glob(f"predictions/*/{method}/split_0/*.geff")})
+    if len(produced) != len(stems):
+        raise RuntimeError(f"expected {len(stems)} prediction graphs, found {len(produced)}: "
+                           f"{[str(p) for p in produced[:3]]}")
+
     raw_dir.mkdir(parents=True, exist_ok=True)
-    for geff in sorted(out_dir.glob("*.geff")):
+    for geff in produced:
         dst = raw_dir / geff.name
         if dst.exists():
             shutil.rmtree(dst)
@@ -353,11 +366,13 @@ def main() -> None:
     print(f"{len(stems)} videos | tag={args.tag} label={args.label} | cache={cache}")
 
     cells = notebook_cells(Path(args.notebook))
-    repo, _ = materialise_repo(Path(args.weights_root), work, args.primary, args.secondary)
-    ns = build_namespace(cells, repo, work, data_dir)
-
     have_raw = {p.stem for p in raw_dir.glob("*.geff")} if raw_dir.is_dir() else set()
     need_infer = args.stage in ("all", "infer") and (args.force_infer or not set(stems) <= have_raw)
+
+    repo, _ = materialise_repo(Path(args.weights_root), work, args.primary, args.secondary,
+                               materialise_code=need_infer)
+    ns = build_namespace(cells, repo, work, data_dir)
+
     if need_infer:
         apply_runtime_patches(cells, ns, repo, work)
         run_inference(ns, repo, work, data_dir, stems, raw_dir, args.unet_batch_size)
@@ -368,7 +383,9 @@ def main() -> None:
         return
 
     load_postproc(cells, ns)
-    ns["DEEPCENTER_VETO_DETECTOR"] = ns["load_deepcenter_veto_detector"]()
+    # The post-processing cell already loads the veto model at module level; only load it again if it did not.
+    if ns.get("DEEPCENTER_VETO_DETECTOR") is None:
+        ns["DEEPCENTER_VETO_DETECTOR"] = ns["load_deepcenter_veto_detector"]()
     rows = postprocess_and_write(ns, raw_dir, out_dir)
     summary = score_dir(out_dir, data_dir)
 
