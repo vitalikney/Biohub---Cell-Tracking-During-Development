@@ -28,3 +28,9 @@
 18:03:36 downloaded loeo44b6_missing.zip 4.76 GB
 18:03:40 bundle unpacked (10 videos)
 18:03:40 $ /home/georgii/anaconda3/envs/biohub/bin/python /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/tools/public_local.py --tag exp29pp --label base --stage infer --keep-peak-prob --stems 44b6_0113de3b 44b6_0b24845f 44b6_0c582fdc 44b6_0db75fae 44b6_144b256d 44b6_1574802b 44b6_18ced818 44b6_24264f12 44b6_267148e4 44b6_2f31fc2f
+18:12:39 inference exit=0: Saved 10 predictions to /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/.public_local_cache/exp29pp/work/tracking_repo/predictions/georgii/unet_transformer/split_0
+inference finished in 9.0 min
+cached 22 raw graphs in /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/.public_local_cache/exp29pp/raw
+18:12:39 bundle videos deleted (GT geffs kept)
+18:12:39 === STREAM DONE
+18:13:50 199 stems | done 12 | todo 187 (local 0, to fetch 187)

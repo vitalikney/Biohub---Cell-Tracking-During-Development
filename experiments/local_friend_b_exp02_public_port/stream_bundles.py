@@ -119,13 +119,17 @@ def main() -> None:
             if missing:
                 raise RuntimeError(f"bundle incomplete after unzip: {missing}")
             log(f"bundle unpacked ({len(stems_b)} videos)")
-        r = run([PY, str(ROOT / "tools" / "public_local.py"), "--tag", TAG, "--label", "base", "--stage", "infer",
-                 "--keep-peak-prob", "--stems", *stems_b], capture_output=True, text=True)
-        tail = "\n".join(r.stdout.splitlines()[-3:])
-        log(f"inference exit={r.returncode}: {tail}")
-        if r.returncode != 0:
-            log(r.stderr[-2000:])
-            raise RuntimeError("inference failed")
+        need_inf = [s for s in stems_b if not (RAW / f"{s}.geff").is_dir()]   # raw graphs from an earlier run are reused
+        if need_inf:
+            r = run([PY, str(ROOT / "tools" / "public_local.py"), "--tag", TAG, "--label", "base", "--stage", "infer",
+                     "--keep-peak-prob", "--stems", *need_inf], capture_output=True, text=True)
+            tail = "\n".join(r.stdout.splitlines()[-3:])
+            log(f"inference ({len(need_inf)} videos) exit={r.returncode}: {tail}")
+            if r.returncode != 0:
+                log(r.stderr[-2000:])
+                raise RuntimeError("inference failed")
+        else:
+            log("inference skipped: raw graphs already cached for this bundle")
         got = [s for s in stems_b if (RAW / f"{s}.geff").is_dir()]
         if len(got) != len(stems_b):
             raise RuntimeError(f"raw graphs missing after inference: {set(stems_b) - set(got)}")
