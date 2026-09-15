@@ -48,4 +48,6 @@ echo "=== verdict ($(date '+%H:%M'))"
 mkdir -p "$HERE/results"
 "$PY" "$HERE/rescore.py"
 "$PY" "$HERE/summarise.py" | tee "$HERE/results/calibration_12videos.txt"
+"$PY" "$HERE/collect_results.py" > /dev/null
+echo "=== results collected into $HERE/results - commit and push them ($(date '+%H:%M'))"
 echo "=== finished ($(date '+%H:%M'))"

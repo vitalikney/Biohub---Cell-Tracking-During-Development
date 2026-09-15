@@ -253,6 +253,74 @@ def set_pool_kernel_um(repo: Path, value: float) -> None:
     print(f"POOL KERNEL: detection NMS kernel set to {value} um (public default is 3.0)")
 
 
+def _replace_once(text: str, old: str, new: str, what: str) -> str:
+    n = text.count(old)
+    if n != 1:
+        raise RuntimeError(f"{what}: expected one anchor, found {n}: {old[:70]!r}")
+    return text.replace(old, new, 1)
+
+
+def keep_peak_prob(repo: Path) -> None:
+    """Store each detection's peak probability as a `peak_prob` node attribute (B25 feature).
+
+    `_detect_cells_pooled` computes sigmoid(logit) for every peak and discards it. This patch captures the
+    values at the ONE call site that produces the graph's nodes (the retention guard calls the same function
+    twice more per frame just to count candidates, on maps that can differ, so keying by coordinate would be
+    wrong) and carries them into `build_graph`, where they become a node attribute. The ILP solver keeps extra
+    node attributes and `save_graph` writes them (checked on a real graph). Nothing about detections, edges or
+    the ILP changes; with the flag off this function is never called and the script stays byte-identical.
+    """
+    script = repo / "scripts" / "predict_unet_transformer.py"
+    s = script.read_text()
+
+    s = _replace_once(s, "def _detect_cells_pooled(",
+                      "_LAST_CALL_PROBS = None\n_LAST_PEAK_PROBS = None\n\n\ndef _detect_cells_pooled(",
+                      "peak-prob globals")
+    s = _replace_once(s, "    logits = det_logits.unsqueeze(0)  # (1, 1, Z, Y, X)",
+                      "    global _LAST_CALL_PROBS\n    logits = det_logits.unsqueeze(0)  # (1, 1, Z, Y, X)",
+                      "peak-prob global decl")
+    s = _replace_once(s, "        return np.empty((0, 4), dtype=np.int16)",
+                      "        _LAST_CALL_PROBS = np.empty((0,), dtype=np.float32)\n"
+                      "        return np.empty((0, 4), dtype=np.int16)",
+                      "peak-prob empty branch")
+    s = _replace_once(s, "    coords = peak_idx.float().cpu().numpy()",
+                      "    _LAST_CALL_PROBS = torch.sigmoid(\n"
+                      "        logits[0, 0][peak_idx[:, 0], peak_idx[:, 1], peak_idx[:, 2]]\n"
+                      "    ).float().cpu().numpy()\n"
+                      "    coords = peak_idx.float().cpu().numpy()",
+                      "peak-prob capture")
+    s = _replace_once(s, "    coord_lists: list[np.ndarray] = []",
+                      "    coord_lists: list[np.ndarray] = []\n    prob_lists: list[np.ndarray] = []",
+                      "peak-prob list init")
+    s = _replace_once(s, "                coord_lists.append(arr)",
+                      "                coord_lists.append(arr)\n                prob_lists.append(_LAST_CALL_PROBS)",
+                      "peak-prob list append")
+    s = _replace_once(s, "    coords = np.concatenate(coord_lists) if coord_lists else np.empty((0, 4), dtype=np.int16)",
+                      "    coords = np.concatenate(coord_lists) if coord_lists else np.empty((0, 4), dtype=np.int16)\n"
+                      "    global _LAST_PEAK_PROBS\n"
+                      "    _LAST_PEAK_PROBS = np.concatenate(prob_lists) if prob_lists else np.empty((0,), dtype=np.float32)\n"
+                      "    if len(_LAST_PEAK_PROBS) != len(coords):\n"
+                      "        raise RuntimeError('peak-prob bookkeeping out of sync: %d probs vs %d coords'\n"
+                      "                           % (len(_LAST_PEAK_PROBS), len(coords)))",
+                      "peak-prob assembly")
+    s = _replace_once(s, "    edges: list[tuple[int, int, float, float]],\n) -> td.graph.InMemoryGraph:",
+                      "    edges: list[tuple[int, int, float, float]],\n    peak_probs=None,\n) -> td.graph.InMemoryGraph:",
+                      "peak-prob build_graph signature")
+    s = _replace_once(s, "    if edges:\n        graph.add_edge_attr_key(\"edge_prob\", pl.Float64, 0.0)",
+                      "    if peak_probs is not None and len(node_ids):\n"
+                      "        graph.add_node_attr_key(\"peak_prob\", pl.Float64, -1.0)\n"
+                      "        graph.update_node_attrs(node_ids=node_ids,\n"
+                      "                                attrs={\"peak_prob\": [float(v) for v in peak_probs]})\n\n"
+                      "    if edges:\n        graph.add_edge_attr_key(\"edge_prob\", pl.Float64, 0.0)",
+                      "peak-prob build_graph body")
+    s = _replace_once(s, "        graph = build_graph(coords, edges)",
+                      "        graph = build_graph(coords, edges, peak_probs=_LAST_PEAK_PROBS)",
+                      "peak-prob build_graph call")
+    compile(s, str(script), "exec")
+    script.write_text(s)
+    print("PEAK PROB: detection probabilities will be stored as the `peak_prob` node attribute")
+
+
 def apply_axis_flip_tta(repo: Path) -> None:
     """Swap the in-plane D4 views (rot90 + transpose) for the training-consistent 8 axis flips.
 
@@ -444,6 +512,9 @@ def main() -> None:
     ap.add_argument("--pool-kernel-um", type=float, default=None,
                     help="detection NMS kernel in um; the public stack hard-codes 3.0 while the checkpoint's "
                          "config.json says 5.0")
+    ap.add_argument("--keep-peak-prob", action="store_true",
+                    help="store each detection's peak probability as a `peak_prob` node attribute (B25 feature); "
+                         "detections, edges and ILP are unchanged")
     ap.add_argument("--tta-group", choices=["public", "axisflip"], default="public",
                     help="'axisflip' replaces the rot90/transpose TTA views by the 8 training-consistent "
                          "axis flips (same view count, matches scripts/augmentations.py)")
@@ -484,6 +555,8 @@ def main() -> None:
         apply_runtime_patches(cells, ns, repo, work)
         if args.pool_kernel_um is not None:
             set_pool_kernel_um(repo, args.pool_kernel_um)
+        if args.keep_peak_prob:
+            keep_peak_prob(repo)
         if args.tta_group == "axisflip":
             apply_axis_flip_tta(repo)
         run_inference(ns, repo, work, data_dir, stems, raw_dir, args.unet_batch_size)
@@ -508,7 +581,7 @@ def main() -> None:
     result = {
         "tag": args.tag, "label": args.label, "notebook": args.notebook,
         "primary": args.primary, "secondary": args.secondary, "tta_group": args.tta_group,
-        "pool_kernel_um": args.pool_kernel_um,
+        "pool_kernel_um": args.pool_kernel_um, "keep_peak_prob": args.keep_peak_prob,
         "env_overrides": args.env, "videos": stems, "summary": summary,
         "per_video": rows, "metric_rows": metric_rows,
     }

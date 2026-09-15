@@ -806,5 +806,18 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   His tools tweak (score_geffs*: a .geff store is a directory, check the suffix before globbing) is merged.
   NEXT FOR HIM (written into TEAM/PROMPT): B26 falsification test; then B25 on his port (learned peak pruning, the
   node-budget lever, comparable locally per his own table); STEP 3 only if disk frees up.
+- 2026-09-15 12:30 FRIEND B: B26 DONE, AXIS-FLIP VARIANT CLOSED (4 videos, official metric; details CONTEXT_FRIEND_B.md
+  §20-22, rows in RESULTS.md). B26: the Z-flip TTA delta is +0.0171 on the pilkwang primary and +0.0098 on the scratch
+  6bba-only primary (never saw 44b6) - a 43% drop, short of his pre-registered 'halves' criterion, so partial support
+  only. The decisive test came from the axis-flip variant itself: +0.0250 on pilkwang, **+0.0007 on the scratch
+  primary** (recall even drops), i.e. ~97% of the local gain is memorised views. One explanation covers both: Z-flip
+  ADDS four views (extra smoothing helps a weak model regardless of which views), axis-flip REPLACES four (no extra
+  smoothing, residual zero) -> on unseen data the composition of the TTA group does not matter; it matters locally only
+  because the model remembers the frames. Consequences: (a) axis-flip closed, no LB probe; (b) any TTA-group change on
+  pilkwang models is unmeasurable on LOEO-44b6 - now shown by direct test, not argument; the only honest local bench
+  for such variants is a from-scratch primary, on which the variant must win by itself. Also closed: NMS kernel
+  (3.0-5.5 um are one (3,3,3) kernel; 6.0 -> (5,5,5) costs 0.026 at 97.6% recall = the bound for B25's selectivity).
+  Next: 12-video calibration running (Kaggle rate limit lifted 12:25), then B25 on the port (design in his §19:
+  PU labels, ceiling +0.008..0.010 from the node-count term, recall >= 99% as go/no-go).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
