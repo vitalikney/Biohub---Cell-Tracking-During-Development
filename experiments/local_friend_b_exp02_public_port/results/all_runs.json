@@ -1,5 +1,24 @@
 [
   {
+    "tag": "axisflip",
+    "label": "base",
+    "videos": 12,
+    "clean_videos": 6,
+    "primary": "pilkwang",
+    "secondary": "seed314159",
+    "tta": "axisflip",
+    "pool_kernel_um": 3.0,
+    "env": "",
+    "score": 0.9215176452747202,
+    "adj_edge": 0.9124267361838112,
+    "edge": 0.8903225806451613,
+    "div_J": 0.09090909090909091,
+    "div": "2/7/13",
+    "recall": 0.9927981779977891,
+    "raw_nodes": 370926,
+    "out_nodes": 363010
+  },
+  {
     "tag": "axisflip_4vid",
     "label": "base",
     "videos": 4,
@@ -684,6 +703,25 @@
     "out_nodes": 119318
   },
   {
+    "tag": "scratch_axisflip",
+    "label": "base",
+    "videos": 12,
+    "clean_videos": 6,
+    "primary": "friend_a_exp02_loeo20",
+    "secondary": "seed314159",
+    "tta": "axisflip",
+    "pool_kernel_um": 3.0,
+    "env": "",
+    "score": 0.8264119537205913,
+    "adj_edge": 0.8187196460282836,
+    "edge": 0.8280495486038211,
+    "div_J": 0.07692307692307693,
+    "div": "2/11/13",
+    "recall": 0.9580263894632887,
+    "raw_nodes": 597058,
+    "out_nodes": 589412
+  },
+  {
     "tag": "scratch_axisflip_4vid",
     "label": "base",
     "videos": 4,
@@ -703,6 +741,25 @@
     "out_nodes": 191030
   },
   {
+    "tag": "scratch_publicTTA",
+    "label": "base",
+    "videos": 12,
+    "clean_videos": 6,
+    "primary": "friend_a_exp02_loeo20",
+    "secondary": "seed314159",
+    "tta": "public",
+    "pool_kernel_um": 3.0,
+    "env": "",
+    "score": 0.8077203840690759,
+    "adj_edge": 0.8077203840690759,
+    "edge": 0.8183908045977012,
+    "div_J": 0.0,
+    "div": "0/8/15",
+    "recall": 0.9581996261710443,
+    "raw_nodes": 603468,
+    "out_nodes": 595698
+  },
+  {
     "tag": "scratch_publicTTA_4vid",
     "label": "base",
     "videos": 4,
@@ -720,6 +777,25 @@
     "recall": 0.9735903173873068,
     "raw_nodes": 194814,
     "out_nodes": 192643
+  },
+  {
+    "tag": "scratch_zflipTTA",
+    "label": "base",
+    "videos": 12,
+    "clean_videos": 6,
+    "primary": "friend_a_exp02_loeo20",
+    "secondary": "seed314159",
+    "tta": "public",
+    "pool_kernel_um": 3.0,
+    "env": "",
+    "score": 0.8165192437628795,
+    "adj_edge": 0.8165192437628795,
+    "edge": 0.8273260687342833,
+    "div_J": 0.0,
+    "div": "0/8/15",
+    "recall": 0.9629045152726715,
+    "raw_nodes": 604660,
+    "out_nodes": 597179
   },
   {
     "tag": "scratch_zflipTTA_4vid",

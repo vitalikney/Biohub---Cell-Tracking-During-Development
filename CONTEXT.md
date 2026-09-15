@@ -880,5 +880,16 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   post-processing-class comparisons, i.e. the locally measurable class. Queued (CPU, behind his GPU chain): relink OFF with
   the full stack, veto OFF, and a linefit weight x window grid. If relink-off or a linefit setting wins on 12 videos, it
   is a candidate in the same class as exp36 - to be read against probe 18's local-vs-LB pair first.
+- 2026-09-15 17:00 FRIEND B: B26 + AXIS-FLIP ON 12 VIDEOS - his 4-video closure of the axis-flip group is RETRACTED
+  (CONTEXT_FRIEND_B.md §32, RESULTS row). Same TTA change on two primaries: axis-flip +0.0214 on pilkwang (0.9001 ->
+  0.9215, edge +0.015, div 1/6/14 -> 2/7/13, raw node count flat) and +0.0187 on the scratch 6bba-only primary that never
+  saw a 44b6 video; Z-flip +0.0108 vs +0.0088. So 81-87% of local TTA gains survive on unseen 44b6 videos: memorised views
+  are a 13-19% effect, not the mechanism (the 4-video +0.0007 was a small-sample artefact, same error class as the CLEAN
+  rule). What sank Z-flip on the LB (exp31 -0.003, exp34 -0.009) must then be embryo difference (+7% nodes for exp31),
+  which no local test can see. Axis-flip is therefore a live inference-class candidate (+0.021 on ALL 12, positive on most
+  videos, no node growth, same cost) with one untestable risk - the same one that hit exp31/exp34 twice. He does not ask
+  for a probe; the class has no confirmed local-vs-LB pair yet (probe 18 gives the first pair, for post-processing).
+  Side finding: on both primaries REPLACING rot90/transpose beats ADDING Z-flips, so the rotated views are harmful, not
+  neutral. A28 status should read 'reopened on 12 videos'. B28/B29 CPU sweep running next.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
