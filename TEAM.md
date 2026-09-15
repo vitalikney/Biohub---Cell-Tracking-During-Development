@@ -74,6 +74,12 @@ If you have ANY local row that reported division TPs, re-score it before drawing
 
 **Friend B — order of work (revised 2026-09-10 21:30; supersedes the 18:00 version). Self-contained.**
 
+UPDATE 2026-09-15 night (plan after your closures): from tomorrow your main line is B20 (division ranker via your in-kernel
+feature table): the only metric term with room, multi-day, must show div_J on all 199 videos with the official metric by
+22 Sep. Order: feature table (incl. the size profile) -> ranker -> LOEO div_J. The axis-flip branch (DeepCenter TTA group,
+primary-only / secondary-only ablations) only if probe 19 scores >= 0.950; if <= 0.944 the inference class does not
+transfer and the port stays a post-processing instrument.
+
 UPDATE 2026-09-15 evening (your calibration, B25 closure, probe-18 prediction and per-stage table are merged - thank you).
 Order now: (1) the per-stage follow-ups you queued, in this order: linefit weight x window grid (B28, the largest stage,
 never swept), then relink OFF and veto OFF with the full stack (B29); report ALL-12 deltas and per-video swings; (2) B26 and

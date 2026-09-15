@@ -904,6 +904,26 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   stack: 0.9054 = +0.0053 on the headline, but +0.0039 of that is ONE extra division TP (2/8/13) and the edge
   term moves +0.0014, positive on 4/12 videos; it does repair 87bba6c4 (0.535 -> 0.607). veto OFF +0.0024,
   again one division event. Neither clears the +0.005 gate on the robust (edge) term; no probe requested. Open question
-  no local test answers: the public author kept relink ON for the hidden embryos and swept its radius, never OFF.
+  no local test answers: the public author kept relink ON for the hidden embryos and swept its radius, never OFF.- 2026-09-15 22:00 MSK PLAN RE-CUT (user asked whether friend B's plan and the team plan need correcting). 14 days left,
+  freeze 24 Sep. Everything knob-shaped is closed on both sides (LB: weights, TTA-add, secondary, post-proc, threshold;
+  local: pruner, linefit, relink/veto). What is left is decided by tonight's two probes:
+  PROBE 19 (axis-flip) >= 0.950 -> the inference class TRANSFERS and friend B's port is a valid screen for it: he screens
+    the same training-consistent group in the DeepCenter TTA and the secondary-only/primary-only ablations (CPU-cheap on
+    cached graphs where possible), Vitalii probes at most one follow-up; final 1 = exp29 + axis-flip (+ hygiene if probe
+    18 >= 0.947). PROBE 19 <= 0.944 -> the inference class does NOT transfer even with an unseen-embryo local test;
+    the port stays a post-processing instrument only; final 1 = exp29 (+ hygiene if probe 18 >= 0.947).
+  INDEPENDENT OF THE PROBES, friend B's main line from tomorrow is B20 (division ranker) via his in-kernel feature table:
+    it is the only term with room (0.1 x div_J, ours 0.11), it is a multi-day build, and it must show div_J on all 199
+    videos with the official metric by 22 Sep to make the freeze. Order for him: B20 feature table -> ranker -> LOEO div_J;
+    the probe-19 branch work only if probe 19 wins.
+  FRIEND A: silent since 10 Sep, teacher/dense set never delivered, and the dense-fine-tune line is weak on new evidence.
+    If he is back, his GPU goes to B5 TEST-TIME ADAPTATION, the one lever aimed at the mechanism that sinks TTA changes on
+    the hidden embryos (embryo shift): cheapest form = re-estimate normalisation statistics / a few self-training steps on
+    the target video before inference, go/no-go on the LOEO scratch model (0.68 on the unseen embryo) with the official
+    metric. Otherwise nothing is assigned to him and the user should ping him.
+  FINAL SUBMISSIONS: final 1 = best public config as above. Final 2 = the HEDGE, not a second public config: exp29 +
+    axis-flip (+ hygiene) if probe 19 is a tie (strong local evidence on an unseen embryo, LB neutral); if probe 19 wins,
+    final 2 = exp29 verbatim as the safe fallback. Both must be selected by hand on the Submissions page by 28 Sep.
+  VITALII/ME: merge friends, run at most one follow-up probe per decisive result, prepare the two finals, no sweeps.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
