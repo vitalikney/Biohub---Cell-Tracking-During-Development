@@ -213,6 +213,25 @@ _ROT_BLOCKS = [
 ]
 
 
+def set_pool_kernel_um(repo: Path, value: float) -> None:
+    """Override the detection NMS kernel the public stack runs with.
+
+    The support pack ships `pool_kernel_um: float = 3.0` as a plain dataclass default and never reads the
+    checkpoint's `config.json`, which says 5.0 - so the public 0.947 stack suppresses peaks with a smaller
+    kernel than the model was saved with, i.e. it keeps more detections. Our `tools/repo/` copy has a
+    `--pool-kernel-um` flag (we added it), the shipped one does not, so patch the default instead.
+    """
+    predict_script = repo / "scripts" / "predict_unet_transformer.py"
+    text = predict_script.read_text()
+    anchor = "    pool_kernel_um: float = 3.0"
+    if text.count(anchor) != 1:
+        raise RuntimeError(f"expected one pool_kernel_um default, found {text.count(anchor)}")
+    text = text.replace(anchor, f"    pool_kernel_um: float = {value}")
+    compile(text, str(predict_script), "exec")
+    predict_script.write_text(text)
+    print(f"POOL KERNEL: detection NMS kernel set to {value} um (public default is 3.0)")
+
+
 def apply_axis_flip_tta(repo: Path) -> None:
     """Swap the in-plane D4 views (rot90 + transpose) for the training-consistent 8 axis flips.
 
@@ -389,6 +408,9 @@ def main() -> None:
     ap.add_argument("--stage", choices=["all", "infer", "pp"], default="all")
     ap.add_argument("--force-infer", action="store_true")
     ap.add_argument("--unet-batch-size", type=int, default=None)
+    ap.add_argument("--pool-kernel-um", type=float, default=None,
+                    help="detection NMS kernel in um; the public stack hard-codes 3.0 while the checkpoint's "
+                         "config.json says 5.0")
     ap.add_argument("--tta-group", choices=["public", "axisflip"], default="public",
                     help="'axisflip' replaces the rot90/transpose TTA views by the 8 training-consistent "
                          "axis flips (same view count, matches scripts/augmentations.py)")
@@ -427,6 +449,8 @@ def main() -> None:
 
     if need_infer:
         apply_runtime_patches(cells, ns, repo, work)
+        if args.pool_kernel_um is not None:
+            set_pool_kernel_um(repo, args.pool_kernel_um)
         if args.tta_group == "axisflip":
             apply_axis_flip_tta(repo)
         run_inference(ns, repo, work, data_dir, stems, raw_dir, args.unet_batch_size)
@@ -451,6 +475,7 @@ def main() -> None:
     result = {
         "tag": args.tag, "label": args.label, "notebook": args.notebook,
         "primary": args.primary, "secondary": args.secondary, "tta_group": args.tta_group,
+        "pool_kernel_um": args.pool_kernel_um,
         "env_overrides": args.env, "videos": stems, "summary": summary, "per_video": rows,
     }
     result_path = cache / "pp" / f"{args.label}.json"

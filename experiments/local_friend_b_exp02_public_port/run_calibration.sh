@@ -32,20 +32,26 @@ else
   SEL=(--split "$ROOT/experiments/_lib/loeo_train6bba_val44b6.json" --key holdout)
 fi
 
-run() {           # run <tag> <notebook> [extra weight-override args...]
+run() {           # run <tag> <with-tight55: yes|no> <notebook> [extra weight-override args...]
   local tag="$1$SUFFIX"; shift
+  local tight="$1"; shift
   local nb="$1"; shift
   echo "################ $tag (GPU + post-processing at the base tight 6.0)"
   "$PY" "$ROOT/tools/public_local.py" --notebook "$nb" --tag "$tag" --label base "${SEL[@]}" "$@"
-  echo "################ $tag (post-processing only, tight 5.5 = the setting exp29 was submitted with)"
-  "$PY" "$ROOT/tools/public_local.py" --notebook "$nb" --tag "$tag" --label tight55 --stage pp "${SEL[@]}" "$@" \
-      --env BIOHUB_MOTION_RELINK_TIGHT_UM=5.5
+  if [ "$tight" = "yes" ]; then
+    echo "################ $tag (post-processing only, tight 5.5 = the setting exp29 was submitted with)"
+    "$PY" "$ROOT/tools/public_local.py" --notebook "$nb" --tag "$tag" --label tight55 --stage pp "${SEL[@]}" "$@" \
+        --env BIOHUB_MOTION_RELINK_TIGHT_UM=5.5
+  fi
 }
 
-run exp29 "$NB29"
-run exp30 "$NB29" --primary exp03B
-run exp31 "$NB31" --primary exp03B
-run exp32 "$NB29" --primary exp03B --secondary exp23
+# Only exp29 needs the tight-5.5 re-run: it is the one that was SUBMITTED with the in-kernel sweep's pick,
+# so it is the only one where "as submitted" differs from "base". Measured on the 4-video set, 5.5 and 6.0
+# score identically to four decimals, so re-running it for the other three would buy nothing.
+run exp29 yes "$NB29"
+run exp30 no  "$NB29" --primary exp03B
+run exp31 no  "$NB31" --primary exp03B
+run exp32 no  "$NB29" --primary exp03B --secondary exp23
 
 echo "################ summary"
 "$PY" "$ROOT/experiments/local_friend_b_exp02_public_port/summarise.py" --suffix "$SUFFIX"
