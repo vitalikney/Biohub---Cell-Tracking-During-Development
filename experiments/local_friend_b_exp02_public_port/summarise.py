@@ -4,23 +4,22 @@ The calibration question is not "does the local score match the LB score" - it c
 embryo and 29% of a hidden test set. It is "does the local port ORDER the four configurations the way the
 leaderboard ordered them". Spearman rank correlation over the four points plus the observed spread answers it.
 
-LEAKAGE, and why this script reports three video sets instead of one
--------------------------------------------------------------------
-Three of the four calibration configurations (exp30, exp31, exp32) swap in a checkpoint we fine-tuned
-ourselves: exp03B as primary and exp23 as secondary. Both were fine-tuned on the 183 videos of
-`experiments/_lib/holdout_split.json`, and that set contains SIX of the twelve LOEO 44b6 videos this
-calibration runs on:
+LEAKAGE SPLIT - diagnostic only, NOT the verdict (corrected after the 12-video run, CONTEXT_FRIEND_B.md §28)
+-----------------------------------------------------------------------------------------------------
+exp03B (primary of exp30/31/32) and exp23 (secondary of exp32) were fine-tuned on the 183 videos of
+`experiments/_lib/holdout_split.json`, which contains six of the twelve LOEO 44b6 videos:
 
-    seen by exp03B/exp23 : 44b6_12dfb391, 44b6_2a2eff9f, 44b6_a21120c2,
-                           44b6_c50204e0, 44b6_d2f34f90, 44b6_d5e7d891
-    never fine-tuned on  : 44b6_1d530831, 44b6_74d0c52e, 44b6_7a302da0,
-                           44b6_87bba6c4, 44b6_9be80b04, 44b6_e28840c6
+    in the fine-tunes' training set : 44b6_12dfb391, 44b6_2a2eff9f, 44b6_a21120c2,
+                                      44b6_c50204e0, 44b6_d2f34f90, 44b6_d5e7d891
+    never fine-tuned on             : 44b6_1d530831, 44b6_74d0c52e, 44b6_7a302da0,
+                                      44b6_87bba6c4, 44b6_9be80b04, 44b6_e28840c6
 
-So on half the calibration set exp30/31/32 are scored on their own training data while exp29 is not, which
-biases the comparison towards exactly the configurations the leaderboard placed LAST. The ranking test is only
-meaningful on the six videos no fine-tune ever saw. (The pilkwang base weights saw all 199 videos, so nothing
-here is absolutely clean - but that leak is identical across all four configurations, which is what a RANKING
-comparison needs.)
+The morning hypothesis was that this leak inflates exp30/31/32 on the LEAKY half. The 12-video run refuted it:
+exp03B configurations beat exp29 on 4 of 6 CLEAN videos and only 1 of 6 LEAKY ones - the opposite sign. What
+drives local rankings is the per-video swing of a weight swap (-0.037..+0.039) against a 0.003 LB effect. So the
+VERDICT IS READ ON ALL 12 with a leave-one-video-out check; the split stays here as a diagnostic. (The pilkwang
+base weights saw all 199 videos; that leak is identical across configurations and is a separate, confirmed
+mechanism for TTA variants - see §13/§20/§22.)
 
 The metric is weighted by ground-truth edge count, so subsets are re-summarised from the per-video rows rather
 than averaged from the totals.

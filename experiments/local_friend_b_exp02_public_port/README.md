@@ -52,18 +52,21 @@ python tools/public_local.py --tag exp29 --stage pp --label gap45 --env BIOHUB_G
 | exp31 | exp31 (Z-flip, 12 views) | exp03B | pilkwang seed314159 | 0.941 |
 | exp32 | exp29 | exp03B | exp23 | 0.937 |
 
-## Leakage — read this before reading any number
+## Leakage split — diagnostic only (corrected after the 12-video run)
 
 `exp03B` (primary of exp30/31/32) and `exp23` (secondary of exp32) were fine-tuned on the 183 videos of
-`experiments/_lib/holdout_split.json`. That set contains **six of the twelve LOEO 44b6 videos this calibration
-runs on**: `12dfb391, 2a2eff9f, a21120c2, c50204e0, d2f34f90, d5e7d891`. On those six, exp30/31/32 are scored
-on their own training data while exp29 is not, which biases the comparison towards the configurations the
-leaderboard ranked last.
+`experiments/_lib/holdout_split.json`, which contains six of the twelve LOEO 44b6 videos:
+`12dfb391, 2a2eff9f, a21120c2, c50204e0, d2f34f90, d5e7d891`. The morning hypothesis - that this inflates the
+exp03B configurations on those six - was **refuted by the 12-video run**: exp03B configurations beat exp29 on
+4 of 6 CLEAN videos and 1 of 6 LEAKY ones, the opposite sign. Local rankings are driven by the per-video swing of
+a weight swap (−0.037…+0.039) against a 0.003 LB effect.
 
-`summarise.py` therefore reports three sets: ALL, CLEAN (the six videos no fine-tune ever saw) and LEAKY.
-**The calibration verdict is read off CLEAN.** The pilkwang base weights saw all 199 videos, so CLEAN is not
-absolutely honest either - but that leak is identical across all four configurations, which is what a ranking
-comparison needs.
+**The verdict is read on ALL 12 videos** with the leave-one-video-out check (`results/calibration_12videos_pervideo.txt`).
+`summarise.py` still prints the CLEAN/LEAKY blocks as a diagnostic. Result: order reproduced up to the exp30/exp31
+pair (LB gap 0.003 = noise), exp29 first and exp32 last, spread 2.4× the LB's. See `CONTEXT_FRIEND_B.md` §28.
+
+The pilkwang base weights saw all 199 videos; that leak is identical across configurations and is a separate,
+confirmed mechanism for TTA variants (scratch-model tests, §13/§20/§22).
 
 ## Files
 
