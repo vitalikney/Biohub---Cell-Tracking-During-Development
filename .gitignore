@@ -13,3 +13,5 @@ experiments/**/submission.csv
 experiments/**/checkpoint_last.pth
 # raw download of the weights dataset; its contents are tracked under weights_dataset/
 /archive.zip
+# Kaggle dependency datasets fetched by tools/get_kaggle_datasets.py (pointers = the slugs in that script)
+/external/

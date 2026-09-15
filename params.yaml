@@ -26,6 +26,12 @@ weights:
     friend_a_full199_ep21: friend A scratch on all 199 videos, epoch 21 (probe 10 as secondary: 0.920)
     friend_a_full199_ep30: friend A scratch on all 199 videos, epoch 30
 
+external:
+  # Third-party Kaggle datasets the kernels read (hundreds of MB). Not in git. Manifest + fetcher:
+  #   python tools/get_kaggle_datasets.py   -> external/<owner>__<name>/ (git-ignored, skip if present)
+  dir: external
+  manifest: tools/get_kaggle_datasets.py
+
 metric:
   official_package: tools/official        # royerlab/kaggle-cell-tracking-competition, vendored 2026-09-11
   scorer: tools/score_geffs.py            # official metric; tools/score_geffs_fork.py = pilkwang fork, deprecated

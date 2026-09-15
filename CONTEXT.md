@@ -776,5 +776,8 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   per person, and inside Kaggle kernels the data is mounted anyway. DVC/Hydra are therefore NOT set up now; the trigger
   for DVC would be a team artefact over ~1 GB that Kaggle cannot hold (e.g. teacher/dense geff sets), and it needs the
   user to choose and authorise a remote first.
+  Third-party packs (pilkwang support pack, seed314159, DeepCenter - the ones the user means by "other participants'
+  datasets, ~900 MB") stay on Kaggle too: `tools/get_kaggle_datasets.py` is the manifest + fetcher into git-ignored
+  `external/` (skip-if-present). Pointers in git, bytes fetched once - DVC's mechanism without needing a remote.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.

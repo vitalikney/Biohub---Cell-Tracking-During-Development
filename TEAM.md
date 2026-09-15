@@ -59,7 +59,9 @@ Goal: run the public 0.941 pipeline locally on the 12 LOEO 44b6 videos and expos
 is the same content for the notebooks. When you add a checkpoint: put it in `weights_dataset/<your_name>/`, commit, push, and
 publish the dataset from that folder (`python -m kaggle datasets version -p weights_dataset --dir-mode zip -m "..."`) so both
 copies stay identical. The competition data (82 GB of zarr) is NOT in git and will not be: download it once from Kaggle.
-Paths, slugs, the base recipe's knobs and the LB rules live in `params.yaml`.
+Paths, slugs, the base recipe's knobs and the LB rules live in `params.yaml`. The THIRD-PARTY packs the kernels depend on
+(pilkwang support pack, seed314159 secondary, DeepCenter; hundreds of MB) are also not in git: run
+`python tools/get_kaggle_datasets.py` once and they land in `external/` (git-ignored, fetched only if missing).
 
 **METRIC ALERT (2026-09-11, applies to BOTH friends, read before any local scoring).**
 `tools/repo/` is pilkwang's fork and its division metric is the PRE-PATCH one: it credits a ground-truth division to any
