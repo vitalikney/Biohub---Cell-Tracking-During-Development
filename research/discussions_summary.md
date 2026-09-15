@@ -279,3 +279,17 @@ musculer/biohub-hoct-general-v0-official = royerlab's HOCT tracker as a veto) sp
 and sweep, and HOCT has a 10 h wall-clock deadline that can skip hidden-test videos. Not our stack (exp29 = v020 with the
 DeepCenter veto, no HOCT) and exp29 was scored on the hidden set already, so no action; HOCT-veto variants scored 0.947
 (tie) anyway.
+
+**Code scan of the 13-15 Sep notebooks by CODE, not score (13 pulled via API, diffed cell-by-cell against exp29).**
+Pure reproductions or single-knob forks already answered: DC safe-div 0.25 (amanatar, beraterolelk, caassicca v4,
+pawanmali), validator off + tight 5.5 (karl0106 = our exp33 base), sectta 1.0 + HOCT veto mode 2 (malikhammadfarooq).
+New information: (1) caassicca v5 = det threshold 0.965 -> 0.99 (+ DC 0.25) scores **0.942**, i.e. raising the
+detection threshold costs ~0.005 on the LB - the node-budget lever cannot be pulled by thresholding (B19 closed for good;
+blind pruning loses, as friend B's NMS run also showed). (2) pawanmali "divfix": after post-processing, any fork whose
+ANCESTOR already divided in the video keeps only its nearest child. Checked on our labels: 0 of 151 GT divisions have a
+divider ancestor in the same video, so the filter can never remove a true division. On our 12-video official-metric
+graphs it drops 23 edges, division FP 13 -> 11, TP unchanged, score 0.9567 -> 0.9576. Same class as the sister floor
+5 um (FP 13 -> 11, +0.0012): risk-free FP hygiene, each worth ~0.001, below LB resolution. (3) hahuyy / zhincez
+"runnable with public datasets": a stage-resume mechanism (sha256-signed stage outputs, resume from JSON) - robustness
+engineering for the 12 h limit, not a score lever. (4) binasalama "learned gap recovery" = 0.887; sujalsuyash LNN = toy;
+josephadamski "reconcile guard" = consistency asserts.
