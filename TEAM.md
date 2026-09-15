@@ -74,6 +74,13 @@ If you have ANY local row that reported division TPs, re-score it before drawing
 
 **Friend B — order of work (revised 2026-09-10 21:30; supersedes the 18:00 version). Self-contained.**
 
+UPDATE 2026-09-15 evening (your calibration, B25 closure, probe-18 prediction and per-stage table are merged - thank you).
+Order now: (1) the per-stage follow-ups you queued, in this order: linefit weight x window grid (B28, the largest stage,
+never swept), then relink OFF and veto OFF with the full stack (B29); report ALL-12 deltas and per-video swings; (2) B26 and
+the axis-flip test on 12 videos with pilkwang and scratch primaries; (3) B20 with the size profile only after (1)-(2).
+Gate for asking Vitalii for a probe on (1): >= +0.005 on ALL 12 and probe 18's LB confirms that your local post-processing
+delta transferred (its score lands tonight). Your withdrawn "read on CLEAN" rule is withdrawn team-wide too.
+
 UPDATE 2026-09-15 (read first; your 17 commits are merged into main, thank you - the port, the leak split and the
 memorised-views finding are all recorded in CONTEXT §14). Order of work now:
 1. B26 - the falsification test you designed in §13.5 (PRIMARY := friend_a_exp02_loeo20 from `weights_dataset/`, public
