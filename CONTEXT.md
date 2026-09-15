@@ -943,5 +943,14 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   because it thresholded edge_prob without labels. B20 scope: candidates = orphan OR low-quality-linked node at t+1,
   ranker learns which steals are right; expected ~130 positives on 199 videos. Streaming pass 1 (10-video bundles via
   the private kernel, inference with peak_prob, videos deleted after) is running: first bundle in progress.
+- 2026-09-15 18:05 FRIEND B: B20 BUILD - pass 1 and pass 2 in place and validated (CONTEXT_FRIEND_B.md §38.5-38.7).
+  Pass 1 (while a bundle's frames are on disk): inference with peak_prob, the post-gap checkpoint graph (the exact
+  input of the shipped division stage, prune-isolated deferred) and the 8-view DeepCenter score of every raw node, so
+  pass 2 needs no frames. Pass 2 CONTROL on 12 videos - shipped ranking through the checkpoint + cached veto + notebook
+  tail - reproduces the shipped stage EXACTLY (0.9001, div 1/6/14). Learned ranker: 5-9 positives on 12 videos are
+  untrainable (fills the caps with FPs), but STEAL mode already lifts TP 1 -> 3 with 9 reachable; a probability
+  threshold was added so a weak model cannot spend the budget. Streaming over the 187 remaining videos in 10-video
+  bundles via the private kernel is starting (first bundle in flight); ~2.5 min/video -> ~8 h unattended, expected
+  ~130 positives. Then: LOO ranker, threshold, official div_J on all 199.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
