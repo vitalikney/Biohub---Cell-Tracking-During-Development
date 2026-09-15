@@ -1,0 +1,40 @@
+{
+  "videos": [
+    "44b6_12dfb391",
+    "44b6_1d530831",
+    "44b6_2a2eff9f",
+    "44b6_74d0c52e",
+    "44b6_7a302da0",
+    "44b6_87bba6c4",
+    "44b6_9be80b04",
+    "44b6_a21120c2",
+    "44b6_c50204e0",
+    "44b6_d2f34f90",
+    "44b6_d5e7d891",
+    "44b6_e28840c6"
+  ],
+  "mode": "steal",
+  "n_rows": 22204,
+  "n_pos": 9,
+  "names": [
+    "d_pc",
+    "d_pq",
+    "d_cq",
+    "asym",
+    "cos",
+    "div_next",
+    "len_p_back",
+    "len_c_fwd",
+    "len_q_fwd",
+    "z_um",
+    "peak_p",
+    "peak_c",
+    "peak_q",
+    "dc_q",
+    "dc_c",
+    "q_claimed",
+    "q_in_prob",
+    "q_pred_peak",
+    "q_pred_backlen"
+  ]
+}

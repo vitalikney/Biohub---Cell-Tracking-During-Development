@@ -951,6 +951,12 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   untrainable (fills the caps with FPs), but STEAL mode already lifts TP 1 -> 3 with 9 reachable; a probability
   threshold was added so a weak model cannot spend the budget. Streaming over the 187 remaining videos in 10-video
   bundles via the private kernel is starting (first bundle in flight); ~2.5 min/video -> ~8 h unattended, expected
+  ~130 positives. Then: LOO ranker, threshold, official div_J on all 199.
+- 2026-09-15 18:15 FRIEND B: B20 STREAM RUNNING - 24 bundles x 8 videos via the private kernel, ~25 min/bundle, ~10 h
+  unattended (log in experiments/local_friend_b_exp02_public_port/results/stream_bundles.log); nothing else heavy on his
+  machine meanwhile (kaggle kernels output buffers the whole zip in RAM). Output per video: raw graph with peak_prob,
+  post-gap checkpoint, DeepCenter score per node. Next, on the light CPU: the 199-video ranker trainer (negative
+  subsampling, LOO by embryo and by video, probability threshold, OOF scores for pass 2 -> official div_J on all 199).
   ~130 positives. Then: LOO ranker, threshold, official div_J on all 199.- 2026-09-16 PROBE 18 SCORED: exp36 (exp29 + already-divided filter + sister floor 5 um) = **0.946**, -0.001 vs exp29 =
   tie inside the +-0.003 floor. Rule applied: not adopted, final 1 stays exp29 verbatim. Friend B's pre-registered local
   prediction was +0.0011 (0.947-0.948); the LB gave -0.001. Both numbers sit inside the noise floor, so the first
