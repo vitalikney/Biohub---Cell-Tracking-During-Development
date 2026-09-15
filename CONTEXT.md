@@ -869,5 +869,14 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   +0.001 +-0.0005 and met. Predicted LB: 0.947-0.948 (tie -> adopt). A LB <= 0.944 would falsify the port's claim that
   post-processing changes are locally measurable - that pair is the real test. B25 closed (see 15:00). Remaining: per-stage
   table for 87bba6c4, then B26 + axis-flip on 12 videos with pilkwang and scratch primaries.
+- 2026-09-15 15:30 FRIEND B: PER-STAGE TABLE of the public post-processing on 12 videos (CONTEXT_FRIEND_B.md §31, RESULTS
+  row, results/stage_table_exp29_12videos.log). Cumulative: edge filter 0.8740 -> +relink 0.8673 (-0.0067) -> +gap 0.8802
+  (+0.0130) -> +divisions 0.8886 (+0.0084) -> +veto 0.8851 (-0.0035, one division event) -> +short-track 0.8856 -> +LINEFIT
+  0.9001 (+0.0145). Two things we did not know: (1) linefit smoothing (OUTPUT_LINEFIT_WEIGHT 0.8, WINDOW 2) is the single
+  largest post-processing stage and is in no sweep key and no probe; (2) motion relink is net NEGATIVE on 12 videos and is
+  the stage that collapses 44b6_87bba6c4 (0.636 -> 0.511, FP edges 32 -> 53, never recovered) - the exp02 mystery. Both are
+  post-processing-class comparisons, i.e. the locally measurable class. Queued (CPU, behind his GPU chain): relink OFF with
+  the full stack, veto OFF, and a linefit weight x window grid. If relink-off or a linefit setting wins on 12 videos, it
+  is a candidate in the same class as exp36 - to be read against probe 18's local-vs-LB pair first.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
