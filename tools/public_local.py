@@ -365,10 +365,16 @@ def postprocess_and_write(ns: dict, raw_dir: Path, out_dir: Path) -> list[dict]:
             nodes_by_id, raw_edges, dataset=dataset, deepcenter_bundle=bundle
         )
 
+        # Match what the Kaggle pipeline actually submits: `write_test_submission` rounds every coordinate to a
+        # non-negative integer, so the graph the leaderboard scores has integer positions. Keeping floats here
+        # would score a slightly different graph than the one the LB number came from (linefit smoothing puts
+        # nodes at sub-voxel positions), which is exactly the kind of drift calibration must not have.
         g = nx.DiGraph()
         for node_id, node in nodes_by_id.items():
             g.add_node(int(node_id), t=int(node["t"]),
-                       z=float(node["z"]), y=float(node["y"]), x=float(node["x"]))
+                       z=float(max(0, round(float(node["z"])))),
+                       y=float(max(0, round(float(node["y"])))),
+                       x=float(max(0, round(float(node["x"])))))
         for edge in edges:
             g.add_edge(int(edge["source_id"]), int(edge["target_id"]))
         pp_io.save(g, out_dir / f"{dataset}.geff")
