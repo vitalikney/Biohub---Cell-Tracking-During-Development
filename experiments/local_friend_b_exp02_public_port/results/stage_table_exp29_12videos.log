@@ -1,0 +1,1160 @@
+######## raw (ILP graphs straight from inference, no post-processing at all)
+== OFFICIAL score=0.8740 adj_edge=0.8740 edge=0.8560 div=0.0000 (0/0/15) node_recall=0.9860 n=12
+######## edgefilter
+ENV OVERRIDE BIOHUB_OUTPUT_MOTION_RELINK=0
+ENV OVERRIDE BIOHUB_OUTPUT_GAP_CLOSE=0
+ENV OVERRIDE BIOHUB_OUTPUT_GAP2_RECOVERY=0
+ENV OVERRIDE BIOHUB_OUTPUT_SAFE_DIVISIONS=0
+ENV OVERRIDE BIOHUB_USE_DEEPCENTER_VETO=0
+ENV OVERRIDE BIOHUB_REQUIRE_DEEPCENTER_VETO=0
+ENV OVERRIDE BIOHUB_OUTPUT_FILTER_SHORT_TRACKS=0
+ENV OVERRIDE BIOHUB_OUTPUT_LINEFIT_SMOOTH=0
+12 videos | tag=exp29 label=edgefilter | cache=/home/georgii/Documents/Biohub---Cell-Tracking-During-Development/.public_local_cache/exp29
+BIOHUB_PRESET: exp29_sjlee947_verbatim
+BIOHUB_SCORE_AXIS: public 0.939 base + holdout-selected post-process configuration
+Biohub learned UNet + node-transformer + ILP submission
+COMP_DIR: /kaggle/input/competitions/biohub-cell-tracking-during-development exists: False
+TEST_DIR: /kaggle/input/competitions/biohub-cell-tracking-during-development/test exists: False
+{
+  "adaptive_short_track_rescue": true,
+  "allow_artifact_fallback": false,
+  "allow_pip_install": false,
+  "deepcenter_checkpoint_default": "/kaggle/input/biohub-deepcenter-unet3d-center-prior-v1/weights/full_frame_center/best.pt",
+  "deepcenter_expected_epoch": 2,
+  "deepcenter_gap_add_gate": true,
+  "deepcenter_gap_confirm_min_span_um": 8.5,
+  "deepcenter_gap_threshold": 0.25,
+  "deepcenter_safe_div_add_gate": true,
+  "deepcenter_safe_div_threshold": 0.2,
+  "det_threshold": 0.965,
+  "div_drop_to_single_if_bad": true,
+  "div_parent_max_um": 10.5,
+  "div_sister_max_um": 8.0,
+  "experiment_tag": "selected_101_dual_seed_near_balanced_center_confirmed_synthetic_gap",
+  "gap2_frame_frac_cap": 0.006,
+  "gap2_max_links_abs": 180,
+  "gap2_max_links_frac": 0.0045,
+  "gap2_max_step_um": 4.4,
+  "gap2_max_total_um": 10.2,
+  "gap2_require_context": true,
+  "gap_close_effective_max_gap": 1,
+  "gap_close_max_added_abs": 2000,
+  "gap_close_max_added_frac": 0.05,
+  "gap_close_max_gap": 2,
+  "gap_close_reuse_existing": true,
+  "gap_close_reuse_um": 3.2,
+  "gap_close_um": 5.0,
+  "gap_density_adaptive": true,
+  "gap_density_gain": 0.04,
+  "gap_density_max_step_delta_um": 0.125,
+  "gap_density_neighbors": 3,
+  "gap_density_reference_um": 6.5,
+  "gap_refine_max_shift_um": 3.2,
+  "gap_refine_synthetic": true,
+  "gap_refine_win_yx": 3,
+  "gap_refine_win_z": 1,
+  "ilp_appearance_weight": 0.0,
+  "ilp_disappearance_weight": 2.0,
+  "ilp_division_weight": 1.2,
+  "ilp_edge_weight": -1.0,
+  "method": "unet_transformer",
+  "motion_relink_learned_bonus": 1.0,
+  "motion_relink_max_frame_nodes": 2600,
+  "motion_relink_relaxed_um": 10.0,
+  "motion_relink_tight_um": 6.0,
+  "motion_relink_velocity_weight": 0.5,
+  "output_division_geometry_filter": false,
+  "output_edge_max_um": 14.0,
+  "output_enforce_next_frame": true,
+  "output_filter_short_tracks": false,
+  "output_gap2_recovery": false,
+  "output_gap_close": false,
+  "output_keep_division_components": true,
+  "output_linefit_smooth": false,
+  "output_linefit_weight": 0.8,
+  "output_linefit_window": 2,
+  "output_min_track_len": 6,
+  "output_motion_relink": false,
+  "output_prune_isolated": true,
+  "output_safe_divisions": false,
+  "output_single_child_repair": false,
+  "output_single_parent_repair": true,
+  "primary_artifact_manifest": "/kaggle/input/datasets/pilkwang/biohub-tracking-support-pack-50ep-v1/ARTIFACT_MANIFEST.json",
+  "safe_div_existing_child_max_um": 10.0,
+  "safe_div_frame_frac_cap": 0.0076,
+  "safe_div_global_frac_cap": 0.00375,
+  "safe_div_max_um": 9.0,
+  "safe_div_sister_max_um": 14.0,
+  "short_track_rescue_max_mean_edge_dist_um": 3.0,
+  "short_track_rescue_max_nodes_abs": 120,
+  "short_track_rescue_max_nodes_frac": 0.012,
+  "short_track_rescue_min_len": 4,
+  "short_track_rescue_min_mean_edge_prob": 0.88,
+  "short_track_rescue_trigger_removed_frac": 0.1,
+  "slice": "",
+  "target_artifact_slug": "biohub-tracking-support-pack-50ep-v1",
+  "unet_batch_size": 4,
+  "use_deepcenter_add_only_gate": false,
+  "use_ilp": true,
+  "weights": "weights/unet_transformer/split_0/edge_predictor_best.pth"
+}
+DeepCenter add-only repair gate disabled by configuration.
+DeepCenter add-only repair gate disabled by configuration.
+  [44b6_12dfb391] after edge-filter+motion-relink: 45357 nodes, 42875 edges
+  [44b6_12dfb391] after gap-closing (single-frame + gap2): 45357 nodes, 42875 edges
+  [44b6_12dfb391] after safe-division repair: 45357 nodes, 42875 edges (geometric_candidates=0, deepcenter_rejected=0, post_veto_candidates=0, added=0, cap_skipped=0, mutual_nn_rejected=0, divergence_rejected=0)
+  [44b6_12dfb391] after division-geometry-filter+prune-isolated: 45357 nodes, 42875 edges
+  [44b6_12dfb391] after short-track filtering: 45357 nodes, 42875 edges (components_removed=0)
+  [44b6_12dfb391] FINAL: 45357 nodes, 42875 edges
+  [44b6_1d530831] after edge-filter+motion-relink: 36885 nodes, 34584 edges
+  [44b6_1d530831] after gap-closing (single-frame + gap2): 36885 nodes, 34584 edges
+  [44b6_1d530831] after safe-division repair: 36885 nodes, 34584 edges (geometric_candidates=0, deepcenter_rejected=0, post_veto_candidates=0, added=0, cap_skipped=0, mutual_nn_rejected=0, divergence_rejected=0)
+  [44b6_1d530831] after division-geometry-filter+prune-isolated: 36885 nodes, 34584 edges
+  [44b6_1d530831] after short-track filtering: 36885 nodes, 34584 edges (components_removed=0)
+  [44b6_1d530831] FINAL: 36885 nodes, 34584 edges
+  [44b6_2a2eff9f] after edge-filter+motion-relink: 40941 nodes, 38171 edges
+  [44b6_2a2eff9f] after gap-closing (single-frame + gap2): 40941 nodes, 38171 edges
+  [44b6_2a2eff9f] after safe-division repair: 40941 nodes, 38171 edges (geometric_candidates=0, deepcenter_rejected=0, post_veto_candidates=0, added=0, cap_skipped=0, mutual_nn_rejected=0, divergence_rejected=0)
+  [44b6_2a2eff9f] after division-geometry-filter+prune-isolated: 40941 nodes, 38171 edges
+  [44b6_2a2eff9f] after short-track filtering: 40941 nodes, 38171 edges (components_removed=0)
+  [44b6_2a2eff9f] FINAL: 40941 nodes, 38171 edges
+  [44b6_74d0c52e] after edge-filter+motion-relink: 8968 nodes, 8371 edges
+  [44b6_74d0c52e] after gap-closing (single-frame + gap2): 8968 nodes, 8371 edges
+  [44b6_74d0c52e] after safe-division repair: 8968 nodes, 8371 edges (geometric_candidates=0, deepcenter_rejected=0, post_veto_candidates=0, added=0, cap_skipped=0, mutual_nn_rejected=0, divergence_rejected=0)
+  [44b6_74d0c52e] after division-geometry-filter+prune-isolated: 8967 nodes, 8371 edges
+  [44b6_74d0c52e] after short-track filtering: 8967 nodes, 8371 edges (components_removed=0)
+  [44b6_74d0c52e] FINAL: 8967 nodes, 8371 edges
+  [44b6_7a302da0] after edge-filter+motion-relink: 46261 nodes, 43149 edges
+  [44b6_7a302da0] after gap-closing (single-frame + gap2): 46261 nodes, 43149 edges
+  [44b6_7a302da0] after safe-division repair: 46261 nodes, 43149 edges (geometric_candidates=0, deepcenter_rejected=0, post_veto_candidates=0, added=0, cap_skipped=0, mutual_nn_rejected=0, divergence_rejected=0)
+  [44b6_7a302da0] after division-geometry-filter+prune-isolated: 46261 nodes, 43149 edges
+  [44b6_7a302da0] after short-track filtering: 46261 nodes, 43149 edges (components_removed=0)
+  [44b6_7a302da0] FINAL: 46261 nodes, 43149 edges
+  [44b6_87bba6c4] after edge-filter+motion-relink: 30188 nodes, 28080 edges
+  [44b6_87bba6c4] after gap-closing (single-frame + gap2): 30188 nodes, 28080 edges
+  [44b6_87bba6c4] after safe-division repair: 30188 nodes, 28080 edges (geometric_candidates=0, deepcenter_rejected=0, post_veto_candidates=0, added=0, cap_skipped=0, mutual_nn_rejected=0, divergence_rejected=0)
+  [44b6_87bba6c4] after division-geometry-filter+prune-isolated: 30183 nodes, 28080 edges
+  [44b6_87bba6c4] after short-track filtering: 30183 nodes, 28080 edges (components_removed=0)
+  [44b6_87bba6c4] FINAL: 30183 nodes, 28080 edges
+  [44b6_9be80b04] after edge-filter+motion-relink: 27032 nodes, 25141 edges
+  [44b6_9be80b04] after gap-closing (single-frame + gap2): 27032 nodes, 25141 edges
+  [44b6_9be80b04] after safe-division repair: 27032 nodes, 25141 edges (geometric_candidates=0, deepcenter_rejected=0, post_veto_candidates=0, added=0, cap_skipped=0, mutual_nn_rejected=0, divergence_rejected=0)
+  [44b6_9be80b04] after division-geometry-filter+prune-isolated: 27032 nodes, 25141 edges
+  [44b6_9be80b04] after short-track filtering: 27032 nodes, 25141 edges (components_removed=0)
+  [44b6_9be80b04] FINAL: 27032 nodes, 25141 edges
+  [44b6_a21120c2] after edge-filter+motion-relink: 22138 nodes, 21316 edges
+  [44b6_a21120c2] after gap-closing (single-frame + gap2): 22138 nodes, 21316 edges
+  [44b6_a21120c2] after safe-division repair: 22138 nodes, 21316 edges (geometric_candidates=0, deepcenter_rejected=0, post_veto_candidates=0, added=0, cap_skipped=0, mutual_nn_rejected=0, divergence_rejected=0)
+  [44b6_a21120c2] after division-geometry-filter+prune-isolated: 22137 nodes, 21316 edges
+  [44b6_a21120c2] after short-track filtering: 22137 nodes, 21316 edges (components_removed=0)
+  [44b6_a21120c2] FINAL: 22137 nodes, 21316 edges
+  [44b6_c50204e0] after edge-filter+motion-relink: 39730 nodes, 36600 edges
+  [44b6_c50204e0] after gap-closing (single-frame + gap2): 39730 nodes, 36600 edges
+  [44b6_c50204e0] after safe-division repair: 39730 nodes, 36600 edges (geometric_candidates=0, deepcenter_rejected=0, post_veto_candidates=0, added=0, cap_skipped=0, mutual_nn_rejected=0, divergence_rejected=0)
+  [44b6_c50204e0] after division-geometry-filter+prune-isolated: 39729 nodes, 36600 edges
+  [44b6_c50204e0] after short-track filtering: 39729 nodes, 36600 edges (components_removed=0)
+  [44b6_c50204e0] FINAL: 39729 nodes, 36600 edges
+  [44b6_d2f34f90] after edge-filter+motion-relink: 15840 nodes, 14690 edges
+  [44b6_d2f34f90] after gap-closing (single-frame + gap2): 15840 nodes, 14690 edges
+  [44b6_d2f34f90] after safe-division repair: 15840 nodes, 14690 edges (geometric_candidates=0, deepcenter_rejected=0, post_veto_candidates=0, added=0, cap_skipped=0, mutual_nn_rejected=0, divergence_rejected=0)
+  [44b6_d2f34f90] after division-geometry-filter+prune-isolated: 15840 nodes, 14690 edges
+  [44b6_d2f34f90] after short-track filtering: 15840 nodes, 14690 edges (components_removed=0)
+  [44b6_d2f34f90] FINAL: 15840 nodes, 14690 edges
+  [44b6_d5e7d891] after edge-filter+motion-relink: 44385 nodes, 41482 edges
+  [44b6_d5e7d891] after gap-closing (single-frame + gap2): 44385 nodes, 41482 edges
+  [44b6_d5e7d891] after safe-division repair: 44385 nodes, 41482 edges (geometric_candidates=0, deepcenter_rejected=0, post_veto_candidates=0, added=0, cap_skipped=0, mutual_nn_rejected=0, divergence_rejected=0)
+  [44b6_d5e7d891] after division-geometry-filter+prune-isolated: 44385 nodes, 41482 edges
+  [44b6_d5e7d891] after short-track filtering: 44385 nodes, 41482 edges (components_removed=0)
+  [44b6_d5e7d891] FINAL: 44385 nodes, 41482 edges
+  [44b6_e28840c6] after edge-filter+motion-relink: 28431 nodes, 26337 edges
+  [44b6_e28840c6] after gap-closing (single-frame + gap2): 28431 nodes, 26337 edges
+  [44b6_e28840c6] after safe-division repair: 28431 nodes, 26337 edges (geometric_candidates=0, deepcenter_rejected=0, post_veto_candidates=0, added=0, cap_skipped=0, mutual_nn_rejected=0, divergence_rejected=0)
+  [44b6_e28840c6] after division-geometry-filter+prune-isolated: 28431 nodes, 26337 edges
+  [44b6_e28840c6] after short-track filtering: 28431 nodes, 26337 edges (components_removed=0)
+  [44b6_e28840c6] FINAL: 28431 nodes, 26337 edges
+44b6_12dfb391    adj=0.9045 edge=0.8844 tp/fp/fn=727/49/46 ratio=-0.227 recall=0.991 div=0/0/1
+44b6_1d530831    adj=0.7744 edge=0.7767 tp/fp/fn=240/38/31 ratio=+0.030 recall=0.978 div=0/0/0
+44b6_2a2eff9f    adj=0.8762 edge=0.8528 tp/fp/fn=197/21/13 ratio=-0.274 recall=1.000 div=0/0/1
+44b6_74d0c52e    adj=0.9337 edge=0.8973 tp/fp/fn=131/7/8 ratio=-0.406 recall=1.000 div=0/0/1
+44b6_7a302da0    adj=0.9163 edge=0.8889 tp/fp/fn=480/33/27 ratio=-0.308 recall=0.996 div=0/0/1
+44b6_87bba6c4    adj=0.6361 edge=0.6409 tp/fp/fn=116/32/33 ratio=+0.074 recall=0.948 div=0/0/0
+44b6_9be80b04    adj=0.9525 edge=0.9043 tp/fp/fn=208/10/12 ratio=-0.533 recall=0.986 div=0/0/1
+44b6_a21120c2    adj=0.9658 edge=0.9621 tp/fp/fn=279/4/7 ratio=-0.039 recall=1.000 div=0/0/2
+44b6_c50204e0    adj=0.7832 edge=0.7711 tp/fp/fn=283/42/42 ratio=-0.156 recall=0.988 div=0/0/2
+44b6_d2f34f90    adj=0.9874 edge=0.9547 tp/fp/fn=274/6/7 ratio=-0.342 recall=1.000 div=0/0/2
+44b6_d5e7d891    adj=0.8301 edge=0.8292 tp/fp/fn=806/79/87 ratio=-0.010 recall=0.983 div=0/0/2
+44b6_e28840c6    adj=0.9214 edge=0.8677 tp/fp/fn=282/16/27 ratio=-0.619 recall=0.961 div=0/0/2
+
+== exp29/edgefilter  score=0.8740 adj_edge=0.8740 edge=0.8560 div=0.0000 (0/0/15) recall=0.9860 n=12
+wrote /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/.public_local_cache/exp29/pp/edgefilter.json
+######## relink
+ENV OVERRIDE BIOHUB_OUTPUT_MOTION_RELINK=0
+ENV OVERRIDE BIOHUB_OUTPUT_GAP_CLOSE=0
+ENV OVERRIDE BIOHUB_OUTPUT_GAP2_RECOVERY=0
+ENV OVERRIDE BIOHUB_OUTPUT_SAFE_DIVISIONS=0
+ENV OVERRIDE BIOHUB_USE_DEEPCENTER_VETO=0
+ENV OVERRIDE BIOHUB_REQUIRE_DEEPCENTER_VETO=0
+ENV OVERRIDE BIOHUB_OUTPUT_FILTER_SHORT_TRACKS=0
+ENV OVERRIDE BIOHUB_OUTPUT_LINEFIT_SMOOTH=0
+ENV OVERRIDE BIOHUB_OUTPUT_MOTION_RELINK=1
+12 videos | tag=exp29 label=relink | cache=/home/georgii/Documents/Biohub---Cell-Tracking-During-Development/.public_local_cache/exp29
+BIOHUB_PRESET: exp29_sjlee947_verbatim
+BIOHUB_SCORE_AXIS: public 0.939 base + holdout-selected post-process configuration
+Biohub learned UNet + node-transformer + ILP submission
+COMP_DIR: /kaggle/input/competitions/biohub-cell-tracking-during-development exists: False
+TEST_DIR: /kaggle/input/competitions/biohub-cell-tracking-during-development/test exists: False
+{
+  "adaptive_short_track_rescue": true,
+  "allow_artifact_fallback": false,
+  "allow_pip_install": false,
+  "deepcenter_checkpoint_default": "/kaggle/input/biohub-deepcenter-unet3d-center-prior-v1/weights/full_frame_center/best.pt",
+  "deepcenter_expected_epoch": 2,
+  "deepcenter_gap_add_gate": true,
+  "deepcenter_gap_confirm_min_span_um": 8.5,
+  "deepcenter_gap_threshold": 0.25,
+  "deepcenter_safe_div_add_gate": true,
+  "deepcenter_safe_div_threshold": 0.2,
+  "det_threshold": 0.965,
+  "div_drop_to_single_if_bad": true,
+  "div_parent_max_um": 10.5,
+  "div_sister_max_um": 8.0,
+  "experiment_tag": "selected_101_dual_seed_near_balanced_center_confirmed_synthetic_gap",
+  "gap2_frame_frac_cap": 0.006,
+  "gap2_max_links_abs": 180,
+  "gap2_max_links_frac": 0.0045,
+  "gap2_max_step_um": 4.4,
+  "gap2_max_total_um": 10.2,
+  "gap2_require_context": true,
+  "gap_close_effective_max_gap": 1,
+  "gap_close_max_added_abs": 2000,
+  "gap_close_max_added_frac": 0.05,
+  "gap_close_max_gap": 2,
+  "gap_close_reuse_existing": true,
+  "gap_close_reuse_um": 3.2,
+  "gap_close_um": 5.0,
+  "gap_density_adaptive": true,
+  "gap_density_gain": 0.04,
+  "gap_density_max_step_delta_um": 0.125,
+  "gap_density_neighbors": 3,
+  "gap_density_reference_um": 6.5,
+  "gap_refine_max_shift_um": 3.2,
+  "gap_refine_synthetic": true,
+  "gap_refine_win_yx": 3,
+  "gap_refine_win_z": 1,
+  "ilp_appearance_weight": 0.0,
+  "ilp_disappearance_weight": 2.0,
+  "ilp_division_weight": 1.2,
+  "ilp_edge_weight": -1.0,
+  "method": "unet_transformer",
+  "motion_relink_learned_bonus": 1.0,
+  "motion_relink_max_frame_nodes": 2600,
+  "motion_relink_relaxed_um": 10.0,
+  "motion_relink_tight_um": 6.0,
+  "motion_relink_velocity_weight": 0.5,
+  "output_division_geometry_filter": false,
+  "output_edge_max_um": 14.0,
+  "output_enforce_next_frame": true,
+  "output_filter_short_tracks": false,
+  "output_gap2_recovery": false,
+  "output_gap_close": false,
+  "output_keep_division_components": true,
+  "output_linefit_smooth": false,
+  "output_linefit_weight": 0.8,
+  "output_linefit_window": 2,
+  "output_min_track_len": 6,
+  "output_motion_relink": true,
+  "output_prune_isolated": true,
+  "output_safe_divisions": false,
+  "output_single_child_repair": false,
+  "output_single_parent_repair": true,
+  "primary_artifact_manifest": "/kaggle/input/datasets/pilkwang/biohub-tracking-support-pack-50ep-v1/ARTIFACT_MANIFEST.json",
+  "safe_div_existing_child_max_um": 10.0,
+  "safe_div_frame_frac_cap": 0.0076,
+  "safe_div_global_frac_cap": 0.00375,
+  "safe_div_max_um": 9.0,
+  "safe_div_sister_max_um": 14.0,
+  "short_track_rescue_max_mean_edge_dist_um": 3.0,
+  "short_track_rescue_max_nodes_abs": 120,
+  "short_track_rescue_max_nodes_frac": 0.012,
+  "short_track_rescue_min_len": 4,
+  "short_track_rescue_min_mean_edge_prob": 0.88,
+  "short_track_rescue_trigger_removed_frac": 0.1,
+  "slice": "",
+  "target_artifact_slug": "biohub-tracking-support-pack-50ep-v1",
+  "unet_batch_size": 4,
+  "use_deepcenter_add_only_gate": false,
+  "use_ilp": true,
+  "weights": "weights/unet_transformer/split_0/edge_predictor_best.pth"
+}
+DeepCenter add-only repair gate disabled by configuration.
+DeepCenter add-only repair gate disabled by configuration.
+  [44b6_12dfb391] after edge-filter+motion-relink: 45357 nodes, 43050 edges
+  [44b6_12dfb391] after gap-closing (single-frame + gap2): 45357 nodes, 43050 edges
+  [44b6_12dfb391] after safe-division repair: 45357 nodes, 43050 edges (geometric_candidates=0, deepcenter_rejected=0, post_veto_candidates=0, added=0, cap_skipped=0, mutual_nn_rejected=0, divergence_rejected=0)
+  [44b6_12dfb391] after division-geometry-filter+prune-isolated: 45353 nodes, 43050 edges
+  [44b6_12dfb391] after short-track filtering: 45353 nodes, 43050 edges (components_removed=0)
+  [44b6_12dfb391] FINAL: 45353 nodes, 43050 edges
+  [44b6_1d530831] after edge-filter+motion-relink: 36885 nodes, 34821 edges
+  [44b6_1d530831] after gap-closing (single-frame + gap2): 36885 nodes, 34821 edges
+  [44b6_1d530831] after safe-division repair: 36885 nodes, 34821 edges (geometric_candidates=0, deepcenter_rejected=0, post_veto_candidates=0, added=0, cap_skipped=0, mutual_nn_rejected=0, divergence_rejected=0)
+  [44b6_1d530831] after division-geometry-filter+prune-isolated: 36874 nodes, 34821 edges
+  [44b6_1d530831] after short-track filtering: 36874 nodes, 34821 edges (components_removed=0)
+  [44b6_1d530831] FINAL: 36874 nodes, 34821 edges
+  [44b6_2a2eff9f] after edge-filter+motion-relink: 40941 nodes, 38443 edges
+  [44b6_2a2eff9f] after gap-closing (single-frame + gap2): 40941 nodes, 38443 edges
+  [44b6_2a2eff9f] after safe-division repair: 40941 nodes, 38443 edges (geometric_candidates=0, deepcenter_rejected=0, post_veto_candidates=0, added=0, cap_skipped=0, mutual_nn_rejected=0, divergence_rejected=0)
+  [44b6_2a2eff9f] after division-geometry-filter+prune-isolated: 40936 nodes, 38443 edges
+  [44b6_2a2eff9f] after short-track filtering: 40936 nodes, 38443 edges (components_removed=0)
+  [44b6_2a2eff9f] FINAL: 40936 nodes, 38443 edges
+  [44b6_74d0c52e] after edge-filter+motion-relink: 8968 nodes, 8400 edges
+  [44b6_74d0c52e] after gap-closing (single-frame + gap2): 8968 nodes, 8400 edges
+  [44b6_74d0c52e] after safe-division repair: 8968 nodes, 8400 edges (geometric_candidates=0, deepcenter_rejected=0, post_veto_candidates=0, added=0, cap_skipped=0, mutual_nn_rejected=0, divergence_rejected=0)
+  [44b6_74d0c52e] after division-geometry-filter+prune-isolated: 8965 nodes, 8400 edges
+  [44b6_74d0c52e] after short-track filtering: 8965 nodes, 8400 edges (components_removed=0)
+  [44b6_74d0c52e] FINAL: 8965 nodes, 8400 edges
+  [44b6_7a302da0] after edge-filter+motion-relink: 46261 nodes, 43489 edges
+  [44b6_7a302da0] after gap-closing (single-frame + gap2): 46261 nodes, 43489 edges
+  [44b6_7a302da0] after safe-division repair: 46261 nodes, 43489 edges (geometric_candidates=0, deepcenter_rejected=0, post_veto_candidates=0, added=0, cap_skipped=0, mutual_nn_rejected=0, divergence_rejected=0)
+  [44b6_7a302da0] after division-geometry-filter+prune-isolated: 46253 nodes, 43489 edges
+  [44b6_7a302da0] after short-track filtering: 46253 nodes, 43489 edges (components_removed=0)
+  [44b6_7a302da0] FINAL: 46253 nodes, 43489 edges
+  [44b6_87bba6c4] after edge-filter+motion-relink: 30188 nodes, 28139 edges
+  [44b6_87bba6c4] after gap-closing (single-frame + gap2): 30188 nodes, 28139 edges
+  [44b6_87bba6c4] after safe-division repair: 30188 nodes, 28139 edges (geometric_candidates=0, deepcenter_rejected=0, post_veto_candidates=0, added=0, cap_skipped=0, mutual_nn_rejected=0, divergence_rejected=0)
+  [44b6_87bba6c4] after division-geometry-filter+prune-isolated: 30078 nodes, 28139 edges
+  [44b6_87bba6c4] after short-track filtering: 30078 nodes, 28139 edges (components_removed=0)
+  [44b6_87bba6c4] FINAL: 30078 nodes, 28139 edges
+  [44b6_9be80b04] after edge-filter+motion-relink: 27032 nodes, 25275 edges
+  [44b6_9be80b04] after gap-closing (single-frame + gap2): 27032 nodes, 25275 edges
+  [44b6_9be80b04] after safe-division repair: 27032 nodes, 25275 edges (geometric_candidates=0, deepcenter_rejected=0, post_veto_candidates=0, added=0, cap_skipped=0, mutual_nn_rejected=0, divergence_rejected=0)
+  [44b6_9be80b04] after division-geometry-filter+prune-isolated: 27025 nodes, 25275 edges
+  [44b6_9be80b04] after short-track filtering: 27025 nodes, 25275 edges (components_removed=0)
+  [44b6_9be80b04] FINAL: 27025 nodes, 25275 edges
+  [44b6_a21120c2] after edge-filter+motion-relink: 22138 nodes, 21224 edges
+  [44b6_a21120c2] after gap-closing (single-frame + gap2): 22138 nodes, 21224 edges
+  [44b6_a21120c2] after safe-division repair: 22138 nodes, 21224 edges (geometric_candidates=0, deepcenter_rejected=0, post_veto_candidates=0, added=0, cap_skipped=0, mutual_nn_rejected=0, divergence_rejected=0)
+  [44b6_a21120c2] after division-geometry-filter+prune-isolated: 22123 nodes, 21224 edges
+  [44b6_a21120c2] after short-track filtering: 22123 nodes, 21224 edges (components_removed=0)
+  [44b6_a21120c2] FINAL: 22123 nodes, 21224 edges
+  [44b6_c50204e0] after edge-filter+motion-relink: 39730 nodes, 37228 edges
+  [44b6_c50204e0] after gap-closing (single-frame + gap2): 39730 nodes, 37228 edges
+  [44b6_c50204e0] after safe-division repair: 39730 nodes, 37228 edges (geometric_candidates=0, deepcenter_rejected=0, post_veto_candidates=0, added=0, cap_skipped=0, mutual_nn_rejected=0, divergence_rejected=0)
+  [44b6_c50204e0] after division-geometry-filter+prune-isolated: 39720 nodes, 37228 edges
+  [44b6_c50204e0] after short-track filtering: 39720 nodes, 37228 edges (components_removed=0)
+  [44b6_c50204e0] FINAL: 39720 nodes, 37228 edges
+  [44b6_d2f34f90] after edge-filter+motion-relink: 15840 nodes, 14801 edges
+  [44b6_d2f34f90] after gap-closing (single-frame + gap2): 15840 nodes, 14801 edges
+  [44b6_d2f34f90] after safe-division repair: 15840 nodes, 14801 edges (geometric_candidates=0, deepcenter_rejected=0, post_veto_candidates=0, added=0, cap_skipped=0, mutual_nn_rejected=0, divergence_rejected=0)
+  [44b6_d2f34f90] after division-geometry-filter+prune-isolated: 15836 nodes, 14801 edges
+  [44b6_d2f34f90] after short-track filtering: 15836 nodes, 14801 edges (components_removed=0)
+  [44b6_d2f34f90] FINAL: 15836 nodes, 14801 edges
+  [44b6_d5e7d891] after edge-filter+motion-relink: 44385 nodes, 42025 edges
+  [44b6_d5e7d891] after gap-closing (single-frame + gap2): 44385 nodes, 42025 edges
+  [44b6_d5e7d891] after safe-division repair: 44385 nodes, 42025 edges (geometric_candidates=0, deepcenter_rejected=0, post_veto_candidates=0, added=0, cap_skipped=0, mutual_nn_rejected=0, divergence_rejected=0)
+  [44b6_d5e7d891] after division-geometry-filter+prune-isolated: 44379 nodes, 42025 edges
+  [44b6_d5e7d891] after short-track filtering: 44379 nodes, 42025 edges (components_removed=0)
+  [44b6_d5e7d891] FINAL: 44379 nodes, 42025 edges
+  [44b6_e28840c6] after edge-filter+motion-relink: 28431 nodes, 26429 edges
+  [44b6_e28840c6] after gap-closing (single-frame + gap2): 28431 nodes, 26429 edges
+  [44b6_e28840c6] after safe-division repair: 28431 nodes, 26429 edges (geometric_candidates=0, deepcenter_rejected=0, post_veto_candidates=0, added=0, cap_skipped=0, mutual_nn_rejected=0, divergence_rejected=0)
+  [44b6_e28840c6] after division-geometry-filter+prune-isolated: 28420 nodes, 26429 edges
+  [44b6_e28840c6] after short-track filtering: 28420 nodes, 26429 edges (components_removed=0)
+  [44b6_e28840c6] FINAL: 28420 nodes, 26429 edges
+44b6_12dfb391    adj=0.9143 edge=0.8940 tp/fp/fn=734/48/39 ratio=-0.227 recall=0.991 div=0/0/1
+44b6_1d530831    adj=0.7777 edge=0.7799 tp/fp/fn=241/38/30 ratio=+0.029 recall=0.978 div=0/0/0
+44b6_2a2eff9f    adj=0.8642 edge=0.8412 tp/fp/fn=196/23/14 ratio=-0.274 recall=1.000 div=0/0/1
+44b6_74d0c52e    adj=0.9273 edge=0.8912 tp/fp/fn=131/8/8 ratio=-0.406 recall=1.000 div=0/0/1
+44b6_7a302da0    adj=0.9163 edge=0.8889 tp/fp/fn=480/33/27 ratio=-0.308 recall=0.996 div=0/0/1
+44b6_87bba6c4    adj=0.5112 edge=0.5149 tp/fp/fn=104/53/45 ratio=+0.070 recall=0.941 div=0/0/0
+44b6_9be80b04    adj=0.9702 edge=0.9211 tp/fp/fn=210/8/10 ratio=-0.533 recall=0.986 div=0/0/1
+44b6_a21120c2    adj=0.8862 edge=0.8827 tp/fp/fn=271/21/15 ratio=-0.040 recall=1.000 div=0/0/2
+44b6_c50204e0    adj=0.7775 edge=0.7655 tp/fp/fn=284/46/41 ratio=-0.156 recall=0.988 div=0/0/2
+44b6_d2f34f90    adj=0.9804 edge=0.9479 tp/fp/fn=273/7/8 ratio=-0.342 recall=1.000 div=0/0/2
+44b6_d5e7d891    adj=0.8397 edge=0.8388 tp/fp/fn=817/81/76 ratio=-0.010 recall=0.983 div=0/0/2
+44b6_e28840c6    adj=0.9436 edge=0.8885 tp/fp/fn=287/14/22 ratio=-0.619 recall=0.961 div=0/0/2
+
+== exp29/relink  score=0.8673 adj_edge=0.8673 edge=0.8493 div=0.0000 (0/0/15) recall=0.9855 n=12
+wrote /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/.public_local_cache/exp29/pp/relink.json
+######## gap
+ENV OVERRIDE BIOHUB_OUTPUT_MOTION_RELINK=0
+ENV OVERRIDE BIOHUB_OUTPUT_GAP_CLOSE=0
+ENV OVERRIDE BIOHUB_OUTPUT_GAP2_RECOVERY=0
+ENV OVERRIDE BIOHUB_OUTPUT_SAFE_DIVISIONS=0
+ENV OVERRIDE BIOHUB_USE_DEEPCENTER_VETO=0
+ENV OVERRIDE BIOHUB_REQUIRE_DEEPCENTER_VETO=0
+ENV OVERRIDE BIOHUB_OUTPUT_FILTER_SHORT_TRACKS=0
+ENV OVERRIDE BIOHUB_OUTPUT_LINEFIT_SMOOTH=0
+ENV OVERRIDE BIOHUB_OUTPUT_MOTION_RELINK=1
+ENV OVERRIDE BIOHUB_OUTPUT_GAP_CLOSE=1
+ENV OVERRIDE BIOHUB_OUTPUT_GAP2_RECOVERY=1
+12 videos | tag=exp29 label=gap | cache=/home/georgii/Documents/Biohub---Cell-Tracking-During-Development/.public_local_cache/exp29
+BIOHUB_PRESET: exp29_sjlee947_verbatim
+BIOHUB_SCORE_AXIS: public 0.939 base + holdout-selected post-process configuration
+Biohub learned UNet + node-transformer + ILP submission
+COMP_DIR: /kaggle/input/competitions/biohub-cell-tracking-during-development exists: False
+TEST_DIR: /kaggle/input/competitions/biohub-cell-tracking-during-development/test exists: False
+{
+  "adaptive_short_track_rescue": true,
+  "allow_artifact_fallback": false,
+  "allow_pip_install": false,
+  "deepcenter_checkpoint_default": "/kaggle/input/biohub-deepcenter-unet3d-center-prior-v1/weights/full_frame_center/best.pt",
+  "deepcenter_expected_epoch": 2,
+  "deepcenter_gap_add_gate": true,
+  "deepcenter_gap_confirm_min_span_um": 8.5,
+  "deepcenter_gap_threshold": 0.25,
+  "deepcenter_safe_div_add_gate": true,
+  "deepcenter_safe_div_threshold": 0.2,
+  "det_threshold": 0.965,
+  "div_drop_to_single_if_bad": true,
+  "div_parent_max_um": 10.5,
+  "div_sister_max_um": 8.0,
+  "experiment_tag": "selected_101_dual_seed_near_balanced_center_confirmed_synthetic_gap",
+  "gap2_frame_frac_cap": 0.006,
+  "gap2_max_links_abs": 180,
+  "gap2_max_links_frac": 0.0045,
+  "gap2_max_step_um": 4.4,
+  "gap2_max_total_um": 10.2,
+  "gap2_require_context": true,
+  "gap_close_effective_max_gap": 1,
+  "gap_close_max_added_abs": 2000,
+  "gap_close_max_added_frac": 0.05,
+  "gap_close_max_gap": 2,
+  "gap_close_reuse_existing": true,
+  "gap_close_reuse_um": 3.2,
+  "gap_close_um": 5.0,
+  "gap_density_adaptive": true,
+  "gap_density_gain": 0.04,
+  "gap_density_max_step_delta_um": 0.125,
+  "gap_density_neighbors": 3,
+  "gap_density_reference_um": 6.5,
+  "gap_refine_max_shift_um": 3.2,
+  "gap_refine_synthetic": true,
+  "gap_refine_win_yx": 3,
+  "gap_refine_win_z": 1,
+  "ilp_appearance_weight": 0.0,
+  "ilp_disappearance_weight": 2.0,
+  "ilp_division_weight": 1.2,
+  "ilp_edge_weight": -1.0,
+  "method": "unet_transformer",
+  "motion_relink_learned_bonus": 1.0,
+  "motion_relink_max_frame_nodes": 2600,
+  "motion_relink_relaxed_um": 10.0,
+  "motion_relink_tight_um": 6.0,
+  "motion_relink_velocity_weight": 0.5,
+  "output_division_geometry_filter": false,
+  "output_edge_max_um": 14.0,
+  "output_enforce_next_frame": true,
+  "output_filter_short_tracks": false,
+  "output_gap2_recovery": true,
+  "output_gap_close": true,
+  "output_keep_division_components": true,
+  "output_linefit_smooth": false,
+  "output_linefit_weight": 0.8,
+  "output_linefit_window": 2,
+  "output_min_track_len": 6,
+  "output_motion_relink": true,
+  "output_prune_isolated": true,
+  "output_safe_divisions": false,
+  "output_single_child_repair": false,
+  "output_single_parent_repair": true,
+  "primary_artifact_manifest": "/kaggle/input/datasets/pilkwang/biohub-tracking-support-pack-50ep-v1/ARTIFACT_MANIFEST.json",
+  "safe_div_existing_child_max_um": 10.0,
+  "safe_div_frame_frac_cap": 0.0076,
+  "safe_div_global_frac_cap": 0.00375,
+  "safe_div_max_um": 9.0,
+  "safe_div_sister_max_um": 14.0,
+  "short_track_rescue_max_mean_edge_dist_um": 3.0,
+  "short_track_rescue_max_nodes_abs": 120,
+  "short_track_rescue_max_nodes_frac": 0.012,
+  "short_track_rescue_min_len": 4,
+  "short_track_rescue_min_mean_edge_prob": 0.88,
+  "short_track_rescue_trigger_removed_frac": 0.1,
+  "slice": "",
+  "target_artifact_slug": "biohub-tracking-support-pack-50ep-v1",
+  "unet_batch_size": 4,
+  "use_deepcenter_add_only_gate": false,
+  "use_ilp": true,
+  "weights": "weights/unet_transformer/split_0/edge_predictor_best.pth"
+}
+DeepCenter add-only repair gate disabled by configuration.
+DeepCenter add-only repair gate disabled by configuration.
+  [44b6_12dfb391] after edge-filter+motion-relink: 45357 nodes, 43050 edges
+  [44b6_12dfb391] after gap-closing (single-frame + gap2): 46037 nodes, 44339 edges
+  [44b6_12dfb391] after safe-division repair: 46037 nodes, 44339 edges (geometric_candidates=0, deepcenter_rejected=0, post_veto_candidates=0, added=0, cap_skipped=0, mutual_nn_rejected=0, divergence_rejected=0)
+  [44b6_12dfb391] after division-geometry-filter+prune-isolated: 46035 nodes, 44339 edges
+  [44b6_12dfb391] after short-track filtering: 46035 nodes, 44339 edges (components_removed=0)
+  [44b6_12dfb391] FINAL: 46035 nodes, 44339 edges
+  [44b6_1d530831] after edge-filter+motion-relink: 36885 nodes, 34821 edges
+  [44b6_1d530831] after gap-closing (single-frame + gap2): 37322 nodes, 35628 edges
+  [44b6_1d530831] after safe-division repair: 37322 nodes, 35628 edges (geometric_candidates=0, deepcenter_rejected=0, post_veto_candidates=0, added=0, cap_skipped=0, mutual_nn_rejected=0, divergence_rejected=0)
+  [44b6_1d530831] after division-geometry-filter+prune-isolated: 37316 nodes, 35628 edges
+  [44b6_1d530831] after short-track filtering: 37316 nodes, 35628 edges (components_removed=0)
+  [44b6_1d530831] FINAL: 37316 nodes, 35628 edges
+  [44b6_2a2eff9f] after edge-filter+motion-relink: 40941 nodes, 38443 edges
+  [44b6_2a2eff9f] after gap-closing (single-frame + gap2): 41503 nodes, 39493 edges
+  [44b6_2a2eff9f] after safe-division repair: 41503 nodes, 39493 edges (geometric_candidates=0, deepcenter_rejected=0, post_veto_candidates=0, added=0, cap_skipped=0, mutual_nn_rejected=0, divergence_rejected=0)
+  [44b6_2a2eff9f] after division-geometry-filter+prune-isolated: 41498 nodes, 39493 edges
+  [44b6_2a2eff9f] after short-track filtering: 41498 nodes, 39493 edges (components_removed=0)
+  [44b6_2a2eff9f] FINAL: 41498 nodes, 39493 edges
+  [44b6_74d0c52e] after edge-filter+motion-relink: 8968 nodes, 8400 edges
+  [44b6_74d0c52e] after gap-closing (single-frame + gap2): 9111 nodes, 8658 edges
+  [44b6_74d0c52e] after safe-division repair: 9111 nodes, 8658 edges (geometric_candidates=0, deepcenter_rejected=0, post_veto_candidates=0, added=0, cap_skipped=0, mutual_nn_rejected=0, divergence_rejected=0)
+  [44b6_74d0c52e] after division-geometry-filter+prune-isolated: 9108 nodes, 8658 edges
+  [44b6_74d0c52e] after short-track filtering: 9108 nodes, 8658 edges (components_removed=0)
+  [44b6_74d0c52e] FINAL: 9108 nodes, 8658 edges
+  [44b6_7a302da0] after edge-filter+motion-relink: 46261 nodes, 43489 edges
+  [44b6_7a302da0] after gap-closing (single-frame + gap2): 46889 nodes, 44662 edges
+  [44b6_7a302da0] after safe-division repair: 46889 nodes, 44662 edges (geometric_candidates=0, deepcenter_rejected=0, post_veto_candidates=0, added=0, cap_skipped=0, mutual_nn_rejected=0, divergence_rejected=0)
+  [44b6_7a302da0] after division-geometry-filter+prune-isolated: 46883 nodes, 44662 edges
+  [44b6_7a302da0] after short-track filtering: 46883 nodes, 44662 edges (components_removed=0)
+  [44b6_7a302da0] FINAL: 46883 nodes, 44662 edges
+  [44b6_87bba6c4] after edge-filter+motion-relink: 30188 nodes, 28139 edges
+  [44b6_87bba6c4] after gap-closing (single-frame + gap2): 30587 nodes, 28884 edges
+  [44b6_87bba6c4] after safe-division repair: 30587 nodes, 28884 edges (geometric_candidates=0, deepcenter_rejected=0, post_veto_candidates=0, added=0, cap_skipped=0, mutual_nn_rejected=0, divergence_rejected=0)
+  [44b6_87bba6c4] after division-geometry-filter+prune-isolated: 30519 nodes, 28884 edges
+  [44b6_87bba6c4] after short-track filtering: 30519 nodes, 28884 edges (components_removed=0)
+  [44b6_87bba6c4] FINAL: 30519 nodes, 28884 edges
+  [44b6_9be80b04] after edge-filter+motion-relink: 27032 nodes, 25275 edges
+  [44b6_9be80b04] after gap-closing (single-frame + gap2): 27509 nodes, 26165 edges
+  [44b6_9be80b04] after safe-division repair: 27509 nodes, 26165 edges (geometric_candidates=0, deepcenter_rejected=0, post_veto_candidates=0, added=0, cap_skipped=0, mutual_nn_rejected=0, divergence_rejected=0)
+  [44b6_9be80b04] after division-geometry-filter+prune-isolated: 27503 nodes, 26165 edges
+  [44b6_9be80b04] after short-track filtering: 27503 nodes, 26165 edges (components_removed=0)
+  [44b6_9be80b04] FINAL: 27503 nodes, 26165 edges
+  [44b6_a21120c2] after edge-filter+motion-relink: 22138 nodes, 21224 edges
+  [44b6_a21120c2] after gap-closing (single-frame + gap2): 22268 nodes, 21463 edges
+  [44b6_a21120c2] after safe-division repair: 22268 nodes, 21463 edges (geometric_candidates=0, deepcenter_rejected=0, post_veto_candidates=0, added=0, cap_skipped=0, mutual_nn_rejected=0, divergence_rejected=0)
+  [44b6_a21120c2] after division-geometry-filter+prune-isolated: 22256 nodes, 21463 edges
+  [44b6_a21120c2] after short-track filtering: 22256 nodes, 21463 edges (components_removed=0)
+  [44b6_a21120c2] FINAL: 22256 nodes, 21463 edges
+  [44b6_c50204e0] after edge-filter+motion-relink: 39730 nodes, 37228 edges
+  [44b6_c50204e0] after gap-closing (single-frame + gap2): 40311 nodes, 38310 edges
+  [44b6_c50204e0] after safe-division repair: 40311 nodes, 38310 edges (geometric_candidates=0, deepcenter_rejected=0, post_veto_candidates=0, added=0, cap_skipped=0, mutual_nn_rejected=0, divergence_rejected=0)
+  [44b6_c50204e0] after division-geometry-filter+prune-isolated: 40304 nodes, 38310 edges
+  [44b6_c50204e0] after short-track filtering: 40304 nodes, 38310 edges (components_removed=0)
+  [44b6_c50204e0] FINAL: 40304 nodes, 38310 edges
+  [44b6_d2f34f90] after edge-filter+motion-relink: 15840 nodes, 14801 edges
+  [44b6_d2f34f90] after gap-closing (single-frame + gap2): 16119 nodes, 15303 edges
+  [44b6_d2f34f90] after safe-division repair: 16119 nodes, 15303 edges (geometric_candidates=0, deepcenter_rejected=0, post_veto_candidates=0, added=0, cap_skipped=0, mutual_nn_rejected=0, divergence_rejected=0)
+  [44b6_d2f34f90] after division-geometry-filter+prune-isolated: 16116 nodes, 15303 edges
+  [44b6_d2f34f90] after short-track filtering: 16116 nodes, 15303 edges (components_removed=0)
+  [44b6_d2f34f90] FINAL: 16116 nodes, 15303 edges
+  [44b6_d5e7d891] after edge-filter+motion-relink: 44385 nodes, 42025 edges
+  [44b6_d5e7d891] after gap-closing (single-frame + gap2): 44944 nodes, 43070 edges
+  [44b6_d5e7d891] after safe-division repair: 44944 nodes, 43070 edges (geometric_candidates=0, deepcenter_rejected=0, post_veto_candidates=0, added=0, cap_skipped=0, mutual_nn_rejected=0, divergence_rejected=0)
+  [44b6_d5e7d891] after division-geometry-filter+prune-isolated: 44939 nodes, 43070 edges
+  [44b6_d5e7d891] after short-track filtering: 44939 nodes, 43070 edges (components_removed=0)
+  [44b6_d5e7d891] FINAL: 44939 nodes, 43070 edges
+  [44b6_e28840c6] after edge-filter+motion-relink: 28431 nodes, 26429 edges
+  [44b6_e28840c6] after gap-closing (single-frame + gap2): 28950 nodes, 27399 edges
+  [44b6_e28840c6] after safe-division repair: 28950 nodes, 27399 edges (geometric_candidates=0, deepcenter_rejected=0, post_veto_candidates=0, added=0, cap_skipped=0, mutual_nn_rejected=0, divergence_rejected=0)
+  [44b6_e28840c6] after division-geometry-filter+prune-isolated: 28944 nodes, 27399 edges
+  [44b6_e28840c6] after short-track filtering: 28944 nodes, 27399 edges (components_removed=0)
+  [44b6_e28840c6] FINAL: 28944 nodes, 27399 edges
+44b6_12dfb391    adj=0.9254 edge=0.9059 tp/fp/fn=741/45/32 ratio=-0.215 recall=0.994 div=0/0/1
+44b6_1d530831    adj=0.7781 edge=0.7814 tp/fp/fn=243/40/28 ratio=+0.042 recall=0.982 div=0/0/0
+44b6_2a2eff9f    adj=0.8634 edge=0.8412 tp/fp/fn=196/23/14 ratio=-0.264 recall=1.000 div=0/0/1
+44b6_74d0c52e    adj=0.9536 edge=0.9172 tp/fp/fn=133/6/6 ratio=-0.396 recall=1.000 div=0/0/1
+44b6_7a302da0    adj=0.9375 edge=0.9103 tp/fp/fn=487/28/20 ratio=-0.299 recall=0.998 div=0/0/1
+44b6_87bba6c4    adj=0.5254 edge=0.5300 tp/fp/fn=106/51/43 ratio=+0.086 recall=0.941 div=0/0/0
+44b6_9be80b04    adj=0.9694 edge=0.9211 tp/fp/fn=210/8/10 ratio=-0.525 recall=0.986 div=0/0/1
+44b6_a21120c2    adj=0.9107 edge=0.9076 tp/fp/fn=275/17/11 ratio=-0.034 recall=1.000 div=0/0/2
+44b6_c50204e0    adj=0.8071 edge=0.7956 tp/fp/fn=292/42/33 ratio=-0.144 recall=0.991 div=0/0/2
+44b6_d2f34f90    adj=0.9933 edge=0.9615 tp/fp/fn=275/5/6 ratio=-0.331 recall=1.000 div=0/0/2
+44b6_d5e7d891    adj=0.8526 edge=0.8527 tp/fp/fn=828/78/65 ratio=+0.002 recall=0.987 div=0/0/2
+44b6_e28840c6    adj=0.9430 edge=0.8885 tp/fp/fn=287/14/22 ratio=-0.612 recall=0.961 div=0/0/2
+
+== exp29/gap  score=0.8802 adj_edge=0.8802 edge=0.8629 div=0.0000 (0/0/15) recall=0.9867 n=12
+wrote /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/.public_local_cache/exp29/pp/gap.json
+######## divisions
+ENV OVERRIDE BIOHUB_OUTPUT_MOTION_RELINK=0
+ENV OVERRIDE BIOHUB_OUTPUT_GAP_CLOSE=0
+ENV OVERRIDE BIOHUB_OUTPUT_GAP2_RECOVERY=0
+ENV OVERRIDE BIOHUB_OUTPUT_SAFE_DIVISIONS=0
+ENV OVERRIDE BIOHUB_USE_DEEPCENTER_VETO=0
+ENV OVERRIDE BIOHUB_REQUIRE_DEEPCENTER_VETO=0
+ENV OVERRIDE BIOHUB_OUTPUT_FILTER_SHORT_TRACKS=0
+ENV OVERRIDE BIOHUB_OUTPUT_LINEFIT_SMOOTH=0
+ENV OVERRIDE BIOHUB_OUTPUT_MOTION_RELINK=1
+ENV OVERRIDE BIOHUB_OUTPUT_GAP_CLOSE=1
+ENV OVERRIDE BIOHUB_OUTPUT_GAP2_RECOVERY=1
+ENV OVERRIDE BIOHUB_OUTPUT_SAFE_DIVISIONS=1
+12 videos | tag=exp29 label=divisions | cache=/home/georgii/Documents/Biohub---Cell-Tracking-During-Development/.public_local_cache/exp29
+BIOHUB_PRESET: exp29_sjlee947_verbatim
+BIOHUB_SCORE_AXIS: public 0.939 base + holdout-selected post-process configuration
+Biohub learned UNet + node-transformer + ILP submission
+COMP_DIR: /kaggle/input/competitions/biohub-cell-tracking-during-development exists: False
+TEST_DIR: /kaggle/input/competitions/biohub-cell-tracking-during-development/test exists: False
+{
+  "adaptive_short_track_rescue": true,
+  "allow_artifact_fallback": false,
+  "allow_pip_install": false,
+  "deepcenter_checkpoint_default": "/kaggle/input/biohub-deepcenter-unet3d-center-prior-v1/weights/full_frame_center/best.pt",
+  "deepcenter_expected_epoch": 2,
+  "deepcenter_gap_add_gate": true,
+  "deepcenter_gap_confirm_min_span_um": 8.5,
+  "deepcenter_gap_threshold": 0.25,
+  "deepcenter_safe_div_add_gate": true,
+  "deepcenter_safe_div_threshold": 0.2,
+  "det_threshold": 0.965,
+  "div_drop_to_single_if_bad": true,
+  "div_parent_max_um": 10.5,
+  "div_sister_max_um": 8.0,
+  "experiment_tag": "selected_101_dual_seed_near_balanced_center_confirmed_synthetic_gap",
+  "gap2_frame_frac_cap": 0.006,
+  "gap2_max_links_abs": 180,
+  "gap2_max_links_frac": 0.0045,
+  "gap2_max_step_um": 4.4,
+  "gap2_max_total_um": 10.2,
+  "gap2_require_context": true,
+  "gap_close_effective_max_gap": 1,
+  "gap_close_max_added_abs": 2000,
+  "gap_close_max_added_frac": 0.05,
+  "gap_close_max_gap": 2,
+  "gap_close_reuse_existing": true,
+  "gap_close_reuse_um": 3.2,
+  "gap_close_um": 5.0,
+  "gap_density_adaptive": true,
+  "gap_density_gain": 0.04,
+  "gap_density_max_step_delta_um": 0.125,
+  "gap_density_neighbors": 3,
+  "gap_density_reference_um": 6.5,
+  "gap_refine_max_shift_um": 3.2,
+  "gap_refine_synthetic": true,
+  "gap_refine_win_yx": 3,
+  "gap_refine_win_z": 1,
+  "ilp_appearance_weight": 0.0,
+  "ilp_disappearance_weight": 2.0,
+  "ilp_division_weight": 1.2,
+  "ilp_edge_weight": -1.0,
+  "method": "unet_transformer",
+  "motion_relink_learned_bonus": 1.0,
+  "motion_relink_max_frame_nodes": 2600,
+  "motion_relink_relaxed_um": 10.0,
+  "motion_relink_tight_um": 6.0,
+  "motion_relink_velocity_weight": 0.5,
+  "output_division_geometry_filter": false,
+  "output_edge_max_um": 14.0,
+  "output_enforce_next_frame": true,
+  "output_filter_short_tracks": false,
+  "output_gap2_recovery": true,
+  "output_gap_close": true,
+  "output_keep_division_components": true,
+  "output_linefit_smooth": false,
+  "output_linefit_weight": 0.8,
+  "output_linefit_window": 2,
+  "output_min_track_len": 6,
+  "output_motion_relink": true,
+  "output_prune_isolated": true,
+  "output_safe_divisions": true,
+  "output_single_child_repair": false,
+  "output_single_parent_repair": true,
+  "primary_artifact_manifest": "/kaggle/input/datasets/pilkwang/biohub-tracking-support-pack-50ep-v1/ARTIFACT_MANIFEST.json",
+  "safe_div_existing_child_max_um": 10.0,
+  "safe_div_frame_frac_cap": 0.0076,
+  "safe_div_global_frac_cap": 0.00375,
+  "safe_div_max_um": 9.0,
+  "safe_div_sister_max_um": 14.0,
+  "short_track_rescue_max_mean_edge_dist_um": 3.0,
+  "short_track_rescue_max_nodes_abs": 120,
+  "short_track_rescue_max_nodes_frac": 0.012,
+  "short_track_rescue_min_len": 4,
+  "short_track_rescue_min_mean_edge_prob": 0.88,
+  "short_track_rescue_trigger_removed_frac": 0.1,
+  "slice": "",
+  "target_artifact_slug": "biohub-tracking-support-pack-50ep-v1",
+  "unet_batch_size": 4,
+  "use_deepcenter_add_only_gate": false,
+  "use_ilp": true,
+  "weights": "weights/unet_transformer/split_0/edge_predictor_best.pth"
+}
+DeepCenter add-only repair gate disabled by configuration.
+DeepCenter add-only repair gate disabled by configuration.
+  [44b6_12dfb391] after edge-filter+motion-relink: 45357 nodes, 43050 edges
+  [44b6_12dfb391] after gap-closing (single-frame + gap2): 46037 nodes, 44339 edges
+  [44b6_12dfb391] after safe-division repair: 46037 nodes, 44365 edges (geometric_candidates=148, deepcenter_rejected=122, post_veto_candidates=26, added=26, cap_skipped=0, mutual_nn_rejected=56, divergence_rejected=1542)
+  [44b6_12dfb391] after division-geometry-filter+prune-isolated: 46035 nodes, 44365 edges
+  [44b6_12dfb391] after short-track filtering: 46035 nodes, 44365 edges (components_removed=0)
+  [44b6_12dfb391] FINAL: 46035 nodes, 44365 edges
+  [44b6_1d530831] after edge-filter+motion-relink: 36885 nodes, 34821 edges
+  [44b6_1d530831] after gap-closing (single-frame + gap2): 37322 nodes, 35628 edges
+  [44b6_1d530831] after safe-division repair: 37322 nodes, 35700 edges (geometric_candidates=288, deepcenter_rejected=212, post_veto_candidates=76, added=72, cap_skipped=0, mutual_nn_rejected=95, divergence_rejected=1611)
+  [44b6_1d530831] after division-geometry-filter+prune-isolated: 37316 nodes, 35700 edges
+  [44b6_1d530831] after short-track filtering: 37316 nodes, 35700 edges (components_removed=0)
+  [44b6_1d530831] FINAL: 37316 nodes, 35700 edges
+  [44b6_2a2eff9f] after edge-filter+motion-relink: 40941 nodes, 38443 edges
+  [44b6_2a2eff9f] after gap-closing (single-frame + gap2): 41503 nodes, 39493 edges
+  [44b6_2a2eff9f] after safe-division repair: 41503 nodes, 39562 edges (geometric_candidates=286, deepcenter_rejected=215, post_veto_candidates=71, added=69, cap_skipped=0, mutual_nn_rejected=71, divergence_rejected=1620)
+  [44b6_2a2eff9f] after division-geometry-filter+prune-isolated: 41498 nodes, 39562 edges
+  [44b6_2a2eff9f] after short-track filtering: 41498 nodes, 39562 edges (components_removed=0)
+  [44b6_2a2eff9f] FINAL: 41498 nodes, 39562 edges
+  [44b6_74d0c52e] after edge-filter+motion-relink: 8968 nodes, 8400 edges
+  [44b6_74d0c52e] after gap-closing (single-frame + gap2): 9111 nodes, 8658 edges
+  [44b6_74d0c52e] after safe-division repair: 9111 nodes, 8669 edges (geometric_candidates=59, deepcenter_rejected=48, post_veto_candidates=11, added=11, cap_skipped=0, mutual_nn_rejected=7, divergence_rejected=194)
+  [44b6_74d0c52e] after division-geometry-filter+prune-isolated: 9108 nodes, 8669 edges
+  [44b6_74d0c52e] after short-track filtering: 9108 nodes, 8669 edges (components_removed=0)
+  [44b6_74d0c52e] FINAL: 9108 nodes, 8669 edges
+  [44b6_7a302da0] after edge-filter+motion-relink: 46261 nodes, 43489 edges
+  [44b6_7a302da0] after gap-closing (single-frame + gap2): 46889 nodes, 44662 edges
+  [44b6_7a302da0] after safe-division repair: 46889 nodes, 44738 edges (geometric_candidates=331, deepcenter_rejected=255, post_veto_candidates=76, added=76, cap_skipped=0, mutual_nn_rejected=85, divergence_rejected=1876)
+  [44b6_7a302da0] after division-geometry-filter+prune-isolated: 46883 nodes, 44738 edges
+  [44b6_7a302da0] after short-track filtering: 46883 nodes, 44738 edges (components_removed=0)
+  [44b6_7a302da0] FINAL: 46883 nodes, 44738 edges
+  [44b6_87bba6c4] after edge-filter+motion-relink: 30188 nodes, 28139 edges
+  [44b6_87bba6c4] after gap-closing (single-frame + gap2): 30587 nodes, 28884 edges
+  [44b6_87bba6c4] after safe-division repair: 30587 nodes, 28992 edges (geometric_candidates=420, deepcenter_rejected=238, post_veto_candidates=182, added=108, cap_skipped=4, mutual_nn_rejected=210, divergence_rejected=1410)
+  [44b6_87bba6c4] after division-geometry-filter+prune-isolated: 30519 nodes, 28992 edges
+  [44b6_87bba6c4] after short-track filtering: 30519 nodes, 28992 edges (components_removed=0)
+  [44b6_87bba6c4] FINAL: 30519 nodes, 28992 edges
+  [44b6_9be80b04] after edge-filter+motion-relink: 27032 nodes, 25275 edges
+  [44b6_9be80b04] after gap-closing (single-frame + gap2): 27509 nodes, 26165 edges
+  [44b6_9be80b04] after safe-division repair: 27509 nodes, 26200 edges (geometric_candidates=156, deepcenter_rejected=120, post_veto_candidates=36, added=35, cap_skipped=0, mutual_nn_rejected=46, divergence_rejected=1020)
+  [44b6_9be80b04] after division-geometry-filter+prune-isolated: 27503 nodes, 26200 edges
+  [44b6_9be80b04] after short-track filtering: 27503 nodes, 26200 edges (components_removed=0)
+  [44b6_9be80b04] FINAL: 27503 nodes, 26200 edges
+  [44b6_a21120c2] after edge-filter+motion-relink: 22138 nodes, 21224 edges
+  [44b6_a21120c2] after gap-closing (single-frame + gap2): 22268 nodes, 21463 edges
+  [44b6_a21120c2] after safe-division repair: 22268 nodes, 21503 edges (geometric_candidates=137, deepcenter_rejected=88, post_veto_candidates=49, added=40, cap_skipped=0, mutual_nn_rejected=58, divergence_rejected=608)
+  [44b6_a21120c2] after division-geometry-filter+prune-isolated: 22256 nodes, 21503 edges
+  [44b6_a21120c2] after short-track filtering: 22256 nodes, 21503 edges (components_removed=0)
+  [44b6_a21120c2] FINAL: 22256 nodes, 21503 edges
+  [44b6_c50204e0] after edge-filter+motion-relink: 39730 nodes, 37228 edges
+  [44b6_c50204e0] after gap-closing (single-frame + gap2): 40311 nodes, 38310 edges
+  [44b6_c50204e0] after safe-division repair: 40311 nodes, 38399 edges (geometric_candidates=455, deepcenter_rejected=364, post_veto_candidates=91, added=89, cap_skipped=0, mutual_nn_rejected=114, divergence_rejected=1989)
+  [44b6_c50204e0] after division-geometry-filter+prune-isolated: 40304 nodes, 38399 edges
+  [44b6_c50204e0] after short-track filtering: 40304 nodes, 38399 edges (components_removed=0)
+  [44b6_c50204e0] FINAL: 40304 nodes, 38399 edges
+  [44b6_d2f34f90] after edge-filter+motion-relink: 15840 nodes, 14801 edges
+  [44b6_d2f34f90] after gap-closing (single-frame + gap2): 16119 nodes, 15303 edges
+  [44b6_d2f34f90] after safe-division repair: 16119 nodes, 15334 edges (geometric_candidates=164, deepcenter_rejected=126, post_veto_candidates=38, added=31, cap_skipped=0, mutual_nn_rejected=30, divergence_rejected=618)
+  [44b6_d2f34f90] after division-geometry-filter+prune-isolated: 16116 nodes, 15334 edges
+  [44b6_d2f34f90] after short-track filtering: 16116 nodes, 15334 edges (components_removed=0)
+  [44b6_d2f34f90] FINAL: 16116 nodes, 15334 edges
+  [44b6_d5e7d891] after edge-filter+motion-relink: 44385 nodes, 42025 edges
+  [44b6_d5e7d891] after gap-closing (single-frame + gap2): 44944 nodes, 43070 edges
+  [44b6_d5e7d891] after safe-division repair: 44944 nodes, 43172 edges (geometric_candidates=466, deepcenter_rejected=360, post_veto_candidates=106, added=102, cap_skipped=0, mutual_nn_rejected=140, divergence_rejected=2255)
+  [44b6_d5e7d891] after division-geometry-filter+prune-isolated: 44939 nodes, 43172 edges
+  [44b6_d5e7d891] after short-track filtering: 44939 nodes, 43172 edges (components_removed=0)
+  [44b6_d5e7d891] FINAL: 44939 nodes, 43172 edges
+  [44b6_e28840c6] after edge-filter+motion-relink: 28431 nodes, 26429 edges
+  [44b6_e28840c6] after gap-closing (single-frame + gap2): 28950 nodes, 27399 edges
+  [44b6_e28840c6] after safe-division repair: 28950 nodes, 27409 edges (geometric_candidates=62, deepcenter_rejected=52, post_veto_candidates=10, added=10, cap_skipped=0, mutual_nn_rejected=22, divergence_rejected=989)
+  [44b6_e28840c6] after division-geometry-filter+prune-isolated: 28944 nodes, 27409 edges
+  [44b6_e28840c6] after short-track filtering: 28944 nodes, 27409 edges (components_removed=0)
+  [44b6_e28840c6] FINAL: 28944 nodes, 27409 edges
+44b6_12dfb391    adj=0.9254 edge=0.9059 tp/fp/fn=741/45/32 ratio=-0.215 recall=0.994 div=0/0/1
+44b6_1d530831    adj=0.7756 edge=0.7788 tp/fp/fn=243/41/28 ratio=+0.042 recall=0.982 div=0/1/0
+44b6_2a2eff9f    adj=0.8678 edge=0.8455 tp/fp/fn=197/23/13 ratio=-0.264 recall=1.000 div=0/1/1
+44b6_74d0c52e    adj=0.9471 edge=0.9110 tp/fp/fn=133/7/6 ratio=-0.396 recall=1.000 div=0/0/1
+44b6_7a302da0    adj=0.9394 edge=0.9121 tp/fp/fn=488/28/19 ratio=-0.299 recall=0.998 div=1/0/0
+44b6_87bba6c4    adj=0.5354 edge=0.5400 tp/fp/fn=108/51/41 ratio=+0.086 recall=0.941 div=0/2/0
+44b6_9be80b04    adj=0.9740 edge=0.9254 tp/fp/fn=211/8/9 ratio=-0.525 recall=0.986 div=0/1/1
+44b6_a21120c2    adj=0.9140 edge=0.9109 tp/fp/fn=276/17/10 ratio=-0.034 recall=1.000 div=1/0/1
+44b6_c50204e0    adj=0.8049 edge=0.7935 tp/fp/fn=292/43/33 ratio=-0.144 recall=0.991 div=0/1/2
+44b6_d2f34f90    adj=0.9933 edge=0.9615 tp/fp/fn=275/5/6 ratio=-0.331 recall=1.000 div=0/0/2
+44b6_d5e7d891    adj=0.8510 edge=0.8511 tp/fp/fn=829/81/64 ratio=+0.002 recall=0.987 div=0/4/2
+44b6_e28840c6    adj=0.9430 edge=0.8885 tp/fp/fn=287/14/22 ratio=-0.612 recall=0.961 div=0/0/2
+
+== exp29/divisions  score=0.8886 adj_edge=0.8806 edge=0.8633 div=0.0800 (2/10/13) recall=0.9867 n=12
+wrote /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/.public_local_cache/exp29/pp/divisions.json
+######## veto
+ENV OVERRIDE BIOHUB_OUTPUT_MOTION_RELINK=0
+ENV OVERRIDE BIOHUB_OUTPUT_GAP_CLOSE=0
+ENV OVERRIDE BIOHUB_OUTPUT_GAP2_RECOVERY=0
+ENV OVERRIDE BIOHUB_OUTPUT_SAFE_DIVISIONS=0
+ENV OVERRIDE BIOHUB_USE_DEEPCENTER_VETO=0
+ENV OVERRIDE BIOHUB_REQUIRE_DEEPCENTER_VETO=0
+ENV OVERRIDE BIOHUB_OUTPUT_FILTER_SHORT_TRACKS=0
+ENV OVERRIDE BIOHUB_OUTPUT_LINEFIT_SMOOTH=0
+ENV OVERRIDE BIOHUB_OUTPUT_MOTION_RELINK=1
+ENV OVERRIDE BIOHUB_OUTPUT_GAP_CLOSE=1
+ENV OVERRIDE BIOHUB_OUTPUT_GAP2_RECOVERY=1
+ENV OVERRIDE BIOHUB_OUTPUT_SAFE_DIVISIONS=1
+ENV OVERRIDE BIOHUB_USE_DEEPCENTER_VETO=1
+ENV OVERRIDE BIOHUB_REQUIRE_DEEPCENTER_VETO=1
+12 videos | tag=exp29 label=veto | cache=/home/georgii/Documents/Biohub---Cell-Tracking-During-Development/.public_local_cache/exp29
+BIOHUB_PRESET: exp29_sjlee947_verbatim
+BIOHUB_SCORE_AXIS: public 0.939 base + holdout-selected post-process configuration
+Biohub learned UNet + node-transformer + ILP submission
+COMP_DIR: /kaggle/input/competitions/biohub-cell-tracking-during-development exists: False
+TEST_DIR: /kaggle/input/competitions/biohub-cell-tracking-during-development/test exists: False
+{
+  "adaptive_short_track_rescue": true,
+  "allow_artifact_fallback": false,
+  "allow_pip_install": false,
+  "deepcenter_checkpoint_default": "/kaggle/input/biohub-deepcenter-unet3d-center-prior-v1/weights/full_frame_center/best.pt",
+  "deepcenter_expected_epoch": 2,
+  "deepcenter_gap_add_gate": true,
+  "deepcenter_gap_confirm_min_span_um": 8.5,
+  "deepcenter_gap_threshold": 0.25,
+  "deepcenter_safe_div_add_gate": true,
+  "deepcenter_safe_div_threshold": 0.2,
+  "det_threshold": 0.965,
+  "div_drop_to_single_if_bad": true,
+  "div_parent_max_um": 10.5,
+  "div_sister_max_um": 8.0,
+  "experiment_tag": "selected_101_dual_seed_near_balanced_center_confirmed_synthetic_gap",
+  "gap2_frame_frac_cap": 0.006,
+  "gap2_max_links_abs": 180,
+  "gap2_max_links_frac": 0.0045,
+  "gap2_max_step_um": 4.4,
+  "gap2_max_total_um": 10.2,
+  "gap2_require_context": true,
+  "gap_close_effective_max_gap": 1,
+  "gap_close_max_added_abs": 2000,
+  "gap_close_max_added_frac": 0.05,
+  "gap_close_max_gap": 2,
+  "gap_close_reuse_existing": true,
+  "gap_close_reuse_um": 3.2,
+  "gap_close_um": 5.0,
+  "gap_density_adaptive": true,
+  "gap_density_gain": 0.04,
+  "gap_density_max_step_delta_um": 0.125,
+  "gap_density_neighbors": 3,
+  "gap_density_reference_um": 6.5,
+  "gap_refine_max_shift_um": 3.2,
+  "gap_refine_synthetic": true,
+  "gap_refine_win_yx": 3,
+  "gap_refine_win_z": 1,
+  "ilp_appearance_weight": 0.0,
+  "ilp_disappearance_weight": 2.0,
+  "ilp_division_weight": 1.2,
+  "ilp_edge_weight": -1.0,
+  "method": "unet_transformer",
+  "motion_relink_learned_bonus": 1.0,
+  "motion_relink_max_frame_nodes": 2600,
+  "motion_relink_relaxed_um": 10.0,
+  "motion_relink_tight_um": 6.0,
+  "motion_relink_velocity_weight": 0.5,
+  "output_division_geometry_filter": false,
+  "output_edge_max_um": 14.0,
+  "output_enforce_next_frame": true,
+  "output_filter_short_tracks": false,
+  "output_gap2_recovery": true,
+  "output_gap_close": true,
+  "output_keep_division_components": true,
+  "output_linefit_smooth": false,
+  "output_linefit_weight": 0.8,
+  "output_linefit_window": 2,
+  "output_min_track_len": 6,
+  "output_motion_relink": true,
+  "output_prune_isolated": true,
+  "output_safe_divisions": true,
+  "output_single_child_repair": false,
+  "output_single_parent_repair": true,
+  "primary_artifact_manifest": "/kaggle/input/datasets/pilkwang/biohub-tracking-support-pack-50ep-v1/ARTIFACT_MANIFEST.json",
+  "safe_div_existing_child_max_um": 10.0,
+  "safe_div_frame_frac_cap": 0.0076,
+  "safe_div_global_frac_cap": 0.00375,
+  "safe_div_max_um": 9.0,
+  "safe_div_sister_max_um": 14.0,
+  "short_track_rescue_max_mean_edge_dist_um": 3.0,
+  "short_track_rescue_max_nodes_abs": 120,
+  "short_track_rescue_max_nodes_frac": 0.012,
+  "short_track_rescue_min_len": 4,
+  "short_track_rescue_min_mean_edge_prob": 0.88,
+  "short_track_rescue_trigger_removed_frac": 0.1,
+  "slice": "",
+  "target_artifact_slug": "biohub-tracking-support-pack-50ep-v1",
+  "unet_batch_size": 4,
+  "use_deepcenter_add_only_gate": true,
+  "use_ilp": true,
+  "weights": "weights/unet_transformer/split_0/edge_predictor_best.pth"
+}
+Trying DeepCenter add-only gate checkpoint: /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/external/pilkwang__biohub-deepcenter-unet3d-center-prior-v1/weights/full_frame_center/best.pt
+Loaded DeepCenter add-only gate checkpoint: /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/external/pilkwang__biohub-deepcenter-unet3d-center-prior-v1/weights/full_frame_center/best.pt
+DeepCenter checkpoint epoch: 2 best_score: -0.04500306242456039
+  [44b6_12dfb391] after edge-filter+motion-relink: 45357 nodes, 43050 edges
+DEEPCENTER_TTA_ACTIVE views= 8 mean_abs_logit_delta= 0.132017
+  [44b6_12dfb391] after gap-closing (single-frame + gap2): 46013 nodes, 44291 edges
+  [44b6_12dfb391] after safe-division repair: 46013 nodes, 44315 edges (geometric_candidates=151, deepcenter_rejected=127, post_veto_candidates=24, added=24, cap_skipped=0, mutual_nn_rejected=59, divergence_rejected=1556)
+  [44b6_12dfb391] after division-geometry-filter+prune-isolated: 46011 nodes, 44315 edges
+  [44b6_12dfb391] after short-track filtering: 46011 nodes, 44315 edges (components_removed=0)
+  [44b6_12dfb391] FINAL: 46011 nodes, 44315 edges
+  [44b6_1d530831] after edge-filter+motion-relink: 36885 nodes, 34821 edges
+  [44b6_1d530831] after gap-closing (single-frame + gap2): 37300 nodes, 35582 edges
+  [44b6_1d530831] after safe-division repair: 37300 nodes, 35623 edges (geometric_candidates=298, deepcenter_rejected=256, post_veto_candidates=42, added=41, cap_skipped=0, mutual_nn_rejected=94, divergence_rejected=1638)
+  [44b6_1d530831] after division-geometry-filter+prune-isolated: 37294 nodes, 35623 edges
+  [44b6_1d530831] after short-track filtering: 37294 nodes, 35623 edges (components_removed=0)
+  [44b6_1d530831] FINAL: 37294 nodes, 35623 edges
+  [44b6_2a2eff9f] after edge-filter+motion-relink: 40941 nodes, 38443 edges
+  [44b6_2a2eff9f] after gap-closing (single-frame + gap2): 41469 nodes, 39424 edges
+  [44b6_2a2eff9f] after safe-division repair: 41469 nodes, 39464 edges (geometric_candidates=292, deepcenter_rejected=252, post_veto_candidates=40, added=40, cap_skipped=0, mutual_nn_rejected=74, divergence_rejected=1659)
+  [44b6_2a2eff9f] after division-geometry-filter+prune-isolated: 41464 nodes, 39464 edges
+  [44b6_2a2eff9f] after short-track filtering: 41464 nodes, 39464 edges (components_removed=0)
+  [44b6_2a2eff9f] FINAL: 41464 nodes, 39464 edges
+  [44b6_74d0c52e] after edge-filter+motion-relink: 8968 nodes, 8400 edges
+  [44b6_74d0c52e] after gap-closing (single-frame + gap2): 9108 nodes, 8652 edges
+  [44b6_74d0c52e] after safe-division repair: 9108 nodes, 8661 edges (geometric_candidates=59, deepcenter_rejected=50, post_veto_candidates=9, added=9, cap_skipped=0, mutual_nn_rejected=7, divergence_rejected=194)
+  [44b6_74d0c52e] after division-geometry-filter+prune-isolated: 9105 nodes, 8661 edges
+  [44b6_74d0c52e] after short-track filtering: 9105 nodes, 8661 edges (components_removed=0)
+  [44b6_74d0c52e] FINAL: 9105 nodes, 8661 edges
+  [44b6_7a302da0] after edge-filter+motion-relink: 46261 nodes, 43489 edges
+  [44b6_7a302da0] after gap-closing (single-frame + gap2): 46848 nodes, 44580 edges
+  [44b6_7a302da0] after safe-division repair: 46848 nodes, 44640 edges (geometric_candidates=339, deepcenter_rejected=279, post_veto_candidates=60, added=60, cap_skipped=0, mutual_nn_rejected=88, divergence_rejected=1909)
+  [44b6_7a302da0] after division-geometry-filter+prune-isolated: 46842 nodes, 44640 edges
+  [44b6_7a302da0] after short-track filtering: 46842 nodes, 44640 edges (components_removed=0)
+  [44b6_7a302da0] FINAL: 46842 nodes, 44640 edges
+  [44b6_87bba6c4] after edge-filter+motion-relink: 30188 nodes, 28139 edges
+  [44b6_87bba6c4] after gap-closing (single-frame + gap2): 30547 nodes, 28804 edges
+  [44b6_87bba6c4] after safe-division repair: 30547 nodes, 28882 edges (geometric_candidates=430, deepcenter_rejected=318, post_veto_candidates=112, added=78, cap_skipped=0, mutual_nn_rejected=214, divergence_rejected=1450)
+  [44b6_87bba6c4] after division-geometry-filter+prune-isolated: 30474 nodes, 28882 edges
+  [44b6_87bba6c4] after short-track filtering: 30474 nodes, 28882 edges (components_removed=0)
+  [44b6_87bba6c4] FINAL: 30474 nodes, 28882 edges
+  [44b6_9be80b04] after edge-filter+motion-relink: 27032 nodes, 25275 edges
+  [44b6_9be80b04] after gap-closing (single-frame + gap2): 27481 nodes, 26108 edges
+  [44b6_9be80b04] after safe-division repair: 27481 nodes, 26126 edges (geometric_candidates=157, deepcenter_rejected=138, post_veto_candidates=19, added=18, cap_skipped=0, mutual_nn_rejected=48, divergence_rejected=1049)
+  [44b6_9be80b04] after division-geometry-filter+prune-isolated: 27475 nodes, 26126 edges
+  [44b6_9be80b04] after short-track filtering: 27475 nodes, 26126 edges (components_removed=0)
+  [44b6_9be80b04] FINAL: 27475 nodes, 26126 edges
+  [44b6_a21120c2] after edge-filter+motion-relink: 22138 nodes, 21224 edges
+  [44b6_a21120c2] after gap-closing (single-frame + gap2): 22263 nodes, 21453 edges
+  [44b6_a21120c2] after safe-division repair: 22263 nodes, 21489 edges (geometric_candidates=138, deepcenter_rejected=93, post_veto_candidates=45, added=36, cap_skipped=0, mutual_nn_rejected=58, divergence_rejected=612)
+  [44b6_a21120c2] after division-geometry-filter+prune-isolated: 22251 nodes, 21489 edges
+  [44b6_a21120c2] after short-track filtering: 22251 nodes, 21489 edges (components_removed=0)
+  [44b6_a21120c2] FINAL: 22251 nodes, 21489 edges
+  [44b6_c50204e0] after edge-filter+motion-relink: 39730 nodes, 37228 edges
+  [44b6_c50204e0] after gap-closing (single-frame + gap2): 40237 nodes, 38159 edges
+  [44b6_c50204e0] after safe-division repair: 40237 nodes, 38208 edges (geometric_candidates=466, deepcenter_rejected=416, post_veto_candidates=50, added=49, cap_skipped=0, mutual_nn_rejected=124, divergence_rejected=2055)
+  [44b6_c50204e0] after division-geometry-filter+prune-isolated: 40230 nodes, 38208 edges
+  [44b6_c50204e0] after short-track filtering: 40230 nodes, 38208 edges (components_removed=0)
+  [44b6_c50204e0] FINAL: 40230 nodes, 38208 edges
+  [44b6_d2f34f90] after edge-filter+motion-relink: 15840 nodes, 14801 edges
+  [44b6_d2f34f90] after gap-closing (single-frame + gap2): 16099 nodes, 15263 edges
+  [44b6_d2f34f90] after safe-division repair: 16099 nodes, 15278 edges (geometric_candidates=168, deepcenter_rejected=150, post_veto_candidates=18, added=15, cap_skipped=0, mutual_nn_rejected=35, divergence_rejected=632)
+  [44b6_d2f34f90] after division-geometry-filter+prune-isolated: 16096 nodes, 15278 edges
+  [44b6_d2f34f90] after short-track filtering: 16096 nodes, 15278 edges (components_removed=0)
+  [44b6_d2f34f90] FINAL: 16096 nodes, 15278 edges
+  [44b6_d5e7d891] after edge-filter+motion-relink: 44385 nodes, 42025 edges
+  [44b6_d5e7d891] after gap-closing (single-frame + gap2): 44900 nodes, 42982 edges
+  [44b6_d5e7d891] after safe-division repair: 44900 nodes, 43051 edges (geometric_candidates=479, deepcenter_rejected=408, post_veto_candidates=71, added=69, cap_skipped=0, mutual_nn_rejected=145, divergence_rejected=2308)
+  [44b6_d5e7d891] after division-geometry-filter+prune-isolated: 44895 nodes, 43051 edges
+  [44b6_d5e7d891] after short-track filtering: 44895 nodes, 43051 edges (components_removed=0)
+  [44b6_d5e7d891] FINAL: 44895 nodes, 43051 edges
+  [44b6_e28840c6] after edge-filter+motion-relink: 28431 nodes, 26429 edges
+  [44b6_e28840c6] after gap-closing (single-frame + gap2): 28925 nodes, 27348 edges
+  [44b6_e28840c6] after safe-division repair: 28925 nodes, 27353 edges (geometric_candidates=62, deepcenter_rejected=57, post_veto_candidates=5, added=5, cap_skipped=0, mutual_nn_rejected=22, divergence_rejected=1008)
+  [44b6_e28840c6] after division-geometry-filter+prune-isolated: 28919 nodes, 27353 edges
+  [44b6_e28840c6] after short-track filtering: 28919 nodes, 27353 edges (components_removed=0)
+  [44b6_e28840c6] FINAL: 28919 nodes, 27353 edges
+44b6_12dfb391    adj=0.9254 edge=0.9059 tp/fp/fn=741/45/32 ratio=-0.216 recall=0.994 div=0/0/1
+44b6_1d530831    adj=0.7749 edge=0.7781 tp/fp/fn=242/40/29 ratio=+0.041 recall=0.978 div=0/1/0
+44b6_2a2eff9f    adj=0.8678 edge=0.8455 tp/fp/fn=197/23/13 ratio=-0.264 recall=1.000 div=0/1/1
+44b6_74d0c52e    adj=0.9471 edge=0.9110 tp/fp/fn=133/7/6 ratio=-0.397 recall=1.000 div=0/0/1
+44b6_7a302da0    adj=0.9375 edge=0.9103 tp/fp/fn=487/28/20 ratio=-0.299 recall=0.998 div=0/0/1
+44b6_87bba6c4    adj=0.5305 edge=0.5350 tp/fp/fn=107/51/42 ratio=+0.084 recall=0.941 div=0/1/0
+44b6_9be80b04    adj=0.9741 edge=0.9254 tp/fp/fn=211/8/9 ratio=-0.525 recall=0.986 div=0/1/1
+44b6_a21120c2    adj=0.9140 edge=0.9109 tp/fp/fn=276/17/10 ratio=-0.034 recall=1.000 div=1/0/1
+44b6_c50204e0    adj=0.7952 edge=0.7838 tp/fp/fn=290/45/35 ratio=-0.145 recall=0.991 div=0/1/2
+44b6_d2f34f90    adj=0.9934 edge=0.9615 tp/fp/fn=275/5/6 ratio=-0.331 recall=1.000 div=0/0/2
+44b6_d5e7d891    adj=0.8554 edge=0.8555 tp/fp/fn=829/76/64 ratio=+0.001 recall=0.987 div=0/1/2
+44b6_e28840c6    adj=0.9430 edge=0.8885 tp/fp/fn=287/14/22 ratio=-0.613 recall=0.961 div=0/0/2
+
+== exp29/veto  score=0.8851 adj_edge=0.8804 edge=0.8630 div=0.0476 (1/6/14) recall=0.9864 n=12
+wrote /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/.public_local_cache/exp29/pp/veto.json
+######## shorttrack
+ENV OVERRIDE BIOHUB_OUTPUT_MOTION_RELINK=0
+ENV OVERRIDE BIOHUB_OUTPUT_GAP_CLOSE=0
+ENV OVERRIDE BIOHUB_OUTPUT_GAP2_RECOVERY=0
+ENV OVERRIDE BIOHUB_OUTPUT_SAFE_DIVISIONS=0
+ENV OVERRIDE BIOHUB_USE_DEEPCENTER_VETO=0
+ENV OVERRIDE BIOHUB_REQUIRE_DEEPCENTER_VETO=0
+ENV OVERRIDE BIOHUB_OUTPUT_FILTER_SHORT_TRACKS=0
+ENV OVERRIDE BIOHUB_OUTPUT_LINEFIT_SMOOTH=0
+ENV OVERRIDE BIOHUB_OUTPUT_MOTION_RELINK=1
+ENV OVERRIDE BIOHUB_OUTPUT_GAP_CLOSE=1
+ENV OVERRIDE BIOHUB_OUTPUT_GAP2_RECOVERY=1
+ENV OVERRIDE BIOHUB_OUTPUT_SAFE_DIVISIONS=1
+ENV OVERRIDE BIOHUB_USE_DEEPCENTER_VETO=1
+ENV OVERRIDE BIOHUB_REQUIRE_DEEPCENTER_VETO=1
+ENV OVERRIDE BIOHUB_OUTPUT_FILTER_SHORT_TRACKS=1
+12 videos | tag=exp29 label=shorttrack | cache=/home/georgii/Documents/Biohub---Cell-Tracking-During-Development/.public_local_cache/exp29
+BIOHUB_PRESET: exp29_sjlee947_verbatim
+BIOHUB_SCORE_AXIS: public 0.939 base + holdout-selected post-process configuration
+Biohub learned UNet + node-transformer + ILP submission
+COMP_DIR: /kaggle/input/competitions/biohub-cell-tracking-during-development exists: False
+TEST_DIR: /kaggle/input/competitions/biohub-cell-tracking-during-development/test exists: False
+{
+  "adaptive_short_track_rescue": true,
+  "allow_artifact_fallback": false,
+  "allow_pip_install": false,
+  "deepcenter_checkpoint_default": "/kaggle/input/biohub-deepcenter-unet3d-center-prior-v1/weights/full_frame_center/best.pt",
+  "deepcenter_expected_epoch": 2,
+  "deepcenter_gap_add_gate": true,
+  "deepcenter_gap_confirm_min_span_um": 8.5,
+  "deepcenter_gap_threshold": 0.25,
+  "deepcenter_safe_div_add_gate": true,
+  "deepcenter_safe_div_threshold": 0.2,
+  "det_threshold": 0.965,
+  "div_drop_to_single_if_bad": true,
+  "div_parent_max_um": 10.5,
+  "div_sister_max_um": 8.0,
+  "experiment_tag": "selected_101_dual_seed_near_balanced_center_confirmed_synthetic_gap",
+  "gap2_frame_frac_cap": 0.006,
+  "gap2_max_links_abs": 180,
+  "gap2_max_links_frac": 0.0045,
+  "gap2_max_step_um": 4.4,
+  "gap2_max_total_um": 10.2,
+  "gap2_require_context": true,
+  "gap_close_effective_max_gap": 1,
+  "gap_close_max_added_abs": 2000,
+  "gap_close_max_added_frac": 0.05,
+  "gap_close_max_gap": 2,
+  "gap_close_reuse_existing": true,
+  "gap_close_reuse_um": 3.2,
+  "gap_close_um": 5.0,
+  "gap_density_adaptive": true,
+  "gap_density_gain": 0.04,
+  "gap_density_max_step_delta_um": 0.125,
+  "gap_density_neighbors": 3,
+  "gap_density_reference_um": 6.5,
+  "gap_refine_max_shift_um": 3.2,
+  "gap_refine_synthetic": true,
+  "gap_refine_win_yx": 3,
+  "gap_refine_win_z": 1,
+  "ilp_appearance_weight": 0.0,
+  "ilp_disappearance_weight": 2.0,
+  "ilp_division_weight": 1.2,
+  "ilp_edge_weight": -1.0,
+  "method": "unet_transformer",
+  "motion_relink_learned_bonus": 1.0,
+  "motion_relink_max_frame_nodes": 2600,
+  "motion_relink_relaxed_um": 10.0,
+  "motion_relink_tight_um": 6.0,
+  "motion_relink_velocity_weight": 0.5,
+  "output_division_geometry_filter": false,
+  "output_edge_max_um": 14.0,
+  "output_enforce_next_frame": true,
+  "output_filter_short_tracks": true,
+  "output_gap2_recovery": true,
+  "output_gap_close": true,
+  "output_keep_division_components": true,
+  "output_linefit_smooth": false,
+  "output_linefit_weight": 0.8,
+  "output_linefit_window": 2,
+  "output_min_track_len": 6,
+  "output_motion_relink": true,
+  "output_prune_isolated": true,
+  "output_safe_divisions": true,
+  "output_single_child_repair": false,
+  "output_single_parent_repair": true,
+  "primary_artifact_manifest": "/kaggle/input/datasets/pilkwang/biohub-tracking-support-pack-50ep-v1/ARTIFACT_MANIFEST.json",
+  "safe_div_existing_child_max_um": 10.0,
+  "safe_div_frame_frac_cap": 0.0076,
+  "safe_div_global_frac_cap": 0.00375,
+  "safe_div_max_um": 9.0,
+  "safe_div_sister_max_um": 14.0,
+  "short_track_rescue_max_mean_edge_dist_um": 3.0,
+  "short_track_rescue_max_nodes_abs": 120,
+  "short_track_rescue_max_nodes_frac": 0.012,
+  "short_track_rescue_min_len": 4,
+  "short_track_rescue_min_mean_edge_prob": 0.88,
+  "short_track_rescue_trigger_removed_frac": 0.1,
+  "slice": "",
+  "target_artifact_slug": "biohub-tracking-support-pack-50ep-v1",
+  "unet_batch_size": 4,
+  "use_deepcenter_add_only_gate": true,
+  "use_ilp": true,
+  "weights": "weights/unet_transformer/split_0/edge_predictor_best.pth"
+}
+Trying DeepCenter add-only gate checkpoint: /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/external/pilkwang__biohub-deepcenter-unet3d-center-prior-v1/weights/full_frame_center/best.pt
+Loaded DeepCenter add-only gate checkpoint: /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/external/pilkwang__biohub-deepcenter-unet3d-center-prior-v1/weights/full_frame_center/best.pt
+DeepCenter checkpoint epoch: 2 best_score: -0.04500306242456039
+  [44b6_12dfb391] after edge-filter+motion-relink: 45357 nodes, 43050 edges
+DEEPCENTER_TTA_ACTIVE views= 8 mean_abs_logit_delta= 0.132017
+  [44b6_12dfb391] after gap-closing (single-frame + gap2): 46013 nodes, 44291 edges
+  [44b6_12dfb391] after safe-division repair: 46013 nodes, 44315 edges (geometric_candidates=151, deepcenter_rejected=127, post_veto_candidates=24, added=24, cap_skipped=0, mutual_nn_rejected=59, divergence_rejected=1556)
+  [44b6_12dfb391] after division-geometry-filter+prune-isolated: 46011 nodes, 44315 edges
+  [44b6_12dfb391] after short-track filtering: 44960 nodes, 43501 edges (components_removed=237)
+  [44b6_12dfb391] FINAL: 44960 nodes, 43501 edges
+  [44b6_1d530831] after edge-filter+motion-relink: 36885 nodes, 34821 edges
+  [44b6_1d530831] after gap-closing (single-frame + gap2): 37300 nodes, 35582 edges
+  [44b6_1d530831] after safe-division repair: 37300 nodes, 35623 edges (geometric_candidates=298, deepcenter_rejected=256, post_veto_candidates=42, added=41, cap_skipped=0, mutual_nn_rejected=94, divergence_rejected=1638)
+  [44b6_1d530831] after division-geometry-filter+prune-isolated: 37294 nodes, 35623 edges
+  [44b6_1d530831] after short-track filtering: 36278 nodes, 34836 edges (components_removed=229)
+  [44b6_1d530831] FINAL: 36278 nodes, 34836 edges
+  [44b6_2a2eff9f] after edge-filter+motion-relink: 40941 nodes, 38443 edges
+  [44b6_2a2eff9f] after gap-closing (single-frame + gap2): 41469 nodes, 39424 edges
+  [44b6_2a2eff9f] after safe-division repair: 41469 nodes, 39464 edges (geometric_candidates=292, deepcenter_rejected=252, post_veto_candidates=40, added=40, cap_skipped=0, mutual_nn_rejected=74, divergence_rejected=1659)
+  [44b6_2a2eff9f] after division-geometry-filter+prune-isolated: 41464 nodes, 39464 edges
+  [44b6_2a2eff9f] after short-track filtering: 40146 nodes, 38443 edges (components_removed=297)
+  [44b6_2a2eff9f] FINAL: 40146 nodes, 38443 edges
+  [44b6_74d0c52e] after edge-filter+motion-relink: 8968 nodes, 8400 edges
+  [44b6_74d0c52e] after gap-closing (single-frame + gap2): 9108 nodes, 8652 edges
+  [44b6_74d0c52e] after safe-division repair: 9108 nodes, 8661 edges (geometric_candidates=59, deepcenter_rejected=50, post_veto_candidates=9, added=9, cap_skipped=0, mutual_nn_rejected=7, divergence_rejected=194)
+  [44b6_74d0c52e] after division-geometry-filter+prune-isolated: 9105 nodes, 8661 edges
+  [44b6_74d0c52e] after short-track filtering: 8695 nodes, 8344 edges (components_removed=93)
+  [44b6_74d0c52e] FINAL: 8695 nodes, 8344 edges
+  [44b6_7a302da0] after edge-filter+motion-relink: 46261 nodes, 43489 edges
+  [44b6_7a302da0] after gap-closing (single-frame + gap2): 46848 nodes, 44580 edges
+  [44b6_7a302da0] after safe-division repair: 46848 nodes, 44640 edges (geometric_candidates=339, deepcenter_rejected=279, post_veto_candidates=60, added=60, cap_skipped=0, mutual_nn_rejected=88, divergence_rejected=1909)
+  [44b6_7a302da0] after division-geometry-filter+prune-isolated: 46842 nodes, 44640 edges
+  [44b6_7a302da0] after short-track filtering: 45067 nodes, 43262 edges (components_removed=397)
+  [44b6_7a302da0] FINAL: 45067 nodes, 43262 edges
+  [44b6_87bba6c4] after edge-filter+motion-relink: 30188 nodes, 28139 edges
+  [44b6_87bba6c4] after gap-closing (single-frame + gap2): 30547 nodes, 28804 edges
+  [44b6_87bba6c4] after safe-division repair: 30547 nodes, 28882 edges (geometric_candidates=430, deepcenter_rejected=318, post_veto_candidates=112, added=78, cap_skipped=0, mutual_nn_rejected=214, divergence_rejected=1450)
+  [44b6_87bba6c4] after division-geometry-filter+prune-isolated: 30474 nodes, 28882 edges
+  [44b6_87bba6c4] after short-track filtering: 29308 nodes, 28005 edges (components_removed=289)
+  [44b6_87bba6c4] FINAL: 29308 nodes, 28005 edges
+  [44b6_9be80b04] after edge-filter+motion-relink: 27032 nodes, 25275 edges
+  [44b6_9be80b04] after gap-closing (single-frame + gap2): 27481 nodes, 26108 edges
+  [44b6_9be80b04] after safe-division repair: 27481 nodes, 26126 edges (geometric_candidates=157, deepcenter_rejected=138, post_veto_candidates=19, added=18, cap_skipped=0, mutual_nn_rejected=48, divergence_rejected=1049)
+  [44b6_9be80b04] after division-geometry-filter+prune-isolated: 27475 nodes, 26126 edges
+  [44b6_9be80b04] after short-track filtering: 26203 nodes, 25146 edges (components_removed=292)
+  [44b6_9be80b04] FINAL: 26203 nodes, 25146 edges
+  [44b6_a21120c2] after edge-filter+motion-relink: 22138 nodes, 21224 edges
+  [44b6_a21120c2] after gap-closing (single-frame + gap2): 22263 nodes, 21453 edges
+  [44b6_a21120c2] after safe-division repair: 22263 nodes, 21489 edges (geometric_candidates=138, deepcenter_rejected=93, post_veto_candidates=45, added=36, cap_skipped=0, mutual_nn_rejected=58, divergence_rejected=612)
+  [44b6_a21120c2] after division-geometry-filter+prune-isolated: 22251 nodes, 21489 edges
+  [44b6_a21120c2] after short-track filtering: 21997 nodes, 21296 edges (components_removed=61)
+  [44b6_a21120c2] FINAL: 21997 nodes, 21296 edges
+  [44b6_c50204e0] after edge-filter+motion-relink: 39730 nodes, 37228 edges
+  [44b6_c50204e0] after gap-closing (single-frame + gap2): 40237 nodes, 38159 edges
+  [44b6_c50204e0] after safe-division repair: 40237 nodes, 38208 edges (geometric_candidates=466, deepcenter_rejected=416, post_veto_candidates=50, added=49, cap_skipped=0, mutual_nn_rejected=124, divergence_rejected=2055)
+  [44b6_c50204e0] after division-geometry-filter+prune-isolated: 40230 nodes, 38208 edges
+  [44b6_c50204e0] after short-track filtering: 38638 nodes, 36980 edges (components_removed=364)
+  [44b6_c50204e0] FINAL: 38638 nodes, 36980 edges
+  [44b6_d2f34f90] after edge-filter+motion-relink: 15840 nodes, 14801 edges
+  [44b6_d2f34f90] after gap-closing (single-frame + gap2): 16099 nodes, 15263 edges
+  [44b6_d2f34f90] after safe-division repair: 16099 nodes, 15278 edges (geometric_candidates=168, deepcenter_rejected=150, post_veto_candidates=18, added=15, cap_skipped=0, mutual_nn_rejected=35, divergence_rejected=632)
+  [44b6_d2f34f90] after division-geometry-filter+prune-isolated: 16096 nodes, 15278 edges
+  [44b6_d2f34f90] after short-track filtering: 15441 nodes, 14774 edges (components_removed=151)
+  [44b6_d2f34f90] FINAL: 15441 nodes, 14774 edges
+  [44b6_d5e7d891] after edge-filter+motion-relink: 44385 nodes, 42025 edges
+  [44b6_d5e7d891] after gap-closing (single-frame + gap2): 44900 nodes, 42982 edges
+  [44b6_d5e7d891] after safe-division repair: 44900 nodes, 43051 edges (geometric_candidates=479, deepcenter_rejected=408, post_veto_candidates=71, added=69, cap_skipped=0, mutual_nn_rejected=145, divergence_rejected=2308)
+  [44b6_d5e7d891] after division-geometry-filter+prune-isolated: 44895 nodes, 43051 edges
+  [44b6_d5e7d891] after short-track filtering: 43684 nodes, 42109 edges (components_removed=269)
+  [44b6_d5e7d891] FINAL: 43684 nodes, 42109 edges
+  [44b6_e28840c6] after edge-filter+motion-relink: 28431 nodes, 26429 edges
+  [44b6_e28840c6] after gap-closing (single-frame + gap2): 28925 nodes, 27348 edges
+  [44b6_e28840c6] after safe-division repair: 28925 nodes, 27353 edges (geometric_candidates=62, deepcenter_rejected=57, post_veto_candidates=5, added=5, cap_skipped=0, mutual_nn_rejected=22, divergence_rejected=1008)
+  [44b6_e28840c6] after division-geometry-filter+prune-isolated: 28919 nodes, 27353 edges
+  [44b6_e28840c6] after short-track filtering: 27399 nodes, 26182 edges (components_removed=349)
+  [44b6_e28840c6] FINAL: 27399 nodes, 26182 edges
+44b6_12dfb391    adj=0.9270 edge=0.9059 tp/fp/fn=741/45/32 ratio=-0.234 recall=0.994 div=0/0/1
+44b6_1d530831    adj=0.7772 edge=0.7781 tp/fp/fn=242/40/29 ratio=+0.013 recall=0.978 div=0/1/0
+44b6_2a2eff9f    adj=0.8698 edge=0.8455 tp/fp/fn=197/23/13 ratio=-0.288 recall=1.000 div=0/1/1
+44b6_74d0c52e    adj=0.9496 edge=0.9110 tp/fp/fn=133/7/6 ratio=-0.424 recall=1.000 div=0/0/1
+44b6_7a302da0    adj=0.9399 edge=0.9103 tp/fp/fn=487/28/20 ratio=-0.326 recall=0.998 div=0/0/1
+44b6_87bba6c4    adj=0.5537 edge=0.5561 tp/fp/fn=109/47/40 ratio=+0.043 recall=0.935 div=0/1/0
+44b6_9be80b04    adj=0.9461 edge=0.8970 tp/fp/fn=209/13/11 ratio=-0.547 recall=0.986 div=0/1/1
+44b6_a21120c2    adj=0.9150 edge=0.9109 tp/fp/fn=276/17/10 ratio=-0.045 recall=1.000 div=1/0/1
+44b6_c50204e0    adj=0.7935 edge=0.7796 tp/fp/fn=290/47/35 ratio=-0.179 recall=0.991 div=0/1/2
+44b6_d2f34f90    adj=0.9960 edge=0.9615 tp/fp/fn=275/5/6 ratio=-0.359 recall=1.000 div=0/0/2
+44b6_d5e7d891    adj=0.8529 edge=0.8507 tp/fp/fn=826/78/67 ratio=-0.026 recall=0.985 div=0/1/2
+44b6_e28840c6    adj=0.9448 edge=0.8885 tp/fp/fn=287/14/22 ratio=-0.633 recall=0.961 div=0/0/2
+
+== exp29/shorttrack  score=0.8856 adj_edge=0.8809 edge=0.8614 div=0.0476 (1/6/14) recall=0.9857 n=12
+wrote /home/georgii/Documents/Biohub---Cell-Tracking-During-Development/.public_local_cache/exp29/pp/shorttrack.json
+######## full (= the shipped configuration, linefit smoothing on)
+   see the 'base' run of this tag
+######## stage table
+stage                                       score    delta     edge     nodes  div TP/FP/FN
+edge filter only (t->t+1, <=14um)          0.8740            0.8560    386148   0/  0/ 15
++ motion relink                            0.8673  -0.0067   0.8493    385962   0/  0/ 15
++ gap closing (1 frame + gap2)             0.8802  +0.0130   0.8629    391421   0/  0/ 15
++ safe divisions                           0.8886  +0.0084   0.8633    391421   2/ 10/ 13
++ DeepCenter veto                          0.8851  -0.0035   0.8630    391056   1/  6/ 14
++ short-track filter                       0.8856  +0.0005   0.8614    377816   1/  6/ 14
++ linefit smoothing (= shipped)            0.9001  +0.0145   0.8756    377816   1/  6/ 14
