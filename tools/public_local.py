@@ -200,6 +200,55 @@ def apply_runtime_patches(cells: list[str], ns: dict, repo: Path, work: Path) ->
         print("patched diagnostic log paths -> local working dir")
 
 
+# Anchors inside the already-patched predict script. Each pair brackets the rot90 + transpose + anti-transpose
+# views of one TTA loop; the flip list that precedes them is replaced separately.
+_AXIS_FLIP_LIST = "for dims in [(-1,), (-2,), (-2, -1), (-3,), (-3, -1), (-3, -2), (-3, -2, -1)]:"
+_PUBLIC_FLIP_LIST = "for dims in [(-1,), (-2,), (-2, -1)]:"
+_ROT_BLOCKS = [
+    ("            for _k in (1, 3):\n                imgs_rot = ",
+     "            del imgs_at, det_at, _u_at\n            _nv += 1\n"),
+    ("                    for _k in (1, 3):\n                        secondary_imgs_rot = ",
+     "                    del secondary_imgs_at, secondary_det_at, _secondary_u_at\n"
+     "                    _secondary_nv += 1\n"),
+]
+
+
+def apply_axis_flip_tta(repo: Path) -> None:
+    """Swap the in-plane D4 views (rot90 + transpose) for the training-consistent 8 axis flips.
+
+    The training augmentation (`scripts/augmentations.py:flip_augment`) samples uniformly from all 8
+    axis-aligned symmetries - Z, Y and X flipped independently - and never rotates or transposes. The public
+    stack does the opposite: it averages over rot90 and transpose views the model never saw in training and
+    skips the Z flips it did see. This makes the TTA group match the training distribution exactly, keeping the
+    view count at 8 so inference cost is unchanged.
+
+    Every edit asserts its anchor count and the result is compiled, so a drift in the upstream patches fails
+    loudly instead of silently producing a different variant.
+    """
+    predict_script = repo / "scripts" / "predict_unet_transformer.py"
+    text = predict_script.read_text()
+
+    n_lists = text.count(_PUBLIC_FLIP_LIST)
+    if n_lists != 2:
+        raise RuntimeError(f"expected 2 public flip lists (primary + secondary), found {n_lists}")
+    text = text.replace(_PUBLIC_FLIP_LIST, _AXIS_FLIP_LIST)
+
+    for start, end in _ROT_BLOCKS:
+        i = text.find(start)
+        j = text.find(end, i + 1) if i >= 0 else -1
+        if i < 0 or j < 0:
+            raise RuntimeError(f"axis-flip surgery: anchors not found for block starting {start[:60]!r}")
+        if text.count(start) != 1:
+            raise RuntimeError(f"axis-flip surgery: ambiguous start anchor {start[:60]!r}")
+        text = text[:i] + text[j + len(end):]
+
+    if "torch.rot90(imgs" in text or "imgs.transpose(-1, -2)" in text:
+        raise RuntimeError("axis-flip surgery: rotation/transpose views survived")
+    compile(text, str(predict_script), "exec")
+    predict_script.write_text(text)
+    print("TTA GROUP: rot90/transpose views replaced by the 8 training-consistent axis flips")
+
+
 # ------------------------------------------------------------------------------------------------------ GPU stage
 def run_inference(ns: dict, repo: Path, work: Path, data_dir: Path, stems: list[str],
                   raw_dir: Path, unet_batch_size: int | None) -> None:
@@ -340,6 +389,9 @@ def main() -> None:
     ap.add_argument("--stage", choices=["all", "infer", "pp"], default="all")
     ap.add_argument("--force-infer", action="store_true")
     ap.add_argument("--unet-batch-size", type=int, default=None)
+    ap.add_argument("--tta-group", choices=["public", "axisflip"], default="public",
+                    help="'axisflip' replaces the rot90/transpose TTA views by the 8 training-consistent "
+                         "axis flips (same view count, matches scripts/augmentations.py)")
     ap.add_argument("--env", nargs="*", default=[], metavar="K=V",
                     help="BIOHUB_* overrides applied on top of the notebook preset")
     args = ap.parse_args()
@@ -375,6 +427,8 @@ def main() -> None:
 
     if need_infer:
         apply_runtime_patches(cells, ns, repo, work)
+        if args.tta_group == "axisflip":
+            apply_axis_flip_tta(repo)
         run_inference(ns, repo, work, data_dir, stems, raw_dir, args.unet_batch_size)
     elif args.stage != "pp":
         print(f"GPU stage cached ({len(have_raw)} graphs in {raw_dir}); skipping inference")
@@ -396,7 +450,7 @@ def main() -> None:
 
     result = {
         "tag": args.tag, "label": args.label, "notebook": args.notebook,
-        "primary": args.primary, "secondary": args.secondary,
+        "primary": args.primary, "secondary": args.secondary, "tta_group": args.tta_group,
         "env_overrides": args.env, "videos": stems, "summary": summary, "per_video": rows,
     }
     result_path = cache / "pp" / f"{args.label}.json"

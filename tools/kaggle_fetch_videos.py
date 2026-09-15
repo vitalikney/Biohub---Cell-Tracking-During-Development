@@ -11,6 +11,12 @@ Usage:
     python tools/kaggle_fetch_videos.py --list-only          # only (re)build the file index
 
 Needs ~/.kaggle/kaggle.json. One video = ~100 zarr chunks (~4.5 MB each) + a few dozen small geff files.
+
+RATE LIMITS: Kaggle throttles aggressively. A 16-worker burst earned HTTP 429 with `Retry-After: 4455`
+(74 minutes), and the Kaggle client does not surface that - it builds connections with no timeout and simply
+wedges, so every worker sits at zero bytes while the site is up. Downloads therefore go through the REST
+endpoint directly, with a deadline per request and a process-wide pause that honours Retry-After. Keep
+--workers small (default 4).
 """
 import argparse
 import json
@@ -51,35 +57,74 @@ def build_index(api, index_path: Path) -> list[dict]:
     return files
 
 
-def fetch_one(api, name: str, size: int, out: Path) -> tuple[str, str]:
+DOWNLOAD_URL = "https://www.kaggle.com/api/v1/competitions/data/download/{comp}/{file}"
+# Set when the server answers 429: no worker starts a new request before this wall-clock time.
+_RATE_LIMIT_UNTIL = 0.0
+_RATE_LOCK = None
+
+
+def _credentials() -> tuple[str, str]:
+    cfg = json.loads((Path.home() / ".kaggle" / "kaggle.json").read_text())
+    return cfg["username"], cfg["key"]
+
+
+def _respect_rate_limit() -> None:
+    while True:
+        with _RATE_LOCK:
+            wait = _RATE_LIMIT_UNTIL - time.time()
+        if wait <= 0:
+            return
+        time.sleep(min(wait, 30.0))
+
+
+def _note_rate_limit(retry_after: float) -> None:
+    global _RATE_LIMIT_UNTIL
+    with _RATE_LOCK:
+        until = time.time() + retry_after
+        if until > _RATE_LIMIT_UNTIL:
+            _RATE_LIMIT_UNTIL = until
+            print(f"  RATE LIMITED: pausing all workers for {retry_after / 60:.1f} min", flush=True)
+
+
+def fetch_one(session, name: str, size: int, out: Path, timeout: float) -> tuple[str, str]:
+    """Download one competition file.
+
+    Uses the REST endpoint directly rather than `api.competition_download_file`: the Kaggle client builds its
+    connections without a timeout and, when the server answers 429, it wedges instead of raising - observed as
+    every worker stalled with zero bytes moving while the site was up. Here a 429 is surfaced, its Retry-After
+    is honoured process-wide, and every request has a deadline.
+    """
+    import urllib.parse
+
     dst = out / name
     if dst.is_file() and (size == 0 or dst.stat().st_size == size):
         return name, "skip"
     dst.parent.mkdir(parents=True, exist_ok=True)
-    tmp_dir = dst.parent / f".tmp_{os.getpid()}_{abs(hash(name)) % 10**8}"
-    tmp_dir.mkdir(parents=True, exist_ok=True)
-    try:
-        for attempt in range(6):
-            try:
-                api.competition_download_file(COMP, name, path=str(tmp_dir), force=True, quiet=True)
-                got = tmp_dir / Path(name).name
-                if not got.is_file():
-                    cands = list(tmp_dir.iterdir())
-                    if len(cands) != 1:
-                        raise RuntimeError(f"unexpected download result {cands}")
-                    got = cands[0]
-                if size and got.stat().st_size != size:
-                    raise RuntimeError(f"size mismatch {got.stat().st_size} != {size}")
-                os.replace(got, dst)
-                return name, "ok"
-            except Exception as e:  # noqa: BLE001
-                if attempt == 5:
-                    return name, f"FAIL {e}"
-                time.sleep(3 * (attempt + 1))
-    finally:
-        for p in tmp_dir.glob("*"):
-            p.unlink(missing_ok=True)
-        tmp_dir.rmdir()
+    tmp = dst.with_name(dst.name + f".part{os.getpid()}")
+    url = DOWNLOAD_URL.format(comp=COMP, file=urllib.parse.quote(name, safe=""))
+
+    for attempt in range(6):
+        _respect_rate_limit()
+        try:
+            with session.get(url, stream=True, timeout=timeout, allow_redirects=True) as r:
+                if r.status_code == 429:
+                    _note_rate_limit(float(r.headers.get("retry-after", 300)) + 5.0)
+                    continue
+                r.raise_for_status()
+                written = 0
+                with tmp.open("wb") as fh:
+                    for chunk in r.iter_content(chunk_size=1 << 20):
+                        fh.write(chunk)
+                        written += len(chunk)
+            if size and written != size:
+                raise RuntimeError(f"size mismatch {written} != {size}")
+            os.replace(tmp, dst)
+            return name, "ok"
+        except Exception as e:  # noqa: BLE001
+            tmp.unlink(missing_ok=True)
+            if attempt == 5:
+                return name, f"FAIL {e}"
+            time.sleep(3 * (attempt + 1))
     return name, "FAIL"
 
 
@@ -89,7 +134,9 @@ def main() -> None:
     ap.add_argument("--key", default="holdout", help="key inside --split JSON")
     ap.add_argument("--stems", nargs="*", default=[])
     ap.add_argument("--out", default=str(DEFAULT_OUT))
-    ap.add_argument("--workers", type=int, default=6)
+    # Kaggle rate-limits hard: a 16-worker burst earned a 429 with Retry-After of 74 minutes. Keep this low.
+    ap.add_argument("--workers", type=int, default=4)
+    ap.add_argument("--timeout", type=float, default=120.0, help="per-request deadline in seconds")
     ap.add_argument("--refresh-index", action="store_true")
     ap.add_argument("--list-only", action="store_true")
     ap.add_argument("--zarr-only", action="store_true", help="skip the .geff ground-truth files")
@@ -127,12 +174,21 @@ def main() -> None:
     if missing:
         print("WARNING: no files in the competition index for:", missing)
 
+    global _RATE_LOCK
+    import threading
+
+    import requests
+
+    _RATE_LOCK = threading.Lock()
+    session = requests.Session()
+    session.auth = _credentials()
+
     t0 = time.time()
     n_ok = n_skip = n_fail = 0
     done_mb = 0.0
     fails = []
     with ThreadPoolExecutor(max_workers=args.workers) as ex:
-        futs = {ex.submit(fetch_one, api, f["name"], f["size"], out): f for f in todo}
+        futs = {ex.submit(fetch_one, session, f["name"], f["size"], out, args.timeout): f for f in todo}
         for i, fut in enumerate(as_completed(futs), 1):
             f = futs[fut]
             name, status = fut.result()
