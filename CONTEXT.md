@@ -891,5 +891,12 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   for a probe; the class has no confirmed local-vs-LB pair yet (probe 18 gives the first pair, for post-processing).
   Side finding: on both primaries REPLACING rot90/transpose beats ADDING Z-flips, so the rotated views are harmful, not
   neutral. A28 status should read 'reopened on 12 videos'. B28/B29 CPU sweep running next.
+- 2026-09-15 17:30 FRIEND B: B28 CLOSED, B29 BELOW THE GATE (CONTEXT_FRIEND_B.md §34, RESULTS row, results/
+  b29_relink_veto_pervideo.txt). Linefit grid on 12 videos: the public (w0.8, win2) is the unimodal optimum, every
+  deviation loses (off -0.0145 ... win3 -0.0008) - the author tuned it, just never exposed it. relink OFF with the full
+  stack: 0.9054 = +0.0053 on the headline, but +0.0039 of that is ONE extra division TP (2/8/13) and the edge
+  term moves +0.0014, positive on 4/12 videos; it does repair 87bba6c4 (0.535 -> 0.607). veto OFF +0.0024,
+  again one division event. Neither clears the +0.005 gate on the robust (edge) term; no probe requested. Open question
+  no local test answers: the public author kept relink ON for the hidden embryos and swept its radius, never OFF.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
