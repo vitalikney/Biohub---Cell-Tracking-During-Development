@@ -33,8 +33,8 @@ USAGE
     # weights swap (exp30 = public stack + our fine-tuned primary)
     python tools/public_local.py --notebook <exp29 nb> --tag exp30 --primary exp03B
 
-Requires: local competition videos (see `tools/kaggle_fetch_videos.py`) and the Kaggle weight datasets
-downloaded to `--weights-root` (default ~/biohub_weights).
+Requires: local competition videos (see `tools/kaggle_fetch_videos.py`), the third-party packs in `external/`
+(`python tools/get_kaggle_datasets.py`) and the team checkpoints in `weights_dataset/` (tracked in git).
 """
 from __future__ import annotations
 
@@ -61,6 +61,31 @@ SUPPORT_PACK = "biohub-tracking-support-pack-50ep-v1"
 SECONDARY_PACK = "biohub-temporal-unet3d-seed314159-v1"
 DEEPCENTER_PACK = "biohub-deepcenter-unet3d-center-prior-v1"
 FT_WEIGHTS = "biohub-ft-weights"
+
+# Repo layout as of 2026-09-15 (params.yaml): team checkpoints are tracked in git under weights_dataset/, the
+# third-party packs are fetched by tools/get_kaggle_datasets.py into git-ignored external/<owner>__<name>/.
+EXTERNAL_DIR = PROJECT_ROOT / "external"
+TEAM_WEIGHTS_DIR = PROJECT_ROOT / "weights_dataset"
+
+
+def find_pack(name: str, weights_root: Path) -> Path:
+    """Locate a third-party pack, preferring the repo's external/ layout over a flat download directory."""
+    for candidate in (EXTERNAL_DIR / f"pilkwang__{name}", weights_root / name):
+        if candidate.is_dir():
+            return candidate
+    raise FileNotFoundError(
+        f"{name} not found in {EXTERNAL_DIR} or {weights_root}; "
+        f"run `python tools/get_kaggle_datasets.py` to fetch it")
+
+
+def find_team_weights(name: str, weights_root: Path) -> Path:
+    """Locate a team checkpoint: git copy first, then the Kaggle download, then a flat directory."""
+    for candidate in (TEAM_WEIGHTS_DIR / name,
+                      EXTERNAL_DIR / f"vitaliineibauer__{FT_WEIGHTS}" / name,
+                      weights_root / FT_WEIGHTS / name):
+        if (candidate / "edge_predictor_best.pth").is_file():
+            return candidate
+    raise FileNotFoundError(f"checkpoint {name!r} not found under {TEAM_WEIGHTS_DIR} or {weights_root}")
 
 # The notebook applies its runtime patches, then runs inference. Everything from this marker on is Kaggle-specific
 # orchestration (test-stem discovery, 2-GPU sharding, shard merging) that we replace with our own invocation.
@@ -91,9 +116,9 @@ def materialise_repo(weights_root: Path, work: Path, primary_override: str | Non
     `materialise_code=False` only resolves paths and exports the environment variables cell 3 exports -
     used for CPU-only post-processing runs, which never touch the inference code or the model weights.
     """
-    support = weights_root / SUPPORT_PACK
+    support = find_pack(SUPPORT_PACK, weights_root)
     if not (support / "repo" / "scripts").is_dir():
-        raise FileNotFoundError(f"support pack not found under {support}")
+        raise FileNotFoundError(f"support pack at {support} has no repo/scripts")
     repo = work / "tracking_repo"
     if materialise_code:
         if repo.exists():
@@ -103,17 +128,13 @@ def materialise_repo(weights_root: Path, work: Path, primary_override: str | Non
 
     primary_dir = repo / "weights" / "unet_transformer" / "split_0"
     if primary_override and materialise_code:
-        src = weights_root / FT_WEIGHTS / primary_override
-        if not (src / "edge_predictor_best.pth").is_file():
-            raise FileNotFoundError(f"primary override weights not found: {src}")
+        src = find_team_weights(primary_override, weights_root)
         for name in ("edge_predictor_best.pth", "config.json"):
             shutil.copy(src / name, primary_dir / name)
         print(f"PRIMARY OVERRIDE: {primary_override} -> {primary_dir}")
 
     if secondary_override:
-        src = weights_root / FT_WEIGHTS / secondary_override
-        if not (src / "edge_predictor_best.pth").is_file():
-            raise FileNotFoundError(f"secondary override weights not found: {src}")
+        src = find_team_weights(secondary_override, weights_root)
         secondary = work / "secondary_seed_weights" / "unet_transformer" / "split_0"
         secondary.mkdir(parents=True, exist_ok=True)
         if materialise_code:
@@ -122,12 +143,12 @@ def materialise_repo(weights_root: Path, work: Path, primary_override: str | Non
         secondary_weights = secondary / "edge_predictor_best.pth"
         print(f"SECONDARY OVERRIDE: {secondary_override} -> {secondary_weights}")
     else:
-        secondary_weights = (weights_root / SECONDARY_PACK / "weights" / "unet_transformer" / "split_0"
-                             / "edge_predictor_best.pth")
+        secondary_weights = (find_pack(SECONDARY_PACK, weights_root) / "weights" / "unet_transformer"
+                             / "split_0" / "edge_predictor_best.pth")
     if not secondary_weights.is_file():
         raise FileNotFoundError(f"secondary weights not found: {secondary_weights}")
 
-    deepcenter = weights_root / DEEPCENTER_PACK / "weights" / "full_frame_center" / "best.pt"
+    deepcenter = find_pack(DEEPCENTER_PACK, weights_root) / "weights" / "full_frame_center" / "best.pt"
     if not deepcenter.is_file():
         raise FileNotFoundError(f"DeepCenter checkpoint not found: {deepcenter}")
 
@@ -415,8 +436,8 @@ def main() -> None:
     ap.add_argument("--data-dir", default=str(DEFAULT_DATA))
     ap.add_argument("--weights-root", default=str(DEFAULT_WEIGHTS_ROOT))
     ap.add_argument("--cache-dir", default=str(DEFAULT_CACHE))
-    ap.add_argument("--primary", default=None, help="folder in biohub-ft-weights to use as PRIMARY")
-    ap.add_argument("--secondary", default=None, help="folder in biohub-ft-weights to use as SECONDARY")
+    ap.add_argument("--primary", default=None, help="checkpoint name under weights_dataset/ to use as PRIMARY")
+    ap.add_argument("--secondary", default=None, help="checkpoint name under weights_dataset/ to use as SECONDARY")
     ap.add_argument("--stage", choices=["all", "infer", "pp"], default="all")
     ap.add_argument("--force-infer", action="store_true")
     ap.add_argument("--unet-batch-size", type=int, default=None)
