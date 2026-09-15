@@ -252,3 +252,30 @@ Everything listed above the 0.947 group is still the July metric-hack set. Leade
 (160 / 3372 two days ago); the top is 0.970 / 0.968 / 0.966 / 0.966; rank 49 = 0.949; ranks 50-344 are collapsed, so
 about 200 teams moved to 0.948-0.949 or ahead of us on tie-break in two days. Whatever they did is not a visible
 public notebook.
+
+## Update 2026-09-15 evening (discussion + code tab; browser)
+
+**Code tab:** still nothing public above the 0.947 group (score-sorted list unchanged above sjlee101; the newcomers of
+13-15 Sep are 0.947 reproductions, "fast repro", "runnable with public datasets", "all199 submission kernel", a
+"structured trajectory candidate" and a "geometric fusion" fork, all unscored or <= 0.947).
+
+**zhincez (= Lê Quang Cảnh, rank 39) notebook "A dividing nucleus gets smaller, not dimmer" (CPU EDA on the labels +
+images, paired controls from the same film starting on the same frame, bootstrap intervals per lag).** Measured in one
+box around each annotated position: PEAK (brightest voxel above local background), VOLUME (voxels above half-max) and
+MEAN. Result: VOLUME of dividing lineages is below paired controls at lags -2, -1 and +1..+5, deepest about -0.27 at
++3 frames and fading by +6; PEAK holds at every lag except the split frame itself; MEAN falls only because a fixed-radius
+probe around a smaller object reads more background (his first version mistook this for dimming). So the usable image
+feature for a division ranker / peak pruner is SIZE over a temporal window (half-max volume relative to a same-frame
+control), not intensity. Our own AUC 0.73 "parent peak intensity at the split frame" is consistent with his "peak
+clears zero only at the split frame". Handed to friend B as the image feature B25/B20 lacked.
+
+**741386 Masha Mikhisor (rank 13):** organisers confirmed Zebrahub data is allowed as external data; she asks whether
+the public Ultrack embryo (2024_03_22_dorado/stabilized.zarr) is separate from the competition embryos and usable for
+validation, and how estimated_number_of_nodes is estimated. No answers yet; if that embryo is separate it is the
+missing "third embryo" for honest validation of the domain-shift work.
+
+**741242 Hammad Farooq (rank 218):** the newer public stack with the HOCT veto (sjlee101/biohub-hoct-020-wheels +
+musculer/biohub-hoct-general-v0-official = royerlab's HOCT tracker as a veto) spends ~75 min on the in-kernel validator
+and sweep, and HOCT has a 10 h wall-clock deadline that can skip hidden-test videos. Not our stack (exp29 = v020 with the
+DeepCenter veto, no HOCT) and exp29 was scored on the hidden set already, so no action; HOCT-veto variants scored 0.947
+(tie) anyway.
