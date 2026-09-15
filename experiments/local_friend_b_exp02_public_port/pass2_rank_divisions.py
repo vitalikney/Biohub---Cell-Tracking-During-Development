@@ -99,7 +99,7 @@ def public_key(f):  # shipped ranking, lower is better; shipped gates as hard fi
     return d_pq + 0.15 * d_cq
 
 
-def apply(nodes, edges, cands, scores, succ, pred, mode):
+def apply(nodes, edges, cands, scores, succ, pred, mode, min_score=-np.inf):
     """Accept candidates in score order under the shipped caps and veto; returns new edge list."""
     n_src_by_t = {}
     for p, c, q, t, f in cands: n_src_by_t[t] = n_src_by_t.get(t, 0) + 1
@@ -108,7 +108,7 @@ def apply(nodes, edges, cands, scores, succ, pred, mode):
     global_cap = max(1, int(round(len(edges) * GLOBAL_CAP)))
     order = sorted(range(len(cands)), key=lambda i: -scores[i])
     for i in order:
-        if scores[i] == -np.inf: continue
+        if scores[i] == -np.inf or scores[i] < min_score: continue   # a learned ranker needs a threshold, not just the caps
         p, c, q, t, f = cands[i]
         if added >= global_cap: break
         cap = max(1, int(round(n_src_by_t.get(t, 1) * FRAME_CAP)))
@@ -125,11 +125,12 @@ def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--tag", default="exp29pp"); ap.add_argument("--stems", nargs="*", default=[])
     ap.add_argument("--ranker", choices=["public", "gbm"], default="public"); ap.add_argument("--mode", choices=["add", "steal"], default="add")
     ap.add_argument("--parent-um", type=float, default=9.0); ap.add_argument("--k", type=int, default=3); ap.add_argument("--label", default=None)
+    ap.add_argument("--min-score", type=float, default=None, help="gbm only: accept a candidate only if its OOF probability >= this (default: caps only)")
     a = ap.parse_args()
     import public_local as pl, divranker, postproc, networkx as nx
     cache = pl.DEFAULT_CACHE / a.tag
     stems = a.stems or sorted(p.stem for p in (cache / "ckpt").glob("*.npz"))
-    label_ = a.label or f"p2_{a.ranker}_{a.mode}"
+    label_ = a.label or f"p2_{a.ranker}_{a.mode}" + (f"_t{a.min_score:g}" if (a.ranker == "gbm" and a.min_score is not None) else "")
     out_dir = cache / "pp" / label_; out_dir.mkdir(parents=True, exist_ok=True)
     # notebook tail (prune-isolated, short-track, linefit) through the real functions
     os.environ["BIOHUB_OUTPUT_SAFE_DIVISIONS"] = "0"; os.environ["BIOHUB_OUTPUT_MOTION_RELINK"] = "0"; os.environ["BIOHUB_OUTPUT_GAP_CLOSE"] = "0"; os.environ["BIOHUB_OUTPUT_GAP2_RECOVERY"] = "0"
@@ -161,7 +162,8 @@ def main():
             else:
                 clf = HistGradientBoostingClassifier(max_iter=200, learning_rate=0.05, max_depth=4, class_weight="balanced", random_state=0).fit(np.nan_to_num(Xtr, nan=-1), ytr)
                 sc = clf.predict_proba(np.nan_to_num(F, nan=-1))[:, 1]
-        new_edges, added = apply(nodes, edges, cands, sc, succ, pred, a.mode)
+        thr = (a.min_score if (a.ranker == "gbm" and a.min_score is not None) else -np.inf)
+        new_edges, added = apply(nodes, edges, cands, sc, succ, pred, a.mode, min_score=thr)
         nb = {i: {"node_id": i, "t": n["t"], "z": n["z"], "y": n["y"], "x": n["x"], **({"gap_synthetic": 1} if n["syn"] else {})} for i, n in nodes.items()}
         eb = [{"source_id": s_, "target_id": d_, "edge_prob": p_} for s_, d_, p_ in new_edges]
         nb, eb, stats = fog(nb, eb, dataset=s, deepcenter_bundle=None)
