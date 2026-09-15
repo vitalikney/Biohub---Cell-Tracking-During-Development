@@ -76,6 +76,25 @@
     "out_nodes": 130079
   },
   {
+    "tag": "exp29pp_4vid_prune05",
+    "label": "base",
+    "videos": 4,
+    "clean_videos": 2,
+    "primary": "pilkwang",
+    "secondary": "seed314159",
+    "tta": "public",
+    "pool_kernel_um": 3.0,
+    "env": "",
+    "score": 0.9073691007729529,
+    "adj_edge": 0.9073691007729529,
+    "edge": 0.885234899328859,
+    "div_J": 0.0,
+    "div": "0/2/3",
+    "recall": 0.9929329434267637,
+    "raw_nodes": 125544,
+    "out_nodes": 124214
+  },
+  {
     "tag": "exp30_4vid",
     "label": "base",
     "videos": 4,
