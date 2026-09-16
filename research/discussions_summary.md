@@ -293,3 +293,37 @@ graphs it drops 23 edges, division FP 13 -> 11, TP unchanged, score 0.9567 -> 0.
 "runnable with public datasets": a stage-resume mechanism (sha256-signed stage outputs, resume from JSON) - robustness
 engineering for the 12 h limit, not a score lever. (4) binasalama "learned gap recovery" = 0.887; sujalsuyash LNN = toy;
 josephadamski "reconcile guard" = consistency asserts.
+
+## Update 2026-09-16 (discussion re-read, focus on hengck23; browser)
+
+**hengck23 (rank 696 on this LB - a strong researcher, not a leader here; his own LB does not validate his claims).**
+- New notebook `hengck23/end2end-cell-linker-raw-edge-ja-0-9-no-ilp`: an end-to-end linker with raw edge Jaccard ~0.90
+  using link probability only (no ILP, no gap filling), trained WITHOUT Kaggle annotation - focus3d instance centroids on
+  20% of the frames (t = 0, 5, 10, ...) plus augmentation that simulates cell movement. Inference only; weights live in his
+  dataset `hengck23-cell-point-detector-demo`. Our raw edge Jaccard is 0.856-0.874, so if 0.90 held on Kaggle labels it
+  would be a real detector/linker lever - but it comes with no LB score and cannot be integrated in 14 days.
+- Tricks he names: analyse FP and MISS by class ("multiple predicted nodes match one GT node and the metric only
+  counts the first two - your edge may link the wrong duplicate"); Kaggle annotations sit on Ultrack-segmentation
+  points that are sometimes "cell corners" while focus3d gives centres (a localisation offset, cf. Lê's -0.57 um dz);
+  annotation errors exist (Satwik shows examples); and "the best way to reduce nodes is to cluster them and represent
+  them by a centroid" - in his code `cluster_predicted_nodes`: greedy score-ordered duplicate suppression within a
+  radius (1 voxel on refined coordinates), keeping the best-scored prediction rather than averaging. Queued as B31.
+- Longer-term (his words): 5-frame training with elastic augmentation over frames, dense pseudo-labels from
+  ultrack/ITEC/HOCT, division as hypothesis competition inside the optimisation (Ultrack) rather than a post-hoc gate;
+  "find the upper bound of achievable division Jaccard first".
+
+**Lê Quang Cảnh (rank 37) in the synthetic-data thread:** on 7 labelled divisions all parents and daughters are detected,
+the linker attaches exactly one daughter every time; reachability of BOTH daughter arcs by a single gate: 29% at 7 um,
+71% at 9.9, 86% at 12, 100% at 15 -> the SECOND arc needs its own gate, about double the continuation gate. Also: the
+public motion-relink stage rebuilds edges one-to-one BEFORE safe-div, so every ILP fork is destroyed there (division
+work upstream of relink is invisible); fine-tuning the public detector on a 7-film sparse split made adj_J -0.016 worse.
+Both match our own measurements (parent radius 9 um rejects 19.9% of real divisions; relink net negative on 12 videos).
+
+**Juan Neira:** a division classifier trained on the synthetic dataset (AP 0.98 on synthetic) dropped his LB 0.910 -> 0.906
+when used as a gate: synthetic division geometry does not transfer. Negative evidence for using the free 18.5 GB set
+directly for divisions.
+
+**Sergio Alvarez (rank 1) answering Masha (rank 14):** the public Ultrack embryo 2024_03_22_dorado/stabilized.zarr is a
+DIFFERENT embryo with the same voxel spacing (chunks must be cut to 64x256x256); the hidden test is new images made with
+the same methodology; annotations are presumably ultrack/hoct + manual review. Confirms B24 as a real third-embryo
+volume (no public tracks, so unsupervised checks only).
