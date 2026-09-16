@@ -327,3 +327,24 @@ directly for divisions.
 DIFFERENT embryo with the same voxel spacing (chunks must be cut to 64x256x256); the hidden test is new images made with
 the same methodology; annotations are presumably ultrack/hoct + manual review. Confirms B24 as a real third-embryo
 volume (no public tracks, so unsupervised checks only).
+
+**Content scan 2026-09-16 of 16 liked/new notebooks (pulled via API, diffed cell-by-cell against exp29; scores read
+where they exist).** Three mechanisms that are genuinely absent from our stack, none above our score:
+- `arnav170/biohub-reid2` (unscored, 2h15 GPU): appearance RE-ID for association - 7x25x25 image cubes around each
+  node -> 28-dim descriptors, pair features (block distances, cosines, raw and motion-predicted distance, edge prob,
+  rank, gap), a HistGradientBoosting classifier trained IN-KERNEL on the train videos (leave-one-video-out) and fed to
+  motion relink as `learned_prob`. Class = association ranker (same family as yusuketogashi's `_PublicLocalAssociationRanker`
+  MLP + forward-acceleration lookahead, clean base 0.915); our evidence says this class gives +0.001 on the LB.
+- `kunaldesale2408/biohub-cell-tracking` (104 votes, **0.940**): a confidence-distance edge gate
+  (prob - penalty * dist/scale >= min, then re-impose one-parent) - a post-processing filter, and it scores below 0.947.
+- `pawanmali/biohub-942tta-fork-succskip-v1`: another safe-division-style addition ("successor skip"); `-novet-v1`:
+  DeepCenter veto off (friend B measured veto OFF locally: +0.0024, one division event).
+- Knob sets only: yunusgmsoy kimi v18 (**0.933**, best 0.936: bidirectional 0.40, secondary det 0.475, safe-div 12/15,
+  gap2 off, rescue off), androidss "936" (gap 5.8, safe-div 7/12, DeepCenter checkpoint_last), anhadmahajan06
+  (SECONDARY_LINK_MODE adaptive, relink bonus 1.0/1.25, sweep margin 0.0005; 0.946 claimed), qrz1201/rishabhr0y
+  (gap 5.8, adaptive link mode), beraterolelk "pp ensemble" (= DC 0.25 fork).
+- `xiaoleilian/biohub-ct-mix-divaug` (247 votes, July) + training code: a separate 2-UNet heatmap pipeline with two
+  preprocessings (none / top-hat), heatmaps averaged, two-pass um-gated Hungarian linking; weights public
+  (`xiaoleilian/biohub-unet3d-weights-v2models`). A candidate third detector for a blend, i.e. the secondary-swap class
+  we closed on the LB (probes 7, 10, 13).
+Verdict: nothing to probe; the popular notebooks are knob sets and association rankers on the same public stack.

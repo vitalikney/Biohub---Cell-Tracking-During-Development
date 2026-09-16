@@ -980,6 +980,11 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   continuation gate, reachability 29% at 7 um -> 100% at 15 um); B24 confirmed by the #1 competitor as a genuine third
   embryo with our spacing. Negative evidence noted: a synthetic-trained division gate cost -0.004 on the LB (Juan Neira).
   hengck23's end-to-end linker (raw edge J ~0.90, trained without Kaggle labels) is recorded as a post-competition idea:
-  no LB proof, not integrable in 14 days.
+  no LB proof, not integrable in 14 days.- 2026-09-16 CODE SCAN BY CONTENT (user: "look at code regardless of score"): 16 liked/new notebooks pulled and diffed
+  (research/discussions_summary.md). New mechanisms found: appearance re-ID association ranker (arnav170, unscored),
+  confidence-distance edge gate (kunaldesale2408, 0.940), successor-skip division addition, xiaoleilian's 2-UNet
+  top-hat/none blend with public weights. All belong to classes closed on the LB (association +0.001, post-proc ties,
+  secondary swaps negative). No probe. Rule kept: a late public notebook with a PUBLISHED score >= 0.950 gets one
+  probe as-is without discussion.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
