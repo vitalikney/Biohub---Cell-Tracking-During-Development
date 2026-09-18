@@ -997,5 +997,7 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   a per-video denoising-autoencoder prefilter (ghazarosbarseghyan91, test-time adaptation flavour, alpha 0.15),
   arnav170 steal2 (re-ID + steal), newwang12 density-grouped overrides, alfonso1799 "V50 SOTA 0.9605" (2 cells,
   claim unverified; the LB has one team at 0.961 so it is not a public-notebook effect). None probed.
+  Scores read later in the browser: haideptry "SOTA 0.948+" (DivNet as a soft veto) = **0.945**, i.e. the veto use costs
+  -0.002 on the exp29-class config - consistent with "ranking, not vetoing"; raunakdey07 harmonic-fusion-v3 = 0.947 (tie).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
