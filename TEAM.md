@@ -74,6 +74,8 @@ If you have ANY local row that reported division TPs, re-score it before drawing
 
 **Friend B — order of work (revised 2026-09-10 21:30; supersedes the 18:00 version). Self-contained.**
 
+UPDATE 2026-09-18 (B20 shortcut): a PUBLIC trained division detector exists - `giorgosi/biohub-divnet-v2` (per-node 3D UNet-GAP on lags -1..+2 + centre marker, 4 folds over all 199 videos, OOF AUC 0.887, simulated official div_J 0.21-0.23 vs our 0.11). Loader/scorer in `tools/divnet_infer.py`, dataset in the fetcher manifest (`--only divnet`). Use its p as the ranker score for your B20 candidates (needs the 4 frames around each candidate, so score in pass 1 or a streaming pass); gate unchanged: official div_J on 199 by 22 Sep.
+
 UPDATE 2026-09-15 night (plan after your closures): from tomorrow your main line is B20 (division ranker via your in-kernel
 feature table): the only metric term with room, multi-day, must show div_J on all 199 videos with the official metric by
 22 Sep. Order: feature table (incl. the size profile) -> ranker -> LOEO div_J. The axis-flip branch (DeepCenter TTA group,
@@ -148,6 +150,15 @@ STEP 4b (CPU, cheap, do it whenever a GPU run is busy): division-gate sweep on A
 STEP 5 (later): teacher for the remaining 61 44b6 videos (for all-183 dense fine-tunes); optional dense scratch run only if 1-4 are done.
 
 **Friend A — order of work (revised 2026-09-10 18:00 after the audit in CONTEXT §14). Self-contained.**
+
+**UPDATE 2026-09-18: friend A's task CHANGED (friend B is out; friend A is back).** The dense/sparse fine-tune line
+below is CANCELLED (probes 15/17: fine-tuned primaries 0.944/0.943 vs 0.947; weight swaps unresolvable locally per
+friend B's calibration). Friend A takes over B20 with the public DivNet model: pass 1 of friend B's port over all 199
+videos on his own GPU (data is local, no Kaggle bundling), DivNet p for every (parent, candidate) fork via
+`tools/divnet_infer.py` computed while frames are on disk, pass 2 with DivNet ranking (top-k 1/2, min-score 0.3/0.5/0.7,
+shipped caps and veto), official div_J and score on all 199, gate: score >= control + 0.005 with division TP up and
+adj_edge down by <= 0.001 -> one LB probe by Vitalii. Deadline 22 Sep. Details in PROMPT_FRIEND_A.md top block.
+
 
 UPDATE 2026-09-12 (read first): LB probes 15 and 17 are in - a fine-tuned primary on the public 0.947 TTA stack scores
 0.944 (exp03B) and 0.943 (weight soup) against 0.947 for the untouched public weights. So NO fine-tuned primary goes into

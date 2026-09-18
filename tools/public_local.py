@@ -52,8 +52,11 @@ warnings.filterwarnings("ignore")
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 TOOLS = PROJECT_ROOT / "tools"
-DEFAULT_WEIGHTS_ROOT = Path.home() / "biohub_weights"
-DEFAULT_DATA = PROJECT_ROOT / "biohub-cell-tracking-during-development" / "train"
+DEFAULT_WEIGHTS_ROOT = Path(os.environ.get("BIOHUB_WEIGHTS_ROOT", Path.home() / "biohub_weights"))
+DEFAULT_DATA = Path(os.environ.get(
+    "BIOHUB_DATA_DIR",
+    PROJECT_ROOT / "biohub-cell-tracking-during-development" / "train",
+))
 DEFAULT_CACHE = Path(os.environ.get("BIOHUB_LOCAL_CACHE", PROJECT_ROOT / ".public_local_cache"))
 DEFAULT_NOTEBOOK = PROJECT_ROOT / "experiments/exp29_sjlee947_verbatim/exp29-sjlee947-verbatim.ipynb"
 
