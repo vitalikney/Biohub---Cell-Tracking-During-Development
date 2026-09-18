@@ -151,6 +151,15 @@ STEP 5 (later): teacher for the remaining 61 44b6 videos (for all-183 dense fine
 
 **Friend A — order of work (revised 2026-09-10 18:00 after the audit in CONTEXT §14). Self-contained.**
 
+**UPDATE 2026-09-18: friend A's task CHANGED (friend B is out; friend A is back).** The dense/sparse fine-tune line
+below is CANCELLED (probes 15/17: fine-tuned primaries 0.944/0.943 vs 0.947; weight swaps unresolvable locally per
+friend B's calibration). Friend A takes over B20 with the public DivNet model: pass 1 of friend B's port over all 199
+videos on his own GPU (data is local, no Kaggle bundling), DivNet p for every (parent, candidate) fork via
+`tools/divnet_infer.py` computed while frames are on disk, pass 2 with DivNet ranking (top-k 1/2, min-score 0.3/0.5/0.7,
+shipped caps and veto), official div_J and score on all 199, gate: score >= control + 0.005 with division TP up and
+adj_edge down by <= 0.001 -> one LB probe by Vitalii. Deadline 22 Sep. Details in PROMPT_FRIEND_A.md top block.
+
+
 UPDATE 2026-09-12 (read first): LB probes 15 and 17 are in - a fine-tuned primary on the public 0.947 TTA stack scores
 0.944 (exp03B) and 0.943 (weight soup) against 0.947 for the untouched public weights. So NO fine-tuned primary goes into
 final submission 1 any more, and there will be no further LB probes of them. Your STEP 2/3 work is still wanted, but its

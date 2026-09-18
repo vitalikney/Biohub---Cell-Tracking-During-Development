@@ -998,6 +998,11 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   arnav170 steal2 (re-ID + steal), newwang12 density-grouped overrides, alfonso1799 "V50 SOTA 0.9605" (2 cells,
   claim unverified; the LB has one team at 0.961 so it is not a public-notebook effect). None probed.
   Scores read later in the browser: haideptry "SOTA 0.948+" (DivNet as a soft veto) = **0.945**, i.e. the veto use costs
-  -0.002 on the exp29-class config - consistent with "ranking, not vetoing"; raunakdey07 harmonic-fusion-v3 = 0.947 (tie).
+  -0.002 on the exp29-class config - consistent with "ranking, not vetoing"; raunakdey07 harmonic-fusion-v3 = 0.947 (tie).- 2026-09-18 FRIEND A IS BACK, FRIEND B IS OUT (user). PROMPT_FRIEND_A.md re-cut with a top block that cancels the dense
+  fine-tune line (he had started a notebook for it - stopped) and hands him B20 with DivNet on friend B's port: pass 1
+  over all 199 videos locally (no Kaggle bundling, he has the data), DivNet scores per candidate fork while frames are on
+  disk, pass 2 with DivNet ranking (top-k, min-score grid), official div_J on 199, gate = score >= control + 0.005 with
+  division TP up and adj_edge within 0.001, deadline 22 Sep, then one LB probe by me. Friend B's B20 stream (148/199)
+  and scripts stay in the repo as the base; his prompt is unchanged in case he returns.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
