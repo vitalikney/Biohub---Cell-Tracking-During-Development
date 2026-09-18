@@ -1,0 +1,25 @@
+# Friend A B5 — resumable test-time adaptation
+
+Entry point: root-level `friend-a-test-time-adaptation.ipynb`.
+
+This is the Friend A task assigned in the latest operational note in `CONTEXT.md` (2026-09-15), which supersedes the
+older dense-fine-tune prompt. It evaluates three controlled modes on the honest 6bba-to-44b6 setup:
+
+1. unchanged `friend_a_exp02_loeo20` baseline;
+2. per-video BatchNorm statistics recalibration (`adabn`);
+3. per-video detection-head-only EMA self-training under mild photometric consistency (`head_ema`).
+
+Adaptation sees image Zarr stores only. The competition GEFF is opened only after all predictions for a variant exist,
+by the official scorer. Each target video starts from the same untouched base checkpoint.
+
+## Stop and resume
+
+- Every completed video is skipped on rerun.
+- `head_ema` writes a full adaptation checkpoint every 25 steps.
+- Jupyter's Interrupt button is caught and saved; rerunning resumes the interrupted video.
+- For a cooperative stop from another PowerShell window, create
+  `C:\Projects\CellTracker\outputs\local_friend_a_exp04_tta_b5\STOP_REQUESTED`.
+- `BIOHUB_TTA_MAX_VIDEOS=1` limits one invocation to one unfinished variant/video pair.
+
+No leaderboard submission, Git commit, or dataset upload is performed automatically.
+
