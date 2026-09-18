@@ -74,6 +74,8 @@ If you have ANY local row that reported division TPs, re-score it before drawing
 
 **Friend B — order of work (revised 2026-09-10 21:30; supersedes the 18:00 version). Self-contained.**
 
+UPDATE 2026-09-18 (B20 shortcut): a PUBLIC trained division detector exists - `giorgosi/biohub-divnet-v2` (per-node 3D UNet-GAP on lags -1..+2 + centre marker, 4 folds over all 199 videos, OOF AUC 0.887, simulated official div_J 0.21-0.23 vs our 0.11). Loader/scorer in `tools/divnet_infer.py`, dataset in the fetcher manifest (`--only divnet`). Use its p as the ranker score for your B20 candidates (needs the 4 frames around each candidate, so score in pass 1 or a streaming pass); gate unchanged: official div_J on 199 by 22 Sep.
+
 UPDATE 2026-09-15 night (plan after your closures): from tomorrow your main line is B20 (division ranker via your in-kernel
 feature table): the only metric term with room, multi-day, must show div_J on all 199 videos with the official metric by
 22 Sep. Order: feature table (incl. the size profile) -> ranker -> LOEO div_J. The axis-flip branch (DeepCenter TTA group,

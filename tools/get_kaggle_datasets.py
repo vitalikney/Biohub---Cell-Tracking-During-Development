@@ -28,6 +28,8 @@ DATASETS = [
      "secondary detector seed314159 (the dual-seed blend); every probe kernel; v1"),
     ("pilkwang/biohub-deepcenter-unet3d-center-prior-v1",
      "DeepCenter full_frame_center/best.pt veto model; every probe kernel since exp29; v1"),
+    ("giorgosi/biohub-divnet-v2",
+     "public DivNet 3D mitosis classifier (best_overall.pt 5.6 MB + ARTIFACT_MANIFEST.json): per-node division-event detector trained on all 199 videos, OOF AUC 0.887; loader/scorer code in tools/divnet_infer.py; for B20"),
     ("vitaliineibauer/biohub-ft-weights",
      "team weights (exp03B, exp08, exp23, soup03B_50, friend_a_*); ALSO fully in git under weights_dataset/, fetch only if you want the Kaggle copy"),
 ]
