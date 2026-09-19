@@ -64,8 +64,18 @@ def candidates(nodes, edges, dcs, peak, parent_um, k, mode):
             if nodes[c]["t"] != t + 1: continue
             d_pc = float(np.linalg.norm(pos[c] - pos[p]))
             if d_pc > EXIST_CHILD_MAX: continue
-            d, i = tree.query(pos[p], k=min(k + 1, len(nxt)), distance_upper_bound=parent_um)
-            for dd, ii in zip(np.atleast_1d(d), np.atleast_1d(i)):
+            if k <= 0:
+                # Exact radius query for follow-up experiments.  The original
+                # positive k path is unchanged for all recorded B20 runs.
+                indices = tree.query_ball_point(pos[p], r=parent_um)
+                pairs = sorted(
+                    (float(np.linalg.norm(pos[nxt[ii]] - pos[p])), int(ii))
+                    for ii in indices
+                )
+            else:
+                d, i = tree.query(pos[p], k=min(k + 1, len(nxt)), distance_upper_bound=parent_um)
+                pairs = list(zip(np.atleast_1d(d), np.atleast_1d(i)))
+            for dd, ii in pairs:
                 if not np.isfinite(dd) or ii >= len(nxt): continue
                 q = nxt[ii]
                 if q == c: continue

@@ -1,0 +1,90 @@
+{
+  "experiment": "local_friend_a_b20_divnet_followup_2026-09-19",
+  "videos": 199,
+  "metric": "official adjusted edge Jaccard + 0.1 * division Jaccard",
+  "gate": "score >= original control + 0.005, division TP up, adjusted edge delta >= -0.001",
+  "diagnostic": {
+    "scored_parents": 3821426,
+    "gt_divisions": 151,
+    "matched_positive_parents": 142,
+    "gt_coverage": 0.9403973509933775,
+    "auc": 0.8340390113839915,
+    "hits_at_1": 0.2676056338028169,
+    "hits_at_2": 0.352112676056338,
+    "hits_at_3": 0.39436619718309857,
+    "match_radius_um": 7.0,
+    "hits_definition": "rank among scored parents in the same dataset/frame; ties use the best rank",
+    "artifact": "b20_followup_diagnostic.json",
+    "histogram": "b20_followup_diagnostic.svg"
+  },
+  "candidate_pool": {
+    "mode": "public orphans only; no steal",
+    "parent_radius_um": 12.0,
+    "sister_separation_min_um": 5.0,
+    "other_filters": "public hard gates, frame/global caps, DeepCenter veto, and notebook tail"
+  },
+  "rows": [
+    {
+      "variant": "original_control_public",
+      "score": 0.912027502438606,
+      "score_delta": 0.0,
+      "adjusted_edge_jaccard": 0.9023109032483225,
+      "adjusted_edge_delta": 0.0,
+      "division_jaccard": 0.09716599190283401,
+      "division_tp": 24,
+      "division_fp": 96,
+      "division_fn": 127,
+      "passes_gate": false
+    },
+    {
+      "variant": "matched_geometry_control",
+      "score": 0.9120537006130333,
+      "score_delta": 0.0000261981744273,
+      "adjusted_edge_jaccard": 0.902172277688132,
+      "adjusted_edge_delta": -0.000138625560190508,
+      "division_jaccard": 0.09881422924901186,
+      "division_tp": 25,
+      "division_fp": 102,
+      "division_fn": 126,
+      "passes_gate": false
+    },
+    {
+      "variant": "divnet_no_threshold",
+      "score": 0.9116101251971906,
+      "score_delta": -0.0004173772414154,
+      "adjusted_edge_jaccard": 0.9021239591892855,
+      "adjusted_edge_delta": -0.000186944059037,
+      "division_jaccard": 0.09486166007905138,
+      "division_tp": 24,
+      "division_fp": 102,
+      "division_fn": 127,
+      "passes_gate": false
+    },
+    {
+      "variant": "divnet_p_ge_0.5",
+      "score": 0.914300260391771,
+      "score_delta": 0.00227275795316506,
+      "adjusted_edge_jaccard": 0.9024445902886783,
+      "adjusted_edge_delta": 0.0001336870403558,
+      "division_jaccard": 0.11855670103092783,
+      "division_tp": 23,
+      "division_fp": 43,
+      "division_fn": 128,
+      "passes_gate": false
+    },
+    {
+      "variant": "hybrid_p_times_inverse_geometry_cost",
+      "score": 0.9119194988861703,
+      "score_delta": -0.0001080035524357,
+      "adjusted_edge_jaccard": 0.9021538738861703,
+      "adjusted_edge_delta": -0.0001570293621522,
+      "division_jaccard": 0.09765625,
+      "division_tp": 25,
+      "division_fp": 105,
+      "division_fn": 126,
+      "passes_gate": false
+    }
+  ],
+  "winner": null,
+  "decision": "B20 division ranking is closed: diagnostic confirms that DivNet carries signal, but no public-candidate re-ranking passes the registered all-199 gate; no leaderboard probe."
+}

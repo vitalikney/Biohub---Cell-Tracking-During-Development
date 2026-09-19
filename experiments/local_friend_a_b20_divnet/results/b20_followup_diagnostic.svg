@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="500" viewBox="0 0 900 500">
+<rect width="100%" height="100%" fill="white"/>
+<text x="450.0" y="30" text-anchor="middle" font-family="sans-serif" font-size="20">DivNet parent diagnostic: AUC=0.8340</text>
+<line x1="70" y1="440" x2="875" y2="440" stroke="#222"/>
+<line x1="70" y1="55" x2="70" y2="440" stroke="#222"/>
+<rect x="70.00" y="440.00" width="40.25" height="0.00" fill="#4c78a8" fill-opacity="0.55"/>
+<rect x="78.05" y="440.00" width="24.15" height="0.00" fill="#f58518" fill-opacity="0.75"/>
+<rect x="110.25" y="440.00" width="40.25" height="0.00" fill="#4c78a8" fill-opacity="0.55"/>
+<rect x="118.30" y="440.00" width="24.15" height="0.00" fill="#f58518" fill-opacity="0.75"/>
+<rect x="150.50" y="440.00" width="40.25" height="0.00" fill="#4c78a8" fill-opacity="0.55"/>
+<rect x="158.55" y="440.00" width="24.15" height="0.00" fill="#f58518" fill-opacity="0.75"/>
+<rect x="190.75" y="440.00" width="40.25" height="0.00" fill="#4c78a8" fill-opacity="0.55"/>
+<rect x="198.80" y="440.00" width="24.15" height="0.00" fill="#f58518" fill-opacity="0.75"/>
+<rect x="231.00" y="440.00" width="40.25" height="0.00" fill="#4c78a8" fill-opacity="0.55"/>
+<rect x="239.05" y="440.00" width="24.15" height="0.00" fill="#f58518" fill-opacity="0.75"/>
+<rect x="271.25" y="55.00" width="40.25" height="385.00" fill="#4c78a8" fill-opacity="0.55"/>
+<rect x="279.30" y="297.22" width="24.15" height="142.78" fill="#f58518" fill-opacity="0.75"/>
+<rect x="311.50" y="435.41" width="40.25" height="4.59" fill="#4c78a8" fill-opacity="0.55"/>
+<rect x="319.55" y="428.10" width="24.15" height="11.90" fill="#f58518" fill-opacity="0.75"/>
+<rect x="351.75" y="437.55" width="40.25" height="2.45" fill="#4c78a8" fill-opacity="0.55"/>
+<rect x="359.80" y="431.08" width="24.15" height="8.92" fill="#f58518" fill-opacity="0.75"/>
+<rect x="392.00" y="438.19" width="40.25" height="1.81" fill="#4c78a8" fill-opacity="0.55"/>
+<rect x="400.05" y="440.00" width="24.15" height="0.00" fill="#f58518" fill-opacity="0.75"/>
+<rect x="432.25" y="438.52" width="40.25" height="1.48" fill="#4c78a8" fill-opacity="0.55"/>
+<rect x="440.30" y="431.08" width="24.15" height="8.92" fill="#f58518" fill-opacity="0.75"/>
+<rect x="472.50" y="438.67" width="40.25" height="1.33" fill="#4c78a8" fill-opacity="0.55"/>
+<rect x="480.55" y="437.03" width="24.15" height="2.97" fill="#f58518" fill-opacity="0.75"/>
+<rect x="512.75" y="438.68" width="40.25" height="1.32" fill="#4c78a8" fill-opacity="0.55"/>
+<rect x="520.80" y="440.00" width="24.15" height="0.00" fill="#f58518" fill-opacity="0.75"/>
+<rect x="553.00" y="438.40" width="40.25" height="1.60" fill="#4c78a8" fill-opacity="0.55"/>
+<rect x="561.05" y="440.00" width="24.15" height="0.00" fill="#f58518" fill-opacity="0.75"/>
+<rect x="593.25" y="437.66" width="40.25" height="2.34" fill="#4c78a8" fill-opacity="0.55"/>
+<rect x="601.30" y="437.03" width="24.15" height="2.97" fill="#f58518" fill-opacity="0.75"/>
+<rect x="633.50" y="433.81" width="40.25" height="6.19" fill="#4c78a8" fill-opacity="0.55"/>
+<rect x="641.55" y="413.23" width="24.15" height="26.77" fill="#f58518" fill-opacity="0.75"/>
+<rect x="673.75" y="425.72" width="40.25" height="14.28" fill="#4c78a8" fill-opacity="0.55"/>
+<rect x="681.80" y="222.86" width="24.15" height="217.14" fill="#f58518" fill-opacity="0.75"/>
+<rect x="714.00" y="440.00" width="40.25" height="0.00" fill="#4c78a8" fill-opacity="0.55"/>
+<rect x="722.05" y="440.00" width="24.15" height="0.00" fill="#f58518" fill-opacity="0.75"/>
+<rect x="754.25" y="440.00" width="40.25" height="0.00" fill="#4c78a8" fill-opacity="0.55"/>
+<rect x="762.30" y="440.00" width="24.15" height="0.00" fill="#f58518" fill-opacity="0.75"/>
+<rect x="794.50" y="440.00" width="40.25" height="0.00" fill="#4c78a8" fill-opacity="0.55"/>
+<rect x="802.55" y="440.00" width="24.15" height="0.00" fill="#f58518" fill-opacity="0.75"/>
+<rect x="834.75" y="440.00" width="40.25" height="0.00" fill="#4c78a8" fill-opacity="0.55"/>
+<rect x="842.80" y="440.00" width="24.15" height="0.00" fill="#f58518" fill-opacity="0.75"/>
+<line x1="70.00" y1="440" x2="70.00" y2="445" stroke="#222"/>
+<text x="70.00" y="463" text-anchor="middle" font-family="sans-serif" font-size="13">0.0</text>
+<line x1="231.00" y1="440" x2="231.00" y2="445" stroke="#222"/>
+<text x="231.00" y="463" text-anchor="middle" font-family="sans-serif" font-size="13">0.2</text>
+<line x1="392.00" y1="440" x2="392.00" y2="445" stroke="#222"/>
+<text x="392.00" y="463" text-anchor="middle" font-family="sans-serif" font-size="13">0.4</text>
+<line x1="553.00" y1="440" x2="553.00" y2="445" stroke="#222"/>
+<text x="553.00" y="463" text-anchor="middle" font-family="sans-serif" font-size="13">0.6</text>
+<line x1="714.00" y1="440" x2="714.00" y2="445" stroke="#222"/>
+<text x="714.00" y="463" text-anchor="middle" font-family="sans-serif" font-size="13">0.8</text>
+<line x1="875.00" y1="440" x2="875.00" y2="445" stroke="#222"/>
+<text x="875.00" y="463" text-anchor="middle" font-family="sans-serif" font-size="13">1.0</text>
+<text x="472.5" y="488" text-anchor="middle" font-family="sans-serif" font-size="15">DivNet probability</text>
+<rect x="82" y="67" width="18" height="12" fill="#4c78a8" fill-opacity="0.55"/>
+<text x="107" y="78" font-family="sans-serif" font-size="13">other parents</text>
+<rect x="215" y="67" width="18" height="12" fill="#f58518" fill-opacity="0.75"/>
+<text x="240" y="78" font-family="sans-serif" font-size="13">GT division parents</text>
+</svg>

@@ -23,3 +23,20 @@ B5 TTA queues are cancelled. The notebook performs, in order:
 
 Nothing is submitted to the leaderboard and no Git push is performed automatically. Compact final results are copied
 to `results/b20_final.{json,md}` for review and commit.
+
+## 2026-09-19 cached follow-up
+
+The two follow-ups from the newest top block of `PROMPT_FRIEND_A.md` are CPU-only and reuse the completed
+`friend_a_b20_exp29` cache. No detector, linker, or DivNet inference is repeated.
+
+`diagnose_divnet.py` matches scored parents to GT division parents in the same frame within 7 microns and writes AUC,
+hits@1/2/3, score histograms, and per-video coverage. `pass2_public_rerank.py` then uses only public orphan candidates,
+an exact 12-micron radius, sister separation at least 5 microns, the public hard gates/caps/DeepCenter veto, and no
+stealing. Its learned modes are:
+
+- `divnet`, no threshold: parents by decreasing DivNet probability; within a parent, maximum sister separation;
+- `divnet --min-score 0.5`: the same ordering with the published probability threshold;
+- `hybrid`: `DivNet p * 1 / (1 + public geometry cost in microns)` for the final pre-registered fallback.
+
+All pass-2 commands support `--resume` and the same `BIOHUB_B20_STOP_FILE`; completed GEFFs are reused after an
+interruption. The exact commands and compact all-199 result table are recorded in `results/b20_followup.md`.

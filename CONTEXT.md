@@ -1029,5 +1029,13 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   (adabn / head-only EMA self-training on the LOEO scratch model) - not run yet, optional after B20.
   His tool changes merged: `tools/divnet_infer.py` rewritten around the manifest (pool-then-crop, percentile
   normalisation, marker), `tools/public_local.py` honours BIOHUB_WEIGHTS_ROOT / BIOHUB_DATA_DIR.
+- 2026-09-19 23:35 FRIEND A: B20 CACHED FOLLOW-UPS COMPLETE on all 199 videos, official metric. Parent diagnostic over
+  3,821,426 cached p values: 142/151 GT division parents matched within 7 um, **AUC 0.8340**, hits@1/2/3
+  0.268/0.352/0.394, close enough to the published 0.887/0.28/0.40/0.46 to validate the input construction. Exact
+  public orphan-only pool (parent <=12 um, sister >=5 um, no steal) reproduces control at 0.91205. DivNet order without
+  a threshold is 0.91161; p>=0.5 is best at **0.91430 (+0.00227)**, adj_edge 0.90244 (+0.00013), div 23/43/128;
+  the final p/(1+public geometry cost) hybrid is 0.91192, div 25/105/126. None passes the registered +0.005 + TP-up +
+  edge-within-0.001 gate. **B20 divisions are closed; no LB probe.** Full report and histogram:
+  `experiments/local_friend_a_b20_divnet/results/b20_followup.{md,json}` and `b20_followup_diagnostic.svg`.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
