@@ -9,8 +9,10 @@ candidate for the parent. Per-video and within-video checkpoints make Ctrl-C or
 from __future__ import annotations
 
 import argparse
+import gc
 import os
 import sys
+import time
 from pathlib import Path
 
 import numpy as np
@@ -30,7 +32,18 @@ def atomic_npz(path: Path, **arrays: object) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_name(path.stem + ".tmp.npz")
     np.savez_compressed(temporary, **arrays)
-    os.replace(temporary, path)
+    # On Windows, antivirus/indexing can briefly hold the previous NPZ open.
+    # Retrying keeps resumable checkpoints from turning a transient file lock
+    # into a multi-hour pipeline failure.
+    for attempt in range(20):
+        try:
+            os.replace(temporary, path)
+            return
+        except PermissionError:
+            if attempt == 19:
+                raise
+            gc.collect()
+            time.sleep(min(0.05 * (attempt + 1), 1.0))
 
 
 def stop_requested() -> bool:
@@ -58,8 +71,12 @@ class FrameReader:
 def load_partial(path: Path) -> dict[int, float]:
     if not path.is_file():
         return {}
-    payload = np.load(path)
-    return {int(parent): float(score) for parent, score in zip(payload["p"], payload["score"])}
+    # NpzFile owns an open file handle.  Closing it explicitly is required on
+    # Windows before the same checkpoint path can be atomically replaced.
+    with np.load(path) as payload:
+        parents = np.asarray(payload["p"]).copy()
+        values = np.asarray(payload["score"]).copy()
+    return {int(parent): float(score) for parent, score in zip(parents, values)}
 
 
 def save_partial(path: Path, scores: dict[int, float]) -> None:

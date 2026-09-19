@@ -1,0 +1,92 @@
+{
+  "experiment": "local_friend_a_b20_divnet",
+  "videos": 199,
+  "gate": "score >= control + 0.005, division TP up, adj_edge delta >= -0.001",
+  "rows": [
+    {
+      "variant": "control_public",
+      "score": 0.912027502438606,
+      "delta": 0.0,
+      "adj_edge": 0.9023109032483225,
+      "adj_edge_delta": 0.0,
+      "division_jaccard": 0.09716599190283401,
+      "division_tp": 24,
+      "division_fp": 96,
+      "division_fn": 127,
+      "passes_gate": false
+    },
+    {
+      "variant": "divnet_k1_t0p3",
+      "score": 0.8979983130199802,
+      "delta": -0.014029189418625743,
+      "adj_edge": 0.8963176407510727,
+      "adj_edge_delta": -0.005993262497249852,
+      "division_jaccard": 0.01680672268907563,
+      "division_tp": 8,
+      "division_fp": 325,
+      "division_fn": 143,
+      "passes_gate": false
+    },
+    {
+      "variant": "divnet_k1_t0p5",
+      "score": 0.8980712325361249,
+      "delta": -0.013956269902481111,
+      "adj_edge": 0.8963940836891647,
+      "adj_edge_delta": -0.005916819559157793,
+      "division_jaccard": 0.016771488469601678,
+      "division_tp": 8,
+      "division_fp": 326,
+      "division_fn": 143,
+      "passes_gate": false
+    },
+    {
+      "variant": "divnet_k1_t0p7",
+      "score": 0.8981706869085779,
+      "delta": -0.013856815530028044,
+      "adj_edge": 0.8964864763822621,
+      "adj_edge_delta": -0.005824426866060439,
+      "division_jaccard": 0.016842105263157894,
+      "division_tp": 8,
+      "division_fp": 324,
+      "division_fn": 143,
+      "passes_gate": false
+    },
+    {
+      "variant": "divnet_k2_t0p3",
+      "score": 0.9000546869436341,
+      "delta": -0.011972815494971867,
+      "adj_edge": 0.8966504316244852,
+      "adj_edge_delta": -0.005660471623837315,
+      "division_jaccard": 0.03404255319148936,
+      "division_tp": 16,
+      "division_fp": 319,
+      "division_fn": 135,
+      "passes_gate": false
+    },
+    {
+      "variant": "divnet_k2_t0p5",
+      "score": 0.9000678013108744,
+      "delta": -0.011959701127731592,
+      "adj_edge": 0.8966635459917255,
+      "adj_edge_delta": -0.005647357256597041,
+      "division_jaccard": 0.03404255319148936,
+      "division_tp": 16,
+      "division_fp": 319,
+      "division_fn": 135,
+      "passes_gate": false
+    },
+    {
+      "variant": "divnet_k2_t0p7",
+      "score": 0.9000665907569179,
+      "delta": -0.011960911681688113,
+      "adj_edge": 0.896662335437769,
+      "adj_edge_delta": -0.005648567810553562,
+      "division_jaccard": 0.03404255319148936,
+      "division_tp": 16,
+      "division_fp": 319,
+      "division_fn": 135,
+      "passes_gate": false
+    }
+  ],
+  "winners": []
+}

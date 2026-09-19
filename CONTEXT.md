@@ -1004,5 +1004,14 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   disk, pass 2 with DivNet ranking (top-k, min-score grid), official div_J on 199, gate = score >= control + 0.005 with
   division TP up and adj_edge within 0.001, deadline 22 Sep, then one LB probe by me. Friend B's B20 stream (148/199)
   and scripts stay in the repo as the base; his prompt is unchanged in case he returns.
+- 2026-09-19 22:06 FRIEND A: B20 PUBLIC DIVNET CLOSED on all 199 videos with the official metric. Control public ranking:
+  score **0.91203**, adj_edge 0.90231, div_J 0.09717, divisions 24/96/127. Best DivNet setting (top-k 2, p>=0.5):
+  **0.90007 (-0.01196)**, adj_edge 0.89666 (-0.00565), div_J 0.03404, divisions 16/319/135; thresholds 0.3/0.5/0.7
+  are effectively flat, and top-k 1 is worse (~0.8981, 8/~325/143). No setting passes the pre-registered +0.005 score,
+  TP-up, edge-within-0.001 gate; no LB probe and no B20 winner. The integration exposes the limitation: the public DivNet
+  checkpoint returns one parent-event probability, copied to every candidate fork of that parent, so it cannot rank the
+  alternative second daughters; geometry still breaks within-parent ties and false steals explode. Full reproducible report
+  is in `experiments/local_friend_a_b20_divnet/results/b20_final.{md,json}`. The Windows-resume failure at 190/199 DivNet
+  videos was fixed by explicitly closing NPZ handles and retrying transient `os.replace` locks; all cached work resumed.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
