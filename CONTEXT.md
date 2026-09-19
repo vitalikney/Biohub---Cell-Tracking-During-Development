@@ -1012,6 +1012,22 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   checkpoint returns one parent-event probability, copied to every candidate fork of that parent, so it cannot rank the
   alternative second daughters; geometry still breaks within-parent ties and false steals explode. Full reproducible report
   is in `experiments/local_friend_a_b20_divnet/results/b20_final.{md,json}`. The Windows-resume failure at 190/199 DivNet
-  videos was fixed by explicitly closing NPZ handles and retrying transient `os.replace` locks; all cached work resumed.
+  videos was fixed by explicitly closing NPZ handles and retrying transient `os.replace` locks; all cached work resumed.- 2026-09-19 FRIEND A MERGED (3 commits, one day of work): B20 with DivNet built end to end and RUN ON ALL 199 VIDEOS
+  (`experiments/local_friend_a_b20_divnet/`, root notebook `friend-a-b20-divnet.ipynb`, results/b20_final.md). Official
+  metric, 199 videos: CONTROL (public ranking through his pass 2) = 0.9120, adj_edge 0.9023, divisions 24/96/127,
+  div_J 0.097. DivNet ranking, steal candidates within 15 um: k=1 -> 8 TP / 325 FP, score -0.014; k=2 -> 16 TP / 319 FP,
+  score -0.012; adj_edge -0.006 in every variant; thresholds 0.3/0.5/0.7 give IDENTICAL results. FIRST PASS NEGATIVE,
+  but not a verdict on DivNet: the implementation computes ONE p PER PARENT (DivNet is a parent-event classifier) and
+  attaches it to every admissible second child, so (a) the choice of WHICH candidate is the daughter is unresolved
+  (ties -> arbitrary), (b) the 15 um steal pool multiplies candidates and the per-frame caps bind before any threshold
+  does (hence threshold-invariance), (c) steals remove true edges (adj_edge -0.006). Two cheap follow-ups from his
+  cached per-parent p, written into PROMPT_FRIEND_A.md: (1) AUC of p for parents matched to GT dividers vs the rest on
+  all 199 - if ~0.85 the inputs are right and only the design failed, if ~0.5 the input construction is wrong;
+  (2) same candidate set and caps as the PUBLIC gate (sister floor 5 um, radius <= 12 um), public ranking replaced by
+  p descending, and within a parent the daughter chosen by geometry (largest sister separation) - a pure ranking
+  change, no FP explosion possible. Gate unchanged. He also built a resumable B5 test-time adaptation notebook
+  (adabn / head-only EMA self-training on the LOEO scratch model) - not run yet, optional after B20.
+  His tool changes merged: `tools/divnet_infer.py` rewritten around the manifest (pool-then-crop, percentile
+  normalisation, marker), `tools/public_local.py` honours BIOHUB_WEIGHTS_ROOT / BIOHUB_DATA_DIR.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
