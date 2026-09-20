@@ -379,3 +379,12 @@ Verdict: nothing to probe; the popular notebooks are knob sets and association r
 - Net for us: nothing new to adopt; two independent confirmations that (a) local weight ranking is worthless on
   in-sample videos, (b) node-count calibration is the LB-predictive readout - which is what friend C's B31 measures and
   what the AdaBN node guard protects.
+- **Addendum (browser back):** focus3d thread (738217), hengck23's only new comment (12 h): "expensive experiments. me
+  trying to find a model that doesn't over estimate num of nodes" - the grandmaster is chasing the same node-count
+  term; his earlier tricks in that thread: cluster nodes and represent by centroid (our B31), unroll joint node+edge
+  detection, listwise ranking loss with the metric as target. Shakeup thread (735352): Georgy Mamarin's table of 13
+  microscopy boards since 2019: on 8 of 13 at least 5 of the public top 10 stayed and the medal zone kept >= 60%; on
+  the other 5 the zone kept <= 50% and 5-18% of teams lost a medal one of their own submissions had earned. Public share
+  does not predict which (SenNet 67% collapsed, CZII 26% held; here 29%). TWEAK (26th, a month ago) claims a "plugin"
+  giving +0.03..0.05 on any public model; no details. Nothing changes: our two finals are the unchanged public stack
+  and one diversification.

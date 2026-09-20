@@ -1067,7 +1067,9 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   Ogurtsov (5th): no detector/linker change moved the LB, node-count calibration is the LB-predictive readout, local
   ranking of weights does not transfer, only synthetic pretraining helped him and only on his own 0.939 pipeline. Code:
   nothing above 0.947; giorgosin (DivNet author) is now training an appearance-aware edge predictor (linker line, out of
-  our window); ghazarosghazaros runs self-distillation arms on 0.946. Details research/discussions_summary.md. Plan
-  unchanged: AdaBN probe (exp38) when friend A's cell is ready, B31 on friend C.
+  our window); ghazarosghazaros runs self-distillation arms on 0.946. Details research/discussions_summary.md. Addendum: hengck23 (focus3d, 12 h) is
+  himself "trying to find a model that doesn't over estimate num of nodes"; shakeup thread = Mamarin's history of 13
+  microscopy boards (8/13 kept >= 5 of the top 10). Plan unchanged: AdaBN probe (exp38) when friend A's cell is ready,
+  B31 on friend C.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
