@@ -23,3 +23,14 @@ by the official scorer. Each target video starts from the same untouched base ch
 
 No leaderboard submission, Git commit, or dataset upload is performed automatically.
 
+## Completed run — 2026-09-20
+
+The full 12-video run completed on an RTX 5070 Ti in about 28 minutes. Official score:
+
+- unchanged baseline: `0.680335`;
+- guarded per-video AdaBN: `0.687615` (`+0.007279`, passes the pre-registered `+0.005` gate);
+- head-only EMA: `0.677830` (`-0.002505`, rejected).
+
+AdaBN was applied on 9 videos and fell back to the unchanged baseline on 3 videos using only the configured node-count
+guard. The compact decision report and exact official per-video metrics are in `results/`.
+

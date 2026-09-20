@@ -1,0 +1,25 @@
+{
+  "python": "3.12.14",
+  "torch": "2.9.1+cu128",
+  "cuda_available": true,
+  "gpu": "NVIDIA GeForce RTX 5070 Ti",
+  "data_dir": "C:\\Projects\\CellTracker\\train",
+  "videos": 12,
+  "variants": [
+    "baseline",
+    "adabn",
+    "head_ema"
+  ],
+  "output_dir": "C:\\Projects\\CellTracker\\outputs\\local_friend_a_exp04_tta_b5",
+  "fingerprint": "dce87420931e6f1b719bb6f479520e00f569aa9d7cb9f26b42161369c863783b",
+  "gpu_smoke": {
+    "finite": true,
+    "shape": [
+      1,
+      1,
+      64,
+      64,
+      64
+    ]
+  }
+}

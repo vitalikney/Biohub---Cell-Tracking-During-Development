@@ -1,0 +1,77 @@
+{
+  "experiment": "local_friend_a_exp04_tta_b5",
+  "completed_at": "2026-09-20T13:05:08+03:00",
+  "status": "complete",
+  "videos": 12,
+  "records_complete": 36,
+  "validation": "honest 6bba-to-44b6 LOEO; adaptation reads target images only; GT is opened only by the official scorer after prediction",
+  "metric": "official adjusted edge Jaccard + 0.1 * division Jaccard",
+  "gate": "adapted score >= baseline + 0.005 on all 12 LOEO-44b6 videos",
+  "environment": {
+    "python": "3.12.14",
+    "torch": "2.9.1+cu128",
+    "gpu": "NVIDIA GeForce RTX 5070 Ti",
+    "cuda_smoke_finite": true
+  },
+  "config": {
+    "base_checkpoint": "weights_dataset/friend_a_exp02_loeo20/edge_predictor_best.pth",
+    "seed": 42,
+    "head_ema_steps": 200,
+    "head_ema_lr": 0.0001,
+    "ema_decay": 0.995,
+    "pseudo_threshold": 0.985,
+    "node_guard_ratio": [
+      0.9,
+      1.05
+    ],
+    "fingerprint": "dce87420931e6f1b719bb6f479520e00f569aa9d7cb9f26b42161369c863783b"
+  },
+  "rows": [
+    {
+      "variant": "baseline",
+      "score": 0.6803352359126459,
+      "delta": 0.0,
+      "edge_jaccard": 0.6808863118658107,
+      "adjusted_edge_jaccard": 0.6803352359126459,
+      "node_recall": 0.8530786246815586,
+      "division_jaccard": 0.0,
+      "passes_gate": false
+    },
+    {
+      "variant": "adabn",
+      "score": 0.6876146285447883,
+      "delta": 0.00727939263214239,
+      "edge_jaccard": 0.688145394465097,
+      "adjusted_edge_jaccard": 0.6876146285447883,
+      "node_recall": 0.8653466016081387,
+      "division_jaccard": 0.0,
+      "applied_videos": 9,
+      "guard_fallback_videos": 3,
+      "per_video_wins_losses_ties": [
+        6,
+        3,
+        3
+      ],
+      "passes_gate": true
+    },
+    {
+      "variant": "head_ema",
+      "score": 0.6778299388593164,
+      "delta": -0.0025052970533294694,
+      "edge_jaccard": 0.6784605834885165,
+      "adjusted_edge_jaccard": 0.6778299388593164,
+      "node_recall": 0.8515855420656928,
+      "division_jaccard": 0.0,
+      "applied_videos": 12,
+      "guard_fallback_videos": 0,
+      "per_video_wins_losses_ties": [
+        2,
+        10,
+        0
+      ],
+      "passes_gate": false
+    }
+  ],
+  "winner": "adabn",
+  "decision": "AdaBN passes the pre-registered honest-LOEO gate by +0.00728. Head-only EMA self-training is rejected. No leaderboard submission was made."
+}

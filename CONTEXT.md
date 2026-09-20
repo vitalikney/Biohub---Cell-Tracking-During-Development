@@ -1037,5 +1037,12 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   the final p/(1+public geometry cost) hybrid is 0.91192, div 25/105/126. None passes the registered +0.005 + TP-up +
   edge-within-0.001 gate. **B20 divisions are closed; no LB probe.** Full report and histogram:
   `experiments/local_friend_a_b20_divnet/results/b20_followup.{md,json}` and `b20_followup_diagnostic.svg`.
+- 2026-09-20 13:05 FRIEND A: B5 TEST-TIME ADAPTATION COMPLETE on the fixed 12-video 44b6 honest LOEO fold. The
+  unchanged 6bba-only scratch checkpoint scores 0.68034. Label-free per-video AdaBN with the registered node-count
+  guard scores **0.68761 (+0.00728)**, raw edge J 0.68815 and node recall 0.86535, passing the +0.005 gate; it is used
+  on 9/12 videos and falls back to baseline on three videos whose candidate node ratios are outside `[0.90, 1.05]`.
+  The guarded result has 6 per-video wins, 3 losses and 3 fallback ties, so the gain is real in the official weighted
+  aggregate but heterogeneous. Head-only EMA scores 0.67783 (-0.00251) and is rejected. Nothing was submitted to the
+  leaderboard. Full report and exact scorer outputs: `experiments/local_friend_a_exp04_tta_b5/results/b5_final.{md,json}`.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
