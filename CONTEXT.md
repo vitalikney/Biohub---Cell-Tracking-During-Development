@@ -1061,6 +1061,13 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   score-ordered merge at r = 0.5/1/1.5/2 um on the raw graph, then the public pp stage on CPU with the DeepCenter veto
   read from dc/<stem>.npz by node_id; gate +0.005 on 199 with adj_edge within 0.001; +0.002..+0.005 with fewer nodes
   is reported as a final-2 candidate. Friend A packages cache/<tag>/{raw,dc,ckpt} + GT geffs as a shared dataset today.
-  Finals unchanged: final 1 = exp29 (probe 14); final 2 = AdaBN probe if it scores >= 0.947, else exp29 + axis-flip.
+  Finals unchanged: final 1 = exp29 (probe 14); final 2 = AdaBN probe if it scores >= 0.947, else exp29 + axis-flip.- 2026-09-20 DISCUSSION/CODE CHECK (user asked; browser dropped mid-way, focus3d + shakeup threads not re-read): Eric
+  (742064) verified from the shipped manifests that the public 0.947 detectors trained on all 199 train videos, so every
+  train hold-out is in-sample for the public stack (his local +0.0078 became -0.002 on the LB); hikaggler (741749) +
+  Ogurtsov (5th): no detector/linker change moved the LB, node-count calibration is the LB-predictive readout, local
+  ranking of weights does not transfer, only synthetic pretraining helped him and only on his own 0.939 pipeline. Code:
+  nothing above 0.947; giorgosin (DivNet author) is now training an appearance-aware edge predictor (linker line, out of
+  our window); ghazarosghazaros runs self-distillation arms on 0.946. Details research/discussions_summary.md. Plan
+  unchanged: AdaBN probe (exp38) when friend A's cell is ready, B31 on friend C.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.

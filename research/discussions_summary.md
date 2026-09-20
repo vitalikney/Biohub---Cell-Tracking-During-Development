@@ -348,3 +348,34 @@ where they exist).** Three mechanisms that are genuinely absent from our stack, 
   (`xiaoleilian/biohub-unet3d-weights-v2models`). A candidate third detector for a blend, i.e. the secondary-swap class
   we closed on the LB (probes 7, 10, 13).
 Verdict: nothing to probe; the popular notebooks are knob sets and association rankers on the same public stack.
+
+## Update 2026-09-20 (discussion sorted by recent comments + Code tab via API; browser dropped before the focus3d and shakeup threads)
+
+- **Eric (77th, 742064): the public 0.947-stack detectors were trained on ALL 199 train videos** (split_manifest of the
+  seed314159 pack lists all 199; DeepCenter manifest 71; the 50ep primary ships no manifest but "others report the same").
+  Consequence he draws and we already live by: any hold-out from train is in-sample for the public weights, so steps
+  that "correct detector errors" look good locally and die on the LB (his sub-voxel peak refinement: +0.0078 on 12
+  videos, -0.002 on the LB twice). He trusts locally only models that never saw the evaluation videos. This is exactly
+  the friend A LOEO design (6bba-only scratch model scored on 44b6), and the reason the AdaBN regression check with
+  public weights is a smoke test, not a gate.
+- **hikaggler (249th, 741749) + Ogurtsov (5th):** three weeks of one-variable detector/linker changes on a 24-video
+  stratified hold-out: wider/deeper UNet, longer training, augmentation, heatmap losses, wider temporal window, a trained
+  pair-softmax division head (local div_J 0.07 -> 0.19, +-0.001 LB) - none moved the LB. Node-count calibration
+  predicted LB movement best; recall changes did not. Post-processing settings chosen locally DO carry over, the local
+  ranking of two trained models does NOT (his r ~ -0.2 in the 0.93-0.95 band). Only lever: pretraining on Jose Freitas'
+  synthetic sequences (497 of 2174, 80 epochs, then 60 epochs on real; +0.012 on hold-out, but pays back through
+  N_pred and helps nothing on divisions; MORE synthetic data was worse). His own pipeline is 0.939, the 0.947 is the
+  public notebook. Ogurtsov: the 0.947 -> 0.957 gap "is reachable to some extent but pretty risky" for the private LB.
+- **OmerZalman (742169) asks the top 100** what moved; Ogurtsov's only answer: "room for improvement in all directions".
+- Chris Deotte / hengck23 (741868): agent dashboards and napari MCP for 3D review; no competition content.
+- **Code tab (API, run since 16 Sep):** haideptry "0.947 Fast Pipeline Code Walkthrough" (tutorial of his 0.947/0.948
+  stack, nothing new); ghazarosghazaros "DAE alpha 0.15 x peak-EM self-distill x repeat" (another self-distillation
+  arm on his 0.946 floor, gaussian teacher from confident peaks mixed into det_logits at alpha 0.10 + second EM pass;
+  no score claimed yet); binasalama closes his UNet+transformer+ILP line; **giorgosin (DivNet author) is training an
+  appearance-aware edge predictor**: he found the public transformer fine-tune saw geometry only (the 32 UNet channels
+  of the 64-dim node feature were noise) and rewires real UNet features into the SimpleNodeTransformer, output drops
+  into the v020 inference notebook. No score yet; a linker line, out of our window (freeze 24 Sep), but the right place
+  to look if a >0.947 notebook appears from him.
+- Net for us: nothing new to adopt; two independent confirmations that (a) local weight ranking is worthless on
+  in-sample videos, (b) node-count calibration is the LB-predictive readout - which is what friend C's B31 measures and
+  what the AdaBN node guard protects.
