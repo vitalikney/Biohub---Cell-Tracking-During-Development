@@ -148,8 +148,7 @@ def main():
     os.environ["BIOHUB_OUTPUT_SAFE_DIVISIONS"] = "0"; os.environ["BIOHUB_OUTPUT_MOTION_RELINK"] = "0"; os.environ["BIOHUB_OUTPUT_GAP_CLOSE"] = "0"; os.environ["BIOHUB_OUTPUT_GAP2_RECOVERY"] = "0"
     os.environ["BIOHUB_USE_DEEPCENTER_VETO"] = "0"; os.environ["BIOHUB_REQUIRE_DEEPCENTER_VETO"] = "0"
     cells = pl.notebook_cells(pl.DEFAULT_NOTEBOOK); work = cache / "work"; work.mkdir(exist_ok=True)
-    repo, _ = pl.materialise_repo(Path(pl.DEFAULT_WEIGHTS_ROOT), work, None, None, materialise_code=False)
-    ns = pl.build_namespace(cells, repo, work, pl.DEFAULT_DATA); pl.load_postproc(cells, ns); fog = ns["filter_output_graph"]
+    ns = pl.build_cached_postproc_namespace(cells, work, pl.DEFAULT_DATA); fog = ns["filter_output_graph"]
 
     data = {s: load_video(cache, s) for s in stems}
     C = {s: candidates(*data[s][:4], a.parent_um, a.k, a.mode) for s in stems}

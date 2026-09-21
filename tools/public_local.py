@@ -207,6 +207,21 @@ def build_namespace(cells: list[str], repo: Path, work: Path, data_dir: Path) ->
     return ns
 
 
+def build_cached_postproc_namespace(cells: list[str], work: Path, data_dir: Path) -> dict:
+    """Load the notebook post-processing code without resolving model packs.
+
+    This is the entry point for CPU-only work from ``ckpt/*.npz`` caches.  Callers
+    must disable stages whose inputs are not present in their cache before calling
+    this function (in particular inference, motion/gap reconstruction and the live
+    DeepCenter model).  Unlike :func:`materialise_repo`, this helper never looks for
+    weights and never imports the support-pack inference repository.
+    """
+    work.mkdir(parents=True, exist_ok=True)
+    namespace = build_namespace(cells, PROJECT_ROOT / "tools" / "repo", work, data_dir)
+    load_postproc(cells, namespace)
+    return namespace
+
+
 def apply_runtime_patches(cells: list[str], ns: dict, repo: Path, work: Path) -> None:
     """Run the notebook's source patches against the local copy of `predict_unet_transformer.py`."""
     idx = find_cell(cells, "TTA patch applied", CELL4_RUN_MARKER)

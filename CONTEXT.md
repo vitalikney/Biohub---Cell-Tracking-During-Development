@@ -1058,9 +1058,11 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   not = the GPU stage of the port, training, the 82 GB download. He takes B31 node clustering (PROMPT_FRIEND_C.md,
   branch friend-c, results in experiments/local_friend_c_b31_cluster/, deadline 23 Sep): step 1 nearest-neighbour
   distance of raw nodes within a frame on 199 videos vs GT (if <1% of peaks closer than 2 um, no lever); step 2 greedy
-  score-ordered merge at r = 0.5/1/1.5/2 um on the raw graph, then the public pp stage on CPU with the DeepCenter veto
-  read from dc/<stem>.npz by node_id; gate +0.005 on 199 with adj_edge within 0.001; +0.002..+0.005 with fewer nodes
-  is reported as a final-2 candidate. Friend A packages cache/<tag>/{raw,dc,ckpt} + GT geffs as a shared dataset today.
+  score-ordered merge at r = 0.5/1/1.5/2 um on the post-gap `ckpt`, then cached public divisions + final tail on CPU
+  with DeepCenter read from dc/<stem>.npz by node_id; gate +0.005 on 199 with adj_edge within 0.001; +0.002..+0.005
+  with fewer nodes is reported as a final-2 candidate. This boundary is required because dc has no scores for synthetic
+  gap points, so raw -> full pp cannot be replayed without frames. Root notebook `friend-c-b31-cluster.ipynb` is
+  resumable and enforces radius-0 control 0.9120275 / 24-96-127. Friend A packages cache/<tag>/{raw,dc,ckpt} + GT geffs.
   Finals unchanged: final 1 = exp29 (probe 14); final 2 = AdaBN probe if it scores >= 0.947, else exp29 + axis-flip.- 2026-09-20 DISCUSSION/CODE CHECK (user asked; browser dropped mid-way, focus3d + shakeup threads not re-read): Eric
   (742064) verified from the shipped manifests that the public 0.947 detectors trained on all 199 train videos, so every
   train hold-out is in-sample for the public stack (his local +0.0078 became -0.002 on the LB); hikaggler (741749) +
@@ -1071,5 +1073,12 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   himself "trying to find a model that doesn't over estimate num of nodes"; shakeup thread = Mamarin's history of 13
   microscopy boards (8/13 kept >= 5 of the top 10). Plan unchanged: AdaBN probe (exp38) when friend A's cell is ready,
   B31 on friend C.
+- 2026-09-21 FRIEND C: B31 CLOSED AT STEP 1 on all 199 cached raw graphs. Physical same-frame nearest-neighbour audit:
+  4,211,780 raw nodes have **zero** neighbours below 1, 2, or 3 um; sparse GT has 2/133,318 below 3 um and zero below
+  2 um. This triggers the registered `<1% below 2 um => no lever` stop rule. Mechanism: the public detector already
+  applies 3 um physical NMS, so proposed clustering radii 0.5/1.0/1.5/2.0 cannot merge any raw pair. The radius sweep
+  is intentionally skipped and no LB probe is requested. CPU-only radius 0 was still rebuilt on all 199 in 521 s and
+  exactly reproduced score 0.9120275, adj_edge 0.9023109, divisions 24/96/127. Mac-safe resumable implementation is in
+  `experiments/local_friend_c_b31_cluster/` and `friend-c-b31-cluster.ipynb`; report in `results/b31_step1.{md,json}`.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.

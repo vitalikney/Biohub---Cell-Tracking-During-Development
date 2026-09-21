@@ -39,13 +39,25 @@ warnings.filterwarnings("ignore")
 import tracksdata as td
 from geff import GeffMetadata
 
-from tracking_cellmot.io import open_dataset
 from tracking_cellmot.metrics import (
     evaluate as compute_metric,
     node_recall,
     per_sample_metrics,
     summarise,
 )
+
+
+def _load_gt_and_scale(geff_path: Path):
+    """Load the scorer inputs directly from GEFF, without image/PyTorch imports."""
+    loaded = td.graph.IndexedRXGraph.from_geff(geff_path)
+    tracks = loaded[0] if isinstance(loaded, tuple) else loaded
+    metadata = GeffMetadata.read(geff_path)
+    axes = {axis.name: axis for axis in metadata.axes}
+    try:
+        scale = tuple(float(axes[name].scale) for name in ("z", "y", "x"))
+    except (KeyError, TypeError, ValueError) as exc:
+        raise ValueError(f"GEFF has no usable z/y/x physical scale: {geff_path}") from exc
+    return tracks, scale
 
 
 def _estimated_n_total(geff_path: Path) -> float:
@@ -61,11 +73,11 @@ def score(geffs, quiet=False):
     rows = []
     for g in geffs:
         name = g.stem
-        ds = open_dataset(DATA / name, require_tracks=True, load_image=False)
+        gt, scale = _load_gt_and_scale(DATA / (name + ".geff"))
         pr = td.graph.IndexedRXGraph.from_geff(g)
         pred = pr[0] if isinstance(pr, tuple) else pr
-        er = compute_metric(pred, ds.tracks, scale=ds.scale)
-        rec = node_recall(pred, ds.tracks) if pred.num_edges() > 0 and pred.num_nodes() > 0 else 0.0
+        er = compute_metric(pred, gt, scale=scale)
+        rec = node_recall(pred, gt) if pred.num_edges() > 0 and pred.num_nodes() > 0 else 0.0
         row = {"dataset": name, **per_sample_metrics(er, _estimated_n_total(DATA / (name + ".geff")), rec)}
         rows.append(row)
         if not quiet:

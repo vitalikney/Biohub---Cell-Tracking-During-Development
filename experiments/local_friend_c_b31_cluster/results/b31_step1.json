@@ -1,0 +1,40 @@
+{
+  "experiment": "local_friend_c_b31_cluster",
+  "completed_at": "2026-09-21",
+  "status": "complete",
+  "step": "B31 Step 1 nearest-neighbour audit",
+  "videos": 199,
+  "voxel_scale_um": [
+    1.625,
+    0.40625,
+    0.40625
+  ],
+  "raw": {
+    "nodes": 4211780,
+    "fraction_nearest_lt_1um": 0.0,
+    "fraction_nearest_lt_2um": 0.0,
+    "fraction_nearest_lt_3um": 0.0
+  },
+  "gt": {
+    "nodes": 133318,
+    "fraction_nearest_lt_1um": 0.0,
+    "fraction_nearest_lt_2um": 0.0,
+    "fraction_nearest_lt_3um": 0.000015001725198397816,
+    "nodes_nearest_lt_3um": 2
+  },
+  "registered_stop_rule": "close B31 if fewer than 1% of raw peaks have a same-frame neighbour below 2 um",
+  "decision": "close_step1_no_lever",
+  "reason": "the public detector's 3 um physical NMS leaves zero raw pairs within every proposed 0.5-2.0 um clustering radius",
+  "sweep_run": false,
+  "implementation_validation": {
+    "radius_zero_videos": 199,
+    "score": 0.912027502438606,
+    "adj_edge_jaccard": 0.9023109032483225,
+    "division_tp": 24,
+    "division_fp": 96,
+    "division_fn": 127,
+    "matches_friend_a_control": true,
+    "wall_seconds": 521.1311929225922
+  },
+  "leaderboard_submission": false
+}

@@ -111,9 +111,7 @@ def main() -> None:
     cells = pl.notebook_cells(pl.DEFAULT_NOTEBOOK)
     work = cache / "work"
     work.mkdir(exist_ok=True)
-    repo, _ = pl.materialise_repo(Path(pl.DEFAULT_WEIGHTS_ROOT), work, None, None, materialise_code=False)
-    namespace = pl.build_namespace(cells, repo, work, Path(args.data_dir))
-    pl.load_postproc(cells, namespace)
+    namespace = pl.build_cached_postproc_namespace(cells, work, Path(args.data_dir))
     filter_output_graph = namespace["filter_output_graph"]
 
     import networkx as nx
