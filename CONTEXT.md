@@ -1124,6 +1124,11 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   199 and on each embryo, adj_edge within 0.001; final model on all 199 -> weights_dataset/friend_a_divpair/ ->
   I build the kernel (division stage replaced) -> one probe 25-26 Sep. FREEZE for this line moves to 27 Sep; finals
   ticked 28 Sep. Odds stated to the user: about 1 in 4. Rejected alternatives: HOCT veto notebook (public, not above
-  0.947, 1 in 10), synthetic pretraining (3-4 GPU days, lands below the public stack).
+  0.947, 1 in 10), synthetic pretraining (3-4 GPU days, lands below the public stack).- 2026-09-21 20:50 PROBE 20 SUBMITTED (id 56440312, PENDING): exp39 = exp29 realised config + DivNet parent veto p >= 0.5
+  inside add_safe_divisions_postlink (kernel vitaliineibauer/biohub-exp39-sjlee947-tight55-divnetveto v1, folder
+  experiments/exp39_sjlee947_tight55_divnetveto/, probe.json has base/change/local/risk/rule). Kernel ran ~100 min on
+  2xT4 (DivNet frame reads); on the 4 dummy test clips the veto was live: checked 64/32/10/43 candidates per clip,
+  vetoed 36/26/6/34, divisions added 26/6/4/9. Rule: >= 0.948 -> final 2; 0.945-0.947 tie (prefer exp39 over exp37
+  only if equal, strictly fewer false divisions); <= 0.944 drop. 4 submissions left today.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
