@@ -6,7 +6,7 @@ Read `CONTEXT.md` first (goal, metric facts, results, plan). This file says who 
 | Who | Hardware | Responsibility |
 |---|---|---|
 | Vitalii (+ Claude) | Kaggle 2xT4 (30 GPU-h/week) | LB probes (5/day, one change each, log in CONTEXT §11), submission notebooks, Kaggle weights dataset, merging results, CONTEXT/RESULTS upkeep |
-| Friend A (Kaggle: Sasyami) | RTX 5070 Ti 16 GB | **Training.** (1) leak-free validator: train from scratch on 6bba only (split `experiments/_lib/loeo_train6bba_val44b6.json`), 5-10 epochs [running]; (2) then the same recipe from scratch on ALL 199 videos for 30-50 epochs (1-2 days) as a candidate primary/secondary for the public pipeline; (3) model-recipe experiments judged on the validator (sparse-label loss, window 3, augmentation, epochs) |
+| Friend A (Kaggle: Sasyami) | RTX 5070 Ti 16 GB | **Current: exp38 AdaBN.** Run `friend-a-exp38-public-adabn.ipynb`: adapt the public primary + secondary independently per video, node-ratio guard `[0.90, 1.05]`, regression/timing report on the fixed 12 videos; no LB submission. B20 and the old training lines are closed. |
 | Friend B (Kaggle: gsfatakhov) | RTX 5070 12 GB | **Local public pipeline + honest evaluation.** (1) [start now, CPU] port the public 0.941 notebook's post-processing (cell 14: dual-seed blend, motion relink, gap closing, safe divisions, DeepCenter veto, short-track filter; env knobs BIOHUB_*) into a local script that takes prediction .geff + GT so its ~40 knobs can be tuned locally (see 'Friend B start kit' below for the exact steps and the order of work after it); (2) when Friend A's checkpoint exists: predictions on the 12 44b6 videos (+ 48-video set), official metric, compare pipeline stages and our post-proc findings honestly; (3) only if time remains: dense pseudo-labels feasibility (FOCUS-3D first with stop criteria; Zebrahub only as a one-day fallback; synthetic volumes dropped - 1st place found no gain) — est. 2-3 days on the 5070 |
 | Friend C (joined 2026-09-20) | MacBook Air M4 16 GB, no CUDA | **STANDBY since 2026-09-21** (B31 closed at step 1 by the 3 um NMS bound; no CPU task with a mechanism left inside the freeze window). Original: **CPU cache work.** B31 closed at Step 1 on 2026-09-21: 0/4,211,780 raw nodes have a same-frame neighbour below 3 um, so the proposed 0.5-2.0 um clustering radii have no lever after public NMS. Mac-safe runner/notebook retained for reproducibility. Never the GPU stage, training, weights, or 82 GB image data. Prompt: PROMPT_FRIEND_C.md, branch `friend-c` |
 
@@ -155,12 +155,11 @@ STEP 5 (later): teacher for the remaining 61 44b6 videos (for all-183 dense fine
 
 **Friend A — order of work (revised 2026-09-10 18:00 after the audit in CONTEXT §14). Self-contained.**
 
-**UPDATE 2026-09-20: B20 closed by friend A (best +0.0023 on 199, below gate); B5 AdaBN passed its LOEO gate (+0.0073,
-node guard). Friend C joined (MacBook Air M4, no CUDA) and takes B31 node clustering on CPU.** Friend A: (1) package his
-pass-1 cache (raw/dc/ckpt for 199 videos + GT geffs, no zarr) as a shared dataset today; (2) port AdaBN to the public
-primary + secondary as one kernel-ready cell (per test video, momentum=None, node-ratio guard [0.90, 1.05]), regression
-check through friend B's port on 12 videos, report by 22 Sep -> one LB probe by Vitalii. PROMPT_FRIEND_A.md /
-PROMPT_FRIEND_C.md top blocks.
+**UPDATE 2026-09-21: B20 and B31 are closed; the cache hand-off to Friend C is cancelled. B5 AdaBN passed its honest
+LOEO gate (+0.0073, node guard).** Friend A's only active task is the public primary + secondary port in
+`friend-a-exp38-public-adabn.ipynb`: per-video `momentum=None`, node-ratio guard `[0.90, 1.05]`, regression and timing
+check through Friend B's public port on the fixed 12 videos, then report to Vitalii for at most one LB probe.
+`PROMPT_FRIEND_A.md` contains the current operational instructions.
 
 **UPDATE 2026-09-18: friend A's task CHANGED (friend B is out; friend A is back).** The dense/sparse fine-tune line
 below is CANCELLED (probes 15/17: fine-tuned primaries 0.944/0.943 vs 0.947; weight swaps unresolvable locally per

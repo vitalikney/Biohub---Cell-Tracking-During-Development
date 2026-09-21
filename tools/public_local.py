@@ -99,7 +99,7 @@ CELL5_STOP_MARKER = 'write_test_submission("base")'
 
 # --------------------------------------------------------------------------------------------------- notebook I/O
 def notebook_cells(path: Path) -> list[str]:
-    nb = json.loads(Path(path).read_text())
+    nb = json.loads(Path(path).read_text(encoding="utf-8"))
     return ["".join(c["source"]) for c in nb["cells"]]
 
 
@@ -231,11 +231,11 @@ def apply_runtime_patches(cells: list[str], ns: dict, repo: Path, work: Path) ->
 
     # The patches hard-code Kaggle's writable directory for their diagnostic logs.
     predict_script = repo / "scripts" / "predict_unet_transformer.py"
-    text = predict_script.read_text()
+    text = predict_script.read_text(encoding="utf-8")
     if "/kaggle/working" in text:
         text = text.replace('Path("/kaggle/working")', f'Path({str(work)!r})')
         compile(text, str(predict_script), "exec")
-        predict_script.write_text(text)
+        predict_script.write_text(text, encoding="utf-8")
         print("patched diagnostic log paths -> local working dir")
 
 
@@ -261,13 +261,13 @@ def set_pool_kernel_um(repo: Path, value: float) -> None:
     `--pool-kernel-um` flag (we added it), the shipped one does not, so patch the default instead.
     """
     predict_script = repo / "scripts" / "predict_unet_transformer.py"
-    text = predict_script.read_text()
+    text = predict_script.read_text(encoding="utf-8")
     anchor = "    pool_kernel_um: float = 3.0"
     if text.count(anchor) != 1:
         raise RuntimeError(f"expected one pool_kernel_um default, found {text.count(anchor)}")
     text = text.replace(anchor, f"    pool_kernel_um: float = {value}")
     compile(text, str(predict_script), "exec")
-    predict_script.write_text(text)
+    predict_script.write_text(text, encoding="utf-8")
     print(f"POOL KERNEL: detection NMS kernel set to {value} um (public default is 3.0)")
 
 
@@ -289,7 +289,7 @@ def keep_peak_prob(repo: Path) -> None:
     the ILP changes; with the flag off this function is never called and the script stays byte-identical.
     """
     script = repo / "scripts" / "predict_unet_transformer.py"
-    s = script.read_text()
+    s = script.read_text(encoding="utf-8")
 
     s = _replace_once(s, "def _detect_cells_pooled(",
                       "_LAST_CALL_PROBS = None\n_LAST_PEAK_PROBS = None\n\n\ndef _detect_cells_pooled(",
@@ -335,7 +335,7 @@ def keep_peak_prob(repo: Path) -> None:
                       "        graph = build_graph(coords, edges, peak_probs=_LAST_PEAK_PROBS)",
                       "peak-prob build_graph call")
     compile(s, str(script), "exec")
-    script.write_text(s)
+    script.write_text(s, encoding="utf-8")
     print("PEAK PROB: detection probabilities will be stored as the `peak_prob` node attribute")
 
 
@@ -352,7 +352,7 @@ def apply_axis_flip_tta(repo: Path) -> None:
     loudly instead of silently producing a different variant.
     """
     predict_script = repo / "scripts" / "predict_unet_transformer.py"
-    text = predict_script.read_text()
+    text = predict_script.read_text(encoding="utf-8")
 
     n_lists = text.count(_PUBLIC_FLIP_LIST)
     if n_lists != 2:
@@ -371,7 +371,7 @@ def apply_axis_flip_tta(repo: Path) -> None:
     if "torch.rot90(imgs" in text or "imgs.transpose(-1, -2)" in text:
         raise RuntimeError("axis-flip surgery: rotation/transpose views survived")
     compile(text, str(predict_script), "exec")
-    predict_script.write_text(text)
+    predict_script.write_text(text, encoding="utf-8")
     print("TTA GROUP: rot90/transpose views replaced by the 8 training-consistent axis flips")
 
 
