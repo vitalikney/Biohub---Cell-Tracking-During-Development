@@ -1088,5 +1088,13 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   budget levers left: none geometric; only detector-side (AdaBN guard keeps the ratio inside [0.90, 1.05]).
   Friend C: no CPU task with a mechanism remains inside the freeze window; on standby (his prompt says so, friend A
   wrote the top block). Friend A: cache package cancelled, straight to the AdaBN kernel cell (item 2 of his 20 Sep block).
+- 2026-09-21 FRIEND A EXP38 PUBLIC-STACK ADABN REGRESSION COMPLETE on the fixed 12 44b6 videos. This is not honest
+  validation because both public checkpoints saw these videos. Unchanged exp29 scores **0.90010**; raw per-video AdaBN
+  scores 0.85644 (-0.04366); the registered label-free node-ratio guard `[0.90, 1.05]` accepts 4/12 and scores
+  **0.89352 (-0.00657)**. Guarded node recall rises 0.98726 -> 0.99062, but adjusted edge falls 0.89534 -> 0.88797;
+  among accepted videos there are two wins and two losses, with the losses dominating. End-to-end runtime was ~34 min
+  on RTX 5070 Ti; adaptation itself was ~78 s. **AdaBN is rejected for the public stack and no exp38 LB probe is
+  requested.** Honest B5 remains valid for its scratch LOEO model, but the effect does not transfer safely to the
+  already in-sample public weights. Full report: `experiments/local_friend_a_exp05_public_adabn/results/exp38_final.md`.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.

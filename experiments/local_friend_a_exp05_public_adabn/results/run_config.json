@@ -1,0 +1,31 @@
+{
+  "repo_root": "C:\\Projects\\CellTracker\\.github-push-worktree",
+  "data_dir": "C:\\Projects\\CellTracker\\train",
+  "output_dir": "C:\\Projects\\CellTracker\\outputs\\local_friend_a_exp05_public_adabn",
+  "source_notebook": "C:\\Projects\\CellTracker\\.github-push-worktree\\experiments\\exp29_sjlee947_verbatim\\exp29-sjlee947-verbatim.ipynb",
+  "split_path": "C:\\Projects\\CellTracker\\.github-push-worktree\\experiments\\_lib\\loeo_train6bba_val44b6.json",
+  "support_repo": "C:\\Projects\\CellTracker\\.github-push-worktree\\external\\pilkwang__biohub-tracking-support-pack-50ep-v1\\repo",
+  "primary_weights": "C:\\Projects\\CellTracker\\.github-push-worktree\\external\\pilkwang__biohub-tracking-support-pack-50ep-v1\\weights\\unet_transformer\\split_0\\edge_predictor_best.pth",
+  "secondary_weights": "C:\\Projects\\CellTracker\\.github-push-worktree\\external\\pilkwang__biohub-temporal-unet3d-seed314159-v1\\weights\\unet_transformer\\split_0\\edge_predictor_best.pth",
+  "baseline_source_dir": "C:\\Projects\\CellTracker\\outputs\\local_friend_a_b20_divnet\\cache\\friend_a_b20_exp29\\raw",
+  "dataset_ids": [
+    "44b6_12dfb391",
+    "44b6_1d530831",
+    "44b6_2a2eff9f",
+    "44b6_74d0c52e",
+    "44b6_7a302da0",
+    "44b6_87bba6c4",
+    "44b6_9be80b04",
+    "44b6_a21120c2",
+    "44b6_c50204e0",
+    "44b6_d2f34f90",
+    "44b6_d5e7d891",
+    "44b6_e28840c6"
+  ],
+  "batch_size": 2,
+  "use_amp": true,
+  "guard_lower": 0.9,
+  "guard_upper": 1.05,
+  "max_videos_per_run": 0,
+  "run_pipeline": true
+}

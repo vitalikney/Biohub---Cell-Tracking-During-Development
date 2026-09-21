@@ -50,3 +50,8 @@ Outputs go to `outputs/local_friend_a_exp05_public_adabn/`.  The final report is
 `result.md`; exact metrics are under `metrics/`.  The copy-ready Kaggle function
 cell is `kaggle_adabn_cell.py`.  Nothing is submitted or uploaded automatically.
 
+The completed 12-video regression report is archived in `results/exp38_final.md`
+with exact per-video scorer outputs. The registered guarded AdaBN variant scored
+0.893524 versus 0.900098 for the unchanged baseline, so it is rejected and no
+leaderboard probe is requested.
+
