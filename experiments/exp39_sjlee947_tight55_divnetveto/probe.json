@@ -1,0 +1,7 @@
+{
+ "base": "exp29 realised config (tight55, pilkwang primary, validator off) = LB 0.947; built from the exp37 notebook with the axis-flip cell removed",
+ "change": "DivNet parent veto inside add_safe_divisions_postlink: after all public geometric gates and the DeepCenter veto, a candidate whose parent has DivNet p < 0.50 at frame t never enters the proposal list (caps go to the next candidate). Scorer = tools/divnet_infer.py (manifest recipe: lags -1..+2, XY pool 4, 16x32x32 crop, percentile 50/99.5 norm, gaussian marker), checkpoint giorgosi/biohub-divnet-v2 best_overall.pt",
+ "local": "friend A, all 199 train videos, official metric: control 0.9120 (div 24/96/127) -> public candidates with p >= 0.5: 0.9143 (+0.0023), div 23/43/128, adj_edge +0.0001; DivNet AUC 0.834 vs GT dividers (published 0.887). Below the +0.005 gate; probed only because slots are free and it is the last local positive with edges untouched",
+ "risk": "haideptry's public 0.945 uses the same veto on his 0.948 stack (his scorer differs from the manifest); expected LB effect within +-0.003 noise; runtime + DivNet frame reads (4 lags per checked parent)",
+ "rule": ">= 0.948 -> final 2; 0.945-0.947 tie -> final 2 stays exp37 unless equal (then prefer exp39: strictly fewer false divisions); <= 0.944 drop"
+}
