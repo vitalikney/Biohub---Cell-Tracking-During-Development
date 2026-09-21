@@ -1108,6 +1108,10 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   the NMS bound, B5 calibration blow-up). Final 1 = exp29 (probe 14, id 56146538). Final 2 = exp37 (exp29 + axis-flip,
   0.946, probe 19) unless the user approves ONE last probe: exp29 + DivNet veto p >= 0.5 on safe divisions (the only
   local positive left, +0.0023 on all 199 with edges untouched, 59 division FP removed / 1 TP lost; haideptry's public
-  0.945 uses the same veto on his stack). Friends A and C on standby; friend B out.
+  0.945 uses the same veto on his stack). Friends A and C on standby; friend B out.- 2026-09-21 EVENING SITE CHECK (user): haideptry's new "0.951" notebook = his density-adaptive stack + DivNet veto +
+  DeepCenter safe-div 0.25; his team is at 0.947 on the LB, title not backed. LB snapshot: 104 teams >= 0.951, 714 at
+  0.947 (we are rank 733). Third independent confirmation (Justin CH123) that LB movement tracks the test node count,
+  not offline edge J. Nothing to adopt; exp39 probe (exp29 + DivNet veto p >= 0.5, kernel pushed 21 Sep) still running.
+  Details in research/discussions_summary.md.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.

@@ -388,3 +388,22 @@ Verdict: nothing to probe; the popular notebooks are knob sets and association r
   does not predict which (SenNet 67% collapsed, CZII 26% held; here 29%). TWEAK (26th, a month ago) claims a "plugin"
   giving +0.03..0.05 on any public model; no details. Nothing changes: our two finals are the unchanged public stack
   and one diversification.
+
+## Update 2026-09-21 evening (Code tab via API + two new discussion threads)
+
+- **Code:** one new notebook since yesterday, haideptry "Biohub 0.951 SOTA DeepCenter Fast ILP 19m". Pulled and diffed
+  against our exp29 config: same stack as his earlier 0.948 notebook (density-adaptive motion overrides
+  `determine_density_group`, 5.5-7.25 um) + the DivNet veto (BIOHUB_DIV_MIN_PROB 0.50) + DeepCenter safe-div threshold
+  0.25 (ours 0.20) + UNET_BATCH_SIZE 8. **His own team (haideptry, prairieee) sits at 0.947 on the LB (rank 309,
+  12 submissions, last 21 Sep)**, so the "0.951" in the title is not backed by his board; the title inflation pattern
+  continues (0.948 notebook, 0.947 team). Nothing to adopt. Leaderboard snapshot 21 Sep: 3785 teams, 104 at >= 0.951,
+  21 at 0.950, 33 at 0.949, 87 at 0.948, 714 at 0.947 (us at rank 733), 173 at 0.946. sjlee101 (our base author) is
+  at 0.948 in a team with frederickvlee (68 submissions); giorgosi (DivNet author) at 0.947.
+- **Justin CH123 (491st, 742266):** ten single-knob changes on the Harmonic Fusion pipeline, all lost on the board; the
+  loss tracked the CHANGE IN PREDICTED NODE COUNT on the test set, not offline validation (best offline edge +0.0011
+  scored worst, -0.005, and dropped the most nodes on one test video; a change of only four nodes still lost 0.001).
+  Third independent confirmation of the node-count readout (hikaggler, hengck23, now him). He also notes that the final
+  edges come from the Hungarian motion relink which replaces the ILP edge set, the network probability entering only
+  through the learned bonus (<= ~1 um vs a 1.8 um median step); asks whether anyone gained at the relink stage. No
+  answers yet.
+- **You WeiLin (140th, 742325):** opinion post, public notebooks are overfit and slow. No content.
