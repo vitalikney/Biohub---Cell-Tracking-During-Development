@@ -1169,6 +1169,10 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   but 20x weaker than the edge term, so pruning only pays if the pruned nodes carry < 5% of the average annotated-edge
   load (B25: even 5% at 99.6% recall lost 0.002); hengck23's refine head (-13% at 99.45%) is a wash by the same math.
   Freeze: none; last results push 27 Sep evening; finals ticked 28 Sep = best public among candidates with local
-  per-embryo support (final 1 stays exp29 unless a candidate beats it on both embryos locally AND on the board).
+  per-embryo support (final 1 stays exp29 unless a candidate beats it on both embryos locally AND on the board).- 2026-09-23 FRIEND C TASK (user asked): line 1 split. Friend C = the CPU tail of the post-processing grid from friend A's
+  ckpt/dc package via the B31 runner's radius-0 path (linefit weight x window - the largest stage, never swept -, short-
+  track filter and rescue, safe-division gates/caps, DeepCenter safe-div threshold, edge max), all 199 videos, per-embryo
+  readout, node ratio; friend A = stages that need frames (relink, gap closing, DeepCenter gap threshold) + GPU line 2;
+  friend A publishes the package today with tools/package_friend_c_b31_cache.py. Both feed candidates nightly; I probe.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
