@@ -1129,6 +1129,12 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   experiments/exp39_sjlee947_tight55_divnetveto/, probe.json has base/change/local/risk/rule). Kernel ran ~100 min on
   2xT4 (DivNet frame reads); on the 4 dummy test clips the veto was live: checked 64/32/10/43 candidates per clip,
   vetoed 36/26/6/34, divisions added 26/6/4/9. Rule: >= 0.948 -> final 2; 0.945-0.947 tie (prefer exp39 over exp37
-  only if equal, strictly fewer false divisions); <= 0.944 drop. 4 submissions left today.
+  only if equal, strictly fewer false divisions); <= 0.944 drop. 4 submissions left today.- 2026-09-22 PROBE 20 SCORED: exp39 (exp29 + DivNet veto p >= 0.5) = **0.947**, a tie with exp29 (probe 14, 0.947) and
+  +0.001 over exp37 (0.946). The public share of the division term is too small to show a +0.002 local effect, as
+  expected. FINALS DECISION (recommended, user ticks by 28 Sep): final 1 = exp29 (id 56146538) unchanged; final 2 =
+  **exp39 (id 56440312)** instead of exp37: same public score as final 1, differs only in the division stage, with local
+  evidence on both embryos (all 199 videos: 59 division FP removed, 1 TP lost, edges and nodes untouched), whereas exp37
+  changes inference views with in-sample-only local evidence and is 0.001 lower on the board. B20/DivNet line fully
+  closed on the LB now (veto = tie). 4 slots left today, none planned until B32 delivers.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
