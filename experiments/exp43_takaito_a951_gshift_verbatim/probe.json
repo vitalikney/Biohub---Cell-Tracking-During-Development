@@ -1,0 +1,6 @@
+{
+ "base": "takaito/biohub-a951-gshift VERBATIM (pulled 2026-09-22 via kaggle kernels pull; code sha256 6c8fb0e84236ab0c7754b965ea417b9a6d0eb8e4d713842bea862643013ebf9f); outputs cleared, same datasets and docker image",
+ "change": "none vs the public notebook; vs our exp29 it is a different base: haideptry density-adaptive relink stack + DivNet veto + DeepCenter safe-div 0.25 + UNet batch 8 + gshift 12 um",
+ "why": "probe 23 transplanted only gshift onto exp29 (0.945); the user asked for the public notebook as is, reported 0.948",
+ "rule": ">= 0.948 -> new base for all further probes and final 2 candidate; <= 0.947 -> exp29 stays base"
+}
