@@ -407,3 +407,20 @@ Verdict: nothing to probe; the popular notebooks are knob sets and association r
   through the learned bonus (<= ~1 um vs a 1.8 um median step); asks whether anyone gained at the relink stage. No
   answers yet.
 - **You WeiLin (140th, 742325):** opinion post, public notebooks are overfit and slow. No content.
+
+## Update 2026-09-24 (discussion, recent comments)
+
+- **742266 (Justin CH123 thread):** OmerZalman (136th, at 0.95, "0.958 soon maybe"): "you cant just be lazy and improve one
+  thing, you have to improve all parts", and a 0.969 team told him the same. OpPrime (414th): traced division errors on
+  the 0.947 stack across stages - correct mother-daughter links are missing before the ILP, removed during selection,
+  and relinking/validation then blocks recovery; association changes gave no dependable gain; results with GT-centred
+  candidates collapse on real detector outputs; crowded neighbourhoods are hardest. Justin asks which part moved Omer
+  first; no answer yet.
+- **741651 (shakeup):** Pavel (43rd): "0.850 CV -> 0.914 LB, 0.919 CV -> 0.914 LB" - local CV and public LB decoupled
+  even near the top.
+- **742456:** another "stuck at 0.947" post, no answers.
+- Relevance: OpPrime's trace (links lost before ILP, in ILP, and blocked by relink) is the same multi-stage loss our
+  B32/A0 audit located; it supports B35's design of adding the division edge AFTER the whole tail (pass 2 from ckpt
+  with edge replacement) rather than touching ILP or relink, and says GT-centred evaluation is misleading - B35 step B
+  already trains and scores on detector-output triples only.
+

@@ -1207,6 +1207,9 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   relink cost is biased on drifting videos. Node counts within +-0.5% of exp29. Probes 21/22 still pending.- 2026-09-24 PROBES 21 AND 22 SCORED: exp40 (motion relink OFF) = 0.945, exp41 (relink learned bonus 2.5) = 0.945; both
   -0.002 vs exp29, i.e. ties at the noise floor, slightly negative. The relink stage as shipped stays; friend B's local
   +0.0053 for relink-off (one division TP + 0.0014 edges on 12 videos) did not transfer. Probe 23 (exp42 gshift) pending.
-  Friend A 31f3212: resumable B35 step A (tools/recover_daughters.py, full-frame 0.90 pass + peak cache) committed, run pending.
+  Friend A 31f3212: resumable B35 step A (tools/recover_daughters.py, full-frame 0.90 pass + peak cache) committed, run pending.- 2026-09-24 DISCUSSION CHECK: OmerZalman (0.95) says the top gains came from improving ALL stages together (a 0.969 team
+  told him the same); OpPrime traced 0.947-stack division losses across pre-ILP, ILP selection and relink - the same
+  multi-stage loss as our A0 audit, consistent with B35 inserting divisions after the tail with edge replacement;
+  Pavel (43rd) shows CV/LB decoupling at the top. No code or recipe shared. Details research/discussions_summary.md.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
