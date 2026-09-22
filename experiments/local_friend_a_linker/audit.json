@@ -1,0 +1,23 @@
+{
+  "experiment": "B34 appearance-aware linker",
+  "status": "blocked_before_training",
+  "source": {
+    "kaggle_kernel": "giorgosin/notebook447aed80b2",
+    "sha256": "bf3b58785020ca4761c9d8a11d94182c7a032278ebe22f029ded0fc08cdf92de",
+    "local_copy": "external/giorgosin_trainer/notebook447aed80b2.ipynb",
+    "local_copy_tracked": false
+  },
+  "blocking_findings": [
+    "required public checkpoint contains both held-out embryos",
+    "validation split is not embryo LOEO",
+    "default data schedule mixes ZSNS/relay data",
+    "training uses GT-node candidates rather than public-detector candidates",
+    "no complete per-epoch resume checkpoint",
+    "Kaggle/Linux-specific paths and memory helpers require a Windows port"
+  ],
+  "training_started": false,
+  "decision_required": [
+    "fold-clean initialisation for leak-free LOEO",
+    "or explicitly labelled public-checkpoint regression"
+  ]
+}
