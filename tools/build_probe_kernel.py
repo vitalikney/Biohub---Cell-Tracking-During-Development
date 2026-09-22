@@ -22,12 +22,125 @@ BASE_NB = BASE_DIR / "exp39-sjlee947-tight55-divnetveto.ipynb"
 NL = chr(10)
 
 
+def _rep1(s: str, old: str, new: str) -> str:
+    assert s.count(old) == 1, f"anchor count {s.count(old)} != 1: {old[:70]!r}"
+    return s.replace(old, new)
+
+
+def patch_gshift(cells_src: dict) -> None:
+    """takaito/biohub-a951-gshift (2026-09-22): per-frame global displacement = median of mutual-nearest-neighbour
+    shifts between consecutive frames (MNN radius BIOHUB_MOTION_RELINK_GLOBAL_SHIFT_MNN_UM, default 8; his run: 12),
+    subtracted inside the motion relink cost (raw distance and velocity prediction). Ported line for line; the only
+    difference is that our relink has no density-adaptive per-call velocity/bonus overrides (we use the constants)."""
+    c2 = cells_src[2]
+    c2 = _rep1(c2, 'MOTION_RELINK_LEARNED_BONUS = float(os.environ.get("BIOHUB_MOTION_RELINK_LEARNED_BONUS", "0.75"))' + NL,
+               'MOTION_RELINK_LEARNED_BONUS = float(os.environ.get("BIOHUB_MOTION_RELINK_LEARNED_BONUS", "0.75"))' + NL
+               + 'MOTION_RELINK_GLOBAL_SHIFT = os.environ.get("BIOHUB_MOTION_RELINK_GLOBAL_SHIFT", "0") != "0"' + NL
+               + 'MOTION_RELINK_GLOBAL_SHIFT_MNN_UM = float(os.environ.get("BIOHUB_MOTION_RELINK_GLOBAL_SHIFT_MNN_UM", "8.0"))' + NL
+               + 'MOTION_RELINK_GLOBAL_SHIFT_MIN_PAIRS = int(os.environ.get("BIOHUB_MOTION_RELINK_GLOBAL_SHIFT_MIN_PAIRS", "20"))' + NL
+               + 'MOTION_RELINK_GLOBAL_SHIFT_MIN_UM = float(os.environ.get("BIOHUB_MOTION_RELINK_GLOBAL_SHIFT_MIN_UM", "0.0"))' + NL)
+    cells_src[2] = c2
+    c7 = cells_src[7]
+    c7 = _rep1(c7, '''    position_um = {node_id: _position_um(node) for node_id, node in nodes_by_id.items()}
+    predecessor_position_um: dict[int, np.ndarray] = {}
+    selected_edges: list[dict[str, object]] = []
+
+    def assign_pass(
+        source_ids: list[int],
+        target_ids: list[int],
+        gate_um: float,
+    ) -> list[tuple[int, int, float, float, float]]:
+        if not source_ids or not target_ids:
+            return []
+''', '''    position_um = {node_id: _position_um(node) for node_id, node in nodes_by_id.items()}
+    predecessor_position_um: dict[int, np.ndarray] = {}
+    selected_edges: list[dict[str, object]] = []
+
+    # --- gshift: per-frame global displacement (median of mutual-nearest-neighbour shifts) ---
+    _zero_shift = np.zeros(3, dtype=np.float64)
+    global_shift_um: dict[int, np.ndarray] = {}
+    if MOTION_RELINK_GLOBAL_SHIFT:
+        for _t in sorted(ids_by_t):
+            if _t + 1 not in ids_by_t:
+                continue
+            _src = np.stack([position_um[i] for i in ids_by_t[_t]])
+            _tgt = np.stack([position_um[i] for i in ids_by_t[_t + 1]])
+            if len(_src) < MOTION_RELINK_GLOBAL_SHIFT_MIN_PAIRS or len(_tgt) < MOTION_RELINK_GLOBAL_SHIFT_MIN_PAIRS:
+                continue
+            _d1, _j = cKDTree(_tgt).query(_src, distance_upper_bound=MOTION_RELINK_GLOBAL_SHIFT_MNN_UM)
+            _d2, _i = cKDTree(_src).query(_tgt, distance_upper_bound=MOTION_RELINK_GLOBAL_SHIFT_MNN_UM)
+            _pairs = [(a, int(_j[a])) for a in range(len(_src)) if np.isfinite(_d1[a]) and _i[int(_j[a])] == a]
+            if len(_pairs) < MOTION_RELINK_GLOBAL_SHIFT_MIN_PAIRS:
+                continue
+            _shift = np.median(np.stack([_tgt[b] - _src[a] for a, b in _pairs]), axis=0)
+            if float(np.linalg.norm(_shift)) < MOTION_RELINK_GLOBAL_SHIFT_MIN_UM:
+                continue
+            global_shift_um[_t] = _shift
+        stats["motion_relink_global_shift_frames"] = len(global_shift_um)
+        stats["motion_relink_global_shift_sum_um"] = float(
+            sum(float(np.linalg.norm(v)) for v in global_shift_um.values())
+        )
+
+    def assign_pass(
+        source_ids: list[int],
+        target_ids: list[int],
+        gate_um: float,
+        shift_um: np.ndarray = _zero_shift,
+        prev_shift_um: np.ndarray = _zero_shift,
+    ) -> list[tuple[int, int, float, float, float]]:
+        if not source_ids or not target_ids:
+            return []
+''')
+    c7 = _rep1(c7, '''            prev_pos = predecessor_position_um.get(source_id)
+            if prev_pos is None:
+                predicted = source_pos
+            else:
+                predicted = source_pos + MOTION_RELINK_VELOCITY_WEIGHT * (source_pos - prev_pos)
+            for j, target_id in enumerate(target_ids):
+                target_pos = position_um[target_id]
+                raw = float(np.linalg.norm(target_pos - source_pos))
+                if raw > gate_um:
+                    continue
+                motion = float(np.linalg.norm(target_pos - predicted))
+                prob = learned_prob(source_id, target_id)
+                raw_dist[i, j] = raw
+''', '''            prev_pos = predecessor_position_um.get(source_id)
+            shifted_pos = source_pos + shift_um
+            if prev_pos is None:
+                predicted = shifted_pos
+            else:
+                predicted = shifted_pos + MOTION_RELINK_VELOCITY_WEIGHT * (source_pos - prev_pos - prev_shift_um)
+            for j, target_id in enumerate(target_ids):
+                target_pos = position_um[target_id]
+                raw_true = float(np.linalg.norm(target_pos - source_pos))
+                raw = float(np.linalg.norm(target_pos - shifted_pos))
+                if raw > gate_um:
+                    continue
+                motion = float(np.linalg.norm(target_pos - predicted))
+                prob = learned_prob(source_id, target_id)
+                raw_dist[i, j] = raw_true
+''')
+    c7 = _rep1(c7, '            matches = assign_pass(pass_sources, pass_targets, gate_um)' + NL,
+               '            matches = assign_pass(' + NL
+               + '                pass_sources,' + NL
+               + '                pass_targets,' + NL
+               + '                gate_um,' + NL
+               + '                global_shift_um.get(t, _zero_shift),' + NL
+               + '                global_shift_um.get(t - 1, _zero_shift),' + NL
+               + '            )' + NL)
+    cells_src[7] = c7
+
+
+PATCHES = {"gshift": patch_gshift}
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("name", help="folder/kernel name, e.g. exp40_relink_off (lowercase, digits, _ or -)")
     ap.add_argument("--set", action="append", default=[], help="KNOB=value (without BIOHUB_), repeatable")
     ap.add_argument("--divnet", choices=["0", "1"], default="1", help="DivNet veto on (1, exp39) or off (0, exp29)")
     ap.add_argument("--note", default="", help="one line for probe.json")
+    ap.add_argument("--patch", action="append", default=[], choices=sorted(PATCHES), help="code surgery to apply, repeatable")
     ap.add_argument("--push", action="store_true")
     a = ap.parse_args()
     if not re.fullmatch(r"[a-z0-9][a-z0-9_-]+", a.name):
@@ -66,6 +179,15 @@ def main() -> None:
         if m:
             c1 = c1[:m.start(2)] + (v if re.fullmatch(r"-?\d+(\.\d+)?", v) else json.dumps(v)) + c1[m.end(2):]
     set_src(code[1], c1)
+
+    if a.patch:
+        cells_src = {k: src(code[k]) for k in range(len(code))}
+        for name in a.patch:
+            PATCHES[name](cells_src)
+        for k, s in cells_src.items():
+            if s != src(code[k]):
+                set_src(code[k], s)
+        overrides["PATCHES"] = "+".join(a.patch)
 
     out_dir = ROOT / "experiments" / a.name
     out_dir.mkdir(exist_ok=True)

@@ -1,0 +1,11 @@
+{
+ "base": "exp29 realised config (tight55, pilkwang primary, validator off) = LB 0.947; built by tools/build_probe_kernel.py from the exp39 notebook",
+ "change": {
+  "MOTION_RELINK_GLOBAL_SHIFT": "1",
+  "MOTION_RELINK_GLOBAL_SHIFT_MNN_UM": "12",
+  "DIVNET_VERIFY": "0",
+  "PATCHES": "gshift"
+ },
+ "note": "takaito/biohub-a951-gshift (22 Sep, reported 0.948 on haideptry's 0.947 stack): per-frame global displacement (median of mutual-NN shifts, 12 um) subtracted in the motion relink cost; ported line for line onto exp29",
+ "rule": "compare with exp29 0.947; >= 0.950 adopt; ties recorded; <= 0.944 drop"
+}
