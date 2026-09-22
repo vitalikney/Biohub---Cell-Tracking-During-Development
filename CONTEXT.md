@@ -1223,6 +1223,8 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   Both kernels pushed; submit both when complete.- 2026-09-22 ~20:40 UTC: exp44 REBUILT as a real bundle after the user pointed out that axis-flip alone is one knob vs exp43:
   takaito base + axis-flip TTA (detector) + exp36 division hygiene (sister floor 5 um + already-divided filter). The v2
   push first failed on the 2-concurrent-GPU-session limit (commit f247b24 says "pushed" - it was not); the user stopped
-  v1 on the site and v2 is now running (submit with -v 2). exp43 still running. Both go out before 00:00 UTC.
+  v1 on the site and v2 is now running (submit with -v 2). exp43 still running. Both go out before 00:00 UTC.- 2026-09-22 ~20:45 UTC PROBES 24 AND 25 SUBMITTED (pending): exp43 = takaito a951-gshift verbatim; exp44 v2 = exp43 +
+  axis-flip TTA + division hygiene (bundle). Kernel log of exp44 confirms both changes ran (TTA GROUP replaced;
+  already-divided filter dropped 0-1 edges per clip); submission files differ. 5/5 slots used today.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
