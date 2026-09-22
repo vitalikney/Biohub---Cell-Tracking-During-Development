@@ -173,6 +173,14 @@ class B35Config:
     def stop_file(self) -> Path:
         return self.audit_dir / "STOP_REQUESTED"
 
+    @property
+    def step_a_dir(self) -> Path:
+        return self.output_dir / "step_a_fullframe_primary090"
+
+    @property
+    def step_a_stop_file(self) -> Path:
+        return self.step_a_dir / "STOP_REQUESTED"
+
     def serialisable(self) -> dict[str, Any]:
         payload = asdict(self)
         for key in ("repo_root", "data_dir", "cache_dir", "output_dir", "package_path"):
@@ -190,6 +198,16 @@ def request_stop(cfg: B35Config) -> Path:
 
 def clear_stop(cfg: B35Config) -> None:
     cfg.stop_file.unlink(missing_ok=True)
+
+
+def request_step_a_stop(cfg: B35Config) -> Path:
+    cfg.step_a_stop_file.parent.mkdir(parents=True, exist_ok=True)
+    cfg.step_a_stop_file.write_text("Stop before the next video.\n", encoding="utf-8")
+    return cfg.step_a_stop_file
+
+
+def clear_step_a_stop(cfg: B35Config) -> None:
+    cfg.step_a_stop_file.unlink(missing_ok=True)
 
 
 def preflight(cfg: B35Config) -> dict[str, Any]:
@@ -232,6 +250,53 @@ def preflight(cfg: B35Config) -> dict[str, Any]:
         "graph_runtime": graph_runtime,
     }
     atomic_json(cfg.output_dir / "preflight.json", result)
+    return result
+
+
+def preflight_step_a(cfg: B35Config) -> dict[str, Any]:
+    import torch
+
+    errors: list[str] = []
+    a0_videos = cfg.audit_dir / "videos"
+    required = (
+        cfg.repo_root / "tools" / "recover_daughters.py",
+        cfg.repo_root / "tools" / "public_local.py",
+        cfg.repo_root / "experiments" / "exp29_sjlee947_verbatim" / "exp29-sjlee947-verbatim.ipynb",
+    )
+    for path in required:
+        if not path.is_file():
+            errors.append(f"missing {path.relative_to(cfg.repo_root)}")
+    if len(list(a0_videos.glob("*.json"))) != 199:
+        errors.append("B35 A0 per-video audit is incomplete; expected 199 cached JSON files")
+    if not torch.cuda.is_available():
+        errors.append("CUDA is required for B35 Step A")
+    public_primary = (
+        cfg.repo_root
+        / "external"
+        / "pilkwang__biohub-tracking-support-pack-50ep-v1"
+        / "weights"
+        / "unet_transformer"
+        / "split_0"
+        / "edge_predictor_best.pth"
+    )
+    if not public_primary.is_file():
+        errors.append("public primary pack is missing; run tools/get_kaggle_datasets.py")
+    if errors:
+        raise RuntimeError("B35 Step A preflight failed:\n- " + "\n- ".join(errors))
+    result = {
+        "status": "ready",
+        "videos": len(cfg.all_stems),
+        "gpu": torch.cuda.get_device_name(0),
+        "det_threshold": 0.90,
+        "nms_um": 3.0,
+        "parent_um": 20.0,
+        "existing_exclusion_um": 3.0,
+        "reach_gate": "144/151",
+        "candidate_node_ratio_gate_per_video": 0.003,
+        "output": str(cfg.step_a_dir),
+        "stop_file": str(cfg.step_a_stop_file),
+    }
+    atomic_json(cfg.step_a_dir / "preflight.json", result)
     return result
 
 
@@ -352,6 +417,83 @@ def run_a0(cfg: B35Config) -> dict[str, Any]:
     if not cfg.run_full_audit:
         return {"status": "disabled", "reason": "BIOHUB_B35_RUN=0"}
     return _run(cfg, cfg.stems, cfg.audit_dir)
+
+
+def _run_step_a(cfg: B35Config, stems: list[str], label: str, *, expect_videos: int = 0) -> dict[str, Any]:
+    command = [
+        sys.executable,
+        str(cfg.repo_root / "tools" / "recover_daughters.py"),
+        "--data-dir", str(cfg.data_dir),
+        "--cache", str(cfg.cache_dir),
+        "--output", str(cfg.step_a_dir),
+        "--baseline-audit", str(cfg.audit_dir),
+        "--stop-file", str(cfg.step_a_stop_file),
+        "--det-threshold", "0.90",
+        "--nms-um", "3.0",
+        "--parent-um", "20.0",
+        "--existing-um", "3.0",
+        "--stems", *stems,
+    ]
+    if expect_videos:
+        command.extend(["--expect-videos", str(expect_videos)])
+    log_path = cfg.step_a_dir / f"{label}.log"
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+    print("STEP A COMMAND:", " ".join(command), flush=True)
+    with log_path.open("a", encoding="utf-8") as log:
+        process = subprocess.Popen(
+            command,
+            cwd=cfg.repo_root,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            bufsize=1,
+        )
+        try:
+            assert process.stdout is not None
+            for line in process.stdout:
+                print(line, end="", flush=True)
+                log.write(line)
+                log.flush()
+        except KeyboardInterrupt:
+            request_step_a_stop(cfg)
+            process.terminate()
+            process.wait(timeout=30)
+            print("SAFE STOP: completed videos are cached; rerun the cell to resume.", flush=True)
+            return compact_step_a_status(cfg)
+        return_code = process.wait()
+    if return_code != 0:
+        raise RuntimeError(f"{label} failed with exit code {return_code}; see {log_path}")
+    return compact_step_a_status(cfg)
+
+
+def run_step_a_smoke(cfg: B35Config) -> dict[str, Any]:
+    return _run_step_a(cfg, list(SMOKE_STEMS), "step_a_smoke2")
+
+
+def run_step_a(cfg: B35Config) -> dict[str, Any]:
+    return _run_step_a(cfg, cfg.all_stems, "step_a_full199", expect_videos=199)
+
+
+def compact_step_a_status(cfg: B35Config) -> dict[str, Any]:
+    state_path = cfg.step_a_dir / "state.json"
+    summary_path = cfg.step_a_dir / "summary.json"
+    state = json.loads(state_path.read_text(encoding="utf-8")) if state_path.is_file() else {}
+    summary = json.loads(summary_path.read_text(encoding="utf-8")) if summary_path.is_file() else {}
+    group = summary.get("groups", {}).get("all", {})
+    return {
+        "status": state.get("status", "new"),
+        "completed": state.get("completed", 0),
+        "selected_videos": state.get("selected_videos", len(cfg.all_stems)),
+        "baseline_reach": group.get("baseline_window_detection_necessary"),
+        "augmented_reach": group.get("augmented_window_detection_necessary"),
+        "candidate_node_ratio": group.get("candidate_node_ratio"),
+        "max_candidate_node_ratio": group.get("max_candidate_node_ratio"),
+        "gate": summary.get("gate"),
+        "stop_file": str(cfg.step_a_stop_file),
+        "report": str(cfg.step_a_dir / "summary.md"),
+    }
 
 
 def build_friend_c_package(cfg: B35Config) -> Path:

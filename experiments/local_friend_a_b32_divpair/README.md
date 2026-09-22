@@ -25,6 +25,24 @@ Do not start daughter recovery or pair-model training from the old 3%/121
 assumptions. Register the Step A parent fraction and revised reach gate from the
 completed A0 report first. The notebook does not submit or upload anything.
 
+## Step A after the accepted A0 response (2026-09-24)
+
+The same root notebook now continues with the accepted full-frame implementation:
+
+- public primary only, public detection TTA, threshold 0.90 and NMS 3 um;
+- one detector pass per full video, with atomic `peaks90/<stem>.npz` caches;
+- candidate peak at least 3 um from an existing node and within 20 um of an
+  eligible one-child parent;
+- official-window reach audit against the A0 baseline;
+- full-run gate: at least 144/151 reachable divisions and at most 0.3%
+  candidate nodes in every video.
+
+The two-video GPU smoke and the 199-video run reuse the same caches. Interrupting
+the kernel loses at most the current video. Runtime output is written under
+`outputs/local_friend_a_b35_divisions/step_a_fullframe_primary090/`; the final
+lightweight report is copied to `results/b35_step_a.{json,md}`. Step B proceeds
+regardless of the Step A gate, and Step C is cancelled by the accepted A0 response.
+
 The remainder of this README records the closed B32 recipe for provenance.
 
 ## Status: stopped honestly at Step 1 (2026-09-22)
