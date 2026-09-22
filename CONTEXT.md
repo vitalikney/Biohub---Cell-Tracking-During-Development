@@ -1204,6 +1204,9 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   (median of mutual-NN shifts, 12 um; ported line for line via tools/build_probe_kernel.py --patch gshift). Kernel stats
   on the dummy clips: shift computed on 99/99 frame pairs per clip, summed |shift| 225 / 118 / 48 / 89 um per clip, i.e.
   a mean per-frame global displacement of 0.5-2.3 um - comparable to the 1.8 um median true step, so the uncorrected
-  relink cost is biased on drifting videos. Node counts within +-0.5% of exp29. Probes 21/22 still pending.
+  relink cost is biased on drifting videos. Node counts within +-0.5% of exp29. Probes 21/22 still pending.- 2026-09-24 PROBES 21 AND 22 SCORED: exp40 (motion relink OFF) = 0.945, exp41 (relink learned bonus 2.5) = 0.945; both
+  -0.002 vs exp29, i.e. ties at the noise floor, slightly negative. The relink stage as shipped stays; friend B's local
+  +0.0053 for relink-off (one division TP + 0.0014 edges on 12 videos) did not transfer. Probe 23 (exp42 gshift) pending.
+  Friend A 31f3212: resumable B35 step A (tools/recover_daughters.py, full-frame 0.90 pass + peak cache) committed, run pending.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
