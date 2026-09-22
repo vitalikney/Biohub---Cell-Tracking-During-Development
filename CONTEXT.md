@@ -1136,5 +1136,14 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   evidence on both embryos (all 199 videos: 59 division FP removed, 1 TP lost, edges and nodes untouched), whereas exp37
   changes inference views with in-sample-only local evidence and is 0.001 lower on the board. B20/DivNet line fully
   closed on the LB now (veto = tie). 4 slots left today, none planned until B32 delivers.
+- 2026-09-22 B32 STEP 1 STOP: the registered 15 um orphan-only pool on all 199 B20 checkpoints covers only 58/151
+  GT divisions (38.4%; 44b6 6/26, 6bba 52/125), not the required >90%. A cumulative reach audit finds the matched
+  parent and both matched daughters for only 121/151 (80.1%), so the gate is impossible even before candidate rules;
+  117 have the correct existing child, 116 pass geometry, 97 pass DeepCenter, and 58 remain after orphan-only. Parent
+  radius 30 um adds only one (59/151); removing sister/DC constraints within the orphan pool reaches 63/151; allowing
+  claimed daughters reaches 97/151 but creates 16.3M triples and still misses the gate. No crop cache, GPU training,
+  or LB probe was run. B32 needs a newly registered upstream detection/edge-replacement redesign, not a radius tweak.
+  Reproducible notebook/code and full report: `experiments/local_friend_a_b32_divpair/`.
+
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.

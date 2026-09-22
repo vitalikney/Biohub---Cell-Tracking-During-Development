@@ -1,0 +1,35 @@
+{
+  "date": "2026-09-22",
+  "status": "stopped_at_step1",
+  "videos": 199,
+  "registered": {
+    "candidates": 338285,
+    "positives": 58,
+    "gt_divisions": 151,
+    "covered_gt_divisions": 58,
+    "coverage": 0.3841059602649007,
+    "by_embryo": {
+      "44b6": {"videos": 71, "candidates": 196180, "covered": 6, "gt": 26, "coverage": 0.23076923076923078},
+      "6bba": {"videos": 128, "candidates": 142105, "covered": 52, "gt": 125, "coverage": 0.416}
+    }
+  },
+  "cumulative_reach": {
+    "gt_divisions": 151,
+    "parent_detected": 149,
+    "both_daughters_detected": 121,
+    "parent_has_one_child": 120,
+    "existing_child_valid": 120,
+    "existing_child_is_gt_daughter": 117,
+    "other_daughter_node_valid": 117,
+    "parent_radius_15um": 116,
+    "sister_range_5_20um": 116,
+    "deepcenter_ge_0_20": 97,
+    "orphan_only": 58
+  },
+  "sweeps": [
+    {"name": "registered_radius30", "candidates": 736825, "covered": 59, "coverage": 0.39072847682119205},
+    {"name": "relaxed_orphan_ceiling", "candidates": 4854901, "covered": 63, "coverage": 0.41721854304635764},
+    {"name": "registered_steal", "candidates": 16317552, "covered": 97, "coverage": 0.6423841059602649}
+  ],
+  "decision": "Do not train: the 80.1% detected-triple ceiling is below the registered 90% gate."
+}
