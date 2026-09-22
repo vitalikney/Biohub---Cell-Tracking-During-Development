@@ -24,24 +24,42 @@ FRACTIONS = (0.01, 0.03, 0.05, 0.10, 0.20, 0.50, 1.0)
 VERSION = "b35-parent-audit-v1"
 
 
+def json_default(item):
+    if isinstance(item, np.generic):
+        return item.item()
+    if isinstance(item, Path):
+        return str(item)
+    raise TypeError(f"Object of type {type(item).__name__} is not JSON serializable")
+
+
 def atomic_json(path, value):
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_suffix(path.suffix + ".tmp")
-    temporary.write_text(json.dumps(value, indent=2, allow_nan=False), encoding="utf-8")
+    temporary.write_text(json.dumps(value, indent=2, allow_nan=False, default=json_default), encoding="utf-8")
     temporary.replace(path)
 
 
 def checkpoint_graph(path):
+    import polars as pl
     import tracksdata as td
     graph = td.graph.IndexedRXGraph()
+    # IndexedRXGraph keeps only registered attributes during bulk insertion.
+    # ``t`` is built in; spatial coordinates and the synthetic-node marker are
+    # not, so register them before loading the compact checkpoint arrays.
+    for key in ("z", "y", "x"):
+        graph.add_node_attr_key(key, pl.Float64, -999999.0)
+    graph.add_node_attr_key("syn", pl.Int64, 0)
     with np.load(path, allow_pickle=False) as a:
         ids = a["node_id"].astype(np.int64).tolist()
         attrs = [dict(t=int(r[0]), z=float(r[1]), y=float(r[2]), x=float(r[3]),
                       syn=int(r[4])) for r in a["tzyx_syn"]]
         graph.bulk_add_nodes(attrs, indices=ids)
         for src, dst in zip(a["src"], a["dst"], strict=True):
-            graph.add_edge(int(src), int(dst))
+            # tracksdata 0.6 requires the attrs argument even for an
+            # attribute-free edge.  The previous two-argument form failed on
+            # the pinned project environment before the first video ran.
+            graph.add_edge(int(src), int(dst), {})
     return graph
 
 
@@ -153,7 +171,7 @@ def audit_video(cache, data, stem, output):
     row = dict(dataset=stem, embryo=stem.split("_")[0], fingerprint=signature,
                **audit_graph(prediction, truth, scale, probabilities))
     atomic_json(destination, row)
-    print(stem, json.dumps(row["counts"]), flush=True)
+    print(stem, json.dumps(row["counts"], default=json_default), flush=True)
     return row
 
 

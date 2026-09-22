@@ -1,6 +1,26 @@
-# Friend A B32 — division pair model
+# Friend A B32/B35 — division pair model and daughter recovery
 
-Entry point: root-level `friend-a-b32-divpair.ipynb`.
+Current entry point: root-level `friend-a-b35-divisions.ipynb`.
+
+## B35 update: Step A0 must run first (2026-09-23)
+
+The old `121/151` detector ceiling and the assumed top-3% DivNet parent filter
+are no longer treated as registered facts. B35 starts with the CPU-only
+`tools/audit_b35.py` audit using the official optimal node matcher and the
+division event window. The root notebook:
+
+- validates all 199 `ckpt`, `divnet`, GT and image inputs;
+- runs a two-video smoke containing six annotated divisions;
+- resumes the full audit per video and writes the final report to
+  `results/b35_audit.{json,md}`;
+- reports the minimum parent fraction reaching 90% recall for all/44b6/6bba;
+- can build the image-free Friend C package, now including `divnet/`.
+
+Do not start daughter recovery or pair-model training from the old 3%/121
+assumptions. Register the Step A parent fraction and revised reach gate from the
+completed A0 report first. The notebook does not submit or upload anything.
+
+The remainder of this README records the closed B32 recipe for provenance.
 
 ## Status: stopped honestly at Step 1 (2026-09-22)
 

@@ -1,8 +1,8 @@
-"""Build the compact, image-free B31 cache package for Friend C.
+"""Build the compact, image-free B31/B33/B35 cache package for Friend C.
 
 The archive contains only raw GEFFs, DeepCenter node scores, post-gap
-checkpoints, and GT GEFFs. Competition image Zarrs, weights, DivNet arrays,
-and prediction outputs are never included.
+checkpoints, DivNet parent scores, and GT GEFFs. Competition image Zarrs,
+weights, and prediction outputs are never included.
 """
 
 from __future__ import annotations
@@ -38,7 +38,7 @@ def add_tree(archive: zipfile.ZipFile, source: Path, destination: Path) -> int:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--cache-root", required=True, help="directory containing <tag>/{raw,dc,ckpt}")
+    parser.add_argument("--cache-root", required=True, help="directory containing <tag>/{raw,dc,ckpt,divnet}")
     parser.add_argument("--tag", default="friend_a_b20_exp29")
     parser.add_argument("--data-dir", required=True, help="train directory containing <stem>.geff")
     parser.add_argument("--output", required=True, help="destination .zip")
@@ -53,6 +53,7 @@ def main() -> None:
         "raw": geff_stems(cache / "raw"),
         "dc": {path.stem for path in (cache / "dc").glob("*.npz")},
         "ckpt": {path.stem for path in (cache / "ckpt").glob("*.npz")},
+        "divnet": {path.stem for path in (cache / "divnet").glob("*.npz")},
         "gt": geff_stems(data_dir),
     }
     stems = sets["ckpt"]
@@ -77,6 +78,7 @@ def main() -> None:
             "raw": "raw detector/linker GEFFs with peak_prob",
             "dc": "DeepCenter score per raw node_id",
             "ckpt": "post-gap checkpoint before divisions/final tail",
+            "divnet": "DivNet probability per eligible parent node_id",
             "train": "GT GEFF only; no image Zarrs",
         },
     }
@@ -84,7 +86,7 @@ def main() -> None:
     with zipfile.ZipFile(temporary, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=6) as archive:
         archive.writestr("manifest.json", json.dumps(manifest, indent=2))
         file_count += 1
-        for name in ("raw", "dc", "ckpt"):
+        for name in ("raw", "dc", "ckpt", "divnet"):
             file_count += add_tree(archive, cache / name, Path("cache") / args.tag / name)
         for stem in sorted(stems):
             file_count += add_tree(archive, data_dir / f"{stem}.geff", Path("train") / f"{stem}.geff")
