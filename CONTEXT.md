@@ -1210,6 +1210,10 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   Friend A 31f3212: resumable B35 step A (tools/recover_daughters.py, full-frame 0.90 pass + peak cache) committed, run pending.- 2026-09-24 DISCUSSION CHECK: OmerZalman (0.95) says the top gains came from improving ALL stages together (a 0.969 team
   told him the same); OpPrime traced 0.947-stack division losses across pre-ILP, ILP selection and relink - the same
   multi-stage loss as our A0 audit, consistent with B35 inserting divisions after the tail with edge replacement;
-  Pavel (43rd) shows CV/LB decoupling at the top. No code or recipe shared. Details research/discussions_summary.md.
+  Pavel (43rd) shows CV/LB decoupling at the top. No code or recipe shared. Details research/discussions_summary.md.- 2026-09-24 PROBE 23 SCORED: exp42 (exp29 + takaito's gshift patch only) = 0.945, -0.002 vs exp29, same as probes 21/22.
+  It was NOT his notebook verbatim: his base is haideptry's density-adaptive stack (relink radius 5.5-7.25 um by
+  density group, DivNet veto, DeepCenter safe-div 0.25, UNet batch 8) + gshift; I transplanted one piece onto exp29.
+  Three relink-stage changes on exp29 (off, bonus 2.5, gshift) all landed at 0.945: the relink stage of exp29 is at its
+  local optimum for the hidden embryo. Next check if slots allow: his notebook verbatim as one probe.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
