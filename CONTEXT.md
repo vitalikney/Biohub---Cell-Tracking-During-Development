@@ -1178,6 +1178,9 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   trainer needs the public checkpoint (trained on both embryos), validates on a fixed 6bba+44b6 pair, mixes ZSNS relay
   data, trains on GT-node pairs, no per-epoch resume, Kaggle-only paths -> not an honest LOEO. DECISION: B34 only as an
   explicitly in-sample public-checkpoint regression (author init, 12-video port check like exp38, LB probe decides),
-  capped at one day of porting, after B33 and the friend C package; else closed and the GPU goes to B33's GPU variants.
+  capped at one day of porting, after B33 and the friend C package; else closed and the GPU goes to B33's GPU variants.- 2026-09-23 PROBES 21 AND 22 SUBMITTED (PENDING): exp40 = exp29 + motion relink OFF (id 56459135; kernel stats confirm 0
+  relink edges, nodes -0.8%..+0.04% on the dummy clips, safe divisions 49/29/10/46 vs exp39's 26/6/4/9 because the veto is
+  off), exp41 = exp29 + MOTION_RELINK_LEARNED_BONUS 1.0 -> 2.5 (id 56459139; relink edge counts shift by a few per clip).
+  Both built by tools/build_probe_kernel.py. 3 slots left today.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
