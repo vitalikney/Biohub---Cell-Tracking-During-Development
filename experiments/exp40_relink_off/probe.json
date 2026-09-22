@@ -1,0 +1,9 @@
+{
+ "base": "exp29 realised config (tight55, pilkwang primary, validator off) = LB 0.947; built by tools/build_probe_kernel.py from the exp39 notebook",
+ "change": {
+  "OUTPUT_MOTION_RELINK": "0",
+  "DIVNET_VERIFY": "0"
+ },
+ "note": "B29: motion relink OFF; friend B 12 videos: +0.0053 (edge +0.0014, one division TP), repairs the collapsing video 87bba6c4; never probed",
+ "rule": "compare with exp29 0.947; >= 0.950 adopt; ties recorded; <= 0.944 drop"
+}

@@ -1,0 +1,9 @@
+{
+ "base": "exp29 realised config (tight55, pilkwang primary, validator off) = LB 0.947; built by tools/build_probe_kernel.py from the exp39 notebook",
+ "change": {
+  "MOTION_RELINK_LEARNED_BONUS": "2.5",
+  "DIVNET_VERIFY": "0"
+ },
+ "note": "Justin CH123: the transformer probability enters the final (relink) edges only through the learned bonus (<= ~1 um vs 1.8 um median step); bonus 1.0 -> 2.5 lets the learned score decide more of the final edges; no local number, mechanism probe",
+ "rule": "compare with exp29 0.947; >= 0.950 adopt; ties recorded; <= 0.944 drop"
+}
