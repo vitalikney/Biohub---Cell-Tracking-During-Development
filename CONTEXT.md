@@ -1200,6 +1200,10 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   one full-frame primary pass at threshold 0.90 per frame with a peak cache and spatial matching (his proposal,
   confirmed), gate reach >= 144/151 at <= 0.3% candidate nodes (not his 150/151); step B proceeds regardless because
   the dominant loss is now the orphan rule (136 reachable vs 58 orphan pool); step B prefilter = embryo-fold geometric
-  ranker with a recall-vs-fraction curve (DivNet p as one feature), pair model only on the retained fraction.
+  ranker with a recall-vs-fraction curve (DivNet p as one feature), pair model only on the retained fraction.- 2026-09-24 PROBE 23 SUBMITTED: exp42 = exp29 + takaito's per-frame global-shift correction inside the motion relink
+  (median of mutual-NN shifts, 12 um; ported line for line via tools/build_probe_kernel.py --patch gshift). Kernel stats
+  on the dummy clips: shift computed on 99/99 frame pairs per clip, summed |shift| 225 / 118 / 48 / 89 um per clip, i.e.
+  a mean per-frame global displacement of 0.5-2.3 um - comparable to the 1.8 um median true step, so the uncorrected
+  relink cost is biased on drifting videos. Node counts within +-0.5% of exp29. Probes 21/22 still pending.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
