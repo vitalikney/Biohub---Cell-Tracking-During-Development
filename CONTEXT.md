@@ -1214,6 +1214,12 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   It was NOT his notebook verbatim: his base is haideptry's density-adaptive stack (relink radius 5.5-7.25 um by
   density group, DivNet veto, DeepCenter safe-div 0.25, UNet batch 8) + gshift; I transplanted one piece onto exp29.
   Three relink-stage changes on exp29 (off, bonus 2.5, gshift) all landed at 0.945: the relink stage of exp29 is at its
-  local optimum for the hidden embryo. Next check if slots allow: his notebook verbatim as one probe.
+  local optimum for the hidden embryo. Next check if slots allow: his notebook verbatim as one probe.- 2026-09-22 20:10 UTC (DATE CORRECTION: the notes above headed 2026-09-23 and 2026-09-24 were all written on 22 Sep UTC;
+  the session clock ran ahead; real deadline math: today 22 Sep, 7 days left). Two slots left today (5/day, UTC).
+  exp43 = takaito/biohub-a951-gshift VERBATIM (user "да"; his stack also carries a relative-rank/mutual-best association
+  patch, beta 0.12, which I had missed when porting gshift alone) - kernel running. exp44 = exp43 + friend B's axis-flip
+  TTA cell (exp37 verbatim) = a BUNDLE with a change in every stage vs exp29 (detector TTA, association, relink density
+  + gshift, divisions DivNet + DC 0.25), per the user's "bundles, not single knobs"; read against exp43 the same day.
+  Both kernels pushed; submit both when complete.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.

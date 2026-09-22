@@ -1,0 +1,6 @@
+{
+ "base": "exp43 = takaito/biohub-a951-gshift verbatim (submitted the same day as the paired reference)",
+ "change": "BUNDLE, every pipeline stage carries a change vs exp29: detector TTA = 8 training-consistent axis flips (friend B surgery, exp37 cell verbatim; local +0.021 on 12 videos, +0.019 on an unseen-embryo scratch primary), association = relative-rank/mutual-best bonus (takaito/haideptry), relink = density-adaptive radius + global-shift correction, divisions = DivNet veto + DeepCenter safe-div 0.25",
+ "why": "forum (OmerZalman 0.95, a 0.969 team): gains come from improving all stages together, single knobs on the 0.947 stack only tie; user asked for a bundle probe",
+ "rule": "read against exp43 (same day): exp44 - exp43 >= +0.002 -> axis-flip composes on the better base; final 2 candidate if >= 0.948"
+}
