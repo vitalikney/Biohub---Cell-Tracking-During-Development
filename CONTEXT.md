@@ -1173,6 +1173,11 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   ckpt/dc package via the B31 runner's radius-0 path (linefit weight x window - the largest stage, never swept -, short-
   track filter and rescue, safe-division gates/caps, DeepCenter safe-div threshold, edge max), all 199 videos, per-embryo
   readout, node ratio; friend A = stages that need frames (relink, gap closing, DeepCenter gap threshold) + GPU line 2;
-  friend A publishes the package today with tools/package_friend_c_b31_cache.py. Both feed candidates nightly; I probe.
+  friend A publishes the package today with tools/package_friend_c_b31_cache.py. Both feed candidates nightly; I probe.- 2026-09-23 FRIEND A 73648e8: B33 grid runner ready (45 one-knob variants from the 199 raw graphs, exp29 notebook's own
+  post-processing functions, resumable, per-embryo readout + node ratio, control forced to tight55). B34 audit: giorgosin's
+  trainer needs the public checkpoint (trained on both embryos), validates on a fixed 6bba+44b6 pair, mixes ZSNS relay
+  data, trains on GT-node pairs, no per-epoch resume, Kaggle-only paths -> not an honest LOEO. DECISION: B34 only as an
+  explicitly in-sample public-checkpoint regression (author init, 12-video port check like exp38, LB probe decides),
+  capped at one day of porting, after B33 and the friend C package; else closed and the GPU goes to B33's GPU variants.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
