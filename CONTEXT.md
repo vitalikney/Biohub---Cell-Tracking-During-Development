@@ -1195,6 +1195,11 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   prefilter threshold must come from that curve; (2) the B32 reach audit used greedy matching and direct t+1 daughters
   only, while the official scorer matches optimally (_match_full, 7 um) and credits daughter branches within a frame
   window, so 121/151 is not yet a strict ceiling; the script recomputes it by the scorer's rules. Friend A runs it as
-  step A0 before any training; the friend C package gains the divnet/ folder so the audit can run without him.
+  step A0 before any training; the friend C package gains the divnet/ folder so the audit can run without him.- 2026-09-24 B35 STEP A0 (friend A, f6610f9): official window matching reaches 136/151 (44b6 24/26, 6bba 112/125), direct
+  parent+both daughters 123/151; DivNet-p prefilter refuted (top 3% -> 42% recall, top 50% -> 83%). Decisions: step A =
+  one full-frame primary pass at threshold 0.90 per frame with a peak cache and spatial matching (his proposal,
+  confirmed), gate reach >= 144/151 at <= 0.3% candidate nodes (not his 150/151); step B proceeds regardless because
+  the dominant loss is now the orphan rule (136 reachable vs 58 orphan pool); step B prefilter = embryo-fold geometric
+  ranker with a recall-vs-fraction curve (DivNet p as one feature), pair model only on the retained fraction.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
