@@ -25,6 +25,8 @@ import numpy as np
 
 
 ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 VERSION = "b35-step-a-full-frame-primary-v1"
 DEFAULT_THRESHOLD = 0.90
 DEFAULT_NMS_UM = 3.0
