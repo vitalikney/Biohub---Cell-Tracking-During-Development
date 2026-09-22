@@ -16,6 +16,11 @@ division event window. The root notebook:
 - reports the minimum parent fraction reaching 90% recall for all/44b6/6bba;
 - can build the image-free Friend C package, now including `divnet/`.
 
+Its preflight also validates the graph-library runtime. If an interrupted
+Jupyter import left a partial `sqlalchemy`/`tracksdata` module in memory, the
+runner clears only those incomplete imports and retries once; package
+reinstallation is not required for that recoverable kernel state.
+
 Do not start daughter recovery or pair-model training from the old 3%/121
 assumptions. Register the Step A parent fraction and revised reach gate from the
 completed A0 report first. The notebook does not submit or upload anything.

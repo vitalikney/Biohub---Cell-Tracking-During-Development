@@ -10,6 +10,8 @@ training before A0 has produced a complete 199-video report.
 from __future__ import annotations
 
 import json
+import importlib
+import importlib.metadata
 import os
 import subprocess
 import sys
@@ -25,6 +27,48 @@ SMOKE_STEMS = ("44b6_a21120c2", "6bba_09961292")
 RECALL_GATE = 0.90
 
 
+def ensure_graph_runtime() -> dict[str, str]:
+    """Import graph dependencies, repairing a partially imported notebook state.
+
+    Interrupting an import in a long-lived Jupyter kernel can leave SQLAlchemy
+    submodules in ``sys.modules`` without all attributes populated.  A later
+    tracksdata import then fails with ``sqlalchemy.sql has no attribute base``
+    even though the installed packages are healthy.  Retry only that known
+    poisoned-kernel state; unrelated dependency failures keep their traceback.
+    """
+
+    def load() -> None:
+        importlib.import_module("tracksdata")
+        sqlalchemy_sql = importlib.import_module("sqlalchemy.sql")
+        if not hasattr(sqlalchemy_sql, "base"):
+            raise AttributeError("module 'sqlalchemy.sql' has no attribute 'base'")
+
+    try:
+        load()
+    except AttributeError as exc:
+        if "sqlalchemy.sql" not in str(exc) or "base" not in str(exc):
+            raise
+        for module_name in list(sys.modules):
+            if module_name in {"tracksdata", "sqlalchemy"} or module_name.startswith(
+                ("tracksdata.", "sqlalchemy.")
+            ):
+                sys.modules.pop(module_name, None)
+        importlib.invalidate_caches()
+        try:
+            load()
+        except Exception as retry_exc:
+            raise RuntimeError(
+                "The notebook kernel contains a broken graph-library import and automatic "
+                "recovery failed. Restart the kernel and run all cells once."
+            ) from retry_exc
+        print("Recovered a partial SQLAlchemy/tracksdata import in the current kernel.", flush=True)
+
+    return {
+        "tracksdata": importlib.metadata.version("tracksdata"),
+        "sqlalchemy": importlib.metadata.version("SQLAlchemy"),
+    }
+
+
 def truthy(value: str | None, default: bool) -> bool:
     if value is None:
         return default
@@ -38,8 +82,23 @@ def atomic_text(path: Path, text: str) -> None:
     os.replace(temporary, path)
 
 
+def json_default(value: Any) -> Any:
+    """Convert NumPy scalar values produced by graph counters to JSON scalars."""
+    item = getattr(value, "item", None)
+    if callable(item):
+        converted = item()
+        if converted is not value:
+            return converted
+    if isinstance(value, Path):
+        return str(value)
+    raise TypeError(f"Object of type {type(value).__name__} is not JSON serializable")
+
+
 def atomic_json(path: Path, value: Any) -> None:
-    atomic_text(path, json.dumps(value, ensure_ascii=False, indent=2, allow_nan=False))
+    atomic_text(
+        path,
+        json.dumps(value, ensure_ascii=False, indent=2, allow_nan=False, default=json_default),
+    )
 
 
 def discover_data_dir(repo_root: Path) -> Path:
@@ -135,6 +194,7 @@ def clear_stop(cfg: B35Config) -> None:
 
 def preflight(cfg: B35Config) -> dict[str, Any]:
     errors: list[str] = []
+    graph_runtime = ensure_graph_runtime()
     sets = {
         "ckpt": {p.stem for p in (cfg.cache_dir / "ckpt").glob("*.npz")},
         "divnet": {p.stem for p in (cfg.cache_dir / "divnet").glob("*.npz")},
@@ -169,6 +229,7 @@ def preflight(cfg: B35Config) -> dict[str, Any]:
         "smoke_stems": list(SMOKE_STEMS),
         "friend_c_package": str(cfg.package_path),
         "cuda_needed_for_a0": False,
+        "graph_runtime": graph_runtime,
     }
     atomic_json(cfg.output_dir / "preflight.json", result)
     return result
@@ -245,6 +306,7 @@ def _write_handoff(cfg: B35Config, report: dict[str, Any], recommendation: dict[
 
 
 def _run(cfg: B35Config, stems: list[str], output: Path) -> dict[str, Any]:
+    ensure_graph_runtime()
     from tools import audit_b35
 
     output.mkdir(parents=True, exist_ok=True)

@@ -1,0 +1,188 @@
+{
+  "audit": {
+    "version": "b35-parent-audit-v1",
+    "videos": 199,
+    "groups": {
+      "all": {
+        "videos": 199,
+        "counts": {
+          "nodes": 4249618,
+          "eligible_parents": 4058838,
+          "scored_eligible_parents": 3821426,
+          "gt_divisions": 151,
+          "direct_parent_detected": 149,
+          "direct_parent_and_daughters": 123,
+          "direct_eligible_parent": 147,
+          "window_detection_necessary": 136,
+          "window_eligible_parent": 149,
+          "direct_parent_top_0.01": 38,
+          "window_parent_top_0.01": 42,
+          "window_detection_and_parent_top_0.01": 38,
+          "direct_parent_top_0.03": 63,
+          "window_parent_top_0.03": 76,
+          "window_detection_and_parent_top_0.03": 68,
+          "direct_parent_top_0.05": 76,
+          "window_parent_top_0.05": 93,
+          "window_detection_and_parent_top_0.05": 84,
+          "direct_parent_top_0.10": 93,
+          "window_parent_top_0.10": 105,
+          "window_detection_and_parent_top_0.10": 95,
+          "direct_parent_top_0.20": 103,
+          "window_parent_top_0.20": 116,
+          "window_detection_and_parent_top_0.20": 106,
+          "direct_parent_top_0.50": 126,
+          "window_parent_top_0.50": 135,
+          "window_detection_and_parent_top_0.50": 124,
+          "direct_parent_top_1.00": 142,
+          "window_parent_top_1.00": 148,
+          "window_detection_and_parent_top_1.00": 136
+        },
+        "parent_recall": {
+          "0.01": 0.25165562913907286,
+          "0.03": 0.41721854304635764,
+          "0.05": 0.5033112582781457,
+          "0.10": 0.6158940397350994,
+          "0.20": 0.6821192052980133,
+          "0.50": 0.8344370860927153,
+          "1.00": 0.9403973509933775
+        }
+      },
+      "44b6": {
+        "videos": 71,
+        "counts": {
+          "nodes": 2042862,
+          "eligible_parents": 1950875,
+          "scored_eligible_parents": 1894056,
+          "gt_divisions": 26,
+          "direct_parent_detected": 26,
+          "direct_parent_and_daughters": 22,
+          "direct_eligible_parent": 26,
+          "window_detection_necessary": 24,
+          "window_eligible_parent": 26,
+          "direct_parent_top_0.01": 10,
+          "window_parent_top_0.01": 11,
+          "window_detection_and_parent_top_0.01": 10,
+          "direct_parent_top_0.03": 13,
+          "window_parent_top_0.03": 14,
+          "window_detection_and_parent_top_0.03": 12,
+          "direct_parent_top_0.05": 14,
+          "window_parent_top_0.05": 17,
+          "window_detection_and_parent_top_0.05": 15,
+          "direct_parent_top_0.10": 20,
+          "window_parent_top_0.10": 20,
+          "window_detection_and_parent_top_0.10": 18,
+          "direct_parent_top_0.20": 20,
+          "window_parent_top_0.20": 20,
+          "window_detection_and_parent_top_0.20": 18,
+          "direct_parent_top_0.50": 22,
+          "window_parent_top_0.50": 24,
+          "window_detection_and_parent_top_0.50": 22,
+          "direct_parent_top_1.00": 26,
+          "window_parent_top_1.00": 26,
+          "window_detection_and_parent_top_1.00": 24
+        },
+        "parent_recall": {
+          "0.01": 0.38461538461538464,
+          "0.03": 0.5,
+          "0.05": 0.5384615384615384,
+          "0.10": 0.7692307692307693,
+          "0.20": 0.7692307692307693,
+          "0.50": 0.8461538461538461,
+          "1.00": 1.0
+        }
+      },
+      "6bba": {
+        "videos": 128,
+        "counts": {
+          "nodes": 2206756,
+          "eligible_parents": 2107963,
+          "scored_eligible_parents": 1927370,
+          "gt_divisions": 125,
+          "direct_parent_detected": 123,
+          "direct_parent_and_daughters": 101,
+          "direct_eligible_parent": 121,
+          "window_detection_necessary": 112,
+          "window_eligible_parent": 123,
+          "direct_parent_top_0.01": 28,
+          "window_parent_top_0.01": 31,
+          "window_detection_and_parent_top_0.01": 28,
+          "direct_parent_top_0.03": 50,
+          "window_parent_top_0.03": 62,
+          "window_detection_and_parent_top_0.03": 56,
+          "direct_parent_top_0.05": 62,
+          "window_parent_top_0.05": 76,
+          "window_detection_and_parent_top_0.05": 69,
+          "direct_parent_top_0.10": 73,
+          "window_parent_top_0.10": 85,
+          "window_detection_and_parent_top_0.10": 77,
+          "direct_parent_top_0.20": 83,
+          "window_parent_top_0.20": 96,
+          "window_detection_and_parent_top_0.20": 88,
+          "direct_parent_top_0.50": 104,
+          "window_parent_top_0.50": 111,
+          "window_detection_and_parent_top_0.50": 102,
+          "direct_parent_top_1.00": 116,
+          "window_parent_top_1.00": 122,
+          "window_detection_and_parent_top_1.00": 112
+        },
+        "parent_recall": {
+          "0.01": 0.224,
+          "0.03": 0.4,
+          "0.05": 0.496,
+          "0.10": 0.584,
+          "0.20": 0.664,
+          "0.50": 0.832,
+          "1.00": 0.928
+        }
+      }
+    },
+    "limitations": [
+      "These are detection/filter diagnostics, not leaderboard or official scores.",
+      "Window detection is necessary but not sufficient for a recoverable division.",
+      "Public detector and DivNet checkpoints have training overlap; this is not honest LOEO.",
+      "Parent fractions are fixed without GT; do not tune them on evaluation embryos."
+    ]
+  },
+  "selection": {
+    "recall_gate": 0.9,
+    "curve": {
+      "all": {
+        "0.01": 0.25165562913907286,
+        "0.03": 0.41721854304635764,
+        "0.05": 0.5033112582781457,
+        "0.10": 0.6158940397350994,
+        "0.20": 0.6821192052980133,
+        "0.50": 0.8344370860927153,
+        "1.00": 0.9403973509933775
+      },
+      "44b6": {
+        "0.01": 0.38461538461538464,
+        "0.03": 0.5,
+        "0.05": 0.5384615384615384,
+        "0.10": 0.7692307692307693,
+        "0.20": 0.7692307692307693,
+        "0.50": 0.8461538461538461,
+        "1.00": 1.0
+      },
+      "6bba": {
+        "0.01": 0.224,
+        "0.03": 0.4,
+        "0.05": 0.496,
+        "0.10": 0.584,
+        "0.20": 0.664,
+        "0.50": 0.832,
+        "1.00": 0.928
+      }
+    },
+    "minimum_fraction_by_group": {
+      "all": 1.0,
+      "44b6": 1.0,
+      "6bba": 1.0
+    },
+    "recommended_robust_fraction": 1.0,
+    "window_detection_baseline": 136,
+    "gt_divisions": 151,
+    "provisional_step_a_target_same_plus14_intent": 150,
+    "target_note": "The +14 target preserves the old intended gain only; register the final Step A gate after reviewing this official-window audit."
+  }
+}
