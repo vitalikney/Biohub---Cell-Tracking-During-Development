@@ -1190,6 +1190,11 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   recovery + steal pool + pair model, PROMPT_FRIEND_A.md top block), B33 CPU grid continues, friend C adds pairwise
   combinations and a per-video win-rate criterion (>= 55% of videos per embryo) to his tail grid, I keep 5 probes/day.
   Site check 23 Sep: takaito's "gshift" (per-frame global shift before relink, MNN 12 um) ported as exp42 (running);
-  his team is 0.946 after 28 submissions; new threads are two more "stuck at 0.947" posts and no answers from the top.
+  his team is 0.946 after 28 submissions; new threads are two more "stuck at 0.947" posts and no answers from the top.- 2026-09-23 NIGHT, USER'S PRE-CHECK OF B35 (tools/audit_b35.py, written on his side, committed here): (1) the top-3%
+  DivNet-p prefilter was an assumption; the script measures GT-parent recall vs fraction (1..100%) per video, and the
+  prefilter threshold must come from that curve; (2) the B32 reach audit used greedy matching and direct t+1 daughters
+  only, while the official scorer matches optimally (_match_full, 7 um) and credits daughter branches within a frame
+  window, so 121/151 is not yet a strict ceiling; the script recomputes it by the scorer's rules. Friend A runs it as
+  step A0 before any training; the friend C package gains the divnet/ folder so the audit can run without him.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
