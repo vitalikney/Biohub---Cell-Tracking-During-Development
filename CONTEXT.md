@@ -1220,6 +1220,9 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   patch, beta 0.12, which I had missed when porting gshift alone) - kernel running. exp44 = exp43 + friend B's axis-flip
   TTA cell (exp37 verbatim) = a BUNDLE with a change in every stage vs exp29 (detector TTA, association, relink density
   + gshift, divisions DivNet + DC 0.25), per the user's "bundles, not single knobs"; read against exp43 the same day.
-  Both kernels pushed; submit both when complete.
+  Both kernels pushed; submit both when complete.- 2026-09-22 ~20:40 UTC: exp44 REBUILT as a real bundle after the user pointed out that axis-flip alone is one knob vs exp43:
+  takaito base + axis-flip TTA (detector) + exp36 division hygiene (sister floor 5 um + already-divided filter). The v2
+  push first failed on the 2-concurrent-GPU-session limit (commit f247b24 says "pushed" - it was not); the user stopped
+  v1 on the site and v2 is now running (submit with -v 2). exp43 still running. Both go out before 00:00 UTC.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
