@@ -1256,6 +1256,10 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   separately), L5 (friend A DaughterNet-B full-res, ensemble partner), L4 (B33 + laptop leaf-prune grid), L3 optional
   (dorado pseudo-divisions, needs user OK for ~40 GB public download), L7 bundle and finals. Gates on a pre-registered
   SELECTION (6bba odd) / CONFIRMATION (6bba even + all 44b6) split. Finals: exp29 anchor + best confirmed stage (else
-  exp39). Build workflow wf_d710f2f6-6f3 launched (splits, K-DN trainer, div_insert + kernel patch, cache replay).
+  exp39). Build workflow wf_d710f2f6-6f3 launched (splits, K-DN trainer, div_insert + kernel patch, cache replay).- 2026-09-23 B35 STEP A RESULT (friend A 3bb04e1, pushed before he saw the new order): a full-frame public-primary pass at
+  threshold 0.90 reaches ALL 151/151 GT divisions under the window rule (136 -> 151; 44b6 26/26, 6bba 125/125) but at
+  +24% candidate nodes (max 73% in one video), far over the 0.3% budget -> gate not passed. Consistent with the new plan:
+  recovered daughters stay out of the submission path (a second detector pass per video and a huge candidate pool);
+  L2 inserts divisions only on existing nodes.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
