@@ -1289,6 +1289,11 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   Dorado extraction done: 8 shards, 12,241 usable samples, private dataset vitaliineibauer/biohub-dorado-crops; dorado-only
   training kernel biohub-l3-dorado-train pushed. K-DN-score done: OOF + ensemble p for all 1,012,255 exported nodes, 0 NaN,
   0 leak-excluded. Pool ceiling (tools/label_candidates.py): 62/151 GT parents and 123/302 daughters are present as exact-
-  frame candidates (selection 27 / confirmation 35 parents). SELECTION orphan grid (16 configs) running.
+  frame candidates (selection 27 / confirmation 35 parents). SELECTION orphan grid (16 configs) running.- 2026-09-23 23:45 UTC L3 CLOSED: dorado-only DaughterNet (12,241 pseudo-labelled crops, 40 epochs on Kaggle T4, 634 s) reaches
+  only val AUC parent 0.62 / daughter 0.53 on its own held-out block 417 (vs Kaggle-trained OOF parent 0.85) - the Ultrack
+  automatic divisions are too noisy (4.5x the GT division rate) to teach mitosis. Plan kill criterion met; no v3 init.
+  L2 SELECTION orphan grid (64 videos, OOF p): best alpha=1 cap=3 -> +0.0038 (TP 7 -> 11, FP 15 -> 23, 90% CI
+  [+0.0003, +0.0075], P(d>0) 0.965); thresholds 0.05-0.3 do not bind (cap 3/video binds). Extension with thresholds 0.4-0.7
+  and caps 2-6 running before the single CONFIRMATION run.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
