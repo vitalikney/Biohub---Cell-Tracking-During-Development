@@ -8,6 +8,16 @@ BIOHUB_DIVNET_VERIFY=0 (the cell stays, the model is not loaded), so `--divnet 0
 Knob names are given WITHOUT the BIOHUB_ prefix. Overrides are appended to the config cell AFTER the base values and the
 configuration guard's expected values are patched for the keys it checks. Output folder:
 experiments/<name>/ with the notebook, kernel-metadata.json and probe.json; `--push` runs `kaggle kernels push`.
+
+Patches (`--patch NAME`, repeatable, any order; they always address the BASE code-cell indices):
+  gshift     takaito's per-frame global-shift motion relink (cell 2 knobs + cell 7).
+  divinsert  plan L2 DaughterNet division insertion after the post-processing tail: a new code cell after the DivNet
+             cell with tools/daughternet.py + tools/div_insert.py embedded, and a guarded call in filter_output_graph.
+             Knobs (via --set, without BIOHUB_): DIVINS_ENABLE (default 0 = exact no-op, no model load), DIVINS_STEAL,
+             DIVINS_CAP, DIVINS_FRAME_CAP, DIVINS_ALPHA, DIVINS_THRESH, DIVINS_WEIGHTS (comma-separated globs, default
+             /kaggle/input/**/vitalii_daughternet/*.pt), DIVINS_DUMP (1 -> /kaggle/working/divins_dump/<dataset>.npz),
+             DIVINS_DUMP_DIR, DIVINS_BATCH. With DIVINS_ENABLE != 0 the weights dataset vitaliineibauer/biohub-ft-weights
+             is ensured in dataset_sources; `--dataset owner/slug` attaches any other dataset.
 """
 import argparse
 import json
@@ -131,7 +141,173 @@ def patch_gshift(cells_src: dict) -> None:
     cells_src[7] = c7
 
 
-PATCHES = {"gshift": patch_gshift}
+NEW_CELLS_KEY = "_new_cells"  # cells_src[NEW_CELLS_KEY] = [(after_code_index, source), ...], inserted after all patches
+WEIGHTS_DATASET = "vitaliineibauer/biohub-ft-weights"
+
+
+def _embed_module(path: Path) -> str:
+    """Module source for a notebook cell: the one `from __future__ import annotations` line goes to the cell top."""
+    s = path.read_text(encoding="utf-8")
+    line = "from __future__ import annotations" + NL
+    assert s.count(line) == 1, f"{path.name}: expected one __future__ import"
+    return s.replace(line, "")
+
+
+DIVINS_GLUE = r'''
+# ======== kernel glue (tools/build_probe_kernel.py patch_divinsert) ========
+import glob as _divins_glob
+
+BIOHUB_DIVINS_ENABLE = os.environ.get("BIOHUB_DIVINS_ENABLE", "0").strip() or "0"
+DIVINS_WEIGHTS = os.environ.get("BIOHUB_DIVINS_WEIGHTS", "/kaggle/input/**/vitalii_daughternet/*.pt")
+DIVINS_DUMP = os.environ.get("BIOHUB_DIVINS_DUMP", "0") != "0"
+DIVINS_DUMP_DIR = Path(os.environ.get("BIOHUB_DIVINS_DUMP_DIR", "/kaggle/working/divins_dump"))
+DIVINS_BATCH = int(os.environ.get("BIOHUB_DIVINS_BATCH", "256"))
+DIVINS_PARAMS = divins_params({
+    "enable": 1 if BIOHUB_DIVINS_ENABLE != "0" else 0,
+    "steal": 1 if os.environ.get("BIOHUB_DIVINS_STEAL", "0") != "0" else 0,
+    "cap_video": int(os.environ.get("BIOHUB_DIVINS_CAP", "3")),
+    "cap_frame": int(os.environ.get("BIOHUB_DIVINS_FRAME_CAP", "1")),
+    "alpha": float(os.environ.get("BIOHUB_DIVINS_ALPHA", "1.0")),
+    "threshold": float(os.environ.get("BIOHUB_DIVINS_THRESH", "0.5")),
+})
+
+
+def divins_find_weights(spec: str) -> list[str]:
+    """Comma-separated glob patterns -> sorted .pt files. '**' is expanded by a pruned os.walk (skips *.zarr / *.geff
+    trees and hidden dirs, depth <= 6): a plain recursive glob over /kaggle/input walks the competition zarr chunks."""
+    found: set[str] = set()
+    for pattern in [item.strip() for item in str(spec).split(",") if item.strip()]:
+        if "**" not in pattern:
+            found.update(_divins_glob.glob(pattern))
+            continue
+        head, _, tail = pattern.partition("**")
+        head = os.path.normpath(head.rstrip("/\\") or "/")
+        tail = tail.lstrip("/\\")
+        if not os.path.isdir(head):
+            continue
+        base_depth = head.count(os.sep)
+        for dirpath, dirnames, _files in os.walk(head, followlinks=True):
+            if os.path.normpath(dirpath).count(os.sep) - base_depth >= 6:
+                dirnames[:] = []
+            else:
+                dirnames[:] = sorted(d for d in dirnames if not d.endswith((".zarr", ".geff")) and not d.startswith("."))
+            found.update(_divins_glob.glob(os.path.join(dirpath, tail)))
+    return sorted(p for p in found if os.path.isfile(p))
+
+
+def divins_frame_reader(dataset: str):
+    """The notebook's read_test_frame with t clamped to [0, T-1] (the DivNet recipe asks for t+1 and t+2, which do not
+    exist for nodes near the last frame; friend A's B20 reader clamps the same way). Frames it loads itself are not
+    kept in the shared cache (prepared frames are cached in the bundle), frames already there are reused."""
+    meta = json.loads((TEST_DIR / f"{dataset}.zarr" / "0" / "zarr.json").read_text())
+    n_frames = int(meta["shape"][0])
+
+    def _read(ds: str, t: int, frame_cache: dict) -> np.ndarray:
+        tt = max(0, min(int(t), n_frames - 1))
+        had = tt in frame_cache
+        frame = read_test_frame(ds, tt, frame_cache)
+        if not had:
+            frame_cache.pop(tt, None)
+        return frame
+
+    return _read
+
+
+def divins_dump(dataset: str, nodes_by_id: dict, edges: list, node_p: dict, triples: list, result_edges: list) -> None:
+    """BIOHUB_DIVINS_DUMP=1: pre-insertion graph + node p + triples + result -> <DUMP_DIR>/<dataset>.npz
+    (tools/div_insert.replay_dump reproduces the insertion from it on the laptop)."""
+    DIVINS_DUMP_DIR.mkdir(parents=True, exist_ok=True)
+    arrays = dump_arrays(nodes_by_id, edges, node_p, DIVINS_PARAMS, triples, result_edges)
+    np.savez_compressed(DIVINS_DUMP_DIR / f"{dataset}.npz", **arrays)
+
+
+DIVINS_BUNDLE = None
+if BIOHUB_DIVINS_ENABLE != "0":
+    _divins_t0 = time.time()
+    _divins_paths = divins_find_weights(DIVINS_WEIGHTS)
+    if not _divins_paths:
+        raise FileNotFoundError(f"BIOHUB_DIVINS_ENABLE={BIOHUB_DIVINS_ENABLE} but no DaughterNet weights match {DIVINS_WEIGHTS!r}")
+    DIVINS_BUNDLE = load_daughternet(_divins_paths)
+    print(f"DIVINS ENABLED: {len(_divins_paths)} DaughterNet model(s) {_divins_paths} on {DIVINS_BUNDLE['device']}"
+          f" params {DIVINS_PARAMS} batch {DIVINS_BATCH} dump {DIVINS_DUMP} ({time.time() - _divins_t0:.1f} s)")
+else:
+    print("DIVINS disabled (BIOHUB_DIVINS_ENABLE=0): no model loaded, filter_output_graph unchanged")
+'''
+
+DIVINS_CALL = r'''    # ---- divinsert: post-tail DaughterNet division insertion (tools/div_insert.py); BIOHUB_DIVINS_ENABLE=0 -> no-op ----
+    if BIOHUB_DIVINS_ENABLE != "0" and dataset is not None and edges and nodes_by_id:
+        _dv_t0 = time.time()
+        _dv_triples = candidate_triples(nodes_by_id, edges, DIVINS_PARAMS)
+        _dv_ids = sorted({int(_i) for _tr in _dv_triples for _i in _tr})
+        _dv_t1 = time.time()
+        if _dv_ids:
+            _dv_probs = score_nodes(str(dataset), [nodes_by_id[_i] for _i in _dv_ids], DIVINS_BUNDLE, repair_frame_cache,
+                                    divins_frame_reader(str(dataset)), batch=DIVINS_BATCH)
+        else:
+            _dv_probs = np.zeros((0, 3), dtype=np.float32)
+        DIVINS_BUNDLE["prepared_frames"].clear()
+        _dv_node_p = {_i: tuple(float(_x) for _x in _dv_probs[_k]) for _k, _i in enumerate(_dv_ids)}
+        _dv_t2 = time.time()
+        _dv_edges, _dv_stats = insert_divisions(nodes_by_id, edges, _dv_node_p, DIVINS_PARAMS)
+        _dv_t3 = time.time()
+        if DIVINS_DUMP:
+            divins_dump(str(dataset), nodes_by_id, edges, _dv_node_p, _dv_triples, _dv_edges)
+        stats.update(_dv_stats)
+        stats["divins_nodes_scored"] = len(_dv_ids)
+        stats["divins_sec_candidates"] = round(_dv_t1 - _dv_t0, 3)
+        stats["divins_sec_score"] = round(_dv_t2 - _dv_t1, 3)
+        stats["divins_sec_insert"] = round(_dv_t3 - _dv_t2, 3)
+        print(f"  [{dataset}] divinsert: triples={_dv_stats['divins_triples']}"
+              f" (orphan={_dv_stats['divins_triples_orphan']}, steal={_dv_stats['divins_triples_steal']})"
+              f" nodes_scored={len(_dv_ids)} eligible={_dv_stats['divins_eligible']}"
+              f" added={_dv_stats['divins_added']} (orphan={_dv_stats['divins_added_orphan']},"
+              f" steal={_dv_stats['divins_added_steal']}) sec cand/score/insert="
+              f"{_dv_t1 - _dv_t0:.1f}/{_dv_t2 - _dv_t1:.1f}/{_dv_t3 - _dv_t2:.1f}")
+        edges = _dv_edges
+    # ---- /divinsert ----
+'''
+
+
+def patch_divinsert(cells_src: dict) -> None:
+    """Plan L2 (2026-09-23): DaughterNet-scored division insertion AFTER the whole post-processing tail.
+    New cell after the DivNet cell (code index 6): tools/daughternet.py + tools/div_insert.py verbatim + BIOHUB_DIVINS_*
+    knobs + weight loading (only when BIOHUB_DIVINS_ENABLE != 0). Cell 7: (a) recover_strict_gap2 tags its inserted
+    nodes gap2_synthetic = 1 (a node key nothing downstream reads; lets div_insert skip them as v), (b) a guarded call
+    after linefit_smooth_output_graph and before the FINAL print: candidate_triples -> score_nodes on the involved nodes
+    only (frame reader = read_test_frame over filter_output_graph's repair_frame_cache) -> insert_divisions, with
+    per-stage seconds and counts in stats, and BIOHUB_DIVINS_DUMP=1 writes /kaggle/working/divins_dump/<dataset>.npz."""
+    tools_dir = Path(__file__).resolve().parent
+    cell = ("# ---- divinsert (tools/build_probe_kernel.py --patch divinsert): plan L2 post-tail division insertion."
+            + NL + "# Embedded verbatim: tools/daughternet.py (3-class DaughterNet on the DivNet input contract; its divnet_infer"
+            + NL + "# import falls back to the DivNet cell's globals) and tools/div_insert.py (the same code the laptop replay runs)."
+            + NL + "# BIOHUB_DIVINS_ENABLE=0 (default): nothing is loaded and filter_output_graph behaves exactly as before."
+            + NL + "from __future__ import annotations" + NL + NL
+            + "# ======== tools/daughternet.py ========" + NL + _embed_module(tools_dir / "daughternet.py") + NL
+            + "# ======== tools/div_insert.py ========" + NL + _embed_module(tools_dir / "div_insert.py")
+            + DIVINS_GLUE)
+    cells_src.setdefault(NEW_CELLS_KEY, []).append((6, cell))
+    c7 = cells_src[7]
+    c7 = _rep1(c7, '''                "x": refined_point[2],
+            }
+            inserted_ids.append(node_id)
+''', '''                "x": refined_point[2],
+                "gap2_synthetic": 1,  # divinsert: node flag (gap2 nodes had none); no downstream reader
+            }
+            inserted_ids.append(node_id)
+''')
+    c7 = _rep1(c7, '    nodes_by_id = linefit_smooth_output_graph(nodes_by_id, edges, stats)' + NL,
+               '    nodes_by_id = linefit_smooth_output_graph(nodes_by_id, edges, stats)' + NL + DIVINS_CALL)
+    cells_src[7] = c7
+
+
+def meta_divinsert(meta: dict, overrides: dict) -> None:
+    """Attach the DaughterNet weights dataset when the stage is switched on."""
+    if overrides.get("BIOHUB_DIVINS_ENABLE", "0") != "0" and WEIGHTS_DATASET not in meta["dataset_sources"]:
+        meta["dataset_sources"].append(WEIGHTS_DATASET)
+
+
+PATCHES = {"gshift": patch_gshift, "divinsert": patch_divinsert}
+META_PATCHES = {"divinsert": meta_divinsert}
 
 
 def main() -> None:
@@ -141,6 +317,7 @@ def main() -> None:
     ap.add_argument("--divnet", choices=["0", "1"], default="1", help="DivNet veto on (1, exp39) or off (0, exp29)")
     ap.add_argument("--note", default="", help="one line for probe.json")
     ap.add_argument("--patch", action="append", default=[], choices=sorted(PATCHES), help="code surgery to apply, repeatable")
+    ap.add_argument("--dataset", action="append", default=[], help="extra Kaggle dataset source owner/slug, repeatable")
     ap.add_argument("--push", action="store_true")
     a = ap.parse_args()
     if not re.fullmatch(r"[a-z0-9][a-z0-9_-]+", a.name):
@@ -151,6 +328,11 @@ def main() -> None:
         if not k or not _:
             sys.exit(f"bad --set {item!r}")
         overrides["BIOHUB_" + k.strip().removeprefix("BIOHUB_")] = v.strip()
+    if any(k.startswith("BIOHUB_DIVINS_") for k in overrides) and "divinsert" not in a.patch:
+        # without the patch no code reads these knobs: the probe would silently be exp39
+        sys.exit("DIVINS_* knobs need --patch divinsert")
+    if "divinsert" in a.patch and overrides.get("BIOHUB_DIVINS_ENABLE", "0") == "0":
+        print("NOTE: --patch divinsert with DIVINS_ENABLE=0 (default) builds an exact no-op of the base")
     overrides["BIOHUB_DIVNET_VERIFY"] = a.divnet
 
     nb = json.load(open(BASE_NB, encoding="utf-8"))
@@ -181,25 +363,38 @@ def main() -> None:
     set_src(code[1], c1)
 
     if a.patch:
+        # patches always see the BASE code-cell indices (cell 7 = post-processing); new cells go in afterwards
         cells_src = {k: src(code[k]) for k in range(len(code))}
         for name in a.patch:
             PATCHES[name](cells_src)
+        new_cells = cells_src.pop(NEW_CELLS_KEY, [])
         for k, s in cells_src.items():
             if s != src(code[k]):
                 set_src(code[k], s)
+        for after in sorted({k for k, _ in new_cells}, reverse=True):
+            for s in reversed([s for k, s in new_cells if k == after]):
+                cells.insert(code[after] + 1, {"cell_type": "code", "execution_count": None, "metadata": {},
+                                               "outputs": [], "source": s.splitlines(keepends=True)})
+        code = [i for i, c in enumerate(cells) if c["cell_type"] == "code"]
         overrides["PATCHES"] = "+".join(a.patch)
 
+    for i in code:
+        compile(src(i), f"cell{i}", "exec")
     out_dir = ROOT / "experiments" / a.name
     out_dir.mkdir(exist_ok=True)
     nb_name = a.name.replace("_", "-") + ".ipynb"
     json.dump(nb, open(out_dir / nb_name, "w", encoding="utf-8"), indent=1, ensure_ascii=False)
-    for i in code:
-        compile(src(i), f"cell{i}", "exec")
     meta = json.load(open(BASE_DIR / "kernel-metadata.json"))
     slug = "biohub-" + a.name.replace("_", "-")
     meta["id"] = "vitaliineibauer/" + slug
     meta["title"] = slug
     meta["code_file"] = nb_name
+    for name in a.patch:
+        if name in META_PATCHES:
+            META_PATCHES[name](meta, overrides)
+    for ds in a.dataset:
+        if ds not in meta["dataset_sources"]:
+            meta["dataset_sources"].append(ds)
     json.dump(meta, open(out_dir / "kernel-metadata.json", "w", encoding="utf-8"), indent=1)
     probe = {
         "base": "exp29 realised config (tight55, pilkwang primary, validator off) = LB 0.947; built by tools/build_probe_kernel.py from the exp39 notebook",
