@@ -1278,6 +1278,17 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   6/18 (base 0.9%, LR ~38), top 1% = 38/172 (22%); daughter AUC 0.767, top 0.1% = 11/18, top 1% = 50/172 (29%, base 1.8%).
   Per embryo parent AUC 44b6 0.820 / 6bba 0.862. Contract re-score from raw frames PASS (max |dp| 5e-7). The plan's L2 kill
   criterion (daughter top-1% precision >= 2x base AND parent LR at top 0.1% >= 20) is PASSED -> proceed to K-DN-score of the
-  1M exported nodes and the laptop insertion grid on SELECTION, then CONFIRMATION.
+  1M exported nodes and the laptop insertion grid on SELECTION, then CONFIRMATION.- 2026-09-23 23:30 UTC L3 FINDING (dorado verifier, tools/register_44b6_dorado.py): the Kaggle 44b6 TRAIN clips are space-time
+  crops of the PUBLIC Ultrack "dorado" movie itself (e.g. 44b6_12dfb391 = dorado frames 106-205 at one fixed shift; 654/777
+  GT nodes coincide with dorado track points with no search; 63/71 clips placed). Consequences: (a) any model pretrained on
+  dorado pseudo-labels is NOT leak-free on 44b6 (39% of dorado samples fall inside 44b6 clip boxes) -> judge L3 on 6bba only
+  (125 parents / 250 daughters, fully independent), '44b6_clean' blocks are only partly clean; (b) the hosts state the
+  hidden test embryos are different from train, so the public movie should not cover them. POLICY: we do NOT try to match
+  hidden test clips against public recordings or use public tracks as test labels - against the spirit of the competition
+  and the hosts' statement; dorado is used only as extra training data (allowed external data, Zebrahub/Ultrack public).
+  Dorado extraction done: 8 shards, 12,241 usable samples, private dataset vitaliineibauer/biohub-dorado-crops; dorado-only
+  training kernel biohub-l3-dorado-train pushed. K-DN-score done: OOF + ensemble p for all 1,012,255 exported nodes, 0 NaN,
+  0 leak-excluded. Pool ceiling (tools/label_candidates.py): 62/151 GT parents and 123/302 daughters are present as exact-
+  frame candidates (selection 27 / confirmation 35 parents). SELECTION orphan grid (16 configs) running.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
