@@ -18,3 +18,7 @@ experiments/**/checkpoint_last.pth
 
 # Friend B local pipeline port (cached raw graphs + post-processed graphs)
 .public_local_cache/
+
+# External public data (dorado Ultrack embryo crops etc.), built by tools/dorado_crops.py
+data_external/
+/data_external/
