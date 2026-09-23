@@ -1272,6 +1272,12 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   private dataset vitaliineibauer/biohub-l2-coords; friend A told to return OOF p with a fold column for L5. (4) Kaggle:
   kdn-train smoke v1 passed end to end (contract re-score max |dp| 4e-8); full run v2 pushed (5 folds, 199 videos). K-DN-score
   kernel being built (wf_d6a27850-e77). (5) Dorado extractor workflow wf_7bfc39d2-ba0 still running; Colab T4 connected in
-  the user's browser for it.
+  the user's browser for it.- 2026-09-23 21:40 UTC L2 DaughterNet v1 TRAINED (kdn-train v2 on Kaggle 2xT4, 17,143 labelled GT samples: 151 parent / 302
+  daughter / 16,690 cont incl. 4,801 hard negatives; 5 folds with 44b6 leak groups; ~20 min training, 8 min crop build).
+  Honest OOF readout (all 199): parent AUC 0.848 (DivNet in-sample on the same samples 0.829), parent precision top 0.1% =
+  6/18 (base 0.9%, LR ~38), top 1% = 38/172 (22%); daughter AUC 0.767, top 0.1% = 11/18, top 1% = 50/172 (29%, base 1.8%).
+  Per embryo parent AUC 44b6 0.820 / 6bba 0.862. Contract re-score from raw frames PASS (max |dp| 5e-7). The plan's L2 kill
+  criterion (daughter top-1% precision >= 2x base AND parent LR at top 0.1% >= 20) is PASSED -> proceed to K-DN-score of the
+  1M exported nodes and the laptop insertion grid on SELECTION, then CONFIRMATION.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
