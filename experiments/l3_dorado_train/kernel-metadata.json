@@ -1,0 +1,19 @@
+{
+ "id": "vitaliineibauer/biohub-l3-dorado-train",
+ "title": "biohub-l3-dorado-train",
+ "code_file": "l3-dorado-train.ipynb",
+ "language": "python",
+ "kernel_type": "notebook",
+ "is_private": true,
+ "enable_gpu": true,
+ "enable_tpu": false,
+ "enable_internet": false,
+ "dataset_sources": [
+  "vitaliineibauer/biohub-dorado-crops"
+ ],
+ "competition_sources": [],
+ "kernel_sources": [],
+ "model_sources": [],
+ "docker_image": "gcr.io/kaggle-private-byod/python@sha256:37c64f7dd9c54116ecd1bcc88817c5469b88387388fade02bfa8bf3fc647d461",
+ "machine_shape": "NvidiaTeslaT4"
+}
