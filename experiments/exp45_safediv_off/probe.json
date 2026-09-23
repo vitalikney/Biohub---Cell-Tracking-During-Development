@@ -1,0 +1,9 @@
+{
+ "base": "exp29 realised config (tight55, pilkwang primary, validator off) = LB 0.947; built by tools/build_probe_kernel.py from the exp39 notebook",
+ "change": {
+  "OUTPUT_SAFE_DIVISIONS": "0",
+  "DIVNET_VERIFY": "0"
+ },
+ "note": "DIAGNOSTIC: exp29 with the safe-division stage OFF (the only source of forks: raw ILP has 0 multi-child edges on the dummy clips). score(exp29) - score(exp45) = 0.1 x our division Jaccard on the hidden test -> sizes the division lever for the 0.97 programme",
+ "rule": "compare with exp29 0.947; >= 0.950 adopt; ties recorded; <= 0.944 drop"
+}
