@@ -1,0 +1,57 @@
+{
+  "version": "b35-step-a-full-frame-primary-v1",
+  "status": "complete",
+  "videos": 199,
+  "groups": {
+    "all": {
+      "videos": 199,
+      "gt_divisions": 151,
+      "baseline_window_detection_necessary": 136,
+      "augmented_window_detection_necessary": 151,
+      "window_gain": 15,
+      "candidate_nodes": 1015461,
+      "baseline_nodes": 4249618,
+      "candidate_node_ratio": 0.23895347770081923,
+      "max_candidate_node_ratio": 0.7325464480874317,
+      "videos_over_node_ratio_gate": 199
+    },
+    "44b6": {
+      "videos": 71,
+      "gt_divisions": 26,
+      "baseline_window_detection_necessary": 24,
+      "augmented_window_detection_necessary": 26,
+      "window_gain": 2,
+      "candidate_nodes": 557046,
+      "baseline_nodes": 2042862,
+      "candidate_node_ratio": 0.2726792118116642,
+      "max_candidate_node_ratio": 0.7325464480874317,
+      "videos_over_node_ratio_gate": 71
+    },
+    "6bba": {
+      "videos": 128,
+      "gt_divisions": 125,
+      "baseline_window_detection_necessary": 112,
+      "augmented_window_detection_necessary": 125,
+      "window_gain": 13,
+      "candidate_nodes": 458415,
+      "baseline_nodes": 2206756,
+      "candidate_node_ratio": 0.20773252684030313,
+      "max_candidate_node_ratio": 0.5542429156049726,
+      "videos_over_node_ratio_gate": 128
+    }
+  },
+  "gate": {
+    "required_reach": 144,
+    "max_candidate_node_ratio_per_video": 0.003,
+    "reach_pass": true,
+    "node_ratio_pass": false,
+    "pass": false
+  },
+  "decision": "proceed_to_step_B_regardless_of_step_A_gate",
+  "step_c": "cancelled_by_2026-09-24_A0_response",
+  "limitations": [
+    "This is an official-window necessary detection diagnostic, not a competition score.",
+    "Recovered peaks remain candidates and enter the final graph only if Step B accepts a division.",
+    "The public checkpoints overlap both embryos; this is not honest LOEO model selection."
+  ]
+}
