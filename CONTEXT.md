@@ -1294,6 +1294,14 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   automatic divisions are too noisy (4.5x the GT division rate) to teach mitosis. Plan kill criterion met; no v3 init.
   L2 SELECTION orphan grid (64 videos, OOF p): best alpha=1 cap=3 -> +0.0038 (TP 7 -> 11, FP 15 -> 23, 90% CI
   [+0.0003, +0.0075], P(d>0) 0.965); thresholds 0.05-0.3 do not bind (cap 3/video binds). Extension with thresholds 0.4-0.7
-  and caps 2-6 running before the single CONFIRMATION run.
+  and caps 2-6 running before the single CONFIRMATION run.- 2026-09-24 00:15 UTC L2 v1 CONFIRMATION FAILED the pre-registered gate. Selected on SELECTION (64 videos): alpha 1, cap 2 per
+  video, threshold 0.6 -> +0.0044 (TP 7 -> 11, FP 15 -> 19, 90% CI [+0.0008, +0.0083]). One run on CONFIRMATION (135 videos):
+  +0.0010 (TP 16 -> 18, FP 28 -> 33, CI [-0.0008, +0.0033]); 44b6 +0.0000, 6bba +0.0015. Gate needed >= +0.002, CI > 0,
+  net TP >= +3, added-fork precision >= 0.31 (got 2/7). No probe for v1-orphan. Reading: the selection gain was partly
+  selection noise; precision on the REAL candidate pool is the weakness (v1 trained on GT-node crops only). Next: (a) steal
+  sub-test on SELECTION (running); (b) v2 = v1 + hard examples from the predicted pool labelled by GT matching
+  (tools/label_candidates.py) - trainer extension being built (wf_bd752e22-e54). Also noted: the 5-fold ensemble p is less
+  extreme than single-fold OOF p (p_par 99th pct 0.83 vs 0.90), so any threshold must be re-calibrated for the ensemble
+  before a probe. Parity kernel exp46_divins_parity (ENABLE=0) running on Kaggle.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
