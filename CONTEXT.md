@@ -1236,6 +1236,11 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   family (mutual-best beta 0.20/0.25, gshift, DivNet veto); two new knobs taken into the grids: weak-leaf pruning
   (BIOHUB_LEAF_PRUNE_MIN_EDGE_PROB, e.g. 0.30; node-count lever) -> friend C tail grid; relink velocity weight 0.25 ->
   friend A B33 grid. Main: friend A pushed two Step A fixes (import path, videos without divisions), no results yet;
-  friend C has not pushed a branch.
+  friend C has not pushed a branch.- 2026-09-23 TEAM CLARIFICATION (user): "friend C" is friend A himself on his MacBook (same person, Kaggle Sasyami, a team
+  member), not a separate participant; no private-sharing issue (rules: no private sharing of code/data outside teams;
+  team merger deadline passed 22 Sep 23:59 UTC; team = gsfatakhov, sasyami, vitaliineibauer). Consequence for planning:
+  friend A's attention is split across both machines. Extra legitimate GPU: each team member's own Kaggle quota
+  (sasyami, gsfatakhov ~30 h/week each). Colab free T4 is connected in the user's browser (1 account; a second Google
+  account for extra free quota was advised against).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
