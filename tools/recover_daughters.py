@@ -366,13 +366,20 @@ def audit_video(args: argparse.Namespace, stem: str, peak_path: Path) -> dict[st
         "candidate_nodes": int(len(candidates)),
         "candidate_node_ratio": float(ratio),
         "candidate_ratio_gate_pass": bool(ratio <= NODE_RATIO_GATE),
-        "baseline_window_detection_necessary": int(baseline_counts["window_detection_necessary"]),
-        "augmented_window_detection_necessary": int(augmented_counts["window_detection_necessary"]),
-        "window_gain": int(
-            augmented_counts["window_detection_necessary"]
-            - baseline_counts["window_detection_necessary"]
+        # Counter-derived audit dictionaries omit categories whose count is zero.
+        # Most training videos contain no annotated division, so missing keys are
+        # valid zero counts rather than an audit failure.
+        "baseline_window_detection_necessary": int(
+            baseline_counts.get("window_detection_necessary", 0)
         ),
-        "gt_divisions": int(augmented_counts["gt_divisions"]),
+        "augmented_window_detection_necessary": int(
+            augmented_counts.get("window_detection_necessary", 0)
+        ),
+        "window_gain": int(
+            augmented_counts.get("window_detection_necessary", 0)
+            - baseline_counts.get("window_detection_necessary", 0)
+        ),
+        "gt_divisions": int(augmented_counts.get("gt_divisions", 0)),
     }
     atomic_npz(
         args.output / "candidates" / f"{stem}.npz",
