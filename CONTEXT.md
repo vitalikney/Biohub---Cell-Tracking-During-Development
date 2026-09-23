@@ -1241,6 +1241,21 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   team merger deadline passed 22 Sep 23:59 UTC; team = gsfatakhov, sasyami, vitaliineibauer). Consequence for planning:
   friend A's attention is split across both machines. Extra legitimate GPU: each team member's own Kaggle quota
   (sasyami, gsfatakhov ~30 h/week each). Colab free T4 is connected in the user's browser (1 account; a second Google
-  account for extra free quota was advised against).
+  account for extra free quota was advised against).- 2026-09-23 20:30 UTC RESEARCH+PLAN WORKFLOW DONE (wf_161da8ae-7e5, 9 agents; full JSON in the session scratchpad
+  plan970.json). Key facts: (1) pawanmali removed every fork from our config family: public 0.947 -> 0.911, so our PUBLIC
+  division Jaccard is ~0.36 already (local 0.10); the teams >= 0.951 lead on EDGES/detection (our public adj_edge ~0.91).
+  (2) Proven division recipes are small: pawanmali's 3-class node classifier (cont/parent/daughter) inserted after the
+  tail, <= 6 per video, +0.003 on a 0.926 base; Le +0.002 per division step (0.946 -> 0.950). (3) HOCT/Trackastra add
+  nothing (HOCT veto variants all 0.947); Freitas synthetic has no mitotic phenotype (LB -0.004 for a user); the public
+  Ultrack dorado embryo (our scale and frame rate, 80k noisy pseudo-divisions) is the only large external division
+  source. (4) The notebook's built-in validator scores divisions with the OLD weakly-connected rule. (5) Compute: 26.7 h
+  Kaggle GPU now + 30 h after reset 2026-09-26 00:00 UTC; teammates' own quotas; CPU kernels free. PLAN (critics'
+  estimate): P(public >= 0.955) ~2-5%, P(0.97) < 0.5%, expected true gain ~+0.001; lines L0 (exp45 measures J_pub, sets
+  the precision floor), L1 (laptop lab on friend A's image-free cache + tools/div_insert.py + --patch divinsert with
+  parity checks), L2 (DaughterNet from scratch on Kaggle T4, honest 5 folds, orphan insertion first, steal gated
+  separately), L5 (friend A DaughterNet-B full-res, ensemble partner), L4 (B33 + laptop leaf-prune grid), L3 optional
+  (dorado pseudo-divisions, needs user OK for ~40 GB public download), L7 bundle and finals. Gates on a pre-registered
+  SELECTION (6bba odd) / CONFIRMATION (6bba even + all 44b6) split. Finals: exp29 anchor + best confirmed stage (else
+  exp39). Build workflow wf_d710f2f6-6f3 launched (splits, K-DN trainer, div_insert + kernel patch, cache replay).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
