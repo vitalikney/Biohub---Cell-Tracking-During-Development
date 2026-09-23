@@ -1,0 +1,849 @@
+{
+  "file": "C:\\Users\\vital\\Documents\\kAGGLE\\Biohub - Cell Tracking During Development\\data_external\\l2\\coords_exp39.parquet",
+  "rows": 1012255,
+  "videos": 199,
+  "split": "all",
+  "export_base": "exp39",
+  "base_key": "divnet_rerank_fb435c47e6d4",
+  "base": {
+    "safe_div": "divnet_rerank",
+    "divnet_min_p": 0.5,
+    "sd_parent_um": 12.0,
+    "sd_sister_min_um": 5.0
+  },
+  "candidate_params": {
+    "enable": 1,
+    "steal": 1,
+    "cap_video": 3,
+    "cap_frame": 1,
+    "alpha": 1.0,
+    "threshold": 0.5,
+    "parent_um": 10.0,
+    "v_um": 15.0,
+    "sister_min": 3.0,
+    "sister_max": 20.0,
+    "mid_um": 6.5,
+    "cos_max": 0.25,
+    "steal_prob_max": 0.3,
+    "steal_margin": 0.2,
+    "steal_frac": 0.5,
+    "scale_um": [
+      1.625,
+      0.40625,
+      0.40625
+    ]
+  },
+  "div_insert": "tools/div_insert.py",
+  "div_insert_sha": "e2a5e86ccc0daaac45d58625f970609a3b843803e389706207a0f251babe45b7",
+  "coordinates": "float voxel units of the full-resolution frame, post-linefit, pre-rounding",
+  "flag_self_check": {
+    "status": "OK",
+    "videos_checked": 199,
+    "videos_mismatch": 0,
+    "mismatch_examples": [],
+    "totals": {
+      "ckpt_gap_synthetic": 25346,
+      "ckpt_stats_gap_added_nodes": 25346,
+      "ckpt_gap2_synthetic": 12492,
+      "ckpt_stats_gap2_added_nodes": 12492
+    }
+  },
+  "per_video": {
+    "44b6_0113de3b": {
+      "triples": 2875,
+      "nodes": 3906
+    },
+    "44b6_0b24845f": {
+      "triples": 3067,
+      "nodes": 6046
+    },
+    "44b6_0c582fdc": {
+      "triples": 3285,
+      "nodes": 6011
+    },
+    "44b6_0db75fae": {
+      "triples": 2878,
+      "nodes": 4197
+    },
+    "44b6_12dfb391": {
+      "triples": 3996,
+      "nodes": 8199
+    },
+    "44b6_144b256d": {
+      "triples": 2522,
+      "nodes": 5410
+    },
+    "44b6_1574802b": {
+      "triples": 2055,
+      "nodes": 4062
+    },
+    "44b6_18ced818": {
+      "triples": 18115,
+      "nodes": 30158
+    },
+    "44b6_1d530831": {
+      "triples": 5403,
+      "nodes": 9949
+    },
+    "44b6_24264f12": {
+      "triples": 3423,
+      "nodes": 5924
+    },
+    "44b6_267148e4": {
+      "triples": 6159,
+      "nodes": 7610
+    },
+    "44b6_2a2eff9f": {
+      "triples": 5311,
+      "nodes": 10253
+    },
+    "44b6_2f31fc2f": {
+      "triples": 5667,
+      "nodes": 7773
+    },
+    "44b6_33b596bf": {
+      "triples": 5768,
+      "nodes": 5618
+    },
+    "44b6_341df25f": {
+      "triples": 329,
+      "nodes": 776
+    },
+    "44b6_3a861e03": {
+      "triples": 4367,
+      "nodes": 5834
+    },
+    "44b6_3bb3690f": {
+      "triples": 1652,
+      "nodes": 3330
+    },
+    "44b6_40c45f5a": {
+      "triples": 4891,
+      "nodes": 9156
+    },
+    "44b6_415c0a3a": {
+      "triples": 3207,
+      "nodes": 6588
+    },
+    "44b6_53f95252": {
+      "triples": 2501,
+      "nodes": 5042
+    },
+    "44b6_551a5dba": {
+      "triples": 4405,
+      "nodes": 8423
+    },
+    "44b6_5740d24b": {
+      "triples": 954,
+      "nodes": 2002
+    },
+    "44b6_587a1e22": {
+      "triples": 2375,
+      "nodes": 3691
+    },
+    "44b6_5f15d135": {
+      "triples": 2762,
+      "nodes": 5399
+    },
+    "44b6_668e0cc7": {
+      "triples": 4397,
+      "nodes": 6664
+    },
+    "44b6_66f9292d": {
+      "triples": 1868,
+      "nodes": 4058
+    },
+    "44b6_706092f0": {
+      "triples": 2437,
+      "nodes": 5217
+    },
+    "44b6_71a4179f": {
+      "triples": 2480,
+      "nodes": 5249
+    },
+    "44b6_74d0c52e": {
+      "triples": 616,
+      "nodes": 1386
+    },
+    "44b6_7a302da0": {
+      "triples": 5623,
+      "nodes": 11108
+    },
+    "44b6_7e557709": {
+      "triples": 2799,
+      "nodes": 5894
+    },
+    "44b6_808952d6": {
+      "triples": 937,
+      "nodes": 1984
+    },
+    "44b6_81c256f0": {
+      "triples": 411,
+      "nodes": 928
+    },
+    "44b6_87bba6c4": {
+      "triples": 11697,
+      "nodes": 12152
+    },
+    "44b6_8cc6506c": {
+      "triples": 2325,
+      "nodes": 4436
+    },
+    "44b6_8f5ab931": {
+      "triples": 3425,
+      "nodes": 6631
+    },
+    "44b6_8f9ecab4": {
+      "triples": 4260,
+      "nodes": 8446
+    },
+    "44b6_90724892": {
+      "triples": 2694,
+      "nodes": 4983
+    },
+    "44b6_949adeb1": {
+      "triples": 7153,
+      "nodes": 12528
+    },
+    "44b6_95029e92": {
+      "triples": 67,
+      "nodes": 180
+    },
+    "44b6_97725144": {
+      "triples": 2641,
+      "nodes": 5280
+    },
+    "44b6_996155de": {
+      "triples": 372,
+      "nodes": 902
+    },
+    "44b6_9be80b04": {
+      "triples": 2599,
+      "nodes": 5233
+    },
+    "44b6_9bfa6a0a": {
+      "triples": 3524,
+      "nodes": 7312
+    },
+    "44b6_a21120c2": {
+      "triples": 2752,
+      "nodes": 3982
+    },
+    "44b6_a2bb48bb": {
+      "triples": 9852,
+      "nodes": 17283
+    },
+    "44b6_aaf8b0ea": {
+      "triples": 1186,
+      "nodes": 2423
+    },
+    "44b6_abf82518": {
+      "triples": 2804,
+      "nodes": 5698
+    },
+    "44b6_b2c44266": {
+      "triples": 3066,
+      "nodes": 6495
+    },
+    "44b6_c15fded2": {
+      "triples": 3460,
+      "nodes": 4248
+    },
+    "44b6_c50204e0": {
+      "triples": 7896,
+      "nodes": 14251
+    },
+    "44b6_c771cb04": {
+      "triples": 3685,
+      "nodes": 7254
+    },
+    "44b6_c8e2a523": {
+      "triples": 2921,
+      "nodes": 4312
+    },
+    "44b6_c96cfa10": {
+      "triples": 5211,
+      "nodes": 9609
+    },
+    "44b6_cf2536e8": {
+      "triples": 1752,
+      "nodes": 3808
+    },
+    "44b6_cf8fed6b": {
+      "triples": 9469,
+      "nodes": 12121
+    },
+    "44b6_d29c9ab2": {
+      "triples": 3673,
+      "nodes": 4643
+    },
+    "44b6_d2f34f90": {
+      "triples": 2085,
+      "nodes": 4108
+    },
+    "44b6_d5e7d891": {
+      "triples": 8703,
+      "nodes": 15109
+    },
+    "44b6_d754aa59": {
+      "triples": 213,
+      "nodes": 512
+    },
+    "44b6_d78e09d9": {
+      "triples": 2708,
+      "nodes": 4913
+    },
+    "44b6_db3c847b": {
+      "triples": 1518,
+      "nodes": 2858
+    },
+    "44b6_ddf577ad": {
+      "triples": 4817,
+      "nodes": 8988
+    },
+    "44b6_deabac95": {
+      "triples": 1203,
+      "nodes": 2499
+    },
+    "44b6_e28840c6": {
+      "triples": 2204,
+      "nodes": 4637
+    },
+    "44b6_e29f0176": {
+      "triples": 2980,
+      "nodes": 4315
+    },
+    "44b6_e31261b4": {
+      "triples": 12480,
+      "nodes": 21114
+    },
+    "44b6_e35b117d": {
+      "triples": 2655,
+      "nodes": 5262
+    },
+    "44b6_e57ff5c6": {
+      "triples": 5174,
+      "nodes": 6782
+    },
+    "44b6_eb2880fc": {
+      "triples": 4039,
+      "nodes": 7894
+    },
+    "44b6_f28707c6": {
+      "triples": 5222,
+      "nodes": 5531
+    },
+    "6bba_05b6850b": {
+      "triples": 215,
+      "nodes": 543
+    },
+    "6bba_05db0fb1": {
+      "triples": 17867,
+      "nodes": 19975
+    },
+    "6bba_062c8d37": {
+      "triples": 211,
+      "nodes": 528
+    },
+    "6bba_07477033": {
+      "triples": 148,
+      "nodes": 396
+    },
+    "6bba_07e24132": {
+      "triples": 4114,
+      "nodes": 6468
+    },
+    "6bba_085bf656": {
+      "triples": 281,
+      "nodes": 626
+    },
+    "6bba_09961292": {
+      "triples": 4551,
+      "nodes": 6366
+    },
+    "6bba_0c7fa718": {
+      "triples": 5868,
+      "nodes": 5993
+    },
+    "6bba_0e7c0d07": {
+      "triples": 9504,
+      "nodes": 10348
+    },
+    "6bba_12665c0e": {
+      "triples": 570,
+      "nodes": 1091
+    },
+    "6bba_13f19531": {
+      "triples": 166,
+      "nodes": 412
+    },
+    "6bba_15403b9a": {
+      "triples": 365,
+      "nodes": 817
+    },
+    "6bba_1d0d8384": {
+      "triples": 2018,
+      "nodes": 3372
+    },
+    "6bba_1ebfb80d": {
+      "triples": 1280,
+      "nodes": 2218
+    },
+    "6bba_1f58c2f6": {
+      "triples": 9172,
+      "nodes": 11906
+    },
+    "6bba_207c6aaf": {
+      "triples": 4460,
+      "nodes": 7101
+    },
+    "6bba_20852818": {
+      "triples": 1219,
+      "nodes": 1906
+    },
+    "6bba_2312ac41": {
+      "triples": 373,
+      "nodes": 874
+    },
+    "6bba_23af9eeb": {
+      "triples": 90,
+      "nodes": 225
+    },
+    "6bba_2540cd90": {
+      "triples": 15,
+      "nodes": 40
+    },
+    "6bba_2646afc7": {
+      "triples": 159,
+      "nodes": 407
+    },
+    "6bba_268e1230": {
+      "triples": 442,
+      "nodes": 869
+    },
+    "6bba_2819ca14": {
+      "triples": 166,
+      "nodes": 414
+    },
+    "6bba_283bf9f1": {
+      "triples": 2294,
+      "nodes": 4324
+    },
+    "6bba_312f0dc3": {
+      "triples": 1000,
+      "nodes": 1714
+    },
+    "6bba_32db13fc": {
+      "triples": 14326,
+      "nodes": 17800
+    },
+    "6bba_337b1b3a": {
+      "triples": 3934,
+      "nodes": 5684
+    },
+    "6bba_372c8cb8": {
+      "triples": 141,
+      "nodes": 366
+    },
+    "6bba_3a1849c2": {
+      "triples": 428,
+      "nodes": 851
+    },
+    "6bba_3abfe10a": {
+      "triples": 15751,
+      "nodes": 21167
+    },
+    "6bba_3c5691b6": {
+      "triples": 156,
+      "nodes": 395
+    },
+    "6bba_3db54e20": {
+      "triples": 9148,
+      "nodes": 10677
+    },
+    "6bba_3fda6b25": {
+      "triples": 303,
+      "nodes": 765
+    },
+    "6bba_43fea39d": {
+      "triples": 326,
+      "nodes": 772
+    },
+    "6bba_474be664": {
+      "triples": 4022,
+      "nodes": 7453
+    },
+    "6bba_48816121": {
+      "triples": 1350,
+      "nodes": 2844
+    },
+    "6bba_4aa14c89": {
+      "triples": 609,
+      "nodes": 1213
+    },
+    "6bba_4f99ce20": {
+      "triples": 232,
+      "nodes": 576
+    },
+    "6bba_4ffd3da3": {
+      "triples": 1545,
+      "nodes": 3291
+    },
+    "6bba_55b7eebe": {
+      "triples": 61,
+      "nodes": 167
+    },
+    "6bba_55c70843": {
+      "triples": 8961,
+      "nodes": 13931
+    },
+    "6bba_57b7cc1e": {
+      "triples": 20405,
+      "nodes": 31830
+    },
+    "6bba_5a4d9360": {
+      "triples": 270,
+      "nodes": 650
+    },
+    "6bba_5b28472a": {
+      "triples": 170,
+      "nodes": 450
+    },
+    "6bba_5c039895": {
+      "triples": 296,
+      "nodes": 689
+    },
+    "6bba_5c824876": {
+      "triples": 2709,
+      "nodes": 5020
+    },
+    "6bba_5dfe9ad1": {
+      "triples": 3068,
+      "nodes": 5516
+    },
+    "6bba_5f89039d": {
+      "triples": 35,
+      "nodes": 96
+    },
+    "6bba_61dd1e0d": {
+      "triples": 706,
+      "nodes": 1425
+    },
+    "6bba_61ecbe65": {
+      "triples": 211,
+      "nodes": 549
+    },
+    "6bba_6321a359": {
+      "triples": 130,
+      "nodes": 345
+    },
+    "6bba_6479435d": {
+      "triples": 7577,
+      "nodes": 10743
+    },
+    "6bba_67ebd073": {
+      "triples": 3431,
+      "nodes": 5426
+    },
+    "6bba_6ca87370": {
+      "triples": 405,
+      "nodes": 887
+    },
+    "6bba_6db0e9b4": {
+      "triples": 4700,
+      "nodes": 6340
+    },
+    "6bba_6feb10f0": {
+      "triples": 1097,
+      "nodes": 2421
+    },
+    "6bba_6feeb0b1": {
+      "triples": 325,
+      "nodes": 748
+    },
+    "6bba_705ec2c9": {
+      "triples": 448,
+      "nodes": 1021
+    },
+    "6bba_718b21f9": {
+      "triples": 21,
+      "nodes": 60
+    },
+    "6bba_74686d6a": {
+      "triples": 3140,
+      "nodes": 5905
+    },
+    "6bba_767a1e17": {
+      "triples": 23394,
+      "nodes": 24953
+    },
+    "6bba_76db78c1": {
+      "triples": 64,
+      "nodes": 166
+    },
+    "6bba_784a78c9": {
+      "triples": 370,
+      "nodes": 883
+    },
+    "6bba_786893ac": {
+      "triples": 14891,
+      "nodes": 21894
+    },
+    "6bba_789f8168": {
+      "triples": 1165,
+      "nodes": 1914
+    },
+    "6bba_78a7bd97": {
+      "triples": 15018,
+      "nodes": 18094
+    },
+    "6bba_7af54fde": {
+      "triples": 783,
+      "nodes": 1578
+    },
+    "6bba_7b5d3b2c": {
+      "triples": 127,
+      "nodes": 328
+    },
+    "6bba_7d3058ae": {
+      "triples": 211,
+      "nodes": 513
+    },
+    "6bba_7f87b3d8": {
+      "triples": 2534,
+      "nodes": 3411
+    },
+    "6bba_80d12824": {
+      "triples": 825,
+      "nodes": 1530
+    },
+    "6bba_825bd1c6": {
+      "triples": 622,
+      "nodes": 1302
+    },
+    "6bba_87289e13": {
+      "triples": 3015,
+      "nodes": 3620
+    },
+    "6bba_8b7818bf": {
+      "triples": 177,
+      "nodes": 437
+    },
+    "6bba_907271db": {
+      "triples": 258,
+      "nodes": 636
+    },
+    "6bba_91951b3a": {
+      "triples": 475,
+      "nodes": 1073
+    },
+    "6bba_96833384": {
+      "triples": 102,
+      "nodes": 272
+    },
+    "6bba_969618f6": {
+      "triples": 1069,
+      "nodes": 2268
+    },
+    "6bba_971fa5e0": {
+      "triples": 182,
+      "nodes": 477
+    },
+    "6bba_9a41d029": {
+      "triples": 2753,
+      "nodes": 4253
+    },
+    "6bba_9e23430b": {
+      "triples": 648,
+      "nodes": 1269
+    },
+    "6bba_a5e926bb": {
+      "triples": 878,
+      "nodes": 1563
+    },
+    "6bba_a90a0b9c": {
+      "triples": 4370,
+      "nodes": 7495
+    },
+    "6bba_ab78413d": {
+      "triples": 1301,
+      "nodes": 2808
+    },
+    "6bba_acd782a8": {
+      "triples": 3463,
+      "nodes": 5336
+    },
+    "6bba_ae82a791": {
+      "triples": 190,
+      "nodes": 465
+    },
+    "6bba_aeee7805": {
+      "triples": 66,
+      "nodes": 190
+    },
+    "6bba_af149c94": {
+      "triples": 270,
+      "nodes": 645
+    },
+    "6bba_afb141ff": {
+      "triples": 433,
+      "nodes": 957
+    },
+    "6bba_b1ae37b9": {
+      "triples": 3482,
+      "nodes": 5691
+    },
+    "6bba_b204cac7": {
+      "triples": 72,
+      "nodes": 202
+    },
+    "6bba_b329af44": {
+      "triples": 15238,
+      "nodes": 19617
+    },
+    "6bba_b693381b": {
+      "triples": 340,
+      "nodes": 780
+    },
+    "6bba_bb9f20c3": {
+      "triples": 1947,
+      "nodes": 3449
+    },
+    "6bba_bbb708ca": {
+      "triples": 484,
+      "nodes": 1143
+    },
+    "6bba_c27cba08": {
+      "triples": 240,
+      "nodes": 541
+    },
+    "6bba_c328f2fd": {
+      "triples": 4388,
+      "nodes": 6757
+    },
+    "6bba_c73a1d11": {
+      "triples": 7612,
+      "nodes": 10383
+    },
+    "6bba_cdcfe533": {
+      "triples": 3591,
+      "nodes": 5644
+    },
+    "6bba_cf35214c": {
+      "triples": 3128,
+      "nodes": 5751
+    },
+    "6bba_cff5865f": {
+      "triples": 6409,
+      "nodes": 9702
+    },
+    "6bba_d0fc38b5": {
+      "triples": 129,
+      "nodes": 325
+    },
+    "6bba_d1acb6ff": {
+      "triples": 2694,
+      "nodes": 4587
+    },
+    "6bba_d2b9fc0c": {
+      "triples": 1692,
+      "nodes": 3015
+    },
+    "6bba_d3da753b": {
+      "triples": 2331,
+      "nodes": 3480
+    },
+    "6bba_d5eae175": {
+      "triples": 44,
+      "nodes": 124
+    },
+    "6bba_d6ecebbb": {
+      "triples": 254,
+      "nodes": 639
+    },
+    "6bba_d82a4fc6": {
+      "triples": 3929,
+      "nodes": 5972
+    },
+    "6bba_debd7bfa": {
+      "triples": 1999,
+      "nodes": 3305
+    },
+    "6bba_df673a83": {
+      "triples": 1138,
+      "nodes": 2428
+    },
+    "6bba_e16ffc58": {
+      "triples": 124,
+      "nodes": 304
+    },
+    "6bba_e5e44988": {
+      "triples": 286,
+      "nodes": 617
+    },
+    "6bba_ebdf3b34": {
+      "triples": 14389,
+      "nodes": 16859
+    },
+    "6bba_ebff6e76": {
+      "triples": 10104,
+      "nodes": 17239
+    },
+    "6bba_ed9377fd": {
+      "triples": 85,
+      "nodes": 223
+    },
+    "6bba_edf14583": {
+      "triples": 7603,
+      "nodes": 12163
+    },
+    "6bba_eebc57a5": {
+      "triples": 443,
+      "nodes": 998
+    },
+    "6bba_ef7b4f7e": {
+      "triples": 144,
+      "nodes": 390
+    },
+    "6bba_f17befbc": {
+      "triples": 8356,
+      "nodes": 10832
+    },
+    "6bba_f1fde7e0": {
+      "triples": 2469,
+      "nodes": 3086
+    },
+    "6bba_f20478e9": {
+      "triples": 225,
+      "nodes": 555
+    },
+    "6bba_f4ae811c": {
+      "triples": 588,
+      "nodes": 1278
+    },
+    "6bba_f8ffd5e7": {
+      "triples": 7011,
+      "nodes": 9439
+    },
+    "6bba_fbc898dc": {
+      "triples": 104,
+      "nodes": 272
+    },
+    "6bba_fc516dc6": {
+      "triples": 606,
+      "nodes": 1129
+    },
+    "6bba_fc5f39dc": {
+      "triples": 1793,
+      "nodes": 3551
+    },
+    "6bba_fc83837d": {
+      "triples": 1801,
+      "nodes": 3323
+    },
+    "6bba_fe670320": {
+      "triples": 1877,
+      "nodes": 2549
+    }
+  }
+}
