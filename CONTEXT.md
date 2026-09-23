@@ -1260,6 +1260,18 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   threshold 0.90 reaches ALL 151/151 GT divisions under the window rule (136 -> 151; 44b6 26/26, 6bba 125/125) but at
   +24% candidate nodes (max 73% in one video), far over the 0.3% budget -> gate not passed. Consistent with the new plan:
   recovered daughters stay out of the submission path (a second detector pass per video and a huge candidate pool);
-  L2 inserts divisions only on existing nodes.
+  L2 inserts divisions only on existing nodes.- 2026-09-23 21:30 UTC NIGHT LOG (user asleep until ~05:00 UTC, autonomous run). (1) Build workflow wf_d710f2f6-6f3 done, all
+  4 artifacts verified and committed (b73bba2): splits.json, tools/div_insert.py (+18 tests), --patch divinsert, DaughterNet
+  trainer kdn_train, replay lab. MAJOR catch by the splits verifier: the 44b6 videos are overlapping space-time crops of ONE
+  recording (global GT node ids; 62 video pairs share 2,429 GT nodes and 2 divisions), so video-level folds leak; now 11
+  leak groups kept whole per fold (0 of 62 links cross folds). 6bba has only 1-frame boundary overlaps between consecutive
+  crops (independently annotated). Unique GT divisions = 149 (2 counted twice in 44b6). (2) L1 lab on friend A's cache
+  (sasyami/biohub-friend-a-b20-cache, 125 MB, downloaded to data_external/friend_a_cache): controls reproduced EXACTLY
+  (exp29 0.912028 / 24-96-127; exp39 0.914300 / 23-43-128; exp39_veto 0.914543). (3) Coordinate export: 1,012,255
+  candidate nodes from 649,808 triples (incl. steal pool) -> experiments/l2_daughternet/coords_exp39.parquet (92d1c05) and
+  private dataset vitaliineibauer/biohub-l2-coords; friend A told to return OOF p with a fold column for L5. (4) Kaggle:
+  kdn-train smoke v1 passed end to end (contract re-score max |dp| 4e-8); full run v2 pushed (5 folds, 199 videos). K-DN-score
+  kernel being built (wf_d6a27850-e77). (5) Dorado extractor workflow wf_7bfc39d2-ba0 still running; Colab T4 connected in
+  the user's browser for it.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
