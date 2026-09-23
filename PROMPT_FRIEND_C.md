@@ -32,6 +32,7 @@
   `SAFE_DIV_EXISTING_CHILD_MAX_UM` 8 / 10 (база); `SAFE_DIV_FRAME_FRAC_CAP` 0.0038 / 0.0076 (база) / 0.0152;
   `SAFE_DIV_GLOBAL_FRAC_CAP` 0.0019 / 0.00375 (база) / 0.0075; `DEEPCENTER_SAFE_DIV_THRESHOLD` 0.15 / 0.20 (база) / 0.25 / 0.30;
 - рёбра: `OUTPUT_EDGE_MAX_UM` 12 / 14 (база) / 16.
+- новая ручка из публичного кода 23 сентября: `LEAF_PRUNE_MIN_EDGE_PROB` 0.2 / 0.3 / 0.4 (обрезка листовых узлов на слабых рёбрах, код `prune_weak_leaf_nodes` в ноутбуке seyitkaangunes/biohub-035-deconfounded-edge-stack; бьёт в число узлов, поэтому смотри отношение узлов особенно внимательно);
 Если какой-то ручки в `runner.py` нет, а в ноутбуке (`experiments/exp39_sjlee947_tight55_divnetveto/`, ячейка 7) она есть,
 перенеси её в runner тем же именем и с тем же кодом, без своих трактовок.
 

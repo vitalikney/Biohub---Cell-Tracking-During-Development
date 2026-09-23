@@ -1225,6 +1225,17 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   push first failed on the 2-concurrent-GPU-session limit (commit f247b24 says "pushed" - it was not); the user stopped
   v1 on the site and v2 is now running (submit with -v 2). exp43 still running. Both go out before 00:00 UTC.- 2026-09-22 ~20:45 UTC PROBES 24 AND 25 SUBMITTED (pending): exp43 = takaito a951-gshift verbatim; exp44 v2 = exp43 +
   axis-flip TTA + division hygiene (bundle). Kernel log of exp44 confirms both changes ran (TTA GROUP replaced;
-  already-divided filter dropped 0-1 edges per clip); submission files differ. 5/5 slots used today.
+  already-divided filter dropped 0-1 edges per clip); submission files differ. 5/5 slots used today.- 2026-09-23 18:40 UTC PROBES 24/25 SCORED + SITE/CODE CHECK. exp43 (takaito a951-gshift VERBATIM) = 0.944 vs his published
+  0.948: the SAME notebook lands 0.004 apart across two runs, so the public "0.948" notebooks are favourable draws from a
+  ~0.945 +- 0.003 distribution and exp29's 0.947 sits in the same distribution. exp44 bundle (exp43 + axis-flip +
+  division hygiene) = 0.946, +0.002 over exp43 on the same day, -0.001 vs exp29. Six probes in a row (20-25) landed
+  0.944-0.947. DECISION: no more probes of public-notebook variants; slots go only to B35 and the grid tables (with
+  per-embryo support). Finals unchanged: exp29 + exp39. LB 23 Sep: 3851 teams, 136 >= 0.951, 724 at 0.947 (us rank 834);
+  OmerZalman now 0.952; sjlee101's team 0.949 after 82 submissions. Discussion: nothing actionable (Civitasmass stuck at
+  0.947 for a month; "today" was the merge deadline, submissions open to 29 Sep). Code: 6 new notebooks, all the same
+  family (mutual-best beta 0.20/0.25, gshift, DivNet veto); two new knobs taken into the grids: weak-leaf pruning
+  (BIOHUB_LEAF_PRUNE_MIN_EDGE_PROB, e.g. 0.30; node-count lever) -> friend C tail grid; relink velocity weight 0.25 ->
+  friend A B33 grid. Main: friend A pushed two Step A fixes (import path, videos without divisions), no results yet;
+  friend C has not pushed a branch.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.

@@ -106,6 +106,7 @@ DivNet как префильтр НЕ работает (top 3% = 42% полно�
 - перелинковка: `MOTION_RELINK_TIGHT_UM` 0 (выкл) / 4.5 / 5.5 (база) / 6.5; `MOTION_RELINK_RELAXED_UM` 7 / 9;
   `MOTION_RELINK_LEARNED_BONUS` 0.5 / 1.0 (база) / 1.5 / 2.5 (вероятность трансформера входит в стоимость только через
   него, форум: «не больше 1 мкм против шага 1.8»);
+  `MOTION_RELINK_VELOCITY_WEIGHT` 0.25 / 0.5 (база) (новая ручка из публичного кода 23 сентября);
 - linefit: вес и окно, какие есть в порте (посмотри `CONTEXT_FRIEND_B.md` §38–40 и код стадии), сетка 3×3;
 - DeepCenter: `DEEPCENTER_GAP_THRESHOLD` 0.15 / 0.25 (база) / 0.35; `DEEPCENTER_SAFE_DIV_THRESHOLD` 0.20 (база) / 0.25 / 0.30;
   `DEEPCENTER_GAP_VETO` 0;
