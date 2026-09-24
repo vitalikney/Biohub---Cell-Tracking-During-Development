@@ -35,7 +35,7 @@ Fixed contract: full XY resolution, crop `16×64×64`, image lags `−2…+3`, c
 The labels, candidate-pool hard examples, optimiser and per-source OOF readout use the current L2 v2 trainer.\n
 Run the cells in order. The full run is resumable. The first build creates a roughly **25 GiB** cache outside Git.
 Interrupting during the build keeps completed videos; interrupting during training keeps the last completed epoch;
-scoring keeps completed videos. Rerun the same long cell to continue. Do not delete the `active` output directory.\n
+scoring keeps completed videos. Rerun the same long cell to continue. Do not delete the `active_v2_pool` output directory.\n
 The final hand-off is `experiments/local_friend_a_l5_daughternet_b/oof_nodes.parquet` with exactly
 `stem,node_id,fold,p_cont,p_par,p_dau`. No leaderboard submission is made here.
 
