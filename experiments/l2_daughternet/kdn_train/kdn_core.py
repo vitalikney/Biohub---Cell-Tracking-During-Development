@@ -35,6 +35,7 @@ as in friend A's FrameReader, so nodes at t >= T-2 get a repeated last frame).
 from __future__ import annotations
 
 import copy
+import hashlib
 import json
 import math
 import os
@@ -68,7 +69,28 @@ CLASS_INDEX = {name: i for i, name in enumerate(CLASSES)}
 CROP = (16, 32, 32)          # DivNet contract crop (z, y, x) in pooled voxels
 MARGIN = 1                   # +-1 voxel jitter margin stored around it
 BIG = (CROP[0] + 2 * MARGIN, CROP[1] + 2 * MARGIN, CROP[2] + 2 * MARGIN)
+IMAGE_CHANNELS = 4           # overridden to 6 by Friend A's L5 full-resolution profile
 OOF_COLUMNS = ["stem", "t", "z", "y", "x", "label", "fold", "p_cont", "p_par", "p_dau"]
+BASE_DEFAULT_CFG = copy.deepcopy(DEFAULT_CFG)
+
+
+def configure_profile(cfg: dict) -> None:
+    """Select the immutable input/model contract before crop or model code runs."""
+    global DEFAULT_CFG, CROP, BIG, IMAGE_CHANNELS
+    profile = str(cfg.get("profile") or "l2_divnet_contract")
+    if profile == "friend_a_l5_fullres":
+        from tools.daughternet import fullres_config
+
+        DEFAULT_CFG = fullres_config()
+        CROP = (16, 64, 64)
+        IMAGE_CHANNELS = 6
+    elif profile == "l2_divnet_contract":
+        DEFAULT_CFG = copy.deepcopy(BASE_DEFAULT_CFG)
+        CROP = (16, 32, 32)
+        IMAGE_CHANNELS = 4
+    else:
+        raise ValueError(f"unknown DaughterNet input profile: {profile}")
+    BIG = tuple(int(v) + 2 * MARGIN for v in CROP)
 
 
 def log(*args) -> None:
@@ -87,6 +109,8 @@ def config_from_env(overrides: dict | None = None) -> dict:
     smoke = _env_flag("KDN_SMOKE")
     on_kaggle = Path("/kaggle/working").exists()
     cfg = {
+        "profile": env("KDN_PROFILE", "l2_divnet_contract"),
+        "run_name": env("KDN_RUN_NAME", "biohub-l2-kdn-train"),
         "smoke": smoke,
         "data_dir": env("KDN_DATA_DIR", ""),
         "work_dir": env("KDN_WORK_DIR", "/kaggle/working" if on_kaggle else str(Path.cwd() / "kdn_out")),
@@ -123,6 +147,9 @@ def config_from_env(overrides: dict | None = None) -> dict:
         "pool_weight": float(env("KDN_POOL_WEIGHT", "1.0")),  # loss weight of source=pool rows
         "dedup_vox": float(env("KDN_DEDUP_VOX", "1.0")),      # pool row within this many voxels of a GT sample = same node
         "es_source": env("KDN_ES_SOURCE", "all"),             # early-stop loss over all / gt / pool rows of the val fold
+        "stream_crops": _env_flag("KDN_STREAM_CROPS", "0"),
+        "resume": _env_flag("KDN_RESUME", "0"),
+        "stop_file": env("KDN_STOP_FILE", ""),
         "gate": {"child_um": 10.0, "v_um": 15.0, "sister_min_um": 3.0, "sister_max_um": 20.0,
                  "mid_um": 6.5, "cos_max": 0.25},
     }
@@ -817,6 +844,7 @@ def _build_worker_init(n_threads: int) -> None:
 
 def crop_video(job: dict) -> dict:
     """All crops of one video: frames are read once (sorted by t), prepared frames kept for lags -1..+2 only."""
+    configure_profile(job)
     t0 = time.time()
     stem = job["stem"]
     try:
@@ -827,7 +855,7 @@ def crop_video(job: dict) -> dict:
         frame_cache: dict = {}
         nodes = job["nodes"]
         sources = job.get("sources") or ["gt"] * len(nodes)
-        out = np.empty((len(nodes), 4, *BIG), dtype=np.dtype(job["dtype"]))
+        out = np.empty((len(nodes), IMAGE_CHANNELS, *BIG), dtype=np.dtype(job["dtype"]))
         checked: dict[str, int] = {}   # exact contract checks per source (gt, pool): the first nodes of each, by t
         inner = (slice(None), slice(MARGIN, MARGIN + CROP[0]), slice(MARGIN, MARGIN + CROP[1]),
                  slice(MARGIN, MARGIN + CROP[2]))
@@ -835,12 +863,12 @@ def crop_video(job: dict) -> dict:
             tt, z, y, x = nodes[i]
             node = {"t": int(tt), "z": float(z), "y": float(y), "x": float(x)}
             sample = prepare_sample(stem, int(tt), node, bundle, frame_cache, reader)
-            if sample.shape != (5, *BIG):
+            if sample.shape != (IMAGE_CHANNELS + 1, *BIG):
                 raise RuntimeError(f"unexpected enlarged sample shape {sample.shape}")
-            out[i] = sample[:4]
+            out[i] = sample[:IMAGE_CHANNELS]
             if checked.get(sources[i], 0) < job["checks"]:
                 ref = prepare_sample(stem, int(tt), node, ref_bundle, frame_cache, reader)
-                if ref.shape != (5, *CROP) or not np.array_equal(sample[inner], ref):
+                if ref.shape != (IMAGE_CHANNELS + 1, *CROP) or not np.array_equal(sample[inner], ref):
                     raise RuntimeError(f"inner crop != DivNet-contract sample (contract drift, {sources[i]} node)")
                 checked[sources[i]] = checked.get(sources[i], 0) + 1
             for key in [k for k in prepared if k[1] < int(tt) - 1]:
@@ -864,7 +892,50 @@ def step_build_cache(cfg: dict, state: dict) -> dict:
     crops_path = cache / "crops.npy"
     dtype = np.dtype(cfg["cache_dtype"])
     n = len(meta)
-    need = n * 4 * int(np.prod(BIG)) * dtype.itemsize
+    profile = str(cfg.get("profile", "l2_divnet_contract"))
+    signature_cols = [
+        c for c in ("stem", "node_id", "t", "z", "y", "x", "label", "kind", "source", "fold") if c in meta
+    ]
+    signature_bytes = meta[signature_cols].to_csv(index=True).encode("utf-8")
+    signature = hashlib.sha256(
+        profile.encode("utf-8") + b"\0" + json.dumps(DEFAULT_CFG, sort_keys=True).encode("utf-8")
+        + b"\0" + signature_bytes
+    ).hexdigest()
+    manifest_path = cache / "build_manifest.json"
+    cached_meta_path = cache / "meta.csv"
+    cached_valid = None
+    reuse_partial = False
+    if cfg.get("resume") and manifest_path.is_file() and crops_path.is_file() and cached_meta_path.is_file():
+        try:
+            manifest = json.loads(manifest_path.read_text())
+            existing = np.load(crops_path, mmap_mode="r")
+            cached_meta = __import__("pandas").read_csv(cached_meta_path, index_col="row")
+            valid = cached_meta["valid"].astype(bool) if "valid" in cached_meta else np.zeros(len(cached_meta), bool)
+            if (
+                manifest.get("signature") == signature
+                and tuple(existing.shape) == (max(n, 1), IMAGE_CHANNELS, *BIG)
+                and len(cached_meta) == n
+            ):
+                if existing.dtype.name != str(manifest.get("dtype")):
+                    raise RuntimeError(f"cache dtype {existing.dtype.name} != manifest {manifest.get('dtype')}")
+                if bool(valid.all()):
+                    state["meta"] = cached_meta
+                    state["cache_dtype"] = existing.dtype.name
+                    state["timing"]["build_s"] = 0.0
+                    state["timing"]["cache_reused"] = True
+                    log(f"[build] resume reuse {crops_path}: {existing.shape} {existing.dtype}")
+                    del existing
+                    return state
+                cached_valid = valid.to_numpy(dtype=bool)
+                dtype = existing.dtype
+                reuse_partial = True
+                log(f"[build] resume partial cache: {int(cached_valid.sum())}/{n} samples already complete")
+            del existing
+        except Exception as exc:
+            cached_valid = None
+            reuse_partial = False
+            log(f"[build] cached crop validation failed -> rebuild: {type(exc).__name__}: {exc}")
+    need = n * IMAGE_CHANNELS * int(np.prod(BIG)) * dtype.itemsize
     try:
         import shutil
         free = shutil.disk_usage(cache).free
@@ -875,43 +946,85 @@ def step_build_cache(cfg: dict, state: dict) -> dict:
     except Exception:
         pass
     state["cache_dtype"] = dtype.name
-    log(f"[build] {n} samples -> {crops_path} ({n * 4 * int(np.prod(BIG)) * dtype.itemsize / 2**30:.2f} GiB {dtype})")
-    crops = np.lib.format.open_memmap(crops_path, mode="w+", dtype=dtype, shape=(max(n, 1), 4, *BIG))
+    log(f"[build] {n} samples -> {crops_path} "
+        f"({n * IMAGE_CHANNELS * int(np.prod(BIG)) * dtype.itemsize / 2**30:.2f} GiB {dtype})")
+    if reuse_partial:
+        crops = np.load(crops_path, mmap_mode="r+")
+    else:
+        crops = np.lib.format.open_memmap(
+            crops_path, mode="w+", dtype=dtype, shape=(max(n, 1), IMAGE_CHANNELS, *BIG)
+        )
     jobs = []
     has_source = "source" in meta.columns
     for stem, grp in meta.groupby("stem", sort=True):
         jobs.append({"stem": stem, "data_dir": state["data_dir"], "dtype": dtype.name, "checks": cfg["contract_checks"],
+                     "profile": cfg.get("profile", "l2_divnet_contract"),
                      "index": grp.index.to_numpy(),
                      "sources": grp["source"].tolist() if has_source else None,
                      "nodes": list(zip(grp["t"].tolist(), grp["z"].tolist(), grp["y"].tolist(), grp["x"].tolist()))})
+    valid = cached_valid.copy() if cached_valid is not None else np.zeros(n, bool)
+    jobs = [job for job in jobs if not bool(valid[job["index"]].all())]
     n_workers = cfg["build_workers"] or min(4, os.cpu_count() or 1)
     n_workers = max(1, min(n_workers, len(jobs) or 1))
     per_worker_threads = max(1, (os.cpu_count() or 1) // n_workers)
-    valid = np.zeros(n, bool)
     video_rows = []
     lite = [{k: v for k, v in j.items() if k != "index"} for j in jobs]
     index_of = {j["stem"]: j["index"] for j in jobs}
     done = 0
+    manifest_value = {
+        "signature": signature,
+        "profile": profile,
+        "shape": [max(n, 1), IMAGE_CHANNELS, *BIG],
+        "dtype": dtype.name,
+        "samples": n,
+        "complete": False,
+    }
+
+    def save_build_progress(*, flush_crops: bool = True) -> None:
+        if flush_crops:
+            crops.flush()
+        current_meta = meta.copy()
+        current_meta["valid"] = valid
+        meta_tmp = cached_meta_path.with_suffix(".csv.tmp")
+        current_meta.to_csv(meta_tmp, index_label="row")
+        os.replace(meta_tmp, cached_meta_path)
+        manifest_tmp = manifest_path.with_suffix(".json.tmp")
+        manifest_tmp.write_text(json.dumps(manifest_value, indent=1))
+        os.replace(manifest_tmp, manifest_path)
+
+    save_build_progress()
     ctx = mp.get_context("spawn")
-    with ctx.Pool(n_workers, initializer=_build_worker_init, initargs=(per_worker_threads,)) as pool:
-        for res in pool.imap_unordered(crop_video, lite):
-            done += 1
-            stem = res["stem"]
-            idx = index_of[stem]
-            grp = meta.loc[idx]
-            counts = grp["kind"].value_counts().to_dict()
-            if res["error"] is None:
-                crops[idx] = res["crops"]
-                valid[idx] = True
-                status = "ok"
-            else:
-                status = "FAILED " + res["error"]
-            video_rows.append({"stem": stem, "crop_secs": round(res["secs"], 2), "frames_read": res["frames_read"],
-                               "contract_checks": res["checked"], "contract_checks_pool": res.get("checked_pool", 0),
-                               "crop_error": res["error"], "n_samples": len(idx)})
-            log(f"[build] {done}/{len(jobs)} {stem} n={len(idx)} "
-                + " ".join(f"{k}={v}" for k, v in sorted(counts.items()))
-                + f" frames={res['frames_read']} {res['secs']:.1f}s decoders={res['decoders']} {status}")
+    try:
+        if lite:
+            with ctx.Pool(n_workers, initializer=_build_worker_init, initargs=(per_worker_threads,)) as pool:
+                for res in pool.imap_unordered(crop_video, lite):
+                    done += 1
+                    stem = res["stem"]
+                    idx = index_of[stem]
+                    grp = meta.loc[idx]
+                    counts = grp["kind"].value_counts().to_dict()
+                    if res["error"] is None:
+                        crops[idx] = res["crops"]
+                        valid[idx] = True
+                        status = "ok"
+                    else:
+                        status = "FAILED " + res["error"]
+                    video_rows.append({"stem": stem, "crop_secs": round(res["secs"], 2), "frames_read": res["frames_read"],
+                                       "contract_checks": res["checked"],
+                                       "contract_checks_pool": res.get("checked_pool", 0),
+                                       "crop_error": res["error"], "n_samples": len(idx)})
+                    # Flushing a multi-GiB mapping after every small video is costly on
+                    # Windows.  A normal Ctrl+C reaches the exception handler below;
+                    # the periodic flush only bounds loss after an abrupt process kill.
+                    if done % 5 == 0 or done == len(jobs):
+                        save_build_progress()
+                    log(f"[build] {done}/{len(jobs)} {stem} n={len(idx)} "
+                        + " ".join(f"{k}={v}" for k, v in sorted(counts.items()))
+                        + f" frames={res['frames_read']} {res['secs']:.1f}s decoders={res['decoders']} {status}")
+    except KeyboardInterrupt:
+        save_build_progress()
+        log(f"[build] interrupted safely; {int(valid.sum())}/{n} samples are reusable")
+        raise
     crops.flush()
     del crops
     meta = meta.copy()
@@ -937,6 +1050,11 @@ def step_build_cache(cfg: dict, state: dict) -> dict:
         state["contract_checks"] = {"gt": n_chk - n_chk_pool, "pool": n_chk_pool}
         log(f"[build] exact contract checks (inner crop == prepare_sample): gt {n_chk - n_chk_pool}, pool {n_chk_pool}; "
             f"valid by source {meta[meta['valid']].groupby('source').size().to_dict()}")
+    if bool(valid.all()):
+        manifest_value["complete"] = True
+        tmp = manifest_path.with_suffix(".json.tmp")
+        tmp.write_text(json.dumps(manifest_value, indent=1))
+        os.replace(tmp, manifest_path)
     return state
 
 
@@ -984,39 +1102,63 @@ def step_train(cfg: dict, state: dict) -> dict:
     queue = list(folds)
     running: dict[str, tuple] = {}
     results: dict[int, int] = {}
-    while queue or running:
-        for slot in slots:
-            if slot not in running and queue:
-                fold = queue.pop(0)
-                fdir = _fold_dir(work, fold)
-                fdir.mkdir(parents=True, exist_ok=True)
-                # a rerun into the same work dir must never pick up a previous run's fold model / OOF rows
-                # (a fold that fails or never saves best.pt would otherwise load or merge stale files silently)
-                for stale in ("best.pt", "last.pt", "oof.csv", "summary.json", "history.json", "train.log"):
-                    (fdir / stale).unlink(missing_ok=True)
-                env = dict(env_base)
-                if slot != "cpu":
-                    env["CUDA_VISIBLE_DEVICES"] = slot
-                device = "cuda:0" if slot != "cpu" else "cpu"
-                cmd = [sys.executable, str(Path(__file__).resolve()), "worker", "--cfg", str(cfg_path),
-                       "--fold", str(fold), "--device", device, "--threads",
-                       str(max(1, (os.cpu_count() or 1) // len(slots)))]
-                sink = open(fdir / "train.log", "a", encoding="utf-8")
-                proc = subprocess.Popen(cmd, env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True,
-                                        encoding="utf-8", errors="replace")
-                th = threading.Thread(target=_pump, args=(proc.stdout, f"[fold {fold}@{slot}] ", sink), daemon=True)
-                th.start()
-                running[slot] = (fold, proc, th, sink, time.time())
-                log(f"[train] started fold {fold} on {slot} (pid {proc.pid})")
-        time.sleep(1.0)
-        for slot in list(running):
-            fold, proc, th, sink, ts = running[slot]
-            if proc.poll() is not None:
-                th.join(timeout=10)
-                sink.close()
-                results[fold] = proc.returncode
-                log(f"[train] fold {fold} finished rc={proc.returncode} in {time.time() - ts:.0f} s")
-                del running[slot]
+    try:
+        while queue or running:
+            stop_requested = bool(cfg.get("stop_file") and Path(cfg["stop_file"]).is_file())
+            if stop_requested and not running:
+                log("[train] cooperative stop file present; no new fold will start")
+                queue.clear()
+                break
+            for slot in slots:
+                if slot not in running and queue and not stop_requested:
+                    fold = queue.pop(0)
+                    fdir = _fold_dir(work, fold)
+                    fdir.mkdir(parents=True, exist_ok=True)
+                    complete = all((fdir / name).is_file() for name in ("best.pt", "oof.csv", "summary.json"))
+                    if cfg.get("resume") and complete:
+                        results[fold] = 0
+                        log(f"[train] fold {fold} already complete -> resume skip")
+                        continue
+                    if not cfg.get("resume"):
+                        # A non-resume rerun must never pick up stale models or rows.
+                        for stale in ("best.pt", "last.pt", "oof.csv", "summary.json", "history.json", "train.log"):
+                            (fdir / stale).unlink(missing_ok=True)
+                    env = dict(env_base)
+                    if slot != "cpu":
+                        env["CUDA_VISIBLE_DEVICES"] = slot
+                    device = "cuda:0" if slot != "cpu" else "cpu"
+                    cmd = [sys.executable, str(Path(__file__).resolve()), "worker", "--cfg", str(cfg_path),
+                           "--fold", str(fold), "--device", device, "--threads",
+                           str(max(1, (os.cpu_count() or 1) // len(slots)))]
+                    sink = open(fdir / "train.log", "a", encoding="utf-8")
+                    proc = subprocess.Popen(cmd, env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True,
+                                            encoding="utf-8", errors="replace")
+                    th = threading.Thread(target=_pump, args=(proc.stdout, f"[fold {fold}@{slot}] ", sink), daemon=True)
+                    th.start()
+                    running[slot] = (fold, proc, th, sink, time.time())
+                    log(f"[train] started fold {fold} on {slot} (pid {proc.pid})")
+            time.sleep(1.0)
+            for slot in list(running):
+                fold, proc, th, sink, ts = running[slot]
+                if proc.poll() is not None:
+                    th.join(timeout=10)
+                    sink.close()
+                    results[fold] = proc.returncode
+                    log(f"[train] fold {fold} finished rc={proc.returncode} in {time.time() - ts:.0f} s")
+                    del running[slot]
+                    if cfg.get("stop_file") and Path(cfg["stop_file"]).is_file():
+                        queue.clear()
+    except KeyboardInterrupt:
+        log("[train] interrupted; terminating fold workers. Last completed epoch remains resumable.")
+        for fold, proc, th, sink, _ in running.values():
+            proc.terminate()
+            try:
+                proc.wait(timeout=20)
+            except subprocess.TimeoutExpired:
+                proc.kill()
+            th.join(timeout=5)
+            sink.close()
+        raise
     state["train_rc"] = results
     state["timing"]["train_s"] = round(time.time() - t0, 1)
     failed = [f for f, rc in results.items() if rc != 0]
@@ -1028,7 +1170,7 @@ def step_train(cfg: dict, state: dict) -> dict:
 def _load_split(crops, rows: np.ndarray, inner_only: bool, dtype, device, torch, chunk: int = 1024):
     """Rows of the memmap -> one tensor on device; inner_only keeps the contract 16x32x32 crop."""
     if len(rows) == 0:
-        shape = (0, 4, *CROP) if inner_only else (0, 4, *BIG)
+        shape = (0, IMAGE_CHANNELS, *CROP) if inner_only else (0, IMAGE_CHANNELS, *BIG)
         return torch.zeros(shape, dtype=dtype, device=device)
     parts = []
     for s in range(0, len(rows), chunk):
@@ -1065,7 +1207,7 @@ def augment_batch(xb, rng: np.random.Generator, cfg: dict, marker, torch):
             idx = torch.from_numpy(sel).to(dev)
             x[idx] = torch.rot90(x[idx], k, dims=(3, 4))
     gain = torch.from_numpy(rng.uniform(cfg["gain"][0], cfg["gain"][1], size=(b, 1, 1, 1, 1)).astype(np.float32)).to(dev)
-    x[:, :4] = (x[:, :4] * gain).clamp(-0.5, 6.0)
+    x[:, :IMAGE_CHANNELS] = (x[:, :IMAGE_CHANNELS] * gain).clamp(-0.5, 6.0)
     return x
 
 
@@ -1083,6 +1225,17 @@ def predict_inner(model, x_inner, marker, batch: int, torch) -> np.ndarray:
             xb = x_inner[s:s + batch].float()
             x = torch.cat([xb, marker.to(xb.device).expand(xb.shape[0], 1, *CROP)], dim=1)
             out.append(torch.softmax(model(x).float(), dim=1).cpu().numpy())
+    return np.concatenate(out) if out else np.zeros((0, len(CLASSES)), np.float32)
+
+
+def predict_rows(model, crops, rows: np.ndarray, marker, batch: int, device, torch) -> np.ndarray:
+    """Predict memmap rows without materialising the full validation/OOF tensor on the GPU."""
+    out = []
+    for start in range(0, len(rows), max(1, int(batch))):
+        part = rows[start:start + max(1, int(batch))]
+        x_inner = _load_split(crops, part, True, torch.float32, device, torch)
+        out.append(predict_inner(model, x_inner, marker, len(part), torch))
+        del x_inner
     return np.concatenate(out) if out else np.zeros((0, len(CLASSES)), np.float32)
 
 
@@ -1177,14 +1330,16 @@ def train_fold(cfg: dict, fold: int, device_str: str, threads: int = 0) -> dict:
         raise RuntimeError("no training samples")
     store_dtype = torch.float16 if use_cuda else torch.float32
     t_load = time.time()
-    x_tr = _load_split(crops, tr_rows, False, store_dtype, device, torch)
-    x_es = _load_split(crops, es_rows, True, torch.float32, device, torch)
+    stream_crops = bool(cfg.get("stream_crops"))
+    x_tr = None if stream_crops else _load_split(crops, tr_rows, False, store_dtype, device, torch)
+    x_es = None if stream_crops else _load_split(crops, es_rows, True, torch.float32, device, torch)
     y_tr_t = torch.from_numpy(y_tr).to(device)
     pool_w = float(cfg.get("pool_weight", 1.0))
     weighted = bool((src_tr == "pool").any()) and pool_w != 1.0
     w_tr_t = (torch.from_numpy(np.where(src_tr == "pool", pool_w, 1.0).astype(np.float32)).to(device)
               if weighted else None)
-    log(f"fold {fold}: loaded crops in {time.time() - t_load:.1f} s (train {tuple(x_tr.shape)} {x_tr.dtype})")
+    loaded = "streaming from memmap" if stream_crops else f"train {tuple(x_tr.shape)} {x_tr.dtype}"
+    log(f"fold {fold}: crop input ready in {time.time() - t_load:.1f} s ({loaded})")
     marker = contract_marker(torch).to(device)
 
     ckpt_cfg = copy.deepcopy(DEFAULT_CFG)
@@ -1192,7 +1347,9 @@ def train_fold(cfg: dict, fold: int, device_str: str, threads: int = 0) -> dict:
     ckpt_cfg["train"] = {k: cfg[k] for k in ("epochs", "patience", "batch", "lr", "weight_decay", "warmup_frac",
                                                "epoch_samples", "jitter", "gain", "seed", "cont_per_video",
                                                "hardneg_per_video", "cont_min_dist", "inner_val", "n_folds")}
-    ckpt_cfg["train"].update({"fold": fold, "early_stop_fold": es_fold, "kernel": "biohub-l2-kdn-train"})
+    ckpt_cfg["train"].update(
+        {"fold": fold, "early_stop_fold": es_fold, "kernel": cfg.get("run_name", "biohub-l2-kdn-train")}
+    )
     if cfg.get("extra_samples"):
         extra_info = cfg.get("_extra_info") or {}
         ckpt_cfg["train"].update({"extra_samples": Path(cfg["extra_samples"]).name,
@@ -1220,9 +1377,35 @@ def train_fold(cfg: dict, fold: int, device_str: str, threads: int = 0) -> dict:
         scaler = torch.amp.GradScaler("cuda", enabled=use_amp)
     except Exception:  # older torch
         scaler = torch.cuda.amp.GradScaler(enabled=use_amp)
-    best, best_epoch, bad, step = float("inf"), -1, 0, 0
+    best, best_epoch, bad, step, start_epoch = float("inf"), -1, 0, 0, 0
     history = []
-    for epoch in range(int(cfg["epochs"])):
+    last_path = fdir / "last.pt"
+    if cfg.get("resume") and last_path.is_file():
+        saved = torch.load(last_path, map_location=device, weights_only=False)
+        saved_cfg = saved.get("config", {})
+        if saved_cfg.get("input") != ckpt_cfg.get("input") or saved_cfg.get("model") != ckpt_cfg.get("model"):
+            raise RuntimeError(f"fold {fold}: last.pt input/model config is incompatible with this run")
+        model.load_state_dict(saved["model_state"], strict=True)
+        if saved.get("optimizer_state"):
+            opt.load_state_dict(saved["optimizer_state"])
+        if saved.get("scaler_state"):
+            scaler.load_state_dict(saved["scaler_state"])
+        best = float(saved.get("best", float("inf")))
+        best_epoch = int(saved.get("best_epoch", -1))
+        bad = int(saved.get("bad", 0))
+        step = int(saved.get("step", 0))
+        start_epoch = int(saved.get("epoch", -1)) + 1
+        if saved.get("numpy_rng_state"):
+            rng.bit_generator.state = saved["numpy_rng_state"]
+        if saved.get("torch_rng_state") is not None:
+            torch.random.set_rng_state(saved["torch_rng_state"].cpu())
+        if use_cuda and saved.get("cuda_rng_state") is not None:
+            torch.cuda.set_rng_state(saved["cuda_rng_state"].cpu(), device=device)
+        history_path = fdir / "history.json"
+        history = json.loads(history_path.read_text()) if history_path.is_file() else []
+        log(f"fold {fold}: resumed after epoch {start_epoch - 1}; best={best:.4f} at {best_epoch}")
+    stopped_early = False
+    for epoch in range(start_epoch, int(cfg["epochs"])):
         te = time.time()
         model.train()
         cls = rng.choice(classes_present, size=epoch_samples)
@@ -1235,7 +1418,11 @@ def train_fold(cfg: dict, fold: int, device_str: str, threads: int = 0) -> dict:
         for s in range(0, epoch_samples, cfg["batch"]):
             idx = order[s:s + cfg["batch"]]
             idx_t = torch.from_numpy(idx).to(device)
-            xb = augment_batch(x_tr[idx_t], rng, cfg, marker, torch)
+            if stream_crops:
+                raw_batch = _load_split(crops, tr_rows[idx], False, store_dtype, device, torch)
+            else:
+                raw_batch = x_tr[idx_t]
+            xb = augment_batch(raw_batch, rng, cfg, marker, torch)
             yb = y_tr_t[idx_t]
             for group in opt.param_groups:
                 group["lr"] = lr_at(step)
@@ -1254,22 +1441,23 @@ def train_fold(cfg: dict, fold: int, device_str: str, threads: int = 0) -> dict:
             run_loss += loss.detach() * len(idx)
             seen += len(idx)
             step += 1
+            if stream_crops:
+                del raw_batch, xb
         train_loss = float(run_loss) / max(1, seen)
         if use_cuda:
             torch.cuda.synchronize()
         train_secs = time.time() - te
-        probs = predict_inner(model, x_es, marker, cfg["eval_batch"], torch)
+        probs = (
+            predict_rows(model, crops, es_rows, marker, cfg["eval_batch"], device, torch)
+            if stream_crops
+            else predict_inner(model, x_es, marker, cfg["eval_batch"], torch)
+        )
         vm = _val_metrics(probs[es_sel], y_es[es_sel]) if es_source != "all" else _val_metrics(probs, y_es)
         vm_src = ({s: _val_metrics(probs[src_es == s], y_es[src_es == s]) for s in ("gt", "pool")} if has_pool else {})
         val_loss = vm.get("macro_ce", float("nan")) if vm["n"] else float("nan")
         improved = vm["n"] > 0 and val_loss < best
-        state_cpu = {k: v.detach().cpu() for k, v in model.state_dict().items()}
-        payload = {"model_state": state_cpu, "config": ckpt_cfg, "fold": int(fold), "epoch": int(epoch),
-                   "val_loss": float(val_loss)}
-        _atomic_save(payload, fdir / "last.pt", torch)
         if improved or (vm["n"] == 0):
             best, best_epoch, bad = (val_loss if vm["n"] else best), epoch, 0
-            _atomic_save(payload, fdir / "best.pt", torch)
         else:
             bad += 1
         rec = {"epoch": epoch, "train_loss": train_loss, "val_loss": val_loss, "lr": lr_at(step - 1),
@@ -1280,6 +1468,29 @@ def train_fold(cfg: dict, fold: int, device_str: str, threads: int = 0) -> dict:
                   if k in ("n", "macro_ce", "auc_parent", "auc_daughter")}}
         history.append(rec)
         (fdir / "history.json").write_text(json.dumps(history, indent=1))
+        state_cpu = {k: v.detach().cpu() for k, v in model.state_dict().items()}
+        model_payload = {
+            "model_state": state_cpu,
+            "config": ckpt_cfg,
+            "fold": int(fold),
+            "epoch": int(epoch),
+            "val_loss": float(val_loss),
+        }
+        if improved or (vm["n"] == 0):
+            _atomic_save(model_payload, fdir / "best.pt", torch)
+        last_payload = {
+            **model_payload,
+            "optimizer_state": opt.state_dict(),
+            "scaler_state": scaler.state_dict(),
+            "best": float(best),
+            "best_epoch": int(best_epoch),
+            "bad": int(bad),
+            "step": int(step),
+            "numpy_rng_state": rng.bit_generator.state,
+            "torch_rng_state": torch.random.get_rng_state(),
+            "cuda_rng_state": torch.cuda.get_rng_state(device) if use_cuda else None,
+        }
+        _atomic_save(last_payload, last_path, torch)
         auc_txt = " ".join(f"auc_{n}={vm.get('auc_' + n) if vm.get('auc_' + n) is None else round(vm['auc_' + n], 3)}"
                            for n in CLASSES)
         src_txt = "".join(
@@ -1287,17 +1498,41 @@ def train_fold(cfg: dict, fold: int, device_str: str, threads: int = 0) -> dict:
             for s, m in vm_src.items() if m["n"])
         log(f"fold {fold} epoch {epoch}: train {train_loss:.4f} val(macro CE) {val_loss:.4f} "
             f"{'*' if improved else ' '} {auc_txt} {rec['secs']}s (train {rec['samples_per_s']} samples/s){src_txt}")
+        stop_file = str(cfg.get("stop_file") or "")
+        if stop_file and Path(stop_file).is_file():
+            log(f"fold {fold}: cooperative stop requested after epoch {epoch}; last.pt is resumable")
+            stopped_early = True
+            break
         if vm["n"] and bad >= int(cfg["patience"]):
             log(f"fold {fold}: early stop at epoch {epoch} (best {best_epoch}, val {best:.4f})")
             break
-    del x_tr
+    if x_tr is not None:
+        del x_tr
+    if x_es is not None:
+        del x_es
+    if stopped_early:
+        # Do not write OOF/summary: their presence marks a fold as complete.  On
+        # the next run step_train will therefore launch this fold again and
+        # train_fold will resume from last.pt at the following epoch.
+        return {
+            "fold": int(fold),
+            "status": "stopped_resumable",
+            "last_epoch": int(history[-1]["epoch"]),
+            "last_path": str(last_path),
+        }
     if not (fdir / "best.pt").is_file():
         raise RuntimeError(f"fold {fold}: no best.pt written in this run (epochs={cfg['epochs']}, history "
                            f"{[h['val_loss'] for h in history]}) -> no OOF for this fold")
     # OOF prediction with best.pt through the shared loader (same path the submission patch uses)
     bundle = load_daughternet([fdir / "best.pt"], device=str(device))
-    x_oof = _load_split(crops, oof_rows, True, torch.float32, device, torch)
-    p_oof = predict_inner(bundle["models"][0], x_oof, marker, cfg["eval_batch"], torch)
+    if stream_crops:
+        p_oof = predict_rows(
+            bundle["models"][0], crops, oof_rows, marker, cfg["eval_batch"], device, torch
+        )
+    else:
+        x_oof = _load_split(crops, oof_rows, True, torch.float32, device, torch)
+        p_oof = predict_inner(bundle["models"][0], x_oof, marker, cfg["eval_batch"], torch)
+        del x_oof
     oof = pd.DataFrame({"row": oof_rows, "p_cont": p_oof[:, 0], "p_par": p_oof[:, 1], "p_dau": p_oof[:, 2]})
     oof.to_csv(fdir / "oof.csv", index=False)
     y_oof = meta.loc[oof_rows, "label_idx"].to_numpy().astype(np.int64)
@@ -1337,6 +1572,7 @@ def worker_main(argv: list[str]) -> int:
     ap.add_argument("--threads", type=int, default=0)
     a = ap.parse_args(argv)
     cfg = json.loads(Path(a.cfg).read_text())
+    configure_profile(cfg)
     train_fold(cfg, a.fold, a.device, a.threads)
     return 0
 
@@ -1451,7 +1687,7 @@ def step_oof(cfg: dict, state: dict) -> dict:
     out[OOF_COLUMNS + extra].to_csv(work / "oof.csv", index=False)
 
     readout = {
-        "kernel": "biohub-l2-kdn-train", "classes": list(CLASSES), "n_samples": int(len(out)),
+        "kernel": cfg.get("run_name", "biohub-l2-kdn-train"), "classes": list(CLASSES), "n_samples": int(len(out)),
         "n_with_oof": int(out["p_par"].notna().sum()), "splits_source": state.get("splits_source"),
         "definitions": {
             "base_rate": "fraction of the embryo's labelled samples that carry the class (sampling-dependent: cont is "
@@ -1669,6 +1905,7 @@ def step_verify(cfg: dict, state: dict, per_fold: int = 2) -> dict:
 
 
 def run_all(cfg: dict) -> dict:
+    configure_profile(cfg)
     state = step_prepare(cfg)
     state = step_build_cache(cfg, state)
     state = step_train(cfg, state)

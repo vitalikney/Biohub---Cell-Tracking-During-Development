@@ -164,7 +164,12 @@ def prepare_divnet_input(
     frame_cache: dict[object, np.ndarray],
     read_frame: Callable[[str, int, dict], np.ndarray] | None = None,
 ) -> np.ndarray:
-    """Build one ``(5, 16, 32, 32)`` sample from the manifest recipe."""
+    """Build one image-lag stack plus a centre-marker channel from the supplied config.
+
+    The public DivNet default remains ``(5, 16, 32, 32)``.  DaughterNet-B uses
+    the same preprocessing implementation with six image lags, no XY pooling,
+    and a ``16x64x64`` crop, so its configured result is ``(7, 16, 64, 64)``.
+    """
     cfg = divnet_bundle.get("config", {})
     input_cfg = cfg.get("input", {}) if isinstance(cfg, dict) else {}
     norm_cfg = cfg.get("normalization", {}) if isinstance(cfg, dict) else {}
@@ -203,7 +208,8 @@ def prepare_divnet_input(
         channels.append(_crop_with_padding(prepared[key], centre, shape))
     channels.append(_marker(shape, sigma))
     sample = np.stack(channels, axis=0)
-    if sample.shape != (5, *shape) or not np.isfinite(sample).all():
+    expected = (len(lags) + 1, *shape)
+    if sample.shape != expected or not np.isfinite(sample).all():
         raise RuntimeError(f"Invalid DivNet input: shape={sample.shape}, finite={np.isfinite(sample).all()}")
     return sample
 

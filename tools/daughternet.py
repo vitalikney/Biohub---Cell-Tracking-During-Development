@@ -14,6 +14,7 @@ from __future__ import annotations
 
 from pathlib import Path
 from typing import Callable, Sequence
+import copy
 
 import numpy as np
 import torch
@@ -30,6 +31,25 @@ DEFAULT_CFG = {
     "normalization": {"lo_pct": 50.0, "hi_pct": 99.5, "clip": [-0.5, 6.0]},
     "model": {"in_channels": 5, "base_channels": 16, "n_classes": 3},
 }
+
+
+def fullres_config() -> dict:
+    """DaughterNet-B input/model contract used by Friend A's L5 experiment."""
+    cfg = copy.deepcopy(DEFAULT_CFG)
+    cfg["input"].update(
+        {
+            "image_lags": [-2, -1, 0, 1, 2, 3],
+            "pool_xy": 1,
+            "crop_z": 16,
+            "crop_yx": 64,
+            # Preserve the physical width of the public marker after removing
+            # four-fold XY pooling.
+            "marker_sigma": [1.5, 8.0, 8.0],
+        }
+    )
+    cfg["model"]["in_channels"] = 7
+    cfg["profile"] = "friend_a_l5_fullres"
+    return cfg
 
 
 class DaughterNet(torch.nn.Module):
@@ -87,7 +107,7 @@ def load_daughternet(paths: Sequence[Path | str], device: str | None = None) -> 
 
 def prepare_sample(dataset: str, t: int, node: dict, bundle: dict, frame_cache: dict,
                    read_frame: Callable[[str, int, dict], np.ndarray] | None = None) -> np.ndarray:
-    """(5, 16, 32, 32) float32 sample, identical to the DivNet contract (bundle['config'] carries input/normalization)."""
+    """Configured lag stack plus marker; ``bundle['config']`` defines its shape."""
     return prepare_divnet_input(dataset, int(t), node, bundle, frame_cache, read_frame)
 
 
