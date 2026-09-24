@@ -1318,6 +1318,9 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   Friend A pushed L5 (b7b7629/1905ac6: full-res DaughterNet-B on his 5070 Ti, 14-22 h, OOF by 25 Sep 20:00 UTC); his edits
   to shared files are backward compatible (tests pass).- 2026-09-24 02:00 UTC PROBE 26 SCORED: exp45 (exp29 with safe divisions OFF, zero forks) = 0.911 public. So our PUBLIC
   division Jaccard J_pub = (0.947 - 0.911) / 0.1 = 0.36 (+-0.04 from 3-decimal rounding), exactly pawanmali's ablation.
-  Precision floor for added forks P_min = max(0.15, J/(1+J) + 0.05) = 0.31; break-even precision J/(1+J) = 0.265.
+  Precision floor for added forks P_min = max(0.15, J/(1+J) + 0.05) = 0.31; break-even precision J/(1+J) = 0.265.- 2026-09-24 02:10 UTC DaughterNet v2 on SELECTION is WORSE for insertion than v1 despite the better pool AUC: best orphan
+  +0.0010 (v1 +0.0044), best steal cap 6 t 0.5 +0.0032 (v1 cap 4 t 0.5 +0.0058). All L2 deltas on 64 videos are 1-4
+  division events, i.e. inside noise. Running: v1+v2 averaged p grid on SELECTION; L4 weak-leaf pruning port + grid
+  (workflow wf_7ffe6fd4-8a4, laptop CPU, selection then one confirmation run).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
