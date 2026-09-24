@@ -1311,6 +1311,11 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   sha256-identical to exp39's (86ba0334...). The patch is an exact no-op when disabled, and the whole pipeline is
   deterministic run to run (so the takaito 0.948 vs our 0.944 gap was not run noise but a different code/version).
   Local edge-error decomposition (exp39, 199 videos): edge TP 122,151 / FP 6,846 / FN 6,732 (J 0.900); errors split ~50/50;
-  annotated node recall 0.983.
+  annotated node recall 0.983.- 2026-09-24 01:30 UTC DaughterNet v2 TRAINED (kdn-train v3: 17,143 GT + 11,117 pool rows at predicted coords; ~25 min).
+  Pool block OOF (the one that matters, real candidates): parent-vs-cont AUC 0.875 (v1 on the same rows 0.825; 44b6 0.950,
+  6bba 0.859), daughter-vs-cont 0.743 (v1 0.718); gate roles: p_par parent vs cont-as-u 0.84, p_dau daughter vs cont-as-v
+  0.68 (weakest link). GT block parent AUC 0.841 (v1 0.848). Rescoring the 1M exported nodes with v2 (kdn-score v2).
+  Friend A pushed L5 (b7b7629/1905ac6: full-res DaughterNet-B on his 5070 Ti, 14-22 h, OOF by 25 Sep 20:00 UTC); his edits
+  to shared files are backward compatible (tests pass).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
