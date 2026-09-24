@@ -1307,6 +1307,10 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   466 insertions were steals). Fails the gate narrowly (+0.002, CI > 0, added-fork precision 4/15 = 27% < 31%). KEY
   ARITHMETIC for the public board: with J_pub ~0.36 already, an added fork helps only if its precision > J/(1+J) ~ 0.265;
   v1's 27% is break-even, so even a perfect transfer would move the public score by ~0. v2 must lift precision to >= 0.45
-  for a visible public gain (+0.002 needs about +5 net public TP at that precision - more than the public test holds).
+  for a visible public gain (+0.002 needs about +5 net public TP at that precision - more than the public test holds).- 2026-09-24 00:30 UTC PARITY PASS: exp46_divins_parity (exp39 + --patch divinsert, DIVINS_ENABLE=0) submission.csv is
+  sha256-identical to exp39's (86ba0334...). The patch is an exact no-op when disabled, and the whole pipeline is
+  deterministic run to run (so the takaito 0.948 vs our 0.944 gap was not run noise but a different code/version).
+  Local edge-error decomposition (exp39, 199 videos): edge TP 122,151 / FP 6,846 / FN 6,732 (J 0.900); errors split ~50/50;
+  annotated node recall 0.983.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.

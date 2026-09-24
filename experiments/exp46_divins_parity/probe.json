@@ -1,0 +1,10 @@
+{
+ "base": "exp29 realised config (tight55, pilkwang primary, validator off) = LB 0.947; built by tools/build_probe_kernel.py from the exp39 notebook",
+ "change": {
+  "DIVINS_ENABLE": "0",
+  "DIVNET_VERIFY": "1",
+  "PATCHES": "divinsert"
+ },
+ "note": "PARITY: exp39 + divinsert patch with DIVINS_ENABLE=0; submission.csv must be sha256-identical to exp39's (no submit)",
+ "rule": "compare with exp29 0.947; >= 0.950 adopt; ties recorded; <= 0.944 drop"
+}
