@@ -1377,5 +1377,16 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   loop) so the user's own work on the laptop keeps priority. OFFLOAD: an agent is porting the replay lab to Kaggle CPU
   kernels (tools/kaggle_lab.py: push-code / run / pull / status; 4 vCPU, 30 GB, no GPU quota) - GPU does not speed up
   the lab (ILP/Hungarian/scoring are CPU-bound) and free Colab gives only 2 vCPU; Colab stays a GPU reserve.
+- 2026-09-24 12:30 UTC, BROWSER AGENT RESULT (research/browser_research_2026-09-24.md): public notebook
+  anvithpothula/biohub-x138 = **0.953** (gold, 21 Sep; missed by earlier Code-tab scans) = thtennant frontier947-readmit
+  (0.946) + ONE change: the "V1284" coordinate-refinement head (MLP 224->32->3 on frozen UNet features at each peak,
+  shift <= 2 um; removes the int16 rounding so coords stay sub-voxel; the edge transformer gathers features at the
+  refined point by trilinear interpolation). Weights: public CC0 dataset anvithpothula/biohub-v1284-head-s075. 33
+  teams sit at exactly 0.953 (x138 copies). Forum: detector retraining gave a top-3 team most of the gain; divisions
+  need ~3 um accuracy; stricter min-track-length looked +0.013 offline, -0.004 public (node multiplier). ACTIONS: agent
+  porting the head as --patch coordhead -> exp51 = exp48 + coordhead (private GPU kernel; submission needs the user's
+  OK). Ideas workflow replaced by a larger crash-safe one, wf_d8ae74be-bcd (9 lenses x 4 hypotheses -> dedupe to <= 14
+  -> web research each -> 3 skeptics each (transfer, arithmetic, feasibility) -> completeness critic -> round 2 ->
+  synthesis), all outputs in research/wf_ideas_v2/ (FINAL_REPORT.md at the end).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
