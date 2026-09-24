@@ -9,7 +9,8 @@
  "enable_tpu": false,
  "enable_internet": false,
  "dataset_sources": [
-  "giorgosi/biohub-divnet-v2"
+  "giorgosi/biohub-divnet-v2",
+  "vitaliineibauer/biohub-l2-coords"
  ],
  "competition_sources": [
   "biohub-cell-tracking-during-development"
