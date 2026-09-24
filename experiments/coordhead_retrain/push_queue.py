@@ -31,10 +31,19 @@ def main() -> None:
     ap.add_argument("dirs", nargs="+")
     ap.add_argument("--wait", type=int, default=120)
     ap.add_argument("--max-hours", type=float, default=14.0)
+    ap.add_argument("--force", action="store_true", help="push even if the kernel already has a run")
     a = ap.parse_args()
     deadline = time.time() + a.max_hours * 3600
     for d in a.dirs:
         kid = json.loads((Path(d) / "kernel-metadata.json").read_text())["id"]
+        if not a.force:
+            st = subprocess.run([sys.executable, "-m", "kaggle", "kernels", "status", kid], capture_output=True,
+                                text=True, timeout=120)
+            if any(s in (st.stdout + st.stderr) for s in ("RUNNING", "QUEUED", "COMPLETE")):
+                # a second queue (e.g. after a session restart) must not push a new version: Kaggle keeps the old
+                # version running, the GPU hour is spent twice (happened once for chcap-6bba-s2of4)
+                log(f"SKIP {kid}: already pushed ({(st.stdout + st.stderr).strip().splitlines()[-1]}); --force to re-push")
+                continue
         while True:
             r = subprocess.run([sys.executable, "-m", "kaggle", "kernels", "push", "-p", d],
                                capture_output=True, text=True, timeout=600)

@@ -459,6 +459,10 @@ def main() -> None:
     ap.add_argument("--threads", type=int, default=1)
     ap.add_argument("--kill-margin", type=float, default=0.03)
     ap.add_argument("--skip-leak5", action="store_true")
+    ap.add_argument("--skip-embryo", action="store_true",
+                    help="leak5 folds only (hyper-parameter selection without touching the kill-test folds; the kill "
+                         "test then reports FAIL for lack of embryo folds)")
+    ap.add_argument("--no-final", action="store_true", help="skip the all-video head (selection runs)")
     ap.add_argument("--export-dataset", action="store_true")
     ap.add_argument("--force-export", action="store_true")
     a = ap.parse_args()
@@ -514,10 +518,11 @@ def main() -> None:
     if not a.skip_leak5:
         for f in range(5):
             fold_defs.append((f"leak5_f{f}", [v for v in videos if v.fold != f], [v for v in videos if v.fold == f]))
-    fold_defs.append(("emb_6bba_to_44b6", [v for v in videos if v.embryo == "6bba"],
-                      [v for v in videos if v.embryo == "44b6"]))
-    fold_defs.append(("emb_44b6_to_6bba", [v for v in videos if v.embryo == "44b6"],
-                      [v for v in videos if v.embryo == "6bba"]))
+    if not a.skip_embryo:
+        fold_defs.append(("emb_6bba_to_44b6", [v for v in videos if v.embryo == "6bba"],
+                          [v for v in videos if v.embryo == "44b6"]))
+        fold_defs.append(("emb_44b6_to_6bba", [v for v in videos if v.embryo == "44b6"],
+                          [v for v in videos if v.embryo == "6bba"]))
 
     oof_rows = defaultdict(list)
     oof_rows_nox = defaultdict(list)
@@ -597,6 +602,13 @@ def main() -> None:
                 f"{'/'.join(f'{x:+.3f}' for x in vn)} vs public {'/'.join(f'{x:+.3f}' for x in vp)} um (z/y/x), "
                 f"max gap {gap:.3f} um ({'ok' if gap <= 0.2 else 'WARN > 0.2 um: learns an embryo convention?'})")
     say(f"KILL TEST VERDICT: {'PASS - ship candidate' if verdict['pass'] else 'FAIL - do not ship'}")
+
+    if a.no_final:
+        report["seconds"] = round(time.time() - t_start, 1)
+        (out / "report.json").write_text(json.dumps(strip_arrays(report), indent=1))
+        (out / "report.txt").write_text("\n".join(report_lines) + "\n", encoding="utf-8")
+        print(f"done (no final head) in {report['seconds']} s -> {out}", flush=True)
+        return
 
     # ---- final head on all videos ----
     final, info = fit_head(videos, a, a.seed, "final")

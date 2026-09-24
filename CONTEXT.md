@@ -1485,5 +1485,11 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   batch is therefore exp52 + exp53 at 00:01 UTC (2 slots), 3 slots left for later decisions (need a new OK).
 - 2026-09-24 21:05 UTC: user (going to sleep until ~10:00 MSK) approved: submit exp52 + exp53 at 00:01 UTC, and exp55
   (retrained head) at my discretion if its kill test passes; conserve token budget until 07:00 UTC (no workflows).
+- 2026-09-24 ~23:00 UTC, HEAD RETRAIN ON 199 = KILL TEST FAIL, exp55 NOT built/submitted. Capture 199/199 (7.2 GPU-h,
+  deterministic; public head on our features -10..13% distance = convention OK). Leak-group OOF: new head P 1.238 um
+  vs public 1.525 (-18.9%), but mostly bias removal (z residual +0.40 -> +0.02 um). Embryo-held-out: 6bba->44b6 P +12.0%
+  WORSE than public (learns 6bba's annotation z-offset), 44b6->6bba +0.2%; debiased Q also worse (+6.3% / +1.3%).
+  Public head (balanced ~10+10 videos) transfers better; the hidden test is other embryos -> keep the public head.
+  Files: experiments/coordhead_retrain/out_full_P|Q/, tools/train_coordhead.py.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
