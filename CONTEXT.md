@@ -1321,6 +1321,13 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   Precision floor for added forks P_min = max(0.15, J/(1+J) + 0.05) = 0.31; break-even precision J/(1+J) = 0.265.- 2026-09-24 02:10 UTC DaughterNet v2 on SELECTION is WORSE for insertion than v1 despite the better pool AUC: best orphan
   +0.0010 (v1 +0.0044), best steal cap 6 t 0.5 +0.0032 (v1 cap 4 t 0.5 +0.0058). All L2 deltas on 64 videos are 1-4
   division events, i.e. inside noise. Running: v1+v2 averaged p grid on SELECTION; L4 weak-leaf pruning port + grid
-  (workflow wf_7ffe6fd4-8a4, laptop CPU, selection then one confirmation run).
+  (workflow wf_7ffe6fd4-8a4, laptop CPU, selection then one confirmation run).- 2026-09-24 03:10 UTC L4 weak-leaf pruning (seyitkaangunes 035 prune_weak_leaf_nodes, ported verbatim; knob 0.2-0.4 identical
+  because tail edge_prob is either 0.0 (relink pairs the network never scored) or >= 0.4): SELECTION +0.0005, CONFIRMATION
+  +0.0006 (CI [+0.0004, +0.0009]; 44b6 +0.0010, 6bba +0.0005; NO video worse among 199; node ratio -0.05%). Real but tiny;
+  fails the pre-registered +0.002 gate. v1+v2 averaged p: not better than v1 on SELECTION. Ensemble-threshold calibration
+  (eligible-count matching on SELECTION): OOF threshold 0.5 ~ ensemble 0.4.
+  PROBES PREPARED (decision taken autonomously while the user sleeps; slots are otherwise unused; finals policy unchanged -
+  none of these is a final unless it also passes its gate): exp47 = exp39 + leaf prune 0.3; exp48 = exp47 + DaughterNet v1
+  insertion with steal (cap 4, alpha 1, ens threshold 0.4, dump on). Both kernels running; submit when complete.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
