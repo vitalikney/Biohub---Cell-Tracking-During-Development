@@ -1302,6 +1302,11 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   sub-test on SELECTION (running); (b) v2 = v1 + hard examples from the predicted pool labelled by GT matching
   (tools/label_candidates.py) - trainer extension being built (wf_bd752e22-e54). Also noted: the 5-fold ensemble p is less
   extreme than single-fold OOF p (p_par 99th pct 0.83 vs 0.90), so any threshold must be re-calibrated for the ensemble
-  before a probe. Parity kernel exp46_divins_parity (ENABLE=0) running on Kaggle.
+  before a probe. Parity kernel exp46_divins_parity (ENABLE=0) running on Kaggle.- 2026-09-24 00:40 UTC L2 v1 STEAL sub-test: SELECTION best cap 4, threshold 0.5, steal on -> +0.0058 (TP 7 -> 13, FP 15 -> 25);
+  one CONFIRMATION run -> +0.0019 (TP 16 -> 20, FP 28 -> 39, 90% CI [-0.0007, +0.0050]; 44b6 +0.0015, 6bba +0.0021; 124 of
+  466 insertions were steals). Fails the gate narrowly (+0.002, CI > 0, added-fork precision 4/15 = 27% < 31%). KEY
+  ARITHMETIC for the public board: with J_pub ~0.36 already, an added fork helps only if its precision > J/(1+J) ~ 0.265;
+  v1's 27% is break-even, so even a perfect transfer would move the public score by ~0. v2 must lift precision to >= 0.45
+  for a visible public gain (+0.002 needs about +5 net public TP at that precision - more than the public test holds).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
