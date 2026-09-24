@@ -1368,5 +1368,14 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   validated against the official scorer): swaps 25% of FN (oracle +0.032), never-detected-link 31%, u-diverted/v-taken
   ~19% (oracle +0.016); a stitch rule (end->start, ILP edge) adds +0.0020 on top of ef on confirmation (44b6 gains on
   only 15% of videos -> fails the per-embryo 55% gate as is).
+- 2026-09-24 12:10 UTC, LAPTOP CRASH RECOVERY: the laptop froze at ~11:37 UTC and was power-cycled; all background
+  agents died. The ideas workflow wf_62b09e11 had produced NOTHING (2 of 3 generators failed at start with an API 403),
+  relaunched as wf_eee39a44-20b from experiments/workflows/biohub-idea-research.js, now CRASH-SAFE: every agent writes
+  notes + its final JSON to research/wf_ideas/ and re-uses an existing JSON on restart. The browser agent, the 5.5
+  rebuild agent (all 199 ckpts at 5.5 done; DivNet stage pending, reuse 6.0 scores where unchanged) and the FN-anatomy
+  agent were resumed with their context, limited to 2 workers. All python processes run at Idle priority (background
+  loop) so the user's own work on the laptop keeps priority. OFFLOAD: an agent is porting the replay lab to Kaggle CPU
+  kernels (tools/kaggle_lab.py: push-code / run / pull / status; 4 vCPU, 30 GB, no GPU quota) - GPU does not speed up
+  the lab (ILP/Hungarian/scoring are CPU-bound) and free Colab gives only 2 vCPU; Colab stays a GPU reserve.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
