@@ -1438,5 +1438,10 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   disagree with them look wrong; on test they are not). Bad omen for #29 (full filter with ILP re-link, still
   pending): if #29 <= 0.948 the edge-filter line is closed and the lab's in-sample optimism is ~+0.01 for anything
   that trusts the ILP/edge network - lab gains of that type must be discounted accordingly.
+- 2026-09-24 16:55 UTC: probe #29 exp49 (exp39 + full edge filter ef_a3_rl_pr, lab CONFIRMATION +0.0162, gate PASS)
+  = **0.947**, a tie with exp39. EDGE-FILTER LINE CLOSED (and the stitch bundle that depended on it). Lesson, now
+  quantified twice: rules that override the relink with the ILP / edge network look +0.01..+0.016 locally and give 0 on
+  LB (in-sample network). Lab gains are only trustworthy for changes that do NOT lean on network confidence (e.g. float
+  output coordinates, which change no topology). Finals candidates now: exp48 (0.948) and, if it scores, exp51.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
