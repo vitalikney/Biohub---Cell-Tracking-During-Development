@@ -1338,6 +1338,28 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   RISKS: (1) the linker was trained on all 199 videos, so trusting the ILP's choice is in-sample (relink-off lost 0.002 on
   the LB; the targeted subset is different, but only a probe decides); (2) the lab cache was built with tight gate 6.0, the
   kernel runs 5.5 (9.5% of the drop set differs). PROBES: exp49 = exp39 + ef_a3_rl_pr; exp50 = exp39 + drop-only ef_a0
-  (SELECTION +0.0095; depends only on the "never scored" property, a transfer hedge). Kernels pushed.
+  (SELECTION +0.0095; depends only on the "never scored" property, a transfer hedge). Kernels pushed.- 2026-09-24 10:50 UTC RESUME POINT (context compaction by the user; read this first).
+  PROBES today (24 Sep UTC; 1 slot left today): #27 exp47 = exp39 + leaf prune 0.3 (id 56510844) = **0.947** (tie with exp29,
+  consistent with its tiny +0.0006 local). #28 exp48 = exp47 + DaughterNet v1 insertion with steal (id 56510845) PENDING.
+  #29 exp49 = exp39 + edge filter ef_a3_rl_pr (id 56518035) PENDING - THE KEY PROBE (lab confirmation +0.0162). #30 exp50 =
+  exp39 + drop-only edge filter ef_a0 (id 56518039) PENDING (transfer hedge). Kernel stats confirmed both filters ran
+  (exp49 dropped 389/178/29/1613 edges on the dummy clips and re-linked most; exp50 dropped 407/435/62/2307).
+  DECISION TREE when #29/#30 score: exp49 >= ~0.951 -> edge filter is the new base (then bundle with leaf prune, division
+  insertion if #28 not worse, re-tune at tight 5.5); exp50 > exp49 -> use drop-only; both <= 0.947 -> filter's local gain
+  was in-sample (edge network trained on the 199 videos), close the line.
+  RUNNING IN BACKGROUND (notifications will arrive): (a) agent rebuilding the lab cache at MOTION_RELINK_TIGHT_UM 5.5 (the
+  kernel's value; friend A's cache was built at 6.0) into data_external/friend_a_cache_t55/ and re-measuring exp39 +
+  both filters there; (b) agent doing the FALSE-NEGATIVE anatomy (why 6,732 GT links are missing: detection miss / track
+  break / swap / dropped ILP edge) with an optional stitching rule (--patch stitch) under the selection->confirmation
+  protocol, files experiments/l2_daughternet/edge_anatomy/fn_anatomy.py; (c) workflow wf_62b09e11-ae9 (3 hypothesis
+  generators -> dedupe -> 5 web researchers -> adversarial judge) for more metric ideas toward the user's target
+  0.97 +- 0.005; (d) ONE browser agent (the only one allowed to use Chrome) reading all Kaggle discussions/code of this
+  competition and external tracking literature -> research/browser_research_2026-09-24.md.
+  KEY TOOLS: lab = experiments/l2_daughternet/replay/replay.py (--cache data_external/friend_a_cache/friend_a_b20_exp29_
+  friend_c/cache/friend_a_b20_exp29, --split selection|confirmation|all, config keys insert/ins.*, leaf_prune, ef.*);
+  kernel builder tools/build_probe_kernel.py with --patch gshift|divinsert|leafprune|edgefilter (all exact no-ops when off);
+  edge anatomy experiments/l2_daughternet/edge_anatomy/ (+ parquet .public_local_cache/l2_edge_anatomy/edges_exp39.parquet).
+  Friend A: L5 full-res DaughterNet-B running on his 5070 Ti (OOF due 25 Sep 20:00 UTC); told about the edge finding.
+  Finals (tick by 29 Sep 20:00 UTC): currently exp29 (56146538) + exp39 (56440312); will change if #29 transfers.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
