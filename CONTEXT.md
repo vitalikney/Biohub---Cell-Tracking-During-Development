@@ -1432,5 +1432,11 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   refinements < 0.81 um are lost at output - float output coordinates are an open idea. Head retraining recipe on 199
   videos: capture mode -> Hungarian match to GT (<= 4 um) -> target (gt-det) um clipped < 2 -> Linear-SiLU-Linear with
   zero-init last layer -> movie/embryo-held-out folds (experiments/ext_x138/DIFF.md).
+- 2026-09-24 16:40 UTC: probe #30 exp50 (exp39 + drop-only edge filter ef_a0, lab SELECTION +0.0095) = **0.946**, i.e.
+  -0.001 vs exp39 0.947: the "unscored relink edges are 79% FP" pattern does NOT transfer to the test embryo as a
+  drop rule (most likely an in-sample artefact: on train the edge network / ILP are near-perfect, so relink edges that
+  disagree with them look wrong; on test they are not). Bad omen for #29 (full filter with ILP re-link, still
+  pending): if #29 <= 0.948 the edge-filter line is closed and the lab's in-sample optimism is ~+0.01 for anything
+  that trusts the ILP/edge network - lab gains of that type must be discounted accordingly.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
