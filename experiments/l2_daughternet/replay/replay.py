@@ -32,6 +32,14 @@ INSERTION (config key `insert=1`; `ins.<name>=<value>` sets a key of div_insert.
     Node flags given to div_insert exactly as in the patched kernel: gap_synthetic from the ckpt, gap2_synthetic for
     ckpt nodes that are neither raw (absent from dc/) nor gap_synthetic (recover_strict_gap2 nodes).
 
+LEAF PRUNE (config key `leaf_prune=<min_edge_prob>`, default 0 = off; plan L4)
+    prune_weak_leaf_nodes VERBATIM from the public notebook seyitkaangunes/biohub-035-deconfounded-edge-stack, at that
+    notebook's position in filter_output_graph: after short-track filtering, before linefit.  The notebook cells are
+    patched by the SAME source functions the kernel builder uses (tools/build_probe_kernel.py leafprune_config_source /
+    leafprune_postproc_source, --patch leafprune), and the namespace global LEAF_PRUNE_MIN_EDGE_PROB is set per tail
+    task; so `leaf_prune=p` ships as `--patch leafprune --set LEAF_PRUNE_MIN_EDGE_PROB=p`.  It changes the tail, so it
+    is part of the base key when > 0 (leaf_prune=0 keeps the old base keys and cached tails: the call is skipped).
+
 EXPORT (--export-coords PATH)
     For every node involved in div_insert.candidate_triples of the FINAL (post-linefit, pre-insertion) graph of
     --export-base (default exp39), write rows stem,node_id,t,z,y,x (float voxel coordinates of the full-resolution
@@ -105,6 +113,8 @@ fc = _import_file("friend_c_b31_runner", ROOT / "experiments" / "local_friend_c_
 rr = _import_file("friend_a_b20_rerank", ROOT / "experiments" / "local_friend_a_b20_divnet" / "pass2_public_rerank.py")
 p2 = fc.p2
 pl = fc.pl
+# Kernel builder: its --patch leafprune source surgery is applied to the replayed notebook cells (one code path).
+bpk = _import_file("build_probe_kernel", TOOLS / "build_probe_kernel.py")
 
 DEFAULT_SPLITS = ROOT / "experiments" / "l2_daughternet" / "splits.json"
 TAIL_VERSION = 1  # bump when the tail/base computation in this file changes
@@ -144,6 +154,13 @@ REFERENCE_VIDEOS = 199
 # ------------------------------------------------------------------------------------------------ small utilities
 def _sha256_bytes(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
+
+
+def _leafprune_sha() -> str:
+    """Hash of the leafprune patch text (knob, function, counters, call, anchors): part of leaf_prune base keys."""
+    parts = (bpk.LEAFPRUNE_KNOB, bpk.LEAFPRUNE_DISPLAY, bpk.LEAFPRUNE_FN, bpk.LEAFPRUNE_STATS, bpk.LEAFPRUNE_CALL,
+             bpk._LP_SHORT_TRACK_PRINT, bpk._LP_LINEFIT_CALL)
+    return _sha256_bytes("\0".join(parts).encode("utf-8"))[:16]
 
 
 def _sha256_file(path: Path) -> str:
@@ -256,6 +273,7 @@ def resolve_config(name: str, raw: dict, defs: dict[str, dict]) -> dict:
     cfg.setdefault("ins", {})
     cfg.setdefault("insert", False)
     cfg.setdefault("node_p", None)
+    cfg.setdefault("leaf_prune", 0.0)
     ins = dict(cfg["ins"])
     for key, value in raw.items():
         if key.startswith("ins."):
@@ -270,24 +288,35 @@ def resolve_config(name: str, raw: dict, defs: dict[str, dict]) -> dict:
         raise SystemExit(f"config {name!r}: safe_div must be one of {sorted(SAFE_DIV_DEFAULTS)}, got {mode!r}")
     for key, value in SAFE_DIV_DEFAULTS[mode].items():
         cfg.setdefault(key, value)
-    allowed = {"safe_div", "insert", "ins", "node_p", *SAFE_DIV_DEFAULTS[mode]}
+    allowed = {"safe_div", "insert", "ins", "node_p", "leaf_prune", *SAFE_DIV_DEFAULTS[mode]}
     unknown = sorted(set(cfg) - allowed - {"name"})
     if unknown:
         raise SystemExit(f"config {name!r}: unknown keys {unknown} for safe_div={mode} (allowed {sorted(allowed)})")
+    try:
+        cfg["leaf_prune"] = float(cfg["leaf_prune"])
+    except (TypeError, ValueError):
+        raise SystemExit(f"config {name!r}: leaf_prune must be a number (0 = off), got {cfg['leaf_prune']!r}") from None
+    if not np.isfinite(cfg["leaf_prune"]) or cfg["leaf_prune"] < 0.0:
+        raise SystemExit(f"config {name!r}: leaf_prune must be finite and >= 0, got {cfg['leaf_prune']!r}")
     cfg["insert"] = bool(cfg["insert"])
     cfg["name"] = name
     return cfg
 
 
 def base_params(cfg: dict) -> dict:
-    return {"safe_div": cfg["safe_div"], **{k: cfg[k] for k in sorted(SAFE_DIV_DEFAULTS[cfg["safe_div"]])}}
+    """Everything the cached tail depends on. leaf_prune enters only when > 0, so leaf_prune=0 configs keep the base
+    keys (and cached tails) of the code before plan L4: the guarded call is skipped, the tail is unchanged."""
+    base = {"safe_div": cfg["safe_div"], **{k: cfg[k] for k in sorted(SAFE_DIV_DEFAULTS[cfg["safe_div"]])}}
+    if float(cfg.get("leaf_prune", 0.0) or 0.0) > 0.0:
+        base.update(leaf_prune=float(cfg["leaf_prune"]), leafprune_sha=_leafprune_sha())
+    return base
 
 
 def is_reference_config(cfg: dict) -> str | None:
     """Name of the reference this config must reproduce (default preset params, no insertion), else None."""
     for ref in REFERENCES:
         preset = PRESETS[ref]
-        if cfg["insert"] or cfg["safe_div"] != preset["safe_div"]:
+        if cfg["insert"] or cfg.get("leaf_prune", 0.0) > 0.0 or cfg["safe_div"] != preset["safe_div"]:
             continue
         if all(cfg[k] == v for k, v in SAFE_DIV_DEFAULTS[cfg["safe_div"]].items()):
             return ref
@@ -393,7 +422,8 @@ def safe_divisions(cfg: dict, cache: Path, stem: str, nodes, edges, dcs) -> tupl
 
 
 TAIL_STAT_KEYS = ("dropped_division_edges", "pruned_isolated_nodes", "short_track_components_removed",
-                  "short_track_nodes_removed", "short_track_rescue_nodes", "linefit_smoothed_nodes")
+                  "short_track_nodes_removed", "short_track_rescue_nodes", "leaf_prune_nodes", "leaf_prune_edges",
+                  "linefit_smoothed_nodes")
 
 
 def save_tail(path: Path, nodes_by_id: dict, edges: list[dict], stats: dict) -> None:
@@ -552,14 +582,35 @@ def load_node_p(node_p_dir: Path, stem: str) -> tuple[dict[int, tuple], np.ndarr
 _CTX: dict[str, Any] = {}
 
 
+def _patched_notebook_cells(original):
+    """pl.notebook_cells with the kernel builder's leafprune source surgery applied to the constants cell (knob) and the
+    post-processing cell (prune_weak_leaf_nodes + counters + guarded call before linefit), found by the same needles
+    public_local uses. With LEAF_PRUNE_MIN_EDGE_PROB = 0 the call is skipped and the tail is the unpatched one."""
+    def cells_for(path):
+        cells = list(original(path))
+        const = pl.find_cell(cells, "COMP_DIR_CANDIDATES", "CONFIG_DISPLAY")
+        post = pl.find_cell(cells, "def filter_output_graph", "def add_safe_divisions_postlink")
+        cells[const] = bpk.leafprune_config_source(cells[const])
+        cells[post] = bpk.leafprune_postproc_source(cells[post])
+        return cells
+    return cells_for
+
+
 def init_context(settings: dict) -> None:
     """Build the notebook tail namespace, scorer and insertion adapter (once per process)."""
     if _CTX.get("settings") == settings:
         return
     os.environ["BIOHUB_DATA_DIR"] = settings["data_dir"]
     shim = type("TailCfg", (), {"output_dir": Path(settings["out"]), "data_dir": Path(settings["data_dir"])})
-    with contextlib.redirect_stdout(io.StringIO()):
-        namespace = fc._tail_namespace(shim)
+    original_cells = pl.notebook_cells
+    pl.notebook_cells = _patched_notebook_cells(original_cells)  # friend C's _tail_namespace reads cells through it
+    try:
+        with contextlib.redirect_stdout(io.StringIO()):
+            namespace = fc._tail_namespace(shim)
+    finally:
+        pl.notebook_cells = original_cells
+    if "prune_weak_leaf_nodes" not in namespace or "LEAF_PRUNE_MIN_EDGE_PROB" not in namespace:
+        raise RuntimeError("leafprune patch did not reach the tail namespace")
     scorer = importlib.import_module("score_geffs")
     if Path(str(scorer.DATA)).resolve() != Path(settings["data_dir"]).resolve():
         raise RuntimeError(f"score_geffs was imported with DATA={scorer.DATA}, expected {settings['data_dir']}")
@@ -569,6 +620,7 @@ def init_context(settings: dict) -> None:
         cache=Path(settings["cache"]),
         out=Path(settings["out"]),
         filter_output_graph=namespace["filter_output_graph"],
+        namespace=namespace,
         scorer=scorer,
         div_insert=DivInsert() if settings["need_insert"] else None,
     )
@@ -584,6 +636,8 @@ def compute_tail(cfg: dict, stem: str) -> dict:
                         **({"gap_synthetic": 1} if n["syn"] else {}), **({"gap2_synthetic": 1} if n["gap2"] else {})}
                     for i, n in nodes.items()}
     edge_records = [{"source_id": s, "target_id": d, "edge_prob": p} for s, d, p in edges]
+    # the kernel reads BIOHUB_LEAF_PRUNE_MIN_EDGE_PROB once in its config cell; here one namespace serves every base
+    _CTX["namespace"]["LEAF_PRUNE_MIN_EDGE_PROB"] = float(cfg.get("leaf_prune", 0.0) or 0.0)
     with contextlib.redirect_stdout(io.StringIO()):
         node_records, edge_records, tail_stats = _CTX["filter_output_graph"](
             node_records, edge_records, dataset=stem, deepcenter_bundle=None)
@@ -964,7 +1018,7 @@ def main() -> None:
     ap.add_argument("--configs", nargs="*", default=[], help="preset names: " + ", ".join(PRESETS))
     ap.add_argument("--config", action="append", default=[], metavar="NAME=BASE,k=v,...",
                     help="custom config; keys: safe_div, sd_parent_um, sd_k, sd_sister_min_um, divnet_min_p, "
-                         "insert, node_p, ins.<div_insert param>")
+                         "leaf_prune (0 = off), insert, node_p, ins.<div_insert param>")
     ap.add_argument("--grid", default="", help="JSON {name: {base: ..., key: value, ins: {...}}}")
     ap.add_argument("--control", default="exp39", help="config the paired bootstrap compares against")
     ap.add_argument("--node-p", default="", help="parquet/csv stem,node_id,p_cont,p_par,p_dau[,t,z,y,x]")
@@ -1214,9 +1268,10 @@ def main() -> None:
                                                   "division_tp", "division_fp", "division_fn", "num_pred_nodes",
                                                   "total_node_ratio", "node_recall")},
                              "ctrl_video_score": _video_score(progress[control][s]["metric"]),
-                             **{k: st.get(k) for k in ("sd_added", "divins_triples", "divins_missing_p",
-                                                       "divins_eligible", "divins_added", "divins_added_steal",
-                                                       "final_nodes", "final_edges", "final_forks")}})
+                             **{k: st.get(k) for k in ("sd_added", "leaf_prune_nodes", "divins_triples",
+                                                       "divins_missing_p", "divins_eligible", "divins_added",
+                                                       "divins_added_steal", "final_nodes", "final_edges",
+                                                       "final_forks")}})
     _atomic_text(out / f"report_{args.split}.json", _dumps(report, indent=2))
     with (out / f"per_video_{args.split}.csv").open("w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(handle, fieldnames=list(csv_rows[0]))
@@ -1266,6 +1321,14 @@ def main() -> None:
         for p, info in node_p_info.items():
             lines.append(f"\nnode-p `{p}`: {info['rows']} rows / {info['stems']} videos; OOF check "
                          f"**{info['oof']['status']}** ({info['oof']['detail']})")
+    for name, entry in report["configs"].items():
+        lp = float(entry["config"].get("leaf_prune", 0.0) or 0.0)
+        if lp > 0.0:
+            # repr, not :g - the shipped knob must be the exact threshold the replay ran (":g" keeps 6 digits)
+            entry["kernel"] = f"--patch leafprune --set LEAF_PRUNE_MIN_EDGE_PROB={lp!r}"
+            pruned = int(entry["stats_total"].get("leaf_prune_nodes", 0))
+            lines.append(f"\n`{name}`: leaf_prune {lp:g} pruned {pruned} leaf nodes; "
+                         f"kernel: tools/build_probe_kernel.py <name> {entry['kernel']}")
     for name, entry in report["configs"].items():
         if "reference_check" in entry:
             rc = entry["reference_check"]

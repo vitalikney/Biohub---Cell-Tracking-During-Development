@@ -18,6 +18,10 @@ Patches (`--patch NAME`, repeatable, any order; they always address the BASE cod
              /kaggle/input/**/vitalii_daughternet/*.pt), DIVINS_DUMP (1 -> /kaggle/working/divins_dump/<dataset>.npz),
              DIVINS_DUMP_DIR, DIVINS_BATCH. With DIVINS_ENABLE != 0 the weights dataset vitaliineibauer/biohub-ft-weights
              is ensured in dataset_sources; `--dataset owner/slug` attaches any other dataset.
+  leafprune  plan L4 weak-leaf pruning, verbatim from seyitkaangunes/biohub-035-deconfounded-edge-stack: cell 2 knob
+             BIOHUB_LEAF_PRUNE_MIN_EDGE_PROB (default 0.0 = exact no-op) + prune_weak_leaf_nodes and its guarded call in
+             filter_output_graph between short-track filtering and linefit (the 035 notebook's position). Set it with
+             --set LEAF_PRUNE_MIN_EDGE_PROB=0.3 (the 035 notebook runs 0.30). Replay: config key leaf_prune=<p>.
 """
 import argparse
 import json
@@ -306,7 +310,121 @@ def meta_divinsert(meta: dict, overrides: dict) -> None:
         meta["dataset_sources"].append(WEIGHTS_DATASET)
 
 
-PATCHES = {"gshift": patch_gshift, "divinsert": patch_divinsert}
+# ---- leafprune: weak-leaf pruning, ported VERBATIM from the public notebook
+# seyitkaangunes/biohub-035-deconfounded-edge-stack (pulled 2026-09-24; its cell 0 runs
+# BIOHUB_LEAF_PRUNE_MIN_EDGE_PROB=0.30, its cell 2 default is 0.0 = inert). The knob line, function, counters and call
+# are that notebook's text; the replay lab (experiments/l2_daughternet/replay/replay.py, config key leaf_prune=<p>)
+# applies the same two source functions to its notebook cells, so a replay number and a kernel built with
+# --patch leafprune run one code path.
+LEAFPRUNE_KNOB = (
+    "# leafprune (035 notebook v4): weak-leaf pruning threshold, 0.0 = inert" + NL
+    + 'LEAF_PRUNE_MIN_EDGE_PROB = float(os.environ.get("BIOHUB_LEAF_PRUNE_MIN_EDGE_PROB", "0.0"))' + NL
+)
+LEAFPRUNE_DISPLAY = '    "leaf_prune_min_edge_prob": LEAF_PRUNE_MIN_EDGE_PROB,' + NL
+LEAFPRUNE_FN = r'''def prune_weak_leaf_nodes(
+    nodes_by_id: dict[int, dict[str, object]],
+    edges: list[dict[str, object]],
+    stats: dict[str, int],
+) -> tuple[dict[int, dict[str, object]], list[dict[str, object]]]:
+    """v4: remove terminal leaf nodes attached by a low-probability edge.
+
+    A node is pruned only when ALL of the following hold:
+      * it has no successor (out-degree 0) -- i.e. the tracker could not continue it;
+      * it has exactly one incoming edge (never a division daughter ambiguity);
+      * it does not sit on the final frame (terminal cells there are legitimate);
+      * its single incoming edge HAS a learned probability and it is below
+        LEAF_PRUNE_MIN_EDGE_PROB.
+    Edges without a probability (edge_prob is None, e.g. safe-division additions)
+    are exempt by construction, so division daughters added by add_safe_divisions_postlink
+    can never be pruned here. Single pass, no cascade: conservative by design.
+    """
+    if LEAF_PRUNE_MIN_EDGE_PROB <= 0.0 or not nodes_by_id or not edges:
+        return nodes_by_id, edges
+    max_t = max(int(node["t"]) for node in nodes_by_id.values())
+    out_degree: dict[int, int] = {}
+    incoming: dict[int, list[dict[str, object]]] = {}
+    for edge in edges:
+        source_id = int(edge["source_id"])
+        target_id = int(edge["target_id"])
+        out_degree[source_id] = out_degree.get(source_id, 0) + 1
+        incoming.setdefault(target_id, []).append(edge)
+    drop: set[int] = set()
+    for node_id, node in nodes_by_id.items():
+        if out_degree.get(node_id, 0) != 0:
+            continue
+        if int(node["t"]) >= max_t:
+            continue
+        incoming_edges = incoming.get(node_id, [])
+        if len(incoming_edges) != 1:
+            continue
+        prob = incoming_edges[0].get("edge_prob")
+        if prob is None:
+            continue
+        try:
+            prob = float(prob)
+        except (TypeError, ValueError):
+            continue
+        if not np.isfinite(prob):
+            continue
+        if prob < LEAF_PRUNE_MIN_EDGE_PROB:
+            drop.add(node_id)
+    if not drop:
+        return nodes_by_id, edges
+    kept_nodes = {node_id: node for node_id, node in nodes_by_id.items() if node_id not in drop}
+    kept_edges = [
+        edge for edge in edges
+        if int(edge["source_id"]) not in drop and int(edge["target_id"]) not in drop
+    ]
+    stats["leaf_prune_nodes"] = len(drop)
+    stats["leaf_prune_edges"] = len(edges) - len(kept_edges)
+    return kept_nodes, kept_edges
+'''
+LEAFPRUNE_STATS = '        "leaf_prune_nodes": 0,' + NL + '        "leaf_prune_edges": 0,' + NL
+LEAFPRUNE_CALL = r'''    if LEAF_PRUNE_MIN_EDGE_PROB > 0.0:
+        nodes_by_id, edges = prune_weak_leaf_nodes(nodes_by_id, edges, stats)
+        if stats.get("leaf_prune_nodes"):
+            print(f"  [{dataset}] after weak-leaf pruning: {len(nodes_by_id)} nodes, {len(edges)} edges"
+                  f" (leaf_pruned={stats['leaf_prune_nodes']})")
+'''
+# anchors (each must occur exactly once): the 035 notebook places the call after short-track filtering and before
+# linefit_smooth_output_graph, the function right before filter_output_graph, the two counters at the end of the
+# stats dict, the knob after OUTPUT_LINEFIT_WINDOW and its display entry after "output_linefit_window".
+_LP_SHORT_TRACK_PRINT = ('''          f" (components_removed={stats['short_track_components_removed']})")''' + NL)
+_LP_LINEFIT_CALL = "    nodes_by_id = linefit_smooth_output_graph(nodes_by_id, edges, stats)" + NL
+
+
+def leafprune_config_source(c2: str) -> str:
+    """Config cell (base code cell 2): the BIOHUB_LEAF_PRUNE_MIN_EDGE_PROB knob (default 0.0) + its CONFIG_DISPLAY line.
+    The 035 notebook's PPSWEEP_EXTENDED / PPSWEEP_PREFIX_GUARD switches next to it are not ported (they only extend its
+    validator-gated PP sweep, which our base runs with the validator off)."""
+    line = 'OUTPUT_LINEFIT_WINDOW = int(os.environ.get("BIOHUB_OUTPUT_LINEFIT_WINDOW", "2"))' + NL
+    c2 = _rep1(c2, line, line + NL + LEAFPRUNE_KNOB)
+    line = '    "output_linefit_window": OUTPUT_LINEFIT_WINDOW,' + NL
+    return _rep1(c2, line, line + LEAFPRUNE_DISPLAY)
+
+
+def leafprune_postproc_source(c7: str) -> str:
+    """Post-processing cell (base code cell 7): prune_weak_leaf_nodes before filter_output_graph, its two counters in
+    the stats dict, and the guarded call between short-track filtering and linefit (LEAF_PRUNE_MIN_EDGE_PROB <= 0 ->
+    the call is skipped: the graph is exactly the base's)."""
+    c7 = _rep1(c7, NL + NL + NL + "def filter_output_graph(" + NL,
+               NL + NL + NL + LEAFPRUNE_FN + NL + NL + "def filter_output_graph(" + NL)
+    c7 = _rep1(c7, '        "linefit_skipped_nodes": 0,' + NL + "    }" + NL,
+               '        "linefit_skipped_nodes": 0,' + NL + LEAFPRUNE_STATS + "    }" + NL)
+    return _rep1(c7, _LP_SHORT_TRACK_PRINT + _LP_LINEFIT_CALL,
+                 _LP_SHORT_TRACK_PRINT + LEAFPRUNE_CALL + _LP_LINEFIT_CALL)
+
+
+def patch_leafprune(cells_src: dict) -> None:
+    """Plan L4 (2026-09-24): weak-leaf pruning from seyitkaangunes/biohub-035-deconfounded-edge-stack. A leaf (no
+    successor, exactly one incoming edge, not on the last frame) whose incoming edge has a finite learned edge_prob
+    below BIOHUB_LEAF_PRUNE_MIN_EDGE_PROB is removed (single pass, no cascade); edges without a probability
+    (safe-division / gap edges) are exempt. Knob via --set LEAF_PRUNE_MIN_EDGE_PROB=<p>; default 0.0 = exact no-op."""
+    cells_src[2] = leafprune_config_source(cells_src[2])
+    cells_src[7] = leafprune_postproc_source(cells_src[7])
+
+
+PATCHES = {"gshift": patch_gshift, "divinsert": patch_divinsert, "leafprune": patch_leafprune}
 META_PATCHES = {"divinsert": meta_divinsert}
 
 
@@ -333,6 +451,20 @@ def main() -> None:
         sys.exit("DIVINS_* knobs need --patch divinsert")
     if "divinsert" in a.patch and overrides.get("BIOHUB_DIVINS_ENABLE", "0") == "0":
         print("NOTE: --patch divinsert with DIVINS_ENABLE=0 (default) builds an exact no-op of the base")
+    if "BIOHUB_LEAF_PRUNE_MIN_EDGE_PROB" in overrides:
+        if "leafprune" not in a.patch:
+            # the base notebook has no prune_weak_leaf_nodes: the knob would be read by nothing
+            sys.exit("LEAF_PRUNE_MIN_EDGE_PROB needs --patch leafprune")
+        try:
+            _lp = float(overrides["BIOHUB_LEAF_PRUNE_MIN_EDGE_PROB"])
+        except ValueError:
+            sys.exit(f"LEAF_PRUNE_MIN_EDGE_PROB must be a number, got {overrides['BIOHUB_LEAF_PRUNE_MIN_EDGE_PROB']!r}")
+        if _lp != _lp or _lp in (float("inf"), float("-inf")):
+            # nan would silently skip the call, inf would prune every leaf with a finite edge_prob; the replay refuses both
+            sys.exit(f"LEAF_PRUNE_MIN_EDGE_PROB must be finite, got {overrides['BIOHUB_LEAF_PRUNE_MIN_EDGE_PROB']!r}")
+    if "leafprune" in a.patch and float(overrides.get("BIOHUB_LEAF_PRUNE_MIN_EDGE_PROB", "0")) <= 0.0:
+        print("NOTE: --patch leafprune with LEAF_PRUNE_MIN_EDGE_PROB<=0 (default 0.0) builds an exact no-op of the "
+              "base")
     overrides["BIOHUB_DIVNET_VERIFY"] = a.divnet
 
     nb = json.load(open(BASE_NB, encoding="utf-8"))
