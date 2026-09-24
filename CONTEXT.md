@@ -1328,6 +1328,16 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   (eligible-count matching on SELECTION): OOF threshold 0.5 ~ ensemble 0.4.
   PROBES PREPARED (decision taken autonomously while the user sleeps; slots are otherwise unused; finals policy unchanged -
   none of these is a final unless it also passes its gate): exp47 = exp39 + leaf prune 0.3; exp48 = exp47 + DaughterNet v1
-  insertion with steal (cap 4, alpha 1, ens threshold 0.4, dump on). Both kernels running; submit when complete.
+  insertion with steal (cap 4, alpha 1, ens threshold 0.4, dump on). Both kernels running; submit when complete.- 2026-09-24 09:15 UTC L5 EDGE ANATOMY -> BIGGEST LOCAL WIN OF THE COMPETITION (agent run, d379138). Per-edge TP/FP labels of the
+  final exp39 graph on 199 videos match the official totals exactly (122,151 / 6,846). The motion relink REPLACES the ILP
+  edge set; 92,952 of its edges join pairs the edge network NEVER scored (edge_prob 0.0), and among evaluable ones they are
+  79% FP (584 TP / 2,172 FP); the subset where the ILP linked the source or the target elsewhere is 89-94% FP. Filter
+  ef_a3_rl_pr (drop unscored relink edges with ILP evidence elsewhere, re-link to the ILP's free alternative, prune isolated
+  nodes, never touch forks): SELECTION +0.0147 [+0.0107, +0.0196]; ONE CONFIRMATION run +0.0162 [+0.0128, +0.0196], 44b6
+  +0.0145, 6bba +0.0169, gain on 61% / 80% of videos, edge FP 3,657 -> 2,735, divisions unchanged. GATE PASS.
+  RISKS: (1) the linker was trained on all 199 videos, so trusting the ILP's choice is in-sample (relink-off lost 0.002 on
+  the LB; the targeted subset is different, but only a probe decides); (2) the lab cache was built with tight gate 6.0, the
+  kernel runs 5.5 (9.5% of the drop set differs). PROBES: exp49 = exp39 + ef_a3_rl_pr; exp50 = exp39 + drop-only ef_a0
+  (SELECTION +0.0095; depends only on the "never scored" property, a transfer hedge). Kernels pushed.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
