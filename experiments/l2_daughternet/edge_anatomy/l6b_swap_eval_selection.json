@@ -1,0 +1,117 @@
+[
+ {
+  "rule": "sw_t4_g3",
+  "params": {
+   "enable": 1,
+   "min_gain_um": 3.0,
+   "min_ratio": 0.0,
+   "max_prob": 1.01,
+   "src_um": 10.0,
+   "max_len_um": 14.0,
+   "min_terms": 4
+  },
+  "moves": 34,
+  "tp_add": 0,
+  "fp_add": 0,
+  "tp_drop": 0,
+  "fp_drop": 0,
+  "d_all": 0.0,
+  "win_all": 0.0,
+  "loss_all": 0.0,
+  "d_6bba": 0.0,
+  "win_6bba": 0.0,
+  "loss_6bba": 0.0
+ },
+ {
+  "rule": "sw_t2_g2",
+  "params": {
+   "enable": 1,
+   "min_gain_um": 2.0,
+   "min_ratio": 0.0,
+   "max_prob": 1.01,
+   "src_um": 10.0,
+   "max_len_um": 14.0,
+   "min_terms": 2
+  },
+  "moves": 128,
+  "tp_add": 0,
+  "fp_add": 2,
+  "tp_drop": 1,
+  "fp_drop": 0,
+  "d_all": -4.8276800618696214e-05,
+  "win_all": 0.0,
+  "loss_all": 0.015625,
+  "d_6bba": -4.8276800618696214e-05,
+  "win_6bba": 0.0,
+  "loss_6bba": 0.015625
+ },
+ {
+  "rule": "sw_t2_g1",
+  "params": {
+   "enable": 1,
+   "min_gain_um": 1.0,
+   "min_ratio": 0.0,
+   "max_prob": 1.01,
+   "src_um": 10.0,
+   "max_len_um": 14.0,
+   "min_terms": 2
+  },
+  "moves": 164,
+  "tp_add": 0,
+  "fp_add": 6,
+  "tp_drop": 3,
+  "fp_drop": 0,
+  "d_all": -0.00014482047210384597,
+  "win_all": 0.0,
+  "loss_all": 0.015625,
+  "d_6bba": -0.00014482047210384597,
+  "win_6bba": 0.0,
+  "loss_6bba": 0.015625
+ },
+ {
+  "rule": "sw_t3_g4",
+  "params": {
+   "enable": 1,
+   "min_gain_um": 4.0,
+   "min_ratio": 0.0,
+   "max_prob": 1.01,
+   "src_um": 10.0,
+   "max_len_um": 14.0,
+   "min_terms": 3
+  },
+  "moves": 64,
+  "tp_add": 0,
+  "fp_add": 0,
+  "tp_drop": 0,
+  "fp_drop": 0,
+  "d_all": 0.0,
+  "win_all": 0.0,
+  "loss_all": 0.0,
+  "d_6bba": 0.0,
+  "win_6bba": 0.0,
+  "loss_6bba": 0.0
+ },
+ {
+  "rule": "sw_t4_g1_p08",
+  "params": {
+   "enable": 1,
+   "min_gain_um": 1.0,
+   "min_ratio": 0.0,
+   "max_prob": 0.8,
+   "src_um": 10.0,
+   "max_len_um": 14.0,
+   "min_terms": 4
+  },
+  "moves": 49,
+  "tp_add": 0,
+  "fp_add": 0,
+  "tp_drop": 0,
+  "fp_drop": 0,
+  "d_all": 0.0,
+  "win_all": 0.0,
+  "loss_all": 0.0,
+  "d_6bba": 0.0,
+  "win_6bba": 0.0,
+  "loss_6bba": 0.0
+ }
+]

@@ -49,6 +49,21 @@ EDGE FILTER (config keys `ef.<param>=<value>`; any ef.* key switches it on unles
     (`ilp_probs`) are raw/<stem>.geff through the notebook's next-frame / OUTPUT_EDGE_MAX_UM filter = the kernel's
     capture before the motion relink.  Not part of the base key (applied post-tail); part of the config fingerprint.
 
+STITCH (config keys `st.<param>`; any st.* key switches it on unless st.enable=0; plan L6)
+    stitch_final_graph from tools/build_probe_kernel.py (--patch stitch, same source text applied to the replayed
+    notebook cells) on the post-tail graph AFTER the edge filter (when both are on) and BEFORE insertion - the kernel's
+    position. It re-adds the linker's own edges (ilp_probs, the same capture as the edge filter) whose source is a track
+    end and whose target is a track start. Params = the kernel knobs (bpk.STITCH_KNOBS): enable, min_prob, max_um,
+    min_um, min_chain; `st.min_prob=0.7` ships as `--patch stitch --set STITCH_ENABLE=1 --set STITCH_MIN_PROB=0.7`.
+    Not part of the base key (applied post-tail); part of the config fingerprint.
+
+SWAPFIX (config keys `sw.<param>`; any sw.* key switches it on unless sw.enable=0; plan L6b)
+    swapfix_final_graph from tools/build_probe_kernel.py (--patch swapfix, same source text) on the post-tail graph
+    after the edge filter and BEFORE the stitch (kernel order: linefit -> edgefilter -> swapfix -> stitch -> divinsert):
+    two links a->b, c->d of the same frame pair become a->d, c->b when the constant-velocity second-difference cost
+    drops by >= sw.min_gain_um. Params = bpk.SWAPFIX_KNOBS (enable, min_gain_um, min_ratio, max_prob, src_um,
+    max_len_um, min_terms). Not part of the base key; part of the config fingerprint.
+
 EXPORT (--export-coords PATH)
     For every node involved in div_insert.candidate_triples of the FINAL (post-linefit, pre-insertion) graph of
     --export-base (default exp39), write rows stem,node_id,t,z,y,x (float voxel coordinates of the full-resolution
@@ -284,8 +299,12 @@ def resolve_config(name: str, raw: dict, defs: dict[str, dict]) -> dict:
     cfg.setdefault("node_p", None)
     cfg.setdefault("leaf_prune", 0.0)
     cfg.setdefault("ef", {})
+    cfg.setdefault("st", {})
+    cfg.setdefault("sw", {})
     ins = dict(cfg["ins"])
     ef = dict(cfg["ef"])
+    st = dict(cfg["st"])
+    sw = dict(cfg["sw"])
     for key, value in raw.items():
         if key.startswith("ins."):
             ins[key[4:]] = value
@@ -295,16 +314,26 @@ def resolve_config(name: str, raw: dict, defs: dict[str, dict]) -> dict:
             ef[key[3:]] = value
         elif key == "ef" and isinstance(value, dict):
             ef.update(value)
+        elif key.startswith("st."):
+            st[key[3:]] = value
+        elif key == "st" and isinstance(value, dict):
+            st.update(value)
+        elif key.startswith("sw."):
+            sw[key[3:]] = value
+        elif key == "sw" and isinstance(value, dict):
+            sw.update(value)
         else:
             cfg[key] = value
     cfg["ins"] = ins
     cfg["ef"] = edgefilter_params(name, ef)
+    cfg["st"] = stitch_params(name, st)
+    cfg["sw"] = swapfix_params(name, sw)
     mode = cfg.get("safe_div")
     if mode not in SAFE_DIV_DEFAULTS:
         raise SystemExit(f"config {name!r}: safe_div must be one of {sorted(SAFE_DIV_DEFAULTS)}, got {mode!r}")
     for key, value in SAFE_DIV_DEFAULTS[mode].items():
         cfg.setdefault(key, value)
-    allowed = {"safe_div", "insert", "ins", "node_p", "leaf_prune", "ef", *SAFE_DIV_DEFAULTS[mode]}
+    allowed = {"safe_div", "insert", "ins", "node_p", "leaf_prune", "ef", "st", "sw", *SAFE_DIV_DEFAULTS[mode]}
     unknown = sorted(set(cfg) - allowed - {"name"})
     if unknown:
         raise SystemExit(f"config {name!r}: unknown keys {unknown} for safe_div={mode} (allowed {sorted(allowed)})")
@@ -344,6 +373,73 @@ def edgefilter_params(name: str, overrides: dict) -> dict:
     return params if params["enable"] else {}
 
 
+def _knob_params(name: str, overrides: dict, knobs: dict, prefix: str) -> dict:
+    """<prefix>.* keys -> the full parameter dict of a post-tail kernel function (kernel knob defaults, kernel types);
+    {} = off. Any key switches the stage on unless enable is given explicitly."""
+    if not overrides:
+        return {}
+    unknown = sorted(set(overrides) - set(knobs))
+    if unknown:
+        raise SystemExit(f"config {name!r}: unknown {prefix} keys {unknown} (kernel knobs: {sorted(knobs)})")
+    params = {}
+    for key, (_knob, default) in knobs.items():
+        given = overrides.get(key, 1 if key == "enable" else default)
+        try:
+            value = float(given)
+        except (TypeError, ValueError):
+            raise SystemExit(f"config {name!r}: {prefix}.{key} must be a number, got {given!r}") from None
+        if not np.isfinite(value):
+            raise SystemExit(f"config {name!r}: {prefix}.{key} must be finite, got {given!r}")
+        if default.isdigit():  # int knob in the kernel (the config cell calls int())
+            if not value.is_integer():
+                raise SystemExit(f"config {name!r}: {prefix}.{key} must be an integer, got {given!r}")
+            value = int(value)
+        params[key] = value
+    return params if params["enable"] else {}
+
+
+def _knob_kernel_args(params: dict, knobs: dict, patch: str) -> str:
+    """The build_probe_kernel.py arguments that ship a post-tail stage config (repr: the exact values the replay ran)."""
+    parts = [f"--patch {patch}"]
+    for key, (knob, default) in knobs.items():
+        value = params[key]
+        if key == "enable" or float(value) != float(default):
+            parts.append(f"--set {knob}={value!r}")
+    return " ".join(parts)
+
+
+def stitch_params(name: str, overrides: dict) -> dict:
+    """st.* keys -> stitch_final_graph params (bpk.STITCH_KNOBS)."""
+    return _knob_params(name, overrides, bpk.STITCH_KNOBS, "st")
+
+
+def stitch_kernel_args(params: dict) -> str:
+    return _knob_kernel_args(params, bpk.STITCH_KNOBS, "stitch")
+
+
+def swapfix_params(name: str, overrides: dict) -> dict:
+    """sw.* keys -> swapfix_final_graph params (bpk.SWAPFIX_KNOBS)."""
+    return _knob_params(name, overrides, bpk.SWAPFIX_KNOBS, "sw")
+
+
+def swapfix_kernel_args(params: dict) -> str:
+    return _knob_kernel_args(params, bpk.SWAPFIX_KNOBS, "swapfix")
+
+
+def _swapfix_sha() -> str:
+    """Hash of the swapfix patch text (knobs, function, call, anchors): part of sw config fingerprints."""
+    parts = (bpk.SWAPFIX_KNOB, bpk.SWAPFIX_DISPLAY, bpk.SWAPFIX_FN, bpk.SWAPFIX_CALL, bpk._EF_FILTER_DEF,
+             bpk._LP_LINEFIT_CALL, _dumps(bpk.SWAPFIX_KNOBS, sort_keys=True))
+    return _sha256_bytes("\0".join(parts).encode("utf-8"))[:16]
+
+
+def _stitch_sha() -> str:
+    """Hash of the stitch patch text (knobs, function, capture, call, anchors): part of st config fingerprints."""
+    parts = (bpk.STITCH_KNOB, bpk.STITCH_DISPLAY, bpk.STITCH_FN, bpk.STITCH_CAPTURE, bpk.STITCH_CALL,
+             bpk._EF_RELINK_ANCHOR, bpk._EF_FILTER_DEF, bpk._LP_LINEFIT_CALL, _dumps(bpk.STITCH_KNOBS, sort_keys=True))
+    return _sha256_bytes("\0".join(parts).encode("utf-8"))[:16]
+
+
 def edgefilter_kernel_args(params: dict) -> str:
     """The build_probe_kernel.py arguments that ship an ef config (repr: the exact values the replay ran)."""
     parts = ["--patch edgefilter"]
@@ -375,7 +471,7 @@ def is_reference_config(cfg: dict) -> str | None:
     """Name of the reference this config must reproduce (default preset params, no insertion), else None."""
     for ref in REFERENCES:
         preset = PRESETS[ref]
-        if (cfg["insert"] or cfg.get("leaf_prune", 0.0) > 0.0 or cfg.get("ef") or
+        if (cfg["insert"] or cfg.get("leaf_prune", 0.0) > 0.0 or cfg.get("ef") or cfg.get("st") or cfg.get("sw") or
                 cfg["safe_div"] != preset["safe_div"]):
             continue
         if all(cfg[k] == v for k, v in SAFE_DIV_DEFAULTS[cfg["safe_div"]].items()):
@@ -539,7 +635,15 @@ def write_geff(path: Path, nodes_by_id: dict, edges: list[dict]) -> None:
     for edge in edges:
         graph.add_edge(int(edge["source_id"]), int(edge["target_id"]))
     path.parent.mkdir(parents=True, exist_ok=True)
-    fc._save_graph_atomic(graph, path)
+    for attempt in range(20):  # Windows: antivirus / indexer can hold the fresh .geff.tmp dir (rename -> WinError 5)
+        try:
+            fc._save_graph_atomic(graph, path)
+            return
+        except PermissionError:
+            if attempt == 19:
+                raise
+            shutil.rmtree(path.with_name(f".{path.name}.tmp"), ignore_errors=True)
+            time.sleep(min(0.25 * (attempt + 1), 3.0))
 
 
 def load_node_p_table(path: Path):
@@ -656,6 +760,11 @@ def _patched_notebook_cells(original):
         # function on the post-tail graph in run_config_video, see compute_tail / run_config_video)
         cells[const] = bpk.edgefilter_config_source(cells[const])
         cells[post] = bpk.edgefilter_postproc_source(cells[post])
+        # stitch (plan L6): same text as --patch stitch; its in-tail call stays off too (run on the post-tail graph)
+        cells[const] = bpk.stitch_config_source(cells[const])
+        cells[post] = bpk.stitch_postproc_source(cells[post])
+        cells[const] = bpk.swapfix_config_source(cells[const])  # plan L6b, in-tail call off as well
+        cells[post] = bpk.swapfix_postproc_source(cells[post])
         return cells
     return cells_for
 
@@ -677,6 +786,10 @@ def init_context(settings: dict) -> None:
         raise RuntimeError("leafprune patch did not reach the tail namespace")
     if "edgefilter_final_graph" not in namespace or "EDGEFILTER_PARAMS" not in namespace:
         raise RuntimeError("edgefilter patch did not reach the tail namespace")
+    if "stitch_final_graph" not in namespace or "STITCH_PARAMS" not in namespace:
+        raise RuntimeError("stitch patch did not reach the tail namespace")
+    if "swapfix_final_graph" not in namespace or "SWAPFIX_PARAMS" not in namespace:
+        raise RuntimeError("swapfix patch did not reach the tail namespace")
     scorer = importlib.import_module("score_geffs")
     if Path(str(scorer.DATA)).resolve() != Path(settings["data_dir"]).resolve():
         raise RuntimeError(f"score_geffs was imported with DATA={scorer.DATA}, expected {settings['data_dir']}")
@@ -706,6 +819,8 @@ def compute_tail(cfg: dict, stem: str) -> dict:
     _CTX["namespace"]["LEAF_PRUNE_MIN_EDGE_PROB"] = float(cfg.get("leaf_prune", 0.0) or 0.0)
     # the in-tail edgefilter call must stay off whatever BIOHUB_EDGEFILTER_* says (tails are shared by ef configs)
     _CTX["namespace"]["EDGEFILTER_PARAMS"] = {"enable": 0}
+    _CTX["namespace"]["STITCH_PARAMS"] = {"enable": 0}
+    _CTX["namespace"]["SWAPFIX_PARAMS"] = {"enable": 0}
     with contextlib.redirect_stdout(io.StringIO()):
         node_records, edge_records, tail_stats = _CTX["filter_output_graph"](
             node_records, edge_records, dataset=stem, deepcenter_bundle=None)
@@ -761,11 +876,22 @@ def run_config_video(cfg: dict, stem: str) -> dict:
     started = time.time()
     nodes, edges, tail_stats = load_tail(Path(cfg["_tail_path"]) / f"{stem}.npz")
     stats = dict(tail_stats)
+    ilp_probs = load_ilp_probs(_CTX["cache"], stem) if (cfg.get("ef") or cfg.get("st")) else {}
     if cfg.get("ef"):
         ef_stats: dict = {}
         nodes, edges = _CTX["namespace"]["edgefilter_final_graph"](nodes, [dict(e) for e in edges], ef_stats,
-                                                                   dict(cfg["ef"]), load_ilp_probs(_CTX["cache"], stem))
+                                                                   dict(cfg["ef"]), dict(ilp_probs))
         stats.update(ef_stats)
+    if cfg.get("sw"):  # kernel order: linefit -> edgefilter -> swapfix -> stitch -> divinsert
+        sw_stats: dict = {}
+        nodes, edges = _CTX["namespace"]["swapfix_final_graph"](nodes, [dict(e) for e in edges], sw_stats,
+                                                                dict(cfg["sw"]))
+        stats.update(sw_stats)
+    if cfg.get("st"):  # kernel order: linefit -> edgefilter -> swapfix -> stitch -> divinsert
+        st_stats: dict = {}
+        nodes, edges = _CTX["namespace"]["stitch_final_graph"](nodes, [dict(e) for e in edges], st_stats,
+                                                               dict(cfg["st"]), dict(ilp_probs))
+        stats.update(st_stats)
     if cfg["insert"]:
         node_p, p_ids, p_tzyx = load_node_p(Path(cfg["_node_p_dir"]), stem)
         stats["node_p_rows"] = len(node_p)
@@ -1118,7 +1244,8 @@ def main() -> None:
     ap.add_argument("--configs", nargs="*", default=[], help="preset names: " + ", ".join(PRESETS))
     ap.add_argument("--config", action="append", default=[], metavar="NAME=BASE,k=v,...",
                     help="custom config; keys: safe_div, sd_parent_um, sd_k, sd_sister_min_um, divnet_min_p, "
-                         "leaf_prune (0 = off), insert, node_p, ins.<div_insert param>, ef.<edgefilter param>")
+                         "leaf_prune (0 = off), insert, node_p, ins.<div_insert param>, ef.<edgefilter param>, "
+                         "st.<stitch param>, sw.<swapfix param>")
     ap.add_argument("--grid", default="", help="JSON {name: {base: ..., key: value, ins: {...}}}")
     ap.add_argument("--control", default="exp39", help="config the paired bootstrap compares against")
     ap.add_argument("--node-p", default="", help="parquet/csv stem,node_id,p_cont,p_par,p_dau[,t,z,y,x]")
@@ -1214,6 +1341,10 @@ def main() -> None:
         fp_payload = {"base_key": base_key, "insert": cfg["insert"]}
         if cfg.get("ef"):  # only when on: configs without ef keep their fingerprints (and stored rows)
             fp_payload.update(ef=cfg["ef"], edgefilter_sha=_edgefilter_sha())
+        if cfg.get("st"):  # idem for the stitch
+            fp_payload.update(st=cfg["st"], stitch_sha=_stitch_sha())
+        if cfg.get("sw"):  # idem for the swapfix
+            fp_payload.update(sw=cfg["sw"], swapfix_sha=_swapfix_sha())
         if cfg["insert"]:
             cfg["_ins_params"] = adapter.resolve(cfg["ins"])
             cfg["_node_p_dir"] = str(node_p_dirs[cfg["node_p"] or args.node_p])
@@ -1373,6 +1504,8 @@ def main() -> None:
                              **{k: st.get(k) for k in ("sd_added", "leaf_prune_nodes", "edgefilter_candidates",
                                                        "edgefilter_dropped", "edgefilter_relinked_fwd",
                                                        "edgefilter_relinked_bwd", "edgefilter_pruned_nodes",
+                                                       "stitch_candidates", "stitch_added", "swapfix_candidates",
+                                                       "swapfix_swaps",
                                                        "divins_triples",
                                                        "divins_missing_p", "divins_eligible", "divins_added",
                                                        "divins_added_steal", "final_nodes", "final_edges",
@@ -1444,6 +1577,22 @@ def main() -> None:
                          f"+{int(tot.get('edgefilter_relinked_bwd', 0))}, pruned nodes "
                          f"{int(tot.get('edgefilter_pruned_nodes', 0))}; kernel: tools/build_probe_kernel.py <name> "
                          f"{entry['kernel_edgefilter']}")
+    for name, entry in report["configs"].items():
+        sw = entry["config"].get("sw") or {}
+        if sw:
+            entry["kernel_swapfix"] = swapfix_kernel_args(sw)
+            tot = entry["stats_total"]
+            lines.append(f"\n`{name}`: swapfix {sw}: candidates {int(tot.get('swapfix_candidates', 0))}, swaps "
+                         f"{int(tot.get('swapfix_swaps', 0))}; kernel: tools/build_probe_kernel.py <name> "
+                         f"{entry['kernel_swapfix']}")
+    for name, entry in report["configs"].items():
+        st = entry["config"].get("st") or {}
+        if st:
+            entry["kernel_stitch"] = stitch_kernel_args(st)
+            tot = entry["stats_total"]
+            lines.append(f"\n`{name}`: stitch {st}: candidates {int(tot.get('stitch_candidates', 0))}, added "
+                         f"{int(tot.get('stitch_added', 0))}; kernel: tools/build_probe_kernel.py <name> "
+                         f"{entry['kernel_stitch']}")
     for name, entry in report["configs"].items():
         if "reference_check" in entry:
             rc = entry["reference_check"]

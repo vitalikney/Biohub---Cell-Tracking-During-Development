@@ -1,0 +1,6 @@
+{
+  "ef_a3_rl_pr": {"base": "exp39", "ef.alt": 3, "ef.relink": 1, "ef.prune": 1},
+  "ef_sw_t4_g3": {"base": "exp39", "ef.alt": 3, "ef.relink": 1, "ef.prune": 1, "sw.min_gain_um": 3.0, "sw.min_terms": 4},
+  "ef_sw_t3_g4": {"base": "exp39", "ef.alt": 3, "ef.relink": 1, "ef.prune": 1, "sw.min_gain_um": 4.0, "sw.min_terms": 3},
+  "ef_sw_t2_g2": {"base": "exp39", "ef.alt": 3, "ef.relink": 1, "ef.prune": 1, "sw.min_gain_um": 2.0, "sw.min_terms": 2}
+}

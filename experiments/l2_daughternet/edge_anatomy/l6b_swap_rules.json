@@ -1,0 +1,7 @@
+{
+  "sw_t4_g3": {"enable": 1, "min_gain_um": 3.0, "min_ratio": 0.0, "max_prob": 1.01, "src_um": 10.0, "max_len_um": 14.0, "min_terms": 4},
+  "sw_t2_g2": {"enable": 1, "min_gain_um": 2.0, "min_ratio": 0.0, "max_prob": 1.01, "src_um": 10.0, "max_len_um": 14.0, "min_terms": 2},
+  "sw_t2_g1": {"enable": 1, "min_gain_um": 1.0, "min_ratio": 0.0, "max_prob": 1.01, "src_um": 10.0, "max_len_um": 14.0, "min_terms": 2},
+  "sw_t3_g4": {"enable": 1, "min_gain_um": 4.0, "min_ratio": 0.0, "max_prob": 1.01, "src_um": 10.0, "max_len_um": 14.0, "min_terms": 3},
+  "sw_t4_g1_p08": {"enable": 1, "min_gain_um": 1.0, "min_ratio": 0.0, "max_prob": 0.8, "src_um": 10.0, "max_len_um": 14.0, "min_terms": 4}
+}

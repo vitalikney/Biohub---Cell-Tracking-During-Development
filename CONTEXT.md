@@ -1408,5 +1408,18 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   (9 lenses -> <= 14 researched -> 3 skeptics each -> critic round 2 -> synthesis; the trim was never applied to the
   running instance, the script file is restored for crash resume). To free budget the Kaggle-CPU-lab port agent is
   PAUSED (resume via SendMessage later; laptop lab at Idle priority works meanwhile).
+- 2026-09-24 13:45 UTC, FN ANATOMY FINAL (experiments/l2_daughternet/edge_anatomy/l6_fn_anatomy_report.md): SWAPS ARE NOT
+  LINKING ERRORS. In swaps the GT link is normal (median 2.6 um) but its two matched predicted nodes are 9.4 um apart;
+  our links there are short and smooth (~1.5 um, p ~0.76; motion prefers ours in 98.6%); swap endpoints match GT at
+  4.4/4.7 um vs 1.8 um for correct edges: the annotated nucleus sits BETWEEN two of our tracks and the 7 um matching
+  picks track A at t and B at t+1 (u_diverted / v_taken: same, one-sided). A 2x2 re-assignment rule (--patch swapfix,
+  sw.*) = -0.00004 on confirmation, FAIL. => the ~2,700 swap/diverted FN (oracle +0.03-0.046) are a NODE-POSITION
+  problem: coordinate head (x138), retraining it on 199, near-duplicate track merging. STITCH (--patch stitch, st.*;
+  re-add ILP end->start edges after the edge filter): confirmation +0.0021 CI [+0.0016, +0.0026], 44b6 +0.0012, 6bba
+  +0.0025, but 44b6 win rate 15.5% (59/71 videos unchanged, 11/12 changed gain) -> fails only the win-rate criterion,
+  which cannot be met by an add-only sparse rule; candidate to bundle with the edge filter if probe 29 transfers
+  (build: --patch edgefilter --patch stitch --set STITCH_ENABLE=1 ...). Open: linefit moves 354 GT-matched nodes beyond
+  7 um (displacement cap untested, needs new tails). The ideas workflow was resumed with this correction in its brief
+  for all post-hypothesis stages (9 hypothesis sets cached), script experiments/workflows/biohub-idea-hunt-v2.js.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.

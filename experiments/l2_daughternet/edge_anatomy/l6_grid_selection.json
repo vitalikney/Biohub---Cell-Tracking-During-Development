@@ -1,0 +1,11 @@
+{
+  "ef_a3_rl_pr": {"base": "exp39", "ef.alt": 3, "ef.relink": 1, "ef.prune": 1},
+  "st_all": {"base": "exp39", "st.enable": 1},
+  "st_p08": {"base": "exp39", "st.min_prob": 0.8},
+  "ef_st_all": {"base": "exp39", "ef.alt": 3, "ef.relink": 1, "ef.prune": 1, "st.enable": 1},
+  "ef_st_p06": {"base": "exp39", "ef.alt": 3, "ef.relink": 1, "ef.prune": 1, "st.min_prob": 0.6},
+  "ef_st_p07": {"base": "exp39", "ef.alt": 3, "ef.relink": 1, "ef.prune": 1, "st.min_prob": 0.7},
+  "ef_st_p08": {"base": "exp39", "ef.alt": 3, "ef.relink": 1, "ef.prune": 1, "st.min_prob": 0.8},
+  "ef_st_c2": {"base": "exp39", "ef.alt": 3, "ef.relink": 1, "ef.prune": 1, "st.min_chain": 2},
+  "ef_st_max12": {"base": "exp39", "ef.alt": 3, "ef.relink": 1, "ef.prune": 1, "st.max_um": 12.0}
+}
