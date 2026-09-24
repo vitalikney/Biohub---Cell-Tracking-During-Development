@@ -1398,5 +1398,11 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   data; hold out by embryo); (3) swap repair where it arises (score unscored relink pairs with the edge net, 2-opt swap
   test on a multi-frame cost; literature: KTH-SE Viterbi re-routing, MAMHT k-best); (5) DaughterNet as a parent/daughter
   constraint for division precision (linajea: -88% FP divisions); (7) short-track-filter guard.
+- 2026-09-24 13:25 UTC, BUDGET MODE (user's Claude limits: 5-h window 78% used, resets ~15:25 UTC; weekly 76%, resets
+  25 Sep): 5.5 lab-rebuild agent STOPPED (probe 29 answers the transfer question directly; its scripts stay in
+  experiments/l2_daughternet/relink55/, the 199 ckpts at 5.5 in data_external/friend_a_cache_t55/). Ideas workflow
+  wf_d8ae74be-bcd trimmed: after the 9 hypothesis agents finish it is resumed from the edited script (6 researched
+  hypotheses, one adversarial judge-synthesizer, no per-idea skeptics, no critic round). Still running: x138 port
+  (exp51 kernel), FN anatomy / swap rule, Kaggle CPU lab port, probe monitor.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
