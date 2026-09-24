@@ -1338,7 +1338,8 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   RISKS: (1) the linker was trained on all 199 videos, so trusting the ILP's choice is in-sample (relink-off lost 0.002 on
   the LB; the targeted subset is different, but only a probe decides); (2) the lab cache was built with tight gate 6.0, the
   kernel runs 5.5 (9.5% of the drop set differs). PROBES: exp49 = exp39 + ef_a3_rl_pr; exp50 = exp39 + drop-only ef_a0
-  (SELECTION +0.0095; depends only on the "never scored" property, a transfer hedge). Kernels pushed.- 2026-09-24 10:50 UTC RESUME POINT (context compaction by the user; read this first).
+  (SELECTION +0.0095; depends only on the "never scored" property, a transfer hedge). Kernels pushed.
+- 2026-09-24 10:50 UTC RESUME POINT (context compaction by the user; read this first).
   PROBES today (24 Sep UTC; 1 slot left today): #27 exp47 = exp39 + leaf prune 0.3 (id 56510844) = **0.947** (tie with exp29,
   consistent with its tiny +0.0006 local). #28 exp48 = exp47 + DaughterNet v1 insertion with steal (id 56510845) PENDING.
   #29 exp49 = exp39 + edge filter ef_a3_rl_pr (id 56518035) PENDING - THE KEY PROBE (lab confirmation +0.0162). #30 exp50 =
@@ -1361,5 +1362,11 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   edge anatomy experiments/l2_daughternet/edge_anatomy/ (+ parquet .public_local_cache/l2_edge_anatomy/edges_exp39.parquet).
   Friend A: L5 full-res DaughterNet-B running on his 5070 Ti (OOF due 25 Sep 20:00 UTC); told about the edge finding.
   Finals (tick by 29 Sep 20:00 UTC): currently exp29 (56146538) + exp39 (56440312); will change if #29 transfers.
+- 2026-09-24 11:20 UTC: probe #28 exp48 (exp47 leaf prune + DaughterNet v1 insertion with steal) = **0.948**, our best
+  public score (+0.001 over exp47 0.947 / exp29 0.947; consistent with the lab's +0.0019 for the insertion part). exp48
+  replaces exp29 as a finals candidate. #29/#30 still pending. FN-anatomy interim (exp39 + ef graph, 199 videos, FN 6099
+  validated against the official scorer): swaps 25% of FN (oracle +0.032), never-detected-link 31%, u-diverted/v-taken
+  ~19% (oracle +0.016); a stitch rule (end->start, ILP edge) adds +0.0020 on top of ef on confirmation (44b6 gains on
+  only 15% of videos -> fails the per-embryo 55% gate as is).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
