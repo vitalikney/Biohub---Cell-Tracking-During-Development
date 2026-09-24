@@ -1460,5 +1460,12 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   more than the sum of all post-processing ceilings (+0.014) - the top teams got there by MODEL RETRAINING (detector
   localisation / density). Agent building --patch floatout -> exp52 = exp51 + float(safe), exp53 = exp48 +
   float(safe) (private kernels, for the 25 Sep batch).
+- 2026-09-24 18:20 UTC, USER APPROVED the 25 Sep batch: P32 = exp52 (exp51 + float output coords, safe encoding),
+  P33 = exp53 (exp48 + float safe), P34 = exp54 (exp51 with COORDHEAD_MODE=zero; control: shift vs float geometry) ONLY
+  if probe 31 (exp51) >= 0.951. exp52/exp53 are submitted right after 00:00 UTC once their kernels are COMPLETE (both
+  go in regardless of #31; order by #31 if it has scored). Remaining 2 slots need a new OK. Detector retrain declined
+  on arithmetic (1 run = ~23 h on the 5070 Ti + edge-net + own head; our earlier all-199 retrain = 0.920; others'
+  retrains 0.947-0.950). Head retrain on 199 (~1-1.5 days, ~+0.0003..0.002) only if #31 >= 0.951 and exp51 - exp54
+  >= 0.002; then prepare friend A's capture script + prompt.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
