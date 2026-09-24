@@ -424,3 +424,14 @@ Verdict: nothing to probe; the popular notebooks are knob sets and association r
   with edge replacement) rather than touching ILP or relink, and says GT-centred evaluation is misleading - B35 step B
   already trains and scores on detector-output triples only.
 
+## Update 2026-09-24 10:00 UTC (site check)
+
+- Code: nothing new of substance since 23 Sep (two re-runs of older notebooks: kunaldesale2408/biohub-cell-tracking,
+  tobimichigan/robust-cell-tracking-...). LB: 3871 teams, 167 >= 0.951 (was 136 a day ago), 724 at 0.947, top 0.975
+  (Sergio Alvarez); we are rank 870 at 0.947 (probes 27-30 still scoring).
+- 742942 "errors in annotated ground truth" (Quantizr, 57th): many train annotations look wrong (centroids > 7 um off,
+  wrong links, a GT division whose "daughter" existed in earlier frames). sghwr (144th): a blind human review of their
+  model's FP found ~70% of them could actually be TP. Relevance: our edge anatomy counted FP by the official matcher;
+  some "FP" are GT noise, so FP-rate estimates per class are upper bounds - but the ranking of classes (unscored relink
+  79% vs kept ILP 3.5%) is far outside any plausible annotation-noise effect.
+
