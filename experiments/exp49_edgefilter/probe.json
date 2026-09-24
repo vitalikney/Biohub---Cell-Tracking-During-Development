@@ -1,0 +1,13 @@
+{
+ "base": "exp29 realised config (tight55, pilkwang primary, validator off) = LB 0.947; built by tools/build_probe_kernel.py from the exp39 notebook",
+ "change": {
+  "EDGEFILTER_ENABLE": "1",
+  "EDGEFILTER_ALT": "3",
+  "EDGEFILTER_RELINK": "1",
+  "EDGEFILTER_PRUNE": "1",
+  "DIVNET_VERIFY": "1",
+  "PATCHES": "edgefilter"
+ },
+ "note": "L5 edge filter ef_a3_rl_pr on exp39: drop unscored relink edges (edge_prob<0.3) where the ILP linked the source or target elsewhere, re-link to the ILP's free alternative, prune isolated; laptop CONFIRMATION +0.0162 [+0.0128,+0.0196], 44b6 +0.0145, 6bba +0.0169; gate PASS",
+ "rule": "compare with exp29 0.947; >= 0.950 adopt; ties recorded; <= 0.944 drop"
+}
