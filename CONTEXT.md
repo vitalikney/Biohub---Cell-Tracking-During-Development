@@ -1388,5 +1388,15 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   OK). Ideas workflow replaced by a larger crash-safe one, wf_d8ae74be-bcd (9 lenses x 4 hypotheses -> dedupe to <= 14
   -> web research each -> 3 skeptics each (transfer, arithmetic, feasibility) -> completeness critic -> round 2 ->
   synthesis), all outputs in research/wf_ideas_v2/ (FINAL_REPORT.md at the end).
+- 2026-09-24 13:10 UTC, BROWSER PASS 2 (research/browser_research_2026-09-24_pass2.md): no public notebook above 0.953;
+  41 teams at exactly 0.953 (x138 reproduces). x138 authors privately at 0.959 (thtennant, rank 32) and 0.956. V1284
+  head training is not public, but it is reconstructable from x138's own VALIDATOR block: run with V1284_MODE=capture
+  on train movies (N per embryo prefix; the author used 20 movies = 4,136 peak<->GT pairs), target = GT - peak in um,
+  z-scored 224-d features, ridge/MLP, output norm-bounded < 2 um; V1284_MODE=zero = float coords + trilinear gather with
+  no shift (free control). Other teams' datasets: plain detector retrain on 199 stays 0.947 (leonixis); GT-to-detection
+  median offset 1.72 um (p90 3.3). Next ideas ranked: (1) exp51 probe; (2) retrain the head on all 199 movies (~10x
+  data; hold out by embryo); (3) swap repair where it arises (score unscored relink pairs with the edge net, 2-opt swap
+  test on a multi-frame cost; literature: KTH-SE Viterbi re-routing, MAMHT k-best); (5) DaughterNet as a parent/daughter
+  constraint for division precision (linajea: -88% FP divisions); (7) short-track-filter guard.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
