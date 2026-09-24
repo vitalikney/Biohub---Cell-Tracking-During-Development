@@ -1474,5 +1474,14 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   directions and no loss of 7 um matches), pilot on 6 videos, then the full run (<= ~12 GPU h, 2 sessions), then
   exp55 = exp51 + COORDHEAD_HEAD_PATH (new knob) - build only. Files: experiments/coordhead_retrain/. Colab kept in
   reserve (it would need the competition data + the user's own kaggle.json upload).
+- 2026-09-24 22:00 UTC, FLOATOUT READY: --patch floatout (BIOHUB_OUTPUT_FLOAT_COORDS=0|safe|float; mode 0 sha256-identical
+  CSV; in-kernel polars re-read check "FLOATOUT CHECK PASSED"); replay key out.coords. Private kernels COMPLETE:
+  exp52 = exp51 + float safe (vitaliineibauer/biohub-exp52-coordhead-floatout v1), exp53 = exp48 + float safe
+  (vitaliineibauer/biohub-exp53-leafprune-divins-floatout v1): nodes/edges/forks and ids identical to their bases,
+  floor(w) == base integer on 100% of nodes (a truncating parser reads exactly the base CSV). Lab SELECTION (64 6bba):
+  e48_safe vs e48 = +0.00248 CI90 [+0.00105, +0.00390], 24 wins / 10 losses among 34 changed videos, divisions identical.
+  exp54 (exp51 with COORDHEAD_MODE=zero) = CSV BYTE-IDENTICAL to exp48 -> its LB is 0.948 by construction, NO slot
+  needed: float geometry + trilinear gather alone change nothing; exp51 - exp48 is entirely the head's shift. The 25 Sep
+  batch is therefore exp52 + exp53 at 00:01 UTC (2 slots), 3 slots left for later decisions (need a new OK).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
