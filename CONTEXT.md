@@ -1404,5 +1404,9 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   wf_d8ae74be-bcd trimmed: after the 9 hypothesis agents finish it is resumed from the edited script (6 researched
   hypotheses, one adversarial judge-synthesizer, no per-idea skeptics, no critic round). Still running: x138 port
   (exp51 kernel), FN anatomy / swap rule, Kaggle CPU lab port, probe monitor.
+- 2026-09-24 13:35 UTC, USER OVERRIDE: research has priority - the ideas workflow wf_d8ae74be-bcd runs at FULL size
+  (9 lenses -> <= 14 researched -> 3 skeptics each -> critic round 2 -> synthesis; the trim was never applied to the
+  running instance, the script file is restored for crash resume). To free budget the Kaggle-CPU-lab port agent is
+  PAUSED (resume via SendMessage later; laptop lab at Idle priority works meanwhile).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
