@@ -1,0 +1,1355 @@
+{
+ "file": "experiments\\l2_daughternet\\pool_samples.parquet",
+ "rows": 11238,
+ "videos": 197,
+ "by_label": {
+  "cont": 11032,
+  "daughter": 133,
+  "parent": 73
+ },
+ "by_embryo": {
+  "44b6": {
+   "cont": 3641,
+   "daughter": 25,
+   "parent": 9
+  },
+  "6bba": {
+   "cont": 7391,
+   "daughter": 108,
+   "parent": 64
+  }
+ },
+ "by_fold": {
+  "0": {
+   "cont": 1943,
+   "daughter": 26,
+   "parent": 16
+  },
+  "1": {
+   "cont": 1817,
+   "daughter": 27,
+   "parent": 17
+  },
+  "2": {
+   "cont": 2344,
+   "daughter": 25,
+   "parent": 14
+  },
+  "3": {
+   "cont": 2244,
+   "daughter": 27,
+   "parent": 16
+  },
+  "4": {
+   "cont": 2684,
+   "daughter": 28,
+   "parent": 10
+  }
+ },
+ "unique_gt": {
+  "parent": 62,
+  "daughter": 123,
+  "cont": 9951
+ },
+ "roles_in_labels": {
+  "none": 987622,
+  "cont": 22062,
+  "other": 2365,
+  "daughter": 133,
+  "parent": 73
+ },
+ "cont_per_video": 80,
+ "seed": 0,
+ "cont_sampling": "weighted without replacement, w = n_triples (Efraimidis-Spirakis), rng default_rng([seed, crc32(stem)]) over cont rows in node_id order",
+ "triples": {
+  "source": "div_insert.candidate_triples on the replay tail graphs",
+  "tail_dir": "C:\\Users\\vital\\Documents\\kAGGLE\\Biohub - Cell Tracking During Development\\.public_local_cache\\l2_replay\\friend_a_b20_exp29\\tail\\divnet_rerank_fb435c47e6d4",
+  "candidate_params": {
+   "enable": 1,
+   "steal": 1,
+   "cap_video": 3,
+   "cap_frame": 1,
+   "alpha": 1.0,
+   "threshold": 0.5,
+   "parent_um": 10.0,
+   "v_um": 15.0,
+   "sister_min": 3.0,
+   "sister_max": 20.0,
+   "mid_um": 6.5,
+   "cos_max": 0.25,
+   "steal_prob_max": 0.3,
+   "steal_margin": 0.2,
+   "steal_frac": 0.5,
+   "scale_um": [
+    1.625,
+    0.40625,
+    0.40625
+   ]
+  },
+  "triples_recomputed": 649772,
+  "div_insert_sha_export": "e2a5e86ccc0daaac45d58625f970609a3b843803e389706207a0f251babe45b7",
+  "div_insert_sha_now": "e2a5e86ccc0daaac45d58625f970609a3b843803e389706207a0f251babe45b7"
+ },
+ "inputs": {
+  "coords": "C:\\Users\\vital\\Documents\\kAGGLE\\Biohub - Cell Tracking During Development\\experiments\\l2_daughternet\\coords_exp39.parquet",
+  "coords_sha256": "28defd683e1e6f197acbc22aefce9a2bdb071e53a465d2e65b252fd897942db3",
+  "labels": "C:\\Users\\vital\\Documents\\kAGGLE\\Biohub - Cell Tracking During Development\\data_external\\l2\\coords_labels.parquet",
+  "labels_sha256": "b69e56e52fd75d0bafd3a53d466fbe4123c85895b3f3d0a2242700f2aaa7ec60",
+  "export_base_key": "divnet_rerank_fb435c47e6d4"
+ },
+ "coordinates": "PREDICTED node coordinates (coords file), float voxel units of the full-resolution frame",
+ "per_video": {
+  "44b6_0113de3b": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 12,
+   "cont": 12
+  },
+  "44b6_0b24845f": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 16,
+   "cont": 16
+  },
+  "44b6_0c582fdc": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 13,
+   "cont": 13
+  },
+  "44b6_0db75fae": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 27,
+   "cont": 27
+  },
+  "44b6_12dfb391": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 194,
+   "cont": 80
+  },
+  "44b6_144b256d": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 22,
+   "cont": 22
+  },
+  "44b6_1574802b": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 46,
+   "cont": 46
+  },
+  "44b6_18ced818": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 59,
+   "cont": 59
+  },
+  "44b6_1d530831": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 89,
+   "cont": 80
+  },
+  "44b6_24264f12": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 68,
+   "cont": 68
+  },
+  "44b6_267148e4": {
+   "parent": 1,
+   "daughter": 2,
+   "cont_available": 126,
+   "cont": 80
+  },
+  "44b6_2a2eff9f": {
+   "parent": 0,
+   "daughter": 1,
+   "cont_available": 86,
+   "cont": 80
+  },
+  "44b6_2f31fc2f": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 46,
+   "cont": 46
+  },
+  "44b6_33b596bf": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 10,
+   "cont": 10
+  },
+  "44b6_341df25f": {
+   "parent": 0,
+   "daughter": 1,
+   "cont_available": 14,
+   "cont": 14
+  },
+  "44b6_3a861e03": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 155,
+   "cont": 80
+  },
+  "44b6_3bb3690f": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 118,
+   "cont": 80
+  },
+  "44b6_40c45f5a": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 68,
+   "cont": 68
+  },
+  "44b6_415c0a3a": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 37,
+   "cont": 37
+  },
+  "44b6_53f95252": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 18,
+   "cont": 18
+  },
+  "44b6_551a5dba": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 139,
+   "cont": 80
+  },
+  "44b6_5740d24b": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 47,
+   "cont": 47
+  },
+  "44b6_587a1e22": {
+   "parent": 1,
+   "daughter": 2,
+   "cont_available": 81,
+   "cont": 80
+  },
+  "44b6_5f15d135": {
+   "parent": 1,
+   "daughter": 1,
+   "cont_available": 77,
+   "cont": 77
+  },
+  "44b6_668e0cc7": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 133,
+   "cont": 80
+  },
+  "44b6_66f9292d": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 20,
+   "cont": 20
+  },
+  "44b6_706092f0": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 30,
+   "cont": 30
+  },
+  "44b6_71a4179f": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 56,
+   "cont": 56
+  },
+  "44b6_74d0c52e": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 28,
+   "cont": 28
+  },
+  "44b6_7a302da0": {
+   "parent": 1,
+   "daughter": 2,
+   "cont_available": 157,
+   "cont": 80
+  },
+  "44b6_7e557709": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 66,
+   "cont": 66
+  },
+  "44b6_808952d6": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 2,
+   "cont": 2
+  },
+  "44b6_81c256f0": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 10,
+   "cont": 10
+  },
+  "44b6_87bba6c4": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 92,
+   "cont": 80
+  },
+  "44b6_8cc6506c": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 154,
+   "cont": 80
+  },
+  "44b6_8f5ab931": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 204,
+   "cont": 80
+  },
+  "44b6_8f9ecab4": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 171,
+   "cont": 80
+  },
+  "44b6_90724892": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 43,
+   "cont": 43
+  },
+  "44b6_949adeb1": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 182,
+   "cont": 80
+  },
+  "44b6_95029e92": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 2,
+   "cont": 2
+  },
+  "44b6_97725144": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 31,
+   "cont": 31
+  },
+  "44b6_996155de": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 17,
+   "cont": 17
+  },
+  "44b6_9be80b04": {
+   "parent": 0,
+   "daughter": 1,
+   "cont_available": 85,
+   "cont": 80
+  },
+  "44b6_9bfa6a0a": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 66,
+   "cont": 66
+  },
+  "44b6_a21120c2": {
+   "parent": 0,
+   "daughter": 2,
+   "cont_available": 60,
+   "cont": 60
+  },
+  "44b6_a2bb48bb": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 228,
+   "cont": 80
+  },
+  "44b6_aaf8b0ea": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 13,
+   "cont": 13
+  },
+  "44b6_abf82518": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 26,
+   "cont": 26
+  },
+  "44b6_b2c44266": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 23,
+   "cont": 23
+  },
+  "44b6_c15fded2": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 41,
+   "cont": 41
+  },
+  "44b6_c50204e0": {
+   "parent": 1,
+   "daughter": 3,
+   "cont_available": 222,
+   "cont": 80
+  },
+  "44b6_c771cb04": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 114,
+   "cont": 80
+  },
+  "44b6_c8e2a523": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 32,
+   "cont": 32
+  },
+  "44b6_c96cfa10": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 185,
+   "cont": 80
+  },
+  "44b6_cf2536e8": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 22,
+   "cont": 22
+  },
+  "44b6_cf8fed6b": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 36,
+   "cont": 36
+  },
+  "44b6_d29c9ab2": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 164,
+   "cont": 80
+  },
+  "44b6_d2f34f90": {
+   "parent": 2,
+   "daughter": 4,
+   "cont_available": 102,
+   "cont": 80
+  },
+  "44b6_d5e7d891": {
+   "parent": 1,
+   "daughter": 3,
+   "cont_available": 521,
+   "cont": 80
+  },
+  "44b6_d754aa59": {
+   "parent": 1,
+   "daughter": 2,
+   "cont_available": 2,
+   "cont": 2
+  },
+  "44b6_d78e09d9": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 96,
+   "cont": 80
+  },
+  "44b6_db3c847b": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 20,
+   "cont": 20
+  },
+  "44b6_ddf577ad": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 287,
+   "cont": 80
+  },
+  "44b6_deabac95": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 15,
+   "cont": 15
+  },
+  "44b6_e28840c6": {
+   "parent": 0,
+   "daughter": 1,
+   "cont_available": 92,
+   "cont": 80
+  },
+  "44b6_e29f0176": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 23,
+   "cont": 23
+  },
+  "44b6_e31261b4": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 57,
+   "cont": 57
+  },
+  "44b6_e35b117d": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 59,
+   "cont": 59
+  },
+  "44b6_e57ff5c6": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 99,
+   "cont": 80
+  },
+  "44b6_eb2880fc": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 102,
+   "cont": 80
+  },
+  "44b6_f28707c6": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 21,
+   "cont": 21
+  },
+  "6bba_05b6850b": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 61,
+   "cont": 61
+  },
+  "6bba_05db0fb1": {
+   "parent": 2,
+   "daughter": 3,
+   "cont_available": 401,
+   "cont": 80
+  },
+  "6bba_062c8d37": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 24,
+   "cont": 24
+  },
+  "6bba_07477033": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 31,
+   "cont": 31
+  },
+  "6bba_07e24132": {
+   "parent": 2,
+   "daughter": 2,
+   "cont_available": 45,
+   "cont": 45
+  },
+  "6bba_085bf656": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 39,
+   "cont": 39
+  },
+  "6bba_09961292": {
+   "parent": 3,
+   "daughter": 3,
+   "cont_available": 531,
+   "cont": 80
+  },
+  "6bba_0c7fa718": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 219,
+   "cont": 80
+  },
+  "6bba_0e7c0d07": {
+   "parent": 1,
+   "daughter": 1,
+   "cont_available": 67,
+   "cont": 67
+  },
+  "6bba_12665c0e": {
+   "parent": 1,
+   "daughter": 2,
+   "cont_available": 83,
+   "cont": 80
+  },
+  "6bba_13f19531": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 36,
+   "cont": 36
+  },
+  "6bba_15403b9a": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 49,
+   "cont": 49
+  },
+  "6bba_1d0d8384": {
+   "parent": 1,
+   "daughter": 2,
+   "cont_available": 297,
+   "cont": 80
+  },
+  "6bba_1ebfb80d": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 132,
+   "cont": 80
+  },
+  "6bba_1f58c2f6": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 128,
+   "cont": 80
+  },
+  "6bba_207c6aaf": {
+   "parent": 2,
+   "daughter": 0,
+   "cont_available": 155,
+   "cont": 80
+  },
+  "6bba_20852818": {
+   "parent": 1,
+   "daughter": 3,
+   "cont_available": 121,
+   "cont": 80
+  },
+  "6bba_2312ac41": {
+   "parent": 1,
+   "daughter": 2,
+   "cont_available": 50,
+   "cont": 50
+  },
+  "6bba_23af9eeb": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 3,
+   "cont": 3
+  },
+  "6bba_2646afc7": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 45,
+   "cont": 45
+  },
+  "6bba_268e1230": {
+   "parent": 0,
+   "daughter": 1,
+   "cont_available": 26,
+   "cont": 26
+  },
+  "6bba_2819ca14": {
+   "parent": 1,
+   "daughter": 2,
+   "cont_available": 59,
+   "cont": 59
+  },
+  "6bba_283bf9f1": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 191,
+   "cont": 80
+  },
+  "6bba_312f0dc3": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 29,
+   "cont": 29
+  },
+  "6bba_32db13fc": {
+   "parent": 2,
+   "daughter": 4,
+   "cont_available": 315,
+   "cont": 80
+  },
+  "6bba_337b1b3a": {
+   "parent": 1,
+   "daughter": 2,
+   "cont_available": 181,
+   "cont": 80
+  },
+  "6bba_372c8cb8": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 17,
+   "cont": 17
+  },
+  "6bba_3a1849c2": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 80,
+   "cont": 80
+  },
+  "6bba_3abfe10a": {
+   "parent": 0,
+   "daughter": 1,
+   "cont_available": 413,
+   "cont": 80
+  },
+  "6bba_3c5691b6": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 24,
+   "cont": 24
+  },
+  "6bba_3db54e20": {
+   "parent": 1,
+   "daughter": 3,
+   "cont_available": 147,
+   "cont": 80
+  },
+  "6bba_3fda6b25": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 61,
+   "cont": 61
+  },
+  "6bba_43fea39d": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 70,
+   "cont": 70
+  },
+  "6bba_474be664": {
+   "parent": 1,
+   "daughter": 2,
+   "cont_available": 99,
+   "cont": 80
+  },
+  "6bba_48816121": {
+   "parent": 4,
+   "daughter": 7,
+   "cont_available": 98,
+   "cont": 80
+  },
+  "6bba_4aa14c89": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 69,
+   "cont": 69
+  },
+  "6bba_4f99ce20": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 39,
+   "cont": 39
+  },
+  "6bba_4ffd3da3": {
+   "parent": 0,
+   "daughter": 1,
+   "cont_available": 104,
+   "cont": 80
+  },
+  "6bba_55b7eebe": {
+   "parent": 1,
+   "daughter": 2,
+   "cont_available": 7,
+   "cont": 7
+  },
+  "6bba_55c70843": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 181,
+   "cont": 80
+  },
+  "6bba_57b7cc1e": {
+   "parent": 0,
+   "daughter": 1,
+   "cont_available": 950,
+   "cont": 80
+  },
+  "6bba_5a4d9360": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 56,
+   "cont": 56
+  },
+  "6bba_5b28472a": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 17,
+   "cont": 17
+  },
+  "6bba_5c039895": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 52,
+   "cont": 52
+  },
+  "6bba_5c824876": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 136,
+   "cont": 80
+  },
+  "6bba_5dfe9ad1": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 212,
+   "cont": 80
+  },
+  "6bba_5f89039d": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 10,
+   "cont": 10
+  },
+  "6bba_61dd1e0d": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 10,
+   "cont": 10
+  },
+  "6bba_61ecbe65": {
+   "parent": 0,
+   "daughter": 2,
+   "cont_available": 32,
+   "cont": 32
+  },
+  "6bba_6321a359": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 22,
+   "cont": 22
+  },
+  "6bba_6479435d": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 241,
+   "cont": 80
+  },
+  "6bba_67ebd073": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 126,
+   "cont": 80
+  },
+  "6bba_6ca87370": {
+   "parent": 1,
+   "daughter": 2,
+   "cont_available": 144,
+   "cont": 80
+  },
+  "6bba_6db0e9b4": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 96,
+   "cont": 80
+  },
+  "6bba_6feb10f0": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 145,
+   "cont": 80
+  },
+  "6bba_6feeb0b1": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 106,
+   "cont": 80
+  },
+  "6bba_705ec2c9": {
+   "parent": 1,
+   "daughter": 2,
+   "cont_available": 72,
+   "cont": 72
+  },
+  "6bba_74686d6a": {
+   "parent": 3,
+   "daughter": 2,
+   "cont_available": 74,
+   "cont": 74
+  },
+  "6bba_767a1e17": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 288,
+   "cont": 80
+  },
+  "6bba_76db78c1": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 5,
+   "cont": 5
+  },
+  "6bba_784a78c9": {
+   "parent": 1,
+   "daughter": 2,
+   "cont_available": 65,
+   "cont": 65
+  },
+  "6bba_786893ac": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 764,
+   "cont": 80
+  },
+  "6bba_789f8168": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 87,
+   "cont": 80
+  },
+  "6bba_78a7bd97": {
+   "parent": 1,
+   "daughter": 2,
+   "cont_available": 322,
+   "cont": 80
+  },
+  "6bba_7af54fde": {
+   "parent": 1,
+   "daughter": 0,
+   "cont_available": 136,
+   "cont": 80
+  },
+  "6bba_7b5d3b2c": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 8,
+   "cont": 8
+  },
+  "6bba_7d3058ae": {
+   "parent": 1,
+   "daughter": 2,
+   "cont_available": 21,
+   "cont": 21
+  },
+  "6bba_7f87b3d8": {
+   "parent": 1,
+   "daughter": 2,
+   "cont_available": 231,
+   "cont": 80
+  },
+  "6bba_80d12824": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 69,
+   "cont": 69
+  },
+  "6bba_825bd1c6": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 173,
+   "cont": 80
+  },
+  "6bba_87289e13": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 120,
+   "cont": 80
+  },
+  "6bba_8b7818bf": {
+   "parent": 1,
+   "daughter": 2,
+   "cont_available": 8,
+   "cont": 8
+  },
+  "6bba_907271db": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 47,
+   "cont": 47
+  },
+  "6bba_91951b3a": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 52,
+   "cont": 52
+  },
+  "6bba_96833384": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 10,
+   "cont": 10
+  },
+  "6bba_969618f6": {
+   "parent": 0,
+   "daughter": 2,
+   "cont_available": 59,
+   "cont": 59
+  },
+  "6bba_971fa5e0": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 58,
+   "cont": 58
+  },
+  "6bba_9a41d029": {
+   "parent": 1,
+   "daughter": 4,
+   "cont_available": 234,
+   "cont": 80
+  },
+  "6bba_9e23430b": {
+   "parent": 1,
+   "daughter": 2,
+   "cont_available": 26,
+   "cont": 26
+  },
+  "6bba_a5e926bb": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 66,
+   "cont": 66
+  },
+  "6bba_a90a0b9c": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 326,
+   "cont": 80
+  },
+  "6bba_ab78413d": {
+   "parent": 1,
+   "daughter": 2,
+   "cont_available": 151,
+   "cont": 80
+  },
+  "6bba_acd782a8": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 122,
+   "cont": 80
+  },
+  "6bba_ae82a791": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 39,
+   "cont": 39
+  },
+  "6bba_aeee7805": {
+   "parent": 1,
+   "daughter": 2,
+   "cont_available": 15,
+   "cont": 15
+  },
+  "6bba_af149c94": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 48,
+   "cont": 48
+  },
+  "6bba_afb141ff": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 68,
+   "cont": 68
+  },
+  "6bba_b1ae37b9": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 218,
+   "cont": 80
+  },
+  "6bba_b204cac7": {
+   "parent": 3,
+   "daughter": 2,
+   "cont_available": 7,
+   "cont": 7
+  },
+  "6bba_b329af44": {
+   "parent": 1,
+   "daughter": 1,
+   "cont_available": 401,
+   "cont": 80
+  },
+  "6bba_b693381b": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 64,
+   "cont": 64
+  },
+  "6bba_bb9f20c3": {
+   "parent": 4,
+   "daughter": 3,
+   "cont_available": 343,
+   "cont": 80
+  },
+  "6bba_bbb708ca": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 106,
+   "cont": 80
+  },
+  "6bba_c27cba08": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 18,
+   "cont": 18
+  },
+  "6bba_c328f2fd": {
+   "parent": 1,
+   "daughter": 1,
+   "cont_available": 94,
+   "cont": 80
+  },
+  "6bba_c73a1d11": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 301,
+   "cont": 80
+  },
+  "6bba_cdcfe533": {
+   "parent": 2,
+   "daughter": 5,
+   "cont_available": 219,
+   "cont": 80
+  },
+  "6bba_cf35214c": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 92,
+   "cont": 80
+  },
+  "6bba_cff5865f": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 347,
+   "cont": 80
+  },
+  "6bba_d0fc38b5": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 2,
+   "cont": 2
+  },
+  "6bba_d1acb6ff": {
+   "parent": 1,
+   "daughter": 2,
+   "cont_available": 149,
+   "cont": 80
+  },
+  "6bba_d2b9fc0c": {
+   "parent": 1,
+   "daughter": 1,
+   "cont_available": 52,
+   "cont": 52
+  },
+  "6bba_d3da753b": {
+   "parent": 1,
+   "daughter": 0,
+   "cont_available": 165,
+   "cont": 80
+  },
+  "6bba_d5eae175": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 1,
+   "cont": 1
+  },
+  "6bba_d6ecebbb": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 70,
+   "cont": 70
+  },
+  "6bba_d82a4fc6": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 147,
+   "cont": 80
+  },
+  "6bba_debd7bfa": {
+   "parent": 3,
+   "daughter": 2,
+   "cont_available": 128,
+   "cont": 80
+  },
+  "6bba_df673a83": {
+   "parent": 1,
+   "daughter": 3,
+   "cont_available": 29,
+   "cont": 29
+  },
+  "6bba_e16ffc58": {
+   "parent": 1,
+   "daughter": 2,
+   "cont_available": 19,
+   "cont": 19
+  },
+  "6bba_e5e44988": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 23,
+   "cont": 23
+  },
+  "6bba_ebdf3b34": {
+   "parent": 2,
+   "daughter": 3,
+   "cont_available": 236,
+   "cont": 80
+  },
+  "6bba_ebff6e76": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 658,
+   "cont": 80
+  },
+  "6bba_ed9377fd": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 11,
+   "cont": 11
+  },
+  "6bba_edf14583": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 250,
+   "cont": 80
+  },
+  "6bba_eebc57a5": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 100,
+   "cont": 80
+  },
+  "6bba_ef7b4f7e": {
+   "parent": 1,
+   "daughter": 2,
+   "cont_available": 32,
+   "cont": 32
+  },
+  "6bba_f17befbc": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 463,
+   "cont": 80
+  },
+  "6bba_f1fde7e0": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 75,
+   "cont": 75
+  },
+  "6bba_f20478e9": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 52,
+   "cont": 52
+  },
+  "6bba_f4ae811c": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 71,
+   "cont": 71
+  },
+  "6bba_f8ffd5e7": {
+   "parent": 1,
+   "daughter": 5,
+   "cont_available": 78,
+   "cont": 78
+  },
+  "6bba_fbc898dc": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 8,
+   "cont": 8
+  },
+  "6bba_fc516dc6": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 66,
+   "cont": 66
+  },
+  "6bba_fc5f39dc": {
+   "parent": 1,
+   "daughter": 2,
+   "cont_available": 94,
+   "cont": 80
+  },
+  "6bba_fc83837d": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 195,
+   "cont": 80
+  },
+  "6bba_fe670320": {
+   "parent": 0,
+   "daughter": 0,
+   "cont_available": 53,
+   "cont": 53
+  }
+ },
+ "sha256": "8b791ff8dbc15f3354003c91d82229c59946be7ddd5b2612ecedf0d63d182821",
+ "n_triples_cont": {
+  "all_cont_mean": 1.8329707188831474,
+  "selected_cont_mean": 2.0610043509789704,
+  "selected_cont_median": 1.0,
+  "all_cont_median": 1.0
+ },
+ "v1_oof_baseline": {
+  "source": "C:\\Users\\vital\\Documents\\kAGGLE\\Biohub - Cell Tracking During Development\\data_external\\l2\\kds_out\\node_p_oof.parquet",
+  "fold_matches_splits": true,
+  "missing_p": 0,
+  "on_pool_samples": {
+   "44b6": {
+    "n_parent": 9,
+    "n_daughter": 25,
+    "n_cont": 3641,
+    "auc_p_par_parent_vs_cont": 0.8959382343068144,
+    "auc_p_dau_daughter_vs_cont": 0.8052293326009338,
+    "auc_p_par_one_vs_rest": 0.8963447899618112,
+    "auc_p_dau_one_vs_rest": 0.8053808219178082
+   },
+   "6bba": {
+    "n_parent": 64,
+    "n_daughter": 108,
+    "n_cont": 7391,
+    "auc_p_par_parent_vs_cont": 0.8242583885807062,
+    "auc_p_dau_daughter_vs_cont": 0.7114070165416397,
+    "auc_p_par_one_vs_rest": 0.8239244399253234,
+    "auc_p_dau_one_vs_rest": 0.7120401420870904
+   },
+   "all": {
+    "n_parent": 73,
+    "n_daughter": 133,
+    "n_cont": 11032,
+    "auc_p_par_parent_vs_cont": 0.827416134383661,
+    "auc_p_dau_daughter_vs_cont": 0.7202560425719847,
+    "auc_p_par_one_vs_rest": 0.8272537099178573,
+    "auc_p_dau_one_vs_rest": 0.720780790336941
+   }
+  },
+  "on_all_labelled_pool_rows": {
+   "44b6": {
+    "n_parent": 9,
+    "n_daughter": 25,
+    "n_cont": 5779,
+    "auc_p_par_parent_vs_cont": 0.895368287477649,
+    "auc_p_dau_daughter_vs_cont": 0.7974874545769164,
+    "auc_p_par_one_vs_rest": 0.8956275365648212,
+    "auc_p_dau_one_vs_rest": 0.7975950241879751
+   },
+   "6bba": {
+    "n_parent": 64,
+    "n_daughter": 108,
+    "n_cont": 16283,
+    "auc_p_par_parent_vs_cont": 0.8215901937603636,
+    "auc_p_dau_daughter_vs_cont": 0.6973223607443346,
+    "auc_p_par_one_vs_rest": 0.821454990543591,
+    "auc_p_dau_one_vs_rest": 0.6976662384535389
+   },
+   "all": {
+    "n_parent": 73,
+    "n_daughter": 133,
+    "n_cont": 22062,
+    "auc_p_par_parent_vs_cont": 0.8252397042953669,
+    "auc_p_dau_daughter_vs_cont": 0.7105839115057156,
+    "auc_p_par_one_vs_rest": 0.8251710400034563,
+    "auc_p_dau_one_vs_rest": 0.7108790725401714
+   }
+  }
+ }
+}

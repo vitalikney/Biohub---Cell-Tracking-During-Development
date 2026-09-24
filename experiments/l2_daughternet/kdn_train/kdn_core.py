@@ -17,8 +17,17 @@ Labels (annotated GT nodes only, never unannotated space):
   hardneg  cont nodes that sit in the L2 insertion gate of an annotated one-child GT node, as u or as v
            (u: exactly one child c1 at t+1 within 10 um; v at t+1, v != c1, within 15 um of u; 3 <= |c1-v| <= 20 um;
            |midpoint(c1, v) - u| <= 6.5 um; cos(c1-u, v-u) <= 0.25), up to hardneg_per_video, label cont
+Extra samples (v2, env KDN_EXTRA_SAMPLES = parquet/csv of tools/make_pool_samples.py): candidate nodes of the REAL
+predicted pool labelled by GT matching (parent / daughter / cont), at their PREDICTED coordinates. They join their
+video's sample list with source=pool (GT rows: source=gt), kind pool_<label>, fold = the video's fold (OOF routing and
+the 44b6 leak groups unchanged), and are cropped exactly like GT samples. A pool row at the same stem and t as a GT
+sample and within KDN_DEDUP_VOX (1) voxel of it is the same node: the GT row is kept, the pool row dropped. The sampler
+stays class-balanced (a class is drawn uniformly, then a row of that class, gt or pool); KDN_POOL_WEIGHT (1.0) scales
+the loss of pool rows (batch loss = sum(w * CE) / sum(w)). GT rows keep their v1 row order and indices (pool rows are
+appended), so a run without KDN_EXTRA_SAMPLES is v1. The OOF readout reports source=gt and source=pool separately.
 Crops: prepare_sample (DivNet contract) called with an enlarged 18x34x34 crop; the inner 16x32x32 of it equals the
-contract sample exactly (asserted on the first nodes of every video), the 1-voxel margin feeds the +-1 voxel jitter.
+contract sample exactly (asserted on the first nodes of every video, per source), the 1-voxel margin feeds the +-1
+voxel jitter.
 Node coordinates are voxel indices of the full-resolution (64, 256, 256) frame, exactly as in the GT .geff.
 Frame index t+lag is clamped to [0, T-1] (the contract clamps the low end with max(0, .); the high end is clamped here,
 as in friend A's FrameReader, so nodes at t >= T-2 get a repeated last frame).
@@ -110,6 +119,10 @@ def config_from_env(overrides: dict | None = None) -> dict:
         "divnet_compare": _env_flag("KDN_DIVNET", "1"),
         "divnet_checkpoint": env("KDN_DIVNET_CKPT", ""),
         "keep_cache": _env_flag("KDN_KEEP_CACHE", "1"),
+        "extra_samples": env("KDN_EXTRA_SAMPLES", ""),        # pool rows (tools/make_pool_samples.py), "" = off
+        "pool_weight": float(env("KDN_POOL_WEIGHT", "1.0")),  # loss weight of source=pool rows
+        "dedup_vox": float(env("KDN_DEDUP_VOX", "1.0")),      # pool row within this many voxels of a GT sample = same node
+        "es_source": env("KDN_ES_SOURCE", "all"),             # early-stop loss over all / gt / pool rows of the val fold
         "gate": {"child_um": 10.0, "v_um": 15.0, "sister_min_um": 3.0, "sister_max_um": 20.0,
                  "mid_um": 6.5, "cos_max": 0.25},
     }
@@ -543,12 +556,111 @@ def _default_splits_path() -> Path | None:
 
 
 # ----------------------------------------------------------------------------------------------------------------------
+# extra samples (v2): labelled nodes of the real candidate pool at their predicted coordinates
+# ----------------------------------------------------------------------------------------------------------------------
+EXTRA_REQUIRED = ["stem", "node_id", "t", "z", "y", "x", "label"]
+EXTRA_OPTIONAL = ["dist_um", "gt_id", "n_triples", "n_u", "n_c1", "n_v"]
+
+
+def sha256_file(path: Path) -> str:
+    import hashlib
+    h = hashlib.sha256()
+    with open(path, "rb") as fh:
+        for block in iter(lambda: fh.read(1 << 20), b""):
+            h.update(block)
+    return h.hexdigest()
+
+
+def load_extra_samples(path: Path):
+    """tools/make_pool_samples.py output (.parquet, or the .csv text copy the notebook embeds; coordinates are read
+    back bit-exactly with float_precision='round_trip')."""
+    import pandas as pd
+
+    path = Path(path)
+    if path.suffix.lower() in (".parquet", ".pq"):
+        df = pd.read_parquet(path)
+    else:
+        df = pd.read_csv(path, dtype={"stem": str, "label": str}, float_precision="round_trip")
+    missing = [c for c in EXTRA_REQUIRED if c not in df.columns]
+    if missing:
+        raise ValueError(f"extra samples {path}: missing columns {missing}")
+    df = df[EXTRA_REQUIRED + [c for c in EXTRA_OPTIONAL if c in df.columns]].copy()
+    df["stem"] = df["stem"].astype(str)
+    df["label"] = df["label"].astype(str)
+    df["node_id"] = df["node_id"].astype(np.int64)
+    df["t"] = df["t"].astype(np.int64)
+    for col in ("z", "y", "x"):
+        df[col] = df[col].astype(np.float64)
+    dup = int(df.duplicated(["stem", "node_id"]).sum())
+    if dup:
+        raise ValueError(f"extra samples {path}: {dup} duplicated (stem, node_id) rows")
+    return df
+
+
+def merge_extra_samples(meta, extra, folds: dict, dedup_vox: float):
+    """GT sample table (v1 order, indices 0..n_gt-1) + pool rows appended (sorted by stem, t, node_id).
+
+    Pool rows of videos outside the selection or with an unknown label are dropped; a pool row at the same stem and t
+    as a GT sample and within dedup_vox voxels (euclidean, full-resolution voxel units) of it is dropped (GT label
+    kept). fold = the video's fold (the same map the GT rows use). Returns (meta, info, per-video counts)."""
+    import pandas as pd
+
+    info = {"rows_file": int(len(extra))}
+    ex = extra[extra["stem"].isin(set(folds))].copy()
+    info["rows_other_videos"] = int(len(extra) - len(ex))
+    bad = ~ex["label"].isin(set(CLASS_INDEX))
+    info["rows_unknown_label"] = int(bad.sum())
+    ex = ex[~bad].reset_index(drop=True)
+    ex["_eid"] = np.arange(len(ex))
+    gt = meta[["stem", "t", "z", "y", "x", "label"]].rename(
+        columns={"z": "z_gt", "y": "y_gt", "x": "x_gt", "label": "label_gt"})
+    pairs = ex[["_eid", "stem", "t", "z", "y", "x", "label"]].merge(gt, on=["stem", "t"], how="inner")
+    d = np.sqrt((pairs["z"] - pairs["z_gt"]) ** 2 + (pairs["y"] - pairs["y_gt"]) ** 2 + (pairs["x"] - pairs["x_gt"]) ** 2)
+    close = pairs[d.to_numpy() <= float(dedup_vox)]
+    dup_ids = set(close["_eid"].tolist())
+    same = close.drop_duplicates("_eid")
+    info["dedup_dropped"] = len(dup_ids)
+    info["dedup_same_label"] = int((same["label"] == same["label_gt"]).sum())
+    info["dedup_dropped_by_label"] = {k: int(v) for k, v in same["label"].value_counts().items()}
+    ex = ex[~ex["_eid"].isin(dup_ids)].drop(columns="_eid")
+    ex["kind"] = "pool_" + ex["label"]
+    ex["label_idx"] = ex["label"].map(CLASS_INDEX).astype(int)
+    ex["fold"] = ex["stem"].map(folds).astype(int)
+    ex["embryo"] = ex["stem"].str[:4]
+    ex["source"] = "pool"
+    ex = ex.sort_values(["stem", "t", "node_id"]).reset_index(drop=True)
+    meta = meta.copy()
+    meta["source"] = "gt"
+    if "gt_id" in ex.columns:
+        meta["gt_id"] = meta["node_id"].astype(np.int64)   # a GT sample IS its GT node
+    if "dist_um" in ex.columns:
+        meta["dist_um"] = 0.0
+    out = pd.concat([meta, ex[[c for c in ex.columns if c in meta.columns or c in EXTRA_OPTIONAL]]],
+                    ignore_index=True)
+    if "gt_id" in out.columns:
+        out["gt_id"] = out["gt_id"].astype(np.int64)
+    info["rows_used"] = int(len(ex))
+    info["by_label"] = {k: int(v) for k, v in ex["label"].value_counts().items()}
+    per_video = {s: {f"pool_{k}": int(v) for k, v in g["label"].value_counts().items()}
+                 for s, g in ex.groupby("stem")}
+    for stem, n in same["stem"].value_counts().items():
+        per_video.setdefault(stem, {})["pool_dedup_dropped"] = int(n)
+    return out, info, per_video
+
+
+# ----------------------------------------------------------------------------------------------------------------------
 # step 1: prepare
 # ----------------------------------------------------------------------------------------------------------------------
 def step_prepare(cfg: dict) -> dict:
     import pandas as pd
 
     t0 = time.time()
+    if cfg.get("es_source", "all") not in ("all", "gt", "pool"):
+        raise ValueError(f"KDN_ES_SOURCE must be all, gt or pool (got {cfg.get('es_source')!r})")
+    if cfg.get("es_source", "all") == "pool" and not cfg.get("extra_samples"):
+        raise ValueError("KDN_ES_SOURCE=pool needs KDN_EXTRA_SAMPLES")
+    if not float(cfg.get("pool_weight", 1.0)) > 0:
+        raise ValueError(f"KDN_POOL_WEIGHT must be > 0 (got {cfg.get('pool_weight')})")
     data_dir = resolve_data_dir(cfg)
     work = Path(cfg["work_dir"])
     work.mkdir(parents=True, exist_ok=True)
@@ -629,6 +741,30 @@ def step_prepare(cfg: dict) -> dict:
     meta["embryo"] = meta["stem"].str[:4]
     meta = meta.sort_values(["stem", "t", "node_id", "kind"]).reset_index(drop=True)
     stats = pd.DataFrame(stats_rows)
+    extra_info = None
+    if cfg.get("extra_samples"):
+        extra_path = Path(cfg["extra_samples"])
+        if not extra_path.is_file():
+            raise FileNotFoundError(f"KDN_EXTRA_SAMPLES={extra_path} not found")
+        extra = load_extra_samples(extra_path)
+        n_gt = len(meta)
+        meta, extra_info, per_video = merge_extra_samples(meta, extra, folds, cfg["dedup_vox"])
+        if not (meta.iloc[:n_gt]["source"] == "gt").all() or (meta.iloc[n_gt:]["source"] != "pool").any():
+            raise RuntimeError("extra-sample merge broke the GT-first row order")
+        extra_info.update({"path": str(extra_path), "sha256": sha256_file(extra_path), "dedup_vox": cfg["dedup_vox"],
+                           "pool_weight": cfg["pool_weight"]})
+        pv = pd.DataFrame.from_dict(per_video, orient="index").rename_axis("stem").reset_index()
+        if not pv.empty:
+            stats = stats.merge(pv, on="stem", how="left")
+            for col in [c for c in pv.columns if c != "stem"]:
+                stats[col] = stats[col].fillna(0).astype(int)
+        log(f"[prepare] extra samples {extra_path.name} (sha256 {extra_info['sha256'][:12]}): "
+            f"{extra_info['rows_file']} rows in file, {extra_info['rows_other_videos']} outside the selected videos, "
+            f"{extra_info['rows_unknown_label']} unknown label, {extra_info['dedup_dropped']} dropped as duplicates of "
+            f"GT samples (<= {cfg['dedup_vox']} voxel; same label {extra_info['dedup_same_label']}), "
+            f"{extra_info['rows_used']} used {extra_info['by_label']}; pool loss weight {cfg['pool_weight']}")
+    else:
+        meta["source"] = "gt"
     stats["selected"] = stats["stem"].isin(stems)
     stats["fold"] = stats["stem"].map(folds)
     (work / "splits_used.json").write_text(json.dumps(
@@ -637,7 +773,7 @@ def step_prepare(cfg: dict) -> dict:
         f"per fold videos {dict(sorted(pd.Series(folds).value_counts().items()))}")
     _print_label_counts(meta)
     return {"data_dir": str(data_dir), "cache_dir": str(cache), "work_dir": str(work), "stems": stems,
-            "folds": folds, "meta": meta, "stats": stats, "splits_source": splits_source,
+            "folds": folds, "meta": meta, "stats": stats, "splits_source": splits_source, "extra_info": extra_info,
             "timing": {"prepare_s": round(time.time() - t0, 1)}}
 
 
@@ -649,6 +785,11 @@ def _print_label_counts(meta) -> None:
     log("[prepare] samples by embryo x kind:\n" + tab.to_string())
     tab = meta.groupby(["fold", "label"]).size().unstack(fill_value=0)
     log("[prepare] samples by fold x label:\n" + tab.to_string())
+    if "source" in meta.columns and (meta["source"] != "gt").any():
+        tab = meta.groupby(["source", "label"]).size().unstack(fill_value=0)
+        log("[prepare] samples by source x label:\n" + tab.to_string())
+        tab = meta.groupby(["fold", "source"]).size().unstack(fill_value=0)
+        log("[prepare] samples by fold x source:\n" + tab.to_string())
 
 
 # ----------------------------------------------------------------------------------------------------------------------
@@ -685,8 +826,9 @@ def crop_video(job: dict) -> dict:
         ref_bundle = {"config": copy.deepcopy(DEFAULT_CFG), "prepared_frames": prepared}
         frame_cache: dict = {}
         nodes = job["nodes"]
+        sources = job.get("sources") or ["gt"] * len(nodes)
         out = np.empty((len(nodes), 4, *BIG), dtype=np.dtype(job["dtype"]))
-        checked = 0
+        checked: dict[str, int] = {}   # exact contract checks per source (gt, pool): the first nodes of each, by t
         inner = (slice(None), slice(MARGIN, MARGIN + CROP[0]), slice(MARGIN, MARGIN + CROP[1]),
                  slice(MARGIN, MARGIN + CROP[2]))
         for i in sorted(range(len(nodes)), key=lambda k: nodes[k][0]):
@@ -696,20 +838,21 @@ def crop_video(job: dict) -> dict:
             if sample.shape != (5, *BIG):
                 raise RuntimeError(f"unexpected enlarged sample shape {sample.shape}")
             out[i] = sample[:4]
-            if checked < job["checks"]:
+            if checked.get(sources[i], 0) < job["checks"]:
                 ref = prepare_sample(stem, int(tt), node, ref_bundle, frame_cache, reader)
                 if ref.shape != (5, *CROP) or not np.array_equal(sample[inner], ref):
-                    raise RuntimeError("inner crop != DivNet-contract sample (contract drift)")
-                checked += 1
+                    raise RuntimeError(f"inner crop != DivNet-contract sample (contract drift, {sources[i]} node)")
+                checked[sources[i]] = checked.get(sources[i], 0) + 1
             for key in [k for k in prepared if k[1] < int(tt) - 1]:
                 prepared.pop(key)
         prepared.clear()
         frame_cache.clear()
-        return {"stem": stem, "crops": out, "secs": time.time() - t0, "error": None, "checked": checked,
+        return {"stem": stem, "crops": out, "secs": time.time() - t0, "error": None,
+                "checked": sum(checked.values()), "checked_pool": checked.get("pool", 0),
                 "frames_read": reader.frames_read, "decoders": decoder_names()}
     except Exception as exc:
         return {"stem": stem, "crops": None, "secs": time.time() - t0, "error": f"{type(exc).__name__}: {exc}",
-                "checked": 0, "frames_read": 0, "decoders": decoder_names()}
+                "checked": 0, "checked_pool": 0, "frames_read": 0, "decoders": decoder_names()}
 
 
 def step_build_cache(cfg: dict, state: dict) -> dict:
@@ -735,9 +878,11 @@ def step_build_cache(cfg: dict, state: dict) -> dict:
     log(f"[build] {n} samples -> {crops_path} ({n * 4 * int(np.prod(BIG)) * dtype.itemsize / 2**30:.2f} GiB {dtype})")
     crops = np.lib.format.open_memmap(crops_path, mode="w+", dtype=dtype, shape=(max(n, 1), 4, *BIG))
     jobs = []
+    has_source = "source" in meta.columns
     for stem, grp in meta.groupby("stem", sort=True):
         jobs.append({"stem": stem, "data_dir": state["data_dir"], "dtype": dtype.name, "checks": cfg["contract_checks"],
                      "index": grp.index.to_numpy(),
+                     "sources": grp["source"].tolist() if has_source else None,
                      "nodes": list(zip(grp["t"].tolist(), grp["z"].tolist(), grp["y"].tolist(), grp["x"].tolist()))})
     n_workers = cfg["build_workers"] or min(4, os.cpu_count() or 1)
     n_workers = max(1, min(n_workers, len(jobs) or 1))
@@ -762,7 +907,8 @@ def step_build_cache(cfg: dict, state: dict) -> dict:
             else:
                 status = "FAILED " + res["error"]
             video_rows.append({"stem": stem, "crop_secs": round(res["secs"], 2), "frames_read": res["frames_read"],
-                               "contract_checks": res["checked"], "crop_error": res["error"], "n_samples": len(idx)})
+                               "contract_checks": res["checked"], "contract_checks_pool": res.get("checked_pool", 0),
+                               "crop_error": res["error"], "n_samples": len(idx)})
             log(f"[build] {done}/{len(jobs)} {stem} n={len(idx)} "
                 + " ".join(f"{k}={v}" for k, v in sorted(counts.items()))
                 + f" frames={res['frames_read']} {res['secs']:.1f}s decoders={res['decoders']} {status}")
@@ -785,6 +931,12 @@ def step_build_cache(cfg: dict, state: dict) -> dict:
     log(f"[build] done in {secs:.1f} s with {n_workers} workers; valid samples {int(valid.sum())}/{n}; "
         f"videos failed {int(vid['crop_error'].notna().sum()) if not vid.empty else 0}; mean crop time per video "
         f"{per_video:.2f} s (single worker)")
+    if has_source and (meta["source"] == "pool").any():
+        n_chk = int(vid["contract_checks"].sum()) if not vid.empty else 0
+        n_chk_pool = int(vid["contract_checks_pool"].sum()) if not vid.empty else 0
+        state["contract_checks"] = {"gt": n_chk - n_chk_pool, "pool": n_chk_pool}
+        log(f"[build] exact contract checks (inner crop == prepare_sample): gt {n_chk - n_chk_pool}, pool {n_chk_pool}; "
+            f"valid by source {meta[meta['valid']].groupby('source').size().to_dict()}")
     return state
 
 
@@ -819,7 +971,8 @@ def step_train(cfg: dict, state: dict) -> dict:
     folds = sorted(int(f) for f in meta.loc[meta["valid"], "fold"].unique())
     (work / "folds").mkdir(parents=True, exist_ok=True)
     cfg_path = cache / "kdn_cfg.json"
-    cfg_path.write_text(json.dumps({**cfg, "_cache_dir": str(cache), "_work_dir": str(work)}, indent=1))
+    cfg_path.write_text(json.dumps({**cfg, "_cache_dir": str(cache), "_work_dir": str(work),
+                                    "_extra_info": state.get("extra_info")}, indent=1, default=_json_default))
     n_gpu = torch.cuda.device_count() if cfg["gpus"] != 0 else 0
     if cfg["gpus"] > 0:
         n_gpu = min(n_gpu, cfg["gpus"])
@@ -987,6 +1140,10 @@ def train_fold(cfg: dict, fold: int, device_str: str, threads: int = 0) -> dict:
     meta = pd.read_csv(cache / "meta.csv", index_col="row")
     crops = np.load(cache / "crops.npy", mmap_mode="r")
     meta = meta[meta["valid"].astype(bool)]
+    if "source" not in meta.columns:  # cache written before v2
+        meta = meta.assign(source="gt")
+    meta = meta.assign(source=meta["source"].fillna("gt").astype(str))
+    has_pool = bool((meta["source"] == "pool").any())
     n_folds = int(cfg["n_folds"])
     if cfg.get("inner_val") and n_folds < 3:
         log(f"fold {fold}: KDN_INNER_VAL needs >= 3 folds (have {n_folds}) -> early stopping on the OOF fold")
@@ -1005,8 +1162,17 @@ def train_fold(cfg: dict, fold: int, device_str: str, threads: int = 0) -> dict:
     oof_rows = meta.index[oof_mask].to_numpy()
     y_tr = meta.loc[tr_rows, "label_idx"].to_numpy().astype(np.int64)
     y_es = meta.loc[es_rows, "label_idx"].to_numpy().astype(np.int64)
+    src_tr = meta.loc[tr_rows, "source"].to_numpy()
+    src_es = meta.loc[es_rows, "source"].to_numpy()
+    es_source = cfg.get("es_source", "all") if has_pool else "all"
+    es_sel = np.ones(len(es_rows), bool) if es_source == "all" else (src_es == es_source)
     log(f"fold {fold}: device {device} train {len(tr_rows)} {np.bincount(y_tr, minlength=3).tolist()} | "
         f"early-stop fold {es_fold}: {len(es_rows)} {np.bincount(y_es, minlength=3).tolist()} | oof {len(oof_rows)}")
+    if has_pool:
+        comp = {s: np.bincount(y_tr[src_tr == s], minlength=3).tolist() for s in ("gt", "pool")}
+        comp_es = {s: np.bincount(y_es[src_es == s], minlength=3).tolist() for s in ("gt", "pool")}
+        log(f"fold {fold}: train by source [cont, parent, daughter] {comp} | early-stop by source {comp_es}; "
+            f"early-stop loss on {es_source} rows ({int(es_sel.sum())}); pool loss weight {cfg.get('pool_weight', 1.0)}")
     if len(tr_rows) == 0:
         raise RuntimeError("no training samples")
     store_dtype = torch.float16 if use_cuda else torch.float32
@@ -1014,6 +1180,10 @@ def train_fold(cfg: dict, fold: int, device_str: str, threads: int = 0) -> dict:
     x_tr = _load_split(crops, tr_rows, False, store_dtype, device, torch)
     x_es = _load_split(crops, es_rows, True, torch.float32, device, torch)
     y_tr_t = torch.from_numpy(y_tr).to(device)
+    pool_w = float(cfg.get("pool_weight", 1.0))
+    weighted = bool((src_tr == "pool").any()) and pool_w != 1.0
+    w_tr_t = (torch.from_numpy(np.where(src_tr == "pool", pool_w, 1.0).astype(np.float32)).to(device)
+              if weighted else None)
     log(f"fold {fold}: loaded crops in {time.time() - t_load:.1f} s (train {tuple(x_tr.shape)} {x_tr.dtype})")
     marker = contract_marker(torch).to(device)
 
@@ -1023,6 +1193,13 @@ def train_fold(cfg: dict, fold: int, device_str: str, threads: int = 0) -> dict:
                                                "epoch_samples", "jitter", "gain", "seed", "cont_per_video",
                                                "hardneg_per_video", "cont_min_dist", "inner_val", "n_folds")}
     ckpt_cfg["train"].update({"fold": fold, "early_stop_fold": es_fold, "kernel": "biohub-l2-kdn-train"})
+    if cfg.get("extra_samples"):
+        extra_info = cfg.get("_extra_info") or {}
+        ckpt_cfg["train"].update({"extra_samples": Path(cfg["extra_samples"]).name,
+                                  "extra_samples_sha256": extra_info.get("sha256"), "pool_weight": pool_w,
+                                  "dedup_vox": cfg.get("dedup_vox"), "es_source": es_source,
+                                  "train_counts_by_source": {s: np.bincount(y_tr[src_tr == s], minlength=3).tolist()
+                                                             for s in ("gt", "pool")}})
     model = build_model(ckpt_cfg).to(device)
     opt = torch.optim.AdamW(model.parameters(), lr=cfg["lr"], weight_decay=cfg["weight_decay"])
     classes_present = [c for c in range(len(CLASSES)) if (y_tr == c).any()]
@@ -1065,7 +1242,12 @@ def train_fold(cfg: dict, fold: int, device_str: str, threads: int = 0) -> dict:
             opt.zero_grad(set_to_none=True)
             with torch.autocast(device_type=device.type, dtype=torch.float16, enabled=use_amp):
                 logits = model(xb)
-            loss = torch.nn.functional.cross_entropy(logits.float(), yb)
+            if weighted:  # pool rows up/down-weighted: weighted mean of the per-sample CE over the batch
+                wb = w_tr_t[idx_t]
+                ce = torch.nn.functional.cross_entropy(logits.float(), yb, reduction="none")
+                loss = (ce * wb).sum() / wb.sum()
+            else:         # v1 path, bit-identical when there are no pool rows or KDN_POOL_WEIGHT = 1
+                loss = torch.nn.functional.cross_entropy(logits.float(), yb)
             scaler.scale(loss).backward()
             scaler.step(opt)
             scaler.update()
@@ -1077,7 +1259,8 @@ def train_fold(cfg: dict, fold: int, device_str: str, threads: int = 0) -> dict:
             torch.cuda.synchronize()
         train_secs = time.time() - te
         probs = predict_inner(model, x_es, marker, cfg["eval_batch"], torch)
-        vm = _val_metrics(probs, y_es)
+        vm = _val_metrics(probs[es_sel], y_es[es_sel]) if es_source != "all" else _val_metrics(probs, y_es)
+        vm_src = ({s: _val_metrics(probs[src_es == s], y_es[src_es == s]) for s in ("gt", "pool")} if has_pool else {})
         val_loss = vm.get("macro_ce", float("nan")) if vm["n"] else float("nan")
         improved = vm["n"] > 0 and val_loss < best
         state_cpu = {k: v.detach().cpu() for k, v in model.state_dict().items()}
@@ -1092,13 +1275,18 @@ def train_fold(cfg: dict, fold: int, device_str: str, threads: int = 0) -> dict:
         rec = {"epoch": epoch, "train_loss": train_loss, "val_loss": val_loss, "lr": lr_at(step - 1),
                "secs": round(time.time() - te, 1), "train_secs": round(train_secs, 1),
                "samples_per_s": round(seen / max(1e-9, train_secs), 1),
-               **{f"val_{k}": v for k, v in vm.items()}}
+               **{f"val_{k}": v for k, v in vm.items()},
+               **{f"val_{s}_{k}": v for s, m in vm_src.items() for k, v in m.items()
+                  if k in ("n", "macro_ce", "auc_parent", "auc_daughter")}}
         history.append(rec)
         (fdir / "history.json").write_text(json.dumps(history, indent=1))
         auc_txt = " ".join(f"auc_{n}={vm.get('auc_' + n) if vm.get('auc_' + n) is None else round(vm['auc_' + n], 3)}"
                            for n in CLASSES)
+        src_txt = "".join(
+            f" | {s}: CE {_r4(m.get('macro_ce'))} auc_par {_r4(m.get('auc_parent'))} auc_dau {_r4(m.get('auc_daughter'))}"
+            for s, m in vm_src.items() if m["n"])
         log(f"fold {fold} epoch {epoch}: train {train_loss:.4f} val(macro CE) {val_loss:.4f} "
-            f"{'*' if improved else ' '} {auc_txt} {rec['secs']}s (train {rec['samples_per_s']} samples/s)")
+            f"{'*' if improved else ' '} {auc_txt} {rec['secs']}s (train {rec['samples_per_s']} samples/s){src_txt}")
         if vm["n"] and bad >= int(cfg["patience"]):
             log(f"fold {fold}: early stop at epoch {epoch} (best {best_epoch}, val {best:.4f})")
             break
@@ -1118,10 +1306,25 @@ def train_fold(cfg: dict, fold: int, device_str: str, threads: int = 0) -> dict:
                "early_stop_fold": es_fold, "n_train": int(len(tr_rows)), "n_oof": int(len(oof_rows)),
                "train_counts": np.bincount(y_tr, minlength=3).tolist(), "oof_metrics": om,
                "secs": round(time.time() - t_start, 1), "device": str(device)}
+    if has_pool:
+        src_oof = meta.loc[oof_rows, "source"].to_numpy()
+        summary["es_source"] = es_source
+        summary["pool_weight"] = pool_w
+        summary["train_counts_by_source"] = {s: np.bincount(y_tr[src_tr == s], minlength=3).tolist()
+                                             for s in ("gt", "pool")}
+        summary["oof_metrics_by_source"] = {s: _val_metrics(p_oof[src_oof == s], y_oof[src_oof == s])
+                                            for s in ("gt", "pool")}
     (fdir / "summary.json").write_text(json.dumps(summary, indent=1))
     log(f"fold {fold}: OOF {len(oof_rows)} samples macro CE {om.get('macro_ce')} "
         f"auc_parent {om.get('auc_parent')} auc_daughter {om.get('auc_daughter')}; total {summary['secs']} s")
+    for s, m in summary.get("oof_metrics_by_source", {}).items():
+        log(f"fold {fold}: OOF source={s} n={m['n']} macro CE {_r4(m.get('macro_ce'))} "
+            f"auc_parent {_r4(m.get('auc_parent'))} auc_daughter {_r4(m.get('auc_daughter'))}")
     return summary
+
+
+def _r4(value):
+    return None if value is None else round(float(value), 4)
 
 
 def worker_main(argv: list[str]) -> int:
@@ -1194,7 +1397,7 @@ def step_oof(cfg: dict, state: dict) -> dict:
     t0 = time.time()
     work = Path(state["work_dir"])
     cache = Path(state["cache_dir"])
-    meta = pd.read_csv(cache / "meta.csv", index_col="row")
+    meta = pd.read_csv(cache / "meta.csv", index_col="row", float_precision="round_trip")  # exact node coordinates
     meta = meta[meta["valid"].astype(bool)].copy()
     for col in ("p_cont", "p_par", "p_dau"):
         meta[col] = np.nan
@@ -1240,7 +1443,11 @@ def step_oof(cfg: dict, state: dict) -> dict:
             log(f"[oof] DivNet comparison skipped: {divnet_info['error']}")
 
     out = meta.reset_index(drop=True)
-    extra = [c for c in ("node_id", "kind", "embryo", "label_idx", "p_divnet") if c in out.columns]
+    if "source" not in out.columns:  # cache written before v2
+        out["source"] = "gt"
+    out["source"] = out["source"].fillna("gt").astype(str)
+    extra = [c for c in ("node_id", "kind", "embryo", "label_idx", "source", "p_divnet", "gt_id", "dist_um",
+                         "n_triples", "n_u", "n_c1", "n_v") if c in out.columns]
     out[OOF_COLUMNS + extra].to_csv(work / "oof.csv", index=False)
 
     readout = {
@@ -1253,13 +1460,21 @@ def step_oof(cfg: dict, state: dict) -> dict:
             "lift": "precision / base_rate",
             "lr_plus": "likelihood ratio at the cutoff = TPR / FPR = (tp/P) / (fp/N); null when fp = 0",
             "auc": "one-vs-rest ROC AUC of the class probability",
+            "source": "gt = annotated GT nodes at GT coordinates (per_embryo / hardneg / divnet_comparison are on "
+                      "these rows only, as in v1); pool = exported candidate nodes of our predicted graphs labelled "
+                      "by the nearest GT node within 7 um, at PREDICTED coordinates (by_source.pool; cont "
+                      "subsampled per video, preferring nodes in many candidate triples -> base rates and AUCs are "
+                      "on that sample)",
         },
         "counts": {e: g.groupby("kind").size().to_dict() for e, g in out.groupby("embryo")},
-        "per_embryo": {}, "hardneg": {}, "folds": fold_summaries, "divnet_comparison": divnet_info,
+        "counts_by_source": {s: g.groupby("label").size().to_dict() for s, g in out.groupby("source")},
+        "per_embryo": {}, "hardneg": {}, "by_source": {}, "folds": fold_summaries, "divnet_comparison": divnet_info,
+        "extra_samples": state.get("extra_info"),
         "timing": state.get("timing", {}), "train_rc": state.get("train_rc"),
         "config": {k: v for k, v in cfg.items() if not k.startswith("_")},
     }
-    scored = out[out["p_par"].notna()]
+    scored_all = out[out["p_par"].notna()]
+    scored = scored_all[scored_all["source"] == "gt"]
     groups = [(e, g) for e, g in scored.groupby("embryo")] + [("all", scored)]
     prob_col = {"cont": "p_cont", "parent": "p_par", "daughter": "p_dau"}
     for emb, g in groups:
@@ -1287,6 +1502,10 @@ def step_oof(cfg: dict, state: dict) -> dict:
                 "random_cont_only": {"divnet_in_sample_auc": auc_score(sub_rand["p_divnet"].to_numpy(), y_r),
                                      "daughternet_oof_auc": auc_score(sub_rand["p_par"].to_numpy(), y_r)},
             }
+    readout["by_source"]["gt"] = {"per_embryo": readout["per_embryo"], "hardneg": readout["hardneg"]}
+    pool = scored_all[scored_all["source"] == "pool"]
+    if len(pool):
+        readout["by_source"]["pool"] = _pool_block(pool, prob_col, bool(divnet_info.get("in_sample")))
     state["timing"]["oof_s"] = round(time.time() - t0, 1)
     readout["timing"] = state["timing"]
     (work / "oof_readout.json").write_text(json.dumps(readout, indent=1, default=_json_default))
@@ -1297,6 +1516,45 @@ def step_oof(cfg: dict, state: dict) -> dict:
         shutil.rmtree(cache, ignore_errors=True)
     state["readout"] = readout
     return state
+
+
+def _vs_auc(pos_scores, neg_scores) -> float | None:
+    return auc_score(np.r_[np.asarray(pos_scores, float), np.asarray(neg_scores, float)],
+                     np.r_[np.ones(len(pos_scores)), np.zeros(len(neg_scores))])
+
+
+def _pool_block(pool, prob_col: dict, divnet_in_sample: bool) -> dict:
+    """OOF readout on source=pool rows (the real candidate pool at predicted coordinates), per embryo + all:
+    one-vs-rest rank blocks per class, parent-vs-cont and daughter-vs-cont rank blocks (the question the insertion
+    asks), the same against cont nodes that occur as u / c1 / v of candidate triples, and DivNet (in-sample) vs
+    DaughterNet on parent-vs-cont."""
+    import pandas as pd
+
+    block = {"per_embryo": {}, "vs_cont": {}, "gate_roles": {}, "divnet_parent_vs_cont": {}}
+    groups = [(e, g) for e, g in pool.groupby("embryo")] + [("all", pool)]
+    for emb, g in groups:
+        block["per_embryo"][emb] = {
+            name: _rank_block(g[prob_col[name]].to_numpy(), (g["label"] == name).to_numpy()) for name in CLASSES}
+        par, dau, cont = g[g["label"] == "parent"], g[g["label"] == "daughter"], g[g["label"] == "cont"]
+        pc = pd.concat([par, cont], ignore_index=True)
+        dc = pd.concat([dau, cont], ignore_index=True)
+        block["vs_cont"][emb] = {
+            "parent_vs_cont_p_par": _rank_block(pc["p_par"].to_numpy(), (pc["label"] == "parent").to_numpy()),
+            "daughter_vs_cont_p_dau": _rank_block(dc["p_dau"].to_numpy(), (dc["label"] == "daughter").to_numpy()),
+        }
+        if all(c in g.columns for c in ("n_u", "n_c1", "n_v")):
+            cu, cc1, cv = cont[cont["n_u"] > 0], cont[cont["n_c1"] > 0], cont[cont["n_v"] > 0]
+            block["gate_roles"][emb] = {
+                "n_cont_as_u": int(len(cu)), "n_cont_as_c1": int(len(cc1)), "n_cont_as_v": int(len(cv)),
+                "auc_p_par_parent_vs_cont_as_u": _vs_auc(par["p_par"], cu["p_par"]),
+                "auc_p_dau_daughter_vs_cont_as_c1": _vs_auc(dau["p_dau"], cc1["p_dau"]),
+                "auc_p_dau_daughter_vs_cont_as_v": _vs_auc(dau["p_dau"], cv["p_dau"]),
+            }
+        if divnet_in_sample and "p_divnet" in g.columns:
+            block["divnet_parent_vs_cont"][emb] = {
+                "divnet_in_sample_auc": _vs_auc(par["p_divnet"], cont["p_divnet"]),
+                "daughternet_oof_auc": _vs_auc(par["p_par"], cont["p_par"])}
+    return block
 
 
 def _json_default(value):
@@ -1311,16 +1569,40 @@ def _json_default(value):
     return str(value)
 
 
+def _print_rank_line(tag: str, emb: str, name: str, r: dict) -> None:
+    tops = " ".join(f"{k}:{r[k]['tp']}/{r[k]['k']}" for k, _ in TOP_FRACS if r.get(k))
+    auc = None if r["auc"] is None else round(r["auc"], 4)
+    base = "n/a" if r["base_rate"] is None else f"{r['base_rate']:.4f}"
+    log(f"{tag} {emb:5s} {name:8s} n={r['n']:6d} n_pos={r['n_pos']:5d} base={base} AUC={auc} {tops}")
+
+
 def _print_readout(readout: dict) -> None:
+    pool = readout.get("by_source", {}).get("pool")
+    if pool:
+        log("[readout] ---- source=gt (GT nodes at GT coordinates; v1 readout) ----")
     for emb, block in readout["per_embryo"].items():
         for name, r in block.items():
-            tops = " ".join(f"{k}:{r[k]['tp']}/{r[k]['k']}" for k, _ in TOP_FRACS if r.get(k))
-            auc = None if r["auc"] is None else round(r["auc"], 4)
-            base = "n/a" if r["base_rate"] is None else f"{r['base_rate']:.4f}"
-            log(f"[readout] {emb:5s} {name:8s} n_pos={r['n_pos']:5d} base={base} AUC={auc} {tops}")
+            _print_rank_line("[readout]", emb, name, r)
     for emb, r in readout.get("divnet_comparison", {}).get("per_embryo", {}).items():
         a, b = r["divnet_in_sample"]["auc"], r["daughternet_oof_p_par"]["auc"]
         log(f"[readout] {emb:5s} parent-vs-cont AUC DivNet(in-sample)={a} DaughterNet(OOF)={b}")
+    if not pool:
+        return
+    log("[readout pool] ---- source=pool (real candidate pool at PREDICTED coordinates; the block that matters) ----")
+    for emb, block in pool["per_embryo"].items():
+        for name, r in block.items():
+            _print_rank_line("[readout pool]", emb, name, r)
+    for emb, r in pool["vs_cont"].items():
+        _print_rank_line("[readout pool]", emb, "par|cont", r["parent_vs_cont_p_par"])
+        _print_rank_line("[readout pool]", emb, "dau|cont", r["daughter_vs_cont_p_dau"])
+    for emb, r in pool["gate_roles"].items():
+        log(f"[readout pool] {emb:5s} gate roles: AUC p_par parent vs cont-as-u ({r['n_cont_as_u']}) "
+            f"{_r4(r['auc_p_par_parent_vs_cont_as_u'])}; p_dau daughter vs cont-as-c1 ({r['n_cont_as_c1']}) "
+            f"{_r4(r['auc_p_dau_daughter_vs_cont_as_c1'])}; vs cont-as-v ({r['n_cont_as_v']}) "
+            f"{_r4(r['auc_p_dau_daughter_vs_cont_as_v'])}")
+    for emb, r in pool["divnet_parent_vs_cont"].items():
+        log(f"[readout pool] {emb:5s} parent-vs-cont AUC DivNet(in-sample)={_r4(r['divnet_in_sample_auc'])} "
+            f"DaughterNet(OOF)={_r4(r['daughternet_oof_auc'])}")
 
 
 def step_verify(cfg: dict, state: dict, per_fold: int = 2) -> dict:
@@ -1332,10 +1614,13 @@ def step_verify(cfg: dict, state: dict, per_fold: int = 2) -> dict:
     from tools.divnet_infer import divnet_score_division
 
     work = Path(state["work_dir"])
-    oof = pd.read_csv(work / "oof.csv")
+    oof = pd.read_csv(work / "oof.csv", float_precision="round_trip")
     oof = oof[oof["p_par"].notna()]
+    if "source" not in oof.columns:
+        oof = oof.assign(source="gt")
     reader = FrameReader(Path(state["data_dir"]))
-    report = {"checked": 0, "max_abs_diff_daughternet": 0.0, "max_abs_diff_divnet": None, "rows": []}
+    report = {"checked": 0, "checked_pool": 0, "max_abs_diff_daughternet": 0.0, "max_abs_diff_divnet": None,
+              "rows": []}
     divnet_bundle = None
     if "p_divnet" in oof.columns and oof["p_divnet"].notna().any():
         ckpt = _find_divnet_checkpoint(cfg)
@@ -1346,15 +1631,20 @@ def step_verify(cfg: dict, state: dict, per_fold: int = 2) -> dict:
         if not best.is_file():
             continue
         bundle = load_daughternet([best], device="cpu")
-        # prefer parents/daughters so the check covers the classes that matter
-        pick = pd.concat([g[g["label"] != "cont"].head(per_fold), g[g["label"] == "cont"].head(1)])
+        # prefer parents/daughters so the check covers the classes that matter; pool rows (predicted coordinates)
+        # get one division-class and one cont row per fold on top
+        gt, gp = g[g["source"] == "gt"], g[g["source"] == "pool"]
+        pick = pd.concat([gt[gt["label"] != "cont"].head(per_fold), gt[gt["label"] == "cont"].head(1),
+                          gp[gp["label"] != "cont"].head(1), gp[gp["label"] == "cont"].head(1)])
         for _, r in pick.iterrows():
             node = {"t": int(r["t"]), "z": float(r["z"]), "y": float(r["y"]), "x": float(r["x"])}
             bundle["prepared_frames"] = {}
             p = score_nodes(r["stem"], [node], bundle, {}, reader, batch=1)[0]
             diff = float(np.abs(p - r[["p_cont", "p_par", "p_dau"]].to_numpy(dtype=np.float64)).max())
             report["max_abs_diff_daughternet"] = max(report["max_abs_diff_daughternet"], diff)
-            row = {"fold": int(fold), "stem": r["stem"], "t": int(r["t"]), "label": r["label"], "diff": diff}
+            row = {"fold": int(fold), "stem": r["stem"], "t": int(r["t"]), "label": r["label"], "diff": diff,
+                   "source": r["source"]}
+            report["checked_pool"] += int(r["source"] == "pool")
             if divnet_bundle is not None:
                 divnet_bundle["prepared_frames"] = {}
                 q = divnet_score_division(r["stem"], int(r["t"]), node, None, None, divnet_bundle, {}, reader)
@@ -1370,7 +1660,8 @@ def step_verify(cfg: dict, state: dict, per_fold: int = 2) -> dict:
     report["pass"] = bool(report["checked"] > 0 and report["max_abs_diff_daughternet"] <= tol
                           and (report["max_abs_diff_divnet"] is None or report["max_abs_diff_divnet"] <= tol))
     (work / "contract_check.json").write_text(json.dumps(report, indent=1, default=_json_default))
-    log(f"[verify] {report['checked']} samples re-scored from raw frames via score_nodes: max |dp| DaughterNet "
+    log(f"[verify] {report['checked']} samples ({report['checked_pool']} pool) re-scored from raw frames via "
+        f"score_nodes: max |dp| DaughterNet "
         f"{report['max_abs_diff_daughternet']:.2e}, DivNet {report['max_abs_diff_divnet']} -> "
         f"{'PASS' if report['pass'] else 'FAIL'} (tol {tol})")
     state["verify"] = report
