@@ -1467,5 +1467,12 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   on arithmetic (1 run = ~23 h on the 5070 Ti + edge-net + own head; our earlier all-199 retrain = 0.920; others'
   retrains 0.947-0.950). Head retrain on 199 (~1-1.5 days, ~+0.0003..0.002) only if #31 >= 0.951 and exp51 - exp54
   >= 0.002; then prepare friend A's capture script + prompt.
+- 2026-09-24 18:40 UTC: user agreed to the V1284 head RETRAIN on all 199 train videos, KAGGLE path, starting now
+  (not waiting for #31): agent builds a sharded capture kernel (exp51 stack, COORDHEAD_MODE=capture, train videos),
+  tools/train_coordhead.py (Hungarian <= 4 um to GT, target (gt-det) um < 2, 224->32->3 zero-init last layer; eval
+  held out by leak group AND by embryo vs the public head; kill test: >= 3% lower matched distance on BOTH embryo
+  directions and no loss of 7 um matches), pilot on 6 videos, then the full run (<= ~12 GPU h, 2 sessions), then
+  exp55 = exp51 + COORDHEAD_HEAD_PATH (new knob) - build only. Files: experiments/coordhead_retrain/. Colab kept in
+  reserve (it would need the competition data + the user's own kaggle.json upload).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
