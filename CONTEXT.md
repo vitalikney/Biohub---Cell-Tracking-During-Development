@@ -1443,5 +1443,8 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   quantified twice: rules that override the relink with the ILP / edge network look +0.01..+0.016 locally and give 0 on
   LB (in-sample network). Lab gains are only trustworthy for changes that do NOT lean on network confidence (e.g. float
   output coordinates, which change no topology). Finals candidates now: exp48 (0.948) and, if it scores, exp51.
+- 2026-09-24 17:09 UTC: probe #31 exp51 (exp48 + x138 coordinate head) SUBMITTED with the user's OK, id 56527239
+  (5/5 slots used on 24 Sep UTC). Next day (25 Sep, 5 slots): float output coordinates on top of the best (lab +0.0018,
+  3/3 skeptics survive; server parser risk = parse error, not silent loss), then the workflow's synthesis picks.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
