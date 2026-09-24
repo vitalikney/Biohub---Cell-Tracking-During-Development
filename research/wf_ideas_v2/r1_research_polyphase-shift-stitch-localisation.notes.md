@@ -10,3 +10,6 @@
 - 16:13 resumed after crash; notes above intact; doing web research + code confirm next
 - Code confirmed: predict _load_frame l.209-222 zarr[t, ::dz, ::dy, ::dx]; train dataset l.340 same; decode l.494-497 coords*ds then astype int16. Det loss train l.541-593: BCE, single positive voxel at floor(gt/ds), w_pos=1/n_pos, w_neg=neg_weight/n_neg -> heatmap ~ posterior over coarse floor cell; ideal phase-(dy) net predicts floor((y-dy)/4).
 - Web: FCN (Long et al., arXiv 1411.4038 / 1605.06211) sec 3.2: shift-and-stitch = f^2 shifted inputs, interlace outputs; equivalent to filter rarefaction; FCN found it not worth it vs learned upsampling (in-network). DARK arXiv 1910.06278: Taylor decode assumes Gaussian heatmap; our target is 1-voxel BCE (not Gaussian) -> Taylor/parabola on logits is a guess.
+- Web: APS (Chaman & Dokmanic CVPR 2021; arXiv 2105.04040 APS-U for U-Net) + Zhang 2019 (arXiv 1904.11486): strided CNNs/U-Nets are NOT shift-equivariant -> per-phase peak jitter/bias; need phase-consistency check and per-video recentring.
+- Key plus: xy refinement lands on the 0.406 um full-res grid, so it SURVIVES the writer's int(round()) (unlike z refinement). Replay lab rounds too -> lab faithful.
+- Verdict drafted: MIXED (mechanism real, magnitude claim refuted by dose-response and 4.4um swap offsets). Writing JSON.

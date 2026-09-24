@@ -1,0 +1,12 @@
+# final synthesis notes (crash-safe log)
+- 2026-09-24 start: final.json absent -> doing the synthesis. Inputs: task brief (verified hypotheses JSON), CONTEXT.md s14, RESULTS.md, r2_critic.
+- 17:40 UTC facts: probe29 exp49 (ef_a3_rl_pr) = 0.947 tie -> ef line + stitch bundle CLOSED (CONTEXT 16:55). probe30 = 0.946. probe31 exp51 (exp48+coordhead) submitted 17:09, PENDING; 5/5 slots used 24 Sep. Scoring latency 7.5-10 h.
+- Browser pass2: 41 teams at 0.953 (x138 reproduces); x138 authors privately 0.959/0.956; plain all-train detector retrain 0.947 (leonixis); pool-2 sigma0.8 detector retrain 0.950 (easonyanyan).
+- Kept so far (plan): float-output (safe encoding, 3/3 survive), finals-emax (3/3), ef-anomaly finals hedge (2/3), overlap-consensus (3/3, r2). Repaired riders: fork-midpoint safe-div-only 4.5um (all 3 fixes converge), plain 199-video head retrain pilot (fixes define kill test). Dropped: stitch (conditional on probe29 -> failed), frozen, div-cap, dorado, oof, hole-fill, dup-collapse, polyphase, rts, clip-boundary.
+- 18:00 UTC decisions: lab e48 config = "e48=exp39,leaf_prune=0.3,insert=1,ins.steal=1,ins.cap_video=4,ins.alpha=1,ins.threshold=0.5" + --node-p data_external/l2/kds_out/node_p_oof.parquet (confirmation s_c4_t0.5 +0.00194, 20/39/67). Float safe encoding from scratch roundsafe.py: w=max(0,R+clip(round(v-R,3),0,0.499)); +0.00190 [+0.00115,+0.00271].
+- Finals: F1 = best scored base(+float); F2 = F1 + ef_a3_rl_pr + stitch st_all (in-sample-ILP hedge; S29=0, S30=-0.001 -> flat branch, ef in ONE final). E[D+] at mu 0, s 0.0048 = +0.0019.
+- LB histogram 24 Sep: 52 teams >= 0.957, 64 >= 0.956, 78 >= 0.955, ~134 >= 0.953.
+- Outlook: expected public ~0.955 (0.948 + head 0.005 + float 0.001 + forkmid 0.0005 + overlap 0.0005 + head-retrain 0.0003); ceiling sum ~0.962; P(>=0.965) < 1%.
+- Next: write final.json + FINAL_REPORT.md.
+- 18:20 UTC final.json written and validated (16 items, 6 kept).
+- 18:25 UTC FINAL_REPORT.md written. Returning final.json via StructuredOutput.

@@ -1,0 +1,12 @@
+# verify float-output-coords (transfer lens) notes
+- Research scripts in session scratchpad acabaea6.../scratchpad: roundtest.py (match/score reimpl), roundfloor.py/csv (r/f/floor/3dec on 199, tail divnet_rerank_fb435c47e6d4).
+- Lens checks: node count identical -> no multiplier artefact; edges unchanged -> no extra trust in in-sample edge net; float part comes only from linefit (GT-free) since detector peaks are integer.
+- Leak angle: in-sample detector peaks ~memorised near GT integer voxels -> rounding could snap back to GT locally => local test biased TOWARD rounding (float gain conservative) - hypothesis to test via noise stress.
+- 44b6 CI [-0.0002,+0.0044] computed as if 71 crops independent (they are overlapping crops of one recording) -> 44b6 evidence weaker than stated; 6bba [+0.0007,+0.0025] carries it.
+- CONTEXT l.206 B28: linefit is largest pp stage (+0.0145 on 12 videos), public w0.8 win2 unimodal optimum with rounded output.
+- KEY TRANSFER RISK: floor variant 6bba -0.0047 but 44b6 +0.0002 => if public embryo is 44b6-like, a truncating server gives the SAME public score as rounding -> the planned diagnostic probe cannot distinguish round vs truncate -> could ship truncation to private (-0.004 on 6bba-like private embryos).
+- (resume 2) roundsafe.csv aggregate: f-r all +0.00178 (dTP+70 dFP-190), 44b6 +0.00195 (dTP only +13, dFP -31: tiny counts, top-5 crops carry >100% of 44b6 dTP), 6bba +0.00175 (dTP+57 dFP-159, win/lose 51/34).
+- Noise proxy (+1 um/axis gaussian, unseen-embryo localisation): gain grows to +0.0023 (44b6 +0.0028, 6bba +0.0022) -> no in-sample-accuracy dependence; if anything the in-sample detector biases toward rounding.
+- Safe (truncation-proof) encoding only keeps positive fractional parts (floor(w)=round(v)); +0.0019 all, 6bba +0.00195, 44b6 +0.00163; adds +0.125 vox mean bias per axis (0.2 um z) - small embryo-specific risk.
+- Concentration (tr_conc.py): 44b6 float gain = top-5 crops +0.00201, rest -0.00006 (overlapping crops -> ~1 independent observation). 6bba: top-5 +0.00105, remaining 123 videos +0.00069. Noise proxy: remaining videos +0.0013-0.0015. Robust per-embryo expectation ~+0.0007..0.0015.
+- Verdict: NOT refuted under transfer lens (GT-free, node count fixed, no net trust); magnitude fragile; truncation masking -> use safe encoding + keep-only-if-LB-rises rule.

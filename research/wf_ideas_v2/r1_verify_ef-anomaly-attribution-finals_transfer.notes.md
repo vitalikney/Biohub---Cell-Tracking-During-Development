@@ -1,0 +1,8 @@
+# transfer verify ef-anomaly-attribution-finals (started)
+- CONTEXT l.1267: 44b6 = leak groups (overlapping crops); 6bba only 1-frame boundary overlaps between consecutive (time-chunked, one recording?)
+- scratchpad eftr.py/eftr.out (parquet, 3.97M edges). Drop precision a0 (no ILP condition) vs a3 (ILP-elsewhere): 44b6 big 0.98/0.98 (est_drop +0.00161/+0.00157); 6bba big 0.89/0.92 (+0.00611/+0.00594); 6bba post 0.87/0.94 (+0.00306/+0.00296). => on anomalous transitions the in-sample ILP is NOT load-bearing for the drop part; only re-link adds (6bba big +0.0014, post +0.0009 total units) rely on it.
+- Normal transitions: a0 prec 0.45-0.46, est_drop 44b6 -0.00018, 6bba -0.00053; a3 full +0.00010/+0.00054. => ef's 'self-gating' neutrality on ordinary transitions comes ENTIRELY from the in-sample ILP condition; out-of-sample worst case ~ a0 = -0.0007 total units (~-0.001 per embryo). Small.
+- Node ratio ef_a3_rl_pr 0.99955 (l5_selection_report) -> no node-multiplier artefact.
+- 44b6 crop redundancy: 44b6 ef est 0.00189 (total units) = ~+0.012 per-embryo (GT_44b6 ~19.8k), 95% of it on big-step transitions; 420 big transitions in 34/71 videos; top5 videos 57%, top10 84% of 44b6 gain; one recording. 6bba broad: 99/128 videos positive, top10 32%.
+- UNIT SLIP in research refined text: '44b6-like ~+0.0015' is in all-GT units; per-embryo it is ~+0.012 (lab conf 44b6 +0.0145). So every train-like embryo gains +0.012..0.017; flat public needs an embryo calmer than 44b6 (<~1% flagged transitions) or non-transfer.
+- FINAL JSON written (refuted=false; unit slip + flat-probe interpretation + coordhead-hedge repairs)

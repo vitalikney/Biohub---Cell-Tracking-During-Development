@@ -1446,5 +1446,19 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
 - 2026-09-24 17:09 UTC: probe #31 exp51 (exp48 + x138 coordinate head) SUBMITTED with the user's OK, id 56527239
   (5/5 slots used on 24 Sep UTC). Next day (25 Sep, 5 slots): float output coordinates on top of the best (lab +0.0018,
   3/3 skeptics survive; server parser risk = parse error, not silent loss), then the workflow's synthesis picks.
+- 2026-09-24 18:00 UTC, IDEAS WORKFLOW v2 DONE (76 agents; research/wf_ideas_v2/FINAL_REPORT.md + final.json): of 36
+  hypotheses / 16 researched, KEPT: (1) float output coordinates, "safe" encoding (w = round(v) + frac clipped to
+  0.499, 3 decimals; a truncating parser still gets round(v)): lab +0.0019 on 199 videos, both embryos, topology and
+  divisions identical -> expected public +0.001 (0..+0.002), P(no harm) ~0.97; (2) finals rule: diversify F2 as a
+  private hedge (edge filter + stitch on the best base) - 0 on public by construction; (3) overlap consensus across
+  overlapping TEST crops (transductive; needs the USER's rules/spirit approval; ~+0.0005, only if the public embryo
+  is 44b6-type); (4) fork-midpoint filter +0.0003..0.0008; (5) head retrain on 199 ~+0.0003 (gated on probe 31 and a
+  COORDHEAD_MODE=zero probe). Critic findings: the loss is a DENSITY problem (densest 6bba quartile = 52% of the loss,
+  Spearman(J, nodes/frame) = -0.66); a_never FN in 44b6 are mostly under-segmentation (Ultrack has ~44% more
+  interior points); linefit displacement cap, neighbour repulsion, border rules, snapping to Ultrack = dead ends.
+  HONEST OUTLOOK: expected public ~0.955 (sd 0.002), optimistic ceiling ~0.962; 0.965-0.975 needs +0.017..0.027,
+  more than the sum of all post-processing ceilings (+0.014) - the top teams got there by MODEL RETRAINING (detector
+  localisation / density). Agent building --patch floatout -> exp52 = exp51 + float(safe), exp53 = exp48 +
+  float(safe) (private kernels, for the 25 Sep batch).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.

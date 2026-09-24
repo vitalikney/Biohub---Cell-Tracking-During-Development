@@ -1,0 +1,7 @@
+# r2 verify dorado-oos-lab transfer notes (Thu Sep 24 17:35:10 UTC 2026)
+- CONTEXT 23 Sep 23:30: 654/777 GT nodes of 44b6_12dfb391 coincide with dorado Ultrack track points with no search -> host GT = proofread Ultrack points (~84% exact, ~16% moved/added by proofreading). Seen-arm calibration ~tautological; unseen arm = unproofread Ultrack (noise ~ up to 16% nodes on annotated lineages).
+- RESULTS: probe29 ef_a3 0.947 (tie exp39), probe30 ef_a0 0.946 (-0.001), probe21 relink-off 0.945 (-0.002, lab +0.0053) = only sign-flip known answer. Probe31 coordhead pending = potential positive control.
+- CONTEXT 16:55: stitch bundle closed with edge filter -> pending queue shrinks to float (probed directly 25 Sep), frozen ILP-first (network-trusting), fork-midpoint (division: unjudgeable), overlap consensus.
+- exp39 notebook: OUTPUT_EDGE_MAX_UM 14, relink relaxed 10 um -> edge-network training negatives/context reach ~10-14 um from GT nodes; 'unseen' radius 7 um is inside that halo (partial label leakage).
+- Decision table gap: unseen-arm ef_a3 in (+0.004, +0.010) undefined. All three LB known answers ~0 +-0.002-0.003 -> a judge that simply compresses deltas passes criterion B (non-diagnostic). Only sharp known answer: relink-off (lab +0.0053 -> LB -0.002, sign flip).
+- Verdict drafted: refuted=true under transfer lens (same-embryo judge, tautological seen-arm calibration, non-diagnostic pass, shrunken queue). Repair = negative/positive controls + 15 um exclusion + matched-noise seen arm + drop Stage 1.

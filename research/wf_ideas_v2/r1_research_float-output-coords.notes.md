@@ -10,3 +10,12 @@
 - Tail stats: 97.9% of output nodes non-integer (linefit); mean |z frac| 0.22 voxel; RMS z rounding shift 0.44 um.
 - Edge-only reimplementation: division term with floats NOT measured -> needs official scorer.
 - geffs_to_csv.py (royerlab official repo) ROUNDS: pl.col(z).cast(Float64).round(0).cast(Int64) -> organizers' reference CSV is integer; csv_to_geffs casts Float64 (no rounding). Server-side parser unknown -> risk of parse error, not silent loss.
+- divfloat.py (official evaluate_divisions, in-memory graphs): first 44 of 87 GT-division videos: rounded == float exactly, TP/FP/FN 13/11/53 both.
+- second 43 GT-division videos: identical again (10/16/69). Division term unaffected by float output on all 87 videos with GT divisions (TP 23 FP 27 FN 122 both).
+- roundfloor.py (199/199 official reproduced): adj rounded 0.90244, float 0.90422, 3-decimal 0.90427, FLOOR/truncation 0.89847 (-0.0040; 6bba -0.0047, 44b6 +0.0002; dTP -260 dFP +313). If server truncates floats -> ~-0.004 on 6bba-like embryo.
+- x138 notebook line 3836-3838 confirmed: max(0,int(round(float(node[z])))) -> x138 rounds at output too.
+- exp39 cell 7 line 1648-1650 same; edge rows write z/y/x = -1 (int) -> column mixes '-1' with floats; nodes come first per dataset so polars infers Float64.
+- tracksdata 0.1.0rc9 metrics/_matching.py l.195 DistanceMatching(max_distance, optimal=True, scale): weights 1/(1+d) on scaled centroids.
+- Competition data page (via search snippets of several public repos): node rows 'node_id, t, z, y, x (integer centroid coordinates in voxels)' -> spec says integer; server parser unknown.
+- Knobs for grid: BIOHUB_OUTPUT_LINEFIT_WEIGHT (0.8), BIOHUB_OUTPUT_LINEFIT_WINDOW (2) env vars exist in notebook cell 2 and bpk.
+- Eric sub-voxel peak refinement lost LB -0.002 twice (discussions_summary l.357) - different mechanism (detector peaks).

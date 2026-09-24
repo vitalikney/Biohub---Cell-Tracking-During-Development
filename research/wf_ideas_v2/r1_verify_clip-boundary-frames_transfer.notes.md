@@ -1,0 +1,7 @@
+# transfer verify clip-boundary-frames (started)
+- Existing research JSON: verdict mixed, cause = ILP d2/a0 no clip-end exemption; (b) tail ~break-even; ILP fix 0..+0.0005 local.
+- TRANSFER EVIDENCE: LB probe 6 (exp21) OUTPUT_MIN_TRACK_LEN 6->4 = -0.002 on public (CONTEXT L180, L261). Part (b) is the boundary subset of exactly that change; tail-removed touching comps carry 0.005 TP edges/node (vs 0.061 avg) -> same junk profile -> expect same negative sign.
+- Forum: stricter min-track-len +0.013 offline / -0.004 public (node-multiplier artefact): short-track changes do not transfer.
+- MEASURED per embryo (fn_exp39 + TP edges, boundary slots t<=2 / t>=96 vs mid rate): 44b6 excess FN 38.4 of 19,826 GT edges (0.19%, e0 rate 14.6% vs 5.2% mid, small n, 44b6 crops overlap in space-time so boundary GT is partly double counted); 6bba excess 118.1 of 109,057 (0.11%). Zero-cost oracle ceilings only; realistic capture <50% minus ~0.6% node growth (-0.00056) if the ILP ramp is fully flattened.
+- ILP re-solve would use in-sample edge probs (edge net trained on all 199) -> restored end segments look cleaner locally than on unseen embryos; C_END ~0 admits any t97-99 chain with p-sum > C_END, so on unseen embryos (less saturated p, more false peaks) the junk share rises.
+- Verdict under transfer lens: REFUTED as a shippable win (b has direct negative LB precedent; ILP fix <= +0.0003 public, below LB resolution, net of multiplier).

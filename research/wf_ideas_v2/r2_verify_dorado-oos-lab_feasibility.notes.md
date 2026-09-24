@@ -1,0 +1,12 @@
+# r2 verify dorado-oos-lab feasibility notes (started)
+- replay.py has --data-dir, but init_context asserts score_geffs.DATA == data_dir (DATA read from env at import); scorer reads GT <stem>.geff + scale + estimated_number_of_nodes from GT metadata -> pseudo-GT dir is a small patch (separate GT dir, score vs several GT sets per prediction).
+- kaggle_lab.py DROPPED_OPTS includes --data-dir, forces competition train -> needs --gt-dir passthrough + private dataset of pseudo-GT geffs.
+- Replay speed: l5_edgefilter confirmation 135 videos done in 488 s (per video 2-20 s) -> Stage 0 compute trivial. Prediction geffs are deleted by default (no --keep-geff) -> configs must be re-run, cheap.
+- Replay bootstraps by video, not leak group -> post-hoc cluster bootstrap needed (11 groups).
+- build_dense_gt.py already writes GT-format geffs with copied metadata (estimated_number_of_nodes) -> reusable writer.
+- tracks.npz: ptr(458520), pt_t int16, pt_zyx int16 (16.0M pts), start/end/parent per tracklet -> division cuts trivial.
+- exp39 total_node_ratio on confirmation: 44b6 mean -0.167 (median -0.13), 6bba -0.013 -> consistent with N_est ~0.91 x Ultrack and our nodes ~0.7x Ultrack.
+- Float coords +0.0018 came from a separate coordinate-rewrite harness (r1_dedupe), not replay; it is LB-probed 25 Sep anyway; coordhead (exp51) has NO train caches -> Stage 0 cannot judge it (needs ~63 videos GPU inference + DC + DivNet).
+- Probe 29/30 already closed ef line and 'stitch bundle' (CONTEXT 16:55) -> those configs are calibration only; remaining judgeable items: frozen ILP-first, overlap consensus, fork-midpoint edge side.
+- Stage 1: 40 GB stream at 2-10 MB/s = 1.1-5.5 h, plus pixel-identity check, exp48+exp51 caches incl DC pass-1 + DivNet on friend A GPU, ~1 day glue -> earliest verdict 27 Sep; infeasible to act on.
+- Verdict: refuted as an OOS (dorado boxes) lab; Stage 0 (label-unseen pseudo-GT on existing 44b6 caches) is feasible in ~1 day but narrow.

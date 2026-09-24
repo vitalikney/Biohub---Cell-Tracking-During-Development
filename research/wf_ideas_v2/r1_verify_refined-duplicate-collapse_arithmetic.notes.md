@@ -1,0 +1,11 @@
+# arithmetic verify: refined-duplicate-collapse (started)
+- Sources: fn_anatomy_exp39_ef.md (b_break 399 FN -> +0.00298 all / 41 FN 44b6 +0.00198 / 358 FN 6bba +0.00317), anatomy_exp39.md, research notes (oracle 25 vids), transfer notes (head shift mean 0.74, max 1.61 um).
+- Marginals (micro, D=135,729): FN->TP +1/D = 7.4e-6; FP removed TP/D^2 = 6.6e-6. Stitch check: 281 TP, 19 FP -> 0.00195 predicted vs +0.00197 measured: OK.
+- Embryo weights from b_break: 44b6 D ~ 41/0.00198 ~ 20.7k (15%), 6bba ~ 358/0.00317 ~ 113k (85%).
+- Hypothesis ceiling recomputed: 450 FP*6.6e-6 = 0.0030 + 400 FN*7.4e-6 = 0.0030 + node 0.0007 = 0.0067 (arithmetic OK, premise wrong: oracle shows FN side ~0, TP -2 in 6bba sample).
+- Measured GT-oracle survivor: +0.0004 (44b6) / +0.0020 (6bba) -> weighted +0.0017; fails overall +0.002 gate and 44b6 +0.001 gate EVEN AT ORACLE.
+- <4um oracle -0.0003/+0.0001 -> weighted +0.00004. Head converge <2um needs d <= 2 + shifts toward each other (mean 0.74) -> mostly 3.25-3.6 um pairs -> the zero-value band.
+- Node term per deleted node: 0.00092/41.3k = 2.2e-8 = 0.3% of one edge; R<4 deletes 0.15-0.2% nodes -> +0.00015 max.
+- Break-even precision on evaluable-touching merges ~ 7.4/(7.4+6.6) = 53%; touching edges are 1350 TP vs 455 FP (25% FP), so any imprecise rule loses.
+- Division: one lost div TP (23/194 -> 22/195) = -0.0058*0.1 = -0.00058 = whole realistic gain. Safe-div forks created AFTER relink, so pre-relink fork exclusion cannot see them.
+- Verdict: refuted under arithmetic lens. Realistic +0.0000..+0.0002.

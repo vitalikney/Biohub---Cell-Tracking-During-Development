@@ -1,0 +1,182 @@
+{
+  "ranked": [
+    {
+      "id": "float-output-coords",
+      "keep": true,
+      "lab_protocol": "ALREADY MEASURED (exp39 tail, all 199 videos, official edge scoring reproduced 199/199): plain float +0.00178 (CI90 [+0.0009,+0.0027]); truncation-safe encoding +0.00190 (CI90 [+0.00115,+0.00271]; 6bba +0.00195, 44b6 +0.00163); a truncating server with plain floats -0.0040; division counts identical on all 87 GT-division videos. STEP 1, regression check on the current base (Kaggle CPU lab, ~15 min, not a new selection): nice -n 19 python tools/kaggle_lab.py run float-e48 -- --cache data_external/friend_a_cache/friend_a_b20_exp29_friend_c/cache/friend_a_b20_exp29 --split all --node-p data_external/l2/kds_out/node_p_oof.parquet --config \"e48=exp39,leaf_prune=0.3,insert=1,ins.steal=1,ins.cap_video=4,ins.alpha=1,ins.threshold=0.5\" --config \"e48_safe=e48,out.coords=safe\" --config \"e48_float=e48,out.coords=float\" --control e48. PRE-REGISTERED GATE (for e48_safe vs e48): overall >= +0.0010; 6bba CI90 lower bound > 0; 44b6 mean >= -0.0005 (one recording, reported with a leak-group bootstrap); among CHANGED videos, 6bba wins >= 55%; node set, edge set and division TP/FP/FN byte-identical. Fail -> drop the idea, no probe. STEP 2, in-kernel parse check: the last cell re-reads submission.csv with polars exactly like royerlab csv_to_geffs.py (z,y,x cast to Float64) and asserts: every node coordinate has a decimal point, floor(w) == int(round(v)) for all nodes, z in [0,63], y,x in [0,255]. LB: P32 = best base + float(safe), plus P33 = the other base + float(safe). KEEP if the public score is not lower than the same base without floats (equal = server rounds or truncates, harmless with the safe encoding; +0.001 or more = server keeps Float64). REVERT on a scoring error (integer-only parser) or a drop of >= 0.002 (unexpected parser).",
+      "implementation_sketch": "New tools/build_probe_kernel.py --patch floatout. Base cell 8 write_test_submission currently writes max(0,int(round(float(node['z'])))) for z,y,x. Knob BIOHUB_OUTPUT_FLOAT_COORDS = 0 (default, byte-identical CSV) | safe | float. safe: r = round(v); w = max(0, r + min(max(round(v - r, 3), 0.0), 0.499)), clipped to [0, dim-1] (dim 64/256/256), written as f'{w:.3f}' on EVERY node row so polars infers Float64 from the first 100 rows. t, node_id, source_id, target_id and the -1 values on edge rows stay ints. The same writer change applies on top of exp51 (coordhead already carries float coordinates end to end; only its output rounding is removed, so the head's sub-voxel z correction survives). Replay: experiments/l2_daughternet/replay/replay.py write_geff (lines 632-634) gets the same three modes behind a config key out.coords (default round, so exp39/exp48 controls still reproduce exactly). Unit test: OUTPUT_FLOAT_COORDS=0 gives a sha256-identical CSV to exp48/exp51. Kernel commands: exp52 = exp51 flags (--patch leafprune --patch divinsert --patch coordhead, LEAF_PRUNE_MIN_EDGE_PROB=0.3, DIVINS_ENABLE=1 DIVINS_STEAL=1 DIVINS_CAP=4 DIVINS_FRAME_CAP=1 DIVINS_ALPHA=1 DIVINS_THRESH=0.4, COORDHEAD_ENABLE=1) + --patch floatout --set OUTPUT_FLOAT_COORDS=safe; exp53 = exp48 flags + the same. The float-aware linefit retune (weight x window grid) is dropped: tuned on in-sample tails, unimodal optimum, expected <= +0.0005.",
+      "expected_public_gain": "+0.001 (range 0 to +0.002). 0 if the hosted parser rounds or int-casts (harmless with the safe encoding). The noise-proxy test (1 um/axis extra noise) kept the gain at +0.0023, so transfer is ~100%. About 5% of the gap to 0.97.",
+      "probability": "P(no harm) ~0.97 (the only failure mode left is a parse error, which is visible and reversible); P(visible +0.001 or more on public) ~0.45; P(server keeps Float64) ~0.6 (the public converter casts to Float64, but the data page says 'integer centroid coordinates').",
+      "effort_hours": "3 h engineering + 0.5 GPU h per kernel (2 kernels) + 15 min Kaggle CPU lab; 2 LB slots on 25 Sep.",
+      "main_risk": "Hosted parser behaviour is unknown. The safe encoding removes the truncation loss (floor(w) == round(v)), so what remains is (a) zero gain if the server rounds and (b) a scoring error if it rejects non-integer text. It adds a mean +0.125 voxel bias on each axis (44b6 +0.0016 vs +0.0020 for plain floats).",
+      "bundle_with": ["coordhead base (exp51)", "finals-emax-diversify", "fork-midpoint-filter", "overlap-consensus"]
+    },
+    {
+      "id": "finals-emax-diversify",
+      "keep": true,
+      "lab_protocol": "Desk rule, no replay. The pseudo-private bootstrap is dropped because it is degenerate (P(D<0) = 0 for every component). Inputs: the scored public value of every candidate file (kaggle CLI), plus these priors: lab-to-LB slope k ~0 for rules that trust the in-sample network (measured on ef, ef_a0, relink-off, DivNet veto) and ~0.3 for network-free rules; sigma floor = max(0.3 x |lab delta|, 0.0011 public one-change sd, 0.0004 rounding). PRE-REGISTERED RULES: (1) Every final is an already-scored submission of the exact file. Never pick the max-public of near-copies of one bundle (winner's curse ~+0.0013 at k=3). (2) F1 = the highest-scoring 'public-proven' file: B + float(safe), where B = exp51 if P31 >= 0.951, exp48 if P31 < 0.948, and in the 0.949-0.950 zone the higher of the two float versions. Riders (fork-midpoint, overlap splice, retrained head) move into F1 only through a scored file F1' whose public >= F1 public. (3) F2 = F1 + edge filter ef_a3_rl_pr + stitch st_all (see ef-anomaly-attribution-finals), eligible if its public >= F1 - 0.003. Its E[D+] = mu*Phi(mu/s) + s*phi(mu/s) with mu ~0 (public showed 0) and s >= 0.0048 gives ~+0.0019, against +0.0002 for a near-copy. (4) Fallback F2 if the hedge probe fails the floor: the other base (coordhead toggled), already scored. (5) Apply the J-vs-multiplier screen to every final component. Coordhead enters BOTH finals only if P31 >= 0.951, because a public score on an unseen embryo is itself the transfer test; otherwise it goes in one final only. (6) Tick both finals manually by 29 Sep 20:00 UTC and re-read the submissions page. If nothing is ticked, Kaggle auto-picks the two best public submissions, which are near-copies.",
+      "implementation_sketch": "Scratch script emax_calib.py extended with a 3-row decision table keyed on P31. It prints E[D+] for each F2 candidate under s x {0.5, 1, 2} and the chosen (F1, F2) ids. Run it once all candidate files have scored, by 28 Sep 20:00 UTC. Record the decision and the ids in CONTEXT.md section 14. No pipeline code.",
+      "expected_public_gain": "0 on public by construction. Private: about +0.001 to +0.0015 expected over auto-picking the two best public files (ceiling 0.4 x sigma, ~+0.002).",
+      "probability": "The E[D+] premium is always >= 0. P(F2 outscores F1 on private) ~0.4. P(the premium exceeds +0.0005 in realised private score) ~0.35.",
+      "effort_hours": "1 h desk + the F2 hedge kernel (see ef-anomaly-attribution-finals).",
+      "main_risk": "Scoring latency of 8-10 h: the F2 file must be submitted by 28 Sep ~06:00 UTC to be scored before ticking. Human error: forgetting to tick. The private sigma is a guess (1 df from 2 train embryos).",
+      "bundle_with": ["ef-anomaly-attribution-finals", "float-output-coords"]
+    },
+    {
+      "id": "ef-anomaly-attribution-finals",
+      "keep": true,
+      "lab_protocol": "No ef_anom variant is built. Every restriction either equals ef (absolute 3.5 um flag, within 0.0006) or throws away 17-53% of it (relative flag). Probes give S29 = exp49 - exp39 = 0.000 and S30 = -0.001, which is the 'flat' branch: ef goes into exactly ONE final, the F2 hedge. Reading: a flat public result is most likely non-transfer, not a calm embryo, but best-of-two covers the downside. ONE LB slot, P36 on 25 Sep: build F2 = B + float(safe) + --patch edgefilter (EDGEFILTER_ENABLE=1, ALT=3, RELINK=1, PRUNE=1) + --patch stitch (STITCH_ENABLE=1, MIN_PROB 0 = st_all). This is the lab-confirmed pair: ef_a3_rl_pr +0.0162 on confirmation, stitch +0.0021 on top of it. Ef has never run on coordhead float coordinates, so before submitting, check that the dummy-clip log shows nonzero 'edgefilter dropped/relinked' and 'stitch added'. GATE: public >= F1 - 0.003 makes it eligible as F2; public >= F1 + 0.002 makes it F1, and F2 then becomes the same file without ef. If F1 changes later (riders adopted), rebuild F2 = F1' + ef + stitch and re-probe by 28 Sep 06:00 UTC, so that F2 differs from F1 only by the hedge. Optional, informational only: a class readout (frozen / post-freeze / big-step / ordinary transitions) on e48 tails in the Kaggle CPU lab. Detect freezes with a tolerance (median ILP step < 0.2 um), not an exact zero.",
+      "implementation_sketch": "Existing patches only (tools/build_probe_kernel.py --patch edgefilter --patch stitch on top of the chosen base flags). Call order is fixed: linefit -> edgefilter -> stitch -> divinsert. No new code. The floatout patch touches only the writer, so it composes.",
+      "expected_public_gain": "0 on public (probe 29 already measured it: tie). Private, as the F2 hedge: best-of-two premium of about +0.001 to +0.002. If a private embryo is train-like (frozen frames or drift steps as in 6bba/44b6), F2 itself could gain +0.01 or more; if not, about -0.001, which F1 covers.",
+      "probability": "P(ef+stitch helps on a private embryo) ~0.3. In-sample it gains +0.015 on both train embryos; on the public embryo 0.",
+      "effort_hours": "1 h build + 0.5 GPU h + 1 LB slot (+1 more slot if F1 changes and F2 has to be rebuilt).",
+      "main_risk": "The ef gain is an in-sample artefact of the edge network and ILP. Public already shows 0 and drop-only showed -0.001, so F2 most likely scores <= F1 on private. That costs nothing because only the better final counts, as long as F2 stays above the -0.003 public floor.",
+      "bundle_with": ["finals-emax-diversify", "stitch-tie-aware-gate (rider inside F2 only)", "float-output-coords"]
+    },
+    {
+      "id": "overlap-consensus",
+      "keep": true,
+      "lab_protocol": "STEP A, GT-free registration (Kaggle CPU lab, ~30 min, 4 processes; runs today). Exact-content anchor hashing on all 199 train zarrs: anchors = voxels equal to their 3x7x7 max filter and above the frame p99.5, hashed on the raw 3x5x5 uint16 patch; each offset collects votes. A pair is accepted with >= 30 votes, >= 99.9% exact voxel equality on 3 overlap frames, >= 5 overlapping frames and >= 5% spatial overlap. GATE A: >= 60 of the 65 GT-linked 44b6 pairs at the exact GT offset (+-1 voxel); 0 accepted 6bba pairs (the 1-frame boundary overlaps must be rejected); 0 cross-prefix pairs. STEP B0, structure bit-probe (needs the user's explicit OK after a check of the rules page): one submission whose kernel runs ONLY the registration on the hidden test zarrs (~15 min). It raises RuntimeError if >= 1 pair is accepted, and otherwise writes a valid trivial CSV (weak score). An error means at least one hidden embryo has overlapping crops, so build Step B. A valid score closes the line at zero engineering cost. STEP B (only if B0 errors): the splice, replayed on e48 tails, all 199 videos. PRE-REGISTERED GATE: 44b6 per-embryo delta >= +0.002; sign test over leak groups, >= 7 of the non-zero groups positive; the result without leak group 0 >= 0 (group 0 holds 75% of the simulated gain); 6bba bit-identical; 44b6 node ratio change <= +0.3%; division TP/FP unchanged; churn (components replaced where both copies were TP) reported. Expected versus simulated ceiling: +89 FN units and +41 FP units, i.e. +0.006 on the embryo. LB: F1' = F1 + splice. Adopt if public >= F1 public (it is an exact no-op on a 6bba-type public embryo).",
+      "implementation_sketch": "One standalone last notebook cell behind flag OVERLAP_SPLICE, wrapped in try/except that restores the untouched CSV. (1) Registration: re-read the test zarrs (~8 min); anchors via torch max_pool3d (3,7,7) on the GPU; blake2b 8-byte hash of the 3x5x5 patch; skip hash buckets with more than 10 entries; vote mode; then the equality check (this also handles frozen frames at dt +-1). Do not depend on filename prefixes; log prefix hits only. (2) Splice per accepted pair, working on submission.csv graphs. Map B into A's frame. Hungarian correspondence within 3.5 um (at 2.5 um, 11% of doubly-correct nodes would churn). A node agrees at track level when it is corresponded and its successor maps through the correspondence. Non-agree nodes are grouped into components by both copies' edges plus same-frame proximity <= 7 um. Owner = larger mean min(spatial border distance um, 1 um x frames to clip end), and B takes over a component only if the owner gap is >= 3 AND the non-owner score is < 8. That keeps +78 of the simulated +89 and removes the coin-flip zone. Replace A's nodes and edges with B's, rewiring seams only through agree nodes. Skip components that contain a fork parent or child, and skip 3-copy cases (36 edges). Drop new fragments shorter than 3 nodes. Revert a video whose node count rises by more than 0.5%. Also reuse the scratch scripts oc_hash.py, oc_sim.py and oc_fp_sim.py; the lab replays the same function on per-video tails. DEBUG flag: run on the known overlapping train pair 44b6_12dfb391 / 44b6_3a861e03 (offset -86,6,-114,75) through the cell-12 TEST_DIR swap.",
+      "expected_public_gain": "Unconditional ~+0.0005 (range 0 to +0.002). It is 0 if the public embryo is tiled like 6bba. If the public embryo is 44b6-type with ~35 clips (half the train density), about +0.001 to +0.002. Private is similar and could be larger if a private embryo matches train crop density (ceiling +0.006 per embryo).",
+      "probability": "P(the hidden test has overlapping crops) ~0.5. P(the lab gate passes | overlap) ~0.6. P(a visible public change) ~0.15-0.2.",
+      "effort_hours": "Step A + bit-probe 4-5 h. Full splice + lab 1-1.5 days. 10-20 min extra kernel runtime. 1-2 LB slots.",
+      "main_risk": "(1) Rules and spirit: this is transductive use of the hidden test clips plus an error-based structure probe, so the user must approve after reading the rules. (2) The gain is concentrated in one 44b6 leak group and may be much smaller on a test embryo with fewer clips. (3) Seam losses from graph surgery. (4) Gains below 0.0005 are invisible at 3-decimal LB resolution.",
+      "bundle_with": ["float-output-coords", "fork-midpoint-filter", "finals-emax-diversify (enters F1 only via a scored F1')"]
+    },
+    {
+      "id": "fork-midpoint-filter",
+      "keep": true,
+      "lab_protocol": "Repaired form only: the three skeptics' fixes converge on safe-division forks only, with DaughterNet-inserted forks exempt (their TP mids run 2.86-5.94 um, and a 4.0 um rule on all forks deletes 6 of 10 inserted TP), and on 4.5 um because the threshold cannot be re-validated on coordhead coordinates. VERIFICATION run (not a confirmation: the thresholds were read on all 199 videos), Kaggle CPU lab, e48 base, all 199 videos: --config e48 (as above) --config \"FM45_sd=e48,fm.mid_um=4.5,fm.scope=safediv\" --config \"FM40_sd=e48,fm.mid_um=4.0,fm.scope=safediv\" --config \"FM40_all=e48,fm.mid_um=4.0,fm.scope=all\" --control e48. PRE-REGISTERED PASS (FM45_sd): (1) 0 division TP lost on each embryo; (2) division FP down by >= 4 in total (exp39 audit: 6 at 4.5 um); (3) adjusted-edge delta >= -0.0001 per embryo and edge TP loss <= 2; (4) node count identical and inserted-fork counts identical to e48; (5) public-calibrated objective 1.36*dTP - 0.36*dFP_eval > 0. Use FM40_sd only if it also removes >= 3 more FP with 0 TP lost AND the base has no coordhead. FM40_all is a damage demonstration, never shipped. LB: never a solo probe. It rides in F1' = F1 + forkmid (+ overlap) and is adopted if public >= F1 public.",
+      "implementation_sketch": "--patch forkmid: forkmid_final_graph(nodes_by_id, edges, stats, FORKMID_PARAMS) called as the LAST graph edit, after divinsert and after linefit (it sees the shipped coordinates). For each parent P with exactly 2 children at t+1 whose added child edge is a safe-division edge (safe_division==1 in the kernel, or edge_prob None/NaN and NOT div_inserted in the replay), compute mid = |P - (c1+c2)/2| in um (scale 1.625/0.40625/0.40625). If mid >= 4.5, drop the safe-division edge. Side rule: drop the ILP-side edge instead when that edge is an unscored relink edge (finite edge_prob <= 0). Nodes are never touched and the short-track filter is not re-run (a node-count change is what flips min-track-length on the LB). Knobs BIOHUB_FORKMID_{ENABLE,MID_UM,SCOPE}; ENABLE=0 is an exact no-op. Replay key fm.*, same function text. Stats: forkmid_checked / dropped / dropped_ilp_side.",
+      "expected_public_gain": "+0.0003 to +0.0008 (about 3 public FP forks x +0.0007 each, minus a 1-3% per-TP-fork chance of losing a public TP worth -0.0019). Not visible on the LB alone.",
+      "probability": "P(0 public TP lost) ~0.9; P(net positive) ~0.65.",
+      "effort_hours": "3-4 h code (kernel patch + replay key + unit test) + one ~15 min Kaggle CPU lab run; 0 dedicated slots.",
+      "main_risk": "One lost public division TP costs as much as 2.7 removed FP. The in-sample TP margin is 0.74 um (TP max 3.76 vs 4.5) on integer-detector positions, and coordhead moves nodes by up to 1.6 um.",
+      "bundle_with": ["float-output-coords", "overlap-consensus"]
+    },
+    {
+      "id": "gate-aware-refine-head",
+      "keep": true,
+      "lab_protocol": "Reduced to the one residual all three skeptics allowed: a PLAIN de-quantiser retrain of the V1284 head. The gate-aware loss, 3 um z cap, track-identity pairs and 27-point stencil are dropped (tail offsets are unlearnable, |r| <= 0.09). CONDITIONS TO START: P31 >= 0.951 AND the zero-mode control P35 (exp51 with COORDHEAD_MODE=zero: float coords + trilinear gather, no shift) scores >= 0.002 below exp51, i.e. the shift itself carries the gain. PILOT (26 Sep, after the GPU quota reset): one Kaggle 2xT4 kernel, COORDHEAD_MODE=capture plus a new short-circuit that stops each video after refine(), on 36 train videos (24 tail-rich 6bba + 12 44b6, one per leak group). Keep peaks Hungarian-matched to GT within 4 um plus a 3% sample; save fp16 224-d features (~1.3 GPU h, < 1 GB). CPU training (Kaggle CPU kernel): 224-32-3 MLP, SiLU, zero-init last layer, bounded output 2*d/(1+|d|) (<= 2 um), Huber loss on (GT - peak) in um for pairs < 4 um, per-embryo mean offset subtracted from the targets. Folds: embryo-held-out (6bba -> 44b6 and the reverse) plus GroupKFold by leak group. Compare against the public head on the same features. KILL unless ALL hold on BOTH held-out embryos: the < 4 um share improves by >= +0.005 over the public head; the 4-7 um zone count drops by >= 3% relative to the public head; the per-embryo mean shift stays within +-0.2 um of the public head's. PASS -> train on all captured pairs and ship the new state_dict/mean/scale as a drop-in head file. LB: one probe, F1 with the new head vs F1. Adopt if public >= F1 + 0.001. With floats on in both arms.",
+      "implementation_sketch": "(a) tools/build_probe_kernel.py coordhead: add COORDHEAD_CAPTURE_STOP=1, which returns after refine() for each video and skips ILP and post-processing. It also loads train GT geffs so it can write only GT-near peaks. (b) Scratch train_head.py on Kaggle CPU (pairs join on integer peak coords; mean/scale z-scoring stored like the V1284 file). (c) The new head file is attached as a private dataset. COORDHEAD_WEIGHTS points to it, and the format is identical to anvithpothula/biohub-v1284-head-s075. Do NOT use the replay lab as the gate: it cannot see the channel where the head changes edge features and the ILP.",
+      "expected_public_gain": "+0.0003 expected (range 0 to +0.002). The public head already takes ~89% of the quantisation error (-10.4% of a theoretical -11.7%). The 4 -> 20 movie volume effect the x138 author reported is the only reason to expect more from 36-199 movies.",
+      "probability": "P(the start conditions hold) ~0.5; P(the kill test passes | start) ~0.25; P(visible public gain | pass) ~0.35. Overall ~0.05 for a visible gain.",
+      "effort_hours": "~1 day engineering + 1.3-2 GPU h pilot (+7 GPU h only if a full 199-video capture is justified) + 1 LB slot.",
+      "main_risk": "Features are in-sample (the UNet saw all 199 videos), so the learned correction is undersized or embryo-specific (the zhincez constant offset lost 0.0031). The expected size sits below LB resolution, and it costs a day that could go to overlap-consensus.",
+      "bundle_with": ["float-output-coords (on in both arms)", "finals-emax-diversify"]
+    },
+    {
+      "id": "stitch-tie-aware-gate",
+      "keep": false,
+      "lab_protocol": "Dropped as a standalone item. All three skeptics made shipping conditional on probe 29 showing that the edge filter transfers (exp49 >= ~0.950). Probe 29 = 0.947 (tie), so that condition failed, and without ef the stitch is worth ~+0.0007 local / ~+0.0003 OOS. It survives only as a rider INSIDE the F2 hedge file (ef_a3_rl_pr + st_all, the exact lab-confirmed pair: confirmation +0.0021 on top of ef, 0 node change). There it needs no gate of its own. The tie-aware sign-test amendment (44b6 counted per leak group) is still worth recording in CONTEXT.md as a post-hoc protocol amendment for add-only rules.",
+      "implementation_sketch": "Existing --patch stitch --set STITCH_ENABLE=1 (min_prob 0). Call placement after linefit and edgefilter, before divinsert (already fixed in the builder).",
+      "expected_public_gain": "0 standalone (below resolution; the ILP-trust channel has shown 0 on the LB). As part of F2: counted under ef-anomaly-attribution-finals.",
+      "probability": "n/a (condition failed)",
+      "effort_hours": "0 (a flag in the F2 build)",
+      "main_risk": "In-sample ILP trust on long (median 9-10 um) end->start links.",
+      "bundle_with": ["ef-anomaly-attribution-finals (F2 only)"]
+    },
+    {
+      "id": "frozen-frame-double-step",
+      "keep": false,
+      "lab_protocol": "Dropped. The motion-model part measured ~0 after ef, and gate scaling was net negative. The remaining 'ILP-first on post-freeze transitions' gains only by trusting the in-sample edge network, which is the channel that gave 0 / -0.001 / -0.002 on the LB (probes 29, 30, 21). The transfer skeptic's condition, probe 29 >= 0.950, failed. The lab also cannot replay a change inside the relink.",
+      "implementation_sketch": "Not implemented.",
+      "expected_public_gain": "~0 (range -0.001 to +0.0005)",
+      "probability": "<0.1 for a visible gain",
+      "effort_hours": "n/a",
+      "main_risk": "Memorised long ILP links on post-freeze steps (free-vs-annotated confidence gap 0.12).",
+      "bundle_with": []
+    },
+    {
+      "id": "div-cap-private-J",
+      "keep": false,
+      "lab_protocol": "Dropped. The measured marginal beyond cap 4 is 0 TP / +2 FP (SELECTION), density scaling is refuted (Spearman 0.02), and the looser-threshold fallback is already shipped (ensemble 0.4 = OOF 0.5). Better division precision needs a better model. Friend A's DaughterNet-B OOF (due 25 Sep 20:00 UTC) is the only live division input: adopt it only if added-fork precision on CONFIRMATION is >= 0.45.",
+      "implementation_sketch": "None (keep DIVINS_CAP=4, THRESH 0.4, steal on).",
+      "expected_public_gain": "0 (range -0.0005 to +0.0001)",
+      "probability": "n/a",
+      "effort_hours": "n/a",
+      "main_risk": "Marginal fork precision at or below the public break-even of 0.265.",
+      "bundle_with": []
+    },
+    {
+      "id": "dorado-oos-lab",
+      "keep": false,
+      "lab_protocol": "Dropped. Everything it was meant to gate is either closed (ef, stitch, frozen ILP-first), measured directly on the LB (float, coordhead), outside what edge-only pseudo-GT can judge (fork-midpoint), or measured on real GT already (overlap-consensus). Stage 1 (40 GB stream + GPU caches) cannot finish before ~27 Sep. The same embryo as 44b6 is also blind to embryo shift.",
+      "implementation_sketch": "Not implemented.",
+      "expected_public_gain": "0",
+      "probability": "n/a",
+      "effort_hours": "n/a",
+      "main_risk": "A delta-compressing judge would veto real gains; Ultrack link noise ~1%/frame.",
+      "bundle_with": []
+    },
+    {
+      "id": "oof-edge-scorer-full-candidates",
+      "keep": false,
+      "lab_protocol": "Dropped. A fold fine-tune from the public init is not out-of-fold, and a from-scratch retrain does not fit. The sub-threshold-probability plumbing moves relink costs by < 0.48 um. The FP-side oracle is +0.0019 even with perfect flips, and a realistic capture is 10-15% of that. The relink-bonus direction already lost 0.002 on the LB (probe 22).",
+      "implementation_sketch": "Not implemented (at most a free p>=0.05 sidecar dump if a train capture pass runs anyway).",
+      "expected_public_gain": "~0",
+      "probability": "n/a",
+      "effort_hours": "n/a",
+      "main_risk": "In-sample edge network on exactly the evaluable pairs.",
+      "bundle_with": []
+    },
+    {
+      "id": "hole-fill-sandwich",
+      "keep": false,
+      "lab_protocol": "Dropped. The 4-6 um holes (~73% of hole nodes) sit on the same imaged blob, with no intensity valley in 95-99% of cases. Filling them creates link-stealing duplicates. The sandwich test passes 40% of random in-tissue points, the >7 um misses are persistent (1.5% pass), and the node cost is certain.",
+      "implementation_sketch": "Not implemented.",
+      "expected_public_gain": "-0.001 to 0",
+      "probability": "n/a",
+      "effort_hours": "n/a",
+      "main_risk": "Duplicates plus the node multiplier; in-sample secondary peaks sit at annotation positions.",
+      "bundle_with": []
+    },
+    {
+      "id": "refined-duplicate-collapse",
+      "keep": false,
+      "lab_protocol": "Dropped. Head-free survivor rules measured -0.002 to -0.013. The GT-oracle ceiling is +0.0004 (44b6) / +0.0020 (6bba), and it sits in the 4-5 um band, which the head cannot converge (shift max 1.61 um). On exp51's test output, close pairs are unchanged (1,050 vs 1,051).",
+      "implementation_sketch": "Not implemented.",
+      "expected_public_gain": "~0",
+      "probability": "n/a",
+      "effort_hours": "n/a",
+      "main_risk": "Deleting members of two continuous tracks breaks annotated tracks.",
+      "bundle_with": []
+    },
+    {
+      "id": "polyphase-shift-stitch-localisation",
+      "keep": false,
+      "lab_protocol": "Dropped. Removing all xy quantisation is worth <= +0.001-0.002 edge recall before linefit and less after it, and it largely overlaps the V1284 head (the same grid error). It cannot reach the ~4.4 um swap offsets. A heuristic sub-voxel refinement lost 0.002 twice for another team, and the lab cannot replay it (the relink sits in raw->ckpt).",
+      "implementation_sketch": "Not implemented.",
+      "expected_public_gain": "0 to +0.0005 on top of the head",
+      "probability": "n/a",
+      "effort_hours": "n/a",
+      "main_risk": "The U-Net is not shift-equivariant; in-sample detector.",
+      "bundle_with": []
+    },
+    {
+      "id": "anisotropic-forkaware-rts-smoother",
+      "keep": false,
+      "lab_protocol": "Dropped. Measured r/q anisotropy is ~1.08, so the per-axis noise model adds nothing, and per-video MMSE noise estimation under-smooths compared with the B28 optimum. The only plausible part, the final-topology re-smooth rs0, got its value from edges the edge filter drops, and that filter is now closed. Its 44b6 sign was negative in 4/4 changed heavy videos.",
+      "implementation_sketch": "Not implemented.",
+      "expected_public_gain": "~0 (range -0.0005 to +0.0005)",
+      "probability": "n/a",
+      "effort_hours": "n/a",
+      "main_risk": "Sign instability across embryos.",
+      "bundle_with": []
+    },
+    {
+      "id": "clip-boundary-frames",
+      "keep": false,
+      "lab_protocol": "Dropped. The detector has no temporal padding, so part (a) rests on a false premise. The real cause, the ILP's missing first/last-frame exemption, has a +0.0011 zero-cost oracle that the node multiplier cancels. The tail rule is a subset of min-len 4, which scored -0.002 on the LB (probe 6).",
+      "implementation_sketch": "Not implemented (the ultrack-style t==T-1 disappearance exemption is noted as a free rider for any future pre-ILP dump).",
+      "expected_public_gain": "0 to +0.0003",
+      "probability": "n/a",
+      "effort_hours": "n/a",
+      "main_risk": "Node-multiplier trap.",
+      "bundle_with": []
+    }
+  ],
+  "schedule": "All times UTC. Probe 31 (exp51 = exp48 + x138 head, id 56527239) was submitted 24 Sep 17:09 and is pending; scoring latency is 7.5-10 h. Submissions need the user's OK, so ask tonight for approval of the 25 Sep batch. Heavy compute runs only on Kaggle kernels; the laptop runs only nice -n 19 single-process jobs under 5 min.\n\nTHU 24 SEP (rest of the day; 0 slots left)\n- Write --patch floatout (OUTPUT_FLOAT_COORDS=0|safe|float) and the replay key out.coords. Unit test: mode 0 reproduces the exp48/exp51 CSV sha256.\n- Build two private GPU kernels (~1 GPU h total): exp52 = exp51 + float(safe) and exp53 = exp48 + float(safe). Add the in-kernel polars Float64 parse assert.\n- Kaggle CPU lab: float-e48 regression gate (~15 min).\n- Port oc_hash.py into a registration module, then run overlap Step A on the 199 train zarrs (Kaggle CPU, ~30 min).\n- Write the bit-probe kernel (registration only; raise if an overlap pair is found). Ask the user to approve it after a rules-page check.\n- Commit and update CONTEXT.md section 14.\n\nFRI 25 SEP (5 slots)\n- ~01:00-03:00: P31 scores. Base B = exp51 if P31 >= 0.951; exp48 if P31 < 0.948; in the 0.949-0.950 zone keep both as F candidates.\n- Submit as soon as approved:\n  - P32: B + float(safe).\n  - P33: the other base + float(safe). This is the float fallback and the coordhead toggle for finals.\n  - P34: the overlap bit-probe (only if the user approves; otherwise skip and decide on overlap from Step A alone).\n  - P35: exp51 with COORDHEAD_MODE=zero, only if P31 >= 0.951. It tells whether the shift or the float geometry carries the gain, which decides the head-retrain pilot.\n  - P36: the F2 hedge = B + float(safe) + edgefilter(ALT3, RELINK1, PRUNE1) + stitch(st_all), after checking the dummy-clip logs.\n- Kaggle CPU lab: write --patch forkmid and replay key fm.*; run the FM45_sd verification.\n- If P34 raises: start the splice (Step B) engineering.\n- ~20:00: friend A's DaughterNet-B OOF arrives. Lab only; it enters the plan only if confirmation added-fork precision is >= 0.45.\n- Evening: read P32/P33 (float verdict), P35 and P36. Apply the float keep/revert rule and fix F1 = best scored B + float.\n\nSAT 26 SEP (GPU quota resets 00:00 UTC; 5 slots, use 1-2)\n- If the start conditions hold (P31 >= 0.951 and exp51 - P35 >= 0.002): run the head-retrain pilot capture (36 videos, ~1.3-2 GPU h), then CPU training and the kill test by evening.\n- Overlap splice: lab Step B on e48 tails with the pre-registered gate.\n- P37: F1' = F1 + forkmid (if its lab verification passed). Adopt if public >= F1.\n- Run the finals desk script on the scored inputs (first pass).\n\nSUN 27 SEP (slots used by ~12:00 so that results arrive the same evening)\n- P38: F1' + overlap splice, only if the lab gate passed.\n- P39: F1' with the retrained head, only if the kill test passed.\n- P40: F2 rebuilt on the final F1 file (F1 + ef + stitch), if F1 changed since P36.\n- Evening: fix the F1 and F2 candidates.\n\nMON 28 SEP\n- Hard cut for new submissions: ~06:00-08:00. Submit only exact-file re-builds that are needed for a scored F1 or F2. No new ideas.\n- Final desk rule: E[D+] table and the decision recorded in CONTEXT.md.\n\nTUE 29 SEP\n- No new probes.\n- By 20:00: tick F1 and F2 manually on the submissions page and re-read the page to verify. Deadline 23:59.\n\nBudget: ~9-11 of 25 slots; ~4-6 GPU h of probe kernels plus <= 2 GPU h for the pilot. Everything else runs on Kaggle CPU kernels.",
+  "honest_outlook": "No: the arithmetic rules it out. EDGE FILTER: public contribution measured at 0. Probe 29 (full filter) = 0.947, a tie with exp39. Probe 30 (drop-only) = 0.946, i.e. -0.001. So the lab's +0.0162 was in-sample, and the stitch that rode on it is closed too. X138 HEAD (probe 31, pending): +0.007 on x138's 0.946 base; on ours, expect +0.003 to +0.007 (point +0.005), because part of it may be node multiplier (-2.9% nodes) and our base already has leaf prune and DaughterNet insertion -> ~0.953. KEPT IDEAS, expected public gains: float coords (safe encoding) +0.001 (0 to +0.002); fork-midpoint rider +0.0005 (0 to +0.001); overlap consensus ~+0.0005 unconditional (0 to +0.002; only a 44b6-type public embryo with overlapping crops); plain head retrain ~+0.0003 (0 to +0.002, heavily gated); finals rules and the ef hedge 0 on public (they add ~+0.001 of private expectation). EXPECTED PUBLIC ~ 0.948 + 0.005 + 0.001 + 0.0005 + 0.0005 + 0.0003 = ~0.955 (sd ~0.002). OPTIMISTIC CEILING, every item at its best case: 0.948 + 0.007 + 0.002 + 0.001 + 0.002 + 0.002 = 0.962. The target band 0.965-0.975 needs +0.017 to +0.027 over 0.948, which exceeds the sum of all ceilings (+0.014). Estimates: P(>=0.955) ~0.5; P(>=0.960) ~0.05; P(>=0.965) < 0.01; P(0.97) ~0. WHY: every remaining lever is post-processing or localisation worth <= 0.002 each, and each sits at or below the 3-decimal LB resolution. The public evidence says the 0.96-0.975 teams got there with model retraining. Tang (rank 3): 'most of the gains come from model improvements'. x138's own authors are at 0.956-0.959 privately. Precision and localisation detector retrains reach ~0.950, while a plain all-train retrain stays at 0.947. That route is closed here: detector fine-tunes are on the closed list, the lab is in-sample for every network-trusting change, and a new detector cannot be validated and shipped honestly in 5 days. For context, on the 24 Sep public LB, 52 teams are >= 0.957, 64 >= 0.956, 78 >= 0.955 and ~134 >= 0.953, so 0.955 is roughly rank 70-80 today and will drift down as x138 copies spread. REALISTIC GOAL: public 0.954-0.957, plus a best-of-two private hedge (F2 = F1 + ef + stitch) that pays only if a private embryo behaves like the train embryos."
+}

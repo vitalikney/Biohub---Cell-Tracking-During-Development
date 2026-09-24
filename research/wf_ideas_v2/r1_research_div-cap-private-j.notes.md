@@ -13,3 +13,4 @@
 - (resumed 2) Lab tables re-read: SELECTION exp39 7/15/57; s_c2_t0.6 10/19/54 (+0.00318); s_c4_t0.6 12/23/52 (+0.00499); s_c6_t0.6 12/25/52 (+0.00465, cap4->6 = -0.00034, 50 more insertions 245 vs 195); s_c4_t0.5 13/25/51 (+0.00579). CONF s_c4_t0.5 20/39/67 (+0.00194, CI [-0.0007,+0.0050]).
 - Web: Kaggle search snippet (dariushafshar/biohub-local-cv-pack) claims the 4 VISIBLE test volumes are train twins (44b6_0113de3b, 44b6_0b24845f, 6bba_05b6850b, 6bba_05db0fb1) -> about the visible sample, not the hidden LB set; unverified.
 - royerlab/kaggle-cell-tracking-competition README: micro-averaged Jaccard across datasets (confirms micro-averaging).
+- FINAL JSON written (verdict mixed; keep cap 4; no density scaling).

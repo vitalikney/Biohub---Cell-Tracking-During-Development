@@ -1,0 +1,9 @@
+# feasibility verify: polyphase-shift-stitch-localisation (started)
+- predict_video (tools/repo/scripts/predict_unet_transformer.py l.300-400): W=2 windows stride 1 (~99/video); _load_frame zarr[t,::dz,::dy,::dx]; full-res 64x256x256 -> 64^3 input; d::4 slices give exactly 64 rows for d=1..3 (no pad/interp). exp51 does 8-view TTA x 2 models = 16 encodes/window; +3 primary phase encodes = +18.75% encodes.
+- exp51 (coordhead) kernel 1,713 s on 4 dummy videos; hidden-test scoring ~6 h for public-class pipeline; x138 has a 27,000 s runtime guard -> +19% GPU time is fine but must be measured.
+- REPLAY LAB (experiments/l2_daughternet/replay/replay.py header l.1-12): starts at ckpt = POST-GAP checkpoint; "raw -> ckpt part is NOT replayed". Motion relink / gap close / gap2 are baked in. Only raw->ckpt path = relink55/build_t55_cache.py: needs local train frames (gap-point refinement), DeepCenter veto is an ORACLE keyed by (t, refined point) -> shifted gap points become UNKNOWN (default accept), divnet parents at moved synthetic positions need CPU rescoring (tools/divnet_infer.py). Multi-hour per arm.
+- Insertion node-p table: coordinates checked against replayed graph -> fails if coords change (needs tolerance/rekey).
+- node_p coord mismatch at insertion is only counted (replay.py l.903), not fatal.
+- load_ckpt (l.521-543): raw nodes = ids present in dc/ (syn=0); substitution of refined y,x by raw node id at ckpt load is a ~30-line patch -> "ship-as-tested" placement: apply refined xy AFTER gap stage, BEFORE safe-div/tail (lab == kernel).
+- Arms D/E need V1284 head coords on friend A's node set: no such capture exists; head in x138 acts pre-edge (changes probs/ILP), so lab arm D would be an approximation.
+- VERDICT: kernel side feasible (0.5-1 day, +~19% encodes); lab test AS SPECIFIED not feasible in 2 days -> refuted as specified; repairable.

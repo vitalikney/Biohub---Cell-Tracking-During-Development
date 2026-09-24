@@ -1,3 +1,12 @@
 # verify stitch-tie-aware-gate (transfer lens) notes
 - started Thu Sep 24 12:44:40 UTC 2026
 - resumed Thu Sep 24 16:14:30 UTC 2026
+- probe 29 still pending per CONTEXT (tail 13:45). relink-off: local edge +0.0014 (12 vids) -> LB -0.002 (probe 21).
+- cand_exp39_ef.parquet (label 1=TP,2=FP,0=uneval): ILP stitch cands 6956, 271 TP/19 FP. 44b6 26/3 (0.897, evrate 1.4%), 6bba 245/16 (0.939, evrate 5.3%). selection 0.915, confirmation 0.948.
+- precision RISES with displacement: <5um 0.75, 5-7 0.80, 7-9 0.92, 9-12 0.96, 12-15 0.95. median cand dist 9.3um vs true step 1.8.
+- evaluable rate rises with ILP p in 6bba (p0.5-0.7 ~2.5% -> p>0.9 10.1%, 4x) but NOT in 44b6 (1.5%/2.5% -> 1.3%): p tracks 'is an annotated (training-labelled) cell' where labels are dense -> leakage signature. p bins 0.6-0.8 precision only 0.72-0.85.
+- non-ILP end->start cands: 82 TP/902 FP (0.083).
+- final exp39 edges with p>0: evaluable rate also rises with p in 6bba (p0.5-0.8 ~2.6-3.1% -> p>0.9 7.6%), 44b6 flat (0.9-1.2%). So p~annotation enrichment is GENERIC to the in-sample edge net, stitch cands slightly stronger (4x vs 2.5x). Final edges beyond 7um are ~0 (tight gate); stitch cands live at 7-15um, the regime the net sees least.
+- local exp39 0.914 < public LB 0.947 -> test embryo not harder overall; generic edge quality transfers.
+- verdict: sign survives (in-sample prec 0.93 vs break-even 0.48; node count unchanged; 44b6 cluster p 0.031); magnitude not trustworthy and not LB-verifiable; conditional on probe 29.
+- final JSON written Thu Sep 24 16:17:12 UTC 2026

@@ -1,0 +1,6 @@
+# feasibility verify: refined-duplicate-collapse (started 24 Sep)
+- Sources: r1_research_refined-duplicate-collapse.{json,notes.md}; r1_research_gate-aware-refine-head.json (public head: mean shift 0.74 um, max 1.61, only 10.5% >=1 um); CONTEXT 16:30 exp51 note.
+- fz_pairs.py (scratchpad) on test outputs, same-frame pairs in final graph (rounded coords): exp48 1050 pairs<5um (<2um 19, 2-2.5 13); exp51 (head) 1051 (<2 19, 2-2.5 7). Head does NOT change close-pair mass; pairs <2.5um = 26/119k nodes = 0.02% (< 0.1% KILL threshold).
+- Geometry: raw NMS leaves d>=3.25 um; to converge <2.0 need relative toward-shift >=1.25 (3.25 pairs) and >=2-3 um for 4-5 um pairs; max per-peak shift 1.61, 10.5% >=1 um -> 4-5 um band (where the whole oracle value lives: <4um oracle -0.0003/+0.0001) is unreachable. Only <4um pairs can converge, and they have ~0 value.
+- Feasibility costs: needs capture on 199 train videos (3-5 T4 h of ~20), peak-ID join to friend A cache (different GPU, float TTA nondeterminism), lab edge probs at int coords vs head trilinear -> lab cannot replay the head pipeline; pre-relink merge can delete a daughter before safe-div/DaughterNet (they run after relink, ILP-fork exclusion does not protect them).
+- VERDICT: refuted (feasible to code, but structurally ~0 gain; kill before GPU spend).
