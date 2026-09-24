@@ -1,0 +1,17 @@
+{
+ "base": "exp29 realised config (tight55, pilkwang primary, validator off) = LB 0.947; built by tools/build_probe_kernel.py from the exp39 notebook",
+ "change": {
+  "LEAF_PRUNE_MIN_EDGE_PROB": "0.3",
+  "DIVINS_ENABLE": "1",
+  "DIVINS_STEAL": "1",
+  "DIVINS_CAP": "4",
+  "DIVINS_FRAME_CAP": "1",
+  "DIVINS_ALPHA": "1",
+  "DIVINS_THRESH": "0.4",
+  "DIVINS_DUMP": "1",
+  "DIVNET_VERIFY": "1",
+  "PATCHES": "leafprune+divinsert"
+ },
+ "note": "L4 leaf prune + L2 DaughterNet v1 insertion with steal (cap 4, alpha 1, ensemble threshold 0.4 = OOF 0.5 by eligible-count matching); laptop CONFIRMATION for the insertion part +0.0019 (TP +4, FP +11, precision 27% ~ break-even at public J 0.36); not gate-passing",
+ "rule": "compare with exp29 0.947; >= 0.950 adopt; ties recorded; <= 0.944 drop"
+}

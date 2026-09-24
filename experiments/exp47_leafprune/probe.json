@@ -1,0 +1,10 @@
+{
+ "base": "exp29 realised config (tight55, pilkwang primary, validator off) = LB 0.947; built by tools/build_probe_kernel.py from the exp39 notebook",
+ "change": {
+  "LEAF_PRUNE_MIN_EDGE_PROB": "0.3",
+  "DIVNET_VERIFY": "1",
+  "PATCHES": "leafprune"
+ },
+ "note": "L4 weak-leaf pruning (seyitkaangunes 035, verbatim) on exp39: laptop CONFIRMATION +0.0006, CI [+0.0004,+0.0009], no video worse in 199; below the pre-registered +0.002 gate",
+ "rule": "compare with exp29 0.947; >= 0.950 adopt; ties recorded; <= 0.944 drop"
+}
