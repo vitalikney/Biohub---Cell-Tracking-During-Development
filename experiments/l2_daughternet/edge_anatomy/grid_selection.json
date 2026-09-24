@@ -1,0 +1,14 @@
+{
+  "ef_a0": {"base": "exp39", "ef.alt": 0},
+  "ef_a0_rl": {"base": "exp39", "ef.alt": 0, "ef.relink": 1},
+  "ef_a1_rl": {"base": "exp39", "ef.alt": 1, "ef.relink": 1},
+  "ef_a2_rl": {"base": "exp39", "ef.alt": 2, "ef.relink": 1},
+  "ef_a3": {"base": "exp39", "ef.alt": 3},
+  "ef_a3_rl": {"base": "exp39", "ef.alt": 3, "ef.relink": 1},
+  "ef_a3_rl_pr": {"base": "exp39", "ef.alt": 3, "ef.relink": 1, "ef.prune": 1},
+  "ef_a3_rl_f0": {"base": "exp39", "ef.alt": 3, "ef.relink": 1, "ef.skip_forks": 0},
+  "ef_a4_rl": {"base": "exp39", "ef.alt": 4, "ef.relink": 1},
+  "lp030": {"base": "exp39", "leaf_prune": 0.3},
+  "lp_ef_a3_rl": {"base": "exp39", "leaf_prune": 0.3, "ef.alt": 3, "ef.relink": 1},
+  "lp_ef_a3_rl_pr": {"base": "exp39", "leaf_prune": 0.3, "ef.alt": 3, "ef.relink": 1, "ef.prune": 1}
+}

@@ -40,6 +40,15 @@ LEAF PRUNE (config key `leaf_prune=<min_edge_prob>`, default 0 = off; plan L4)
     task; so `leaf_prune=p` ships as `--patch leafprune --set LEAF_PRUNE_MIN_EDGE_PROB=p`.  It changes the tail, so it
     is part of the base key when > 0 (leaf_prune=0 keeps the old base keys and cached tails: the call is skipped).
 
+EDGE FILTER (config keys `ef.<param>=<value>`; any ef.* key switches it on unless ef.enable=0; plan L5)
+    edgefilter_final_graph from tools/build_probe_kernel.py (--patch edgefilter, source text applied to the replayed
+    notebook cells like leafprune) on the post-tail graph, BEFORE insertion - the kernel's position (right after
+    linefit, before the divinsert call).  Params = the kernel knobs (bpk.EDGEFILTER_KNOBS): enable, max_prob, alt,
+    min_len_um, relink, prune, skip_forks; `ef.max_prob=0.3,ef.relink=1` ships as `--patch edgefilter --set
+    EDGEFILTER_ENABLE=1 --set EDGEFILTER_RELINK=1` (the report prints the exact line).  The linker's own edges it needs
+    (`ilp_probs`) are raw/<stem>.geff through the notebook's next-frame / OUTPUT_EDGE_MAX_UM filter = the kernel's
+    capture before the motion relink.  Not part of the base key (applied post-tail); part of the config fingerprint.
+
 EXPORT (--export-coords PATH)
     For every node involved in div_insert.candidate_triples of the FINAL (post-linefit, pre-insertion) graph of
     --export-base (default exp39), write rows stem,node_id,t,z,y,x (float voxel coordinates of the full-resolution
@@ -274,21 +283,28 @@ def resolve_config(name: str, raw: dict, defs: dict[str, dict]) -> dict:
     cfg.setdefault("insert", False)
     cfg.setdefault("node_p", None)
     cfg.setdefault("leaf_prune", 0.0)
+    cfg.setdefault("ef", {})
     ins = dict(cfg["ins"])
+    ef = dict(cfg["ef"])
     for key, value in raw.items():
         if key.startswith("ins."):
             ins[key[4:]] = value
         elif key == "ins" and isinstance(value, dict):
             ins.update(value)
+        elif key.startswith("ef."):
+            ef[key[3:]] = value
+        elif key == "ef" and isinstance(value, dict):
+            ef.update(value)
         else:
             cfg[key] = value
     cfg["ins"] = ins
+    cfg["ef"] = edgefilter_params(name, ef)
     mode = cfg.get("safe_div")
     if mode not in SAFE_DIV_DEFAULTS:
         raise SystemExit(f"config {name!r}: safe_div must be one of {sorted(SAFE_DIV_DEFAULTS)}, got {mode!r}")
     for key, value in SAFE_DIV_DEFAULTS[mode].items():
         cfg.setdefault(key, value)
-    allowed = {"safe_div", "insert", "ins", "node_p", "leaf_prune", *SAFE_DIV_DEFAULTS[mode]}
+    allowed = {"safe_div", "insert", "ins", "node_p", "leaf_prune", "ef", *SAFE_DIV_DEFAULTS[mode]}
     unknown = sorted(set(cfg) - allowed - {"name"})
     if unknown:
         raise SystemExit(f"config {name!r}: unknown keys {unknown} for safe_div={mode} (allowed {sorted(allowed)})")
@@ -301,6 +317,49 @@ def resolve_config(name: str, raw: dict, defs: dict[str, dict]) -> dict:
     cfg["insert"] = bool(cfg["insert"])
     cfg["name"] = name
     return cfg
+
+
+def edgefilter_params(name: str, overrides: dict) -> dict:
+    """ef.* keys -> the full parameter dict of edgefilter_final_graph (kernel knob defaults, kernel types); {} = off.
+    Any key switches the filter on unless enable is given explicitly."""
+    if not overrides:
+        return {}
+    unknown = sorted(set(overrides) - set(bpk.EDGEFILTER_KNOBS))
+    if unknown:
+        raise SystemExit(f"config {name!r}: unknown ef keys {unknown} (kernel knobs: {sorted(bpk.EDGEFILTER_KNOBS)})")
+    params = {}
+    for key, (_knob, default) in bpk.EDGEFILTER_KNOBS.items():
+        given = overrides.get(key, 1 if key == "enable" else default)
+        try:
+            value = float(given)
+        except (TypeError, ValueError):
+            raise SystemExit(f"config {name!r}: ef.{key} must be a number, got {given!r}") from None
+        if not np.isfinite(value):
+            raise SystemExit(f"config {name!r}: ef.{key} must be finite, got {given!r}")
+        if default.isdigit():  # int knob in the kernel (the config cell calls int())
+            if not value.is_integer():
+                raise SystemExit(f"config {name!r}: ef.{key} must be an integer, got {given!r}")
+            value = int(value)
+        params[key] = value
+    return params if params["enable"] else {}
+
+
+def edgefilter_kernel_args(params: dict) -> str:
+    """The build_probe_kernel.py arguments that ship an ef config (repr: the exact values the replay ran)."""
+    parts = ["--patch edgefilter"]
+    for key, (knob, default) in bpk.EDGEFILTER_KNOBS.items():
+        value = params[key]
+        if key == "enable" or float(value) != float(default):
+            parts.append(f"--set {knob}={value!r}")
+    return " ".join(parts)
+
+
+def _edgefilter_sha() -> str:
+    """Hash of the edgefilter patch text (knobs, function, capture, call, anchors): part of ef config fingerprints."""
+    parts = (bpk.EDGEFILTER_KNOB, bpk.EDGEFILTER_DISPLAY, bpk.EDGEFILTER_FN, bpk.EDGEFILTER_CAPTURE,
+             bpk.EDGEFILTER_CALL, bpk._EF_RELINK_ANCHOR, bpk._EF_FILTER_DEF, bpk._LP_LINEFIT_CALL,
+             _dumps(bpk.EDGEFILTER_KNOBS, sort_keys=True))
+    return _sha256_bytes("\0".join(parts).encode("utf-8"))[:16]
 
 
 def base_params(cfg: dict) -> dict:
@@ -316,7 +375,8 @@ def is_reference_config(cfg: dict) -> str | None:
     """Name of the reference this config must reproduce (default preset params, no insertion), else None."""
     for ref in REFERENCES:
         preset = PRESETS[ref]
-        if cfg["insert"] or cfg.get("leaf_prune", 0.0) > 0.0 or cfg["safe_div"] != preset["safe_div"]:
+        if (cfg["insert"] or cfg.get("leaf_prune", 0.0) > 0.0 or cfg.get("ef") or
+                cfg["safe_div"] != preset["safe_div"]):
             continue
         if all(cfg[k] == v for k, v in SAFE_DIV_DEFAULTS[cfg["safe_div"]].items()):
             return ref
@@ -592,6 +652,10 @@ def _patched_notebook_cells(original):
         post = pl.find_cell(cells, "def filter_output_graph", "def add_safe_divisions_postlink")
         cells[const] = bpk.leafprune_config_source(cells[const])
         cells[post] = bpk.leafprune_postproc_source(cells[post])
+        # edgefilter (plan L5): same text as --patch edgefilter; its in-tail call stays off here (the replay runs the
+        # function on the post-tail graph in run_config_video, see compute_tail / run_config_video)
+        cells[const] = bpk.edgefilter_config_source(cells[const])
+        cells[post] = bpk.edgefilter_postproc_source(cells[post])
         return cells
     return cells_for
 
@@ -611,6 +675,8 @@ def init_context(settings: dict) -> None:
         pl.notebook_cells = original_cells
     if "prune_weak_leaf_nodes" not in namespace or "LEAF_PRUNE_MIN_EDGE_PROB" not in namespace:
         raise RuntimeError("leafprune patch did not reach the tail namespace")
+    if "edgefilter_final_graph" not in namespace or "EDGEFILTER_PARAMS" not in namespace:
+        raise RuntimeError("edgefilter patch did not reach the tail namespace")
     scorer = importlib.import_module("score_geffs")
     if Path(str(scorer.DATA)).resolve() != Path(settings["data_dir"]).resolve():
         raise RuntimeError(f"score_geffs was imported with DATA={scorer.DATA}, expected {settings['data_dir']}")
@@ -638,6 +704,8 @@ def compute_tail(cfg: dict, stem: str) -> dict:
     edge_records = [{"source_id": s, "target_id": d, "edge_prob": p} for s, d, p in edges]
     # the kernel reads BIOHUB_LEAF_PRUNE_MIN_EDGE_PROB once in its config cell; here one namespace serves every base
     _CTX["namespace"]["LEAF_PRUNE_MIN_EDGE_PROB"] = float(cfg.get("leaf_prune", 0.0) or 0.0)
+    # the in-tail edgefilter call must stay off whatever BIOHUB_EDGEFILTER_* says (tails are shared by ef configs)
+    _CTX["namespace"]["EDGEFILTER_PARAMS"] = {"enable": 0}
     with contextlib.redirect_stdout(io.StringIO()):
         node_records, edge_records, tail_stats = _CTX["filter_output_graph"](
             node_records, edge_records, dataset=stem, deepcenter_bundle=None)
@@ -648,6 +716,33 @@ def compute_tail(cfg: dict, stem: str) -> dict:
              "tail_seconds": round(time.time() - started, 3)}
     save_tail(Path(cfg["_tail_path"]) / f"{stem}.npz", node_records, edge_records, stats)
     return {"stem": stem, "base_key": cfg["_base_key"], "stats": stats}
+
+
+def load_ilp_probs(cache: Path, stem: str) -> dict[tuple[int, int], float]:
+    """The linker's edges as filter_output_graph holds them before the motion relink: raw/<stem>.geff (the notebook's
+    post-processing input; edge_anatomy re-runs the notebook's relink on it and reproduces every ckpt) through the
+    notebook's own first loop (both endpoints known, next frame, edge_distance_um <= OUTPUT_EDGE_MAX_UM), finite p,
+    max per pair - what the kernel's edgefilter capture builds."""
+    ns = _CTX["namespace"]
+    graph = fc._load_raw_graph(cache / "raw" / f"{stem}.geff")
+    na, ea = graph.node_attrs(), graph.edge_attrs()
+    raw_nodes = {int(i): {"t": int(t), "z": float(z), "y": float(y), "x": float(x)}
+                 for i, t, z, y, x in zip(na["node_id"].to_list(), na["t"].to_list(), na["z"].to_list(),
+                                          na["y"].to_list(), na["x"].to_list())}
+    probs: dict[tuple[int, int], float] = {}
+    for s, d, p in zip(ea["source_id"].to_list(), ea["target_id"].to_list(), ea["edge_prob"].to_list()):
+        a, b = raw_nodes.get(int(s)), raw_nodes.get(int(d))
+        if a is None or b is None:
+            continue
+        if ns["OUTPUT_ENFORCE_NEXT_FRAME"] and int(b["t"]) != int(a["t"]) + 1:
+            continue
+        if ns["OUTPUT_EDGE_MAX_UM"] > 0 and ns["edge_distance_um"](a, b) > ns["OUTPUT_EDGE_MAX_UM"]:
+            continue
+        if p is None or not np.isfinite(float(p)):
+            continue
+        key = (int(s), int(d))
+        probs[key] = max(probs.get(key, float("-inf")), float(p))
+    return probs
 
 
 def export_video(cfg: dict, stem: str, params: dict) -> dict:
@@ -666,6 +761,11 @@ def run_config_video(cfg: dict, stem: str) -> dict:
     started = time.time()
     nodes, edges, tail_stats = load_tail(Path(cfg["_tail_path"]) / f"{stem}.npz")
     stats = dict(tail_stats)
+    if cfg.get("ef"):
+        ef_stats: dict = {}
+        nodes, edges = _CTX["namespace"]["edgefilter_final_graph"](nodes, [dict(e) for e in edges], ef_stats,
+                                                                   dict(cfg["ef"]), load_ilp_probs(_CTX["cache"], stem))
+        stats.update(ef_stats)
     if cfg["insert"]:
         node_p, p_ids, p_tzyx = load_node_p(Path(cfg["_node_p_dir"]), stem)
         stats["node_p_rows"] = len(node_p)
@@ -1018,7 +1118,7 @@ def main() -> None:
     ap.add_argument("--configs", nargs="*", default=[], help="preset names: " + ", ".join(PRESETS))
     ap.add_argument("--config", action="append", default=[], metavar="NAME=BASE,k=v,...",
                     help="custom config; keys: safe_div, sd_parent_um, sd_k, sd_sister_min_um, divnet_min_p, "
-                         "leaf_prune (0 = off), insert, node_p, ins.<div_insert param>")
+                         "leaf_prune (0 = off), insert, node_p, ins.<div_insert param>, ef.<edgefilter param>")
     ap.add_argument("--grid", default="", help="JSON {name: {base: ..., key: value, ins: {...}}}")
     ap.add_argument("--control", default="exp39", help="config the paired bootstrap compares against")
     ap.add_argument("--node-p", default="", help="parquet/csv stem,node_id,p_cont,p_par,p_dau[,t,z,y,x]")
@@ -1112,6 +1212,8 @@ def main() -> None:
                                                           "tail_sources_sha": tail_sources_sha})[:12]
         cfg = dict(cfg, _base_key=base_key, _tail_path=str(out / "tail" / base_key), _keep_geff=args.keep_geff)
         fp_payload = {"base_key": base_key, "insert": cfg["insert"]}
+        if cfg.get("ef"):  # only when on: configs without ef keep their fingerprints (and stored rows)
+            fp_payload.update(ef=cfg["ef"], edgefilter_sha=_edgefilter_sha())
         if cfg["insert"]:
             cfg["_ins_params"] = adapter.resolve(cfg["ins"])
             cfg["_node_p_dir"] = str(node_p_dirs[cfg["node_p"] or args.node_p])
@@ -1268,7 +1370,10 @@ def main() -> None:
                                                   "division_tp", "division_fp", "division_fn", "num_pred_nodes",
                                                   "total_node_ratio", "node_recall")},
                              "ctrl_video_score": _video_score(progress[control][s]["metric"]),
-                             **{k: st.get(k) for k in ("sd_added", "leaf_prune_nodes", "divins_triples",
+                             **{k: st.get(k) for k in ("sd_added", "leaf_prune_nodes", "edgefilter_candidates",
+                                                       "edgefilter_dropped", "edgefilter_relinked_fwd",
+                                                       "edgefilter_relinked_bwd", "edgefilter_pruned_nodes",
+                                                       "divins_triples",
                                                        "divins_missing_p", "divins_eligible", "divins_added",
                                                        "divins_added_steal", "final_nodes", "final_edges",
                                                        "final_forks")}})
@@ -1329,6 +1434,16 @@ def main() -> None:
             pruned = int(entry["stats_total"].get("leaf_prune_nodes", 0))
             lines.append(f"\n`{name}`: leaf_prune {lp:g} pruned {pruned} leaf nodes; "
                          f"kernel: tools/build_probe_kernel.py <name> {entry['kernel']}")
+    for name, entry in report["configs"].items():
+        ef = entry["config"].get("ef") or {}
+        if ef:
+            entry["kernel_edgefilter"] = edgefilter_kernel_args(ef)
+            tot = entry["stats_total"]
+            lines.append(f"\n`{name}`: edgefilter {ef}: candidates {int(tot.get('edgefilter_candidates', 0))}, dropped "
+                         f"{int(tot.get('edgefilter_dropped', 0))}, re-linked {int(tot.get('edgefilter_relinked_fwd', 0))}"
+                         f"+{int(tot.get('edgefilter_relinked_bwd', 0))}, pruned nodes "
+                         f"{int(tot.get('edgefilter_pruned_nodes', 0))}; kernel: tools/build_probe_kernel.py <name> "
+                         f"{entry['kernel_edgefilter']}")
     for name, entry in report["configs"].items():
         if "reference_check" in entry:
             rc = entry["reference_check"]

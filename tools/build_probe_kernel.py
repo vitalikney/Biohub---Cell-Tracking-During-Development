@@ -22,6 +22,12 @@ Patches (`--patch NAME`, repeatable, any order; they always address the BASE cod
              BIOHUB_LEAF_PRUNE_MIN_EDGE_PROB (default 0.0 = exact no-op) + prune_weak_leaf_nodes and its guarded call in
              filter_output_graph between short-track filtering and linefit (the 035 notebook's position). Set it with
              --set LEAF_PRUNE_MIN_EDGE_PROB=0.3 (the 035 notebook runs 0.30). Replay: config key leaf_prune=<p>.
+  edgefilter plan L5 edge-anatomy filter: cell 2 EDGEFILTER_PARAMS from BIOHUB_EDGEFILTER_{ENABLE,MAX_PROB,ALT,
+             MIN_LEN_UM,RELINK,PRUNE,SKIP_FORKS} (ENABLE default 0 = exact no-op) + cell 7 edgefilter_final_graph, a
+             capture of the linker's own edges before the motion relink, and a guarded call right after linefit (before
+             the divinsert call if both patches are applied). Drops (RELINK=1: re-links to the ILP's free alternative)
+             relink edges with edge_prob < MAX_PROB (= the unscored 0.0 pairs). Replay: config keys ef.<param>
+             (experiments/l2_daughternet/replay/replay.py), same function text.
 """
 import argparse
 import json
@@ -299,8 +305,10 @@ def patch_divinsert(cells_src: dict) -> None:
             }
             inserted_ids.append(node_id)
 ''')
-    c7 = _rep1(c7, '    nodes_by_id = linefit_smooth_output_graph(nodes_by_id, edges, stats)' + NL,
-               '    nodes_by_id = linefit_smooth_output_graph(nodes_by_id, edges, stats)' + NL + DIVINS_CALL)
+    anchor = '    nodes_by_id = linefit_smooth_output_graph(nodes_by_id, edges, stats)' + NL
+    if anchor + EDGEFILTER_CALL in c7:  # --patch edgefilter applied first: keep filter -> insertion (the replay's order)
+        anchor += EDGEFILTER_CALL
+    c7 = _rep1(c7, anchor, anchor + DIVINS_CALL)
     cells_src[7] = c7
 
 
@@ -424,7 +432,217 @@ def patch_leafprune(cells_src: dict) -> None:
     cells_src[7] = leafprune_postproc_source(cells_src[7])
 
 
-PATCHES = {"gshift": patch_gshift, "divinsert": patch_divinsert, "leafprune": patch_leafprune}
+# ---- edgefilter: plan L5 (edge anatomy, experiments/l2_daughternet/edge_anatomy). Drop - and optionally re-link to
+# the ILP's own choice - the motion-relink edges the network never scored (edge_prob 0.0; every scored edge has
+# p >= 0.4, gap / safe-division edges carry None and are exempt) at the END of the tail (after linefit, before the
+# divinsert call when both patches are applied). The replay lab (experiments/l2_daughternet/replay/replay.py, config
+# keys ef.<param>) applies the same source text to its notebook cells and calls the same function on the post-tail
+# graph, so a replay number and a kernel built with --patch edgefilter run one code path.
+EDGEFILTER_KNOB_LINE = 'OUTPUT_LINEFIT_WEIGHT = float(os.environ.get("BIOHUB_OUTPUT_LINEFIT_WEIGHT", "0.8"))' + NL
+EDGEFILTER_DISPLAY_LINE = '    "output_linefit_weight": OUTPUT_LINEFIT_WEIGHT,' + NL
+# replay param -> kernel knob (without BIOHUB_), with the kernel default; the function reads a dict with these keys
+EDGEFILTER_KNOBS = {"enable": ("EDGEFILTER_ENABLE", "0"), "max_prob": ("EDGEFILTER_MAX_PROB", "0.3"),
+                    "alt": ("EDGEFILTER_ALT", "0"), "min_len_um": ("EDGEFILTER_MIN_LEN_UM", "0.0"),
+                    "relink": ("EDGEFILTER_RELINK", "0"), "prune": ("EDGEFILTER_PRUNE", "0"),
+                    "skip_forks": ("EDGEFILTER_SKIP_FORKS", "1")}
+EDGEFILTER_KNOB = (
+    "# edgefilter (plan L5): drop / re-link unscored motion-relink edges after linefit; ENABLE=0 = inert" + NL
+    + 'EDGEFILTER_PARAMS = {' + NL
+    + '    "enable": int(os.environ.get("BIOHUB_EDGEFILTER_ENABLE", "0")),' + NL
+    + '    "max_prob": float(os.environ.get("BIOHUB_EDGEFILTER_MAX_PROB", "0.3")),' + NL
+    + '    "alt": int(os.environ.get("BIOHUB_EDGEFILTER_ALT", "0")),' + NL
+    + '    "min_len_um": float(os.environ.get("BIOHUB_EDGEFILTER_MIN_LEN_UM", "0.0")),' + NL
+    + '    "relink": int(os.environ.get("BIOHUB_EDGEFILTER_RELINK", "0")),' + NL
+    + '    "prune": int(os.environ.get("BIOHUB_EDGEFILTER_PRUNE", "0")),' + NL
+    + '    "skip_forks": int(os.environ.get("BIOHUB_EDGEFILTER_SKIP_FORKS", "1")),' + NL
+    + '}' + NL
+)
+EDGEFILTER_DISPLAY = '    "edgefilter_params": EDGEFILTER_PARAMS,' + NL
+EDGEFILTER_FN = r'''def edgefilter_final_graph(
+    nodes_by_id: dict[int, dict[str, object]],
+    edges: list[dict[str, object]],
+    stats: dict[str, int],
+    params: dict[str, object],
+    ilp_probs: dict[tuple[int, int], float] | None = None,
+) -> tuple[dict[int, dict[str, object]], list[dict[str, object]]]:
+    """Plan L5: drop (optionally re-link) weak motion-relink edges of the FINAL graph (after linefit).
+
+    Candidate = an edge with a finite edge_prob below params["max_prob"] (the motion relink stores 0.0 for pairs the
+    network never scored; scored pairs have p >= 0.4; gap and safe-division edges carry None and are never touched),
+    whose target is on the next frame, whose current length (um) is >= params["min_len_um"], whose source is not a
+    fork when params["skip_forks"], and which has the ILP evidence params["alt"] asks for (ilp_probs = the linker's
+    own edges {(source, target): p} as filter_output_graph received them, after its next-frame / length filter):
+      0 none; 1 the source had another ILP successor; 2 the target had another ILP predecessor; 3 either;
+      4 a FREE ILP alternative: an ILP successor of the source on the next frame without a predecessor in the graph,
+        or an ILP predecessor of the target on the previous frame without a successor.
+    Candidates are handled in (t, source, target) order. relink=1 replaces a dropped edge by source -> free ILP
+    successor (best p), else free ILP predecessor -> target; an end point is claimed once. prune=1 removes nodes left
+    without any edge. Deterministic, independent of dict order.
+    """
+    if not int(params.get("enable", 0)) or not edges or not nodes_by_id:
+        return nodes_by_id, edges
+    max_prob = float(params.get("max_prob", 0.3))
+    min_len = float(params.get("min_len_um", 0.0))
+    alt_mode = int(params.get("alt", 0))
+    relink = bool(int(params.get("relink", 0)))
+    skip_forks = bool(int(params.get("skip_forks", 1)))
+    ilp_probs = ilp_probs or {}
+    ilp_succ: dict[int, list[tuple[int, float]]] = {}
+    ilp_pred: dict[int, list[tuple[int, float]]] = {}
+    for (a, b), p in sorted(ilp_probs.items()):
+        ilp_succ.setdefault(int(a), []).append((int(b), float(p)))
+        ilp_pred.setdefault(int(b), []).append((int(a), float(p)))
+    out_degree: dict[int, int] = {}
+    in_degree: dict[int, int] = {}
+    for edge in edges:
+        out_degree[int(edge["source_id"])] = out_degree.get(int(edge["source_id"]), 0) + 1
+        in_degree[int(edge["target_id"])] = in_degree.get(int(edge["target_id"]), 0) + 1
+
+    def free_successor(source_id: int, target_id: int) -> tuple[int, float] | None:
+        t_next = int(nodes_by_id[source_id]["t"]) + 1
+        free = [(c, p) for c, p in ilp_succ.get(source_id, []) if c != target_id and c in nodes_by_id
+                and in_degree.get(c, 0) == 0 and int(nodes_by_id[c]["t"]) == t_next]
+        return max(free, key=lambda item: (item[1], -item[0])) if free else None
+
+    def free_predecessor(source_id: int, target_id: int) -> tuple[int, float] | None:
+        t_prev = int(nodes_by_id[target_id]["t"]) - 1
+        free = [(c, p) for c, p in ilp_pred.get(target_id, []) if c != source_id and c in nodes_by_id
+                and out_degree.get(c, 0) == 0 and int(nodes_by_id[c]["t"]) == t_prev]
+        return max(free, key=lambda item: (item[1], -item[0])) if free else None
+
+    candidates: list[tuple[int, int, int, int]] = []
+    for index, edge in enumerate(edges):
+        prob = edge.get("edge_prob")
+        if prob is None:
+            continue
+        try:
+            prob = float(prob)
+        except (TypeError, ValueError):
+            continue
+        if not np.isfinite(prob) or prob >= max_prob:
+            continue
+        source_id = int(edge["source_id"])
+        target_id = int(edge["target_id"])
+        source = nodes_by_id.get(source_id)
+        target = nodes_by_id.get(target_id)
+        if source is None or target is None or int(target["t"]) != int(source["t"]) + 1:
+            continue
+        if skip_forks and out_degree.get(source_id, 0) >= 2:
+            continue
+        if min_len > 0.0 and edge_distance_um(source, target) < min_len:
+            continue
+        if alt_mode:
+            other_succ = any(c != target_id for c, _ in ilp_succ.get(source_id, []))
+            other_pred = any(c != source_id for c, _ in ilp_pred.get(target_id, []))
+            if alt_mode == 1 and not other_succ:
+                continue
+            if alt_mode == 2 and not other_pred:
+                continue
+            if alt_mode == 3 and not (other_succ or other_pred):
+                continue
+            if alt_mode == 4 and free_successor(source_id, target_id) is None \
+                    and free_predecessor(source_id, target_id) is None:
+                continue
+        candidates.append((int(source["t"]), source_id, target_id, index))
+    stats["edgefilter_candidates"] = len(candidates)
+    if not candidates:
+        return nodes_by_id, edges
+    candidates.sort()
+    drop: set[int] = set()
+    added: list[dict[str, object]] = []
+    relinked_fwd = relinked_bwd = 0
+    for _, source_id, target_id, index in candidates:
+        drop.add(index)
+        out_degree[source_id] -= 1
+        in_degree[target_id] -= 1
+        if not relink:
+            continue
+        choice = free_successor(source_id, target_id)
+        if choice is not None:
+            new_source, new_target = source_id, choice[0]
+            relinked_fwd += 1
+        else:
+            choice = free_predecessor(source_id, target_id)
+            if choice is None:
+                continue
+            new_source, new_target = choice[0], target_id
+            relinked_bwd += 1
+        out_degree[new_source] = out_degree.get(new_source, 0) + 1
+        in_degree[new_target] = in_degree.get(new_target, 0) + 1
+        added.append({
+            "source_id": new_source,
+            "target_id": new_target,
+            "edge_prob": float(choice[1]),
+            "distance_um": edge_distance_um(nodes_by_id[new_source], nodes_by_id[new_target]),
+            "edgefilter_relinked": 1,
+        })
+    edges = [edge for index, edge in enumerate(edges) if index not in drop] + added
+    stats["edgefilter_dropped"] = len(drop)
+    stats["edgefilter_relinked_fwd"] = relinked_fwd
+    stats["edgefilter_relinked_bwd"] = relinked_bwd
+    if int(params.get("prune", 0)):
+        incident = {int(edge["source_id"]) for edge in edges} | {int(edge["target_id"]) for edge in edges}
+        kept = {node_id: node for node_id, node in nodes_by_id.items() if node_id in incident}
+        stats["edgefilter_pruned_nodes"] = len(nodes_by_id) - len(kept)
+        nodes_by_id = kept
+    return nodes_by_id, edges
+'''
+# ILP pairs as filter_output_graph holds them after its own next-frame / max-length filter, before the motion relink
+# replaces them (the relink's learned_edge_probs are built from the same list).
+EDGEFILTER_CAPTURE = r'''    # edgefilter: the linker's own edges (after the next-frame / length filter), for the post-linefit re-link
+    _ef_ilp_probs: dict[tuple[int, int], float] = {}
+    for _ef_edge in edges:
+        _ef_p = _ef_edge.get("edge_prob")
+        if _ef_p is None:
+            continue
+        try:
+            _ef_p = float(_ef_p)
+        except (TypeError, ValueError):
+            continue
+        if np.isfinite(_ef_p):
+            _ef_key = (int(_ef_edge["source_id"]), int(_ef_edge["target_id"]))
+            _ef_ilp_probs[_ef_key] = max(_ef_ilp_probs.get(_ef_key, float("-inf")), _ef_p)
+'''
+EDGEFILTER_CALL = r'''    # ---- edgefilter (plan L5): drop / re-link unscored relink edges; EDGEFILTER_PARAMS["enable"] = 0 -> no-op ----
+    if int(EDGEFILTER_PARAMS.get("enable", 0)):
+        nodes_by_id, edges = edgefilter_final_graph(nodes_by_id, edges, stats, EDGEFILTER_PARAMS, _ef_ilp_probs)
+        print(f"  [{dataset}] edgefilter: candidates={stats.get('edgefilter_candidates', 0)}"
+              f" dropped={stats.get('edgefilter_dropped', 0)} relinked={stats.get('edgefilter_relinked_fwd', 0)}"
+              f"+{stats.get('edgefilter_relinked_bwd', 0)} pruned={stats.get('edgefilter_pruned_nodes', 0)}")
+    # ---- /edgefilter ----
+'''
+_EF_RELINK_ANCHOR = ("    if OUTPUT_MOTION_RELINK:" + NL
+                     + "        learned_edge_probs: dict[tuple[int, int], float] = {}" + NL)
+_EF_FILTER_DEF = NL + NL + NL + "def filter_output_graph(" + NL
+
+
+def edgefilter_config_source(c2: str) -> str:
+    """Config cell (base code cell 2): EDGEFILTER_PARAMS from the BIOHUB_EDGEFILTER_* knobs + its CONFIG_DISPLAY line
+    (anchored on the linefit WEIGHT lines, so it composes with --patch leafprune, which anchors on the WINDOW lines)."""
+    c2 = _rep1(c2, EDGEFILTER_KNOB_LINE, EDGEFILTER_KNOB_LINE + NL + EDGEFILTER_KNOB)
+    return _rep1(c2, EDGEFILTER_DISPLAY_LINE, EDGEFILTER_DISPLAY_LINE + EDGEFILTER_DISPLAY)
+
+
+def edgefilter_postproc_source(c7: str) -> str:
+    """Post-processing cell (base code cell 7): edgefilter_final_graph before filter_output_graph, the ILP capture
+    before the motion relink, and the guarded call right after linefit_smooth_output_graph (and before the divinsert
+    call when that patch is applied too, in either order: the replay runs the filter on the post-tail graph and the
+    insertion after it). Counters are set by the function itself (no stats-dict anchor: composes with leafprune)."""
+    c7 = _rep1(c7, _EF_FILTER_DEF, NL + NL + NL + EDGEFILTER_FN + _EF_FILTER_DEF)
+    c7 = _rep1(c7, _EF_RELINK_ANCHOR, EDGEFILTER_CAPTURE + _EF_RELINK_ANCHOR)
+    return _rep1(c7, _LP_LINEFIT_CALL, _LP_LINEFIT_CALL + EDGEFILTER_CALL)
+
+
+def patch_edgefilter(cells_src: dict) -> None:
+    """Plan L5 (2026-09-24): edge anatomy filter. Knobs via --set EDGEFILTER_ENABLE=1 EDGEFILTER_MAX_PROB=...
+    EDGEFILTER_ALT=... EDGEFILTER_MIN_LEN_UM=... EDGEFILTER_RELINK=... EDGEFILTER_PRUNE=... EDGEFILTER_SKIP_FORKS=...;
+    default EDGEFILTER_ENABLE=0 = exact no-op (the capture only builds a dict nothing else reads)."""
+    cells_src[2] = edgefilter_config_source(cells_src[2])
+    cells_src[7] = edgefilter_postproc_source(cells_src[7])
+
+
+PATCHES = {"gshift": patch_gshift, "divinsert": patch_divinsert, "leafprune": patch_leafprune,
+           "edgefilter": patch_edgefilter}
 META_PATCHES = {"divinsert": meta_divinsert}
 
 
@@ -465,6 +683,25 @@ def main() -> None:
     if "leafprune" in a.patch and float(overrides.get("BIOHUB_LEAF_PRUNE_MIN_EDGE_PROB", "0")) <= 0.0:
         print("NOTE: --patch leafprune with LEAF_PRUNE_MIN_EDGE_PROB<=0 (default 0.0) builds an exact no-op of the "
               "base")
+    ef_knobs = {"BIOHUB_" + knob: default for knob, default in EDGEFILTER_KNOBS.values()}
+    if any(k.startswith("BIOHUB_EDGEFILTER_") for k in overrides):
+        if "edgefilter" not in a.patch:
+            sys.exit("EDGEFILTER_* knobs need --patch edgefilter")
+        unknown = sorted(k for k in overrides if k.startswith("BIOHUB_EDGEFILTER_") and k not in ef_knobs)
+        if unknown:
+            sys.exit(f"unknown edgefilter knobs {unknown}; known: {sorted(ef_knobs)}")
+        for k in overrides:
+            if k in ef_knobs:
+                try:
+                    value = float(overrides[k])
+                except ValueError:
+                    sys.exit(f"{k} must be a number, got {overrides[k]!r}")
+                if value != value or value in (float("inf"), float("-inf")):
+                    sys.exit(f"{k} must be finite, got {overrides[k]!r}")
+                if ef_knobs[k].isdigit() and not re.fullmatch(r"-?\d+", overrides[k]):  # the config cell calls int()
+                    sys.exit(f"{k} must be an integer literal, got {overrides[k]!r}")
+    if "edgefilter" in a.patch and overrides.get("BIOHUB_EDGEFILTER_ENABLE", "0") in ("0", "0.0"):
+        print("NOTE: --patch edgefilter with EDGEFILTER_ENABLE=0 (default) builds an exact no-op of the base")
     overrides["BIOHUB_DIVNET_VERIFY"] = a.divnet
 
     nb = json.load(open(BASE_NB, encoding="utf-8"))
