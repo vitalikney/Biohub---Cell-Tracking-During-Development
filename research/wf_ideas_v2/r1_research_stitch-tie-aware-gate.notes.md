@@ -1,0 +1,13 @@
+# r1 research: stitch-tie-aware-gate (notes, crash-safe)
+- No prior json existed; started 2026-09-24.
+- l6_selection_stitch.md (64 6bba sel): ef +0.014657; ef_st_all +0.016441 (+0.00178 over ef); ef_st_p07 +0.016332 (+0.00168); ef_st_p08 +0.00152; ef_st_c2 +0.00172; st_all alone (no ef, exp39 base) +0.000674; st_p08 no-ef +0.000699. Node ratio unchanged.
+- l6_confirmation_vs_ef.md (135 videos): ef_st_all +0.002114 CI[+0.00161,+0.00262]; d44b6 +0.001167, d6bba +0.002474. st_p07 NOT run on confirmation (hypothesis's "+0.00179 st_p07 confirmation" is selection-based ~+0.00168).
+- Without ef, stitch has only 475 candidates on sel (vs 2507 with ef) -> gain is mostly created by ef dropping edges (stitch repairs ef's breaks).
+- Recomputed from l6_per_video_confirmation_vs_ef.csv (ef_st_all vs ef_a3_rl_pr): 44b6 W/L/T 11/1/59 (loss 44b6_ddf577ad -0.00122, +1 FP), mean +0.00106; 6bba 46/0/18 mean +0.00274. Sign test one-sided p 0.0032 (44b6), 1.4e-14 (6bba). Added 4675 edges, evaluable dTP +168 dFP +9 -> precision 0.949 on confirmation. Node counts identical on all videos. 47 of 59 tied 44b6 videos DID add stitched edges (all unevaluable) -> ties are coverage, confirmed.
+- CODE: stitch_final_graph is called AFTER linefit (and after short-track filter), not before; hypothesis's placement "before short-track filter and linefit" would change node counts (short tracks rescued) -> ship exactly measured placement. Conflict risk: stitch consumes track starts that divinsert (runs after) could use as daughters -> exp48 base must be re-measured.
+- 44b6 leak groups (splits.json meta.leak_groups): the 12 non-tied 44b6 videos fall in 5 groups (0:3, 1:3 incl. the loss, 3:2, 4:2, 6:2); cluster-level 44b6 W/L/T = 5/0/13 over 18 clusters -> one-sided sign p = 0.031 (not 0.003).
+- fn_anatomy_exp39_ef.md stitch table: st_p07 conf 44b6 +0.00078 (< +0.001 per-embryo gate!), st_all +0.00117, st_p06 +0.00102. Marginal slice p<0.7: 41 TP/11 FP (0.79). st_all 281/19 on 199.
+- Without ef: exp39 stitch 115 TP/5 FP, +0.0008 est / +0.00067 sel. ef creates 150->399 breaks; stitch mainly repairs ef-created breaks -> value conditional on probe 29.
+- divinsert orphan branch needs v with no incoming edge = the track starts stitch consumes; runs after stitch -> interaction must be measured on exp48 base; DaughterNet p file covers exp39-graph candidates only (missing p -> skipped).
+- Sources: Dixon & Mood 1946 sign test (ties dropped, standard); Wikipedia Sign test ("pairs with no difference are omitted"); Coakley & Heise 1996 (ties procedures; trinomial / modified tests when many zeros); Jaqaman 2008 Nat Methods + TrackMate LAP (two-step: frame linking then segment gap closing, alt cost 1.05*max) = literature precedent for segment stitching.
+- final JSON written

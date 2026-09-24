@@ -1,0 +1,18 @@
+{
+ "base": "exp29 realised config (tight55, pilkwang primary, validator off) = LB 0.947; built by tools/build_probe_kernel.py from the exp39 notebook",
+ "change": {
+  "LEAF_PRUNE_MIN_EDGE_PROB": "0.3",
+  "DIVINS_ENABLE": "1",
+  "DIVINS_STEAL": "1",
+  "DIVINS_CAP": "4",
+  "DIVINS_FRAME_CAP": "1",
+  "DIVINS_ALPHA": "1",
+  "DIVINS_THRESH": "0.4",
+  "DIVINS_DUMP": "1",
+  "COORDHEAD_ENABLE": "1",
+  "DIVNET_VERIFY": "1",
+  "PATCHES": "leafprune+divinsert+coordhead"
+ },
+ "note": "exp48 (probe 28, 0.948) + x138 V1284 coordinate-refinement head (float coords end to end, trilinear edge features; public 0.946 -> 0.953 single-variable step on thtennant readmit-v1 -> anvithpothula x138); DeepCenter safe-div threshold stays 0.20",
+ "rule": "compare with exp29 0.947; >= 0.950 adopt; ties recorded; <= 0.944 drop"
+}

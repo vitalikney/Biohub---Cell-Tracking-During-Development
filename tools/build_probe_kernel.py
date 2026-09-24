@@ -28,6 +28,21 @@ Patches (`--patch NAME`, repeatable, any order; they always address the BASE cod
              the divinsert call if both patches are applied). Drops (RELINK=1: re-links to the ILP's free alternative)
              relink edges with edge_prob < MAX_PROB (= the unscored 0.0 pairs). Replay: config keys ef.<param>
              (experiments/l2_daughternet/replay/replay.py), same function text.
+  stitch     plan L6 FN-anatomy stitch: cell 2 STITCH_PARAMS from BIOHUB_STITCH_{ENABLE,MIN_PROB,MAX_UM,MIN_UM,MIN_CHAIN}
+             (ENABLE default 0 = exact no-op) + cell 7 stitch_final_graph, its own capture of the linker's edges before
+             the motion relink, and a guarded call after linefit AND after the edgefilter call, before the divinsert
+             call (any patch order). Re-adds the linker's own edges whose source is a track end and whose target is a
+             track start. Replay: config keys st.<param>, same function text.
+  swapfix    plan L6b motion 2x2 swap: cell 2 SWAPFIX_PARAMS from BIOHUB_SWAPFIX_{ENABLE,MIN_GAIN_UM,MIN_RATIO,MAX_PROB,
+             SRC_UM,MAX_LEN_UM,MIN_TERMS} (ENABLE default 0 = exact no-op) + cell 7 swapfix_final_graph and a guarded
+             call after linefit / edgefilter, before stitch / divinsert (any patch order). Replay: sw.<param>.
+  coordhead  x138's V1284 coordinate-refinement head (anvithpothula/biohub-x138, public 0.953), x138's lines verbatim:
+             cell 5 (predict-script patch cell) gets a block guarded by BIOHUB_COORDHEAD_ENABLE (default 0 = exact
+             no-op, the predict script is not touched) that writes the head module, removes the int16 cast (float
+             coordinates end to end), refines each peak (<= 2 um) and swaps in the trilinear feature gather; plus
+             per-video shift stats (COORDHEAD_STATS log lines, coordhead_stats_*.jsonl) and a summary after
+             prediction. COORDHEAD_MODE=candidate (default) | zero | capture. With ENABLE != 0 the CC0 dataset
+             anvithpothula/biohub-v1284-head-s075 is attached.
 """
 import argparse
 import json
@@ -149,6 +164,16 @@ def patch_gshift(cells_src: dict) -> None:
                + '                global_shift_um.get(t - 1, _zero_shift),' + NL
                + '            )' + NL)
     cells_src[7] = c7
+
+
+def _tail_anchor(c7: str, anchor: str, calls: tuple[str, ...]) -> str:
+    """Extend `anchor` over the post-linefit calls already present, in the fixed tail order (names of module-level
+    call-text constants, resolved lazily: linefit -> edgefilter -> swapfix -> stitch -> divinsert)."""
+    for name in calls:
+        text = globals()[name]
+        if anchor + text in c7:
+            anchor += text
+    return anchor
 
 
 NEW_CELLS_KEY = "_new_cells"  # cells_src[NEW_CELLS_KEY] = [(after_code_index, source), ...], inserted after all patches
@@ -306,8 +331,8 @@ def patch_divinsert(cells_src: dict) -> None:
             inserted_ids.append(node_id)
 ''')
     anchor = '    nodes_by_id = linefit_smooth_output_graph(nodes_by_id, edges, stats)' + NL
-    if anchor + EDGEFILTER_CALL in c7:  # --patch edgefilter applied first: keep filter -> insertion (the replay's order)
-        anchor += EDGEFILTER_CALL
+    # patches applied before this one keep the replay's order: linefit -> edgefilter -> swapfix -> stitch -> insertion
+    anchor = _tail_anchor(c7, anchor, ("EDGEFILTER_CALL", "SWAPFIX_CALL", "STITCH_CALL"))
     c7 = _rep1(c7, anchor, anchor + DIVINS_CALL)
     cells_src[7] = c7
 
@@ -641,9 +666,507 @@ def patch_edgefilter(cells_src: dict) -> None:
     cells_src[7] = edgefilter_postproc_source(cells_src[7])
 
 
+# ---- stitch: plan L6 (FN anatomy, experiments/l2_daughternet/edge_anatomy/fn_anatomy.py). Restore the linker's own
+# edges between a track END and a track START of the final graph (both ends left free by the motion relink, whose gates
+# drop the ILP's long displacements, and by everything after it). Applied at the END of the tail: after linefit and
+# after the edgefilter call, before the divinsert call (any patch order). The replay lab (config keys st.<param>)
+# applies the same source text to its notebook cells and calls the same function on the post-tail(+ef) graph.
+STITCH_KNOB_LINE = 'OUTPUT_LINEFIT_SMOOTH = os.environ.get("BIOHUB_OUTPUT_LINEFIT_SMOOTH", "1") != "0"' + NL
+STITCH_DISPLAY_LINE = '    "output_linefit_smooth": OUTPUT_LINEFIT_SMOOTH,' + NL
+# replay param -> kernel knob (without BIOHUB_), with the kernel default; the function reads a dict with these keys
+STITCH_KNOBS = {"enable": ("STITCH_ENABLE", "0"), "min_prob": ("STITCH_MIN_PROB", "0.0"),
+                "max_um": ("STITCH_MAX_UM", "0.0"), "min_um": ("STITCH_MIN_UM", "0.0"),
+                "min_chain": ("STITCH_MIN_CHAIN", "0")}
+STITCH_KNOB = (
+    "# stitch (plan L6): re-add the linker's own end->start edges after linefit (+ edgefilter); ENABLE=0 = inert" + NL
+    + 'STITCH_PARAMS = {' + NL
+    + '    "enable": int(os.environ.get("BIOHUB_STITCH_ENABLE", "0")),' + NL
+    + '    "min_prob": float(os.environ.get("BIOHUB_STITCH_MIN_PROB", "0.0")),' + NL
+    + '    "max_um": float(os.environ.get("BIOHUB_STITCH_MAX_UM", "0.0")),' + NL
+    + '    "min_um": float(os.environ.get("BIOHUB_STITCH_MIN_UM", "0.0")),' + NL
+    + '    "min_chain": int(os.environ.get("BIOHUB_STITCH_MIN_CHAIN", "0")),' + NL
+    + '}' + NL
+)
+STITCH_DISPLAY = '    "stitch_params": STITCH_PARAMS,' + NL
+STITCH_FN = r'''def stitch_final_graph(
+    nodes_by_id: dict[int, dict[str, object]],
+    edges: list[dict[str, object]],
+    stats: dict[str, int],
+    params: dict[str, object],
+    ilp_probs: dict[tuple[int, int], float] | None = None,
+) -> tuple[dict[int, dict[str, object]], list[dict[str, object]]]:
+    """Plan L6: re-add the linker's own edges between a track END and a track START of the FINAL graph.
+
+    ilp_probs = the linker's own edges {(source, target): p} as filter_output_graph received them (after its next-frame
+    / length filter). The motion relink replaces them; the ILP links it cannot place inside its gates (mostly
+    displacements > 10 um) are lost even when both nodes stay free to the end of the tail. Candidate = an ILP edge whose
+    two nodes are in the graph, target on the next frame, source without a successor (a track end), target without a
+    predecessor (a track start), p >= params["min_prob"], current length (um) in [params["min_um"], params["max_um"]]
+    (max_um 0 = no upper limit), and - with params["min_chain"] = k > 0 - at least k edges of linear chain above the
+    source and below the target. Added in order of p descending, then (t, source, target), each node used once (the
+    linker's solution is one-to-one already). No node is added or removed. Deterministic, independent of dict order.
+    """
+    if not int(params.get("enable", 0)) or not edges or not nodes_by_id or not ilp_probs:
+        return nodes_by_id, edges
+    min_prob = float(params.get("min_prob", 0.0))
+    max_um = float(params.get("max_um", 0.0))
+    min_um = float(params.get("min_um", 0.0))
+    min_chain = int(params.get("min_chain", 0))
+    successors: dict[int, list[int]] = {}
+    predecessors: dict[int, list[int]] = {}
+    for edge in edges:
+        successors.setdefault(int(edge["source_id"]), []).append(int(edge["target_id"]))
+        predecessors.setdefault(int(edge["target_id"]), []).append(int(edge["source_id"]))
+    max_t = max(int(node["t"]) for node in nodes_by_id.values())
+
+    def chain_up(node_id: int, need: int) -> int:
+        steps = 0
+        while steps < need:
+            parents = predecessors.get(node_id, [])
+            if len(parents) != 1 or len(successors.get(parents[0], [])) != 1:
+                break
+            node_id = parents[0]
+            steps += 1
+        return steps
+
+    def chain_down(node_id: int, need: int) -> int:
+        steps = 0
+        while steps < need:
+            children = successors.get(node_id, [])
+            if len(children) != 1 or len(predecessors.get(children[0], [])) != 1:
+                break
+            node_id = children[0]
+            steps += 1
+        return steps
+
+    candidates: list[tuple[float, int, int, int, float]] = []
+    for (source_id, target_id), prob in sorted(ilp_probs.items()):
+        source = nodes_by_id.get(int(source_id))
+        target = nodes_by_id.get(int(target_id))
+        if source is None or target is None:
+            continue
+        source_id, target_id, prob = int(source_id), int(target_id), float(prob)
+        if not np.isfinite(prob) or prob < min_prob:
+            continue
+        if int(target["t"]) != int(source["t"]) + 1 or int(source["t"]) >= max_t:
+            continue
+        if successors.get(source_id) or predecessors.get(target_id):
+            continue
+        length = float(edge_distance_um(source, target))
+        if length < min_um or (max_um > 0.0 and length > max_um):
+            continue
+        if min_chain > 0 and (chain_up(source_id, min_chain) < min_chain or chain_down(target_id, min_chain) < min_chain):
+            continue
+        candidates.append((-prob, int(source["t"]), source_id, target_id, length))
+    stats["stitch_candidates"] = len(candidates)
+    if not candidates:
+        return nodes_by_id, edges
+    candidates.sort()
+    used_sources: set[int] = set()
+    used_targets: set[int] = set()
+    added: list[dict[str, object]] = []
+    for neg_prob, _, source_id, target_id, length in candidates:
+        if source_id in used_sources or target_id in used_targets:
+            continue
+        used_sources.add(source_id)
+        used_targets.add(target_id)
+        added.append({
+            "source_id": source_id,
+            "target_id": target_id,
+            "edge_prob": -neg_prob,
+            "distance_um": length,
+            "stitched": 1,
+        })
+    stats["stitch_added"] = len(added)
+    return nodes_by_id, edges + added
+'''
+STITCH_CAPTURE = r'''    # stitch: the linker's own edges (after the next-frame / length filter), for the post-linefit end->start stitch
+    _st_ilp_probs: dict[tuple[int, int], float] = {}
+    for _st_edge in edges:
+        _st_p = _st_edge.get("edge_prob")
+        if _st_p is None:
+            continue
+        try:
+            _st_p = float(_st_p)
+        except (TypeError, ValueError):
+            continue
+        if np.isfinite(_st_p):
+            _st_key = (int(_st_edge["source_id"]), int(_st_edge["target_id"]))
+            _st_ilp_probs[_st_key] = max(_st_ilp_probs.get(_st_key, float("-inf")), _st_p)
+'''
+STITCH_CALL = r'''    # ---- stitch (plan L6): re-add the linker's own end->start edges; STITCH_PARAMS["enable"] = 0 -> no-op ----
+    if int(STITCH_PARAMS.get("enable", 0)):
+        nodes_by_id, edges = stitch_final_graph(nodes_by_id, edges, stats, STITCH_PARAMS, _st_ilp_probs)
+        print(f"  [{dataset}] stitch: candidates={stats.get('stitch_candidates', 0)}"
+              f" added={stats.get('stitch_added', 0)}")
+    # ---- /stitch ----
+'''
+
+
+def stitch_config_source(c2: str) -> str:
+    """Config cell (base code cell 2): STITCH_PARAMS from the BIOHUB_STITCH_* knobs + its CONFIG_DISPLAY line (anchored
+    on the linefit SMOOTH lines: composes with --patch leafprune (WINDOW) and --patch edgefilter (WEIGHT))."""
+    c2 = _rep1(c2, STITCH_KNOB_LINE, STITCH_KNOB_LINE + NL + STITCH_KNOB)
+    return _rep1(c2, STITCH_DISPLAY_LINE, STITCH_DISPLAY_LINE + STITCH_DISPLAY)
+
+
+def stitch_postproc_source(c7: str) -> str:
+    """Post-processing cell (base code cell 7): stitch_final_graph before filter_output_graph, the ILP capture before the
+    motion relink, and the guarded call after linefit AND after the edgefilter call (if that patch is or will be
+    applied: edgefilter always inserts its call directly after linefit) and before the divinsert call (divinsert
+    anchors after this call when present). Counters are set by the function itself."""
+    c7 = _rep1(c7, _EF_FILTER_DEF, NL + NL + NL + STITCH_FN + _EF_FILTER_DEF)
+    c7 = _rep1(c7, _EF_RELINK_ANCHOR, STITCH_CAPTURE + _EF_RELINK_ANCHOR)
+    anchor = _tail_anchor(c7, _LP_LINEFIT_CALL, ("EDGEFILTER_CALL", "SWAPFIX_CALL"))
+    return _rep1(c7, anchor, anchor + STITCH_CALL)
+
+
+def patch_stitch(cells_src: dict) -> None:
+    """Plan L6 (2026-09-24): end->start stitch with the linker's own edges. Knobs via --set STITCH_ENABLE=1
+    STITCH_MIN_PROB=... STITCH_MAX_UM=... STITCH_MIN_UM=... STITCH_MIN_CHAIN=...; default STITCH_ENABLE=0 = exact
+    no-op (the capture only builds a dict nothing else reads)."""
+    cells_src[2] = stitch_config_source(cells_src[2])
+    cells_src[7] = stitch_postproc_source(cells_src[7])
+
+
+# ---- swapfix: plan L6b (experiments/l2_daughternet/edge_anatomy/swap_anatomy.py). Local 2x2 re-assignment of the
+# final graph's links between consecutive frames by a constant-velocity (second-difference) motion cost: a->b + c->d
+# become a->d + c->b when that makes both trajectories markedly smoother. Applied after linefit and the edgefilter
+# call, before the stitch and divinsert calls (any patch order). Replay: config keys sw.<param>, same function text.
+SWAPFIX_KNOB_LINE = 'OUTPUT_PRUNE_ISOLATED = os.environ.get("BIOHUB_OUTPUT_PRUNE_ISOLATED", "1") != "0"' + NL
+SWAPFIX_DISPLAY_LINE = '    "output_prune_isolated": OUTPUT_PRUNE_ISOLATED,' + NL
+SWAPFIX_KNOBS = {"enable": ("SWAPFIX_ENABLE", "0"), "min_gain_um": ("SWAPFIX_MIN_GAIN_UM", "3.0"),
+                 "min_ratio": ("SWAPFIX_MIN_RATIO", "0.0"), "max_prob": ("SWAPFIX_MAX_PROB", "1.01"),
+                 "src_um": ("SWAPFIX_SRC_UM", "10.0"), "max_len_um": ("SWAPFIX_MAX_LEN_UM", "14.0"),
+                 "min_terms": ("SWAPFIX_MIN_TERMS", "4")}
+SWAPFIX_KNOB = (
+    "# swapfix (plan L6b): motion-smoothness 2x2 re-assignment of final links; ENABLE=0 = inert" + NL
+    + 'SWAPFIX_PARAMS = {' + NL
+    + '    "enable": int(os.environ.get("BIOHUB_SWAPFIX_ENABLE", "0")),' + NL
+    + '    "min_gain_um": float(os.environ.get("BIOHUB_SWAPFIX_MIN_GAIN_UM", "3.0")),' + NL
+    + '    "min_ratio": float(os.environ.get("BIOHUB_SWAPFIX_MIN_RATIO", "0.0")),' + NL
+    + '    "max_prob": float(os.environ.get("BIOHUB_SWAPFIX_MAX_PROB", "1.01")),' + NL
+    + '    "src_um": float(os.environ.get("BIOHUB_SWAPFIX_SRC_UM", "10.0")),' + NL
+    + '    "max_len_um": float(os.environ.get("BIOHUB_SWAPFIX_MAX_LEN_UM", "14.0")),' + NL
+    + '    "min_terms": int(os.environ.get("BIOHUB_SWAPFIX_MIN_TERMS", "4")),' + NL
+    + '}' + NL
+)
+SWAPFIX_DISPLAY = '    "swapfix_params": SWAPFIX_PARAMS,' + NL
+SWAPFIX_FN = r'''def swapfix_final_graph(
+    nodes_by_id: dict[int, dict[str, object]],
+    edges: list[dict[str, object]],
+    stats: dict[str, int],
+    params: dict[str, object],
+    ilp_probs: dict[tuple[int, int], float] | None = None,
+) -> tuple[dict[int, dict[str, object]], list[dict[str, object]]]:
+    """Plan L6b: swap two links between consecutive frames when a constant-velocity model strongly prefers it.
+
+    Simple link = an edge a->b with a finite edge_prob (gap / safe-division edges, None, are never touched), target on
+    the next frame, a with exactly one successor and b with exactly one predecessor. For two simple links a->b, c->d of
+    the same frame pair whose sources lie within params["src_um"] of each other, the move is a->d + c->b (both new
+    lengths <= params["max_len_um"]). Motion cost = sum of the second differences |x(t+1) - 2 x(t) + x(t-1)| (um, final
+    float coordinates) at a, c (with their unique predecessors) and at b, d (with their unique successors), counted only
+    for terms that exist before and after the move; at least params["min_terms"] such terms (4 = full context). A move
+    is a candidate when cost_before - cost_after >= params["min_gain_um"], cost_after <= (1 - params["min_ratio"]) *
+    cost_before, and both current edge_prob < params["max_prob"]. Candidates are applied by decreasing gain, each node
+    in at most one move (so moves never interact). New links carry edge_prob 0.0 (a pair the linker did not choose).
+    No node is added or removed. Deterministic, independent of dict order.
+    """
+    if not int(params.get("enable", 0)) or not edges or not nodes_by_id:
+        return nodes_by_id, edges
+    from scipy.spatial import cKDTree as _SwKDTree
+
+    min_gain = float(params.get("min_gain_um", 3.0))
+    min_ratio = float(params.get("min_ratio", 0.0))
+    max_prob = float(params.get("max_prob", 1.01))
+    src_um = float(params.get("src_um", 10.0))
+    max_len = float(params.get("max_len_um", 14.0))
+    min_terms = int(params.get("min_terms", 4))
+    scale = np.asarray([1.625, 0.40625, 0.40625], dtype=np.float64)
+    pos = {int(i): np.asarray([float(n["z"]), float(n["y"]), float(n["x"])], dtype=np.float64) * scale
+           for i, n in nodes_by_id.items()}
+    successors: dict[int, list[int]] = {}
+    predecessors: dict[int, list[int]] = {}
+    for edge in edges:
+        successors.setdefault(int(edge["source_id"]), []).append(int(edge["target_id"]))
+        predecessors.setdefault(int(edge["target_id"]), []).append(int(edge["source_id"]))
+    simple_by_t: dict[int, list[tuple[int, int, int]]] = {}
+    for index, edge in enumerate(edges):
+        source_id, target_id = int(edge["source_id"]), int(edge["target_id"])
+        prob = edge.get("edge_prob")
+        if prob is None:
+            continue
+        try:
+            prob = float(prob)
+        except (TypeError, ValueError):
+            continue
+        if not np.isfinite(prob) or prob >= max_prob:
+            continue
+        if source_id not in nodes_by_id or target_id not in nodes_by_id:
+            continue
+        t_source = int(nodes_by_id[source_id]["t"])
+        if int(nodes_by_id[target_id]["t"]) != t_source + 1:
+            continue
+        if len(successors.get(source_id, [])) != 1 or len(predecessors.get(target_id, [])) != 1:
+            continue
+        simple_by_t.setdefault(t_source, []).append((source_id, target_id, index))
+
+    def unique(items: list[int]) -> int | None:
+        return items[0] if len(items) == 1 else None
+
+    def second_diff(p0: int, p1: int, p2: int) -> float:
+        return float(np.linalg.norm(pos[p2] - 2.0 * pos[p1] + pos[p0]))
+
+    candidates: list[tuple[float, int, int, int, int, int, int, int]] = []
+    for t in sorted(simple_by_t):
+        links = sorted(simple_by_t[t])
+        if len(links) < 2:
+            continue
+        tree = _SwKDTree(np.stack([pos[a] for a, _, _ in links]))
+        for i, j in sorted(tree.query_pairs(src_um)):
+            a, b, index_ab = links[i]
+            c, d, index_cd = links[j]
+            if float(np.linalg.norm(pos[d] - pos[a])) > max_len or float(np.linalg.norm(pos[b] - pos[c])) > max_len:
+                continue
+            before = after = 0.0
+            terms = 0
+            pa, pc = unique(predecessors.get(a, [])), unique(predecessors.get(c, []))
+            sb, sd = unique(successors.get(b, [])), unique(successors.get(d, []))
+            if pa is not None:
+                before += second_diff(pa, a, b); after += second_diff(pa, a, d); terms += 1
+            if pc is not None:
+                before += second_diff(pc, c, d); after += second_diff(pc, c, b); terms += 1
+            if sb is not None:
+                before += second_diff(a, b, sb); after += second_diff(c, b, sb); terms += 1
+            if sd is not None:
+                before += second_diff(c, d, sd); after += second_diff(a, d, sd); terms += 1
+            if terms < min_terms:
+                continue
+            gain = before - after
+            if gain < min_gain or after > (1.0 - min_ratio) * before:
+                continue
+            candidates.append((-gain, t, a, b, c, d, index_ab, index_cd))
+    stats["swapfix_candidates"] = len(candidates)
+    if not candidates:
+        return nodes_by_id, edges
+    candidates.sort()
+    used: set[int] = set()
+    replace: dict[int, int] = {}
+    for _neg_gain, _t, a, b, c, d, index_ab, index_cd in candidates:
+        if a in used or b in used or c in used or d in used:
+            continue
+        used.update((a, b, c, d))
+        replace[index_ab] = d
+        replace[index_cd] = b
+    new_edges: list[dict[str, object]] = []
+    for index, edge in enumerate(edges):
+        if index not in replace:
+            new_edges.append(edge)
+            continue
+        source_id, target_id = int(edge["source_id"]), replace[index]
+        new_edges.append({
+            "source_id": source_id,
+            "target_id": target_id,
+            "edge_prob": 0.0,
+            "distance_um": edge_distance_um(nodes_by_id[source_id], nodes_by_id[target_id]),
+            "swapfix": 1,
+        })
+    stats["swapfix_swaps"] = len(replace) // 2
+    return nodes_by_id, new_edges
+'''
+SWAPFIX_CALL = r'''    # ---- swapfix (plan L6b): motion 2x2 re-assignment; SWAPFIX_PARAMS["enable"] = 0 -> no-op ----
+    if int(SWAPFIX_PARAMS.get("enable", 0)):
+        nodes_by_id, edges = swapfix_final_graph(nodes_by_id, edges, stats, SWAPFIX_PARAMS)
+        print(f"  [{dataset}] swapfix: candidates={stats.get('swapfix_candidates', 0)}"
+              f" swaps={stats.get('swapfix_swaps', 0)}")
+    # ---- /swapfix ----
+'''
+
+
+def swapfix_config_source(c2: str) -> str:
+    """Config cell (base code cell 2): SWAPFIX_PARAMS from the BIOHUB_SWAPFIX_* knobs + its CONFIG_DISPLAY line
+    (anchored on the OUTPUT_PRUNE_ISOLATED lines: composes with leafprune / edgefilter / stitch)."""
+    c2 = _rep1(c2, SWAPFIX_KNOB_LINE, SWAPFIX_KNOB_LINE + NL + SWAPFIX_KNOB)
+    return _rep1(c2, SWAPFIX_DISPLAY_LINE, SWAPFIX_DISPLAY_LINE + SWAPFIX_DISPLAY)
+
+
+def swapfix_postproc_source(c7: str) -> str:
+    """Post-processing cell (base code cell 7): swapfix_final_graph before filter_output_graph and the guarded call after
+    linefit and the edgefilter call, before the stitch / divinsert calls (whichever patches come later anchor after it:
+    edgefilter always goes directly after linefit, stitch and divinsert extend their anchors over this call)."""
+    c7 = _rep1(c7, _EF_FILTER_DEF, NL + NL + NL + SWAPFIX_FN + _EF_FILTER_DEF)
+    anchor = _tail_anchor(c7, _LP_LINEFIT_CALL, ("EDGEFILTER_CALL",))
+    return _rep1(c7, anchor, anchor + SWAPFIX_CALL)
+
+
+def patch_swapfix(cells_src: dict) -> None:
+    """Plan L6b (2026-09-24): motion-smoothness 2x2 link swaps. Knobs via --set SWAPFIX_ENABLE=1 SWAPFIX_MIN_GAIN_UM=...
+    SWAPFIX_MIN_RATIO=... SWAPFIX_MAX_PROB=... SWAPFIX_SRC_UM=... SWAPFIX_MAX_LEN_UM=... SWAPFIX_MIN_TERMS=...;
+    default SWAPFIX_ENABLE=0 = exact no-op."""
+    cells_src[2] = swapfix_config_source(cells_src[2])
+    cells_src[7] = swapfix_postproc_source(cells_src[7])
+
+
+# ---- coordhead: the x138 "V1284" coordinate-refinement head (anvithpothula/biohub-x138, public LB 0.953 = the public
+# 0.946 kernel thtennant/biohub-frontier947-readmit-v1 + this block ONLY; pulled 2026-09-24 to experiments/ext_x138, full
+# diff in experiments/ext_x138/DIFF.md). A frozen-feature MLP (Linear 224->32, SiLU, Linear 32->3; input = the primary
+# UNet's 32-channel feature at the peak voxel + its 6 face-neighbour differences, standardised by a stored mean/scale)
+# shifts every detected peak by a bounded 2*d/(1+|d|) <= 2 um right after peak extraction (before coord_offset[t]); the
+# int16 cast at the end of predict_video is removed, so the refined sub-voxel coordinates reach the graph, the ILP and
+# the whole post-processing tail as floats (the tail is float-native: nodes are read as float, linefit already moves
+# nodes off the grid; the CSV writer rounds to full-resolution voxels, exactly as in x138); and
+# UNetNodeTransformer._index_features is replaced CLASS-WIDE (primary and secondary model) by a trilinear gather that
+# reproduces the native integer gather at integer coordinates. The x138 lines are kept VERBATIM (COORDHEAD_X138_MODULE:
+# the module it writes next to the script; COORDHEAD_X138_PATCH: its four anchored replacements); ours around them:
+# the BIOHUB_COORDHEAD_ENABLE guard (0 = the predict script is not touched at all), a head lookup that tries the two
+# mount paths before x138's full /kaggle/input rglob (~3-4 min on this competition's mount), and a stats wrapper that
+# calls x138's refine and returns its array unchanged (COORDHEAD_STATS lines in the log, /kaggle/working/
+# coordhead_stats_<shard>.jsonl, a summary after prediction that fails the run if the head never ran).
+COORDHEAD_DATASET = "anvithpothula/biohub-v1284-head-s075"
+COORDHEAD_KNOBS = {"BIOHUB_COORDHEAD_ENABLE": "0", "BIOHUB_COORDHEAD_MODE": "candidate"}
+COORDHEAD_X138_MODULE = r'''(_ps.parent/'v1284_coordinate_refinement.py').write_text('"""Frozen-feature coordinate regression at first-seen fused detector centers."""\nimport os\nfrom pathlib import Path\nimport numpy as np\nimport torch\n\nSPACING = np.array([1.625, 1.625, 1.625], dtype=np.float32)\nOFFSETS = ((0,0,0), (-1,0,0), (1,0,0), (0,-1,0), (0,1,0), (0,0,-1), (0,0,1))\n_CACHE = None\n\n\ndef make_head():\n    head = torch.nn.Sequential(torch.nn.Linear(224, 32), torch.nn.SiLU(), torch.nn.Linear(32, 3))\n    torch.nn.init.zeros_(head[-1].weight)\n    torch.nn.init.zeros_(head[-1].bias)\n    return head\n\n\ndef bounded(head, x):\n    delta = head(x)\n    return 2.0 * delta / (1.0 + torch.linalg.vector_norm(delta, dim=-1, keepdim=True))\n\n\ndef sample_features(feature, arr):\n    xyz = torch.as_tensor(arr[:, 1:], device=feature.device, dtype=torch.long)\n    blocks = []\n    for offset in OFFSETS:\n        loc = xyz + torch.tensor(offset, device=feature.device)\n        for axis, size in enumerate(feature.shape[-3:]):\n            loc[:, axis].clamp_(0, size-1)\n        blocks.append(feature[0, :, loc[:,0], loc[:,1], loc[:,2]].T)\n    # Directional differences plus the central representation.\n    return torch.cat([blocks[0]] + [b - blocks[0] for b in blocks[1:]], dim=1)\n\n\ndef index_features(self, maps, coords, mask):\n    """Trilinear lookup; integer coordinates reproduce native gather exactly."""\n    out = torch.zeros((*coords.shape[:2], maps.shape[1]), device=maps.device, dtype=maps.dtype)\n    for batch in range(len(maps)):\n        n = int(mask[batch].sum())\n        if not n:\n            continue\n        q = coords[batch, :n].clone()\n        for axis, size in enumerate(maps.shape[-3:]):\n            q[:,axis].clamp_(0, size-1)\n        low = q.floor().long()\n        frac = q-low\n        for z in (0,1):\n            for y in (0,1):\n                for x in (0,1):\n                    shift = torch.tensor([z,y,x], device=maps.device)\n                    loc = low+shift\n                    for axis, size in enumerate(maps.shape[-3:]):\n                        loc[:,axis].clamp_(0,size-1)\n                    weight = torch.where(shift.bool(), frac, 1-frac).prod(dim=1)\n                    out[batch,:n] += maps[batch,:,loc[:,0],loc[:,1],loc[:,2]].T * weight[:,None]\n    return out\n\n\ndef refine(ds_path, t, arr, feature):\n    global _CACHE\n    mode = os.environ[\'V1284_MODE\']\n    if not len(arr):\n        return arr\n    if mode == \'zero\':\n        return arr.astype(np.float32)\n    x = sample_features(feature, arr).float()\n    if mode == \'capture\':\n        folder = Path(os.environ[\'V1284_CAPTURE\']) / ds_path.stem\n        folder.mkdir(parents=True, exist_ok=True)\n        np.savez_compressed(folder/f\'{int(t):04d}.npz\', coords=arr, features=x.cpu().numpy())\n        return arr\n    if _CACHE is None:\n        saved = torch.load(os.environ[\'V1284_HEAD\'], map_location=\'cpu\', weights_only=True)\n        head = make_head().to(feature.device)\n        head.load_state_dict(saved[\'state_dict\']); head.eval()\n        _CACHE = (head, saved[\'mean\'].to(feature.device), saved[\'scale\'].to(feature.device))\n    head, mean, scale = _CACHE\n    shift = bounded(head, (x-mean)/scale).cpu().numpy() / SPACING\n    result = arr.astype(np.float32).copy()\n    result[:,1:] += shift\n    result[:,1:] = np.clip(result[:,1:], 0, np.asarray(feature.shape[-3:])-1)\n    if not np.isfinite(result).all() or np.max(np.linalg.norm((result[:,1:]-arr[:,1:])*SPACING,axis=1)) > 2.00001:\n        raise RuntimeError(\'invalid V1284 displacement\')\n    return result\n')
+'''
+COORDHEAD_X138_PATCH = r'''_trial_source = _ps.read_text()
+if _trial_source.count('import tracksdata as td\n') != 1: raise RuntimeError("V1284 patch anchor mismatch")
+_trial_source = _trial_source.replace('import tracksdata as td\n', 'import tracksdata as td\nfrom v1284_coordinate_refinement import refine as _v1284_refine, index_features as _v1284_index\n')
+if _trial_source.count('                coord_offset[t] = (global_node_count, global_node_count + len(arr))') != 1: raise RuntimeError("V1284 patch anchor mismatch")
+_trial_source = _trial_source.replace('                coord_offset[t] = (global_node_count, global_node_count + len(arr))', '                arr = _v1284_refine(ds_path, t, arr, unet_out[:, f_idx])\n                coord_offset[t] = (global_node_count, global_node_count + len(arr))')
+if _trial_source.count('    coords = coords.astype(np.int16)\n') != 1: raise RuntimeError("V1284 patch anchor mismatch")
+_trial_source = _trial_source.replace('    coords = coords.astype(np.int16)\n', '    # Preserve refined geometry through association and graph output.\n')
+if _trial_source.count('    model, window_size, downsample = load_model(weights_path, device)') != 1: raise RuntimeError("V1284 patch anchor mismatch")
+_trial_source = _trial_source.replace('    model, window_size, downsample = load_model(weights_path, device)', '    model, window_size, downsample = load_model(weights_path, device)\n    UNetNodeTransformer._index_features = _v1284_index')
+'''
+COORDHEAD_HEAD_LOOKUP = r'''_myhead = [_p for _p in (Path('/kaggle/input/biohub-v1284-head-s075/v1284_head.pt'),
+                         Path('/kaggle/input/datasets/anvithpothula/biohub-v1284-head-s075/v1284_head.pt')) if _p.is_file()][:1]
+if not _myhead:
+    # x138's own lookup (walks the whole /kaggle/input tree, competition zarrs included)
+    _myhead = sorted(Path('/kaggle/input').rglob('biohub-v1284-head-s075/v1284_head.pt'))
+if len(_myhead) != 1:
+    raise RuntimeError(('my V1284 head mount mismatch', [str(p) for p in _myhead]))
+# My own head, same architecture the module loads. Trained on x107's 20-movie TRAIN capture
+# (4,136 detection<->GT pairs). Held-out BY MOVIE it moves centres CLOSER to truth:
+#   ridge -10.8%   mlp -10.4%   POOLED, 16 of 20 movies improve.
+# The 4-movie version of this head was +14.9% WORSE, so the null there was volume, not concept.
+import hashlib as _coordhead_hashlib
+print('coordhead: V1284 head', _myhead[0], 'sha256', _coordhead_hashlib.sha256(_myhead[0].read_bytes()).hexdigest()[:16])
+# x138: V1284_MODE='candidate' (head inference); BIOHUB_COORDHEAD_MODE=zero (float path, no shift) or capture (dump
+# coords + 224-d features per frame to V1284_CAPTURE, coordinates unchanged) are the module's own other modes
+os.environ['V1284_MODE']=os.environ.get('BIOHUB_COORDHEAD_MODE', 'candidate').strip() or 'candidate'
+os.environ.setdefault('V1284_CAPTURE', '/kaggle/working/v1284_capture')
+os.environ['V1284_HEAD']=str(_myhead[0])
+for _coordhead_old_log in Path('/kaggle/working').glob('coordhead_stats_*.jsonl'):
+    _coordhead_old_log.unlink()
+'''
+# predict-script source added after x138's import line: a wrapper named like x138's refine (the name predict_video
+# calls), so the head's array is what predict_video gets; it only counts. _v1284_log(ds_path) runs before build_graph.
+COORDHEAD_STATS_SRC = '''from v1284_coordinate_refinement import SPACING as _V1284_SPACING
+_v1284_refine_head = _v1284_refine
+_V1284_STATS = {}
+
+
+def _v1284_refine(ds_path, t, arr, feature):
+    """coordhead stats (tools/build_probe_kernel.py): x138's refine, its array returned unchanged."""
+    out = _v1284_refine_head(ds_path, t, arr, feature)
+    st = _V1284_STATS.setdefault(str(ds_path), {"frames": 0, "peaks": 0, "moved": 0, "ge1um": 0, "sum_um": 0.0,
+                                                "max_um": 0.0, "sum_dzyx_um": [0.0, 0.0, 0.0]})
+    st["frames"] += 1
+    if len(arr):
+        d = (np.asarray(out, dtype=np.float64)[:, 1:] - np.asarray(arr, dtype=np.float64)[:, 1:]) * _V1284_SPACING
+        n = np.linalg.norm(d, axis=1)
+        st["peaks"] += int(len(arr))
+        st["moved"] += int((n > 0).sum())
+        st["ge1um"] += int((n >= 1.0).sum())
+        st["sum_um"] += float(n.sum())
+        st["max_um"] = max(st["max_um"], float(n.max()))
+        for k in range(3):
+            st["sum_dzyx_um"][k] += float(d[:, k].sum())
+    return out
+
+
+def _v1284_log(ds_path):
+    st = _V1284_STATS.pop(str(ds_path), None)
+    if st is None:
+        return
+    k = max(st["peaks"], 1)
+    rec = {"dataset": Path(str(ds_path)).name, "mode": os.environ.get("V1284_MODE", ""), "frames": st["frames"],
+           "peaks": st["peaks"], "moved": st["moved"], "ge1um": st["ge1um"], "mean_um": round(st["sum_um"] / k, 5),
+           "max_um": round(st["max_um"], 5), "sum_um": st["sum_um"],
+           "mean_dz_um": round(st["sum_dzyx_um"][0] / k, 5), "mean_dy_um": round(st["sum_dzyx_um"][1] / k, 5),
+           "mean_dx_um": round(st["sum_dzyx_um"][2] / k, 5)}
+    print("COORDHEAD_STATS " + json.dumps(rec, sort_keys=True), flush=True)
+    shard = os.environ.get("BIOHUB_GPU_SHARD", "single").replace("/", "_")
+    with (Path("/kaggle/working") / ("coordhead_stats_" + shard + ".jsonl")).open("a") as handle:
+        handle.write(json.dumps(rec, sort_keys=True) + "\\n")
+'''
+COORDHEAD_STATS_PATCH = (
+    "_coordhead_import = 'from v1284_coordinate_refinement import refine as _v1284_refine, index_features as _v1284_index\\n'" + NL
+    + "_coordhead_build = '        graph = build_graph(coords, edges)\\n'" + NL
+    + "if _trial_source.count(_coordhead_import) != 1 or _trial_source.count(_coordhead_build) != 1:" + NL
+    + "    raise RuntimeError('coordhead stats anchor mismatch')" + NL
+    + "_trial_source = _trial_source.replace(_coordhead_import, _coordhead_import + " + repr(COORDHEAD_STATS_SRC) + ")" + NL
+    + "_trial_source = _trial_source.replace(_coordhead_build, '        _v1284_log(ds_path)\\n' + _coordhead_build)" + NL
+    + "compile(_trial_source, str(_ps), 'exec')" + NL
+    + "_ps.write_text(_trial_source)" + NL
+    + "print('coordhead: V1284 head patched (x138 verbatim + stats wrapper); mode =', os.environ['V1284_MODE'])" + NL
+)
+COORDHEAD_SUMMARY = r'''
+# ---- coordhead summary (tools/build_probe_kernel.py --patch coordhead) ----
+if os.environ.get("BIOHUB_COORDHEAD_ENABLE", "0").strip() not in ("", "0"):
+    _ch_rows = [json.loads(_line) for _p in sorted(Path("/kaggle/working").glob("coordhead_stats_*.jsonl"))
+                for _line in _p.read_text().splitlines() if _line.strip()]
+    _ch_peaks = sum(int(_r["peaks"]) for _r in _ch_rows)
+    _ch_moved = sum(int(_r["moved"]) for _r in _ch_rows)
+    _ch_ge1 = sum(int(_r["ge1um"]) for _r in _ch_rows)
+    _ch_mean = sum(float(_r["sum_um"]) for _r in _ch_rows) / max(_ch_peaks, 1)
+    _ch_max = max([float(_r["max_um"]) for _r in _ch_rows] or [0.0])
+    print(f"COORDHEAD SUMMARY: videos={len(_ch_rows)}/{len(test_stems)} peaks={_ch_peaks} moved={_ch_moved}"
+          f" (>=1um: {_ch_ge1}) mean_shift_um={_ch_mean:.4f} max_shift_um={_ch_max:.4f}"
+          f" mode={os.environ.get('V1284_MODE')}", flush=True)
+    if os.environ.get("V1284_MODE") == "candidate" and (len(_ch_rows) != len(test_stems) or _ch_peaks == 0):
+        raise RuntimeError(f"coordhead enabled but the head did not run on every video: {len(_ch_rows)} stats rows")
+'''
+_CH_PRED_ANCHOR = "start_time = time.time()" + NL + "available_gpu_count = _torch.cuda.device_count()" + NL
+_CH_DONE_ANCHOR = 'print(f"Prediction completed in {predict_seconds / 60:.2f} minutes")'
+
+
+def _ch_indent(text: str) -> str:
+    """Indent a block of single-line statements by 4 spaces (no multi-line string literals in these blocks)."""
+    return "".join(("    " + line) if line.strip() else line for line in text.splitlines(keepends=True))
+
+
+def coordhead_block() -> str:
+    """The guarded cell-5 block: x138's module write + head lookup + x138's four replacements + the stats wrapper."""
+    return (
+        "# ---- coordhead (tools/build_probe_kernel.py --patch coordhead): x138 V1284 coordinate-refinement head." + NL
+        + "# x138 lines verbatim inside the guard; BIOHUB_COORDHEAD_ENABLE=0 -> predict_unet_transformer.py is not touched." + NL
+        + 'if os.environ.get("BIOHUB_COORDHEAD_ENABLE", "0").strip() not in ("", "0"):' + NL
+        + _ch_indent(COORDHEAD_X138_MODULE + COORDHEAD_HEAD_LOOKUP + NL + COORDHEAD_X138_PATCH + COORDHEAD_STATS_PATCH)
+        + "else:" + NL
+        + '    print("coordhead disabled (BIOHUB_COORDHEAD_ENABLE=0): predict_unet_transformer.py unchanged")' + NL + NL
+    )
+
+
+def patch_coordhead(cells_src: dict) -> None:
+    """x138's V1284 head (see the section comment). Base code cell 5 (the predict-script patch cell): the guarded block
+    right before the prediction launch (after every other predict-script patch of the cell, so its anchors are the
+    patched text, as in x138) and a guarded summary after 'Prediction completed'. Knobs: --set COORDHEAD_ENABLE=1
+    [COORDHEAD_MODE=candidate|zero|capture]; default ENABLE=0 = exact no-op (the predict script is not modified)."""
+    c5 = cells_src[5]
+    c5 = _rep1(c5, _CH_PRED_ANCHOR, coordhead_block() + _CH_PRED_ANCHOR)
+    c5 = _rep1(c5, _CH_DONE_ANCHOR, _CH_DONE_ANCHOR + NL + COORDHEAD_SUMMARY)
+    cells_src[5] = c5
+
+
+def meta_coordhead(meta: dict, overrides: dict) -> None:
+    """Attach the head's CC0 dataset when the stage is switched on."""
+    if overrides.get("BIOHUB_COORDHEAD_ENABLE", "0").strip() not in ("", "0") and COORDHEAD_DATASET not in meta["dataset_sources"]:
+        meta["dataset_sources"].append(COORDHEAD_DATASET)
+
+
 PATCHES = {"gshift": patch_gshift, "divinsert": patch_divinsert, "leafprune": patch_leafprune,
-           "edgefilter": patch_edgefilter}
-META_PATCHES = {"divinsert": meta_divinsert}
+           "edgefilter": patch_edgefilter, "stitch": patch_stitch, "swapfix": patch_swapfix,
+           "coordhead": patch_coordhead}
+META_PATCHES = {"divinsert": meta_divinsert, "coordhead": meta_coordhead}
 
 
 def main() -> None:
@@ -702,6 +1225,56 @@ def main() -> None:
                     sys.exit(f"{k} must be an integer literal, got {overrides[k]!r}")
     if "edgefilter" in a.patch and overrides.get("BIOHUB_EDGEFILTER_ENABLE", "0") in ("0", "0.0"):
         print("NOTE: --patch edgefilter with EDGEFILTER_ENABLE=0 (default) builds an exact no-op of the base")
+    st_knobs = {"BIOHUB_" + knob: default for knob, default in STITCH_KNOBS.values()}
+    if any(k.startswith("BIOHUB_STITCH_") for k in overrides):
+        if "stitch" not in a.patch:
+            sys.exit("STITCH_* knobs need --patch stitch")
+        unknown = sorted(k for k in overrides if k.startswith("BIOHUB_STITCH_") and k not in st_knobs)
+        if unknown:
+            sys.exit(f"unknown stitch knobs {unknown}; known: {sorted(st_knobs)}")
+        for k in overrides:
+            if k in st_knobs:
+                try:
+                    value = float(overrides[k])
+                except ValueError:
+                    sys.exit(f"{k} must be a number, got {overrides[k]!r}")
+                if value != value or value in (float("inf"), float("-inf")):
+                    sys.exit(f"{k} must be finite, got {overrides[k]!r}")
+                if st_knobs[k].isdigit() and not re.fullmatch(r"-?\d+", overrides[k]):  # the config cell calls int()
+                    sys.exit(f"{k} must be an integer literal, got {overrides[k]!r}")
+    if "stitch" in a.patch and overrides.get("BIOHUB_STITCH_ENABLE", "0") in ("0", "0.0"):
+        print("NOTE: --patch stitch with STITCH_ENABLE=0 (default) builds an exact no-op of the base")
+    sw_knobs = {"BIOHUB_" + knob: default for knob, default in SWAPFIX_KNOBS.values()}
+    if any(k.startswith("BIOHUB_SWAPFIX_") for k in overrides):
+        if "swapfix" not in a.patch:
+            sys.exit("SWAPFIX_* knobs need --patch swapfix")
+        unknown = sorted(k for k in overrides if k.startswith("BIOHUB_SWAPFIX_") and k not in sw_knobs)
+        if unknown:
+            sys.exit(f"unknown swapfix knobs {unknown}; known: {sorted(sw_knobs)}")
+        for k in overrides:
+            if k in sw_knobs:
+                try:
+                    value = float(overrides[k])
+                except ValueError:
+                    sys.exit(f"{k} must be a number, got {overrides[k]!r}")
+                if value != value or value in (float("inf"), float("-inf")):
+                    sys.exit(f"{k} must be finite, got {overrides[k]!r}")
+                if sw_knobs[k].isdigit() and not re.fullmatch(r"-?\d+", overrides[k]):  # the config cell calls int()
+                    sys.exit(f"{k} must be an integer literal, got {overrides[k]!r}")
+    if "swapfix" in a.patch and overrides.get("BIOHUB_SWAPFIX_ENABLE", "0") in ("0", "0.0"):
+        print("NOTE: --patch swapfix with SWAPFIX_ENABLE=0 (default) builds an exact no-op of the base")
+    if any(k.startswith("BIOHUB_COORDHEAD_") for k in overrides):
+        if "coordhead" not in a.patch:
+            sys.exit("COORDHEAD_* knobs need --patch coordhead")
+        unknown = sorted(k for k in overrides if k.startswith("BIOHUB_COORDHEAD_") and k not in COORDHEAD_KNOBS)
+        if unknown:
+            sys.exit(f"unknown coordhead knobs {unknown}; known: {sorted(COORDHEAD_KNOBS)}")
+        if not re.fullmatch(r"\d+", overrides.get("BIOHUB_COORDHEAD_ENABLE", "0")):
+            sys.exit(f"COORDHEAD_ENABLE must be an integer literal, got {overrides['BIOHUB_COORDHEAD_ENABLE']!r}")
+        if overrides.get("BIOHUB_COORDHEAD_MODE", "candidate") not in ("candidate", "zero", "capture"):
+            sys.exit(f"COORDHEAD_MODE must be candidate, zero or capture, got {overrides['BIOHUB_COORDHEAD_MODE']!r}")
+    if "coordhead" in a.patch and overrides.get("BIOHUB_COORDHEAD_ENABLE", "0").strip() in ("", "0"):
+        print("NOTE: --patch coordhead with COORDHEAD_ENABLE=0 (default) builds an exact no-op of the base")
     overrides["BIOHUB_DIVNET_VERIFY"] = a.divnet
 
     nb = json.load(open(BASE_NB, encoding="utf-8"))

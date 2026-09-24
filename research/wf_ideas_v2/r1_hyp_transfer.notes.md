@@ -1,0 +1,17 @@
+# r1_hyp_transfer notes (started)
+- read CONTEXT 10a/11/14 tail, anatomy_exp39.md, l5_selection_report.md, fn_anatomy_exp39_ef.md, l5_confirmation_vs_exp39.md
+- key: prob==0 relink FP rate 0.759 (44b6) / 0.794 (6bba); "ILP src->other" 0.859/0.900 -> structural, embryo-stable locally
+- relink_new_tight FP 0.712/0.772; ILP-tight FP 0.047/0.032 (44b6 is harder: in-sample ILP less good on 44b6)
+- LB noise +-0.003 single run; pipeline deterministic (sha256 parity) -> the "noise" is run-level GPU nondeterminism / version
+- relink off / bonus 2.5 / gshift all 0.945 on LB (-0.002) ; exp48 0.948 best
+- stitch rule: +0.002 conf but 44b6 gains on only 15% videos
+- parquet stats (own script): edge_prob AUC TP-vs-FP among scored evaluable: 44b6 0.776 / 6bba 0.852 (in-sample!); FP rate 0.048/0.033
+- per-video median step 44b6 p10-p90 0.64-1.97 um, 6bba 0.88-2.72; unscored-relink FP rate vs video median step Spearman +0.67 (n=101)
+- per-video node ratio (N_pred-N_est)/N_est: 44b6 mean -0.167 (min -0.63), 6bba +0.002 -> multiplier embryo-specific
+- ef_a3_rl_pr conf per video: 44b6 wins 61% losses 20%, neg mass 11% of gains; 6bba wins 80% losses 6%; per-video best-of-two oracle only +0.0018 (44b6) -> no need for per-video switch; ef node ratio 0.99958 -> multiplier share ~0.00004 of +0.016 => gain is J
+- local div J exp39: 44b6 5/10/21 = 0.139, 6bba 18/33/107 = 0.114 vs PUBLIC 0.36 -> public embryo is an outlier/small-n; break-even precision private ~0.11 vs public 0.265
+- stitch ef_st_all vs ef (conf, per video): 44b6 win 11 / loss 1 / tie 59 (worst -0.0012); 6bba 46/0/18 -> "fails 55% gate" only because of ties (low coverage); sign test 11/12 p~0.003
+- ef vs exp39 conf: 44b6 43/14/14, 6bba 51/4/9
+- replay lab starts from post-ILP ckpt (ILP not rerun) -> prob-noise stress test only partial; dropped as own hypothesis
+- chosen 4: (1) stitch with tie-aware gate, (2) J-robust division cap for private (public J 0.36 outlier), (3) finals = diversified pair maximizing E[max], (4) label-free logit-parabola sub-voxel refinement as embryo-invariant guard/complement for V1284 head
+- final JSON written and validated

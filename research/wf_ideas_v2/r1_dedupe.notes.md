@@ -1,0 +1,7 @@
+# r1_dedupe notes (2026-09-24)
+- no prior r1_dedupe.json; starting fresh. 33 input hypotheses in task text; wf_ideas/ has only notes.md (no json).
+- Inputs: 36 hyps = 9 lens files x4 (r1_hyp_*.json), same as task text. CONTEXT §14 checked: probes 29/30 pending, exp48=0.948 best, port exp51 in progress, Kaggle-CPU lab port paused.
+- Clusters: stitch(4 ids) ; float+bias ; head retrain(gate-aware, head-v2, scale/clip) ; smoothing(rts, linefit-after-head, learned-linefit, offset-pooling, presmooth) ; holes(hole-fill, hole-admission) ; ILP node admission(ultrack, ilp-keep) ; label-free subvoxel(polyphase, parabola) ; div insert(mirror, ckpt/after-ef, div-cap) ; div gates(forkmid, divgates-refined) ; full-cand probs(oof-edge, edge-net-daughter).
+- Conflicts noted: (1) float-output says x138 still int(round()) at output (line ~3836) vs bias hyp says float is 'part of port' -> verify in exp51 kernel. (2) constant offset: forum -0.003 LB (Le Quang Canh/zhincez) + per-video mean removal no gain (gate-aware) vs bias model +0.005 -> offset only as grid arm on float harness. Sign conventions differ between agents (GT-node +0.44 vox z vs 'dz -0.85 um').
+- Drops: swap-repair (answered: SELECTION repoints dTP-224/dFP+409; only 179 true link swaps), learned-tail-rescue (dominated by ILP fragment rescue), fullres-patch (dominated by head retrain, effort), linajea (capture+training, noisy div term), ultrack/ilp-keep (GPU ILP rebuild, dominated by hole-fill step0 which tests same hypothesis on CPU).
+- DONE: r1_dedupe.json written (14 selected, 6 dropped).

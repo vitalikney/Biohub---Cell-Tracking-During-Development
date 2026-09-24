@@ -1,0 +1,9 @@
+# hyp_linking notes (linking lens)
+
+- 2026-09-24: started; no prior hyp_linking.json found. Reading anatomy_exp39.md, fn_anatomy_exp39_ef.md, CONTEXT.md, exp39 cell 7.
+- 2026-09-24: anatomy_exp39.md read. Key: relink_ilp_tight 3.72M edges FP 3.5%; relink_new_tight 57k FP 76%; relink_new_relaxed 36k FP 84%; ILP src->other 89% FP; prob [0.6,0.8) 679k edges FP 13.6%; prob>=0.8 FP 1.8%; dense n10>=4 FP 12.9%; turn_cos<0 FP 8.1%.
+- fn_anatomy_exp39_ef.md: FN 6099. b_swap 1528 (prov ilp 1 / ckpt 12 / none 1515; competitors 53 TP / 3003 FP; oracle +0.032, 44b6 +0.045). b_u_diverted 593, b_v_taken 556 (prov mostly none). a_never 1907, a_tail 624, a_linefit 353. b_break 399 (281 ILP prov). NOTE: "prov none" = raw ILP solution did NOT contain p_u->p_v (candidate set w/ network scores NOT cached) -> swaps are NOT fixable by trusting ILP more; need a scorer on the missing pair.
+- End->start pairs: ILP edge 6956 pairs 271 TP/19 FP; no-ILP mutual NN 62 TP/365 FP.
+- 2026-09-24: exp39 cell 7 read. motion_relink_edges = per-frame Hungarian, cost = |target - (src + w*vel)| + 0.05*raw - BONUS*prob, NO "no-link" cost (any pair inside the gate is forced), two passes (tight 5.5 / relaxed 10). learned_edge_probs are built ONLY from the raw ILP SOLUTION edges (filter_output_graph input) -> every non-ILP pair gets prob 0, although the edge transformer scored the whole kNN candidate graph; those scores are discarded before post-processing. Swap = 1 FN + 2 FP; swaps' competitors = 3003 FP = about half of all FP after ef.
+- Laptop: 3.1 GB free RAM, 7 idle-priority python procs running -> analyses here are single-process, per-video npz only (no full 257 MB parquet load).
+- 2026-09-24: running scratchpad/swap_geom.py (read-only; swap geometry + 2-opt multi-frame smoothness rule on exp39 tail graph, 199 videos, idle priority).

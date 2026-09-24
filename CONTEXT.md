@@ -1421,5 +1421,16 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   (build: --patch edgefilter --patch stitch --set STITCH_ENABLE=1 ...). Open: linefit moves 354 GT-matched nodes beyond
   7 um (displacement cap untested, needs new tails). The ideas workflow was resumed with this correction in its brief
   for all post-hypothesis stages (9 hypothesis sets cached), script experiments/workflows/biohub-idea-hunt-v2.js.
+- 2026-09-24 16:30 UTC, exp51 READY (not submitted): kernel vitaliineibauer/biohub-exp51-coordhead v1 COMPLETE, 1,713 s,
+  valid submission = exp48 + --patch coordhead (x138's V1284 head verbatim: 224->32->3 MLP, shift <= 2 um, float coords,
+  trilinear gather incl. the secondary model; knobs COORDHEAD_ENABLE, COORDHEAD_MODE=candidate|zero|capture; ENABLE=0
+  byte-identical to exp48). Pre-ILP coordinates and raw ILP counts identical to x138's own run. Head moved 143,633
+  peaks, mean 0.74 um, max 1.61 um. Final nodes 122,704 -> 119,174 (-2.9%, mostly 44b6_0b24845f -10.7%; x138 shows the
+  same drop vs its parent, so part of its +0.007 may be the node multiplier -> private-board risk), forks 58 -> 56.
+  x138 vs our base otherwise: flow-prior relink (raw-distance cost 0), readmit, gap filler, DeepCenter 0.25, ILP timeout
+  1200 s, runtime guard (each neutral alone on LB). The CSV writer rounds coords (int(round())), also in x138: z
+  refinements < 0.81 um are lost at output - float output coordinates are an open idea. Head retraining recipe on 199
+  videos: capture mode -> Hungarian match to GT (<= 4 um) -> target (gt-det) um clipped < 2 -> Linear-SiLU-Linear with
+  zero-init last layer -> movie/embryo-held-out folds (experiments/ext_x138/DIFF.md).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.

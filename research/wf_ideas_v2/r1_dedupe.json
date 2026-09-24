@@ -1,0 +1,100 @@
+{
+  "selected": [
+    {
+      "id": "float-output-coords",
+      "merged_from": ["float-output-coords", "subvoxel-bias-calibration"],
+      "why": "Already measured with a reimplemented scorer that matches the official one exactly (199/199 videos): writing float z,y,x instead of int(round()) gives +0.0018 (44b6 +0.0020, 6bba +0.0018), with the node count unchanged. It is trivial to ship (one line in write_test_submission and write_geff) and carries low risk. The x138 port reportedly still rounds at output (line ~3836), so the gain is NOT absorbed by the port; verify this in the exp51 kernel. MERGED ARM from subvoxel-bias-calibration: the same coordinate-rewrite harness also grids a constant per-axis offset (dz {0,0.25,0.5}, dy {0,0.5}, dx {0,0.25} vox), with float-no-shift as the control. The offset arm has a LOW prior: a forum user lost 0.003 on the LB with a constant dz, per-video mean removal did not help in the gate-aware analysis, and the bias is embryo-dependent. Ship it only if 6bba >= +0.002 and 44b6 >= -0.0005, and only at half-shift. Rescoring needs no re-linking and takes minutes on a Kaggle CPU kernel. Bundle with the next probe."
+    },
+    {
+      "id": "stitch-tie-aware-gate",
+      "merged_from": ["stitch-tie-aware-gate", "ilp-restore-stitch", "stitch-before-tail-evaluable-gate", "ilp-fragment-rescue-before-tail"],
+      "why": "Four near-identical proposals built on the already-implemented stitch_final_graph (ILP end->start edges the relink left open). Measured on confirmation: +0.0021 st_all, +0.0018 st_p07. 44b6 = 11 wins / 1 loss / 59 exact ties, 6bba = 46/0/18. The only failure was the '>=55% of videos gain' gate, which cannot be met on 0.2-1.3%-coverage 44b6 videos. Adopt the tie-aware sign test on non-tied videos (wins/(wins+losses) >= 0.8 per embryo, CI > 0). Precision 0.93-0.97 against a 0.47 break-even, with no nodes added, gives the best transfer margin in the set. ARMS in one Kaggle CPU lab run: (a) st_p07 after ef (ship-ready baseline); (b) stitch moved BEFORE the short-track filter plus fragment reattachment of short components that have a raw-ILP edge to a free terminal (57% of a_tail fragments have one; ceiling ~+0.0045 vs ~+0.0021 now); (c) also restore ILP edges whose relink replacement ef dropped (~50 u_div/v_taken FN). Re-measure on the exp48 base without ef if probe 29 fails. Bundle, never a solo probe."
+    },
+    {
+      "id": "finals-emax-diversify",
+      "merged_from": ["finals-emax-diversify"],
+      "why": "Zero pipeline risk and decides the counted score: choose the two finals to maximise E[max(private)] instead of taking the two highest public scores. The test is pseudo-private resampling of existing lab outputs (leak-group and block bootstrap, 29/71 mix), so it costs only CPU minutes. It gives the embryo-consistent, J-driven components (ef, stitch, division-cap changes) a place in F2 without betting F1 on them. Expected +0.0005..+0.0015 of private score, and protection against a -0.003..-0.005 public-overfit choice. Must be settled before 29 Sep 20:00 UTC."
+    },
+    {
+      "id": "gate-aware-refine-head",
+      "merged_from": ["gate-aware-refine-head", "head-v2-199", "coordhead-scale-clip-calibration"],
+      "why": "The largest learnable lever with a public proof of mechanism: x138's head gave +0.007 LB from -10% centre error, and swaps / u_div / v_taken are driven by localisation (median GT-node distance 4.3 um). All three proposals need ONE shared GPU capture (x138 V1284_MODE=capture extended to all raw peaks, 199 or ~60 stratified videos, 3-5 GPU h). ARMS on CPU after capture: (a) head-v2 = same 224->32->3 architecture refit on ~30x the pairs from our TTA-averaged features. It is a drop-in .pt with zero code change, so try it first; it also fixes the TTA-feature normalisation mismatch. (b) gate-aware variant: track-identity pairs out to 10 um, a gate-hinge loss, 27-neighbour stencil, 3 um z cap. (c) cheap scale/clip grid of the public head (s 0.5-1.25, c 2-3 um) on final-coordinate rescoring. Mandatory embryo-fold readout (6bba->44b6 and reverse), no embryo id as input. Expected +0.001..+0.005 over the port. The capture also feeds polyphase and the smoothing arms."
+    },
+    {
+      "id": "hole-fill-sandwich",
+      "merged_from": ["hole-fill-sandwich", "hole-nucleus-admission"],
+      "why": "The biggest measured error mass. 80% of FN (4,855) and 62% of FP touch GT nodes with no prediction within 4 um. 72% of the 'swap' class is a missing nucleus at that frame, not a linking error, and the hole runs are mostly 1-2 frames (flicker). Readmit and gapfill (end-conditioned, closed) structurally cannot reach holes that have no open end. Step 0 is CPU-only on friend A's existing 0.90 peak cache: coverage of the FN-carrying hole nodes by clearance (>=4-4.5 um) + temporal-sandwich peaks, per embryo, at <= +1.5% nodes. It kills the line cheaply if coverage < 30%. ARMS: (a) the rule (clearance + sandwich, inserted before relink); (b) the hole-nucleus-admission OOF GBM (chain persistence, midpoint-ness, peak score) as a learned admission filter if the rule's precision is too low. Local +0.004..+0.012 potential, but transfer risk is high (sub-threshold peaks are in-sample on train). Require the 6bba-only-primary honesty check on 44b6 before any probe."
+    },
+    {
+      "id": "fork-midpoint-filter",
+      "merged_from": ["fork-midpoint-filter", "divgates-refined"],
+      "why": "Measured on exp39's final graph with fork labels that match the official 23/43. Dropping safe-div/divinsert fork edges with parent-to-daughter-midpoint >= 4.0 um removes 11 FP forks and 0 TP (+0.0007 local). It is worth more on public, where J_div 0.36 puts break-even at 0.265 vs 0.106 locally. Model-free, low risk, CPU-only lab step. The per-embryo gate must use a 0-TP-lost criterion, because 44b6 has few events. MERGED post-port arm from divgates-refined: once head-refined float coordinates exist, re-audit reachability of the 151 GT divisions under the existing divergence/symmetry gates. Those gates currently sit inside ~1.3 um lattice noise. Optionally rank safe-div by DaughterNet p. The re-selection counts only if reachable divisions rise by >= 8."
+    },
+    {
+      "id": "anisotropic-forkaware-rts-smoother",
+      "merged_from": ["anisotropic-forkaware-rts-smoother", "linefit-after-head", "learned-linefit-weight-subvoxel", "track-context-offset-pooling", "presmooth-decisions"],
+      "why": "Five proposals attack the same stage: linefit, the largest post-processing gain (+0.0145), which was tuned only on lattice input (B28). They are merged into one smoothing grid in the replay lab. The end-only variant keeps N_pred and topology fixed, so rescoring is exact. ARMS: (a) NOW, on lattice coordinates: per-segment RTS smoother with per-axis noise (z residual std 1.03 vs xy 0.65 um) estimated label-free per video, outlier gating, and one-sided smoothing at forks (division nodes get none today). (b) AFTER the port / capture: re-grid weight {0.3-0.8} x window {1-3} plus a turn-aware stop on float input. This protects the port from double smoothing. (c) Pool head offsets along chains (w x own + (1-w) x median over +-k) instead of positions. (d) Learned per-node convex weight (bias-free by construction), only if (b) leaves a gap. (e) Pre-relink smoothing (presmooth-decisions), but only in the network-free mutual-NN-chain variant: heuristic sub-voxel changes lost 0.002 on the LB twice (Eric) and flow2 was neutral, so its transfer prior is weak. Expected +0.001..+0.003."
+    },
+    {
+      "id": "ef-anomaly-attribution-finals",
+      "merged_from": ["ef-anomaly-attribution-finals"],
+      "why": "New attribution: ~90% of the edge filter's +0.0162 is repair of anomalous transitions (1,235 FP removed on large-step drift transitions, 487 post-freeze) and only ~181 FP on normal ones. Probe 29 therefore mostly measures whether the public embryo has drift or freeze events. ef_anom (ef only on flagged transitions, with a threshold relative to each video's median step) keeps ~all of the gain while removing the in-sample-ILP-trust part. It gives a principled rule for keeping ef in a final even if probe 29 is flat. A cheap CPU replay with a per-transition-class readout. Its decision value is high and depends on probes 29/30, due today."
+    },
+    {
+      "id": "frozen-frame-double-step",
+      "merged_from": ["frozen-frame-double-step"],
+      "why": "A measured, exactly detectable data defect: 909 duplicate-frame transitions in 114/128 6bba videos, none in 44b6. The transition after a freeze has 3.7x the FP rate and 2.8x the FN rate, with 508 excess FP left after ef. A conditional motion model is not the closed global relink knobs: it predicts x+(k+1)v and scales the gates by the freeze length. It is an exact no-op on embryos without freezes, so the transfer downside is ~0, and 44b6 serves as a built-in bit-identical control. CPU replay (relink_rerun exists). Local +0.0015..+0.003 on 6bba. Also feeds the ef_anom post-freeze flag."
+    },
+    {
+      "id": "div-cap-private-J",
+      "merged_from": ["div-cap-private-J", "mirror-peak-daughter", "insert-at-ckpt-and-after-ef"],
+      "why": "Three extensions of the shipped, LB-positive DaughterNet insertion (probe 28), tested in one replay grid. (a) Cheapest, no new inputs: choose the per-video cap (4/6/8/12, or density-scaled) by marginal evaluable precision >= 0.17. That floor is the break-even at train-embryo J ~0.13 (the private prior), versus the public-derived 0.31; score under 3 J scenarios. (b) mirror-peak-daughter: capped sub-threshold (0.90-0.965) daughter lookup at sister geometry, using friend A's existing 0.90 peak cache as the side table (15 of 151 GT divisions unreachable today, +0.001..+0.003). (c) insert-at-ckpt: an extra insertion pass before the short-track filter to rescue ~10 tail-deleted daughters. It needs one short K-DN-score GPU run for nodes missing from the export. Ship the aggressive cap only in the private-leaning F2."
+    },
+    {
+      "id": "polyphase-shift-stitch-localisation",
+      "merged_from": ["polyphase-shift-stitch-localisation", "logit-parabola-subvoxel-guard"],
+      "why": "Label-free sub-voxel refinement that complements the learned head. The detector reads zarr[t,:,::4,::4] at phase (0,0) only, so it never saw 15/16 of the xy pixels. Shift-and-stitch with 3 extra phase inputs (primary only, +19% GPU) gives a finer heatmap without changing the node set. MERGED zero-cost arm: a 3-point parabola on the fused logits per axis, used as an embryo-invariant guard (fall back to it where the head disagrees by > 1 um). Both piggyback on the same capture kernel as the head retrain, and the readout is geometry-first (median matched distance -8% on both embryos vs lattice, -3% vs head). Expected +0.001..+0.004 over the port, or 0 if redundant. It is also a fallback if the V1284 weights transfer poorly. Eric's heuristic refinement lost on the LB, so require the geometry gate before any replay."
+    },
+    {
+      "id": "refined-duplicate-collapse",
+      "merged_from": ["refined-duplicate-collapse"],
+      "why": "The forum's 'duplicates steal links', quantified: 46k same-frame raw pairs under 5 um, and a valley test finds two objects in only 3%. Edges touching <4 um pairs are 35.9% FP (vs 1.4% for isolated nodes, 450 FP in total). It differs from the closed clustering (radii 0.5-2 um) and heavy NMS (no survivor choice) because it picks the survivor by trajectory (GT-nearest 88% vs 63.5% for max-prob) and re-attaches edges. The trajectory-rule variant runs NOW in the CPU replay; the head-refined survivor choice comes after the capture. Expected +0.0005..+0.002. Watch for overlap with hole-fill: collapsing must not create holes (hard 2.5 um refined-agreement guard)."
+    },
+    {
+      "id": "clip-boundary-frames",
+      "merged_from": ["clip-boundary-frames"],
+      "why": "A cheap structural artefact present in every test clip. The unmatched GT node rate is 3-4x higher in the first/last 3 frames, matching the temporal window, and 19% of a_tail nodes sit at t<=1 or t>=97. Part (b), relaxing min track length by 2 for components touching t=0 or T-1, is a pure tail change that can run in the CPU replay now. Part (a) (reflection padding at the temporal edges, or boundary-frame hole-fill) first needs a read of the notebook's padding code, and then reuses the hole-fill path. Small (+0.001..+0.002 local) but embryo-symmetric and low risk."
+    },
+    {
+      "id": "oof-edge-scorer-full-candidates",
+      "merged_from": ["oof-edge-scorer-full-candidates", "edge-net-second-daughter"],
+      "why": "Both need the same kernel change: keep the edge transformer's probabilities for ALL kNN candidate pairs. Today every non-ILP pair enters relink and div_insert with prob 0. Uses: (a) full-candidate probabilities in the relink bonus (u_diverted zero-prob in-edges; not a relink-knob change); (b) p_edge(u->v) as a pairwise second-daughter arbiter in div_insert (54 of 132 missed divisions are 'claimed'). Step 1 is an inflation audit (in-sample vs OOF edge-prob AUC per embryo). It decides how much every network-trusting lab gain (ef, stitch) should be discounted, but the fold retrain costs ~1 day to adapt the trainer, so run it only if probe 29 is ambiguous. Transfer risk is high (in-sample network). Its gate: pursue arm (b) only if exp49 >= ~0.951. Lowest-priority selected entry."
+    }
+  ],
+  "dropped": [
+    {
+      "id": "swap-repair-stop-loss",
+      "reason": "Its question is already answered, so it would spend a lab run to confirm a closed line. swap_anatomy on SELECTION: 245 swaps dTP -3/dFP +6, repoints dTP -224/dFP +409. hole-fill-sandwich measured that only 179/1528 swaps have both ends <3 um (true linking swaps), and 72% are missing nuclei. Expected +0.0003..+0.001. Record swaps as a localisation/detection artefact with a ceiling of ~+0.004 for genuine repairs."
+    },
+    {
+      "id": "learned-tail-rescue",
+      "reason": "Dominated by the ILP fragment-rescue arm of stitch-tie-aware-gate: 57% of a_tail fragments have a raw-ILP edge to a surviving node, which is rescued at 93%+ precision with no training. The learned variant needs per-component official-delta labels (heavy lab work), uses in-sample edge probabilities, and fights the node-multiplier trap that sank min-track-length on the LB. Revisit only if the fragment rescue leaves most a_tail FN."
+    },
+    {
+      "id": "fullres-patch-residual-head",
+      "reason": "Same oracle as the head retrain and not additive beyond it. It needs its own patch extraction over 199 videos plus 5-fold CNN training, which does not fit the ~2-day window alongside the capture-based head-v2. Keep it only as a fallback idea if the V1284 port fails to transfer."
+    },
+    {
+      "id": "linajea-parent-vector-head",
+      "reason": "Needs the capture plus training of a new regressor (with t-1 features), and its main payoff is the division term, where public J rests on perhaps 10-30 events (+-0.003 per event). The cheaper division levers (cap re-tune, mirror lookup, midpoint gate, p_edge arbiter in oof-edge-scorer) cover the same precision/reach gap with existing models. Out of budget for 2 days."
+    },
+    {
+      "id": "ultrack-optional-node-ilp",
+      "reason": "Dominated for now by hole-fill-sandwich, which tests the same 'missing nuclei are in the heatmap' hypothesis on CPU with friend A's existing 0.90 peak cache. This line needs a GPU rebuild of the raw ILP graphs at threshold 0.6 (3-5 T4 h) and has a high transfer risk (node-set changes lost on the LB repeatedly). Revisit only if hole-fill step 0 shows coverage >= 30% but post-hoc linking fails."
+    },
+    {
+      "id": "ilp-keep-clearance-peaks",
+      "reason": "The ILP-side twin of ultrack-optional-node-ilp (force-keep >= 0.965 peaks at >= 4 um clearance). It needs a GPU peak dump plus an ILP re-solve, and its reach is a subset of the hole-fill step-0 coverage audit, so run hole-fill first. If hole-fill's post-hoc linking underperforms, this becomes the preferred follow-up because the added nodes would get network-scored edges."
+    }
+  ]
+}

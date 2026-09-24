@@ -1,0 +1,12 @@
+# r1_research refined-duplicate-collapse notes (2026-09-24)
+- no prior json; starting. r1_dedupe.json selected this id unchanged (warn: overlap w/ hole-fill; 2.5um refined-agreement guard).
+- Code (exp39 cell 7): motion_relink_edges = per-frame 1:1 Hungarian over ALL nodes (cost motion + 0.05 raw - bonus*prob), REPLACES ILP edges; then single-parent/child repair, gap close, gap2, safe div, div-geom filter, prune isolated, short-track, linefit. => duplicates become parallel 1:1 tracks or interleave; a pre-relink node drop lets Hungarian re-link naturally (no custom edge union needed).
+- Final tails with positions: .public_local_cache/l2_replay/friend_a_b20_exp29/tail/divnet_rerank_fb435c47e6d4/<stem>.npz (node_id,t,zyx post-linefit, src,dst,edge_prob); match npz in l2_edge_anatomy/match/... (n_id,n_match,e_src,e_dst,e_tp,e_valid).
+- Swap class (CONTEXT 13:45): the two tracks are 9.4 um apart => NOT <5 um duplicates; duplicate collapse does not address the swap mass.
+- dupstruct.py (scratchpad, all 199 final exp39 tails + official match, post-linefit coords): 31,234 same-frame pairs <5um, 62,098 nodes (1.50%). Edges touching pair nodes: 86,070, evaluable 1,805: FP 455 / TP 1,350 (collapse must keep 1,350 TP!). 44b6 FP180/TP641, 6bba FP275/TP709.
+  Pair members in the SAME component only 96/31k => the two members sit on two DIFFERENT tracks. Parallel run length (succ pairs also <5um): 65% single frame, 15% >=3 frames (11.0k of 31.2k pair-frames in runs>=3). => mostly transient close passes / one-frame extra peaks, not persistent twin tracks.
+  GT: pairs with one member matched 1,011, both matched 44 (44b6 38 vs 435 = 8.7% >> coverage ~1% => real annotated neighbour pairs, likely sisters near division).
+  Survivor proxies for the matched member (when one matched): longer component 549 vs 439; higher mean edge prob 410 vs 397; higher degree 196 vs 166 => graph-only survivor rules ~coin flips (55%).
+  dist hist final (0.5um bins): 3.0:1050 3.5:2673 4.0:5407 4.5:11043 5.0:9851 ; <3 um 1,210 (post-linefit/synthetic).
+- [resume 2] session resumed after interruption; dupstruct numbers above are final. Next: pattern classification (break / twin / spur) + post-hoc collapse simulation on final tails (dupbreak.py in scratchpad), then web search.
+- exp39 cell7 confirmed: motion_relink_edges(nodes_by_id) builds per-frame Hungarian over ALL nodes (tight 5.5 then relaxed 10um), cost = |target - (src + w*vel)| + 0.05*raw - bonus*prob; then single parent/child repair etc.

@@ -1,0 +1,12 @@
+# float-output-coords research notes (2026-09-24)
+- exp39 notebook cell 7: write_test_submission lines ~1648-1650 `max(0,int(round(float(node[z]))))`; linefit_smooth_output_graph writes float z,y,x (weight*linefit + (1-w)*orig) -> quantised at output.
+- sample_submission.csv: all integer coords (32,128,128). GT geff node props t,z,y,x dtype int64 (44b6_0113de3b) -> GT itself is on the integer voxel grid.
+- Official metrics.py (tools/official): DistanceMatching(max_distance=7, scale) via graph.match; no rounding in metric itself.
+- Pitfall: GT = integer grid. If pred noise << grid, rounding pred can snap to GT exactly; float not guaranteed better in theory -> empirical +0.0018 is the arbiter.
+- royerlab csv_to_geffs.py (github.com/royerlab/kaggle-cell-tracking-competition/blob/main/scripts/csv_to_geffs.py): pl.read_csv then cast t Int64, z/y/x Float64 -> floats accepted by public converter. Pitfall: polars schema inference (first 100 rows) -> write every node coord with a decimal point (f"{v:.3f}") so the column infers Float64.
+- tracksdata DistanceMatching(max_distance, optimal=True default, scale): weight 1/(1+d) after scaling, per-timepoint.
+- roundall.csv (scratchpad, friend_a_b20_exp29 divnet_rerank tail, 199/199 official reproduced): float vs round adj delta (D-weighted) all +0.00165 CI90 [+0.0008,+0.0025]; 44b6 +0.0020 CI90 [-0.0002,+0.0044] win/lose/tie 22/13/36; 6bba +0.0016 CI90 [+0.0007,+0.0025] 51/34/43. z-only float: +0.00096. Win-rate gate (>=55% videos/embryo) fails literally (ties ~40-50%).
+- Friend B earlier (CONTEXT l.812, RESULTS l.79): rounding worth +0.0006 on 4 videos (opposite sign; 4 videos = noise; 47/199 videos lose with floats).
+- Tail stats: 97.9% of output nodes non-integer (linefit); mean |z frac| 0.22 voxel; RMS z rounding shift 0.44 um.
+- Edge-only reimplementation: division term with floats NOT measured -> needs official scorer.
+- geffs_to_csv.py (royerlab official repo) ROUNDS: pl.col(z).cast(Float64).round(0).cast(Int64) -> organizers' reference CSV is integer; csv_to_geffs casts Float64 (no rounding). Server-side parser unknown -> risk of parse error, not silent loss.

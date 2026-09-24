@@ -1,0 +1,6 @@
+# r1_research hole-fill-sandwich notes (2026-09-24)
+- Local data: raw geff (friend_a_cache .../raw/<stem>.geff) = pass-1 detections >=0.965 (peak_prob min 0.965, solution all 1). ckpt = post-ILP. coords_exp39.parquet = exp39 final coords (post-linefit, pre-round). The 0.90 peak cache (tools/recover_daughters.py -> <out>/peaks90/<stem>.npz, keys tzyx + probs) is NOT on this laptop (friend A's machine).
+- friend A B35 step A: 0.90 full-frame pass, peaks >=3 um from existing node = +24% candidate nodes (max 73% one video) -> sub-threshold pool is large; clearance+sandwich must cut 16x to hit 1.5%.
+- FN anatomy: a_never 1907 FN no raw node within 7 um; a_tail 606 (ckpt node removed by tail); a_linefit 354. r1_ext (dangling extrapolation, 5% nodes) precision 0.287 < 0.48 break-even -> DEAD. exp07 det threshold sweep flat.
+- (resume 2) x138/readmit-v1 (0.946 base of x138) ALREADY has: readmit (peaks>=0.965 ILP discarded, >2um from node, <=4um of open end/start, relink rerun) + gapfill (end(t)->start(t+g+1), g<=3, sub-threshold peaks >=0.5 within 3.5um of straight line, EXCLUDE 2.0um, <=3% nodes) from a lowdet dump >=0.3 (int16 unrefined). Source experiments/ext_x138/DIFF.md sec 2. Both neutral on LB vs our line.
+- match npz (l2_fn_anatomy/match/<cfg>/<stem>.npz) has n_id/n_match/e_* but NO coords; ckpt npz has tzyx_syn.
