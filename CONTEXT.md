@@ -1483,5 +1483,7 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   exp54 (exp51 with COORDHEAD_MODE=zero) = CSV BYTE-IDENTICAL to exp48 -> its LB is 0.948 by construction, NO slot
   needed: float geometry + trilinear gather alone change nothing; exp51 - exp48 is entirely the head's shift. The 25 Sep
   batch is therefore exp52 + exp53 at 00:01 UTC (2 slots), 3 slots left for later decisions (need a new OK).
+- 2026-09-24 21:05 UTC: user (going to sleep until ~10:00 MSK) approved: submit exp52 + exp53 at 00:01 UTC, and exp55
+  (retrained head) at my discretion if its kill test passes; conserve token budget until 07:00 UTC (no workflows).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
