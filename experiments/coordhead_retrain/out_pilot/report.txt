@@ -1,0 +1,92 @@
+capture: 6 videos (3 44b6 / 3 6bba), kept peaks 22240, all peaks 163542, GT nodes 8055, pairs <= 4.0 um 7804 (share 0.9688)
+NOTE: 193 of 199 train videos not captured
+x138 mean/scale vs ours: |mean - allpeaks| 0.0366, |mean - pairs| 0.0494; scale ratio x138/allpeaks median 0.967, x138/pairs median 1.111
+
+[leak5_f0] train 5 videos / 5952 pairs (loss 0.3185 -> 0.1494, 3.4 s); held out 1 videos; new beats public on 1/1 videos
+  method   videos   pairs  mean_um  med_um  <=1um          bias z/y/x um      m4  share4      m7 shift_um  >=1um
+  none          1    1852   1.4385  1.6250  0.381  +0.244/+0.240/+0.232    1852  0.9621    1916   0.0000  0.000
+  public        1    1852   1.3571  1.1742  0.381  +0.378/+0.170/+0.280    1855  0.9636    1914   0.7559  0.132
+  new           1    1852   1.2071  1.0424  0.466  -0.022/-0.030/-0.078    1862  0.9673    1913   0.9443  0.415
+  ridge         1    1852   1.1580  0.9860  0.509  -0.078/+0.027/-0.028    1860  0.9662    1912   0.8708  0.282
+
+[leak5_f1] train 4 videos / 5673 pairs (loss 0.3007 -> 0.1645, 2.6 s); held out 2 videos; new beats public on 2/2 videos
+  method   videos   pairs  mean_um  med_um  <=1um          bias z/y/x um      m4  share4      m7 shift_um  >=1um
+  none          2    2131   1.6996  1.7236  0.261  +1.149/+0.281/+0.209    2131  0.9829    2162   0.0000  0.000
+  public        2    2131   1.4184  1.2727  0.298  +0.688/+0.313/+0.431    2133  0.9839    2161   0.7644  0.137
+  new           2    2131   1.2127  1.0023  0.497  +0.581/-0.042/+0.151    2139  0.9866    2161   0.9625  0.465
+  ridge         2    2131   1.3340  1.1742  0.391  +0.710/-0.113/+0.264    2138  0.9862    2162   0.7812  0.203
+  ... without the 1 probable x138 training videos
+  method   videos   pairs  mean_um  med_um  <=1um          bias z/y/x um      m4  share4      m7 shift_um  >=1um
+  none          1    1762   1.7566  1.7236  0.238  +1.257/+0.263/+0.229    1762  0.9855    1787   0.0000  0.000
+  public        1    1762   1.4874  1.3196  0.266  +0.739/+0.337/+0.487    1763  0.9860    1787   0.7985  0.175
+  new           1    1762   1.2634  1.0412  0.470  +0.658/-0.076/+0.181    1768  0.9888    1787   0.9853  0.517
+  ridge         1    1762   1.3961  1.2115  0.362  +0.798/-0.160/+0.295    1767  0.9883    1787   0.8775  0.287
+
+[leak5_f2] train 5 videos / 5939 pairs (loss 0.3222 -> 0.1530, 2.5 s); held out 1 videos; new beats public on 1/1 videos
+  method   videos   pairs  mean_um  med_um  <=1um          bias z/y/x um      m4  share4      m7 shift_um  >=1um
+  none          1    1865   1.4146  1.4648  0.389  +0.214/+0.262/+0.239    1865  0.9564    1946   0.0000  0.000
+  public        1    1865   1.3086  1.0809  0.440  +0.593/+0.104/+0.180    1862  0.9549    1940   0.7502  0.088
+  new           1    1865   1.1298  0.9514  0.537  +0.070/+0.077/+0.072    1869  0.9585    1945   0.8579  0.249
+  ridge         1    1865   1.1403  0.9423  0.527  +0.141/+0.065/+0.036    1869  0.9585    1946   0.7366  0.164
+
+[leak5_f3] train 5 videos / 7195 pairs (loss 0.3166 -> 0.1563, 4.0 s); held out 1 videos; new beats public on 1/1 videos
+  method   videos   pairs  mean_um  med_um  <=1um          bias z/y/x um      m4  share4      m7 shift_um  >=1um
+  none          1     609   1.5547  1.6750  0.335  +0.584/+0.270/-0.250     609  0.9241     656   0.0000  0.000
+  public        1     609   1.4415  1.3537  0.374  +0.690/+0.139/-0.232     616  0.9347     656   0.7139  0.059
+  new           1     609   1.3687  1.1565  0.392  +0.143/+0.134/-0.382     609  0.9241     656   0.9402  0.447
+  ridge         1     609   1.3532  1.1573  0.376  +0.177/+0.112/-0.396     612  0.9287     656   0.7717  0.218
+
+[leak5_f4] train 5 videos / 6457 pairs (loss 0.3338 -> 0.1603, 3.2 s); held out 1 videos; new beats public on 0/1 videos
+  method   videos   pairs  mean_um  med_um  <=1um          bias z/y/x um      m4  share4      m7 shift_um  >=1um
+  none          1    1347   1.1737  0.9084  0.535  +0.141/+0.096/+0.126    1347  0.9956    1352   0.0000  0.000
+  public        1    1347   0.9035  0.7451  0.655  +0.097/-0.012/+0.091    1346  0.9948    1352   0.7671  0.132
+  new           1    1347   1.1674  1.0883  0.436  -0.729/-0.153/+0.101    1345  0.9941    1352   1.1520  0.713
+  ridge         1    1347   1.1428  1.0614  0.457  -0.704/-0.179/+0.096    1345  0.9941    1352   1.2011  0.648
+
+[emb_6bba_to_44b6] train 3 videos / 5479 pairs (loss 0.3340 -> 0.1532, 2.5 s); held out 3 videos; new beats public on 2/3 videos
+  method   videos   pairs  mean_um  med_um  <=1um          bias z/y/x um      m4  share4      m7 shift_um  >=1um
+  none          3    2325   1.3138  1.2188  0.456  +0.335/+0.184/+0.025    2325  0.9720    2383   0.0000  0.000
+  public        3    2325   1.0739  0.8871  0.550  +0.308/+0.061/+0.018    2332  0.9749    2382   0.7351  0.091
+  new           3    2325   1.1811  1.0477  0.465  -0.400/-0.061/-0.133    2326  0.9724    2382   1.1069  0.669
+  ridge         3    2325   1.1809  1.0405  0.480  -0.422/-0.074/-0.103    2327  0.9728    2382   1.0258  0.495
+  ... without the 1 probable x138 training videos
+  method   videos   pairs  mean_um  med_um  <=1um          bias z/y/x um      m4  share4      m7 shift_um  >=1um
+  none          2    1956   1.2923  1.1490  0.473  +0.279/+0.150/+0.009    1956  0.9722    2008   0.0000  0.000
+  public        2    1956   1.0710  0.8670  0.567  +0.281/+0.035/-0.010    1962  0.9751    2008   0.7371  0.091
+  new           2    1956   1.2054  1.0890  0.434  -0.477/-0.082/-0.143    1955  0.9717    2008   1.1179  0.682
+  ridge         2    1956   1.2089  1.0806  0.453  -0.512/-0.107/-0.123    1957  0.9727    2007   1.0492  0.520
+
+[emb_44b6_to_6bba] train 3 videos / 2325 pairs (loss 0.2837 -> 0.1452, 1.4 s); held out 3 videos; new beats public on 3/3 videos
+  method   videos   pairs  mean_um  med_um  <=1um          bias z/y/x um      m4  share4      m7 shift_um  >=1um
+  none          3    5479   1.5327  1.6750  0.338  +0.560/+0.255/+0.233    5479  0.9675    5649   0.0000  0.000
+  public        3    5479   1.3825  1.1895  0.364  +0.567/+0.201/+0.312    5480  0.9677    5641   0.7621  0.121
+  new           3    5479   1.3341  1.1216  0.403  +0.483/+0.011/+0.250    5468  0.9656    5645   0.9432  0.415
+  ridge         3    5479   1.4016  1.2444  0.354  +0.331/-0.033/+0.392    5480  0.9677    5641   0.8745  0.308
+  ... without the 1 probable x138 training videos
+  method   videos   pairs  mean_um  med_um  <=1um          bias z/y/x um      m4  share4      m7 shift_um  >=1um
+  none          2    3614   1.5936  1.6750  0.312  +0.738/+0.251/+0.231    3614  0.9733    3703   0.0000  0.000
+  public        2    3614   1.4207  1.2453  0.325  +0.554/+0.252/+0.381    3618  0.9744    3701   0.7721  0.149
+  new           2    3614   1.3891  1.1659  0.374  +0.548/+0.016/+0.284    3609  0.9720    3702   0.9433  0.411
+  ridge         2    3614   1.4462  1.2913  0.325  +0.291/-0.051/+0.446    3618  0.9744    3698   0.9106  0.340
+
+[leak5 OOF, all videos]
+  method   videos   pairs  mean_um  med_um  <=1um          bias z/y/x um      m4  share4      m7 shift_um  >=1um
+  none          6    7804   1.4675  1.6750  0.373  +0.493/+0.234/+0.171    7804  0.9688    8032   0.0000  0.000
+  public        6    7804   1.2906  1.1198  0.419  +0.490/+0.159/+0.225    7812  0.9698    8023   0.7467  0.104
+  new           6    7804   1.1959  1.0283  0.481  +0.055/-0.016/+0.028    7824  0.9713    8027   0.9746  0.465
+  ridge         6    7804   1.2144  1.0590  0.462  +0.102/-0.031/+0.060    7824  0.9713    8028   0.8747  0.308
+[leak5 OOF, without probable x138 training videos]
+  method   videos   pairs  mean_um  med_um  <=1um          bias z/y/x um      m4  share4      m7 shift_um  >=1um
+  none          4    5570   1.4878  1.6750  0.368  +0.577/+0.215/+0.153    5570  0.9729    5711   0.0000  0.000
+  public        4    5570   1.2979  1.1423  0.410  +0.458/+0.176/+0.244    5580  0.9747    5709   0.7482  0.109
+  new           4    5570   1.2330  1.0633  0.452  +0.040/-0.056/+0.014    5584  0.9754    5708   1.0095  0.528
+  ridge         4    5570   1.2510  1.0922  0.435  +0.076/-0.073/+0.064    5584  0.9754    5707   0.9319  0.367
+
+KILL TEST: on BOTH embryo-held-out directions: new fixed-pair mean distance <= (1 - 0.03) x public AND new 7 um re-match count >= public
+  emb_6bba_to_44b6: new 1.1811 vs public 1.0739 um (+9.98 %; none 1.3138); match7 new 2382 vs public 2382 (none 2383) -> FAIL; without x138 train +12.55 %
+  emb_44b6_to_6bba: new 1.3341 vs public 1.3825 um (-3.50 %; none 1.5327); match7 new 5645 vs public 5641 (none 5649) -> PASS; without x138 train -2.22 %
+  embryo-bias check emb_6bba_to_44b6: mean shift on all-peak sample new +0.553/+0.190/+0.098 vs public -0.037/+0.064/+0.024 um (z/y/x), max gap 0.590 um (WARN > 0.2 um: learns an embryo convention?)
+  embryo-bias check emb_44b6_to_6bba: mean shift on all-peak sample new +0.114/+0.286/+0.023 vs public -0.130/+0.120/+0.007 um (z/y/x), max gap 0.244 um (WARN > 0.2 um: learns an embryo convention?)
+KILL TEST VERDICT: FAIL - do not ship
+
+final head (all 6 videos, 7804 pairs): experiments\coordhead_retrain\out_pilot\v1284_head.pt sha256 71d10139f61d44a9; in-sample mean shift on the all-peak sample 0.950 um (public 0.747 um)

@@ -1,0 +1,19 @@
+{
+ "base": "exp48 (probe 28, LB 0.948); same knobs + --patch floatout --set OUTPUT_FLOAT_COORDS=safe; built by tools/build_probe_kernel.py from the exp39 notebook",
+ "compare_with": "exp48_leafprune_divins",
+ "change": {
+  "LEAF_PRUNE_MIN_EDGE_PROB": "0.3",
+  "DIVINS_ENABLE": "1",
+  "DIVINS_STEAL": "1",
+  "DIVINS_CAP": "4",
+  "DIVINS_FRAME_CAP": "1",
+  "DIVINS_ALPHA": "1",
+  "DIVINS_THRESH": "0.4",
+  "DIVINS_DUMP": "1",
+  "OUTPUT_FLOAT_COORDS": "safe",
+  "DIVNET_VERIFY": "1",
+  "PATCHES": "leafprune+divinsert+floatout"
+ },
+ "note": "exp48 (probe 28, 0.948) + float output coordinates, truncation-safe encoding (floor(w) == round(v)); lab exp39 tail 199 videos +0.0019",
+ "rule": "compare with the same base without floats: keep if >=, revert on scoring error or drop >= 0.002"
+}

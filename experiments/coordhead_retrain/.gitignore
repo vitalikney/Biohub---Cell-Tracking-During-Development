@@ -1,0 +1,6 @@
+# downloaded kernel outputs (~300 MB for all 199 videos) and the re-downloadable public head
+captures/
+public_head/
+# training outputs: keep report.json / report.txt / head_meta.json, the head itself is published as a dataset
+out_*/v1284_head.pt
+push_queue.log

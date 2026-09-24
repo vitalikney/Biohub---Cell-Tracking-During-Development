@@ -42,7 +42,16 @@ Patches (`--patch NAME`, repeatable, any order; they always address the BASE cod
              coordinates end to end), refines each peak (<= 2 um) and swaps in the trilinear feature gather; plus
              per-video shift stats (COORDHEAD_STATS log lines, coordhead_stats_*.jsonl) and a summary after
              prediction. COORDHEAD_MODE=candidate (default) | zero | capture. With ENABLE != 0 the CC0 dataset
-             anvithpothula/biohub-v1284-head-s075 is attached.
+             anvithpothula/biohub-v1284-head-s075 is attached. COORDHEAD_HEAD_PATH (default "" = the public head,
+             exact no-op) loads our own head file instead (tools/train_coordhead.py output, same format), e.g.
+             --set COORDHEAD_HEAD_PATH=biohub-coordhead-199/v1284_head.pt (that dataset is attached automatically).
+  floatout   float output coordinates (wf_ideas_v2 "float-output-coords"): write_test_submission (cell 7) writes node
+             z/y/x through floatout_zyx; knob BIOHUB_OUTPUT_FLOAT_COORDS = 0 (default: the base writer's integers,
+             byte-identical submission.csv) | safe (w = max(0, r + min(max(round(v - r, 3), 0), 0.499)), r = round(v):
+             floor(w) == r) | float (v); both clipped to [0, dim - 1] and written as f"{w:.3f}" on every node row; t, ids
+             and the edge rows' -1 stay integers. A new last cell re-reads submission.csv like royerlab csv_to_geffs.py
+             (polars, z/y/x as Float64) and asserts decimal points, floor(w) == round(v) (safe), ranges and node/edge
+             counts. Replay: config key out.coords=round|safe|float.
 """
 import argparse
 import json
@@ -1023,7 +1032,12 @@ def patch_swapfix(cells_src: dict) -> None:
 # calls x138's refine and returns its array unchanged (COORDHEAD_STATS lines in the log, /kaggle/working/
 # coordhead_stats_<shard>.jsonl, a summary after prediction that fails the run if the head never ran).
 COORDHEAD_DATASET = "anvithpothula/biohub-v1284-head-s075"
-COORDHEAD_KNOBS = {"BIOHUB_COORDHEAD_ENABLE": "0", "BIOHUB_COORDHEAD_MODE": "candidate"}
+COORDHEAD_KNOBS = {"BIOHUB_COORDHEAD_ENABLE": "0", "BIOHUB_COORDHEAD_MODE": "candidate", "BIOHUB_COORDHEAD_HEAD_PATH": ""}
+# COORDHEAD_HEAD_PATH (default "" = the public x138 head, exact no-op): our own head file in the public head's format
+# (tools/train_coordhead.py), given as a path under /kaggle/input that is resolved in both mount layouts
+# (/kaggle/input/<path> and /kaggle/input/datasets/<owner>/<path>), e.g. biohub-coordhead-199/v1284_head.pt; an
+# absolute existing path is taken as is. Datasets of known head slugs are attached automatically, others need --dataset.
+COORDHEAD_HEAD_DATASETS = {"biohub-coordhead-199": "vitaliineibauer/biohub-coordhead-199"}
 COORDHEAD_X138_MODULE = r'''(_ps.parent/'v1284_coordinate_refinement.py').write_text('"""Frozen-feature coordinate regression at first-seen fused detector centers."""\nimport os\nfrom pathlib import Path\nimport numpy as np\nimport torch\n\nSPACING = np.array([1.625, 1.625, 1.625], dtype=np.float32)\nOFFSETS = ((0,0,0), (-1,0,0), (1,0,0), (0,-1,0), (0,1,0), (0,0,-1), (0,0,1))\n_CACHE = None\n\n\ndef make_head():\n    head = torch.nn.Sequential(torch.nn.Linear(224, 32), torch.nn.SiLU(), torch.nn.Linear(32, 3))\n    torch.nn.init.zeros_(head[-1].weight)\n    torch.nn.init.zeros_(head[-1].bias)\n    return head\n\n\ndef bounded(head, x):\n    delta = head(x)\n    return 2.0 * delta / (1.0 + torch.linalg.vector_norm(delta, dim=-1, keepdim=True))\n\n\ndef sample_features(feature, arr):\n    xyz = torch.as_tensor(arr[:, 1:], device=feature.device, dtype=torch.long)\n    blocks = []\n    for offset in OFFSETS:\n        loc = xyz + torch.tensor(offset, device=feature.device)\n        for axis, size in enumerate(feature.shape[-3:]):\n            loc[:, axis].clamp_(0, size-1)\n        blocks.append(feature[0, :, loc[:,0], loc[:,1], loc[:,2]].T)\n    # Directional differences plus the central representation.\n    return torch.cat([blocks[0]] + [b - blocks[0] for b in blocks[1:]], dim=1)\n\n\ndef index_features(self, maps, coords, mask):\n    """Trilinear lookup; integer coordinates reproduce native gather exactly."""\n    out = torch.zeros((*coords.shape[:2], maps.shape[1]), device=maps.device, dtype=maps.dtype)\n    for batch in range(len(maps)):\n        n = int(mask[batch].sum())\n        if not n:\n            continue\n        q = coords[batch, :n].clone()\n        for axis, size in enumerate(maps.shape[-3:]):\n            q[:,axis].clamp_(0, size-1)\n        low = q.floor().long()\n        frac = q-low\n        for z in (0,1):\n            for y in (0,1):\n                for x in (0,1):\n                    shift = torch.tensor([z,y,x], device=maps.device)\n                    loc = low+shift\n                    for axis, size in enumerate(maps.shape[-3:]):\n                        loc[:,axis].clamp_(0,size-1)\n                    weight = torch.where(shift.bool(), frac, 1-frac).prod(dim=1)\n                    out[batch,:n] += maps[batch,:,loc[:,0],loc[:,1],loc[:,2]].T * weight[:,None]\n    return out\n\n\ndef refine(ds_path, t, arr, feature):\n    global _CACHE\n    mode = os.environ[\'V1284_MODE\']\n    if not len(arr):\n        return arr\n    if mode == \'zero\':\n        return arr.astype(np.float32)\n    x = sample_features(feature, arr).float()\n    if mode == \'capture\':\n        folder = Path(os.environ[\'V1284_CAPTURE\']) / ds_path.stem\n        folder.mkdir(parents=True, exist_ok=True)\n        np.savez_compressed(folder/f\'{int(t):04d}.npz\', coords=arr, features=x.cpu().numpy())\n        return arr\n    if _CACHE is None:\n        saved = torch.load(os.environ[\'V1284_HEAD\'], map_location=\'cpu\', weights_only=True)\n        head = make_head().to(feature.device)\n        head.load_state_dict(saved[\'state_dict\']); head.eval()\n        _CACHE = (head, saved[\'mean\'].to(feature.device), saved[\'scale\'].to(feature.device))\n    head, mean, scale = _CACHE\n    shift = bounded(head, (x-mean)/scale).cpu().numpy() / SPACING\n    result = arr.astype(np.float32).copy()\n    result[:,1:] += shift\n    result[:,1:] = np.clip(result[:,1:], 0, np.asarray(feature.shape[-3:])-1)\n    if not np.isfinite(result).all() or np.max(np.linalg.norm((result[:,1:]-arr[:,1:])*SPACING,axis=1)) > 2.00001:\n        raise RuntimeError(\'invalid V1284 displacement\')\n    return result\n')
 '''
 COORDHEAD_X138_PATCH = r'''_trial_source = _ps.read_text()
@@ -1043,6 +1057,14 @@ if not _myhead:
     _myhead = sorted(Path('/kaggle/input').rglob('biohub-v1284-head-s075/v1284_head.pt'))
 if len(_myhead) != 1:
     raise RuntimeError(('my V1284 head mount mismatch', [str(p) for p in _myhead]))
+_ch_head_path = os.environ.get('BIOHUB_COORDHEAD_HEAD_PATH', '').strip()
+if _ch_head_path:
+    # COORDHEAD_HEAD_PATH (tools/build_probe_kernel.py): our retrained head (same file format) replaces the public one
+    _ch_head_hits = [Path(_ch_head_path)] if Path(_ch_head_path).is_file() else sorted({_p for _pat in (_ch_head_path, 'datasets/*/' + _ch_head_path) for _p in Path('/kaggle/input').glob(_pat) if _p.is_file()})
+    if len(_ch_head_hits) != 1:
+        raise RuntimeError(('COORDHEAD_HEAD_PATH must resolve to exactly one file', _ch_head_path, [str(p) for p in _ch_head_hits]))
+    _myhead = _ch_head_hits
+    print('coordhead: COORDHEAD_HEAD_PATH override ->', _myhead[0])
 # My own head, same architecture the module loads. Trained on x107's 20-movie TRAIN capture
 # (4,136 detection<->GT pairs). Held-out BY MOVIE it moves centres CLOSER to truth:
 #   ridge -10.8%   mlp -10.4%   POOLED, 16 of 20 movies improve.
@@ -1161,11 +1183,140 @@ def meta_coordhead(meta: dict, overrides: dict) -> None:
     """Attach the head's CC0 dataset when the stage is switched on."""
     if overrides.get("BIOHUB_COORDHEAD_ENABLE", "0").strip() not in ("", "0") and COORDHEAD_DATASET not in meta["dataset_sources"]:
         meta["dataset_sources"].append(COORDHEAD_DATASET)
+    head_path = overrides.get("BIOHUB_COORDHEAD_HEAD_PATH", "").strip()
+    head_ds = COORDHEAD_HEAD_DATASETS.get(head_path.lstrip("/").split("/")[0]) if head_path else None
+    if head_ds and head_ds not in meta["dataset_sources"]:
+        meta["dataset_sources"].append(head_ds)
+    elif head_path and not head_ds:
+        print(f"NOTE: COORDHEAD_HEAD_PATH={head_path!r} is not a known head dataset: attach it with --dataset owner/slug")
+
+
+# ---- floatout: sub-voxel output coordinates (research/wf_ideas_v2/final.json "float-output-coords"; lab on the exp39
+# tail, all 199 videos, official scorer reproduced: plain float +0.00178, truncation-safe +0.00190, division counts
+# identical). write_test_submission (base code cell 7) writes max(0, int(round(v))) for z/y/x; the tail (linefit, and the
+# coordhead's refined peaks) is float-native, so the rounding throws away sub-voxel positions. Knob
+# BIOHUB_OUTPUT_FLOAT_COORDS = 0 (default: the base writer's integers, byte-identical submission.csv) | safe | float.
+# safe: r = round(v), w = max(0, r + min(max(round(v - r, 3), 0), 0.499)) -> floor(w) == r, so a server that truncates
+# floats still reads the integer writer's value; float: v. Both clipped to [0, dim - 1] (volume 64 x 256 x 256) and written
+# as f"{w:.3f}" on EVERY node row (polars infers the column dtype from the first rows -> Float64); t, node_id, source_id,
+# target_id and the edge rows' -1 stay integers. A last cell re-reads submission.csv like royerlab
+# scripts/csv_to_geffs.py (pl.read_csv, z/y/x cast to Float64) and asserts decimal points, floor(w) == round(v) (safe),
+# ranges and node/edge counts against the integer writer's values. Replay: config key out.coords=round|safe|float
+# (experiments/l2_daughternet/replay/replay.py write_geff calls floatout_text from this text).
+FLOATOUT_MODES = ("0", "safe", "float")
+FLOATOUT_TEXT_FN = r'''def floatout_text(value: float, hi: int, mode: str) -> str:
+    """One node coordinate cell in safe / float mode (the replay lab runs this same function: out.coords)."""
+    v = float(value)
+    if mode == "safe":
+        r = round(v)
+        w = max(0, r + min(max(round(v - r, 3), 0.0), 0.499))
+    elif mode == "float":
+        w = v
+    else:
+        raise ValueError(f"floatout mode must be safe or float, got {mode!r}")
+    return f"{min(max(float(w), 0.0), float(hi)) + 0.0:.3f}"
+'''
+FLOATOUT_FN = (
+    "# ---- floatout (tools/build_probe_kernel.py --patch floatout): sub-voxel output coordinates. The base writer rounds" + NL
+    + "# z/y/x to max(0, int(round(v))); BIOHUB_OUTPUT_FLOAT_COORDS = 0 (default: exactly that, byte-identical CSV) | safe |" + NL
+    + "# float. safe: w = max(0, r + min(max(round(v - r, 3), 0), 0.499)) with r = round(v) -> floor(w) == r (a truncating" + NL
+    + "# parser still reads the integer writer's value); float: v. Both clipped to [0, dim - 1], written with 3 decimals on" + NL
+    + "# EVERY node row (polars infers Float64 from the first rows); t, ids and the edge rows' -1 stay integers." + NL
+    + 'OUTPUT_FLOAT_COORDS = os.environ.get("BIOHUB_OUTPUT_FLOAT_COORDS", "0").strip() or "0"' + NL
+    + 'if OUTPUT_FLOAT_COORDS not in ("0", "safe", "float"):' + NL
+    + '    raise ValueError(f"BIOHUB_OUTPUT_FLOAT_COORDS must be 0, safe or float, got {OUTPUT_FLOAT_COORDS!r}")' + NL
+    + 'FLOATOUT_MAX = {"z": 63, "y": 255, "x": 255}  # volume (64, 256, 256) on every train and test video' + NL
+    + '# the integer writer\'s z/y/x of every node row (flat, row order) and its counts: read by the floatout check cell' + NL
+    + 'FLOATOUT_REF: dict[str, object] = {"int": [], "nodes": 0, "edges": 0}' + NL + NL + NL
+    + FLOATOUT_TEXT_FN + NL + NL
+    + '''def floatout_zyx(node: dict) -> dict:
+    """z/y/x cells of one node row; OUTPUT_FLOAT_COORDS=0 returns the base writer's integers unchanged."""
+    ints = {axis: max(0, int(round(float(node[axis])))) for axis in ("z", "y", "x")}
+    if OUTPUT_FLOAT_COORDS == "0":
+        return ints
+    FLOATOUT_REF["int"].extend((ints["z"], ints["y"], ints["x"]))
+    return {axis: floatout_text(node[axis], FLOATOUT_MAX[axis], OUTPUT_FLOAT_COORDS) for axis in ("z", "y", "x")}
+''' + NL + NL)
+_FO_WRITER_DEF = 'def write_test_submission(tag: str = "base") -> None:' + NL
+_FO_WRITER_INIT = "    seen_datasets: set[str] = set()" + NL + "    row_id = 0" + NL
+_FO_WRITER_RESET = '    FLOATOUT_REF.update({"int": [], "nodes": 0, "edges": 0})  # floatout: fresh integer reference per write' + NL
+_FO_WRITER_COORDS = ('                    "z": max(0, int(round(float(node["z"])))),' + NL
+                     + '                    "y": max(0, int(round(float(node["y"])))),' + NL
+                     + '                    "x": max(0, int(round(float(node["x"])))),' + NL)
+_FO_WRITER_FLOAT = '                    **floatout_zyx(node),  # floatout: z/y/x (OUTPUT_FLOAT_COORDS=0: the integers above)' + NL
+_FO_WRITER_COUNT = '    assert row_id == total_nodes + total_edges, "Internal row counter mismatch"' + NL
+_FO_WRITER_RECORD = '    FLOATOUT_REF.update(nodes=total_nodes, edges=total_edges)  # floatout: the writer\'s counts, for the check' + NL
+FLOATOUT_CHECK = r'''# ---- floatout check (tools/build_probe_kernel.py --patch floatout): re-read submission.csv the way royerlab
+# scripts/csv_to_geffs.py does (pl.read_csv with its columns, node rows, t cast to Int64, z/y/x cast to Float64) and check
+# the written coordinates against the integer writer's values recorded by write_test_submission (FLOATOUT_REF).
+if OUTPUT_FLOAT_COORDS != "0":
+    import polars as _fo_pl
+
+    _fo_cols = ["dataset", "row_type", "node_id", "t", "z", "y", "x", "source_id", "target_id"]
+    _fo_df = _fo_pl.read_csv(SUBMISSION_PATH, columns=_fo_cols)
+    for _fo_c in ("z", "y", "x"):
+        assert _fo_df.schema[_fo_c] == _fo_pl.Float64, f"floatout: polars inferred {_fo_df.schema[_fo_c]} for {_fo_c}"
+    for _fo_c in ("node_id", "t", "source_id", "target_id"):
+        assert _fo_df.schema[_fo_c] == _fo_pl.Int64, f"floatout: polars inferred {_fo_df.schema[_fo_c]} for {_fo_c}"
+    _fo_nodes = _fo_df.filter(_fo_pl.col("row_type") == "node").with_columns(
+        _fo_pl.col("t").cast(_fo_pl.Int64), _fo_pl.col("z").cast(_fo_pl.Float64),
+        _fo_pl.col("y").cast(_fo_pl.Float64), _fo_pl.col("x").cast(_fo_pl.Float64))
+    _fo_edges = _fo_df.filter(_fo_pl.col("row_type") == "edge")
+    _fo_text = _fo_pl.read_csv(SUBMISSION_PATH, columns=_fo_cols, infer_schema_length=0)  # every cell as written
+    _fo_text_nodes = _fo_text.filter(_fo_pl.col("row_type") == "node")
+    _fo_text_edges = _fo_text.filter(_fo_pl.col("row_type") == "edge")
+    for _fo_c in ("z", "y", "x"):
+        assert _fo_text_nodes[_fo_c].str.contains(".", literal=True).all(), f"floatout: a node {_fo_c} has no decimal point"
+        assert (_fo_text_edges[_fo_c] == "-1").all(), f"floatout: edge rows must keep {_fo_c} = -1"
+    for _fo_c in ("node_id", "t", "source_id", "target_id"):
+        assert not _fo_text[_fo_c].str.contains(".", literal=True).any(), f"floatout: {_fo_c} must stay integer"
+    _fo_int = np.asarray(FLOATOUT_REF["int"], dtype=np.int64).reshape(-1, 3)
+    _fo_hi = np.asarray([FLOATOUT_MAX[_fo_c] for _fo_c in ("z", "y", "x")], dtype=np.int64)
+    _fo_w = _fo_nodes.select(["z", "y", "x"]).to_numpy().astype(np.float64)
+    assert len(_fo_nodes) == FLOATOUT_REF["nodes"] == len(_fo_int), ("floatout: node rows", len(_fo_nodes),
+                                                                     FLOATOUT_REF["nodes"], len(_fo_int))
+    assert len(_fo_edges) == FLOATOUT_REF["edges"], ("floatout: edge rows", len(_fo_edges), FLOATOUT_REF["edges"])
+    assert np.isfinite(_fo_w).all() and (_fo_w >= 0.0).all() and (_fo_w <= _fo_hi).all(), "floatout: coordinate out of range"
+    _fo_ref = np.minimum(_fo_int, _fo_hi)  # the integer writer's value (it has no upper clip) inside the volume
+    _fo_floor = np.floor(_fo_w).astype(np.int64)
+    if OUTPUT_FLOAT_COORDS == "safe":
+        assert (_fo_floor == _fo_ref).all(), f"floatout: floor(w) != round(v) on {int((_fo_floor != _fo_ref).sum())} coords"
+    else:
+        assert (np.abs(_fo_w - _fo_ref) <= 0.5 + 1e-6).all(), "floatout: |w - round(v)| > 0.5"
+    _fo_forks = int((_fo_edges.group_by(["dataset", "source_id"]).len()["len"] >= 2).sum())
+    _fo_changed = _fo_w != _fo_int
+    print(f"FLOATOUT CHECK PASSED: mode={OUTPUT_FLOAT_COORDS} nodes={len(_fo_nodes)} edges={len(_fo_edges)} "
+          f"forks={_fo_forks} coords_changed={_fo_changed.mean():.4f} "
+          f"(z/y/x {[round(float(_v), 4) for _v in _fo_changed.mean(axis=0)]}) "
+          f"mean_abs_shift_vox={np.abs(_fo_w - _fo_int).mean():.4f} "
+          f"int_beyond_volume={int((_fo_int > _fo_hi).sum())} floor_ne_int_unclipped={int((_fo_floor != _fo_int).sum())}",
+          flush=True)
+else:
+    print("floatout: OUTPUT_FLOAT_COORDS=0 -> integer coordinates (the base writer), nothing to check")
+'''
+
+
+def floatout_postproc_source(c7: str) -> str:
+    """Post-processing cell (base code cell 7): the knob + floatout_text / floatout_zyx right before
+    write_test_submission, and three edits inside it (reset the integer reference, node rows' z/y/x through
+    floatout_zyx, record the writer's counts). No other patch touches these lines: any patch order."""
+    c7 = _rep1(c7, NL + NL + _FO_WRITER_DEF, NL + NL + FLOATOUT_FN + _FO_WRITER_DEF)
+    c7 = _rep1(c7, _FO_WRITER_INIT, _FO_WRITER_INIT + _FO_WRITER_RESET)
+    c7 = _rep1(c7, _FO_WRITER_COORDS, _FO_WRITER_FLOAT)
+    return _rep1(c7, _FO_WRITER_COUNT, _FO_WRITER_COUNT + _FO_WRITER_RECORD)
+
+
+def patch_floatout(cells_src: dict) -> None:
+    """Float output coordinates (see the section comment). Knob via --set OUTPUT_FLOAT_COORDS=safe|float; default 0 =
+    the base writer's integers (byte-identical submission.csv). A new last code cell (after the manifest, base code
+    index 13) runs the csv_to_geffs-style parse check when the knob is on."""
+    cells_src[7] = floatout_postproc_source(cells_src[7])
+    cells_src.setdefault(NEW_CELLS_KEY, []).append((max(k for k in cells_src if isinstance(k, int)), FLOATOUT_CHECK))
 
 
 PATCHES = {"gshift": patch_gshift, "divinsert": patch_divinsert, "leafprune": patch_leafprune,
            "edgefilter": patch_edgefilter, "stitch": patch_stitch, "swapfix": patch_swapfix,
-           "coordhead": patch_coordhead}
+           "coordhead": patch_coordhead, "floatout": patch_floatout}
 META_PATCHES = {"divinsert": meta_divinsert, "coordhead": meta_coordhead}
 
 
@@ -1273,8 +1424,20 @@ def main() -> None:
             sys.exit(f"COORDHEAD_ENABLE must be an integer literal, got {overrides['BIOHUB_COORDHEAD_ENABLE']!r}")
         if overrides.get("BIOHUB_COORDHEAD_MODE", "candidate") not in ("candidate", "zero", "capture"):
             sys.exit(f"COORDHEAD_MODE must be candidate, zero or capture, got {overrides['BIOHUB_COORDHEAD_MODE']!r}")
+        if not re.fullmatch(r"[A-Za-z0-9_./*-]*", overrides.get("BIOHUB_COORDHEAD_HEAD_PATH", "")):
+            sys.exit(f"COORDHEAD_HEAD_PATH must be a plain path, got {overrides['BIOHUB_COORDHEAD_HEAD_PATH']!r}")
+        if overrides.get("BIOHUB_COORDHEAD_HEAD_PATH", "") and overrides.get("BIOHUB_COORDHEAD_ENABLE", "0") in ("", "0"):
+            sys.exit("COORDHEAD_HEAD_PATH needs COORDHEAD_ENABLE=1")
     if "coordhead" in a.patch and overrides.get("BIOHUB_COORDHEAD_ENABLE", "0").strip() in ("", "0"):
         print("NOTE: --patch coordhead with COORDHEAD_ENABLE=0 (default) builds an exact no-op of the base")
+    if "BIOHUB_OUTPUT_FLOAT_COORDS" in overrides:
+        if "floatout" not in a.patch:
+            # the base writer never reads the knob: the probe would silently write integers
+            sys.exit("OUTPUT_FLOAT_COORDS needs --patch floatout")
+        if overrides["BIOHUB_OUTPUT_FLOAT_COORDS"] not in FLOATOUT_MODES:
+            sys.exit(f"OUTPUT_FLOAT_COORDS must be one of {FLOATOUT_MODES}, got {overrides['BIOHUB_OUTPUT_FLOAT_COORDS']!r}")
+    if "floatout" in a.patch and overrides.get("BIOHUB_OUTPUT_FLOAT_COORDS", "0") == "0":
+        print("NOTE: --patch floatout with OUTPUT_FLOAT_COORDS=0 (default) writes a byte-identical submission.csv")
     overrides["BIOHUB_DIVNET_VERIFY"] = a.divnet
 
     nb = json.load(open(BASE_NB, encoding="utf-8"))

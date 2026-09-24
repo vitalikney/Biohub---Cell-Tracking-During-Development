@@ -7,7 +7,8 @@ WHAT IT REPLAYS
          filter, linefit; `filter_output_graph` of the exp29 post-processing cell with relink/gap/safe-div/DC-veto off,
          exactly the namespace experiments/local_friend_c_b31_cluster/runner.py builds)
       -> [optional] L2 division insertion AFTER linefit: tools/div_insert.insert_divisions with node p from --node-p
-      -> coordinates rounded exactly like write_test_submission -> .geff -> OFFICIAL metric (tools/score_geffs.py)
+      -> coordinates rounded exactly like write_test_submission (or out.coords=safe|float, below) -> .geff
+      -> OFFICIAL metric (tools/score_geffs.py)
     The raw -> ckpt part is NOT replayed: DeepCenter scores exist only at raw nodes, not at synthetic gap points
     (see experiments/local_friend_c_b31_cluster/README.md).
 
@@ -63,6 +64,15 @@ SWAPFIX (config keys `sw.<param>`; any sw.* key switches it on unless sw.enable=
     two links a->b, c->d of the same frame pair become a->d, c->b when the constant-velocity second-difference cost
     drops by >= sw.min_gain_um. Params = bpk.SWAPFIX_KNOBS (enable, min_gain_um, min_ratio, max_prob, src_um,
     max_len_um, min_terms). Not part of the base key; part of the config fingerprint.
+
+OUTPUT COORDINATES (config key `out.coords=round|safe|float`, default round = the integer writer; wf_ideas_v2
+    "float-output-coords")
+    write_geff writes node z/y/x as the kernel's --patch floatout writer would have them parsed back by the server
+    (float(text) of bpk.FLOATOUT_TEXT_FN's floatout_text, the kernel's own function text): safe = r + min(max(round(v - r,
+    3), 0), 0.499) with r = round(v) (floor == the integer writer's value), float = v with 3 decimals; both clipped to
+    [0, dim - 1] (63 / 255 / 255). `out.coords=safe` ships as `--patch floatout --set OUTPUT_FLOAT_COORDS=safe`.
+    Not part of the base key (applied at the GEFF write); part of the config fingerprint only when not round, so the
+    existing controls keep their fingerprints and stored rows.
 
 EXPORT (--export-coords PATH)
     For every node involved in div_insert.candidate_triples of the FINAL (post-linefit, pre-insertion) graph of
@@ -301,10 +311,12 @@ def resolve_config(name: str, raw: dict, defs: dict[str, dict]) -> dict:
     cfg.setdefault("ef", {})
     cfg.setdefault("st", {})
     cfg.setdefault("sw", {})
+    cfg.setdefault("out", {})
     ins = dict(cfg["ins"])
     ef = dict(cfg["ef"])
     st = dict(cfg["st"])
     sw = dict(cfg["sw"])
+    out_keys = dict(cfg["out"])
     for key, value in raw.items():
         if key.startswith("ins."):
             ins[key[4:]] = value
@@ -322,18 +334,23 @@ def resolve_config(name: str, raw: dict, defs: dict[str, dict]) -> dict:
             sw[key[3:]] = value
         elif key == "sw" and isinstance(value, dict):
             sw.update(value)
+        elif key.startswith("out."):
+            out_keys[key[4:]] = value
+        elif key == "out" and isinstance(value, dict):
+            out_keys.update(value)
         else:
             cfg[key] = value
     cfg["ins"] = ins
     cfg["ef"] = edgefilter_params(name, ef)
     cfg["st"] = stitch_params(name, st)
     cfg["sw"] = swapfix_params(name, sw)
+    cfg["out"] = output_params(name, out_keys)
     mode = cfg.get("safe_div")
     if mode not in SAFE_DIV_DEFAULTS:
         raise SystemExit(f"config {name!r}: safe_div must be one of {sorted(SAFE_DIV_DEFAULTS)}, got {mode!r}")
     for key, value in SAFE_DIV_DEFAULTS[mode].items():
         cfg.setdefault(key, value)
-    allowed = {"safe_div", "insert", "ins", "node_p", "leaf_prune", "ef", "st", "sw", *SAFE_DIV_DEFAULTS[mode]}
+    allowed = {"safe_div", "insert", "ins", "node_p", "leaf_prune", "ef", "st", "sw", "out", *SAFE_DIV_DEFAULTS[mode]}
     unknown = sorted(set(cfg) - allowed - {"name"})
     if unknown:
         raise SystemExit(f"config {name!r}: unknown keys {unknown} for safe_div={mode} (allowed {sorted(allowed)})")
@@ -346,6 +363,37 @@ def resolve_config(name: str, raw: dict, defs: dict[str, dict]) -> dict:
     cfg["insert"] = bool(cfg["insert"])
     cfg["name"] = name
     return cfg
+
+
+OUT_COORDS = ("round", "safe", "float")
+FLOATOUT_MAX = (63, 255, 255)  # z, y, x: the kernel's FLOATOUT_MAX (volume 64 x 256 x 256)
+
+
+def output_params(name: str, overrides: dict) -> dict:
+    """out.* keys -> {} (round: the integer writer, fingerprints unchanged) or {'coords': 'safe'|'float'}."""
+    unknown = sorted(set(overrides) - {"coords"})
+    if unknown:
+        raise SystemExit(f"config {name!r}: unknown out keys {unknown} (known: ['coords'])")
+    coords = str(overrides.get("coords", "round")).strip()
+    if coords not in OUT_COORDS:
+        raise SystemExit(f"config {name!r}: out.coords must be one of {list(OUT_COORDS)}, got {overrides['coords']!r}")
+    return {} if coords == "round" else {"coords": coords}
+
+
+_FLOATOUT_NS: dict = {}
+
+
+def floatout_value(value: float, hi: int, mode: str) -> float:
+    """The value the server parses from the kernel's floatout cell: float(floatout_text(...)), one function text."""
+    if not _FLOATOUT_NS:
+        exec(compile(bpk.FLOATOUT_TEXT_FN, "bpk.FLOATOUT_TEXT_FN", "exec"), _FLOATOUT_NS)
+    return float(_FLOATOUT_NS["floatout_text"](value, hi, mode))
+
+
+def _floatout_sha() -> str:
+    """Hash of the floatout writer text: part of out.coords config fingerprints."""
+    parts = (bpk.FLOATOUT_TEXT_FN, bpk.FLOATOUT_FN, _dumps(FLOATOUT_MAX))
+    return _sha256_bytes("\0".join(parts).encode("utf-8"))[:16]
 
 
 def edgefilter_params(name: str, overrides: dict) -> dict:
@@ -472,7 +520,7 @@ def is_reference_config(cfg: dict) -> str | None:
     for ref in REFERENCES:
         preset = PRESETS[ref]
         if (cfg["insert"] or cfg.get("leaf_prune", 0.0) > 0.0 or cfg.get("ef") or cfg.get("st") or cfg.get("sw") or
-                cfg["safe_div"] != preset["safe_div"]):
+                cfg.get("out") or cfg["safe_div"] != preset["safe_div"]):
             continue
         if all(cfg[k] == v for k, v in SAFE_DIV_DEFAULTS[cfg["safe_div"]].items()):
             return ref
@@ -622,16 +670,23 @@ def load_tail(path: Path) -> tuple[dict, list[dict], dict]:
     return nodes, edges, stats
 
 
-def write_geff(path: Path, nodes_by_id: dict, edges: list[dict]) -> None:
-    """Same rounding as write_test_submission / friend C _write_prediction."""
+def write_geff(path: Path, nodes_by_id: dict, edges: list[dict], coords: str = "round") -> None:
+    """Same rounding as write_test_submission / friend C _write_prediction (coords=round, default); coords=safe|float:
+    the values the server parses from the kernel's --patch floatout CSV (floatout_value)."""
     import networkx as nx
 
     graph = nx.DiGraph()
     for node_id, node in nodes_by_id.items():
-        graph.add_node(int(node_id), t=int(node["t"]),
-                       z=float(max(0, round(float(node["z"])))),
-                       y=float(max(0, round(float(node["y"])))),
-                       x=float(max(0, round(float(node["x"])))))
+        if coords == "round":
+            graph.add_node(int(node_id), t=int(node["t"]),
+                           z=float(max(0, round(float(node["z"])))),
+                           y=float(max(0, round(float(node["y"])))),
+                           x=float(max(0, round(float(node["x"])))))
+        elif coords in ("safe", "float"):
+            graph.add_node(int(node_id), t=int(node["t"]),
+                           **{axis: floatout_value(node[axis], hi, coords) for axis, hi in zip(("z", "y", "x"), FLOATOUT_MAX)})
+        else:
+            raise ValueError(f"write_geff: coords must be round, safe or float, got {coords!r}")
     for edge in edges:
         graph.add_edge(int(edge["source_id"]), int(edge["target_id"]))
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -905,7 +960,7 @@ def run_config_video(cfg: dict, stem: str) -> dict:
         stats.update(ins_stats)
     out = _CTX["out"]
     geff = out / "predictions" / cfg["name"] / f"{stem}.geff"
-    write_geff(geff, nodes, edges)
+    write_geff(geff, nodes, edges, (cfg.get("out") or {}).get("coords", "round"))
     with contextlib.redirect_stdout(io.StringIO()):
         _, rows = _CTX["scorer"].score([geff], quiet=True)
     metric = {k: (v.item() if hasattr(v, "item") else v) for k, v in rows[0].items()}
@@ -1245,7 +1300,7 @@ def main() -> None:
     ap.add_argument("--config", action="append", default=[], metavar="NAME=BASE,k=v,...",
                     help="custom config; keys: safe_div, sd_parent_um, sd_k, sd_sister_min_um, divnet_min_p, "
                          "leaf_prune (0 = off), insert, node_p, ins.<div_insert param>, ef.<edgefilter param>, "
-                         "st.<stitch param>, sw.<swapfix param>")
+                         "st.<stitch param>, sw.<swapfix param>, out.coords (round|safe|float)")
     ap.add_argument("--grid", default="", help="JSON {name: {base: ..., key: value, ins: {...}}}")
     ap.add_argument("--control", default="exp39", help="config the paired bootstrap compares against")
     ap.add_argument("--node-p", default="", help="parquet/csv stem,node_id,p_cont,p_par,p_dau[,t,z,y,x]")
@@ -1345,6 +1400,8 @@ def main() -> None:
             fp_payload.update(st=cfg["st"], stitch_sha=_stitch_sha())
         if cfg.get("sw"):  # idem for the swapfix
             fp_payload.update(sw=cfg["sw"], swapfix_sha=_swapfix_sha())
+        if cfg.get("out"):  # idem for float output coordinates (round = {} keeps the old fingerprints)
+            fp_payload.update(out=cfg["out"], floatout_sha=_floatout_sha())
         if cfg["insert"]:
             cfg["_ins_params"] = adapter.resolve(cfg["ins"])
             cfg["_node_p_dir"] = str(node_p_dirs[cfg["node_p"] or args.node_p])
@@ -1593,6 +1650,12 @@ def main() -> None:
             lines.append(f"\n`{name}`: stitch {st}: candidates {int(tot.get('stitch_candidates', 0))}, added "
                          f"{int(tot.get('stitch_added', 0))}; kernel: tools/build_probe_kernel.py <name> "
                          f"{entry['kernel_stitch']}")
+    for name, entry in report["configs"].items():
+        out_cfg = entry["config"].get("out") or {}
+        if out_cfg:
+            entry["kernel_floatout"] = f"--patch floatout --set OUTPUT_FLOAT_COORDS={out_cfg['coords']}"
+            lines.append(f"\n`{name}`: output coordinates {out_cfg['coords']}; kernel: tools/build_probe_kernel.py <name> "
+                         f"{entry['kernel_floatout']}")
     for name, entry in report["configs"].items():
         if "reference_check" in entry:
             rc = entry["reference_check"]

@@ -1,0 +1,20 @@
+{
+ "base": "exp51 (probe 31, exp48 + x138 coordinate head) with COORDHEAD_MODE=zero; built by tools/build_probe_kernel.py from the exp39 notebook",
+ "compare_with": "exp51_coordhead (and exp48_leafprune_divins, LB 0.948)",
+ "change": {
+  "LEAF_PRUNE_MIN_EDGE_PROB": "0.3",
+  "DIVINS_ENABLE": "1",
+  "DIVINS_STEAL": "1",
+  "DIVINS_CAP": "4",
+  "DIVINS_FRAME_CAP": "1",
+  "DIVINS_ALPHA": "1",
+  "DIVINS_THRESH": "0.4",
+  "DIVINS_DUMP": "1",
+  "COORDHEAD_ENABLE": "1",
+  "COORDHEAD_MODE": "zero",
+  "DIVNET_VERIFY": "1",
+  "PATCHES": "leafprune+divinsert+coordhead"
+ },
+ "note": "exp51 control: coordhead pipeline (float coordinates end to end + trilinear feature gather) with zero head shift; tells whether the head's shift or the float geometry carries x138's gain",
+ "rule": "attribution control, not an adoption candidate: exp54 ~ exp51 -> the gain is the float geometry / trilinear gather; exp54 ~ exp48 -> the head's shift carries it"
+}

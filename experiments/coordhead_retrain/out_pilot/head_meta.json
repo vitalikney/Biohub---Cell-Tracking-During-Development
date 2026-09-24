@@ -1,0 +1,142 @@
+{
+ "sha256": "71d10139f61d44a93aa276bb42c0569e2ada2966a72a68cbe8438f83f14813ef",
+ "file": "v1284_head.pt",
+ "format": "x138 V1284 (state_dict 0/2 Linear, mean, scale)",
+ "trained_on": [
+  "44b6_996155de",
+  "44b6_d29c9ab2",
+  "44b6_ddf577ad",
+  "6bba_09961292",
+  "6bba_784a78c9",
+  "6bba_bb9f20c3"
+ ],
+ "fit": {
+  "n_pairs": 7804,
+  "n_videos": 6,
+  "train_loss_first": 0.31837035204617564,
+  "train_loss_last": 0.15629767274807685,
+  "seconds": 3.6
+ },
+ "kill_test_pass": false,
+ "args": {
+  "capture": [
+   "experiments/coordhead_retrain/captures/pilot"
+  ],
+  "out": "experiments/coordhead_retrain/out_pilot",
+  "data_dir": "C:\\Users\\vital\\Documents\\kAGGLE\\Biohub - Cell Tracking During Development\\biohub-cell-tracking-during-development\\train",
+  "splits": "C:\\Users\\vital\\Documents\\kAGGLE\\Biohub - Cell Tracking During Development\\experiments\\l2_daughternet\\splits.json",
+  "public_head": "C:\\Users\\vital\\Documents\\kAGGLE\\Biohub - Cell Tracking During Development\\experiments\\coordhead_retrain\\public_head\\v1284_head.pt",
+  "match_um": 4.0,
+  "clip_um": 1.99,
+  "target_scale": 1.0,
+  "norm": "allpeaks",
+  "debias": "none",
+  "loss": "huber",
+  "huber_delta": 1.0,
+  "epochs": 60,
+  "batch": 1024,
+  "lr": 0.003,
+  "wd": 0.0001,
+  "ridge_lambda": 0.001,
+  "seed": 20260924,
+  "threads": 1,
+  "kill_margin": 0.03,
+  "skip_leak5": false,
+  "export_dataset": false,
+  "force_export": false
+ },
+ "in_sample_eval_all": {
+  "none": {
+   "videos": 6,
+   "n_gt": 8055,
+   "fixed_pairs": 7804,
+   "fixed_mean_um": 1.4674570882314402,
+   "fixed_median_um": 1.6750116604071745,
+   "fixed_share_le1um": 0.3731419784725782,
+   "bias_zyx_um": [
+    0.49287224500256277,
+    0.23373430292157868,
+    0.17137045105074322
+   ],
+   "mae_zyx_um": [
+    0.8893355971296771,
+    0.5697078421322399,
+    0.5497180932854946
+   ],
+   "match4": 7804,
+   "match7": 8032,
+   "share4": 0.9688392302917442,
+   "share7": 0.9971446306641837,
+   "match4_mean_um": 1.46745708823144,
+   "sample_mean_shift_um": 0.0,
+   "sample_share_ge1um": 0.0,
+   "sample_mean_vec_zyx_um": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "public": {
+   "videos": 6,
+   "n_gt": 8055,
+   "fixed_pairs": 7804,
+   "fixed_mean_um": 1.290557483516183,
+   "fixed_median_um": 1.1198150459493157,
+   "fixed_share_le1um": 0.4191440287032291,
+   "bias_zyx_um": [
+    0.4899322310132433,
+    0.1594663060657453,
+    0.2245436324518323
+   ],
+   "mae_zyx_um": [
+    0.9534524427349628,
+    0.44082486579926405,
+    0.47268421766494656
+   ],
+   "match4": 7812,
+   "match7": 8023,
+   "share4": 0.9698324022346368,
+   "share7": 0.9960273122284296,
+   "match4_mean_um": 1.2911916090166913,
+   "sample_mean_shift_um": 0.7466802641574792,
+   "sample_share_ge1um": 0.10363972856261566,
+   "sample_mean_vec_zyx_um": [
+    -0.07696099067465928,
+    0.08797054282422043,
+    0.016621214464323134
+   ]
+  },
+  "final": {
+   "videos": 6,
+   "n_gt": 8055,
+   "fixed_pairs": 7804,
+   "fixed_mean_um": 1.0173887254059844,
+   "fixed_median_um": 0.8521112314072902,
+   "fixed_share_le1um": 0.615325474115838,
+   "bias_zyx_um": [
+    0.06782938784119472,
+    0.02248094593154274,
+    0.005516358729076528
+   ],
+   "mae_zyx_um": [
+    0.7462441525818799,
+    0.36237156648103697,
+    0.3511029009370814
+   ],
+   "match4": 7852,
+   "match7": 8027,
+   "share4": 0.9747982619490999,
+   "share7": 0.9965238981998759,
+   "match4_mean_um": 1.031149928686374,
+   "sample_mean_shift_um": 0.9496817871339506,
+   "sample_share_ge1um": 0.44293645897594075,
+   "sample_mean_vec_zyx_um": [
+    0.28551835324861574,
+    0.16861705449875156,
+    0.11893155617519902
+   ]
+  }
+ },
+ "created_utc": "2026-09-24T18:57:38Z",
+ "tool": "tools/train_coordhead.py"
+}
