@@ -1,0 +1,1 @@
+- 2026-09-25T11:01:47Z started schedule skeptic; no prior json; read BRIEF + sibling value verdict (refuted)
