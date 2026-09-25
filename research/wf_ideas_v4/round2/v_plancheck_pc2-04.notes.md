@@ -1,0 +1,9 @@
+# v_plancheck_pc2-04 notes (2026-09-25T20:22:58Z)
+- tools/trainlab.py l.755: original clause `new_fork_precision_ge_0.35` = new_tp / ALL new forks (None -> pass). l.781: `kept` drops it; l.795-796 pass_strict_plateau_L2 = kept (minus noncontrol plateau) AND L2. decisions() l.~836: in_force = pass_strict_plateau_L2. Finding's code claim CONFIRMED (line numbers shifted ~14).
+- Wilson check (z=1.2816): 3/6 -> 0.2682 > 0.265 pass; original 3/10 = 0.30 fail. Example CONFIRMED.
+- CONTEXT l.1850-1860 (18:20 UTC ADDENDUM L): L2 labelled "[bug fix + tightening]", NOT [OK]; written before exp60 dumps (downloaded 20:05). FINAL_REPORT_v4.md l.9: "everything that ... loosens gates is marked [нужен OK]"; table row 1 marks only L1 as needing OK.
+- Round-1 verifiers already knew: v_divisions-x138_d3 feasibility notes 17:52Z: original clause ~3% evaluable -> "near-unpassable when t<0.25"; D3 value verifier: Wilson "replaces the bare 0.35 point estimate". So L2 replacing the denominator was a deliberate design, but the loosening half was never put to the user.
+- Practical: with ~3.3% evaluable (exp39 66/2014), original TP/all is ~<=0.03 -> original clause ~always FAILS for t*<0.25. So "original AND L2" == K3b off until the user OKs L2. Finding's example (4 ignored of 10) understates the gap.
+- Schedule: K3b slot S5 = 26.09 11:00-14:00 UTC; user awake ~05:00 -> morning OK comes before S5 -> the stricter in-force line costs ~0 time. exp60 T9 main results.md not on disk yet (only results_forkblob.*), so the rule can still be set before the verdict is read.
+- Value: 0 score; the original clause is a measurement bug (free forks on unannotated cells in the denominator), so it is not a better predictor of private; merit is rule discipline (loosen -> [OK]) only.
+- 2026-09-25T20:24:50Z final JSON written (refuted=false)

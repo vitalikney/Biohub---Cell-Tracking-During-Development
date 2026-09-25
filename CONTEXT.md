@@ -1935,6 +1935,28 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   CONSEQUENCE: F1 stack = K2 (x138 + safetail + lowrefine + insertion) unless a later mechanism passes; S4/S5 on 26 Sep
   have no rider. The exp58n twin dummy (AMENDMENT f2 candidate) was pushed now (GPU free) so the morning OK can be
   acted on at once.
+- 2026-09-25 20:55 UTC, NIGHT RESEARCH ROUND 2 DONE (research/wf_ideas_v4/round2/REPORT.md, report.json; 24 agents; curator ran).
+  HONEST SEQUENCE NOTE: round 2 proposed PRE-REGISTRATION v3 ADDENDUM M (text in round2/report.json plan_issues, items
+  M1-M6) to be written BEFORE the exp60 T9 DeepCenter section is opened, but the main session had already read and
+  recorded the T9 decisions at 20:35 UTC (entry above). M is therefore NOT a pre-registration; it is recorded as
+  post-hoc NOTES. It changes nothing: M1/M2 only TIGHTEN the K3b gate (t* incl. control, two neighbours, parity, dc_miss,
+  node digest; L2's evaluable-precision half reclassified as needing the user's OK) and K3b already FAILS under every
+  reading; M3 (forkmid variant skipping readmitted-touching forks) is moot because forkmid FAILS the original gate.
+  Recorded as facts: M4 ANTIPAR (same-side safe fork, cos > 0.25, final coords) was evaluated ONCE by the round-2
+  skeptic on the 56 lab clips: vetoed 113/676 (TP 1, FP 4, ignored 108), div_J 0.1290 -> 0.1250, score -0.00034 ->
+  FAIL, CLOSED (no reruns); DNVETO (DaughterNet veto on safe forks, orphan I-081) CLOSED without a run (same mechanism
+  class); lab veto break-even at J_div 0.129 is FP:TP >= 7.7. M5: the 4 dummy clips hold GT divisions 0/0/0/3 and every
+  dummy fork is metric-ignored -> dummies are plumbing evidence only. M6: K4/tempfuse DROPPED (no code, no owner, no
+  honest lab); reopen only with a new honest bed. I-072 (float-coordinate divergence/symmetry gates) CLOSED (premise
+  false: presafe gates already use float coords). Density-quartile column computed (orphan I-204), no rule attached.
+  LB at 19:46 UTC: we are #157/3,908; 0.954 block = ranks 139-201 (silver ~195 inside it, 38 ranks below us); 0.953 block
+  = 202-469; ten late 0.953 risers sit at the END of the block (consistent with the earlier-submission tie rule for
+  byte-copies). No new public notebook > 0.953, no new discussions.
+- 2026-09-25 20:55 UTC, TWIN DUMMY exp58n (vitaliineibauer/biohub-exp58n-x138-safe-lowref v1; AMENDMENT f2 candidate) GATES PASS:
+  node rows identical to the K2 dummy (121,252); K2 = twin + 12 inserted edges - 5 stolen edges (all 12 added edges are
+  fork edges = exactly #35's 12 forks / 5 steals); LOWDET and 'LOWREFINE ... refined R of N' lines identical to K2; no
+  DIVINS lines; no DEADLINE:/REPAIR FAILED/LOWREFINE FAILED; kernel end 1,038 s vs K2 1,512 s, repair 219 s vs 509 s.
+  Its SUBMIT still needs the user's OK on AMENDMENT f2 (morning).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

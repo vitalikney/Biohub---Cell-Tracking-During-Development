@@ -1,0 +1,8 @@
+- 2026-09-25T20:23:04Z start PC2-11 verification (twin dummy push priority / quota)
+- 2026-09-25T20:24:35Z rebuilt exp58n from git archive HEAD (ec8cd86) in scratch: ipynb sha 55038fd6... == committed experiments/exp58n_x138_safe_lowref (built 14c339e). kernel id vitaliineibauer/biohub-exp58n-x138-safe-lowref, T4, x138 4 datasets.
+- twin vs K2 (exp58) code cells: twin has 12 cells, K2 has 14. Twin cells 1-4 and 6-11 are byte-equal to K2 cells 1-4 and 8-13. Cell 0 only drops the DIVINS_* env lines. Twin cell 5 = K2 cell 7 minus the divinsert block (removals only). K2 cells 5-6 (DivNet helpers) are absent. So the twin is a strict subset of the 18/18-gated K2 code, and crash risk is low. The dummy is still the only runtime proof of this exact code path (R7).
+- twin vs exp56: only cells 0/4/5 differ (5/2/29 changed lines), as CONTEXT 14:29 says.
+- quota: WATCHLIST W06/W15: 21:13/30 used at ~18:10, so 8.78 h left. exp60 A 6959 s (pushed 17:15, so up to ~0.9 h of it ran before 18:10) plus B 5599 s gives ~5.3-6.2 h left now, not 4-5 (a minor, conservative error). The K2 dummy took ~45 min (pushed ~16:35, gates 17:20).
+- timing: the twin can only be submitted in S3 (~07-09 UTC 26 Sep) after the user's morning OK on f2. A dummy pushed now or at 00:05 is ready in time either way. The only difference is quota: before the (unconfirmed) Saturday reset, this week's quota is use-it-or-lose-it, so pushing NOW weakly dominates. Nothing else needs GPU before 00:00 (K3/K3b wait on T9, forkblob closed).
+- no-reset budget: twin 0.75 + K3 0.75 + K3b 0.75 = 2.25 h, and L6 ~4 h makes 6.25 h > ~5-6 h. So dropping L6 first is correct.
+- 2026-09-25T20:25:46Z final JSON written (refuted=false)

@@ -1,0 +1,33 @@
+{
+  "task": "curation 2 WATCHLIST update (incremental over v4 18:30 UTC build)",
+  "curated_at": "2026-09-25T20:55Z",
+  "complete": true,
+  "files_written": [
+    "research/KNOWLEDGE/WATCHLIST.md",
+    "research/KNOWLEDGE/_curation/2/watch.notes.md",
+    "research/KNOWLEDGE/_curation/2/watch.json"
+  ],
+  "status_changes": {
+    "done": ["W01", "W08", "W09", "W11"],
+    "cancelled": ["W13", "W24", "W27", "T01"],
+    "resolved_insights": ["I10", "I13"],
+    "new": ["W30", "W31", "W33", "W34", "W35", "I15", "I16", "I17", "I18", "I19", "I20"]
+  },
+  "alerts": [
+    {"kind": "forgotten", "what": "ADDENDUM M (round 2) never recorded in CONTEXT; research/wf_ideas_v4/round2/ untracked; its REPORT.md never written", "evidence": "round2/report.json R2-A1; git da154cb (T9 read 20:35 UTC) precedes report.json 20:42; grep 'ADDENDUM M' CONTEXT.md = none; git status ?? research/wf_ideas_v4/round2/", "suggested_action": "Record M1-M6 as a post-T9 entry (M1/M2 tightenings do not change the verdict; M3-M6 closures remain valid), commit round2/, save RU REPORT.md text from report.json", "urgency": "now"},
+    {"kind": "stale", "what": "Friend A card still asks him to run exp60 shard B on sasyami (done at 20:05) and a tempfuse LOEO (K4 dropped)", "evidence": "research/wf_ideas_v3/TASK_FRIEND_A.md l.31-65; CONTEXT.md 20:05, 19:05 (f); PROMPT_FRIEND_A.md top block still 14:30", "suggested_action": "Add a top cancellation block to PROMPT_FRIEND_A.md like friend C's (14c339e)", "urgency": "now"},
+    {"kind": "deadline", "what": "exp58n twin dummy returns ~21:20-21:40 UTC but tools/dummy_gates.py has no --twin mode for the f2 gates", "evidence": "tools/dummy_gates.py l.71-78; CONTEXT.md 18:20 f2, 20:35; round2/report.json R2-A3", "suggested_action": "Implement --twin checks (a)-(f) before reading the output; compare per-dataset repair lines, not kernel time", "urgency": "now"},
+    {"kind": "deadline", "what": "K2 submit 00:00:30-00:05 UTC 26 Sep: -m must start with 'probe 37: exp58'; then runtime_ledger --k2/--family <ref>=safetail", "evidence": "round2/report.json R2-A4 (PC2-10); experiments/lb_poll/ledger.md A5 WATCH; CONTEXT.md 17:55", "suggested_action": "Local session awake at 00:00; submit v1 (no re-push); verify ledger family 'safetail (9.5 h)'", "urgency": "today"},
+    {"kind": "deadline", "what": "Quota/slot reset 00:00 UTC; quota check ~00:05 and record that hidden reruns do not consume quota (CONTEXT still 'unverified')", "evidence": "CONTEXT.md l.1744-1746; lens_redteam-plan.json RT1; round2/report.json R2-A5", "suggested_action": "Check Settings at 00:05, log reset + quota evidence in CONTEXT", "urgency": "today"},
+    {"kind": "deadline", "what": "P36 7.5 h mark ~23:48 UTC; info-only", "evidence": "ledger.md (PENDING, L > 4.40 h at 20:42Z); CONTEXT.md l.1905-1907", "suggested_action": "Log score/latency/delta vs #35 in RESULTS.md l.69 and CONTEXT; no rider", "urgency": "today"},
+    {"kind": "stale", "what": "Morning OK list must drop L3, forkblob and L1/L2 (all moot after T9: t* = 0.30 > 0.25 means no build); keep f2 + S3 twin, optional floatout, K1 fallback", "evidence": "experiments/exp60_trainlab/results.md l.76-80; round2/report.json R2-A8 (still lists L1+L2); FINAL_REPORT_v4.md §5", "suggested_action": "Write the revised list before ~05:00 UTC 26 Sep", "urgency": "before-finals"},
+    {"kind": "forgotten", "what": "Admission table (after every score) still absent; ext_* folders still untracked", "evidence": "TASK_CLOUD_SESSION.md T13; grep admission CONTEXT.md = none; git status ?? experiments/ext_corwin-biocel-aux/, ext_y3uanm-secondary-ft/", "suggested_action": "Start the table now (#34, #35, P36, K2); commit ext_* without __pycache__", "urgency": "today"},
+    {"kind": "forgotten", "what": "Closures to CONTEXT by 26 Sep 12:00: ANTIPAR one-shot FAIL, DNVETO, I-072 (corrected reason), K4 DROPPED + M6 reopen clause, dummies = plumbing only (M5)", "evidence": "round2/report.json R2-A7, new_facts (8), (11), (13); CONTEXT.md 19:05 (f)", "suggested_action": "Add one CONTEXT closure entry", "urgency": "today"},
+    {"kind": "risk", "what": "FLOATOUT_CHECK is a bare assert (not fail-soft); any new floatout build (the optional x138 rider) would violate R7", "evidence": "round2/report.json new_facts (12); tools/build_probe_kernel.py l.1315-1362", "suggested_action": "Only with the user's OK: fail-soft wrapper + FORCE_FAIL test before 27 Sep 12:00; ride only in S12", "urgency": "before-finals"},
+    {"kind": "orphan-idea", "what": "DeepCenter t* = 0.30 (higher threshold) removes 8 evaluable FP forks with 0 TP lost on 56 lab clips, but changes nodes (-79/-49) and was pre-registered as no-build", "evidence": "experiments/exp60_trainlab/results.md l.13-18, l.61-66; CONTEXT.md l.1858", "suggested_action": "Do not act before 29 Sep (post-hoc, R8, not node-preserving); keep for the post-deadline analysis", "urgency": "info"},
+    {"kind": "stale", "what": "Memory index still says 'LB probe approval: 25 Sep batch exp52/53/54'; the body lacks ADDENDUM L/M and f2 and says K2 ~00:55 vs CONTEXT 00:01", "evidence": "MEMORY.md index; memory project-lb-probe-approval.md; round2/report.json R2-A12", "suggested_action": "Main session updates the memory index line and body", "urgency": "today"},
+    {"kind": "risk", "what": "The silver line (~195) now sits inside the 0.954 block and drifts ~6 ranks per 1.6 h; we were 38 above it at 19:46", "evidence": "round2/report.json new_facts (1)-(2)", "suggested_action": "Add the 19:46 intel line to CONTEXT; record K2's in-block rank when it scores", "urgency": "info"},
+    {"kind": "contradiction", "what": "Round 2's actions assume T9 unread (R2-A1, R2-A2, R2-A6), but T9 was read and committed 7 min earlier", "evidence": "round2/report.notes.md 20:36 vs git da154cb 20:35 UTC", "suggested_action": "Round 3 re-reads CONTEXT first; treat R2-A2/A6 as moot, R2-A1 as post-hoc record", "urgency": "today"}
+  ],
+  "summary": "WATCHLIST updated at 20:50 UTC 25 Sep. The exp60 T9 read (20:35) closed K3/K3b and forkblob; K4 dropped; F1 = K2 goes at 00:01. Overdue: ADDENDUM M/round2 unrecorded, friend A card stale (shard B/tempfuse), no twin dummy gate code while the twin dummy is running, admission table, ext_* commit, quota evidence, memory pointer. Next 24 h: twin dummy read ~21:30, P36 ~23:48 (info), slot/quota reset 00:00, K2 submit 00:00:30 with the 'probe 37: exp58' message, K2 COMPLETE by 08:01, revised morning OK list (f2 + S3, optional floatout, K1 fallback), closures by 26 Sep 12:00. Later: R8 27 Sep 12:00, S12 28 Sep 12:00, admission table 28 Sep 22:00, reminder 29 Sep 12:00, tick 20:00, deadline 23:59."
+}

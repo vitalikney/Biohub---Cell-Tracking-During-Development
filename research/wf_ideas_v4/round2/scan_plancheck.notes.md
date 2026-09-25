@@ -1,0 +1,16 @@
+# scan_plancheck notes (round 2)
+- 2026-09-25T19:46:16Z start; no round*/ REPORT.md exist yet; round2 folder created
+- 2026-09-25T19:49:35Z kaggle status (read-only): exp58, exp58t COMPLETE; exp60 trainlab-a and -b COMPLETE (T9 can start now); exp58n twin NOT on Kaggle (kernels.get denied = never pushed)
+- 19:5x UTC: exp60 shards A/B outputs being downloaded by main session into _dl/exp60_a (240M), _dl/exp60_b (partial); shard A log: 28 TRAINLAB_TIMING lines, 0 FAILED/Traceback/DEADLINE lines, kernel elapsed 6958 s.
+- K2 rebuild in scratch (git archive HEAD) reproduces experiments/exp58_x138_safe_lowref ipynb sha 1f1ddb6d... ; K3 (forkmid), K3+forkblob, K3b (DEEPCENTER_SAFE_DIV_THRESHOLD=0.20) all build; K3b override is the last cell-0 line (wins over x138's "0.25").
+- Order in filter_output_graph (K3 fb build, cell 7): linefit -> divinsert (safetail-gated) -> forkmid -> forkblob -> FINAL print. forkblob is NOT deadline-gated.
+- tools/dummy_gates.py: only K1/K2/FD/FF gates; NO K3 (gate 4), K3b (gate 5), twin exp58n (f2) or forkblob gate; no A5 forecast output (ledger shows 'A5-F Forecast F not supplied').
+- tools/trainlab.py gates(): DC t* = argmax over NON-control arms (control never t*; 'no build if t*=0.25' unreachable); plateau neighbours at grid edge t*=0.15 = only 0.20 (one neighbour); in-force K3b = strict plateau AND L2 with the ORIGINAL precision clause dropped (kept = checks minus new_fork_precision_ge_0.35) -> looser than original on that clause without OK; nodes_unchanged uses embryo-aggregate node counts; DCLookup miss -> None -> accepted, dc_miss per arm not gated.
+- runtime_ledger EXP_RULES: first exp token of the submission description decides family -> K2 message must start with exp58 (no earlier exp56/exp57 token).
+- Kaggle status (read-only): exp58 lastRunTime 16:20:17 UTC (single run), exp58n not on Kaggle.
+- ~20:10 UTC: Kaggle K2 source pulled to scratch: 14 code cells identical to experiments/exp58_x138_safe_lowref (whitespace-stripped compare).
+- Dummy twins have NO GT divisions: official_eval on 6bba_05b6850b (exp56 dummy CSV vs train geff; test zarr frame 0 == train zarr frame 0) -> division TP/FP/FN 0/0/0, adj_edge 0.982; all 62 exp56 / 75 K2 dummy forks are metric-ignored; forkblob flags 15 (exp56) / 15 (K2), all ignored. -> dummies can never show fork-rider harm/benefit.
+- trainlab decisions() does not include the parity gate (g['parity']['pass']).
+- forkmid_v2 lowrefine sensitivity passes vacuously if control nodes carry no 'readmitted' flag (report prints readmitted_nodes_final vs _kernel_stats).
+- exp60 dump 44b6_18ced818: node flag 'readmitted' present on 1034 final nodes (kernel stats readmitted_nodes 1107, rest filtered) -> L3 lowrefine sensitivity is NOT vacuous; 661 DC score entries.
+- 2026-09-25T19:59:29Z final JSON written (16 findings)

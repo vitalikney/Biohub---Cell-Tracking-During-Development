@@ -1,0 +1,70 @@
+{
+  "task": "curate:facts (FACTS.md + DECISIONS.md), curation 2",
+  "complete": true,
+  "written_at": "2026-09-25T20:55Z",
+  "files_written": [
+    "research/KNOWLEDGE/FACTS.md",
+    "research/KNOWLEDGE/DECISIONS.md",
+    "research/KNOWLEDGE/_curation/2/facts.notes.md",
+    "research/KNOWLEDGE/_curation/2/facts.json"
+  ],
+  "alerts": [
+    {
+      "kind": "contradiction",
+      "what": "Round 2's ADDENDUM M (M1-M6) was supposed to be committed before the T9 results were opened. It was not: T9 was read at 20:35 UTC with the L-version code. No decision changed, because K3 and K3b fail under every reading. But the closures of ANTIPAR, DNVETO and K4 (with a stricter reopen clause) and the reclassification of L2 as needing an OK are not recorded in CONTEXT.",
+      "evidence": "research/wf_ideas_v4/round2/report.json R2-A1/A2/A7, plan_issues 'ADDENDUM M TEXT'; CONTEXT.md l.1924-1937 (no ADDENDUM M at HEAD da154cb); experiments/exp60_trainlab/results.md l.78-79; FACTS C-21, C-23",
+      "suggested_action": "Main session: record ADDENDUM M in CONTEXT as a post-read closure note. State that the T9 read came first and that M changes no verdict. Mark ANTIPAR, DNVETO and K4 as CLOSED/DROPPED.",
+      "urgency": "today"
+    },
+    {
+      "kind": "deadline",
+      "what": "K2 submit window is 00:00:30-00:05 UTC 26 Sep. The -m message must start with 'probe 37: exp58'. After the submit, run tools/runtime_ledger.py --k2 <ref> --family <ref>=safetail. Otherwise the ledger classes K2 as x138 (7.5 h) and misreads R5 for the main F1 candidate, whose forecast is ~7.8 h.",
+      "evidence": "research/wf_ideas_v4/round2/report.json R2-A4 (PC2-10); experiments/lb_poll/ledger.md A5-L(K2) WATCH; FACTS F-RUN-11",
+      "suggested_action": "Submit the dummy-gated exp58 -v 1 with that message, then pass --k2/--family to the ledger and keep them in the poller call until K2 scores (~06:30-08:00 UTC).",
+      "urgency": "now"
+    },
+    {
+      "kind": "deadline",
+      "what": "The exp58n twin dummy was pushed ~20:35 UTC, but tools/dummy_gates.py has no --twin mode yet. The f2 dummy gate (node rows == K2, edges differ only at inserted/steal forks, no FAILED lines) cannot be read automatically.",
+      "evidence": "CONTEXT.md l.1935-1937; research/wf_ideas_v4/round2/report.json R2-A3, PC2-01",
+      "suggested_action": "Add the --twin mode and read the twin dummy before the morning OK message, so the S3 submit can follow the f2 OK at once.",
+      "urgency": "today"
+    },
+    {
+      "kind": "deadline",
+      "what": "The GPU quota reset (expected Sat 26 Sep 00:00 UTC) is unconfirmed. About 5 GPU-h are left if it does not happen.",
+      "evidence": "FACTS F-RUL-05; research/wf_ideas_v4/round2/report.json R2-A5",
+      "suggested_action": "Check Kaggle Settings at ~00:05 UTC and record the result in CONTEXT.",
+      "urgency": "today"
+    },
+    {
+      "kind": "stale",
+      "what": "The CONTEXT intel line still says #151 at 18:08. At 19:46 UTC we were #157 of 3,908, and the silver line (~rank 195) now falls inside the 0.954 block, 38 ranks below us.",
+      "evidence": "CONTEXT.md l.1846-1849; research/wf_ideas_v4/round2/scan_browser.json lb-delta-1946; FACTS F-LB-02, F-LB-03",
+      "suggested_action": "Update the intel line. When K2 scores, record its rank inside its displayed-score block as a proxy for its unrounded score vs #35.",
+      "urgency": "info"
+    },
+    {
+      "kind": "stale",
+      "what": "The auto-memory project-lb-probe-approval still describes only the exp52/53/54 batch. TEAM.md (friend A row) still states the 0.97 target.",
+      "evidence": "MEMORY.md index line 'LB probe approval'; research/wf_ideas_v4/round2/scan_plancheck.json PC2-16; TEAM.md l.9; FACTS F-RUL-10, C-04",
+      "suggested_action": "Main session: point the memory at PRE-REGISTRATION v3 + ADDENDUM L/M + f2 as the approval source, and update the TEAM.md role line.",
+      "urgency": "today"
+    },
+    {
+      "kind": "risk",
+      "what": "If floatout is OK'd as an R3 coordinate rider, its FLOATOUT_CHECK is a bare assert and would throw on a hidden rerun (R7). The expected private gain is only ~+0.0001.",
+      "evidence": "research/wf_ideas_v4/round2/report.json new_facts (12), R2-A9; FACTS F-TRN-13",
+      "suggested_action": "Build it only after the OK, with the fail-soft wrapper (restore the integer CSV) and a FORCE_FAIL test, and only inside the S12 consolidation, never the twin.",
+      "urgency": "before-finals"
+    },
+    {
+      "kind": "stale",
+      "what": "P36 (exp57 v1) was still PENDING at 20:42:40Z (L36 > 4.40 h). It is info only by the 18:40 rule, so no decision depends on it.",
+      "evidence": "experiments/lb_poll/ledger.md 20:42:42Z; CONTEXT.md l.1904-1906; DECISIONS P36",
+      "suggested_action": "Log the score and latency when it lands, as info. It is not a leaf-prune rider trigger.",
+      "urgency": "info"
+    }
+  ],
+  "summary": "Incremental update of FACTS.md and DECISIONS.md from the v4 baseline (18:25 UTC) to 20:45 UTC (HEAD da154cb, poll 20:42:40Z). IDs are stable and changed lines are tagged [c2]. FACTS: new F-MET-12 (fork-veto break-even: 0.265 public vs 0.114 lab, FP:TP >= 7.7), F-DAT-13/14 (dummy GT divisions 0/0/0/3; GT vs predicted sister geometry and density), F-LB-08 (late byte-copies at the end of the 0.953 block), F-RUN-10/11/12 (other teams' latency 2-8 h; runtime ledger family tagging; P36 > 4.40 h pending), F-RUL-10 (night approvals, stale memory), F-MOD-11/12/13 (K2/twin sha, float presafe gates, new tools), F-TRN-11/12/13 (exp60 T9: no K3, no K3b, insertion in-sample positive; forkblob and ANTIPAR fail div_J; floatout lab +0.0023 but ~+0.0001 private). Updated F-LB-01..06 (#157 of 3,908 at 19:46; silver inside the 0.954 block) and F-RUL-05. Resolved C-01, C-06, C-16 and C-17 (CONTEXT curator-alert entry, RESULTS P25 = 0.946). Added C-19 (19:05 vs ~18:40 stamps), C-20 (P36 is info only), C-21 (ADDENDUM M not recorded before or after the T9 read), C-22 (break-even per bed) and C-23 (L2 tightening vs loosening). DECISIONS: P36 is info only and still pending; the K2 submit recipe; new §1b lab-gate table G01-G06 (forkblob, forkmid, DeepCenter, insertion, ANTIPAR, DNVETO/K4); the finals table now reads F1 = K2 as very likely final, twin dummy pushed, K3/K3b/K4 none, exp52 admissible; R3/R4/R5/R7/R8/R9/§f statuses and an ADDENDUM M / morning-OK note."
+}

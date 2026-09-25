@@ -1,0 +1,8 @@
+- 2026-09-25T20:22:52Z start PC2-02 check: tools/trainlab.py gates() vs decisions()
+- 2026-09-25 20:25 UTC verified in tools/trainlab.py: gates() l.693-701 builds g['parity'] (writer_mismatch, float_mismatch, dc_miss_total, divins_graph_mismatch); decisions() l.832-855 never reads it -> claim TRUE.
+- Scope: forkmid45 arm = forkmid(control) where control = dump['final'] (kernel graph) -> K3 verdict does NOT depend on replay parity. ins35* arms also built on control but use node_p from divins dump -> divins_graph_mismatch matters only for insertion (warning-only under L5).
+- K3b (DeepCenter arc): dc{t} arms = replay(ns,dump,'presafe',dc_threshold=t) (l.517-523); aggregate() l.576-582 delta = replay(t) - kernel control -> any presafe replay error lands in every dc delta. So presafe parity is a real precondition for K3b.
+- Extra gap: DCLookup (l.256-269) returns None on an unseen point = 'accepted'; per-arm dc_miss stored in info['dc{t}'] (l.523) but gates only sum parity presafe dc_miss (control threshold). dc_miss>0 at t*/neighbours silently biases the arc -> should also block K3b.
+- State: exp60 dumps downloaded (_dl/exp60_a, _dl/exp60_b); main score started ~20:19 UTC (_dl/trainlab_score.log, workers>1 so no per-clip parity prints yet); no results.json yet. Parity only tested on synthetic graph (tests/test_trainlab.py::test_end_to_end_replay_parity).
+- cmd_score --only exists (l.949) but default --out overwrites results -> rerun needs --out .../results_parityclean. tp_forks/new_forks lists popped from JSON (l.980-984) -> L2 cannot be recomputed from results.json; rerun needed.
+- 2026-09-25T20:24:46Z verdict: NOT refuted (narrowed to K3b + dc_miss gap); JSON written.

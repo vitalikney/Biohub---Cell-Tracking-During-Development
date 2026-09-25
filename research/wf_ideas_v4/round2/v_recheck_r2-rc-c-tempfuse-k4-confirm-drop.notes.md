@@ -1,0 +1,12 @@
+# v_recheck R2-RC-C tempfuse K4 confirm-drop - notes
+- 2026-09-25T20:24:30Z start; no prior json
+- 20:26Z read CONTEXT.md l.1576-1924 (pre-reg v3 R1-R10, slots S6 'K4 or empty', curator (f) default DROPPED, exp60 forkblob FAIL 20:05Z).
+- v3 value skeptic research/wf_ideas_v3/v_literature_symmetric-temporal-det-fusion_value.json: refuted, +0.0008 central, P(obs>=+0.002|0)=25% computed with 2-run SD 0.003 -> that SD premise is SUPERSEDED (curator 18:40Z (c): our kernels deterministic). The remaining noise is public->private embryo transfer, not run noise. Conclusion unchanged, number stale.
+- v3 kill gate for friend A LOEO pretest was >= +0.003 (scratch primary has more headroom), the finding's reopen uses +0.002 -> looser than v3.
+- v4 M3 value skeptic: probes 12/16 (Z-flip) were EDGE-feature TTA, not detection maps (RESULTS.md probe 12/16 rows). Detection-map LB evidence = probe 5 (sec weight 0.5, -0.002), probe 19 (axis flip, -0.001, local +0.021 incl. +0.0187 on a scratch primary that never saw 44b6), probe 10/13 swaps. sjlee TTA stack +0.006 once (KNOWLEDGE/IDEAS.md l.20) = the one positive. So 'every detection-map change 0 or negative' holds for OUR changes, with 2 not 4 true detection-map probes.
+- grep 'tempfuse' in tools/ tests/ experiments/ (*.py,*.ipynb,*.json) = 0 hits; git log --grep tempfuse = 0. No exp61, no T11 script (WATCHLIST W27 not started). Friend A: no reply (W02 overdue), card stale (W03). Friend A cannot run a LOEO test without the script -> the finding's reopen clause is unreachable as written.
+- Timeline if reopened: T01 last K4 dummy push 27 Sep 06:00; build ~5 h + dummy ~0.7-1.4 GPU-h + score 7-8 h; R8 new mechanisms by 27 Sep 12:00. A friend-A result 'before 27 Sep 12:00' is too late to act -> reopen deadline must be ~26 Sep 18:00Z at the latest.
+- Runtime: K2 forecast <=7.8 h vs 8.0 h DIVINS gate (step0.md, WATCHLIST I05) -> tempfuse's GPU-phase overhead is NOT irrelevant to the insertion gate (the finding's claim (1) is wrong in detail, same direction: another reason to drop).
+- S6 repurposing: pre-reg S6 = 'K4 or N1-build by trigger; else empty'. K3 retry = S10-S11 reserve (27.09) pulled forward, covered by the standing OK for K3 after its gates; floatout needs user OK as R3 coordinate rider; K1 is held in branch A (S3) -> K1 in S6 is not pre-approved under branch A.
+- Verdict: finding (STAYS DROPPED) stands; not refuted. Fixes to the evidence and to the reopen clause.
+- 2026-09-25T20:26:52Z final JSON written (refuted=false)

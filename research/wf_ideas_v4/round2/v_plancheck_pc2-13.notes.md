@@ -1,0 +1,11 @@
+# v_plancheck_pc2-13 notes (2026-09-25)
+- start: checked JSON absent; reading trainlab.py forkmid / readmitted sensitivity, build_probe_kernel forkmid_edges, exp60 dump.
+- 2026-09-25 ~23:30 UTC: reran forkmid (tools/trainlab.py forkmid, 4.5 um) on the FINAL graph of all 56 exp60 dumps (_dl/exp60_a|b/trainlab/*.npz). Script: scratchpad pc213.py.
+  - 44b6_18ced818: readmitted flag on 1034 final nodes, final_stats readmitted_nodes 1107 -> finding's numbers CONFIRMED.
+  - pooled 56 clips: readmitted final 13,284 vs kernel stats 14,525; forkmid eligible rows 676, removed 40.
+  - rows touching a readmitted node (parent/either child): 37. Of those REMOVED: 2 (6bba_786893ac mid 4.681 'added'; 6bba_f8ffd5e7 mid 4.833 'added'); within 0.7 um of 4.5 but kept: 2 more (6bba_969618f6 4.290, 6bba_cdcfe533 4.211).
+  - forkmid_v2(lowdet_adverse=True) (trainlab.py l.648-684) relabels these 4 as removed TP -> check removed_tp_eq_0 FAILS mechanically, independent of the true labels. Even without the 0.7 um margin extension, the 2 truly removed rows fail it. => the sensitivity is not merely non-vacuous, it is DECISIVE: ADDENDUM L3 (forkmid_v2 AND sensitivity) cannot pass on this lab.
+  - lowrefine also refines gapfill pool peaks (build_probe_kernel.py l.69-74); sensitivity only uses 'readmitted'. Checked: 1,049 gapfill_peak nodes, 0 forkmid rows touch a gapfill_peak-only node -> coverage gap is empirically zero.
+  - lab forkmid (trainlab.py l.321-352) vs kernel forkmid_edges (build_probe_kernel.py l.1702-1758): same fork set (2 out-edges, exactly 1 safe_division & not div_inserted, none div_inserted), same mid formula, scale (1.625,0.40625,0.40625), same victim rule (ilp edge iff edge_prob == 0.0, NaN -> added edge). Only audit order differs. CONFIRMED.
+  - order: FORKMID_CALL is inserted right before the FINAL print (l.1777-1792), FORKBLOB_CALL right after it (l.1949-1964). The scratch exp59fb build cited is not on disk here (other session's scratchpad), not re-verified; moot anyway because forkblob is CLOSED (CONTEXT 20:05 UTC).
+  - decisions() (l.832-845): in force = ORIGINAL T9 forkmid gate, which has NO lowrefine term. So if the original gate passes, K3 = K2(+lowrefine) + forkmid is built although 2/40 lab removals (5%) sit on nodes whose coordinates lowrefine moves in K2 -> unmodelled transfer risk.

@@ -1,0 +1,81 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/ideas.json",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/IDEAS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/2/ideas.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/2/ideas.json"
+ ],
+ "alerts": [
+  {
+   "kind": "contradiction",
+   "what": "ADDENDUM M (round 2) was meant to be committed BEFORE the exp60 T9 results were opened, but it is not in CONTEXT.md and the T9 results were already read at 20:35 UTC; M1-M3 (K3b gate fix, L2 reclassified as needing an OK, forkmid skip-readmitted clause) can no longer be pre-registered, while M4-M6 (ANTIPAR/DNVETO closed, veto break-even FP:TP >= 7.7, dummies = plumbing only, K4 reopen clause) are still unrecorded (ledger I-216)",
+   "evidence": "research/wf_ideas_v4/round2/report.json R2-A1 ('commit BEFORE anyone opens the DeepCenter section'); grep 'ADDENDUM M' CONTEXT.md = 0 hits at da154cb; CONTEXT.md l.1924 (T9 read 20:35 UTC)",
+   "suggested_action": "Write M4-M6 into CONTEXT.md as closures; record M1-M3 as moot/post-hoc (every gate also failed under the original rules), so no one later applies them as if pre-registered.",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "Closures of I-072 (float-coord divgates), I-081/DNVETO, I-212 ANTIPAR and I-213 (GT-geometry fork flags) exist only in the UNTRACKED folder research/wf_ideas_v4/round2/; the round-2 REPORT.md was never saved (harness blocked it)",
+   "evidence": "git status '?? research/wf_ideas_v4/round2/'; research/wf_ideas_v4/round2/report.notes.md 20:40 UTC (REPORT.md blocked); report.json R2-A7 (1)-(3)",
+   "suggested_action": "Main session: add one-line closures to CONTEXT.md (R2-A7), save the RU REPORT.md text from report.json plan_issues, and commit round2/ so the closures survive.",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "K2 (exp58) submit at 00:00:30-00:05 UTC 26 Sep: the -m message must start with 'probe 37: exp58' (no exp56/exp57b token first), or the runtime ledger classes K2 as x138 (7.5 h) and misreads R5/A5/A6; then run runtime_ledger --k2/--family",
+   "evidence": "research/wf_ideas_v4/round2/report.json R2-A4; scan_plancheck.json PC2-10; experiments/lb_poll/ledger.md 'A5-L(K2) WATCH: K2 not in the poll log yet'; ledger I-001, I-003",
+   "suggested_action": "Use the exact message from R2-A4 and verify ledger.md shows family 'safetail (9.5 h)'.",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "exp58n twin dummy was pushed ~20:35 UTC but tools/dummy_gates.py has no --twin mode, so its f2 gate (node rows == K2, edges differ only at DIVINS forks, no DIVINS lines, time <= K2) cannot be read when it returns",
+   "evidence": "CONTEXT.md l.1935-1937; research/wf_ideas_v4/round2/scan_plancheck.json PC2-01; report.json R2-A3; ledger I-090",
+   "suggested_action": "Add the --twin checks (a)-(f) before the morning OK (~09:00 UTC 26 Sep) so the S3 twin submit can follow the OK at once.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "The morning OK list from FINAL_REPORT_v4 §5 still asks for L3 and forkblob, which are now closed (exp60 FAIL); the updated list is f2 + S3 twin, L1+L2 (K3b re-read, P ~0.1), optional floatout on x138 (I-215), K1 fallback (I-011)",
+   "evidence": "research/wf_ideas_v4/FINAL_REPORT_v4.md §5; research/wf_ideas_v4/round2/report.json R2-A8; CONTEXT.md l.1918-1937",
+   "suggested_action": "Rewrite the morning brief before ~09:00 UTC 26 Sep; state that F1 = K2 is very likely final and S4-S7 stay empty by design.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "research/KNOWLEDGE/INDEX.md 'TOP OPEN IDEAS' and WATCHLIST still show I-071 forkmid, I-073 forkblob, I-074 K3b and I-158 tempfuse as in-plan / at-risk; all four are closed now",
+   "evidence": "research/KNOWLEDGE/INDEX.md TOP OPEN IDEAS rows I-071, I-073, I-074, I-158 vs research/KNOWLEDGE/IDEAS.md (curation 2) and CONTEXT.md l.1913-1914, l.1918-1937",
+   "suggested_action": "Index/watch curators: refresh INDEX.md top ideas (live: I-001 K2, I-090 twin, I-215 floatout OK, I-011 A6) and cancel W11/W27/T01-type items.",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "If floatout is ever ported to x138 (I-215), the current FLOATOUT_CHECK cell is a bare assert that would raise on the hidden rerun (R7 fail-soft violation)",
+   "evidence": "research/wf_ideas_v4/round2/report.json new_facts (12), R2-A9; tools/build_probe_kernel.py l.1315-1362 (per report)",
+   "suggested_action": "Only with the user's OK: wrap the check fail-soft (restore the integer CSV), add a FORCE_FAIL test, ride only in S12 before R8 (27 Sep 12:00 UTC).",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "I-035 head cascade / scale pre-gate is the only remaining at-risk idea besides ADDENDUM M: idle-only, never run, no owner",
+   "evidence": "research/KNOWLEDGE/IDEAS.md ORPHANS; research/wf_ideas_v3/FINAL_REPORT.md §c row 13",
+   "suggested_action": "Close it explicitly in CONTEXT.md before R8 (27 Sep 12:00 UTC) unless the cloud session idles.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "stale",
+   "what": "Auto-memory file project-lb-probe-approval still describes the 25 Sep exp52/53/54 batch as the approval source",
+   "evidence": "MEMORY.md index line 'LB probe approval - 25 Sep batch approved: exp52, exp53, exp54'; research/wf_ideas_v4/round2/report.json R2-A12 / PC2-16",
+   "suggested_action": "Main session: point it to PRE-REGISTRATION v3 (13:38 UTC) + Addendum L (and M, once written) + f2.",
+   "urgency": "info"
+  },
+  {
+   "kind": "risk",
+   "what": "P36 (exp57 v1) is still PENDING at 20:42:40Z (L36 > 4.40 h); by the 18:40 rule it is INFO ONLY and must not trigger a leaf-prune rider whatever it scores",
+   "evidence": "experiments/lb_poll/ledger.md row 56555189; CONTEXT.md l.1905-1907; ledger I-136",
+   "suggested_action": "When it scores, log it as info only; do not open a rider.",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 2 of the ideas ledger (incremental over the v4 baseline at 14c339e; inputs: CONTEXT.md l.1896-1937, exp60 results, research/wf_ideas_v4/round2/, ledger.md). 216 ideas in 12 clusters (5 new: I-212 ANTIPAR, I-213 GT-geometry fork flags, I-214 K3 bundle, I-215 floatout on x138, I-216 ADDENDUM M); 33 records changed, listed in ideas.json meta.curations[n=2]. The exp60 T9 read closed the whole fork-rider line: forkmid (I-071), forkblob (I-073), K3b DeepCenter (I-074), 6bba extension (I-075), linefit w0.7 (I-183), plus ANTIPAR and DNVETO (I-081) from round 2. tempfuse (I-158) is DROPPED; I-072, I-204, I-205 and I-207 are resolved. No strict orphans are left. At risk: I-035 (head cascade) and I-216 (ADDENDUM M, not written in CONTEXT, and the T9 results were already read). Live levers: K2 submit (I-001), F2 twin (I-090), optional floatout on x138 (I-215, needs OK), A6 K1 fallback (I-011). Clusters are reordered so FINALS is #2. Totals: refuted 124, lb-tested 37, lab-tested 20, deferred 19, in-plan 16, open-untested 0."
+}

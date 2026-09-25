@@ -1,0 +1,95 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/INDEX.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/CHANGES.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/2/index.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/2/index.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "what": "Submit K2 (exp58 v1, no re-push) at 00:00:30-00:05 UTC on 26 Sep. The -m message must start with 'probe 37: exp58'. Then run tools/runtime_ledger.py --k2 <ref> --family <ref>=safetail and check that the ledger shows 'safetail (9.5 h)'.",
+   "evidence": "research/KNOWLEDGE/WATCHLIST.md W16; research/wf_ideas_v4/round2/report.json R2-A4; experiments/lb_poll/ledger.md l.12 'A5-L(K2) WATCH'",
+   "suggested_action": "Local session awake at 00:00; use the exact message; keep the poller alive until K2 is COMPLETE (by 08:01).",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "The exp58n twin dummy returns ~21:20-21:40 UTC, but tools/dummy_gates.py has no --twin mode for the f2 gates (a)-(f).",
+   "evidence": "CONTEXT.md l.1935-1937; research/KNOWLEDGE/WATCHLIST.md W12/W17; research/wf_ideas_v4/round2/report.json R2-A3",
+   "suggested_action": "Add --twin before reading the dummy, so the S3 twin submit can follow the f2 OK at once.",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "ADDENDUM M (M1-M6) is not in CONTEXT.md, and the T9 lab results were read first (20:35 UTC, before round 2 finished at 20:42). M1-M3 can no longer count as pre-registered. M4-M6 are still unrecorded: the ANTIPAR/DNVETO closures, the fork-veto break-even of FP:TP >= 7.7, the rule that dummies prove plumbing only, and the K4 reopen clause. research/wf_ideas_v4/round2/ is untracked, and its REPORT.md was never written.",
+   "evidence": "CONTEXT.md l.1924-1937 (grep 'ADDENDUM M' = 0 hits at da154cb); research/KNOWLEDGE/FACTS.md C-21; research/KNOWLEDGE/WATCHLIST.md W30; research/KNOWLEDGE/IDEAS.md I-216",
+   "suggested_action": "Main session: record M4-M6 as closures in CONTEXT and M1-M3 as moot/post-hoc (no verdict changes); commit round2/ and save REPORT.md from report.json.",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "The closures of I-072, I-081, I-212 and I-213 exist only in the untracked research/wf_ideas_v4/round2/report.json R2-A7.",
+   "evidence": "research/KNOWLEDGE/IDEAS.md ORPHANS; research/KNOWLEDGE/WATCHLIST.md W31",
+   "suggested_action": "Add one-line closures to CONTEXT by 26 Sep 12:00 UTC.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "The morning OK list in FINAL_REPORT_v4 §5 still asks for L3 and forkblob, and the curators disagree on L1/L2. The ideas curator keeps a K3b re-read at P ~0.1; the facts and watch curators say there is no K3b under any reading. The revised list is f2 + the S3 twin submit, optional floatout (I-215) and the K1 fallback (I-011).",
+   "evidence": "research/wf_ideas_v4/FINAL_REPORT_v4.md §5; experiments/exp60_trainlab/results.md l.76-79; research/KNOWLEDGE/WATCHLIST.md W21",
+   "suggested_action": "Rewrite the brief before ~09:00 UTC 26 Sep. Drop L1/L2/L3 and forkblob, and say that F1 = K2 is very likely final.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "Friend A's card still asks for exp60 shard B (done at 20:05) and a tempfuse LOEO test (K4 dropped). His Task 0 reply is overdue.",
+   "evidence": "research/wf_ideas_v3/TASK_FRIEND_A.md l.31-65; research/KNOWLEDGE/WATCHLIST.md W02, W03",
+   "suggested_action": "Add a cancellation block at the top of PROMPT_FRIEND_A.md.",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "The GPU quota reset at 00:00 UTC on 26 Sep is unconfirmed. The evidence that hidden reruns do not use quota is not in CONTEXT (l.1746 still says 'unverified').",
+   "evidence": "research/KNOWLEDGE/WATCHLIST.md W06, W15; research/wf_ideas_v4/round2/report.json R2-A5",
+   "suggested_action": "Check Kaggle Settings at ~00:05 and log both facts in CONTEXT.",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "The admission table has not been started. experiments/ext_corwin-biocel-aux/ and experiments/ext_y3uanm-secondary-ft/ are untracked. RESULTS.md has no exp60 lab row.",
+   "evidence": "research/KNOWLEDGE/WATCHLIST.md W04, W05, W35; git status",
+   "suggested_action": "Start the table with #34, #35, P36 and K2; commit the ext_* folders without __pycache__; add a pointer to the exp60 results.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "Three pointers are stale: the memory project-lb-probe-approval still names the exp52/53/54 batch, TEAM.md still has the 0.97 target, and the CONTEXT rank line still says #151 at 18:08 (it was #157/3,908 at 19:46).",
+   "evidence": "research/KNOWLEDGE/WATCHLIST.md W34, W22; research/KNOWLEDGE/FACTS.md C-04, F-LB-02",
+   "suggested_action": "Main session: point the memory at PRE-REG v3 + ADDENDUM L/M + f2; update the TEAM.md and CONTEXT rank lines.",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "FLOATOUT_CHECK is a bare assert, so any floatout build on x138 (I-215) would violate the R7 fail-soft rule. The expected private gain is only ~+0.0001.",
+   "evidence": "tools/build_probe_kernel.py l.1315-1362; research/KNOWLEDGE/WATCHLIST.md W33, I17",
+   "suggested_action": "Only with the user's OK: add a fail-soft wrapper and a FORCE_FAIL test by 27 Sep 12:00 UTC (R8); ship only in S12.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "I-035 (head cascade / scale pre-gate) is the last at-risk orphan. It was never run and has no owner.",
+   "evidence": "research/KNOWLEDGE/IDEAS.md l.109, ORPHANS",
+   "suggested_action": "Close it in CONTEXT before R8 (27 Sep 12:00 UTC) unless the cloud session is idle.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "risk",
+   "what": "P36 reaches its 7.5 h mark ~23:48 UTC and is info only. DeepCenter t* = 0.30 (8 FP forks removed, 0 TP lost, nodes change) is post-hoc and must not be acted on before 29 Sep.",
+   "evidence": "CONTEXT.md l.1904-1906; research/KNOWLEDGE/FACTS.md C-20; research/KNOWLEDGE/WATCHLIST.md W14, I19",
+   "suggested_action": "Log the P36 score and latency as info; no leaf-prune rider; keep t*=0.30 for the post-deadline analysis.",
+   "urgency": "info"
+  }
+ ],
+ "summary": "INDEX.md is rewritten for curation 2 (76 lines, state at ~20:55 UTC 25 Sep, git HEAD da154cb). CHANGES.md has a new dated section '2' with the full delta since v4.\n\n**STATE:**\n- Best public is still 0.954 (P35), which R5 rules out as a final. The base is x138 (0.953).\n- The rank was #157/3,908 at 19:46, with the silver line inside the 0.954 block.\n- The exp60 T9 lab read closed K3, K3b and forkblob, and K4 was dropped, so F1 = K2 (exp58) is very likely final. K2 goes at 00:00:30 26 Sep.\n- F2 is still exp52 until the user OKs f2. The twin dummy is pushed but not read.\n- P36 is pending and info only.\n\n**WHERE:** the map now includes _curation/2, ledger.md, exp60 results, runtime_ledger.py, forkblob_lab.py and round2/report.json. FINAL_REPORT_v4 §5 is flagged as stale.\n\n**TOP OPEN IDEAS (8):** I-001, I-090, I-011, I-215 (new), I-216 (new), I-089/I-091, I-136 and I-035. I-071, I-073, I-074 and I-158 were removed because they are closed.\n\n**TOP ALERTS:** 12 after deduplicating 32 curator alerts. The main ones are the K2 -m message plus the ledger --k2/--family call, the missing dummy_gates --twin mode, ADDENDUM M being unrecorded with T9 read first, the round 2 closures, and the stale morning OK list. The curators disagreed on L1/L2; I followed the facts and watch curators (no K3b under any reading).\n\n**CHANGES section 2:**\n- New ideas: I-212 to I-216.\n- 10 ideas moved to refuted or closed.\n- Status counts moved from 211 to 216 ideas, and from 5 strict orphans to 0.\n- New facts are recorded; contradictions C-01, C-06, C-16 and C-17 are resolved, and C-19 to C-23 are new.\n- Watchlist: some items are done, some cancelled, and some are new.\n- 9 alerts from v4 are resolved, the rest are still open, and there are new ones.\n\nNo other files were edited, nothing was committed, and Kaggle was not touched."
+}

@@ -34,3 +34,50 @@ Alerts opened (13 after dedup; full list in `INDEX.md` TOP ALERTS):
   quota "unverified" (W06), `TEAM.md` 0.97 target (C-04).
 
 Alerts resolved: none (first curation).
+
+## 2 - 2026-09-25 ~20:55 UTC (curation 2; git HEAD da154cb + untracked `research/wf_ideas_v4/round2/`)
+
+Previous curation: v4 (~18:30 UTC, 14c339e). New inputs: `CONTEXT.md` l.1896-1937 (entries 18:40-20:35), commits 9545e91..da154cb,
+`experiments/exp60_trainlab/results.md` + `results_forkblob.md`, `experiments/lb_poll/ledger.md` (20:42:42Z),
+`research/wf_ideas_v4/round2/report.json` + scan/v_*.json (finished 20:42). Curator logs: `research/KNOWLEDGE/_curation/2/`.
+
+State change in one line: the exp60 T9 lab read closed every fork rider (no K3, no K3b, forkblob FAIL, K4 dropped), so
+F1 = K2 (exp58) is very likely final; the live levers are the f2 twin, an optional floatout rider and the K1 fallback -
+`CONTEXT.md` l.1918-1937; `DECISIONS.md` §1b.
+
+Ideas (`IDEAS.md` "CHANGES IN THIS CURATION (2)"; full list `ideas.json` meta.curations[n=2], 33 records changed):
+- New (5): I-212 ANTIPAR (refuted, one-shot lab FAIL), I-213 GT-geometry fork flags (refuted), I-214 K3 bundle (refuted),
+  I-215 floatout on x138 (in-plan, needs OK), I-216 ADDENDUM M (at risk, not in CONTEXT).
+- To refuted/closed: I-071 forkmid, I-073 forkblob, I-074 DeepCenter K3b, I-075 6bba extension, I-183 linefit w0.7,
+  I-072 float-coord divgates, I-081 DNVETO, I-158 tempfuse K4 (DROPPED), I-205 kaggle_lab, I-207 stage-resume.
+- To lab-tested: I-201 exp60, I-204 density quartiles (info only); I-062 insertion gets its in-sample lab (+0.0157 / +0.0090).
+- Updated: I-001 (K2 submit mechanics), I-010 (A5 ledger built), I-090 (twin dummy pushed), I-136 (P36 info only).
+- Counts v4 -> 2: 211 -> 216 ideas; refuted 111 -> 124, lab-tested 18 -> 20, in-plan 21 -> 16, open-untested 5 -> 0,
+  lb-tested 37 and deferred 19 unchanged. Strict orphans 5 -> 0; at risk: I-035, I-216 (I-158 left the list).
+
+Facts and decisions (`FACTS.md`, `DECISIONS.md`, lines marked [c2]; `_curation/2/facts.json`):
+- New facts: lab fork-veto break-even FP:TP >= 7.7 (public 0.265 vs lab 0.114), dummy clips' GT divisions 0/0/0/3
+  (dummies prove plumbing only), GT vs predicted sister geometry, other teams' latency 2-8 h, how the ledger picks a
+  family, K2/twin checksums, exp60 outcomes, floatout +0.0023 lab / ~+0.0001 private, rank #157/3,908 at 19:46.
+- Contradictions resolved: C-01 (edge-J weighting), C-06 (LB noise), C-16 (R7 applies to new builds), C-17 (RESULTS P25 = 0.946).
+- Contradictions new: C-19 (19:05 stamps written ~18:40), C-20 (P36 info only), C-21 (ADDENDUM M not recorded before T9),
+  C-22 (break-even differs by bed), C-23 (L2 both tightening and loosening).
+- `DECISIONS.md`: new §1b lab-gate decisions G01-G06; finals table: K2 very likely F1, K3/K3b/K4 none; P36 row info only.
+
+Watchlist (`WATCHLIST.md`; `_curation/2/watch.json`):
+- Done: W01 (ADDENDUM L code), W08, W09, W11 (forkblob built and closed). Cancelled: W13 (K3/K3b dummy gates), W24, W27, T01.
+- Resolved insights: I10 (P36 reading written before it scored), I13 (kaggle_lab.py closed).
+- New: W30-W37 (ADDENDUM M/round 2 untracked, closures, floatout fail-soft, memory pointer, RESULTS lab row) and I15-I20.
+
+Alerts (`INDEX.md` TOP ALERTS, 12 after dedup):
+- Resolved since v4: ADDENDUM L code missing (W01, merged 19:05 entry l.1896); P36 reading undecidable (rule recorded
+  l.1904-1906); forkblob not built (built and FAILED, l.1918-1923); tempfuse build-or-drop (DROPPED, l.1912-1914);
+  K3b one-blob share (moot, no K3b); R7 vs exp52 DIVINS_DUMP (C-16 resolved); stale RESULTS P25, CONTEXT §4 weighting
+  and §11a noise (C-17, C-01, C-06); orphans I-204/I-205/I-207 closed.
+- Still open from v4: twin dummy-gate code (now `--twin` only), admission table, untracked ext_* folders, friend A card
+  (now fully stale), quota evidence, never tick exp56, TEAM.md 0.97 target.
+- New: ADDENDUM M not recorded and T9 read first (C-21, W30); round 2 closures only in untracked files (W31); K2 `-m`
+  message + `--k2/--family` ledger call (W16); morning OK list in `FINAL_REPORT_v4.md` §5 stale (W21); FLOATOUT_CHECK
+  bare assert (I17, W33); stale memory pointer (W34); rank line in CONTEXT stale (W22); DeepCenter t* = 0.30 post-hoc (I19).
+- Curator disagreement settled here: the ideas curator kept "L1+L2 K3b re-read (P ~0.1)" on the morning OK list; the
+  facts and watch curators say no K3b under any reading (`experiments/exp60_trainlab/results.md` l.76-80). INDEX follows the latter.

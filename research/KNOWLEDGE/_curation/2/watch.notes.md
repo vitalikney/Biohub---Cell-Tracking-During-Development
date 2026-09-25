@@ -1,0 +1,5 @@
+- 2026-09-25 20:44 UTC: start; no watch.json in _curation/2; existing WATCHLIST.md (21:27 local) to be updated incrementally
+- 20:44Z: read CONTEXT 1830-1937 (new: 19:05 code merged, 20:05 forkblob FAIL, 20:35 T9 read no K3/K3b, twin dummy pushed); P36 PENDING at 20:42Z
+- 20:45Z: round2 report.json read (A1-A12); Addendum M NOT in CONTEXT; T9 read at 20:35 preceded round2 report (20:42); dummy_gates has no --twin; ext_* + round2 untracked
+- 20:46Z: verified: friend A card still asks shard B + tempfuse (stale); admission table absent; quota l.1746 still 'unverified'; memory index line stale; T9 dc0.30 removes 8 evaluable FP / 0 TP but nodes -79/-49 (info). Writing WATCHLIST v2.
+- 20:48Z: WATCHLIST.md written (W30-W35 new, I15-I20 new; W01/08/09/11 done; W13/24/27/T01 cancelled; I10/I13 resolved); watch.json written; DONE

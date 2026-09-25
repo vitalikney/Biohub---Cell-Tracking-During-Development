@@ -1,0 +1,7 @@
+# PC2-10 notes (2026-09-25T20:23:00Z)
+- 20:23Z read tools/runtime_ledger.py: EXP_TOKEN (l.73) = first `exp\d+[a-z]*` token; family_of (l.145) fullmatches it against EXP_RULES (l.65-71); pick_k2 (l.254) auto-picks K2 only if e["exp"] == "exp58" (or exp58n fallback).
+- Tested exp_token/family_of: proposed msg 'probe 37: exp58 = K2 (...#35 config); dummy gates 18/18' -> exp58 -> safetail (9.5 h, ins gate 8.0 h). Counter-example 'probe 37: K2 = x138 (exp56) + ... exp58' -> exp56 -> x138 (7.5 h) and pick_k2 would not find K2 (A5-L(K2) stuck at WATCH 'not in poll log'). '#35', 'C01' do not match the token regex. Build slug 'biohub-exp58-x138-safe-lowref' -> exp58 too.
+- ledger.md 20:22Z: 5 submissions dated 25 Sep (exp52, exp53 00:02; exp56 08:09; exp57b 08:33; exp57 16:18) -> daily cap 5 used; next slot after 00:00 UTC 26 Sep.
+- CONTEXT l.1773: K2 build = exp58_x138_safe_lowref, REPAIR_DEADLINE_S=34200 (9.5 h), DIVINS_DEADLINE_S=28800 (8.0 h) -> 'safetail' family is the correct one. K2 = vitaliineibauer/biohub-exp58-x138-safe-lowref v1 (dummy gates 18/18, CONTEXT 17:20/17:45Z).
+- K2 forecast <= ~7.8 h (step0) lies between 7.5 and 9.5 h: misclass as x138 would flip R5(a) to NO/UNPROVEN and could raise the A6 K1-swap contingency wrongly -> the issue matters for finals admission.
+- Verdict: not refuted; zero-cost process fix; belt-and-braces: after submit run runtime_ledger.py --k2 <ref> --family <ref>=safetail (ref override beats token).
