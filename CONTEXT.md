@@ -1915,6 +1915,12 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   forks) and I-072 (divergence/symmetry gates with float coords) and the density-quartile report column -> handed to the
   night research rounds as candidate free CPU arms on the exp60 dumps.
 - 2026-09-25 18:41 UTC: TIMESTAMP CORRECTION - the two entries above stamped "2026-09-25 19:05 UTC" were written at ~18:40 UTC (manual stamp error). exp60 lab shards A and B still RUNNING.
+- 2026-09-25 20:05 UTC, exp60 LAB DUMPS: both shards COMPLETE (A 6,959 s, B 5,599 s kernel time; 28 + 28 clips written, missing [],
+  failed_hooks 0), downloaded to _dl/exp60_a, _dl/exp60_b (not in git). FORKBLOB (ADDENDUM L4) LAB GATE = FAIL
+  (tools/forkblob_lab.py score -> experiments/exp60_trainlab/results_forkblob.json): vetoed 150 forks (evaluable TP 1,
+  FP 6, ignored 143), dose 22% of 676 control safe-division forks, pooled div_J 0.1290 -> 0.1271 (check
+  div_J(arm) >= control FAILS), adj_edge +0.00006, score delta -0.00013, nodes unchanged. -> forkblob CLOSED (not in K3);
+  no user OK needed. Main T9 score (forkmid, DeepCenter threshold arc, insertion arms) is running.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
