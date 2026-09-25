@@ -7,3 +7,4 @@
 - Runtime: x138 guard at 27,000 s (h_ensembles-and-private.json); ~130 hidden videos; an extra full-zarr pass per video at output stage could cost 45-130 min and push last datasets past the guard -> compute statistic at raw peaks during detection (frames already in memory) instead.
 - Schedule: gate script 2-3 h agent (Fri), run on user's PC ~1.5-3 h CPU (Fri eve/Sat morning), build 1.5-2 h, dummy T4 40 min after 26 Sep 00:00 reset, scoring 7-10 h -> scored Sat 26 ~21:00 - Sun 27 ~16:00 if gate passes. Clock not binding; P(gate pass) 0.1-0.2 is. P(scored by 29 Sep 10:00) ~0.08-0.17 < 0.7.
 - VERDICT: refuted (schedule lens: contingent on a gate that most likely fails; probe below LB resolution).
+- final JSON written
