@@ -1545,5 +1545,16 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   block). No commits from him since 24 Sep 04:12 MSK. GPU quota: Kaggle resets 26 Sep 00:00 UTC.
   Paused: tools/kaggle_lab.py (Kaggle CPU lab port, unfinished). Idea needing the user's rules decision: overlap
   consensus across overlapping test crops (transductive; recommended NOT to do).
+- 2026-09-25 11:40 UTC, BROWSER INTEL for the cloud session's ideas workflow v3 (branch claude/practical-meitner-31k9ye,
+  research/wf_ideas_v3/browser_intel.md, worktree ../biohub-browser): no public notebook > 0.953 (kunaldesale2408 = x138
+  copy; "0.951" haideptry = 0.944; seyitkaangunes 0.946). LB 11:27 UTC: 241 teams at 0.953, 0.954: 47, 0.955: 28,
+  0.956: 19; we are #460 (0.950). Forum: imissher 743222 (25 Sep) - 8 LB probes all lost, det thresholds 0.960/0.970
+  worse; hikaggler 741749 - synthetic pretraining 0.9146 -> 0.9269 hold-out, node count predicts LB better than recall;
+  Zebrahub ZSNS001/003 + Ultrack tracks exist as Kaggle datasets (giorgosi relays). RUNTIME RISK (agent's estimate from
+  logs): x138 GPU phase ~265 s/clip on 2 shards -> ~7.4 h for ~199 hidden clips, right at x138's 7.5 h repair
+  deadline (after it relink/gap/safe-div/linefit are switched off); exp57b's DaughterNet insertion roughly DOUBLES the
+  repair time (491 s vs 227 s on the dummy clips) and ignores the deadline flag -> exp57b may degrade or time out on
+  the hidden run. If #35 errors or scores < #34, that is the likely cause; any insertion-on-x138 final must respect the
+  deadline flag.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
