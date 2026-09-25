@@ -1,4 +1,4 @@
-# Browser intel (Kaggle), 2026-09-25 11:40 UTC (in progress)
+# Browser intel (Kaggle), 2026-09-25 11:31 UTC
 
 Collected by the local session on the user's computer (Kaggle CLI + Chrome). Every fact has a source; guesses are marked.
 
@@ -370,3 +370,52 @@ dataset". 56: Eric (742064) wrote only "a sub-voxel peak refinement" (+0.0078 lo
 "produced 0.953 score in ... biohub-x138"; no 's075' explanation, no movie list; author's newer datasets: none found.
 66: 6.0 (C). 67: no report of a retrained V1284 head in 742673 or the forum; 742965 deleted. 68: nothing from hosts on
 offsets/centroids. 69: 6.0 (C) - spike exact, no public > 0.953. 70: Data tab silent on acquisition/density of hidden embryos.
+
+### 6.11 Late additions (read 11:30-11:45 UTC)
+- **exp57b log (items 13, 33; ensembles-and-private)** https://www.kaggle.com/code/vitaliineibauer/biohub-exp57b-x138-divins-only/log :
+  "Prediction completed in 9.18 minutes"; per clip `divinsert: triples / eligible / added / sec cand/score/insert`:
+  44b6_0113de3b 2,844 / 14 / 4 / 0.2-37.2-0.5 s; 44b6_0b24845f 3,685 / 0 / 0 / 0.2-63.3-0.2 s; 6bba_05b6850b 276 / 33 / 4 /
+  0.1-9.7-0.1 s; 6bba_05db0fb1 17,562 / 140 / 4 / 1.1-180.3-1.1 s. **Repair per clip 79.9 / 116.2 / 19.4 / 275.9 s vs 46.8 / 59.3 /
+  11.1 / 109.3 s in exp56 (x2.2 in total: 491 s vs 227 s)**; kernel end 1367 s vs 1138 s. Final node counts identical to exp56
+  (edges +2/+0/+3/+2). Guess: on a ~199-clip hidden set DaughterNet scoring adds ~(264 s / 4) x 199 = ~3.6 h of CPU repair time
+  on top of x138's; whether that fits depends on whether divinsert is skipped after `_deadline_degrade()` (not checked here).
+- **Division geometry (items 46, 57)** 740573 (Lê Quang Cảnh) exact table, one-frame displacement between labelled centroids:
+  continuation n=25,661 median 1.724 um, IQR 0.908-2.188, p90 3.350, p99 6.906, max 18.692; division step (parent->daughter)
+  n=72 median 4.569, IQR 3.300-6.214, p90 7.081, p99 10.619, max 12.336; sister separation n=36 median 8.849, IQR 7.196-10.235,
+  p90 11.866, p99 13.896, max 14.653. He warns the 36 labelled divisions are a biased (easy) subset. The "constant offset
+  correction -0.0031 LB" is not in this thread.
+- **Item 58** 740145 (hengck23): the "cell corners" remark is one sentence plus images: "kaggle annotation is based on Ultrack
+  segmentation i think it sometimes annotates 'cell corners'" (his guess); no axis or magnitude in text. Same thread: his
+  refinement moved error vs GT in a 64^3 canonical voxel grid from 1.1766 to 0.969; he links the Ultrack UNet weights.
+- **Items 20-21 (external-data-training)** https://zebrahub.sf.czbiohub.org/imaging : 7 light-sheet timelapses with tracking -
+  OpenSiMView ZMNS001, ZMNS002; DaXi ZSNS001, ZSNS002, ZSNS001_tail, ZSNS003, ZSNS004, ZSNS005 ("all corresponding imaging and
+  tracking data" linked; tracks made with Ultrack). Listing https://public.czbiohub.org/royerlab/zebrahub/imaging/single-objective/ :
+  `ZSNS00{1..5}.ome.zarr`, `ZSNS001_tail.ome.zarr`, tracks CSVs `ZSNS001_tracks.csv` 849 MiB, `ZSNS001_tail_tracks.csv` 464 MiB,
+  `ZSNS003_tracks.csv` 199 MiB, `ZSNS004_tracks.csv` 360 MiB (ZSNS005 row truncated at read), per-embryo JSON (1.6 KiB), and
+  `tracks_benchmark/` with `2024_03_14_daxi_tracks.zarr`, `tracks_int8_20230719.zarr(.zip 121 MiB)`, `ZSNS001_{edges,nodes,tracks}.zarr`.
+  https://public.czbiohub.org/royerlab/ultrack/unet_weights/ : `unet-daxi.pt` 20 MiB, `unet-simview.pt` 84 MiB (11 Jan 2025).
+  https://public.czbiohub.org/royerlab/ultrack/ lists `zebrafish_embryo.ome.zarr` ("Dense nuclear labeled zebrafish embryo") and
+  curated tracks only for the neuromast and the breast-cancer set (no curated tracks for the zebrafish embryo on that page).
+
+## 7. Top 5 takeaways for reaching 0.97+ (OPINION of the browser session, not facts)
+1. **Nobody public is above 0.953, and the crowd is stacking up just above it.** 241 teams sit at exactly 0.953 and a new
+   shoulder formed at 0.954-0.956 (47/28/19 teams, up from 15/14/12 on 24 Sep) - consistent with private +0.001..+0.003 tweaks of
+   x138. 0.96+ (39 teams) looks like own models: every top-team statement we have points to retraining, and every public attempt
+   to beat x138 by post-processing or in-sample sweeps failed (imissher 8/8 negative, amanatar sweep errored, seyitkaangunes
+   0.946, haideptry 0.944). My read: 0.97 is not reachable from x138 post-processing in 4 days; 0.955-0.958 is.
+2. **Private-LB runtime risk may be worth more than any +0.001.** x138 on a ~199-clip hidden set projects to a ~7.4 h GPU phase
+   (2 shards x ~100 clips x ~265 s), right at `REPAIR_DEADLINE_S` 27000 s, after which relink, gap closing, safe divisions and
+   linefit are switched off for the remaining clips; exp57b doubles repair time. If public clips are repaired first and private
+   ones degraded, public 0.953 overstates private. Use #34/#35 latency to calibrate, and consider making the GPU phase cheaper
+   (fewer TTA views on the secondary) rather than adding stages. (Projection = arithmetic on dummy-clip logs; unverified.)
+3. **Node count is the lever the LB listens to.** Three independent posters (hikaggler, Justin CH123, imissher) found LB moves track
+   the predicted node count, not offline edge J; wider/longer-trained detectors lost through N_pred. Any change should be judged
+   first by its N_pred change per clip; favour changes that fix positions (the V1284-type head) over ones that add nodes.
+4. **Validate only where nothing was memorised.** Primary and secondary saw all 199 train clips; DeepCenter saw only the 71 44b6
+   clips (so 6bba is an honest test for it). The only splits that predict the LB: embryo-held-out models, or the LB itself.
+   In-notebook PP sweeps are a trap (different stems on the hidden rerun).
+5. **If one GPU shot is spent on models, spend it on localisation/detection with new data, not on linker tweaks.** Available now:
+   Zebrahub ZSNS001/003 volumes + Ultrack tracks already mirrored on Kaggle (giorgosi relay legs), José Freitas' CC0 synthetic
+   sequences (+0.012 on hikaggler's own model, only with a small subset), and a public pool-2 / sigma-0.8 um detector checkpoint
+   (georgexue666, no code, no LB). For divisions, the cheapest evidence-backed change is an asymmetric gate for the second
+   daughter (both arcs fit a 12 um gate in 6/7 labelled divisions vs 2/7 at 7 um).
