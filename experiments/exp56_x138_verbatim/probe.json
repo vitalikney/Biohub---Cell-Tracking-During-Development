@@ -1,0 +1,5 @@
+{
+ "base": "anvithpothula/biohub-x138 verbatim (author public 0.953)",
+ "change": "none - reproduction on our account, same docker image pin and machine shape",
+ "rule": "expect 0.953; <0.953 means an environment/version difference (as with takaito)"
+}

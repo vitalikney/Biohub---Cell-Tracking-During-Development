@@ -1503,5 +1503,8 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   scored 0.946, but those stages all consume node POSITIONS, so the head's refined coordinates make them work (+0.007);
   on our plain relink the head adds only +0.002. Pre-ILP coordinates of exp51 == x138 exactly, so the gap is post-ILP.
   Next: x138 verbatim as the new base (+ our DaughterNet insertion on top).
+- 2026-09-25 08:00 UTC: user approved 2 probes: P34 = exp56 = x138 VERBATIM on our account (same docker pin + machine
+  shape; pushed, vitaliineibauer/biohub-exp56-x138-verbatim v1) and P35 = exp57 = x138 + DaughterNet insertion (+ leaf
+  prune 0.3 if clean), agent building via a --base x138 option in tools/build_probe_kernel.py. Submit each when COMPLETE.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
