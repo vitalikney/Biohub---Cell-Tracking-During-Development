@@ -1,1 +1,2 @@
 - 2026-09-25T12:50:42Z final judge started; final.json absent -> full run
+- 2026-09-25T12:55:11Z read BRIEF, browser_intel, CONTEXT tail, both plans (in task), critic/verify notes, x138 anchors (cell0 env knobs, cell4 lowdet literals, cell5 deadline), build_probe_kernel DIVINS_CALL (l.302, ungated). Branch claude/practical-meitner-31k9ye.
