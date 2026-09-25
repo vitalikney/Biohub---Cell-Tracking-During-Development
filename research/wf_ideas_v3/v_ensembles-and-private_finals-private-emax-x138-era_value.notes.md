@@ -1,1 +1,9 @@
 - 2026-09-25T11:10:38Z started value review of finals-private-emax-x138-era
+- 11:15 verified: coordhead_retrain/out_full_P/report.txt l.70-89: 'none' z bias 44b6 +0.177, 6bba +0.824; public head +0.131/+0.447 -> idea's numbers correct.
+- 11:15 verified: ext_x138/DIFF.md l.125-149: exp52 and x138 share the SAME three pilkwang detector datasets + same head; node drop 124,246->121,219, 44b6_0b24845f -10.7% -> correct. So exp52 vs x138 share detector, head, edge net, ILP: only the tail differs -> private errors highly correlated, s smaller than 0.006.
+- 11:18 LB noise: h_redteam-past notes + CONTEXT l.1330: pipeline deterministic run-to-run; 0.946/0.942 pair was a leaky sweep -> no run noise; s = embryo-to-embryo variation of the tail/head interaction only.
+- 11:20 lab per-embryo deltas of tail changes (edge_anatomy/l5_confirmation_vs_exp39.md): leaf prune 44b6 +0.00098 / 6bba +0.00048; edge filter +0.0145 / +0.0169 -> embryo spread of a tail delta ~0.0005-0.0025 (in-sample). Guess s(exp52 vs x138, private) 0.002-0.004.
+- 11:22 E[D+] table (python): mu -0.003: s .002 +0.00006, .003 +0.00025, .004 +0.00052, .006 +0.0012; mu -0.004: +0.00002/+0.00013/+0.00033. Near-copy F2 (mu -0.0005..0, s .0005-.001): +0.00004..+0.0004. Incremental value of exp52 over near-copy F2 ~0..+0.0003.
+- 11:24 guard-collapse rationale: v_..._x138-budget-aware-deadline_value.json shows it is observable for free (latency(#34) < 7.5 h => guard never fired). Then the 'x138 cluster collapses together' tail case is mostly removable.
+- verdict: public gain 0 by construction (< +0.002 lens bar) -> refuted under value lens; keep as a zero-cost finals rule.
+- 11:12 wrote value json (refuted=true under lens; keep as zero-cost rule)
