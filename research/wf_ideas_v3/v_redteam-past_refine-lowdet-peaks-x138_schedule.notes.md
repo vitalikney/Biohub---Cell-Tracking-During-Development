@@ -7,3 +7,4 @@
 - tools/build_probe_kernel.py --base x138 supports only divinsert/leafprune -> a new 'lowdetrefine' patch is needed (~1 h agent).
 - Schedule: GPU vitalii ~0 until 26 Sep 00:00Z; #34/#35 results 25 Sep 17-20Z decide the host base. Realistic human window (team seems MSK, guess): Vitalii 26 Sep ~06-09Z. Scored ~16-19Z 26 Sep. Slack to 29 Sep 10:00Z ~2.5 days -> P(scored if team ships it) ~0.9.
 - BUT: effect +0.0002 (value sibling) vs LB noise 0.003 -> any scored probe has ~zero power; rider only.
+- 2026-09-25T11:21:38Z final JSON written (refuted=false under schedule lens; feasible; rider only).

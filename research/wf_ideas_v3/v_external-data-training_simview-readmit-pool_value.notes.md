@@ -1,1 +1,11 @@
 - 2026-09-25 start: value/transfer skeptic for simview-readmit-pool; read BRIEF
+- 2026-09-25 checked DIFF.md s2 (readmit >=0.965 ILP-discarded, >2um from nodes, <=4um from open end/start, ONE round; gapfill <=3% cap; readmit uncapped). OK.
+- fn_anatomy_exp39.md l.56: 424 free-end det FN + 28 bridges of 2,929 det FN -- CONFIRMED, but on exp39 (no readmit/gapfill), not x138. J union 122151+6846+6732=135,729 -> 452/135729 = +0.0033 ceiling CONFIRMED arithmetic.
+- a_never 1907 = 167 44b6 / 1740 6bba -> the reachable pool is ~90% 6bba (dense, out-of-domain for simview); 44b6 under-segmentation story covers only ~9% of a_never.
+- x138 readmit already adds 1,337/121,777 = 1.1% nodes on dummy (CONTEXT L1515, via sibling notes) -> part of 424 already taken by primary peaks.
+- simview README (raw.githubusercontent OK): torchscript only; no preprocessing/scale script. h_external notes: sparse_zebrafish = dorado 522 frames, dorado tracks MADE with unet-simview -> 44b6 is in-domain/possibly in-train for simview; lab 44b6 not informative (also 11 leak groups). public.czbiohub.org blocked here (sibling notes).
+- metrics.md l.21-30: edge p_u->new is FP when u's GT node has another target. Exposure sites where p_u is a free end but GT successor is already matched to another track: b_v_taken 701 + b_u_diverted 706 (mirror) = ~1,400 in lab.
+- Duplicate risk: our node -> Ultrack pt median 1.46um, 92.5%<4 (r2_critic.notes l.19) -> ~20-27% of same-nucleus twins fall in the 2-4um band, which passes the 2um exclusion AND the 4um readmit radius. Primary readmit peaks are NMS'd (3um) against kept peaks; external candidates are not -> new FP channel. Est. q~0.1 x 1,400 = ~140 FP -> -0.001.
+- Node-cost algebra: per readmit benefit p/N vs cost 0.1/N (f cancels) -> break-even TP-yield 10%; node cost only binding if readmits large (1-2.5% nodes est. from open-end rate ~5% x 0.3-0.5 candidate hit).
+- Net estimate: gross +0.0005..+0.0011 (30-50% of 424 already/not reachable, simview hit 30-50%) - dup FP 0.0005..0.001 - nodes 0.0005..0.0015 -> central ~0, range -0.002..+0.001. Below +0.002 gate and LB noise 0.003 -> REFUTED (value lens).
+- Repair: exclusion >= 4um for external candidates, cap <=0.5% nodes, 2-frame simview support, 6bba-only lab judge.
