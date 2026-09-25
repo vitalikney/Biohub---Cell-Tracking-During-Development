@@ -319,6 +319,7 @@ def test_end_to_end_replay_parity(lab_nb, tmp_path):
     ctrl = d["meta"]["final_stats"]["safe_divisions_added"]
     assert (added["dc0.15"], added["dc0.20"], ctrl, added["dc0.30"], added["dc0.35"]) == (7, 6, 5, 4, 3)
     assert arms["forkmid45"]["nodes"] == arms["control"]["nodes"]
+    assert all(isinstance(r["readmitted_touch"], bool) for r in res["forkmid_audit"])  # ADDENDUM L3 sensitivity flag
     assert arms["linefit_w07_win2"]["digest"] != arms["control"]["digest"]  # weight 0.7 moves nodes
     assert arms["linefit_w07_win2"]["edges"] == arms["control"]["edges"]
 
@@ -463,3 +464,183 @@ def test_aggregate_and_gates():
                        "aggregate": agg, "gates": g, "clips": [
                            dict(r, meta={"stage_seconds": {}, "kernel_elapsed_s": 1.0}) for r in results]})
     assert "forkmid 4.5 um audit" in md and "| control | 6bba/ALL |" in md
+
+
+# ---------------------------------------------------------------------------------------------------------------------
+# PRE-REGISTRATION v3 ADDENDUM L (CONTEXT.md 25 Sep 18:20 UTC): L1/L2 DeepCenter, L3 forkmid_v2, L5 insertion labels
+# ---------------------------------------------------------------------------------------------------------------------
+def test_wilson_lower():
+    assert tl.wilson_lower(0, 0) is None
+    assert tl.wilson_lower(2, 6) < 0.265 < tl.wilson_lower(3, 6)  # at n = 6 the L2 bound needs 3/6
+    assert abs(tl.wilson_lower(3, 6) - 0.2682) < 1e-3 and abs(tl.wilson_lower(6, 7) - 0.6223) < 1e-3
+    assert tl.wilson_lower(4, 10) < 0.265  # 0.40 point estimate, bound 0.23: fails L2 although >= 0.35
+    assert tl.wilson_lower(0, 8) <= 1e-12 and tl.wilson_lower(5, 5) < 1.0
+    assert tl.wilson_lower(3, 6, z=0.0) == pytest.approx(0.5)
+
+
+def test_fork_precision_evaluable_keeps_old_value():
+    # 20 new forks: 4 TP, 2 FP, 14 ignored by the metric -> T9 as coded 4/20 = 0.2, ADDENDUM L2 4/6
+    a = {"new_forks": list(range(100, 120)), "tp_forks": [100, 101, 102, 103, 1], "fp_forks": [104, 105, 2],
+         "gone_forks": [1, 2, 3]}
+    c = {"tp_forks": [1], "fp_forks": [2]}
+    res = [{"stem": "6bba_x", "embryo": "6bba", "arms": {"control": c, "dc0.20": a}},
+           {"stem": "44b6_y", "embryo": "44b6", "arms": {"control": c, "dc0.20": a}}]
+    p = tl._fork_precision(res, "dc0.20", "6bba", {"6bba_x"})
+    assert (p["new_forks"], p["new_tp"], p["new_precision"], p["gone_forks"], p["gone_tp"]) == (20, 4, 0.2, 3, 1)
+    assert (p["new_fp"], p["new_evaluable"], p["gone_fp"], p["gone_evaluable"]) == (2, 6, 1, 2)
+    assert p["new_precision_evaluable"] == pytest.approx(4 / 6)
+    assert tl._fork_precision(res, "dc0.20", "6bba", set())["new_precision_evaluable"] is None
+
+
+def _dc_results(new_tp: int, new_fp: int, new_ignored: int, dnodes: int = 0) -> tuple[list, dict]:
+    """t* = 0.20 on 6bba (SELECTION +3 edge TP, CONFIRMATION +3); the CONFIRMATION clip's dc0.20 arm adds the given
+    new forks. dc0.15 +2 (the non-control neighbour), 0.25 = control."""
+    tp = {"mid_um": 2.0, "removed": None, "label": "TP"}
+    fp = {"mid_um": 5.0, "removed": "added", "label": "FP"}
+    results = [_fake_result("6bba_a", {"dc0.20": 3, "dc0.15": 2}, [fp, fp, tp]),
+               _fake_result("6bba_b", {"dc0.20": 3, "dc0.15": 2}, [tp]),
+               _fake_result("44b6_c", {}, [fp]),
+               _fake_result("44b6_d", {}, [])]
+    new = list(range(200, 200 + new_tp + new_fp + new_ignored))
+    arm = results[1]["arms"]["dc0.20"]
+    arm["new_forks"] = new
+    arm["tp_forks"] = [1, 2] + new[:new_tp]
+    arm["fp_forks"] = [3, 4, 5] + new[new_tp:new_tp + new_fp]
+    arm["new_fork_sister_um"] = {str(u): (3.0 if i % 2 == 0 else 9.0) for i, u in enumerate(new)}
+    arm["nodes"] += dnodes
+    half_of = {"6bba_a": "SELECTION", "6bba_b": "CONFIRMATION", "44b6_c": "SELECTION", "44b6_d": "CONFIRMATION"}
+    return results, half_of
+
+
+def test_gates_L1_L2_deepcenter():
+    pytest.importorskip("tracksdata")
+    # the coded T9 bug: 4 TP + 2 FP + 14 ignored -> old precision 0.2 fails, L2 precision 0.67, n 6, Wilson 0.41 passes
+    results, half_of = _dc_results(4, 2, 14)
+    g = tl.gates(results, tl.aggregate(results, half_of), half_of)
+    dc = g["deepcenter_m1"]
+    assert dc["t_star"] == 0.20 and dc["new_fork_precision_conf"]["new_precision"] == 0.2
+    assert dc["checks"]["new_fork_precision_ge_0.35"] is False and dc["pass_noncontrol_plateau"] is False  # unchanged
+    l2 = dc["L2"]
+    assert l2["new_evaluable"] == 6 and l2["new_precision_evaluable"] == pytest.approx(4 / 6)
+    assert all(l2["checks"].values()), l2["checks"]
+    assert l2["pass_noncontrol_plateau_L2"] is True  # L1 + L2
+    assert l2["pass_strict_plateau_L2"] is False  # strict reading: neighbour 0.25 = control has delta 0
+    info = l2["forkblob_L4_info"]
+    assert info["marginal_forks"] == 20 and info["sister_le_5.0um"] == 10 and info["sister_le_5.0um_share"] == 0.5
+    assert info["cell_share"] is None
+    d = g["decisions"]["deepcenter_K3b"]
+    assert (d["original_T9_strict"], d["strict_plateau_plus_L2"], d["addendum_L1_L2"], d["in_force"]) == (
+        False, False, True, False)
+    # n_evaluable < 6 fails although precision is perfect; the coded gate passes vacuously (no new forks at all)
+    results, half_of = _dc_results(5, 0, 0)
+    l2 = tl.gates(results, tl.aggregate(results, half_of), half_of)["deepcenter_m1"]["L2"]
+    assert l2["checks"]["n_evaluable_added_ge_6"] is False and l2["pass_noncontrol_plateau_L2"] is False
+    results, half_of = _dc_results(0, 0, 0)
+    dc = tl.gates(results, tl.aggregate(results, half_of), half_of)["deepcenter_m1"]
+    assert dc["pass_noncontrol_plateau"] is True and dc["L2"]["pass_noncontrol_plateau_L2"] is False
+    assert dc["L2"]["wilson80_lower"] is None
+    # Wilson clause: 4/10 (point 0.40 >= 0.35) has a lower bound 0.23 <= 0.265
+    results, half_of = _dc_results(4, 6, 0)
+    l2 = tl.gates(results, tl.aggregate(results, half_of), half_of)["deepcenter_m1"]["L2"]
+    assert l2["checks"]["new_fork_precision_evaluable_ge_0.35"] and not l2["checks"]["wilson80_lower_gt_0.265"]
+    # nodes must stay unchanged
+    results, half_of = _dc_results(4, 2, 14, dnodes=3)
+    l2 = tl.gates(results, tl.aggregate(results, half_of), half_of)["deepcenter_m1"]["L2"]
+    assert l2["checks"]["nodes_unchanged"] is False and l2["pass_noncontrol_plateau_L2"] is False
+
+
+def _fm_row(mid, removed, label, readmitted=False):
+    return {"mid_um": mid, "removed": removed, "label": label, "readmitted_touch": readmitted}
+
+
+def _fm_results(audits: list[list[dict]], fm_delta: int = 0) -> list[dict]:
+    return [_fake_result(f"{'6bba' if i % 2 else '44b6'}_{i}", {"forkmid45": fm_delta}, a) for i, a in enumerate(audits)]
+
+
+def test_forkmid_v2_pooled_rules():
+    fp = _fm_row(5.0, "added", "FP")
+    res = _fm_results([[fp], [fp, _fm_row(2.0, None, "TP")], [fp, _fm_row(4.0, None, "TP")]])
+    v = tl.forkmid_v2(res, 0.0)
+    assert v["pass"] and v["removed_fp"] == 3 and v["tp_in_band"] == 1 and v["removed_tp"] == 0
+    assert not tl.forkmid_v2(res, -0.0003)["pass"]  # pooled adj_edge floor -0.0002
+    assert tl.forkmid_v2(res, -0.0002)["pass"]
+    assert not tl.forkmid_v2(res, None)["pass"]
+    res2 = _fm_results([[fp], [fp, _fm_row(3.8, None, "TP")], [fp, _fm_row(4.49, None, "TP")]])
+    assert tl.forkmid_v2(res2, 0.0)["checks"]["tp_mid_in_[3.8,4.5)_le_1"] is False  # 2 TP in the band
+    res3 = _fm_results([[fp], [fp, _fm_row(3.79, None, "TP")], [fp, _fm_row(4.2, None, "TP")]])
+    assert tl.forkmid_v2(res3, 0.0)["pass"]  # 3.79 is outside the band
+    res4 = _fm_results([[fp], [fp, _fm_row(5.1, "added", "ignored")]])
+    v4 = tl.forkmid_v2(res4, 0.0)
+    assert v4["removed_fp"] == 2 and v4["removed_ignored"] == 1 and not v4["pass"]  # ignored forks are not FP
+    res5 = _fm_results([[fp], [fp, fp, _fm_row(4.6, "added", "TP")]])
+    assert tl.forkmid_v2(res5, 0.0)["checks"]["removed_tp_eq_0"] is False
+    res6 = _fm_results([[fp], [fp], [fp]])
+    res6[0]["arms"]["forkmid45"]["nodes"] += 1
+    assert tl.forkmid_v2(res6, 0.0)["checks"]["nodes_unchanged"] is False
+    res6 = _fm_results([[fp], [fp], [fp]])
+    res6[1]["arms"]["ins35_forkmid45"]["inserted_kept"] = False
+    assert tl.forkmid_v2(res6, 0.0)["checks"]["inserted_forks_unchanged"] is False
+
+
+def test_forkmid_v2_lowrefine_sensitivity():
+    fp = _fm_row(5.0, "added", "FP")
+    # a removed FP touching a readmitted node counts as a removed TP in the sensitivity variant
+    res = _fm_results([[fp], [fp, fp], [_fm_row(6.0, "added", "FP", readmitted=True)]])
+    assert tl.forkmid_v2(res, 0.0)["pass"]
+    s = tl.forkmid_v2(res, 0.0, lowdet_adverse=True)
+    assert not s["pass"] and s["removed_tp"] == 1 and s["removed_fp"] == 3 and s["readmitted_rows_flagged"] == 1
+    # an unremoved fork within 0.7 um of 4.5 touching a readmitted node is adverse (lowrefine may move it across)
+    res = _fm_results([[fp], [fp, fp], [fp, _fm_row(3.9, None, "ignored", readmitted=True)]])
+    assert tl.forkmid_v2(res, 0.0)["pass"]
+    assert not tl.forkmid_v2(res, 0.0, lowdet_adverse=True)["pass"]
+    # far from 4.5 and not removed: harmless
+    res = _fm_results([[fp], [fp, fp], [fp, _fm_row(2.0, None, "TP", readmitted=True)]])
+    assert tl.forkmid_v2(res, 0.0, lowdet_adverse=True)["pass"]
+    # the input rows are never modified
+    rows = [_fm_row(6.0, "added", "FP", readmitted=True)]
+    tl.forkmid_v2(_fm_results([rows]), 0.0, lowdet_adverse=True)
+    assert rows[0]["label"] == "FP" and rows[0]["removed"] == "added"
+
+
+def test_gates_L3_L5_and_decisions():
+    pytest.importorskip("tracksdata")
+    fp = {"mid_um": 5.0, "removed": "added", "label": "FP", "readmitted_touch": False}
+    # 3 removed FP, none on 44b6: the original T9 gate fails on its 44b6 clause, ADDENDUM L3 passes
+    results = [_fake_result("6bba_a", {"ins35": -1}, [fp, fp]), _fake_result("6bba_b", {}, [fp]),
+               _fake_result("44b6_c", {}, []), _fake_result("44b6_d", {}, [])]
+    half_of = {"6bba_a": "SELECTION", "6bba_b": "CONFIRMATION", "44b6_c": "SELECTION", "44b6_d": "CONFIRMATION"}
+    agg = tl.aggregate(results, half_of)
+    g = tl.gates(results, agg, half_of)
+    assert g["forkmid"]["pass"] is False and g["forkmid_v2"]["pass"] is True
+    assert g["forkmid_v2"]["pooled"]["clips"] == 4 and g["forkmid_v2"]["pooled_adj_edge_delta"] == 0.0
+    assert g["forkmid_v2_lowrefine_sensitivity"]["pass"] is True
+    d = g["decisions"]["forkmid_K3"]
+    assert (d["original_T9"], d["addendum_L3"], d["in_force"]) == (False, True, False)
+    assert "original until the user's OK" in d["applies"]
+    # pooled adj_edge harm: the forkmid arm loses edge TP on one clip
+    results[2]["arms"]["forkmid45"]["row"] = results[2]["arms"]["control"]["row"] | {"edge_tp": 89, "edge_fn": 11,
+                                                                                    "adj_edge_jaccard": 89 / 105}
+    g2 = tl.gates(results, tl.aggregate(results, half_of), half_of)
+    assert g2["forkmid_v2"]["pooled_adj_edge_delta"] < -0.0002 and g2["forkmid_v2"]["pass"] is False
+    # L5: ins35 CONFIRMATION delta is 0 here; make SELECTION-only harm irrelevant and CONFIRMATION harm a warning
+    results[1]["arms"]["ins35"]["row"] = results[1]["arms"]["control"]["row"] | {"edge_tp": 89, "edge_fn": 11,
+                                                                                "adj_edge_jaccard": 89 / 105}
+    g3 = tl.gates(results, tl.aggregate(results, half_of), half_of)
+    assert g3["insertion"]["ok_each_embryo_ge_0"]["ins35"] is False  # original key and value kept
+    l5 = g3["insertion_L5"]
+    assert l5["check_is_warning_only"] and l5["labels"]["ins35_forkmid45"].startswith("IN-SAMPLE UPPER BOUND")
+    assert any(w.startswith("ins35:") for w in l5["warnings"]) and "CLOSED" in l5["nosteal0"]
+    md = tl.report_md({"generated_utc": "x", "n_clips": 4, "clips_per_embryo": {}, "missing": [], "leak_clashes": [],
+                       "aggregate": tl.aggregate(results, half_of), "gates": g3, "clips": [
+                           dict(r, meta={"stage_seconds": {}, "kernel_elapsed_s": 1.0}) for r in results]})
+    assert "ORIGINAL T9 vs PRE-REGISTRATION v3 ADDENDUM L" in md and "IN-SAMPLE UPPER BOUND" in md
+    assert "forkmid_v2 (ADDENDUM L3" in md and "forkmid_v2_lowrefine_sensitivity" in md
+    assert "original until the user's OK" in md and "IN FORCE" in md
+
+
+def test_sister_um():
+    nodes = {1: {"t": 1, "z": 0.0, "y": 0.0, "x": 0.0}, 2: {"t": 1, "z": 2.0, "y": 0.0, "x": 0.0},
+             3: {"t": 1, "z": 0.0, "y": 8.0, "x": 0.0}}
+    assert tl.sister_um(nodes, (1, 2)) == pytest.approx(3.25)
+    assert tl.sister_um(nodes, (1, 3)) == pytest.approx(3.25)
+    assert tl.sister_um(nodes, (1, 2, 3)) is None and tl.sister_um(nodes, (1, 9)) is None

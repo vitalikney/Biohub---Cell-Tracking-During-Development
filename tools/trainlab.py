@@ -31,6 +31,9 @@ Arms (pre-registered, FINAL_REPORT.md section e / TASK T5):
 Parity: replaying the presafe dump at the kernel's own threshold and the preshort dump must give the kernel's final
 graph (writer rows byte-identical; float coordinates reported too) - the lab's control gate.
 44b6: one clip per leak group (split.json), so every GT division is counted once; checked again here.
+Gates: the original T9 gates (keys unchanged) plus PRE-REGISTRATION v3 ADDENDUM L (CONTEXT.md 25 Sep 18:20 UTC) next to
+them: deepcenter_m1.L2 (L1/L2), forkmid_v2 + forkmid_v2_lowrefine_sensitivity (L3), insertion_L5 (L5), and
+'decisions' (original vs addendum, and which one is in force), printed by `score` and in the report.
 """
 from __future__ import annotations
 
@@ -535,6 +538,7 @@ def lab_dataset(task: dict) -> dict:
             gone = [u for u, k in control_forks.items() if f.get(u) != k]
             rec.update({"row": row, "tp_forks": tpf, "fp_forks": fpf, "new_forks": sorted(new),
                         "gone_forks": sorted(gone)})
+            rec["new_fork_sister_um"] = {str(u): sister_um(nodes, f[u]) for u in sorted(new)}  # ADDENDUM L4 info
         arms[arm] = rec
     out["arms"] = arms
     # forkmid audit with the control's fork labels
@@ -542,7 +546,11 @@ def lab_dataset(task: dict) -> dict:
     cfp = set(arms["control"].get("fp_forks", []))
     for r in fm_audit:
         r["label"] = "TP" if r["parent"] in ctp else ("FP" if r["parent"] in cfp else "ignored")
+        r["readmitted_touch"] = any(_flag(control[0].get(n, {}), "readmitted")  # ADDENDUM L3 lowrefine sensitivity
+                                    for n in (r["parent"], r["added_child"], r["ilp_child"]))
     out["forkmid_audit"] = fm_audit
+    out["readmitted_nodes_final"] = sum(1 for n in control[0].values() if _flag(n, "readmitted"))
+    out["readmitted_nodes_stats"] = int((dump["meta"].get("final_stats") or {}).get("readmitted_nodes", 0) or 0)
     out["seconds"] = round(time.time() - t0, 1)
     return out
 
@@ -576,7 +584,10 @@ def aggregate(results: list[dict], half_of: dict) -> dict:
 
 
 def _fork_precision(results: list[dict], arm: str, emb: str, stems: set | None = None) -> dict:
+    """new_precision (T9 as coded) divides by ALL new forks; new_precision_evaluable (ADDENDUM L2) = TP / (TP + FP)
+    over the new forks the metric labels (ignored forks left out)."""
     new_tp = new_n = gone_tp = gone_n = 0
+    new_fp = gone_fp = 0
     for r in results:
         if r["embryo"] != emb or (stems is not None and r["stem"] not in stems):
             continue
@@ -587,8 +598,94 @@ def _fork_precision(results: list[dict], arm: str, emb: str, stems: set | None =
         new_tp += len(set(a["new_forks"]) & set(a["tp_forks"]))
         gone_n += len(a["gone_forks"])
         gone_tp += len(set(a["gone_forks"]) & set(c.get("tp_forks", [])))
+        new_fp += len(set(a["new_forks"]) & set(a.get("fp_forks", [])) - set(a["tp_forks"]))
+        gone_fp += len(set(a["gone_forks"]) & set(c.get("fp_forks", [])) - set(c.get("tp_forks", [])))
+    new_ev = new_tp + new_fp
     return {"new_forks": new_n, "new_tp": new_tp, "new_precision": new_tp / new_n if new_n else None,
-            "gone_forks": gone_n, "gone_tp": gone_tp}
+            "gone_forks": gone_n, "gone_tp": gone_tp,
+            "new_fp": new_fp, "new_evaluable": new_ev,
+            "new_precision_evaluable": new_tp / new_ev if new_ev else None,
+            "gone_fp": gone_fp, "gone_evaluable": gone_tp + gone_fp}
+
+
+WILSON_Z80 = 1.2816  # one-sided 80% (ADDENDUM L2)
+L2_MIN_EVALUABLE = 6
+L2_WILSON_FLOOR = 0.265  # public break-even precision of an added evaluable fork
+L2_PRECISION = 0.35
+L3_BAND_UM = (3.8, 4.5)
+L3_MIN_FP = 3
+L3_MAX_TP_IN_BAND = 1
+L3_ADJ_EDGE_FLOOR = -0.0002
+L3_LOWDET_MARGIN_UM = 0.7
+L4_SISTER_UM = 5.0
+IN_SAMPLE_LABEL = "IN-SAMPLE UPPER BOUND (4/5 DaughterNet v1 folds saw these clips)"
+
+
+def wilson_lower(k: int, n: int, z: float = WILSON_Z80) -> float | None:
+    """One-sided Wilson score lower bound of a binomial proportion k/n (None for n == 0)."""
+    if n <= 0:
+        return None
+    p = k / n
+    z2 = z * z
+    return (p + z2 / (2 * n) - z * math.sqrt(p * (1 - p) / n + z2 / (4 * n * n))) / (1 + z2 / n)
+
+
+def _pooled_delta(results: list[dict], arm: str) -> dict:
+    """Pooled (all clips, both embryos) official summary of `arm` minus control over clips scored in both."""
+    res = [r for r in results if "row" in r["arms"].get(arm, {}) and "row" in r["arms"].get("control", {})]
+    if not res:
+        return {"clips": 0, "adj_edge_delta": None, "score_delta": None, "division_jaccard_delta": None}
+    s = summarise_rows([r["arms"][arm]["row"] for r in res])
+    c = summarise_rows([r["arms"]["control"]["row"] for r in res])
+
+    def d(k):
+        x, y = s.get(k), c.get(k)
+        return None if x is None or y is None or x != x or y != y else x - y
+    return {"clips": len(res), "adj_edge_delta": d("adj_edge_jaccard"), "score_delta": d("score"),
+            "division_jaccard_delta": d("division_jaccard")}
+
+
+def forkmid_v2(results: list[dict], adj_edge_delta: float | None, lowdet_adverse: bool = False) -> dict:
+    """ADDENDUM L3: the forkmid (C04) audit pooled over all lab clips. lowdet_adverse = the lowrefine sensitivity:
+    audit rows whose parent or a child is a readmitted low-detection node ('readmitted_touch') count as adverse,
+    i.e. as a removed TP fork when removed or when the midpoint is within 0.7 um of 4.5 (lowrefine may move it)."""
+    rows = [dict(a) for r in results for a in r.get("forkmid_audit", [])]
+    flagged = 0
+    for a in rows:
+        if lowdet_adverse and a.get("readmitted_touch"):
+            flagged += 1
+            if a.get("removed") or abs(float(a["mid_um"]) - FORKMID_UM) < L3_LOWDET_MARGIN_UM:
+                a["label"], a["removed"] = "TP", a.get("removed") or "adverse"
+    lo, hi = L3_BAND_UM
+    removed_tp = sum(1 for a in rows if a.get("removed") and a.get("label") == "TP")
+    removed_fp = sum(1 for a in rows if a.get("removed") and a.get("label") == "FP")
+    tp_band = sum(1 for a in rows if a.get("label") == "TP" and not a.get("removed") and lo <= float(a["mid_um"]) < hi)
+    nodes_same = all(r["arms"]["forkmid45"].get("nodes") == r["arms"]["control"].get("nodes")
+                     for r in results if "forkmid45" in r.get("arms", {}) and "control" in r.get("arms", {}))
+    ins_same = all(r["arms"].get("ins35_forkmid45", {}).get("inserted_kept", True) for r in results)
+    checks = {"removed_tp_eq_0": removed_tp == 0,
+              f"removed_evaluable_fp_ge_{L3_MIN_FP}": removed_fp >= L3_MIN_FP,
+              f"tp_mid_in_[{lo},{hi})_le_{L3_MAX_TP_IN_BAND}": tp_band <= L3_MAX_TP_IN_BAND,
+              f"pooled_adj_edge_delta_ge_{L3_ADJ_EDGE_FLOOR}": adj_edge_delta is not None
+              and adj_edge_delta >= L3_ADJ_EDGE_FLOOR,
+              "nodes_unchanged": nodes_same, "inserted_forks_unchanged": ins_same}
+    return {"clips": len(results), "eligible": len(rows), "removed": sum(1 for a in rows if a.get("removed")),
+            "removed_tp": removed_tp, "removed_fp": removed_fp,
+            "removed_ignored": sum(1 for a in rows if a.get("removed") and a.get("label") not in ("TP", "FP")),
+            "tp_forks": sum(1 for a in rows if a.get("label") == "TP"), "tp_in_band": tp_band,
+            "pooled_adj_edge_delta": adj_edge_delta, "lowdet_adverse": lowdet_adverse,
+            "readmitted_rows_flagged": flagged if lowdet_adverse else sum(1 for a in rows if a.get("readmitted_touch")),
+            "readmitted_flag_available": any("readmitted_touch" in a for a in rows),
+            "readmitted_nodes_final": sum(int(r.get("readmitted_nodes_final", 0) or 0) for r in results),
+            "readmitted_nodes_kernel_stats": sum(int(r.get("readmitted_nodes_stats", 0) or 0) for r in results),
+            "checks": checks, "pass": all(checks.values())}
+
+
+def sister_um(nodes: dict, kids) -> float | None:
+    kids = list(kids)
+    if len(kids) != 2 or any(k not in nodes for k in kids):
+        return None
+    return float(np.linalg.norm(_pos_um(nodes[kids[0]]) - _pos_um(nodes[kids[1]])))
 
 
 def gates(results: list[dict], agg: dict, half_of: dict) -> dict:
@@ -621,6 +718,15 @@ def gates(results: list[dict], agg: dict, half_of: dict) -> dict:
     fm["rule"] = ("0 TP safe-division forks removed on each embryo; >= 3 FP removed with >= 1 on 44b6; TP midpoint "
                   "margin >= 0.7 um below 4.5; node count unchanged (FINAL_REPORT.md section e, T9)")
     g["forkmid"] = fm
+    # ADDENDUM L3 (needs the user's OK; the original gate above decides until then): pooled over all lab clips
+    pooled_fm = _pooled_delta(results, "forkmid45")
+    g["forkmid_v2"] = forkmid_v2(results, pooled_fm["adj_edge_delta"])
+    g["forkmid_v2"]["pooled"] = pooled_fm
+    g["forkmid_v2_lowrefine_sensitivity"] = forkmid_v2(results, pooled_fm["adj_edge_delta"], lowdet_adverse=True)
+    g["forkmid_v2"]["rule"] = (
+        "ADDENDUM L3, pooled over all lab clips: 0 TP safe-division forks removed; removed evaluable FP >= 3; <= 1 TP "
+        "fork with midpoint in [3.8, 4.5) um; pooled adj_edge delta >= -0.0002; nodes and inserted forks unchanged; "
+        "must also pass with fork rows touching a readmitted lowdet node counted as adverse (lowrefine sensitivity)")
     # DeepCenter threshold (M1), judged ONLY on 6bba: t* from SELECTION, verdict on CONFIRMATION
     arms_dc = [f"dc{t:.2f}" for t in DC_THRESHOLDS if t != DC_CONTROL]
     sel = {a: agg[a].get("6bba/SELECTION", {}).get("delta") for a in arms_dc}
@@ -659,6 +765,49 @@ def gates(results: list[dict], agg: dict, half_of: dict) -> dict:
                             "next to 0.25 fails. Both readings are reported; the main session decides (no build if "
                             "t* = 0.25; network-confidence arms are discounted to 0)."),
                    "no_build_if_t_star_is_control": True})
+        # ADDENDUM L2 (bug fix + tightening, no OK needed): precision over EVALUABLE new forks, n >= 6, Wilson 80%
+        # lower bound > 0.265, t* below the control, nodes unchanged; ANDed with the other T9 checks
+        n_ev = prec["new_evaluable"]
+        wl = wilson_lower(prec["new_tp"], n_ev)
+        pev = prec["new_precision_evaluable"]
+        dnodes = {e: agg[best].get(f"{e}/ALL", {}).get("delta_nodes") for e in EMBRYOS}
+        checks_l2 = {
+            f"new_fork_precision_evaluable_ge_{L2_PRECISION}": pev is not None and pev >= L2_PRECISION,
+            f"n_evaluable_added_ge_{L2_MIN_EVALUABLE}": n_ev >= L2_MIN_EVALUABLE,
+            f"wilson80_lower_gt_{L2_WILSON_FLOOR}": wl is not None and wl > L2_WILSON_FLOOR,
+            "t_star_below_control": tstar < DC_CONTROL,
+            "nodes_unchanged": all(v == 0 for v in dnodes.values() if v is not None),
+        }
+        kept = {k2: v for k2, v in checks.items() if k2 != "new_fork_precision_ge_0.35"}  # replaced by the L2 one
+        strict_k, nonctl_k = "plateau_strict_grid_neighbours_ge_+0.001", "plateau_noncontrol_neighbours_ge_+0.001"
+        l2_ok = all(checks_l2.values())
+        # marginal forks at t* (6bba CONFIRMATION) in the forkblob cell (ADDENDUM L4, info only)
+        sis, cell = [], []
+        for r in results:
+            if r["embryo"] != "6bba" or r["stem"] not in conf_stems:
+                continue
+            a = r["arms"].get(best, {})
+            sis += [v for v in (a.get("new_fork_sister_um") or {}).values()]
+            fb = a.get("new_fork_forkblob")  # {parent: bool}, only when a forkblob valley reader filled it in
+            if fb is not None:
+                cell += [bool(v) for v in fb.values()]
+        n_s = [v for v in sis if v is not None]
+        dc["L2"] = {
+            "checks": checks_l2, "wilson80_lower": wl, "new_evaluable": n_ev, "new_tp": prec["new_tp"],
+            "new_fp": prec["new_fp"], "new_precision_evaluable": pev, "delta_nodes": dnodes,
+            "pass_strict_plateau_L2": all(v for k2, v in kept.items() if k2 != nonctl_k) and l2_ok,
+            "pass_noncontrol_plateau_L2": all(v for k2, v in kept.items() if k2 != strict_k) and l2_ok,
+            "forkblob_L4_info": {
+                "marginal_forks": len(sis), "two_child": len(n_s),
+                f"sister_le_{L4_SISTER_UM}um": sum(1 for v in n_s if v <= L4_SISTER_UM),
+                f"sister_le_{L4_SISTER_UM}um_share": (sum(1 for v in n_s if v <= L4_SISTER_UM) / len(n_s)) if n_s else None,
+                "cell_share": (sum(cell) / len(cell)) if cell else None,
+                "note": ("info only; the cell also needs the t+1 valley >= 0.95 (image), so the sister-distance share is "
+                         "an upper bound; cell_share is None unless forkblob valley flags are in the dumps")},
+            "rule": ("ADDENDUM L2: precision over evaluable new forks (TP/(TP+FP), 6bba CONFIRMATION) >= 0.35 AND "
+                     "n_evaluable_added >= 6 AND one-sided Wilson 80% (z = 1.2816) lower bound > 0.265 AND t* < 0.25 "
+                     "(t* > 0.25: no build) AND nodes unchanged, with the other T9 checks (conf, plateau, 44b6, "
+                     "forks <= +50%)")}
     g["deepcenter_m1"] = dc
     # insertion: CONFIRMATION >= 0 on each embryo (else a warning in CONTEXT; R2 unchanged, LB decides)
     g["insertion"] = {a: {emb: agg[a].get(f"{emb}/CONFIRMATION", {}).get("delta") for emb in EMBRYOS}
@@ -668,7 +817,55 @@ def gates(results: list[dict], agg: dict, half_of: dict) -> dict:
         for a in ("ins35", "ins35_nosteal0")}
     g["linefit_record_only"] = {f"{emb}/{grp}": agg["linefit_w07_win2"].get(f"{emb}/{grp}", {}).get("delta")
                                 for emb in EMBRYOS for grp in GROUPS}
+    # ADDENDUM L5: insertion arms are an in-sample upper bound; the check is a warning only; nosteal0 closed
+    ok_ins = g["insertion"]["ok_each_embryo_ge_0"]
+    g["insertion_L5"] = {
+        "labels": {a: IN_SAMPLE_LABEL for a in ("ins35", "ins35_nosteal0", "ins35_forkmid45")},
+        "check_is_warning_only": True,
+        "warnings": [f"{a}: CONFIRMATION delta < 0 on an embryo (warning only; R2 unchanged)" for a, v in ok_ins.items()
+                     if not v],
+        "nosteal0": "CLOSED under R2 whatever the lab shows"}
+    g["decisions"] = decisions(g)
     return g
+
+
+def decisions(g: dict) -> dict:
+    """Original T9 decision next to the ADDENDUM L decision, and which one is in force (L1/L3 need the user's OK)."""
+    dc, fm = g.get("deepcenter_m1", {}), g.get("forkmid", {})
+    v2, sens = g.get("forkmid_v2", {}), g.get("forkmid_v2_lowrefine_sensitivity", {})
+    l2 = dc.get("L2", {})
+    fm_orig = bool(fm.get("pass"))
+    fm_add = bool(v2.get("pass")) and bool(sens.get("pass"))
+    dc_orig = bool(dc.get("pass_strict"))
+    dc_now = bool(l2.get("pass_strict_plateau_L2"))
+    dc_add = bool(l2.get("pass_noncontrol_plateau_L2"))
+    return {
+        "forkmid_K3": {"original_T9": fm_orig, "addendum_L3": fm_add, "addendum_L3_pooled": bool(v2.get("pass")),
+                       "addendum_L3_lowrefine_sensitivity": bool(sens.get("pass")),
+                       "in_force": fm_orig, "applies": "original until the user's OK (L3 needs it)"},
+        "deepcenter_K3b": {"t_star": dc.get("t_star"), "original_T9_strict": dc_orig,
+                           "original_T9_noncontrol_old_precision": bool(dc.get("pass_noncontrol_plateau")),
+                           "strict_plateau_plus_L2": dc_now, "addendum_L1_L2": dc_add, "in_force": dc_now,
+                           "applies": ("original (strict) plateau until the user's OK for L1; L2 (bug fix + "
+                                       "tightening) applies now, so in force = strict plateau AND L2")},
+        "insertion": {"original_T9_ok_each_embryo": g.get("insertion", {}).get("ok_each_embryo_ge_0"),
+                      "addendum_L5": "warning only; ins35* = " + IN_SAMPLE_LABEL + "; nosteal0 CLOSED",
+                      "in_force": "addendum L5 (labels and closure, no OK needed)"},
+    }
+
+
+def decisions_text(dec: dict) -> list[str]:
+    fk, dk, ins = dec["forkmid_K3"], dec["deepcenter_K3b"], dec["insertion"]
+    return [
+        f"forkmid (K3):  ORIGINAL T9 pass = {fk['original_T9']} | ADDENDUM L3 pass = {fk['addendum_L3']} (pooled "
+        f"{fk['addendum_L3_pooled']}, lowrefine sensitivity {fk['addendum_L3_lowrefine_sensitivity']}) -> IN FORCE: "
+        f"{fk['in_force']} ({fk['applies']})",
+        f"DeepCenter (K3b) t* = {dk['t_star']}:  ORIGINAL T9 strict pass = {dk['original_T9_strict']} (non-control, old "
+        f"precision {dk['original_T9_noncontrol_old_precision']}) | strict + L2 = {dk['strict_plateau_plus_L2']} | "
+        f"ADDENDUM L1+L2 pass = {dk['addendum_L1_L2']} -> IN FORCE: {dk['in_force']} ({dk['applies']})",
+        f"insertion:  ORIGINAL T9 ok each embryo = {ins['original_T9_ok_each_embryo']} | ADDENDUM L5: "
+        f"{ins['addendum_L5']} -> IN FORCE: {ins['in_force']}",
+    ]
 
 
 def check_leak(stems: list[str]) -> list:
@@ -705,14 +902,27 @@ def report_md(res: dict) -> str:
                      f"{_fmt(s.get('adj_edge_jaccard'))} | {_fmt(s.get('division_jaccard'))} | "
                      f"{s.get('division_tp')}/{s.get('division_fp')}/{s.get('division_fn')} | "
                      f"{s.get('delta_nodes', 0)} | {s.get('delta_forks', 0)} |")
+    if "decisions" in res["gates"]:
+        L += ["", f"ins35* rows: {IN_SAMPLE_LABEL} (ADDENDUM L5).", "",
+              "## Decisions: ORIGINAL T9 vs PRE-REGISTRATION v3 ADDENDUM L", ""]
+        L += [f"- {x}" for x in decisions_text(res["gates"]["decisions"])]
     fm = res["gates"]["forkmid"]
     L += ["", "## forkmid 4.5 um audit (C04)", "", f"pass = **{fm['pass']}** ({fm['rule']})", ""]
     for emb in EMBRYOS:
         L.append(f"- {emb}: {fm[emb]}")
+    for key in ("forkmid_v2", "forkmid_v2_lowrefine_sensitivity"):
+        if key in res["gates"]:
+            v = {k: x for k, x in res["gates"][key].items() if k not in ("rule", "pooled")}
+            L += ["", f"{key} (ADDENDUM L3, needs the user's OK): pass = **{v['pass']}**", f"```\n{json.dumps(v, indent=1)}\n```"]
+    if "forkmid_v2" in res["gates"]:
+        L.append(f"{res['gates']['forkmid_v2']['rule']}; pooled: {res['gates']['forkmid_v2'].get('pooled')}")
     dc = res["gates"]["deepcenter_m1"]
     L += ["", "## DeepCenter safe-division threshold (M1, 6bba only)", "", f"```\n{json.dumps(dc, indent=1)}\n```"]
     L += ["", "## Insertion (#35 config) and linefit (record only)", "",
           f"```\n{json.dumps(res['gates']['insertion'], indent=1)}\n{json.dumps(res['gates']['linefit_record_only'], indent=1)}\n```",
+          *([f"ADDENDUM L5: ins35 / ins35_nosteal0 / ins35_forkmid45 = **{IN_SAMPLE_LABEL}**; the insertion check is a "
+             f"warning only ({res['gates']['insertion_L5']['warnings'] or 'no warnings'}); nosteal0 "
+             f"{res['gates']['insertion_L5']['nosteal0']}."] if "insertion_L5" in res["gates"] else []),
           "", "## Timing per clip (kernel)", "", "| clip | presafe s | preshort s | final s | kernel elapsed s |",
           "|---|---|---|---|---|"]
     for r in res["clips"]:
@@ -777,6 +987,9 @@ def cmd_score(a) -> None:
     out.with_suffix(".json").write_text(json.dumps(res, indent=1, default=str), encoding="utf-8")
     if not a.no_score:
         out.with_suffix(".md").write_text(report_md(res), encoding="utf-8")
+        print("DECISIONS (ORIGINAL T9 vs ADDENDUM L):", flush=True)
+        for line in decisions_text(res["gates"]["decisions"]):
+            print("  " + line, flush=True)
     print("wrote", out.with_suffix(".json"), flush=True)
 
 
