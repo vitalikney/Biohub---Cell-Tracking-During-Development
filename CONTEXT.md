@@ -1824,6 +1824,9 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   -> K2 goes at 00:01 UTC 26 Sep (pre-approved). exp60 lab shard A pushed at 17:15 UTC with this week's remaining quota
   (~9 h left before the expected Saturday reset), shard B queued after FF, so the forkmid / DeepCenter-threshold audit
   (T9) can be done tonight instead of 26 Sep morning.
+- 2026-09-25 17:45 UTC: FF dummy (exp58ff, DIVINS_FORCE_FAIL=1) 2/2 PASS: 'DIVINS FAILED' on all 4 clips and the CSV is
+  byte-identical to exp56 (d52a5da2...) -> the insertion's fail-soft path restores the input graph exactly. All
+  dummy gates for K2 are green (18/18).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
