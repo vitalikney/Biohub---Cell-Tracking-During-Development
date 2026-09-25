@@ -1841,6 +1841,58 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   finals candidates, R1-R10 status), WATCHLIST.md (overdue / next 24 h / later / insights at risk of being forgotten),
   CHANGES.md (delta per curation). Writes only there; alerts go to the main session. First standalone curation right
   after the v4 workflow finishes.
+- 2026-09-25 18:20 UTC: research round 1 (workflow v4, 52 agents; research/wf_ideas_v4/FINAL_REPORT_v4.md) done. Its lab and finals
+  amendments are recorded below VERBATIM before any exp60 output is downloaded or scored (no exp60 output on disk).
+  The user is asleep: [OK] items (L1, L3, L4 as R3 class, f2) are COMPUTED alongside but the ORIGINAL rules decide until
+  the morning OK. Intel at 18:08 UTC: we are #151 of 3,905 at 0.954; score blocks 0.957 = ranks 66-77, 0.956 = 78-98,
+  0.955 = 99-133, 0.954 = 134-195, 0.953 = 196-456 (261 teams); silver ~rank 195 (end of the 0.954 block), bronze ~390
+  (inside 0.953); within one displayed score the order follows the unrounded score. No public notebook > 0.953.
+- 2026-09-25 18:20 UTC, PRE-REGISTRATION v3 ADDENDUM L (lab reading of exp60; written before any exp60 output was
+  downloaded or scored; source research/wf_ideas_v4/FINAL_REPORT_v4.md). Items marked [OK] take effect only with the
+  user's morning OK; until then the original T9 text applies. Both versions are computed and reported.
+  L1 [OK, clarification] DeepCenter plateau (T9 "M1"): neighbours = non-control grid neighbours of t* (the control 0.25
+     has delta 0 by definition); i.e. trainlab 'pass_noncontrol_plateau', ANDed with L2.
+  L2 [bug fix + tightening] "precision of added forks >= 0.35" is computed over EVALUABLE new forks only
+     (TP/(TP+FP) on 6bba CONFIRMATION; trainlab _fork_precision currently divides by all new forks). Added AND clauses:
+     n_evaluable_added >= 6 and one-sided Wilson 80% (z = 1.2816) lower bound > 0.265. Existing checks stay (conf >=
+     +0.002 at t*, plateau per L1, 44b6 >= -0.0005, forks <= +50%, nodes unchanged). t* > 0.25: no build (removal
+     branch unreachable). Report (info only) the share of marginal forks that fall in the forkblob cell (L4).
+  L3 [OK, power fix] forkmid C04 audit, pooled over all 56 clips: 0 TP safe-division forks removed; removed evaluable
+     FP >= 3; <= 1 lab TP fork with midpoint in [3.8, 4.5) um (replaces the max-margin clause); pooled adj_edge delta
+     >= -0.0002; nodes and inserted forks unchanged. The '>= 1 FP on 44b6' clause is dropped (lambda_44b6 ~0.1-0.4).
+     Sensitivity (lab base has no lowrefine): the gate must still pass when fork rows touching a readmitted lowdet node
+     are counted as adverse. exp39's 0/23 is never used in any bound (4.5 um was chosen on it).
+  L4 [rule frozen now; R3 class needs OK] forkblob: for every 2-child fork with safe_division == 1 and not
+     div_inserted, at t+1: sister distance <= 5.0 um AND valley >= 0.95, valley = min of the interior 20-80% of 41
+     samples of the gaussian-blurred (sigma zyx 0.6/1.5/1.5 vox, local crop, margin >= 4 sigma) intensity on c1->c2,
+     divided by min(I(c1), I(c2)); drop the ILP-side edge if edge_prob == 0.0 else the added edge; runs after
+     forkmid; nodes untouched. Lab harm gate (pooled 56 clips): vetoed evaluable TP <= 1 and (TP == 0 or FP >= 3*TP);
+     pooled div_J(arm) >= control; >= 10% of control safe-division forks fall in the cell (dose); pooled adj_edge
+     delta >= -0.0002; nodes unchanged. Log per vetoed fork: dropped edge, its edge label, the fork's division label.
+     Thresholds come from GT sister statistics of all 151 train divisions (no fork labels seen). Prior: on the old
+     base (exp39 graphs, 199 clips) the cell holds 3 FP / 0 TP / 65 free; probe 18 (pre-link 5 um floor) tied 0.946 vs
+     0.947 -> an LB tie is not a failure, +0.001 is not a confirmation.
+  L5 ins35 / ins35_nosteal0 / ins35_forkmid45 arms are 'IN-SAMPLE UPPER BOUND (4/5 DaughterNet v1 folds saw these
+     clips)'; the T9 insertion check is a warning only; nosteal0 is CLOSED under R2 whatever the lab shows.
+  L6 [conditional] 6bba extension: only if the 39-clip 6bba bed passes the full E5 gate (L1+L2), push the 78 clean
+     6bba clips outside exp60 (17 GT divisions; the 10 head-train stems incl. 05db0fb1 excluded; honest pooled bed
+     105 divisions) as 2 shards after the K3/twin dummies; veto K3b if the pooled 6bba CONFIRMATION+EXT delta at t* < 0
+     or the evaluable new-fork precision < 0.35. Result not in by 10:00 UTC 26 Sep -> decide on the 39-clip bed.
+  L7 closures: RE-AIM on x138/K2 = no-op (K2 dummies: 2 of 117,077 edges re-pointed; TP/FP/FN 2,047/101/80 with and
+     without it); pair-GBM relink bonus closed (in-sample booster; reopen only on a full-stack public delta >= +0.002
+     or an honest OOS check); E13/C08 closed on schedule (R8) plus small ceiling (5/82 end-anchored node misses);
+     births/optional nodes stay closed on the LB anchors (gapfill 0, readmit -0.001, det 0.95 flat, MIN_TRACK_LEN 4
+     -0.002), not on the anatomy share. FD dummy 0.9249 vs K1 0.9180 locally is an in-sample artefact (one clip
+     +0.023; probes 21/29 show this 'trust ILP over relink' pattern gives 0 or less on LB): never act on it.
+- 2026-09-25 18:20 UTC, PRE-REGISTRATION v3 AMENDMENT f2 [needs the user's OK]: F2 = exp58n (x138 + safetail + lowrefine = K2 minus the
+  DaughterNet insertion; no fork riders) if scored without error, R5-admissible and public >= 0.953; its dummy gate:
+  tools/dummy_gates.py --insertion 0, node rows (id column stripped) == K2 dummy, edges differ from K2 only at K2's
+  inserted/steal forks, no DIVINS/DEADLINE/REPAIR FAILED/LOWREFINE FAILED lines. exp52 only if the twin is unscored,
+  failed, or in branch D. A DeepCenter/tempfuse variant that R4 makes an 'F2 candidate' does not displace the twin.
+  The twin's score never reopens R2 unless twin - K2 >= +0.002 (R7). The S12 consolidated file joins the candidate
+  set; earlier scored K files stay candidates. §f fallback item 4 (#34) stays as the last resort before exp52 ('never
+  tick exp56' applies while any admissible non-copy x138-family file exists). Never tick two files with identical
+  components. The finals objective is P(private > raw x138) first, silver second.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

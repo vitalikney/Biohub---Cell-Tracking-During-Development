@@ -1,0 +1,11 @@
+# M3 tempfuse node-guard tighten - feasibility notes
+- 2026-09-25T17:49:54Z start; no prior json/notes found for this task.
+- 2026-09-25 17:55Z read: research/wf_ideas_v3/v_literature_symmetric-temporal-det-fusion_schedule.json (feasible, 5 agent-h build, one-window edge-delay refactor, per-frame top-K guard fix with clamp |K_fused-K| <= max(1,1%)), ..._value.json (REFUTED on value: central +0.0008).
+- FINAL_REPORT v3 §e: K4=exp61 = F1 stack + tempfuse; S6 26.09 ~18:00, S7 27.09 <=12:00; R7 "для tempfuse допуск ±1%"; R10: tempfuse cut first; dummy exp61 slot 26.09 ~17:00-17:45.
+- grep "tempfuse" in tools/ tests/ experiments/: 0 hits -> K4 NOT BUILT as of 17:50Z 25 Sep; no build_probe_kernel patch; cloud session finished after T1 (CONTEXT 14:05Z); night = research rounds only (CONTEXT 17:55Z).
+- tools/dummy_gates.py l.113-121: readmit/gapfill +-10% vs exp56, final nodes +-0.3% per clip vs K1 already exist as code -> M3 gate = reuse with --k4/--base args (~0.3 h believable).
+- Local env: torch 2.13.0+cpu and tracksdata import OK -> CPU mock test of tempfuse possible on this laptop.
+- experiments/runtime_step0/step0.md: K2 forecast <= ~7.8 h; insertion gate 28,800 s (8.0 h) -> WORST-CASE margin only ~0.2 h (~720 s). The "4 h headroom" is vs the 12 h limit, NOT vs the insertion gate. Any tempfuse GPU-phase overhead >~7 s/clip x ~100 clips would push late clips past the insertion gate (fail-soft, but loses insertion). M3 has no runtime gate -> add one.
+- v3 fix clamp allows +-1%/frame drift; a consistent +1 per frame would fail the 0.3% final gate -> set clamp to exact K (raw nodes per clip == stack dummy).
+- Baseline for comparison must be a sha256-verified TEMPFUSE=0 twin of the same stack (like K1/K2), else K3/K3b changes confound.
+- 2026-09-25T17:52:20Z final JSON written (refuted=false, conditional; fixes: exact-K clamp, twin baseline, runtime gate vs 8 h insertion gate).

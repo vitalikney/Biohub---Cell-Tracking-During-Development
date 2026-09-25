@@ -1,0 +1,16 @@
+{
+ "idea_id": "reaim-trackend-resolve",
+ "lens": "feasibility/schedule skeptic",
+ "written_utc": "2026-09-25",
+ "refuted": true,
+ "reason": "Building it is feasible: an env gate gives byte identity when off, apply_reaim already fails soft to a copy of its input, and the exp60 lab arm is a CPU replay (tools/trainlab.py), so it needs no GPU. Runtime is also fine: 16.3 s on the laptop for K2's 4 dummy clips (121,252 nodes), roughly 7-15 min for ~100 hidden clips against ~4 h of headroom. It fails because its effect cannot be measured. On K2's own dummy output (_dl/biohub-exp58-x138-safe-lowref/submission.csv) the unmodified plugin (selftest 9/9 PASS) finds 3,339 track ends and considers 1,097 of them, but applies only 2 moves and 0 adds out of 117,077 edges. Even at margin 0 with abstention it makes 8 moves and 0 adds. x138's relink, gapfill and readmit have already used every free t+1 target near a track end, so risk (a) is confirmed. An effect of about 2 edges per 117k is 1e-4 or less even if every edit is correct. That cannot reach the lab gate (+0.001 on SELECTION) or R4's +0.002, and an LB probe would be a guaranteed display tie that R7 forbids us to choose on, so a slot would be spent on nothing before R8. A verbatim port also has format bugs on our CSV: _rewrite duplicates the proto edge's `id` (2 duplicate ids), writes null instead of -1 in the node columns of new edge rows, and reorders rows. The scorer could reject that file.",
+ "fix": "Do not add the arm, the build or the slot. If anyone revives it, the minimum steps are: (1) renumber `id` and write -1 sentinels in _rewrite; (2) set BIOHUB_REAIM_ENABLE default 0, keep it off under _deadline_degraded, and cap wall time at 20 min, then pass through; (3) run the CPU-only exp60 arm on the ins35 graphs first. It gets an LB slot only if the arm changes at least 0.1% of edges and reaches +0.001 on SELECTION, which the dummy measurement (0.002%) says will not happen. Otherwise close it as a no-op on x138 (Corwin built it for a different base world, v31, which has no x138 gapfill/readmit).",
+ "realistic_gain": "+0.0000 (edits 2 of 117,077 edges on K2's dummy output; ceiling 8 edits at margin 0; below LB display resolution)",
+ "evidence_files": [
+  "experiments/ext_corwin-biocel-aux/ker11_reaim_plugin_v24.py",
+  "_dl/biohub-exp58-x138-safe-lowref/submission.csv",
+  "tools/trainlab.py",
+  "research/wf_ideas_v3/FINAL_REPORT.md (section e, R3/R4/R7/R8)",
+  "research/wf_ideas_v4/v_intel_reaim-trackend-resolve_feasibility.notes.md"
+ ]
+}

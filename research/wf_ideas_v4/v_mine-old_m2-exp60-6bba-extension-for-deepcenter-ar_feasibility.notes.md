@@ -1,0 +1,11 @@
+# Feasibility skeptic notes: M2 exp60 6bba extension (2026-09-25T17:49:51Z)
+
+- 17:50Z no prior feasibility json existed (only a _value.notes.md from another skeptic).
+- tools/trainlab.py: score takes --split (needs keys stems, half_of); gates() hardcodes 6bba/SELECTION vs CONFIRMATION from split half_of -> a split_ext.json with the same keys scores standalone with NO code change; a pooled bed needs a merged split file (few lines). Builder tools/build_probe_kernel.py L1579: --train-stems '@split.json:SHARD' accepts any key in split["shards"] -> C/D/E work unchanged.
+- Recount (experiments/l2_daughternet/splits.json divisions_per_video + exp60 split excluded): 6bba 128 clips/125 div; outside exp60 = 89 clips/37 div = 78 clean (17 div; 61 clips with 0 div, 17 with 1) + 10 head-train (20 div) + 6bba_05b6850b (dummy twin, 0 div). 6bba_05db0fb1 is BOTH head-train and dummy twin -> the idea double-counts its 3 div. Honest addition = +17 div (+19%, 88 -> 105), not +45%/128.
+- exp60 6bba bed was chosen most-divisions-first: all 39 clips have >= 1 div (19x2, 8x1, 7x3, 4x4, 1x5). Extension is the complementary low-division tail -> the two beds differ systematically in division density (sign agreement on t* is a population check, not a replicate).
+- All 89 GT .geff present locally (biohub-cell-tracking-during-development/train).
+- kaggle kernels status 17:51Z: exp60 trainlab-a RUNNING, trainlab-b RUNNING (CONTEXT 17:20/17:55 entries: A pushed 17:15, B after FF) -> A/B results ~19:15-20:00Z tonight, i.e. BEFORE any 00:05 ext push. Pre-registration of the ext veto must be committed before A/B dumps are downloaded.
+- Quota: CONTEXT 13:58 entry 11h04m left, Saturday 00:00 UTC reset UNCONFIRMED; after dummies + A/B ~4-5 h left. Kernel_b_sasyami exists (friend A account) as alternative quota.
+- Schedule: C/D at 00:05 -> ~02:15; E + K3/K3b dummies -> ~04:30; CPU scoring ~1 h -> ~05:30Z 26 Sep, before S5 (11:00-14:00) and R8 (27 Sep 12:00). Hidden-run cost 0 (lab only, no submission code change -> byte-identical-off trivially). But 2 ext shards at 00:05 would occupy both GPU sessions that K3/K3b dummies need (S4/S5 gates) -> dummies must go first.
+- 17:52Z final JSON written: refuted=false (feasible with fixes a-e).

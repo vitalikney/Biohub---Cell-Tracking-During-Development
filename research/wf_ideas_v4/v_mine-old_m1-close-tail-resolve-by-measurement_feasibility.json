@@ -1,0 +1,18 @@
+{
+ "idea_id": "M1-close-tail-resolve-by-measurement",
+ "lens": "feasibility/schedule skeptic",
+ "written_utc": "2026-09-25",
+ "refuted": false,
+ "reason": "It survives this lens by construction. M1 adds nothing to K2/K3: no stage, no env flag, no slot, no GPU and 0 s of hidden-run time, so it is byte-identical and fail-soft trivially and leaves all ~4 h of headroom untouched. The only work is a 0.3 h CONTEXT note. It also agrees with the schedule reality. The sibling verdicts refuted RE-AIM and pair-GBM relink on both feasibility and value: 1-2 applied re-points on 4 dummies with 0 GT change, the verbatim _rewrite writes duplicate ids and null sentinels, the 26 Sep slots are fully booked, and the evidence is in-sample below R4's +0.002. E13/C08 could never reach the LB: v3 FINAL_REPORT l.120 schedules it '>= 27.09 and only on pass', and TASK_FRIEND_C says it cannot enter a submission before 27.09 12:00, which is R8's cutoff for new mechanisms. One weakness in how the idea argues: C08's PRE-REGISTERED step-0 metric was never computed (TASK_FRIEND_C: share of FN-edge GT ends with a free low peak >= 0.5 within 3 um, close if < 15%). M1 closes C08 on a different reach metric (end-anchored misses 5/82 = 6% vs a 20% line). Counting all missed-node FN classes gives 10 + 5 + 7 = 22/82 = 27%, which is above 15%. So the reach argument alone does not formally close C08 under its own rule, but the R8 schedule does, at no loss.",
+ "fix": "Adopt M1 with three corrections. (1) In CONTEXT, record the C08/E13 closure as 'closed on schedule (R8: it cannot reach a slot before 27.09 12:00) plus small ceiling (all missed-node FN = 22/2,127 GT edges in-sample; x138 readmit already draws on the low pool)'. Do not write 'closed by the pre-registered step 0', since that metric was not run. (2) Tell friend C that the optional C08 step 0 in TASK_FRIEND_C.md is cancelled, so nobody spends the 2-3 CPU-h. (3) Keep the optional RE-AIM exp60 replay CPU-only and after the shards land (26.09 ~06-09 UTC). Before scoring, patch _rewrite so it renumbers `id` and writes -1 sentinels. Kill if applied < 1 per clip or CONFIRMATION < +0.001 on either embryo. It never gets an LB slot, because the 26.09 slots are full and R8 closes at 27.09 12:00.",
+ "realistic_gain": "0 on score (intended). Saves ~4-8 agent-h plus 2-3 friend-C CPU-h and 1-2 slots, and avoids a relink-class risk of -0.001..-0.002 (probe 22). The hidden-run time and headroom are unchanged.",
+ "evidence_files": [
+  "research/wf_ideas_v4/v_intel_reaim-trackend-resolve_feasibility.json",
+  "research/wf_ideas_v4/v_intel_reaim-trackend-resolve_value.json",
+  "research/wf_ideas_v4/v_intel_pair-gbm-relink-prior_feasibility.json",
+  "research/wf_ideas_v4/lens_mine-old.notes.md",
+  "research/wf_ideas_v3/FINAL_REPORT.md (l.120 E13=C08; R8 l.268)",
+  "research/wf_ideas_v3/TASK_FRIEND_C.md (l.15-56 pre-registered C08 step-0 rule)",
+  "research/wf_ideas_v4/v_mine-old_m1-close-tail-resolve-by-measurement_feasibility.notes.md"
+ ]
+}

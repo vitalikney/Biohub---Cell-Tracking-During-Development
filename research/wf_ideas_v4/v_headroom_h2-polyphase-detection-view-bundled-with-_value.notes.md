@@ -1,0 +1,14 @@
+# H2 polyphase value/transfer skeptic notes
+- 2026-09-25T17:41:15Z start; no prior json
+- 2026-09-25 read: lens_headroom.json (H2 source), wf_ideas_v2/r1_verify_polyphase..._arithmetic.json + _transfer.json (both refuted), wf_ideas_v3/v_literature_symmetric-temporal-det-fusion_value.json (tempfuse refuted, +0.0008 central, a_never 1,907 x 7.37e-6 = +0.0141 ceiling, 2-run LB diff SD ~0.003).
+- Code: tools/repo/scripts/predict_unet_transformer.py l.209-222 _load_frame = zarr[t, ::1, ::4, ::4] (config downsample [1,4,4] l.159); training io.py l.95 also strided -> model memorised phase (0,0) on all 199 train videos.
+- x138 cell 4 (experiments/exp58_x138_safe_lowref/exp58-x138-safe-lowref.ipynb): 8 D4 views summed then /nv per model; blend standardises primary/secondary by mean/std before 0.2/0.8.
+- ARITHMETIC: 9th view at weight 1/9. Pixel-noise var of blended map: (8/9)^2 + (1/9)^2 = 0.802 of base (SD -10%); equal-weight 2-phase would be 0.5. So H2 buys ~0.4x the noise-reduction of an equal-weight polyphase, which itself is <= tempfuse-class (+0.0008 central, refuted). -> H2 alone ~ +0.0003 central.
+- Per-peak logit move = (1/9)(phase - base) incl. 2x2-mean blur (lowers sharp peaks) -> random reshuffle near 0.965; net recall gain is 2nd order.
+- Multiplier: +1% nodes = -0.00093 (wf_ideas_v3/h_localisation-training-free.notes.md l.12); break-even 126 FN per 1% nodes. Guard tolerance +-1% => +-0.00093 multiplier noise, 3x the central edge effect (~40 FN). Downstream readmit/gapfill/linefit/short-track nodes are unguarded.
+- 'Head byte-identical' only for feature maps; per-node head inputs change with peak set/positions (same unquantified risk as tempfuse item 6).
+- Lab: friend A LOEO primary recall 0.86 vs x138 ~0.98 -> headroom mismatch, overstated; 12 videos = overlapping crops of one 44b6 recording; friend A silent. Train-clip lab biased (phase-0 memorised).
+- LB: detection-map-change class 0/5 (z-flip -0.003/-0.009, axis-flip -0.001, sec weight -0.002). P(observed >= +0.002 | true 0) ~25% at SD 0.003 -> R4 cannot separate.
+- Runtime: +0.38 h forces DIVINS move, contradicting H1's own 'do not move DIVINS later' (15-55:1 repair vs insertion).
+- VERDICT: refuted (size below resolution, multiplier-dominated, no honest lab, closed class).
+- 2026-09-25T17:44:18Z final JSON written
