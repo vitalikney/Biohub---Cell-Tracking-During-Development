@@ -10,3 +10,4 @@
 - GPU plan vitalii (26 Sep): 00:05 F1a dummies x2 (~0.7) -> 00:45 E05 lab 2 shards (~4-6) -> 03:30 axis-flip lab arm (~2.5-3) -> 05:30 M3 fine-tune (~1.5) -> ~10:00 variant dummies (~1.2) -> M3 gate (~1.5-2). Total ~13-16 GPU-h of 30; sasyami optional.
 - Outlook guesses: public F1 ~0.9535, P(>=0.955) 0.2; private absolute dominated by embryo difficulty (public embryo 0.953 vs train-embryo lab 0.90-0.92 for same stack family) -> centre ~0.94 sd ~0.015 -> P(>=0.97) ~0.03, P(>=0.99) ~0.001; controllable part +0.001..+0.003 (+0.01..0.03 in runtime-failure world); P(max(F1,F2) > x138 block private) ~0.75-0.85.
 - Writing final JSON.
+- 2026-09-25T12:48:49Z s_plan_moonshot.json written (14 experiments, 21-slot plan with branches A-D, DR1-DR8, finals rule, risks, user decisions).
