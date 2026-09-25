@@ -1,4 +1,4 @@
-# Browser intel (Kaggle), 2026-09-25 11:20 UTC (in progress)
+# Browser intel (Kaggle), 2026-09-25 11:22 UTC (in progress)
 
 Collected by the local session on the user's computer (Kaggle CLI + Chrome). Every fact has a source; guesses are marked.
 
@@ -158,3 +158,37 @@ Topic-specific notes (asked in the brief):
 - **Runtime limit**: imissher and You WeiLin complain about long public runtimes; no host statement. See section 5 for the rule.
 - **External data**: Zebrahub allowed (hosts, covered earlier); new links: Janelia linajea 160328, RIKEN SSBD Keller fish embryo,
   virtual-embryo-zoo, royerlab luxar / zenodo 22807312. Winner-deliverable question for third-party weights still open (743146).
+
+## 4. Datasets
+Source: `kaggle datasets list -s biohub --sort-by updated` pages 1-2, `kaggle datasets files <ref>`, `kaggle datasets metadata`,
+and dataset pages https://www.kaggle.com/datasets/<ref> (read 25 Sep 11:15-11:20 UTC). Window: updated 18-25 Sep. Descriptions
+are mostly empty; "contents" = file list. Download counts at read time.
+
+| Dataset | Updated (UTC) | Size | DL | Contents / what it is |
+|---|---|---|---|---|
+| [kabirk22/biohub1](https://www.kaggle.com/datasets/kabirk22/biohub1) | 25 Sep 08:02 | 22.8 GB | 0 | competition train videos re-saved as normalized `.pt` tensors per frame (`44b6_abf82518_<t>.pt`); a data copy, nothing new. |
+| [dariushafshar/kaggle-competition-leaderboard-intelligence](https://www.kaggle.com/datasets/dariushafshar/kaggle-competition-leaderboard-intelligence) | 25 Sep 01:37 | 1.6 MB | 595 | generic Kaggle LB dataset (matched the search word only). |
+| [emankhattap/biohub-offline-wheelhouse](https://www.kaggle.com/datasets/emankhattap/biohub-offline-wheelhouse) | 24 Sep 18:12 | 3.7 GB | 2 | offline pip wheels. |
+| [shalukumari456/biohub-divnet-w](https://www.kaggle.com/datasets/shalukumari456/biohub-divnet-w) | 23 Sep 20:54 | 22 kB | 7 | tiny DivNet weights. Same owner: `biohub-divsynth` (22 Sep, `divsynth.npz` 0.45 MB, guess: synthetic division samples) and `biohub-cpsam-novel` (21 Sep, `novel.json`, "cpsam novel centroids" - guess: Cellpose-SAM detections of cells the main detector misses). |
+| [kvswim/biohub-entry-pkg](https://www.kaggle.com/datasets/kvswim/biohub-entry-pkg) | 23 Sep 18:41 | 47 MB | 11 | classical v0 pipeline (DoG detection, min-cost-flow association, division repair) + CPU wheels, MIT. |
+| [arumpuri/biohub-0-10](https://www.kaggle.com/datasets/arumpuri/biohub-0-10) | 23 Sep 15:01 | 10 MB | 27 | own small model (`final_model.pth` 5.4 MB, `fold_model.pth`), `div_clf.joblib` division classifier, `calibration.json`. |
+| rishi150805/biohub-offline-wheels | 23 Sep 14:41 | 13 MB | 1 | wheels. |
+| [majidaleissa/biohub-bio122-cross-domain-secondary-v1](https://www.kaggle.com/datasets/majidaleissa/biohub-bio122-cross-domain-secondary-v1) | 22 Sep 20:11 | 23 MB | 101 | 3 edge predictors (`weights/unet_transformer/split_0..2/edge_predictor_best.pth`) in the support-pack format; manifest generated 20 Jul; name says "cross-domain secondary" (guess: split by embryo). |
+| [krisdreemurr/biohub-epoch402-mid-epoch-runner-v2](https://www.kaggle.com/datasets/krisdreemurr/biohub-epoch402-mid-epoch-runner-v2) | 22 Sep 05:47 | 16 kB | 35 | scripts to continue the public 402-epoch primary training in step-chunks across Kaggle sessions (`train_stepchunk.py`, `protocol_402.json`). Tooling for multi-session retraining on Kaggle GPUs. |
+| bigbag1983/biohub-rudi-fold0-weights | 22 Sep 00:13 | 7.7 MB | 17 | one fold-0 edge predictor. |
+| [adonis122/biohub-vm-drops](https://www.kaggle.com/datasets/adonis122/biohub-vm-drops) | 21 Sep 15:55 | 16 MB | 267 | a team's working notes (`AUDIT_v24.md`, `DECISIONS*.md`, `BLOCK_V25_20260921.md`) + artefacts; guess: agent-run project logs, might contain LB numbers (not read). |
+| [fagbolapeter/biohub-trained-4ep](https://www.kaggle.com/datasets/fagbolapeter/biohub-trained-4ep) | 21 Sep 12:29 | 92 MB | 103 | 4-epoch retrain of the unet_transformer (checkpoint + tracking_repo + `probe_b16.log`/`probe_b8.log` batch-size probes). |
+| youyuany123/biohub-finetuned-unet-v2 | 21 Sep 09:57 | 7.7 MB | 18 | one fine-tuned edge predictor. |
+| [maoxin123/biohub-fused-v4-pv2-public](https://www.kaggle.com/datasets/maoxin123/biohub-fused-v4-pv2-public) | 21 Sep 08:24 | 2.2 MB | 4 | "Consensus-fused cell tracking submission (4-voter graph pruning), CC0" - a submission CSV (guess: fused from 4 public outputs). |
+| [leonixis/biohub-v5-candidates](https://www.kaggle.com/datasets/leonixis/biohub-v5-candidates) | 21 Sep 05:29 | 357 MB | 107 | "Per-epoch checkpoints from the all-train (199 videos, 60 epochs, warm start from v3res) run; LB checkpoint-pick set." Same owner: `biohub-deepcenter-pipeline` and `biohub-p314159-pipeline` (19 Sep, repacks of pilkwang). |
+| fheizz/biohub-tracking-wheel; serudeeven/biohub-ilpy-wheels | 20-21 Sep | - | - | wheels. |
+| [georgexue666/biohub-precision-pool2-weights](https://www.kaggle.com/datasets/georgexue666/biohub-precision-pool2-weights) | 20 Sep 21:48 | 43 MB | 123 | **higher-resolution detector**: 3D UNet heatmap detector with pool=2 (instead of the /4 XY stride) and sigma 0.8 um; top checkpoints epoch 22/12/19 with in-loop recall@K at 4 um 0.735/0.730/0.729, plus a matching pool-2 edge predictor. Directly relevant to our node-position (FN "swap") problem; no LB score attached. |
+| [anvithpothula/biohub-v1284-head-s075](https://www.kaggle.com/datasets/anvithpothula/biohub-v1284-head-s075) | 20 Sep 14:13 | 30 kB | 292 | the x138 V1284 coordinate head. |
+| easonyanyan/biohub-exposure-bias-weights-v1 | 20 Sep 04:48 | 31 MB | 33 | edge predictors (best + epochs 8/11/12), "exposure bias" (guess: linker trained on its own detections instead of GT). |
+| [giorgosi/biohub-zsns001-relay-leg1 ... leg11](https://www.kaggle.com/datasets/giorgosi/biohub-zsns001-relay-leg1) and `biohub-zsns003-relay-leg1..4` | 19-20 Sep | 11-17 GB each (~170 GB total) | 1-20 | **Zebrahub whole-embryo light-sheet recordings ZSNS001 / ZSNS003 mirrored into Kaggle** as `ZSNS001_t0000.ome.zarr` chunks + `ZSNS001_tracks.csv` (Zebrahub/Ultrack tracks) + relay manifests; CC0. Means external zebrafish data with tracks can be attached to an offline Kaggle notebook (no internet needed) - but it is ~12-17 GB per leg. |
+| [bhpepper/biohub-synthetic-5fold-ensemble-v1](https://www.kaggle.com/datasets/bhpepper/biohub-synthetic-5fold-ensemble-v1) | 19 Sep 22:20 | 46 MB | 267 | 5 edge predictors trained with synthetic data (5 folds + SWA) + `ensemble_summary.json`. |
+
+Takeaway (facts): nobody has published a detector that is shown to beat the pilkwang primary on the LB. Two things are new and usable:
+(a) a pool-2 / sigma-0.8 um high-resolution detector (georgexue666) - candidate secondary for position precision, needs an LB test;
+(b) Zebrahub ZSNS001/ZSNS003 volumes + tracks are already on Kaggle (giorgosi), so external-data training can run in Kaggle
+without uploading anything. Also krisdreemurr's step-chunk runner shows people continuing the 402-epoch primary across sessions.
