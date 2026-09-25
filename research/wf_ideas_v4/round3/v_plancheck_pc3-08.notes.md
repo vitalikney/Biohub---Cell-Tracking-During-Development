@@ -1,0 +1,11 @@
+# v_plancheck_pc3-08 notes (skeptic, value + feasibility)
+- 2026-09-25T22:46Z start; no prior v_plancheck_pc3-08.json. The local clock reads 22:46 UTC 25 Sep, so the 00:05 check is still in the future.
+- Sources: CONTEXT.md l.1744-1746 (13:58: "Kaggle GPU 18:56 / 30 hrs"; hidden reruns "reportedly" not counted, unverified); lens_redteam-plan.notes.md l.19 (18:12 browser read of https://www.kaggle.com/settings: 21:13 / 30 hrs); FINAL_REPORT_v4.md l.54; round2/report.json l.32-35 (R2-A5-quota-check: "twin dummy first; K3/K3b dummies only if lab gates pass; drop L6"); scan_plancheck.notes.md l.11 (dummy timings).
+- Arithmetic: 21:13 - 18:56 = 2 h 17 m = 2.28 h. Known GPU sessions in 13:58-18:10: K2 dummy 1512 s (0.42 h) + K1 1680 s (0.47 h), both pushed ~16:35; FD + FF ~0.3-0.4 h each (FF done 17:45); exp60 shard A 17:15 -> 18:10 = 0.92 h. Sum ~2.4-2.6 h, which covers the +2.28 h (the small excess is plausibly display lag or rounding).
+- The finding understates the case. Besides P36 (16:18 ->, ~1.9 h in the window), #35's hidden rerun (08:33 -> ~16:16, ~2.3 h after 13:58) and #34's (08:09 -> ~14:36, ~0.6 h) also ran in the window. Counted reruns would add ~4.8 h, so the observed total would be ~7 h instead of 2.28 h. Hidden reruns are almost certainly NOT charged to the quota.
+- Consumers of the check: twin dummy done (exp58n v1 COMPLETE 20:35Z); K3/K3b closed by the T9 read (commit da154cb); L6 was conditional on K3b, so it is moot. Only hypothetical future consumers remain: an optional floatout rider dummy (needs OK, S12) or a re-dummy after a fix, each ~0.3-0.5 h. Even without a reset, ~5+ h is left after exp60 A/B and the twin (8.78 h at 18:10 minus ~1 h rest of A, 1.56 h B, ~0.3-0.5 h twin). The quota is non-binding either way.
+- Submissions are not quota-limited (see above), so K2, the twin and the finals do not depend on the reading.
+- Side benefit: dropping a mandatory 00:05 browser task frees the operator in the K2 submit window (00:00:30-00:05). A single read at any time on 26 Sep (e.g. with the morning brief) serves W06 equally well.
+- LB/private value: 0 (process-only). Feasibility: trivial; no code, no rule touched (R1-R10 unaffected).
+- Verdict: not refuted. Info-level simplification, with slightly stronger evidence than stated.
+- 2026-09-25T22:48Z final JSON written (not refuted)

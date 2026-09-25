@@ -1,0 +1,74 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/ideas.json",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/IDEAS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/3/ideas.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/3/ideas.json"
+ ],
+ "alerts": [
+  {
+   "kind": "forgotten",
+   "what": "K2/twin READ TABLE (I-217) is not in CONTEXT.md; without it the R3 reference for K2 is undefined (K2 = 0.952 passes vs #34, fails vs #35) and finals are undefined for K2 <= 0.952 or twin - K2 >= +0.002",
+   "evidence": "grep 'READ TABLE' CONTEXT.md = 0 hits at 1ca747b; research/wf_ideas_v4/round3/report.json R3-A2 + plan_issues (verbatim block); research/KNOWLEDGE/IDEAS.md I-217",
+   "suggested_action": "Main session: paste the verbatim READ TABLE into CONTEXT.md with a timestamp and commit it right after the 00:01 submits, before any K2/twin score (earliest ~06:00 UTC 26 Sep)",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "K2 (exp58 v1) and twin (exp58n v1) submits at >= 00:01:00 UTC 26 Sep; first exp token must be exp58 / exp58n, -v 1, no re-push",
+   "evidence": "CONTEXT.md l.1960-1966 (user OK f2 22:06 UTC); research/wf_ideas_v4/round3/report.json R3-A1; experiments/lb_poll/ledger.md 22:53:06Z (neither submitted yet)",
+   "suggested_action": "Submit both per R3-A1, run tools/runtime_ledger.py --print once, log refs/times and P36 state in CONTEXT (I-001, I-090)",
+   "urgency": "now"
+  },
+  {
+   "kind": "stale",
+   "what": "Closed riders K3 forkmid (I-071) and K3b DeepCenter threshold (I-074) are still listed as work in the research-round workflow prompt, which re-feeds them to every night round",
+   "evidence": "research/wf_ideas_v4/round3/report.json R3-A3; v_plancheck_pc3-03.json (experiments/workflows/biohub-research-round.js l.34, l.54); CONTEXT.md l.1924-1937 (T9 FAIL)",
+   "suggested_action": "Edit the two prompt lines before round 4 (~00:45 UTC) and add the 'S4-S6 empty by the T9 read' line to CONTEXT",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "The last RESUME POINT (25 Sep 10:20) still says F2 = exp51 and F1 = best of {exp57b, exp56, ...}, contradicting PRE-REG v3 §f and the approved f2 twin (I-089/I-090); MEMORY.md points new sessions to it",
+   "evidence": "research/wf_ideas_v4/round3/v_plancheck_pc3-07.json; report.json R3-A5; CONTEXT.md l.1519 vs l.1960-1966",
+   "suggested_action": "After the submits append a 26 Sep 00:1x RESUME POINT that points to §f + f2 + READ TABLE (quote f2 verbatim) and mark the 10:20 block SUPERSEDED",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "Morning OK list: K1 contingency (I-011, only K2 ERROR or READ TABLE rows 4/5), twin floor 0.952 (I-219), READ TABLE [OK] rows 2/4, optional S12 floatout (I-215), runtime trigger (I-004)",
+   "evidence": "research/wf_ideas_v4/round3/report.json R3-A9 (covered_by_existing_approval: false); research/KNOWLEDGE/IDEAS.md ORPHANS 'Pending decisions'",
+   "suggested_action": "Put these to the user before the first K2/twin score is acted on (~06:30 UTC 26 Sep); without OKs the strict text applies",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "poll.log keeps only the 5 newest submissions (lb_poll.py [:12]); a pending K build can drop out and its latency/R5(a) proof is lost (I-223)",
+   "evidence": "experiments/lb_poll/lb_poll.py l.28 (round 3 cites l.27); research/wf_ideas_v4/round3/scan_plancheck.json PC3-05; report.json R3-A4",
+   "suggested_action": "Change [:12] -> [:60] and restart only in a quiet window (23:15-23:55 UTC 25 Sep or after ~09:30 UTC 26 Sep, never 06:00-09:30), then check the new block and runtime_ledger --print",
+   "urgency": "today"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "Round-3 closures exist only in research files: swapfix on x138 (I-165/I-166), boundary rescue b4 (I-145), axis-flip on x138 (I-151), dangling-end relink (I-173), I-218, I-220, I-221, I-222, the lab node-count calibration rule (I-201), plus round-2 I-213 GT-geometry flags",
+   "evidence": "research/wf_ideas_v4/round3/report.json R3-A8, rejected; research/wf_ideas_v4/round2/report.json R2-A7 (3); CONTEXT.md l.1938-1966 names none of them",
+   "suggested_action": "Add one closure line per item (or one grouped line) to CONTEXT.md by 26 Sep 12:00 UTC so later rounds stop re-mining closed classes",
+   "urgency": "today"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "I-035 head cascade / V1284 scale pre-gate: idle-only since v3, never run, never closed; round 3 says the new-mechanism search is over",
+   "evidence": "research/wf_ideas_v3/FINAL_REPORT.md §c row 13; research/wf_ideas_v4/round3/report.json plan_issues STRATEGIC",
+   "suggested_action": "Close with one line in CONTEXT.md (or run the CPU desk test) before R8, 27 Sep 12:00 UTC",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "risk",
+   "what": "P36 (exp57 v1, info only) still PENDING at 22:53Z (L36 > 6.58 h); if still pending at the 00:01 submit, L(K2) may include queue time and the 'clean' (L <= 8.0 h) condition of the READ TABLE gets harder",
+   "evidence": "experiments/lb_poll/ledger.md 22:53:06Z; research/wf_ideas_v4/round3/scan_recheck.json R3-NF-p36-latency; report.json R3-A6 (e)",
+   "suggested_action": "Record P36 state at the submit; compare L(twin) with L(K2) before any runtime-trigger request (I-136, I-004)",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Ideas curation 3 (2026-09-25 ~23:15 UTC, HEAD 1ca747b + untracked round3/): 216 -> 223 ideas, 12 clusters, 42 records changed (ideas.json meta.curations[n=3]). New: I-217 K2/twin READ TABLE (in-plan, at risk - not in CONTEXT), I-218 R3S-7 widened K1 trigger (refuted), I-219 twin floor 0.952 (needs OK), I-220 density-gated insertion (refuted), I-221 x138 structure repair/dedupe (refuted), I-222 retention-guard hysteresis (refuted), I-223 poller window (in-plan, at risk). I-216 ADDENDUM M closed (recorded post-hoc CONTEXT l.1938-1951); I-090 twin approved (user OK 22:06, gates PASS); x138 rechecks re-close swapfix, boundary rescue, axis-flip and dangling-end relink with numbers. Status counts: refuted 129, lb-tested 37, lab-tested 20, deferred 19, in-plan 18, open-untested 0. Strict orphans 0; at risk I-035, I-217, I-223."
+}

@@ -1,6 +1,6 @@
 {
  "meta": {
-  "generated": "2026-09-25 ~20:55 UTC (ideas curator, curation 2; git HEAD da154cb + untracked research/wf_ideas_v4/round2/)",
+  "generated": "2026-09-25 ~23:15 UTC (ideas curator, curation 3; git HEAD 1ca747b + untracked research/wf_ideas_v4/round3/)",
   "task": "IDEAS LEDGER: every idea/hypothesis/experiment ever proposed, deduplicated into clusters, with status and sources",
   "status_kinds": [
    "lb-tested",
@@ -14,8 +14,8 @@
    "strict": "proposed but never tested nor explicitly closed",
    "at-risk": "in the plan only as optional/idle work with no owner or build yet"
   },
-  "cluster_order_rule": "clusters sorted by realistic potential score impact for the remaining window (29 Sep 2026), then post-deadline ceiling; curation 2 moved FINALS to #2 because the fork-rider slots S4-S7 are now expected empty",
-  "path_conventions": "paths are repo-relative; 'l.N' = line number at commit da154cb (CONTEXT.md lines <= 1895 are unchanged since 14c339e; entries 18:40-20:35 UTC 25 Sep are l.1896-1937); §x = section",
+  "cluster_order_rule": "clusters sorted by realistic potential score impact for the remaining window (29 Sep 2026), then post-deadline ceiling; order unchanged in curation 3 (RUN, FINALS lead: K2/twin submits + READ TABLE are the live levers)",
+  "path_conventions": "paths are repo-relative; 'l.N' = line number at commit 1ca747b (CONTEXT.md l.1-1937 unchanged since da154cb; entries 20:55-22:06 UTC 25 Sep are l.1938-1966; '## 9. Literature' at l.1967); section sign = section",
   "sources_read": [
    "CONTEXT.md (all, to l.1912)",
    "experiments/RESULTS.md (all)",
@@ -35,9 +35,14 @@
    "experiments/exp60_trainlab/results.md, results_forkblob.md",
    "experiments/lb_poll/ledger.md, poll.log (to 20:42:40Z)",
    "research/wf_ideas_v4/round2/ (report.json, scan_hypotheses/plancheck/recheck/browser.json, v_*.json)",
-   "git log 14c339e..da154cb (tools/runtime_ledger.py, tools/forkblob_lab.py, tools/trainlab.py)"
+   "git log 14c339e..da154cb (tools/runtime_ledger.py, tools/forkblob_lab.py, tools/trainlab.py)",
+   "CONTEXT.md l.1938-1966 (entries 20:55-22:06 UTC 25 Sep)",
+   "git log da154cb..1ca747b",
+   "experiments/lb_poll/ledger.md (22:53:06Z), poll.log (to 22:53:04Z)",
+   "research/wf_ideas_v4/round3/ (report.json 22:59Z, report.notes.md, scan_hypotheses/plancheck/recheck/browser.json, v_*.json)",
+   "experiments/ext_corwin-biocel-aux/NOTES.md, experiments/ext_y3uanm-secondary-ft/NOTES.md (re-read, already covered)"
   ],
-  "previous_curation": "v4 baseline 2026-09-25 ~18:30 UTC at 14c339e (research/KNOWLEDGE/_curation/v4/ideas.json)",
+  "previous_curation": "curation 2, 2026-09-25 ~20:55 UTC at da154cb (research/KNOWLEDGE/_curation/2/ideas.json)",
   "curations": [
    {
     "n": 2,
@@ -78,6 +83,55 @@
      "I-215": "NEW (in-plan)",
      "I-216": "NEW (in-plan)"
     }
+   },
+   {
+    "n": 3,
+    "at": "2026-09-25 ~23:15 UTC",
+    "head": "1ca747b",
+    "changes": {
+     "I-001": "in-plan -> in-plan: submit mechanics superseded by round 3 (no ledger flags)",
+     "I-002": "lab-tested -> lab-tested: forecast F computed",
+     "I-003": "in-plan -> in-plan: R5(b) margin 1.63 h",
+     "I-004": "in-plan -> in-plan: trigger refined (compare L(twin))",
+     "I-009": "refuted -> refuted: re-confirmed trigger-only",
+     "I-010": "in-plan -> in-plan: ledger alive; F computed",
+     "I-011": "in-plan -> in-plan: triggers narrowed",
+     "I-012": "refuted -> refuted: re-proposed as I-218",
+     "I-089": "in-plan -> in-plan: F2 part amended by f2",
+     "I-090": "in-plan -> in-plan: dummy gates PASS + user OK f2 22:06",
+     "I-091": "in-plan -> in-plan: now fallback only",
+     "I-094": "in-plan -> in-plan: 22:23 rank #164",
+     "I-095": "refuted -> refuted: core revived as I-217",
+     "I-026": "in-plan -> in-plan: no successor at 22:43",
+     "I-036": "in-plan -> in-plan: read rule fixed (READ TABLE)",
+     "I-215": "in-plan -> in-plan: still on morning OK list",
+     "I-062": "lb-tested -> lb-tested: density-quartile lab read",
+     "I-071": "refuted -> refuted: closure reconfirmed; workflow-prompt drift",
+     "I-074": "refuted -> refuted: closure reconfirmed; L1/L2 moot",
+     "I-081": "refuted -> refuted: closure now in CONTEXT",
+     "I-212": "refuted -> refuted: closure now in CONTEXT",
+     "I-072": "refuted -> refuted: closure now in CONTEXT",
+     "I-129": "lb-tested -> lb-tested: lab calibration vs LB added",
+     "I-136": "in-plan -> in-plan: PENDING > 6.58 h",
+     "I-145": "refuted -> refuted: re-refuted on x138 (RC-B)",
+     "I-173": "refuted -> refuted: re-refuted on x138 (R3S-4)",
+     "I-151": "lb-tested -> lb-tested: re-read on x138: stays closed",
+     "I-119": "deferred-after-deadline -> deferred-after-deadline: re-confirmed only engine above x138",
+     "I-165": "refuted -> refuted: re-refuted on x138 (RC-A)",
+     "I-166": "refuted -> refuted: re-refuted on x138 (RC-A)",
+     "I-200": "lab-tested -> lab-tested: x138 FN anatomy: tail saturated",
+     "I-201": "lab-tested -> lab-tested: node-count calibration rule",
+     "I-204": "lab-tested -> lab-tested: recorded in CONTEXT; used by R3S-2",
+     "I-216": "in-plan -> refuted: recorded post-hoc in CONTEXT -> closed",
+     "I-217": "NEW (in-plan)",
+     "I-218": "NEW (refuted)",
+     "I-219": "NEW (in-plan)",
+     "I-220": "NEW (refuted)",
+     "I-221": "NEW (refuted)",
+     "I-222": "NEW (refuted)",
+     "I-223": "NEW (in-plan)",
+     "I-035": "in-plan -> in-plan: still at risk; round 3 implies dead"
+    }
    }
   ]
  },
@@ -86,21 +140,21 @@
    "code": "RUN",
    "title": "Runtime / hidden-rerun safety (safetail, N1 parrepair, deadlines, step 0)",
    "impact": "Decides whether a final degrades on the hidden rerun: -0.05..-0.065 per degraded dataset, +0.01..+0.03 in the slow world (research/wf_ideas_v3/FINAL_REPORT.md §a.4, §c row 1).",
-   "n": 14,
+   "n": 16,
    "by_status": {
-    "in-plan": 5,
+    "in-plan": 6,
     "lab-tested": 1,
-    "refuted": 8
+    "refuted": 9
    }
   },
   {
    "code": "FINALS",
    "title": "Finals choice / rank strategy (E[max], rank-aware F1, no-insertion twin F2)",
-   "impact": "0 on public; private premium ~+0.0002..+0.0005 and P(one final > raw x138) +0.01..+0.05 (research/wf_ideas_v4/FINAL_REPORT_v4.md §1.3). With S4-S7 likely empty, the F2 twin is one of the two live levers left (research/wf_ideas_v4/round2/report.json plan_issues STRATEGIC CONSEQUENCE).",
-   "n": 11,
+   "impact": "0 on public; private premium ~+0.0002..+0.0005 and P(one final > raw x138) +0.01..+0.05 (research/wf_ideas_v4/FINAL_REPORT_v4.md §1.3). After the user OK on f2 (CONTEXT.md l.1960-1966) the finals pair K2 + twin plus the READ TABLE is the main remaining lever; P(non-default row) ~0.1 (research/wf_ideas_v4/round3/report.json R3-A2).",
+   "n": 13,
    "by_status": {
-    "refuted": 6,
-    "in-plan": 5
+    "in-plan": 7,
+    "refuted": 6
    }
   },
   {
@@ -109,9 +163,9 @@
    "impact": "Realised the two largest LB steps: +0.006 (sjlee TTA stack, probe 14) and +0.003..+0.006 (x138, probe 34) (experiments/RESULTS.md rows 43, 67).",
    "n": 12,
    "by_status": {
+    "in-plan": 1,
     "lb-tested": 8,
-    "refuted": 3,
-    "in-plan": 1
+    "refuted": 3
    }
   },
   {
@@ -120,22 +174,22 @@
    "impact": "Only in-window lever with a public proof: +0.002 on our base (probe 31), +0.007 inside x138 (CONTEXT.md l.1495-1504); remaining option: fail-soft floatout on x138, private E ~+0.0001 (research/wf_ideas_v4/round2/report.json R2-A9).",
    "n": 21,
    "by_status": {
-    "lb-tested": 2,
-    "refuted": 15,
+    "in-plan": 3,
     "lab-tested": 1,
-    "in-plan": 3
+    "lb-tested": 2,
+    "refuted": 15
    }
   },
   {
    "code": "DIV",
    "title": "Divisions (safe-division gates, DivNet, DaughterNet insertion, forkmid/forkblob, DeepCenter threshold)",
-   "impact": "0.1 x div_J; public div_J <= 0.36 (probe 26); realised +0.001 twice (probes 28, 35), insertion is inside K2. The fork-REMOVAL family is exhausted on exp60 (forkmid, forkblob, ANTIPAR FAIL; DNVETO dropped; K3b FAIL): lab break-even FP:TP >= 7.7 at J 0.129 (CONTEXT.md l.1918-1937; research/wf_ideas_v4/round2/report.json new_facts (7)).",
-   "n": 42,
+   "impact": "0.1 x div_J; public div_J <= 0.36 (probe 26); realised +0.001 twice (probes 28, 35), insertion is inside K2. The fork-REMOVAL family is exhausted on exp60 (forkmid, forkblob, ANTIPAR FAIL; DNVETO dropped; K3b FAIL): lab break-even FP:TP >= 7.7 at J 0.129 (CONTEXT.md l.1918-1937; research/wf_ideas_v4/round2/report.json new_facts (7)). Round 3: the insertion is not a dense-clip risk (private harm needs OOF evaluable precision < ~11%) and the whole x138 tail is saturated (research/wf_ideas_v4/round3/report.json new_facts (11), (13)).",
+   "n": 43,
    "by_status": {
-    "refuted": 32,
-    "lb-tested": 6,
+    "deferred-after-deadline": 1,
     "lab-tested": 3,
-    "deferred-after-deadline": 1
+    "lb-tested": 6,
+    "refuted": 33
    }
   },
   {
@@ -144,33 +198,33 @@
    "impact": "Largest ceiling (0.97 route per top teams) but every retrain is refused for 29 Sep by rule R9; all 7 LB weight swaps were negative (CONTEXT.md l.1673-1676; research/wf_ideas_v3/s_merge.json C11).",
    "n": 32,
    "by_status": {
-    "lb-tested": 6,
-    "refuted": 7,
     "deferred-after-deadline": 18,
-    "lab-tested": 1
+    "lab-tested": 1,
+    "lb-tested": 6,
+    "refuted": 7
    }
   },
   {
    "code": "NODES",
    "title": "Node budget & recall (track length, threshold, pruning, readmit/gapfill, hole fill, leaf prune)",
    "impact": "Node multiplier is linear (0.001 per 1% nodes); every LB node-count lever was <= 0 except leaf prune (tie) (CONTEXT.md l.1169-1171).",
-   "n": 21,
+   "n": 22,
    "by_status": {
-    "lb-tested": 4,
-    "refuted": 15,
+    "in-plan": 1,
     "lab-tested": 1,
-    "in-plan": 1
+    "lb-tested": 4,
+    "refuted": 16
    }
   },
   {
    "code": "INFER",
    "title": "Inference-time TTA / ensembles / test-time adaptation (Z-flip, axis-flip, AdaBN, tempfuse)",
    "impact": "+0.006 once (sjlee TTA stack); every later detection-map change 0 or negative on LB (probes 12, 16, 19; research/wf_ideas_v4/FINAL_REPORT_v4.md §4 H2).",
-   "n": 11,
+   "n": 12,
    "by_status": {
+    "lab-tested": 1,
     "lb-tested": 3,
-    "refuted": 7,
-    "lab-tested": 1
+    "refuted": 8
    }
   },
   {
@@ -179,9 +233,9 @@
    "impact": "Lab +0.016 -> LB 0 (probes 29/30): the in-sample edge network/ILP trap; whole class closed (CONTEXT.md l.1441-1445).",
    "n": 11,
    "by_status": {
+    "lab-tested": 1,
     "lb-tested": 2,
-    "refuted": 8,
-    "lab-tested": 1
+    "refuted": 8
    }
   },
   {
@@ -190,9 +244,9 @@
    "impact": "All relink/gap/linefit knob probes landed 0.943-0.945 (probes 8, 21-23); linker gains transfer ~+0.001 (CONTEXT.md l.1213-1217).",
    "n": 21,
    "by_status": {
+    "lab-tested": 3,
     "lb-tested": 6,
-    "refuted": 12,
-    "lab-tested": 3
+    "refuted": 12
    }
   },
   {
@@ -201,9 +255,8 @@
    "impact": "No direct score; decides which ideas are trusted. Key lesson: labs on train are in-sample (CONTEXT.md l.1537-1538).",
    "n": 16,
    "by_status": {
-    "refuted": 7,
     "lab-tested": 8,
-    "in-plan": 1
+    "refuted": 8
    }
   },
   {
@@ -240,15 +293,18 @@
     "CONTEXT.md l.1817-1829",
     "tools/build_probe_kernel.py --patch safetail",
     "research/wf_ideas_v4/round2/report.json R2-A4",
-    "research/wf_ideas_v4/round2/scan_plancheck.json PC2-10, PC2-14"
+    "research/wf_ideas_v4/round2/scan_plancheck.json PC2-10, PC2-14",
+    "research/wf_ideas_v4/round3/report.json R3-A1",
+    "research/wf_ideas_v4/round3/v_plancheck_pc3-04.json",
+    "CONTEXT.md l.1960-1966"
    ],
    "status": {
     "kind": "in-plan",
-    "detail": "In K2 = exp58 (18/18 dummy gates PASS incl. FD/FF, CONTEXT.md l.1817-1829); K2 artefact re-verified (Kaggle source == local, rebuild sha 1f1ddb6d, research/wf_ideas_v4/round2/report.json new_facts (17)); submit 00:00:30-00:05 UTC 26 Sep, 25 Sep quota full (report.json R2-A4)."
+    "detail": "In K2 = exp58 v1 (18/18 dummy gates PASS incl. FD/FF, CONTEXT.md l.1817-1829); exp58 v1 unchanged since its dummy (lastRunTime 16:20:17Z), cell-0 hygiene clean (research/wf_ideas_v4/round3/report.json new_facts (6)); submit approved for >= 00:01:00 UTC 26 Sep with the first exp token 'exp58' so tools/runtime_ledger.py assigns family safetail (9.5 h) without --k2/--family flags (round-2 R2-A4 superseded; research/wf_ideas_v4/round3/report.json R3-A1, scan_plancheck.json PC3-04). Not yet submitted at 22:53Z (experiments/lb_poll/ledger.md)."
    },
    "lb": [],
    "lab": "Dummy: K1 sha256 == exp57b dummy (inert without deadline); FD keeps safe_div 76 + linefit; FF restores exp56 CSV.",
-   "next_step": "Submit K2 with -m starting 'probe 37: exp58' (no exp56/exp57b token first), then tools/runtime_ledger.py --k2 <ref> --family <ref>=safetail; read score + latency by R5 (<= 9.5 h) (research/wf_ideas_v4/round2/report.json R2-A4).",
+   "next_step": "00:01-00:10 UTC 26 Sep: list submissions, then `kaggle competitions submit ... -k vitaliineibauer/biohub-exp58-x138-safe-lowref -v 1 -m 'probe 37: exp58 = K2 ...'` (no re-push); run tools/runtime_ledger.py --print once; log ref + time + P36 state in CONTEXT (research/wf_ideas_v4/round3/report.json R3-A1).",
    "orphan": false
   },
   {
@@ -266,15 +322,17 @@
    },
    "sources": [
     "experiments/runtime_step0/step0.md",
-    "CONTEXT.md l.1811-1816"
+    "CONTEXT.md l.1811-1816",
+    "research/wf_ideas_v4/round3/scan_plancheck.json PC3-06",
+    "research/wf_ideas_v4/round3/report.json R3-A6"
    ],
    "status": {
     "kind": "lab-tested",
-    "detail": "Done: N <= ~97-106 at dummy speed; K2 forecast <= ~7.8 h; R6 not triggered (experiments/runtime_step0/step0.md)."
+    "detail": "Done: N <= ~97-106 at dummy speed (experiments/runtime_step0/step0.md). Round 3 computed the missing A5 forecast: F(K2) = 7.73 + 97 x 4.45 s x 1.15 = 7.87 h (just below the 7.9 h trigger, inside the 818-1179 s start-up noise; lowrefine GPU cost ~0) (research/wf_ideas_v4/round3/scan_plancheck.json PC3-06; report.json R3-A6 (a))."
    },
    "lb": [],
    "lab": "",
-   "next_step": "Recompute when K2 latency is known.",
+   "next_step": "When K2/twin score: record L(K2), L(twin), L(K2) - L(twin) (upper bound on hidden insertion cost; dummy predicts ~72 s/clip ~2 h) (research/wf_ideas_v4/round3/report.json R3-A6 (d)).",
    "orphan": false
   },
   {
@@ -294,15 +352,17 @@
     "CONTEXT.md l.1797-1810",
     "experiments/lb_poll/poll.log",
     "experiments/lb_poll/ledger.md",
-    "tools/runtime_ledger.py"
+    "tools/runtime_ledger.py",
+    "research/wf_ideas_v4/round3/report.json R3-A6 (b)",
+    "research/wf_ideas_v4/round3/report.notes.md"
    ],
    "status": {
     "kind": "in-plan",
-    "detail": "Applied to #34 (L34 <= 6.46 h, proven) and #35 (L35 in (6.72,7.73] h -> not a finals candidate) (CONTEXT.md l.1797-1810); now automated per build family in experiments/lb_poll/ledger.md (tools/runtime_ledger.py, CONTEXT.md l.1896-1900)."
+    "detail": "Applied to #34 (L34 <= 6.46 h, ADMIT) and #35 (L35 in (6.72,7.73] h, UNPROVEN -> not a finals candidate) (CONTEXT.md l.1797-1810; experiments/lb_poll/ledger.md); automated per build family by tools/runtime_ledger.py (CONTEXT.md l.1896-1900). Round 3: R5(b) margin of K2 to its 9.5 h repair deadline = 1.63 h, so K2 and the twin are R5-admissible unless they ERROR; 'K2 fails R5' is an empty K1 trigger (research/wf_ideas_v4/round3/report.json R3-A6 (b), rejected)."
    },
    "lb": [],
    "lab": "",
-   "next_step": "Poll K2 ~06:30-08:00 UTC 26 Sep (others' latency 2-8 h, research/wf_ideas_v4/round2/report.json new_facts (4)); family must read 'safetail (9.5 h)'.",
+   "next_step": "Poll K2 + twin ~06:00-09:30 UTC 26 Sep; K2 row must read exp58 / safetail (9.5 h), twin exp58n / safetail_noins (research/wf_ideas_v4/round3/report.json R3-A1).",
    "orphan": false
   },
   {
@@ -322,15 +382,17 @@
    "sources": [
     "research/wf_ideas_v3/s_verify_n1-parallel-repair-failsoft.json",
     "research/wf_ideas_v3/FINAL_REPORT.md §c row 9",
-    "CONTEXT.md l.1658-1664"
+    "CONTEXT.md l.1658-1664",
+    "research/wf_ideas_v4/round3/v_plancheck_pc3-03.json",
+    "research/wf_ideas_v4/round3/report.json R3-A3, R3-A9 (6)"
    ],
    "status": {
     "kind": "in-plan",
-    "detail": "Trigger-only (R6); NOT triggered: L34 <= 6.46 h, #35 no error, L35 <= 7.73 h, forecast 7.8 h < 9 h (experiments/runtime_step0/step0.md)."
+    "detail": "Trigger-only (R6); NOT triggered: L34 <= 6.46 h, #35 no error, L35 <= 7.73 h, forecast F(K2) 7.87 h (experiments/runtime_step0/step0.md; research/wf_ideas_v4/round3/scan_plancheck.json PC3-06). Kept only behind the runtime trigger L(K2) > 8.0 h (FINAL_REPORT_v4 item 5, needs the user's OK), READ TABLE row 5 (research/wf_ideas_v4/round3/report.json plan_issues READ TABLE; v_plancheck_pc3-03.json)."
    },
    "lb": [],
    "lab": "",
-   "next_step": "Build only if K2 latency > 8 h or a K file errors.",
+   "next_step": "Only if L(K2) > 8.0 h and L(twin) < L(K2) - 0.3 h (not queue delay): ask the user for a deadline-move/D4/N1 build (research/wf_ideas_v4/round3/report.json R3-A9 (6)).",
    "orphan": false
   },
   {
@@ -437,11 +499,13 @@
    },
    "sources": [
     "research/wf_ideas_v4/final.json rejected",
-    "research/wf_ideas_v4/FINAL_REPORT_v4.md §3 row 5"
+    "research/wf_ideas_v4/FINAL_REPORT_v4.md §3 row 5",
+    "research/wf_ideas_v4/round3/scan_hypotheses.json R3S-8",
+    "research/wf_ideas_v4/round3/v_hypotheses_r3s-8.json"
    ],
    "status": {
     "kind": "refuted",
-    "detail": "EV ~1e-5 unconditional; kept only as an A5 trigger (L(K2) > 8 h) (research/wf_ideas_v4/final.json)."
+    "detail": "EV ~1e-5 unconditional; kept only as an A5 trigger (L(K2) > 8 h) (research/wf_ideas_v4/final.json). Round 3 re-check R3S-8 (survived): rejection stays correct, pays only if L(K2) > 8.0 h (research/wf_ideas_v4/round3/v_hypotheses_r3s-8.json)."
    },
    "lb": [],
    "lab": "",
@@ -464,15 +528,17 @@
     "research/wf_ideas_v4/final.json A5",
     "tools/runtime_ledger.py",
     "experiments/lb_poll/ledger.md",
-    "research/wf_ideas_v4/round2/scan_plancheck.json PC2-12"
+    "research/wf_ideas_v4/round2/scan_plancheck.json PC2-12",
+    "research/wf_ideas_v4/round3/report.json R3-A4, R3-A6",
+    "research/wf_ideas_v4/round3/scan_plancheck.json PC3-05, PC3-09"
    ],
    "status": {
     "kind": "in-plan",
-    "detail": "BUILT as tools/runtime_ledger.py (commit 597eec3; poller refreshes experiments/lb_poll/ledger.md each cycle) (CONTEXT.md l.1896-1900); the forecast F (per-clip repair delta vs K2) was never implemented, ledger says 'Forecast F not supplied' (research/wf_ideas_v4/round2/scan_plancheck.json PC2-12)."
+    "detail": "BUILT as tools/runtime_ledger.py (commit 597eec3; poller refreshes experiments/lb_poll/ledger.md each cycle, last 22:53:06Z, 58 polls, 0 gaps > 15 min) (CONTEXT.md l.1896-1900; experiments/lb_poll/ledger.md). Forecast F now computed by hand in round 3 (7.87 h, PC3-06), still 'not supplied' in the ledger. Known gap: poll.log keeps only the 5 newest submissions (see I-223)."
    },
    "lb": [],
    "lab": "",
-   "next_step": "Keep the poller alive; F only matters for a rider dummy (none left).",
+   "next_step": "Keep the poller alive; do not restart it 06:00-09:30 UTC 26 Sep (research/wf_ideas_v4/round3/report.json R3-A4).",
    "orphan": false
   },
   {
@@ -491,15 +557,17 @@
    "sources": [
     "research/wf_ideas_v4/FINAL_REPORT_v4.md §3 row 6",
     "research/wf_ideas_v4/final.json A6",
-    "research/wf_ideas_v4/round2/report.json R2-A8"
+    "research/wf_ideas_v4/round2/report.json R2-A8",
+    "research/wf_ideas_v4/round3/report.json R3-A9 (1), plan_issues READ TABLE",
+    "research/wf_ideas_v4/round3/v_hypotheses_r3s-7.json"
    ],
    "status": {
     "kind": "in-plan",
-    "detail": "Still needs the user's morning OK (research/wf_ideas_v4/FINAL_REPORT_v4.md §5.4; kept as item 5 of the round-2 morning list, research/wf_ideas_v4/round2/report.json R2-A8)."
+    "detail": "Triggers narrowed by round 3 (READ TABLE rows 1, 4, 5): K1 = exp58t v1 in the next free 26 Sep slot ONLY if K2 ERRORs or the table removes lowrefine from the F1 stack (d1 = K2 - #35 <= -0.002 clean, or not clean with d2 <= -0.002); never at d1 = -0.001; 'K2 fails R5' is empty. Still needs the user's OK (morning list item 1) (research/wf_ideas_v4/round3/report.json R3-A9 (1), rejected). 'Rebase K3 on K1' moot (no K3, CONTEXT.md l.1924-1937)."
    },
    "lb": [],
    "lab": "",
-   "next_step": "Ask OK 26 Sep morning.",
+   "next_step": "Ask OK 26 Sep morning with its READ TABLE row; message must start 'probe NN: exp58t' (research/wf_ideas_v4/round3/report.json R3-A9 (1)).",
    "orphan": false
   },
   {
@@ -513,11 +581,13 @@
     "path": "research/wf_ideas_v4/lens_redteam-plan.json RT1"
    },
    "sources": [
-    "research/wf_ideas_v4/FINAL_REPORT_v4.md §4"
+    "research/wf_ideas_v4/FINAL_REPORT_v4.md §4",
+    "research/wf_ideas_v4/round3/scan_hypotheses.json R3S-7",
+    "research/wf_ideas_v4/round3/v_hypotheses_r3s-7.json"
    ],
    "status": {
     "kind": "refuted",
-    "detail": "No approval, no rule uses its score; reduced to A6 contingency (research/wf_ideas_v4/FINAL_REPORT_v4.md §4)."
+    "detail": "No approval, no rule uses its score; reduced to A6 contingency (research/wf_ideas_v4/FINAL_REPORT_v4.md §4). Revived as a conditional K1 in round 3 (R3S-7 = I-218) and refuted again."
    },
    "lb": [],
    "lab": "",
@@ -655,15 +725,17 @@
    },
    "sources": [
     "CONTEXT.md l.1707-1736",
-    "research/wf_ideas_v3/FINAL_REPORT.md §f"
+    "research/wf_ideas_v3/FINAL_REPORT.md §f",
+    "CONTEXT.md l.1960-1966",
+    "research/wf_ideas_v4/round3/report.json R3-A2, R3-A9"
    ],
    "status": {
     "kind": "in-plan",
-    "detail": "Pre-registered with the user's OK 25 Sep 13:37 UTC (CONTEXT.md l.1576-1585)."
+    "detail": "Pre-registered with the user's OK 25 Sep 13:37 UTC (CONTEXT.md l.1576-1585, l.1707-1736); F2 part amended by f2 (user OK 22:06 UTC: F2 = exp58n twin, CONTEXT.md l.1960-1966). Default world (P ~0.85-0.9): F1 = K2, F2 = twin; S4-S11 empty (research/wf_ideas_v4/round3/report.json R3-A9)."
    },
    "lb": [],
    "lab": "",
-   "next_step": "Tick F1/F2 manually by 29 Sep 20:00 UTC.",
+   "next_step": "Apply the READ TABLE (I-217) mechanically when K2/twin score; tick F1/F2 manually by 29 Sep 20:00 UTC.",
    "orphan": false
   },
   {
@@ -685,15 +757,18 @@
     "CONTEXT.md l.1887-1895",
     "experiments/exp58n_x138_safe_lowref/probe.json",
     "CONTEXT.md l.1935-1937",
-    "research/wf_ideas_v4/round2/report.json R2-A3"
+    "research/wf_ideas_v4/round2/report.json R2-A3",
+    "CONTEXT.md l.1955-1966",
+    "research/wf_ideas_v4/round3/report.json R3-A1",
+    "research/wf_ideas_v4/round3/scan_hypotheses.json R3S-8"
    ],
    "status": {
     "kind": "in-plan",
-    "detail": "Kernel built (commit 14c339e; rebuild from HEAD == committed, sha 55038fd6); twin DUMMY PUSHED 25 Sep ~20:35 UTC (CONTEXT.md l.1935-1937); dummy_gates.py has no --twin mode yet (research/wf_ideas_v4/round2/scan_plancheck.json PC2-01); needs the user's OK for amendment f2 + S3 submit (CONTEXT.md l.1887-1895)."
+    "detail": "Twin dummy GATES PASS (node rows == K2 dummy 121,252; K2 = twin + 12 inserted - 5 stolen edges; no DIVINS/DEADLINE lines; repair 219 s vs K2 509 s) (CONTEXT.md l.1955-1959); USER OK on AMENDMENT f2 at 22:06 UTC: F2 = exp58n if scored without error, R5-admissible and public >= 0.953, else exp52 (CONTEXT.md l.1960-1966). Twin Kaggle source == local build (research/wf_ideas_v4/round3/scan_plancheck.json PC3-09). Submit planned >= 00:01 UTC 26 Sep as 'probe 38: exp58n ...' (research/wf_ideas_v4/round3/report.json R3-A1); not yet submitted at 22:53Z (experiments/lb_poll/ledger.md)."
    },
    "lb": [],
    "lab": "",
-   "next_step": "Add dummy_gates --twin checks (a)-(f) and read the dummy; ask f2 OK ~09:00 UTC 26 Sep; S3 submit 07:00-09:00 (research/wf_ideas_v4/round2/report.json R2-A3, R2-A8 (1)).",
+   "next_step": "Submit exp58n v1 right after K2 with first exp token 'exp58n' (family safetail_noins); read by the READ TABLE (I-217) (research/wf_ideas_v4/round3/report.json R3-A1, R3-A2).",
    "orphan": false
   },
   {
@@ -709,11 +784,13 @@
     "path": "research/wf_ideas_v3/FINAL_REPORT.md §f"
    },
    "sources": [
-    "CONTEXT.md l.1719-1730"
+    "CONTEXT.md l.1719-1730",
+    "CONTEXT.md l.1960-1966",
+    "research/wf_ideas_v4/round3/report.json R3-A9 (2)"
    ],
    "status": {
     "kind": "in-plan",
-    "detail": "Default F2 until amendment f2 is approved; fallback if the twin fails (CONTEXT.md l.1719, l.1891)."
+    "detail": "Fallback F2 under AMENDMENT f2 (user OK 22:06 UTC): exp52 only if the twin errors, is not R5-admissible or scores < 0.953 (CONTEXT.md l.1960-1966; l.1719-1730). Round 3: a twin at 0.952 would drop F2 to exp52 (0.950) unless the user OKs a 0.952 floor (I-219) (research/wf_ideas_v4/round3/report.json R3-A9 (2))."
    },
    "lb": [],
    "lab": "",
@@ -780,15 +857,18 @@
     "research/wf_ideas_v4/FINAL_REPORT_v4.md §3 row 8",
     "research/wf_ideas_v4/final.json A8",
     "research/wf_ideas_v4/round2/scan_browser.json lb-delta-1946",
-    "research/wf_ideas_v4/round2/scan_browser.json silver-line-inside-0954"
+    "research/wf_ideas_v4/round2/scan_browser.json silver-line-inside-0954",
+    "research/wf_ideas_v4/round3/scan_browser.json r3-lb-delta-2216, r3-late-copies-block-end",
+    "research/wf_ideas_v4/round3/scan_hypotheses.json R3S-6",
+    "research/wf_ideas_v4/round3/report.json R3-A7"
    ],
    "status": {
     "kind": "in-plan",
-    "detail": "Adopted (research/wf_ideas_v4/FINAL_REPORT_v4.md §3 row 8). 19:46 UTC: rank 157/3,908 at 0.954; 0.954 block = ranks 139-201; silver line (~195) now inside the 0.954 block, 38 ranks below us (research/wf_ideas_v4/round2/report.json new_facts (1)-(2))."
+    "detail": "Adopted (research/wf_ideas_v4/FINAL_REPORT_v4.md §3 row 8). 22:16-22:23 UTC: 3,914 teams, we are #164 at 0.954 (18th of 65 in the 0.954 block = ranks 147-211); silver (~rank 196) inside the block, 32 ranks below us; all 7 ranks lost since 19:46 went to teams rising into >= 0.955; 16 late 0.953 risers at the END of the 0.953 block (byte-copies, earlier-submission tiebreak) (research/wf_ideas_v4/round3/report.json new_facts (1)-(3), R3-A7)."
    },
    "lb": [],
    "lab": "",
-   "next_step": "Record K2's rank inside its displayed-score block when it scores (research/wf_ideas_v4/round2/report.json R2-A10).",
+   "next_step": "Record K2's in-block rank vs #35 (18th of 65) as INFO only, never a decision input (R7) (research/wf_ideas_v4/round3/report.json R3-A7).",
    "orphan": false
   },
   {
@@ -802,11 +882,12 @@
     "path": "research/wf_ideas_v4/lens_redteam-plan.json RT2"
    },
    "sources": [
-    "research/wf_ideas_v4/FINAL_REPORT_v4.md §4"
+    "research/wf_ideas_v4/FINAL_REPORT_v4.md §4",
+    "research/wf_ideas_v4/round3/report.json R3-A2"
    ],
    "status": {
     "kind": "refuted",
-    "detail": "Items 1-2 rejected; items 3-4 (plateau reading, poll window) adopted in Addendum L (research/wf_ideas_v4/FINAL_REPORT_v4.md §4)."
+    "detail": "Items 1-2 rejected; items 3-4 (plateau reading, poll window) adopted in Addendum L (research/wf_ideas_v4/FINAL_REPORT_v4.md §4). Its core ('fix rule ambiguities before scores') is revived in narrower form as the round-3 K2/twin READ TABLE (I-217)."
    },
    "lb": [],
    "lab": "",
@@ -1153,11 +1234,12 @@
     "research/wf_ideas_v3/s_merge.json C10",
     "research/wf_ideas_v3/FINAL_REPORT.md §c row 11",
     "CONTEXT.md l.991-992",
-    "research/wf_ideas_v4/round2/scan_browser.json no-new-public-code-or-posts"
+    "research/wf_ideas_v4/round2/scan_browser.json no-new-public-code-or-posts",
+    "research/wf_ideas_v4/round3/scan_browser.json r3-no-new-code-posts-announcements"
    ],
    "status": {
     "kind": "in-plan",
-    "detail": "Triggered watch only; no public notebook > 0.953 and x138 still v1 as of 25 Sep 19:46 UTC (research/wf_ideas_v4/round2/scan_browser.json no-new-public-code-or-posts)."
+    "detail": "Triggered watch only; at 22:16-22:43 UTC 25 Sep no public notebook > 0.953, x138 still v1 (copies 258 -> 260), no competition notebook run since 09:09 UTC, no new discussions/announcements (research/wf_ideas_v4/round3/report.json new_facts (4); scan_browser.json r3-no-new-code-posts-announcements)."
    },
    "lb": [],
    "lab": "",
@@ -1401,15 +1483,16 @@
    "sources": [
     "research/wf_ideas_v3/s_merge.json C09",
     "research/wf_ideas_v3/FINAL_REPORT.md §c row 13",
-    "research/wf_ideas_v3/TASK_CLOUD_SESSION.md T12"
+    "research/wf_ideas_v3/TASK_CLOUD_SESSION.md T12",
+    "research/wf_ideas_v4/round3/report.json plan_issues STRATEGIC"
    ],
    "status": {
     "kind": "in-plan",
-    "detail": "Idle-only (E12/T12), P(reaches a slot) ~0.1; not run (research/wf_ideas_v3/FINAL_REPORT.md §c row 13)."
+    "detail": "Idle-only (E12/T12), P(reaches a slot) ~0.1; never run (research/wf_ideas_v3/FINAL_REPORT.md §c row 13). Round 3 declares the new-mechanism search over (tail saturated, every rider gate failed) and lists only K1 and S12 floatout as possible slot uses (research/wf_ideas_v4/round3/report.json plan_issues STRATEGIC) -> de facto dead but not explicitly closed."
    },
    "lb": [],
    "lab": "",
-   "next_step": "Run only if the cloud session idles before R8 (27 Sep 12:00 UTC); else close.",
+   "next_step": "Close explicitly in CONTEXT (one line) or run the CPU desk test before R8 (27 Sep 12:00 UTC).",
    "orphan": "at-risk"
   },
   {
@@ -1432,15 +1515,18 @@
    "sources": [
     "CONTEXT.md l.1750-1752",
     "CONTEXT.md l.1817-1822",
-    "research/wf_ideas_v3/FINAL_REPORT.md §c row 4"
+    "research/wf_ideas_v3/FINAL_REPORT.md §c row 4",
+    "research/wf_ideas_v4/round3/scan_hypotheses.json R3S-1, R3S-3, R3S-8",
+    "research/wf_ideas_v4/round3/v_hypotheses_r3s-1.json",
+    "research/wf_ideas_v4/round3/report.json plan_issues READ TABLE"
    ],
    "status": {
     "kind": "in-plan",
-    "detail": "In K2 (LOWREFINE refined 26,532/27,877 ... peaks, 0 failed frames; dummy gates PASS) (CONTEXT.md l.1817-1822); expected +0.0002."
+    "detail": "In K2 and in the twin (LOWREFINE lines identical in both dummies, CONTEXT.md l.1817-1822, l.1955-1959). No honest lab (exp60 base has no lowrefine); public-read ceiling |d| <= ~2.4e-4, GPU cost ~0, guarded against NaN/out-of-volume (research/wf_ideas_v4/round3/v_hypotheses_r3s-1.json; scan_hypotheses.json R3S-3). The ONLY component shared by F1 and F2 whose sign rests on public reads alone (research/wf_ideas_v4/round3/scan_hypotheses.json R3S-8)."
    },
    "lb": [],
    "lab": "",
-   "next_step": "Read K2 by R3.",
+   "next_step": "Read by the READ TABLE (I-217): d1 = K2 - #35 decides when clean (L(K2) <= 8.0 h); d2 = twin - #34 only when d1 is not clean; lowrefine leaves F1 only at <= -0.002 (research/wf_ideas_v4/round3/report.json plan_issues).",
    "orphan": false
   },
   {
@@ -1689,15 +1775,16 @@
    "sources": [
     "research/wf_ideas_v4/round2/scan_recheck.json R2-RC-A-floatout-on-x138",
     "research/wf_ideas_v4/round2/v_recheck_r2-rc-a-floatout-on-x138.json",
-    "research/wf_ideas_v4/round2/report.json R2-A9, R2-A8 (4)"
+    "research/wf_ideas_v4/round2/report.json R2-A9, R2-A8 (4)",
+    "research/wf_ideas_v4/round3/report.json R3-A9 (5)"
    ],
    "status": {
     "kind": "in-plan",
-    "detail": "Proposed for the morning OK list only (not approved, not built): x138 lab +0.00229, CI90 [+0.0006, +0.0040], 16 W / 7 L; public tie expected (P32/P33 ties -> private E ~+0.0001, 1-3 ranks); current FLOATOUT_CHECK is a bare assert = R7 violation (research/wf_ideas_v4/round2/report.json new_facts (12), R2-A9)."
+    "detail": "Proposed for the morning OK list only (not approved, not built): x138 lab +0.00229, CI90 [+0.0006, +0.0040], 16 W / 7 L; public tie expected (P32/P33 ties -> private E ~+0.0001, 1-3 ranks); current FLOATOUT_CHECK is a bare assert = R7 violation (research/wf_ideas_v4/round2/report.json new_facts (12), R2-A9). Round 3 keeps it as the only optional rider: S12 only, with the fail-soft wrapper (research/wf_ideas_v4/round3/report.json R3-A9 (5), plan_issues STRATEGIC)."
    },
    "lb": [],
    "lab": "exp60 x138 lab, 56 clips: +0.00229 [+0.00061, +0.00398]; edge TP +30, FP -71; divisions identical (research/wf_ideas_v4/round2/report.json new_facts (12)).",
-   "next_step": "Ask the user's OK 26 Sep morning; if yes, code fail-soft + FORCE_FAIL test by 27 Sep 12:00 UTC (R8) and ride only in S12; write 'public tie expected' in CONTEXT before the score.",
+   "next_step": "Ask the user's OK 26 Sep morning (R3-A9 (5)); if yes, code fail-soft + FORCE_FAIL test by 27 Sep 12:00 UTC (R8) and ride only in S12; write 'public tie expected' in CONTEXT before the score.",
    "orphan": false
   },
   {
@@ -2117,11 +2204,13 @@
     "experiments/RESULTS.md l.68",
     "CONTEXT.md l.1801-1810",
     "experiments/exp60_trainlab/results.md",
-    "CONTEXT.md l.1932-1933"
+    "CONTEXT.md l.1932-1933",
+    "research/wf_ideas_v4/round3/scan_hypotheses.json R3S-2",
+    "research/wf_ideas_v4/round3/report.json new_facts (11)"
    ],
    "status": {
     "kind": "lb-tested",
-    "detail": "Lab CONFIRMATION +0.0019 (gate failed narrowly); probe 28 exp48 = 0.948 (+0.001); probe 35 exp57b (on x138) = 0.954 (+0.001); in K2 per R2 (CONTEXT.md l.1801-1806). exp60 lab (#35 config) 44b6 +0.0157 / 6bba +0.0090 = IN-SAMPLE UPPER BOUND (L5) (CONTEXT.md l.1932-1933)."
+    "detail": "Lab CONFIRMATION +0.0019 (gate failed narrowly); probe 28 exp48 = 0.948 (+0.001); probe 35 exp57b (on x138) = 0.954 (+0.001); in K2 per R2 (CONTEXT.md l.1801-1806). exp60 lab (#35 config) = IN-SAMPLE UPPER BOUND (CONTEXT.md l.1932-1933). Round 3 density read: not a dense-clip risk; private harm needs out-of-fold evaluable precision < ~11% (q* = 0.114) vs 25% even in the dense half (research/wf_ideas_v4/round3/scan_hypotheses.json R3S-2). Hedged by the twin F2 (I-090)."
    },
    "lb": [
     {
@@ -2133,8 +2222,8 @@
      "score": 0.954
     }
    ],
-   "lab": "exp60 ins35: 44b6 +0.0157, 6bba +0.0090 (in-sample, 4/5 folds saw the clips) (experiments/exp60_trainlab/results.md 'Insertion (#35 config)').",
-   "next_step": "Keep only #35's config (no ladder); read K2.",
+   "lab": "exp60 ins35: 44b6 +0.0157, 6bba +0.0090 (experiments/exp60_trainlab/results.md). By density quartile Q0 +0.0246, Q1 +0.0028, Q2 -0.0005, Q3 +0.0019, ALL +0.0065 (div TP/FP/FN 16/25/83 -> 25/31/74); evaluable precision sparse half 8 TP/3 FP, dense half 1 TP/3 FP; 186/201 inserted forks metric-ignored (research/wf_ideas_v4/round3/report.json new_facts (11)).",
+   "next_step": "Keep only #35's config (no ladder); read K2 vs twin by the READ TABLE (I-217); twin - K2 >= +0.002 reopens R2 (row 2).",
    "orphan": false
   },
   {
@@ -2363,7 +2452,9 @@
     "experiments/exp60_trainlab/results.md",
     "CONTEXT.md l.1924-1929",
     "research/wf_ideas_v4/round2/scan_hypotheses.json R2S-6",
-    "research/wf_ideas_v4/round2/v_hypotheses_r2s-6.json"
+    "research/wf_ideas_v4/round2/v_hypotheses_r2s-6.json",
+    "research/wf_ideas_v4/round3/report.json R3-A3",
+    "research/wf_ideas_v4/round3/v_plancheck_pc3-03.json"
    ],
    "status": {
     "kind": "refuted",
@@ -2371,7 +2462,7 @@
    },
    "lb": [],
    "lab": "exp39 prior 11 FP / 0 TP (+0.0007); exp60 pooled score +0.00013, div_J +0.0010, adj_edge +0.00002 (experiments/exp60_trainlab/results.md l.76-89).",
-   "next_step": "None (S4 empty). Any future removal rule keeps a 0-TP / FP >= 3*TP lab clause (research/wf_ideas_v4/round2/report.json ADDENDUM M M4).",
+   "next_step": "Do not rebuild (no exp59 / K3 dummy); experiments/workflows/biohub-research-round.js l.34/l.54 still list K3/K3b and feed them back into rounds (research/wf_ideas_v4/round3/report.json R3-A3).",
    "orphan": false
   },
   {
@@ -2388,11 +2479,12 @@
     "research/wf_ideas_v2/r1_dedupe.json fork-midpoint-filter merge",
     "research/wf_ideas_v4/round2/scan_hypotheses.json R2S-4",
     "research/wf_ideas_v4/round2/v_hypotheses_r2s-4.json",
-    "research/wf_ideas_v4/round2/report.json R2-A7"
+    "research/wf_ideas_v4/round2/report.json R2-A7",
+    "CONTEXT.md l.1950-1951"
    ],
    "status": {
     "kind": "refuted",
-    "detail": "Premise false: x138's safe-division gates already run on float, head-refined presafe coords (exp60 nb cells 4/8); a final-coord re-gate has no FP-specific mechanism; closure recommended by round 2 (research/wf_ideas_v4/round2/report.json new_facts (13), R2-A7 (3); v_hypotheses_r2s-4.json). Not yet written in CONTEXT.md."
+    "detail": "Closed by night round 2: premise false (presafe gates already use float coords); recorded in CONTEXT.md l.1950-1951."
    },
    "lb": [],
    "lab": "",
@@ -2453,7 +2545,10 @@
     "tools/trainlab.py",
     "experiments/exp60_trainlab/results.md",
     "CONTEXT.md l.1930-1931",
-    "research/wf_ideas_v4/round2/scan_plancheck.json PC2-02..PC2-06"
+    "research/wf_ideas_v4/round2/scan_plancheck.json PC2-02..PC2-06",
+    "research/wf_ideas_v4/round3/report.json R3-A3",
+    "research/wf_ideas_v4/round3/v_plancheck_pc3-03.json",
+    "CONTEXT.md l.1939-1944"
    ],
    "status": {
     "kind": "refuted",
@@ -2461,7 +2556,7 @@
    },
    "lb": [],
    "lab": "exp60 6bba arc t* = 0.30, every gate clause FALSE (experiments/exp60_trainlab/results.md l.79, l.196-218).",
-   "next_step": "None unless the user OKs L1+L2 and a re-read passes (P ~0.1, only t* = 0.20) (research/wf_ideas_v4/round2/report.json R2-A8 (2)).",
+   "next_step": "Do not rebuild (no exp59dc / K3b dummy); L1/L2 OKs moot (CONTEXT.md l.1966; research/wf_ideas_v4/round3/report.json R3-A3).",
    "orphan": false
   },
   {
@@ -2624,11 +2719,12 @@
     "research/wf_ideas_v2/r1_dedupe.json fork-midpoint-filter",
     "research/wf_ideas_v4/round2/scan_hypotheses.json R2S-3",
     "research/wf_ideas_v4/round2/v_hypotheses_r2s-3.json",
-    "CONTEXT.md l.1914-1916"
+    "CONTEXT.md l.1914-1916",
+    "CONTEXT.md l.1947-1948"
    ],
    "status": {
     "kind": "refuted",
-    "detail": "Made testable as DNVETO (veto if DaughterNet p_par < 0.057 = GT-OOF 5th pct) and DROPPED without a run: same class as ANTIPAR/forkblob (both FAIL), probe-20 analogue tied, ~7 evaluable vetoes (research/wf_ideas_v4/round2/report.json rejected; v_hypotheses_r2s-3.json)."
+    "detail": "DNVETO CLOSED without a run (same mechanism class as ANTIPAR), recorded in CONTEXT.md l.1947-1948 (research/wf_ideas_v4/round2/report.json R2-A7)."
    },
    "lb": [],
    "lab": "",
@@ -2742,15 +2838,16 @@
     "research/wf_ideas_v4/round2/scan_hypotheses.json R2S-2",
     "research/wf_ideas_v4/round2/v_hypotheses_r2s-2.json",
     "research/wf_ideas_v4/round2/v_hypotheses_r2s-2.notes.md",
-    "research/wf_ideas_v4/round2/report.json rejected"
+    "research/wf_ideas_v4/round2/report.json rejected",
+    "CONTEXT.md l.1945-1948"
    ],
    "status": {
     "kind": "refuted",
-    "detail": "One-shot lab on 56 exp60 clips FAIL: vetoed 113/676 (TP 1 / FP 4 / ignored 108), div_J 0.1290 -> 0.1250, score -0.00034; the vetoed TP has cos 0.976 so no threshold saves it; no reruns (research/wf_ideas_v4/round2/report.json new_facts (8), rejected)."
+    "detail": "One-shot lab on 56 exp60 clips FAIL: vetoed 113/676 (TP 1 / FP 4 / ignored 108), div_J 0.1290 -> 0.1250, score -0.00034; no reruns; recorded CLOSED in CONTEXT.md l.1945-1947 (research/wf_ideas_v4/round2/report.json new_facts (8))."
    },
    "lb": [],
    "lab": "score -0.00034 (SELECTION -0.0012, CONFIRMATION +0.0006); forkmid45+antipar25 == antipar25 (research/wf_ideas_v4/round2/v_hypotheses_r2s-2.notes.md).",
-   "next_step": "Record 'ANTIPAR CLOSED' in CONTEXT.md (research/wf_ideas_v4/round2/report.json R2-A7 (1)).",
+   "next_step": "",
    "orphan": false
   },
   {
@@ -3431,11 +3528,13 @@
    },
    "sources": [
     "research/wf_ideas_v4/FINAL_REPORT_v4.md §1.2",
-    "research/wf_ideas_v4/FINAL_REPORT_v4.md §2"
+    "research/wf_ideas_v4/FINAL_REPORT_v4.md §2",
+    "research/wf_ideas_v4/round3/scan_hypotheses.json R3S-6",
+    "experiments/ext_y3uanm-secondary-ft/NOTES.md"
    ],
    "status": {
     "kind": "deferred-after-deadline",
-    "detail": "Only public engine of the 0.954-0.956 shoulder (0.949 -> 0.956); closed by R9 for 29 Sep (research/wf_ideas_v4/FINAL_REPORT_v4.md §1.2)."
+    "detail": "Only public engine of the 0.954-0.956 shoulder (0.949 -> 0.956); still the only public engine above x138 at 22:23 UTC 25 Sep (research/wf_ideas_v4/round3/scan_hypotheses.json R3S-6); closed by R9 for 29 Sep (research/wf_ideas_v4/FINAL_REPORT_v4.md §1.2). Mechanism: distillation to a frozen teacher on unlabelled voxels (experiments/ext_y3uanm-secondary-ft/NOTES.md item 5)."
    },
    "lb": [],
    "lab": "",
@@ -3674,7 +3773,9 @@
     "experiments/RESULTS.md l.38",
     "experiments/RESULTS.md l.41",
     "CONTEXT.md l.170",
-    "CONTEXT.md l.180"
+    "CONTEXT.md l.180",
+    "research/wf_ideas_v4/round3/scan_recheck.json R3-NF-lab-node-count-bias",
+    "research/wf_ideas_v4/round3/report.json R3-A8 (3)"
    ],
    "status": {
     "kind": "lb-tested",
@@ -3690,7 +3791,7 @@
      "score": 0.944
     }
    ],
-   "lab": "",
+   "lab": "exp60 x138 lab (56 clips) replay from 'preshort': L4 +0.00015 (nodes +2.13%), L5 +0.00002, L8 -0.00023; SELECTION and CONFIRMATION disagree in sign for all arms -> the lab is biased ~+0.002 toward keeping short components vs the LB (research/wf_ideas_v4/round3/scan_recheck.json R3-NF-lab-node-count-bias).",
    "next_step": "",
    "orphan": false
   },
@@ -3876,15 +3977,17 @@
     "CONTEXT.md l.1806-1810",
     "CONTEXT.md l.1610",
     "CONTEXT.md l.1905-1907",
-    "experiments/lb_poll/ledger.md"
+    "experiments/lb_poll/ledger.md",
+    "research/wf_ideas_v4/round3/scan_recheck.json R3-NF-p36-latency",
+    "research/wf_ideas_v4/round3/report.json R3-A6 (e)"
    ],
    "status": {
     "kind": "in-plan",
-    "detail": "Probe 36 submitted 25 Sep 16:18 UTC, still PENDING at 20:42:40Z (L36 > 4.40 h, experiments/lb_poll/ledger.md); INFO ONLY by the 18:40 reading rule - cannot trigger a leaf-prune rider even at >= +0.002 (CONTEXT.md l.1905-1907)."
+    "detail": "Probe 36 submitted 25 Sep 16:18:09Z, still PENDING at 22:53:04Z (L36 > 6.58 h; #35 took (6.72, 7.73] h) (experiments/lb_poll/ledger.md); INFO ONLY by the 18:40 reading rule (CONTEXT.md l.1905-1907). If still pending at 00:01 (L36 > 7.7 h): log as a runtime datapoint for x138 + insertion; K2's L may include queue time (research/wf_ideas_v4/round3/scan_recheck.json R3-NF-p36-latency; report.json R3-A6 (e))."
    },
    "lb": [],
    "lab": "",
-   "next_step": "Log the score as info; never a final.",
+   "next_step": "Note P36's state at the K2 submit; log the score as info; never a final.",
    "orphan": false
   },
   {
@@ -4084,15 +4187,18 @@
     "path": "research/wf_ideas_v2/r1_hyp_data-mining.json"
    },
    "sources": [
-    "research/wf_ideas_v2/FINAL_REPORT.md Dropped"
+    "research/wf_ideas_v2/FINAL_REPORT.md Dropped",
+    "research/wf_ideas_v4/round3/scan_recheck.json R3-RC-B-clip-boundary-short-track-on-x138",
+    "research/wf_ideas_v4/round3/v_recheck_r3-rc-b-clip-boundary-short-track-on-x138.json",
+    "research/wf_ideas_v4/round3/report.json R3-A8 (2)"
    ],
    "status": {
     "kind": "refuted",
-    "detail": "No detector padding; +0.0011 oracle cancelled by the node multiplier (research/wf_ideas_v2/FINAL_REPORT.md Dropped)."
+    "detail": "Old: no detector padding; +0.0011 oracle cancelled by the node multiplier (research/wf_ideas_v2/FINAL_REPORT.md Dropped). Re-measured on x138 by round 3 (R3-RC-B, verdict survived): boundary deficit persists (GT node recall t0 0.959 -> 0.940, mid 0.986) but boundary rescue b4 fails its own bar (SELECTION 0.00000, W/L 7/47, nodes +0.48%); STAYS CLOSED; ILP start/end part deferred after the deadline (research/wf_ideas_v4/round3/report.json R3-A8 (2))."
    },
    "lb": [],
-   "lab": "",
-   "next_step": "",
+   "lab": "exp60 b4: +0.00056 pooled, +0.00033 without 44b6_9be80b04, SELECTION 0.00000, CONFIRMATION +0.00109, W/L 7/47, nodes +0.48%; edge TP +25 / FP -17 / FN -25 (research/wf_ideas_v4/round3/v_recheck_r3-rc-b-clip-boundary-short-track-on-x138.json).",
+   "next_step": "Post-deadline only: ILP start/end exemption on a model-side lab.",
    "orphan": false
   },
   {
@@ -4238,11 +4344,14 @@
     "experiments/RESULTS.md l.52",
     "experiments/RESULTS.md l.89-91",
     "experiments/RESULTS.md l.107",
-    "CONTEXT.md l.972-978"
+    "CONTEXT.md l.972-978",
+    "research/wf_ideas_v4/round3/scan_recheck.json R3-RC-C-axisflip-tta-private-reread",
+    "research/wf_ideas_v4/round3/v_recheck_r3-rc-c-axisflip-tta-private-reread.json",
+    "research/wf_ideas_v4/round3/report.json R3-A8 (4)"
    ],
    "status": {
     "kind": "lb-tested",
-    "detail": "Local +0.0214 (+0.0187 on an unseen-embryo primary); probe 19 exp37 = 0.946 (tie); axis-flip on x138 refused (R9) (experiments/RESULTS.md l.52)."
+    "detail": "Local +0.0214 (+0.0187 on an unseen-embryo primary); probe 19 exp37 = 0.946 vs exp29 0.947 (experiments/RESULTS.md l.52); probe 25 = +0.002 only bundled with hygiene on the takaito base (I-022) -> sign depends on the base. Round 3 re-read (R3-RC-C, survived): STAYS CLOSED on x138 (no honest lab, V1284 head/readmit/insertion calibrated under the D4 group, user refusal R9); do not cite Z-flip probes 12/16 as detection-map evidence (research/wf_ideas_v4/round3/report.json R3-A8 (4))."
    },
    "lb": [
     {
@@ -4606,15 +4715,18 @@
     "path": "CONTEXT.md l.1411-1416"
    },
    "sources": [
-    "experiments/l2_daughternet/edge_anatomy/l6_selection_swapfix.md"
+    "experiments/l2_daughternet/edge_anatomy/l6_selection_swapfix.md",
+    "research/wf_ideas_v4/round3/scan_recheck.json R3-RC-A-swapfix-on-x138",
+    "research/wf_ideas_v4/round3/v_recheck_r3-rc-a-swapfix-on-x138.json",
+    "research/wf_ideas_v4/round3/report.json R3-A8 (1)"
    ],
    "status": {
     "kind": "refuted",
-    "detail": "-0.00004 on CONFIRMATION: swaps are node-position/missing-nucleus errors, not linking (CONTEXT.md l.1411-1416)."
+    "detail": "-0.00004 on CONFIRMATION on the old base (CONTEXT.md l.1411-1416). Re-measured on x138 by round 3 (R3-RC-A, survived): 0 of 555 both-linked FN are true 2x2 swaps; the 2x2 rule reaches 1 TP on 56 clips (~+0.00002); matched node is the nearest to the GT nucleus in 90% of cases -> detection/localisation problem, STAYS CLOSED (research/wf_ideas_v4/round3/report.json R3-A8 (1))."
    },
    "lb": [],
-   "lab": "",
-   "next_step": "",
+   "lab": "exp60 x138: FN 1,705 = miss 834 / both_linked 555 / one_free 305 / both_free 11; both_linked GT link 3.17 um vs matched pred nodes 9.13 um apart; 6bba holds 485/555 (research/wf_ideas_v4/round3/v_recheck_r3-rc-a-swapfix-on-x138.json).",
+   "next_step": "Post-deadline: detector / coordinate-head retraining (MODEL cluster).",
    "orphan": false
   },
   {
@@ -4630,11 +4742,13 @@
    "sources": [
     "research/browser_research_2026-09-24_pass2.md §7.3c",
     "research/wf_ideas_v2/r1_dedupe.json dropped swap-repair-stop-loss",
-    "research/wf_ideas/hyp_linking.notes.md"
+    "research/wf_ideas/hyp_linking.notes.md",
+    "research/wf_ideas_v4/round3/scan_recheck.json R3-RC-A-swapfix-on-x138",
+    "research/wf_ideas_v4/round3/report.json R3-A8 (1)"
    ],
    "status": {
     "kind": "refuted",
-    "detail": "Only 179/1528 swaps are true linking swaps; repoints dTP -224 / dFP +409 (research/wf_ideas_v2/r1_dedupe.json dropped)."
+    "detail": "Only 179/1528 swaps are true linking swaps; repoints dTP -224 / dFP +409 (research/wf_ideas_v2/r1_dedupe.json dropped). On x138: 0 of 555 true 2x2 swaps (research/wf_ideas_v4/round3/report.json R3-A8 (1))."
    },
    "lb": [],
    "lab": "",
@@ -4805,11 +4919,13 @@
    "sources": [
     "CONTEXT.md l.118",
     "CONTEXT.md l.249",
-    "CONTEXT.md l.254"
+    "CONTEXT.md l.254",
+    "research/wf_ideas_v4/round3/scan_hypotheses.json R3S-4",
+    "research/wf_ideas_v4/round3/report.json R3-A8 (6)"
    ],
    "status": {
     "kind": "refuted",
-    "detail": "Lab + on hold12/divset36/LOEO; on the public pipeline 0 pairs within 5 um (useless) (CONTEXT.md l.254)."
+    "detail": "Lab + on hold12/divset36/LOEO; on the public pipeline 0 pairs within 5 um (CONTEXT.md l.254). Re-checked on x138 (R3S-4): 0 mutual-nearest end->start pairs within 2-7 um on all 56 exp60 clips (x138's relink/gapfill already bridges them); dangling ends are only 8% of edge FN -> closed (research/wf_ideas_v4/round3/report.json R3-A8 (6), rejected)."
    },
    "lb": [],
    "lab": "",
@@ -5468,11 +5584,13 @@
    },
    "sources": [
     "experiments/l2_daughternet/edge_anatomy/l6_fn_anatomy_report.md",
-    "CONTEXT.md l.1411-1416"
+    "CONTEXT.md l.1411-1416",
+    "research/wf_ideas_v4/round3/scan_hypotheses.json R3S-3, R3S-4",
+    "research/wf_ideas_v4/round3/report.json R3-A8 (6)"
    ],
    "status": {
     "kind": "lab-tested",
-    "detail": "Swaps are node-position/missing-nucleus errors; a_never = 28.3% of lab FN (research/wf_ideas_v3/FINAL_REPORT.md §j.8, §j.10)."
+    "detail": "Swaps are node-position/missing-nucleus errors; a_never = 28.3% of lab FN (research/wf_ideas_v3/FINAL_REPORT.md §j.8, §j.10). On x138 (exp60, round 3): edge FN 1,705/40,093 = node misses 49%, swaps 43%, dangling ends 8%; 0 structural defects -> the x138 tail is SATURATED, remaining error mass needs retraining (R9) (research/wf_ideas_v4/round3/report.json new_facts (12)-(14), R3-A8 (6))."
    },
    "lb": [],
    "lab": "",
@@ -5499,15 +5617,17 @@
     "CONTEXT.md l.1824-1826",
     "CONTEXT.md l.1850-1886",
     "experiments/exp60_trainlab/results.md",
-    "CONTEXT.md l.1918-1937"
+    "CONTEXT.md l.1918-1937",
+    "research/wf_ideas_v4/round3/report.json R3-A8 (3)",
+    "research/wf_ideas_v4/round3/scan_recheck.json R3-NF-lab-node-count-bias"
    ],
    "status": {
     "kind": "lab-tested",
-    "detail": "Done: shards A/B COMPLETE (6,959 s / 5,599 s, 56 clips, 0 missing) (CONTEXT.md l.1918-1920); T9 read 20:35 UTC: no K3, no K3b, forkblob FAIL, insertion in-sample positive (CONTEXT.md l.1924-1937)."
+    "detail": "Done: shards A/B COMPLETE (56 clips) (CONTEXT.md l.1918-1920); T9 read 20:35 UTC: no K3, no K3b, forkblob FAIL, insertion in-sample positive (CONTEXT.md l.1924-1937). Round 3 used it for 6 more CPU reads (density, structure, FN anatomy, swaps, boundary, retention guard) and fixed a calibration rule: a node-adding arm counts only if SELECTION and CONFIRMATION agree in sign and >= 55% of clips win, and still takes a ~-0.002 LB discount (research/wf_ideas_v4/round3/report.json R3-A8 (3))."
    },
    "lb": [],
    "lab": "See experiments/exp60_trainlab/results.md / results_forkblob.md; lab control div TP/FP/FN 16/25/83, div_J 0.129 -> veto break-even FP:TP >= 7.7 (research/wf_ideas_v4/round2/report.json new_facts (7)).",
-   "next_step": "Only further use: re-read DeepCenter arc if the user OKs L1+L2.",
+   "next_step": "No further pre-deadline use planned (L1/L2 moot, CONTEXT.md l.1966).",
    "orphan": false
   },
   {
@@ -5570,11 +5690,13 @@
    "sources": [
     "CONTEXT.md l.1456-1457",
     "research/wf_ideas_v4/round2/scan_hypotheses.json R2S-5",
-    "CONTEXT.md l.1914-1916"
+    "CONTEXT.md l.1914-1916",
+    "research/wf_ideas_v4/round3/scan_hypotheses.json R3S-2",
+    "CONTEXT.md l.1951"
    ],
    "status": {
     "kind": "lab-tested",
-    "detail": "Computed on exp60 in round 2 (info only): GT divisions flat 25/24/23/27 across node-density quartiles while safe forks rise 55/149/209/263 (2.2 -> 9.7 forks per GT division); no rule left to attach it to (research/wf_ideas_v4/round2/scan_hypotheses.json R2S-5; report.json R2-A7 (8))."
+    "detail": "Computed on exp60 in round 2 (info only): GT divisions flat 25/24/23/27 across node-density quartiles while safe forks rise 55/149/209/263 (research/wf_ideas_v4/round2/scan_hypotheses.json R2S-5); recorded in CONTEXT.md l.1951 ('no rule attached'); round 3 applied it to the insertion (I-220, closed)."
    },
    "lb": [],
    "lab": "Quartile edges 83.7/160.7/258.8 nodes/frame, 14 clips each (research/wf_ideas_v4/round2/report.json new_facts (15)).",
@@ -5667,16 +5789,18 @@
    "sources": [
     "research/wf_ideas_v4/round2/report.json R2-A1, plan_issues (ADDENDUM M TEXT)",
     "research/wf_ideas_v4/round2/scan_plancheck.json",
-    "research/wf_ideas_v4/round2/scan_hypotheses.json R2S-1"
+    "research/wf_ideas_v4/round2/scan_hypotheses.json R2S-1",
+    "CONTEXT.md l.1938-1951",
+    "commit 4f5d325"
    ],
    "status": {
-    "kind": "in-plan",
-    "detail": "Proposed, NOT in CONTEXT.md at da154cb (grep 'ADDENDUM M' = 0 hits); the T9 results were already read at 20:35 UTC (CONTEXT.md l.1924), so M1-M3 can no longer be pre-registered; they are moot because every gate failed under the old rules too. M4 (ANTIPAR/DNVETO closed, break-even 7.7), M5 (dummy GT divisions 0/0/0/3) and M6 (K4 reopen clause) remain useful closures."
+    "kind": "refuted",
+    "detail": "Recorded in CONTEXT.md l.1938-1951 as POST-HOC NOTES, not a pre-registration (T9 had been read at 20:35 UTC): M1/M2 only tighten the K3b gate and K3b fails under every reading; M3 moot (forkmid fails the original gate); M4 ANTIPAR + DNVETO CLOSED, break-even FP:TP >= 7.7; M5 dummies = plumbing only; M6 K4 dropped. Closed, changes nothing."
    },
    "lb": [],
    "lab": "",
-   "next_step": "Record M4-M6 in CONTEXT.md as closures; note M1-M3 as moot/post-hoc (T9 read before the addendum).",
-   "orphan": "at-risk"
+   "next_step": "",
+   "orphan": false
   },
   {
    "id": "I-208",
@@ -5763,6 +5887,198 @@
    "lab": "",
    "next_step": "",
    "orphan": false
+  },
+  {
+   "id": "I-217",
+   "cluster": "FINALS",
+   "name": "K2/twin READ TABLE: pre-score rule for d1 = K2 - #35, d2 = twin - #34, 'clean' = L(K2) upper bound <= 8.0 h, first-match rows 1-5",
+   "aliases": [
+    "R3-A2",
+    "PC3-01",
+    "PC3-02",
+    "R3S-1 (salvaged)",
+    "lowrefine read",
+    "R3 reference for K2"
+   ],
+   "description": "Fix the R3 reference for K2 (#35, 0.954) and the twin (#34, 0.953) and the finals for K2 ERROR / twin - K2 >= +0.002 / d1 >= -0.001 / d1 <= -0.002 clean / not clean, written into CONTEXT before any K2 or twin score; [OK]-tagged rows need the user.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v4/round3/scan_plancheck.json PC3-01"
+   },
+   "sources": [
+    "research/wf_ideas_v4/round3/scan_plancheck.json PC3-01, PC3-02",
+    "research/wf_ideas_v4/round3/v_plancheck_pc3-01.json",
+    "research/wf_ideas_v4/round3/scan_hypotheses.json R3S-1",
+    "research/wf_ideas_v4/round3/v_hypotheses_r3s-1.json",
+    "research/wf_ideas_v4/round3/report.json R3-A2, plan_issues READ TABLE (verbatim)",
+    "research/wf_ideas_v4/round3/report.notes.md"
+   ],
+   "status": {
+    "kind": "in-plan",
+    "detail": "Proposed by night round 3 (22:59Z), covered by existing approval; NOT in CONTEXT.md at 1ca747b (grep 'READ TABLE' = 0 hits). Without it K2 = 0.952 passes vs #34 and fails vs #35 (the probe.json 'compare with exp56' line is builder boilerplate, tools/build_probe_kernel.py l.2310). P(a non-default row) ~0.1 (research/wf_ideas_v4/round3/report.json R3-A2)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "Write the verbatim block into CONTEXT.md with a timestamp and commit it BEFORE any K2/twin score (earliest ~06:00 UTC 26 Sep), ideally with the 00:1x RESUME POINT (research/wf_ideas_v4/round3/report.json R3-A2, R3-A5).",
+   "orphan": "at-risk"
+  },
+  {
+   "id": "I-218",
+   "cluster": "RUN",
+   "name": "R3S-7: conditional K1 submit in an empty 26 Sep slot with a WIDER trigger (d1 <= -0.001 or K2 ERROR) as a finals option",
+   "aliases": [
+    "R3S-7",
+    "conditional K1"
+   ],
+   "description": "Buy an option: a scored K1 (x138 + safetail + insertion, no lowrefine) so F1 can move without a late slot.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v4/round3/scan_hypotheses.json R3S-7"
+   },
+   "sources": [
+    "research/wf_ideas_v4/round3/scan_hypotheses.json R3S-7",
+    "research/wf_ideas_v4/round3/v_hypotheses_r3s-7.json",
+    "research/wf_ideas_v4/round3/report.json rejected"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Mostly a repeat of I-011; the only new part (trigger at d1 = -0.001) is worth ~0: R3 keeps lowrefine at -0.001 and R7/§f bar a 0.001 K1-vs-K2 pick (research/wf_ideas_v4/round3/v_hypotheses_r3s-7.json; report.json rejected)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-219",
+   "cluster": "FINALS",
+   "name": "Twin floor 0.952 instead of 0.953 while lowrefine is kept (f2 loosening)",
+   "aliases": [
+    "R3-A9 (2)",
+    "R3S-1 GAP 2"
+   ],
+   "description": "d2 = -0.001 is inside R3's tolerance; without the floor a twin at 0.952 drops F2 to exp52 (0.950).",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v4/round3/scan_hypotheses.json R3S-1"
+   },
+   "sources": [
+    "research/wf_ideas_v4/round3/scan_hypotheses.json R3S-1",
+    "research/wf_ideas_v4/round3/report.json R3-A9 (2), plan_issues READ TABLE row 3"
+   ],
+   "status": {
+    "kind": "in-plan",
+    "detail": "Needs the user's OK (loosens f2 as approved at 22:06 UTC, CONTEXT.md l.1960-1966); without it the strict 0.953 floor applies (research/wf_ideas_v4/round3/report.json R3-A9 (2))."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "Put on the morning OK list with READ TABLE row 3; decide before the first K2/twin score (~06:30 UTC 26 Sep).",
+   "orphan": false
+  },
+  {
+   "id": "I-220",
+   "cluster": "DIV",
+   "name": "Density-gated insertion / density-scaled DIVINS_CAP",
+   "aliases": [
+    "R3S-2"
+   ],
+   "description": "Restrict or scale the DaughterNet insertion by clip node density to protect dense (private-like) clips.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v4/round3/scan_hypotheses.json R3S-2"
+   },
+   "sources": [
+    "research/wf_ideas_v4/round3/scan_hypotheses.json R3S-2",
+    "research/wf_ideas_v4/round3/report.json rejected, R3-A8 (5)"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Closed: the cap of 4 binds nearly everywhere, and every density quartile is above break-even in-sample except Q2 (-0.0005); pooled +0.0065 (research/wf_ideas_v4/round3/report.json R3-A8 (5), new_facts (11))."
+   },
+   "lb": [],
+   "lab": "Q0 +0.0246, Q1 +0.0028, Q2 -0.0005, Q3 +0.0019 (in-sample) (research/wf_ideas_v4/round3/report.json new_facts (11)).",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-221",
+   "cluster": "NODES",
+   "name": "Deterministic x138 tail-bug fixes / final-graph structure repair / near-duplicate dedupe",
+   "aliases": [
+    "R3S-3",
+    "tail bug fix class (a)"
+   ],
+   "description": "Look for isolated nodes, >2 children, multi-parent nodes, dt != 1 edges and same-frame near-duplicates in x138's final graph.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v4/round3/scan_hypotheses.json R3S-3"
+   },
+   "sources": [
+    "research/wf_ideas_v4/round3/scan_hypotheses.json R3S-3",
+    "research/wf_ideas_v4/round3/report.json new_facts (12), R3-A8 (5)"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Closed: 0 isolated nodes, 0 nodes with > 2 children, 0 multi-parent nodes, 0 dt != 1 edges on 56 exp60 graphs; ~190 near-duplicate pairs among ~1.1 M nodes -> EV < 1e-5 (research/wf_ideas_v4/round3/report.json R3-A8 (5)). Related old closures: I-043, I-134."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-222",
+   "cluster": "INFER",
+   "name": "Retention-guard hysteresis / per-movie scope for x138's dual-seed blended vs primary-only switch",
+   "aliases": [
+    "R3S-5",
+    "retention guard flicker"
+   ],
+   "description": "Stop per-frame switching between blended and primary-only candidates when retention < 0.9.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v4/round3/scan_hypotheses.json R3S-5"
+   },
+   "sources": [
+    "research/wf_ideas_v4/round3/scan_hypotheses.json R3S-5",
+    "research/wf_ideas_v4/round3/report.json new_facts (17), R3-A8 (5)"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Closed, not proposed: no flicker penalty (switch pairs 6.05% GT-edge FN, between blended 3.17% and primary 10.71%); would change the node set (R4) and needs a GPU lab (research/wf_ideas_v4/round3/scan_hypotheses.json R3S-5). Related: I-190 (RETENTION 0.90 switch)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-223",
+   "cluster": "RUN",
+   "name": "Widen the LB poller window: lb_poll.py l.28 splitlines()[:12] -> [:60]",
+   "aliases": [
+    "PC3-05",
+    "R3-A4",
+    "poll window"
+   ],
+   "description": "poll.log keeps only header + 5 newest submissions, so a pending K build drops out after 4 newer submits and its COMPLETE/latency is never seen (R5(a) stays UNPROVEN).",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v4/round3/scan_plancheck.json PC3-05"
+   },
+   "sources": [
+    "research/wf_ideas_v4/round3/scan_plancheck.json PC3-05",
+    "research/wf_ideas_v4/round3/report.json R3-A4, new_facts (7)",
+    "research/wf_ideas_v4/round3/report.notes.md"
+   ],
+   "status": {
+    "kind": "in-plan",
+    "detail": "Verified by the round-3 judge (experiments/lb_poll/lb_poll.py l.28 at 1ca747b - round 3 cites l.27; 22:43:02Z block = header + 5 rows); harmless tonight, bites on a busy 26-28 Sep day; covered by existing approval, not applied at 1ca747b (research/wf_ideas_v4/round3/report.json R3-A4)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "Edit + restart only in a quiet window (23:15-23:55 UTC 25 Sep or after ~09:30 UTC 26 Sep, never 06:00-09:30); check a new block with > 5 rows and runtime_ledger --print (research/wf_ideas_v4/round3/report.json R3-A4).",
+   "orphan": "at-risk"
   }
  ]
 }

@@ -1,0 +1,5 @@
+- 2026-09-25T23:00:51Z start: watch.json absent; reading existing WATCHLIST.md (curation 2) for incremental update
+- 2026-09-25T23:01:28Z read CONTEXT up to 22:06 UTC entry (HEAD 1ca747b), ledger 22:53Z, round3/report.json (22:59Z; 9 actionable R3-A1..A9)
+- 2026-09-25T23:02:21Z verified: lb_poll.py l.28 still [:12]; workflow js l.34/l.54 still list K3/K3b; READ TABLE/RESUME POINT 26 Sep absent; 10:20 block finals line stale (CONTEXT l.1531-1532); friend A card unchanged since fea74ea; memory index line current, Resume point line stale. Writing WATCHLIST v3.
+- 2026-09-25T23:04:05Z WATCHLIST.md written (curation 3): W30/W12/W17 done; new W36-W41, T12, I21-I30; writing watch.json
+- 2026-09-25T23:05:08Z watch.json written and validated; done

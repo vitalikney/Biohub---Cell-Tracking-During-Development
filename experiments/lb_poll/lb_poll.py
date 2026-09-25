@@ -25,7 +25,7 @@ while True:
     ts = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     out, note = poll()
     with LOG.open("a", encoding="utf-8") as f:
-        f.write(f"=== {ts}{note}\n" + "\n".join(out.strip().splitlines()[:12]) + "\n")
+        f.write(f"=== {ts}{note}\n" + "\n".join(out.strip().splitlines()[:60]) + "\n")
     try:  # A5 ledger -> experiments/lb_poll/ledger.md; fail-soft, never stops the poller, never writes into poll.log
         r = subprocess.run(LEDGER, capture_output=True, text=True, timeout=120, env=ENV, encoding="utf-8")
         if r.returncode:

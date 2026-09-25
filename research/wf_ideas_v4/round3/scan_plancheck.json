@@ -1,0 +1,77 @@
+{
+ "summary": "Plan check, round 3 (22:35 UTC 25 Sep). The 00:01 UTC submission of K2 (exp58 v1) and the twin (exp58n v1) is safe to run as planned. Both Kaggle kernels are COMPLETE. The twin's pulled source is identical to the local build (12/12 code cells). R7 hygiene flags are off (VALIDATOR_ENABLE 0, DIVINS_DUMP 0, no lab lines). The local clock is within 2 s of Kaggle and the PC never sleeps. A ledger simulation with the proposed messages auto-detects K2 (family safetail) and the twin (safetail_noins), so no --k2 flag and no poller restart are needed. The main gaps are in the rules, not the artefacts. (1) No rule says which scored file K2 is compared with under R3 (#35 0.954 or #34 0.953). K2's probe.json even says 'compare with exp56'. (2) The K1 fallback (v4 item 6) covers only a K2 ERROR. It does not cover K2 <= 0.952 (lowrefine fails R3; the twin contains lowrefine too) or twin - K2 >= +0.002 (R2 reopens; F2 is then undefined). Both cases must be written into CONTEXT before about 06:30 UTC, when the scores can appear. Other items: the task's plan still lists K3/K3b builds, which the pre-registered T9 read closed. poll.log keeps only the 5 newest submissions. The last RESUME POINT and the §10 checklist are stale and contradict PRE-REGISTRATION v3. The A5 forecast F can now be computed (7.87 h < 7.9 h). The 00:05 quota check has almost no remaining purpose.",
+ "findings": [
+  {
+   "id": "PC3-01",
+   "kind": "plan-issue",
+   "urgency": "now",
+   "what": "The R3 reference for K2 is undefined. K2 = #35 + C01 (safetail, inert unless a deadline fires; K1 sha == exp57b dummy) + C05 (lowrefine). R3 says 'public >= previous stack - 0.001', but CONTEXT never names the previous stack. If it is #35 (0.954), K2 = 0.952 fails R3. If it is #34 (0.953), K2 = 0.952 passes. The K2 artefact itself says something else: experiments/exp58_x138_safe_lowref/probe.json 'rule' = 'compare with exp56 ... above exp56 adopt, ties recorded' (builder boilerplate). Under that wording K2 = 0.953 would be only a 'tie', not an adoption. Choosing the reference after K2 scores (~06:30-08:00 UTC) would be choosing the rule by the result.",
+   "evidence": "CONTEXT.md l.1647-1649 (R3), l.1709-1711 (f(v): every rider passed R3/R4); experiments/exp58_x138_safe_lowref/probe.json 'rule'; #35 exp57b 0.954, #34 exp56 0.953 (experiments/lb_poll/ledger.md); K1 sha == exp57b dummy (CONTEXT 17:20 UTC).",
+   "action": "Before 06:00 UTC, write into CONTEXT (timestamped, before any K2 score): 'R3 reference for K2 = #35 (0.954), the scored file with the same insertion config. A K2 delta is attributed to lowrefine only (C01 is inert unless a deadline fires; FD/FF/K1 dummies). If L(K2) > 8.0 h, a K2 drop may come from the insertion gate firing on late clips, not from lowrefine. It is then read as a timing confound, as in branch C, and not as lowrefine harm.' Add a second check: twin - #34 <= -0.002 also closes lowrefine. The twin = #34 + C01 + C05 isolates lowrefine without the insertion. The probe.json boilerplate is not a rule; say so in the same entry."
+  },
+  {
+   "id": "PC3-02",
+   "kind": "plan-issue",
+   "urgency": "today",
+   "what": "The K2/twin read table has holes that land on bad finals. (a) K2 <= 0.952: R3 closes lowrefine. The §f fallback is then 'previous K' (none) -> K1 (unscored; approved only for branches C/D or a K2 ERROR under v4 item 6 [OK]) -> #35 (not admissible, L35 in (6.72, 7.73] h is unproven) -> #34, a byte-copy of x138 at the END of the 241-team tie block. The twin also contains lowrefine, yet f2 would still make it F2 if it scores >= 0.953. That conflicts with R3's 'removed and never tried again'. (b) twin - K2 >= +0.002: R2 reopens, the insertion leaves the F1 stack and the twin becomes F1. F2 is then undefined, because f2 names exp52 only when the twin is unscored or failed, or in branch D. (c) K2 ERROR plus twin ERROR: covered only by item 6 plus exp52.",
+   "evidence": "research/wf_ideas_v4/FINAL_REPORT_v4.md §3 item 6 (K1 only if K2 = ERROR, [OK]) and §5 item 4; CONTEXT.md l.1712-1717 (§f fallback order), l.1887-1895 (AMENDMENT f2), l.1960-1966 (user OK on the twin).",
+   "action": "Write this table into CONTEXT before the scores appear, and put the K1 line on the morning OK list. K2 >= 0.953 and twin >= 0.953: F1 = K2, F2 = twin. K2 >= 0.953 and twin <= 0.952 or ERROR: F1 = K2, F2 = exp52. K2 <= 0.952 or K2 ERROR: submit K1 (exp58t v1, already gated, sha == exp57b dummy) in the next 26 Sep slot [needs OK]; F1 = K1 once it scores >= 0.953 and is R5-admissible; F2 = exp52. The twin is not F2 while lowrefine is closed by R3. twin - K2 >= +0.002: F1 = twin, F2 = K2 (they differ by the insertion) or exp52; the user picks now, not after the scores. K1 scores ~7 h after its submit, so a submit at ~08:30 UTC 26 Sep is back by ~16:00, well inside R8."
+  },
+  {
+   "id": "PC3-03",
+   "kind": "plan-issue",
+   "urgency": "now",
+   "what": "The task text still lists 'K3 = K2 + forkmid and K3b = DeepCenter threshold builds and their dummies' and slots S4-S6 on 26 Sep. CONTEXT 20:35 UTC recorded the pre-registered T9 read: forkmid FAIL (ORIGINAL and L3: 1 evaluable FP removed, the rule needs 3), K3b FAIL on every clause, forkblob FAIL (20:05), K4 dropped (M6). Building or pushing K3/K3b dummies tonight, or filling S4-S6 with variants, would re-open closed riders on public LB feedback. That breaks 'no public knob ladders' and R3/R4.",
+   "evidence": "CONTEXT.md l.1924-1936 (T9 decisions), l.1938-1951 (round 2: ANTIPAR/DNVETO closed, K4 dropped); FINAL_REPORT_v4 §3 'Что не делать'.",
+   "action": "Main session: after the 00:01 submits, the only planned Kaggle actions tonight are polling and reading the ledger. Do not build exp59/exp59dc or push any GPU dummy. Leave S4-S6 on 26 Sep empty unless PC3-02 triggers K1. Write one line in CONTEXT: 'S4-S6 empty by the T9 read; unused slots are not burned.'"
+  },
+  {
+   "id": "PC3-04",
+   "kind": "plan-issue",
+   "urgency": "now",
+   "what": "The submit checklist is verified; four details matter. (1) The twin's message must have 'exp58n' as its FIRST exp token. A message like 'probe 38: K2 twin (exp58 minus insertion) = exp58n' would make the ledger pick the twin as K2 (token exp58) with the wrong family and a false insertion-gate column. (2) Submit both with -v 1. exp58 v1 ran at 16:20:17Z and exp58n v1 at 20:35:41Z; neither has been re-pushed since its dummy. (3) Submit at >= 00:01:00 UTC: 25 Sep is full (5 submissions), and the local clock is within 2 s of Kaggle. (4) A ledger simulation with the proposed messages gives K2 = safetail (9.5 h, insertion-gate column) and twin = safetail_noins. The round-2 advice to add --k2/--family to the poller (which needs a restart) is therefore unnecessary.",
+   "evidence": "kaggle kernels list --mine (22:22Z): exp58n lastRunTime 2026-09-25 20:35:41, exp58 16:20:17; scratchpad pull58n: 12/12 code cells equal to experiments/exp58n_x138_safe_lowref; tools/runtime_ledger.py EXP_TOKEN/EXP_RULES l.64-73, pick_k2 l.255; simulated ledger scratchpad/fake_ledger.md; curl Date header 22:21:45 vs local 22:21:44.",
+   "action": "Use: kaggle competitions submit biohub-cell-tracking-during-development -k vitaliineibauer/biohub-exp58-x138-safe-lowref -v 1 -f submission.csv -m 'probe 37: exp58 = K2 (x138 + safetail C01 + lowrefine + DaughterNet insertion #35 config); dummy gates 18/18'. Then use -k vitaliineibauer/biohub-exp58n-x138-safe-lowref -v 1 -f submission.csv -m 'probe 38: exp58n = K2 twin without the insertion (x138 + safetail + lowrefine); AMENDMENT f2 F2 candidate; twin gates pass'. Afterwards run 'python tools/runtime_ledger.py --print' once and check that the two rows show families safetail / safetail_noins. Log 'K2 + twin submitted 00:0x under pre-approval (3) + f2 OK 22:06'."
+  },
+  {
+   "id": "PC3-05",
+   "kind": "new-fact",
+   "urgency": "today",
+   "what": "poll.log records only the 5 newest submissions. lb_poll.py writes out.strip().splitlines()[:12], and the Kaggle CLI output separates rows with blank lines, so 12 lines = header + 5 rows. After 00:01 the window holds twin, K2, P36, #35 and #34. A pending K build drops out of the window after 4 newer submissions. After that, runtime_ledger never sees its COMPLETE. hi_h stays None and R5(a) and the insertion-gate proof become UNPROVEN forever. This is harmless tonight, but it bites on a busy day (26-28 Sep, 5 slots) while an earlier K build is still pending.",
+   "evidence": "experiments/lb_poll/lb_poll.py l.27 ('[:12]'); cat -A of the 22:12:56Z block: header, ^M, row, ^M ... 5 rows; tools/runtime_ledger.py ledger_entry(): a missing row goes to 'invisible' and first_result is never set.",
+   "action": "Change '[:12]' to '[:60]' in experiments/lb_poll/lb_poll.py. Restart the poller now (before 00:01, when only the info-only P36 is pending) or after K2 and the twin are COMPLETE. Do not restart during 06:30-08:30 UTC, the K2 watch window. Keep the append-only log; a restart gap under 1 min is harmless (GAP_WARN is 15 min)."
+  },
+  {
+   "id": "PC3-06",
+   "kind": "new-fact",
+   "urgency": "today",
+   "what": "The A5 forecast F (round-2 PC2-12, never computed) can now be computed from the dummies with the v4 item-5 formula. Repair delta K2 vs exp57b dummy = (509.2 - 491.4)/4 = 4.45 s/clip, and 97 * 4.45 * 1.15 = 496 s = 0.14 h. So F = L35_upper 7.73 + 0.14 = 7.87 h, just below the 7.9 h trigger. lowrefine costs about nothing in the GPU phase: Prediction took 9.30 min for K2 vs 9.18 for exp57b, but 9.40 for the twin (same lowrefine) and 9.22 for K1, so it is noise. Start-up before the first repair varies 818-1179 s between identical-code kernels. Consequence: the 7.9 h trigger sits inside the noise, and L(K2) > 8.0 h can come from queueing alone. The twin, submitted at the same moment with the same GPU phase but ~65 s/clip less repair, is a paired control for that.",
+   "evidence": "_dl/biohub-exp57b-x138-divins-only, _dl/biohub-exp58-x138-safe-lowref, _dl/biohub-exp58t-x138-safe, _dl/biohub-exp58n-x138-safe-lowref logs ('[ds] repair Xs | kernel elapsed', 'Prediction completed in'); experiments/runtime_step0/step0.md.",
+   "action": "Record F = 7.87 h in CONTEXT and pass --forecast-h 7.87 in the next manual ledger run (A5-F then reads CLEAR). If A5-L(K2) FIRES (L(K2) > 8.0 h), check the twin before asking for the D4 / deadline-move OK. If L(twin) >= L(K2) - 0.3 h, queue delay dominates; say so in the OK request and do not present it as proof of a slow runtime."
+  },
+  {
+   "id": "PC3-07",
+   "kind": "plan-issue",
+   "urgency": "now",
+   "what": "The resume state is stale and contradicts the binding rules. MEMORY.md tells a new session to read 'the LAST RESUME POINT block ... latest 25 Sep 10:20 UTC'. That block says 'F1 = best of {exp57b, exp56, exp51/exp52}; F2 = exp51' and 'every new submission needs the user's explicit OK'. PRE-REGISTRATION v3 forbids exp56 as F1 (f(iv)) and excludes #35/exp57b (R5, L35 unproven). The MEMORY.md index line for project-lb-probe-approval still reads '25 Sep batch approved: exp52, exp53, exp54 ... more needs a new OK', although the file itself is up to date. The CONTEXT §10 'Next steps' checklist dates from 6 Sep, although the user wants the checklist kept there. The 'T1 SAFETAIL DONE' entry (25 Sep 14:05) sits below '## 9. Literature'. A context compaction or new chat during the night (research rounds at 00:45 and 03:15 plus the curator) could act on the 10:20 block.",
+   "evidence": "MEMORY.md 'Resume point' line; CONTEXT.md l.1519-1547 (10:20 block), l.109 (§10 checklist, 6 Sep content), l.1967-1984 (entry under §9); memory/project-lb-probe-approval.md (file current: f2 approved '~21:00' vs CONTEXT 22:06).",
+   "action": "Main session, right after the 00:01 submits: add a new '2026-09-26 00:1x UTC ===== RESUME POINT =====' block. It holds: the K2/twin refs, the PC3-01/02 read table, the finals rule (F1 = K2 by default, F2 = twin by f2, else exp52; never exp56/#35), closed items (K3/K3b/forkblob/ANTIPAR/DNVETO/K4), the poll window, and the pending morning OKs (K1 fallback, optional floatout, L1/L2 moot). Point MEMORY.md at it and refresh the approval index line. The memory/CONTEXT edits are the main session's to make; this agent writes neither."
+  },
+  {
+   "id": "PC3-08",
+   "kind": "recheck-old",
+   "urgency": "info",
+   "what": "The GPU quota check at ~00:05 UTC (round-2 A5) has almost no remaining purpose. Its only consumers were the twin dummy (done), K3/K3b dummies (closed) and the L6 6bba extension (conditional on K3b passing, so moot). The quota arithmetic also indicates that hidden reruns do NOT count: usage rose by +2.28 h between 13:58 and 18:10. The dummies (K2 0.43 h, K1 0.47 h, FD/FF ~0.35 h each) plus exp60 shard A (~0.9 h by 18:10) already explain that. P36's rerun (running since 16:18) would have added ~1.9 h if it counted.",
+   "evidence": "CONTEXT 13:58 ('18:56 / 30 hrs'), FINAL_REPORT_v4 l.54 ('~21:13 of 30 h at ~18:10'); dummy kernel end times from the _dl logs; ledger: P36 PENDING since 16:18:09Z.",
+   "action": "Optional: read Settings once at ~00:05 only to record whether the Saturday reset happened (W06). No GPU push is planned tonight whatever it shows. Do not treat 'quota reset' as a reason to run extra GPU work."
+  },
+  {
+   "id": "PC3-09",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "Verified OK, no action. Twin Kaggle source == local build and metadata identical (datasets without biohub-ft-weights, which is correct with no insertion; T4 machine, same docker pin, internet off). Kernel cell 0 in K2/twin: VALIDATOR_ENABLE 0, DIVINS_DUMP 0 (K2), DEEPCENTER_SAFE_DIV_THRESHOLD 0.25 (x138 default), no LAB/FORCE_FAIL/TRAINLAB lines. The input-mount layout differs between dummies: exp57b saw /kaggle/input/<slug>, while K2 and the twin saw /kaggle/input/competitions/... and /kaggle/input/datasets/<owner>/<slug>. The notebook resolves both (candidate lists plus the rglob/_divins_glob walkers), and #34 and #35 both scored under the hidden rerun. PC sleep is disabled (STANDBYIDLE AC/DC = 0). The poller (PID 30460, started 18:41Z) is alive; last poll 22:12:56Z, 0 gaps > 15 min.",
+   "evidence": "scratchpad/pull58n/kernel-metadata.json; experiments/exp58*_x138_safe_lowref cell 0; dummy logs; powercfg /query SCHEME_CURRENT SUB_SLEEP STANDBYIDLE; Win32_Process listing; experiments/lb_poll/ledger.md 22:12:58Z.",
+   "action": "None."
+  }
+ ]
+}

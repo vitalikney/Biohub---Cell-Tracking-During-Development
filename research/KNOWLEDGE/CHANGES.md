@@ -81,3 +81,107 @@ Alerts (`INDEX.md` TOP ALERTS, 12 after dedup):
   bare assert (I17, W33); stale memory pointer (W34); rank line in CONTEXT stale (W22); DeepCenter t* = 0.30 post-hoc (I19).
 - Curator disagreement settled here: the ideas curator kept "L1+L2 K3b re-read (P ~0.1)" on the morning OK list; the
   facts and watch curators say no K3b under any reading (`experiments/exp60_trainlab/results.md` l.76-80). INDEX follows the latter.
+
+## 3 - 2026-09-25 ~23:15 UTC (curation 3; git HEAD 1ca747b + untracked `research/wf_ideas_v4/round3/`)
+
+Previous curation: 2 (~20:55 UTC, da154cb). New inputs:
+- `CONTEXT.md` l.1938-1966 (entries 20:55-22:06) and commits 4f5d325, 1ca747b.
+- `experiments/lb_poll/ledger.md` (22:53Z-23:03Z).
+- `research/wf_ideas_v4/round3/report.json` + scan/v_*.json (finished 22:59Z).
+
+Curator logs: `research/KNOWLEDGE/_curation/3/`.
+
+**State change in one line.** The user OK'd AMENDMENT f2 at 22:06, so the finals pair is F1 = K2 (exp58) and F2 = the exp58n twin (twin gates PASS at 20:55). Both are submitted at 00:01 26 Sep. Round 3 adds a pre-score READ TABLE and declares the x138 tail saturated - `CONTEXT.md` l.1955-1966; `research/wf_ideas_v4/round3/report.json` R3-A1, R3-A2, new_facts (13).
+
+**Ideas** (`IDEAS.md` "CHANGES IN THIS CURATION (3)"; full list in `ideas.json` meta.curations[n=3], 42 records changed):
+- New (7):
+  - I-217 READ TABLE: in-plan, at risk (not in CONTEXT).
+  - I-218 widened K1 trigger: refuted.
+  - I-219 twin floor 0.952: in-plan, needs OK.
+  - I-220 density-gated insertion: refuted.
+  - I-221 x138 structure repair / dedupe: refuted.
+  - I-222 retention-guard hysteresis: refuted.
+  - I-223 poller window `[:12]` -> `[:60]`: in-plan, at risk.
+- To refuted/closed: I-216 ADDENDUM M, now recorded post-hoc in `CONTEXT.md` l.1938-1951.
+- Updated:
+  - I-090 twin: approved.
+  - I-089/I-091: exp52 is now only the f2 fallback.
+  - I-001, I-002 (F(K2) = 7.87 h), I-003 (R5(b) margin 1.63 h).
+  - I-011: K1 triggers narrowed to READ TABLE rows 1/4/5.
+  - I-036, I-062 (insertion by density quartile), I-136 (P36 still pending), I-094 (#164), I-201 (lab calibration rule).
+- Re-closed with numbers: I-165/I-166 swapfix, I-145, I-151, I-173.
+- Counts, curation 2 -> 3:
+  - ideas 216 -> 223;
+  - refuted 124 -> 129, in-plan 16 -> 18;
+  - lb-tested 37, lab-tested 20, deferred 19 and open-untested 0 are unchanged.
+- At risk: {I-035, I-216} -> {I-035, I-217, I-223}.
+
+**Facts and decisions** (`FACTS.md` and `DECISIONS.md`, lines marked [c3]; `_curation/3/facts.json`):
+- New facts:
+  - F-RUN-13: F(K2) = 7.87 h.
+  - F-RUN-14: the poller keeps only 5 rows.
+  - F-RUN-15: twin dummy 1,038 s vs K2 1,512 s.
+  - F-RUL-05: hidden reruns use no GPU quota.
+  - F-RUL-11: the Overview page is unchanged.
+  - F-MOD-14/15.
+  - F-TRN-14..18: insertion gain by density quartile, x138 tail saturated with 0 true 2x2 swaps, node loss at clip boundaries, the lab over-rewards node-adding arms, no flicker penalty.
+  - F-LB: #164/3,914 at 22:16, 18th of 65 in the 0.954 block, silver 32 ranks below us.
+- Contradictions resolved: C-21 and C-23 (ADDENDUM M recorded as post-hoc notes, `CONTEXT.md` l.1938-1951).
+- Contradictions new:
+  - C-24: other teams' latency.
+  - C-25: f2 OK time, memory ~21:00 vs CONTEXT 22:06.
+  - C-26: stale RESUME POINT.
+  - C-27: R3 reference for K2, #34 vs #35.
+  - C-28: `--k2/--family` flags superseded.
+  - C-29: the workflow prompt still lists closed riders.
+- `DECISIONS.md`:
+  - P37 (K2) and P38 (twin) are scheduled; P36 is still pending.
+  - §1b adds G07-G11 (round-3 closures, proposed).
+  - §2: twin = F2 candidate, with K1 triggers.
+  - New §2b holds the proposed READ TABLE.
+
+**Watchlist** (`WATCHLIST.md`; `_curation/3/watch.json`):
+- Done: W30 (ADDENDUM M recorded, round 2 committed), W12/W17 (twin gates PASS), W21 item (1) (f2 OK).
+- Partial: W31.
+- Superseded by round 3: W06, W15, W18.
+- Resolved insights: I16, I20.
+- New:
+  - W36: poller window.
+  - W37: workflow prompt drift.
+  - W38: round 3 untracked, no REPORT.md.
+  - W39: READ TABLE.
+  - W40: RESUME POINT.
+  - W41: runtime records.
+  - T12: the M6 window lapses 26 Sep 18:00.
+  - I21-I30.
+
+**Alerts** (`INDEX.md` TOP ALERTS, 12 after dedup):
+- Resolved since curation 2:
+  - ADDENDUM M not recorded (C-21, W30);
+  - twin dummy has no `--twin` gate read (gates PASS, `CONTEXT.md` l.1955-1959);
+  - round 2 untracked (committed in 4f5d325);
+  - f2 needs the user's OK (OK at 22:06);
+  - the K2 `--k2/--family` ledger call (the first exp token now sets the family, C-28);
+  - quota check at 00:05 (now optional, W15);
+  - the round-2 closures ANTIPAR, DNVETO, I-072 and K4 (in CONTEXT at 20:55).
+- Still open from curation 2:
+  - the K2 submit (now K2 + twin);
+  - the morning OK list (now R3-A9);
+  - closures into CONTEXT (now round 3 + I-213);
+  - quota evidence;
+  - friend A card;
+  - admission table and untracked ext_* folders;
+  - stale memory pointer;
+  - I-035;
+  - TEAM.md 0.97;
+  - DeepCenter t* = 0.30 post-hoc.
+- New:
+  - READ TABLE not in CONTEXT (I-217, W39);
+  - poller window (I-223, W36);
+  - workflow prompt drift (W37);
+  - stale 10:20 RESUME POINT (W40, C-26);
+  - round 3 untracked, and CONTEXT cites a missing `round2/REPORT.md` (W38);
+  - P36 still pending at the submit, so L(K2) may include queue time (W14).
+- Curator disagreement settled here:
+  - The `[:12]` slice is at `experiments/lb_poll/lb_poll.py` l.28 (verified at 1ca747b); `FACTS.md` F-RUN-14 and round 3 say l.27.
+  - Poller urgency: the ideas and facts curators say "today", the watch curator says "now". INDEX uses "now", because the first quiet window is 23:15-23:55 tonight.

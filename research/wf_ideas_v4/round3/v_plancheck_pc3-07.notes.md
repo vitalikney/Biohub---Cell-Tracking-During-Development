@@ -1,0 +1,9 @@
+# PC3-07 verify notes (2026-09-25T22:46:20Z)
+- 22:47 UTC 25 Sep (date -u): K2/twin not yet submitted (poll.log 22:43Z shows #32-#36 only).
+- CONTEXT.md l.1519: last "===== RESUME POINT" = 25 Sep 10:20 UTC; it says F1 = best of {exp57b, exp56, exp51/exp52}, F2 = exp51 -> contradicts §f (l.1705-1734: F2 = exp52 default, never tick exp56) and AMENDMENT f2 (l.1887, user OK 22:06 l.1967ff: F2 = twin exp58n). CONFIRMED.
+- MEMORY.md on disk (mtime 16:38 local = 13:38 UTC): "Resume point ... latest 25 Sep 10:20 UTC", "(just above ## 9. Literature)" -> stale + wrong location (10:20 block is ~450 lines above ## 9). CONFIRMED.
+- MEMORY.md lb-probe-approval index line ON DISK already reads "PRE-REGISTRATION v3 approved 25 Sep: K2 night submit, gated riders..." (updated 13:38 UTC). The "exp52, exp53, exp54" text is only in the session-start system-reminder snapshot -> that part of the finding (and round-2 W34/PC2-16) is FALSE for new sessions.
+- memory/project-lb-probe-approval.md body (mtime 01:06 local = 22:06 UTC): "f2 APPROVED 25 Sep ~21:00 UTC" vs CONTEXT 22:06 -> minor stamp mismatch, confirmed.
+- CONTEXT §10 checklist l.109-125 = 6 Sep items only. CONFIRMED. T1 SAFETAIL entry at l.1969 below "## 9. Literature". CONFIRMED (cosmetic).
+- ERROR IN PROPOSED ACTION: "never exp56/#35". AMENDMENT f2 (l.1887-1893) keeps "§f fallback item 4 (#34) stays as the last resort before exp52 ('never tick exp56' applies while any admissible non-copy x138-family file exists)". #35 is already out by R5 (16:20 entry: L35 in (6.72,7.73] h, 7.5 h unprovable). A paraphrased rule in a resume block would create a second divergent rule source -> the block must POINT to l.1705ff + f2 verbatim, not restate.
+- Value: 0 on LB/private directly; guards against a new chat/compaction advising wrong finals ticks (manual by user 29 Sep 20:00) or wrong approvals. Cost ~10 min text, no kernel, no rule conflict (R1-R10 untouched). Do after the 00:01 submits, not before.

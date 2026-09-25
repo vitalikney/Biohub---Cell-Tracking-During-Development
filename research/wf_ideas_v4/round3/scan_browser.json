@@ -1,0 +1,37 @@
+{
+ "summary": "Round-3 delta scan, 22:16-22:30 UTC 25 Sep, compared with round 2 (LB 19:46 UTC). Very little changed and nothing affects K2 at 00:01 UTC or the plan. The public LB now has 3,914 teams (was 3,908). We are rank 164 at 0.954 (was 157). The drop comes only from teams above us: 8 teams entered the 0.954+ range from below. Our place inside the 0.954 block is unchanged (18th of 65). Block counts, with 19:46 in brackets: 0.953 = 280 (268), 0.954 = 65 (63), 0.955 = 40 (38), 0.956 = 23 (21), 0.957 = 14 (13), >=0.960 = 49 (47), >=0.953 = 491 (469). Rank ranges: 0.954 = 147-211, 0.953 = 212-491. The silver line (about rank 196) is still inside the 0.954 block, 32 ranks below us. The top 19 did not change. Syed Asad Ali jumped from 0.953 (#417) to 0.965 (#20). His only public kernels are for another competition. Sixteen more teams moved from 0.947 into 0.953, all at the END of the 0.953 block, which again fits late x138 copies. No public notebook has run since raunakdey07 at 09:09 UTC, and none scores above 0.953. x138 is unchanged (Version 1 of 1, 3 comments; copies went from 258 to 260). The only discussion activity is a one-line comment by Gabriel (#1) on a beginner public/private-split thread, with no content. There are no host announcements and no changes to the Overview, timeline, runtime limit or data. Nothing was pulled into experiments/ext_*.",
+ "findings": [
+  {
+   "id": "r3-lb-delta-2216",
+   "kind": "new-fact",
+   "what": "Public LB at 22:16 UTC: 3,914 teams. We are rank 164 at 0.954 (37 subs, last 08:33:25). Rank was 157 at 19:46, 151 at 18:08 and 149 at 16:52. The 0.954 block moved from 139-201 to 147-211 (65 teams). We are its 18th team, 19th at 19:46, so our place inside the block did not change. All 7 lost ranks come from teams rising from lower blocks into 0.955+. Other blocks: 0.957 = 70-83 (14), 0.956 = 84-106 (23), 0.955 = 107-146 (40), 0.953 = 212-491 (280). Also >=0.960 = 49 (+2), >=0.970 = 6, >=0.953 = 491 (+22 in 2.5 h). Silver (about 5% of 3,914 = rank 196) is inside the 0.954 block, 15 ranks above its end; we are 32 ranks above the line.",
+   "evidence": "python -m kaggle competitions leaderboard biohub-cell-tracking-during-development --download at 22:16:15 UTC. File: session scratchpad lb/r3/biohub-cell-tracking-during-development-publicleaderboard-2026-09-25T22_16_15.csv. Compared with lb/new/...T19_46_38.csv using the scratchpad script lb/cmp.py.",
+   "action": "Update the CONTEXT intel line to rank 164/3,914, 0.954 block 147-211, silver ~196. No plan change. When K2 scores (~06:30-08:00 UTC 26 Sep), record its rank inside its block against #35 (18th of 65 now).",
+   "urgency": "info"
+  },
+  {
+   "id": "r3-top-movers",
+   "kind": "new-fact",
+   "what": "The top 19 are unchanged (Gabriel and Sergio Alvarez 0.975, yu4u 0.973, ymg_aq and tatsutaka 0.971, Tang 0.970; Corwin #17 0.965). Large movers since 19:46: Syed Asad Ali (syed3000) 0.953 (#417) -> 0.965 (#20), 18 subs, last sub 12:24 UTC. Others: LIN mimosa 0.957 -> 0.962 (#31), Mositaku 0.955 -> 0.958, Alfonso Sanchez 0.948 -> 0.957, Miz 0.954 -> 0.957, maesaer 0.954 -> 0.956, Deep Thought 0.953 -> 0.956, datnt114 0.953 -> 0.955, Satwik 0.954 -> 0.955, darkvector4 0.938 -> 0.955. New in 0.954: Gaiar Baimuratov, BobtheBot369 (from 0.945), Kita Renji, ssaakura (new team, 2 subs), Reuben Ernser. Every mover's last submission falls between 12:24 and 15:33 UTC, which fits hidden-rerun latencies of about 7-10 h; there is no sign of a queue problem. None has public biohub code from after x138. syed3000's three public kernels ('v12b/v17/v19 ... build', 7-8 Sep) list competition_sources = ai-agent-security-multi-step-tool-attacks, a different competition. alfonso1799's biohub notebooks were last run 18 Sep, before x138. linmimosa, achenyyc, versavice, darkvector4, sha1ng, valtrix, the ssaakura team and reubenernser have nothing public.",
+   "evidence": "Same LB diff. kaggle kernels list --user <u> and datasets list --user <u>. kaggle kernels pull syed3000/v17-the-private-build-we-submitted -m, whose kernel-metadata shows competition_sources ['ai-agent-security-multi-step-tool-attacks']; metadata is in the scratchpad r3k/.",
+   "action": "None. The 0.955-0.965 shoulder keeps growing with no public mechanism behind it. That fits private retrained or ensembled models, which R9 rules out for us.",
+   "urgency": "info"
+  },
+  {
+   "id": "r3-late-copies-block-end",
+   "kind": "new-fact",
+   "what": "Sixteen more teams (Pavel Pavlov, kglctf, yok (new), ji-ma, stevenleehans, Dalton Omondi, ykhnkf, codelion, Kousuke55, ChenWenSheng, hisatarosu, kerlgd, lyre lin, T-Hans7, Vinayak Pathak, plus Pawan Rama Mali #481 and neurlog #486) went from 0.946-0.951 into 0.953. They sit at ranks 460-486, the END of the 0.953 block (212-491). Their last submissions were mostly 13:14-15:11 UTC. This is the third window in a row showing the pattern: late byte-copies of x138 share x138's unrounded score and rank below earlier copies.",
+   "evidence": "LB 22:16 vs 19:46 (cmp.py movers list).",
+   "action": "None. It reconfirms finals rule f(iv): never tick a verbatim x138 copy (exp56).",
+   "urgency": "info"
+  },
+  {
+   "id": "r3-no-new-code-posts-announcements",
+   "kind": "new-fact",
+   "what": "Nothing new is public. (a) Code: no competition notebook has run since raunakdey07/biohub-harmonic-fusion-v3 (25 Sep 09:09 UTC). The newest created notebook on the Code tab is 2 days old ('Robust Cell Tracking ... via Chan.'). No public notebook scores above 0.953. (b) x138 (https://www.kaggle.com/code/anvithpothula/biohub-0-953-lb-runnable-with-public-datasets) is unchanged: 'Version 1 of 1', Comments (3), 183 votes. Copies went from 258 to 260 and views from 1,873 to 1,908. (c) Discussion: there is no new topic. The only new comment is on topic 743006, 'Beginner question: How do Public/Private splits usually work in biological datasets?' (https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/743006, Rishavendra Sharma, posted a day ago). About 24 min before 22:20 UTC, Gabriel (#1, 0.975) wrote: \"I am also curious about the answer to this question.\" It carries no information. The pinned host topics are unchanged (9d/25d/2mo), so there is no announcement. (d) Overview is unchanged: Entry Deadline September 22, 2026; Final Submission Deadline September 29, 2026; 'GPU Notebook <= 12 hours run-time' and 'CPU Notebook <= 12 hours run-time'; internet disabled; external data allowed. (e) Data: competition files still show creationDate 2026-06-26. (f) Datasets: the only new biohub dataset is kragglenote2forwork/biohub-sub-cache2 (20:06 UTC, size 0), which is empty and irrelevant. models list --search biohub shows nothing new. Nothing was pulled into experiments/ext_*.",
+   "evidence": "Browser in its own tab (closed at the end): /discussion?sort=published, /discussion?sort=recent-comments, /discussion/743006, /code?sortBy=dateCreated, the x138 page, and /overview. CLI: kernels list --competition --sort-by dateRun and --sort-by scoreDescending, competitions files, datasets list --search biohub --sort-by updated, models list --search biohub.",
+   "action": "None. The next browser delta is in round 4 (~00:45 UTC), shortly after K2 goes in. That scan should also confirm K2 appears as PENDING on our Submissions page (via the poller or CLI, not the browser).",
+   "urgency": "info"
+  }
+ ]
+}

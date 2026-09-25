@@ -1964,6 +1964,45 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   the first exp token naming the build (exp58 / exp58n) so tools/runtime_ledger.py assigns the safetail families.
   User's stated principle: the two finals must not be the same file; they hedge different risks (F2 hedges the least
   proven component of F1, the insertion). L1/L2 OKs still pending but moot (K3b fails under every reading).
+- 2026-09-25 23:12 UTC, NIGHT RESEARCH ROUND 3 DONE (research/wf_ideas_v4/round3/REPORT.md). Recorded (no OK needed):
+  S4-S6 on 26 Sep carry NO rider (forkmid / K3b / forkblob FAIL at the T9 read, K4 dropped): no exp59/exp59dc build and no
+  GPU dummy; unused slots are not burned. Exceptions needing the user's OK: K1 per the READ TABLE below, or a deadline
+  move / D4 build if the runtime trigger (L(K2) > 8.0 h) fires. Runtime: forecast F(K2) = 7.73 + 97*4.45*1.15/3600 =
+  7.87 h (1.63 h margin to the 9.5 h repair deadline -> R5(b) admits K2 and the twin unless they ERROR). Hidden reruns
+  do not consume the weekly GPU quota (usage +2.28 h 13:58->18:12 matched our dummies + lab only). LB 22:16-22:23 UTC:
+  3,914 teams, we are #164 at 0.954 (18th of the 0.954 block, ranks 147-211); silver (~rank 196) is 32 ranks below us.
+  Closures (round 3): swapfix on x138 (0 of 555 true 2x2 swaps; detection/localisation problem, post-deadline);
+  clip-boundary rescue b4 (+0.00056 pooled but 0.00000 on SELECTION - no honest gain). Poller widened to 60 lines so
+  pending builds do not drop out of the log (PC3-05). The 25 Sep 10:20 UTC RESUME POINT's finals line (F2 = exp51,
+  F1 = best of exp57b/exp56/...) is SUPERSEDED by PRE-REG v3 §f + AMENDMENT f2 + the user's OK (22:06 UTC) + the READ TABLE.
+- 2026-09-25 23:12 UTC, K2/TWIN READ TABLE (pre-score clarification of R3/R5/§f/f2; written before any K2 or twin score is
+  in poll.log; source research/wf_ideas_v4/round3/report.json). The strict reading applies now. Rows tagged [OK] need the
+  user's OK; without it the strict text in [brackets] applies. Displayed scores only; K2's rank inside its score block is
+  info, never a decision input (R7).
+  REFS: d1 = K2 - #35 (0.954). #35 is the scored proxy of K1 (K1 dummy sha == exp57b dummy; C01 is inert unless a deadline
+  fires), so d1 reads lowrefine in the insertion stack. d2 = twin - #34 (0.953): no insertion and no insertion gate, so d2
+  reads lowrefine alone. The probe.json line 'compare with exp56 ... ties recorded' is builder boilerplate
+  (tools/build_probe_kernel.py l.2310), not a rule.
+  CLEAN: d1 is clean iff ledger.md shows L(K2) upper bound <= 8.0 h (COMPLETE seen at a poll <= submit + 8.0 h, ~08:01Z).
+  Then the in-kernel insertion deadline (28,800 s from kernel start) never fired; a per-clip 'DIVINS FAILED' stays
+  unobservable. L > 8.0 h or no proof = not clean (L includes queue time; P36 still PENDING at the submit makes that likelier).
+  R5: F(K2) = 7.87 h leaves 1.63 h to the 9.5 h repair deadline, so R5(b) admits K2 and the twin unless they ERROR.
+  First matching row wins:
+  1. K2 ERROR: K1 = exp58t v1 in the next 26 Sep slot [OK] (v4 item 6); F1 = K1 once scored, R5-admissible and >= 0.953;
+     F2 = twin by f2, else exp52. [Without the OK: §f fallback order.]
+  2. twin - K2 >= +0.002: R2 reopens (f2 / R7). F1 = twin. F2 = K2 if d1 >= -0.001 [OK], else K1 if submitted and
+     scored [OK], [else exp52].
+  3. d1 >= -0.001: lowrefine kept. F1 = K2. F2 = twin if >= 0.953; twin = 0.952 -> twin with a 0.952 floor [OK]
+     [else exp52]; twin <= 0.951 or ERROR -> exp52. d2 alone never removes lowrefine from F1.
+  4. d1 <= -0.002 and clean: R3 removes lowrefine from the F1 stack (no new lowrefine build). K1 [OK]; F1 = K1 once
+     scored, R5-admissible and >= 0.953. F2 = twin if >= 0.953 (f2 as written; R3's 'never try again' bars new builds,
+     not an already scored f2 file), else exp52. No K1: F1 = twin if >= 0.953 [OK] [else §f item 4 = #34]; F2 = exp52.
+  5. d1 <= -0.002 and not clean: timing confound (branch-C logic); d2 is the lowrefine read. d2 <= -0.002 -> as row 4
+     (note: K1 carries the same 8.0 h insertion gate). d2 >= -0.001 -> lowrefine kept; F1 = K2; F2 = twin if >= 0.953
+     (0.952 with the floor OK) else exp52; raise the v4 item-5 runtime trigger (deadline move / D4) to the user after
+     comparing L(twin): L(twin) >= L(K2) - 0.3 h means queue delay dominates.
+  Never: K1 at d1 = -0.001 (R3 keeps lowrefine; a 0.001 K1-vs-K2 pick is barred by R7 and §f); exp56 while an admissible
+  non-copy x138-family file exists; two files with identical components.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

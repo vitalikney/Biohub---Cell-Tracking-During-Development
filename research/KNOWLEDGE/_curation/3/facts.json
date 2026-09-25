@@ -1,0 +1,77 @@
+{
+  "task": "curate:facts (FACTS.md + DECISIONS.md), curation 3",
+  "complete": true,
+  "written_at": "2026-09-25T23:10Z",
+  "files_written": [
+    "research/KNOWLEDGE/FACTS.md",
+    "research/KNOWLEDGE/DECISIONS.md",
+    "research/KNOWLEDGE/_curation/3/facts.notes.md",
+    "research/KNOWLEDGE/_curation/3/facts.json"
+  ],
+  "alerts": [
+    {
+      "kind": "deadline",
+      "what": "The K2/twin READ TABLE (round 3) is not in CONTEXT. Until it is, the R3 reference for K2 is undefined: K2 = 0.952 passes against #34 and fails against #35. It counts as pre-registered only if it is committed before any K2 or twin score appears in poll.log.",
+      "evidence": "research/wf_ideas_v4/round3/report.json R3-A2 and plan_issues (verbatim block); CONTEXT.md l.1647-1649 (R3 text); HEAD 1ca747b has no READ TABLE; FACTS C-27; DECISIONS §2b",
+      "suggested_action": "Main session: write the READ TABLE verbatim into CONTEXT with a timestamp and commit it right after the 00:01 submits, well before ~06:00 UTC.",
+      "urgency": "now"
+    },
+    {
+      "kind": "deadline",
+      "what": "Submit K2 (P37, exp58 v1) and the twin (P38, exp58n v1) at >= 00:01:00 UTC 26 Sep. Both are approved (pre-approval (3); f2 OK at 22:06 UTC). The messages must start 'probe 37: exp58' and 'probe 38: exp58n'. Do not re-push; no --k2/--family flags are needed.",
+      "evidence": "CONTEXT.md l.1960-1966; git 1ca747b; research/wf_ideas_v4/round3/report.json R3-A1, new_facts (8); experiments/lb_poll/ledger.md 22:53:06Z (WATCH A5-L(K2)); FACTS F-RUN-11, C-28",
+      "suggested_action": "Check the submissions list, submit both, then run one tools/runtime_ledger.py --print. Log both refs and times in CONTEXT, and whether P36 was still PENDING at the submit.",
+      "urgency": "now"
+    },
+    {
+      "kind": "stale",
+      "what": "The live RESUME POINT is still the 25 Sep 10:20 block (CONTEXT l.1519). Its finals line (F1 = best of {exp57b, exp56, exp51/52}; F2 e.g. exp51) contradicts PRE-REG v3 §f and f2. The MEMORY.md 'Resume point' line points at it 'just above ## 9. Literature' (actually l.1967). The memory approval body dates the f2 OK '~21:00 UTC' (CONTEXT: 22:06).",
+      "evidence": "CONTEXT.md l.1519-1532, l.1707-1736, l.1887-1895, l.1960; MEMORY.md 'Resume point' line; memory/project-lb-probe-approval.md; research/wf_ideas_v4/round3/report.json R3-A5; FACTS C-25, C-26",
+      "suggested_action": "After the submits, append a 26 Sep 00:1x RESUME POINT that points to §f + f2 + the READ TABLE (quote f2, do not paraphrase), mark the 10:20 block SUPERSEDED, and fix both memory lines.",
+      "urgency": "now"
+    },
+    {
+      "kind": "contradiction",
+      "what": "The research-round workflow prompt still lists K3/K3b builds, S4-S6 rider slots and K4/N1 rider approvals. The T9 read (20:35) and the round-2 closures (20:55) closed all of them, so every round is fed closed riders again.",
+      "evidence": "experiments/workflows/biohub-research-round.js l.34, l.54; CONTEXT.md l.1934-1937, l.1947-1950; research/wf_ideas_v4/round3/report.json R3-A3; FACTS C-29",
+      "suggested_action": "Edit l.34 and l.54 before round 4 (~00:45 UTC), and add the 'S4-S6 carry no rider; unused slots not burned' line to CONTEXT.",
+      "urgency": "now"
+    },
+    {
+      "kind": "risk",
+      "what": "The poller logs only the 5 newest submissions (lb_poll.py l.27 '[:12]'). A pending K build pushed out by 4 newer submissions never shows its COMPLETE, so R5(a) stays UNPROVEN for good. This is harmless tonight but would bite on a busy day (e.g. K1 plus others while K2 is pending).",
+      "evidence": "experiments/lb_poll/lb_poll.py l.27; research/wf_ideas_v4/round3/report.json new_facts (7), R3-A4; FACTS F-RUN-14",
+      "suggested_action": "Change it to [:60] and restart only in a quiet window (23:15-23:55 UTC 25 Sep, or after ~09:30 UTC 26 Sep; never 06:00-09:30), then verify one poll block.",
+      "urgency": "today"
+    },
+    {
+      "kind": "deadline",
+      "what": "The morning OK list changed. Round 3's R3-A9 replaces round 2's R2-A8: K1 only on READ TABLE rows 1/4/5, twin floor 0.952, F1 = twin if twin - K2 >= +0.002, F1 = twin instead of #34 when there is no K1, optional floatout, deadline move/D4 only if the runtime trigger fires. Without these OKs the strict text applies.",
+      "evidence": "research/wf_ideas_v4/round3/report.json R3-A9 (covered_by_existing_approval false); DECISIONS §2b and the closing note",
+      "suggested_action": "Put these to the user before the first K2/twin score is acted on (~06:30 UTC 26 Sep), each with its READ TABLE row.",
+      "urgency": "today"
+    },
+    {
+      "kind": "stale",
+      "what": "P36 (exp57 v1) is still PENDING at 22:53:04Z (L36 > 6.58 h). It is info only. If it is still pending at the 00:01 submits, L(K2) may include queue time, which weakens the 'clean' (L <= 8.0 h) proof.",
+      "evidence": "experiments/lb_poll/ledger.md 22:53:06Z; CONTEXT.md l.1904-1906; research/wf_ideas_v4/round3/report.json PC3-04, R3-A6 (e); DECISIONS P36",
+      "suggested_action": "Record P36's state at the submit and its latency when it lands, as a runtime datapoint only.",
+      "urgency": "info"
+    },
+    {
+      "kind": "stale",
+      "what": "Round-3 closures and lab facts are not in CONTEXT: swapfix, clip-boundary rescue b4, axis-flip on x138, density-gated insertion, tail-bug fixes, dangling-end relink, retention hysteresis; tail saturated; lab node-count bias rule; hidden reruns do not use GPU quota; intel line (#164 of 3,914 at 22:16).",
+      "evidence": "research/wf_ideas_v4/round3/report.json R3-A6 (c), R3-A7, R3-A8, new_facts (1), (10)-(17); DECISIONS §1b G07-G11; FACTS F-LB-02/03, F-RUL-05, F-TRN-14..18",
+      "suggested_action": "Record them in CONTEXT together with the new RESUME POINT, with no build and no slot.",
+      "urgency": "before-finals"
+    },
+    {
+      "kind": "stale",
+      "what": "TEAM.md friend A row still states 'TARGET 0.97'. All current evidence puts 0.97 out of reach and R9 refuses retraining.",
+      "evidence": "TEAM.md l.9; FACTS C-04",
+      "suggested_action": "Update the role line when TEAM.md is next touched.",
+      "urgency": "info"
+    }
+  ],
+  "summary": "Incremental update of FACTS.md and DECISIONS.md from curation 2 (20:45 UTC) to 23:00 UTC 25 Sep (HEAD 1ca747b, poll 22:53:04Z, untracked research/wf_ideas_v4/round3 finished 22:59). IDs are stable and changed lines are tagged [c3]. FACTS: F-LB-01/02/03/04/06/08 updated (#164 of 3,914 at 22:16, still 18th of 65 in the 0.954 block, silver 32 ranks below, a third window of late 0.953 copies at the block end, movers syed3000 0.965, no new public code). F-RUN-10/11/12 updated. New F-RUN-13 (F(K2) = 7.87 h, R5(b) margin 1.63 h), F-RUN-14 (poller keeps only 5 submissions) and F-RUN-15 (twin vs K2 dummy timing). F-RUL-05 (hidden reruns do not use quota), F-RUL-09 (user OK on f2 at 22:06), F-RUL-10 and new F-RUL-11 (Overview unchanged). F-MOD-11 updated; new F-MOD-14 (twin gates PASS) and F-MOD-15 (x138 graphs structurally clean). New F-TRN-14..18 (insertion by density quartile, tail saturated with 0 true swaps, clip-boundary recall, lab node-count bias, no retention flicker). Contradictions: C-21 and C-23 resolved (CONTEXT 20:55 records ADDENDUM M post-hoc). New: C-24 (other teams' latency 2-8 h vs 7-10 h), C-25 (f2 OK time in memory vs CONTEXT), C-26 (stale 10:20 RESUME POINT and memory pointer), C-27 (R3 reference for K2 undefined: #34 vs #35), C-28 (round-2 --k2/--family flags superseded), C-29 (workflow prompt still lists closed riders). DECISIONS: P36 still pending (> 6.58 h); P37 = K2 and P38 = twin scheduled >= 00:01 UTC 26 Sep, both approved; §1b G05/G06 now recorded in CONTEXT, plus proposed closures G07-G11; finals table says the f2 OK makes the twin the F2 candidate and exp52 the fallback, with K1 triggers; new §2b holds the proposed READ TABLE (not in CONTEXT); R3/R5/R6/R7/R8/R9/§f statuses updated; closing note with the R3-A9 morning OK list."
+}

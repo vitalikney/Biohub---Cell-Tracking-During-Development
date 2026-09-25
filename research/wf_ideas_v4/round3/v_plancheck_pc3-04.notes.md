@@ -1,0 +1,9 @@
+- 2026-09-25T22:46:19Z start PC3-04 verification
+- 2026-09-25T22:47:03Z ledger sim in scratchpad/fp.log: K2 row exp58->safetail, twin exp58n->safetail_noins, pick_k2 = exp58 ref (confirmed)
+- 22:47Z kaggle kernels status: exp58 and exp58n COMPLETE; kernels list --mine -s exp58: lastRunTime exp58 16:20:17Z, exp58n 20:35:41Z (unchanged since dummies -> v1 = gated version).
+- 22:47Z submissions: 25 Sep has 5 (00:02:05, 00:02:10, 08:09, 08:33, 16:18) -> day full; P36 (56555189, 'P36 exp57 v1 ...') still PENDING at 6.5 h, family x138_ungated by first token exp57.
+- 22:47Z clock: local 22:47:42 vs kaggle Date 22:47:43 GMT (~1 s).
+- CLI: action text omits the competition slug; CONTEXT l.565 template = python -m kaggle competitions submit biohub-cell-tracking-during-development -k <kernel> -v 1 -f submission.csv -m "..."; runtime_ledger.py has --print.
+- Caveat: poll.log max PENDING in one poll so far = 2; P36 (16:18) may still be scoring at 00:01 -> 3 concurrent; no evidence of a scoring-concurrency cap (docs unknown). If queued, L(K2) (submit->score) overstates runtime and could false-fire the A5 L>8.0 h trigger; the in-kernel DIVINS gate counts kernel time, not queue time. Record P36 status at submit time.
+- Verdict: not refuted (process check, all 4 claims verified); corrections: add competition slug, note P36 state.
+- 2026-09-25T22:48:16Z final JSON written (refuted=false)

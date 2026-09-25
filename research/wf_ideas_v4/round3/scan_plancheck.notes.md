@@ -1,0 +1,14 @@
+# scan_plancheck notes (round 3)
+- 2026-09-25T22:15:46Z start; no prior scan_plancheck.json
+- 22:20Z poll.log: lb_poll.py keeps only out.splitlines()[:12]; CLI rows are separated by blank lines -> only the 5 newest submissions are logged per poll (verified cat -A on the 22:12:56Z block). Poller PID 30460 alive (started 18:41Z).
+- 22:22Z Kaggle read-only: exp58/exp58n/exp58t kernels COMPLETE; exp58n v1 lastRunTime 20:35:41Z; pulled source (scratchpad/pull58n) == experiments/exp58n_x138_safe_lowref (12/12 code cells equal); no ft-weights dataset needed.
+- 22:24Z dummy timing (kernel elapsed at last clip / repair sum): x138 1112s/226.5; exp57b 1344/491.4; K2 1512/509.2; K1 1680/499.8; twin 1038/218.8. LOWREFINE cost ~0 in GPU phase (Prediction 9.30 vs 9.22 min K1). Pre-repair start-up varies 818-1179 s (container/mount noise), not a build effect.
+- 22:26Z runtime_ledger simulation (scratchpad/fake_poll.log): messages 'probe 37: exp58 = K2 ...' and 'probe 38: exp58n = K2 twin ...' -> K2 auto-picked (exp58, safetail 9.5 h, insertion-gate column), twin = safetail_noins; no --k2/--family and no poller restart needed for K2 detection.
+- 22:27Z clock: local UTC vs kaggle.com Date header differ by ~1-2 s. powercfg STANDBYIDLE AC/DC = 0 (never sleeps).
+- 22:28Z R7 hygiene in K2/twin cell 0: VALIDATOR_ENABLE 0, DIVINS_DUMP 0 (K2), no LAB/FORCE/TRAINLAB lines; DEEPCENTER_SAFE_DIV_THRESHOLD 0.25 (x138 default).
+- 22:29Z K2 probe.json 'rule' = 'compare with exp56 ... above exp56 adopt, ties recorded' (builder boilerplate) vs R3 (previous stack - 0.001); R3 reference for K2 (#35 0.954 or #34 0.953) not written anywhere in CONTEXT.
+- 22:30Z A5 forecast by v4 item-5 formula: repair delta K2 vs exp57b dummy = (509.2-491.4)/4 = 4.45 s/clip -> 97*4.45*1.15 = 496 s = 0.14 h -> F = 7.73 + 0.14 = 7.87 h (< 7.9 trigger). GPU-phase delta (9.30 vs 9.18 min) is noise: twin (same lowrefine) 9.40 min, K1 9.22.
+- 22:31Z GPU quota arithmetic: 18:56 used at 13:58 -> 21:13 at 18:10 (+2.28 h); dummies K2 0.43 h + K1 0.47 h + FD/FF ~0.3-0.4 h each + exp60 A ~0.9 h by 18:10 ~= 2.3-2.6 h; P36 hidden rerun (running since 16:18) would add ~1.9 h if counted -> hidden reruns very likely NOT counted.
+- 22:32Z CONTEXT §10 'Next steps' checklist is from 6 Sep; last RESUME POINT block = 25 Sep 10:20 (says F1 = best of exp57b/exp56/exp51, contradicts PRE-REG v3 f(iv) and R5); MEMORY.md index still points to it. Entry 'T1 SAFETAIL DONE' (14:05) sits under '## 9. Literature'.
+- 22:33Z v4 FINAL_REPORT item 6: K1 fallback only for 'K2 = ERROR' [OK]; no rule for K2 <= 0.952 (lowrefine R3 fail) or for twin - K2 >= +0.002 (R2 reopen) -> who is F2 then is undefined; f2 lets the twin (contains lowrefine) be F2 even if R3 closes lowrefine.
+- 2026-09-25T22:24:40Z final JSON written (9 findings)
