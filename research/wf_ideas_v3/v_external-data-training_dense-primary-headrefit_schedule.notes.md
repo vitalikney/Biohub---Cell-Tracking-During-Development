@@ -8,3 +8,4 @@
   * capture cost: 7.2 GPU-h/199 (CONTEXT l.1488) -> 20 videos ~0.7 GPU-h + setup; idea's number OK.
   * scoring latency proxy ~7.5 h (#31 17:09->00:39); x138 hidden runtime not in repo.
   * Probability chain: P(dataset by 26 Sep 07:00) ~0.6 x P(idea-1 gate) ~0.33 x P(own OOS gate a) ~0.5 x P(head kill test b) ~0.5 x P(no slip) 0.8 x P(x138 base) 0.85 ~= 0.034. Execution-only (no gates) ~0.6x0.8x0.85 ~= 0.41. Both < 0.70 -> REFUTE.
+- 11:16 UTC: final JSON written (refuted, feasible=false).
