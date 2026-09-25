@@ -371,7 +371,15 @@ dataset". 56: Eric (742064) wrote only "a sub-voxel peak refinement" (+0.0078 lo
 66: 6.0 (C). 67: no report of a retrained V1284 head in 742673 or the forum; 742965 deleted. 68: nothing from hosts on
 offsets/centroids. 69: 6.0 (C) - spike exact, no public > 0.953. 70: Data tab silent on acquisition/density of hidden embryos.
 
-### 6.11 Late additions (read 11:30-11:45 UTC)
+### 6.11 Late additions (read 11:28-11:35 UTC)
+- **Code fact behind the runtime concern (checked in `experiments/exp57b_x138_divins_only/exp57b-x138-divins-only.ipynb`,
+  main repo):** the repair loop walks `sorted((REPO_DIR / "predictions").glob(f"*/{METHOD}/split_0/*.geff"))`, i.e. datasets in
+  alphabetical order of `<embryo>_<fov>`, and `_deadline_degrade()` fires once a dataset STARTS after 27000 s. The divinsert block
+  (cell line ~4648) is gated only by `BIOHUB_DIVINS_ENABLE != "0"` - **it does not check `_deadline_degraded`**, so DaughterNet
+  scoring (10-180 s per clip on the dummies) keeps running for every clip after the deadline, and `BIOHUB_DIVINS_DUMP=1` also
+  writes one npz per clip. Guess: if the hidden GPU phase really ends near 7.4 h, exp57b's degraded tail (~199 clips x
+  (degraded repair + ~66 s divinsert)) could approach the 12 h limit; x138 alone would not. Worth a guard
+  (`and not _deadline_degraded`) and DUMP=0 before any exp57b-style final.
 - **exp57b log (items 13, 33; ensembles-and-private)** https://www.kaggle.com/code/vitaliineibauer/biohub-exp57b-x138-divins-only/log :
   "Prediction completed in 9.18 minutes"; per clip `divinsert: triples / eligible / added / sec cand/score/insert`:
   44b6_0113de3b 2,844 / 14 / 4 / 0.2-37.2-0.5 s; 44b6_0b24845f 3,685 / 0 / 0 / 0.2-63.3-0.2 s; 6bba_05b6850b 276 / 33 / 4 /
