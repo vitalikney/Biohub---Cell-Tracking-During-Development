@@ -7,3 +7,4 @@
 - Verified: B20 16/319/135 (CONTEXT l.1011-1013); 15 of 43 FP forks ILP-child wrong/added right (r1_research_fork-midpoint-filter.json claim 2); exp12 24/103 vs 23/172 (CONTEXT l.684).
 - Dependency: idea 1 (divins-x138-lab-retune) refuted by sibling value AND schedule verdicts (P scored ~0.2; 13-16 GPU-h x138 train cache). Lab p_edge in-sample anyway -> sanity-only.
 - Estimate as described: P(scored by 29 Sep 10:00) ~0.15-0.3 -> refute. Blind rider path: ~0.85 but below LB resolution.
+- 2026-09-25T11:01:31Z final JSON written (refuted, feasible false as described; blind rider repair P~0.85)
