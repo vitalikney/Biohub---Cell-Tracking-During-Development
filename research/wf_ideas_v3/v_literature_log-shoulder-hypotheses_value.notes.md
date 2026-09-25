@@ -1,0 +1,1 @@
+- 2026-09-25 11:1x UTC: started value/transfer review of log-shoulder-hypotheses; no prior json.

@@ -1,0 +1,12 @@
+# schedule skeptic notes: refined-lowdet-pool
+- 2026-09-25T11:05:30Z started; read BRIEF.md and browser_intel.md
+- 11:10Z exp56 cell 4 (scratch copy of notebook cells): 'lowdet peaks' patch (label list in the non-fatal try/except, prints "LOW-DETECTION DUMP SKIPPED (non-fatal)" on any anchor/compile error) then V1284 patch AFTER it. V1284 inserts `from v1284_coordinate_refinement import refine as _v1284_refine` at module top -> a call to _v1284_refine inside the lowdet replacement text resolves at RUNTIME with the current order. No re-anchoring needed; ordering V1284 first = the x122 silent-failure bug documented in cell 4.
+- 'lowdet write' casts _lc to int16 after *downsample; load_low_detections reads float64 -> float dump is drop-in.
+- _detect_cells_pooled (tools/repo/scripts/predict_unet_transformer.py L256) = max-pool local-max then threshold -> peak set is threshold-independent; the >=0.965 part of the 0.3 pool == arr. cell0: READMIT_MIN_SCORE=0.965 = det threshold, so readmitted nodes are ILP-discarded above-threshold peaks that the head already refined pre-ILP. Gapfill pool = 0.5..0.965 = OOD for the head (captures/report only cover kept >=0.965 peaks).
+- Numbers checked: CONTEXT L1511-1517 1,337 readmit / 121,777 (1.10%), 513 pruned leaves >=479 readmit; report.txt L104-105 179 videos none 1.6983 -> public 1.5375 um; leaf prune +0.0006 CONTEXT L1324-1328. OK.
+- motion_relink_edges (cell5 L519): learned_prob default 0.0 for ANY pair not in the ILP solution edges, not only readmit pairs; readmitted nodes carry "readmitted":1 so (2) is implementable (~1 h).
+- Build tool: tools/build_probe_kernel.py --base x138 supports only divinsert/leafprune -> a new patch type is needed (~1.5-2 h incl. tests). Local anchor/compile test possible against tools/repo/scripts/predict_unet_transformer.py.
+- Sibling schedule verdicts: H1 split-aware (refuted, infeasible), tracklet-gap-lap (refuted), H3 x138-tail lab (refuted: captures hold 313k near-GT peaks of 4.83M, lab needs 13-16 GPU-h + friend A). => the idea's host bundle (H1/H3) and its lab gate for (2)/(3) are not available with >=70%.
+- CONTEXT L594: probe kernel ~25 min GPU, hidden-test scoring ~5.5 h; latency 7-10 h (BRIEF).
+- Verdict drafted: as described refuted (host bundles + H3 gate infeasible); repaired (1)-only rider feasible ~0.75.
+- 2026-09-25T11:09:46Z final JSON written (refuted=true as described; reduced (1) rider feasible ~0.75)

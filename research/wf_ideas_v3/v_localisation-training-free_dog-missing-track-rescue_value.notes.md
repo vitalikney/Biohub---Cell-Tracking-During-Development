@@ -1,0 +1,15 @@
+# v_localisation-training-free dog-missing-track-rescue VALUE notes
+- 2026-09-25T11:06Z: started; JSON absent -> doing task. Read BRIEF.md, h_localisation-training-free.notes.md.
+- read fn_anatomy_exp39.md (a_never 1907, 44b6 167/6bba 1740; FN total 6732) -> 1907x7.37e-6 = +0.0141 reproduces (D = TP+FP+FN = 135,729).
+- KEY from wf_ideas_v2/r1_hyp_detection.notes.md: a_never = 1567 distinct GT nodes in 721 runs (len1 370 nodes, len2-4 744, len5+ 453, >=10 160). 846 FN edges INTERNAL to runs, ~1061 boundary (r1_verify_gate-aware..._arithmetic.notes.md). A standalone track (not attached) can only convert INTERNAL edges; boundary edges stay FN.
+- Same file: 58% of missed nodes have a raw peak at 7-10 um; valley test (326 misses at 7-10 um) only 4% valley -> same blob, annotation offset / axial elongation; per-track offset persistent (dz sign agrees 82%). Only ~424/1567 missed nodes lack any peak within 10 um -> truly-absent pool ~500 FN (+0.004 max).
+- Conflicting number: hole-fill notes >7um valley<0.85 44% (n=69, brightest pt within 2um of GT -> nearest final node). Small n, start point biased toward a separate blob.
+- misses enriched at z<=3 slices and xy border <8 vox -> border exclusion in the idea removes part of pool.
+- metrics.md: adj = J(1 - 0.1 (T_pred - T_true)/T_true), T_true = coarse provided estimate -> every added node costs linearly; +1% nodes = -0.00093 (J~0.93) confirmed.
+- CEILING RECOMPUTE (standalone tracks, min len 6): runs 721 = 370 (len1) + ~290 (len2-4, 744 nodes) + ~60 (len5+, 453 nodes; ~12 runs >=10 hold 160). Runs >=6 ~ 340 nodes in ~40 runs -> internal edges ~300 FN = +0.0022 lab (NOT +0.0141). Boundary edges (~1061) cannot become TP without attaching (= readmit/gapfill territory, LB-neutral, v2-closed).
+- Truly-absent share: only ~27% of missed nodes lack a peak within 10 um (424/1567); long runs are ENRICHED for persistent per-track annotation offset (dz sign 82%, predecessor 7.8 um) which a clearance>=6.5 DoG track cannot touch. Reachable ~300 x 0.3-0.5 = 90-150 FN -> ceiling +0.0007..+0.0011 lab.
+- Realistic: DoG+clearance+valley+every-frame persistence recall 0.3-0.6 -> 30-90 FN = +0.0002..+0.0007 gross; node cost (unannotated misses + junk, capped 1.5%) -0.0002..-0.0014 -> lab net ~ -0.001..+0.0005. Gate +0.002 fails with P>0.9.
+- Transfer: public adj edge ~0.914 vs lab ~0.902 (div J lab 23/194=0.12) -> public detector recall is lab-like, not LOEO-0.86-like; public true-absent pool maybe 1-3x lab -> public +0.000..+0.0015 gross, below +0.002 and below LB noise 0.003. Private: unknown embryos; plausible 0..+0.002; downside bounded -0.0014 by cap.
+- Match stealing: 6.5 um clearance < 7 um gate; a new node can take GT matched at >3.25 um to the old node (swap zone 4-7 um has ~7.9k GT nodes) -> extra FP/FN risk not in the idea's arithmetic.
+- VERDICT: refuted on value. Repair: 1-h desk test on friend A's cache before any build (DoG recall on the 424 truly-absent annotated nodes and internal-edge count in >=6 runs; proceed only if >=150 FN reachable at <=0.5% nodes), or run on LOEO-44b6 scratch graphs where misses are 8x larger.
+- 2026-09-25T11:09Z: FINAL JSON written (refuted).

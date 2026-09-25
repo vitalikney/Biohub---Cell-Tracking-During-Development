@@ -1,0 +1,12 @@
+# notes: ultrack-optional-nodes-ilp VALUE skeptic (2026-09-25)
+- 11:xx read BRIEF.md
+- read sibling verdicts: v_literature_byte-lowscore-extension_value.json (refuted, +0.0007 central), v_linking-on-x138_refined-lowdet-pool_value.json, v_metric-math_readmit-recall-knobs_value.json (both refuted)
+- fetched raw.githubusercontent.com/royerlab/tracksdata/main/src/tracksdata/solvers/_ilp_solver.py (436 lines): node_weight (default 0.0) CONFIRMED l.138/l.231-249; overlap constraints x_i+x_j<=1 CONFIRMED (_add_overlap_constraints), only if graph.has_overlaps(). Timeout -> SCIP incumbent + warning.
+- tools/repo/scripts/predict_unet_transformer.py l.560-568: ILP = edge_weight*edge_prob, app, disapp, div; no node weight CONFIRMED.
+- exp56 cell 0: ILP app 0.0, disapp 2, div 1.2, edge weight -1*prob. => current ILP ALREADY does temporal-consistency node selection at zero node cost: extension of a track end costs -p (free), a new track costs 2-sum(p). So "threshold lowering had no selection" is WRONG: det 0.965->0.95 (probe 4, CONTEXT l.158: 0.940 neutral) went through this same ILP selection with node cost 0.
+- predict l.457: edge_activation softmax over dim 0 + bidirectional harmonic fusion (exp56 cell 0) => adding band peaks to coords REDISTRIBUTES probability of every standard edge near them (global input shift, not local). Transformer attends over the whole frame set -> OOD token count.
+- hyp_cost break-even vs p: beta 0.5 -> s>0.79 (p=1); beta 1 -> s>0.91; beta 2 -> s>0.944 => beta 2 ~ threshold 0.945 (= probe 4 sliver), beta 0.5 reaches deep band where value density lower.
+- metric: +1% nodes = -0.0009 score; lab FN->TP worth 7.4e-6 each (1/135,729) -> 1% nodes = 122 FN->TP break-even. Break-even TP edges/added node: 6bba ~0.005, 44b6 ~0.001.
+- ceiling: a_never 1907 + a_tail 606 = 2513 FN = +0.0185 local (checked). Chain: pool-hit 0.3-0.5 x ILP-select 0.4-0.6 x relink/tail keep+right link 0.6 x not already taken by readmit/gapfill 0.6-0.7 -> 110-320 FN->TP = +0.0008..+0.0024 gross; node growth +1..3% (unannotated real nuclei in band get selected too; 6bba 13-15% annotated, 44b6 0.2-1.3%) -> -0.0009..-0.0027. Net ~ -0.002..+0.0015 local; lab inflated by in-sample edge_prob (selection is 100% edge_prob driven).
+- LB anchors on public embryo: det 0.965->0.95 0.940 vs 0.941; gapfill 0.947->0.947; readmit ->0.946; min len 4 -0.002; det 0.99 -0.005 (value density of peaks falls to ~0 at 0.95-0.965).
+- 11:10 wrote final JSON (refuted=true)

@@ -6,3 +6,4 @@
 - Tooling: tools/kaggle_lab.py paused/unfinished (CONTEXT L1545); t55 builder uses exp29 namespace (public_local.py), no x138 cell-5 replayer exists; build_probe_kernel --base x138 only divinsert|leafprune (CONTEXT L1537) -> predictor/consensus need a new patch type. x138 knobs RAW_COST/READMIT_*/LINEFIT_* are env knobs in exp56 notebook.
 - Friend A: silent since 24 Sep 04:12 MSK; queued (PROMPT_FRIEND_A top block) to build an x138-stack raw/ckpt/dc/divnet cache after #34 -> that cache has head floats natively and supersedes this CPU hack.
 - Sibling verdicts: value verdict refuted (P>=+0.002 ~0.05); divins-x138 schedule: x138 train run 13-16 GPU-h, REPAIR_DEADLINE_S 27000 guard, P(scored gated probe) ~0.2.
+- 2026-09-25T11:05:42Z final JSON written (refuted, infeasible)
