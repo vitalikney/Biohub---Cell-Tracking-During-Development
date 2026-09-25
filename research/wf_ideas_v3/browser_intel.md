@@ -1,4 +1,4 @@
-# Browser intel (Kaggle), 2026-09-25 11:22 UTC (in progress)
+# Browser intel (Kaggle), 2026-09-25 11:27 UTC (in progress)
 
 Collected by the local session on the user's computer (Kaggle CLI + Chrome). Every fact has a source; guesses are marked.
 
@@ -192,3 +192,49 @@ Takeaway (facts): nobody has published a detector that is shown to beat the pilk
 (a) a pool-2 / sigma-0.8 um high-resolution detector (georgexue666) - candidate secondary for position precision, needs an LB test;
 (b) Zebrahub ZSNS001/ZSNS003 volumes + tracks are already on Kaggle (giorgosi), so external-data training can run in Kaggle
 without uploading anything. Also krisdreemurr's step-chunk runner shows people continuing the 402-epoch primary across sessions.
+
+## 5. Rules / data / overview facts
+Pages read 25 Sep 11:20-11:25 UTC: Overview https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/overview ,
+Data .../data , Rules .../rules , Leaderboard .../leaderboard . Only the relevant parts, short quotes.
+
+**Runtime / code requirements (Overview > Code Requirements)**: CPU and GPU notebook "<= 12 hours run-time", internet disabled,
+output `submission.csv`. "Freely & publicly available external data is allowed, including pre-trained models". No statement on
+how a timeout is shown (the Code Competition FAQ is linked, not read).
+
+**Timeline (Overview)**: entry + team-merger deadline 22 Sep 2026; final submission deadline 29 Sep 2026; "All deadlines are at
+11:59 PM UTC". Stats on the page: 3,896 teams, 84,653 submissions.
+
+**Submission limits / final selection (Rules 2)**: "a maximum of five (5) Submissions per day"; "select up to two (2) Final
+Submissions for judging". Winners are "determined solely by the leaderboard ranking on the Private Leaderboard".
+
+**Public/private split (Leaderboard page)**: "calculated with approximately 29% of the test data. The final results will be
+based on the other 71%".
+
+**Test description (Data tab)**:
+- "Train and test sets are embryo-disjoint - no embryo appears in both." Folder names `{embryo_id}_{field_of_view}`, e.g.
+  `44b6_0049_0438_1330_1273` (so hidden test names follow the same `<embryo>_<fov>` pattern; our dummy test names are train stems).
+- `test/` = "Example test samples (copies from train)"; on rerun "a new hidden test set is swapped in. The size of the hidden
+  test set is approximately the same size as the training dataset." (train = 199 videos -> expect ~200 hidden videos of
+  ~100x64x256x256; the number of hidden videos is NOT stated exactly.)
+- Volumes: Zarr v3, `(T, Z, Y, X)` "typically (100, 64, 256, 256)" uint16, one chunk per timepoint; scale z=1.625, y=x=0.40625 um.
+- GT: `.geff`, "integer centroid coordinates per node (in voxels)"; "Annotations are sparse"; "The estimated_number_of_nodes
+  field in the .geff metadata (zarr.json) provides an estimate of the true total cell count per sample." **Nothing on HOW the
+  annotations were produced** (no mention of Ultrack, proofreading or manual clicks) and nothing on how N_est is estimated.
+
+**Metric (Overview > Evaluation)**: matching "optimal bipartite assignment on scaled centroid distance (max 7.0 um)"; edge Jaccard
+"adjusted by a penalty on over-predicting the total number of nodes"; division = "a node with two or more outgoing edges"; for each
+GT division the predicted graph must have "a connected component that covers the pre-split stage and touches both daughter
+lineages"; edge J weight-averaged by (TP+FP+FN), division J micro-averaged; "it is possible for scores to exceed 1.0". Submission
+coordinates are "integer centroid coordinates in voxels" in the spec (our float-output probe tied, so the scorer accepts floats or rounds).
+
+**External data and models (Rules 6)**: External Data allowed if "publicly available and equally accessible to use by all
+Participants ... at no cost"; "The use of external data and models is acceptable unless specifically prohibited by the Host";
+use must be "reasonably accessible to all" and of "minimal cost". Using External Data "does not limit your other obligations
+under these Competition Rules, including ... Section 2.8 (Winners Obligations)".
+
+**Winner licence (Rules 5)**: winning submission and "the source code used to generate the Submission" under MIT; for input data
+or pretrained models with an incompatible licence the winner does not have to relicense them (text truncated at read; the open
+question 743146 asks whether full training code for third-party weights must be delivered - no host answer yet).
+
+**Hand labelling (General rules)**: "submissions may not use or incorporate information from hand labeling or human prediction of
+the validation dataset or test data records". (Hand-labelling TRAIN or external data is not prohibited by this line.)
