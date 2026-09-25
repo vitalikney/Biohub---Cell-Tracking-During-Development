@@ -1495,5 +1495,13 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
 - 2026-09-25 00:39 UTC: probe #31 exp51 (exp48 + x138 V1284 head) = **0.950**, NEW BEST (+0.002 over exp48 0.948; x138
   gained +0.007 on its own 0.946 base, so the head overlaps with our leaf prune / DaughterNet gains or part of x138's
   gain was its node drop). exp51 becomes finals candidate F1 (with exp48 as the fallback). #32/#33 (float) pending.
+- 2026-09-25 07:50 UTC: #32 exp52 (exp51 + float safe) = 0.950 (tie with exp51), #33 exp53 (exp48 + float safe) = 0.948
+  (tie with exp48): float output coordinates are harmless but invisible on the public LB (server rounds, or gain < 0.0005).
+  WHY exp51 = 0.950 while x138 = 0.953: we never ran x138 itself - exp51 is OUR base (sjlee v020 + tight 5.5 + DivNet
+  veto + leaf prune + DaughterNet) + x138's head. x138's base is thtennant's chain (flow-prior relink with raw cost 0
+  and a 7 um tight gate, readmit of discarded peaks, sub-threshold gap filler, DeepCenter 0.25, ILP timeout): alone it
+  scored 0.946, but those stages all consume node POSITIONS, so the head's refined coordinates make them work (+0.007);
+  on our plain relink the head adds only +0.002. Pre-ILP coordinates of exp51 == x138 exactly, so the gap is post-ILP.
+  Next: x138 verbatim as the new base (+ our DaughterNet insertion on top).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
