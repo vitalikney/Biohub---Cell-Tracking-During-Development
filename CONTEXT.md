@@ -1921,6 +1921,20 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   FP 6, ignored 143), dose 22% of 676 control safe-division forks, pooled div_J 0.1290 -> 0.1271 (check
   div_J(arm) >= control FAILS), adj_edge +0.00006, score delta -0.00013, nodes unchanged. -> forkblob CLOSED (not in K3);
   no user OK needed. Main T9 score (forkmid, DeepCenter threshold arc, insertion arms) is running.
+- 2026-09-25 20:35 UTC, exp60 T9 LAB READ (python tools/trainlab.py score, 56 clips, official metric; experiments/exp60_trainlab/
+  results.md / results.json). DECISIONS (pre-registered; original and ADDENDUM L both computed):
+  - forkmid (K3): ORIGINAL T9 = FAIL, ADDENDUM L3 = FAIL -> NO K3. Pooled: 676 eligible safe-division forks, 40 removed,
+    removed TP 0, removed evaluable FP 1 (39 unevaluable), TP mid max 3.65 um (6bba); pooled score delta +0.00013,
+    division Jaccard +0.0010, adj_edge +0.00002 -> the sign is favourable but the ">= 3 evaluable FP" power clause fails.
+    forkmid stays closed for the LB (no ladder on public).
+  - DeepCenter safe-division threshold (K3b): t* = 0.30; conf >= +0.002 FALSE, plateau (strict and non-control) FALSE,
+    44b6 >= -0.0005 FALSE, precision FALSE -> NO K3b (S5 empty).
+  - insertion (#35 config): lab 44b6 +0.0157, 6bba +0.0090 (ins35_nosteal0: 0.0000 / +0.0071) - IN-SAMPLE UPPER BOUND
+    (L5, warning-only), consistent with R2 keeping the insertion in K2.
+  - forkblob: FAIL (see the entry above).
+  CONSEQUENCE: F1 stack = K2 (x138 + safetail + lowrefine + insertion) unless a later mechanism passes; S4/S5 on 26 Sep
+  have no rider. The exp58n twin dummy (AMENDMENT f2 candidate) was pushed now (GPU free) so the morning OK can be
+  acted on at once.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
