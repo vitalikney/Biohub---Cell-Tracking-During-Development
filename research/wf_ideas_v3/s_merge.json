@@ -1,0 +1,555 @@
+{
+ "brief_corrections": [
+  "Adjusted edge Jaccard is weighted per video by TP+FP+FN, not by the GT edge count (tools/official/metrics.md 'w_i = TP_i + FP_i + FN_i'; metrics.py summarise(); h_metric-math.json challenged_assumptions; browser_intel.md s.5 'weight-averaged by (TP+FP+FN)').",
+  "'Fewer nodes than N_est is a bonus' is misleading: the node multiplier is linear with no kink and no cap above 1, so every node costs 0.1*J_i/N_est_i on either side of N_est and N_est is irrelevant to decisions (h_metric-math.json, synthetic check N_est=2*N_pred -> adj 1.05; browser_intel.md s.5 'scores can exceed 1.0').",
+  "LB noise '~0.003' does not apply to deterministic kernels: 241 teams sit at exactly 0.953 (browser_intel.md s.6.0C histogram), exp54 is byte-identical to exp48 and exp56 reproduced x138's counts exactly (browser s.6.0B). The 0.946/0.942 pair came from notebooks with an in-kernel PP sweep that scores DIFFERENT train stems on the hidden rerun (imissher, discussion 743222; h_redteam-past.json). Resolution on the public embryo is the 0.001 display step; the real uncertainty is public (one embryo, 29%) -> private (71%, other embryos).",
+  "LB state is stale in BRIEF: at 11:00-11:27 UTC 25 Sep there are 241 (not 41) teams at exactly 0.953, 401 >= 0.953, 39-41 >= 0.960, 6 >= 0.970, top 0.975; we are rank ~456 at 0.950; the 0.954-0.956 shoulder grew to 47/28/19 teams; no public notebook scores above 0.953 (browser_intel.md s.1, s.2, s.6.0C).",
+  "Hidden test size: the Data tab says 'approximately the same size as the training dataset' (~199 clips; browser_intel.md s.5), while CONTEXT.md l.14 estimated 100-130 from scoring-time ratios. Runtime must be planned for N up to ~200. Note (s_merge arithmetic): x138's own public 0.953 (241 identical copies) and exp51's <= 7.5 h submit-to-score latency (#31 17:09 -> 00:39, same GPU phase) bound N*(~132 s GPU per clip on 2 shards + repair) <= ~27,000 s at dummy speed, i.e. N <~ 140 unless the hidden hardware is faster; the browser's '7.4 h GPU phase for 199 clips' projection is contradicted by x138 scoring 0.953.",
+  "The probe rule '#35 > #34 -> x138 + insertion is F1' is unsafe: in exp57b the divinsert block (experiments/exp57b_x138_divins_only/exp57b-x138-divins-only.ipynb code line ~4648) is gated only by BIOHUB_DIVINS_ENABLE, not by _deadline_degraded; BIOHUB_DIVINS_DUMP=1 writes an npz per clip; repair took 491 s vs 227 s on the 4 dummies (browser_intel.md s.6.11). Past REPAIR_DEADLINE_S=27000 the alphabetically later datasets lose relink/readmit/gaps/safe divisions/linefit (~-0.05..-0.065 each, v_ensembles-and-private_x138-budget-aware-deadline_value.json) while insertion keeps running. #35's public score can therefore be confounded by the guard, and its private score can be degraded even when public looks fine.",
+  "x138's +0.007 head gain is not all localisation: final nodes fall 2.4-2.9% (ext_x138/DIFF.md s.4), worth ~+0.0022-0.0027 through the node multiplier, so the localisation share is ~+0.004 and itself a single LB difference (h_metric-math, h_redteam-past, h_detector-retrain, h_linking-on-x138 challenged_assumptions).",
+  "Public division J 0.36 is an upper estimate: probe 26 (safe divisions off) also removed the second-daughter edges, so part of the 0.036 drop is edge J (h_redteam-past.json).",
+  "a_never (node never produced) is 1,907/6,732 = 28.3% of lab FN, not ~31% (experiments/l2_daughternet/edge_anatomy/fn_anatomy_exp39.md; v_metric-math_readmit-recall-knobs_value.json).",
+  "'READMIT of discarded peaks' is incomplete: READMIT_MIN_SCORE 0.965 equals the detection threshold, so readmitted nodes are ILP-discarded ABOVE-threshold peaks that re-enter as UNREFINED int16 grid copies (the head had refined them before the ILP); only the gap filler uses 0.5-0.965 peaks (x138 cells 0/4/5; v_kaggle-intel_refine-lowdet-pool_*.json, v_linking-on-x138_refined-lowdet-pool_*.json).",
+  "The head-retrain closure stands, but for a different reason than BRIEF gives: the kill test's comparator was in-embryo (public head trained on ~10+10 stems), yet per-embryo leak5 OOF shows the 199-video heads are WORSE than the public head on 44b6 even at equal exposure (P 1.343 vs 1.296 um, +3.6%; Q +3.9%, beats public on only 20/71 44b6 videos); the pooled -19% is a 6bba effect (v_redteam-past_head199-x138-two-arm_value.json, v_github-intel_head-blend_schedule.json).",
+  "DeepCenter (the safe-division and gap veto) was trained on the 71 44b6 clips only; its val set is the 128 6bba clips (split_manifest, browser_intel.md s.6.1 item 2), so 6bba is an honest test bed for any DeepCenter-threshold decision; BRIEF's lab caveat does not apply to that component.",
+  "Lab infrastructure is thinner than BRIEF implies: the 199-video head captures hold 224-d features only for 313,205 near-GT peaks (+1% sample) of 4.83M peaks, so they cannot drive a CPU x138-tail lab; friend A's queued cache (raw/ckpt/dc/divnet, replay.py) has no flow relink, readmit, gap filler or lowdet dump; friend A has made no commits since 24 Sep 04:12 MSK. Any honest x138 lab must be a Kaggle x138-on-train kernel (v_linking-on-x138_x138-tail-lab-headcoords_schedule.json, v_redteam-past_x138-tail-recalibration-refined-coords_schedule.json).",
+  "In x138 every final edge comes from a one-to-one flow-prior Hungarian (filter_output_graph sets edges = motion_edges); the ILP emits 0 forks, so safe divisions are the only fork source and OUTPUT_DIVISION_GEOMETRY_FILTER is off (h_linking-on-x138.json, h_divisions.json, v_linking-on-x138_split-aware-flow-relink_schedule.json).",
+  "Top-team evidence is unchanged since 24 Sep: no top-10 post in 10 days beyond Ogurtsov one-liners; Tang (6th, 0.970) recommends retraining; nobody has published a retrained detector, edge or division model that beats 0.953 (browser_intel.md s.2, s.3, s.6.11)."
+ ],
+ "assumptions_adjudicated": [
+  {
+   "assumption": "BRIEF: adjusted edge is weighted by GT edge count; predicting fewer nodes than N_est is a special bonus region.",
+   "verdict": "overturned",
+   "why": "Official summarise() weights by TP+FP+FN; the multiplier is linear with no kink or cap (synthetic check in h_metric-math.json; browser_intel.md s.5). Harmless for ranking, but lab re-implementations must use D_i and every node has the same marginal price."
+  },
+  {
+   "assumption": "x138's +0.007 over readmit-v1 measures what better localisation is worth (positions consumed by the post-ILP chain).",
+   "verdict": "overturned",
+   "why": "Final nodes drop 2.4-2.9% with the head (DIFF.md s.4) = ~+0.0022-0.0027 of multiplier; 7 um re-match counts move <= 0.1% for every head (out_full_P/report.txt). The localisation share (~+0.004) is a single LB difference; on our base the head gave +0.002, i.e. ~all multiplier. Raised independently by 6 lenses."
+  },
+  {
+   "assumption": "LB noise is ~+-0.003 per run, so single-probe deltas below 0.005 are not decisions.",
+   "verdict": "overturned",
+   "why": "Our kernels and x138 are deterministic (241 teams at exactly 0.953; exp54 == exp48 byte-for-byte; exp56 == x138 counts). The 0.946/0.942 pair came from leaky in-kernel sweeps (imissher 743222). A 0.001 public step is a real public-embryo effect; what stays uncertain is transfer to the 71% private embryos, which skeptics mislabelled as 'noise'. Effects of +0.0002-0.0005 remain invisible at the 0.001 display step."
+  },
+  {
+   "assumption": "Hidden test ~100-130 clips (CONTEXT l.14) vs ~199 (Data tab; browser projection 7.4 h GPU phase).",
+   "verdict": "unresolved",
+   "why": "Data tab says 'approximately the same size as the training dataset'. But x138's public 0.953 requires public datasets to be fully repaired, and exp51 (same GPU phase, no guard) scored within 7.5 h of submission, which bounds N at ~140 at dummy speed (265 s/clip/shard, 2 shards). Either N ~100-140 or the hidden hardware is faster. Plan runtime for N up to 200."
+  },
+  {
+   "assumption": "x138 verbatim is a safe finals base because 41 (now 241) teams reproduce 0.953.",
+   "verdict": "overturned",
+   "why": "Identical public scores prove only that public datasets were not degraded (a firing guard would jitter the score between runs). The guard (REPAIR_DEADLINE_S 27000, sorted dataset order) can still degrade alphabetically late private datasets; heavier variants (exp57b: +66 s/clip ungated insertion) cross it sooner. Also, a byte-identical copy ties 240 earlier copies on private and loses the submission-time tie-break."
+  },
+  {
+   "assumption": "The 199-video V1284 head failed its kill test only because the test was biased (in-embryo comparator, offset-dominated metric), so it should be re-opened.",
+   "verdict": "upheld",
+   "why": "The test design was flawed, but skeptics split the leak5 OOF per embryo: on 44b6 the new heads are 3.6-3.9% worse than the public head even at equal exposure; the -19% gain is 6bba-only; debiased Q loses to public in both embryo directions; a 50/50 blend is bounded by convexity at +1.6-2% worse on 44b6. The closure stands (v_redteam-past_head199-x138-two-arm_value.json, v_github-intel_head-blend_*.json, v_detector-retrain_coordhead-v2-embryo-robust_value.json)."
+  },
+  {
+   "assumption": "v2: the lab's division numbers (J 0.12, precision 0.35) calibrate division decisions; 'keep cap 4' carries over to x138.",
+   "verdict": "overturned",
+   "why": "Public J ~0.36 needs precision >= 0.40 and sets the break-even for an added fork at J/(1+J) = 0.265 vs ~0.11 in the lab; removals of FP forks are positive under both. But no re-tune survived: tightening is ~#34, loosening had a 0 TP / +2 FP lab marginal, and ~3% of insertions are evaluable (~5 public events), so the x138 cap question is moot rather than answered."
+  },
+  {
+   "assumption": "Public division J = 0.36 exactly.",
+   "verdict": "overturned",
+   "why": "Probe 26 removed the safe-division stage including second-daughter edges, so 0.036 mixes 0.1*div_J with an edge-J change; 0.36 is an upper estimate (h_redteam-past.json)."
+  },
+  {
+   "assumption": "Divisions are the only big untapped term / the top teams win on divisions.",
+   "verdict": "overturned",
+   "why": "Division headroom at realistic precision is +0.002-0.005; the gap to 0.970 is mostly adjusted edge (~0.91 for us vs ~0.93-0.94 needed). Forum: div J ~0.28 at adj 0.89 (Lime1123); hikaggler's trained division head gave +-0.001 LB (browser 741749)."
+  },
+  {
+   "assumption": "v2: ceiling ~0.962; 0.97 unreachable by 29 Sep (and 0.99 is the target).",
+   "verdict": "upheld",
+   "why": "Every lens concluded 0.99 is unreachable (it would need adjusted edge ~0.95 plus div J ~0.4 on unseen embryos, above the LB top 0.975). All 44 ideas' realistic public gains are <= +0.001 except the runtime insurance; the only evidence-backed route to 0.97 (retraining, Tang/Civitasmass) was refuted for this window by 10/10 skeptic files. The hunters' objection to v2's reasoning (sum of kept ceilings is not a problem ceiling) is correct, but the conclusion holds."
+  },
+  {
+   "assumption": "Retraining is impossible in time / does not pay (BRIEF: scratch 0.920, fine-tunes 0.944/0.943).",
+   "verdict": "upheld",
+   "why": "For 29 Sep: 7/7 detector swaps on our LB were negative; exp11's LOEO +0.0027 was a node artefact (matched-node edge J -0.0015); Kai-Gowers' 400-epoch retrain 0.927 vs 0.942; leonixis 0.947; dense Ultrack teachers (97.2% <= 7 um) are weaker than the student (0.988). P(gated scored probe) 0.03-0.2. The scratch-0.920 argument itself was weak (undertrained secondary), but the conclusion stands."
+  },
+  {
+   "assumption": "External/dorado data is a closed line (BRIEF lists dorado-only DaughterNet).",
+   "verdict": "overturned",
+   "why": "Only the division classifier was closed; no detector was ever trained on dense Ultrack labels. The detector variants were then refuted on value/time (C11), so the practical outcome is the same for 29 Sep."
+  },
+  {
+   "assumption": "44b6 clips are overlapping crops of the Ultrack dorado recording (BRIEF) vs Sergio Alvarez (1st): dorado is 'not the same embryos used in training, but very similar'.",
+   "verdict": "upheld",
+   "why": "Our registration (tools/register_44b6_dorado.py: 84% of 44b6 GT within 2.5 um of dorado Ultrack points at the right time offset vs 5-11% at wrong offsets; 62 clip pairs share 2,429 GT nodes) is a measurement; Sergio's line is an opinion (browser_intel.md 741386)."
+  },
+  {
+   "assumption": "The ~2,700 swap-type FN are node-position errors that better localisation can harvest (+0.03-0.046 oracle).",
+   "verdict": "overturned",
+   "why": "Swap GT sits 4.4/4.7 um from two of our tracks 9.4 um apart, beyond the head's 2 um range; 4-6 um holes are the same blob in 95-99% of cases (valley test); motion prefers our link in 98.6%; snapping to Ultrack lowered the <4 um share 0.927 -> 0.908. It reads as annotation convention/missing-node, not sub-voxel error (h_localisation-training-free.json, h_linking-on-x138.json)."
+  },
+  {
+   "assumption": "Sub-voxel / full-resolution localisation (polyphase, parabola, watershed centroid, image z-offset) is still an open lever after x138.",
+   "verdict": "upheld",
+   "why": "Challenged by redteam (v2 bound excluded x138's tail), but every measured analogue is <= 0: float output lab +0.0019 -> LB tie twice; Eric's sub-voxel refinement +0.0078 local -> -0.002 LB twice; constant offset -0.0031; per-video GT-oracle z shift gave no match gain; z carries 66% of error variance and full-res adds no z information. The lever is closed in practice (C09 keeps only CPU desk tests)."
+  },
+  {
+   "assumption": "Lab gains transfer when the change does not lean on network confidence.",
+   "verdict": "overturned",
+   "why": "Float output (pure geometry) lab +0.0019 on 199 videos -> LB tie twice; insertion lab +0.0019 -> LB +0.001. The in-sample detector places train peaks closer to GT than test peaks, so geometric lab gains are inflated too; the sign of the bias depends on the change (fragment rescue is under-stated in-sample)."
+  },
+  {
+   "assumption": "B35 (full-frame 0.90 daughter pass) failed because +24% nodes blow the node budget.",
+   "verdict": "overturned",
+   "why": "+24% was the CANDIDATE pool, not output nodes (each accepted fork adds <= 1 node), and x138 already dumps peaks >= 0.3. But the revived mirror/lowdet-daughter ideas are still ~0 (17% not 27% addressable; merged-blob c1 defeats mirror geometry), so the practical closure stands for other reasons."
+  },
+  {
+   "assumption": "Lowering the detection threshold is closed, so sub-threshold peaks carry no value.",
+   "verdict": "upheld",
+   "why": "Persistence-gated admission (BYTE/hysteresis) was never tested, but public anchors on the same pool and embryo say value density in the 0.5-0.965 band is <= 0: gapfill 0.947 -> 0.947, readmit -> 0.946, det 0.965 -> 0.95 flat, min track len 4 -0.002; the ILP already selects band nodes at zero node cost. The x138 dummy logs show the free pool is 142% and 30% of final nodes on 2/4 clips (junk-dominated)."
+  },
+  {
+   "assumption": "Every node in x138 carries head-refined float coordinates.",
+   "verdict": "overturned",
+   "why": "The lowdet pool is dumped before _v1284_refine and cast to int16 (x138 cell 4 'lowdet peaks'/'lowdet write'); readmit and gapfill write those lattice positions (1,337 readmitted of 121,777 raw nodes on the dummies). Fix = C05 (refine only the >= 0.965 part)."
+  },
+  {
+   "assumption": "Extra seeds/TTA views can be added freely inside the 12 h limit.",
+   "verdict": "overturned",
+   "why": "For x138 the binding budget is the 7.5 h repair guard, not 12 h: GPU phase ~265 s/clip/shard; at N~130 exp56 finishes ~6.9 h (0.6 h margin). Any extra GPU pass (third detector, simview, precision detector, dense copy) pushes late datasets into degraded mode unless C01 is applied."
+  },
+  {
+   "assumption": "Relink/linefit/gate knobs are a closed line (closed on integer-grid coordinates).",
+   "verdict": "unresolved",
+   "why": "The noise model did change (head shift 0.74 um), but ~2/3 of the head's squared-error drop is a constant offset that cancels in displacements; the B28 curvature puts a re-weighting at ~+0.0001-0.0003. Only one pre-registered linefit arm (w0.7, win2) survives, inside C06's lab."
+  },
+  {
+   "assumption": "Leaf prune on x138 is closed because it removes readmitted nodes.",
+   "verdict": "unresolved",
+   "why": "The mechanism is that every non-ILP pair gets edge_prob 0.0 (not only readmits); a neutral-probability fix is confidence-leaning and its ceiling is the +0.0006 lab gain. Not retested; not worth a slot."
+  },
+  {
+   "assumption": "'ILP division weight is closed (probe 3 neutral)'.",
+   "verdict": "upheld",
+   "why": "Probe 3 could not reach the output (ILP emits 0 forks; relink rebuilds edges one-to-one), so the test was invalid. But the direct in-sample evidence of the edge network's pairwise division signal is weak (exp12 ILP forks 24 TP / 103 FP = 0.19 precision, below the 0.265 break-even), so re-opening is not justified."
+  },
+  {
+   "assumption": "Dummy-test kernel runtimes can judge the hidden-test budget.",
+   "verdict": "overturned",
+   "why": "Whole-kernel dummy times vary ~1.5x between identical-compute runs (exp51 29 min vs exp52 43 min). Only per-dataset log lines are informative; the browser supplied them (detection+edges 214-268 s/clip/shard, ILP 5-90 s, repair 10-110 s x138 / 19-276 s exp57b)."
+  },
+  {
+   "assumption": "thtennant's private 0.959 is x138 plus knobs, so nothing can be learned from him / a successor will be published.",
+   "verdict": "unresolved",
+   "why": "He likely reached 0.959 without V1284 (head public only on 24 Sep 03:04; separate team), which implies an unpublished lever, but he has published nothing since 19 Sep and silver-zone incentives argue against release (browser s.6.0C: Tennant #47 0.959). C10 keeps only a triggered watch."
+  },
+  {
+   "assumption": "AdaBN was correctly rejected (-0.0066 on the public stack) and intensity-augmentation fine-tunes hurt (exp14).",
+   "verdict": "unresolved",
+   "why": "Both rejections used in-sample videos (the public weights memorised them), so the closure reasons are biased; but the only honest AdaBN test also showed node inflation, and neither was re-proposed as a candidate. Not re-tested; no action by 29 Sep."
+  }
+ ],
+ "candidates": [
+  {
+   "id": "C01-runtime-guard-safety",
+   "merged_from": [
+    "ensembles-and-private/x138-budget-aware-deadline",
+    "kaggle-intel/runtime-guard-audit"
+   ],
+   "title": "Runtime-safe x138 finals: raise REPAIR_DEADLINE_S, degrade DaughterNet insertion first, read #34/#35 latency",
+   "what": "(1) Free read-out today: the local session polls `kaggle competitions submissions` every 10-15 min from ~15:30 UTC. #34 was submitted 08:09:00, #35 08:33:25 (browser s.6.0A); a score visible before 15:39 / 16:03 UTC proves that run finished in < 7.5 h, i.e. the guard never fired on it (runtime <= latency). A #35 arriving >= 1 h after #34 means insertion time matters on the hidden set. (2) Every x138-family build from now on: `python tools/build_probe_kernel.py <name> --base x138 [--patch divinsert ...] --set REPAIR_DEADLINE_S=34200` (9.5 h; --set already exists and appends one env line to cell 0, verified by v_kaggle-intel_runtime-guard-audit_schedule.json). (3) Small new patch (agent): (a) run the divinsert block (exp57b notebook code line ~4648) only if `not _deadline_degraded and time.time() - KERNEL_START_TS < DIVINS_DEADLINE_S` (default 25200 s = 7.0 h): insertion is the least valuable stage per second (whole insertion ~+0.001 public, #28) but costs 66 s/clip on average and 180 s on the dense dummy; (b) BIOHUB_DIVINS_DUMP=0 in any submission; (c) degrade order: after the deadline keep OUTPUT_SAFE_DIVISIONS and OUTPUT_LINEFIT_SMOOTH on (they carry ~0.036 + ~0.01 of the ~0.05-0.065 per-degraded-dataset loss) and switch off only relink/readmit/gap close/gap2. (4) Do NOT use the idea's projection rule 'elapsed + remaining x 1.3 p90 > budget': it is all-or-nothing and repaired only 3-7% of datasets vs 23-43% for the original guard in the skeptic's simulation. (5) Optional runtime cut (s_merge suggestion, not in any hunter file): two-stage DaughterNet scoring - score parent candidates first and drop triples with p_par(u) < DIVINS_THRESH before scoring v/c1; exact because score = p_par*p_dau(v)*p_dau(c1)^alpha with p <= 1 and alpha = 1 (tools/div_insert.py l.28, l.264-270); verify with tools/div_insert.replay_dump parity on the 4 exp57b dumps. Arithmetic (guess; dummy per-clip timings, 2 shards): N=130 hidden clips -> exp56 ends ~6.9 h (no fire, 0.6 h margin) while unpatched exp57b fires and degrades ~41% of datasets; N=150 -> even exp56 fires on the last ~20%. With 34200 s + gated insertion, N=200 ends ~9.7-10.1 h (< 12 h).",
+   "verdict_summary": "Value (ensembles): refuted as a standalone probe - public ~0, private ~+0.002 expected, +0.008..+0.02 if it fires; per-degraded-movie loss is 0.05-0.065, not 0.025. Schedule (ensembles): refuted as written - the projection rule is broken (simulation); repair = fixed --set deadline or a greedy per-dataset test, carried as a zero-slot rider. Value (kaggle): refuted standalone for the same reason; private +0.001..+0.003. Schedule (kaggle): survives; --set exists (10 min build). Repairs adopted: fixed 34200 s, insertion gated first, rider on the F1 build. Browser 6.11 confirms the extra risk (insertion ungated, DUMP=1, repair x2.2) and s_merge verified line 4648 in the exp57b notebook; skeptics assumed the latency is readable, but the CLI prints only submit times, so polling is required.",
+   "survives": "yes",
+   "public_gain": "0 when no guard fires (byte-identical output); +0.005..+0.03 only if a file's guard fired on public datasets (a #35 far below #34 would be that signature). Expected ~+0.0005.",
+   "private_gain": "exp56-based F1: +0.001..+0.003 expected (+0.01..+0.02 if N >~ 140). exp57b-based F1: avoids ~0.05 x degraded share, i.e. ~-0.02..-0.03 on the affected board at N~130 (s_merge arithmetic, guess). Never negative once a patched run has scored validly.",
+   "probability": "P(guard fires unpatched): exp56 0.15-0.3, exp57b 0.4-0.7 (guesses from per-clip timings and #31's <= 7.5 h latency). P(patch harmless) ~0.97 (timeout risk only if the deadline is raised without gating insertion).",
+   "owner_and_hours": "agent-container 1.5 h (gate + degrade-order patch, no-op and forced-degrade tests; +1.5 h optional two-stage scoring with replay parity); local session 0.5 h (latency polling, --set builds); kaggle-vitalii ~1.4 GPU-h (no-op dummy + forced-degrade dummy with REPAIR_DEADLINE_S=1, DIVINS_DEADLINE_S=1).",
+   "time_to_scored_probe": "~20-28 h, no dedicated slot: rides the first 26 Sep x138-family F1 build (dummy 26 Sep 00:05-00:50 or ~06:00 UTC, submit ~01:00-08:00, scored ~09:00-17:00 UTC 26 Sep).",
+   "validation_gate": "(a) no-op dummy CSV sha256 == the unpatched twin (exp56/exp57b dummy output), no 'DEADLINE' line; (b) forced-degrade dummy prints DEADLINE on dataset 1, skips insertion, keeps safe divisions/linefit (if (c) is built) and writes a valid CSV; (c) finish-time bound 34200 s + max full repair (<= 280 s on dummies) + remaining x degraded cost <= 11 h at N=200; (d) public of the patched build >= unpatched base - 0.001 (a strict gain means the base was degraded on public).",
+   "depends_on": "#34/#35 scores and latency (25 Sep ~15:30-20:00 UTC); x138 confirmed as base; the user's OK for the F1 slot; vitaliineibauer GPU after the 26 Sep 00:00 UTC reset.",
+   "source_files": [
+    "research/wf_ideas_v3/h_ensembles-and-private.json",
+    "research/wf_ideas_v3/h_kaggle-intel.json",
+    "research/wf_ideas_v3/v_ensembles-and-private_x138-budget-aware-deadline_value.json",
+    "research/wf_ideas_v3/v_ensembles-and-private_x138-budget-aware-deadline_schedule.json",
+    "research/wf_ideas_v3/v_kaggle-intel_runtime-guard-audit_value.json",
+    "research/wf_ideas_v3/v_kaggle-intel_runtime-guard-audit_schedule.json",
+    "research/wf_ideas_v3/browser_intel.md",
+    "experiments/exp57b_x138_divins_only/exp57b-x138-divins-only.ipynb",
+    "tools/div_insert.py",
+    "tools/build_probe_kernel.py"
+   ]
+  },
+  {
+   "id": "C02-finals-rule-rank-aware",
+   "merged_from": [
+    "ensembles-and-private/finals-private-emax-x138-era"
+   ],
+   "title": "Pre-registered, rank-aware finals rule for the x138 era (escape the 241-team x138 tie block)",
+   "what": "Write into CONTEXT.md before #34/#35 score (~17:00 UTC 25 Sep): F1 = the best x138-family file that (i) carries C01's runtime patch and (ii) is NOT byte-identical to x138 verbatim - a verbatim copy shares one private score with the 241 teams at exactly 0.953 and, under the standard 'earlier submission wins' tie-break (verify on the Leaderboard page), ranks at the END of that block. Candidate F1 = exp56 + C01 + C05 (+ C04 if audited) (+ insertion only per C03). F2 = exp52 (or exp51) if public(exp52) >= public(F1) - 0.003; if the F1 base's latency >= 7.5 h, F2 = exp52 regardless; if #34 < 0.952, F1 = exp51 and F2 = the best scored x138-family file (not exp52, a float-only twin of exp51). Never choose between near-copies on a 0.001 public difference; a later file replaces F1 only at >= +0.002. Remind the user at ~12:00 UTC 29 Sep to tick both finals by hand by 20:00 UTC (Kaggle auto-selection would pick the two best public near-copies). Rank arithmetic (browser_intel.md s.6.0C, 11:27 UTC): 165 teams >= 0.954; the 0.953 block spans ranks ~166-406; with 3,899 teams silver ~top 195 and bronze ~top 390 both fall INSIDE the block, so on private any F1 with private > x138 by epsilon jumps ~240 places and any F1 below x138 by epsilon drops below the block. F1 should maximise P(private(F1) > private(x138)) with small variance, not public score.",
+   "verdict_summary": "Schedule skeptic: survives (0.3-0.5 h container work; patched with a full decision table incl. the #34 < 0.952 branch, the latency trigger and a manual-tick reminder). Value skeptic: refuted as a score idea (exp52 shares detector, head, edge net and ILP with x138, so s ~0.002-0.004 and the premium is +0.00006..+0.0005), kept as a zero-cost rule. Browser intel adds the decisive rank fact both skeptics only mentioned qualitatively: the x138 copy block straddles both medal cutoffs.",
+   "survives": "yes",
+   "public_gain": "0 (a choice among scored files)",
+   "private_gain": "+0.00006..+0.0005 expected score premium from F2; rank effect potentially decisive (silver vs no medal hinges on private(F1) vs private(x138) in the tie-block arithmetic above; guess-level because non-x138 teams also reshuffle).",
+   "probability": "P(rule executed as written) ~0.95; P(F2 is the file that counts) 0.07-0.35.",
+   "owner_and_hours": "agent-container 0.5 h (decision table + rank note in CONTEXT.md); user ticks F1/F2 by 29 Sep 20:00 UTC.",
+   "time_to_scored_probe": "0 h (no probe; exp52 already scored 0.950, #34/#35 score ~17:00-20:00 UTC 25 Sep).",
+   "validation_gate": "Rule committed before #34/#35 scores are known; F1 must be a scored submission that contains C01 and differs from x138 verbatim; F2 never re-tuned on public.",
+   "depends_on": "#34/#35 scores and latencies; C01, C05 (and optionally C04/C03) builds being scored by ~29 Sep 10:00 UTC.",
+   "source_files": [
+    "research/wf_ideas_v3/h_ensembles-and-private.json",
+    "research/wf_ideas_v3/v_ensembles-and-private_finals-private-emax-x138-era_value.json",
+    "research/wf_ideas_v3/v_ensembles-and-private_finals-private-emax-x138-era_schedule.json",
+    "research/wf_ideas_v3/browser_intel.md"
+   ]
+  },
+  {
+   "id": "C03-divinsert-on-x138-decision",
+   "merged_from": [
+    "metric-math/div-budget-ladder-x138",
+    "divisions/divins-x138-lab-retune"
+   ],
+   "title": "DaughterNet insertion on x138: keep #35's config only, runtime-gated; no ladder, no grid",
+   "what": "No threshold/cap ladder and no 144-config retune. The only insertion variant is #35's shipped config (steal 1, cap 4, frame cap 1, ens threshold 0.4, alpha 1). Include it in F1 only if (i) public #35 >= #34 - 0.001, (ii) #35's latency does not indicate a guard trip (score visible before ~16:03 UTC, or not >= 1 h later than #34's), and (iii) it runs under C01 (DIVINS_DEADLINE_S, DUMP=0, REPAIR_DEADLINE_S=34200). If #35 <= #34 - 0.002, ship x138 without insertion. Optional transfer-safe rule, only if C06's lab supports it: never steal from edge_prob == 0.0 edges (unscored relink/readmit/gapfill). Interpretation warning for tonight: a #35 far below #34 (e.g. -0.01 or worse) is the signature of the guard degrading public datasets, not of DaughterNet harm.",
+   "verdict_summary": "Ladder value: refuted (tight point at ens product 0.6 ~ no insertion ~ #34; loose point had a 0 TP / +2 FP lab marginal; ~3% of insertions evaluable ~ 5 public events). Ladder schedule: refuted (branch trigger P ~0.42; tighter point is a subset of #35, so its gate is incoherent). Retune value: refuted (+0.000 over #35; needs precision 0.27 -> 0.42 on ~5 evaluable forks; SELECTION->CONF transfer 33%). Retune schedule: refuted as written (13-16 GPU-h x138 cache, build order backwards, guard trips long shards); repaired to sanity-only checks in one x138 train lab (C06). Browser 6.11 adds the runtime defect (ungated, repair x2.2).",
+   "survives": "conditional",
+   "public_gain": "+0.000..+0.001 over #34 (the whole insertion was +0.001 on our base, #28; #35 pending).",
+   "private_gain": "+0.000..+0.001 if runtime-gated (private break-even 0.11-0.20 is friendlier); -0.01..-0.03 if shipped ungated and the guard fires on late private datasets.",
+   "probability": "P(#35 >= #34 - 0.001) ~0.6 (guess); P(included safely | that) ~0.8.",
+   "owner_and_hours": "Shares C01's patch; local session 0.2 h rebuild; kaggle-vitalii 0.7 GPU-h dummy (shared with the F1 build).",
+   "time_to_scored_probe": "Same as C01 (26 Sep ~09:00-17:00 UTC) if included in the F1 build.",
+   "validation_gate": "#35 >= #34 - 0.001 and latency check; C01 dummy gates; dummy insertion counts equal exp57b's (12 forks) when not gated; optional C06 CONFIRMATION delta >= 0 for insertion on x138 train tails with 44b6 events counted once per unique GT division.",
+   "depends_on": "#34/#35 scores and latencies; C01; optionally C06.",
+   "source_files": [
+    "research/wf_ideas_v3/h_metric-math.json",
+    "research/wf_ideas_v3/h_divisions.json",
+    "research/wf_ideas_v3/v_metric-math_div-budget-ladder-x138_value.json",
+    "research/wf_ideas_v3/v_metric-math_div-budget-ladder-x138_schedule.json",
+    "research/wf_ideas_v3/v_divisions_divins-x138-lab-retune_value.json",
+    "research/wf_ideas_v3/v_divisions_divins-x138-lab-retune_schedule.json",
+    "research/wf_ideas_v3/browser_intel.md",
+    "tools/div_insert.py"
+   ]
+  },
+  {
+   "id": "C04-forkmid-fp-fork-removal",
+   "merged_from": [
+    "metric-math/fork-fp-removal-x138",
+    "divisions/fork-precision-geometry-rider"
+   ],
+   "title": "Geometric FP-fork removal on x138 safe-division forks (parent-to-sister-midpoint >= 4.5 um), zero-slot rider",
+   "what": "New `--patch forkmid` for --base x138 (and the exp39 fallback): the very last graph edit, after linefit and after divinsert. Only forks whose added child edge has safe_division == 1 and not div_inserted; un-fork when |P - (c1+c2)/2| >= 4.5 um (drop the cos >= 0.1 arm unless the x138 audit shows TP cos max <= -0.15); drop the ILP-side edge when its edge_prob == 0.0 (unscored relink), else the added edge; nodes never touched; FORKMID_ENABLE=0 byte-identical. Validation: (a) free 15-min dose check of the midpoint distribution on the 62 (exp56) / 74 (exp57b) forks of the downloaded dummy outputs (scratchpad cmp57.py pattern): if 0 forks exceed 4.5 um it is a no-op there, if > ~15% exceed it the coordinates have shifted and the threshold is suspect; (b) the fork audit arm of C06 on division-rich x138 train tails. Ship only inside an x138-family build that is scored anyway.",
+   "verdict_summary": "Metric value: refuted (+0.0005 expected; MC p10 -0.0016, p90 +0.0023; 4.5 um removes 6 FP / 0 TP = 14% of lab FP, not 25%; FP count and per-FP value are anti-correlated). Metric schedule: refuted as written (rode the conditional ladder), repaired path P(scored) ~0.7. Divisions value: refuted (+0.0008 mean, P(<0) ~0.2, cos arm carries most TP-loss risk). Divisions schedule: refuted as written (depended on idea-1's cache), repaired with an x138 train-SUBSET audit kernel (50-60 division-rich videos, ~4-4.5 GPU-h) -> P(scored rider) ~0.8. Both value skeptics keep it as a rider; nodes untouched and no network confidence used, so it is one of the few changes with a positive expected private sign.",
+   "survives": "conditional",
+   "public_gain": "+0.0005..+0.0009 (P(>= +0.002) 0.14-0.23; P(< 0) 0.17-0.2)",
+   "private_gain": "+0.0003..+0.0008 (P(< 0) ~0.2, driven by out-of-sample TP-fork position noise on head coordinates)",
+   "probability": "P(audit passes: 0 TP forks lost on both embryos, >= 3 FP removed) ~0.6; P(scored as a rider by 29 Sep 10:00) ~0.7-0.8.",
+   "owner_and_hours": "agent-container 2-2.5 h (patch for both bases, byte-identity and synthetic unit tests, replay key); local session 0.25 h dose check; audit inside C06 (no extra GPU); dummy shared with the host build.",
+   "time_to_scored_probe": "Patch 25 Sep; dose check tonight; audit 26 Sep; rider on a 26-27 Sep F1' build -> scored 26 Sep evening to 27 Sep.",
+   "validation_gate": "0 safe-div TP forks removed on each embryo (44b6 counted once per unique GT division); >= 3 FP removed with >= 1 on 44b6; TP-mid margin >= 0.7 um below the threshold on head coordinates; node and inserted-fork counts identical; bundle adopted at public >= host - 0.001, no delta attributed to it.",
+   "depends_on": "x138 base; C06 audit (or at least the dummy dose check); a host build.",
+   "source_files": [
+    "research/wf_ideas_v3/h_metric-math.json",
+    "research/wf_ideas_v3/h_divisions.json",
+    "research/wf_ideas_v3/v_metric-math_fork-fp-removal-x138_value.json",
+    "research/wf_ideas_v3/v_metric-math_fork-fp-removal-x138_schedule.json",
+    "research/wf_ideas_v3/v_divisions_fork-precision-geometry-rider_value.json",
+    "research/wf_ideas_v3/v_divisions_fork-precision-geometry-rider_schedule.json",
+    "research/wf_ideas_v2/r1_research_fork-midpoint-filter.json"
+   ]
+  },
+  {
+   "id": "C05-lowdet-readmit-refine",
+   "merged_from": [
+    "redteam-past/refine-lowdet-peaks-x138",
+    "linking-on-x138/refined-lowdet-pool",
+    "github-intel/lowdet-refine",
+    "kaggle-intel/refine-lowdet-pool"
+   ],
+   "title": "Give readmitted nodes their head-refined float coordinates (refine only the >= 0.965 part of x138's lowdet pool)",
+   "what": "`--patch lowrefine` on --base x138, two exact-once replacements in x138 cell 4's 'lowdet' literals: replace `_LOWDET.append((_low.astype(np.float32), _lsc.astype(np.float32)))` by a version that, AFTER the integer score lookup, sets `_hi = _lsc >= 0.965; _lowf = _low.astype(np.float32); _lowf[_hi] = _v1284_refine(ds_path, t, _low[_hi], unet_out[:, f_idx])` (these are exactly the ILP-discarded main peaks the head refined before the ILP, so it is in-distribution); leave the 0.5-0.965 gapfill peaks on the integer grid (head out of distribution there); delete `_lc = _lc.astype(np.int16)`. Keep the patch order (lowdet first, V1284 second): re-ordering reproduces x122's silent 'LOW-DETECTION DUMP SKIPPED', which disables readmit AND gapfill. Drop the neutral-relink-probability and leaf-prune parts (confidence-leaning, need a lab). Ship only inside the F1 build; it also makes F1 differ from x138 verbatim with a reliably non-negative expected sign (C02).",
+   "verdict_summary": "All four value skeptics refuted it as a gain (+0.0002; 1.1% of nodes; head does not change 7 um matching). Schedule: 3 of 4 survive (patch verified in memory: both anchors occur once, patched cell compiles, cell-5 consumers read float64; P(scored as rider) ~0.75-0.9); the linking schedule skeptic refuted the described version (hosts H1/H3 dead, re-anchoring bug, (2)/(3) need a lab) but passed the reduced part (1). Merged spec = the reduced, in-distribution variant with fail-loud checks.",
+   "survives": "conditional",
+   "public_gain": "+0.0002 (0..+0.0005); invisible at the 0.001 display step",
+   "private_gain": "+0.0001..+0.0002, sign reliably >= 0 for the >= 0.965-only variant (it reproduces coordinates the head already produced)",
+   "probability": "P(non-negative) ~0.6-0.8; P(clean dummy first time) ~0.95.",
+   "owner_and_hours": "agent-container 1-2 h (patch, anchor/compile tests, synthetic refine unit test, byte-identity with patch off); local session builds with the F1; dummy shared.",
+   "time_to_scored_probe": "Rides C01's F1 build: scored 26 Sep ~09:00-17:00 UTC.",
+   "validation_gate": "Dummy log must show 'Low-detection dump applied', per-video 'LOWDET <name>: N peaks' equal to exp56's N, raw nodes 121,777, readmitted 1,337 +-10%, gapfill counts +-10%; any 'LOW-DETECTION DUMP SKIPPED', 'gap filler idle', 'invalid V1284 displacement' or 'REPAIR FAILED' is a hard fail; cmp57 diff: only readmit/gapfill nodes and incident edges differ.",
+   "depends_on": "#34 >= 0.952 (x138 base); an F1 host build.",
+   "source_files": [
+    "research/wf_ideas_v3/h_redteam-past.json",
+    "research/wf_ideas_v3/h_linking-on-x138.json",
+    "research/wf_ideas_v3/h_github-intel.json",
+    "research/wf_ideas_v3/h_kaggle-intel.json",
+    "research/wf_ideas_v3/v_redteam-past_refine-lowdet-peaks-x138_value.json",
+    "research/wf_ideas_v3/v_redteam-past_refine-lowdet-peaks-x138_schedule.json",
+    "research/wf_ideas_v3/v_linking-on-x138_refined-lowdet-pool_value.json",
+    "research/wf_ideas_v3/v_linking-on-x138_refined-lowdet-pool_schedule.json",
+    "research/wf_ideas_v3/v_github-intel_lowdet-refine_value.json",
+    "research/wf_ideas_v3/v_github-intel_lowdet-refine_schedule.json",
+    "research/wf_ideas_v3/v_kaggle-intel_refine-lowdet-pool_value.json",
+    "research/wf_ideas_v3/v_kaggle-intel_refine-lowdet-pool_schedule.json",
+    "experiments/exp56_x138_verbatim/exp56-x138-verbatim.ipynb"
+   ]
+  },
+  {
+   "id": "C06-x138-train-subset-lab",
+   "merged_from": [
+    "linking-on-x138/x138-tail-lab-headcoords",
+    "redteam-past/x138-tail-recalibration-refined-coords"
+   ],
+   "title": "One x138-on-train lab kernel (division-rich subset) shared by all x138 post-processing checks and runtime measurement",
+   "what": "One Kaggle kernel built from exp56 (x138) instead of the impossible CPU capture lab: run x138 on ~50-60 train videos (the division-rich ones of both embryos, one clip per 44b6 leak group, excluding the 20 probable x138-head training stems and the 4 dummy twins), either through x138's dormant validator (cells 7-10; BIOHUB_VALIDATOR_ENABLE=1, PPSWEEP_SELECT_MARGIN=99 so nothing is rewritten, extended PP_SWEEP_KEYS) or TEST_DIR -> train with per-shard stems (build_capture_kernel pattern); REPAIR_DEADLINE_S=40000; divinsert dump-only (DIVINS_THRESH > 1, DUMP=1); dumps: final graph with edge flags (safe_division, div_inserted, readmit/gapfill), pre-short-track graph, lowdet npz, per-dataset timing lines. Pre-registered tail-only arms (~1 min/video/arm): control; forkmid 4.5 um (C04); insertion #35 config vs off, plus never-steal-from-0.0 (C03); linefit w0.7 win2 (the only surviving tail-recalibration arm); DeepCenter safe-div threshold 0.20 and 0.30 judged on 6bba only (DeepCenter never saw 6bba, browser s.6.1 item 2; it rejects 84/121, 149/155, 8/13, 203/222 geometric candidates on the dummies). In-kernel official scoring per embryo. Never ship a submission with the validator/PP sweep on (imissher 743222: it scores different stems on the hidden rerun).",
+   "verdict_summary": "Tail-lab value: refuted (+0.0003; flow/fusion/consensus bounded by b_break +0.0011; linefit shift ~+0.0001-0.0003). Tail-lab schedule: refuted as described - captures hold features for only 313,205 of 4.83M peaks, so the CPU mapping lab cannot exist; repaired to a dump-only x138 train run. Tail-recal value: refuted (+0.0003; the shading rule cancels itself); schedule: refuted as described (friend A's replay.py cache cannot replay flow/readmit/gapfill) but found x138's dormant validator harness, the cheapest honest x138 lab. Divisions/literature skeptics independently converge on ONE 50-60-video x138-on-train kernel (~4-6 GPU-h) with raised deadline and flagged dumps. Merged as an enabler: its value is no-harm checks for C03/C04 and per-clip runtime at scale for C01.",
+   "survives": "conditional",
+   "public_gain": "0 directly (enabler); each arm <= +0.001",
+   "private_gain": "0 directly; per-dataset timings at scale reduce C01's uncertainty about the guard and the 12 h limit",
+   "probability": "P(built, run clean and parity-checked by ~26 Sep 18:00 UTC) ~0.6-0.7 (guess).",
+   "owner_and_hours": "agent-container 3-5 h (builder, shard lists, flagged dumps, arm tails, parity + scoring); kaggle-vitalii 4-6 GPU-h (2 concurrent shards after the 26 Sep 00:00 reset); local session 0.5 h push/download.",
+   "time_to_scored_probe": "No own LB probe; results ~26 Sep 12:00-18:00 UTC if pushed 00:05-06:00; hard stop 27 Sep 12:00 UTC.",
+   "validation_gate": "Control arm reproduces the kernel's own final graphs exactly (parity); no DEADLINE line; per-dataset timings logged; every arm judged on a pre-registered SELECTION/CONFIRMATION split with each embryo >= 0 and 44b6 counted once per unique GT division; network-confidence arms discounted to 0.",
+   "depends_on": "#34 confirming x138; vitaliineibauer GPU after the reset (or sasyami if friend A confirms); C04/C03 patches written first so their arms are in the first push.",
+   "source_files": [
+    "research/wf_ideas_v3/h_linking-on-x138.json",
+    "research/wf_ideas_v3/h_redteam-past.json",
+    "research/wf_ideas_v3/v_linking-on-x138_x138-tail-lab-headcoords_value.json",
+    "research/wf_ideas_v3/v_linking-on-x138_x138-tail-lab-headcoords_schedule.json",
+    "research/wf_ideas_v3/v_redteam-past_x138-tail-recalibration-refined-coords_value.json",
+    "research/wf_ideas_v3/v_redteam-past_x138-tail-recalibration-refined-coords_schedule.json",
+    "research/wf_ideas_v3/v_divisions_fork-precision-geometry-rider_schedule.json",
+    "research/wf_ideas_v3/v_divisions_divins-x138-lab-retune_schedule.json",
+    "research/wf_ideas_v3/v_literature_byte-lowscore-extension_schedule.json",
+    "research/wf_ideas_v3/browser_intel.md"
+   ]
+  },
+  {
+   "id": "C07-tempfuse",
+   "merged_from": [
+    "literature/symmetric-temporal-det-fusion"
+   ],
+   "title": "Symmetric temporal detection fusion: use the discarded (t, t+1) window logits for frame t (zero extra GPU)",
+   "what": "x138 cell-4 patch: detect frame t from the mean of the pos-1 logits of window (t-1, t) and the pos-0 logits of window (t, t+1) (TemporalUNet3D has no temporal position embedding, so both are the same function of (self, neighbour)); per-FRAME top-K guard (K = number of pos-1 peaks >= 0.965, |dK| <= max(1, 1%)) instead of the unimplementable per-video quantile; edges delayed one window by lifting the edge block into a nested def; lowdet dump from the fused map with scores rescaled so the cutoff maps to 0.965; TEMPFUSE=0 output-identical, TEMPFUSE=2 max-fusion backup. Cheaper safer variant: use pos-0 only to build the lowdet/readmit pool (main node set and head inputs unchanged). Honest pre-test if friend A is available: primary := friend_a_exp02_loeo20 (6bba-only) on the 12 LOEO-44b6 videos, TEMPFUSE 0 vs 1, kill below +0.003.",
+   "verdict_summary": "Schedule: survives (P(scored) ~0.8; two repairs: per-frame guard, nested-def delay refactor ~3-5 h with a CPU mock test). Value: refuted (+0.0008 central, 0..+0.0015; only a_never is reachable; the out-of-sample analogue, axis-flip views on an unseen-embryo primary, was +0.0007; the head was trained on pos-1 peaks). Kept because it is the only model-side ensemble with zero extra GPU and it perturbs the node set in a way no tail knob does.",
+   "survives": "conditional",
+   "public_gain": "+0.0008 central (0..+0.0015); P(>= +0.002) 0.10-0.15",
+   "private_gain": "+0.0008 central (-0.0005..+0.0015)",
+   "probability": "P(honest LOEO pre-test >= +0.003) ~0.2-0.3 (guess); P(public >= base + 0.001 | shipped) ~0.35.",
+   "owner_and_hours": "agent-container 5 h (patch, CPU mock with torch CPU, byte-identity); friend A 0.5-1 h 5070 Ti (optional pre-test); kaggle-vitalii 0.7 GPU-h dummy; 1 LB slot.",
+   "time_to_scored_probe": "~30-45 h: build 25-26 Sep, dummy 26 Sep, submit 26 Sep evening or 27 Sep, scored 27 Sep.",
+   "validation_gate": "Dummy: peak-set change 1-10% of peaks, per-frame counts within the clamp, identical pair coverage, TEMPFUSE=0 coords/edges identical; pre-test >= +0.003 on LOEO-44b6 if run; LB adopt only at >= base + 0.001 with node count within +-1%.",
+   "depends_on": "x138 base; friend A optional; a free slot on 26-28 Sep.",
+   "source_files": [
+    "research/wf_ideas_v3/h_literature.json",
+    "research/wf_ideas_v3/v_literature_symmetric-temporal-det-fusion_value.json",
+    "research/wf_ideas_v3/v_literature_symmetric-temporal-det-fusion_schedule.json"
+   ]
+  },
+  {
+   "id": "C08-lowscore-pool-recall",
+   "merged_from": [
+    "literature/byte-lowscore-extension",
+    "metric-math/readmit-recall-knobs",
+    "literature/ultrack-optional-nodes-ilp",
+    "localisation-training-free/dog-missing-track-rescue"
+   ],
+   "title": "Missing-node recall from x138's low-score pool: CPU step-0 audit first, BYTE-style end extension only if it passes",
+   "what": "Step 0 (CPU, no GPU): on exp56's kernel output for the 4 dummy clips (edge_cache/*.npz low_coords/low_score + submission.csv; GT geffs from sasyami/biohub-friend-a-b20-cache) measure the share of FN-edge GT nodes with a FREE pool peak >= 0.5 within 3 um, the free-peak distance histogram (2-4 um duplicates), and the extension hit rate at annotated nuclei vs the annotation fraction; kill if < 15% or junk-dominated. The browser log already makes this likely to fail: free pool (> 0.5) = 1,633 / 27,798 / 1,896 / 10,431 vs final nodes 25,728 / 19,522 / 6,220 / 69,749, i.e. 142% and 30% of final nodes on two clips. Only if it passes: arm (a) = extend tracks that already have >= MIN_TRACK_LEN nodes, flow-consistent, from head-refined pool peaks (C05), 1% node cap, counted inside the guard, deadline-aware; tested as a C06 arm; probe only if lab >= +0.001 on both embryos. The readmit knob (READMIT_MIN_SCORE 0.965 -> 0.85/0.75, zero code) only as a 2-arm dose pair on idle slots, never in F1. GAPFILL_MAX_ADDED_FRAC is not binding (gap filler added +3/+67/+3/+37 nodes, <= 0.34%, browser s.6.0B), so that arm is a no-op. ILP optional nodes and DoG standalone tracks are dominated alternatives (see verdicts).",
+   "verdict_summary": "BYTE value: refuted (+0.0007; public anchors on the same pool/embryo: gapfill 0.000, readmit -0.001; reach 424 free-end FN). BYTE schedule: refuted as written (lab not built, 54 videos not 36, guard leak via fragments rescued from the short-track filter), repaired: P(scored | gates) ~0.85, unconditional ~0.2. Readmit-knob value: refuted (failed readmits are linked, not isolated: 479 of 513 leaf-pruned leaves were readmits; +0.5..+2% nodes = -0.0004..-0.0015); schedule: survives (one --set, P scored ~0.8-0.9). ILP optional nodes: refuted x2 (the ILP already selects at zero node cost; probe-4 analogue flat; ILP/runtime risk). DoG rescue: refuted x2 (reachable pool ~90-150 FN; 0.9-1.4 h serial CPU in the repair loop threatens the guard).",
+   "survives": "conditional",
+   "public_gain": "arm (a): +0.0007 (-0.001..+0.002); readmit knob: -0.001..+0.0007",
+   "private_gain": "arm (a): +0.0005..+0.0015; readmit knob: -0.0015..+0.0007",
+   "probability": "P(step 0 passes) ~0.3 (lowered by the browser pool counts); P(lab gate | pass) ~0.35-0.45; overall ~0.1-0.15.",
+   "owner_and_hours": "local session 0.5 h (download exp56 output + GT); agent-container 1.5 h step-0 script (+4 h arm-(a) patch only on pass); C06 arm; kaggle-vitalii 0.7 GPU-h dummy on pass.",
+   "time_to_scored_probe": "Step 0 by 26 Sep morning; probe >= 27 Sep only if the lab passes.",
+   "validation_gate": "Step-0 kill rules above; lab CONFIRMATION >= +0.001 on both embryos, node ratio <= +1%, added-node GT-hit rate >= 2x the annotation fraction; never adopt on a public delta < +0.001; never in F1 without lab support.",
+   "depends_on": "exp56 kernel output download (local session with the user's permission); C05; C06.",
+   "source_files": [
+    "research/wf_ideas_v3/h_literature.json",
+    "research/wf_ideas_v3/h_metric-math.json",
+    "research/wf_ideas_v3/h_localisation-training-free.json",
+    "research/wf_ideas_v3/v_literature_byte-lowscore-extension_value.json",
+    "research/wf_ideas_v3/v_literature_byte-lowscore-extension_schedule.json",
+    "research/wf_ideas_v3/v_metric-math_readmit-recall-knobs_value.json",
+    "research/wf_ideas_v3/v_metric-math_readmit-recall-knobs_schedule.json",
+    "research/wf_ideas_v3/v_literature_ultrack-optional-nodes-ilp_value.json",
+    "research/wf_ideas_v3/v_literature_ultrack-optional-nodes-ilp_schedule.json",
+    "research/wf_ideas_v3/v_localisation-training-free_dog-missing-track-rescue_value.json",
+    "research/wf_ideas_v3/v_localisation-training-free_dog-missing-track-rescue_schedule.json",
+    "research/wf_ideas_v3/browser_intel.md"
+   ]
+  },
+  {
+   "id": "C09-localisation-desk-tests",
+   "merged_from": [
+    "github-intel/head-cascade",
+    "redteam-past/fullres-residual-head",
+    "localisation-training-free/fullres-watershed-centroid"
+   ],
+   "title": "Localisation desk tests on the existing captures (head-cascade scale pre-gate; training-free full-res xy centroid); no head retraining",
+   "what": "CPU only, on the user's PC that holds experiments/coordhead_retrain/captures and the train GT: (1) scale pre-gate for the cascade - multiply the public V1284 shift by s in {0.8, 1.0, 1.2, 1.4, 1.6} and report fixed-pair mean, per-axis MAE, m7 and share4 per embryo; kill the cascade if s_opt <= 1.1 or the gain at s_opt is < 3% on either embryo. Only if s_opt >= 1.25 with >= 4% on BOTH embryos: capture2 on 40 held-out train videos (none of the 20 probable x138-head stems; ~2.5-3 GPU-h), pass-2 gate per embryo (<= 0.97x pass 1, all-peak mean shift <= 0.15 um/axis), cumulative shift clipped < 1.99 um before x138's RuntimeError, then at most one probe. (2) Training-free full-res xy intensity centroid/parabola around the public-refined peak (no fitting): continue only if the xy-sd cut is >= 10% and the 3D bias-free cut >= 3% on EACH embryo; otherwise close full-res localisation for good.",
+   "verdict_summary": "Cascade schedule: survives with 4 fixes (exclude all 20 probable x138 stems; a new GPU capture is mandatory because integer-peak captures cannot give trilinear pass-2 features; evaluation must run on the user's PC; clip before the 2 um assert). Cascade value: refuted (+0.0005; pass-1 per-axis MAE barely moved, most of its -9.5% was a one-shot z-plane median collapse); the CPU scale pre-gate is the skeptic's own fix. Full-res residual head: refuted x2 (z = 66% of error variance and full res adds no z; target 85% 6bba; Eric's sub-voxel refinement -0.002 LB twice). Watershed centroid: refuted x2 (float-output analogue tied; safe encoding drops negative fractions). Merged as desk tests only.",
+   "survives": "conditional",
+   "public_gain": "+0.0005 expected (+0.001 if a cascade ships; range -0.002..+0.003)",
+   "private_gain": "+0.0003 expected",
+   "probability": "P(scale pre-gate passes) ~0.2-0.35 (guess); P(anything ships) ~0.1-0.15.",
+   "owner_and_hours": "agent-container 1 h (scale/centroid script; +3 h capture2 patch only on pass); user PC CPU ~1-1.5 h; kaggle-vitalii 2.5-3 GPU-h capture2 + 0.7 dummy only on pass.",
+   "time_to_scored_probe": "Pre-gate 25-26 Sep; a probe no earlier than 26 Sep evening and only on pass.",
+   "validation_gate": "As above; any probe must keep node counts within +-1% of exp56 on every dummy clip and is adopted only at public >= base + 0.001.",
+   "depends_on": "User's PC with captures and train GT; x138 base.",
+   "source_files": [
+    "research/wf_ideas_v3/h_github-intel.json",
+    "research/wf_ideas_v3/h_redteam-past.json",
+    "research/wf_ideas_v3/h_localisation-training-free.json",
+    "research/wf_ideas_v3/v_github-intel_head-cascade_value.json",
+    "research/wf_ideas_v3/v_github-intel_head-cascade_schedule.json",
+    "research/wf_ideas_v3/v_redteam-past_fullres-residual-head_value.json",
+    "research/wf_ideas_v3/v_redteam-past_fullres-residual-head_schedule.json",
+    "research/wf_ideas_v3/v_localisation-training-free_fullres-watershed-centroid_value.json",
+    "research/wf_ideas_v3/v_localisation-training-free_fullres-watershed-centroid_schedule.json"
+   ]
+  },
+  {
+   "id": "C10-successor-watch",
+   "merged_from": [
+    "github-intel/successor-port",
+    "kaggle-intel/harvest-x138-successors"
+   ],
+   "title": "Triggered watch for a public x138 successor (>= 0.956), verbatim port only on trigger",
+   "what": "No reserved resources. The local session (Kaggle CLI) polls every 4-6 h until 29 Sep 07:00 UTC: `kaggle kernels list --competition biohub-cell-tracking-during-development --sort-by scoreDescending`, `--user thtennant` and `--user anvithpothula` by dateRun, and the LB histogram for a NEW spike of >= 10 teams at one score >= 0.956 (the signature of a public notebook, as 0.953 went 41 -> 241). Port only if the notebook's own score is >= 0.956, every dataset/model source is public, and its diff vs experiments/exp56_x138_verbatim is 1-2 explainable mechanisms (not a knob sweep, no in-kernel PP sweep). Verbatim path: `kaggle kernels pull -m`, change only id/title, keep docker_image and machine_shape, push, dummy run, add C01's --set if it keeps x138's guard; adopt only at >= max(#34, #35) + 0.002. Rider path (its new stage onto our F1) only after the verbatim copy has scored by 28 Sep 22:00.",
+   "verdict_summary": "All four skeptics refuted it as a planned line: P(something portable) 0.15-0.3; both authors publish below their own scores (Pothula released 0.953 at 0.956; Tennant's newest public kernel 0.946 vs 0.959); silver-zone incentives argue against release; the container cannot reach Kaggle. Browser 25 Sep 11:10 UTC confirms nothing public > 0.953, anvithpothula's only new kernel is an empty template, thtennant nothing since 19 Sep. Repaired by all four into a zero-cost triggered watch.",
+   "survives": "conditional",
+   "public_gain": "+0.0003..+0.0005 expected; ~+0.002 conditional on a qualifying release",
+   "private_gain": "+0.0001..+0.0003 expected; ~+0.001 for a genuine new mechanism, ~0 or negative for a public-swept knob set",
+   "probability": "P(qualifying release seen by 29 Sep 07:00 UTC) ~0.15-0.2; P(verbatim copy reproduces | release) ~0.9.",
+   "owner_and_hours": "local session ~0.3 h/day polling; on trigger ~1.5 h + 0.7 GPU-h + 1 slot; agent-container 1 h diff (off the critical path).",
+   "time_to_scored_probe": "Trigger + 8-11 h; latest useful trigger ~29 Sep 08:00 UTC.",
+   "validation_gate": ">= 0.956 own score; public sources; mechanism-type diff; dummy counts within 1% of the author's log; no REPAIR FAILED / DEADLINE; LB >= max(#34,#35) + 0.002.",
+   "depends_on": "Someone publishing; the local session's CLI; free slots.",
+   "source_files": [
+    "research/wf_ideas_v3/h_github-intel.json",
+    "research/wf_ideas_v3/h_kaggle-intel.json",
+    "research/wf_ideas_v3/v_github-intel_successor-port_value.json",
+    "research/wf_ideas_v3/v_github-intel_successor-port_schedule.json",
+    "research/wf_ideas_v3/v_kaggle-intel_harvest-x138-successors_value.json",
+    "research/wf_ideas_v3/v_kaggle-intel_harvest-x138-successors_schedule.json",
+    "research/wf_ideas_v3/browser_intel.md"
+   ]
+  },
+  {
+   "id": "C11-retrain-with-dense-labels",
+   "merged_from": [
+    "detector-retrain/dense-proposal-detector-copy",
+    "detector-retrain/joint-finetune-long-shot",
+    "external-data-training/dense-dorado-secondary",
+    "external-data-training/dense-primary-headrefit",
+    "external-data-training/ultrack-dense-6bba"
+   ],
+   "title": "Detector/edge retraining with dense or external labels (the top teams' route) - recorded as what 0.97+ would take, not executable honestly by 29 Sep",
+   "what": "Recorded so the final report can state what 0.97-0.99 would need. The only honest version is an information-isolating A/B from an out-of-embryo init (friend_a_exp02_loeo20, 6bba-only): arm A = sparse + dense labels (dorado Ultrack for 44b6, or Ultrack pseudo-labels on the 199 clips), arm B = same steps without them, both scored through the FULL x138 tail on the held-out embryo at matched N_pred (+-1%), gate A - B >= +0.008 edge J for 2 seeds, >= 8/12 videos non-negative; then a head refit if the primary changes. Cost 8-12 GPU-h plus an x138 lab harness; not before 29 Sep. Cheapest pre-kills if anyone wants to spend CPU: on the 63 placed 44b6 clips count exp39 a_never + b_swap FN with an Ultrack point within 3 um and no primary peak >= 0.5 within 3 um (close the dense-44b6 mechanism if < 300). The Zebrahub ZSNS001/ZSNS003 relay legs mirrored on Kaggle (giorgosi, CC0, ~170 GB; browser s.4) only remove the download obstacle; ZSNS is DaXi optics (1.24 x 0.439 x 0.439 um), a different domain.",
+   "verdict_summary": "All 10 skeptic files refuted: dense-dorado-secondary (the averaged variant needs +8 TTA passes and cannot create nodes - a dense logit >= 11.3 would be needed; the full swap carries the 4/4-negative secondary-swap record; P(gated scored) ~0.09); dense-primary-headrefit (central -0.002; P ~0.03-0.05); ultrack-dense-6bba (skeptic measured ultrack 0.8.0 + CBC at ~15-17 min per 100-frame clip; the classical teacher is weaker than the student, 97.2% vs 0.988 <= 7 um); dense-proposal-copy (+0.0003; reachable pool 424 FN; friend A lacks the dorado files); joint fine-tune (exp11's +0.0027 was a node artefact; central -0.001). No repair reaches a scored, gated probe with P > 0.2 by 29 Sep.",
+   "survives": "no",
+   "public_gain": "-0.001..-0.002 central if forced before 29 Sep (range -0.01..+0.004); P(>= +0.005) 0.03-0.10",
+   "private_gain": "-0.001..-0.002 central (node drift after fine-tunes changes sign across embryos: +3.2/+5.6/-6.6%)",
+   "probability": "P(a gated scored probe by 29 Sep 10:00) 0.03-0.2",
+   "owner_and_hours": "friend A 8-12 GPU-h + agent 10+ h (post-deadline research only)",
+   "time_to_scored_probe": "Not before the deadline with honest gates (45-70 h paths all depend on friend A or a non-existent harness).",
+   "validation_gate": "Information-isolating out-of-embryo A/B as above; never judged on in-sample 6bba or on the same-embryo dorado block.",
+   "depends_on": "Friend A's GPU, an x138 lab harness, dense labels.",
+   "source_files": [
+    "research/wf_ideas_v3/h_detector-retrain.json",
+    "research/wf_ideas_v3/h_external-data-training.json",
+    "research/wf_ideas_v3/v_detector-retrain_dense-proposal-detector-copy_value.json",
+    "research/wf_ideas_v3/v_detector-retrain_dense-proposal-detector-copy_schedule.json",
+    "research/wf_ideas_v3/v_detector-retrain_joint-finetune-long-shot_value.json",
+    "research/wf_ideas_v3/v_detector-retrain_joint-finetune-long-shot_schedule.json",
+    "research/wf_ideas_v3/v_external-data-training_dense-dorado-secondary_value.json",
+    "research/wf_ideas_v3/v_external-data-training_dense-dorado-secondary_schedule.json",
+    "research/wf_ideas_v3/v_external-data-training_dense-primary-headrefit_value.json",
+    "research/wf_ideas_v3/v_external-data-training_dense-primary-headrefit_schedule.json",
+    "research/wf_ideas_v3/v_external-data-training_ultrack-dense-6bba_value.json",
+    "research/wf_ideas_v3/v_external-data-training_ultrack-dense-6bba_schedule.json",
+    "research/wf_ideas_v3/browser_intel.md"
+   ]
+  }
+ ],
+ "dropped": [
+  {
+   "id": "redteam-past/head199-x138-two-arm",
+   "reason": "Per-embryo leak5 OOF: the 199-video head P is WORSE than the public head on 44b6 (1.343 vs 1.296 um, +3.6%, in 4/5 folds) - the -19% gain is 6bba-only; Arm B inherits a per-node component that is ~0-6% out of embryo; x138's refine() raises above 2.00001 um so Arm B would crash unless re-bounded; value +0.0005 (B) / -0.001 (A), P(gate) ~0.35-0.45 (v_redteam-past_head199-x138-two-arm_value/schedule.json)."
+  },
+  {
+   "id": "detector-retrain/coordhead-v2-embryo-robust",
+   "reason": "Gate as written passes with P 0.05-0.10 (the REF-shift criterion contradicts debiasing); debias/balance fix a constant offset the 7 um metric ignores; out-of-embryo random-error gain ~3.5%; +0.0005 public, only an F2 passenger at best (v_detector-retrain_coordhead-v2-embryo-robust_*.json). Dominated by the head-family evidence under 'head199'."
+  },
+  {
+   "id": "github-intel/head-blend",
+   "reason": "Debiased Q is +3.9% worse than the public head on 44b6 even at equal exposure (beats it on 20/71 videos); by convexity the 50/50 blend is >= +1.6-2% worse there, so gate (b) (<= 0.95x) fails; P(gate) 0.05-0.15; value +0.001 only if it passed (v_github-intel_head-blend_*.json)."
+  },
+  {
+   "id": "detector-retrain/ultrack-convention-localiser",
+   "reason": "The public head on 44b6 (median 1.107 um) already beats dorado Ultrack points (1.29 um) on the most favourable embryo; unet-simview preprocessing is unpublished; a full-res UNet pass per frame threatens the 27,000 s guard; P(scored) ~0.04 (v_detector-retrain_ultrack-convention-localiser_*.json)."
+  },
+  {
+   "id": "localisation-training-free/image-z-convention",
+   "reason": "A per-video GT-ORACLE mean shift gave no match gain (0.9843 -> 0.9831-0.9835); 6bba's +0.824 um bias = 0.507 z-slice, a rounding/click convention an image statistic cannot predict; estimator noise (sd ~0.5 um) exceeds the 0.45 um residual; ~0 (v_localisation-training-free_image-z-convention_*.json)."
+  },
+  {
+   "id": "localisation-training-free/zsplit-under-segmented-z",
+   "reason": "Recomputed increment 10-40 FN (+0.0001 lab); 97% of same-frame raw-peak pairs < 5 um are z-duplicates; its host (dogrescue) is refuted; false splits steal swap-zone matches (v_localisation-training-free_zsplit-under-segmented-z_*.json)."
+  },
+  {
+   "id": "external-data-training/simview-readmit-pool",
+   "reason": "Central +0.0002 (x138 already readmits 1.1%; 2-4 um twin FP channel at ~1,400 taken/diverted sites); unet-simview I/O unpublished; the extra full-res UNet pass (0.6-3.6 GPU-h on the hidden set) pushes x138 toward its guard; P(scored gated) ~0.05 (v_external-data-training_simview-readmit-pool_*.json)."
+  },
+  {
+   "id": "kaggle-intel/precision-detector-localiser",
+   "reason": "Browser 6.1 item 1: georgexue666's dataset has no model class or inference code and no D1.json, no public notebook uses it and no LB score exists; its D1-val is within-embryo (the same kind of test that showed -19% while embryo transfer was 12% worse); the pool-2 pass adds ~4x voxels of GPU time; value ~0 (v_kaggle-intel_precision-detector-localiser_*.json)."
+  },
+  {
+   "id": "linking-on-x138/split-aware-flow-relink",
+   "reason": "+0.002 needs marginal fork precision >= 0.40 vs an expected 0.15-0.30 for geometry-only steal forks; the velocity-compensated midpoint was already WORSE than the plain one (div_audit9); the '2-7 um both steps' gate drops > 25% of real divisions; competes with #35 for the same forks; no bed can replay x138's relink (v_linking-on-x138_split-aware-flow-relink_*.json)."
+  },
+  {
+   "id": "linking-on-x138/tracklet-gap-lap",
+   "reason": "The g=0 part is idle (0 end->start pairs < 5-6 um after relink); g=1..3 overlaps gap1/gap2/gapfill; only ~115 a_tail FN are attachable; LB said gap closing is saturated (GAP_CLOSE 6.5 um -0.001); +0.0003 and 7-8 h of code (v_linking-on-x138_tracklet-gap-lap_*.json)."
+  },
+  {
+   "id": "divisions/edge-evidence-second-daughter",
+   "reason": "The dumped prob is a softmax over SOURCES, so p(u->v) <= 0.52 against an ILP-chosen w; the edge net is in-sample on all daughter edges; its own division evidence was 0.19 precision (exp12), below the 0.265 break-even; only 0.4-1.2 evaluable public forks change; +0.0002 (v_divisions_edge-evidence-second-daughter_*.json)."
+  },
+  {
+   "id": "divisions/mirror-daughter-lowdet",
+   "reason": "~2.5 public missing-daughter cases x ~0.2 recovery = ~0.5 TP vs ~1.5 evaluable FP; when a daughter is missing, c1 is often the merged blob so the mirror point sits near u and the sister/mirror gates reject exactly the target cases; +0.0001, P(scored gated) ~0.04 (v_divisions_mirror-daughter-lowdet_*.json)."
+  },
+  {
+   "id": "metric-math/lowdet-daughter-recovery",
+   "reason": "Same mechanism as mirror-daughter; the addressable share is 17% (23 of 132 lab FN divisions), not 27%; ranked recall ~5.6% measured; gate undecidable at 5-10 evaluable forks; ~0 public (v_metric-math_lowdet-daughter-recovery_*.json)."
+  },
+  {
+   "id": "ensembles-and-private/third-detector-heatmap-blend",
+   "reason": "4/4 detector-blend perturbations on our LB were negative (-0.002..-0.025); leonixis/biohub-v5-candidates are warm-started, LB-epoch-picked checkpoints of a 0.947 model (browser 6.1 item 6); +25% detection encodes on a stack near the 7.5 h guard; value ~0 (v_ensembles-and-private_third-detector-heatmap-blend_*.json). The only evidence-backed ensemble form (hikaggler's conditional fusion) is not buildable by 29 Sep."
+  },
+  {
+   "id": "ensembles-and-private/two-tail-consensus",
+   "reason": "The third voter is a near-copy of our tail, so the vote collapses to 'x138 with the flow prior off' (a closed relink class, expected <= 0); a per-node majority is not a valid assignment; doubles repair time against the guard; the hedge already comes free from F2 = exp52/exp51 (v_ensembles-and-private_two-tail-consensus_*.json)."
+  },
+  {
+   "id": "literature/log-shoulder-hypotheses",
+   "reason": "+0.0002 on top of a byteext line that is itself unlikely to ship; toy checks: -LoG creates the missing peak in 2/10 merged 1D configurations and rescues 12/60 in 3D; appending to low_coords would contaminate the gap-filler control; dominated rider of C08 (v_literature_log-shoulder-hypotheses_*.json)."
+  }
+ ],
+ "browser_findings_not_covered": [
+  "Rank arithmetic at the x138 tie block (browser s.6.0C histogram, 11:27 UTC): 165 teams >= 0.954, 241 at exactly 0.953 (ranks ~166-406), 3,899 teams -> silver (~top 5% = 195) and bronze (~top 10% = 390) cutoffs both fall INSIDE the block. Deterministic x138 copies share one private score; a late byte-identical copy ranks at the block's end under the usual earlier-submission tie-break (verify on the Kaggle leaderboard/rules page - browser_todo). Only the ensembles lens mentioned the copy cluster qualitatively; used now in C02.",
+  "x138's own public 0.953 (241 identical copies) proves public datasets were fully repaired on the hidden run, which contradicts the browser's '7.4 h GPU phase for ~199 clips' projection unless the hidden hardware is faster; together with exp51's <= 7.5 h latency it bounds N <~ 140 at dummy speed. exp56 has ~0.6 h of guard margin at N=130; exp57b does not (C01 arithmetic).",
+  "Latency is not directly readable: the CLI prints only submit times and the Submissions page only relative times (browser s.6.0A). The 'free gate' several skeptics rely on (latency < 7.5 h => guard never fired) needs the local session to poll: #34 must show a score before 15:39 UTC, #35 before 16:03 UTC.",
+  "DeepCenter (safe-division/gap veto) was trained only on the 71 44b6 clips, validated on the 128 6bba clips (browser s.6.1 item 2), and on the x138 dummies it rejects 84/121, 149/155, 8/13 and 203/222 geometric safe-division candidates (~80%, browser s.6.0B). It is the dominant safe-division gate and 6bba is an honest test bed for its threshold (x138 0.25 vs our 0.20) - no hunter proposed this; added as an arm in C06.",
+  "Division geometry base rates (discussion 740573 exact table, browser s.6.11): continuation step p99 6.9 um; parent->daughter step median 4.57, p90 7.08, p99 10.6 um; sister separation median 8.85, p99 13.9 um. x138's safe-division gates (parent <= 9, sister <= 14 um) already cover >= 90% of labelled division geometry, so the '2x second-daughter gate' advice (browser s.7 item 5) is largely already in x138's safe divisions; reach is limited by precision (DeepCenter/mutual-NN rejections), not by gate width.",
+  "Gap filler adds only +3/+67/+3/+37 nodes on the 4 dummies (<= 0.34% of nodes; browser s.6.0B), so GAPFILL_MAX_ADDED_FRAC 0.03 is not binding and the 'widen the gapfill budget' arm of readmit-recall-knobs is a no-op. The free low-det pool (> 0.5) is 142% and 30% of final nodes on 44b6_0b24845f and 6bba_05b6850b, which already trips the byteext step-0 junk criterion on 2/4 clips (used in C08).",
+  "imissher (743222): x138-type in-notebook PP sweeps score DIFFERENT train stems on the hidden rerun, so the configuration behind an LB score can differ from the commit log; plus 8/8 negative single-variable probes on the public stack (det 0.960 = 0.946, 0.970 = 0.945, 16-view Z-flip 0.946, secondary weight 0.65 = 0.945, own secondary 0.939, synthetic+real adaptation -0.006). Implication: never ship x138's validator/PP sweep ON (relevant to C06), and threshold/TTA/secondary-weight closures are re-confirmed by an independent team.",
+  "hikaggler (741749): synthetic pretraining on 497 of 2,174 Freitas CC0 sequences (80 epochs) then 60 real epochs gave hold-out 0.9146 -> 0.9269 vs his own scratch model; all 2,174 sequences was -0.005; conditional two-model fusion (second model only where the primary is uncertain) worked while plain averaging did nothing; node-count calibration predicted LB moves better than recall. The only concrete public recipe for a model-side gain; not executable by 29 Sep (C11), and 'conditional fusion' is the only ensemble form with evidence.",
+  "Winner-deliverable question for third-party pretrained weights (Rules 2.8; discussion 743146) is unanswered by the hosts, so any line shipping external weights (unet-simview, georgexue666, leonixis) carries a licence/deliverable risk; hand-labelling train or external data is not prohibited (only test/validation).",
+  "New external data sources listed in the forum but unused by any lens: Janelia linajea zebrafish 160328 (figshare), RIKEN SSBD Keller fish embryo, virtual-embryo-zoo, royerlab luxar / zenodo 22807312; Zebrahub ZSNS001/ZSNS003 volumes + Ultrack tracks are already mirrored on Kaggle (giorgosi relay legs, 11-17 GB each). None changes the 29 Sep plan (C11), but they matter for any post-deadline retraining.",
+  "LB leaders barely moved in 24 h (top-6 0.970-0.975), the 0.954-0.956 shoulder grew from 15/14/12 to 47/28/19 teams (private x138 tweaks worth +0.001..+0.003), Tennant is now #47 at 0.959 and Pothula #77 at 0.956 (browser s.1, s.6.0C). By the finals more teams will sit just above 0.953, so the silver cutoff will move above the block unless F1 beats x138 on private (C02).",
+  "exp56 reproduces x138 exactly on every per-clip count (detections, readmitted 94/662/84/497, gap filler, safe divisions 35/6/5/16, final nodes/edges; browser s.6.0B): the environment is identical and #34 should score exactly 0.953; a different #34 would indicate a hidden-run difference, not code."
+ ]
+}
