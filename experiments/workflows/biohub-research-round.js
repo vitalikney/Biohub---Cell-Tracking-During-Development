@@ -52,4 +52,11 @@ const REP = { type: 'object', properties: {
   new_facts: { type: 'string' }, plan_issues: { type: 'string' }, rejected: { type: 'string' }, next_focus: { type: 'string', description: 'suggested focus for the next round' },
 }, required: ['actionable', 'new_facts', 'plan_issues', 'rejected', 'next_focus'] }
 const report = await agent(`${CONTEXT}\n\nALL FINDINGS:\n${JSON.stringify(items)}\n\nSKEPTIC VERDICTS:\n${JSON.stringify(verified.filter(Boolean).map(x => ({ id: x.f.id, refuted: x.v && x.v.refuted, reason: x.v && x.v.reason, fix: x.v && x.v.fix, gain: x.v && x.v.realistic_gain })))}\n\nWrite this round's report: actionable items for the main session (only items that survived or whose objection has a fix; mark whether an existing user approval covers them - the user pre-approved: K2 at 00:01 UTC; riders K3 forkmid / K3b DeepCenter threshold / K4 tempfuse / N1 after their gates pass; exp60 lab GPU time; research actions), new Kaggle facts, plan issues, rejected ideas with one-line reasons, and a suggested focus for the next round. ALSO write a concise Russian markdown report to ${DIR}/REPORT.md (итог раунда, новые факты, проблемы плана, действия, отвергнутое).${persist('report')}`, { label: 'report', phase: 'Report', schema: REP, effort: 'xhigh' })
-return { round: ROUND, n_findings: items.length, report }
+// knowledge curator after every round (research/KNOWLEDGE/)
+let curation = null
+try {
+  curation = await workflow({ scriptPath: `${REPO}/experiments/workflows/biohub-curator.js` }, { round: ROUND })
+} catch (e) {
+  log(`curator failed: ${e}`)
+}
+return { round: ROUND, n_findings: items.length, report, curation }

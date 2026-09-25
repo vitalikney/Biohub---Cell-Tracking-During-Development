@@ -1834,6 +1834,13 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   the running v4 workflow (FINAL_REPORT_v4.md). Round 2 at ~19:45 UTC, then ~22:15, ~00:45, ~03:15, ~05:45. Submissions
   at night stay within existing approvals: K2 at 00:01 UTC (18/18 dummy gates green); riders K3/K3b/K4/N1 only after
   their gates pass (exp60 lab running now).
+- 2026-09-25 18:05 UTC: KNOWLEDGE CURATOR added (user request): experiments/workflows/biohub-curator.js runs after every
+  research round (called from biohub-research-round.js) and can run standalone. It maintains research/KNOWLEDGE/:
+  INDEX.md (1-page state + map), IDEAS.md + ideas.json (every idea ever proposed, clustered, with status and sources;
+  ORPHANS = proposed but never tested/closed), FACTS.md (+ contradictions), DECISIONS.md (all LB probes, decisions by rule,
+  finals candidates, R1-R10 status), WATCHLIST.md (overdue / next 24 h / later / insights at risk of being forgotten),
+  CHANGES.md (delta per curation). Writes only there; alerts go to the main session. First standalone curation right
+  after the v4 workflow finishes.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
