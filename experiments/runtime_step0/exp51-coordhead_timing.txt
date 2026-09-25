@@ -1,0 +1,40 @@
+# exp51-coordhead: kernel log last timestamp 1725.4 s (28.8 min); 2124 records
+# run_stats timing columns: ['dropped_nonconsecutive_edges', 'divins_sec_candidates', 'divins_sec_score', 'divins_sec_insert']
+# 44b6_0113de3b: dropped_nonconsecutive_edges=0, divins_sec_candidates=0.238, divins_sec_score=38.69, divins_sec_insert=0.218
+# 44b6_0b24845f: dropped_nonconsecutive_edges=0, divins_sec_candidates=0.453, divins_sec_score=53.798, divins_sec_insert=0.218
+# 6bba_05b6850b: dropped_nonconsecutive_edges=0, divins_sec_candidates=0.046, divins_sec_score=9.355, divins_sec_insert=0.049
+# 6bba_05db0fb1: dropped_nonconsecutive_edges=0, divins_sec_candidates=0.965, divins_sec_score=193.698, divins_sec_insert=1.036
+     10.5s  Biohub learned UNet + node-transformer + ILP submission
+     10.5s  "ilp_appearance_weight": 0.0,
+     10.5s  "ilp_disappearance_weight": 2.0,
+     10.5s  "ilp_division_weight": 1.2,
+     10.5s  "ilp_edge_weight": -1.0,
+     10.5s  "output_linefit_smooth": true,
+     10.5s  "output_linefit_weight": 0.8,
+     10.5s  "output_linefit_window": 2,
+     10.5s  "output_single_child_repair": false,
+     10.5s  "output_single_parent_repair": true,
+     10.5s  "use_ilp": true,
+     17.9s  Installing missing packages from offline package dirs: ['tracksdata', 'zarr', 'pyscipopt', 'geff', 'geff_spec', 'ilpy', 'imagecodecs', 'rustworkx', 'numcodecs', 'donfig', 'bidict']
+     53.4s  Required graph/Zarr/ILP packages import successfully.
+    269.8s  Pre-ILP detector-coordinate manifest hook applied
+    269.8s  Launching 2 independent video shards on CUDA devices ['0', '1']
+    269.8s  GPU shard 0: CUDA_VISIBLE_DEVICES=0 | /usr/bin/python3 scripts/predict_unet_transformer.py --data-dir /kaggle/input/competitions/biohub-cell-tracking-during-development/test --splits kaggle_test_splits_50ep.json --split 
+    269.8s  GPU shard 1: CUDA_VISIBLE_DEVICES=1 | /usr/bin/python3 scripts/predict_unet_transformer.py --data-dir /kaggle/input/competitions/biohub-cell-tracking-during-development/test --splits kaggle_test_splits_50ep.json --split 
+    276.1s  Secondary model: /kaggle/working/secondary_seed_weights/unet_transformer/split_0/edge_predictor_best.pth | edge weight=0.150 | detection weight=0.800 | link mode=low_margin_consensus | temperature=1.000 | low-margin max=
+    276.1s  Secondary model: /kaggle/working/secondary_seed_weights/unet_transformer/split_0/edge_predictor_best.pth | edge weight=0.150 | detection weight=0.800 | link mode=low_margin_consensus | temperature=1.000 | low-margin max=
+    276.3s  Secondary model: /kaggle/working/secondary_seed_weights/unet_transformer/split_0/edge_predictor_best.pth | edge weight=0.150 | detection weight=0.800 | link mode=low_margin_consensus | temperature=1.000 | low-margin max=
+    276.3s  Secondary model: /kaggle/working/secondary_seed_weights/unet_transformer/split_0/edge_predictor_best.pth | edge weight=0.150 | detection weight=0.800 | link mode=low_margin_consensus | temperature=1.000 | low-margin max=
+    850.9s  Prediction completed in 9.68 minutes
+    852.5s  DIVINS ENABLED: 5 DaughterNet model(s) ['/kaggle/input/datasets/vitaliineibauer/biohub-ft-weights/vitalii_daughternet/fold_0.pt', '/kaggle/input/datasets/vitaliineibauer/biohub-ft-weights/vitalii_daughternet/fold_1.pt', 
+   1129.2s  [44b6_0113de3b] after safe-division repair: 25871 nodes, 25073 edges (geometric_candidates=126, deepcenter_rejected=99, post_veto_candidates=27, added=26, cap_skipped=0, mutual_nn_rejected=60, divergence_rejected=525)
+   1173.9s  [44b6_0113de3b] divinsert: triples=2797 (orphan=1653, steal=1144) nodes_scored=3782 eligible=8 added=4 (orphan=2, steal=2) sec cand/score/insert=0.2/38.7/0.2
+   1231.6s  [44b6_0b24845f] after safe-division repair: 20527 nodes, 18830 edges (geometric_candidates=170, deepcenter_rejected=163, post_veto_candidates=7, added=6, cap_skipped=0, mutual_nn_rejected=49, divergence_rejected=775)
+   1289.9s  [44b6_0b24845f] divinsert: triples=2633 (orphan=1868, steal=765) nodes_scored=5318 eligible=1 added=1 (orphan=1, steal=0) sec cand/score/insert=0.5/53.8/0.2
+   1299.9s  [6bba_05b6850b] after safe-division repair: 6270 nodes, 6031 edges (geometric_candidates=16, deepcenter_rejected=12, post_veto_candidates=4, added=4, cap_skipped=0, mutual_nn_rejected=3, divergence_rejected=77)
+   1310.5s  [6bba_05b6850b] divinsert: triples=215 (orphan=176, steal=39) nodes_scored=546 eligible=30 added=4 (orphan=3, steal=1) sec cand/score/insert=0.0/9.4/0.0
+   1501.9s  [6bba_05db0fb1] after safe-division repair: 69910 nodes, 67622 edges (geometric_candidates=231, deepcenter_rejected=224, post_veto_candidates=7, added=7, cap_skipped=0, mutual_nn_rejected=223, divergence_rejected=2459)
+   1712.7s  [6bba_05db0fb1] divinsert: triples=16724 (orphan=6520, steal=10204) nodes_scored=19394 eligible=147 added=4 (orphan=4, steal=0) sec cand/score/insert=1.0/193.7/1.0
+   1713.6s  "ilp_appearance_weight": 0.0,
+   1713.6s  "ilp_disappearance_weight": 1.5,
+   1713.6s  "secondary_detection_weight": 0.475,

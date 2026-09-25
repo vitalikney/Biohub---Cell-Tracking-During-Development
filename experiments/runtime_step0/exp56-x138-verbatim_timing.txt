@@ -1,0 +1,87 @@
+# exp56-x138-verbatim: kernel log last timestamp 1138.2 s (19.0 min); 2153 records
+# run_stats timing columns: ['dropped_nonconsecutive_edges', 'repair_seconds', 'kernel_elapsed_seconds']
+# 44b6_0113de3b: dropped_nonconsecutive_edges=0, repair_seconds=46.8, kernel_elapsed_seconds=929.9
+# 44b6_0b24845f: dropped_nonconsecutive_edges=0, repair_seconds=59.3, kernel_elapsed_seconds=989.9
+# 6bba_05b6850b: dropped_nonconsecutive_edges=0, repair_seconds=11.1, kernel_elapsed_seconds=1001.4
+# 6bba_05db0fb1: dropped_nonconsecutive_edges=0, repair_seconds=109.3, kernel_elapsed_seconds=1111.7
+     12.2s  Biohub learned UNet + node-transformer + ILP submission
+     12.2s  "ilp_appearance_weight": 0.0,
+     12.2s  "ilp_disappearance_weight": 2.0,
+     12.2s  "ilp_division_weight": 1.2,
+     12.2s  "ilp_edge_weight": -1.0,
+     12.2s  "output_linefit_smooth": true,
+     12.2s  "output_linefit_weight": 0.8,
+     12.2s  "output_linefit_window": 2,
+     12.2s  "output_single_child_repair": false,
+     12.2s  "output_single_parent_repair": true,
+     12.2s  "use_ilp": true,
+     21.8s  Installing missing packages from offline package dirs: ['tracksdata', 'zarr', 'pyscipopt', 'geff', 'geff_spec', 'ilpy', 'imagecodecs', 'rustworkx', 'numcodecs', 'donfig', 'bidict']
+     64.1s  Required graph/Zarr/ILP packages import successfully.
+     71.2s  ILP timeout patch applied | 1200 s per dataset
+     71.2s  Per-dataset detection timing patch applied
+     71.2s  Pre-ILP detector-coordinate manifest hook applied
+     71.4s  Low-detection dump applied | dir= /kaggle/working/edge_cache | lowdet threshold= 0.3
+    257.7s  V1284 head patched AFTER the readmit dump patch; mode = candidate
+    257.7s  Launching 2 independent video shards on CUDA devices ['0', '1']
+    257.7s  GPU shard 0: CUDA_VISIBLE_DEVICES=0 | /usr/bin/python3 scripts/predict_unet_transformer.py --data-dir /kaggle/input/competitions/biohub-cell-tracking-during-development/test --splits kaggle_test_splits_50ep.json --split 
+    257.7s  GPU shard 1: CUDA_VISIBLE_DEVICES=1 | /usr/bin/python3 scripts/predict_unet_transformer.py --data-dir /kaggle/input/competitions/biohub-cell-tracking-during-development/test --splits kaggle_test_splits_50ep.json --split 
+    264.9s  Secondary model: /kaggle/working/secondary_seed_weights/unet_transformer/split_0/edge_predictor_best.pth | edge weight=0.150 | detection weight=0.800 | link mode=low_margin_consensus | temperature=1.000 | low-margin max=
+    264.9s  Secondary model: /kaggle/working/secondary_seed_weights/unet_transformer/split_0/edge_predictor_best.pth | edge weight=0.150 | detection weight=0.800 | link mode=low_margin_consensus | temperature=1.000 | low-margin max=
+    265.1s  Secondary model: /kaggle/working/secondary_seed_weights/unet_transformer/split_0/edge_predictor_best.pth | edge weight=0.150 | detection weight=0.800 | link mode=low_margin_consensus | temperature=1.000 | low-margin max=
+    265.1s  Secondary model: /kaggle/working/secondary_seed_weights/unet_transformer/split_0/edge_predictor_best.pth | edge weight=0.150 | detection weight=0.800 | link mode=low_margin_consensus | temperature=1.000 | low-margin max=
+    497.9s  LOWDET 44b6_0113de3b: 27877 peaks above 0.3
+    498.1s  LOWDET 44b6_0113de3b: 27877 peaks above 0.3
+    498.1s  [44b6_0113de3b] detection+edges 233.2s | detections=26532
+    498.3s  [44b6_0113de3b] detection+edges 233.2s | detections=26532
+    510.4s  LOWDET 44b6_0b24845f: 51793 peaks above 0.3
+    510.5s  LOWDET 44b6_0b24845f: 51793 peaks above 0.3
+    510.7s  [44b6_0b24845f] detection+edges 245.7s | detections=33336
+    510.8s  [44b6_0b24845f] detection+edges 245.7s | detections=33336
+    530.1s  [44b6_0113de3b] ILP 32.0s | candidate nodes=26532 edges=25505 | timeout=1200.0
+    530.3s  [44b6_0113de3b] ILP 32.0s | candidate nodes=26532 edges=25505 | timeout=1200.0
+    532.0s  [44b6_0b24845f] ILP 21.3s | candidate nodes=33336 edges=23370 | timeout=1200.0
+    532.0s  [44b6_0b24845f] ILP 21.3s | candidate nodes=33336 edges=23370 | timeout=1200.0
+    760.3s  LOWDET 6bba_05b6850b: 8518 peaks above 0.3
+    760.4s  [6bba_05b6850b] detection+edges 229.9s | detections=7370
+    760.5s  LOWDET 6bba_05b6850b: 8518 peaks above 0.3
+    760.5s  [6bba_05b6850b] detection+edges 229.9s | detections=7370
+    765.9s  [6bba_05b6850b] ILP 5.5s | candidate nodes=7370 edges=6377 | timeout=1200.0
+    766.1s  [6bba_05b6850b] ILP 5.5s | candidate nodes=7370 edges=6377 | timeout=1200.0
+    799.1s  LOWDET 6bba_05db0fb1: 81321 peaks above 0.3
+    799.3s  LOWDET 6bba_05db0fb1: 81321 peaks above 0.3
+    799.8s  [6bba_05db0fb1] detection+edges 267.5s | detections=76396
+    800.0s  [6bba_05db0fb1] detection+edges 267.5s | detections=76396
+    889.5s  [6bba_05db0fb1] ILP 89.6s | candidate nodes=76396 edges=69924 | timeout=1200.0
+    889.7s  [6bba_05db0fb1] ILP 89.6s | candidate nodes=76396 edges=69924 | timeout=1200.0
+    892.8s  Prediction completed in 10.59 minutes
+    902.0s  [44b6_0113de3b] low-detection pool: 27561 peaks >= 0.5, 25817 on existing nodes, 1744 free
+    902.0s  [44b6_0113de3b] readmitted 94 discarded detections within 4.0 um of an open end/start
+    913.4s  [44b6_0113de3b] low-detection pool: 27561 peaks >= 0.5, 25928 on existing nodes, 1633 free
+    913.4s  [44b6_0113de3b] gap filler: +3 nodes, +4 edges
+    913.4s  [44b6_0113de3b] after gap-closing (single-frame + gap2 + low-detection filler): 25966 nodes, 25129 edges | 19.1s
+    935.2s  [44b6_0113de3b] after safe-division repair: 25966 nodes, 25164 edges | 40.6s (geometric_candidates=121, deepcenter_rejected=84, post_veto_candidates=37, added=35, cap_skipped=0, mutual_nn_rejected=70, divergence_rejected
+    940.9s  [44b6_0113de3b] repair 46.8s | kernel elapsed 930s
+    947.7s  [44b6_0b24845f] low-detection pool: 48783 peaks >= 0.5, 20206 on existing nodes, 28577 free
+    947.7s  [44b6_0b24845f] readmitted 662 discarded detections within 4.0 um of an open end/start
+    968.3s  [44b6_0b24845f] low-detection pool: 48783 peaks >= 0.5, 20985 on existing nodes, 27798 free
+    968.3s  [44b6_0b24845f] gap filler: +67 nodes, +99 edges
+    968.3s  [44b6_0b24845f] after gap-closing (single-frame + gap2 + low-detection filler): 21242 nodes, 19629 edges | 26.6s
+    996.5s  [44b6_0b24845f] after safe-division repair: 21242 nodes, 19635 edges | 54.5s (geometric_candidates=155, deepcenter_rejected=149, post_veto_candidates=6, added=6, cap_skipped=0, mutual_nn_rejected=49, divergence_rejected=
+   1001.0s  [44b6_0b24845f] repair 59.3s | kernel elapsed 990s
+   1003.4s  [6bba_05b6850b] low-detection pool: 8222 peaks >= 0.5, 6239 on existing nodes, 1983 free
+   1003.4s  [6bba_05b6850b] readmitted 84 discarded detections within 4.0 um of an open end/start
+   1007.1s  [6bba_05b6850b] low-detection pool: 8222 peaks >= 0.5, 6326 on existing nodes, 1896 free
+   1007.1s  [6bba_05b6850b] gap filler: +3 nodes, +4 edges
+   1007.1s  [6bba_05b6850b] after gap-closing (single-frame + gap2 + low-detection filler): 6359 nodes, 6123 edges | 5.5s
+   1011.2s  [6bba_05b6850b] after safe-division repair: 6359 nodes, 6128 edges | 9.6s (geometric_candidates=13, deepcenter_rejected=8, post_veto_candidates=5, added=5, cap_skipped=0, mutual_nn_rejected=6, divergence_rejected=83)
+   1012.5s  [6bba_05b6850b] repair 11.1s | kernel elapsed 1001s
+   1035.0s  [6bba_05db0fb1] low-detection pool: 80516 peaks >= 0.5, 69515 on existing nodes, 11001 free
+   1035.0s  [6bba_05db0fb1] readmitted 497 discarded detections within 4.0 um of an open end/start
+   1074.0s  [6bba_05db0fb1] low-detection pool: 80516 peaks >= 0.5, 70085 on existing nodes, 10431 free
+   1074.4s  [6bba_05db0fb1] gap filler: +37 nodes, +51 edges
+   1074.4s  [6bba_05db0fb1] after gap-closing (single-frame + gap2 + low-detection filler): 70392 nodes, 68168 edges | 60.8s
+   1106.3s  [6bba_05db0fb1] after safe-division repair: 70392 nodes, 68184 edges | 92.6s (geometric_candidates=222, deepcenter_rejected=203, post_veto_candidates=19, added=16, cap_skipped=0, mutual_nn_rejected=259, divergence_reject
+   1122.7s  [6bba_05db0fb1] repair 109.3s | kernel elapsed 1112s
+   1124.5s  "ilp_appearance_weight": 0.0,
+   1124.5s  "ilp_disappearance_weight": 1.5,
+   1124.5s  "secondary_detection_weight": 0.475,

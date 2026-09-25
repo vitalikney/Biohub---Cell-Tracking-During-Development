@@ -1,0 +1,92 @@
+# exp57b-x138-divins-only: kernel log last timestamp 1367.4 s (22.8 min); 2158 records
+# run_stats timing columns: ['dropped_nonconsecutive_edges', 'divins_sec_candidates', 'divins_sec_score', 'divins_sec_insert', 'repair_seconds', 'kernel_elapsed_seconds']
+# 44b6_0113de3b: dropped_nonconsecutive_edges=0, divins_sec_candidates=0.229, divins_sec_score=37.173, divins_sec_insert=0.452, repair_seconds=79.9, kernel_elapsed_seconds=930.9
+# 44b6_0b24845f: dropped_nonconsecutive_edges=0, divins_sec_candidates=0.234, divins_sec_score=63.269, divins_sec_insert=0.246, repair_seconds=116.2, kernel_elapsed_seconds=1047.7
+# 6bba_05b6850b: dropped_nonconsecutive_edges=0, divins_sec_candidates=0.054, divins_sec_score=9.679, divins_sec_insert=0.054, repair_seconds=19.4, kernel_elapsed_seconds=1067.5
+# 6bba_05db0fb1: dropped_nonconsecutive_edges=0, divins_sec_candidates=1.096, divins_sec_score=180.347, divins_sec_insert=1.071, repair_seconds=275.9, kernel_elapsed_seconds=1344.4
+     10.7s  Biohub learned UNet + node-transformer + ILP submission
+     10.7s  "ilp_appearance_weight": 0.0,
+     10.7s  "ilp_disappearance_weight": 2.0,
+     10.7s  "ilp_division_weight": 1.2,
+     10.7s  "ilp_edge_weight": -1.0,
+     10.7s  "output_linefit_smooth": true,
+     10.7s  "output_linefit_weight": 0.8,
+     10.7s  "output_linefit_window": 2,
+     10.7s  "output_single_child_repair": false,
+     10.7s  "output_single_parent_repair": true,
+     10.7s  "use_ilp": true,
+     18.4s  Installing missing packages from offline package dirs: ['tracksdata', 'zarr', 'pyscipopt', 'geff', 'geff_spec', 'ilpy', 'imagecodecs', 'rustworkx', 'numcodecs', 'donfig', 'bidict']
+     56.4s  Required graph/Zarr/ILP packages import successfully.
+     62.6s  ILP timeout patch applied | 1200 s per dataset
+     62.6s  Per-dataset detection timing patch applied
+     62.6s  Pre-ILP detector-coordinate manifest hook applied
+     62.8s  Low-detection dump applied | dir= /kaggle/working/edge_cache | lowdet threshold= 0.3
+    306.5s  V1284 head patched AFTER the readmit dump patch; mode = candidate
+    306.5s  Launching 2 independent video shards on CUDA devices ['0', '1']
+    306.5s  GPU shard 0: CUDA_VISIBLE_DEVICES=0 | /usr/bin/python3 scripts/predict_unet_transformer.py --data-dir /kaggle/input/biohub-cell-tracking-during-development/test --splits kaggle_test_splits_50ep.json --split 0 --weights w
+    306.5s  GPU shard 1: CUDA_VISIBLE_DEVICES=1 | /usr/bin/python3 scripts/predict_unet_transformer.py --data-dir /kaggle/input/biohub-cell-tracking-during-development/test --splits kaggle_test_splits_50ep.json --split 0 --weights w
+    313.0s  Secondary model: /kaggle/working/secondary_seed_weights/unet_transformer/split_0/edge_predictor_best.pth | edge weight=0.150 | detection weight=0.800 | link mode=low_margin_consensus | temperature=1.000 | low-margin max=
+    313.0s  Secondary model: /kaggle/working/secondary_seed_weights/unet_transformer/split_0/edge_predictor_best.pth | edge weight=0.150 | detection weight=0.800 | link mode=low_margin_consensus | temperature=1.000 | low-margin max=
+    313.2s  Secondary model: /kaggle/working/secondary_seed_weights/unet_transformer/split_0/edge_predictor_best.pth | edge weight=0.150 | detection weight=0.800 | link mode=low_margin_consensus | temperature=1.000 | low-margin max=
+    313.2s  Secondary model: /kaggle/working/secondary_seed_weights/unet_transformer/split_0/edge_predictor_best.pth | edge weight=0.150 | detection weight=0.800 | link mode=low_margin_consensus | temperature=1.000 | low-margin max=
+    523.5s  LOWDET 44b6_0b24845f: 51793 peaks above 0.3
+    523.6s  LOWDET 44b6_0b24845f: 51793 peaks above 0.3
+    523.8s  [44b6_0b24845f] detection+edges 210.8s | detections=33336
+    523.9s  [44b6_0b24845f] detection+edges 210.8s | detections=33336
+    524.2s  LOWDET 44b6_0113de3b: 27877 peaks above 0.3
+    524.4s  LOWDET 44b6_0113de3b: 27877 peaks above 0.3
+    524.5s  [44b6_0113de3b] detection+edges 211.5s | detections=26532
+    524.6s  [44b6_0113de3b] detection+edges 211.5s | detections=26532
+    543.4s  [44b6_0b24845f] ILP 19.7s | candidate nodes=33336 edges=23370 | timeout=1200.0
+    543.6s  [44b6_0b24845f] ILP 19.7s | candidate nodes=33336 edges=23370 | timeout=1200.0
+    549.5s  [44b6_0113de3b] ILP 25.0s | candidate nodes=26532 edges=25505 | timeout=1200.0
+    549.7s  [44b6_0113de3b] ILP 25.0s | candidate nodes=26532 edges=25505 | timeout=1200.0
+    760.2s  LOWDET 6bba_05b6850b: 8518 peaks above 0.3
+    760.3s  [6bba_05b6850b] detection+edges 210.5s | detections=7370
+    760.3s  LOWDET 6bba_05b6850b: 8518 peaks above 0.3
+    760.3s  [6bba_05b6850b] detection+edges 210.5s | detections=7370
+    765.1s  [6bba_05b6850b] ILP 4.8s | candidate nodes=7370 edges=6377 | timeout=1200.0
+    765.3s  [6bba_05b6850b] ILP 4.8s | candidate nodes=7370 edges=6377 | timeout=1200.0
+    776.3s  LOWDET 6bba_05db0fb1: 81321 peaks above 0.3
+    776.5s  LOWDET 6bba_05db0fb1: 81321 peaks above 0.3
+    776.9s  [6bba_05db0fb1] detection+edges 233.2s | detections=76396
+    777.1s  [6bba_05db0fb1] detection+edges 233.2s | detections=76396
+    854.7s  [6bba_05db0fb1] ILP 77.7s | candidate nodes=76396 edges=69924 | timeout=1200.0
+    854.9s  [6bba_05db0fb1] ILP 77.7s | candidate nodes=76396 edges=69924 | timeout=1200.0
+    857.6s  Prediction completed in 9.18 minutes
+    859.7s  DIVINS ENABLED: 5 DaughterNet model(s) ['/kaggle/input/biohub-ft-weights/vitalii_daughternet/fold_0.pt', '/kaggle/input/biohub-ft-weights/vitalii_daughternet/fold_1.pt', '/kaggle/input/biohub-ft-weights/vitalii_daughtern
+    867.3s  [44b6_0113de3b] low-detection pool: 27561 peaks >= 0.5, 25817 on existing nodes, 1744 free
+    867.3s  [44b6_0113de3b] readmitted 94 discarded detections within 4.0 um of an open end/start
+    877.1s  [44b6_0113de3b] low-detection pool: 27561 peaks >= 0.5, 25928 on existing nodes, 1633 free
+    877.1s  [44b6_0113de3b] gap filler: +3 nodes, +4 edges
+    877.1s  [44b6_0113de3b] after gap-closing (single-frame + gap2 + low-detection filler): 25966 nodes, 25129 edges | 16.1s
+    897.8s  [44b6_0113de3b] after safe-division repair: 25966 nodes, 25164 edges | 36.9s (geometric_candidates=121, deepcenter_rejected=84, post_veto_candidates=37, added=35, cap_skipped=0, mutual_nn_rejected=70, divergence_rejected
+    940.6s  [44b6_0113de3b] divinsert: triples=2844 (orphan=1699, steal=1145) nodes_scored=3873 eligible=14 added=4 (orphan=2, steal=2) sec cand/score/insert=0.2/37.2/0.5
+    940.6s  [44b6_0113de3b] repair 79.9s | kernel elapsed 931s
+    946.3s  [44b6_0b24845f] low-detection pool: 48783 peaks >= 0.5, 20206 on existing nodes, 28577 free
+    946.3s  [44b6_0b24845f] readmitted 662 discarded detections within 4.0 um of an open end/start
+    964.8s  [44b6_0b24845f] low-detection pool: 48783 peaks >= 0.5, 20985 on existing nodes, 27798 free
+    965.1s  [44b6_0b24845f] gap filler: +67 nodes, +99 edges
+    965.1s  [44b6_0b24845f] after gap-closing (single-frame + gap2 + low-detection filler): 21242 nodes, 19629 edges | 23.7s
+    989.7s  [44b6_0b24845f] after safe-division repair: 21242 nodes, 19635 edges | 48.3s (geometric_candidates=155, deepcenter_rejected=149, post_veto_candidates=6, added=6, cap_skipped=0, mutual_nn_rejected=49, divergence_rejected=
+   1057.5s  [44b6_0b24845f] divinsert: triples=3685 (orphan=1850, steal=1835) nodes_scored=6985 eligible=0 added=0 (orphan=0, steal=0) sec cand/score/insert=0.2/63.3/0.2
+   1057.5s  [44b6_0b24845f] repair 116.2s | kernel elapsed 1048s
+   1059.4s  [6bba_05b6850b] low-detection pool: 8222 peaks >= 0.5, 6239 on existing nodes, 1983 free
+   1059.4s  [6bba_05b6850b] readmitted 84 discarded detections within 4.0 um of an open end/start
+   1062.7s  [6bba_05b6850b] low-detection pool: 8222 peaks >= 0.5, 6326 on existing nodes, 1896 free
+   1062.7s  [6bba_05b6850b] gap filler: +3 nodes, +4 edges
+   1062.7s  [6bba_05b6850b] after gap-closing (single-frame + gap2 + low-detection filler): 6359 nodes, 6123 edges | 4.7s
+   1066.4s  [6bba_05b6850b] after safe-division repair: 6359 nodes, 6128 edges | 8.4s (geometric_candidates=13, deepcenter_rejected=8, post_veto_candidates=5, added=5, cap_skipped=0, mutual_nn_rejected=6, divergence_rejected=83)
+   1077.3s  [6bba_05b6850b] divinsert: triples=276 (orphan=176, steal=100) nodes_scored=668 eligible=33 added=4 (orphan=3, steal=1) sec cand/score/insert=0.1/9.7/0.1
+   1077.3s  [6bba_05b6850b] repair 19.4s | kernel elapsed 1068s
+   1096.4s  [6bba_05db0fb1] low-detection pool: 80516 peaks >= 0.5, 69515 on existing nodes, 11001 free
+   1096.4s  [6bba_05db0fb1] readmitted 497 discarded detections within 4.0 um of an open end/start
+   1129.1s  [6bba_05db0fb1] low-detection pool: 80516 peaks >= 0.5, 70085 on existing nodes, 10431 free
+   1129.4s  [6bba_05db0fb1] gap filler: +37 nodes, +51 edges
+   1129.4s  [6bba_05db0fb1] after gap-closing (single-frame + gap2 + low-detection filler): 70392 nodes, 68168 edges | 51.0s
+   1157.5s  [6bba_05db0fb1] after safe-division repair: 70392 nodes, 68184 edges | 78.7s (geometric_candidates=222, deepcenter_rejected=203, post_veto_candidates=19, added=16, cap_skipped=0, mutual_nn_rejected=259, divergence_reject
+   1354.2s  [6bba_05db0fb1] divinsert: triples=17562 (orphan=6410, steal=11152) nodes_scored=20788 eligible=140 added=4 (orphan=2, steal=2) sec cand/score/insert=1.1/180.3/1.1
+   1354.2s  [6bba_05db0fb1] repair 275.9s | kernel elapsed 1344s
+   1355.6s  "ilp_appearance_weight": 0.0,
+   1355.6s  "ilp_disappearance_weight": 1.5,
+   1355.6s  "secondary_detection_weight": 0.475,
