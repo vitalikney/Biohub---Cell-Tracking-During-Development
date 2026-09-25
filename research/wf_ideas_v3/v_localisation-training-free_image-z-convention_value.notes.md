@@ -1,0 +1,1 @@
+- 2026-09-25T11:16:54Z start: value/transfer skeptic for image-z-convention; read BRIEF
