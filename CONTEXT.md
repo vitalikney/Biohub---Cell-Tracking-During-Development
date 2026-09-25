@@ -1893,6 +1893,27 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   set; earlier scored K files stay candidates. §f fallback item 4 (#34) stays as the last resort before exp52 ('never
   tick exp56' applies while any admissible non-copy x138-family file exists). Never tick two files with identical
   components. The finals objective is P(private > raw x138) first, silver second.
+- 2026-09-25 19:05 UTC, v4 AMENDMENT CODE MERGED (workflow wf_9606c7ef-11e; 3 implementers + 3 reviewers; full suite 112
+  passed): tools/trainlab.py ADDENDUM L gates (additive; results.md prints "Decisions: ORIGINAL T9 vs ADDENDUM L"; in
+  force now: forkmid = ORIGINAL T9 until the user's OK for L3; DeepCenter K3b = strict plateau AND L2; insertion = L5
+  warning-only), tools/forkblob_lab.py + --patch forkblob (x138 only; FORKBLOB_ENABLE default 0; fail-soft), and
+  tools/runtime_ledger.py (A5; the poller now refreshes experiments/lb_poll/ledger.md each cycle; poller restarted).
+  Reviewer minors kept as known limits: Wilson z = 1.2816 is the ADDENDUM's constant (one-sided 90% quantile, labelled
+  "80%" in the text) - applied as written; the new gate code is not wrapped fail-soft (a crash stops the lab report, not a
+  kernel); vacuous passes when an aggregate row is NaN are flagged in the report.
+- 2026-09-25 19:05 UTC, CURATOR (research/KNOWLEDGE/, first run "v4") ALERTS HANDLED: (a) RESULTS.md probe 25 fixed to
+  0.946; (b) P36 READING RULE (recorded BEFORE P36 scores): L35 is only bounded to (6.72, 7.73] h, so "L35 > 7.5 h" is
+  unprovable; conservative reading = P36 is INFO ONLY and cannot trigger a leaf-prune rider (no rider from P36 even if
+  delta >= +0.002; leaf prune on x138 stays closed); (c) metric notes: adjusted edge J is weighted per video by TP+FP+FN
+  (official code; s_merge brief_corrections) and the node multiplier is linear without a kink - the older §4 wording is
+  superseded; the "+-0.003 LB noise" of §11a does not apply to our deterministic kernels (a 0.001 public step between our
+  kernels is real on the public embryo; transfer to private is the open question); (d) R7 "DIVINS_DUMP=1 never in a
+  submission" applies to NEW builds; exp48/51/52/57b were scored with dumps (they only write files) and stay admissible;
+  (e) closed explicitly: tools/kaggle_lab.py (paused, superseded by the exp60 x138 lab), stage-resume idea (safetail
+  covers the failure modes); (f) K4 tempfuse has no owner: default = DROPPED (S6 empty) unless a night research round
+  finds a strong reason before 26 Sep 12:00 UTC; (g) orphans I-081 (DaughterNet as a precision veto on safe-division
+  forks) and I-072 (divergence/symmetry gates with float coords) and the density-quartile report column -> handed to the
+  night research rounds as candidate free CPU arms on the exp60 dumps.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

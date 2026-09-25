@@ -1,0 +1,5531 @@
+{
+ "meta": {
+  "generated": "2026-09-25 (ideas curator v4, after research round 1 / FINAL_REPORT_v4 and commit 14c339e)",
+  "task": "IDEAS LEDGER: every idea/hypothesis/experiment ever proposed, deduplicated into clusters, with status and sources",
+  "status_kinds": [
+   "lb-tested",
+   "lab-tested",
+   "refuted",
+   "open-untested",
+   "deferred-after-deadline",
+   "in-plan"
+  ],
+  "orphan_values": {
+   "strict": "proposed but never tested nor explicitly closed",
+   "at-risk": "in the plan only as optional/idle work with no owner or build yet"
+  },
+  "cluster_order_rule": "clusters sorted by realistic potential score impact for the remaining window (29 Sep 2026), then post-deadline ceiling",
+  "path_conventions": "paths are repo-relative; 'l.N' = line number in the file at commit 14c339e; §x = section",
+  "sources_read": [
+   "CONTEXT.md (all, to l.1912)",
+   "experiments/RESULTS.md (all)",
+   "experiments/*/probe.json (exp58n)",
+   "experiments/lb_poll/poll.log (tail)",
+   "research/wf_ideas_v2/ (FINAL_REPORT.md, r1_dedupe.json, r1_hyp_*.json, r2_critic.json, final.json)",
+   "research/wf_ideas_v3/ (FINAL_REPORT.md, s_merge.json, s_critic.json, h_*.json, browser_intel.md, NEXT_RESEARCH.md, TASK_*.md)",
+   "research/wf_ideas_v4/ (FINAL_REPORT_v4.md, final.json, lens_*.json, intel_browser.json)",
+   "research/wf_ideas/*.notes.md",
+   "research/browser_research_2026-09-24*.md",
+   "research/discussions_summary.md (§ implications)",
+   "research/survey_*.md (top-5 lists)",
+   "experiments/runtime_step0/step0.md",
+   "experiments/ext_*/NOTES.md",
+   "PROMPT_FRIEND_A.md, PROMPT_FRIEND_C.md (top blocks)"
+  ]
+ },
+ "clusters": [
+  {
+   "code": "RUN",
+   "title": "Runtime / hidden-rerun safety (safetail, N1 parrepair, deadlines, step 0)",
+   "impact": "Decides whether a final degrades on the hidden rerun: -0.05..-0.065 per degraded dataset, +0.01..+0.03 in the slow world (research/wf_ideas_v3/FINAL_REPORT.md §a.4, §c row 1).",
+   "n": 14,
+   "by_status": {
+    "in-plan": 5,
+    "lab-tested": 1,
+    "refuted": 8
+   }
+  },
+  {
+   "code": "BASE",
+   "title": "Base stack / public-notebook ports (public 0.941 -> sjlee 0.947 -> x138 0.953)",
+   "impact": "Realised the two largest LB steps: +0.006 (sjlee TTA stack, probe 14) and +0.003..+0.006 (x138, probe 34) (experiments/RESULTS.md rows 43, 67).",
+   "n": 12,
+   "by_status": {
+    "lb-tested": 8,
+    "refuted": 3,
+    "in-plan": 1
+   }
+  },
+  {
+   "code": "LOC",
+   "title": "Localisation / coordinate head (V1284 coordhead, float output, lowrefine, head retrain)",
+   "impact": "Only in-window lever with a public proof: +0.002 on our base (probe 31), +0.007 inside x138 (CONTEXT.md l.1495-1504).",
+   "n": 20,
+   "by_status": {
+    "lb-tested": 2,
+    "refuted": 15,
+    "lab-tested": 1,
+    "in-plan": 2
+   }
+  },
+  {
+   "code": "DIV",
+   "title": "Divisions (safe-division gates, DivNet, DaughterNet insertion, forkmid/forkblob, DeepCenter threshold)",
+   "impact": "0.1 x div_J; public div_J <= 0.36 (probe 26); realised +0.001 twice (probes 28, 35); in-window ceiling ~+0.002-0.005 (research/wf_ideas_v3/s_merge.json assumptions).",
+   "n": 39,
+   "by_status": {
+    "refuted": 23,
+    "lb-tested": 6,
+    "lab-tested": 3,
+    "in-plan": 4,
+    "open-untested": 2,
+    "deferred-after-deadline": 1
+   }
+  },
+  {
+   "code": "FINALS",
+   "title": "Finals choice / rank strategy (E[max], rank-aware F1, no-insertion twin F2)",
+   "impact": "0 on public; private premium ~+0.0002..+0.0005 and P(one final > raw x138) +0.01..+0.05 (research/wf_ideas_v4/FINAL_REPORT_v4.md §1.3).",
+   "n": 11,
+   "by_status": {
+    "refuted": 6,
+    "in-plan": 5
+   }
+  },
+  {
+   "code": "MODEL",
+   "title": "Model training / weights (fine-tunes, secondary swaps, dense/external labels, distillation) - the top-team route",
+   "impact": "Largest ceiling (0.97 route per top teams) but every retrain is refused for 29 Sep by rule R9; all 7 LB weight swaps were negative (CONTEXT.md l.1673-1676; research/wf_ideas_v3/s_merge.json C11).",
+   "n": 32,
+   "by_status": {
+    "lb-tested": 6,
+    "refuted": 7,
+    "deferred-after-deadline": 18,
+    "lab-tested": 1
+   }
+  },
+  {
+   "code": "NODES",
+   "title": "Node budget & recall (track length, threshold, pruning, readmit/gapfill, hole fill, leaf prune)",
+   "impact": "Node multiplier is linear (0.001 per 1% nodes); every LB node-count lever was <= 0 except leaf prune (tie) (CONTEXT.md l.1169-1171).",
+   "n": 21,
+   "by_status": {
+    "lb-tested": 4,
+    "refuted": 15,
+    "lab-tested": 1,
+    "in-plan": 1
+   }
+  },
+  {
+   "code": "INFER",
+   "title": "Inference-time TTA / ensembles / test-time adaptation (Z-flip, axis-flip, AdaBN, tempfuse)",
+   "impact": "+0.006 once (sjlee TTA stack); every later detection-map change 0 or negative on LB (probes 12, 16, 19; research/wf_ideas_v4/FINAL_REPORT_v4.md §4 H2).",
+   "n": 11,
+   "by_status": {
+    "lb-tested": 3,
+    "refuted": 6,
+    "lab-tested": 1,
+    "in-plan": 1
+   }
+  },
+  {
+   "code": "EF",
+   "title": "Edge filter / trusting ILP or edge net over the relink (ef_a3, ef_a0, stitch, swapfix, pair-GBM, RE-AIM)",
+   "impact": "Lab +0.016 -> LB 0 (probes 29/30): the in-sample edge network/ILP trap; whole class closed (CONTEXT.md l.1441-1445).",
+   "n": 11,
+   "by_status": {
+    "lb-tested": 2,
+    "refuted": 8,
+    "lab-tested": 1
+   }
+  },
+  {
+   "code": "LINK",
+   "title": "Linking / relink / gap closing / smoothing knobs",
+   "impact": "All relink/gap/linefit knob probes landed 0.943-0.945 (probes 8, 21-23); linker gains transfer ~+0.001 (CONTEXT.md l.1213-1217).",
+   "n": 21,
+   "by_status": {
+    "lb-tested": 6,
+    "refuted": 11,
+    "lab-tested": 3,
+    "in-plan": 1
+   }
+  },
+  {
+   "code": "VALID",
+   "title": "Validation, labs and methodology (LOEO, port, official metric, replay lab, exp60, anatomy)",
+   "impact": "No direct score; decides which ideas are trusted. Key lesson: labs on train are in-sample (CONTEXT.md l.1537-1538).",
+   "n": 15,
+   "by_status": {
+    "refuted": 5,
+    "lab-tested": 6,
+    "in-plan": 1,
+    "open-untested": 3
+   }
+  },
+  {
+   "code": "TESTSET",
+   "title": "Test-set structure / transductive / rules-policy ideas",
+   "impact": "Refused on rules/spirit (R9) or rules (proxy accounts).",
+   "n": 4,
+   "by_status": {
+    "refuted": 4
+   }
+  }
+ ],
+ "ideas": [
+  {
+   "id": "I-001",
+   "cluster": "RUN",
+   "name": "safetail (C01/E1): REPAIR_DEADLINE_S 34200 + gated/fail-soft DaughterNet insertion + DEGRADE_KEEP_DIV",
+   "aliases": [
+    "x138-budget-aware-deadline",
+    "runtime-guard-audit",
+    "E1",
+    "T1",
+    "DIVINS_DEADLINE_S gate"
+   ],
+   "description": "Raise x138's 7.5 h repair deadline to 9.5 h, run the insertion only before 28,800 s and inside try/except, keep safe divisions + linefit after the deadline.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v3/browser_intel.md §7.2"
+   },
+   "sources": [
+    "research/wf_ideas_v3/s_merge.json C01",
+    "research/wf_ideas_v3/FINAL_REPORT.md §c row 1",
+    "CONTEXT.md l.1898-1912",
+    "CONTEXT.md l.1817-1829",
+    "tools/build_probe_kernel.py --patch safetail"
+   ],
+   "status": {
+    "kind": "in-plan",
+    "detail": "In K2 = exp58 (18/18 dummy gates PASS incl. FD/FF, CONTEXT.md l.1817-1829); K2 pre-approved for 26 Sep 00:01 UTC (slot S2)."
+   },
+   "lb": [],
+   "lab": "Dummy: K1 sha256 == exp57b dummy (inert without deadline); FD keeps safe_div 76 + linefit; FF restores exp56 CSV.",
+   "next_step": "Read K2 score + latency (R5: admissible if latency <= 9.5 h).",
+   "orphan": false
+  },
+  {
+   "id": "I-002",
+   "cluster": "RUN",
+   "name": "Step 0 runtime arithmetic (E0/T7): bound hidden clip count N from latencies",
+   "aliases": [
+    "E0",
+    "T7"
+   ],
+   "description": "Per-clip dummy timings + probe latencies -> upper bound on N and runtime forecast of each build.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v3/FINAL_REPORT.md §c row 2"
+   },
+   "sources": [
+    "experiments/runtime_step0/step0.md",
+    "CONTEXT.md l.1811-1816"
+   ],
+   "status": {
+    "kind": "lab-tested",
+    "detail": "Done: N <= ~97-106 at dummy speed; K2 forecast <= ~7.8 h; R6 not triggered (experiments/runtime_step0/step0.md)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "Recompute when K2 latency is known.",
+   "orphan": false
+  },
+  {
+   "id": "I-003",
+   "cluster": "RUN",
+   "name": "Latency-as-proof admission (R5) via 10-min submission polling",
+   "aliases": [
+    "R5"
+   ],
+   "description": "A score visible before the deadline mark proves the timer never fired on that run.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v3/s_merge.json C01 (1)"
+   },
+   "sources": [
+    "CONTEXT.md l.1653-1657",
+    "CONTEXT.md l.1797-1810",
+    "experiments/lb_poll/poll.log"
+   ],
+   "status": {
+    "kind": "in-plan",
+    "detail": "Applied to #34 (L34 <= 6.46 h, proven) and #35 (L35 in (6.72,7.73] h, 7.5 h not provable -> #35 not a finals candidate) (CONTEXT.md l.1797-1810)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "Poll K2 07:00-08:30 UTC 26 Sep (A5).",
+   "orphan": false
+  },
+  {
+   "id": "I-004",
+   "cluster": "RUN",
+   "name": "N1 parrepair: multi-process repair workers (byte-identical CSV) + fail-soft wrappers",
+   "aliases": [
+    "E8",
+    "T10",
+    "exp62"
+   ],
+   "description": "Run x138's per-clip repair in K worker processes to remove the deadline risk.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v3/s_critic.json N1"
+   },
+   "sources": [
+    "research/wf_ideas_v3/s_verify_n1-parallel-repair-failsoft.json",
+    "research/wf_ideas_v3/FINAL_REPORT.md §c row 9",
+    "CONTEXT.md l.1658-1664"
+   ],
+   "status": {
+    "kind": "in-plan",
+    "detail": "Trigger-only (R6); NOT triggered: L34 <= 6.46 h, #35 no error, L35 <= 7.73 h, forecast 7.8 h < 9 h (experiments/runtime_step0/step0.md)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "Build only if K2 latency > 8 h or a K file errors.",
+   "orphan": false
+  },
+  {
+   "id": "I-005",
+   "cluster": "RUN",
+   "name": "N2 hidden-size bit probe (one slot to read test size from submission outcome)",
+   "aliases": [],
+   "description": "Deliberately error/score a submission depending on hidden clip count.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v3/s_critic.json N2"
+   },
+   "sources": [
+    "research/wf_ideas_v3/s_verify_n2-hidden-size-bit-probe.json",
+    "CONTEXT.md l.1673-1676"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Refused by R9 (info mostly free from latencies + step 0); last resort only with explicit user OK (CONTEXT.md l.1673-1676)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-006",
+   "cluster": "RUN",
+   "name": "Budget-aware deadline rule (elapsed + remaining x 1.3 > budget)",
+   "aliases": [],
+   "description": "Replace x138's fixed deadline by a budget forecast.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v3/h_ensembles-and-private.json x138-budget-aware-deadline"
+   },
+   "sources": [
+    "research/wf_ideas_v3/FINAL_REPORT.md §i",
+    "research/wf_ideas_v3/v_ensembles-and-private_x138-budget-aware-deadline_schedule.json"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "All-or-nothing, repairs 3-7% of datasets vs 23-43% for the fixed deadline (research/wf_ideas_v3/FINAL_REPORT.md §i)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-007",
+   "cluster": "RUN",
+   "name": "H1: REPAIR_DEADLINE_S 10.5 h (37800) with runtime ledger",
+   "aliases": [],
+   "description": "Raise the repair deadline further from K3 on.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v4/lens_headroom.json H1"
+   },
+   "sources": [
+    "research/wf_ideas_v4/FINAL_REPORT_v4.md §4",
+    "research/wf_ideas_v4/final.json rejected"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Worth 0 unless the rerun is >= 1.2-1.4x slower than #35; kept only as an OK-gated trigger inside A5 (research/wf_ideas_v4/final.json)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-008",
+   "cluster": "RUN",
+   "name": "L2: DIVINS_DEADLINE_S 32400 (with/without REPAIR 37800) after the 12 h limit was confirmed",
+   "aliases": [],
+   "description": "Loosen the insertion gate for K3/K4/F1-final.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v4/lens_literature.json L2"
+   },
+   "sources": [
+    "research/wf_ideas_v4/FINAL_REPORT_v4.md §4",
+    "research/wf_ideas_v4/v_literature_l2-deadline-retune-12h_value.json"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Insertion eats later clips' repair budget in the slow world (-0.0006..-0.002); never move DIVINS alone (research/wf_ideas_v4/FINAL_REPORT_v4.md §4)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-009",
+   "cluster": "RUN",
+   "name": "D4: two-stage scoring / insertion time insurance",
+   "aliases": [],
+   "description": "Exact two-stage scoring so the insertion cannot starve repair.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v4/lens_divisions-x138.json D4"
+   },
+   "sources": [
+    "research/wf_ideas_v4/final.json rejected",
+    "research/wf_ideas_v4/FINAL_REPORT_v4.md §3 row 5"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "EV ~1e-5 unconditional; kept only as an A5 trigger (L(K2) > 8 h) (research/wf_ideas_v4/final.json)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-010",
+   "cluster": "RUN",
+   "name": "A5 runtime ledger (report-only) in tools/dummy_gates.py + LB poll 07:00-08:30 UTC",
+   "aliases": [
+    "A5"
+   ],
+   "description": "Per-clip repair/GPU delta vs K2 and forecast F = L(K2) + 97*delta*1.15; triggers need OK.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v4/FINAL_REPORT_v4.md §3 row 5"
+   },
+   "sources": [
+    "research/wf_ideas_v4/final.json A5"
+   ],
+   "status": {
+    "kind": "in-plan",
+    "detail": "Adopted as report-only amendment; deadlines unchanged (research/wf_ideas_v4/FINAL_REPORT_v4.md §3 row 5)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "Implement before 07:00 UTC 26 Sep; triggers only with user OK.",
+   "orphan": false
+  },
+  {
+   "id": "I-011",
+   "cluster": "RUN",
+   "name": "A6 K2-error contingency: submit K1 (exp58t) next slot and rebase K3 on K1",
+   "aliases": [
+    "A6",
+    "RT1 reduced"
+   ],
+   "description": "Pre-registered fallback if K2 errors or is not R5-admissible.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v4/lens_redteam-plan.json RT1"
+   },
+   "sources": [
+    "research/wf_ideas_v4/FINAL_REPORT_v4.md §3 row 6",
+    "research/wf_ideas_v4/final.json A6"
+   ],
+   "status": {
+    "kind": "in-plan",
+    "detail": "Needs the user's morning OK (research/wf_ideas_v4/FINAL_REPORT_v4.md §5.4)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "Ask OK 26 Sep morning.",
+   "orphan": false
+  },
+  {
+   "id": "I-012",
+   "cluster": "RUN",
+   "name": "RT1: submit K1 in S3 tonight unconditionally",
+   "aliases": [],
+   "description": "Use the reserve slot on K1 right away.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v4/lens_redteam-plan.json RT1"
+   },
+   "sources": [
+    "research/wf_ideas_v4/FINAL_REPORT_v4.md §4"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "No approval, no rule uses its score; reduced to A6 contingency (research/wf_ideas_v4/FINAL_REPORT_v4.md §4)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-013",
+   "cluster": "RUN",
+   "name": "RT4: runtime FAIL gates on riders + DIVINS-only rebuild",
+   "aliases": [],
+   "description": "Fail riders whose dummy GPU/repair time grows.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v4/lens_redteam-plan.json RT4"
+   },
+   "sources": [
+    "research/wf_ideas_v4/FINAL_REPORT_v4.md §4"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "GPU threshold inside run noise (+25 s/clip exp56 vs K2); only the report-only ledger and the FD-trap note survive (research/wf_ideas_v4/FINAL_REPORT_v4.md §4)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-014",
+   "cluster": "RUN",
+   "name": "Speed-ups: fewer TTA views / fp16 / cudnn.benchmark to shorten the GPU phase",
+   "aliases": [],
+   "description": "Make x138's GPU phase cheaper to protect the deadline.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v3/browser_intel.md §7.2"
+   },
+   "sources": [
+    "research/wf_ideas_v3/FINAL_REPORT.md §i",
+    "research/wf_ideas_v3/s_critic.json"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Changes nodes and breaks 'F1 above the x138 block by eps'; cudnn.benchmark only if N >= 175 and nodes/edges identical (research/wf_ideas_v3/FINAL_REPORT.md §i)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-015",
+   "cluster": "BASE",
+   "name": "Public 0.941 pipeline as the base (dual-seed blend + DeepCenter veto + safe divisions + short-track filter)",
+   "aliases": [
+    "exp02",
+    "exp06"
+   ],
+   "description": "Use analyticaobscura's public pipeline instead of our own post-processing.",
+   "first_seen": {
+    "date": "2026-09-05",
+    "path": "experiments/RESULTS.md row exp02 (l.12)"
+   },
+   "sources": [
+    "CONTEXT.md l.245-252",
+    "CONTEXT.md §13 l.351-356"
+   ],
+   "status": {
+    "kind": "lb-tested",
+    "detail": "Public 0.941; +exp03B primary = probe 2 LB 0.945 (experiments/RESULTS.md l.34); superseded by the sjlee stack."
+   },
+   "lb": [
+    {
+     "probe": 2,
+     "score": 0.945
+    }
+   ],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-016",
+   "cluster": "BASE",
+   "name": "Own clean pipeline v2.1 (exp03B + ILP div 0.6 + gap 5 + direct 8, no public post-proc)",
+   "aliases": [
+    "exp10",
+    "A5 (old §10a)"
+   ],
+   "description": "Fine-tuned model + ILP + light post-processing, tuned on hold12.",
+   "first_seen": {
+    "date": "2026-09-05",
+    "path": "experiments/RESULTS.md l.150-153"
+   },
+   "sources": [
+    "CONTEXT.md l.61-66",
+    "CONTEXT.md §11 l.232-244"
+   ],
+   "status": {
+    "kind": "lb-tested",
+    "detail": "Probe 1 LB 0.899 vs hold12 0.990: leaky validation; public heuristics worth +0.046 (experiments/RESULTS.md l.33)."
+   },
+   "lb": [
+    {
+     "probe": 1,
+     "score": 0.899
+    }
+   ],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-017",
+   "cluster": "BASE",
+   "name": "sjlee101 TTA stack verbatim (biohub-lf-dctta-v020: DeepCenter TTA + secondary edge-feature TTA 0.75 + DC div 0.20)",
+   "aliases": [
+    "exp29",
+    "B17",
+    "A23"
+   ],
+   "description": "Inference-only public 0.947 stack.",
+   "first_seen": {
+    "date": "2026-09-10",
+    "path": "CONTEXT.md l.425-437"
+   },
+   "sources": [
+    "experiments/RESULTS.md l.43",
+    "CONTEXT.md l.620-624"
+   ],
+   "status": {
+    "kind": "lb-tested",
+    "detail": "Probe 14 exp29 = 0.947 (reproduced); base and final candidate until x138 (experiments/RESULTS.md l.43)."
+   },
+   "lb": [
+    {
+     "probe": 14,
+     "score": 0.947
+    }
+   ],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-018",
+   "cluster": "BASE",
+   "name": "sjlee single-knob forks (secondary edge-TTA 1.0, DC safe-div 0.25/0.15, sister 16)",
+   "aliases": [],
+   "description": "Friend B's queued inference variants.",
+   "first_seen": {
+    "date": "2026-09-10",
+    "path": "CONTEXT.md l.465-469"
+   },
+   "sources": [
+    "experiments/RESULTS.md l.72",
+    "CONTEXT.md l.698-710"
+   ],
+   "status": {
+    "kind": "lb-tested",
+    "detail": "Answered by the author's public scores: 0.946-0.947, all ties (experiments/RESULTS.md l.72)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-019",
+   "cluster": "BASE",
+   "name": "thtennant frontier947-readmit chain (flow-prior relink, readmit, sub-threshold gapfill, DC 0.25, ILP timeout)",
+   "aliases": [],
+   "description": "Public chain later used as x138's base.",
+   "first_seen": {
+    "date": "2026-09-18",
+    "path": "CONTEXT.md l.999-1001"
+   },
+   "sources": [
+    "CONTEXT.md l.1430-1431",
+    "CONTEXT.md l.1500-1504",
+    "experiments/ext_frontier947_readmit/"
+   ],
+   "status": {
+    "kind": "lb-tested",
+    "detail": "0.946 alone (others' public score); adopted through x138, where the head's positions make it work (CONTEXT.md l.1500-1504)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-020",
+   "cluster": "BASE",
+   "name": "x138 verbatim (anvithpothula/biohub-x138 = frontier947-readmit + V1284 head)",
+   "aliases": [
+    "exp56"
+   ],
+   "description": "Reproduce the 0.953 public notebook on our account.",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "CONTEXT.md l.1380-1386"
+   },
+   "sources": [
+    "experiments/RESULTS.md l.67",
+    "CONTEXT.md l.1797-1800",
+    "experiments/ext_x138/DIFF.md"
+   ],
+   "status": {
+    "kind": "lb-tested",
+    "detail": "Probe 34 exp56 = 0.953, L34 <= 6.46 h -> x138 is the base (R1) (CONTEXT.md l.1797-1800). Never tick as a final (byte copy)."
+   },
+   "lb": [
+    {
+     "probe": 34,
+     "score": 0.953
+    }
+   ],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-021",
+   "cluster": "BASE",
+   "name": "takaito a951-gshift verbatim (haideptry density stack + gshift + mutual-best beta)",
+   "aliases": [
+    "exp43"
+   ],
+   "description": "Port a public '0.948' notebook as a new base.",
+   "first_seen": {
+    "date": "2026-09-22",
+    "path": "CONTEXT.md l.1217-1223"
+   },
+   "sources": [
+    "experiments/RESULTS.md l.57",
+    "CONTEXT.md l.1228-1233"
+   ],
+   "status": {
+    "kind": "lb-tested",
+    "detail": "Probe 24 exp43 = 0.944 (author 0.948): public '0.948' notebooks are favourable draws (CONTEXT.md l.1228-1231)."
+   },
+   "lb": [
+    {
+     "probe": 24,
+     "score": 0.944
+    }
+   ],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-022",
+   "cluster": "BASE",
+   "name": "Bundle: takaito base + axis-flip TTA + division hygiene (change in every stage)",
+   "aliases": [
+    "exp44"
+   ],
+   "description": "User's 'bundles, not single knobs' request.",
+   "first_seen": {
+    "date": "2026-09-22",
+    "path": "CONTEXT.md l.1223-1226"
+   },
+   "sources": [
+    "CONTEXT.md l.1231-1232",
+    "experiments/RESULTS.md l.58"
+   ],
+   "status": {
+    "kind": "lb-tested",
+    "detail": "Probe 25 exp44 v2 = 0.946 (CONTEXT.md l.1231); experiments/RESULTS.md row still says PENDING (stale)."
+   },
+   "lb": [
+    {
+     "probe": 25,
+     "score": 0.946
+    }
+   ],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-023",
+   "cluster": "BASE",
+   "name": "haideptry density-adaptive '0.951' stack (+ DivNet veto + DC 0.25)",
+   "aliases": [],
+   "description": "Candidate public base.",
+   "first_seen": {
+    "date": "2026-09-21",
+    "path": "CONTEXT.md l.1115-1118"
+   },
+   "sources": [
+    "experiments/ext_biohub-0-951-sota-deepcenter-fast-ilp-19m/NOTES.md"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Public 0.944/0.947 despite the title; nothing to take (experiments/ext_biohub-0-951-sota-deepcenter-fast-ilp-19m/NOTES.md)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-024",
+   "cluster": "BASE",
+   "name": "HOCT-veto public stack (sjlee hoctveto-div-b)",
+   "aliases": [],
+   "description": "Alternative public base with a HOCT fork veto.",
+   "first_seen": {
+    "date": "2026-09-13",
+    "path": "CONTEXT.md l.768-771"
+   },
+   "sources": [
+    "CONTEXT.md l.1129-1130",
+    "CONTEXT.md l.1249"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "HOCT veto variants all 0.947; odds 1 in 10 (CONTEXT.md l.1129-1130, l.1249)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-025",
+   "cluster": "BASE",
+   "name": "amanatar optimized-max-score (x138 + in-kernel metric-aligned PP sweep + wall-clock governor)",
+   "aliases": [],
+   "description": "In-kernel sweep layer on x138.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "experiments/ext_optimized-biohub-max-score/NOTES.md"
+   },
+   "sources": [
+    "research/wf_ideas_v3/browser_intel.md §2b"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Latest version ERRORED on LB; in-sample sweep class (experiments/ext_optimized-biohub-max-score/NOTES.md)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-026",
+   "cluster": "BASE",
+   "name": "Successor watch (C10/E10): port a public x138 successor >= 0.956 verbatim on trigger",
+   "aliases": [
+    "harvest-x138-successors",
+    "E10",
+    "rule: late public >= 0.950 gets one probe"
+   ],
+   "description": "Poll Code tab / LB histogram for a new >= 0.956 spike.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v3/h_github-intel.json successor-port"
+   },
+   "sources": [
+    "research/wf_ideas_v3/s_merge.json C10",
+    "research/wf_ideas_v3/FINAL_REPORT.md §c row 11",
+    "CONTEXT.md l.991-992"
+   ],
+   "status": {
+    "kind": "in-plan",
+    "detail": "Triggered watch only; no public notebook > 0.953 as of 25 Sep 18:08 UTC (research/wf_ideas_v4/FINAL_REPORT_v4.md §2)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "Keep polling until 29 Sep 07:00 UTC; S8/S14 on trigger.",
+   "orphan": false
+  },
+  {
+   "id": "I-027",
+   "cluster": "LOC",
+   "name": "V1284 coordinate-refinement head on our base (--patch coordhead; float coords + trilinear gather)",
+   "aliases": [
+    "coordhead",
+    "exp51"
+   ],
+   "description": "MLP 224->32->3 on frozen UNet features, shift <= 2 um, coords stay float.",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "CONTEXT.md l.1380-1388"
+   },
+   "sources": [
+    "experiments/RESULTS.md l.64",
+    "CONTEXT.md l.1424-1434",
+    "CONTEXT.md l.1495-1504",
+    "research/browser_research_2026-09-24.md §e.1"
+   ],
+   "status": {
+    "kind": "lb-tested",
+    "detail": "Probe 31 exp51 = 0.950 (+0.002 over exp48); in x138 the same head gives +0.007 because the post-ILP chain consumes positions (CONTEXT.md l.1495-1504)."
+   },
+   "lb": [
+    {
+     "probe": 31,
+     "score": 0.95
+    }
+   ],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-028",
+   "cluster": "LOC",
+   "name": "Float output coordinates, truncation-safe encoding (--patch floatout)",
+   "aliases": [
+    "float-output-coords",
+    "exp52",
+    "exp53"
+   ],
+   "description": "Write sub-voxel coords instead of int(round()); floor(w) == round(v).",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "CONTEXT.md l.1431-1432"
+   },
+   "sources": [
+    "research/wf_ideas_v2/FINAL_REPORT.md §1",
+    "CONTEXT.md l.1477-1485",
+    "CONTEXT.md l.1498-1499",
+    "experiments/RESULTS.md l.65-66"
+   ],
+   "status": {
+    "kind": "lb-tested",
+    "detail": "Lab +0.0019 on 199 videos; probes 32/33 = 0.950/0.948 = ties with their bases (harmless, invisible) (CONTEXT.md l.1498-1499)."
+   },
+   "lb": [
+    {
+     "probe": 32,
+     "score": 0.95
+    },
+    {
+     "probe": 33,
+     "score": 0.948
+    }
+   ],
+   "lab": "",
+   "next_step": "Optional in finals; exp52 carries it.",
+   "orphan": false
+  },
+  {
+   "id": "I-029",
+   "cluster": "LOC",
+   "name": "Constant sub-voxel offset arm (dz/dy/dx grid; subvoxel-bias-calibration)",
+   "aliases": [],
+   "description": "Apply a per-axis constant shift in the float-output harness.",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "research/wf_ideas_v2/r1_dedupe.json subvoxel-bias-calibration"
+   },
+   "sources": [
+    "research/wf_ideas_v2/r1_dedupe.json float-output-coords",
+    "research/wf_ideas_v3/s_merge.json dropped image-z-convention"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Low prior: forum constant dz lost 0.0031; per-video GT-oracle z shift gave no match gain (research/wf_ideas_v3/s_merge.json dropped)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-030",
+   "cluster": "LOC",
+   "name": "COORDHEAD_MODE=zero control (float geometry + trilinear gather, no shift)",
+   "aliases": [
+    "exp54",
+    "P34 (old)"
+   ],
+   "description": "Decide whether exp51's gain is the shift or the float geometry.",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "research/browser_research_2026-09-24_pass2.md §7.1"
+   },
+   "sources": [
+    "CONTEXT.md l.1463-1465",
+    "CONTEXT.md l.1483-1485"
+   ],
+   "status": {
+    "kind": "lab-tested",
+    "detail": "exp54 CSV byte-identical to exp48 -> LB 0.948 by construction, no slot used; the gain is entirely the shift (CONTEXT.md l.1483-1485)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-031",
+   "cluster": "LOC",
+   "name": "Retrain the V1284 head on all 199 train videos (capture -> Hungarian <= 4 um -> MLP)",
+   "aliases": [
+    "head-v2-199",
+    "gate-aware-refine-head (reduced)",
+    "exp55"
+   ],
+   "description": "More data for the head (author: 'volume, not concept').",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "research/browser_research_2026-09-24_pass2.md §7.2"
+   },
+   "sources": [
+    "CONTEXT.md l.1470-1476",
+    "CONTEXT.md l.1488-1493",
+    "research/wf_ideas_v2/FINAL_REPORT.md §6",
+    "experiments/coordhead_retrain/",
+    "tools/train_coordhead.py"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Kill test FAIL: embryo-held-out 6bba->44b6 +12% worse than the public head (learns 6bba z-offset) (CONTEXT.md l.1488-1493)."
+   },
+   "lb": [],
+   "lab": "Leak-group OOF -18.9% (mostly bias removal); embryo-held-out worse.",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-032",
+   "cluster": "LOC",
+   "name": "Gate-aware refine head (track-identity pairs to 10 um, gate-hinge loss, 27-neighbour stencil, 3 um z cap)",
+   "aliases": [],
+   "description": "Train the head for the matching gate instead of plain distance.",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "research/wf_ideas_v2/r1_hyp_detection.json gate-aware-refine-head"
+   },
+   "sources": [
+    "research/wf_ideas_v2/r1_dedupe.json",
+    "research/wf_ideas_v2/final.json gate-aware-refine-head"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Skeptics reduced it to a plain retrain, which then failed its kill test (research/wf_ideas_v2/final.json)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-033",
+   "cluster": "LOC",
+   "name": "coordhead-v2 embryo-robust (debiased, embryo-balanced, bagged 199-video head)",
+   "aliases": [],
+   "description": "Fix the retrain's embryo bias.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v3/h_detector-retrain.json"
+   },
+   "sources": [
+    "research/wf_ideas_v3/s_merge.json dropped",
+    "research/wf_ideas_v3/FINAL_REPORT.md §i"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Gate passes with P 0.05-0.10; fixes a constant offset the 7 um metric ignores (research/wf_ideas_v3/s_merge.json dropped)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-034",
+   "cluster": "LOC",
+   "name": "50/50 blend of the 199-video head with the public head",
+   "aliases": [],
+   "description": "Hedge the retrain.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v3/h_github-intel.json head-blend"
+   },
+   "sources": [
+    "research/wf_ideas_v3/s_merge.json dropped"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Debiased Q +3.9% worse on 44b6; by convexity the blend is >= +1.6-2% worse (research/wf_ideas_v3/s_merge.json dropped)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-035",
+   "cluster": "LOC",
+   "name": "Head cascade / scale pre-gate (multiply public V1284 shift by s in 0.8..1.6) (C09/E12)",
+   "aliases": [
+    "C09",
+    "E12",
+    "head-cascade",
+    "coordhead-scale-clip-calibration"
+   ],
+   "description": "CPU desk test on existing captures; cascade only if s_opt >= 1.25 and >= 4% on both embryos.",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "research/wf_ideas_v2/r1_dedupe.json coordhead-scale-clip-calibration"
+   },
+   "sources": [
+    "research/wf_ideas_v3/s_merge.json C09",
+    "research/wf_ideas_v3/FINAL_REPORT.md §c row 13",
+    "research/wf_ideas_v3/TASK_CLOUD_SESSION.md T12"
+   ],
+   "status": {
+    "kind": "in-plan",
+    "detail": "Idle-only (E12/T12), P(reaches a slot) ~0.1; not run (research/wf_ideas_v3/FINAL_REPORT.md §c row 13)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "Run only if the cloud session idles before R8 (27 Sep 12:00 UTC); else close.",
+   "orphan": "at-risk"
+  },
+  {
+   "id": "I-036",
+   "cluster": "LOC",
+   "name": "lowrefine (C05/E2): readmitted >= 0.965 lowdet peaks get head-refined float coords",
+   "aliases": [
+    "refine-lowdet-peaks-x138",
+    "refined-lowdet-pool",
+    "lowdet-refine",
+    "refine-lowdet-pool",
+    "E2",
+    "T2"
+   ],
+   "description": "x138 dumps the lowdet pool before the head and casts to int16; refine the >= 0.965 part.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v3/s_merge.json C05"
+   },
+   "sources": [
+    "CONTEXT.md l.1750-1752",
+    "CONTEXT.md l.1817-1822",
+    "research/wf_ideas_v3/FINAL_REPORT.md §c row 4"
+   ],
+   "status": {
+    "kind": "in-plan",
+    "detail": "In K2 (LOWREFINE refined 26,532/27,877 ... peaks, 0 failed frames; dummy gates PASS) (CONTEXT.md l.1817-1822); expected +0.0002."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "Read K2 by R3.",
+   "orphan": false
+  },
+  {
+   "id": "I-037",
+   "cluster": "LOC",
+   "name": "Polyphase shift-and-stitch localisation (+ logit-parabola sub-voxel guard)",
+   "aliases": [
+    "logit-parabola-subvoxel-guard"
+   ],
+   "description": "Read the 15/16 unused xy phases to remove grid quantisation.",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "research/wf_ideas_v2/r1_hyp_literature.json"
+   },
+   "sources": [
+    "research/wf_ideas_v2/FINAL_REPORT.md Dropped",
+    "research/wf_ideas_v2/final.json"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Same grid error as the head; dose-response bound +0.001-0.002 (research/wf_ideas_v2/FINAL_REPORT.md Dropped)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-038",
+   "cluster": "LOC",
+   "name": "H2: one polyphase detection view bundled with tempfuse",
+   "aliases": [],
+   "description": "Add a diagonal half-cell phase view as a 9th TTA view.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v4/lens_headroom.json H2"
+   },
+   "sources": [
+    "research/wf_ideas_v4/FINAL_REPORT_v4.md §4"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Closed TTA class (detection-map changes 0/5 on LB), no honest lab, pushes the forecast past the 8 h gate (research/wf_ideas_v4/FINAL_REPORT_v4.md §4)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-039",
+   "cluster": "LOC",
+   "name": "Full-resolution residual head (fullres-patch-residual-head / fullres-residual-head)",
+   "aliases": [],
+   "description": "Second-stage refinement from full-res image intensity.",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "research/wf_ideas_v2/r1_hyp_detection.json"
+   },
+   "sources": [
+    "research/wf_ideas_v2/r1_dedupe.json dropped",
+    "research/wf_ideas_v3/s_merge.json (C09 merge)",
+    "research/wf_ideas_v3/FINAL_REPORT.md §i"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "z carries 66% of error variance and full-res adds no z info; not additive beyond the head (research/wf_ideas_v3/FINAL_REPORT.md §i)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-040",
+   "cluster": "LOC",
+   "name": "Full-resolution marker-controlled watershed centroid as output position",
+   "aliases": [],
+   "description": "Training-free centroid refinement.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v3/h_localisation-training-free.json"
+   },
+   "sources": [
+    "research/wf_ideas_v3/FINAL_REPORT.md §i"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Analogue float-output lab gain tied twice on LB; z dominates error (research/wf_ideas_v3/FINAL_REPORT.md §i)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-041",
+   "cluster": "LOC",
+   "name": "Per-video image-estimated z-offset (image-z-convention)",
+   "aliases": [],
+   "description": "Estimate annotation z convention from the raw image.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v3/h_localisation-training-free.json"
+   },
+   "sources": [
+    "research/wf_ideas_v3/s_merge.json dropped"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Even a GT-oracle per-video shift gave no match gain (research/wf_ideas_v3/s_merge.json dropped)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-042",
+   "cluster": "LOC",
+   "name": "Valley-gated z-split of under-segmented z-stacked nuclei (zsplit)",
+   "aliases": [],
+   "description": "Split merged z detections in dense regions.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v3/h_localisation-training-free.json"
+   },
+   "sources": [
+    "research/wf_ideas_v3/s_merge.json dropped"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "+10-40 FN (+0.0001 lab); 97% of close pairs are z-duplicates (research/wf_ideas_v3/s_merge.json dropped)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-043",
+   "cluster": "LOC",
+   "name": "Refined duplicate collapse / near-duplicate track merging",
+   "aliases": [],
+   "description": "Merge near-duplicate tracks after the head.",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "CONTEXT.md l.1417-1418"
+   },
+   "sources": [
+    "research/wf_ideas_v2/FINAL_REPORT.md Dropped",
+    "research/wf_ideas_v2/final.json"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Head-free variants -0.002..-0.013; oracle +0.0004/+0.0020 (research/wf_ideas_v2/FINAL_REPORT.md Dropped)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-044",
+   "cluster": "LOC",
+   "name": "Ultrack-convention localiser / snapping to Ultrack (unet-simview) points",
+   "aliases": [],
+   "description": "Hidden annotations may follow Ultrack's convention.",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "research/wf_ideas_v2/r2_critic.json"
+   },
+   "sources": [
+    "research/wf_ideas_v3/s_merge.json dropped",
+    "research/wf_ideas_v2/r2_critic.json"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Public head on 44b6 (1.107 um) already beats dorado Ultrack (1.29 um); snapping lowers the <4 um share (research/wf_ideas_v3/s_merge.json dropped)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-045",
+   "cluster": "LOC",
+   "name": "Precision detector as second localiser (georgexue666 pool-2, sigma 0.8 um)",
+   "aliases": [],
+   "description": "Use a public retrained precision detector.",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "research/browser_research_2026-09-24_pass2.md §7.6"
+   },
+   "sources": [
+    "research/wf_ideas_v3/s_merge.json dropped",
+    "research/wf_ideas_v3/browser_intel.md §6.1"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "No model code, no LB score, within-embryo validation only (research/wf_ideas_v3/s_merge.json dropped)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-046",
+   "cluster": "LOC",
+   "name": "Probability-weighted centroid sub-voxel refinement (Eric; Corwin k10_subvox)",
+   "aliases": [],
+   "description": "Training-free sub-voxel refinement.",
+   "first_seen": {
+    "date": "2026-09-20",
+    "path": "CONTEXT.md l.1070-1073"
+   },
+   "sources": [
+    "experiments/ext_corwin-biocel-aux/NOTES.md",
+    "research/wf_ideas_v3/s_merge.json assumptions"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Eric's +0.0078 local became -0.002 on LB twice; lever closed in practice (research/wf_ideas_v3/s_merge.json assumptions)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-047",
+   "cluster": "DIV",
+   "name": "Post-hoc divisions (parent <= 5 um to an orphan start at t+1, sisters <= 12 um)",
+   "aliases": [
+    "A6 (old §10a)"
+   ],
+   "description": "Our own rule-based fork adder in the clean pipeline.",
+   "first_seen": {
+    "date": "2026-09-05",
+    "path": "experiments/RESULTS.md l.18"
+   },
+   "sources": [
+    "experiments/RESULTS.md l.22",
+    "CONTEXT.md l.161",
+    "CONTEXT.md l.572-576"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Lab +0.011 hold12 but honest 1 TP / 31 FP; DIV_PARENT_UM=0 kept (CONTEXT.md l.161)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-048",
+   "cluster": "DIV",
+   "name": "Division 'steal' of weakly linked daughters by edge_prob threshold (exp07)",
+   "aliases": [],
+   "description": "Let divisions take a daughter whose link has low probability.",
+   "first_seen": {
+    "date": "2026-09-05",
+    "path": "experiments/RESULTS.md l.20"
+   },
+   "sources": [
+    "CONTEXT.md l.94"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Lab 0.9710/0.9717/0.9693 vs 0.9728: no new TP, more edge damage (experiments/RESULTS.md l.20)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-049",
+   "cluster": "DIV",
+   "name": "ILP division weight (1.2 -> 0.6 / 0.9 / 0.1; B23 Ultrack-scale penalties)",
+   "aliases": [
+    "A2",
+    "A9",
+    "B23",
+    "exp12",
+    "exp18"
+   ],
+   "description": "Let the ILP emit forks.",
+   "first_seen": {
+    "date": "2026-09-05",
+    "path": "experiments/RESULTS.md l.28"
+   },
+   "sources": [
+    "experiments/RESULTS.md l.35",
+    "CONTEXT.md l.213",
+    "research/wf_ideas_v3/s_merge.json assumptions 'ILP division weight is closed'"
+   ],
+   "status": {
+    "kind": "lb-tested",
+    "detail": "Probe 3 (0.9) = 0.941 neutral; B23 never run; v3: the test was invalid (x138 ILP emits 0 forks) but ILP fork precision 0.19 < 0.265 -> not reopened (research/wf_ideas_v3/s_merge.json)."
+   },
+   "lb": [
+    {
+     "probe": 3,
+     "score": 0.941
+    }
+   ],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-050",
+   "cluster": "DIV",
+   "name": "Division candidate GBM ranker prototype (tools/divranker.py)",
+   "aliases": [
+    "A8",
+    "B15"
+   ],
+   "description": "Rank candidate forks instead of rules.",
+   "first_seen": {
+    "date": "2026-09-06",
+    "path": "CONTEXT.md l.116"
+   },
+   "sources": [
+    "CONTEXT.md l.163"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Candidate recall 35% is the bottleneck; GBM top-200 = 8 TP vs rule 12 (CONTEXT.md l.163); superseded by B20."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-051",
+   "cluster": "DIV",
+   "name": "Safe-division gate knobs (symmetry tau, parent radius, divergence) swept offline (sim_safediv)",
+   "aliases": [],
+   "description": "Re-tune the public safe-division gates.",
+   "first_seen": {
+    "date": "2026-09-11",
+    "path": "CONTEXT.md l.654-669"
+   },
+   "sources": [
+    "experiments/RESULTS.md l.71",
+    "CONTEXT.md l.670-681"
+   ],
+   "status": {
+    "kind": "lab-tested",
+    "detail": "Under the official metric the public tau 0.6 is the best tested; gate worth +0.010 total; knobs closed (experiments/RESULTS.md l.71)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-052",
+   "cluster": "DIV",
+   "name": "B21 sister-separation floor (5 um) in safe-division",
+   "aliases": [
+    "B21"
+   ],
+   "description": "Public gate has only an upper bound; its ranker prefers duplicates.",
+   "first_seen": {
+    "date": "2026-09-11",
+    "path": "CONTEXT.md l.211"
+   },
+   "sources": [
+    "CONTEXT.md l.744-757",
+    "experiments/RESULTS.md l.50"
+   ],
+   "status": {
+    "kind": "lb-tested",
+    "detail": "Lab +0.0012 (one FP); shipped inside probe 18 exp36 = 0.946 (tie) (experiments/RESULTS.md l.51)."
+   },
+   "lb": [
+    {
+     "probe": 18,
+     "score": 0.946
+    }
+   ],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-053",
+   "cluster": "DIV",
+   "name": "Open gates (drop symmetry/divergence) + floor + sister-first ranker",
+   "aliases": [],
+   "description": "Reach 109/151 GT divisions instead of 35.",
+   "first_seen": {
+    "date": "2026-09-11",
+    "path": "CONTEXT.md l.744-753"
+   },
+   "sources": [
+    "CONTEXT.md l.754-760",
+    "experiments/RESULTS.md l.50"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "FP explodes (27-29 FP) without a learned ranker; sister-first ranker 1 TP (CONTEXT.md l.754-760)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-054",
+   "cluster": "DIV",
+   "name": "B27 division FP hygiene (already-divided fork filter + sister floor 5 um)",
+   "aliases": [
+    "B27",
+    "exp36"
+   ],
+   "description": "Two structurally safe FP filters, one probe.",
+   "first_seen": {
+    "date": "2026-09-15",
+    "path": "CONTEXT.md l.841-845"
+   },
+   "sources": [
+    "experiments/RESULTS.md l.51",
+    "experiments/RESULTS.md l.103",
+    "CONTEXT.md l.965-972"
+   ],
+   "status": {
+    "kind": "lb-tested",
+    "detail": "Probe 18 exp36 = 0.946 (-0.001, tie; local prediction +0.0011); also inside the exp44 bundle (0.946) (experiments/RESULTS.md l.51)."
+   },
+   "lb": [
+    {
+     "probe": 18,
+     "score": 0.946
+    }
+   ],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-055",
+   "cluster": "DIV",
+   "name": "B20 learned fork ranker on steal-aware candidates (friend B pass 2)",
+   "aliases": [
+    "B20",
+    "B22"
+   ],
+   "description": "Candidates = orphan OR claimed-by-unmatched daughters; ranker learns which steals are right.",
+   "first_seen": {
+    "date": "2026-09-11",
+    "path": "CONTEXT.md l.210"
+   },
+   "sources": [
+    "CONTEXT.md l.943-959",
+    "experiments/RESULTS.md l.113-115"
+   ],
+   "status": {
+    "kind": "lab-tested",
+    "detail": "Pass 2 reproduces the shipped stage; ranker untrainable on 5-9 positives on 12 videos; superseded by DivNet ranking (experiments/RESULTS.md l.115)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-056",
+   "cluster": "DIV",
+   "name": "B22 evidence re-rank features (sister separation, parent intensity AUC 0.73, daughter size shrink)",
+   "aliases": [],
+   "description": "Ranker features from base rates and zhincez's size profile.",
+   "first_seen": {
+    "date": "2026-09-11",
+    "path": "CONTEXT.md l.212"
+   },
+   "sources": [
+    "experiments/RESULTS.md l.111",
+    "CONTEXT.md l.913-921"
+   ],
+   "status": {
+    "kind": "lab-tested",
+    "detail": "Post-split shrinkage reproduced (-0.17..-0.20 at lags 0..+2); ranker power never measured; line closed with B20 (experiments/RESULTS.md l.111)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-057",
+   "cluster": "DIV",
+   "name": "Public DivNet (giorgosi/biohub-divnet-v2) as the fork RANKER on all 199 videos",
+   "aliases": [],
+   "description": "Use the public division detector's p to rank candidate forks.",
+   "first_seen": {
+    "date": "2026-09-18",
+    "path": "CONTEXT.md l.992-1005"
+   },
+   "sources": [
+    "experiments/RESULTS.md l.117-118",
+    "CONTEXT.md l.1011-1043"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Best ranking -0.012 on 199 (per-parent p cannot choose the daughter); AUC 0.834 validates inputs (experiments/RESULTS.md l.117-118)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-058",
+   "cluster": "DIV",
+   "name": "DivNet parent veto p >= 0.5 on safe-division candidates",
+   "aliases": [
+    "exp39",
+    "haideptry soft veto (0.945)"
+   ],
+   "description": "Use DivNet only as a veto.",
+   "first_seen": {
+    "date": "2026-09-19",
+    "path": "CONTEXT.md l.1036-1043"
+   },
+   "sources": [
+    "experiments/RESULTS.md l.53",
+    "CONTEXT.md l.1135-1141"
+   ],
+   "status": {
+    "kind": "lb-tested",
+    "detail": "Lab +0.0023 (59 FP removed, 1 TP lost); probe 20 exp39 = 0.947 (tie); F2 until the x138 era (experiments/RESULTS.md l.53)."
+   },
+   "lb": [
+    {
+     "probe": 20,
+     "score": 0.947
+    }
+   ],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-059",
+   "cluster": "DIV",
+   "name": "B32 division pair model (parent + both daughters, UNet-GAP, wide orphan pool)",
+   "aliases": [
+    "B32"
+   ],
+   "description": "Score the whole triple on a 15 um pool.",
+   "first_seen": {
+    "date": "2026-09-22",
+    "path": "CONTEXT.md l.1119-1130"
+   },
+   "sources": [
+    "CONTEXT.md l.1142-1162",
+    "experiments/RESULTS.md l.122"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Closed at step 1: orphan pool reaches 58/151; detection ceiling 121/151; steal pool 16.3M triples (experiments/RESULTS.md l.122)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-060",
+   "cluster": "DIV",
+   "name": "B35 daughter recovery: second detector pass (0.90) + steal pool + pair model",
+   "aliases": [
+    "B35",
+    "step A0",
+    "tools/recover_daughters.py"
+   ],
+   "description": "Recover undetected second daughters, then rank.",
+   "first_seen": {
+    "date": "2026-09-23",
+    "path": "CONTEXT.md l.200"
+   },
+   "sources": [
+    "CONTEXT.md l.1193-1203",
+    "CONTEXT.md l.1259-1263"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Step A reaches 151/151 GT divisions but at +24% candidate nodes (gate 0.3%); recovered daughters stay out; DivNet-p prefilter refuted (CONTEXT.md l.1198-1203, l.1259-1263)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-061",
+   "cluster": "DIV",
+   "name": "B35 step C: dense division-label fine-tune for the local second pass",
+   "aliases": [],
+   "description": "Only if step A fails.",
+   "first_seen": {
+    "date": "2026-09-23",
+    "path": "CONTEXT.md l.200"
+   },
+   "sources": [
+    "CONTEXT.md l.1244-1259"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Superseded by the 23 Sep 20:30 plan (L2 inserts divisions on existing nodes only) (CONTEXT.md l.1259-1263)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-062",
+   "cluster": "DIV",
+   "name": "DaughterNet v1 (from scratch, 5 honest folds) + insertion with steal after the tail (L2; div_insert)",
+   "aliases": [
+    "L2",
+    "divinsert",
+    "exp48",
+    "exp57b",
+    "C03",
+    "E6",
+    "pawanmali 3-class classifier"
+   ],
+   "description": "3-class node model (cont/parent/daughter; pawanmali-style) inserting <= cap forks per video.",
+   "first_seen": {
+    "date": "2026-09-23",
+    "path": "CONTEXT.md l.1244-1259"
+   },
+   "sources": [
+    "CONTEXT.md l.1275-1310",
+    "experiments/RESULTS.md l.61",
+    "experiments/RESULTS.md l.68",
+    "CONTEXT.md l.1801-1810"
+   ],
+   "status": {
+    "kind": "lb-tested",
+    "detail": "Lab CONFIRMATION +0.0019 (gate failed narrowly); probe 28 exp48 = 0.948 (+0.001); probe 35 exp57b (on x138) = 0.954 (+0.001); in K2 per R2 (CONTEXT.md l.1801-1806)."
+   },
+   "lb": [
+    {
+     "probe": 28,
+     "score": 0.948
+    },
+    {
+     "probe": 35,
+     "score": 0.954
+    }
+   ],
+   "lab": "",
+   "next_step": "Keep only #35's config (no ladder); read K2.",
+   "orphan": false
+  },
+  {
+   "id": "I-063",
+   "cluster": "DIV",
+   "name": "DaughterNet v2 (v1 + hard examples from the predicted pool)",
+   "aliases": [
+    "v1+v2 average"
+   ],
+   "description": "Raise insertion precision on the real pool.",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "CONTEXT.md l.1297-1305"
+   },
+   "sources": [
+    "CONTEXT.md l.1314-1323"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Pool AUC better (0.875) but insertion worse than v1 on SELECTION; v1+v2 average not better (CONTEXT.md l.1321-1328)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-064",
+   "cluster": "DIV",
+   "name": "L5 DaughterNet-B full-res (friend A, 16x64x64, lags -2..+3) as ensemble partner",
+   "aliases": [
+    "L5"
+   ],
+   "description": "Full-resolution daughter model.",
+   "first_seen": {
+    "date": "2026-09-23",
+    "path": "CONTEXT.md l.1256"
+   },
+   "sources": [
+    "CONTEXT.md l.1318",
+    "PROMPT_FRIEND_A.md (24 Sep 19:00 block)"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Dropped after friend A's PC reboot: too little time/ceiling, needs >= 45% insertion precision (PROMPT_FRIEND_A.md 24 Sep 19:00 block)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-065",
+   "cluster": "DIV",
+   "name": "L3 dorado (Ultrack) pseudo-division DaughterNet",
+   "aliases": [
+    "L3"
+   ],
+   "description": "Train division model on dorado automatic divisions.",
+   "first_seen": {
+    "date": "2026-09-23",
+    "path": "CONTEXT.md l.1250-1257"
+   },
+   "sources": [
+    "CONTEXT.md l.1281-1294"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Val AUC parent 0.62 / daughter 0.53: Ultrack divisions too noisy (CONTEXT.md l.1292-1294)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-066",
+   "cluster": "DIV",
+   "name": "Division insertion re-tune on x138 (144-config grid / budget ladder at the public break-even)",
+   "aliases": [
+    "div-budget-ladder-x138"
+   ],
+   "description": "Retune cap/threshold for x138.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v3/h_divisions.json divins-x138-lab-retune"
+   },
+   "sources": [
+    "research/wf_ideas_v3/s_merge.json C03",
+    "research/wf_ideas_v3/FINAL_REPORT.md §i"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "~5 evaluable public forks: only #35's config is used, no ladder (research/wf_ideas_v3/s_merge.json C03)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-067",
+   "cluster": "DIV",
+   "name": "Division cap beyond 4 for private J (div-cap-private-J; + mirror-peak-daughter, insert-at-ckpt-and-after-ef)",
+   "aliases": [],
+   "description": "Loosen the cap because private J differs.",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "research/wf_ideas_v2/r1_hyp_transfer.json"
+   },
+   "sources": [
+    "research/wf_ideas_v2/FINAL_REPORT.md Dropped",
+    "research/wf_ideas_v2/final.json"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Marginal beyond cap 4 = 0 TP / +2 FP; density scaling refuted (research/wf_ideas_v2/FINAL_REPORT.md Dropped)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-068",
+   "cluster": "DIV",
+   "name": "Insertion variant nosteal0",
+   "aliases": [],
+   "description": "Insertion without steals.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v4/lens_divisions-x138.json D1"
+   },
+   "sources": [
+    "CONTEXT.md l.1875-1876"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Closed under R2 whatever the lab shows (CONTEXT.md l.1875-1876, Addendum L5)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-069",
+   "cluster": "DIV",
+   "name": "D1: OOF re-score of exp60 insertion arms (honest labels)",
+   "aliases": [],
+   "description": "Make the lab's insertion arms out-of-fold.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v4/lens_divisions-x138.json D1"
+   },
+   "sources": [
+    "research/wf_ideas_v4/FINAL_REPORT_v4.md §4",
+    "CONTEXT.md l.1875"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Not a decision input (R2 decided by LB); arms labelled 'IN-SAMPLE UPPER BOUND'; diagnostic only if GPU idles (research/wf_ideas_v4/FINAL_REPORT_v4.md §4)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-070",
+   "cluster": "DIV",
+   "name": "Probe 26 diagnostic: safe divisions OFF (measure public div_J)",
+   "aliases": [
+    "L0",
+    "exp45"
+   ],
+   "description": "Zero forks to read J_pub.",
+   "first_seen": {
+    "date": "2026-09-23",
+    "path": "CONTEXT.md l.1253-1256"
+   },
+   "sources": [
+    "experiments/RESULTS.md l.59",
+    "CONTEXT.md l.1319-1321"
+   ],
+   "status": {
+    "kind": "lb-tested",
+    "detail": "Probe 26 exp45 = 0.911 -> J_pub <= 0.36; break-even precision 0.265 (upper estimate, second-daughter edges removed too) (CONTEXT.md l.1319-1321)."
+   },
+   "lb": [
+    {
+     "probe": 26,
+     "score": 0.911
+    }
+   ],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-071",
+   "cluster": "DIV",
+   "name": "forkmid (C04/E3/K3): drop safe-division forks with |P-(c1+c2)/2| >= 4.5 um",
+   "aliases": [
+    "fork-midpoint-filter",
+    "fork-fp-removal-x138",
+    "fork-precision-geometry-rider",
+    "C04",
+    "E3",
+    "K3",
+    "D2"
+   ],
+   "description": "Model-free FP-fork removal; inserted forks exempt; nodes untouched.",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "research/wf_ideas_v2/r1_hyp_divisions.json fork-midpoint-filter"
+   },
+   "sources": [
+    "research/wf_ideas_v2/FINAL_REPORT.md §5",
+    "research/wf_ideas_v3/s_merge.json C04",
+    "CONTEXT.md l.1753-1758",
+    "CONTEXT.md l.1861-1864"
+   ],
+   "status": {
+    "kind": "in-plan",
+    "detail": "Lab (exp39) 11 FP / 0 TP (+0.0007); patch built (T6), dose 2/62 forks on dummies; exp60 audit pending (L3 power fix needs OK) -> K3 in S4 (CONTEXT.md l.1753-1758, l.1861-1864)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "Score exp60 with the pre-registered gates, then K3.",
+   "orphan": false
+  },
+  {
+   "id": "I-072",
+   "cluster": "DIV",
+   "name": "Re-audit divergence/symmetry reachability with head-refined float coords (divgates-refined)",
+   "aliases": [],
+   "description": "Gates sit inside ~1.3 um lattice noise; re-audit reach after the head.",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "research/wf_ideas_v2/r1_hyp_kaggle-intel.json divgates-refined"
+   },
+   "sources": [
+    "research/wf_ideas_v2/r1_dedupe.json fork-midpoint-filter merge"
+   ],
+   "status": {
+    "kind": "open-untested",
+    "detail": "Merged into forkmid as an optional arm and never run (research/wf_ideas_v2/r1_dedupe.json)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "Could be read from exp60 dumps (x138 has float coords); otherwise close explicitly.",
+   "orphan": "strict"
+  },
+  {
+   "id": "I-073",
+   "cluster": "DIV",
+   "name": "forkblob (L1/A4): drop a safe fork if at t+1 both daughters sit on one blob (sister <= 5 um, valley >= 0.95)",
+   "aliases": [
+    "L1",
+    "A4"
+   ],
+   "description": "Image-valley veto; nodes untouched; runs after forkmid.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v4/lens_literature.json L1"
+   },
+   "sources": [
+    "research/wf_ideas_v4/FINAL_REPORT_v4.md §1.5",
+    "research/wf_ideas_v4/final.json A4",
+    "CONTEXT.md l.1865-1874"
+   ],
+   "status": {
+    "kind": "in-plan",
+    "detail": "Rule frozen (Addendum L4); prior on exp39 graphs 3 FP / 0 TP / 65 free; needs the user's OK for R3 class; patch not yet built (research/wf_ideas_v4/FINAL_REPORT_v4.md §3 row 4)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "Build --patch forkblob + trainlab arm; harm gate on exp60; K3 with OK.",
+   "orphan": false
+  },
+  {
+   "id": "I-074",
+   "cluster": "DIV",
+   "name": "DeepCenter safe-division threshold chosen on 6bba (M1/E5/K3b)",
+   "aliases": [
+    "M1",
+    "E5",
+    "K3b",
+    "exp59dc",
+    "D3 (AND clauses)"
+   ],
+   "description": "DeepCenter trained on 44b6 only -> 6bba is an honest bed for its threshold (x138: 0.25).",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v3/s_merge.json browser_findings"
+   },
+   "sources": [
+    "research/wf_ideas_v3/FINAL_REPORT.md §c row 8",
+    "CONTEXT.md l.1853-1859",
+    "tools/trainlab.py"
+   ],
+   "status": {
+    "kind": "in-plan",
+    "detail": "exp60 arc pending; gates L1 (plateau) + L2 (evaluable precision fix, n >= 6, Wilson > 0.265) (CONTEXT.md l.1853-1859); expected 'no'."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "Score exp60 6bba arc; K3b in S5 only if gates pass.",
+   "orphan": false
+  },
+  {
+   "id": "I-075",
+   "cluster": "DIV",
+   "name": "6bba extension shards for the DeepCenter arc (M2/L6/A9)",
+   "aliases": [
+    "M2",
+    "L6",
+    "A9"
+   ],
+   "description": "78 clean 6bba clips outside exp60 as extra power.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v4/lens_mine-old.json M2"
+   },
+   "sources": [
+    "CONTEXT.md l.1877-1880",
+    "research/wf_ideas_v4/final.json A9"
+   ],
+   "status": {
+    "kind": "in-plan",
+    "detail": "Conditional: only if the 39-clip bed passes E5; else decide on 39 clips (CONTEXT.md l.1877-1880)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-076",
+   "cluster": "DIV",
+   "name": "L3: rescue DeepCenter-rejected forks with image evidence (two blobs + daughter shrink)",
+   "aliases": [],
+   "description": "Fork adder complementing K3b.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v4/lens_literature.json L3"
+   },
+   "sources": [
+    "research/wf_ideas_v4/FINAL_REPORT_v4.md §4"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Pool holds ~2% of GT divisions, precision 4-15% vs break-even 0.265 (research/wf_ideas_v4/FINAL_REPORT_v4.md §4)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-077",
+   "cluster": "DIV",
+   "name": "Mirror-position / low-detection second-daughter recovery (mirror-daughter-lowdet, lowdet-daughter-recovery)",
+   "aliases": [],
+   "description": "Find the missing daughter in the sub-threshold dump at the mirror point.",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "research/wf_ideas_v2/r1_hyp_divisions.json mirror-peak-daughter"
+   },
+   "sources": [
+    "research/wf_ideas_v3/s_merge.json dropped",
+    "research/wf_ideas_v3/FINAL_REPORT.md §i"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "~0.5 TP vs ~1.5 FP on public; merged blob defeats mirror geometry (research/wf_ideas_v3/s_merge.json dropped)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-078",
+   "cluster": "DIV",
+   "name": "Second daughter from the edge network's own p(u->v) (edge-evidence / edge-net-second-daughter)",
+   "aliases": [],
+   "description": "Use dumped edge probabilities to choose the second daughter.",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "research/wf_ideas_v2/r1_hyp_divisions.json edge-net-second-daughter"
+   },
+   "sources": [
+    "research/wf_ideas_v3/s_merge.json dropped"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Softmax over sources caps p <= 0.52; in-sample; precision 0.19 < 0.265 (research/wf_ideas_v3/s_merge.json dropped)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-079",
+   "cluster": "DIV",
+   "name": "Split-aware flow relink (division slots inside the relink)",
+   "aliases": [],
+   "description": "Let the Hungarian assign two children.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v3/h_linking-on-x138.json"
+   },
+   "sources": [
+    "research/wf_ideas_v3/s_merge.json dropped"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Needs fork precision >= 0.40 vs expected 0.15-0.30 (research/wf_ideas_v3/s_merge.json dropped)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-080",
+   "cluster": "DIV",
+   "name": "Asymmetric / wider second-daughter gate (12-15 um; Le's reachability note)",
+   "aliases": [],
+   "description": "Second arc needs ~2x the continuation gate.",
+   "first_seen": {
+    "date": "2026-09-16",
+    "path": "CONTEXT.md l.210"
+   },
+   "sources": [
+    "research/wf_ideas_v3/browser_intel.md §7.5",
+    "CONTEXT.md l.1142-1148"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Predicted-graph reach audit: radius 30 um adds 1 of 151; losses are detection + claimed daughters (CONTEXT.md l.1142-1148)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-081",
+   "cluster": "DIV",
+   "name": "Division classifier as a precision CONSTRAINT/veto on safe-division forks (DaughterNet parent+daughter; rank safe-div by DaughterNet p)",
+   "aliases": [],
+   "description": "linajea-style: FP divisions -88% at flat recall.",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "research/browser_research_2026-09-24_pass2.md §7.5"
+   },
+   "sources": [
+    "CONTEXT.md l.1399-1400",
+    "research/wf_ideas_v2/r1_dedupe.json fork-midpoint-filter"
+   ],
+   "status": {
+    "kind": "open-untested",
+    "detail": "Never run with DaughterNet; the DivNet-parent analogue tied on LB (probe 20, 0.947) (experiments/RESULTS.md l.53)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "Could be an exp60 CPU arm (DaughterNet p is dumped by divinsert); otherwise close explicitly.",
+   "orphan": "strict"
+  },
+  {
+   "id": "I-082",
+   "cluster": "DIV",
+   "name": "Corwin MITO3 GBM division ADD stage",
+   "aliases": [],
+   "description": "Edges-only GBM fork adder (OOF +0.00063).",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "experiments/ext_corwin-biocel-aux/NOTES.md"
+   },
+   "sources": [
+    "research/wf_ideas_v4/FINAL_REPORT_v4.md §2"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Trained on train GT (in-sample) and tiny (research/wf_ideas_v4/FINAL_REPORT_v4.md §2)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-083",
+   "cluster": "DIV",
+   "name": "HOCT (CTC-trained) fork veto",
+   "aliases": [],
+   "description": "Veto forks with the royerlab HOCT model.",
+   "first_seen": {
+    "date": "2026-09-13",
+    "path": "CONTEXT.md l.769"
+   },
+   "sources": [
+    "experiments/ext_corwin-biocel-aux/NOTES.md",
+    "CONTEXT.md l.1249"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "HOCT veto variants all 0.947 publicly (CONTEXT.md l.1249)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-084",
+   "cluster": "DIV",
+   "name": "Successor-skip division addition (public code scan)",
+   "aliases": [],
+   "description": "Add a fork when a successor is skipped.",
+   "first_seen": {
+    "date": "2026-09-16",
+    "path": "CONTEXT.md l.987-992"
+   },
+   "sources": [
+    "research/discussions_summary.md Update 2026-09-16"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Post-processing class closed on LB; not probed (CONTEXT.md l.990-991)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-085",
+   "cluster": "DIV",
+   "name": "Treat divisions as tracklet association after good tracking (hengck23)",
+   "aliases": [],
+   "description": "Division as a tracklet-level decision.",
+   "first_seen": {
+    "date": "2026-09-06",
+    "path": "research/discussions_summary.md l.47-53"
+   },
+   "sources": [
+    "research/discussions_summary.md"
+   ],
+   "status": {
+    "kind": "deferred-after-deadline",
+    "detail": "Never tested; the division term inside this stack is bounded by detector and linker (CONTEXT.md l.1159-1161)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-086",
+   "cluster": "FINALS",
+   "name": "Finals rule v1: sub 1 = best public config, sub 2 = best honest-validator config",
+   "aliases": [],
+   "description": "Never pick by max-over-runs public score.",
+   "first_seen": {
+    "date": "2026-09-08",
+    "path": "CONTEXT.md l.527-529"
+   },
+   "sources": [
+    "CONTEXT.md l.939-941"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Superseded by the E[max] rule and the v3 pre-registered §f (CONTEXT.md l.1707-1736)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-087",
+   "cluster": "FINALS",
+   "name": "Finals E[max] diversification (best-of-two; F2 not a near-copy of F1)",
+   "aliases": [
+    "finals-emax-diversify"
+   ],
+   "description": "Maximise E[max(private)]; avoid the winner's curse among near-copies.",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "research/wf_ideas_v2/r1_hyp_transfer.json finals-emax-diversify"
+   },
+   "sources": [
+    "research/wf_ideas_v2/FINAL_REPORT.md §2",
+    "CONTEXT.md l.1728-1730"
+   ],
+   "status": {
+    "kind": "in-plan",
+    "detail": "Adopted as the principle of v3 §f (CONTEXT.md l.1728-1730)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-088",
+   "cluster": "FINALS",
+   "name": "Edge filter + stitch as a private-only F2 hedge (ef-anomaly-attribution-finals)",
+   "aliases": [],
+   "description": "Put the lab-confirmed ef pair only into F2.",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "research/wf_ideas_v2/r1_hyp_metric.json ef-anomaly-attribution-finals"
+   },
+   "sources": [
+    "research/wf_ideas_v2/FINAL_REPORT.md §3",
+    "research/wf_ideas_v2/final.json"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Never built (P36 of v2 plan); superseded by v3 F2 = exp52 and v4 F2 = no-insertion twin (CONTEXT.md l.1719, l.1887-1895)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-089",
+   "cluster": "FINALS",
+   "name": "Rank-aware finals rule (C02/E11): F1 = cumulative x138-family K build, never byte-identical to x138; F2 = exp52",
+   "aliases": [
+    "C02",
+    "E11",
+    "§f"
+   ],
+   "description": "241-team 0.953 block spans the medal cutoffs; only the sign vs raw x138 matters.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v3/s_merge.json C02"
+   },
+   "sources": [
+    "CONTEXT.md l.1707-1736",
+    "research/wf_ideas_v3/FINAL_REPORT.md §f"
+   ],
+   "status": {
+    "kind": "in-plan",
+    "detail": "Pre-registered with the user's OK 25 Sep 13:37 UTC (CONTEXT.md l.1576-1585)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "Tick F1/F2 manually by 29 Sep 20:00 UTC.",
+   "orphan": false
+  },
+  {
+   "id": "I-090",
+   "cluster": "FINALS",
+   "name": "F2 = no-insertion twin exp58n (x138 + safetail + lowrefine) instead of exp52 (amendment f2)",
+   "aliases": [
+    "A2",
+    "noins-twin-f2",
+    "exp58n"
+   ],
+   "description": "Hedge the least certain F1 component (the insertion).",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v4/lens_private-finals.json noins-twin-f2"
+   },
+   "sources": [
+    "research/wf_ideas_v4/FINAL_REPORT_v4.md §1.3",
+    "CONTEXT.md l.1887-1895",
+    "experiments/exp58n_x138_safe_lowref/probe.json"
+   ],
+   "status": {
+    "kind": "in-plan",
+    "detail": "Kernel built (commit 14c339e); needs the user's OK for the amendment and the S3 submission (CONTEXT.md l.1887-1895)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "Ask OK 26 Sep morning; dummy gate --insertion 0; submit in S3.",
+   "orphan": false
+  },
+  {
+   "id": "I-091",
+   "cluster": "FINALS",
+   "name": "exp52 as F2 fallback (different post-ILP tail, no deadline timer)",
+   "aliases": [
+    "exp52 as F2"
+   ],
+   "description": "Structurally different hedge.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v3/FINAL_REPORT.md §f"
+   },
+   "sources": [
+    "CONTEXT.md l.1719-1730"
+   ],
+   "status": {
+    "kind": "in-plan",
+    "detail": "Default F2 until amendment f2 is approved; fallback if the twin fails (CONTEXT.md l.1719, l.1891)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-092",
+   "cluster": "FINALS",
+   "name": "finals-pair-calculator (Monte-Carlo decides finals)",
+   "aliases": [],
+   "description": "MC over pseudo-private outcomes.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v4/lens_private-finals.json"
+   },
+   "sources": [
+    "research/wf_ideas_v4/FINAL_REPORT_v4.md §4"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "False precision, in-sample calibration; its rule loses to the twin (research/wf_ideas_v4/FINAL_REPORT_v4.md §4)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-093",
+   "cluster": "FINALS",
+   "name": "pair-aware slot use (do not consolidate at S12)",
+   "aliases": [],
+   "description": "Save slots by not consolidating.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v4/lens_private-finals.json"
+   },
+   "sources": [
+    "research/wf_ideas_v4/FINAL_REPORT_v4.md §4"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "S12 adds an option and removes none (research/wf_ideas_v4/FINAL_REPORT_v4.md §4)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-094",
+   "cluster": "FINALS",
+   "name": "Rank-arithmetic watch (A8): rank, 0.953/0.954 block edges, teams above raw x138, 5%/10% cutoffs",
+   "aliases": [
+    "A8"
+   ],
+   "description": "Daily status line; information only.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v4/intel_browser.json rank-arithmetic-watch"
+   },
+   "sources": [
+    "research/wf_ideas_v4/FINAL_REPORT_v4.md §3 row 8",
+    "research/wf_ideas_v4/final.json A8"
+   ],
+   "status": {
+    "kind": "in-plan",
+    "detail": "Adopted (no OK needed) (research/wf_ideas_v4/FINAL_REPORT_v4.md §3 row 8)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "LB snapshots 26/27 Sep ~09:00 UTC.",
+   "orphan": false
+  },
+  {
+   "id": "I-095",
+   "cluster": "FINALS",
+   "name": "RT2: fix rule ambiguities before scores (reclassify lowrefine/forkmid, drop #34 fallback)",
+   "aliases": [],
+   "description": "Red-team of the pre-registration.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v4/lens_redteam-plan.json RT2"
+   },
+   "sources": [
+    "research/wf_ideas_v4/FINAL_REPORT_v4.md §4"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Items 1-2 rejected; items 3-4 (plateau reading, poll window) adopted in Addendum L (research/wf_ideas_v4/FINAL_REPORT_v4.md §4)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-096",
+   "cluster": "FINALS",
+   "name": "Combination rule: two positive single changes (>= +0.002) -> next probe is their combination",
+   "aliases": [],
+   "description": "Stack positives.",
+   "first_seen": {
+    "date": "2026-09-06",
+    "path": "CONTEXT.md l.330-332"
+   },
+   "sources": [
+    "CONTEXT.md l.598-601"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Never fired (no two positives); replaced by the 'bundles' approach and later by R3/R4 (CONTEXT.md l.1647-1652)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-097",
+   "cluster": "MODEL",
+   "name": "Fine-tuned primary exp03B (1200 it, lr 5e-5) in the public pipeline",
+   "aliases": [
+    "A1",
+    "A24",
+    "exp06",
+    "exp30",
+    "exp33"
+   ],
+   "description": "Our fine-tune as PRIMARY.",
+   "first_seen": {
+    "date": "2026-09-05",
+    "path": "experiments/RESULTS.md l.14"
+   },
+   "sources": [
+    "experiments/RESULTS.md l.34",
+    "experiments/RESULTS.md l.44",
+    "experiments/RESULTS.md l.47",
+    "CONTEXT.md l.296-298"
+   ],
+   "status": {
+    "kind": "lb-tested",
+    "detail": "Probe 2 = 0.945 (+0.004 on the 0.941 base); on the TTA stack probes 11/15 = 0.944 (-0.003): does not compose; closed (experiments/RESULTS.md l.47)."
+   },
+   "lb": [
+    {
+     "probe": 2,
+     "score": 0.945
+    },
+    {
+     "probe": 11,
+     "score": 0.944
+    },
+    {
+     "probe": 15,
+     "score": 0.944
+    }
+   ],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-098",
+   "cluster": "MODEL",
+   "name": "Fine-tune recipe variants: full epoch 2265 it / 600 it / seed 7 / window 3",
+   "aliases": [
+    "exp05",
+    "exp08",
+    "exp16",
+    "exp17",
+    "A11",
+    "A12"
+   ],
+   "description": "Search the fine-tune length/seed/window.",
+   "first_seen": {
+    "date": "2026-09-05",
+    "path": "experiments/RESULTS.md l.23"
+   },
+   "sources": [
+    "experiments/RESULTS.md l.75-78",
+    "CONTEXT.md l.166-167"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Lab 0.954 / 0.956 / 0.950 / 0.953 vs 0.958; seed noise +-0.005 (CONTEXT.md l.166-167)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-099",
+   "cluster": "MODEL",
+   "name": "Gauss-focal detection loss (exp04) + retry with threshold re-sweep (B14 anisotropic targets)",
+   "aliases": [
+    "A10",
+    "B14",
+    "exp04"
+   ],
+   "description": "Heatmap target redesign.",
+   "first_seen": {
+    "date": "2026-09-05",
+    "path": "experiments/RESULTS.md l.15"
+   },
+   "sources": [
+    "CONTEXT.md l.165",
+    "CONTEXT.md l.223",
+    "research/survey_detection_sparse_labels.md Top-5 #2"
+   ],
+   "status": {
+    "kind": "deferred-after-deadline",
+    "detail": "exp04 lab 0.909 (calibration shift); B14 never run; retraining refused by R9 (CONTEXT.md l.1673-1676)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-100",
+   "cluster": "MODEL",
+   "name": "Intensity augmentation fine-tune for low-contrast videos (exp14; milder ranges variant d)",
+   "aliases": [
+    "A13",
+    "exp14"
+   ],
+   "description": "Background robustness.",
+   "first_seen": {
+    "date": "2026-09-05",
+    "path": "CONTEXT.md l.119"
+   },
+   "sources": [
+    "experiments/RESULTS.md l.31",
+    "CONTEXT.md l.122",
+    "CONTEXT.md l.489-491"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "exp14 lab 0.9345 vs 0.9575; milder variant never run (dense line cancelled) (experiments/RESULTS.md l.31)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-101",
+   "cluster": "MODEL",
+   "name": "Per-video contrast normalisation / background subtraction (q0.1; Corwin k10_haze_op min-pool)",
+   "aliases": [
+    "10b.5c"
+   ],
+   "description": "Consistent train+predict normalisation for high-background videos.",
+   "first_seen": {
+    "date": "2026-09-06",
+    "path": "CONTEXT.md l.141-142"
+   },
+   "sources": [
+    "CONTEXT.md l.122",
+    "experiments/ext_corwin-biocel-aux/NOTES.md"
+   ],
+   "status": {
+    "kind": "deferred-after-deadline",
+    "detail": "Never tested; needs retraining (R9) or is a detector-map change (closed TTA class) (CONTEXT.md l.1673-1676)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-102",
+   "cluster": "MODEL",
+   "name": "Secondary detection weight 0.8 -> 0.5",
+   "aliases": [
+    "A4",
+    "exp20"
+   ],
+   "description": "Rebalance the dual-seed blend.",
+   "first_seen": {
+    "date": "2026-09-06",
+    "path": "CONTEXT.md l.328"
+   },
+   "sources": [
+    "experiments/RESULTS.md l.37"
+   ],
+   "status": {
+    "kind": "lb-tested",
+    "detail": "Probe 5 = 0.943 (-0.002), dropped (experiments/RESULTS.md l.37)."
+   },
+   "lb": [
+    {
+     "probe": 5,
+     "score": 0.943
+    }
+   ],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-103",
+   "cluster": "MODEL",
+   "name": "Secondary := exp08 (fine-tune of the same primary)",
+   "aliases": [
+    "A18",
+    "exp22"
+   ],
+   "description": "Swap the secondary model.",
+   "first_seen": {
+    "date": "2026-09-06",
+    "path": "CONTEXT.md l.601"
+   },
+   "sources": [
+    "experiments/RESULTS.md l.39"
+   ],
+   "status": {
+    "kind": "lb-tested",
+    "detail": "Probe 7 = 0.929 (-0.016) (experiments/RESULTS.md l.39)."
+   },
+   "lb": [
+    {
+     "probe": 7,
+     "score": 0.929
+    }
+   ],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-104",
+   "cluster": "MODEL",
+   "name": "Secondary := friend A all-199 scratch (21 epochs) (B4)",
+   "aliases": [
+    "A22",
+    "B4",
+    "exp27"
+   ],
+   "description": "Independent model as secondary for diversity.",
+   "first_seen": {
+    "date": "2026-09-07",
+    "path": "CONTEXT.md l.412-424"
+   },
+   "sources": [
+    "experiments/RESULTS.md l.42",
+    "CONTEXT.md l.267-274"
+   ],
+   "status": {
+    "kind": "lb-tested",
+    "detail": "Probe 10 = 0.920 (-0.025); rule: a secondary must first beat pilkwang raw on the honest split (CONTEXT.md l.272-274)."
+   },
+   "lb": [
+    {
+     "probe": 10,
+     "score": 0.92
+    }
+   ],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-105",
+   "cluster": "MODEL",
+   "name": "Fine-tune the pilkwang seed314159 SECONDARY (exp23, B2) as secondary",
+   "aliases": [
+    "B2",
+    "exp23",
+    "exp32",
+    "A26"
+   ],
+   "description": "Different init than exp03B.",
+   "first_seen": {
+    "date": "2026-09-07",
+    "path": "CONTEXT.md l.190"
+   },
+   "sources": [
+    "experiments/RESULTS.md l.46",
+    "experiments/RESULTS.md l.73",
+    "CONTEXT.md l.285-286"
+   ],
+   "status": {
+    "kind": "lb-tested",
+    "detail": "Probe 13 exp32 (with exp03B primary) = 0.937 (-0.007); secondary swaps closed on LB (CONTEXT.md l.301-303)."
+   },
+   "lb": [
+    {
+     "probe": 13,
+     "score": 0.937
+    }
+   ],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-106",
+   "cluster": "MODEL",
+   "name": "exp23 secondary with the PILKWANG primary",
+   "aliases": [],
+   "description": "Untested combination of probe 13.",
+   "first_seen": {
+    "date": "2026-09-11",
+    "path": "CONTEXT.md l.316-318"
+   },
+   "sources": [
+    "CONTEXT.md l.301-303"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Never run; the whole secondary-swap family closed after 4 negatives (CONTEXT.md l.301-303, l.1673)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-107",
+   "cluster": "MODEL",
+   "name": "Weight soup primary (0.5 pilkwang + 0.5 exp03B) (B18)",
+   "aliases": [
+    "B18",
+    "A27",
+    "exp35"
+   ],
+   "description": "Halve exp03B's node shift.",
+   "first_seen": {
+    "date": "2026-09-11",
+    "path": "CONTEXT.md l.199"
+   },
+   "sources": [
+    "experiments/RESULTS.md l.49"
+   ],
+   "status": {
+    "kind": "lb-tested",
+    "detail": "Probe 17 exp35 = 0.943 (-0.004), interpolates (experiments/RESULTS.md l.49)."
+   },
+   "lb": [
+    {
+     "probe": 17,
+     "score": 0.943
+    }
+   ],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-108",
+   "cluster": "MODEL",
+   "name": "B19 det-threshold re-calibration for a fine-tuned primary (0.97/0.975)",
+   "aliases": [
+    "B19"
+   ],
+   "description": "Match pilkwang's node count.",
+   "first_seen": {
+    "date": "2026-09-11",
+    "path": "CONTEXT.md l.209"
+   },
+   "sources": [
+    "CONTEXT.md l.178"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Gate (exp33 >= 0.946) failed; public det 0.99 = 0.942 (A29) (CONTEXT.md l.209)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-109",
+   "cluster": "MODEL",
+   "name": "From-scratch models (friend A 6bba 5/20 epochs; all-199 30 epochs)",
+   "aliases": [
+    "A17",
+    "friend_a_exp02_loeo20"
+   ],
+   "description": "Leak-free validator and independent model.",
+   "first_seen": {
+    "date": "2026-09-06",
+    "path": "CONTEXT.md l.124"
+   },
+   "sources": [
+    "experiments/RESULTS.md l.79-82",
+    "CONTEXT.md l.507-521"
+   ],
+   "status": {
+    "kind": "lab-tested",
+    "detail": "LOEO-44b6 0.68 (validator gate 0.85 not reached); embryo shift +0.15 dominates (experiments/RESULTS.md l.81-82)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-110",
+   "cluster": "MODEL",
+   "name": "B3 dense pseudo-labels (teacher exp03B + seed314159) to fine-tune primary/secondary",
+   "aliases": [
+    "B3",
+    "item 17",
+    "dense self-distillation"
+   ],
+   "description": "Remove 'unlabelled nucleus = negative'.",
+   "first_seen": {
+    "date": "2026-09-07",
+    "path": "CONTEXT.md l.191"
+   },
+   "sources": [
+    "CONTEXT.md l.473-494",
+    "CONTEXT.md l.772-775",
+    "CONTEXT.md l.1005-1010",
+    "research/survey_detection_sparse_labels.md Update 2026-09-07 N1"
+   ],
+   "status": {
+    "kind": "deferred-after-deadline",
+    "detail": "Cancelled 18 Sep (never delivered); Le: head-only -0.003, encoder -0.038; M3 = NO; honest A/B only after 29 Sep (E14) (CONTEXT.md l.1581-1582)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-111",
+   "cluster": "MODEL",
+   "name": "B3b temporal filtering of teacher labels (agreement 3-5 um, >= 3-frame persistence, fwd/bwd match)",
+   "aliases": [
+    "B3b"
+   ],
+   "description": "Clean pseudo-labels before training.",
+   "first_seen": {
+    "date": "2026-09-10",
+    "path": "CONTEXT.md l.192"
+   },
+   "sources": [
+    "CONTEXT.md l.487-488"
+   ],
+   "status": {
+    "kind": "deferred-after-deadline",
+    "detail": "Never run; cancelled with B3 (CONTEXT.md l.1005-1010)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-112",
+   "cluster": "MODEL",
+   "name": "Two-stage dense detector -> sparse linker recalibration (variant e, --freeze)",
+   "aliases": [
+    "variant (e)"
+   ],
+   "description": "Freeze linker while training detector on dense labels.",
+   "first_seen": {
+    "date": "2026-09-10",
+    "path": "CONTEXT.md l.482-486"
+   },
+   "sources": [
+    "CONTEXT.md l.772-775"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Measured-harmful case per Le (encoder with frozen linker -0.038) (CONTEXT.md l.772-775)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-113",
+   "cluster": "MODEL",
+   "name": "B7 nnPU / ignore-unlabelled detection loss; neighbourhood-softmax peak loss",
+   "aliases": [
+    "B7"
+   ],
+   "description": "Sparse-label-aware loss.",
+   "first_seen": {
+    "date": "2026-09-06",
+    "path": "CONTEXT.md l.140"
+   },
+   "sources": [
+    "CONTEXT.md l.216",
+    "research/survey_detection_sparse_labels.md Top-5 #1",
+    "research/discussions_summary.md l.47-53"
+   ],
+   "status": {
+    "kind": "deferred-after-deadline",
+    "detail": "Never run; retraining refused by R9 (CONTEXT.md l.1673-1676)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-114",
+   "cluster": "MODEL",
+   "name": "B13 in-domain MAE pretraining of the UNet encoder",
+   "aliases": [
+    "B13"
+   ],
+   "description": "Self-supervised pretraining.",
+   "first_seen": {
+    "date": "2026-09-06",
+    "path": "research/survey_detection_sparse_labels.md Top-5 #5"
+   },
+   "sources": [
+    "CONTEXT.md l.222"
+   ],
+   "status": {
+    "kind": "deferred-after-deadline",
+    "detail": "Never run (P3); R9."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-115",
+   "cluster": "MODEL",
+   "name": "B11 FOCUS-3D / Zebrahub dense labels (hengck23)",
+   "aliases": [
+    "B11"
+   ],
+   "description": "External dense centroids for detector training.",
+   "first_seen": {
+    "date": "2026-09-06",
+    "path": "research/discussions_summary.md l.47-53"
+   },
+   "sources": [
+    "CONTEXT.md l.220",
+    "CONTEXT.md l.123"
+   ],
+   "status": {
+    "kind": "deferred-after-deadline",
+    "detail": "Never run; C11 route to 0.97 after deadline (research/wf_ideas_v3/FINAL_REPORT.md §b)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-116",
+   "cluster": "MODEL",
+   "name": "C11 detector/edge retraining with dense or external labels (dorado Ultrack, ZSNS, dense 6bba Ultrack, proposal-only copy, joint fine-tune)",
+   "aliases": [
+    "dense-dorado-secondary",
+    "dense-primary-headrefit",
+    "ultrack-dense-6bba",
+    "dense-proposal-detector-copy",
+    "joint-finetune-long-shot",
+    "E14",
+    "M3"
+   ],
+   "description": "The top teams' route.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v3/s_merge.json C11"
+   },
+   "sources": [
+    "research/wf_ideas_v3/FINAL_REPORT.md §b",
+    "research/wf_ideas_v3/FINAL_REPORT.md §i",
+    "research/wf_ideas_v3/TASK_FRIEND_A.md Task 4"
+   ],
+   "status": {
+    "kind": "deferred-after-deadline",
+    "detail": "10/10 skeptics refute it for the window; honest out-of-embryo A/B = friend A task 4 after 29 Sep (research/wf_ideas_v3/FINAL_REPORT.md §b, §i)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-117",
+   "cluster": "MODEL",
+   "name": "B24 external Ultrack zebrafish volume (dorado) at our voxel scale; Ultrack pretrained unet-daxi/unet-simview",
+   "aliases": [
+    "B24"
+   ],
+   "description": "Extra data / pretraining.",
+   "first_seen": {
+    "date": "2026-09-11",
+    "path": "CONTEXT.md l.214"
+   },
+   "sources": [
+    "CONTEXT.md l.1281-1294",
+    "research/wf_ideas_v3/s_merge.json assumptions"
+   ],
+   "status": {
+    "kind": "deferred-after-deadline",
+    "detail": "Used only for L3 DaughterNet (closed); 44b6 clips are crops of dorado (leak); detector use deferred (CONTEXT.md l.1281-1288)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-118",
+   "cluster": "MODEL",
+   "name": "Detector precision retrain (sigma 0.8 um) / own full detector retrain",
+   "aliases": [],
+   "description": "Retrain for localisation, not epochs.",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "research/browser_research_2026-09-24_pass2.md §7.6"
+   },
+   "sources": [
+    "CONTEXT.md l.1466-1468"
+   ],
+   "status": {
+    "kind": "deferred-after-deadline",
+    "detail": "Declined on arithmetic (1 run ~23 h on 5070 Ti; others' retrains 0.947-0.950) (CONTEXT.md l.1466-1468)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-119",
+   "cluster": "MODEL",
+   "name": "Teacher-distilled secondary fine-tune (y3uanm recipe, +Freitas synthetic)",
+   "aliases": [],
+   "description": "Distil to a frozen teacher on unlabelled voxels.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "experiments/ext_y3uanm-secondary-ft/NOTES.md"
+   },
+   "sources": [
+    "research/wf_ideas_v4/FINAL_REPORT_v4.md §1.2",
+    "research/wf_ideas_v4/FINAL_REPORT_v4.md §2"
+   ],
+   "status": {
+    "kind": "deferred-after-deadline",
+    "detail": "Only public engine of the 0.954-0.956 shoulder (0.949 -> 0.956); closed by R9 for 29 Sep (research/wf_ideas_v4/FINAL_REPORT_v4.md §1.2)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-120",
+   "cluster": "MODEL",
+   "name": "Synthetic data pretraining (Jose Freitas CC0 sequences)",
+   "aliases": [],
+   "description": "Pretrain on synthetic volumes.",
+   "first_seen": {
+    "date": "2026-09-06",
+    "path": "research/discussions_summary.md l.56-58"
+   },
+   "sources": [
+    "CONTEXT.md l.227",
+    "CONTEXT.md l.1070-1075",
+    "research/wf_ideas_v3/browser_intel.md §3"
+   ],
+   "status": {
+    "kind": "deferred-after-deadline",
+    "detail": "Dropped (1st place no gain; synthetic division gate -0.004 LB); hikaggler subset +0.012 on his model only (CONTEXT.md l.227, l.1074)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-121",
+   "cluster": "MODEL",
+   "name": "B8 parent-offset / movement-vector head (linajea, ELEPHANT)",
+   "aliases": [
+    "B8",
+    "linajea-parent-vector-head"
+   ],
+   "description": "Learned displacement as edge feature and gap prior.",
+   "first_seen": {
+    "date": "2026-09-06",
+    "path": "research/survey_linking_divisions.md Top-5 #3"
+   },
+   "sources": [
+    "CONTEXT.md l.217",
+    "research/wf_ideas_v2/r1_dedupe.json dropped linajea-parent-vector-head"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Out of budget; division payoff covered by cheaper levers (research/wf_ideas_v2/r1_dedupe.json dropped)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-122",
+   "cluster": "MODEL",
+   "name": "B12 longer linker window 3-6 / HOCT edge-centric transformer",
+   "aliases": [
+    "B12",
+    "HOCT",
+    "Trackastra"
+   ],
+   "description": "Multi-frame linker.",
+   "first_seen": {
+    "date": "2026-09-06",
+    "path": "research/survey_linking_divisions.md Top-5 #1"
+   },
+   "sources": [
+    "CONTEXT.md l.221",
+    "CONTEXT.md l.492-494"
+   ],
+   "status": {
+    "kind": "deferred-after-deadline",
+    "detail": "exp05 window 3 worse; linker class closed (wrong association ~0); needs dense tracks (CONTEXT.md l.492-494)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-123",
+   "cluster": "MODEL",
+   "name": "B34 appearance-aware linker (giorgosin trainer: UNet features into the node transformer)",
+   "aliases": [
+    "B34"
+   ],
+   "description": "Only model-side defect found by anyone.",
+   "first_seen": {
+    "date": "2026-09-23",
+    "path": "CONTEXT.md l.202"
+   },
+   "sources": [
+    "CONTEXT.md l.1177-1182",
+    "CONTEXT.md l.1185-1190"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Not an honest LOEO; dropped 23 Sep night, GPU to line 3 (CONTEXT.md l.1189)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-124",
+   "cluster": "MODEL",
+   "name": "Edge-transformer hard-negative fine-tune (noisyislands recipe) / score relink pairs by retrained net",
+   "aliases": [],
+   "description": "Teach the edge net duplicates/impostors.",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "research/browser_research_2026-09-24_pass2.md §7.3d"
+   },
+   "sources": [
+    "CONTEXT.md l.1398-1399"
+   ],
+   "status": {
+    "kind": "deferred-after-deadline",
+    "detail": "Edge/detector retraining refused by R9 (CONTEXT.md l.1673-1676)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-125",
+   "cluster": "MODEL",
+   "name": "hengck23 end-to-end linker trained without Kaggle labels",
+   "aliases": [],
+   "description": "Replace the linker.",
+   "first_seen": {
+    "date": "2026-09-16",
+    "path": "CONTEXT.md l.986-987"
+   },
+   "sources": [
+    "research/discussions_summary.md Update 2026-09-16"
+   ],
+   "status": {
+    "kind": "deferred-after-deadline",
+    "detail": "Recorded as a post-competition idea (CONTEXT.md l.986-987)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-126",
+   "cluster": "MODEL",
+   "name": "Conditional two-model fusion (second model only where the primary is uncertain; hikaggler)",
+   "aliases": [],
+   "description": "Only ensemble form with a public confirmation.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v3/browser_intel.md §3"
+   },
+   "sources": [
+    "research/wf_ideas_v3/s_merge.json dropped third-detector-heatmap-blend",
+    "research/wf_ideas_v3/FINAL_REPORT.md §b"
+   ],
+   "status": {
+    "kind": "deferred-after-deadline",
+    "detail": "Not buildable by 29 Sep (research/wf_ideas_v3/s_merge.json)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-127",
+   "cluster": "MODEL",
+   "name": "Other external data (Janelia linajea 160328, RIKEN SSBD, virtual-embryo-zoo, luxar/zenodo, ZSNS001/003)",
+   "aliases": [],
+   "description": "More training data sources.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v3/s_merge.json browser_findings_not_covered"
+   },
+   "sources": [
+    "research/wf_ideas_v3/browser_intel.md §4"
+   ],
+   "status": {
+    "kind": "deferred-after-deadline",
+    "detail": "Unused by any lens; licence/deliverable question open (research/wf_ideas_v3/s_merge.json browser_findings)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-128",
+   "cluster": "MODEL",
+   "name": "Ultrack-supervised split / second-object head for under-segmented 44b6 nuclei",
+   "aliases": [],
+   "description": "a_never FN in 44b6 are under-segmentation.",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "research/wf_ideas_v2/r2_critic.json"
+   },
+   "sources": [
+    "research/wf_ideas_v2/r2_critic.json"
+   ],
+   "status": {
+    "kind": "deferred-after-deadline",
+    "detail": "Not proposed by the critic (91% of a_never FN are in 6bba; nodes pay the multiplier) (research/wf_ideas_v2/r2_critic.json)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-129",
+   "cluster": "NODES",
+   "name": "OUTPUT_MIN_TRACK_LEN 6 -> 4 / 8 (node-count lever)",
+   "aliases": [
+    "A19",
+    "A21",
+    "exp21",
+    "exp25"
+   ],
+   "description": "Use the signed node multiplier via track length.",
+   "first_seen": {
+    "date": "2026-09-06",
+    "path": "CONTEXT.md l.329"
+   },
+   "sources": [
+    "experiments/RESULTS.md l.38",
+    "experiments/RESULTS.md l.41",
+    "CONTEXT.md l.170",
+    "CONTEXT.md l.180"
+   ],
+   "status": {
+    "kind": "lb-tested",
+    "detail": "Probe 6 (4) = 0.943, probe 9 (8) = 0.944: not exploitable (experiments/RESULTS.md l.38, l.41)."
+   },
+   "lb": [
+    {
+     "probe": 6,
+     "score": 0.943
+    },
+    {
+     "probe": 9,
+     "score": 0.944
+    }
+   ],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-130",
+   "cluster": "NODES",
+   "name": "Node-count control by dropping short components (A15)",
+   "aliases": [
+    "A15"
+   ],
+   "description": "Remove short components for the bonus.",
+   "first_seen": {
+    "date": "2026-09-06",
+    "path": "CONTEXT.md l.182"
+   },
+   "sources": [],
+   "status": {
+    "kind": "refuted",
+    "detail": "Bonus = loss (0.9610 vs 0.9619); needs a confidence signal (CONTEXT.md l.182)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-131",
+   "cluster": "NODES",
+   "name": "Detection threshold as node lever (0.965 -> 0.95 / 0.99; local sweep 0.93-0.985)",
+   "aliases": [
+    "A3",
+    "A29",
+    "exp19"
+   ],
+   "description": "Fewer/more peaks.",
+   "first_seen": {
+    "date": "2026-09-06",
+    "path": "CONTEXT.md l.327"
+   },
+   "sources": [
+    "experiments/RESULTS.md l.16",
+    "experiments/RESULTS.md l.36",
+    "CONTEXT.md l.178"
+   ],
+   "status": {
+    "kind": "lb-tested",
+    "detail": "Probe 4 (0.95) = 0.940; public fork det 0.99 = 0.942 (A29); imissher 0.960/0.970 worse (experiments/RESULTS.md l.36)."
+   },
+   "lb": [
+    {
+     "probe": 4,
+     "score": 0.94
+    }
+   ],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-132",
+   "cluster": "NODES",
+   "name": "NMS pool kernel 3-6 um",
+   "aliases": [],
+   "description": "Suppress more peaks.",
+   "first_seen": {
+    "date": "2026-09-15",
+    "path": "experiments/RESULTS.md l.84"
+   },
+   "sources": [
+    "CONTEXT.md l.812",
+    "CONTEXT.md l.829-830"
+   ],
+   "status": {
+    "kind": "lab-tested",
+    "detail": "3.0-5.5 um map to one (3,3,3) kernel; 6.0 um -7.9% nodes, -0.026: closed (experiments/RESULTS.md l.84)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-133",
+   "cluster": "NODES",
+   "name": "B25 learned peak pruning / refine head (hengck23 -13% peaks at 99.45% recall)",
+   "aliases": [
+    "B25",
+    "B10"
+   ],
+   "description": "Learned second-stage pruning for the node budget.",
+   "first_seen": {
+    "date": "2026-09-13",
+    "path": "CONTEXT.md l.775-776"
+   },
+   "sources": [
+    "experiments/RESULTS.md l.93-101",
+    "CONTEXT.md l.193",
+    "CONTEXT.md l.867-873"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Negative at every fraction on 12 videos (5% -0.0023 ... 13% -0.0078); size features add nothing (experiments/RESULTS.md l.101)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-134",
+   "cluster": "NODES",
+   "name": "B31 node clustering (greedy duplicate merge 0.5-2 um)",
+   "aliases": [
+    "B31"
+   ],
+   "description": "Merge duplicate peaks instead of pruning.",
+   "first_seen": {
+    "date": "2026-09-16",
+    "path": "CONTEXT.md l.981-984"
+   },
+   "sources": [
+    "experiments/RESULTS.md l.120",
+    "CONTEXT.md l.1080-1094"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "No-op by construction: 0 of 4.2M raw nodes closer than 3 um (NMS) (experiments/RESULTS.md l.120)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-135",
+   "cluster": "NODES",
+   "name": "Weak-leaf pruning 0.3 (seyitkaangunes prune_weak_leaf_nodes) (L4)",
+   "aliases": [
+    "L4",
+    "exp47",
+    "leafprune"
+   ],
+   "description": "Drop track-end nodes whose only edge has p < 0.3.",
+   "first_seen": {
+    "date": "2026-09-23",
+    "path": "CONTEXT.md l.1236-1237"
+   },
+   "sources": [
+    "CONTEXT.md l.1324-1331",
+    "experiments/RESULTS.md l.60",
+    "CONTEXT.md l.1509-1517"
+   ],
+   "status": {
+    "kind": "lb-tested",
+    "detail": "Lab CONFIRMATION +0.0006 (no video worse); probe 27 exp47 = 0.947 (tie); on x138 it removes readmitted nodes (479 of 513) -> not in x138 finals (CONTEXT.md l.1509-1517)."
+   },
+   "lb": [
+    {
+     "probe": 27,
+     "score": 0.947
+    }
+   ],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-136",
+   "cluster": "NODES",
+   "name": "Leaf prune + ungated insertion on x138 (exp57 v1 diagnostic, E9)",
+   "aliases": [
+    "E9",
+    "exp57",
+    "P36"
+   ],
+   "description": "Measure leaf prune's effect on x138.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "CONTEXT.md l.1509-1518"
+   },
+   "sources": [
+    "experiments/RESULTS.md l.69",
+    "CONTEXT.md l.1806-1810",
+    "CONTEXT.md l.1610"
+   ],
+   "status": {
+    "kind": "in-plan",
+    "detail": "Probe 36 submitted 25 Sep 16:18 UTC, PENDING (experiments/lb_poll/poll.log); rule: delta vs #35 >= +0.002 -> rider on 27 Sep; |d| <= 0.001 closed."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "Read #36 by R4; never a final.",
+   "orphan": false
+  },
+  {
+   "id": "I-137",
+   "cluster": "NODES",
+   "name": "Neutral relink probability for readmit pairs (to make leaf prune compatible with x138)",
+   "aliases": [],
+   "description": "Give non-ILP pairs a neutral p instead of 0.0.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v3/h_linking-on-x138.json refined-lowdet-pool"
+   },
+   "sources": [
+    "research/wf_ideas_v3/s_merge.json assumptions 'Leaf prune on x138'"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Confidence-leaning, ceiling = +0.0006 lab gain; 'not worth a slot' (research/wf_ideas_v3/s_merge.json assumptions)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-138",
+   "cluster": "NODES",
+   "name": "Readmit discarded peaks + evidence-gated sub-threshold gap filler (x138/thtennant)",
+   "aliases": [],
+   "description": "Recover never-detected links with evidence.",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "research/browser_research_2026-09-24.md §e.5"
+   },
+   "sources": [
+    "CONTEXT.md l.1430-1431",
+    "research/wf_ideas_v3/s_merge.json brief_corrections"
+   ],
+   "status": {
+    "kind": "lb-tested",
+    "detail": "Neutral alone (0.946-0.947, others); adopted through x138 (probe 34) (research/browser_research_2026-09-24.md §e.5)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-139",
+   "cluster": "NODES",
+   "name": "Readmit recall knobs (lower READMIT_MIN_SCORE, widen gapfill budget)",
+   "aliases": [],
+   "description": "Recall-side node budget on x138.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v3/h_metric-math.json readmit-recall-knobs"
+   },
+   "sources": [
+    "research/wf_ideas_v3/FINAL_REPORT.md §i",
+    "research/wf_ideas_v3/s_merge.json browser_findings"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Readmit failures are linked (479 of 513 leaves), -0.0015..+0.0007; gapfill budget not binding (research/wf_ideas_v3/FINAL_REPORT.md §i)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-140",
+   "cluster": "NODES",
+   "name": "Low-score pool recall / BYTE-style track-end extension (C08/E13; + ultrack-optional-nodes-ilp, dog-missing-track-rescue)",
+   "aliases": [
+    "C08",
+    "E13",
+    "byte-lowscore-extension",
+    "M1 closures"
+   ],
+   "description": "Extend track ends from the free low-score pool.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v3/s_merge.json C08"
+   },
+   "sources": [
+    "CONTEXT.md l.1881-1884",
+    "PROMPT_FRIEND_C.md (25 Sep 18:30 block)"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Closed in Addendum L7: schedule (R8) + small ceiling (5/82 end-anchored node misses); step 0 cancelled (CONTEXT.md l.1881-1884)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-141",
+   "cluster": "NODES",
+   "name": "Hole fill with temporal sandwich (+ hole-nucleus admission GBM)",
+   "aliases": [],
+   "description": "Fill 1-2 frame holes at GT-free clearance.",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "research/wf_ideas_v2/r1_hyp_data-mining.json"
+   },
+   "sources": [
+    "research/wf_ideas_v2/FINAL_REPORT.md Dropped",
+    "research/wf_ideas_v2/final.json"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "4-6 um holes are the same blob (no valley in 95-99%); fills become duplicates (research/wf_ideas_v2/FINAL_REPORT.md Dropped)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-142",
+   "cluster": "NODES",
+   "name": "ILP optional nodes / force-keep clearance peaks (ultrack-optional-node-ilp, ilp-keep-clearance-peaks)",
+   "aliases": [],
+   "description": "Low-score peaks as optional ILP nodes.",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "research/wf_ideas_v2/r1_hyp_literature.json"
+   },
+   "sources": [
+    "research/wf_ideas_v2/r1_dedupe.json dropped",
+    "research/wf_ideas_v3/FINAL_REPORT.md §i"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "ILP already selects band nodes at zero node cost; public anchors say value density <= 0 (research/wf_ideas_v3/s_merge.json assumptions)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-143",
+   "cluster": "NODES",
+   "name": "LoG/DoG shoulder hypotheses for z-merged nuclei",
+   "aliases": [],
+   "description": "Blob splits feeding the low-score pool.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v3/h_literature.json"
+   },
+   "sources": [
+    "research/wf_ideas_v3/s_merge.json dropped"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "+0.0002 on top of a line that will not ship (research/wf_ideas_v3/s_merge.json dropped)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-144",
+   "cluster": "NODES",
+   "name": "SimView UNet readmit pool (in-kernel unet-simview candidates)",
+   "aliases": [],
+   "description": "Extra readmit candidates.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v3/h_external-data-training.json"
+   },
+   "sources": [
+    "research/wf_ideas_v3/s_merge.json dropped"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "+0.0002 central; extra full-res pass pushes the deadline (research/wf_ideas_v3/s_merge.json dropped)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-145",
+   "cluster": "NODES",
+   "name": "Clip-boundary frames (ILP first/last-frame exemption, detector padding)",
+   "aliases": [],
+   "description": "Boundary effects in ILP/detector.",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "research/wf_ideas_v2/r1_hyp_data-mining.json"
+   },
+   "sources": [
+    "research/wf_ideas_v2/FINAL_REPORT.md Dropped"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "No detector padding; +0.0011 oracle cancelled by the node multiplier (research/wf_ideas_v2/FINAL_REPORT.md Dropped)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-146",
+   "cluster": "NODES",
+   "name": "Short-track-filter guard / learned tail rescue (keep short components with a high-p edge)",
+   "aliases": [],
+   "description": "Half of kernel edge FN from MIN_TRACK_LEN cuts (adonis122).",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "research/browser_research_2026-09-24_pass2.md §7.7"
+   },
+   "sources": [
+    "research/wf_ideas_v2/r1_dedupe.json dropped learned-tail-rescue"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Dominated by the stitch fragment-rescue arm, which closed with the edge filter (research/wf_ideas_v2/r1_dedupe.json)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-147",
+   "cluster": "NODES",
+   "name": "Group-wise node dropping (border, short components, low p) to exploit N_pred",
+   "aliases": [],
+   "description": "First-order value of dropping node groups.",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "research/wf_ideas/hyp_nodes-metric.notes.md"
+   },
+   "sources": [
+    "CONTEXT.md l.1169-1171"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Every spatial/length group strongly negative; annotation is spatially uniform (research/wf_ideas/hyp_nodes-metric.notes.md)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-148",
+   "cluster": "NODES",
+   "name": "Spatial crop-border rule / linefit displacement cap / neighbour repulsion",
+   "aliases": [],
+   "description": "Critic-measured tail tweaks.",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "research/wf_ideas_v2/r2_critic.json"
+   },
+   "sources": [
+    "CONTEXT.md l.1457-1458",
+    "CONTEXT.md l.1421-1422"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Measured dead ends (border ceiling +0.0012 confounded; cap does nothing; repulsion <= 0.0003) (research/wf_ideas_v2/r2_critic.json)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-149",
+   "cluster": "NODES",
+   "name": "Count-target pruning / weak pendant prune (amanatar optional stages)",
+   "aliases": [],
+   "description": "Node-count targeting.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "experiments/ext_optimized-biohub-max-score/NOTES.md"
+   },
+   "sources": [],
+   "status": {
+    "kind": "refuted",
+    "detail": "Same families already tested; no evidence of gain (experiments/ext_optimized-biohub-max-score/NOTES.md)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-150",
+   "cluster": "INFER",
+   "name": "Z-flip views in the edge-feature TTA loops (training aug flips Z)",
+   "aliases": [
+    "A25",
+    "exp31",
+    "exp34"
+   ],
+   "description": "Training-consistent extra TTA views.",
+   "first_seen": {
+    "date": "2026-09-10",
+    "path": "CONTEXT.md l.447-451"
+   },
+   "sources": [
+    "experiments/RESULTS.md l.45",
+    "experiments/RESULTS.md l.48",
+    "experiments/RESULTS.md l.87"
+   ],
+   "status": {
+    "kind": "lb-tested",
+    "detail": "Probe 12 exp31 = 0.941, probe 16 exp34 = 0.938 (-0.009, real negative) (experiments/RESULTS.md l.48)."
+   },
+   "lb": [
+    {
+     "probe": 12,
+     "score": 0.941
+    },
+    {
+     "probe": 16,
+     "score": 0.938
+    }
+   ],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-151",
+   "cluster": "INFER",
+   "name": "Axis-flip TTA group (8 flips replace rot90/transpose) (B30)",
+   "aliases": [
+    "A28",
+    "B30",
+    "exp37",
+    "M2 (v3)"
+   ],
+   "description": "Same view count, training-consistent.",
+   "first_seen": {
+    "date": "2026-09-10",
+    "path": "CONTEXT.md l.450-451"
+   },
+   "sources": [
+    "experiments/RESULTS.md l.52",
+    "experiments/RESULTS.md l.89-91",
+    "experiments/RESULTS.md l.107",
+    "CONTEXT.md l.972-978"
+   ],
+   "status": {
+    "kind": "lb-tested",
+    "detail": "Local +0.0214 (+0.0187 on an unseen-embryo primary); probe 19 exp37 = 0.946 (tie); axis-flip on x138 refused (R9) (experiments/RESULTS.md l.52)."
+   },
+   "lb": [
+    {
+     "probe": 19,
+     "score": 0.946
+    }
+   ],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-152",
+   "cluster": "INFER",
+   "name": "Edge-feature TTA (average UNet features over the 8 views before edge prediction) (B16)",
+   "aliases": [
+    "B16"
+   ],
+   "description": "Multi-view linker features.",
+   "first_seen": {
+    "date": "2026-09-08",
+    "path": "CONTEXT.md l.215"
+   },
+   "sources": [
+    "CONTEXT.md l.425-437"
+   ],
+   "status": {
+    "kind": "lb-tested",
+    "detail": "Shipped inside the sjlee stack (probe 14 = 0.947) (CONTEXT.md l.425-437)."
+   },
+   "lb": [
+    {
+     "probe": 14,
+     "score": 0.947
+    }
+   ],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-153",
+   "cluster": "INFER",
+   "name": "Z-flip in the DeepCenter TTA / other single-view stages",
+   "aliases": [],
+   "description": "Friend B variant list.",
+   "first_seen": {
+    "date": "2026-09-10",
+    "path": "CONTEXT.md l.465-467"
+   },
+   "sources": [
+    "CONTEXT.md l.926"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Never run; TTA-group changes closed after probes 16/19 (CONTEXT.md l.972-978)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-154",
+   "cluster": "INFER",
+   "name": "Linker-window TTA and temporal-reversal TTA",
+   "aliases": [],
+   "description": "More views for the linker.",
+   "first_seen": {
+    "date": "2026-09-11",
+    "path": "CONTEXT.md l.649-650"
+   },
+   "sources": [],
+   "status": {
+    "kind": "refuted",
+    "detail": "Rejected: W=2 scores every pair once; reversal not in training aug (CONTEXT.md l.649-650)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-155",
+   "cluster": "INFER",
+   "name": "Inference ensemble of fine-tunes (exp03B+exp08; seed ensemble with dedup merge B6)",
+   "aliases": [
+    "A14",
+    "B6",
+    "exp15"
+   ],
+   "description": "Average heatmaps/logits.",
+   "first_seen": {
+    "date": "2026-09-06",
+    "path": "CONTEXT.md l.138-139"
+   },
+   "sources": [
+    "experiments/RESULTS.md l.74",
+    "CONTEXT.md l.169",
+    "CONTEXT.md l.197"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "exp15 lab 0.971 vs 0.982 (no diversity); B6 never run; detector-blend family 4/4 negative on LB (research/wf_ideas_v3/s_merge.json dropped)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-156",
+   "cluster": "INFER",
+   "name": "Third independently trained detector in the heatmap blend",
+   "aliases": [],
+   "description": "Model-diversity ensemble on x138.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v3/h_ensembles-and-private.json"
+   },
+   "sources": [
+    "research/wf_ideas_v3/s_merge.json dropped"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "4/4 detector-blend perturbations negative on our LB; +25% encodes near the deadline (research/wf_ideas_v3/s_merge.json dropped)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-157",
+   "cluster": "INFER",
+   "name": "B5 test-time adaptation: per-video AdaBN (+ head-only EMA self-training, DARTH-style)",
+   "aliases": [
+    "B5",
+    "item 18",
+    "exp38"
+   ],
+   "description": "Attack the embryo shift at test time.",
+   "first_seen": {
+    "date": "2026-09-07",
+    "path": "CONTEXT.md l.562-564"
+   },
+   "sources": [
+    "experiments/RESULTS.md l.119",
+    "experiments/RESULTS.md l.121",
+    "CONTEXT.md l.1095-1110"
+   ],
+   "status": {
+    "kind": "lab-tested",
+    "detail": "Honest LOEO +0.0073 (scratch model); public stack regression -0.0066 (node inflation 1.1-2.0x); head EMA -0.0025; closed, no probe (experiments/RESULTS.md l.121)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-158",
+   "cluster": "INFER",
+   "name": "tempfuse (C07/E7/K4): detect frame t from mean of pos-1 (t-1,t) and pos-0 (t,t+1) logits",
+   "aliases": [
+    "C07",
+    "E7",
+    "K4",
+    "exp61",
+    "T11",
+    "M3 (v4 guard)",
+    "A10"
+   ],
+   "description": "Zero-extra-GPU temporal detection fusion with per-frame top-K guard.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v3/h_literature.json symmetric-temporal-det-fusion"
+   },
+   "sources": [
+    "research/wf_ideas_v3/s_merge.json C07",
+    "research/wf_ideas_v3/FINAL_REPORT.md §c row 10",
+    "research/wf_ideas_v4/final.json A10",
+    "research/wf_ideas_v3/TASK_FRIEND_A.md Task 3"
+   ],
+   "status": {
+    "kind": "in-plan",
+    "detail": "Optional, cut first (R10); not built yet (no exp61); A10 tighter gates pre-registered; friend A LOEO pretest needs a script by 26 Sep 15:00 UTC (research/wf_ideas_v4/FINAL_REPORT_v4.md §3 row 10)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "Build by 26 Sep 12:00 UTC or record 'K4 dropped, S6 empty'.",
+   "orphan": "at-risk"
+  },
+  {
+   "id": "I-159",
+   "cluster": "INFER",
+   "name": "Per-video denoising-autoencoder prefilter (ghazarosbarseghyan91)",
+   "aliases": [],
+   "description": "Test-time denoising before detection.",
+   "first_seen": {
+    "date": "2026-09-18",
+    "path": "CONTEXT.md l.1001-1003"
+   },
+   "sources": [],
+   "status": {
+    "kind": "refuted",
+    "detail": "Closed class (detector-map change), not probed (CONTEXT.md l.1003)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-160",
+   "cluster": "INFER",
+   "name": "xiaoleilian 2-UNet top-hat/none blend; newwang12 density-grouped overrides",
+   "aliases": [],
+   "description": "Public variants of the blend/overrides.",
+   "first_seen": {
+    "date": "2026-09-16",
+    "path": "CONTEXT.md l.987-992"
+   },
+   "sources": [
+    "CONTEXT.md l.1001-1003"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Classes closed on LB (secondary swaps / post-proc ties) (CONTEXT.md l.990-991)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-161",
+   "cluster": "EF",
+   "name": "Edge filter ef_a3_rl_pr: drop unscored relink edges with ILP evidence elsewhere, re-link to the ILP alternative, prune isolated",
+   "aliases": [
+    "edgefilter",
+    "exp49",
+    "relink-unscored-drop"
+   ],
+   "description": "92,952 relink edges join never-scored pairs; 79% FP among evaluable.",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "CONTEXT.md l.1331-1341"
+   },
+   "sources": [
+    "experiments/RESULTS.md l.62",
+    "CONTEXT.md l.1441-1445",
+    "experiments/l2_daughternet/edge_anatomy/anatomy_exp39.md"
+   ],
+   "status": {
+    "kind": "lb-tested",
+    "detail": "Lab CONFIRMATION +0.0162 (gate PASS); probe 29 exp49 = 0.947 (tie): in-sample network trap; line closed (CONTEXT.md l.1441-1445)."
+   },
+   "lb": [
+    {
+     "probe": 29,
+     "score": 0.947
+    }
+   ],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-162",
+   "cluster": "EF",
+   "name": "Drop-only edge filter ef_a0 (transfer hedge)",
+   "aliases": [
+    "exp50"
+   ],
+   "description": "Depends only on the 'never scored' property.",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "CONTEXT.md l.1340-1341"
+   },
+   "sources": [
+    "experiments/RESULTS.md l.63",
+    "CONTEXT.md l.1435-1440"
+   ],
+   "status": {
+    "kind": "lb-tested",
+    "detail": "Lab SELECTION +0.0095; probe 30 exp50 = 0.946 (CONTEXT.md l.1435-1440)."
+   },
+   "lb": [
+    {
+     "probe": 30,
+     "score": 0.946
+    }
+   ],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-163",
+   "cluster": "EF",
+   "name": "Split every local gain into J vs node multiplier per embryo before believing it",
+   "aliases": [],
+   "description": "zhincez: +0.013 offline -> -0.004 LB when multiplier-driven.",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "research/browser_research_2026-09-24.md §e.3"
+   },
+   "sources": [
+    "research/browser_research_2026-09-24.md §d.2"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Superseded: probes 29/30 answered the edge-filter question directly (CONTEXT.md l.1441-1445)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-164",
+   "cluster": "EF",
+   "name": "Stitch: re-add ILP end->start edges after the edge filter (+ fragment rescue before tail, ILP-restore)",
+   "aliases": [
+    "stitch-tie-aware-gate",
+    "ilp-restore-stitch",
+    "stitch-before-tail-evaluable-gate",
+    "ilp-fragment-rescue-before-tail"
+   ],
+   "description": "Rescue ILP edges the relink left open.",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "CONTEXT.md l.1368-1370"
+   },
+   "sources": [
+    "CONTEXT.md l.1418-1421",
+    "research/wf_ideas_v2/FINAL_REPORT.md Dropped",
+    "experiments/l2_daughternet/edge_anatomy/l6_selection_stitch.md"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Lab +0.0021 CONFIRMATION but 44b6 win rate 15.5%; conditional on ef transfer, which failed (research/wf_ideas_v2/FINAL_REPORT.md Dropped)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-165",
+   "cluster": "EF",
+   "name": "swapfix: 2x2 re-assignment rule on swaps (--patch swapfix)",
+   "aliases": [],
+   "description": "Fix 'swap' FN by local re-assignment.",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "CONTEXT.md l.1411-1416"
+   },
+   "sources": [
+    "experiments/l2_daughternet/edge_anatomy/l6_selection_swapfix.md"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "-0.00004 on CONFIRMATION: swaps are node-position/missing-nucleus errors, not linking (CONTEXT.md l.1411-1416)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-166",
+   "cluster": "EF",
+   "name": "2-opt multi-frame swap test / k-best assignments (KTH-SE Viterbi, MAMHT) / swap-repair stop-loss",
+   "aliases": [],
+   "description": "Literature swap repair on relink edges.",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "CONTEXT.md l.1397-1399"
+   },
+   "sources": [
+    "research/browser_research_2026-09-24_pass2.md §7.3c",
+    "research/wf_ideas_v2/r1_dedupe.json dropped swap-repair-stop-loss",
+    "research/wf_ideas/hyp_linking.notes.md"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Only 179/1528 swaps are true linking swaps; repoints dTP -224 / dFP +409 (research/wf_ideas_v2/r1_dedupe.json dropped)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-167",
+   "cluster": "EF",
+   "name": "Score unscored relink pairs with the edge network (OOF edge scorer over full candidates)",
+   "aliases": [
+    "oof-edge-scorer-full-candidates"
+   ],
+   "description": "Give the relink real probabilities for its pairs.",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "research/wf_ideas/hyp_linking.notes.md"
+   },
+   "sources": [
+    "research/browser_research_2026-09-24_pass2.md §7.3d",
+    "research/wf_ideas_v2/FINAL_REPORT.md Dropped",
+    "research/wf_ideas_v2/final.json"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "A fold fine-tune from public init is not OOF; plumbing below gate; oracle +0.0019 (research/wf_ideas_v2/FINAL_REPORT.md Dropped)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-168",
+   "cluster": "EF",
+   "name": "Frozen-frame double step (ILP-first on post-freeze transitions)",
+   "aliases": [],
+   "description": "Special handling after duplicated frames.",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "research/wf_ideas_v2/r1_hyp_metric.json"
+   },
+   "sources": [
+    "research/wf_ideas_v2/FINAL_REPORT.md Dropped"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Geometric part ~0; ILP-first part is the in-sample channel (research/wf_ideas_v2/FINAL_REPORT.md Dropped)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-169",
+   "cluster": "EF",
+   "name": "Pair-LightGBM relink prior (Corwin, 15 geometric features)",
+   "aliases": [
+    "pair-gbm-relink-prior"
+   ],
+   "description": "Second bonus term in the relink.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "experiments/ext_corwin-biocel-aux/NOTES.md"
+   },
+   "sources": [
+    "research/wf_ideas_v4/FINAL_REPORT_v4.md §4",
+    "CONTEXT.md l.1882-1883"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "In-sample booster (edge-filter pattern); closed in Addendum L7 (CONTEXT.md l.1882-1883)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-170",
+   "cluster": "EF",
+   "name": "RE-AIM post-canon track-end re-aim (Corwin)",
+   "aliases": [
+    "reaim-trackend-resolve"
+   ],
+   "description": "Local Hungarian on flow-compensated distance at track ends.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "experiments/ext_corwin-biocel-aux/NOTES.md"
+   },
+   "sources": [
+    "CONTEXT.md l.1881-1882",
+    "research/wf_ideas_v4/FINAL_REPORT_v4.md §4"
+   ],
+   "status": {
+    "kind": "lab-tested",
+    "detail": "No-op on K2 dummies: 2 of 117,077 edges re-pointed, TP/FP/FN identical; closed (CONTEXT.md l.1881-1882)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-171",
+   "cluster": "EF",
+   "name": "Two-tail consensus (fuse x138 tail and our tail on the shared ILP graph)",
+   "aliases": [],
+   "description": "Edge consensus with geometry tie-break.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v3/h_ensembles-and-private.json"
+   },
+   "sources": [
+    "research/wf_ideas_v3/s_merge.json dropped"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Collapses to 'x138 without flow prior'; doubles repair time (research/wf_ideas_v3/s_merge.json dropped)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-172",
+   "cluster": "LINK",
+   "name": "Gap closing (5 um, 1 frame, mutual NN, midpoint) and radius 6.5 um",
+   "aliases": [
+    "A20",
+    "exp24"
+   ],
+   "description": "Close 1-frame gaps.",
+   "first_seen": {
+    "date": "2026-09-05",
+    "path": "experiments/RESULTS.md l.17"
+   },
+   "sources": [
+    "experiments/RESULTS.md l.40",
+    "CONTEXT.md l.179"
+   ],
+   "status": {
+    "kind": "lb-tested",
+    "detail": "Lab +0.0044; on the public pipeline GAP_CLOSE 6.5 = probe 8 0.944 (noise) (experiments/RESULTS.md l.40)."
+   },
+   "lb": [
+    {
+     "probe": 8,
+     "score": 0.944
+    }
+   ],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-173",
+   "cluster": "LINK",
+   "name": "Residual direct end(t)->start(t+1) linking (8 um, mutual NN)",
+   "aliases": [],
+   "description": "Fragmentation fix.",
+   "first_seen": {
+    "date": "2026-09-05",
+    "path": "experiments/RESULTS.md l.21"
+   },
+   "sources": [
+    "CONTEXT.md l.118",
+    "CONTEXT.md l.249",
+    "CONTEXT.md l.254"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Lab + on hold12/divset36/LOEO; on the public pipeline 0 pairs within 5 um (useless) (CONTEXT.md l.254)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-174",
+   "cluster": "LINK",
+   "name": "Velocity-projected (EMA) gap closing",
+   "aliases": [
+    "A7"
+   ],
+   "description": "Motion-aware gap closing.",
+   "first_seen": {
+    "date": "2026-09-05",
+    "path": "experiments/RESULTS.md l.19"
+   },
+   "sources": [
+    "CONTEXT.md l.162"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Lab neutral 0.9619 -> 0.9621 (CONTEXT.md l.162)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-175",
+   "cluster": "LINK",
+   "name": "ILP appearance/disappearance cost sweep (exp13)",
+   "aliases": [
+    "exp13"
+   ],
+   "description": "Tune ILP event costs.",
+   "first_seen": {
+    "date": "2026-09-05",
+    "path": "experiments/RESULTS.md l.32"
+   },
+   "sources": [
+    "CONTEXT.md l.87"
+   ],
+   "status": {
+    "kind": "lab-tested",
+    "detail": "No change: keep d2/a0 (experiments/RESULTS.md l.32)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-176",
+   "cluster": "LINK",
+   "name": "Motion-relink tight gate 5.5 um (in-kernel sweep pick tight55)",
+   "aliases": [],
+   "description": "sjlee sweep selected MOTION_RELINK_TIGHT_UM 5.5.",
+   "first_seen": {
+    "date": "2026-09-10",
+    "path": "CONTEXT.md l.460-464"
+   },
+   "sources": [
+    "experiments/RESULTS.md l.47",
+    "experiments/RESULTS.md l.83"
+   ],
+   "status": {
+    "kind": "lb-tested",
+    "detail": "Part of exp29's realised config (probe 14 0.947); locally identical to 6.0 (experiments/RESULTS.md l.83)."
+   },
+   "lb": [
+    {
+     "probe": 14,
+     "score": 0.947
+    }
+   ],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-177",
+   "cluster": "LINK",
+   "name": "Motion relink OFF (B29)",
+   "aliases": [
+    "B29",
+    "exp40"
+   ],
+   "description": "Relink is net -0.0067 on 12 videos and collapses 87bba6c4.",
+   "first_seen": {
+    "date": "2026-09-15",
+    "path": "CONTEXT.md l.880-888"
+   },
+   "sources": [
+    "experiments/RESULTS.md l.54",
+    "experiments/RESULTS.md l.109",
+    "CONTEXT.md l.1207-1209"
+   ],
+   "status": {
+    "kind": "lb-tested",
+    "detail": "Local +0.0053 (one division TP); probe 21 exp40 = 0.945 (CONTEXT.md l.1207-1209)."
+   },
+   "lb": [
+    {
+     "probe": 21,
+     "score": 0.945
+    }
+   ],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-178",
+   "cluster": "LINK",
+   "name": "DeepCenter veto OFF (B29 second arm)",
+   "aliases": [],
+   "description": "Veto is -0.0035 on 12 videos (one event).",
+   "first_seen": {
+    "date": "2026-09-15",
+    "path": "CONTEXT.md l.207"
+   },
+   "sources": [
+    "experiments/RESULTS.md l.109"
+   ],
+   "status": {
+    "kind": "lab-tested",
+    "detail": "Local +0.0024 (one division event), below the gate, no probe (experiments/RESULTS.md l.109)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-179",
+   "cluster": "LINK",
+   "name": "Motion relink learned bonus 1.0 -> 2.5",
+   "aliases": [
+    "exp41"
+   ],
+   "description": "Let the learned probability reach final edges.",
+   "first_seen": {
+    "date": "2026-09-23",
+    "path": "CONTEXT.md l.1182-1185"
+   },
+   "sources": [
+    "experiments/RESULTS.md l.55"
+   ],
+   "status": {
+    "kind": "lb-tested",
+    "detail": "Probe 22 exp41 = 0.945 (experiments/RESULTS.md l.55)."
+   },
+   "lb": [
+    {
+     "probe": 22,
+     "score": 0.945
+    }
+   ],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-180",
+   "cluster": "LINK",
+   "name": "Per-frame global-shift correction in relink (takaito gshift, MNN 12 um)",
+   "aliases": [
+    "gshift",
+    "exp42"
+   ],
+   "description": "Drift-corrected relink cost.",
+   "first_seen": {
+    "date": "2026-09-23",
+    "path": "CONTEXT.md l.1192-1193"
+   },
+   "sources": [
+    "experiments/RESULTS.md l.56",
+    "CONTEXT.md l.1213-1217"
+   ],
+   "status": {
+    "kind": "lb-tested",
+    "detail": "Probe 23 exp42 = 0.945; relink stage of exp29 at its local optimum (CONTEXT.md l.1213-1217)."
+   },
+   "lb": [
+    {
+     "probe": 23,
+     "score": 0.945
+    }
+   ],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-181",
+   "cluster": "LINK",
+   "name": "Association-rule variants (mutual-best / relative-rank beta 0.12-0.25; density-adaptive relink radius)",
+   "aliases": [],
+   "description": "takaito/haideptry association patches.",
+   "first_seen": {
+    "date": "2026-09-22",
+    "path": "CONTEXT.md l.1219-1221"
+   },
+   "sources": [
+    "CONTEXT.md l.1234-1237",
+    "research/browser_research_2026-09-24.md §e 'Do NOT spend'"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Public 0.943-0.946; our verbatim probe 24 = 0.944 (experiments/RESULTS.md l.57)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-182",
+   "cluster": "LINK",
+   "name": "B28 linefit smoothing weight x window grid",
+   "aliases": [
+    "B28"
+   ],
+   "description": "Largest post-processing stage (+0.0145), never swept.",
+   "first_seen": {
+    "date": "2026-09-15",
+    "path": "CONTEXT.md l.206"
+   },
+   "sources": [
+    "experiments/RESULTS.md l.109",
+    "CONTEXT.md l.906-912"
+   ],
+   "status": {
+    "kind": "lab-tested",
+    "detail": "Public (w0.8, win2) is the unimodal optimum on 12 videos; closed (experiments/RESULTS.md l.109)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-183",
+   "cluster": "LINK",
+   "name": "x138-tail recalibration for refined coords (linefit w0.7 win2 arm; flow gate, readmit radius)",
+   "aliases": [
+    "x138-tail-lab-headcoords"
+   ],
+   "description": "Position-consuming knobs may shift after the head.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v3/h_redteam-past.json x138-tail-recalibration-refined-coords"
+   },
+   "sources": [
+    "research/wf_ideas_v3/s_merge.json C06",
+    "research/wf_ideas_v3/s_merge.json assumptions",
+    "research/wf_ideas_v3/FINAL_REPORT.md §j.17"
+   ],
+   "status": {
+    "kind": "in-plan",
+    "detail": "One pre-registered linefit arm (w0.7, win2) inside the exp60 lab; expected +0.0001-0.0003 (research/wf_ideas_v3/FINAL_REPORT.md §j.17)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "Read the arm when exp60 is scored.",
+   "orphan": false
+  },
+  {
+   "id": "I-184",
+   "cluster": "LINK",
+   "name": "Anisotropic fork-aware RTS smoother (+ linefit-after-head, learned linefit weight, track-context offset pooling, presmooth decisions)",
+   "aliases": [
+    "linefit-after-head",
+    "learned-linefit-weight-subvoxel",
+    "track-context-offset-pooling",
+    "presmooth-decisions"
+   ],
+   "description": "Replace linefit with a model-based smoother.",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "research/wf_ideas_v2/r1_hyp_literature.json"
+   },
+   "sources": [
+    "research/wf_ideas_v2/FINAL_REPORT.md Dropped",
+    "research/wf_ideas_v2/r1_dedupe.json"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Anisotropy ~1.08; value came from the edge filter; 44b6 sign negative (research/wf_ideas_v2/FINAL_REPORT.md Dropped)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-185",
+   "cluster": "LINK",
+   "name": "Neighbourhood-flow motion prior in the relink (x138/thtennant flow2)",
+   "aliases": [],
+   "description": "Predict position from the median displacement of 12 neighbours.",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "research/browser_research_2026-09-24.md §e.4"
+   },
+   "sources": [
+    "CONTEXT.md l.1430",
+    "CONTEXT.md l.1500-1504"
+   ],
+   "status": {
+    "kind": "lb-tested",
+    "detail": "Neutral alone (0.947, others); adopted through x138 (probe 34 0.953) (research/browser_research_2026-09-24.md §e.4)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-186",
+   "cluster": "LINK",
+   "name": "Tracklet gap-closing LAP (u-track style, g <= 3)",
+   "aliases": [],
+   "description": "Global tracklet linking before the short-track filter.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v3/h_linking-on-x138.json"
+   },
+   "sources": [
+    "research/wf_ideas_v3/s_merge.json dropped"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "g=0 idle, g=1..3 overlaps existing gap stages; +0.0003 (research/wf_ideas_v3/s_merge.json dropped)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-187",
+   "cluster": "LINK",
+   "name": "HOCT-style relink scoring: cost (0.5-p), parental softmax per target, two-pass tracklet stitching",
+   "aliases": [],
+   "description": "Literature-backed linker scoring.",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "research/browser_research_2026-09-24.md §e.6"
+   },
+   "sources": [
+    "research/survey_linking_divisions.md Top-5 #2",
+    "CONTEXT.md l.1249"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Linker gains transfer ~+0.001 (Mark, Pavel, Yubo); HOCT/Trackastra add nothing publicly (CONTEXT.md l.1249)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-188",
+   "cluster": "LINK",
+   "name": "Association consistency between models where they disagree + metric-aware ILP cost calibration (B9)",
+   "aliases": [
+    "B9"
+   ],
+   "description": "FOYSAL's consistency idea.",
+   "first_seen": {
+    "date": "2026-09-06",
+    "path": "research/discussions_summary.md l.44-46"
+   },
+   "sources": [
+    "CONTEXT.md l.218",
+    "CONTEXT.md l.776"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Never run; 'linker work stays closed' (contested links lost on appearance AND motion) (CONTEXT.md l.775-776)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-189",
+   "cluster": "LINK",
+   "name": "Appearance re-ID association ranker (arnav170) / confidence-distance edge gate (kunaldesale2408)",
+   "aliases": [],
+   "description": "Public association variants.",
+   "first_seen": {
+    "date": "2026-09-16",
+    "path": "CONTEXT.md l.987-992"
+   },
+   "sources": [
+    "research/browser_research_2026-09-24.md §e 'Do NOT spend'"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Classes closed on LB (association +0.001; 0.940/0.947 publicly) (CONTEXT.md l.990-991)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-190",
+   "cluster": "LINK",
+   "name": "Unused notebook switches (SINGLE_CHILD_REPAIR, DIVISION_GEOMETRY_FILTER, VELOCITY_WEIGHT, RETENTION 0.90)",
+   "aliases": [],
+   "description": "Remaining env knobs.",
+   "first_seen": {
+    "date": "2026-09-11",
+    "path": "CONTEXT.md l.650-652"
+   },
+   "sources": [],
+   "status": {
+    "kind": "refuted",
+    "detail": "Post-proc knob class, closed (CONTEXT.md l.650-652)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-191",
+   "cluster": "LINK",
+   "name": "B33 post-processing grid on all 199 videos (45 one-knob variants incl. relink velocity weight 0.25, edge max)",
+   "aliases": [
+    "B33",
+    "friend C tail grid"
+   ],
+   "description": "Never-done large grid with per-embryo readout.",
+   "first_seen": {
+    "date": "2026-09-23",
+    "path": "CONTEXT.md l.201"
+   },
+   "sources": [
+    "CONTEXT.md l.1177-1178",
+    "CONTEXT.md l.1236-1238",
+    "research/wf_ideas_v3/TASK_FRIEND_A.md 'What not to do'"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Runner built but no table reported; closed/moved to exp60 ('do not run old grids B33') (research/wf_ideas_v3/TASK_FRIEND_A.md)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-192",
+   "cluster": "LINK",
+   "name": "Frozen/duplicated frames rule (A16)",
+   "aliases": [
+    "A16"
+   ],
+   "description": "6bba has duplicated frames with moving GT.",
+   "first_seen": {
+    "date": "2026-09-06",
+    "path": "CONTEXT.md l.183"
+   },
+   "sources": [],
+   "status": {
+    "kind": "refuted",
+    "detail": "Identical input -> identical detections; no rule needed (CONTEXT.md l.183)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-193",
+   "cluster": "VALID",
+   "name": "hold12 / divset36 local validation (official metric on held-out train videos)",
+   "aliases": [],
+   "description": "Local ladder hold12 -> 48 videos -> LOEO.",
+   "first_seen": {
+    "date": "2026-09-05",
+    "path": "experiments/RESULTS.md l.3-5"
+   },
+   "sources": [
+    "CONTEXT.md l.99-104",
+    "CONTEXT.md l.242-244"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Leaky: hold12 0.990 -> LB 0.899 (pilkwang weights saw all videos) (CONTEXT.md l.242)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-194",
+   "cluster": "VALID",
+   "name": "LOEO check 6bba -> 44b6 (exp11)",
+   "aliases": [
+    "exp11"
+   ],
+   "description": "Leave-one-embryo-out fine-tune.",
+   "first_seen": {
+    "date": "2026-09-05",
+    "path": "CONTEXT.md l.101"
+   },
+   "sources": [
+    "experiments/RESULTS.md l.26-27"
+   ],
+   "status": {
+    "kind": "lab-tested",
+    "detail": "Post-proc transfers locally, but the base saw 44b6 (in-sample) (CONTEXT.md l.235-237)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-195",
+   "cluster": "VALID",
+   "name": "Friend B local port of the public stack (tools/public_local.py) as calibrated screen",
+   "aliases": [],
+   "description": "Execute the notebook's own cells locally.",
+   "first_seen": {
+    "date": "2026-09-06",
+    "path": "CONTEXT.md l.363-364"
+   },
+   "sources": [
+    "experiments/RESULTS.md l.83",
+    "experiments/RESULTS.md l.99",
+    "CONTEXT.md l.855-866"
+   ],
+   "status": {
+    "kind": "lab-tested",
+    "detail": "Order reproduced (Spearman +0.80), magnitude not; inference class not screenable (probe 19) (experiments/RESULTS.md l.99)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-196",
+   "cluster": "VALID",
+   "name": "Official metric (tools/official) instead of the pilkwang fork's division rule",
+   "aliases": [],
+   "description": "Weakly-connected-component rule inflated division TP.",
+   "first_seen": {
+    "date": "2026-09-11",
+    "path": "CONTEXT.md l.670-686"
+   },
+   "sources": [],
+   "status": {
+    "kind": "lab-tested",
+    "detail": "Fixed; all earlier local division TP suspect (CONTEXT.md l.682-686)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-197",
+   "cluster": "VALID",
+   "name": "exp28 calibration probe (re-run exp06 unchanged) / exp26 validator + exp23 run",
+   "aliases": [],
+   "description": "Measure run-to-run LB variance.",
+   "first_seen": {
+    "date": "2026-09-08",
+    "path": "CONTEXT.md l.525-527"
+   },
+   "sources": [
+    "CONTEXT.md l.632-633",
+    "CONTEXT.md l.538-540"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Not run: exp29 reproducing 0.947 answered it; exp26 declined by the user (CONTEXT.md l.632-633)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-198",
+   "cluster": "VALID",
+   "name": "B26 memorised-views falsification test (scratch primary vs pilkwang)",
+   "aliases": [
+    "B26"
+   ],
+   "description": "Are local TTA gains memorised views?",
+   "first_seen": {
+    "date": "2026-09-15",
+    "path": "CONTEXT.md l.808"
+   },
+   "sources": [
+    "experiments/RESULTS.md l.87",
+    "experiments/RESULTS.md l.107",
+    "CONTEXT.md l.889-898"
+   ],
+   "status": {
+    "kind": "lab-tested",
+    "detail": "81-87% of local TTA gains survive on an unseen-embryo primary (memorisation 13-19%); LB still tie (experiments/RESULTS.md l.107)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-199",
+   "cluster": "VALID",
+   "name": "Replay lab on friend A's image-free cache with SELECTION/CONFIRMATION split and 44b6 leak groups",
+   "aliases": [],
+   "description": "Laptop lab for post-ILP changes.",
+   "first_seen": {
+    "date": "2026-09-23",
+    "path": "CONTEXT.md l.1253-1270"
+   },
+   "sources": [
+    "CONTEXT.md l.1535-1538",
+    "experiments/l2_daughternet/replay/replay.py"
+   ],
+   "status": {
+    "kind": "lab-tested",
+    "detail": "Controls reproduced exactly; in-sample: trust only changes not leaning on the edge network/ILP (and even geometric gains inflate) (research/wf_ideas_v3/s_merge.json assumptions)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-200",
+   "cluster": "VALID",
+   "name": "Edge anatomy and FN anatomy (per-edge TP/FP labels; FN classes swap/a_never/u_diverted)",
+   "aliases": [],
+   "description": "Locate the loss.",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "CONTEXT.md l.1331-1334"
+   },
+   "sources": [
+    "experiments/l2_daughternet/edge_anatomy/l6_fn_anatomy_report.md",
+    "CONTEXT.md l.1411-1416"
+   ],
+   "status": {
+    "kind": "lab-tested",
+    "detail": "Swaps are node-position/missing-nucleus errors; a_never = 28.3% of lab FN (research/wf_ideas_v3/FINAL_REPORT.md §j.8, §j.10)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-201",
+   "cluster": "VALID",
+   "name": "exp60 x138-on-train lab (C06/E4/T5): 56 clips, SELECTION/CONFIRMATION, in-kernel official scoring",
+   "aliases": [
+    "C06",
+    "E4",
+    "T5",
+    "T9"
+   ],
+   "description": "Honest-ish x138 lab for forkmid/DeepCenter/insertion/linefit arms.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v3/s_merge.json C06"
+   },
+   "sources": [
+    "CONTEXT.md l.1759-1767",
+    "CONTEXT.md l.1824-1826",
+    "CONTEXT.md l.1850-1886"
+   ],
+   "status": {
+    "kind": "in-plan",
+    "detail": "Shards A/B RUNNING (pushed 25 Sep 17:15 UTC); Addendum L recorded before any output (CONTEXT.md l.1850-1886)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "Download + score with tools/trainlab.py under Addendum L; T9 analysis.",
+   "orphan": false
+  },
+  {
+   "id": "I-202",
+   "cluster": "VALID",
+   "name": "RT3: exp60 lab on the K2 stack (two extra GPU shards with lowrefine)",
+   "aliases": [],
+   "description": "Match the lab base to K2.",
+   "first_seen": {
+    "date": "2026-09-25",
+    "path": "research/wf_ideas_v4/lens_redteam-plan.json RT3"
+   },
+   "sources": [
+    "research/wf_ideas_v4/FINAL_REPORT_v4.md §4"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "VOI ~2e-5; replaced by the zero-GPU lowdet-adverse sensitivity (research/wf_ideas_v4/FINAL_REPORT_v4.md §4)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-203",
+   "cluster": "VALID",
+   "name": "Dorado out-of-sample lab (Ultrack tracks outside the 44b6 boxes as pseudo-GT judge)",
+   "aliases": [
+    "dorado-oos-lab"
+   ],
+   "description": "OOS images for the lab.",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "research/wf_ideas_v2/r2_critic.json"
+   },
+   "sources": [
+    "research/wf_ideas_v2/FINAL_REPORT.md Dropped",
+    "research/wf_ideas_v2/final.json"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Nothing left for it to gate; same embryo as 44b6 (research/wf_ideas_v2/FINAL_REPORT.md Dropped)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-204",
+   "cluster": "VALID",
+   "name": "Report every gate by density quartile (loss is a density problem; Spearman(J, nodes/frame) = -0.66)",
+   "aliases": [],
+   "description": "Critic's methodology fix.",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "research/wf_ideas_v2/r2_critic.json"
+   },
+   "sources": [
+    "CONTEXT.md l.1456-1457"
+   ],
+   "status": {
+    "kind": "open-untested",
+    "detail": "Never adopted in any gate (Addendum L / trainlab gates are per-embryo only) (CONTEXT.md l.1850-1886)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "Add a density-quartile column to the exp60 T9 readout (info only).",
+   "orphan": "strict"
+  },
+  {
+   "id": "I-205",
+   "cluster": "VALID",
+   "name": "Kaggle CPU lab port (tools/kaggle_lab.py: push-code/run/pull/status)",
+   "aliases": [],
+   "description": "Offload the replay lab to free Kaggle CPU kernels.",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "CONTEXT.md l.1376-1379"
+   },
+   "sources": [
+    "CONTEXT.md l.1409-1410",
+    "CONTEXT.md l.1546"
+   ],
+   "status": {
+    "kind": "open-untested",
+    "detail": "Paused and unfinished (CONTEXT.md l.1546); the replay lab itself is superseded by exp60 for x138."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "Close explicitly (x138 lab = exp60 kernel).",
+   "orphan": "strict"
+  },
+  {
+   "id": "I-206",
+   "cluster": "VALID",
+   "name": "Lab cache rebuild at MOTION_RELINK_TIGHT_UM 5.5 (relink55) and B21 cache on the exp51/x138 stack",
+   "aliases": [],
+   "description": "Match lab cache to kernel settings.",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "CONTEXT.md l.1351-1353"
+   },
+   "sources": [
+    "CONTEXT.md l.1401-1403",
+    "research/wf_ideas_v3/TASK_FRIEND_A.md Task 1"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Stopped (probe 29 answered); B21/x138 cache cancelled (replay.py lacks flow relink/readmit/gapfill) (research/wf_ideas_v3/TASK_FRIEND_A.md)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-207",
+   "cluster": "VALID",
+   "name": "Stage-resume mechanism from a public notebook",
+   "aliases": [],
+   "description": "Resume long kernels by stage.",
+   "first_seen": {
+    "date": "2026-09-15",
+    "path": "CONTEXT.md l.843-844"
+   },
+   "sources": [],
+   "status": {
+    "kind": "open-untested",
+    "detail": "'Worth copying only if we ever change the kernel' - never revisited (CONTEXT.md l.843-844); safetail now covers failure modes."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "Close explicitly.",
+   "orphan": "strict"
+  },
+  {
+   "id": "I-208",
+   "cluster": "TESTSET",
+   "name": "Overlap consensus across overlapping test crops (transductive)",
+   "aliases": [
+    "overlap-consensus"
+   ],
+   "description": "44b6-type embryos are overlapping crops; owner rule picks the better copy.",
+   "first_seen": {
+    "date": "2026-09-24",
+    "path": "research/wf_ideas_v2/r2_critic.json"
+   },
+   "sources": [
+    "research/wf_ideas_v2/FINAL_REPORT.md §4",
+    "CONTEXT.md l.1452-1455",
+    "CONTEXT.md l.1673-1674"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Refused by the team policy and R9 (transductive) (CONTEXT.md l.1583, l.1673-1674)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-209",
+   "cluster": "TESTSET",
+   "name": "Match hidden test clips against public recordings (dorado) / use public tracks as labels",
+   "aliases": [],
+   "description": "Exploit that 44b6 = dorado crops.",
+   "first_seen": {
+    "date": "2026-09-23",
+    "path": "CONTEXT.md l.1281-1288"
+   },
+   "sources": [],
+   "status": {
+    "kind": "refuted",
+    "detail": "Policy NO: against the spirit and the hosts' statement (CONTEXT.md l.1286-1288)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-210",
+   "cluster": "TESTSET",
+   "name": "3 accounts = 15 probes/day",
+   "aliases": [],
+   "description": "Multiply submission slots.",
+   "first_seen": {
+    "date": "2026-09-06",
+    "path": "CONTEXT.md l.343-349"
+   },
+   "sources": [],
+   "status": {
+    "kind": "refuted",
+    "detail": "Rejected: proxy submissions = disqualification; limit is per team (CONTEXT.md l.343-349)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-211",
+   "cluster": "TESTSET",
+   "name": "Hand-labelling test data / SAM2 zero-shot tracking",
+   "aliases": [],
+   "description": "",
+   "first_seen": {
+    "date": "2026-09-07",
+    "path": "CONTEXT.md l.230"
+   },
+   "sources": [],
+   "status": {
+    "kind": "refuted",
+    "detail": "Forbidden / too heavy (CONTEXT.md l.230)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  }
+ ]
+}

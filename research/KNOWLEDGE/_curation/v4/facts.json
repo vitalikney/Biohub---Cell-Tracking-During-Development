@@ -1,0 +1,70 @@
+{
+  "task": "curate:facts (FACTS.md + DECISIONS.md), curation v4",
+  "complete": true,
+  "written_at": "2026-09-25T18:35Z",
+  "files_written": [
+    "research/KNOWLEDGE/FACTS.md",
+    "research/KNOWLEDGE/DECISIONS.md",
+    "research/KNOWLEDGE/_curation/v4/facts.notes.md",
+    "research/KNOWLEDGE/_curation/v4/facts.json"
+  ],
+  "alerts": [
+    {
+      "kind": "risk",
+      "what": "R4 reading of P36 (exp57 v1) is undecidable as written: the rule says ignore the result if L36 or L35 > 7.5 h, but L35 is only bounded to (6.72, 7.73] h because of five empty polls.",
+      "evidence": "CONTEXT.md 25 Sep 16:20 UTC entry (l.1802-1810); research/KNOWLEDGE/DECISIONS.md section 3, R4 row",
+      "suggested_action": "Before P36 scores, record one line in CONTEXT stating whether an unprovable L35 counts as > 7.5 h for the P36 read. The conservative choice is to treat it as unprovable and ignore the result.",
+      "urgency": "today"
+    },
+    {
+      "kind": "deadline",
+      "what": "The user's OKs are needed before about 09:00 UTC 26 Sep: AMENDMENT f2 (twin exp58n as F2 and its submit), ADDENDUM L1/L3, forkblob as an R3-class rider, and K1 as the fallback if K2 errors. Until then the original rules apply (F2 = exp52).",
+      "evidence": "research/wf_ideas_v4/FINAL_REPORT_v4.md section 5; CONTEXT.md 25 Sep 18:20 UTC (l.1850-1895)",
+      "suggested_action": "Put the four OK questions at the top of the morning status message. Run the twin's dummy gate (tools/dummy_gates.py --insertion 0) after the quota reset so S3 is ready.",
+      "urgency": "today"
+    },
+    {
+      "kind": "deadline",
+      "what": "K2 (exp58) goes in at 00:01 UTC 26 Sep. R5 admission needs its latency from the 10-minute poll, and the v4 plan asks for the poller to run 07:00-08:30 UTC (COMPLETE before 08:01 proves the insertion gate did not fire).",
+      "evidence": "CONTEXT.md 25 Sep 17:20-17:55 UTC; research/wf_ideas_v4/FINAL_REPORT_v4.md section 3 item 5; experiments/runtime_step0/step0.md",
+      "suggested_action": "Keep experiments/lb_poll running overnight and through 07:00-08:30 UTC, and log the first-COMPLETE timestamp in CONTEXT.",
+      "urgency": "today"
+    },
+    {
+      "kind": "contradiction",
+      "what": "R7 says DIVINS_DUMP=1 never appears in a submission, but the section f default F2 / fallback exp52 (and exp51, exp48, exp57b) were built with DIVINS_DUMP=1.",
+      "evidence": "CONTEXT.md l.1667 (R7); experiments/exp52_coordhead_floatout/probe.json change.DIVINS_DUMP = 1",
+      "suggested_action": "Add a one-line note that R7 applies to new builds only and that exp52 is already scored without error, so it stays admissible. Otherwise a literal reading could disqualify the default F2.",
+      "urgency": "before-finals"
+    },
+    {
+      "kind": "stale",
+      "what": "experiments/RESULTS.md probe 25 (exp44 v2) is still PENDING, but it scored 0.946 on 23 Sep.",
+      "evidence": "experiments/RESULTS.md l.58 vs CONTEXT.md 23 Sep 18:40 UTC entry (l.1230)",
+      "suggested_action": "Main session: set the probe 25 row to 0.946 (tie; no more public-notebook variant probes).",
+      "urgency": "info"
+    },
+    {
+      "kind": "contradiction",
+      "what": "CONTEXT section 4 says adjusted edge J is weighted by GT edge count. The Overview text and v3 section j.1 say it is weighted by the video's TP+FP+FN.",
+      "evidence": "CONTEXT.md l.45; research/wf_ideas_v3/FINAL_REPORT.md section j.1; research/wf_ideas_v3/browser_intel.md section 5",
+      "suggested_action": "Correct CONTEXT section 4. Also mark CONTEXT section 1 l.14 (hidden test ~100-130, scoring ~6 h) and section 11a (noise +-0.003) as superseded (FACTS C-02, C-06, C-08).",
+      "urgency": "info"
+    },
+    {
+      "kind": "contradiction",
+      "what": "Estimates of the hidden test size disagree: about 100-130 (CONTEXT section 1), about 199 (Data tab), 110-160 (v3), and at most 97-106 at dummy speed (step 0).",
+      "evidence": "research/KNOWLEDGE/FACTS.md C-02; experiments/runtime_step0/step0.md",
+      "suggested_action": "Keep planning with the step-0 bound plus the 12 h hard limit. Re-derive N from K2's latency when it scores.",
+      "urgency": "info"
+    },
+    {
+      "kind": "stale",
+      "what": "TEAM.md (friend A row) still states the 0.97 target. The verdict and the user's accepted goal are now public ~0.954 and private above the x138 block.",
+      "evidence": "TEAM.md roles table; CONTEXT.md 25 Sep 13:38 UTC item (8) (l.1583)",
+      "suggested_action": "Main session: update the TEAM.md role line when convenient. The curator does not edit it.",
+      "urgency": "info"
+    }
+  ],
+  "summary": "First build of research/KNOWLEDGE/FACTS.md and DECISIONS.md; there was no earlier knowledge base. FACTS.md has 7 topic tables (metric, data and 44b6 leak groups, LB, runtime and N, Kaggle rules, models and weights, lab-to-LB transfer) with stable IDs and cited sources, plus 18 contradictions (C-01..C-18: edge-J weighting, N estimates, 9/10/12 h limits, 0.97 feasibility, dorado vs 44b6, noise floor vs determinism, tie order, latency, division rule wording, swap FN, a_never share, R7 vs exp52 DIVINS_DUMP, stale RESULTS row, 22-Sep date correction, and others). DECISIONS.md lists all 36 probes with date, kernel, change, score, latency and the rule used. Best public is 0.954 (P35); P36 was still pending at the 18:28:59Z poll. It also has the current finals table (K2 as F1 candidate, not yet submitted; twin exp58n as F2 under AMENDMENT f2, which needs the user's OK; exp52 is the F2 default; #35 is not admissible under R5; exp56 is last resort only) and the status of R1-R10. R1, R2, R5 and R6 were applied on 25 Sep; R3 and R4 are pending (first R3 read on the K2 score, first R4 read on P36); R7-R10 are in force. Alerts: the R4 read of P36 is undecidable, OKs are due before about 09:00 UTC, the K2 latency window needs watching, R7 conflicts with exp52, and several source lines are stale."
+}

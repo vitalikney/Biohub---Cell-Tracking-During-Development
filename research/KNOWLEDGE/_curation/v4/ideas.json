@@ -1,0 +1,102 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/ideas.json",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/IDEAS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/v4/ideas.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/v4/ideas.json"
+ ],
+ "alerts": [
+  {
+   "kind": "stale",
+   "what": "experiments/RESULTS.md still lists probe 25 (exp44 bundle) as PENDING although it scored 0.946",
+   "evidence": "experiments/RESULTS.md l.58 'PENDING' vs CONTEXT.md l.1231 'exp44 bundle ... = 0.946'",
+   "suggested_action": "Update the RESULTS.md row for probe 25 to 0.946 (ledger I-008 already uses 0.946).",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "User OKs needed on the morning of 26 Sep: amendment f2 (F2 = no-insertion twin exp58n), Addendum L [OK] items L1/L3, forkblob as an R3 rider, and the A6 K2-error contingency",
+   "evidence": "research/wf_ideas_v4/FINAL_REPORT_v4.md §5 items 1-4; CONTEXT.md l.1850-1895; ideas I-090, I-073, I-011",
+   "suggested_action": "Put the four yes/no questions in front of the user by ~09:00 UTC 26 Sep, before the first rider score.",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "forkblob (I-073) is frozen as a rule but no --patch forkblob or trainlab arm exists yet; it must pass its lab harm gate before R8 (27 Sep 12:00 UTC)",
+   "evidence": "research/wf_ideas_v4/FINAL_REPORT_v4.md §3 row 4 (patch + tests planned 20:00-23:00 UTC 25 Sep); CONTEXT.md l.1671 (R8)",
+   "suggested_action": "Build the patch + trainlab arm tonight so exp60 can score it with forkmid; otherwise record 'forkblob dropped'.",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "tempfuse (K4, I-158) is not built (no exp61) and has no owner; friend A's LOEO pretest needs a script by 26 Sep 15:00 UTC",
+   "evidence": "research/wf_ideas_v3/TASK_FRIEND_A.md Task 3; research/wf_ideas_v4/FINAL_REPORT_v4.md §3 row 10 ('otherwise record K4 dropped, S6 empty')",
+   "suggested_action": "Decide by 26 Sep 12:00 UTC: build K4 or write 'K4 dropped, S6 empty' in CONTEXT.md.",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "Probe 36 (exp57 v1: x138 + leaf prune 0.3 + ungated insertion) is still PENDING; its reading rule is pre-registered and it must never be a final",
+   "evidence": "experiments/lb_poll/poll.log l.302 (PENDING); CONTEXT.md l.1806-1810 (delta vs #35 by R4; ignore if L36 or L35 > 7.5 h)",
+   "suggested_action": "Read #36 against #35 (0.954) by R4 and log the latency; do not add leaf prune to x138 unless delta >= +0.002.",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "K2 (exp58) goes out at 00:01 UTC 26 Sep; its latency must be proven <= 9.5 h by polling (R5) and read 07:00-08:30 UTC (A5)",
+   "evidence": "CONTEXT.md l.1653-1657 (R5), l.1817-1829 (18/18 gates); research/wf_ideas_v4/FINAL_REPORT_v4.md §3 row 5",
+   "suggested_action": "Keep the 10-min poller running overnight; record first-seen COMPLETE time for K2.",
+   "urgency": "now"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "DaughterNet as a precision veto/constraint on safe-division forks (I-081) and the divergence/symmetry reachability re-audit with float coords (I-072) were proposed and never run nor closed",
+   "evidence": "research/browser_research_2026-09-24_pass2.md §7.5; CONTEXT.md l.1399-1400; research/wf_ideas_v2/r1_dedupe.json (fork-midpoint-filter merge)",
+   "suggested_action": "Either add them as free CPU arms in the exp60 T9 readout (DaughterNet p is dumped by divinsert) before R8, or close them in one CONTEXT line.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "Density-quartile readout of every gate (v2 critic: loss is a density problem, Spearman -0.66) was never adopted",
+   "evidence": "research/wf_ideas_v2/r2_critic.json; CONTEXT.md l.1456-1457; Addendum L gates are per-embryo only (CONTEXT.md l.1850-1886)",
+   "suggested_action": "Add an info-only density-quartile column to the exp60 T9 report.",
+   "urgency": "today"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "Kaggle CPU lab port (tools/kaggle_lab.py, paused) and the public stage-resume mechanism were left open",
+   "evidence": "CONTEXT.md l.1546 ('Paused: tools/kaggle_lab.py ... unfinished'); CONTEXT.md l.843-844",
+   "suggested_action": "Close both explicitly in CONTEXT.md (exp60 is the x138 lab; safetail covers failure modes).",
+   "urgency": "info"
+  },
+  {
+   "kind": "forgotten",
+   "what": "C09/E12 head-scale pre-gate is 'idle-only' with P(reaches a slot) ~0.1 and no run scheduled",
+   "evidence": "research/wf_ideas_v3/FINAL_REPORT.md §c row 13; research/wf_ideas_v3/TASK_CLOUD_SESSION.md T12",
+   "suggested_action": "Run only if the cloud session idles before 27 Sep 12:00 UTC; else record it closed.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "contradiction",
+   "what": "CONTEXT.md §4 still says adjusted edge J is weighted by GT edge count and that fewer nodes than N_est is a special bonus; the official code weights by TP+FP+FN and the multiplier is linear without a kink",
+   "evidence": "CONTEXT.md l.45-46 vs research/wf_ideas_v3/s_merge.json brief_corrections 1-2 (tools/official/metrics.md)",
+   "suggested_action": "Correct §4 so future lab re-implementations use D_i = TP+FP+FN.",
+   "urgency": "info"
+  },
+  {
+   "kind": "contradiction",
+   "what": "CONTEXT.md §11a keeps the '+-0.003 LB noise floor' rule, while v3 established our kernels are deterministic (the noise came from in-kernel PP sweeps)",
+   "evidence": "CONTEXT.md l.333-340 vs research/wf_ideas_v3/s_merge.json assumptions_adjudicated #3; CONTEXT.md l.1311-1312 (exp46 sha256-identical)",
+   "suggested_action": "Annotate §11a: a 0.001 public step between our deterministic kernels is a real public-embryo effect; the uncertainty is private transfer.",
+   "urgency": "info"
+  },
+  {
+   "kind": "risk",
+   "what": "Finals must be ticked by hand: never exp56 (byte copy of x138), never two files with identical components, F2 per amendment f2 or exp52",
+   "evidence": "CONTEXT.md l.1735-1736, l.1887-1895",
+   "suggested_action": "Reminder at 29 Sep 12:00 UTC with the admission table.",
+   "urgency": "before-finals"
+  }
+ ],
+ "summary": "Built the IDEAS LEDGER from scratch (research/KNOWLEDGE did not exist): 211 ideas in 12 clusters (RUN, BASE, LOC, DIV, FINALS, MODEL, NODES, INFER, EF, LINK, VALID, TESTSET), IDs I-001..I-211, each with first-seen date+path, sources, status (lb-tested 37, lab-tested 18, refuted 111, open-untested 5, deferred-after-deadline 19, in-plan 21) and next step. Sources: CONTEXT.md (all), RESULTS.md, wf_ideas v1-v4, browser reports, surveys, discussion digest, ext NOTES, step0, friend prompts/TASK cards. Orphans: 5 strict (I-072 divgates reachability re-audit, I-081 DaughterNet precision veto, I-204 density-quartile readout, I-205 Kaggle CPU lab port, I-207 stage-resume) and 2 at-risk (I-035 C09 head-scale pre-gate, I-158 tempfuse). Main time-critical items: K2 00:01 UTC 26 Sep (poll latency), forkblob patch not built, user OKs for f2 twin/Addendum L/forkblob/A6, #36 pending, tempfuse build-or-drop by 26 Sep 12:00 UTC."
+}

@@ -1,0 +1,6 @@
+- 2026-09-25T18:22Z start: no KNOWLEDGE dir / watch.json existed -> fresh build
+- 2026-09-25T18:23Z read CONTEXT tail (1519-1912), v3 FINAL §c/d/g/h/i/j, v4 FINAL, TASK_LOCAL/CLOUD, NEXT_RESEARCH
+- 2026-09-25T18:23Z trainlab.py: L2 (evaluable precision+Wilson), L3 pooled forkmid, L4 forkblob arm NOT implemented; no forkblob patch; dummy_gates has no timing journal
+- 2026-09-25T18:24Z read v4 lenses; at-risk: 24% one-blob forks, lab->LB 1/10 table, quota-not-consumed evidence, ext_* untracked
+- 2026-09-25T18:26Z verified: dummy_gates.py has no twin/K3/K3b/timing checks; forkmid_dose outputs not in git; composing WATCHLIST
+- 2026-09-25T18:28Z wrote WATCHLIST.md (W01-W29, T01-T11, I01-I14) and watch.json (12 alerts); DONE

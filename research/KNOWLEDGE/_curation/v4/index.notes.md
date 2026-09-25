@@ -1,0 +1,3 @@
+- 2026-09-25 21:40 UTC: start. index.json absent; INDEX.md and CHANGES.md absent -> first build (v4). Reading WATCHLIST/DECISIONS/FACTS/IDEAS.
+- 2026-09-25 21:50 local (~18:50 UTC): INDEX.md written (first build). CHANGES.md absent -> create with v4 baseline section.
+- ~18:55 UTC: CHANGES.md + index.json written. Done.

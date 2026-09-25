@@ -1,0 +1,94 @@
+{
+ "files_written": [
+  "research/KNOWLEDGE/WATCHLIST.md",
+  "research/KNOWLEDGE/_curation/v4/watch.notes.md",
+  "research/KNOWLEDGE/_curation/v4/watch.json"
+ ],
+ "alerts": [
+  {
+   "kind": "forgotten",
+   "what": "W01: ADDENDUM L lab-gate code is missing: L2 evaluable-only precision + n>=6 + Wilson LB>0.265, L3 pooled forkmid gate with lowdet-adverse sensitivity, L4 forkblob arm. CONTEXT 18:20 promises 'both versions are computed and reported', which the current code cannot do.",
+   "evidence": "tools/trainlab.py l.578-591 (_fork_precision divides by all new forks), l.606-617 (per-embryo forkmid gate, '>=1 FP on 44b6', 0.7 um margin); no 'forkblob' in tools/ or tests/; CONTEXT.md 18:20 ADDENDUM L; research/wf_ideas_v4/FINAL_REPORT_v4.md §1.4, §3 items 1/3/4",
+   "suggested_action": "Implement L2/L3/L4 in tools/trainlab.py (keeping the old T9 gates reported alongside) BEFORE the first 'trainlab.py score' on the exp60 output (expected 19:15-20:30 UTC).",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "I10: the P36 read rule says 'ignore if L36 or L35 > 7.5 h', but L35 is in (6.72, 7.73] h and cannot be shown either way.",
+   "evidence": "research/wf_ideas_v3/TASK_LOCAL_SESSION.md §5; CONTEXT.md 16:20 entry",
+   "suggested_action": "Write down which reading applies (e.g. 'unprovable = not ignored' or 'ignored') before P36 scores (7.5 h mark 23:48 UTC 25 Sep).",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "W16/W19: K2 submission at 00:01 UTC 26 Sep (pre-approved). Git has no scheduled-submit mechanism. The poller must stay alive 07:00-08:30 (COMPLETE by 08:01 proves the insertion gate did not fire; R5(a) by 09:31).",
+   "evidence": "CONTEXT.md 17:20/17:45/17:55; grep of tools/ and experiments/workflows/ finds only the text in biohub-research-round.js:20; FINAL_REPORT_v4.md §3 item 5; experiments/lb_poll/poll.log last 18:18:57Z",
+   "suggested_action": "Make sure the local session or PC is awake at 00:01, submit exp58 v1, and log the time. Keep lb_poll.py running overnight.",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "W12/W13: dummy-gate code missing for the f2 twin (node rows == K2, edges differ only at inserted forks) and for K3/K3b (gates 4-5, forkblob checks).",
+   "evidence": "tools/dummy_gates.py l.72-78 (only k2/k1/fd/ff/--insertion); CONTEXT.md 18:20 f2; CONTEXT.md 13:38 'Ворота дамми' 4-5",
+   "suggested_action": "Add --twin and --k3/--k3b checks before the exp58n dummy (after 00:00) and the K3 dummy (~09:00 26 Sep).",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "W05: experiments/ext_corwin-biocel-aux/ and experiments/ext_y3uanm-secondary-ft/ are untracked but cited as evidence in FINAL_REPORT_v4 §2.",
+   "evidence": "git status (?? both folders); research/wf_ideas_v4/FINAL_REPORT_v4.md §2",
+   "suggested_action": "git add and commit both small folders (604 KB, 68 KB); drop __pycache__.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "W02/W03: friend A's Task 0 reply (due 18:00 25 Sep) is missing. His card still tells him to run exp60 shard B on sasyami at a wrong path, although shard B already runs on vitaliineibauer.",
+   "evidence": "research/wf_ideas_v3/TASK_FRIEND_A.md Задача 0/2; CONTEXT.md l.1545, 17:20; research/wf_ideas_v4/final.notes.md 18:08; PROMPT_FRIEND_A.md top block (14:30) not updated, unlike friend C in 14c339e",
+   "suggested_action": "Add a top block to PROMPT_FRIEND_A.md: shard B is not needed, Task 0 is still open, tempfuse Task 3 only if the script appears.",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "W04: the admission table (file, public, latency, R5, riders, F1/F2 candidate) has not been started, although #34/#35 are scored.",
+   "evidence": "research/wf_ideas_v3/TASK_CLOUD_SESSION.md T13; FINAL_REPORT.md §d; no 'admission'/'таблица допуска' in CONTEXT.md",
+   "suggested_action": "Start the table now (exp52, #34, #35, K2 pending) and update it after every score; final version 28 Sep 22:00.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "W06/I03: CONTEXT still calls 'hidden reruns do not consume GPU quota' unverified, but lens evidence (18:56 -> 21:13 used while #35/#36 reruns ran) supports it. The GPU quota reset at 26 Sep 00:00 is itself unconfirmed.",
+   "evidence": "CONTEXT.md l.1744-1746; research/wf_ideas_v4/lens_redteam-plan.json RT1 evidence; FINAL_REPORT_v4.md §2",
+   "suggested_action": "Record it in CONTEXT; check Settings quota at ~00:05 26 Sep before pushing the twin/K3 dummies.",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "I01/I05: K3b (a lower DeepCenter threshold) likely adds one-blob duplicate forks (24% of x138 forks vs 2% of GT) and repair time, while the insertion gate margin is only ~0.14-0.2 h. The one-blob share is 'info only' and the time journal is report-only.",
+   "evidence": "research/wf_ideas_v4/lens_literature.json critique; lens_headroom.json critique; CONTEXT.md 18:20 L2",
+   "suggested_action": "Before any S5 K3b submission, read the one-blob share of the added forks and the per-clip repair delta vs K2.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "deadline",
+   "what": "The morning OK package (~09:00 UTC 26 Sep): f2 (F2 = exp58n + S3 submission), L1/L3, forkblob as R3, K1 fallback, time trigger. Until then the original rules decide.",
+   "evidence": "research/wf_ideas_v4/FINAL_REPORT_v4.md §5; CONTEXT.md 18:20",
+   "suggested_action": "Present the five OK items to the user first thing on 26 Sep. Build the twin dummy beforehand so S3 can go right after the OK.",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "Fixed deadlines: R8 new-mechanism cutoff 27 Sep 12:00; S12 consolidation 28 Sep 12:00 (S13 16:00, final table 22:00); only an emergency repeat after 29 Sep 02:00 (hard edge 10:00); reminder 29 Sep 12:00; finals ticked manually by 29 Sep 20:00; deadline 23:59.",
+   "evidence": "CONTEXT.md 13:38 R8 + slot table + §f; research/wf_ideas_v3/TASK_CLOUD_SESSION.md T13",
+   "suggested_action": "Keep these in the status line; never use Kaggle auto-select; never tick exp56.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "I06/I02: the K2-dummy FN anatomy (82/2,127 GT edges: 50% swaps, 23% one-free-end) and the lab->LB transfer table (1 of 10 transferred; only arms with out-of-sample learned inputs may drive slots) appear only in v4 lens files.",
+   "evidence": "research/wf_ideas_v4/lens_mine-old.json plan_critique (3), (4)",
+   "suggested_action": "Carry the transfer rule into the exp60 (T9) reading, and the FN anatomy into FACTS/CONTEXT for after 29 Sep.",
+   "urgency": "info"
+  }
+ ],
+ "summary": "First WATCHLIST build (25 Sep 18:30 UTC, HEAD 14c339e). Most urgent: the ADDENDUM L lab-gate code (L2 precision fix + Wilson, L3 pooled forkmid, L4 forkblob) is not in tools/trainlab.py, and the exp60 output lands ~19:15-20:30. Also missing: the twin and K3/K3b dummy-gate code, the forkblob patch, the admission table, a commit of the untracked ext_corwin/ext_y3uanm folders, a friend-A card update (his Task 0 reply is overdue), and a fixed reading of the P36 rule (L35 unprovable). Next 24 h: P36 7.5 h mark 23:48, slot/quota reset 00:00, K2 submit 00:01 (no scheduled mechanism in git), poller 07:00-08:30 (08:01 insertion-gate proof), morning OKs ~09:00, L6 decision 10:00, S4-S6. Later: R8 27 Sep 12:00, S12 28 Sep 12:00, emergency only after 29 Sep 02:00, finals 29 Sep 20:00 (reminder 12:00). 14 at-risk insights are quoted with paths."
+}
