@@ -1,1 +1,2 @@
 # h_redteam-past notes (2026-09-25T10:41:40Z)
+- 11:05 read BRIEF, v2 FINAL_REPORT, CONTEXT 10a/11/14 (tail). Candidate challenges: (a) head retrain kill test compared held-out-embryo distance vs public head that SAW both embryos (public head trained on ~10+10 train videos incl. both embryos -> in-sample for the public head); (b) "23 h retrain" from-scratch; fine-tune not considered; (c) many closures on our base (flow relink/readmit) -> x138; (d) 0.97 needs retrain claim.
