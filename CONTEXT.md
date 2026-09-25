@@ -1827,6 +1827,13 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
 - 2026-09-25 17:45 UTC: FF dummy (exp58ff, DIVINS_FORCE_FAIL=1) 2/2 PASS: 'DIVINS FAILED' on all 4 clips and the CSV is
   byte-identical to exp56 (d52a5da2...) -> the insertion's fail-soft path restores the input graph exactly. All
   dummy gates for K2 are green (18/18).
+- 2026-09-25 17:55 UTC, NIGHT PLAN (user asleep; standing OK given in chat: "запускай каждые 2-3 часа ресерчеров ...
+  заранее даю добро на их действия"): research rounds every ~2.5 h via experiments/workflows/biohub-research-round.js
+  (args round/since/focus; browser delta of the competition page, plan check, new hypotheses on a rotating focus,
+  re-check of old closed ideas, one skeptic per idea, REPORT.md), all logged in research/wf_ideas_v4/round<N>/. Round 1 =
+  the running v4 workflow (FINAL_REPORT_v4.md). Round 2 at ~19:45 UTC, then ~22:15, ~00:45, ~03:15, ~05:45. Submissions
+  at night stay within existing approvals: K2 at 00:01 UTC (18/18 dummy gates green); riders K3/K3b/K4/N1 only after
+  their gates pass (exp60 lab running now).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
