@@ -42,6 +42,8 @@ DEFAULT_COLUMNS = ["ref", "fileName", "date", "description", "status", "publicSc
 RETRY_SLACK_S = 210            # lb_poll.py: one failed attempt = <= 180 s timeout + 30 s sleep
 GAP_WARN_S = 15 * 60           # the poller runs every ~10 min
 K2_TOKEN = "exp58"             # K2 = exp58 (FINAL_REPORT v3 §e build names)
+K2_ALT_TOKENS = ("exp58n",)    # K2 without insertion (branch C / R2 'exp58n_...'): used only when no exp58 is in the log
+UNKNOWN_WATCH_AFTER = dt.datetime(2026, 9, 25, 18, 0, tzinfo=dt.timezone.utc)   # K-build era: unknown family is loud
 K1_NOTE = "K1 = exp58t (vitaliineibauer/biohub-exp58t-x138-safe v1, already gated: sha256 == exp57b dummy)"
 DIVINS_GATE_H = 8.0            # DIVINS_DEADLINE_S = 28800
 A5_L_TRIGGER_H = 8.0           # A5: L(K2) > 8.0 h
@@ -67,7 +69,8 @@ EXP_RULES = [
     (r"exp(58|59|61|62)[a-z]*", "safetail"),
     (r"exp5[12]", "notimer"),
 ]
-EXP_TOKEN = re.compile(r"\b(exp\d+[a-z]*)\b", re.IGNORECASE)
+# '_' and '-' are separators: build names are exp58_x138_safe_lowref / exp58n_x138_safe_lowref / biohub-exp58t-x138-safe
+EXP_TOKEN = re.compile(r"(?<![A-Za-z0-9])(exp\d+[a-z]*)(?![a-z0-9])", re.IGNORECASE)
 HEADER = re.compile(r"^=== (\d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ)(.*)$")
 RESULT_STATES = ("COMPLETE", "ERROR")
 
@@ -252,6 +255,8 @@ def pick_k2(entries: list[dict], k2_ref: str | None) -> dict | None:
     if k2_ref:
         return next((e for e in entries if e["ref"] == k2_ref), None)
     cands = [e for e in entries if e["exp"] == K2_TOKEN]
+    if not cands:
+        cands = [e for e in entries if e["exp"] in K2_ALT_TOKENS]
     return max(cands, key=lambda e: e["submitted"] or e["first_seen"]) if cands else None
 
 
@@ -263,6 +268,13 @@ def a5_triggers(entries: list[dict], polls: list[Poll], k2_ref: str | None, fore
         out.append(dict(id="poller", state="WATCH",
                         text=f"last poll {fmt_ts(polls[-1].ts)} is {(now - polls[-1].ts).total_seconds() / 60:.0f} "
                              f"min before {fmt_ts(now)}: is experiments/lb_poll/lb_poll.py still running?"))
+    for e in entries:
+        if e["family"] == "unknown" and (e["submitted"] or e["first_seen"]) >= UNKNOWN_WATCH_AFTER:
+            out.append(dict(id="family", state="WATCH",
+                            text=f"ref {e['ref']} (submitted {fmt_ts(e['submitted'])}, token {e['exp'] or '-'}) has "
+                                 f"family unknown: R5(a) and the insertion gate are NOT evaluated. If it is a K build "
+                                 f"pass --family {e['ref']}=FAMILY (and --k2 {e['ref']} if it is K2). "
+                                 f"Description: {e['description'][:100]}"))
     k2 = pick_k2(entries, k2_ref)
     if k2 is None:
         out.append(dict(id="A5-L(K2)", state="WATCH", text=f"K2 ({K2_TOKEN}) not in the poll log yet."))
@@ -419,7 +431,7 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--family", action="append", default=[], metavar="REF_OR_EXP=FAMILY",
                     help=f"override the build family; families: {', '.join(FAMILIES)}")
     ap.add_argument("--k2", default=None, help="K2 submission ref (default: newest submission whose exp token is "
-                                               f"'{K2_TOKEN}')")
+                                               f"'{K2_TOKEN}', else '{'/'.join(K2_ALT_TOKENS)}')")
     ap.add_argument("--forecast-h", type=float, default=None, help="A5 forecast F (h) from the dummy ledger")
     ap.add_argument("--now", default=None, help="ledger time, e.g. 2026-09-26T08:05:00Z (default: current UTC time)")
     ap.add_argument("--print", action="store_true", help="also print the ledger to stdout")

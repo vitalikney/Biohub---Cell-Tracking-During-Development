@@ -194,6 +194,53 @@ def test_families_and_overrides():
     assert rl.exp_token('"P36 exp57 v1 DIAGNOSTIC (x138+leafprune0.3)"') == "exp57"
 
 
+def test_exp_token_underscore_and_dash_build_names():
+    assert rl.exp_token("probe 37: exp58_x138_safe_lowref = K2") == "exp58"
+    assert rl.exp_token("probe 37: exp58n_x138_safe_lowref = K2 no insertion") == "exp58n"
+    assert rl.exp_token("vitaliineibauer/biohub-exp58t-x138-safe v1") == "exp58t"
+    assert rl.exp_token("EXP58_x138") == "exp58"
+    assert rl.exp_token("myexp58 exp58abc1 x") == ""          # embedded / digit-tailed tokens are not builds
+    assert rl.family_of("1", rl.exp_token("exp58_x138_safe_lowref"), {}) == "safetail"
+    assert rl.family_of("1", rl.exp_token("exp58n_x138_safe_lowref"), {}) == "safetail_noins"
+
+
+K2U = ("56560003", "2026-09-26 00:01:30.100000", "probe 37: exp58_x138_safe_lowref = K2 x138 + safetail + lowrefine")
+K2N = ("56560004", "2026-09-26 00:55:00.000000", "probe 37: exp58n_x138_safe_lowref = K2 (no insertion)")
+
+
+def test_k2_underscore_build_name_fires():
+    # the review scenario: PENDING until 08:35Z, COMPLETE at 09:05Z -> L in (8.55, 9.06] -> FIRED, not WATCH
+    text = (block("2026-09-26T08:35:00Z", [row(K2U, "PENDING")])
+            + block("2026-09-26T09:05:00Z", [row(K2U, "COMPLETE", "0.954")]))
+    rep, e = ledger(text)
+    k2 = e["56560003"]
+    assert k2["exp"] == "exp58" and k2["family"] == "safetail" and k2["r5"][0] == "ADMIT"
+    t = trig(rep, "A5-L(K2)")[0]
+    assert t["state"] == "FIRED" and "56560003" in t["text"] and "BOTH deadlines to 32400/37800" in t["text"]
+    assert not trig(rep, "family")
+
+
+def test_k2_falls_back_to_exp58n_and_prefers_exp58():
+    text = block("2026-09-26T09:00:00Z", [row(K2N, "PENDING")])
+    rep, e = ledger(text)
+    assert e["56560004"]["family"] == "safetail_noins"
+    t = trig(rep, "A5-L(K2)")[0]
+    assert t["state"] == "FIRED" and "(exp58n)" in t["text"]
+    rep, _ = ledger(block("2026-09-26T09:00:00Z", [row(K2N, "PENDING"), row(K2U, "PENDING")]))
+    assert "56560003" in trig(rep, "A5-L(K2)")[0]["text"]
+
+
+def test_unknown_family_after_1800z_is_loud():
+    unk = ("56560005", "2026-09-25 23:00:00.000000", "probe 36: K build without a token")
+    old = ("56560006", "2026-09-25 07:00:00.000000", "probe 33: exp53 = something")
+    rep, e = ledger(block("2026-09-26T01:00:00Z", [row(unk, "PENDING"), row(old, "COMPLETE", "0.95")]))
+    assert e["56560005"]["family"] == "unknown" and e["56560006"]["family"] == "unknown"
+    w = trig(rep, "family")
+    assert len(w) == 1 and w[0]["state"] == "WATCH" and "56560005" in w[0]["text"] and "--family 56560005=" in w[0]["text"]
+    rep, _ = ledger(block("2026-09-26T01:00:00Z", [row(unk, "PENDING")]), overrides={"56560005": "safetail"})
+    assert not trig(rep, "family")
+
+
 def test_forecast_trigger():
     rep, _ = ledger(LOG_2509, forecast_h=7.95)
     assert trig(rep, "A5-F")[0]["state"] == "FIRED"
