@@ -1957,6 +1957,13 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   fork edges = exactly #35's 12 forks / 5 steals); LOWDET and 'LOWREFINE ... refined R of N' lines identical to K2; no
   DIVINS lines; no DEADLINE:/REPAIR FAILED/LOWREFINE FAILED; kernel end 1,038 s vs K2 1,512 s, repair 219 s vs 509 s.
   Its SUBMIT still needs the user's OK on AMENDMENT f2 (morning).
+- 2026-09-25 22:06 UTC, USER OK on AMENDMENT f2 (chat: "мне нравится твоя идея с двойником", after the comparison twin exp58n vs
+  exp52): F2 = exp58n (x138 + safetail + lowrefine = K2 without the DaughterNet insertion) under the f2 conditions
+  (scored without error, R5-admissible, public >= 0.953; otherwise exp52 per §f). Its submission is approved; twin dummy
+  gates already PASS (entry 20:55 UTC). Plan: submit K2 and the twin at ~00:01 UTC 26 Sep (5 slots that day), both with
+  the first exp token naming the build (exp58 / exp58n) so tools/runtime_ledger.py assigns the safetail families.
+  User's stated principle: the two finals must not be the same file; they hedge different risks (F2 hedges the least
+  proven component of F1, the insertion). L1/L2 OKs still pending but moot (K3b fails under every reading).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
