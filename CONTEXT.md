@@ -1511,5 +1511,10 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   leafprune) runs, but leaf prune on x138 conflicts with READMIT (readmitted peaks are relinked with edge_prob 0.0, so a
   readmitted track end is a leaf < 0.3 and gets pruned) -> P35 will be exp57b = x138 + DaughterNet insertion ONLY
   (vitaliineibauer/biohub-exp57b-x138-divins-only; one change vs exp56). exp57 v1 output kept only as a diagnostic.
+- 2026-09-25 08:40 UTC, exp57 DIAGNOSTIC (x138 + leaf prune + insertion; not submitted): runs clean (no REPAIR FAILED,
+  repair_fallback 0), pre-tail identical to exp56 (121,777 raw nodes, 1,337 readmitted). Leaf prune removes 513 leaves,
+  >= 479 of them READMITTED nodes (36% of readmit) - confirms prune undoes readmit on x138, so exp57b (insertion only)
+  is the right P35. Insertion on x138: 12 forks added (5 steals) over 4 test clips, forks 62 -> 74 (0 eligible on
+  44b6_0b24845f). Compare script: scratchpad/cmp57.py (out_exp56 downloaded).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
