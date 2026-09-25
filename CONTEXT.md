@@ -1744,6 +1744,56 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   "Notebook Running" (hidden rerun still in progress ~6 h after submission). (3) GPU QUOTA: Settings shows "Kaggle GPU
   18:56 / 30 hrs" (11 h 04 m left); reset weekly, per a 2020 staff post Saturday 00:00 UTC (= 26 Sep 00:00, unconfirmed
   in current docs). Hidden-test reruns reportedly do NOT count against the quota (community answers only, unverified).
+- 2026-09-25 14:29 UTC, T2/T3/T5/T6 DONE AND MERGED INTO main (local session; workflow wf_0b307a70-4af: 4 implementers in isolated
+  worktrees + 4 independent reviewers, all "ok_to_merge", minor remarks only). Full suite: `python -m pytest tests` = 69
+  passed; K2 and K3 render and all cells compile after the merge.
+  - T2 --patch lowrefine (x138 only): pool rows with score >= 0.965 get _v1284_refine coords (same features as the main
+    peaks), 0.5-0.965 stay on the grid, int16 cast removed (float32), BIOHUB_LOWREFINE_ENABLE (0 = byte-identical
+    dump), fail-soft 'LOWREFINE FAILED', log 'LOWREFINE <clip>: refined R of N lowdet peaks'. tests/test_lowrefine.py.
+  - T6 --patch forkmid (x138 only): last graph edit; safe-division forks (not div_inserted) removed when |P-(c1+c2)/2|
+    >= 4.5 um; drops the ILP-side edge if edge_prob == 0.0 else the added edge; nodes untouched; FORKMID_ENABLE default 0;
+    fail-soft 'FORKMID FAILED'; counters forkmid_*. tests/test_forkmid.py.
+  - T3 tools/forkmid_dose.py (+test). Dummy dose: exp56 62 forks, 2 >= 4.5 um (3.2%; both in 6bba_05db0fb1); exp57b 74
+    forks, 5 >= 4.5 um (the 62 base forks give the same 2; inserted forks 3/12 but C04 excludes them). Verdict per the
+    pre-registered T3 rule: neither a no-op (0%) nor a stop (> 15%) -> C04 continues to the exp60 audit.
+  - T5 exp60 lab: --patch trainlab (--lab only; DIVINS_DUMP=1 now needs --lab on every base), tools/trainlab.py (split,
+    CPU tail-arm replay through the notebook's own code, official scoring, gates), tools/trainlab_io.py. Split written
+    BEFORE any run: experiments/exp60_trainlab/split.json = 56 clips (44b6 17 = one per leak group, 11 GT divisions;
+    6bba 39, 88 divisions; 20 probable x138 head stems + 4 dummy twins excluded), SELECTION/CONFIRMATION 28/28, shards
+    A/B 28/28. Kernels built (NOT pushed): experiments/exp60_trainlab/kernel_a, kernel_b, kernel_b_sasyami. Push after the
+    GPU quota reset (26.09 00:00 UTC): `python -m kaggle kernels push -p experiments/exp60_trainlab/kernel_a` (+ kernel_b).
+    ~2 h per shard. Known minor gaps (reviewer): DeepCenter score recorder and the TRAINLAB summary cell are not
+    fail-soft (a recorder exception sends that clip to the REPAIR FAILED fallback in the LAB only); 7 of 17 44b6 picks
+    are leak-siblings of excluded stems.
+  BUILD COMMANDS FOR 26.09 (T4; run from the repo root, never --push from the builder):
+  # run from the repo root after merging this branch; knob names without BIOHUB_; never --push from here
+  K="--set DIVINS_ENABLE=1 --set DIVINS_STEAL=1 --set DIVINS_CAP=4 --set DIVINS_FRAME_CAP=1 --set DIVINS_ALPHA=1 --set DIVINS_THRESH=0.4 --set DIVINS_DUMP=0"
+
+  ## Branch A (insertion per R2; #35 config). K1 = K2 twin with LOWREFINE_ENABLE=0 (notebooks differ in ONE cell-0 line)
+  python tools/build_probe_kernel.py exp58_x138_safe_lowref --base x138 --patch divinsert --patch safetail --patch lowrefine $K --set REPAIR_DEADLINE_S=34200 --set DIVINS_DEADLINE_S=28800 --set LOWREFINE_ENABLE=1 --note "K2: x138 + safetail + lowrefine + divinsert (#35 config)"
+  python tools/build_probe_kernel.py exp58t_x138_safe --base x138 --patch divinsert --patch safetail --patch lowrefine $K --set REPAIR_DEADLINE_S=34200 --set DIVINS_DEADLINE_S=28800 --set LOWREFINE_ENABLE=0 --note "K1: K2 twin, lowrefine off"
+  python tools/build_probe_kernel.py exp58fd_x138_safe --base x138 --patch divinsert --patch safetail --patch lowrefine --lab $K --set REPAIR_DEADLINE_S=1 --set DIVINS_DEADLINE_S=28800 --set LOWREFINE_ENABLE=0 --note "FD dummy only"
+  python tools/build_probe_kernel.py exp58ff_x138_safe --base x138 --patch divinsert --patch safetail --patch lowrefine --lab $K --set REPAIR_DEADLINE_S=34200 --set DIVINS_DEADLINE_S=28800 --set LOWREFINE_ENABLE=0 --set DIVINS_FORCE_FAIL=1 --note "FF dummy only"
+  # expected probe.json change (A-K2): DIVINS_ENABLE 1, STEAL 1, CAP 4, FRAME_CAP 1, ALPHA 1, THRESH 0.4, DUMP 0, REPAIR_DEADLINE_S 34200, DIVINS_DEADLINE_S 28800, LOWREFINE_ENABLE 1, DEGRADE_KEEP_DIV 1, PATCHES divinsert+lowrefine+safetail; 14 code cells; datasets = x138's 4 + vitaliineibauer/biohub-ft-weights. K1 same with LOWREFINE_ENABLE 0; FD REPAIR_DEADLINE_S 1 + "lab"; FF + DIVINS_FORCE_FAIL 1 + "lab".
+
+  ## No insertion (branch B; C: S2; E: the 00:55 K2; D: S3 when R2 says no insertion). Drop --patch divinsert and all DIVINS_* (DIVINS_DEADLINE_S needs divinsert). FF is not needed.
+  python tools/build_probe_kernel.py exp58n_x138_safe_lowref --base x138 --patch safetail --patch lowrefine --set REPAIR_DEADLINE_S=34200 --set LOWREFINE_ENABLE=1 --note "K2 (no insertion): x138 + safetail + lowrefine"
+  python tools/build_probe_kernel.py exp58nt_x138_safe --base x138 --patch safetail --patch lowrefine --set REPAIR_DEADLINE_S=34200 --set LOWREFINE_ENABLE=0 --note "K1 (no insertion): twin, lowrefine off"
+  python tools/build_probe_kernel.py exp58nfd_x138_safe --base x138 --patch safetail --patch lowrefine --lab --set REPAIR_DEADLINE_S=1 --set LOWREFINE_ENABLE=0 --note "FD (no insertion) dummy only"
+  # expected change: REPAIR_DEADLINE_S 34200, LOWREFINE_ENABLE 1|0, DEGRADE_KEEP_DIV 1, PATCHES lowrefine+safetail; 12 code cells, only cells 0/4/5 differ from exp56; datasets = x138's 4.
+
+  ## Branch C (b <= a-0.002 or #35 error): S2 = exp58n_x138_safe_lowref; S3 (only if L35 > 7.5 h or #35 error) = exp58t_x138_safe (branch A's K1: x138 + gated insertion + C01, lowrefine off). If L35 <= 7.5 h: same as B, S3 held.
+  ## Branch D (a <= 0.952): S2 = K1' = x138 + C01 only (no insertion, no lowrefine patch):
+  python tools/build_probe_kernel.py exp58p_x138_c01 --base x138 --patch safetail --set REPAIR_DEADLINE_S=34200 --note "K1': x138 + C01 only (reproduction check)"
+  #   change: REPAIR_DEADLINE_S 34200, DEGRADE_KEEP_DIV 1, PATCHES safetail; only cells 0 and 5 differ from exp56. S3 = K2 by R2 (exp58_... if b >= a else exp58n_...).
+  ## Branch E (#34 unscored at 20:30): build both sets; 00:55 submit exp58n_x138_safe_lowref (with OK), insertion decided when #35 appears.
+  K3 = K2 + forkmid: add `--patch forkmid --set FORKMID_ENABLE=1` to the K2 line (name exp59_x138_k3).
+  K2 DUMMY GATE CORRECTION (reviewer of T2; FINAL_REPORT §e gate 2 read literally would fail a correct K2): keep the
+  hard gates 'Low-detection dump applied'; LOWDET N == exp56 per clip; 'LOWREFINE <clip>: refined R of N' with N ==
+  LOWDET N, R > 0, failed frames 0; no 'LOWREFINE FAILED' / 'LOW-DETECTION DUMP SKIPPED' / 'REPAIR FAILED'; raw nodes
+  121,777; readmit and gapfill counts within +-10%; final nodes within +-0.3% per clip; K1 sha256 check. The "only
+  readmit/gapfill nodes and their edges differ from K1" condition becomes a SOFT check (relink/linefit knock-on on main
+  nodes is expected).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
