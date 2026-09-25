@@ -9,3 +9,4 @@
 - Node-cost algebra: per readmit benefit p/N vs cost 0.1/N (f cancels) -> break-even TP-yield 10%; node cost only binding if readmits large (1-2.5% nodes est. from open-end rate ~5% x 0.3-0.5 candidate hit).
 - Net estimate: gross +0.0005..+0.0011 (30-50% of 424 already/not reachable, simview hit 30-50%) - dup FP 0.0005..0.001 - nodes 0.0005..0.0015 -> central ~0, range -0.002..+0.001. Below +0.002 gate and LB noise 0.003 -> REFUTED (value lens).
 - Repair: exclusion >= 4um for external candidates, cap <=0.5% nodes, 2-frame simview support, 6bba-only lab judge.
+- final JSON written (refuted=true)
