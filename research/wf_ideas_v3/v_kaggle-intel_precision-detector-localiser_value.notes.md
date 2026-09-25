@@ -6,3 +6,4 @@
 - Precision model is trained on the same two embryos (D1 split, within-embryo val) -> its D1-val gate is the leak-OOF type test that looked -19% while transfer was +12% worse. Gate cannot detect the failure mode.
 - 11:45 WebSearch "georgexue666 biohub precision pool2" -> nothing relevant (no GitHub mirror found). Dataset page is kaggle.com (blocked): model code presence unverified.
 - 11:50 arithmetic: J_lab 0.8999, 7.37e-6/FN; a_never full recovery +0.0141 lab; 20-25% -> +0.0028-0.0035 lab -> x0.5 transfer +0.0014-0.0018 public before node cost. V1284 slope: +0.007 LB per 9.5% OOF distance cut = ~0.00074 per 1% distance. Head-retrain precedent on unseen embryo: +12% worse ... +0.2% -> -0.009 .. 0 by the same slope.
+- 11:55 final JSON written: refuted=true (transfer: embryo-convention precedent; ceiling pool mis-cited).

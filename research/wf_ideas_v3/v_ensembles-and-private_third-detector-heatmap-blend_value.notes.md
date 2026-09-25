@@ -6,3 +6,8 @@
 - RESULTS.md l.37,39,42,46: ALL FOUR detector-blend perturbations on LB were negative: sec weight 0.5 -0.002; sec:=exp08 -0.016; sec:=friend A scratch -0.025; sec:=exp23 (ft seed314159) -0.007. Zero positives.
 - CONTEXT l.355: +0.046 = public pipeline (4 heuristics incl. dual-seed blend) vs our clean pipeline; dual-seed share is NOT isolated -> idea's evidence misattributed.
 - Budget-guard value verdict (v_..._x138-budget-aware-deadline_value.json): refuted as a standalone, private ~+0.002 insurance; dependency weak.
+- WebSearch "leonixis biohub-v5-candidates v3res": nothing indexed (kaggle blocked; not retried). Config/licence stays a browser_todo.
+- Arithmetic (lab exp39 TP122151/FP6846/FN6732, T=135729): 1 FN->TP = +7.4e-6 J. Recovering 2/5/10% of (never-det ~2087 + swap 2700) = +0.0007/+0.0018/+0.0035.
+- Peak-jitter sd, weights 0.2/0.8 -> 0.2/0.6/0.2: sd ratio 0.926 (rho 0.5), 0.959 (0.7), 0.981 (0.85). Warm-started leonixis => rho high => 2-4% jitter cut; the offset is mostly bias (embryo z offset 44b6 +0.18 / 6bba +0.82 um) + under-segmentation, which averaging cannot fix. Head analogy (~10% offset cut = +0.007 on x138) -> +0.0005..0.0015 gross.
+- Verdict: gross ceiling ~+0.001..+0.003, minus calibration/node-shift cost (4/4 LB blend perturbations negative, smallest -0.002) -> net E ~ -0.001..+0.001 public. REFUTED (below +0.002, not measurable vs 0.003 noise).
+- 2026-09-25T11:17:31Z final JSON written.
