@@ -2,3 +2,11 @@
 - 2026-09-25T11:15:09Z started; read BRIEF.md, browser_intel.md. No existing schedule json -> fresh.
 - 11:25 kaggle.com blocked (curl 000, connect_rejected) - tried once. github.com/georgexue666 = 404 (no public GH account). WebSearch: no repo for the pool-2 detector. So model code availability UNKNOWN; only source is research/browser_research_2026-09-24_pass2.md l.76 (README summary: pool=2, sigma 0.8, base ch 24, 128/32 D1.json, recall@4um top-330 0.7348, 46 MB, CC0 per l.238).
 - CONTEXT.md 10:20 resume block: friend A has NO x138 lab cache yet (told to wait for #34, then build it); no commits since 24 Sep 04:12 MSK. x138 runtime guard at 27,000 s (DIFF.md l.97).
+- 11:40 experiments/l2_daughternet/replay/replay.py: 0 hits for readmit/flow_predictor/gapfill -> NO x138-tail replay exists; the idea's "replay on friend A's x138 lab cache" needs (i) a cache that does not exist (friend A waits for #34, ~17-20 UTC 25 Sep; 199 videos x138 predict) and (ii) a new replay port of the x138 tail. Both unscheduled.
+- tools/build_probe_kernel.py --base x138 supports only divinsert/leafprune -> new patch type needed (2-4 h agent).
+- V1284 captures on 199 exist as Kaggle kernel outputs vitaliineibauer/biohub-chcap-* (CONTEXT 24 Sep 23:00, 7.2 GPU-h) -> a Kaggle-only gate kernel can attach them; friend A not required for gate (a).
+- Kaggle vitalii GPU ~0 until 26 Sep 00:00; CPU kernels free -> frame-subsampled CPU gate possible tonight.
+- 44b6 clips = overlapping crops of ONE recording -> D1-val 44b6 movies are NOT out-of-sample for the precision model (overlap with its 44b6 train clips); gate on 44b6 biased in its favour. D1 = 128+32 = 160 != 199 (39 movies unaccounted; unknown).
+- CC0: stated in pass2 l.238 but browser_todo still asks "license (CC0?)" -> unverified.
+- Estimate: as described (friend A + x138 cache + replay + variant b) P(scored by 29 Sep 10:00) ~0.15; repaired Kaggle-only variant (a) ~0.35 conditional on gate pass; <0.7 either way -> refuted under schedule lens.
+- 2026-09-25T11:18:09Z final JSON written (refuted=true, feasible=false).

@@ -1,0 +1,1 @@
+- 2026-09-25 start: value/transfer skeptic for simview-readmit-pool; read BRIEF

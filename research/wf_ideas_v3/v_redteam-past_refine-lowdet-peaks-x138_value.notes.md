@@ -1,1 +1,12 @@
 # notes 2026-09-25T11:16:25Z value skeptic refine-lowdet-peaks-x138
+- 11:10Z read BRIEF.md. No prior json for this task.
+- x138 cell 4 confirmed: 'lowdet peaks' dumps _low (thr 0.5 via BIOHUB_LOWDET_THRESHOLD) unrefined; 'lowdet write' casts to int16 after *downsample. V1284 refine is applied only to arr (main peaks) on the coord_offset anchor. The score _lsc is gathered at integer _low indices, so it must be computed BEFORE refining.
+- cell 5: load_low_detections -> build_low_detection_pool drops score<0.5 and peaks within GAPFILL_EXCLUDE_UM=2.0 of a node. readmit: free peak score>=0.965 within READMIT_RADIUS 4 um of an open end/start (t+-1). gap filler: MAX_GAP 3, PEAK_RADIUS 3.5, STEP 5.0, MAX_ADDED_FRAC 0.03 (DIFF.md l.70-71).
+- Linefit smoothing is ON in x138 (weight 0.8, window 2): every node with >=2 chain neighbours is pulled 80% onto a local line fit, which already dilutes the grid noise of readmitted/gap-filled nodes that end up inside tracks.
+- CONTEXT 08:15Z: readmitted peaks are relinked with edge_prob 0.0. CONTEXT 08:40Z: 1,337 readmitted / 121,777 raw nodes (1.1%) on 4 dummy clips. Gap-fill count not in the repo (only the 3% cap).
+- KEY transfer datum (CONTEXT 07:50Z): float output coords on ALL nodes (lab +0.0017, CI90 +0.0008..+0.0025, r1_research_float-output-coords) = TIE on public (#32 0.950 vs #31 0.950, #33 0.948 vs 0.948). Removing grid noise on ~2-4% of nodes is 25-50x less coverage -> invisible.
+- v2 gate-aware-refine-head.json: head moves peaks mean 0.74 um, max 1.61, only 10.5% move >= 1 um -> the head only removes quantisation.
+- Head +0.007 on x138 is a single LB difference (0.946 -> 0.953) with LB noise 0.003; on our base it was +0.002.
+- Ceiling arithmetic: edges touching readmitted nodes ~2.2% of edges; pro rata of +0.007 = 0.00015; x3 break-point weight = 0.0005; gap-filled <= 3% (likely < 1%) similar. Output channel (matching at 7 um) ~0.0017*0.03*0.5 ~ 3e-5. Decision channel (4 um readmit, 2 um exclusion, 3.5 um peak radius flips from 0.74 um shifts) is symmetric-ish; guess net +0.0001..+0.0004. Node multiplier: dN ~ tens of 121k -> <1e-5.
+- Verdict: REFUTED under the value lens (realistic public +0.0002, far below +0.002 and below LB noise 0.003). Transfer is fine (no confidence reliance), but there is nothing to transfer.
+- 2026-09-25T11:18:48Z final JSON written (refuted=true).

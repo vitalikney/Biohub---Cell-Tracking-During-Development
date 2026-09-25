@@ -1,1 +1,10 @@
 - 2026-09-25T11:16:54Z start: value/transfer skeptic for image-z-convention; read BRIEF
+- 2026-09-25T11:18:06Z read out_full_P/report.txt (bias = gt - pred; 6bba none +0.824 public +0.447; 44b6 none +0.177 public +0.131; 6bba-head on 44b6 -0.536), polyphase notes dose-response (z jitter var 0.22 um^2: -0.0009 44b6 / -0.0028 6bba, 1 seed, pre-linefit recall)
+- toy sim (scratchpad zsim2.py, jittered lattice 7-9 um, sd z1.55/xy1.0, nearest-own match): const z bias 0.45 um costs ~ the same as iid z jitter var 0.22 (second order: bias^2 ~ var); toy overstates lab dose ~2x (toy jitter -0.005 vs lab -0.0028 6bba).
+- KEY evidence against ceiling: research/wf_ideas_v2/r1_hyp_detection.notes.md 'Bias oracle': subtracting per-video (GT-derived!) mean offset on 133k GT nodes, raw peaks: <7um 0.9843 -> 0.9831-0.9835 (NO gain). Per-video perfect shift = the idea's ceiling, measured ~0.
+- r1_hyp_learned-rescoring.notes.md l.9: zs70.log official metric, 70 videos raw base: float 0.903212; float+dz0.5vox +0.0035 vs base i.e. +0.0011 over float, 6bba only, 44b6 flat/neg. That is a near-perfect in-sample embryo-constant correction of a 0.82 um bias. Scale to x138 residual 0.45: (0.45/0.82)^2 ~0.3 -> ~+0.0003..0.0005 on 6bba-like.
+- Canh constant offset -0.0031 LB => public embryo most likely NOT carrying a 6bba-size z bias (44b6-like) => public ceiling ~0.
+- Estimator noise: per-video raw dz q10/50/90 -1.34/-0.63/+0.16 (sd ~0.6); at gate Spearman 0.5 residual error sd ~0.5 um > residual bias 0.45 -> net harm unless rho >~0.8. 2 embryos = 2 points for the embryo-level intercept; gate (2)/(3) +-0.25 um cannot validate a 3rd embryo.
+- LB readability claim false: <=0.0005 << LB noise 0.003.
+- VERDICT: refuted (value+transfer).
+- 2026-09-25T11:19:58Z final JSON written

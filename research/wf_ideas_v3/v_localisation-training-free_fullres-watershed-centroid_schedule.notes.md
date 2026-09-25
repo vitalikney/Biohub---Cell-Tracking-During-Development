@@ -1,2 +1,11 @@
 # schedule skeptic notes: fullres-watershed-centroid (2026-09-25T11:14:56Z)
 - read BRIEF.md; no prior json existed
+- 2026-09-25 ~11:30Z read sibling v_*_schedule.json for shared facts: x138 hidden run ~5.5-7.5 h, REPAIR_DEADLINE_S 27000 guard, dummy run ~40 min T4, build_probe_kernel --base x138 supports only divinsert|leafprune.
+- experiments/coordhead_retrain/out_full_P/report.txt: capture 199 videos, 125,700 pairs <=4um; leak5 per-fold none ~1.63-1.73 / public ~1.45-1.60 / new ~1.21-1.28 um -> cited 1.686/1.525/1.238 are consistent.
+- experiments/l2_daughternet/coords_exp39.parquet IS IN THE REPO (11 MB): 1,012,255 final exp39 nodes, 199 videos, float full-res voxel coords post-linefit; median 3,691 nodes/video, max 31,830. No edges (edges come from replay.py on the user's laptop, friend A's ckpt cache).
+- exp56 cell 5: read_test_frame (blosc2 chunk per frame, full res), refine_synthetic_midpoint, writer rounds z/y/x to int (l.~2150). REPAIR guard check is inside the per-dataset writer loop -> any per-movie CPU added there pushes later movies toward the 27,000 s degrade.
+- tools/build_probe_kernel.py l.13-14: x138 base supports only divinsert/leafprune; floatout (l.56-62) is exp39-base only and 'safe' mode encodes only positive fractions (w = r + clip(v-r,0,0.499)) -> negative sub-voxel shifts are lost.
+- container benchmark (scratchpad/bench_ws.py): crop +-3 z / +-10 yx, gaussian 0.8um + otsu + skimage watershed with neighbour markers = 0.76 ms/node; blosc-like frame decompress ~0.03 s. Hidden test ~100-130 videos (CONTEXT.md l.14) x 5k-30k nodes -> ~8-45 min single-thread. Runtime is NOT a blocker if it skips after an own deadline.
+- synthetic sanity (bench2.py, ideal isotropic 2um blobs, 1um/axis marker noise): mean err 1.58-1.64 -> w=0.4 blend 1.08/1.27/1.32 um at 100/300/600 nodes/frame. Implementable; real-data value unknown (not my lens).
+- schedule conclusion: logistics repairable without friend A (Kaggle CPU kernel on train zarr + parquet dataset; laptop replay with coord override). Binding constraint = gate (idea's own P~0.25) and LB noise 0.003 >> expected +0..0.001 (a scored probe cannot be read). REFUTED under the 0.7 bar.
+- 2026-09-25T11:19:05Z final JSON written (refuted=true, feasible=false)
