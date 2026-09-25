@@ -1545,5 +1545,22 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   block). No commits from him since 24 Sep 04:12 MSK. GPU quota: Kaggle resets 26 Sep 00:00 UTC.
   Paused: tools/kaggle_lab.py (Kaggle CPU lab port, unfinished). Idea needing the user's rules decision: overlap
   consensus across overlapping test crops (transductive; recommended NOT to do).
+- 2026-09-25 13:20 UTC, IDEAS WORKFLOW v3 DONE (user target 0.99 by 29 Sep; cloud session, 11 lenses x 4 ideas, 2
+  skeptics each = 44 ideas / 88 verdicts, + browser intel from a local Chrome session, + merge / completeness critic /
+  two independent plans / final judge; ~120 agents). Everything in research/wf_ideas_v3/: BRIEF.md, browser_intel.md
+  (LB 11:00 UTC: top 0.975, 6 teams >= 0.970, 39 >= 0.960, 401 >= 0.953, 241 exactly 0.953 = x138 copies, we ~456;
+  no public notebook > 0.953), h_*.json / v_*.json, s_*.json, FINAL_REPORT.md (Russian), task cards TASK_LOCAL_SESSION /
+  TASK_CLOUD_SESSION / TASK_FRIEND_A / TASK_FRIEND_C / TASK_COLAB.md; scripts experiments/workflows/biohub-hunt-v3.js
+  and biohub-plan-v3.js. VERDICT: 0.99 and 0.97 are out of reach by 29 Sep (every retraining path refuted for the
+  window, 10/10 skeptics); expected public ~0.954 (P>=0.955 ~0.25, P>=0.96 ~0.02). Main new risk: RUNTIME on the hidden
+  set (~199 clips per the Data tab): x138 GPU phase ~7.4 h at dummy speed vs REPAIR_DEADLINE_S 27000 s, after which
+  relink/readmit/gaps/safe divisions/linefit are switched off for later (alphabetical) clips; exp57b's DaughterNet
+  insertion is NOT gated by the deadline and doubles repair time. Plan backbone: K2 = exp58 = x138 + safetail (deadline
+  34200 s, insertion gated + fail-soft, DIVINS_DUMP=0) + lowrefine (head coords for readmitted peaks) + insertion per
+  rule R2; then forkmid (K3) and a DeepCenter threshold chosen on 6bba (K3b; DeepCenter trained on 44b6 only). F1 must
+  not be byte-identical to x138 (241-team tie block spans the medal cutoffs); F2 = exp52 by default. PROPOSED
+  PRE-REGISTRATION (branches A-E on #34/#35 score + latency, rules R1-R10, finals rule) = FINAL_REPORT.md sections e/f;
+  binding only after the user's OK. Other corrections: metric weights videos by TP+FP+FN; our kernels are deterministic,
+  so the 0.003 "LB noise" does not apply to them; swap FN are not reachable by localisation.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
