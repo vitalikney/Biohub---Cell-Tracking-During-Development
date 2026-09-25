@@ -1,2 +1,12 @@
 # schedule skeptic notes: readmit-recall-knobs (2026-09-25T11:04Z)
 - read BRIEF.md; no prior json
+- exp56 notebook (extracted cells to scratchpad): cell0 l.93-106 READMIT_RADIUS_UM 4, READMIT_MIN_SCORE 0.965, GAPFILL_MIN_SCORE 0.5, GAPFILL_MAX_ADDED_FRAC 0.03, LOWDET_THRESHOLD 0.3; cell2 l.82-91 reads them from env.
+- cell5 l.1180-1245 load_low_detections: pool = dump peaks >= GAPFILL_MIN_SCORE (0.5) and > 2.0 um from any node; readmit l.1250-1300 filters pool by READMIT_MIN_SCORE and <= 4 um of open end(t-1)/start(t+1). => 0.85 reachable with NO code change (any value >= 0.5; below 0.5 also changes the gap filler = confound).
+- cell5 l.1944-1948: readmit then re-run motion relink; readmitted ids have no learned prob (prob 0). Gap filler (l.1990) reloads the pool against the updated node set -> no duplicate use of a readmitted peak.
+- gapfill budget: budget=round(N*0.03) (l.1347), 'gapfill_budget_hit' only in stats; stats NOT printed/persisted (cell5 l.2121-2140, no json dump). Binding must be INFERRED from log lines: 'gap filler: +A nodes' and 'after gap-closing ...: N nodes' -> binding iff A >= round(0.03*(N-A)) - 3.
+- tools/build_probe_kernel.py l.12-18, 1524-1530: --base x138 accepts --set (overrides appended to cell 0, after base values), sha256 check; divinsert patch composable -> build = one command, ~0.3 agent-h.
+- CONTEXT.md l.1515: 1,337 readmitted / 121,777 raw nodes on 4 dummy clips (confirmed). l.1511-1516 leaf prune removes readmits (idea's 'never combine' correct).
+- runtime: extra nodes ~ +1-2% -> second relink LSA marginal; REPAIR_DEADLINE_S 27000 guard; no runtime risk.
+- GPU: vitalii ~0 GPU-h until 26 Sep 00:00 UTC; commit (dummy run) needs GPU (enable_gpu true, T4). => earliest commit 26 Sep 00:05 UTC, realistic 05:00-07:00 UTC (user MSK morning).
+- No new dataset/weights needed (x138 datasets only). Friend A not on the path.
+- 2026-09-25T11:07Z wrote final json (refuted=false, feasible=true, P scored ~0.8-0.9; weakness = LB-noise readability; repair = 2-arm dose pair)

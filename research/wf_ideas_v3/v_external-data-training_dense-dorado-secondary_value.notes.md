@@ -1,0 +1,12 @@
+# notes Fri Sep 25 11:08:21 UTC 2026
+- 2026-09-25 ~11:30 UTC: read BRIEF, related v3 verdicts (dense-proposal-detector-copy, joint-finetune-long-shot, ultrack-convention-localiser: all refuted on value).
+- RESULTS.md: secondary swaps probe 7 -0.016 (exp08), probe 10 -0.025 (scratch), probe 13 -0.007 (exp23); weight 0.8->0.5 probe 5 -0.002. Only positive model swap ever: probe 2 exp03B primary +0.004 (old stack; did not compose on TTA stack, probes 11/15).
+- fn_anatomy_exp39.md: a_never 1907 (44b6 167 / 6bba 1740), b_swap 2175 (444/1731); a_tail/a_linefit/a_taken 1022 are not detector-existence failures. 44b6 total FN 1063/6732 = 16%.
+- r2_critic.notes: 44b6 GT match<=7 already 0.988; Ultrack has ~44% more interior pts than our final nodes; N_est = 0.91 x Ultrack (median; p10 0.765, p90 1.026). Adding Ultrack pts -> match 0.998 but +30-40% nodes.
+- exp56 notebook: det_logits = 0.2 primary + 0.8 aligned secondary; retention guard 0.90 (falls back to primary only if blended candidates < 90% of primary's); secondary edge weight 0.15; det thr 0.965.
+- train_unet_transformer.py compute_detection_loss: per-sample normalised pos (1/n_pos) and neg (neg_weight/n_neg) terms confirmed.
+- discussions_summary.md l.214-217 (Le Quang Canh, rank 39, 5 held-out films, official scorer): dense-label DETECTOR fine-tune, head only = -0.0033; head+encoder (frozen linker) = -0.0377. l.90 / l.297+: hengck23 FOCUS-3D dense line, no LB proof (222nd). l.326: rank 1 says dorado is a different embryo (team registration says 44b6 = dorado crops; brief follows the team).
+- Arithmetic: 1 FN->TP = 1/135,729 = 7.37e-6 J (lab). Detector-addressable pool = a_never 1907 + b_swap 2175 = 4082 (+0.030 cap); the idea's 5,104 adds a_tail/a_linefit/a_taken (node existed; not detector). In 44b6 (only embryo with dense labels): 167+444 = 611 FN = +0.0045 cap.
+- Blend arithmetic (det thr 0.965 -> logit 3.32): for a_never where primary and old secondary sit ~-2 logit, full swap needs dense logit >= (3.32+0.4)/0.8 = 4.65; the AVERAGED default (0.2/0.4/0.4) needs >= (3.32+1.2)/0.4 = 11.3 -> the default variant can essentially not create new nodes; it only moves positions.
+- LB noise: identical notebooks 0.946/0.942 -> diff SD ~0.003; +0.003 promotion rule has ~16% false-pass at zero true effect vs P(true >= +0.003) ~10% => a pass is ~50/50.
+- Verdict: REFUTED on value (central public ~-0.001; the idea's own central +0.001 is below the +0.002 bar).

@@ -7,3 +7,4 @@
 - Probe discrimination: SD of a 2-run diff ~0.003 -> P(obs >= +0.002 | true 0) = 25%, | true +0.0007 = 33%. Adoption rule is a coin flip -> one LB slot cannot validate it.
 - Extra risk: V1284 head (+0.007 on x138) was trained on pos-1-view peaks (x107 capture); fused peaks shift the head's input offset distribution (unquantified, sign unknown). Lowdet pool thresholds 0.3/0.5 and READMIT 0.965 are not re-calibrated by the count-only quantile guard.
 - Repair: honest held-out test with friend_a_exp02_loeo20 (6bba-only, never saw 44b6) on the 12 LOEO-44b6 videos (B26 harness, ~30 min on 5070 Ti), gate >= +0.003; or restrict pos-0 view to the lowdet/readmit pool only (main node set byte-identical).
+- 2026-09-25T11:05:40Z final JSON written: refuted=true (value below +0.002, unresolvable at LB noise); fix = LOEO scratch-primary test or pool-only variant.

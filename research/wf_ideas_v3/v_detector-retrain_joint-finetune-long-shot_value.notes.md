@@ -1,0 +1,12 @@
+# v_detector-retrain_joint-finetune-long-shot_value notes
+- 2026-09-25 ~11:xx UTC: started; no prior json. Read BRIEF.md.
+- 2026-09-25: read RESULTS.md rows exp03B/exp11/exp14/exp16/exp06/exp02, probes 11/15/17 (exp30/33/35), B30 axis-flip; CONTEXT.md B18/B19/A24; metrics.md adjusted_jaccard; discussions_summary l.30-37, 83-92; h_detector-retrain.json.
+- Metric check: adj = J*(1 - 0.1*(Tpred-Ttrue)/Ttrue). +3.2% nodes at Tpred/Ttrue~1 and J~0.93 -> -0.0030. Arithmetic in the idea is right.
+- KEY 1: exp11 LOEO "+0.0027" is itself a node-multiplier artefact: score/edge ratio A 1.0248 -> B 1.0298 => Tpred/Ttrue 0.752 -> 0.702 (-6.6% nodes); edge J 0.8585 -> 0.8570 (-0.0015). At matched nodes the fine-tune is NEGATIVE on the unseen-in-finetune embryo.
+- KEY 2: node shift sign is embryo-dependent: all-199 fine-tune +3.2% nodes (dummy/public), +5.6% on hold12 (exp06 t_pred 232k->245k), 6bba-only fine-tune on 44b6 -6.6%. B19 calibration on 4 dummy clips cannot fix private embryos.
+- KEY 3: soup exp35 halved the node shift -> node story predicts ~0.9455, LB 0.943. exp33 0.944 + 0.003 node correction = 0.947 = base. LB value of fine-tuned weights at matched nodes = ~0 (-0.002..0).
+- KEY 4: lab->LB transfer of model-side changes: axis-flip +0.021 lab (+0.019 on unseen scratch primary) -> LB -0.001; weight swaps per-video -0.037..+0.039 local vs 0.003 LB. Seed sd +-0.005 (exp16 vs exp03B 0.0073 apart). Gate +0.004 on 12 videos, single seed, is inside seed noise.
+- KEY 5: LOEO leak bias: pilkwang init saw ALL 199 incl. 44b6/6bba eval clips. PU masking removes most negative gradients -> model stays closer to the memorising init -> spuriously better on the in-sample eval vs the control. Gate biased in favour of PU.
+- KEY 6: round-target: v2 dose-response says de-quantisation worth <= +0.001..0.002 and V1284 head already removes most; changing convention invalidates the head -> recapture; head retrain on 199 failed kill test once.
+- KEY 7: PU masking raises peaks on unannotated nuclei -> more nodes (free edges, paid multiplier); threshold matching then gives back recall. Net on annotated recall (0.983 already) small.
+- Verdict: realistic public -0.003..+0.002 (central ~-0.001), private -0.004..+0.002; REFUTED under value lens. Schedule: ~12 friend-A GPU-h, contested, P(scored by 29 Sep 10:00) ~0.3.

@@ -1,2 +1,4 @@
 # notes Fri Sep 25 11:03:37 UTC 2026
 - started; no prior json
+- 11:05 read BRIEF, v2 research + 3 v2 verifies (all refuted as-specified; repaired = safe-div only, 4.5um, +0.0005..0.001). x138 cell5 safe-div gates = exp48 gates minus DivNet veto, DeepCenter 0.25; geometry filter OFF (default 0). CONTEXT 1308-1320: J_pub 0.36+-0.04. Running MC of public gain.
+- 11:05 MC (/tmp/claude-0/mc.py; G 20-60, J 0.36+-0.02, public fork precision 0.45-0.75, safe-div share of FP 0.7-0.9, k 0.10-0.30, per-TP loss 0.5-4%): public gain mean +0.0008, median +0.0009, p10 -0.0014, p90 +0.0030; P(>=0.002) 0.23, P(<0) 0.20. Zero-loss ceiling at k*s 0.27: +0.0027. Idea 1 (divins-x138-lab-retune) refuted by its value verifier -> its x138 train cache (needed for out-of-sample re-check) is unlikely. Verdict: REFUTED under value lens (<+0.002, invisible under LB noise 0.003).

@@ -8,3 +8,4 @@
 - build_probe_kernel.py: DIVINS glue in filter_output_graph post-tail; DIVINS_DUMP writes pre-insertion graph+node_p; replay.py = exp39 tail only; no x138-on-train harness
 - friend A: no commits since 24 Sep 04:12 MSK; told to wait for #34 then build x138 lab cache (format raw/ckpt/dc/divnet, lowdet npz not requested)
 - v2: mirror-peak-daughter was merged into a dedupe cluster and not chosen in FINAL_REPORT
+- 2026-09-25T11:05:47Z final JSON written (refuted, P(scored) ~0.04 as described, ~0.27 repaired)
