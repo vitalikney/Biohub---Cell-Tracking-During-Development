@@ -1,3 +1,5 @@
 # h_kaggle-intel notes (2026-09-25)
 - 11:10 read BRIEF, discussions_summary, browser_research_2026-09-24 (+pass2), wf_ideas_v2 FINAL_REPORT, CONTEXT tail (resume point 25 Sep 10:20).
 - 11:15 GitHub repo search "biohub cell tracking pushed:>2026-09-15": 16 repos; active today: kito2718/kaggle_Biohub-Cell_Tracking_During_Development (10:17 UTC), JunhaoLiXD/Biohub_Cell_Tracking (03:56), pathik1511, Caffeinated-Code, drosadocastro-bit/Atabey, alvaromendizabal (0.947 repro), davidlueng986-alt auto R&D. Checking them.
+- 11:25 GitHub READMEs read (JunhaoLiXD 0.942/0.944 repro; sota1111 agent scaffold; alvaromendizabal 0.947 repro, linker fine-tune in progress, no score; davidlueng auto R&D; Gluzdov 0.926; kito2718 early). NONE above 0.953, no top-team code on GitHub. GitHub code search for V1284 / motion_model_audit -> only our repo. kito2718 repo not reachable via MCP (session allows only our repo), WebFetch works.
+- WebSearch: kaggle pages are indexed only by title; no snippets with LB numbers of top teams; "Sergio Alvarez", yu4u, Japanese queries -> nothing. Dead end for top-team methods via search.
