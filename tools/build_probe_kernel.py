@@ -1556,6 +1556,123 @@ def patch_lowrefine(cells_src: dict) -> None:
 BASES["x138"]["patches"] += ("lowrefine",)
 PATCHES["lowrefine"] = patch_lowrefine
 
+# ---- forkmid (ideas workflow v3, E3 = C04; research/wf_ideas_v3/s_merge.json, TASK_CLOUD_SESSION.md T6): x138 base
+# only. The very last graph edit of filter_output_graph (after linefit, after the divinsert call and whatever else the
+# tail patches put there): a fork whose added child edge carries safe_division == 1 (and not div_inserted) is un-forked
+# when the parent is >= FORKMID_MIN_UM (4.5 um) from the sisters' midpoint |P - (c1 + c2)/2| (no cosine arm). The
+# ILP-side edge goes when its edge_prob == 0.0 (an unscored motion-relink edge), otherwise the added edge. Nodes are
+# never touched. FORKMID_ENABLE=0 (default): the call is skipped, the graph is exactly the input. Fail-soft: any
+# exception keeps the input edges ('FORKMID FAILED'). forkmid_edges() is pure (lab replays can exec FORKMID_FN).
+FORKMID_FN = r'''
+
+# ---- forkmid (tools/build_probe_kernel.py --patch forkmid): un-fork safe-division forks far from the sisters' midpoint ----
+FORKMID_ENABLE = os.environ.get("BIOHUB_FORKMID_ENABLE", "0").strip() not in ("", "0")
+FORKMID_MIN_UM = float(os.environ.get("BIOHUB_FORKMID_MIN_UM", "4.5"))
+FORKMID_FORCE_FAIL = os.environ.get("BIOHUB_FORKMID_FORCE_FAIL", "0") != "0"
+print(f"FORKMID: enable={int(FORKMID_ENABLE)} min_um={FORKMID_MIN_UM} force_fail={int(FORKMID_FORCE_FAIL)}", flush=True)
+
+
+def forkmid_edges(nodes_by_id, edges, min_um, scale=VOXEL_SCALE_UM):
+    """Pure: (kept edges, counters, removed [(parent, removed child, mid_um, side)]). A fork = a parent with exactly two
+    out-edges, one of them added by add_safe_divisions_postlink (safe_division == 1, not div_inserted). Un-forked when
+    |P - (c1 + c2)/2| >= min_um: the ILP-side edge is dropped if its edge_prob == 0.0, else the added edge."""
+    def _is(edge, key):
+        value = edge.get(key)
+        try:
+            return value is not None and int(value) == 1
+        except (TypeError, ValueError):
+            return False
+
+    def _pos(node):
+        return np.array([float(node["z"]), float(node["y"]), float(node["x"])], dtype=np.float64) * np.asarray(scale, dtype=np.float64)
+
+    out_by_source = {}
+    for edge in edges:
+        out_by_source.setdefault(int(edge["source_id"]), []).append(edge)
+    counters = {"forkmid_forks_seen": 0, "forkmid_removed": 0, "forkmid_removed_ilp_edge": 0,
+                "forkmid_removed_added_edge": 0, "forkmid_skipped": 0}
+    drop = set()
+    removed = []
+    for source_id, outs in out_by_source.items():
+        added = [e for e in outs if _is(e, "safe_division") and not _is(e, "div_inserted")]
+        if not added:
+            continue
+        if len(outs) != 2 or len(added) != 1:
+            counters["forkmid_skipped"] += 1
+            continue
+        add_edge = added[0]
+        ilp_edge = outs[1] if outs[0] is add_edge else outs[0]
+        if _is(ilp_edge, "div_inserted"):
+            counters["forkmid_skipped"] += 1
+            continue
+        parent = nodes_by_id.get(source_id)
+        c1 = nodes_by_id.get(int(ilp_edge["target_id"]))
+        c2 = nodes_by_id.get(int(add_edge["target_id"]))
+        if parent is None or c1 is None or c2 is None:
+            counters["forkmid_skipped"] += 1
+            continue
+        counters["forkmid_forks_seen"] += 1
+        mid_um = float(np.linalg.norm(_pos(parent) - 0.5 * (_pos(c1) + _pos(c2))))
+        if not np.isfinite(mid_um) or mid_um < min_um:
+            continue
+        prob = ilp_edge.get("edge_prob")
+        try:
+            ilp_unscored = prob is not None and float(prob) == 0.0
+        except (TypeError, ValueError):
+            ilp_unscored = False
+        victim = ilp_edge if ilp_unscored else add_edge
+        drop.add(id(victim))
+        side = "ilp" if ilp_unscored else "added"
+        counters["forkmid_removed"] += 1
+        counters["forkmid_removed_ilp_edge" if ilp_unscored else "forkmid_removed_added_edge"] += 1
+        removed.append((int(source_id), int(victim["target_id"]), round(mid_um, 3), side))
+    if not drop:
+        return edges, counters, removed
+    return [e for e in edges if id(e) not in drop], counters, removed
+
+
+def forkmid_final_graph(nodes_by_id, edges, stats, dataset=None):
+    """Fail-soft wrapper: counters into stats, one log line; on any exception the input edges are returned."""
+    try:
+        if FORKMID_FORCE_FAIL:
+            raise RuntimeError("BIOHUB_FORKMID_FORCE_FAIL=1 (dummy test of the fail-soft path)")
+        kept, counters, removed = forkmid_edges(nodes_by_id, edges, FORKMID_MIN_UM)
+        stats.update(counters)
+        print(f"  [{dataset}] forkmid: forks={counters['forkmid_forks_seen']} removed={counters['forkmid_removed']}"
+              f" (ilp_edge={counters['forkmid_removed_ilp_edge']}, added_edge={counters['forkmid_removed_added_edge']})"
+              f" skipped={counters['forkmid_skipped']} min_um={FORKMID_MIN_UM} removed_list={removed[:20]}", flush=True)
+        return kept
+    except Exception as _fm_exc:
+        stats["forkmid_failed"] = 1
+        print(f"  [{dataset}] FORKMID FAILED ({type(_fm_exc).__name__}: {_fm_exc}); keeping the input edges", flush=True)
+        return edges
+'''
+FORKMID_CALL = r'''    # ---- forkmid (ideas v3 C04): the last graph edit; FORKMID_ENABLE=0 -> no-op ----
+    if FORKMID_ENABLE and edges and nodes_by_id:
+        edges = forkmid_final_graph(nodes_by_id, edges, stats, dataset)
+    # ---- /forkmid ----
+'''
+_FM_FINAL_PRINT = ('    print(f"  [{dataset}] FINAL: {len(nodes_by_id)} nodes, {len(edges)} edges'
+                   ' | {_time.time() - _stage_t0:.1f}s")' + NL)
+_FM_FILTER_DEF = NL + NL + NL + "def filter_output_graph(" + NL
+FORKMID_KNOBS = ("BIOHUB_FORKMID_ENABLE", "BIOHUB_FORKMID_MIN_UM", "BIOHUB_FORKMID_FORCE_FAIL")
+
+
+def forkmid_postproc_source(c: str) -> str:
+    """Post-processing cell: knobs + forkmid_edges / forkmid_final_graph right before filter_output_graph, and the
+    guarded call right before the FINAL print (after linefit and every post-linefit call, in any patch order)."""
+    c = _rep1(c, _FM_FILTER_DEF, NL + FORKMID_FN + _FM_FILTER_DEF)
+    return _rep1(c, _FM_FINAL_PRINT, FORKMID_CALL + _FM_FINAL_PRINT)
+
+
+def patch_forkmid(cells_src: dict) -> None:
+    """Ideas workflow v3 E3 = C04 (TASK_CLOUD_SESSION.md T6), x138 base only; see FORKMID_FN."""
+    cells_src[CELL["post"]] = forkmid_postproc_source(cells_src[CELL["post"]])
+
+
+PATCHES["forkmid"] = patch_forkmid
+BASES["x138"]["patches"] += ("forkmid",)
+
 
 def main() -> None:
     ap = argparse.ArgumentParser()
@@ -1716,6 +1833,30 @@ def main() -> None:
             sys.exit(f"OUTPUT_FLOAT_COORDS must be one of {FLOATOUT_MODES}, got {overrides['BIOHUB_OUTPUT_FLOAT_COORDS']!r}")
     if "floatout" in a.patch and overrides.get("BIOHUB_OUTPUT_FLOAT_COORDS", "0") == "0":
         print("NOTE: --patch floatout with OUTPUT_FLOAT_COORDS=0 (default) writes a byte-identical submission.csv")
+    if any(k.startswith("BIOHUB_FORKMID_") for k in overrides):
+        if "forkmid" not in a.patch:
+            sys.exit("FORKMID_* knobs need --patch forkmid")
+        unknown = sorted(k for k in overrides if k.startswith("BIOHUB_FORKMID_") and k not in FORKMID_KNOBS)
+        if unknown:
+            sys.exit(f"unknown forkmid knobs {unknown}; known: {sorted(FORKMID_KNOBS)}")
+        if overrides.get("BIOHUB_FORKMID_ENABLE", "0") not in ("0", "1"):
+            sys.exit(f"FORKMID_ENABLE must be 0 or 1, got {overrides['BIOHUB_FORKMID_ENABLE']!r}")
+        try:
+            _fm = float(overrides.get("BIOHUB_FORKMID_MIN_UM", "4.5"))
+        except ValueError:
+            sys.exit(f"FORKMID_MIN_UM must be a number, got {overrides['BIOHUB_FORKMID_MIN_UM']!r}")
+        if not 0.0 < _fm < float("inf"):
+            sys.exit(f"FORKMID_MIN_UM must be finite and > 0, got {overrides['BIOHUB_FORKMID_MIN_UM']!r}")
+        if overrides.get("BIOHUB_FORKMID_FORCE_FAIL", "0") != "0" and not a.lab:
+            sys.exit("FORKMID_FORCE_FAIL is a dummy test knob: needs --lab")
+    if "forkmid" in a.patch:
+        if a.base != "x138":
+            sys.exit("--patch forkmid needs --base x138")
+        if overrides.get("BIOHUB_FORKMID_ENABLE", "0") == "0":
+            print("NOTE: --patch forkmid with FORKMID_ENABLE=0 (default) builds an exact no-op of the base")
+        # the last graph edit: applied after every other patch except safetail (which stays last)
+        a.patch = ([p for p in a.patch if p not in ("forkmid", "safetail")] + ["forkmid"]
+                   + [p for p in a.patch if p == "safetail"])
     if a.base == "exp39":
         overrides["BIOHUB_DIVNET_VERIFY"] = a.divnet or "1"
 
