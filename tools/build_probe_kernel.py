@@ -1800,6 +1800,178 @@ def patch_forkmid(cells_src: dict) -> None:
 PATCHES["forkmid"] = patch_forkmid
 BASES["x138"]["patches"] += ("forkmid",)
 
+# ---- forkblob (ideas workflow v4 L1; rule frozen in CONTEXT.md PRE-REGISTRATION v3 ADDENDUM L4, 25 Sep 18:20 UTC):
+# x138 base only, spliced right after the forkmid call (builder order forkmid -> forkblob -> safetail). A 2-child fork
+# whose added child edge carries safe_division == 1 (and not div_inserted) is un-forked when, at t+1, the sisters are
+# <= 5.0 um apart AND the valley >= 0.95: valley = min over the interior 20-80% of 41 samples of the gaussian-blurred
+# (sigma zyx 0.6/1.5/1.5 vox, local crop, margin >= 4 sigma) intensity on c1 -> c2, divided by min(I(c1), I(c2)) of
+# the same blurred profile. The ILP-side edge goes when its edge_prob == 0.0, otherwise the added edge; nodes are never
+# touched. Frames come from the notebook's read_test_frame over filter_output_graph's repair_frame_cache.
+# FORKBLOB_ENABLE=0 (default): the call is skipped, the graph is exactly the input. Fail-soft: any exception keeps the
+# input edges ('FORKBLOB FAILED'). forkblob_edges() is pure (the frame reader is an argument): tools/forkblob_lab.py
+# execs FORKBLOB_FN, so the lab arm runs the kernel's own code.
+FORKBLOB_FN = r'''
+
+# ---- forkblob (tools/build_probe_kernel.py --patch forkblob): un-fork safe-division forks whose sisters sit on one blob at t+1 ----
+import time as _fb_time
+FORKBLOB_ENABLE = os.environ.get("BIOHUB_FORKBLOB_ENABLE", "0").strip() not in ("", "0")
+FORKBLOB_FORCE_FAIL = os.environ.get("BIOHUB_FORKBLOB_FORCE_FAIL", "0") != "0"
+FORKBLOB_MAX_UM = 5.0  # ADDENDUM L4 (frozen): sister distance at t+1 <= 5.0 um
+FORKBLOB_MIN_VALLEY = 0.95  # ADDENDUM L4 (frozen): valley >= 0.95
+FORKBLOB_SIGMA_ZYX = (0.6, 1.5, 1.5)
+FORKBLOB_SAMPLES = 41
+print(f"FORKBLOB: enable={int(FORKBLOB_ENABLE)} max_um={FORKBLOB_MAX_UM} min_valley={FORKBLOB_MIN_VALLEY}"
+      f" sigma_zyx={FORKBLOB_SIGMA_ZYX} force_fail={int(FORKBLOB_FORCE_FAIL)}", flush=True)
+
+
+def forkblob_valley(frame, a, b, sigma=FORKBLOB_SIGMA_ZYX, n_samples=FORKBLOB_SAMPLES):
+    """Min over the interior 20-80% of n_samples of the gaussian-blurred intensity on a -> b (voxel z, y, x), divided by
+    the smaller blurred endpoint value. The blur runs on a local crop whose margin per axis is the filter radius
+    int(4 sigma + 0.5) + 2 voxels (>= 4 sigma, plus the linear-interpolation neighbour), so every sampled value equals
+    the full-frame blur; at the frame border the crop edge is the frame edge (same reflect mode)."""
+    from scipy.ndimage import gaussian_filter, map_coordinates
+    shape = np.asarray(frame.shape, dtype=np.int64)
+    hi = (shape - 1).astype(np.float64)
+    a = np.clip(np.asarray(a, dtype=np.float64), 0.0, hi)
+    b = np.clip(np.asarray(b, dtype=np.float64), 0.0, hi)
+    margin = np.asarray([int(4.0 * float(s) + 0.5) + 2 for s in sigma], dtype=np.int64)
+    lo = np.maximum(np.floor(np.minimum(a, b)).astype(np.int64) - margin, 0)
+    up = np.minimum(np.ceil(np.maximum(a, b)).astype(np.int64) + margin + 1, shape)
+    crop = np.asarray(frame[lo[0]:up[0], lo[1]:up[1], lo[2]:up[2]], dtype=np.float32)
+    blurred = gaussian_filter(crop, sigma=tuple(float(s) for s in sigma))
+    s = np.linspace(0.0, 1.0, int(n_samples))
+    pts = a[None, :] + s[:, None] * (b - a)[None, :] - lo[None, :].astype(np.float64)
+    prof = map_coordinates(blurred, pts.T, order=1, mode="nearest")
+    n = int(n_samples) - 1
+    inner = prof[int(round(0.2 * n)):int(round(0.8 * n)) + 1]
+    return float(inner.min() / max(min(float(prof[0]), float(prof[-1])), 1e-6))
+
+
+def forkblob_edges(nodes_by_id, edges, read_frame, max_um=FORKBLOB_MAX_UM, min_valley=FORKBLOB_MIN_VALLEY,
+                   scale=VOXEL_SCALE_UM, sigma=FORKBLOB_SIGMA_ZYX):
+    """Pure: (kept edges, counters, vetoed [one dict per un-forked fork]). A fork = a parent with exactly two out-edges,
+    one of them added by add_safe_divisions_postlink (safe_division == 1, not div_inserted), both children at t + 1.
+    Un-forked when the sisters are <= max_um apart and forkblob_valley(frame t + 1) >= min_valley: the ILP-side edge is
+    dropped if its edge_prob == 0.0, else the added edge. read_frame(t) -> the (Z, Y, X) frame t; it is called only for
+    forks within max_um. Nodes and edge dicts are never modified."""
+    def _is(edge, key):
+        value = edge.get(key)
+        try:
+            return value is not None and int(value) == 1
+        except (TypeError, ValueError):
+            return False
+
+    def _zyx(node):
+        return np.array([float(node["z"]), float(node["y"]), float(node["x"])], dtype=np.float64)
+
+    out_by_source = {}
+    for edge in edges:
+        out_by_source.setdefault(int(edge["source_id"]), []).append(edge)
+    counters = {"forkblob_forks_seen": 0, "forkblob_close": 0, "forkblob_removed": 0, "forkblob_removed_ilp_edge": 0,
+                "forkblob_removed_added_edge": 0, "forkblob_skipped": 0}
+    drop = set()
+    vetoed = []
+    for source_id, outs in out_by_source.items():
+        added = [e for e in outs if _is(e, "safe_division") and not _is(e, "div_inserted")]
+        if not added:
+            continue
+        if len(outs) != 2 or len(added) != 1:
+            counters["forkblob_skipped"] += 1
+            continue
+        add_edge = added[0]
+        ilp_edge = outs[1] if outs[0] is add_edge else outs[0]
+        if _is(ilp_edge, "div_inserted"):
+            counters["forkblob_skipped"] += 1
+            continue
+        parent = nodes_by_id.get(source_id)
+        c1 = nodes_by_id.get(int(ilp_edge["target_id"]))
+        c2 = nodes_by_id.get(int(add_edge["target_id"]))
+        if parent is None or c1 is None or c2 is None:
+            counters["forkblob_skipped"] += 1
+            continue
+        t1 = int(c1["t"])
+        if int(c2["t"]) != t1 or t1 != int(parent["t"]) + 1:
+            counters["forkblob_skipped"] += 1
+            continue
+        counters["forkblob_forks_seen"] += 1
+        sister_um = float(np.linalg.norm((_zyx(c1) - _zyx(c2)) * np.asarray(scale, dtype=np.float64)))
+        if not np.isfinite(sister_um) or sister_um > max_um:
+            continue
+        counters["forkblob_close"] += 1
+        valley = forkblob_valley(read_frame(t1), _zyx(c1), _zyx(c2), sigma)
+        if not valley >= min_valley:  # NaN -> kept
+            continue
+        prob = ilp_edge.get("edge_prob")
+        try:
+            ilp_unscored = prob is not None and float(prob) == 0.0
+        except (TypeError, ValueError):
+            ilp_unscored = False
+        victim = ilp_edge if ilp_unscored else add_edge
+        drop.add(id(victim))
+        side = "ilp" if ilp_unscored else "added"
+        counters["forkblob_removed"] += 1
+        counters["forkblob_removed_ilp_edge" if ilp_unscored else "forkblob_removed_added_edge"] += 1
+        vetoed.append({"parent": int(source_id), "t": t1, "ilp_child": int(ilp_edge["target_id"]),
+                       "added_child": int(add_edge["target_id"]),
+                       "dropped": (int(victim["source_id"]), int(victim["target_id"])), "side": side,
+                       "sister_um": round(sister_um, 3), "valley": round(valley, 4)})
+    if not drop:
+        return edges, counters, vetoed
+    return [e for e in edges if id(e) not in drop], counters, vetoed
+
+
+def forkblob_final_graph(nodes_by_id, edges, stats, dataset=None, frame_cache=None):
+    """Fail-soft wrapper: frames via read_test_frame (over the given cache), counters into stats, one summary line and
+    one line per vetoed fork; on any exception the input edges are returned ('FORKBLOB FAILED')."""
+    _fb_t0 = _fb_time.time()
+    try:
+        if FORKBLOB_FORCE_FAIL:
+            raise RuntimeError("BIOHUB_FORKBLOB_FORCE_FAIL=1 (dummy test of the fail-soft path)")
+        if dataset is None:
+            raise ValueError("no dataset name: frames cannot be read")
+        cache = frame_cache if frame_cache is not None else {}
+        kept, counters, vetoed = forkblob_edges(nodes_by_id, edges,
+                                                lambda t: read_test_frame(str(dataset), int(t), cache))
+        stats.update(counters)
+        print(f"  [{dataset}] forkblob: forks={counters['forkblob_forks_seen']} close={counters['forkblob_close']}"
+              f" removed={counters['forkblob_removed']} (ilp_edge={counters['forkblob_removed_ilp_edge']},"
+              f" added_edge={counters['forkblob_removed_added_edge']}) skipped={counters['forkblob_skipped']}"
+              f" max_um={FORKBLOB_MAX_UM} min_valley={FORKBLOB_MIN_VALLEY} | {_fb_time.time() - _fb_t0:.2f}s", flush=True)
+        for v in vetoed:
+            print(f"  [{dataset}] forkblob veto: parent={v['parent']} t={v['t']} dropped={v['dropped'][0]}->"
+                  f"{v['dropped'][1]} ({v['side']} edge) sister_um={v['sister_um']} valley={v['valley']}", flush=True)
+        return kept
+    except Exception as _fb_exc:
+        stats["forkblob_failed"] = 1
+        print(f"  [{dataset}] FORKBLOB FAILED ({type(_fb_exc).__name__}: {_fb_exc}); keeping the input edges", flush=True)
+        return edges
+'''
+FORKBLOB_CALL = r'''    # ---- forkblob (ideas v4 L4): right after forkmid; FORKBLOB_ENABLE=0 -> no-op ----
+    if FORKBLOB_ENABLE and edges and nodes_by_id:
+        edges = forkblob_final_graph(nodes_by_id, edges, stats, dataset, repair_frame_cache)
+    # ---- /forkblob ----
+'''
+FORKBLOB_KNOBS = ("BIOHUB_FORKBLOB_ENABLE", "BIOHUB_FORKBLOB_FORCE_FAIL")
+
+
+def forkblob_postproc_source(c: str) -> str:
+    """Post-processing cell: knobs + forkblob_valley / forkblob_edges / forkblob_final_graph right before
+    filter_output_graph (after FORKMID_FN when present), and the guarded call right after the forkmid call (or, without
+    --patch forkmid, right before the FINAL print)."""
+    c = _rep1(c, _FM_FILTER_DEF, NL + FORKBLOB_FN + _FM_FILTER_DEF)
+    if FORKMID_CALL in c:
+        return _rep1(c, FORKMID_CALL + _FM_FINAL_PRINT, FORKMID_CALL + FORKBLOB_CALL + _FM_FINAL_PRINT)
+    return _rep1(c, _FM_FINAL_PRINT, FORKBLOB_CALL + _FM_FINAL_PRINT)
+
+
+def patch_forkblob(cells_src: dict) -> None:
+    """Ideas workflow v4 L1 / ADDENDUM L4 (research/wf_ideas_v4/FINAL_REPORT_v4.md), x138 base only; see FORKBLOB_FN."""
+    cells_src[CELL["post"]] = forkblob_postproc_source(cells_src[CELL["post"]])
+
+
+PATCHES["forkblob"] = patch_forkblob
+BASES["x138"]["patches"] += ("forkblob",)
+
 
 def main() -> None:
     ap = argparse.ArgumentParser()
@@ -2016,6 +2188,24 @@ def main() -> None:
         # the last graph edit: applied after every other patch except safetail (which stays last)
         a.patch = ([p for p in a.patch if p not in ("forkmid", "safetail")] + ["forkmid"]
                    + [p for p in a.patch if p == "safetail"])
+    if any(k.startswith("BIOHUB_FORKBLOB_") for k in overrides):
+        if "forkblob" not in a.patch:
+            sys.exit("FORKBLOB_* knobs need --patch forkblob")
+        unknown = sorted(k for k in overrides if k.startswith("BIOHUB_FORKBLOB_") and k not in FORKBLOB_KNOBS)
+        if unknown:
+            sys.exit(f"unknown forkblob knobs {unknown}; known: {sorted(FORKBLOB_KNOBS)} (thresholds are frozen by L4)")
+        if overrides.get("BIOHUB_FORKBLOB_ENABLE", "0") not in ("0", "1"):
+            sys.exit(f"FORKBLOB_ENABLE must be 0 or 1, got {overrides['BIOHUB_FORKBLOB_ENABLE']!r}")
+        if overrides.get("BIOHUB_FORKBLOB_FORCE_FAIL", "0") != "0" and not a.lab:
+            sys.exit("FORKBLOB_FORCE_FAIL is a dummy test knob: needs --lab")
+    if "forkblob" in a.patch:
+        if a.base != "x138":
+            sys.exit("--patch forkblob needs --base x138")
+        if overrides.get("BIOHUB_FORKBLOB_ENABLE", "0") == "0":
+            print("NOTE: --patch forkblob with FORKBLOB_ENABLE=0 (default) builds an exact no-op of the base")
+        # right after forkmid: order ... -> forkmid -> forkblob -> safetail (safetail stays last)
+        a.patch = ([p for p in a.patch if p not in ("forkmid", "forkblob", "safetail")]
+                   + [p for p in a.patch if p == "forkmid"] + ["forkblob"] + [p for p in a.patch if p == "safetail"])
     if a.base == "exp39":
         overrides["BIOHUB_DIVNET_VERIFY"] = a.divnet or "1"
 
