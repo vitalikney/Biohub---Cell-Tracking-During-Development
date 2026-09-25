@@ -1,0 +1,11 @@
+{
+ "base": "x138 verbatim = exp56 (anvithpothula/biohub-x138, author public 0.953; x138 datasets, docker pin and machine shape); built by tools/build_probe_kernel.py --base x138",
+ "change": {
+  "REPAIR_DEADLINE_S": "34200",
+  "LOWREFINE_ENABLE": "1",
+  "DEGRADE_KEEP_DIV": "1",
+  "PATCHES": "lowrefine+safetail"
+ },
+ "note": "K2 twin without insertion (AMENDMENT f2 candidate F2)",
+ "rule": "compare with exp56 (x138 verbatim on our account); above exp56 adopt, ties recorded"
+}
