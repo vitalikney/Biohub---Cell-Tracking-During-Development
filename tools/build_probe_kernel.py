@@ -72,6 +72,12 @@ Patches (`--patch NAME`, repeatable, any order; they always address the BASE cod
              (float32). Edits only the 'lowdet' literals of the predict-patch cell (order lowdet -> V1284 unchanged).
              Knob BIOHUB_LOWREFINE_ENABLE (the patch sets 1; 0 = byte-identical CSV). A refine exception keeps that
              frame's grid coordinates and logs 'LOWREFINE FAILED'; per video 'LOWREFINE <name>: refined R of N ...'.
+  trainlab   (x138 base, --lab only; ideas workflow v3 E4 = exp60) x138 on TRAIN videos: --train-stems a,b,c or
+             @experiments/exp60_trainlab/split.json:A; TEST_DIR -> /tmp zarr symlinks of those stems; three graph
+             snapshots per dataset + the safe-division DeepCenter scores -> /kaggle/working/trainlab/<dataset>.npz
+             (tools/trainlab_io.py; BIOHUB_TRAINLAB_DUMP, set to 1); with divinsert on it must be dump-only
+             (DIVINS_THRESH > 1, DIVINS_DUMP=1). CPU tail arms + official scoring: tools/trainlab.py.
+DIVINS_DUMP=1 needs --lab on every base. --owner / --out-dir set the metadata owner and the folder under experiments/.
 """
 import argparse
 import hashlib
@@ -97,6 +103,7 @@ BASES = {
              "config": 2, "predict": 4, "divnet": None, "post": 5,
              "patches": ("divinsert", "leafprune", "safetail")},
 }
+BASES["x138"]["patches"] += ("trainlab",)  # exp60 train lab (--lab only)
 CELL = dict(BASES["exp39"])  # the active base's cell indices; main() sets it from --base before any patch runs
 
 
@@ -1462,9 +1469,129 @@ def patch_safetail(cells_src: dict) -> None:
     cells_src[post] = c
 
 
+# ---- trainlab (ideas workflow v3 E4 = C06, TASK_CLOUD_SESSION.md T5; x138 base, --lab only): x138 on TRAIN videos ----
+# The predict cell points TEST_DIR at a /tmp folder of zarr symlinks to this shard's train stems (so the retention
+# guard, the final checks and read_test_frame all see exactly these videos, and no .geff sits next to them as on the
+# hidden test); the post-processing cell records three graph snapshots per dataset and the safe-division DeepCenter
+# scores (tools/trainlab_io.py, embedded verbatim) for the CPU tail replay in tools/trainlab.py. BIOHUB_TRAINLAB_DUMP=0
+# makes every hook return at once (the graph and the CSV are the base's).
+TRAINLAB_STEMS: list[str] = []  # main() fills it from --train-stems before the patches run
+TRAINLAB_SPLITS = ROOT / "experiments/l2_daughternet/splits.json"  # its "folds" keys = the 199 train stems
+_TL_STEMS_ANCHOR = "test_stems = list_test_stems()" + NL
+_TL_DC_ANCHOR = "DEEPCENTER_VETO_DETECTOR = load_deepcenter_veto_detector()" + NL
+_TL_DC_CALL = "    score = deepcenter_score_point(dataset, int(t), point, detector_bundle, frame_cache, heatmap_cache)" + NL
+_TL_PRESAFE_ANCHOR = ("    edges = add_safe_divisions_postlink(" + NL + "        nodes_by_id," + NL + "        edges," + NL
+                      + "        stats," + NL + "        dataset=dataset," + NL)
+_TL_PRESHORT_ANCHOR = "    nodes_by_id, edges = filter_short_track_components(nodes_by_id, edges, stats)" + NL
+_TL_FINAL_ANCHOR = '    print(f"  [{dataset}] FINAL: {len(nodes_by_id)} nodes, {len(edges)} edges | {_time.time() - _stage_t0:.1f}s")' + NL
+
+
+def trainlab_hook_line(stage: str) -> str:
+    return f'    trainlab_hook("{stage}", dataset, nodes_by_id, edges, stats, deepcenter_bundle, _stage_t0)' + NL
+
+
+TRAINLAB_DC_WRAP = r'''# ---- trainlab (tools/build_probe_kernel.py --patch trainlab): record the safe-division DeepCenter scores so the
+# threshold arms replay on CPU (tools/trainlab.py); BIOHUB_TRAINLAB_DUMP=0 -> the original function stays in place ----
+if TRAINLAB_DUMP:
+    _trainlab_dc_score_orig = deepcenter_score_point
+
+    def deepcenter_score_point(dataset, t, point, detector_bundle, frame_cache, heatmap_cache):
+        score = _trainlab_dc_score_orig(dataset, t, point, detector_bundle, frame_cache, heatmap_cache)
+        trainlab_record_dc(t, point, score)
+        return score
+
+
+'''
+
+TRAINLAB_SUMMARY = r'''# ---- trainlab summary (tools/build_probe_kernel.py --patch trainlab) ----
+if TRAINLAB_DUMP:
+    _tl_written = sorted(TRAINLAB_STATE["written"])
+    _tl_missing = sorted(set(test_stems) - set(_tl_written))
+    _tl_cache = Path(os.environ.get("BIOHUB_CACHE_DIR", "") or "/nonexistent")
+    _tl_divins = Path(str(globals().get("DIVINS_DUMP_DIR", "/nonexistent")))
+    _tl_summary = {
+        "stems": list(test_stems), "written": _tl_written, "missing": _tl_missing,
+        "failed_hooks": int(TRAINLAB_STATE["failed"]), "pending": sorted(TRAINLAB_STATE["pending"]),
+        "lowdet_npz": sorted(p.stem for p in _tl_cache.glob("*.npz")) if _tl_cache.is_dir() else [],
+        "divins_npz": sorted(p.stem for p in _tl_divins.glob("*.npz")) if _tl_divins.is_dir() else [],
+        "predict_seconds": round(float(globals().get("predict_seconds", float("nan"))), 1),
+        "kernel_elapsed_s": round(time.time() - float(os.environ.get("BIOHUB_KERNEL_START_TS", "0") or 0), 1),
+        "gpu_shard_env": os.environ.get("BIOHUB_TRAINLAB_SHARD", ""),
+    }
+    TRAINLAB_DIR.mkdir(parents=True, exist_ok=True)
+    (TRAINLAB_DIR / "manifest.json").write_text(json.dumps(_tl_summary, indent=1))
+    print("TRAINLAB SUMMARY " + json.dumps({k: v for k, v in _tl_summary.items() if k != "stems"}), flush=True)
+    if _tl_missing or _tl_summary["failed_hooks"]:
+        print(f"TRAINLAB INCOMPLETE: missing {_tl_missing}, failed hooks {_tl_summary['failed_hooks']}", flush=True)
+else:
+    print("TRAINLAB: dump disabled (BIOHUB_TRAINLAB_DUMP=0)")
+'''
+
+
+def trainlab_cell() -> str:
+    tools_dir = Path(__file__).resolve().parent
+    return ("# ---- trainlab (tools/build_probe_kernel.py --patch trainlab): exp60 x138 train lab, graph snapshots." + NL
+            + "# Embedded verbatim: tools/trainlab_io.py (the laptop replay tools/trainlab.py reads with the same code)." + NL
+            + "from __future__ import annotations" + NL + NL
+            + _embed_module(tools_dir / "trainlab_io.py") + NL
+            + 'print(f"TRAINLAB: dump={int(TRAINLAB_DUMP)} dir={TRAINLAB_DIR}", flush=True)' + NL)
+
+
+def trainlab_stems_block(stems: list[str]) -> str:
+    return ("# ---- trainlab (tools/build_probe_kernel.py --patch trainlab): x138 on the TRAIN videos of this shard. TEST_DIR" + NL
+            + "# -> a /tmp folder of zarr symlinks (no .geff next to them, as on the hidden test), so every later reader of" + NL
+            + "# TEST_DIR (predict script, read_test_frame, retention guard, final checks) sees exactly these videos." + NL
+            + "TRAINLAB_STEMS = [" + NL + "".join(f"    {s!r},{NL}" for s in stems) + "]" + NL
+            + '_trainlab_src = COMP_DIR / "train"' + NL
+            + "_trainlab_missing = [s for s in TRAINLAB_STEMS if not (_trainlab_src / f'{s}.zarr').is_dir()]" + NL
+            + "if _trainlab_missing or not TRAINLAB_STEMS or len(set(TRAINLAB_STEMS)) != len(TRAINLAB_STEMS):" + NL
+            + "    raise FileNotFoundError(('trainlab stems missing in train/ or duplicated', _trainlab_missing))" + NL
+            + 'TEST_DIR = Path(tempfile.gettempdir()) / "trainlab_test_dir"' + NL
+            + "shutil.rmtree(TEST_DIR, ignore_errors=True)" + NL
+            + "TEST_DIR.mkdir(parents=True)" + NL
+            + "for _trainlab_stem in TRAINLAB_STEMS:" + NL
+            + "    os.symlink(_trainlab_src / f'{_trainlab_stem}.zarr', TEST_DIR / f'{_trainlab_stem}.zarr', target_is_directory=True)" + NL
+            + 'print(f"TRAINLAB: TEST_DIR -> {TEST_DIR} ({len(TRAINLAB_STEMS)} train videos, zarr symlinks)", flush=True)' + NL)
+
+
+def patch_trainlab(cells_src: dict) -> None:
+    """exp60 lab (x138 base, --lab only): predict cell -> this shard's train stems (TRAINLAB_STEMS from --train-stems);
+    a new cell before the post-processing cell with tools/trainlab_io.py; post-processing cell: the DeepCenter score
+    recorder (a wrapper of deepcenter_score_point, only when BIOHUB_TRAINLAB_DUMP != 0) and three one-line hooks in
+    filter_output_graph (before add_safe_divisions_postlink, before filter_short_track_components, before the FINAL
+    print = after linefit and after the divinsert call); a new cell after it writes trainlab/manifest.json."""
+    if not TRAINLAB_STEMS:
+        raise SystemExit("--patch trainlab needs --train-stems")
+    pred, post = CELL["predict"], CELL["post"]
+    cells_src[pred] = _rep1(cells_src[pred], _TL_STEMS_ANCHOR, trainlab_stems_block(TRAINLAB_STEMS) + _TL_STEMS_ANCHOR)
+    c = cells_src[post]
+    assert c.count("def deepcenter_score_point(") == 1 and c.count(_TL_DC_CALL) == 1, "x138 DeepCenter scorer changed"
+    c = _rep1(c, _TL_DC_ANCHOR, TRAINLAB_DC_WRAP + _TL_DC_ANCHOR)
+    c = _rep1(c, _TL_PRESAFE_ANCHOR, trainlab_hook_line("presafe") + _TL_PRESAFE_ANCHOR)
+    c = _rep1(c, _TL_PRESHORT_ANCHOR, trainlab_hook_line("preshort") + _TL_PRESHORT_ANCHOR)
+    c = _rep1(c, _TL_FINAL_ANCHOR, trainlab_hook_line("final") + _TL_FINAL_ANCHOR)
+    cells_src[post] = c
+    cells_src.setdefault(NEW_CELLS_KEY, []).append((pred, trainlab_cell()))
+    cells_src.setdefault(NEW_CELLS_KEY, []).append((post, TRAINLAB_SUMMARY))
+
+
+def trainlab_parse_stems(spec: str) -> list[str]:
+    """--train-stems: 'a,b,c' or '@path/split.json:SHARD' (the shard's list in split.json["shards"])."""
+    if spec.startswith("@"):
+        path, _, shard = spec[1:].rpartition(":")
+        if not path or not shard:
+            sys.exit(f"--train-stems {spec!r}: use @path/to/split.json:SHARD")
+        split = json.loads((ROOT / path if not Path(path).is_absolute() else Path(path)).read_text(encoding="utf-8"))
+        if shard not in split.get("shards", {}):
+            sys.exit(f"--train-stems: shard {shard!r} not in {path} (have {sorted(split.get('shards', {}))})")
+        return [str(s) for s in split["shards"][shard]]
+    return [s.strip() for s in spec.split(",") if s.strip()]
+
+
 PATCHES = {"gshift": patch_gshift, "divinsert": patch_divinsert, "leafprune": patch_leafprune,
            "edgefilter": patch_edgefilter, "stitch": patch_stitch, "swapfix": patch_swapfix,
            "coordhead": patch_coordhead, "floatout": patch_floatout, "safetail": patch_safetail}
+PATCHES["trainlab"] = patch_trainlab
 META_PATCHES = {"divinsert": meta_divinsert, "coordhead": meta_coordhead}
 
 
@@ -1688,9 +1815,15 @@ def main() -> None:
     ap.add_argument("--push", action="store_true")
     ap.add_argument("--lab", action="store_true",
                     help="dummy/lab build, never a submission: allows DIVINS_DUMP=1, DIVINS_FORCE_FAIL and any REPAIR_DEADLINE_S")
+    ap.add_argument("--train-stems", default="",
+                    help="--patch trainlab: comma-separated TRAIN stems or @path/split.json:SHARD")
+    ap.add_argument("--owner", default="vitaliineibauer", help="Kaggle owner in kernel-metadata.json id")
+    ap.add_argument("--out-dir", default="", help="output folder relative to experiments/ (default: the name)")
     a = ap.parse_args()
     if not re.fullmatch(r"[a-z0-9][a-z0-9_-]+", a.name):
         sys.exit("name must be lowercase letters/digits/_/-")
+    if not re.fullmatch(r"[a-z0-9][a-z0-9_-]*", a.owner):
+        sys.exit("--owner must be a Kaggle user name")
     base = BASES[a.base]
     CELL.clear()
     CELL.update(base)
@@ -1733,6 +1866,32 @@ def main() -> None:
             sys.exit(f"LOWREFINE_ENABLE must be 0 or 1, got {overrides['BIOHUB_LOWREFINE_ENABLE']!r}")
     if overrides.get("BIOHUB_DIVINS_FORCE_FAIL", "0") != "0" and not a.lab:
         sys.exit("DIVINS_FORCE_FAIL is a dummy test knob: needs --lab")
+    if overrides.get("BIOHUB_DIVINS_DUMP", "0") != "0" and not a.lab:
+        sys.exit("DIVINS_DUMP=1 is for --lab builds only")
+    if "trainlab" in a.patch:
+        if a.base != "x138":
+            sys.exit("--patch trainlab needs --base x138")
+        if not a.lab:
+            sys.exit("--patch trainlab is a lab kernel (train videos, dumps): needs --lab")
+        TRAINLAB_STEMS[:] = trainlab_parse_stems(a.train_stems)
+        known = set(json.loads(TRAINLAB_SPLITS.read_text(encoding="utf-8"))["folds"])
+        unknown = sorted(set(TRAINLAB_STEMS) - known)
+        if not TRAINLAB_STEMS or unknown or len(set(TRAINLAB_STEMS)) != len(TRAINLAB_STEMS):
+            sys.exit(f"--patch trainlab needs --train-stems of distinct train stems; unknown {unknown}")
+        if overrides.get("BIOHUB_VALIDATOR_ENABLE", "0") != "0":
+            sys.exit("--patch trainlab: the validator / PP sweep stay off (VALIDATOR_ENABLE=0)")
+        if "divinsert" in a.patch and overrides.get("BIOHUB_DIVINS_ENABLE", "0") != "0":
+            try:
+                _tl_thresh = float(overrides.get("BIOHUB_DIVINS_THRESH", "0.5"))
+            except ValueError:
+                sys.exit("DIVINS_THRESH must be a number")
+            if not _tl_thresh > 1.0 or overrides.get("BIOHUB_DIVINS_DUMP", "0") == "0":
+                sys.exit("--patch trainlab runs divinsert dump-only: DIVINS_THRESH > 1 and DIVINS_DUMP=1")
+        overrides.setdefault("BIOHUB_TRAINLAB_DUMP", "1")
+    elif a.train_stems:
+        sys.exit("--train-stems needs --patch trainlab")
+    if "BIOHUB_TRAINLAB_DUMP" in overrides and "trainlab" not in a.patch:
+        sys.exit("TRAINLAB_DUMP needs --patch trainlab")
     if any(k.startswith("BIOHUB_DIVINS_") for k in overrides) and "divinsert" not in a.patch:
         # without the patch no code reads these knobs: the probe would silently be exp39
         sys.exit("DIVINS_* knobs need --patch divinsert")
@@ -1923,8 +2082,10 @@ def main() -> None:
 
     for i in code:
         compile(src(i), f"cell{i}", "exec")
-    out_dir = ROOT / "experiments" / a.name
-    out_dir.mkdir(exist_ok=True)
+    out_dir = ROOT / "experiments" / (a.out_dir or a.name)
+    if not re.fullmatch(r"[A-Za-z0-9_-]+(/[A-Za-z0-9_-]+)*", a.out_dir or a.name):
+        sys.exit("--out-dir: a relative path under experiments/")
+    out_dir.mkdir(parents=True, exist_ok=True)
     nb_name = a.name.replace("_", "-") + ".ipynb"
     if base["compact"]:
         # x138's own serialisation (Kaggle export): compact separators; json.loads -> dumps reproduces it byte for byte
@@ -1933,7 +2094,7 @@ def main() -> None:
         json.dump(nb, open(out_dir / nb_name, "w", encoding="utf-8"), indent=1, ensure_ascii=False)
     meta = json.load(open(base["dir"] / "kernel-metadata.json"))
     slug = "biohub-" + a.name.replace("_", "-")
-    meta["id"] = "vitaliineibauer/" + slug
+    meta["id"] = a.owner + "/" + slug
     meta["title"] = slug
     meta["code_file"] = nb_name
     for name in a.patch:
@@ -1951,6 +2112,8 @@ def main() -> None:
     }
     if a.lab:
         probe["lab"] = "LAB/DUMMY BUILD (--lab): never submit"
+    if "trainlab" in a.patch:
+        probe["train_stems"] = list(TRAINLAB_STEMS)
     if a.base == "x138":
         probe["base"] = ("x138 verbatim = exp56 (anvithpothula/biohub-x138, author public 0.953; x138 datasets, docker pin "
                          "and machine shape); built by tools/build_probe_kernel.py --base x138")
