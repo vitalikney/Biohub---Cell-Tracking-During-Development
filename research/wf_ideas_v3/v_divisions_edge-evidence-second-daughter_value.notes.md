@@ -1,0 +1,12 @@
+# v_divisions_edge-evidence-second-daughter_value notes
+- 2026-09-25T10:56:08Z start; read BRIEF.md and sibling v_divisions_divins-x138-lab-retune_value.json (refuted, public +0.000)
+- 11:10 x138 nb cell 4: dump hooks `probs > _CACHE_THRESHOLD` AFTER final softmax(dim=0) (normalised over SOURCES per target; bidirectional harmonic 0.15 fused inside predict_edges). So p(u->v)=P(parent of v = u); sums to 1 per target, no null column.
+- v2 had the SAME idea (r1_hyp_divisions 'edge-net-second-daughter'), merged into oof-edge-scorer-full-candidates; all 3 verifiers refuted it (arith/feas/transfer). Transfer verdict: train_unet_transformer BCE supervises annotated rows/cols = exactly the evaluable pairs, incl. all 151 GT daughter edges -> lab p_edge on daughter edges is memorised.
+- CONTEXT l.85 exp12: ILP div 0.6 (lets edge-net pairwise evidence make forks) -> 24 TP / 103 FP (old metric, suspect; official likely lower) = precision <=0.19 < break-even 0.265, IN-SAMPLE. LB probe 3 ILP div 1.2->0.9: 0.941 neutral.
+- div-cap transfer verdict: insertion edge side already +5TP/+7FP in-sample (steals + 2nd daughter edges); CONF 466 insertions -> 15 evaluable (3%); SELECTION->CONF 33%, CONF->LB ~50%.
+- fork-midpoint: 43 FP forks = 19 added-child wrong / 15 ILP-child wrong (added right) / 9 both wrong -> only <=28/43 have a wrong added child that re-picking v could fix.
+- 11:25 linajea check (browser_research_2026-09-24_pass2.md l.172-180): the FP-div 0.89->0.11 gain comes from a NODE-level cell-state classifier as ILP constraints, in-distribution; not a pairwise edge score. Supports DaughterNet (already used), not p_edge.
+- Public anchor guess TP19/FP13/FN21 (r1_hyp_divisions.json), J=0.3585, U=53: FP->TP flip +0.0026, drop FP +0.0007, drop TP -0.0019 score.
+- Idea UB check: 8 eval x q0.6 = +0.0073 arithmetic OK, but #35 inserts only ~12 public forks and 3% (CONF 15/466) are evaluable -> ~0.4 evaluable, not 8.
+- MC (scratchpad/sim.py, 12 insertions, base q0.27): evaluable frac 0.03 -> mean +0.0001..+0.0004, P(>=+0.002) 0.02-0.12; frac 0.10 -> +0.0003..+0.0013, P 0.08-0.36; only frac>=0.3 AND in-sample-grade discrimination reaches +0.002 mean.
+- Verdict: REFUTED on value/transfer (public mean <= +0.001, in-sample p_edge on daughter edges, LB can't resolve).

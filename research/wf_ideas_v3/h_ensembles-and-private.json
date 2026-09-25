@@ -1,0 +1,259 @@
+{
+ "lens_summary": "Lens: ensembles, inference budget, private set. (1) There is NO spare inference budget to buy more seeds/views: our exp48/exp51-class submissions take ~7.5 h from submit to score (CONTEXT.md l.1488-1497; wf_ideas_v2 finals notes: #28 03:45->11:20), exp51 used 1,713 s on the 4 dummy clips (CONTEXT.md l.1424), and x138 has a hard-coded runtime guard: 27,000 s (7.5 h) after kernel start the repair loop switches off relink(+readmit), gap close, gap2, safe divisions and linefit for every remaining dataset (experiments/ext_x138/biohub-x138.ipynb cell 0 l.73, cell 5 l.10-45, l.2071-2116). Datasets are repaired in sorted-name order, so if the hidden run passes 7.5 h the LAST datasets (plausibly a whole embryo prefix, possibly private) lose the tail, which is worth ~0.025 per movie on the exp29 tail (RESULTS.md per-stage table: gap +0.013, divisions +0.0084, veto -0.0035, linefit +0.0145, relink -0.0067). One hidden run produces both public and private scores, so this can hit private while leaving public intact. That makes the guard the lens's biggest item: 0 on public in expectation, but a -0.005..-0.024 private loss avoided when it fires (scratchpad calc, see notes). exp57b (x138 + DaughterNet insertion) adds repair seconds outside the guard, so it reaches the 7.5 h line sooner than exp56. (2) Private transfer: the GT-vs-detection offset depends on the embryo (z bias with no head: 44b6 +0.18 um, 6bba +0.82 um; public head leaves +0.13 / +0.45; experiments/coordhead_retrain/out_full_P/report.txt). x138's node drop sits mostly on one dense 44b6 clip (-10.7%, DIFF.md s.4). And 41+ teams submit x138 byte-for-byte, so on private they will all move together. A structurally different F2 therefore pays: at mu=-0.002 the premium is +0.0008 for s=0.004 and +0.0015 for s=0.006, against +0.0002 for a near-copy (s=0.002). (3) Ensembles: TTA variants of the same model are closed (Z-flip/axis-flip ties). Blend weights are LB-sensitive (secondary weight 0.5 = 0.943 vs 0.945, CONTEXT.md l.356). Our own retrained detectors are worse (0.920 as secondary; fine-tunes 0.944/0.943). The only step-change-sized ensemble move left is a THIRD independently trained detector at a small blend weight. It has no honest local validation and costs GPU time, P(>= +0.002) ~0.2. (4) Fusing two tails on the shared ILP graph (x138 tail vs our tail; the pre-ILP output is identical, DIFF.md s.4) is capped by the 0.003 public gap between them. HONEST CEILING OF THE LENS: about +0.000..+0.004 public (expected ~+0.001) and +0.001..+0.004 expected private (insurance plus finals premium), with up to +0.01..+0.02 private protected in the bad case where the guard fires. Nothing in this lens reaches 0.99, or even 0.97. 0.99 would need adjusted edge ~0.96 plus division J ~0.3 on unseen embryos, beyond the current LB top (0.975). Of all four ideas, the budget-aware guard has the most expected value per slot.",
+ "challenged_assumptions": [
+  {
+   "assumption": "The x138 stack scores the same on private as on public, so an x138-based F1 is safe (the probe rule '#34 = 0.953 -> x138 is the new base').",
+   "why_doubtful": "x138 degrades its whole repair tail for every dataset processed after 27,000 s of kernel time. The repair loop runs in sorted-name order. One hidden run scores public and private together, so a firing guard can hit only private (or only public) datasets. 41 identical public 0.953 scores prove nothing about the datasets later in the order. Our comparable stack takes ~7.5 h from submit to score, right at the guard line. exp57b adds DaughterNet time inside the loop that the guard does not cover.",
+   "evidence": "experiments/ext_x138/biohub-x138.ipynb cell 0 l.70-74 (KERNEL_START_TS, REPAIR_DEADLINE_S=27000), cell 5 l.10-45 (_deadline_degrade: relink, gap close, gap2, safe divisions, linefit off), l.1929-1943 (readmit inside relink), l.2071 (sorted geffs), l.2115; CONTEXT.md l.1488-1497 (probe latencies ~7.5 h); tools/build_probe_kernel.py DIVINS_CALL (inside filter_output_graph)."
+  },
+  {
+   "assumption": "Extra seeds or TTA views can be added freely inside the 12 h limit (the 12 h limit is the binding budget).",
+   "why_doubtful": "For x138 the binding budget is the 7.5 h guard, not 12 h. Any extra GPU time pushes more datasets past the guard unless the guard is changed. Our exp51-class runs already take ~7.5 h from submit to score.",
+   "evidence": "x138 cell 0 l.73 comment '7.5 h after kernel start the repair loop degrades'; CONTEXT.md l.14 (0.941 pipeline ~6 h), l.1424 (exp51 1,713 s on 4 clips)."
+  },
+  {
+   "assumption": "The head's +0.007 on x138 is a localisation gain that transfers to unseen embryos.",
+   "why_doubtful": "Part of it is (a) embryo-specific annotation-offset correction: the public head learned a mixed z offset, while the true offset is +0.18 um for 44b6 and +0.82 um for 6bba, so on a new embryo the correction may be right or wrong. Part is (b) node-multiplier change concentrated on one dense 44b6 clip. On our base the head gave only +0.002. The private effect is therefore more uncertain than the public one, which argues for a structurally different F2, not a near-copy.",
+   "evidence": "experiments/coordhead_retrain/out_full_P/report.txt (bias rows 'none' per embryo-held-out direction); experiments/ext_x138/DIFF.md s.4 (-10.7% nodes on 44b6_0b24845f; readmit-v1 124,246 -> x138 121,219); CONTEXT.md l.1491-1497."
+  },
+  {
+   "assumption": "wf_ideas_v2: 'F2 = F1 + edge filter + stitch' is the right private hedge.",
+   "why_doubtful": "That rule was written for the exp48/exp51 era. With x138 as F1, the most structurally different scored file we already have is exp52 (our tail + head + float, 0.950). It costs no slot and has a different relink, readmit, gapfill and division logic. The edge filter was never run on x138 and would need a new build plus a slot.",
+   "evidence": "research/wf_ideas_v2/FINAL_REPORT.md s.2-3; CONTEXT.md l.1531 (resume block already hints 'F2 = exp51 if F1 is x138-based')."
+  }
+ ],
+ "browser_todo": [
+  "https://www.kaggle.com/code/vitaliineibauer/biohub-exp56-x138-verbatim (Logs tab of v1, our private kernel on the 4 dummy clips): copy every line with 'detection+edges', '] ILP ', 'repair ... | kernel elapsed', 'DEADLINE', the total run time, and the time from kernel start to the first 'repair' line. This splits the run into fixed cost, per-video GPU cost and per-video repair cost, to extrapolate the hidden run.",
+  "https://www.kaggle.com/code/vitaliineibauer/biohub-exp57b-x138-divins-only (Logs tab): the same lines plus every 'divinsert: ... sec cand/score/insert=' line (extra repair seconds per video from DaughterNet).",
+  "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/submissions : for #28-#35, the exact submit time and the time the score appeared. Latency is an upper bound on hidden-run time. If #34 (exp56) latency < 7.3 h the guard cannot have fired.",
+  "https://www.kaggle.com/code/anvithpothula/biohub-x138 (Logs tab of the public version): the author's per-stage timing on the dummy clips, to compare with ours (same hardware?).",
+  "https://www.kaggle.com/datasets/leonixis/biohub-v5-candidates : file list, config.json of the checkpoints (architecture name, window size, downsample (1,4,4)?, feature channels), license, which epoch was 'LB-picked', any README note on the LB score. Is it drop-in compatible with pilkwang TemporalUNet3D load_model()?",
+  "https://www.kaggle.com/datasets/georgexue666/biohub-precision-pool2-weights : architecture and output grid (pool 2 vs our (1,4,4) downsample), license. Can its heatmap be resampled onto our detection grid?",
+  "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/overview/code-requirements : the exact runtime limit (GPU 12 h?) and whether a timeout shows as an error on the submission.",
+  "Kaggle discussion search in this competition: 'timeout', 'runtime', 'hidden test size', 'number of test videos'. Extract any host statement on the hidden test clip count or runtime, and any report of x138 copies timing out or degrading."
+ ],
+ "hypotheses": [
+  {
+   "id": "x138-budget-aware-deadline",
+   "title": "Replace x138's fixed 7.5 h repair deadline with a budget-aware one (private-set insurance for an x138-based F1)",
+   "mechanism": "In x138 (and exp56/exp57b), every dataset whose repair starts more than 27,000 s after kernel start is written with relink (and readmit, nested inside it), gap close, gap2, safe divisions and linefit OFF. The repair loop visits datasets in sorted-name order, and one hidden run produces both public and private scores. Our comparable stack takes ~7.5 h from submit to score, so an x138 run of 7.5-8.5 h is plausible (guess). In that case the last 20-67% of datasets lose ~0.025 each (per-stage table on the exp29 tail). If those datasets are private, public shows nothing. exp57b adds DaughterNet seconds inside the loop that the guard does not cover, so it crosses the line sooner. The fix keeps the full tail as long as the real 12 h limit allows.",
+   "change": "New patch in tools/build_probe_kernel.py for --base x138, e.g. --patch deadline (knob BIOHUB_REPAIR_BUDGET_S, default 0 = no-op). In the repair loop (x138 cell 5 near l.2115), replace `_dataset_t0 - KERNEL_START_TS > REPAIR_DEADLINE_S` with a budget test: remaining = datasets not yet repaired; est = max(60 s, 1.3 x p90 of repair_seconds so far); degrade only if elapsed + remaining x est > BUDGET (39,600 s = 11 h). Keep a hard fallback at 41,400 s (11.5 h). Log the decision per dataset. Leave ILP_TIMEOUT 1200 s unchanged: it bounds the GPU phase. Apply to whichever x138-family file becomes F1 (exp56 or exp57b), and to F2 if that is x138-based.",
+   "evidence": [
+    {
+     "claim": "REPAIR_DEADLINE_S=27000, '7.5 h after kernel start the repair loop degrades'; ILP timeout 1200 s",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/experiments/ext_x138/biohub-x138.ipynb (cell 0 l.70-74)"
+    },
+    {
+     "claim": "_deadline_degrade switches off relink, gap close, gap2, safe divisions, linefit; readmit is nested in the relink branch; repair order = sorted geffs",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/experiments/ext_x138/biohub-x138.ipynb (cell 5 l.10-45, l.1929-1943, l.2071, l.2115)"
+    },
+    {
+     "claim": "Local stage values on the exp29 tail: gap +0.013, divisions +0.0084, veto -0.0035, linefit +0.0145, relink -0.0067 (sum of switched-off stages ~ -0.025/movie)",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/experiments/RESULTS.md (per-stage table of the public post-processing)"
+    },
+    {
+     "claim": "Scoring latency of our submissions ~7.5 h (#28 03:45->11:20; #31 17:09->00:39; #32/#33 00:02->~07:50)",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/CONTEXT.md l.1488-1497; research/wf_ideas_v2/r1_verify_finals-emax-diversify_feasibility.notes.md"
+    },
+    {
+     "claim": "exp51 dummy run 1,713 s on 4 clips; hidden test ~100-130 clips by scoring-time ratio (hosts: 'similar size to train')",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/CONTEXT.md l.14, l.1424; research/discussions_summary.md l.4"
+    },
+    {
+     "claim": "divinsert runs inside filter_output_graph after linefit and is not gated by the guard (adds per-dataset seconds)",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/tools/build_probe_kernel.py (DIVINS_CALL)"
+    },
+    {
+     "claim": "One notebook rerun on the full hidden set produces the submission scored for both leaderboards; a timeout is an error",
+     "source": "https://www.kaggle.com/docs/competitions (search snippet; page blocked)"
+    }
+   ],
+   "upper_bound": "Loss avoided = (share of private datasets degraded) x ~0.025. If the unguarded run would take T h with a repair loop of R h: T=8.0, R=1.5-2.5 -> 20-33% of all datasets -> private -0.007..-0.012 if they are all private (-0.005..-0.008 if spread). T=8.5 -> -0.014..-0.024 (scratchpad calc in notes). If T <= 7.5 h the gain is exactly 0 and the output is byte-identical.",
+   "expected_public_gain": "0 most likely (byte-identical unless public datasets were degraded); +0.005..+0.01 only if public datasets sit after the guard line. Expectation ~+0.0005 (guess: P(fire) 0.3 x P(public in the tail) 0.3 x 0.006).",
+   "expected_private_gain": "~+0.002 expected (guess: P(fire) ~0.3 x ~0.008 avoided loss); +0.005..+0.024 conditional on firing; never negative if the probe returns a valid score.",
+   "probability": "P(guard fires on the hidden run of exp56) ~0.3, of exp57b ~0.4 (guesses anchored on the ~7.5 h latencies of our stack and on the author choosing exactly 7.5 h). #34's latency moves this a lot: latency < 7.3 h -> P ~0 for exp56. The fix is weakly dominant: with no firing the file is byte-identical.",
+   "validation_protocol": "No lab needed; the gain cannot be in-sample because it changes no model or threshold. Pre-registered steps: (1) Dummy run: CSV sha256 must equal exp56's (exp57b's for the insertion variant). (2) A second dummy run with BIOHUB_REPAIR_BUDGET_S=1 must show 'DEADLINE' on the first dataset and a valid CSV, which proves the degrade path. (3) Read the exp56 dummy log (browser_todo) and extrapolate T = fixed + N x (GPU + repair) for N = 115 and 200. (4) LB probe: adopt as F1 if valid (no timeout) and public >= #34 - 0.001. A strictly higher public score means public datasets were being degraded. Kill: timeout error -> keep the original file.",
+   "resources": [
+    {
+     "who": "agent-container",
+     "hours": 1.0,
+     "what": "write --patch deadline for --base x138 + tests (no-op sha check)"
+    },
+    {
+     "who": "kaggle-vitalii",
+     "hours": 0.8,
+     "what": "two dummy runs (no-op + forced-degrade) after the 26 Sep 00:00 UTC quota reset"
+    },
+    {
+     "who": "agent-container",
+     "hours": 0.3,
+     "what": "extrapolate hidden runtime from exp56/exp57b dummy logs once the browser copies them"
+    }
+   ],
+   "wallclock_to_scored_probe_hours": 22,
+   "earliest_scored_probe_utc": "2026-09-26 ~09:00-11:00 UTC (build today; dummy runs 26 Sep 00:05-00:50; submit ~00:50; 8-10 h scoring). Could be 25 Sep ~20:00 if the user spends today's last slot and a GPU dummy run is available on Vitalii's account (currently ~0 GPU-h).",
+   "dependencies": "#34 (exp56) score and latency (expected 25 Sep 17-20 UTC) to pick the base; #35 decides whether the fix goes on exp56 or exp57b; the browser copy of the exp56/exp57b dummy logs for the runtime extrapolation.",
+   "risks": "(a) The longer tail pushes the run past 12 h. That shows as an error on the probe, not a silent final loss, and the 11 h budget plus the 11.5 h hard stop leave margin. (b) The budget estimator mispredicts if late datasets are much denser (p90 x 1.3 safety factor). (c) If the guard never fires, it costs a slot for a guaranteed tie. Mitigation: skip the probe if #34/#35 latency < 7.0 h. (d) Public cannot show the private benefit, so a tie is the expected and correct outcome.",
+   "not_closed_because": "Never examined. 'Runtime guard neutral alone on LB' (CONTEXT.md l.1431) was about public score and nobody measured when the guard fires. Earlier closures of relink/gap knobs do not apply: this keeps the author's exact tail and only moves the switch-off time.",
+   "needs_user_decision": "no (only the usual per-submission OK; the patch changes no model and uses no test information)"
+  },
+  {
+   "id": "finals-private-emax-x138-era",
+   "title": "Choose F1/F2 for private in the x138 era: guard-safe x138-family F1 plus our-tail exp52 as a structurally different F2",
+   "mechanism": "Kaggle scores a team by the better private score of its two finals. The expected premium of F2 over F1 is E[D+] = mu*Phi(mu/s) + s*phi(mu/s), where D is F2's private score minus F1's. Near-copies (exp56 vs exp57b differ by 12 forks; x138 vs x138+riders) have s ~0.001-0.002 and a premium <= 0.0002. exp52 (0.950: our relink, no readmit/gapfill, DivNet veto, leaf prune, DaughterNet, head, float coords) shares only the pre-ILP stage with x138, so s is larger. Evidence that private and public may differ for these stacks: the head's value depends on the embryo's annotation offset (44b6 +0.18 vs 6bba +0.82 um in z); x138's node drop is concentrated on one dense 44b6 clip; the head gave +0.007 on x138's base but +0.002 on ours. Also, 41+ teams hold x138 byte-for-byte, so an x138 private collapse (e.g. the guard) moves all of them together and F2 is the only escape. Rank value is therefore larger than the score premium.",
+   "change": "Pre-register now, before more scores arrive. F1 = the best x138-family file (exp57b if #35 > #34, else exp56), preferably its guard-safe rebuild (idea x138-budget-aware-deadline). F2 = exp52 (already scored 0.950) if public(exp52) >= public(F1) - 0.004. Otherwise F2 = the scored x138-family file with the most different tail. Never pick F2 as the higher of two near-copies (winner's curse). No slot needed. Do not tune F2 on public (for example, no exp52 + DeepCenter 0.25 rebuild). Keep it as an already scored file.",
+   "evidence": [
+    {
+     "claim": "E[D+] premium: mu -0.002 -> +0.0008 (s 0.004), +0.0015 (s 0.006); mu -0.003 -> +0.0005/+0.0012; near-copy s 0.002 -> +0.0002",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/research/wf_ideas_v3/h_ensembles-and-private.notes.md (scratchpad calc); formula from research/wf_ideas_v2/FINAL_REPORT.md s.2"
+    },
+    {
+     "claim": "GT-vs-detection z bias with no head: 44b6 +0.177 um, 6bba +0.824 um; public head leaves +0.131 / +0.447",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/experiments/coordhead_retrain/out_full_P/report.txt (emb_6bba_to_44b6, emb_44b6_to_6bba)"
+    },
+    {
+     "claim": "x138 node drop vs readmit-v1 124,246 -> 121,219; exp51 vs exp48 -2.9%, mostly 44b6_0b24845f -10.7%",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/experiments/ext_x138/DIFF.md s.4"
+    },
+    {
+     "claim": "Head +0.007 on x138's base vs +0.002 on ours (exp51 0.950 vs exp48 0.948); 41 teams at exactly 0.953",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/CONTEXT.md l.1488-1497; research/browser_research_2026-09-24_pass2.md s.4"
+    },
+    {
+     "claim": "Community: public notebooks overfit the public LB, a private shake-up is expected; CV and LB decoupled near the top",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/research/discussions_summary.md (739570, 740103, 741651)"
+    }
+   ],
+   "upper_bound": "Premium <= s*phi(0) = 0.40*s. With s = 0.006 (guess for structurally different tails on an unseen embryo) the premium is <= +0.0024. 0 on public by construction.",
+   "expected_public_gain": "0 (a finals choice among scored files)",
+   "expected_private_gain": "+0.0005..+0.0015 in score (mu -0.003..-0.002, s 0.004-0.006; guesses). The rank gain is larger because the x138 copy cluster moves together.",
+   "probability": "Premium >= 0 always, since Kaggle takes the max. P(F2 is the one that counts) ~0.25-0.35 (Phi(mu/s) at mu -0.002, s 0.004-0.006).",
+   "validation_protocol": "Pre-register the rule in CONTEXT.md before #34/#35 score (the in-sample trap here is choosing by public score among near-copies). Estimate s from existing pairs of structurally different scored files (e.g. exp48 vs x138-family, exp39 vs exp49/50) and from the embryo-level lab spread (per-embryo deltas in edge_anatomy reports). No LB slot.",
+   "resources": [
+    {
+     "who": "agent-container",
+     "hours": 0.5,
+     "what": "write the pre-registered finals rule and the E[D+] table into CONTEXT.md"
+    }
+   ],
+   "wallclock_to_scored_probe_hours": 0,
+   "earliest_scored_probe_utc": "n/a: exp52 is already scored (0.950); F1 candidates #34/#35 score ~2026-09-25 17:00-20:00 UTC",
+   "dependencies": "#34/#35 results; idea x138-budget-aware-deadline for the guard-safe F1",
+   "risks": "If exp52 is truly worse on private by >= 0.004, F2 simply does not count (no loss). The only risk is using F2 on a near-copy and wasting the hedge. The user must tick both finals by hand by 29 Sep 20:00 UTC.",
+   "not_closed_because": "Re-derivation of the v2 finals rule for the new base; v2 assumed exp51/48 as F1 and an edge-filter F2 that was never built on x138.",
+   "needs_user_decision": "yes: the user ticks the two finals; the rule should be agreed now so it is not driven by the last public scores."
+  },
+  {
+   "id": "third-detector-heatmap-blend",
+   "title": "Add a third, independently trained detector to x138's detection blend (model-diversity ensemble), paid for by the budget-aware guard",
+   "mechanism": "x138's detections come from a heatmap blend: 0.2 x primary (support pack 50ep) + 0.8 x secondary (seed314159), each with 8-view TTA, plus a retention guard. Both are pilkwang models. Averaging an independently trained third detector lowers peak-position variance and cuts spurious single-model peaks. That is what the dual-seed blend did (mige551: -1.7% nodes and better precision; the dual-seed blend is part of the heuristics worth +0.046 on unseen embryos). It targets the lab's two biggest FN classes: ~31% of FN involve a node never detected, and ~2,700 swap FN are node-position errors (oracle +0.03-0.046). Top teams report their gains came from the detector. This is the only step-change-sized lever under the ensemble lens.",
+   "change": "In the predict-script patch cell (x138 cell 4), load a third TemporalUNet3D-compatible checkpoint. First candidate: leonixis/biohub-v5-candidates (all 199 videos, 60 ep; alone 0.947 on Harmonic Fusion); fallback: friend A's all-199 scratch primary. Blend det = 0.2 P + (0.8 - w) S + w T with w = 0.2, using 4-view TTA for T to limit cost. The retention guard also covers T. Head, edge features and edge scorer stay on the primary's features. Must ship with the budget-aware guard (idea 1), since it adds ~15-30% of GPU time (guess).",
+   "evidence": [
+    {
+     "claim": "x138 blend: SECONDARY_DETECTION_WEIGHT 0.80, secondary edge weight 0.15, retention guard 0.90, 8-view TTA",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/experiments/ext_x138/biohub-x138.ipynb (cell 3 l.651-660, cell 4 l.12-160)"
+    },
+    {
+     "claim": "mige551 (rank 34): two-seed blend reduced nodes 1.7% and helped (model diversity -> precision)",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/research/browser_research_2026-09-24.md (forum table, /discussion/730924)"
+    },
+    {
+     "claim": "dual-seed blend + DeepCenter veto + short-track filter + safe divisions worth +0.046 on unseen embryos; secondary detection weight 0.5 = 0.943 (negative vs 0.945)",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/CONTEXT.md l.355-356"
+    },
+    {
+     "claim": "leonixis all-199 60 ep retrain = 0.947 alone (at the wall); easonyanyan precision detector team = 0.950",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/research/browser_research_2026-09-24_pass2.md s.3-4"
+    },
+    {
+     "claim": "~31% of FN involve a node the detector never produced; swap FN = node-position errors, oracle +0.03-0.046",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/research/wf_ideas_v3/BRIEF.md s.1; experiments/l2_daughternet/edge_anatomy/"
+    },
+    {
+     "claim": "Our own detectors are worse: all-199 scratch as secondary 0.920; fine-tuned primaries 0.944/0.943",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/research/wf_ideas_v3/BRIEF.md s.1"
+    }
+   ],
+   "upper_bound": "Guess: if the third model removed 10% of the never-detected FN and 10% of the swap-type position errors, that would be ~+0.003-0.005 on the edge term. A realistic ceiling for a 3-model blend over a 2-model blend is ~+0.004 public (diminishing returns: the second seed already took most of the diversity gain).",
+   "expected_public_gain": "-0.003..+0.004, mean ~+0.0005 (guess; blend-weight changes have been LB-negative before: 0.5 weight -> -0.002)",
+   "expected_private_gain": "similar to public, with more variance; a genuinely more diverse detector should generalise better to an unseen embryo than a public-tuned tail knob (argument, not evidence)",
+   "probability": "P(>= +0.002 on public) ~0.2; P(negative) ~0.4 (guesses: TTA/blend changes transferred poorly so far, and leonixis' model alone is no better than the public one)",
+   "validation_protocol": "No honest local validation is possible: every candidate model saw all 199 train videos, so the lab is in-sample. Do NOT run a lab sweep of w. Pre-registered gates before spending a slot: (a) compatibility (config matches load_model, window/downsample identical); (b) dummy run: final node count within +-1.5% of exp56 and retention-guard fallbacks < 5% of frames; (c) projected hidden runtime from the dummy log < 10 h. LB: adopt only if public >= F1 + 0.003 (the noise floor). Otherwise it can serve as F2 only if its structure differs enough (not recommended).",
+   "resources": [
+    {
+     "who": "agent-container",
+     "hours": 3.0,
+     "what": "third-model loading + blend patch for --base x138, tests"
+    },
+    {
+     "who": "kaggle-vitalii",
+     "hours": 1.0,
+     "what": "dummy run with the third model (26 Sep)"
+    },
+    {
+     "who": "agent-container",
+     "hours": 0.3,
+     "what": "browser check of the leonixis dataset (via the user's browser)"
+    }
+   ],
+   "wallclock_to_scored_probe_hours": 28,
+   "earliest_scored_probe_utc": "2026-09-26 ~16:00-18:00 UTC (build 25 Sep evening after the browser check; dummy run 26 Sep morning; submit ~07:00; 8-10 h scoring)",
+   "dependencies": "browser_todo (leonixis config/license); idea x138-budget-aware-deadline (otherwise the extra GPU time pushes more datasets past the 7.5 h guard); #34 as base",
+   "risks": "12 h timeout (visible on the probe); node-count shift (the LB node trap); architecture mismatch; a license that forbids use (public CC0/Apache needed); one slot spent on a low-probability idea.",
+   "not_closed_because": "The closed TTA lines were extra VIEWS of the same two models. The 0.920 result REPLACED the secondary at weight 0.8 with a much weaker model. Neither tested ADDING an independently trained, equally good model at a small weight.",
+   "needs_user_decision": "yes: ~4 h agent + 1 GPU-h + one slot on a ~0.2-probability idea, plus a license check of a third-party dataset."
+  },
+  {
+   "id": "two-tail-consensus",
+   "title": "Fuse the x138 tail and our tail on the shared ILP graph (edge consensus, geometry tie-break)",
+   "mechanism": "exp51 and x138 have identical pre-ILP coordinates and raw ILP graphs (121,777 nodes / 114,927 edges on the dummies). They differ only in the post-ILP tail: flow-prior relink + readmit + gapfill + DeepCenter 0.25 for x138; plain relink + DivNet veto + leaf prune + DaughterNet for ours. Where the two tails give a target node the same parent, the edge is robust. Where they disagree, one tail is wrong. A per-node vote with a third, cheap voter (x138 tail with flow prior off) plus a geometry tie-break (multi-frame motion residual) could keep the better choice per node. That is edge voting across stacks without a second GPU pass.",
+   "change": "In one x138 kernel, run both tails on each dataset's ILP graph: x138's tail and ours, ported from exp48's cell 8 as a function. Take x138's graph and, for target nodes whose parent differs, use the majority of three tails. Ties go to the smaller 3-frame motion residual. Nodes are never added or removed (so node count equals x138's), and forks are kept from x138 (+DaughterNet if #35 wins).",
+   "evidence": [
+    {
+     "claim": "Pre-ILP coordinates and raw ILP counts of exp51 identical to x138's run",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/experiments/ext_x138/DIFF.md s.4"
+    },
+    {
+     "claim": "Public: x138 0.953 vs exp51 0.950 (tails differ only); flow relink/readmit/gapfill neutral alone on the head-less base",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/CONTEXT.md l.1424-1432, l.1491-1497"
+    },
+    {
+     "claim": "Rules that override the relink with the ILP/edge network gave 0 on LB (#29 0.947, #30 0.946); swap re-assignment rule -0.00004",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/CONTEXT.md l.1438-1452, l.1409-1416"
+    },
+    {
+     "claim": "Forum: linker-only changes give ~+0.001 on LB while CV moves 0.01-0.03",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/research/discussions_summary.md (739685)"
+    }
+   ],
+   "upper_bound": "Bounded by the disagreement set. The whole-tail public gap is 0.003, so per-node selection can at most recover the part of that gap where our tail is right plus the part where x138 is wrong: guess <= +0.002..+0.003 public.",
+   "expected_public_gain": "0..+0.002 (guess, mean ~+0.0005)",
+   "expected_private_gain": "0..+0.002; voting reduces the variance of tail-specific failures on an unseen embryo (argument)",
+   "probability": "~0.25 that it beats x138 by >= 0.001 on public (linker-class changes have transferred at ~+0.001 at best)",
+   "validation_protocol": "Needs friend A's x138 lab cache (planned in PROMPT_FRIEND_A.md). The vote uses no network confidence, only tail outputs and geometry, so the in-sample discount is smaller, but relink tails were still tuned on train. Gate: +0.002 on BOTH embryos in the lab, >= 55% wins among changed videos, node count identical. Only then a probe, adopt at >= F1 + 0.002.",
+   "resources": [
+    {
+     "who": "friend-a-5070ti",
+     "hours": 6,
+     "what": "x138 lab cache on 199 videos (already planned) + two extra tail runs"
+    },
+    {
+     "who": "agent-container",
+     "hours": 4,
+     "what": "port our tail as a function into the x138 post cell; vote logic; replay script"
+    },
+    {
+     "who": "kaggle-vitalii",
+     "hours": 0.6,
+     "what": "dummy run"
+    }
+   ],
+   "wallclock_to_scored_probe_hours": 48,
+   "earliest_scored_probe_utc": "2026-09-27 ~12:00-14:00 UTC at the earliest (friend A availability uncertain)",
+   "dependencies": "#34 (x138 as base); friend A's x138 lab cache; idea x138-budget-aware-deadline (a second tail roughly doubles repair seconds per dataset, so the 7.5 h guard fires sooner)",
+   "risks": "Doubles repair time (guard/timeout); lab optimism (tails tuned on train); the gain is likely below the 0.003 LB noise and cannot be confirmed with one probe.",
+   "not_closed_because": "The edge-filter/stitch closures used network confidence to override the relink. This vote uses agreement between two independently designed tails, a different mechanism. It is still weak, and is listed because it is the only no-GPU fusion that combines our stack with x138.",
+   "needs_user_decision": "no (lab-gated); recommend doing it only if friend A's x138 cache exists by 26 Sep evening"
+  }
+ ]
+}

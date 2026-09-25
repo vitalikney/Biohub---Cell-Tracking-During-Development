@@ -1,0 +1,9 @@
+# v_metric-math fork-fp-removal-x138 value notes
+- 2026-09-25 ~11:10 UTC: read BRIEF; read v2 r1_research_fork-midpoint-filter.json and its 3 verifies (all refuted as spec'd; repaired safe-div-only 4.5 um -> public +0.0005..+0.0009, not LB-visible).
+- 11:20 UTC: x138 notebook (experiments/ext_x138/biohub-x138.ipynb cell 0): safe-div gates 9/14/0.6/2.25/10/0.0076/0.00375 IDENTICAL to exp39/exp48; only DeepCenter 0.25 (vs 0.20) and no DivNet veto; OUTPUT_DIVISION_GEOMETRY_FILTER default 0 (off). So exp39 audit is the right proxy population; "none of our fork hygiene" is empty: exp48/51 never had forkmid either.
+- Numbers check: idea's "25% of 43 FP" is the 4.0 um figure (11/43). At the proposed 4.5 um: 6 FP / 0 TP = 14% (v2 r1_research_fork-midpoint-filter.json). 44b6 share at 4.0 was 1/10 FP; at 4.5 <=1. Lab score at 4.5: 23/194 -> 23/188 = +0.00037.
+- Metric: pooled div J (metrics.md l.142). Per removed FP 0.1*J/D; per lost TP 0.1*J/TP... (1/D); lost TP = 2.8 removed FP at J .36. Closed form expected gain = 0.1*f*J*(1-J/r), r = public recall. J_pub 0.36 with precision p needs 1/r = 1/J+1-1/p: p=0.5->r .56, p=.4->r .78; safe-div funnel passes only 35/151 GT on GT coords in lab => r > .55 implausible => public FP small (~0.4 G).
+- MC (scratch /tmp/claude-0/sp/mc.py; J .30-.38, G 15-50, f .03-.25, q_TPloss .2-3%/TP): broad r<=.7: mean +0.0012, P(>=.002) .29, P(<0) .15. Plausible r<=.55, f .03-.2: mean +0.0004..+0.0005, p10 -0.0016, p90 +0.0023, P(>=.002) .13-.14, P(<0) .17-.18. f=25% (idea's number): mean +0.0026 -> the idea's 'visible' case rests on the 4.0 fraction. 44b6-like f 0-.1: mean 0.000.
+- Private (J .10-.20, G 50-150, r<=.35): mean +0.0005, p10 -0.0003, p90 +0.0013.
+- No x138 dummy outputs/lab cache in container (out_exp56 not present) -> cannot measure x138 fork mids here.
+- 11:30 UTC: final JSON written (refuted: public EV ~+0.0005, P(>=.002) ~.14).

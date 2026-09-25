@@ -1,0 +1,279 @@
+{
+ "lens_summary": "Training-free node quality, honestly bounded. (1) Sub-voxel refinement is mostly spent. The detector peaks on a (1,4,4) grid, 1.625 um isotropic (experiments/ext_x138/DIFF.md). Its peak-to-GT error is 1.69 um; the public V1284 head brings it to 1.53 um (experiments/coordhead_retrain/out_full_P/report.txt). The detect head is a 1x1 Conv3d on the 32-channel UNet features (tools/repo/scripts/train_unet_transformer.py l.444), so the head's 224-d stencil already contains the logit differences a parabolic heatmap fit would use: that fit is subsumed. Removing all xy quantisation is worth <= +0.001-0.002 before linefit, and <= +0.0005 on top of the head (research/wf_ideas_v2/r1_verify_polyphase-shift-stitch-localisation_arithmetic.notes.md). On the forum, one sub-voxel peak refinement scored +0.0078 locally and -0.002 on the LB, twice (research/discussions_summary.md l.357). (2) The +0.03-0.046 swap oracle is NOT a localisation ceiling. In a swap, the GT node sits 4.4/4.7 um from two of our tracks that are 9.4 um apart. That is beyond the head's 2 um bound, and most 4-6 um holes lie on the same imaged blob as our node (no intensity valley) (experiments/l2_daughternet/edge_anatomy/l6_fn_anatomy_report.md s.3; research/wf_ideas_v2/r1_research_hole-fill-sandwich.notes.md). It reads as a convention/annotation gap, not something a GT-free shift can reach. (3) The only class this lens can reach at scale is MISSING NUCLEI: a_never, 1,907 FN = 28% of FN, lab ceiling +0.014; 6bba holds 1,740 of them and the densest quartile carries 52% of the loss (experiments/l2_daughternet/edge_anatomy/fn_anatomy_exp39.md; research/wf_ideas_v2/r2_critic.notes.md). v2 closed only fills ATTACHED to existing tracks at 4-6 um. Persistent misses beyond 7 um (31.8% of FN ends, 77% persistent runs, valley rate like distinct nuclei) were never attacked as standalone tracks. A raw-image DoG detector is GT-free and untrained, so its lab estimate avoids the in-sample trap that killed the edge filter; the base detector around it is still in-sample. Honest ceiling of the lens: about +0.005 lab / +0.002-0.004 public at the best realistic case, almost all from idea 1. Expected public gain across all four ideas is about +0.001-0.003. 0.99 is unreachable under this lens: it needs about +0.04 on public, roughly 3x the whole a_never oracle.",
+ "challenged_assumptions": [
+  {
+   "assumption": "The ~2,700 swap-type FN are node-position errors, so better localisation can harvest the +0.03-0.046 oracle (BRIEF s.1).",
+   "why_doubtful": "Swap endpoints match at 4.4/4.7 um and their two predicted nodes are 9.4 um apart. A training-free refinement bounded at ~2 um (the head's range) cannot move a node 4 um toward a GT point between two nuclei without breaking the ordinary matches (1.8 um). Holes at 4-6 um show no intensity valley in 95-99% of cases, so no second nucleus exists there to find. On the dorado movie, Ultrack points are closer to GT in the swap zone (2.4 vs 3.7 um), yet snapping to them LOWERS the <4 um share (0.927 -> 0.908). The residual is annotation convention/noise, not a missing sub-voxel correction.",
+   "evidence": "experiments/l2_daughternet/edge_anatomy/l6_fn_anatomy_report.md s.3; research/wf_ideas_v2/r1_research_hole-fill-sandwich.notes.md (IMAGE VALLEY TEST); research/wf_ideas_v2/r2_critic.notes.md (ultrack.py / ultrack3.py)"
+  },
+  {
+   "assumption": "The v2 closure of hole-fill closes every node-adding idea.",
+   "why_doubtful": "v2 tested fills attached to existing track ends, at 4-6 um clearance, with detector sub-threshold peaks (in-sample). Holes beyond 7 um behave like distinct nuclei (valley <0.85 in 44% vs 46% for true neighbour pairs), are persistent (side_far 77%), and hold 31.8% of FN edge-ends. The verify note itself says 3-node chains die at min_track_len 6 'unless attached'. Standalone tracks from a GT-free image detector, inserted after the short-track filter, were never tested.",
+   "evidence": "research/wf_ideas_v2/r1_research_hole-fill-sandwich.notes.md; research/wf_ideas_v2/r1_verify_hole-fill-sandwich_transfer.notes.md"
+  },
+  {
+   "assumption": "Annotated node recall 0.983 (lab) means the detector misses almost nothing on test.",
+   "why_doubtful": "The public detector saw all 199 train videos (Eric, 742064), so train recall is memorised. A 6bba-only scratch detector reaches only 0.853-0.865 recall on unseen 44b6, versus 0.986 for the public stack there. The miss class on hidden embryos may be larger than in the lab, which helps a GT-free rescue. The public LB (0.95) sits above the lab (0.914), though, so the public test embryo looks easier: the direction is uncertain.",
+   "evidence": "experiments/RESULTS.md rows 'local Friend A exp01/exp02' and 'local Friend B exp02 / exp29 on all 12 LOEO-44b6'; research/discussions_summary.md l.354-357"
+  },
+  {
+   "assumption": "x138's +0.007 measures the value of better localisation, so each um of error removed is worth a lot.",
+   "why_doubtful": "x138 has 2.9% fewer nodes than readmit-v1 (124,246 -> 121,219). At 0.1 x 0.029 x 0.93, that is about +0.0027 from the node multiplier alone. On our base, the same head gave only +0.002. The localisation-only value of a ~10% mean-error cut is therefore ~+0.002-0.004, and every localisation ceiling below is scaled to that.",
+   "evidence": "experiments/ext_x138/DIFF.md s.4; BRIEF s.1"
+  },
+  {
+   "assumption": "A heatmap-based sub-voxel peak fit (quadratic/Gaussian/soft-argmax) is a new training-free lever on top of the head.",
+   "why_doubtful": "detect_head = Conv3d(32,1,k=1): logits at the centre and its 6 face neighbours are linear in the 224-d features the V1284 MLP already reads, so a 3-point parabola is inside the head's hypothesis class. The heatmap is in-sample on train, so its sub-voxel shape encodes train GT and the lab would overstate it. A forum sub-voxel refinement went +0.0078 local / -0.002 LB twice.",
+   "evidence": "tools/repo/scripts/train_unet_transformer.py l.444, l.493-494; experiments/ext_x138/DIFF.md s.1 (sample_features); research/discussions_summary.md l.357"
+  }
+ ],
+ "browser_todo": [
+  "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/data : extract (a) how the GT points were produced (Ultrack segment centroids? manual clicks? curated?), which decides whether a mask-centroid convention (idea fullres-watershed-centroid) can match GT; (b) the number and size of hidden test videos, for the CPU runtime budget of a DoG pass (~25-140 s per 100-frame video).",
+  "https://www.kaggle.com/discussions/ (thread 742064, Eric): what exactly his 'sub-voxel peak refinement' was (heatmap parabola/centroid vs raw-image centroid, which axes). If it was raw-image based, idea fullres-watershed-centroid is effectively closed.",
+  "Kaggle discussion 740573 (Le Quang Canh): the axis, magnitude and estimation source of his 'constant offset correction' (-0.0031 LB). It tells whether z-convention differs between the train and test embryos (idea image-z-convention).",
+  "Kaggle discussion 740145 (hengck23): the 'cell corners' annotation examples. Are the offsets mostly in z? Do they follow the segment shape?",
+  "Kaggle notebook anvithpothula/biohub-x138, latest version log / run time on the hidden test: the headroom under the 12 h limit for an extra CPU DoG pass (+ raw frame reads)."
+ ],
+ "hypotheses": [
+  {
+   "id": "dog-missing-track-rescue",
+   "title": "GT-free raw-image DoG tracks for persistently missed nuclei, inserted as standalone tracks after the tail",
+   "mechanism": "a_never is 1,907 FN (28% of FN; 6bba 1,740, 44b6 167): GT nodes with NO raw ILP node within 7 um. Holes beyond 7 um behave like distinct nuclei (intensity valley <0.85 in 44% vs 46% for true neighbour pairs), come in persistent runs (side_far 77%) and hold 31.8% of FN edge-ends. Nothing in x138 can reach them. Readmit needs a >=0.965 peak within 4 um of an open end; gapfill needs >=0.5 detector peaks on a line between an end and a start; both attach to existing tracks. Fills beside existing tracks were refuted in v2 because 4-6 um holes are the same blob. A detector that never saw labels (DoG/LoG on the raw full-resolution image) can propose nuclei in EMPTY space (clearance >= 6.5 um from every existing node). Linked into their own tracks and inserted after the short-track filter, they recover whole missed lineages. Metric: nodes more than 7 um from any annotated node are free except the multiplier. A new node 7 um or more from every existing node cannot steal an existing tight match. A recovered annotated nucleus turns its FN edges into TP.",
+   "change": "New tail stage `dogrescue` in the post-processing cell (tools/build_probe_kernel.py --patch dogrescue, ENABLE=0 = byte-identical), run after linefit / divinsert and before the writer. Per frame, via the existing read_test_frame: (1) downsample (1,2,2) by mean, background-subtract (20th percentile, or a large-sigma Gaussian like Ultrack's detect_foreground), then an anisotropic DoG at nucleus scale (sigma_z ~1.6 um, sigma_xy ~2.4 um vs 1.6x) and local maxima (footprint ~3x9x9 full-res-equivalent). (2) Self-calibrated threshold per video: keep maxima whose DoG response >= the q-th percentile (q ~ 20-30) of DoG responses sampled at the video's OWN final nodes. GT-free, adapts to embryo brightness. (3) Clearance: >= 6.5 um (Euclidean, um) from every final node at that frame. Valley gate: the intensity profile to the nearest node dips below 0.85-0.9 x min(endpoints) (v2's valley code). (4) Link candidates frame to frame by Hungarian (gate 4 um, median step 1.8 um), allow 1-frame gaps, keep tracks of >= 6 frames (the pipeline's min_track_len) that keep clearance in EVERY frame. (5) Insert them as new components (new ids, edges t->t+1, no forks), capped per video at 1.5% of its nodes, ranked by mean DoG response x length. (6) Log counts per video (COORDHEAD-style stats line) and revert a video if the cap is hit twice (runaway guard).",
+   "evidence": [
+    {
+     "claim": "a_never = 1,907 FN (28.3%), 6bba 1,740 / 44b6 167; b_swap 2,175; FN total 6,732; base 0.9143",
+     "source": "experiments/l2_daughternet/edge_anatomy/fn_anatomy_exp39.md"
+    },
+    {
+     "claim": "Holes beyond 7 um: valley <0.85 in 44% (distinct neighbour pairs 46%); 4-6 um holes 0-1.2% (same blob); FN ends beyond 7 um = 31.8%, persistent side_far 77%; 3-node chains die at min_track_len 6 unless attached",
+     "source": "research/wf_ideas_v2/r1_research_hole-fill-sandwich.notes.md; research/wf_ideas_v2/r1_verify_hole-fill-sandwich_transfer.notes.md"
+    },
+    {
+     "claim": "44b6 a_never GT sit 2.3 um from an Ultrack object while our nearest pred is 1.9 um from ANOTHER Ultrack object ~7 um away; Ultrack has 44% more interior points than our nodes; densest 6bba quartile = 52% of the 6bba loss, dense FN mix swap 37% / a_never 29%",
+     "source": "research/wf_ideas_v2/r2_critic.notes.md"
+    },
+    {
+     "claim": "x138 readmit (>=0.965, <=4 um of open end) and gapfill (>=0.5 lowdet peaks between end and start, <=3% nodes) only attach to existing tracks",
+     "source": "experiments/ext_x138/DIFF.md s.2"
+    },
+    {
+     "claim": "One FN->TP = +7.37e-6 on the 199-video lab; +1% nodes = -0.00093",
+     "source": "research/wf_ideas_v2/r1_verify_polyphase-shift-stitch-localisation_arithmetic.notes.md; research/wf_ideas_v2/r1_verify_hole-fill-sandwich_transfer.notes.md"
+    },
+    {
+     "claim": "An honest out-of-sample detector (6bba-only scratch) has 0.853-0.865 annotated recall on 44b6 vs 0.986 for the in-sample public stack: train-lab miss rates understate misses on unseen embryos",
+     "source": "experiments/RESULTS.md (local Friend A exp01/exp02; Friend B exp02 exp29 on 12 LOEO-44b6)"
+    },
+    {
+     "claim": "CPU cost: 2-scale DoG on a 64x256x256 frame 1.27 s full-res, 0.15 s at (1,2,2) + 0.11 s peak finding (this container, scipy, random volume)",
+     "source": "research/wf_ideas_v3/h_localisation-training-free.notes.md (benchmark line)"
+    },
+    {
+     "claim": "Ultrack's own zebrafish pipeline is training-free: detect_foreground(sigma=25) + robust_invert + area-hierarchy watershed, min_area 500",
+     "source": "https://github.com/royerlab/ultrack/tree/main/examples/zebrahub (config.toml, zebrahub.ipynb)"
+    },
+    {
+     "claim": "Literature: missed detections are fixed by an over-complete candidate set plus temporal consistency (linajea low-threshold candidates, Ultrack hypotheses), not by local fills",
+     "source": "https://www.nature.com/articles/s41592-025-02778-0; research/wf_ideas_v2/r1_research_hole-fill-sandwich.notes.md (web section)"
+    }
+   ],
+   "upper_bound": "Lab: all 1,907 a_never FN -> TP = 1,907 x 7.37e-6 = +0.0141 (6bba +0.0128, 44b6 +0.0012), minus nodes. A perfect rescue adds ~ the missed-nucleus count; 6bba a_never ~1.6% of GT edges => ~0.8% of nuclei missed (guess from 2 endpoints per edge) => ~0.8-1.5% nodes = -0.0007..-0.0014. Net lab ceiling ~+0.013. Break-even: 126 recovered FN per +1% nodes.",
+   "expected_public_gain": "Guess, with arithmetic. DoG finds 40-60% of the beyond-7-um misses; track assembly keeps 60-70% of the found edges correct => recovery 25-40% of a_never = 480-760 FN = +0.0035..+0.0056 lab. Nodes +1..+1.5% (cap) = -0.0009..-0.0014. Net lab +0.002..+0.004. Public: haircut x0.5-1.0. Direction unclear: in-sample recall hides test misses (pushes up), but the public embryo scores 0.95 vs lab 0.914, i.e. it is easier (pushes down). => +0.001..+0.003 public, 0 or negative if the DoG threshold over-fires on the test embryo.",
+   "expected_private_gain": "Similar or slightly larger than public (+0.001..+0.004): 71% of test = unseen embryos where the in-sample recall bonus is absent. Downside bounded by the per-video 1.5% node cap (worst case -0.0014 if every added node is junk).",
+   "probability": "P(lab confirmation gate passes) ~0.4. P(public gain >= +0.002 | lab pass) ~0.5. P(>= +0.005 public) ~0.1. Reasoning: the mechanism is GT-free and the lab measures it honestly, but dim, z-blurred missed nuclei are exactly what an image-only DoG also struggles with (guess).",
+   "validation_protocol": "Pre-registered, image-only; no network confidence is used, so the lab is not in-sample for the rescue itself. Base = friend A's exp39 final tails (the only 199-video lab). Split: SELECTION = the 64 6bba videos of the L6 protocol, for the grid (clearance {6.0,6.5,7.0} um, valley {off,0.9,0.85}, q {20,30,40}, min track {6,8}, cap {1,1.5,2}%). CONFIRMATION = the 135 others, run ONCE on the chosen config. Gate: delta >= +0.002 overall; each embryo >= +0.0005; J part >= 1.5x |multiplier part| (report dJ and node ratio separately, zhincez rule); node ratio <= +1.5%; gains on >= 55% of CHANGED videos per embryo (ties excluded; the L6 stitch failed a plain win-rate on ties); 90% bootstrap CI low > 0; divisions unchanged. Honest-transfer extra, required: run the same config on the 12 LOEO-44b6 videos with friend A's 6bba-only scratch detector graphs (out-of-sample detector, recall ~0.86), which shows how it behaves when the detector misses more. It must not be negative there. Leakage diagnostic: the added-node rate near annotated vs unannotated valley-verified blobs must be similar. The DoG never saw labels, so a big asymmetry would mean a bug.",
+   "resources": [
+    {
+     "who": "agent-container",
+     "hours": 4,
+     "what": "write tools/dog_rescue.py (candidates, valley gate, track assembly, insertion into tail npz / geff, stats) + unit tests on synthetic volumes; no data needed"
+    },
+    {
+     "who": "friend-a-5070ti",
+     "hours": 6,
+     "what": "CPU: DoG pass over 199 train zarr (~1-2 min per video incl. reads, 4-8 processes) + selection grid + one confirmation with the official metric on the exp39 tails; + the 12 LOEO-44b6 scratch-detector graphs"
+    },
+    {
+     "who": "kaggle-cpu",
+     "hours": 5,
+     "what": "fallback lab if friend A is unavailable: the competition train set is attached on Kaggle; needs friend A's tail npz uploaded as a private dataset"
+    },
+    {
+     "who": "agent-container",
+     "hours": 2.5,
+     "what": "--patch dogrescue on the x138 base notebook (exp56/exp57b) + build test"
+    },
+    {
+     "who": "kaggle-vitalii",
+     "hours": 1,
+     "what": "private dummy-test run (4 videos, GPU for the whole stack): check stats lines, runtime, valid CSV"
+    },
+    {
+     "who": "kaggle-vitalii",
+     "hours": 9,
+     "what": "scoring run of the submission (x138-type notebook, several hours + DoG CPU pass)"
+    }
+   ],
+   "wallclock_to_scored_probe_hours": 70,
+   "earliest_scored_probe_utc": "2026-09-28T10:00Z (tool written by Sat 26 ~06:00; lab selection Sat, confirmation Sun 27 morning; kernel + dummy run Sun afternoon; submit Sun ~22:00-Mon 00:05 with the user's OK; scored Mon 28 ~08:00-10:00)",
+   "dependencies": "Friend A (or Vitalii's PC holding his caches) with raw train zarr + exp39 tails; the x138 base decision from #34/#35 (tonight); tools/build_probe_kernel.py support for the x138 notebook (exp57b already patched x138, so the anchor machinery exists). Shares code with zsplit-under-segmented-z (run it as a mode of the same patch).",
+   "risks": "(1) DoG fires on debris, yolk and autofluorescent blobs, or clip borders, spending the node budget (bounded by the cap; exclude 3 um borders). (2) Missed nuclei are dim/z-blurred, so DoG recall on the target class may be ~20%; then the lab shows ~+0.001 and the idea dies at the gate (cheap death). (3) Runtime: extra frame reads + DoG ~2-3 min per test video on CPU; inside the 12 h limit only if x138 has >= 1 h headroom (browser_todo). (4) Hidden-embryo intensity differs; the self-calibrated percentile is meant to absorb this. (5) The lab base is exp39, not x138; a node-adding stage interacts little with the head, but the node ratio differs (x138 -2.9%).",
+   "not_closed_because": "v2's hole-fill closure tested fills attached to open ends at 4-6 um clearance using detector sub-threshold peaks (in-sample), and those holes are same-blob. This idea targets the other population: >= 6.5-7 um clearance, distinct-nucleus valley, persistent runs. It uses an untrained image detector and inserts standalone tracks after the short-track filter. The v2 verify note named exactly this as the surviving variant ('clearance >=6.5um + image valley <0.85 + chains') but never ran it.",
+   "needs_user_decision": "no (one LB slot on 27/28 Sep, and friend A CPU time if he is available)"
+  },
+  {
+   "id": "zsplit-under-segmented-z",
+   "title": "Valley-gated z-profile split of z-stacked nuclei merged into one detection (dense regions)",
+   "mechanism": "In 44b6 the critic found a_never = under-segmentation: our node sits 1.9 um from one Ultrack object while the annotated neighbour ~7 um away, z-blurred, has no node. Our predictions sit FARTHER apart than GT neighbours by +0.55..+1.0 um in 6bba (mostly z), a merged/repelled z-pair signature. The detector sees z at 1.625 um with a z-elongated PSF, and its xy input is a strided ::4 subsample (15/16 of pixels unseen). A z-profile at full xy resolution (mean over a 2 um disk) through each node can show a second maximum or shoulder 4.5-8 um away in z. A second nucleus is added only where the profile shows a real dip (valley < 0.9) and no node exists within 4.5 um of that mode. This targets the 4.5-6.5 um z-neighbour band that dogrescue's isotropic 6.5 um clearance cannot reach.",
+   "change": "Mode `DOGRESCUE_ZSPLIT=1` of the same patch. Per final node in frames where its same-frame NN distance < 8 um (density gate): full-res z-profile of background-subtracted intensity in a 2 um xy disk, z window +-10 um, 3-tap smoothing; find a secondary local maximum at |dz| 4.5-9 um with min(profile between) < 0.9 x min(two maxima) and secondary peak >= 0.6 x primary. If no final node lies within 4.5 um of (z2, y, x) (xy re-centred by an intensity-weighted centroid in a 1.6 um window), make it a candidate. Candidates go through the same track assembly as dogrescue (Hungarian 4 um, >= 6 frames, persistent) and the same node cap (shared).",
+   "evidence": [
+    {
+     "claim": "a_never in 44b6 = our under-segmentation of two Ultrack objects ~7 um apart (z-blurred); GT->Ultrack 2.3 um median",
+     "source": "research/wf_ideas_v2/r2_critic.notes.md (ultrack.py/ultrack2.py)"
+    },
+    {
+     "claim": "Annotated neighbour pairs: our preds farther apart than GT by +0.55..+1.0 um (6bba), mostly z (ddz +0.2..+0.8); GT-free contraction does nothing",
+     "source": "research/wf_ideas_v2/r2_critic.notes.md (attract3.py, contract.py)"
+    },
+    {
+     "claim": "Peak-to-GT z sd 1.47-1.79 um vs xy 0.91-1.11 um; z is the worst axis",
+     "source": "research/wf_ideas_v2/r1_research_polyphase-shift-stitch-localisation.notes.md"
+    },
+    {
+     "claim": "Predict script reads zarr[t, ::1, ::4, ::4] (strided subsample, not a mean)",
+     "source": "research/wf_ideas_v2/r1_research_polyphase-shift-stitch-localisation.notes.md (code confirmed l.209-222)"
+    },
+    {
+     "claim": "Holes at 4-6 um rarely show an intensity valley on the line to the nearest node (1.2% < 0.85, ~5% < 0.95)",
+     "source": "research/wf_ideas_v2/r1_research_hole-fill-sandwich.notes.md"
+    }
+   ],
+   "upper_bound": "44b6 a_never 167 FN = +0.0012 lab. The 6bba dense-quartile a_never share with a z-neighbour at 4.5-7 um is unmeasured; guess <= 1/3 of 1,740 = 580 FN = +0.0043. Total lab ceiling <= ~+0.005 before node cost, overlapping dogrescue at the 6.5-7 um edge.",
+   "expected_public_gain": "+0.0003..+0.0015 (guess). The v2 valley statistics say genuine second modes at 4-6 um are rare (~1-5% of holes), so the triggered set is small; the node cost is small too (<0.3% nodes = -0.0003).",
+   "expected_private_gain": "+0.0003..+0.002; dense embryos gain most, and the private set is 71% unseen embryos (density unknown).",
+   "probability": "P(passes the lab gate as an increment over dogrescue) ~0.25; P(visible on LB) ~0.1. The valley evidence against same-blob fills is strong; the z-specific profile is the only new element.",
+   "validation_protocol": "Same selection/confirmation split and gate as dogrescue, measured as an INCREMENT over the chosen dogrescue config (control = dogrescue on). Pre-registered extra: on the 12 videos where friend A has raw images, the z-profile valley statistic must separate (a) annotated neighbour pairs 4.5-8 um apart in z (positive control) from (b) single matched GT nuclei (negative control, profile through the GT xy) with >= 3x trigger-rate ratio before any score is computed. If it cannot separate known pairs, stop.",
+   "resources": [
+    {
+     "who": "agent-container",
+     "hours": 1.5,
+     "what": "z-profile mode inside tools/dog_rescue.py + controls script"
+    },
+    {
+     "who": "friend-a-5070ti",
+     "hours": 2,
+     "what": "CPU: control test on 12-24 videos, then the increment in the selection/confirmation run of dogrescue"
+    }
+   ],
+   "wallclock_to_scored_probe_hours": 70,
+   "earliest_scored_probe_utc": "2026-09-28T10:00Z (rides in the dogrescue probe if it passes; a separate probe would cost a second slot on 28 Sep, scored ~28 Sep 18:00)",
+   "dependencies": "dogrescue infrastructure (track assembly, insertion, cap); raw train zarr on friend A's machine.",
+   "risks": "The PSF z-elongation makes a single nucleus's profile shouldered, so false splits create duplicates that steal links (hengck23's duplicate warning). The 4.5 um minimum and the valley < 0.9 gate are the guards. Small triggered set, below LB noise (0.003).",
+   "not_closed_because": "The v2 duplicate/hole work looked at xy-dominated line profiles from GT to the nearest node and at graph-feature survivor rules. It never looked for a second z-mode at nodes in dense frames, the mechanism the critic identified for 44b6 a_never. Neighbour contraction (closed) moved nodes; this adds nodes only where the image shows two maxima.",
+   "needs_user_decision": "no"
+  },
+  {
+   "id": "fullres-watershed-centroid",
+   "title": "Full-resolution marker-controlled watershed centroid as the output position (bounded, blended), on top of the head",
+   "mechanism": "The detector and the V1284 head see only the ::4 xy subsample (1.625 um grid); 15/16 of the xy pixels are never used. The public head leaves a 1.53 um mean error; an in-sample retrained head reaches 1.24 um, so learnable error remains, but it is partly embryo convention (the kill test failed). A GT-free image estimate at full resolution uses information the head cannot see. Seed a watershed with ALL final nodes as markers on the smoothed, inverted full-res frame, masked by a foreground threshold, then take each node's segment centroid (intensity-weighted). Segment centroids are also how Ultrack-derived annotations are defined, if the GT came from Ultrack. Final position = linefit position + w x clip(centroid - position, 1.5 um), w ~0.3-0.5, applied at output only, after linefit, so relink/readmit/gapfill still see the head coordinates.",
+   "change": "New output-stage patch `wscentroid` (ENABLE=0 no-op): per frame, crop +-4 um around each final node at full res, 3D watershed with all nodes in the crop as markers (skimage.segmentation.watershed on the Gaussian-smoothed inverted image, sigma_xy ~0.8 um, sigma_z ~0.8 um, mask = intensity > local Otsu). Take the marker's segment intensity-weighted centroid, blend and clip, write floats (safe encoding from exp52). Topology is untouched: nodes, edges and divisions are byte-identical.",
+   "evidence": [
+    {
+     "claim": "Peak error none 1.686 um / public head 1.525 / leak5 retrained head 1.238 (in-sample-ish); embryo-held-out retrain fails (+12% worse on 44b6)",
+     "source": "experiments/coordhead_retrain/out_full_P/report.txt"
+    },
+    {
+     "claim": "Perfect xy de-quantisation <= +0.001-0.002 pre-linefit; residual on top of the head <= +0.0005",
+     "source": "research/wf_ideas_v2/r1_verify_polyphase-shift-stitch-localisation_arithmetic.notes.md"
+    },
+    {
+     "claim": "Snapping final nodes to Ultrack points lowers median GT distance 1.42 -> 1.22 um but lowers the <4 um share 0.927 -> 0.908",
+     "source": "research/wf_ideas_v2/r2_critic.notes.md (ultrack3.py)"
+    },
+    {
+     "claim": "Forum: sub-voxel peak refinement +0.0078 local, -0.002 LB twice; constant offset -0.0031 LB",
+     "source": "research/discussions_summary.md l.357; research/browser_research_2026-09-24.md l.94"
+    },
+    {
+     "claim": "The x138 tail already refines SYNTHETIC gap nodes by an intensity centroid (z+-1, yx+-3 voxels, shift <= 3.2 um); real nodes are never image-refined",
+     "source": "experiments/exp56_x138_verbatim/exp56-x138-verbatim.ipynb cell 5 (refine_synthetic_midpoint) and cell 2 (GAP_REFINE_* knobs)"
+    },
+    {
+     "claim": "Float output coords (exp52) tied exp51 on the LB",
+     "source": "BRIEF s.1"
+    }
+   ],
+   "upper_bound": "Localisation-only value of the head's ~10% mean-error cut is ~+0.002-0.004 once the node-multiplier share of x138's +0.007 is removed (experiments/ext_x138/DIFF.md s.4). A further GT-free 5-10% cut is worth <= +0.001-0.002 by the same scaling; the v2 dose-response gives <= +0.0005 for pure de-quantisation on top of the head.",
+   "expected_public_gain": "0..+0.001, with a real chance of -0.001..-0.002 (Eric's pattern) if segment centroids follow a different convention than the hidden embryo's annotators.",
+   "expected_private_gain": "-0.002..+0.001; convention risk dominates on unseen embryos.",
+   "probability": "P(lab gain >= +0.001 on both embryos) ~0.25; P(visible LB gain) ~0.1. Listed because the lens asks for it and the check is cheap; not recommended for an LB slot unless the lab result is clean on BOTH embryos.",
+   "validation_protocol": "Topology-invariant, so the lab is honest for this transform: nodes, edges and divisions stay identical, and only matching distances change. Ship-gate on exp39 tails, all 199 videos: (a) matched-distance mean down >= 5% on EACH embryo separately; (b) <4 um share not lower on either embryo (the Ultrack-snap failure mode); (c) official score >= +0.001 overall and >= 0 per embryo; (d) the 44b6->6bba direction is decided by the image alone (no fitted parameter; w and the clip are fixed before the run at 0.4 / 1.5 um). Any per-embryo sign disagreement kills it.",
+   "resources": [
+    {
+     "who": "agent-container",
+     "hours": 3,
+     "what": "watershed-centroid module + patch + synthetic tests"
+    },
+    {
+     "who": "friend-a-5070ti",
+     "hours": 3,
+     "what": "CPU pass over 199 train videos on the exp39 tails (crop-local watershed; ~1-2 min per video) + official metric"
+    }
+   ],
+   "wallclock_to_scored_probe_hours": 52,
+   "earliest_scored_probe_utc": "2026-09-27T16:00Z (lab Sat 26, build + dummy Sat night, submit Sun 27 ~06:00, scored ~14:00-16:00), only if its gate passes",
+   "dependencies": "raw train zarr + exp39 tails (friend A); floatout safe encoding already in tools/build_probe_kernel.py (exp52).",
+   "risks": "Convention mismatch (GT is not a segment centroid; cell corners); dense touching nuclei give watershed segments that split a nucleus; LB noise 0.003 is larger than the expected gain.",
+   "not_closed_because": "Polyphase (closed) re-ran the detector on shifted grids, i.e. the same network information. Refined duplicate collapse (closed) removed nodes. This moves real nodes by full-resolution image evidence the network never sees. It is new information but small, and should be treated as a rider, not a step change.",
+   "needs_user_decision": "no (lab only by default; an LB slot only if both-embryo gate passes)"
+  },
+  {
+   "id": "image-z-convention",
+   "title": "Per-video z-offset estimated from the raw image (asymmetric z-profile), not from train labels",
+   "mechanism": "The annotation-vs-detector z offset is embryo-specific: raw peak z bias +0.82 um in 6bba vs +0.18 um in 44b6, per-video 6bba -0.2..+1.6 um. The public head removes about half (+0.45 / +0.13 residual). A head retrained on 6bba shifts 44b6 by -0.54 um and fails. A constant train-mean correction lost -0.0031 on the LB. If the offset is caused by the IMAGE (z-asymmetric PSF/attenuation making the annotators' mask centroid sit above the intensity peak), a per-video statistic on the raw image predicts it on an unseen embryo without labels. Statistic: mean over the video's nodes of (half-max-mask z-centroid - detector z).",
+   "change": "Desk test first. For every train video, compute the image statistic at the raw ILP / final node positions and compare with the GT-derived per-video z bias (Hungarian pairs <= 4 um, as in tools/train_coordhead.py). Only if the gate passes: output-stage patch `zconv` shifting all node z by k x statistic (k fitted on 6bba only, checked on 44b6), written with float-safe encoding; topology unchanged.",
+   "evidence": [
+    {
+     "claim": "Bias z none: 44b6 +0.177, 6bba +0.824 um; public head: 44b6 +0.131, 6bba +0.447; 6bba-trained head shifts 44b6 by -0.536 um (kill test FAIL, 'learns an embryo convention?')",
+     "source": "experiments/coordhead_retrain/out_full_P/report.txt (emb rows)"
+    },
+    {
+     "claim": "6bba median z offset = +1 slice; per-video z bias 6bba -0.2..+1.6 um",
+     "source": "research/wf_ideas_v2/r1_research_polyphase-shift-stitch-localisation.notes.md"
+    },
+    {
+     "claim": "Constant offset correction loses 0.0031 on the LB; 'a learned per-node offset is the only version that can pay'",
+     "source": "research/browser_research_2026-09-24.md l.94"
+    },
+    {
+     "claim": "Ultrack node positions are segment centroids of a foreground/boundary hierarchy (training-free imgproc in the zebrahub example)",
+     "source": "https://github.com/royerlab/ultrack/tree/main/examples/zebrahub"
+    }
+   ],
+   "upper_bound": "On the x138 base the residual 6bba z bias is +0.45 um (bias^2 ~0.2 um^2, about one xy quantisation variance of 0.22 um^2). By the v2 dose-response that is worth <= +0.001-0.002 when the correction is perfect and the test embryo is 6bba-like; ~0 if it is 44b6-like.",
+   "expected_public_gain": "0..+0.001 (guess); expected value ~+0.0003 after the probability that the image explains the offset.",
+   "expected_private_gain": "0..+0.0015; the only positive-EV version on unseen embryos, because it adapts per video instead of copying a train constant.",
+   "probability": "P(image statistic explains the per-video bias: Spearman >= 0.5 within 6bba AND embryo gap reproduced within 0.25 um) ~0.2 (guess; the mechanism could equally be annotator habit, which leaves no image trace).",
+   "validation_protocol": "No score is involved until the correlation gate passes. It uses only images plus GT biases already computable on 199 videos. Gate: (1) Spearman(image statistic, GT z bias) >= 0.5 across 6bba videos; (2) k fitted on 6bba predicts the 44b6 mean bias within +-0.25 um; (3) the same with the roles swapped. Then an official-metric run on the exp39 tails + public head coordinates (if friend A's capture coordinates are available). Ship only if the score >= +0.001 on BOTH embryos. Note this is the one idea whose truth on the public embryo is directly readable from one LB probe.",
+   "resources": [
+    {
+     "who": "agent-container",
+     "hours": 2,
+     "what": "statistic + correlation script (reuses tools/train_coordhead.py pairing)"
+    },
+    {
+     "who": "friend-a-5070ti",
+     "hours": 1.5,
+     "what": "CPU: z-profiles at ~50k matched nodes over 199 videos + correlation report"
+    }
+   ],
+   "wallclock_to_scored_probe_hours": 52,
+   "earliest_scored_probe_utc": "2026-09-27T16:00Z (desk gate Sat 26; build Sat night; submit Sun 27 ~06:00) - only if the correlation gate passes",
+   "dependencies": "raw train zarr + GT geffs + node positions (friend A); floatout encoding.",
+   "risks": "The offset is annotator behaviour, not optics, so the gate fails (cheap). A correct but noisy per-video estimate adds variance that costs more than the bias it removes (checked by requiring a score gain on both embryos).",
+   "not_closed_because": "Canh's constant offset and our 199-video head retrain both learned the offset FROM LABELS of the train embryos and failed on a different embryo. Estimating it from each test video's own image is a different mechanism, never tested.",
+   "needs_user_decision": "no"
+  }
+ ]
+}

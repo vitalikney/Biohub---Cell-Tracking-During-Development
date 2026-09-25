@@ -1,0 +1,11 @@
+# schedule skeptic notes: dog-missing-track-rescue (2026-09-25T11:09:40Z)
+- read BRIEF.md and sibling value verdict (refuted, central public +0.0005)
+- 11:3x facts: build_probe_kernel.py --base x138 supports ONLY divinsert|leafprune (l.13-14, CONTEXT l.1537) -> dogrescue = new patch on x138 cell 5.
+- x138 cell 5: read_test_frame exists (l.116, one blosc2 chunk per frame); repair loop serial over sorted geffs (l.2071-2116); REPAIR_DEADLINE_S 27000 guard (l.19, l.2115) - a post-tail stage like divinsert is NOT gated by it and adds seconds before later movies' deadline check.
+- replay.py runs deepcenter_bundle=None, no image reads (l.881) -> lab needs a new image stage reading TRAIN zarr; only friend A (82 GB local) or a Kaggle CPU kernel (competition data attached) has the images. tools/kaggle_lab.py PAUSED/unfinished (CONTEXT l.1546).
+- friend A: no commits since 24 Sep 04:12 MSK; queued job = x138 lab cache after #34 (PROMPT_FRIEND_A top, 13-16 GPU-h per sibling schedule verdicts). 
+- LOEO-44b6 scratch graphs: scratch model friend_a_exp02_loeo20 raw pipeline only (RESULTS l.80: 0.6803); full-stack tails on it were run by friend B (inactive, RESULTS l.86-106) -> 'required honest-transfer extra' needs friend A to re-run the stack (~1 h) or a port.
+- sibling value verdict: refuted, reachable pool ~90-150 FN, central public +0.0005, P(gate fail) ~0.9.
+- 11:4x DoG benchmark here (uint16 random 64x256x256, (1,2,2) mean ds, 2 Gaussians, 3x5x5 max filter): 0.14-0.18 s/frame -> confirms idea's 0.15+0.11 s. Hidden test 100-130 videos x 100 frames = 10-13k frames; Kaggle CPU guess 1.5-2x slower + blosc read 0.05 s -> 0.9-1.4 h SERIAL inside the repair loop (not guarded) -> pushes later movies over the 27,000 s REPAIR_DEADLINE (degraded movie ~-0.04 each, h_kaggle-intel notes l.8). Needs time-gated skip or a 4-proc pool.
+- a_never 1,907 / 6bba 1,740 / 44b6 167 confirmed (fn_anatomy_exp39.md table).
+- Verdict: P(scored by 29 Sep 10:00) ~0.1 gated (friend A ~0.5-0.55 x gate ~0.2 x kernel 0.85); ~0.5 even ungated. Refuted on schedule.

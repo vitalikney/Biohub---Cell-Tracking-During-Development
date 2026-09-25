@@ -1,0 +1,12 @@
+# notes simview-readmit-pool schedule skeptic
+- 2026-09-25T11:22:45Z started; no prior json
+- 11:1x read BRIEF; sibling value verdict (refuted, central ~+0.0002); runtime-guard-audit schedule (--set REPAIR_DEADLINE_S=36000 works on --base x138); divins-x138-lab-retune schedule (x138 train lab cache 13-16 GPU-h, no x138 tail replay harness, agent 8-10 h).
+- PROMPT_FRIEND_A.md top block (25 Sep 08:30): x138 lab cache NOT started, conditional on #34=0.953 (answer ~17-20 UTC 25 Sep); friend A no commits since 24 Sep 04:12 MSK.
+- experiments/l2_daughternet/replay/replay.py: 0 hits for readmit/gapfill/flow/lowdet -> no x138-tail replay exists; the idea's "replay readmit/gap filler with vs without pool" needs new harness (or rerun x138 cell 5 on CPU over train-run geffs+npz).
+- x138 nb cell 4: lowdet dump = /kaggle/working/edge_cache/<name>.npz keys coords, low_coords (t,z,y,x FULL-RES int16, x(1,4,4)), low_score. There is no in-memory '_LOWDET' consumed by the tail: _LOWDET is a predict-subprocess list flushed to npz. cell 5 load_low_detections -> build_low_detection_pool (score>=0.5, drop within GAPFILL_EXCLUDE 2.0 um of a node) -> readmit (score>=0.965, <=4 um of open end/start, ONE pass, no cap) and gapfill share the pool. => cleanest implementation = a NEW cell after prediction that appends simview centroids to each npz (no predict-script patch). Implementable; idea's 'append to _LOWDET in predict patch' is the wrong hook but repairable.
+- build_probe_kernel --base x138 supports only divinsert|leafprune (l.12-18) -> new 'simview' patch + no-op sha test needed (~3-4 h agent, cannot test real model here: no weights, no data, public.czbiohub.org blocked).
+- ultrack_supplementary sparse_zebrafish (raw.githubusercontent OK; GitHub API dir listing refused for this session): README torch.jit.load only; segment.sh reads precomputed detection/edge layers; config threshold 0.4 min_area 300. No inference/normalisation script -> normalisation must be reverse-engineered by a human (Colab or internet-on Kaggle kernel pushed by Vitalii).
+- CONTEXT l.14: hidden test ~100-130 videos; scoring latency 7-10 h; x138 guard REPAIR_DEADLINE_S 27000.
+- Runtime guess (GUESS): simview 3D UNet 64x256x256 on T4 fp16 0.2-1 s/frame x 10-13k frames = 0.6-3.6 GPU-h, /2 GPUs = 0.3-1.8 h added -> crosses 27000 s guard unless raised; 12 h hard limit margin 2-4 h.
+- Probability chain (GUESSES): gated path P ~0.05-0.1; ungated rider path P ~0.35-0.45. Both <0.7 -> refuted on schedule lens.
+- 2026-09-25T11:25:33Z final JSON written (refuted=true, feasible=false)

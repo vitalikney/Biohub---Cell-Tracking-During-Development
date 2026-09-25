@@ -1,0 +1,9 @@
+# schedule skeptic notes (two-tail-consensus) 2026-09-25T11:20:36Z
+- read BRIEF.md and sibling value verdict (refuted, feasible=false)
+- 2026-09-25 ~11:30 UTC. Verified: DIFF.md s.4 121,777/114,927 identical pre-ILP (OK); CONTEXT l.1431 flow/readmit/gapfill neutral alone (OK); #29 0.947, #30 0.946, swapfix -0.00004 (OK); forum 739685 linker ~+0.001 LB (discussions_summary l.110, l.196) (OK).
+- PROMPT_FRIEND_A.md top block (08:30 UTC 25 Sep): x138 cache NOT started; conditional on #34 == 0.953 (scores 17-20 UTC); friend A silent since 24 Sep (no commits since 24 Sep 04:12 MSK, CONTEXT resume block). Earlier Windows port of a foreign stack was abandoned after >1 working day (PROMPT_FRIEND_A l.274, B34).
+- exp56 cell 5: x138 tail is NOT image-free: fill_gaps_from_low_detections and refine_synthetic_midpoint read frames (read_test_frame), DeepCenter scoring calls the detector on frames (l.408-501), readmit/gapfill need the low-detection pool dump. => x138-tail replay needs full data + GPU = friend A machine or a Kaggle kernel; not this container, not friend C's Mac. Existing replay.py is for the exp39 stack only.
+- Runtime: REPAIR_DEADLINE_S=27000 (cell 5 l.19); sibling runtime-guard verdicts estimate x138 hidden runtime T~6.5-7.3 h (exp51 latency 7.5 h incl. queue); hidden test ~100-130 videos (CONTEXT l.14). "Doubling repair" as the idea says pushes T past 7.5 h -> guard degrades tail movies (~-0.05 per unit degraded weight, sibling value verdict). A relink-only vote (3 Hungarian passes, no image IO) adds only a few % instead.
+- build_probe_kernel.py --base x138 supports only divinsert|leafprune -> new patch needed (2-4 h agent).
+- Sibling value verdict: refuted (voter 3 ~= our relink; collapses to flow-prior-off knob; matching repair needed).
+- 2026-09-25T11:22:55Z final JSON written (refuted, feasible=false; repaired variant = relink-only vote + Kaggle train-subset lab)

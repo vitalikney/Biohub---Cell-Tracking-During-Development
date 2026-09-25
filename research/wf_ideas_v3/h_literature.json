@@ -1,0 +1,259 @@
+{
+ "lens_summary": "Literature lens (Ultrack, linajea, Trackastra, HOCT, ELEPHANT, CELLECT, TGMM/TrackMate, ByteTrack, shift-and-stitch/DARK). In published work the big jumps come from two things. (1) Detectors trained so that unannotated voxels are NOT negatives: linajea masks the loss to annotated neighbourhoods, and PU learning / dense pseudo-labels do the same job. (2) Committing to nodes late: Ultrack selects among segmentation hypotheses with an ILP over time, and ByteTrack associates low-score detections to tracklets (+1..10 IDF1 across 9 trackers, github.com/ifzhang/ByteTrack). Retraining for (1) does not fit 4 days. Our all-199 scratch run scored 0.920, leonixis' 60-epoch all-train retrain 0.947, and moving the encoder under the frozen edge net cost -0.038 (Le, discussions_summary.md). Part (2) can ship. The public detector's loss treats every unannotated voxel as a negative (train_unet_transformer.py l.539-593: single-voxel target, neg_weight 0.1), so on unseen embryos it pushes real nuclei below 0.965. The x138 kernel already dumps every peak >= 0.3 (BIOHUB_LOWDET_THRESHOLD, experiments/ext_x138/biohub-x138.ipynb cells 0/4). Today that pool is used only by readmit (score >= 0.965 near open ends) and the gap filler (bridging end->start). Nothing extends a track through low-score peaks or starts a track from a persistent low-score chain. The FN anatomy says this is where the loss sits. Detection-side FN are 2,929 of 6,732 (a_never 1,907, a_tail 606). The swap/u/v classes (oracle +0.065) are 'annotated nucleus between two of our tracks, 9.4 um apart, matched at 4.4 um': a missing or merged node, not a link choice (edge_anatomy/l6_fn_anatomy_report.md s.3). A node-count check with the official formula on the exp02 hold12 validator rows gives 3.6-5.0% break-even precision for an added node, i.e. nodes are cheap and recall is expensive. It matches friend B's NMS result (-7.9% nodes = -0.026). Sub-voxel localisation is NOT the lever: polyphase/shift-and-stitch was refuted by 3 v2 skeptics (grid RMS 0.47 um against 4.4 um swap offsets), and I agree. HONEST CEILING: all detection-side classes together are +0.02 local (2,929 x 7.4e-6), and swap/u/v add +0.065 only if missing nodes cause them. A realistic hypothesis-selection stage captures 10-25% of that, so +0.001..+0.005 public per idea, not additive. With the x138 base (0.953 expected), the expected landing is ~0.955-0.958 and the optimistic one ~0.962. 0.99 is unreachable: it needs adj_edge ~0.95 AND div J ~0.4 on an unseen embryo, which exceeds today's LB top (0.975). What 0.99 would take is a dense-supervised detector plus hypothesis-selecting ILP, retrained jointly with the edge network. That is weeks of work and several GPU-days.",
+ "challenged_assumptions": [
+  {
+   "assumption": "Lowering the detection threshold is closed (0.965->0.95 flat on the LB, 0.99 = -0.005, threshold 0.93-0.985 flat locally), so sub-threshold peaks carry no value.",
+   "why_doubtful": "Every one of those tests admitted sub-threshold peaks WITHOUT temporal selection, so they fed the ILP and relink peaks that could steal or duplicate matches. Also, 0.965->0.95 adds only a sliver of peaks. The 0.99 result (-0.005) shows the opposite: peaks just above threshold are valuable. The metric says added nodes are cheap: break-even precision is 3.6-5.0% of added nodes being real (annotated-rate) nuclei. Persistence-gated admission (hysteresis/BYTE) was never tested, and x138's readmit+gapfill (a partial version) is exactly what lets the head's +0.007 work.",
+   "evidence": "research/discussions_summary.md (caassicca det 0.99 = 0.942; probe 4 flat); CONTEXT.md l.209 (B19); break-even computed from experiments/exp02_pub941_holdout12/results/validator_results.csv (0.1*J*D/N_est vs 2*E/N_est per correct node: 0.036-0.050 on 12 videos); experiments/ext_x138/DIFF.md (readmit/gapfill knobs)"
+  },
+  {
+   "assumption": "The head retrain on 199 videos failed a fair kill test (embryo-held-out: new head 12% worse than the public head on 6bba->44b6).",
+   "why_doubtful": "The public V1284 head was trained on a 20-movie TRAIN capture drawn from BOTH embryos (~10+10). In the embryo-held-out comparison, the new head had never seen the held-out embryo while the public head had, so the comparison was in-sample for the public head only. A fair test compares both heads on movies outside the public head's 20-movie capture, with the new head trained on both embryos (leak-group folds). The leak-group OOF (-18.9% distance) is closer to that and was positive. This does not make the retrain a step change (v2 estimate +0.0003..0.002). It means the line was closed on a biased test.",
+   "evidence": "CONTEXT.md 2026-09-24 ~23:00 UTC entry (kill test); research/browser_research_2026-09-24_pass2.md s.5 (x107 20-movie capture, 4,136 pairs); experiments/ext_x138/DIFF.md l.515-518"
+  },
+  {
+   "assumption": "Ultrack is a dead end for us (snapping to Ultrack points hurt; adding Ultrack points costs +30-40% nodes).",
+   "why_doubtful": "Snapping ALL nodes and adding ALL unmatched Ultrack points are both unselective operations. The same measurement shows that the missing-node classes are exactly where Ultrack-like hypotheses help. For a_never GT, an Ultrack point is at median 2.3 um (47% < 2 um) while our nearest node sits on ANOTHER Ultrack object. For swaps, GT->Ultrack is 2.4 um vs GT->pred 3.7 um. The literature lesson of Ultrack is SELECTION of hypotheses by temporal consistency, which was never tried. tracksdata's ILPSolver (the solver we already run) has node_weight and overlap constraints for this purpose.",
+   "evidence": "research/wf_ideas_v2/r2_critic.notes.md (ultrack2/ultrack3 measurements); https://raw.githubusercontent.com/royerlab/tracksdata/main/src/tracksdata/solvers/_ilp_solver.py (node_weight l.138, _add_overlap_constraints l.330)"
+  },
+  {
+   "assumption": "v2: 0.97 is unreachable by post-processing alone because post-processing cannot touch detection.",
+   "why_doubtful": "Partly right on the number, wrong on the reason. Post-processing in x138 already holds detection-side information (the >= 0.3 peak dump), and x138's own +0.007 came from detection-side post-processing (readmit + gapfill + head). The v2 ceiling table summed only the kept ideas and had no item for the detection-side FN classes (43.5% of FN). I still think 0.97 is out of reach by 29 Sep. But the missing-node lever is the one remaining class with a ceiling above +0.01, and it is reachable from the lowdet pool.",
+   "evidence": "research/wf_ideas_v2/FINAL_REPORT.md (outlook table); experiments/l2_daughternet/edge_anatomy/l6_fn_anatomy_report.md s.1 (a_* 2,929 FN = 43.5%)"
+  },
+  {
+   "assumption": "Sub-voxel localisation (polyphase / DARK) remains an open lever after x138 showed positions matter.",
+   "why_doubtful": "I agree with the v2 refutation and do not re-open it. The swap offsets (4.4 um) are an order of magnitude above grid noise (0.47 um RMS), and the measured dose-response is +0.001-0.002. The x138 head's gain mixes bias correction, float z and trilinear features, so it does not scale polyphase.",
+   "evidence": "research/wf_ideas_v2/r1_verify_polyphase-shift-stitch-localisation_arithmetic.json; _transfer.json"
+  }
+ ],
+ "browser_todo": [
+  "Kaggle submission page for our probe #34 (id 56545267, exp56 x138 verbatim) and #35: total run time on the hidden test (to budget any extra GPU work inside the 12 h limit) and the final public scores.",
+  "Kaggle kernel output of vitaliineibauer/biohub-exp56-x138-verbatim v1: confirm /kaggle/working/edge_cache/*.npz is in the output and holds 'low_coords'/'low_score' for the 4 dummy (train) clips; download them for the H1 step-0 audit.",
+  "https://www.kaggle.com/datasets/anvithpothula/biohub-v1284-head-s075 (and the x107 notebook it cites): the list of the 20 train movies in the head's capture, so any head comparison can exclude them.",
+  "https://www.kaggle.com/thtennant/code (sorted by recent): anything after readmit-v1 (19 Sep). He is at 0.959. Look for low-score track extension, hysteresis births or ILP node weights; extract env knobs.",
+  "Kaggle discussion search 'low score' OR 'sub-threshold' OR 'hysteresis' OR 'track extension' OR 'readmit' in the Biohub forum: any LB deltas reported for admitting low-score peaks with temporal persistence.",
+  "Leaderboard: current top-10 scores and the count of teams at exactly 0.953 (is x138 still the wall?)."
+ ],
+ "hypotheses": [
+  {
+   "id": "byte-lowscore-extension",
+   "title": "BYTE-style track extension and hysteresis births from x138's low-score peak pool",
+   "mechanism": "The detector was trained with single-voxel positives at annotated nuclei and every other voxel as a negative (tools/repo/scripts/train_unet_transformer.py l.539-593, neg_weight 0.1). So it learned to push unannotated and hard nuclei down, and on unseen embryos real nuclei fall below the 0.965 threshold. The loss agrees. Detection-side FN are 2,929 of 6,732 (a_never 1,907, a_tail 606, linefit 354). The swap/u_diverted/v_taken classes (4,582 FN, oracle +0.065) are GT nuclei lying between two of our tracks ~9.4 um apart and matched at 4.4 um, i.e. a node missing at the right place (experiments/l2_daughternet/edge_anatomy/l6_fn_anatomy_report.md s.1, s.3). In 44b6, a_never GT has an Ultrack object at median 2.3 um while our nearest node sits on another object (research/wf_ideas_v2/r2_critic.notes.md). x138 already dumps every local maximum >= 0.3 of the fused map (BIOHUB_LOWDET_THRESHOLD=0.3) but uses it only for readmit (>= 0.965 near open ends) and the gap filler (bridging an end to a start through 0.5+ peaks). The track-level decision that ByteTrack and hysteresis thresholding make is missing: continue a track through low-score detections that sit where the motion predicts, and accept a low-score chain as a new track only if it persists. The metric makes this cheap. Per video, an added node costs 0.1*J/N_est of adjusted J, while a correct annotated node recovers up to 2 edges worth 1/D each. With E/N_est = annotation fraction, break-even precision is 3.6-5.0% on all 12 hold12 videos (computed from experiments/exp02_pub941_holdout12/results/validator_results.csv).",
+   "change": "New stage in x138 cell 5 (post-processing), after readmit + second relink + gap filler and BEFORE the short-track filter and linefit, as a patch 'byteext' in tools/build_probe_kernel.py --base x138 (knobs default off = byte-identical). Pool = load_low_detections() (score >= S_EXT, > GAPFILL_EXCLUDE_UM 2.0 from any node). (a) EXTENSION: for every track end at t < T-1, predict p = x_t + v_t, where v_t is the neighbourhood-flow vector the flow-prior relink already computes (or the last step). Take the highest-score free pool peak at t+1 within R_EXT = 3.5 um of p (continuation step p90 3.35 um, discussion 740573). Add node + edge, iterate up to K_EXT = 4 frames, and stop at a frame without a peak. Mirror backwards from track starts. Each peak is used once, greedy by score. If the extension reaches a track start (or end), join and stop. (b) BIRTHS (hysteresis): chain the remaining free peaks with score >= S_BIRTH by mutual-nearest-neighbour steps <= 3.5 um. Keep chains of length >= MIN_TRACK_LEN (6) with median score >= S_BIRTH_MED that stay > 4 um from existing nodes on >= 80% of frames. Guard: per video, added nodes <= 3% (like GAPFILL_MAX_ADDED_FRAC), else revert (a) then (b). Added nodes carry the integer peak coordinate (no head) and go through linefit like the others. Pre-registered primary config: S_EXT 0.5, R_EXT 3.5, K_EXT 4, S_BIRTH 0.8, S_BIRTH_MED 0.9. Arms: (a) only, (a)+(b).",
+   "evidence": [
+    {
+     "claim": "Detection-side FN 2,929 of 6,732 (a_never 1,907, a_tail 606); swap 2,175 (oracle +0.0457), u_diverted 706 (+0.0095), v_taken 701 (+0.0099)",
+     "source": "experiments/l2_daughternet/edge_anatomy/fn_anatomy_exp39.md"
+    },
+    {
+     "claim": "Swaps: GT step normal (2.6 um), matched preds 9.4 um apart, matches 4.4/4.7 um vs 1.8 um for TP -> the fix is a node at the right place, not a relink; local swap moves gave 0",
+     "source": "experiments/l2_daughternet/edge_anatomy/l6_fn_anatomy_report.md s.3"
+    },
+    {
+     "claim": "x138 dumps peaks >= 0.3 and uses them only in readmit (>= 0.965 within 4 um of open ends) and gapfill (>= 0.5, bridge end->start, max gap 3, cap 3% nodes)",
+     "source": "experiments/ext_x138/biohub-x138.ipynb cell 0 l.105, cell 4 l.487, cell 5 (load_low_detections, readmit_discarded_detections, fill_gaps_from_low_detections); experiments/ext_x138/DIFF.md"
+    },
+    {
+     "claim": "ByteTrack: associating low-score boxes to tracklets gives +1..10 IDF1 on 9 trackers (MOT17 80.3 MOTA)",
+     "source": "https://github.com/ifzhang/ByteTrack"
+    },
+    {
+     "claim": "Break-even precision of an added node 0.036-0.050 on 12 hold12 videos (both embryos)",
+     "source": "computed here from experiments/exp02_pub941_holdout12/results/validator_results.csv (logged in research/wf_ideas_v3/h_literature.notes.md)"
+    },
+    {
+     "claim": "Blind node pruning -7.9% nodes -> -0.026 (recall matters far more than node count)",
+     "source": "CONTEXT.md l.193 (B25 reference cost)"
+    },
+    {
+     "claim": "a_never GT in 44b6 has an Ultrack point at median 2.3 um while our nearest pred is on another Ultrack object (under-segmentation)",
+     "source": "research/wf_ideas_v2/r2_critic.notes.md"
+    }
+   ],
+   "upper_bound": "Local units: 1 FN->TP = +7.4e-6 (D = 122,151+6,846+6,732 = 135,729; wf_ideas_v2 arithmetic verifier). Directly reachable classes: a_never + a_tail = 2,513 FN -> +0.0186. Of the swap/u/v oracle (+0.065), only the share caused by a missing node counts; unknown, measured in step 0. Node cost: +1% nodes = -0.1*0.914*0.01 = -0.0009, and the 3% guard caps it at -0.0027. Ceiling with every a_never/a_tail recovered and the cap used: ~+0.016 local. Realistic: 10-25% of those classes -> +0.0019..+0.0047, minus 0.0005..0.0015 node cost -> +0.001..+0.003 local. On the test embryos the detector is out-of-sample, so the pool holds more annotated nuclei than on train, and the local figure should under-state the test effect (guess).",
+   "expected_public_gain": "+0.001..+0.004 (central +0.002; guess from the arithmetic above; it scales with the share of a_never/swap GT nodes that have a free pool peak within 3 um, which step 0 measures)",
+   "expected_private_gain": "Similar or larger (+0.001..+0.005): the rule uses no edge-network confidence, and private embryos are unseen by the detector like public. If a private embryo is 44b6-like (dense, under-segmented), the pool matters more (guess).",
+   "probability": "0.35 that it gives >= +0.002 on the public LB. For: the mechanism attacks the largest FN classes, rests on a textbook tracking component, and x138's partial version already transfers. Against: the pool may mostly hold duplicates or noise near existing nodes (the 2 um exclusion and persistence gates address this), and the added nodes can steal matches from correct nodes (measured in the lab).",
+   "validation_protocol": "STEP 0 (today, CPU, zero GPU, ~1.5 h): download exp56's kernel output (edge_cache/*.npz with low_coords/low_score, submission.csv) for the 4 dummy clips, which are train clips with GT. For every GT node whose edge is FN under the official metric, and for all GT nodes, measure the share with a FREE pool peak (>= 0.5, > 2 um from any final node) within 3 um. KILL if < 15% of the FN-edge GT nodes have one, or if free pool peaks number > 30% of final nodes per frame (pool mostly junk). STEP 1 (lab, out of the in-sample trap as far as possible): run the exp56 kernel on 36 train videos (18 6bba stratified by density + 18 44b6, one per leak group) through a fake test dir. Keep the pre-tail checkpoint and pool, and run the tail twice per video (control / arm) in the same kernel. Official metric. SELECTION = 18 6bba to choose between the pre-registered primary and at most 2 alternates. CONFIRMATION = the 18 44b6 + 18 fresh 6bba, run once. GATE: delta >= +0.0010 overall, each embryo >= 0.0000, >= 55% of changed videos gain, node ratio change <= +2.5%, and added-node GT-hit rate in 6bba >= 0.5 x the video's annotated fraction. Why the lab is not optimistic here: the rule reads only detector peak scores and geometry, not the in-sample edge network (the channel that faked +0.016 before). The detector is in-sample on train, so annotated nuclei are already ABOVE threshold there and the train pool under-represents them. The lab bias therefore points to UNDER-estimating the gain. LB rule: adopt if the probe >= base + 0.002; tie -> keep as F2 diversification only.",
+   "resources": [
+    {
+     "who": "agent-container",
+     "hours": 4,
+     "what": "stage code in build_probe_kernel.py --base x138 (patch 'byteext', off = byte-identical), unit tests on synthetic tracks, step-0 audit script"
+    },
+    {
+     "who": "kaggle-sasyami",
+     "hours": 5,
+     "what": "lab GPU run of exp56 on 36 train videos with checkpoint+pool dump (use vitalii after the 26 Sep 00:00 reset if sasyami is unavailable)"
+    },
+    {
+     "who": "kaggle-cpu",
+     "hours": 3,
+     "what": "control/arm tail replays and official scoring (or inside the GPU kernel after inference)"
+    },
+    {
+     "who": "kaggle-vitalii",
+     "hours": 0.7,
+     "what": "private dummy-test run of the probe kernel"
+    }
+   ],
+   "wallclock_to_scored_probe_hours": 32,
+   "earliest_scored_probe_utc": "2026-09-26T19:00Z (code by 25 Sep 16:00; step 0 by 17:30; lab GPU 18:00-23:00 on sasyami or 00:05-05:00 on vitalii; replay/score to ~07:00; build + dummy run to ~09:30; submit ~09:30 26 Sep; scored 17:00-19:30)",
+   "dependencies": "Base = x138 (#34 result expected 25 Sep 17-20 UTC). If #34 < 0.953, port the LOWDET dump patch (x138 cell 4, 'lowdet peaks') onto exp51; the stage code is base-independent. Friend A's planned x138 lab cache would replace step 1 if it exists earlier.",
+   "risks": "(1) The pool may be dominated by duplicate peaks of already-tracked nuclei at 2-4 um. The 2 um exclusion lets them through, so step 0 must look at the distance histogram and raise the exclusion to 3-4 um if needed. (2) Added nodes can steal the official match from a correct node (a false peak closer to GT than our node) -> FP+FN; the lab measures it. (3) Node-multiplier artefact: the guard caps it at 3%, and the gate reports the node ratio. (4) Births in dense 6bba could add many nodes; arm (a) alone is the conservative fallback. (5) Runtime: CPU-only KD-tree work, seconds per video, well inside x138's 27,000 s repair deadline.",
+   "not_closed_because": "Closed lines touching low-score peaks were threshold changes (B19, probe 4, caassicca 0.99) and blind pruning (B25). None of them used temporal persistence or motion-gated extension. x138's readmit/gapfill cover only >= 0.965 peaks at open ends and end->start bridges, not free extensions or births. Relink knobs and HOCT/Trackastra (closed) change links, not the node set.",
+   "needs_user_decision": "no (one LB slot on 26 Sep; GPU ~5 h from sasyami or vitalii)"
+  },
+  {
+   "id": "symmetric-temporal-det-fusion",
+   "title": "Use the discarded future-context detection logits: fuse window (t-1,t) and (t,t+1) outputs for frame t (zero extra GPU)",
+   "mechanism": "predict_video slides W=2 windows with stride 1. Frame t is detected ONLY from window (t-1,t) at position 1 (seen_frames dedup, tools/repo/scripts/predict_unet_transformer.py l.394-404), and x138 keeps this (cell 4 still gates on seen_frames). The window (t,t+1) also outputs trained detection logits for frame t (the detection loss covers every window frame, train_unet_transformer.py l.842-849), but they are thrown away. The TemporalUNet3D mixes frames through temporal attention in the deeper stages (tools/repo/src/biohub_tracking/models/temporal_unet.py l.51-75), so the two outputs for frame t see DIFFERENT context: past vs future frame. The literature is consistent that symmetric or longer temporal context helps detection and linking of nuclei. linajea uses a centred 7-frame 4D U-Net; Trackastra reports that a 2-frame window 'substantially degrades' against 6 (research/survey_linking_divisions.md #1, #3). Averaging the two logit maps is an ensemble of two genuinely different inputs, unlike flip TTA, which re-shows memorised pixels. It targets faint or entering nuclei: a_never 1,907 and part of swaps.",
+   "change": "Patch 'tempfuse' in the x138 predict cell (cell 4 patches): keep the final fused det map (after TTA, dual-seed blend and retention guard) of the LAST frame of window (t-1,t). When window (t,t+1) is encoded, take det_t = mean(L_pos1(t-1,t), L_pos0(t,t+1)) and run _detect_cells_pooled, the V1284 refine and the lowdet dump on it. Frame 0 and the last frame keep one view. Edge prediction for the pair (t-1,t) needs the coords of t, so it moves one window later, using cached unet_out (TTA-averaged features) of window (t-1,t). This is a one-window delay; features stay the same arrays as today, so the edge net and head see no distribution shift beyond the peak positions. Calibration guard: per video, set the threshold so the number of peaks >= threshold on the fused map matches the pos-1-only count (quantile match, clamp to +-1%). The change then reorders WHICH peaks pass instead of adding nodes (avoids the node-multiplier artefact). Knob TEMPFUSE=0 -> byte-identical.",
+   "evidence": [
+    {
+     "claim": "Detection of frame t taken only from its first window (seen_frames), both frames' det logits computed per window",
+     "source": "tools/repo/scripts/predict_unet_transformer.py l.348-404"
+    },
+    {
+     "claim": "Detection loss is averaged over all W frames of the window (pos-0 logits are trained outputs)",
+     "source": "tools/repo/scripts/train_unet_transformer.py l.842-849"
+    },
+    {
+     "claim": "x138 predict patch still uses seen_frames gating",
+     "source": "experiments/ext_x138/biohub-x138.ipynb cell 4 (retention-guard patch text)"
+    },
+    {
+     "claim": "Trackastra: window 2 substantially degrades vs 6; linajea: 7-frame 4D U-Net",
+     "source": "research/survey_linking_divisions.md (items 1, 3); https://github.com/weigertlab/trackastra; https://github.com/funkelab/linajea"
+    },
+    {
+     "claim": "Temporal attention in deeper UNet stages (skipped only at full res)",
+     "source": "tools/repo/src/biohub_tracking/models/temporal_unet.py l.51-75"
+    }
+   ],
+   "upper_bound": "Only detection-side classes move: a_* 2,929 FN x 7.4e-6 = +0.0217 local if all recovered, plus an unknown share of the swap oracle. A 2-view ensemble of one network recovers a small fraction. The dual-seed blend (a 2-model ensemble) is the nearest analogue, and its size is not isolated in our records. Guess 3-10% of detection-side FN -> +0.0007..+0.0022, node count held fixed by the guard.",
+   "expected_public_gain": "+0.000..+0.003 (guess; central +0.001)",
+   "expected_private_gain": "+0.000..+0.003, same as public. It is a model-side ensemble, so gains should carry to unseen embryos about equally.",
+   "probability": "0.2 for a visible >= +0.002. The two outputs may be highly correlated if temporal attention is weak, and the delay refactor is the main build risk.",
+   "validation_protocol": "The lab cannot validate this honestly: both logit maps come from a detector trained on all 199 videos, so the ensemble gain is suppressed in-sample. Pre-LB checks only: (1) on the 4 dummy clips, log the per-frame IoU of the peak sets (pos-1 vs fused) and the node count; proceed only if 1-10% of peaks change and the count is within +-1%; (2) byte-identity with TEMPFUSE=0; (3) the edge list is identical in structure (same pair coverage). Then ONE LB probe on the base. Adopt only if >= base + 0.002 (noise ~0.003 for identical notebooks, research/discussions_summary.md 2026-09-08). Otherwise use it as the F2 diversifier (it perturbs the node set, not the tail).",
+   "resources": [
+    {
+     "who": "agent-container",
+     "hours": 5,
+     "what": "delay refactor of the x138 predict patch, byte-identity test, dummy-log counters"
+    },
+    {
+     "who": "kaggle-vitalii",
+     "hours": 0.7,
+     "what": "private dummy-test run"
+    }
+   ],
+   "wallclock_to_scored_probe_hours": 30,
+   "earliest_scored_probe_utc": "2026-09-26T17:00Z (build 25 Sep 12:00-18:00; dummy run on sasyami or after the 26 Sep 00:05 reset; submit ~01:00-08:00 26 Sep depending on slot order; scored 7-10 h later)",
+   "dependencies": "Base x138 (#34). Independent of H1, so it can be probed in parallel and stacked later.",
+   "risks": "(1) Build risk: x138's predict cell is heavily string-patched (dual-seed blend, retention guard, 8-view TTA features, V1284). The delay must keep coord_offset/global ids consistent, so assert anchors like x138 does. (2) The pos-0 and pos-1 logits may be calibrated differently; the quantile guard handles the node count but not the ranking quality. (3) Nuclei moving ~1.8 um/frame blur the averaged peak slightly; the alternative is max-fusion. (4) Runtime unchanged (no extra forward passes; the cache adds ~2 x 32ch x 64^3 floats of GPU memory).",
+   "not_closed_because": "The closed TTA lines (Z-flip, axis-flip, rot) re-show the same frame pair. This fuses outputs computed from a different neighbour frame, which already exist and are currently discarded. It is not a fine-tune, soup or seed ensemble.",
+   "needs_user_decision": "no (one LB slot)"
+  },
+  {
+   "id": "ultrack-optional-nodes-ilp",
+   "title": "Ultrack-style hypothesis selection: low-score peaks as optional ILP nodes with a node cost",
+   "mechanism": "Ultrack's central idea is to commit to nodes inside the ILP, choosing among segmentation hypotheses by temporal consistency, instead of thresholding first (Bragantini et al., Nat Methods 2025, https://www.nature.com/articles/s41592-025-02778-0). Our ILP only sees peaks >= 0.965, so a nucleus the detector scores 0.6 in every frame can never be tracked. Readmit and gapfill patch this afterwards, with local rules. tracksdata's ILPSolver, the solver the pipeline already calls, supports a per-node node_weight and overlap (mutual-exclusion) constraints (raw.githubusercontent.com/royerlab/tracksdata/main/src/tracksdata/solvers/_ilp_solver.py l.138, l.330-404). A low-score peak can therefore enter the candidate graph with a positive cost that only a consistent track can pay back. Same target classes as H1 (a_never, part of swaps). The selection uses the edge network's pair scores over the whole window rather than geometry only, which is what the literature credits for Ultrack's robustness in dense tissue.",
+   "change": "In the x138 predict patch, append the free lowdet peaks (0.5 <= s < 0.965; already local maxima of the same map, so >= 3 um from standard peaks) to coords before candidate edges are built. Give every node attr hyp_cost = beta * (logit(0.965) - logit(s)) (0 for standard peaks) and call ILPSolver(..., node_weight=td.NodeAttr('hyp_cost'), timeout=ILP_TIMEOUT_S). The rest of the x138 chain is unchanged (relink/readmit/gapfill see the ILP node set). Knobs: HYP_MIN_SCORE 0.5, HYP_BETA in {0.5, 1, 2}; HYP=0 -> byte-identical. Check in the kernel that the installed tracksdata has node_weight (inspect.signature), else skip with a log line.",
+   "evidence": [
+    {
+     "claim": "tracksdata ILPSolver has node_weight and overlap constraints",
+     "source": "https://raw.githubusercontent.com/royerlab/tracksdata/main/src/tracksdata/solvers/_ilp_solver.py"
+    },
+    {
+     "claim": "Our ILP call uses edge_weight, appearance, disappearance, division only (no node weights)",
+     "source": "tools/repo/scripts/predict_unet_transformer.py l.560-568"
+    },
+    {
+     "claim": "Ultrack: multiple segmentation hypotheses selected by an ILP using temporal consistency, robust under segmentation uncertainty",
+     "source": "https://www.nature.com/articles/s41592-025-02778-0 (search snippet); https://github.com/royerlab/ultrack"
+    },
+    {
+     "claim": "hengck23 (forum): generate hypotheses and test them over a long window (Ultrack-style) rather than learn perfect predictors",
+     "source": "research/discussions_summary.md (2026-09-13 update)"
+    }
+   ],
+   "upper_bound": "Same classes as H1: +0.0186 local for a_never + a_tail, plus a missing-node share of the +0.065 swap/u/v oracle, minus the node cost (+1% nodes = -0.0009). The motion relink rebuilds edges one-to-one after the ILP, so the ILP contributes only the NODE set (and the edge network's pair scores through the relink bonus). Realistic capture is similar to or below H1's; guess +0.000..+0.003 local.",
+   "expected_public_gain": "+0.000..+0.003 (guess). Worth running only if H1's step 0 shows the pool contains the missing nuclei but H1's geometric gates cannot place them.",
+   "expected_private_gain": "+0.000..+0.003 (guess)",
+   "probability": "0.15 for >= +0.002 visible. It changes the edge transformer's input set (more nodes in its candidate softmax; a distribution shift for an in-sample network) and enlarges the ILP next to an existing 1,200 s timeout.",
+   "validation_protocol": "Same 36-video lab as H1 (shared GPU run if both arms are dumped in one kernel). This arm changes the ILP input, so it needs its own inference pass: 2 x GPU for the lab. SELECTION on 18 6bba (beta grid of 3), CONFIRMATION once on 18 44b6 + 18 fresh 6bba. Gate as H1, plus a hard ILP check: no video hits the ILP timeout, and runtime +<= 15%. Caveat: the edge network is in-sample on train, so any gain that comes through edge_prob is discounted by the observed lab->LB ratio for network-trusting rules (~0). Report separately the gain from nodes that the relink (geometry) kept. Adopt on LB only if >= base + 0.002.",
+   "resources": [
+    {
+     "who": "agent-container",
+     "hours": 5,
+     "what": "predict-cell patch (append hypotheses, node attr, solver call), tests on dummy clips, ILP timing logs"
+    },
+    {
+     "who": "kaggle-vitalii",
+     "hours": 6,
+     "what": "lab inference on 36 train videos with the hypothesis arm (a second inference pass)"
+    },
+    {
+     "who": "kaggle-vitalii",
+     "hours": 0.7,
+     "what": "private dummy-test run"
+    }
+   ],
+   "wallclock_to_scored_probe_hours": 48,
+   "earliest_scored_probe_utc": "2026-09-27T12:00Z (build 26 Sep morning after H1 step 0; lab GPU 26 Sep day; submit ~27 Sep 03:00; scored ~27 Sep 10:00-13:00)",
+   "dependencies": "H1 step 0 (pool content). Base x138. Kaggle tracksdata wheel must expose node_weight.",
+   "risks": "(1) ILP size/time: the hidden test is already guarded by ILP_TIMEOUT_S 1200 and REPAIR_DEADLINE_S 27000. More nodes can push videos into the timeout fallback, which would be catastrophic for those videos. (2) Edge-transformer distribution shift from extra nodes (in-sample network). (3) The relink after the ILP may discard the selected hypotheses anyway, and the gain can then be 0. (4) Largest build effort of the four.",
+   "not_closed_because": "Closed ILP lines changed division/disappearance weights (probe 3, exp12/13), not the node hypothesis set; threshold lowering had no node cost and no selection. HOCT/Trackastra (closed) replace the linker, not the node set.",
+   "needs_user_decision": "no, but it competes with H1 for the same ~6-12 GPU-h; recommend only if H1 step 0 passes and H1's lab shows the pool nodes cannot be placed geometrically"
+  },
+  {
+   "id": "log-shoulder-hypotheses",
+   "title": "LoG/DoG blob hypotheses for z-merged nuclei (TrackMate/TGMM-style splits) feeding the H1 pool",
+   "mechanism": "In 44b6 the a_never class is under-segmentation: two Ultrack objects ~7 um apart, blurred in z, where our detector puts one peak and the GT nucleus sits 2.3 um from the second object (research/wf_ideas_v2/r2_critic.notes.md). The peak extractor keeps only strict local maxima of the logit map in a 3x3x3 window (tools/repo/scripts/predict_unet_transformer.py l.256-295). A second nucleus that appears as a SHOULDER of its neighbour's response has no local maximum and so is not even in the lowdet pool. Classic blob detectors (TrackMate's LoG/DoG detectors; TGMM's Gaussian-mixture split test) resolve shoulders through the scale-normalised Laplacian, whose peaks separate overlapping blobs that the raw intensity cannot. Measured: our preds are farther apart than GT pairs by +0.55..+1.0 um in dense 6bba, mostly in z (neighbour-repulsion bias, r2_critic.notes.md attract3.py). Adding shoulder hypotheses to the pool lets H1's persistence gates decide.",
+   "change": "In the x138 predict patch, after the fused det map for frame t: compute -LoG of the logit map (sigma ~ 1 grid voxel = 1.625 um isotropic, separable 3D conv on GPU), extract its local maxima (3x3x3) with logit >= logit(0.3). Keep those > 3.5 um from every standard peak and from every lowdet peak, and append them to the lowdet dump with a flag and score = sigmoid(logit). H1's extension and birth rules then treat them like other pool peaks, with an optional stricter S for flagged peaks. Knob SHOULDER=0 -> byte-identical.",
+   "evidence": [
+    {
+     "claim": "a_never in 44b6 = under-segmentation of two Ultrack objects ~7 um apart (z-blurred); swap GT->Ultrack 2.4 um vs GT->pred 3.7 um",
+     "source": "research/wf_ideas_v2/r2_critic.notes.md"
+    },
+    {
+     "claim": "Peaks = strict local maxima in a 3x3x3 max-pool window of the fused logits, threshold 0.965 (lowdet 0.3)",
+     "source": "tools/repo/scripts/predict_unet_transformer.py l.256-295; experiments/ext_x138/biohub-x138.ipynb cell 4"
+    },
+    {
+     "claim": "Dense-tissue neighbour repulsion of +0.55..+1.0 um, mostly z",
+     "source": "research/wf_ideas_v2/r2_critic.notes.md (attract3.py)"
+    },
+    {
+     "claim": "Division/dense structure: continuation step median 1.72 um, sister separation median 8.85 um",
+     "source": "research/discussions_summary.md (740573)"
+    }
+   ],
+   "upper_bound": "Limited to the under-segmented share of a_never plus the matching share of swaps. 44b6 a_never is 167 FN (fn_anatomy_exp39.md) -> +0.0012 local even if all were recovered. In 6bba (1,740 a_never) the under-segmentation share is unmeasured. If it were 30%: 522 x 7.4e-6 = +0.0039 ceiling. Realistic after H1's gates: +0.000..+0.0015 local (guess). Its value rises if a private embryo is 44b6-like.",
+   "expected_public_gain": "+0.000..+0.0015 on top of H1 (guess)",
+   "expected_private_gain": "+0.000..+0.002 (guess; larger for a dense, 44b6-like embryo)",
+   "probability": "0.1 for a visible LB gain on its own. It is a rider on H1, and its main value is diagnostic: how much of a_never is a shoulder vs a separate sub-threshold maximum.",
+   "validation_protocol": "Measured inside H1's lab at no extra GPU cost if the LoG maxima are dumped in the same inference run. Readout 1 (kill): share of FN-edge GT nodes with a shoulder hypothesis within 3 um and no pool peak. Kill if < 5%. Readout 2: H1 arm with vs without flagged peaks, same gate as H1 (delta >= +0.0005, each embryo >= 0, node ratio <= +1% extra). Ships only inside an H1 probe, never alone.",
+   "resources": [
+    {
+     "who": "agent-container",
+     "hours": 2,
+     "what": "LoG extraction patch + dump flag, tests"
+    },
+    {
+     "who": "kaggle-vitalii",
+     "hours": 0,
+     "what": "shares H1's lab GPU run (dump only)"
+    }
+   ],
+   "wallclock_to_scored_probe_hours": 55,
+   "earliest_scored_probe_utc": "2026-09-27T18:00Z (as a rider on the second H1 probe, submitted ~27 Sep 08:00-10:00)",
+   "dependencies": "H1 (pool consumer). It must be in H1's lab kernel from the start, otherwise it needs its own GPU run.",
+   "risks": "(1) LoG maxima of a logit map may mostly be noise or ringing near bright nuclei. The 3.5 um exclusion and H1's persistence gate limit that, and step readout 1 decides. (2) The extra nodes cost multiplier. (3) Slight GPU time for a 3D conv per frame (negligible next to 16 UNet passes).",
+   "not_closed_because": "Closed detection lines are NMS/duplicate clustering (radius changes can only merge, B31), threshold moves, and fine-tunes. None generates hypotheses for shoulders. The v2 contract/repulsion test moved existing nodes and did not add hypotheses.",
+   "needs_user_decision": "no"
+  }
+ ]
+}
