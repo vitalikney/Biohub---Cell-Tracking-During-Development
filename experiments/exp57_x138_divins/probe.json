@@ -1,0 +1,16 @@
+{
+ "base": "x138 verbatim = exp56 (anvithpothula/biohub-x138, author public 0.953; x138 datasets, docker pin and machine shape); built by tools/build_probe_kernel.py --base x138",
+ "change": {
+  "LEAF_PRUNE_MIN_EDGE_PROB": "0.3",
+  "DIVINS_ENABLE": "1",
+  "DIVINS_STEAL": "1",
+  "DIVINS_CAP": "4",
+  "DIVINS_FRAME_CAP": "1",
+  "DIVINS_ALPHA": "1",
+  "DIVINS_THRESH": "0.4",
+  "DIVINS_DUMP": "1",
+  "PATCHES": "leafprune+divinsert"
+ },
+ "note": "x138 verbatim (exp56) + exp48's additions: L4 weak-leaf prune 0.3 (between short-track filtering and linefit) + L2 DaughterNet v1 insertion with steal (cap 4, frame cap 1, alpha 1, threshold 0.4) after linefit on x138's final float-coordinate graph; no DivNet veto (x138 has none)",
+ "rule": "compare with exp56 (x138 verbatim on our account); above exp56 adopt, ties recorded"
+}

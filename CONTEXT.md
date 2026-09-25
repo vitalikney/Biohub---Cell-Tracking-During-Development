@@ -1506,5 +1506,10 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
 - 2026-09-25 08:00 UTC: user approved 2 probes: P34 = exp56 = x138 VERBATIM on our account (same docker pin + machine
   shape; pushed, vitaliineibauer/biohub-exp56-x138-verbatim v1) and P35 = exp57 = x138 + DaughterNet insertion (+ leaf
   prune 0.3 if clean), agent building via a --base x138 option in tools/build_probe_kernel.py. Submit each when COMPLETE.
+- 2026-09-25 08:15 UTC: tools/build_probe_kernel.py gained --base x138 (base = experiments/exp56_x138_verbatim; only
+  divinsert/leafprune allowed; no patches -> byte-identical to exp56; exp39 builds unchanged). exp57 (x138 + divinsert +
+  leafprune) runs, but leaf prune on x138 conflicts with READMIT (readmitted peaks are relinked with edge_prob 0.0, so a
+  readmitted track end is a leaf < 0.3 and gets pruned) -> P35 will be exp57b = x138 + DaughterNet insertion ONLY
+  (vitaliineibauer/biohub-exp57b-x138-divins-only; one change vs exp56). exp57 v1 output kept only as a diagnostic.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.

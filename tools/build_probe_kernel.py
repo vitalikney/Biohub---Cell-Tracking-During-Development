@@ -9,6 +9,14 @@ Knob names are given WITHOUT the BIOHUB_ prefix. Overrides are appended to the c
 configuration guard's expected values are patched for the keys it checks. Output folder:
 experiments/<name>/ with the notebook, kernel-metadata.json and probe.json; `--push` runs `kaggle kernels push`.
 
+`--base x138` (default exp39): base = experiments/exp56_x138_verbatim (anvithpothula/biohub-x138 byte-identical, public
+0.953, sha256-checked; its kernel-metadata.json = x138's datasets, docker pin and machine shape). Only --patch divinsert
+and --patch leafprune are supported there (same patch code, x138's cell indices: config 2, predict-patch 4,
+post-processing 5; no DivNet cell, so divinsert also adds the DivNet helper definitions its DaughterNet builds on, taken
+verbatim from the exp39 DivNet cell, without loading DivNet or installing the veto). x138's preset name is kept, the
+override block is appended only when there are overrides, there is no BIOHUB_DIVNET_VERIFY (no --divnet), and the
+notebook is written in x138's compact JSON: with no --patch and no --set the output is byte-identical to x138.
+
 Patches (`--patch NAME`, repeatable, any order; they always address the BASE code-cell indices):
   gshift     takaito's per-frame global-shift motion relink (cell 2 knobs + cell 7).
   divinsert  plan L2 DaughterNet division insertion after the post-processing tail: a new code cell after the DivNet
@@ -54,6 +62,7 @@ Patches (`--patch NAME`, repeatable, any order; they always address the BASE cod
              counts. Replay: config key out.coords=round|safe|float.
 """
 import argparse
+import hashlib
 import json
 import re
 import subprocess
@@ -64,6 +73,18 @@ ROOT = Path(__file__).resolve().parent.parent
 BASE_DIR = ROOT / "experiments/exp39_sjlee947_tight55_divnetveto"
 BASE_NB = BASE_DIR / "exp39-sjlee947-tight55-divnetveto.ipynb"
 NL = chr(10)
+# Bases: notebook, metadata folder and the CODE-cell indices the patches address (config constants, predict-script
+# patch cell, DivNet cell or None, post-processing cell with filter_output_graph + the writer).
+X138_DIR = ROOT / "experiments/exp56_x138_verbatim"
+BASES = {
+    "exp39": {"dir": BASE_DIR, "nb": BASE_NB, "sha256": None, "compact": False,
+              "config": 2, "predict": 5, "divnet": 6, "post": 7, "patches": None},
+    "x138": {"dir": X138_DIR, "nb": X138_DIR / "exp56-x138-verbatim.ipynb",
+             # = experiments/ext_x138/biohub-x138.ipynb as pulled from anvithpothula/biohub-x138
+             "sha256": "6b655e39bbfd2d3d6c762badea69847d3f00f5b548f385cb01b07ee2600fde6d", "compact": True,
+             "config": 2, "predict": 4, "divnet": None, "post": 5, "patches": ("divinsert", "leafprune")},
+}
+CELL = dict(BASES["exp39"])  # the active base's cell indices; main() sets it from --base before any patch runs
 
 
 def _rep1(s: str, old: str, new: str) -> str:
@@ -329,8 +350,15 @@ def patch_divinsert(cells_src: dict) -> None:
             + "# ======== tools/daughternet.py ========" + NL + _embed_module(tools_dir / "daughternet.py") + NL
             + "# ======== tools/div_insert.py ========" + NL + _embed_module(tools_dir / "div_insert.py")
             + DIVINS_GLUE)
-    cells_src.setdefault(NEW_CELLS_KEY, []).append((6, cell))
-    c7 = cells_src[7]
+    after = CELL["divnet"]
+    if after is None:
+        # base without the exp39 DivNet cell (x138): the helper definitions go first, both cells after the prediction
+        # cell and before post-processing (the same slot as exp39's DivNet + divinsert cells)
+        after = CELL["predict"]
+        cells_src.setdefault(NEW_CELLS_KEY, []).append((after, divnet_helpers_cell()))
+    cells_src.setdefault(NEW_CELLS_KEY, []).append((after, cell))
+    post = CELL["post"]
+    c7 = cells_src[post]
     c7 = _rep1(c7, '''                "x": refined_point[2],
             }
             inserted_ids.append(node_id)
@@ -343,7 +371,25 @@ def patch_divinsert(cells_src: dict) -> None:
     # patches applied before this one keep the replay's order: linefit -> edgefilter -> swapfix -> stitch -> insertion
     anchor = _tail_anchor(c7, anchor, ("EDGEFILTER_CALL", "SWAPFIX_CALL", "STITCH_CALL"))
     c7 = _rep1(c7, anchor, anchor + DIVINS_CALL)
-    cells_src[7] = c7
+    cells_src[post] = c7
+
+
+def divnet_helpers_cell() -> str:
+    """For a base without a DivNet cell (x138): tools/daughternet.py builds on _DivNetConvBlock and prepare_divnet_input
+    (its import falls back to the notebook globals). The exp39 DivNet cell's module text up to the model loading is
+    taken VERBATIM (the definitions exp48's DaughterNet ran with; tools/divnet_infer.py has since diverged: it drops
+    frames from the shared cache); DIVNET_VERIFY / the model load / the veto helper are not included."""
+    nb = json.load(open(BASE_NB, encoding="utf-8"))
+    code = [c for c in nb["cells"] if c["cell_type"] == "code"]
+    s = "".join(code[BASES["exp39"]["divnet"]]["source"])
+    body = s[s.index('"""Inference for the public'):s.index(NL + "DIVNET_VERIFY = os.environ.get(")].rstrip(NL) + NL
+    for need in ("from __future__ import annotations", "class _DivNetConvBlock(", "def prepare_divnet_input("):
+        assert body.count(need) == 1, need
+    assert "load_divnet_mitosis_model()" not in body
+    return ("# ---- divinsert helpers (tools/build_probe_kernel.py --patch divinsert on a base without a DivNet cell): the" + NL
+            + "# DivNet conv block and input preparation that the DaughterNet cell below builds on, verbatim from the exp39" + NL
+            + "# DivNet cell (the code exp48 ran). Definitions only: no DivNet model is loaded and no veto is installed." + NL
+            + body)
 
 
 def meta_divinsert(meta: dict, overrides: dict) -> None:
@@ -462,8 +508,8 @@ def patch_leafprune(cells_src: dict) -> None:
     successor, exactly one incoming edge, not on the last frame) whose incoming edge has a finite learned edge_prob
     below BIOHUB_LEAF_PRUNE_MIN_EDGE_PROB is removed (single pass, no cascade); edges without a probability
     (safe-division / gap edges) are exempt. Knob via --set LEAF_PRUNE_MIN_EDGE_PROB=<p>; default 0.0 = exact no-op."""
-    cells_src[2] = leafprune_config_source(cells_src[2])
-    cells_src[7] = leafprune_postproc_source(cells_src[7])
+    cells_src[CELL["config"]] = leafprune_config_source(cells_src[CELL["config"]])
+    cells_src[CELL["post"]] = leafprune_postproc_source(cells_src[CELL["post"]])
 
 
 # ---- edgefilter: plan L5 (edge anatomy, experiments/l2_daughternet/edge_anatomy). Drop - and optionally re-link to
@@ -1324,7 +1370,10 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("name", help="folder/kernel name, e.g. exp40_relink_off (lowercase, digits, _ or -)")
     ap.add_argument("--set", action="append", default=[], help="KNOB=value (without BIOHUB_), repeatable")
-    ap.add_argument("--divnet", choices=["0", "1"], default="1", help="DivNet veto on (1, exp39) or off (0, exp29)")
+    ap.add_argument("--base", choices=sorted(BASES), default="exp39",
+                    help="base notebook: exp39 (default) or x138 (= exp56, anvithpothula/biohub-x138 verbatim)")
+    ap.add_argument("--divnet", choices=["0", "1"], default=None,
+                    help="DivNet veto on (1, exp39, the default) or off (0, exp29); exp39 base only")
     ap.add_argument("--note", default="", help="one line for probe.json")
     ap.add_argument("--patch", action="append", default=[], choices=sorted(PATCHES), help="code surgery to apply, repeatable")
     ap.add_argument("--dataset", action="append", default=[], help="extra Kaggle dataset source owner/slug, repeatable")
@@ -1332,6 +1381,17 @@ def main() -> None:
     a = ap.parse_args()
     if not re.fullmatch(r"[a-z0-9][a-z0-9_-]+", a.name):
         sys.exit("name must be lowercase letters/digits/_/-")
+    base = BASES[a.base]
+    CELL.clear()
+    CELL.update(base)
+    if base["patches"] is not None:
+        unsupported = sorted(set(a.patch) - set(base["patches"]))
+        if unsupported:
+            sys.exit(f"--base {a.base} supports only --patch {', '.join(base['patches'])}; got {unsupported}")
+        if a.divnet is not None:
+            sys.exit(f"--divnet: the {a.base} base has no DivNet veto cell")
+        if len(set(a.patch)) != len(a.patch):
+            sys.exit("each --patch once")
     overrides = {}
     for item in a.set:
         k, _, v = item.partition("=")
@@ -1438,9 +1498,13 @@ def main() -> None:
             sys.exit(f"OUTPUT_FLOAT_COORDS must be one of {FLOATOUT_MODES}, got {overrides['BIOHUB_OUTPUT_FLOAT_COORDS']!r}")
     if "floatout" in a.patch and overrides.get("BIOHUB_OUTPUT_FLOAT_COORDS", "0") == "0":
         print("NOTE: --patch floatout with OUTPUT_FLOAT_COORDS=0 (default) writes a byte-identical submission.csv")
-    overrides["BIOHUB_DIVNET_VERIFY"] = a.divnet
+    if a.base == "exp39":
+        overrides["BIOHUB_DIVNET_VERIFY"] = a.divnet or "1"
 
-    nb = json.load(open(BASE_NB, encoding="utf-8"))
+    raw_nb = base["nb"].read_bytes()
+    if base["sha256"] and hashlib.sha256(raw_nb).hexdigest() != base["sha256"]:
+        sys.exit(f"{base['nb']} is not the expected {a.base} notebook (sha256 mismatch)")
+    nb = json.loads(raw_nb.decode("utf-8"))
     cells = nb["cells"]
     code = [i for i, c in enumerate(cells) if c["cell_type"] == "code"]
 
@@ -1448,27 +1512,33 @@ def main() -> None:
         return "".join(cells[i]["source"])
 
     def set_src(i, s):
-        cells[i]["source"] = s.splitlines(keepends=True)
+        # exp39 builds store source as a list of lines (as before); x138 (Kaggle export) keeps one string per cell
+        cells[i]["source"] = s if base["compact"] else s.splitlines(keepends=True)
         cells[i]["outputs"] = []
         cells[i]["execution_count"] = None
 
     c0 = src(code[0])
-    assert "BIOHUB_PRESET = 'exp39_sjlee947_tight55_divnetveto'" in c0
-    c0 = c0.replace("BIOHUB_PRESET = 'exp39_sjlee947_tight55_divnetveto'", f"BIOHUB_PRESET = '{a.name}'")
-    block = NL + f"# ---- {a.name}: probe overrides (tools/build_probe_kernel.py) ----" + NL
-    block += NL.join(f'os.environ["{k}"] = "{v}"' for k, v in overrides.items()) + NL
-    c0 = c0.rstrip(NL) + NL + block
-    set_src(code[0], c0)
+    if a.base == "exp39":
+        assert "BIOHUB_PRESET = 'exp39_sjlee947_tight55_divnetveto'" in c0
+        c0 = c0.replace("BIOHUB_PRESET = 'exp39_sjlee947_tight55_divnetveto'", f"BIOHUB_PRESET = '{a.name}'")
+    if overrides or a.base == "exp39":  # x138: its preset name stays; no overrides -> cell 0 untouched
+        tag = "tools/build_probe_kernel.py" + ("" if a.base == "exp39" else f" --base {a.base}")
+        block = NL + f"# ---- {a.name}: probe overrides ({tag}) ----" + NL
+        block += NL.join(f'os.environ["{k}"] = "{v}"' for k, v in overrides.items()) + NL
+        c0 = c0.rstrip(NL) + NL + block
+        set_src(code[0], c0)
 
     c1 = src(code[1])
     for k, v in overrides.items():
         m = re.search(r'^(\s*"%s": )([^,\n]+),' % re.escape(k), c1, re.M)
         if m:
             c1 = c1[:m.start(2)] + (v if re.fullmatch(r"-?\d+(\.\d+)?", v) else json.dumps(v)) + c1[m.end(2):]
-    set_src(code[1], c1)
+    if c1 != src(code[1]) or a.base == "exp39":
+        set_src(code[1], c1)
 
     if a.patch:
-        # patches always see the BASE code-cell indices (cell 7 = post-processing); new cells go in afterwards
+        # patches always see the BASE code-cell indices (CELL: exp39 post-processing = 7, x138 = 5); new cells go in
+        # afterwards
         cells_src = {k: src(code[k]) for k in range(len(code))}
         for name in a.patch:
             PATCHES[name](cells_src)
@@ -1476,10 +1546,19 @@ def main() -> None:
         for k, s in cells_src.items():
             if s != src(code[k]):
                 set_src(code[k], s)
+        cell_ids = {c.get("id") for c in cells}
         for after in sorted({k for k, _ in new_cells}, reverse=True):
             for s in reversed([s for k, s in new_cells if k == after]):
-                cells.insert(code[after] + 1, {"cell_type": "code", "execution_count": None, "metadata": {},
-                                               "outputs": [], "source": s.splitlines(keepends=True)})
+                if base["compact"]:  # Kaggle-export base (x138): cell ids, source as one string
+                    cid = hashlib.sha256(s.encode("utf-8")).hexdigest()[:8]
+                    assert cid not in cell_ids, cid
+                    cell_ids.add(cid)
+                    new = {"id": cid, "cell_type": "code", "source": s, "metadata": {}, "outputs": [],
+                           "execution_count": None}
+                else:
+                    new = {"cell_type": "code", "execution_count": None, "metadata": {}, "outputs": [],
+                           "source": s.splitlines(keepends=True)}
+                cells.insert(code[after] + 1, new)
         code = [i for i, c in enumerate(cells) if c["cell_type"] == "code"]
         overrides["PATCHES"] = "+".join(a.patch)
 
@@ -1488,8 +1567,12 @@ def main() -> None:
     out_dir = ROOT / "experiments" / a.name
     out_dir.mkdir(exist_ok=True)
     nb_name = a.name.replace("_", "-") + ".ipynb"
-    json.dump(nb, open(out_dir / nb_name, "w", encoding="utf-8"), indent=1, ensure_ascii=False)
-    meta = json.load(open(BASE_DIR / "kernel-metadata.json"))
+    if base["compact"]:
+        # x138's own serialisation (Kaggle export): compact separators; json.loads -> dumps reproduces it byte for byte
+        (out_dir / nb_name).write_bytes(json.dumps(nb, separators=(",", ":"), ensure_ascii=False).encode("utf-8"))
+    else:
+        json.dump(nb, open(out_dir / nb_name, "w", encoding="utf-8"), indent=1, ensure_ascii=False)
+    meta = json.load(open(base["dir"] / "kernel-metadata.json"))
     slug = "biohub-" + a.name.replace("_", "-")
     meta["id"] = "vitaliineibauer/" + slug
     meta["title"] = slug
@@ -1507,6 +1590,10 @@ def main() -> None:
         "note": a.note,
         "rule": "compare with exp29 0.947; >= 0.950 adopt; ties recorded; <= 0.944 drop",
     }
+    if a.base == "x138":
+        probe["base"] = ("x138 verbatim = exp56 (anvithpothula/biohub-x138, author public 0.953; x138 datasets, docker pin "
+                         "and machine shape); built by tools/build_probe_kernel.py --base x138")
+        probe["rule"] = "compare with exp56 (x138 verbatim on our account); above exp56 adopt, ties recorded"
     json.dump(probe, open(out_dir / "probe.json", "w", encoding="utf-8"), indent=1, ensure_ascii=False)
     print("built", out_dir.relative_to(ROOT), "overrides", overrides)
     if a.push:
