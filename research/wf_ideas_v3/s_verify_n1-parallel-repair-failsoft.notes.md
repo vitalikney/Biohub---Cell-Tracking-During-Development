@@ -1,2 +1,8 @@
 - 12:30 start N1 verify
 - 12:31 verified cell4/cell5 structure: ILP inside GPU shards, repair sequential after merge; key test = latency bound vs sim N=140-180 worlds
+- 12:33 latency check: exp51 (DN ungated, DivNet, no guard) scored <=7.5h; exp49 <=7.2h; dummy exp51 kernel 1713 s vs exp56 1138 s -> heavier stacks fit in ~7.5h => N=160-180 sim worlds inconsistent
+- VALUE: public 0 by construction (ok). Private increment over C01 needs full F1 runtime > 9.5 h. The runtime evidence we already have bounds it. exp51 (same GPU phase as x138 per DIFF.md; its repair is heavier: DivNet + ungated DaughterNet, no guard) scored within <=7.5 h of submit (17:09 -> 00:39 UTC). exp49 scored within <=7.2 h. Latency >= runtime. So G + R_heavy <= ~7.5 h on the real hidden set, at the real hidden density. That already includes rho, which the sim treats as free. The sim's N=160-180 / rho 1.6 worlds need G alone ~6.5-7.1 h (dummy 141 s/clip effective) and leave <1 h for exp51's repair, which is ~90+ s/clip on the dummies -> inconsistent. P(C01-only F1 still degrades) ~0.03-0.05, not 0.1-0.2 -> E[gain] ~+0.0002-0.0004.
+- New risk: OOM killer may pick the notebook parent (largest RSS) instead of a worker -> whole-kernel failure. Fix: workers write oom_score_adj=1000.
+- Checked: cell 5 has no global RNG and caches are per dataset -> byte-identity plausible; the gate still decides.
+- Verdict: refuted as a default item (value). Repair: keep step 0, add a divinsert deadline gate plus try/except to the C01 rider (~30 min), build parrepair only on a trigger (latency #34 >= 7.5 h or #35 >= 8.5 h or projected F1 total > 9 h).
+- 12:34 final JSON written (refuted=true, repairable as conditional)
