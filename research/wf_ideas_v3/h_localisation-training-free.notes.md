@@ -1,2 +1,5 @@
 # h_localisation-training-free notes
 - 2026-09-25 ~11:05 UTC: started; read BRIEF.md. JSON not present -> doing the task.
+- 11:15 read: edge_anatomy/fn_anatomy_exp39.md, l6_fn_anatomy_report.md (swap: GT between two of our tracks 9.4um apart, match 4.4/4.7um vs 1.8 TP), ext_x138/DIFF.md (detector grid (1,4,4)-downsampled = isotropic 1.625um; head mean shift 0.74um; x138 -2.9% nodes vs readmit-v1 => part of +0.007 may be node multiplier ~+0.0027).
+- coordhead_retrain/out_full_P/report.txt: peak->GT error none 1.686um mean (z bias +0.725, 6bba +0.824, 44b6 +0.177), public head 1.525, leak5 retrain 1.238 (in-sample-ish); embryo-held-out kill test FAIL (6bba->44b6 +12% worse; learns embryo z convention).
+- wf_ideas_v2 closed in my lens: polyphase xy dequantisation (bound +0.001-0.002, <=+0.0005 on top of head), hole-fill sandwich (4-6um holes = same blob, no valley), refined duplicate collapse (head-free harmful). Forum: Eric sub-voxel peak refinement +0.0078 local / -0.002 LB twice; Canh constant offset -0.0031 LB.
