@@ -1564,3 +1564,18 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   so the 0.003 "LB noise" does not apply to them; swap FN are not reachable by localisation.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
+- 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
+  research/wf_ideas_v3/PROMPT_LOCAL_CHAT.md). tools/build_probe_kernel.py --patch safetail (x138 base only, applied after
+  all other patches): requires --set REPAIR_DEADLINE_S=34200 (other values need --lab); gate + fail-soft around the
+  DaughterNet insertion (BIOHUB_DIVINS_DEADLINE_S default 28800, 'DIVINS SKIPPED (deadline)', 'DIVINS FAILED'); sets
+  BIOHUB_DEGRADE_KEEP_DIV=1 (safe divisions + linefit survive the deadline); DIVINS_DUMP=1 / DIVINS_FORCE_FAIL need --lab
+  (probe.json then says "LAB/DUMMY BUILD: never submit"). tests/test_safetail.py 8/8 pass (exact-diff undo check vs the
+  unpatched cell, compile, exec'd gate / fail-soft / degrade mocks, builder refusals, a K1-like build). NOT done here:
+  pyflakes pass, lowrefine (T2) - the local chat builds K2 = K1 + lowrefine. Build commands (x138 exp57b insertion knobs):
+    K="--set DIVINS_ENABLE=1 --set DIVINS_STEAL=1 --set DIVINS_CAP=4 --set DIVINS_FRAME_CAP=1 --set DIVINS_ALPHA=1 --set DIVINS_THRESH=0.4"
+    K1: python tools/build_probe_kernel.py exp58t_x138_safe --base x138 --patch divinsert --patch safetail --set REPAIR_DEADLINE_S=34200 $K
+    FD: python tools/build_probe_kernel.py exp58fd_x138_safe --base x138 --patch divinsert --patch safetail --lab --set REPAIR_DEADLINE_S=1 $K
+    FF: python tools/build_probe_kernel.py exp58ff_x138_safe --base x138 --patch divinsert --patch safetail --lab --set REPAIR_DEADLINE_S=34200 --set DIVINS_FORCE_FAIL=1 $K
+    branch B (no insertion): drop --patch divinsert and $K.
+  Dummy gates as in FINAL_REPORT.md section e (K1 sha256 == exp57b dummy CSV; FD: 'DEADLINE' on dataset 1, insertion skipped,
+  safe divisions + linefit counters > 0; FF: 'DIVINS FAILED' on every clip, CSV == exp56 dummy).

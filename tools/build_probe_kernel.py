@@ -60,6 +60,12 @@ Patches (`--patch NAME`, repeatable, any order; they always address the BASE cod
              and the edge rows' -1 stay integers. A new last cell re-reads submission.csv like royerlab csv_to_geffs.py
              (polars, z/y/x as Float64) and asserts decimal points, floor(w) == round(v) (safe), ranges and node/edge
              counts. Replay: config key out.coords=round|safe|float.
+  safetail   (x138 base only; ideas workflow v3 E1) runtime insurance, applied after every other patch: requires
+             --set REPAIR_DEADLINE_S=34200 (any other value needs --lab); DaughterNet insertion runs only while the
+             repair deadline has not fired and the kernel is younger than BIOHUB_DIVINS_DEADLINE_S (default 28800;
+             'DIVINS SKIPPED (deadline)'), inside try/except (input edges kept, 'DIVINS FAILED'); BIOHUB_DEGRADE_KEEP_DIV
+             (set to 1) keeps safe divisions + linefit after the deadline. --lab builds (dummy only, never submit) may
+             set REPAIR_DEADLINE_S=1 (FD test), DIVINS_FORCE_FAIL=1 (FF test) and DIVINS_DUMP=1.
 """
 import argparse
 import hashlib
@@ -82,7 +88,8 @@ BASES = {
     "x138": {"dir": X138_DIR, "nb": X138_DIR / "exp56-x138-verbatim.ipynb",
              # = experiments/ext_x138/biohub-x138.ipynb as pulled from anvithpothula/biohub-x138
              "sha256": "6b655e39bbfd2d3d6c762badea69847d3f00f5b548f385cb01b07ee2600fde6d", "compact": True,
-             "config": 2, "predict": 4, "divnet": None, "post": 5, "patches": ("divinsert", "leafprune")},
+             "config": 2, "predict": 4, "divnet": None, "post": 5,
+             "patches": ("divinsert", "leafprune", "safetail")},
 }
 CELL = dict(BASES["exp39"])  # the active base's cell indices; main() sets it from --base before any patch runs
 
@@ -1360,9 +1367,98 @@ def patch_floatout(cells_src: dict) -> None:
     cells_src.setdefault(NEW_CELLS_KEY, []).append((max(k for k in cells_src if isinstance(k, int)), FLOATOUT_CHECK))
 
 
+# ---- safetail (ideas workflow v3, E1 = C01 + fail-soft; research/wf_ideas_v3/FINAL_REPORT.md): x138 base only ----
+SAFETAIL_GATE = r"""
+
+# ---- safetail (tools/build_probe_kernel.py --patch safetail): runtime insurance for the hidden rerun ----
+# DaughterNet insertion runs only while the repair deadline has not fired and the kernel is younger than
+# BIOHUB_DIVINS_DEADLINE_S; BIOHUB_DIVINS_FORCE_FAIL=1 (dummy test only) makes the insertion raise to exercise the
+# fail-soft path; BIOHUB_DEGRADE_KEEP_DIV=1 keeps safe divisions + linefit after the deadline.
+SAFETAIL_DIVINS_DEADLINE_S = float(os.environ.get("BIOHUB_DIVINS_DEADLINE_S", "28800"))
+SAFETAIL_DIVINS_FORCE_FAIL = os.environ.get("BIOHUB_DIVINS_FORCE_FAIL", "0") != "0"
+print(f"SAFETAIL: repair deadline {REPAIR_DEADLINE_S:.0f}s, divins deadline {SAFETAIL_DIVINS_DEADLINE_S:.0f}s,"
+      f" keep_div_after_deadline={os.environ.get('BIOHUB_DEGRADE_KEEP_DIV', '0')},"
+      f" divins_force_fail={int(SAFETAIL_DIVINS_FORCE_FAIL)}", flush=True)
+
+
+def safetail_divins_allowed(dataset, stats) -> bool:
+    elapsed = _time.time() - KERNEL_START_TS
+    if _deadline_degraded or elapsed >= SAFETAIL_DIVINS_DEADLINE_S:
+        stats["divins_skipped_deadline"] = 1
+        print(f"  [{dataset}] DIVINS SKIPPED (deadline): elapsed {elapsed:.0f}s, degraded={int(_deadline_degraded)}",
+              flush=True)
+        return False
+    return True
+"""
+
+SAFETAIL_DEGRADE_OLD = """    OUTPUT_SAFE_DIVISIONS = False
+    OUTPUT_LINEFIT_SMOOTH = False
+    print(
+        f"DEADLINE: {_time.time() - KERNEL_START_TS:.0f}s since kernel start exceeds"
+        f" {REPAIR_DEADLINE_S:.0f}s; remaining datasets get edge filtering and"
+        " short-track filtering only",
+        flush=True,
+    )
+"""
+SAFETAIL_DEGRADE_NEW = """    _keep_div = os.environ.get("BIOHUB_DEGRADE_KEEP_DIV", "0") != "0"  # safetail
+    if not _keep_div:
+        OUTPUT_SAFE_DIVISIONS = False
+        OUTPUT_LINEFIT_SMOOTH = False
+    print(
+        f"DEADLINE: {_time.time() - KERNEL_START_TS:.0f}s since kernel start exceeds"
+        f" {REPAIR_DEADLINE_S:.0f}s; remaining datasets get edge filtering and"
+        " short-track filtering only"
+        + ("; safetail keeps safe divisions + linefit" if _keep_div else ""),
+        flush=True,
+    )
+"""
+_DIVINS_IF = '    if BIOHUB_DIVINS_ENABLE != "0" and dataset is not None and edges and nodes_by_id:' + NL
+_DIVINS_END = '    # ---- /divinsert ----' + NL
+
+
+def safetail_divins_call() -> str:
+    """DIVINS_CALL with the deadline gate and a try/except that keeps the pre-insertion edges on any exception."""
+    head, rest = DIVINS_CALL.split(_DIVINS_IF)
+    body, tail = rest.split(_DIVINS_END)
+    assert tail == "", tail
+    body = "".join("    " + ln if ln.strip() else ln for ln in body.splitlines(keepends=True))
+    return (head
+            + '    if BIOHUB_DIVINS_ENABLE != "0" and dataset is not None and edges and nodes_by_id'
+            + ' and safetail_divins_allowed(dataset, stats):' + NL
+            + '        _dv_edges_in = edges' + NL
+            + '        try:' + NL
+            + '            if SAFETAIL_DIVINS_FORCE_FAIL:' + NL
+            + '                raise RuntimeError("BIOHUB_DIVINS_FORCE_FAIL=1 (dummy test of the fail-soft path)")' + NL
+            + body
+            + '        except Exception as _dv_exc:' + NL
+            + '            edges = _dv_edges_in' + NL
+            + '            if DIVINS_BUNDLE is not None:' + NL
+            + '                DIVINS_BUNDLE["prepared_frames"].clear()' + NL
+            + '            stats["divins_failed"] = 1' + NL
+            + '            print(f"  [{dataset}] DIVINS FAILED ({type(_dv_exc).__name__}: {_dv_exc});"' + NL
+            + '                  " keeping the pre-insertion edges", flush=True)' + NL
+            + _DIVINS_END)
+
+
+def patch_safetail(cells_src: dict) -> None:
+    """Ideas workflow v3 E1 (research/wf_ideas_v3/FINAL_REPORT.md, TASK_CLOUD_SESSION.md T1), x138 base only, applied
+    after every other patch. Post-processing cell: (a) SAFETAIL knobs + safetail_divins_allowed() after the x138
+    runtime-guard block; (b) _deadline_degrade() keeps OUTPUT_SAFE_DIVISIONS / OUTPUT_LINEFIT_SMOOTH when
+    BIOHUB_DEGRADE_KEEP_DIV=1 (main() sets it to 1 for safetail builds); (c) with --patch divinsert: the insertion call
+    is gated by the deadline and wrapped in try/except (on failure: input edges kept, 'DIVINS FAILED' in the log).
+    The repair deadline itself is REPAIR_DEADLINE_S from --set (main() requires it)."""
+    post = CELL["post"]
+    c = cells_src[post]
+    c = _rep1(c, NL + NL + NL + "def fallback_output_graph(", SAFETAIL_GATE + NL + NL + "def fallback_output_graph(")
+    c = _rep1(c, SAFETAIL_DEGRADE_OLD, SAFETAIL_DEGRADE_NEW)
+    if DIVINS_CALL in c:
+        c = _rep1(c, DIVINS_CALL, safetail_divins_call())
+    cells_src[post] = c
+
+
 PATCHES = {"gshift": patch_gshift, "divinsert": patch_divinsert, "leafprune": patch_leafprune,
            "edgefilter": patch_edgefilter, "stitch": patch_stitch, "swapfix": patch_swapfix,
-           "coordhead": patch_coordhead, "floatout": patch_floatout}
+           "coordhead": patch_coordhead, "floatout": patch_floatout, "safetail": patch_safetail}
 META_PATCHES = {"divinsert": meta_divinsert, "coordhead": meta_coordhead}
 
 
@@ -1378,6 +1474,8 @@ def main() -> None:
     ap.add_argument("--patch", action="append", default=[], choices=sorted(PATCHES), help="code surgery to apply, repeatable")
     ap.add_argument("--dataset", action="append", default=[], help="extra Kaggle dataset source owner/slug, repeatable")
     ap.add_argument("--push", action="store_true")
+    ap.add_argument("--lab", action="store_true",
+                    help="dummy/lab build, never a submission: allows DIVINS_DUMP=1, DIVINS_FORCE_FAIL and any REPAIR_DEADLINE_S")
     a = ap.parse_args()
     if not re.fullmatch(r"[a-z0-9][a-z0-9_-]+", a.name):
         sys.exit("name must be lowercase letters/digits/_/-")
@@ -1398,6 +1496,22 @@ def main() -> None:
         if not k or not _:
             sys.exit(f"bad --set {item!r}")
         overrides["BIOHUB_" + k.strip().removeprefix("BIOHUB_")] = v.strip()
+    if "safetail" in a.patch:
+        if a.base != "x138":
+            sys.exit("--patch safetail needs --base x138")
+        if "BIOHUB_REPAIR_DEADLINE_S" not in overrides:
+            sys.exit("--patch safetail needs --set REPAIR_DEADLINE_S=34200 (x138 default 27000 is the runtime cliff)")
+        if not a.lab and overrides["BIOHUB_REPAIR_DEADLINE_S"] != "34200":
+            sys.exit("submission builds with safetail use REPAIR_DEADLINE_S=34200; other values need --lab")
+        if not a.lab and overrides.get("BIOHUB_DIVINS_DUMP", "0") != "0":
+            sys.exit("DIVINS_DUMP=1 is for --lab builds only")
+        overrides.setdefault("BIOHUB_DEGRADE_KEEP_DIV", "1")
+        a.patch = [p for p in a.patch if p != "safetail"] + ["safetail"]  # wraps what the other patches inserted
+    for _k in ("BIOHUB_DIVINS_DEADLINE_S", "BIOHUB_DIVINS_FORCE_FAIL", "BIOHUB_DEGRADE_KEEP_DIV"):
+        if _k in overrides and "safetail" not in a.patch:
+            sys.exit(f"{_k.removeprefix('BIOHUB_')} needs --patch safetail")
+    if overrides.get("BIOHUB_DIVINS_FORCE_FAIL", "0") != "0" and not a.lab:
+        sys.exit("DIVINS_FORCE_FAIL is a dummy test knob: needs --lab")
     if any(k.startswith("BIOHUB_DIVINS_") for k in overrides) and "divinsert" not in a.patch:
         # without the patch no code reads these knobs: the probe would silently be exp39
         sys.exit("DIVINS_* knobs need --patch divinsert")
@@ -1590,6 +1704,8 @@ def main() -> None:
         "note": a.note,
         "rule": "compare with exp29 0.947; >= 0.950 adopt; ties recorded; <= 0.944 drop",
     }
+    if a.lab:
+        probe["lab"] = "LAB/DUMMY BUILD (--lab): never submit"
     if a.base == "x138":
         probe["base"] = ("x138 verbatim = exp56 (anvithpothula/biohub-x138, author public 0.953; x138 datasets, docker pin "
                          "and machine shape); built by tools/build_probe_kernel.py --base x138")
