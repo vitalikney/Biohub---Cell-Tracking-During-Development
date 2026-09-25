@@ -1,0 +1,278 @@
+{
+ "lens_summary": "DIVISIONS. Short answer: no path moves public div_J by >= +0.2 by 29 Sep. Arithmetic (own python; public TP/FP/FN are GUESSES consistent with J_pub 0.36 from probe 26, exp45 = 0.911): with D = TP+FP+FN of 25-50, +0.2 J means recovering 45% of the public FN (10/22, 8/17 or 5/11) with ZERO extra FP. Our best confirmed insertion (DaughterNet v1 + steal) recovered 4/71 FN (5.6%) and added 11 FP on CONFIRMATION (CONTEXT.md 2026-09-24 00:40). That is about 8x short on recall at worse precision. The lab reach audits bound it too: parent + both daughters are detected for 136/151 GT divisions under the window rule, but only 58/151 are orphan-reachable (B32/B35 A0, CONTEXT.md 2026-09-22/24). Only about 3% of insertions land on annotated cells at all (research/wf_ideas_v2/r1_research_div-cap-private-j.json). Each public event is worth a lot: -1 FP fork = +0.007..0.015 J (+0.0007..0.0015 score); an added evaluable fork is worth +0.006..0.013 J at precision 0.5 and ~0 at precision 0.27. So the division term moves in steps of 1-3 events, which is below the LB noise of ~0.003. Top teams probably do NOT win on divisions: a forum report puts divJ ~0.28 at adj 0.89 (Lime1123, research/browser_research_2026-09-24.md l.100), and 0.969-0.975 is only reachable with adj_edge ~0.93-0.94 (inference). Their division gain would come from retrained detectors: dividing nuclei shrink, and the detector misses one daughter in about a fifth of divisions. Realistic ceiling of this lens by 29 Sep: +0.002..+0.005 public score (div_J +0.02..0.05) if everything goes right. Expected: +0.001..+0.002, most of it already in probe 35. Metric facts that matter (tools/official/src/tracking_cellmot/division_metrics.py): the fork may sit at t-1..t+1 of the GT divider; a daughter lineage = child + its successors; FP = considered-but-not-TP + evaluable (the parent matches an annotated non-terminal GT node) + cross-component (children match two different GT tracks) + malformed (a child with in-degree > 1). Forks among unannotated cells are free. One error in an old test: the ILP division weight probe (probe 3, 1.2 -> 0.9) could not change output forks. The motion relink rebuilds edges one-to-one before safe-div (discussions_summary.md l.318), and the ILP emits 0 forks in 1.46M solution edges (CONTEXT.md). So 'let the linker make divisions' was never tested. Re-solving the ILP is too costly now. Idea 2 uses the edge network's pairwise evidence post hoc instead. x138 already exposes the inputs these ideas need, as unused knobs: a candidate-edge dump (BIOHUB_CACHE_EDGE_THRESHOLD, set to 1.0 = off) and a sub-threshold peak dump (LOWDET 0.3 -> low_coords/low_score in the edge_cache npz) (experiments/ext_x138/biohub-x138.ipynb cells 0 and 4). x138 has NO DivNet veto, and its safe divisions are parent <= 9, sister <= 14, mutual NN, divergence 2.25, symmetry 0.6, DeepCenter 0.25 (cell 5).",
+ "challenged_assumptions": [
+  {
+   "assumption": "Earlier notes: 'ILP division weight is closed (probe 3 neutral)'; B23 'ILP division weight lower' was never needed.",
+   "why_doubtful": "Probe 3 could not have changed the output forks. The ILP returns 0 forks at weight 1.2, and the motion relink (flow relink on x138) rebuilds all edges one-to-one before safe divisions, which destroys any ILP fork. So 'the linker's own division evidence' has never reached the submission. The closure holds for re-solving with a lower weight, but not for using the edge network's pairwise probability of the second daughter edge.",
+   "evidence": "CONTEXT.md B23 row (l.213) and probe 3 (l.157); research/discussions_summary.md l.315-320 (Le: relink destroys ILP forks); CONTEXT.md wf v2 idea text: 'The ILP has ZERO forks (0 of 1.46M solution edges on 67 sampled videos)' (research/wf_ideas_v2/r1_hyp_divisions.json insert-at-ckpt)."
+  },
+  {
+   "assumption": "Local division numbers (lab J 0.10-0.12) guide public decisions.",
+   "why_doubtful": "Public J_pub ~0.36 vs local 0.10 with the same stack. Either the public embryo's divisions are easier or it has few GT divisions. Break-even precision is J/(1+J): 0.265 on public vs ~0.1 locally, so the lab over-values insertion and under-values FP-fork removal. Only ~3% of insertions are evaluable, so a 64-video SELECTION split has 1-4 events per config (pure noise).",
+   "evidence": "CONTEXT.md probe 26 (0.911) and 2026-09-24 02:10 note; research/wf_ideas_v2/r1_research_div-cap-private-j.json"
+  },
+  {
+   "assumption": "The v2 conclusion 'keep cap 4, do not re-tune' carries over to x138.",
+   "why_doubtful": "It was measured on exp39 tails. x138 changes the candidate pool (readmit adds ~1,337 real peaks on the 4 dummy clips, gap filler, flow relink with a 7 um gate, head-refined coordinates that shift nodes 0.74 um on average), which changes the orphan/steal pool and the geometry gates (mid_um, cos_max, sister). exp57 already shows the change: 0 eligible on 44b6_0b24845f and 12 insertions over 4 clips with 5 steals.",
+   "evidence": "CONTEXT.md 2026-09-25 08:40 exp57 diagnostic; experiments/ext_x138/DIFF.md section 4 (head shift 0.739 um mean)"
+  },
+  {
+   "assumption": "'Divisions are the only big untapped term' (CONTEXT.md B20/B32, 22-23 Sep).",
+   "why_doubtful": "With J_pub already 0.36, the whole division term has at most +0.064 left even at J = 1, and realistic methods move it by a few events. The gap to 0.969-0.975 is mostly adj_edge (~0.91 for us). The 22 Sep estimate 'their div_J ~0.3 vs our 0.11' compared public-top with our LOCAL J.",
+   "evidence": "CONTEXT.md 2026-09-22 B32 opening; probe 26 J_pub 0.36; research/browser_research_2026-09-24.md l.100 (Lime1123 divJ ~0.28)"
+  },
+  {
+   "assumption": "The DivNet veto is closed because it tied on the LB, and it cannot be improved.",
+   "why_doubtful": "The closure itself is fine, but the lab '+0.0023' behind it was in-sample: the DivNet final model was trained on all 199 videos, so the local number was never honest evidence either way. Forks also carry a geometric signal that DivNet ignores: FP forks have their parent off the daughters' midpoint, and the TP midpoint maximum is 3.8 um. That signal is model-free and transfers.",
+   "evidence": "CONTEXT.md 2026-09-18 (DivNet 4 folds over all 199 videos; final veto uses the full model); research/wf_ideas_v2/r1_research_fork-midpoint-filter.json (TP p 0.77 vs FP p 0.76; mid TP max 3.76 um)"
+  }
+ ],
+ "browser_todo": [
+  "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/submissions : read probe #35 (exp57b, id 56545786) vs #34 (exp56, id 56545267) public scores when they land (~17-20 UTC 25 Sep); every idea here is gated on them",
+  "Kaggle discussion search 'division' sorted by recent (competition discussion tab): any post from a team >= 0.965 stating its public division_jaccard or its zero-fork ablation (like pawanmali's 0.911). Extract the numbers (adj_edge vs div_J split) to confirm or refute 'top teams win on edges, not divisions'",
+  "https://www.kaggle.com/code/pawanmali (list of notebooks): find the 3-class node classifier notebook (cont/parent/daughter, '+0.003 on a 0.926 base'): extract its insertion gates (parent radius, sister range, cap per video, threshold) and whether it vetoes existing forks; compare with tools/div_insert.py defaults",
+  "https://www.kaggle.com/code/anvithpothula/divqc-ground-truth-free-division-qc : extract its per-fork QC features (which features separated TP/FP forks on 50 train movies, div TP 17 / FP 19) for the fork-precision rider",
+  "Kaggle x138 kernel logs (vitaliineibauer/biohub-exp56-x138-verbatim v1 output log): grep 'safe_division' stats (geometric candidates, DeepCenter rejects, symmetry/divergence rejects, added) and 'LOWDET' peak counts per dummy clip, to size ideas 3 and 4 on x138"
+ ],
+ "hypotheses": [
+  {
+   "id": "divins-x138-lab-retune",
+   "title": "Re-tune and re-place the DaughterNet insertion on an x138 lab cache (probe 35 follow-up)",
+   "mechanism": "Probe 35 (exp57b) ships DaughterNet v1 insertion with exp39-era settings (cap 4, frame cap 1, steal, ens threshold 0.4, mid 6.5, cos 0.25, sister 3-20) onto x138. Those settings were chosen on exp39 tails. On x138 the pool differs: readmitted real peaks become orphan starts, the gap filler adds nodes, the flow relink uses a 7 um gate, and head-refined coordinates move nodes 0.74 um on average. Two structural leaks also remain. (a) Insertion runs post-tail, so second daughters whose orphan track was shorter than MIN_TRACK_LEN 6 were already deleted: 10 local GT divisions lose their daughter node between ckpt and final (r1_hyp_divisions.json insert-at-ckpt). (b) Gap-synthetic nodes are excluded as v, but readmit/gapfill nodes on x138 are not flagged, and their edge_prob is 0.0, so they are steal-eligible by default. A lab on x138 tails lets us set cap/threshold/steal/geometry for the pool we actually ship, and test a second insertion slot right after safe divisions (before the short-track filter) so that inserted daughter tracks are protected as division components.",
+   "change": "(1) Build x138 tails on all 199 train videos with the kernel's own post-processing (base experiments/exp56_x138_verbatim, BIOHUB_VALIDATOR-style train run or friend A's cache builder), and dump pre-insertion graphs with DIVINS_DUMP=1. (2) Export candidate triples (tools/div_insert.candidate_triples) and score the new nodes with DaughterNet v1 OOF via experiments/l2_daughternet/kdn_score. (3) Replay grid on SELECTION: cap {2,4,6}, threshold {0.3,0.4,0.5}, steal {0,1} with steal only from edges with prob < 0.3 AND not readmit/gapfill, mid_um {4.5,6.5}, sister_min {3,5}, slot {post-tail, post-safe-div + post-tail}. (4) ONE CONFIRMATION run of the single selected config. (5) Kernel: extend tools/build_probe_kernel.py --base x138 with the new DIVINS knobs and an optional pre-short-track slot. Bundle with the fork-precision rider (idea 4) as one probe.",
+   "evidence": [
+    {
+     "claim": "Insertion transferred: lab +0.0019 on CONFIRMATION -> LB +0.001 (exp48 0.948 vs exp47 0.947)",
+     "source": "CONTEXT.md 2026-09-24 00:40 and 11:20"
+    },
+    {
+     "claim": "x138 insertion adds 12 forks over 4 dummy clips (5 steals), 0 eligible on 44b6_0b24845f; readmit adds 1,337 nodes",
+     "source": "CONTEXT.md 2026-09-25 08:40 (exp57 diagnostic)"
+    },
+    {
+     "claim": "Cap above 4 had marginal 0 TP / +2 FP on SELECTION (exp39 tails)",
+     "source": "research/wf_ideas_v2/r1_research_div-cap-private-j.json"
+    },
+    {
+     "claim": "Between ckpt and final, GT divisions with no second-daughter node rise 13 -> 23 (tail deletes 10)",
+     "source": "research/wf_ideas_v2/r1_hyp_divisions.json (insert-at-ckpt)"
+    },
+    {
+     "claim": "The insertion code excludes gap-synthetic v and treats edge_prob None as never-stealable, but 0.0 (unscored relink/readmit) as stealable",
+     "source": "tools/div_insert.py _candidates / _edge_prob"
+    },
+    {
+     "claim": "Break-even precision of an added evaluable fork on public = J/(1+J) = 0.265",
+     "source": "CONTEXT.md 2026-09-24 02:00"
+    }
+   ],
+   "upper_bound": "Scenario TP 18 / FP 10 / FN 22 (GUESS, J 0.36). The pool reaches at most the orphan + steal share of FN (58/151 orphan, 97/151 with steal, locally). If the retune lifts evaluable insertion precision from ~0.27 to 0.5 and places ~6 evaluable public forks: dJ = 6 x ((1.36 x 0.5 - 0.36)/50) = +0.038 -> +0.004 score. The insert-at-ckpt slot adds at most 10/151 of divisions (6.6%): about 1-2 public events -> +0.002..0.004 at perfect precision.",
+   "expected_public_gain": "+0.000..+0.002 on top of whatever probe 35 shows. With 4-6 evaluable public insertions at precision 0.3-0.45: dJ = 5 x (1.36q - 0.36)/50 = +0.005..+0.025 J -> +0.0005..+0.0025 score.",
+   "expected_private_gain": "+0.000..+0.002. Private J is likely lower (0.13-0.25), so break-even precision is ~0.12-0.20 and insertion is more robustly positive there. The same arithmetic with J 0.2: 5 x (1.2 x 0.35 - 0.2)/D.",
+   "probability": "0.35 that the retuned config beats the probe-35 config by >= +0.001 on the LB (in expectation, not visible). The lab is 1-4 events per config; the transfer ratio seen was ~0.5 (+0.0019 -> +0.001).",
+   "validation_protocol": "Pre-registered split experiments/l2_daughternet/splits.json: grid on SELECTION (64 6bba videos), ONE run on CONFIRMATION (6bba even + all 44b6, leak groups kept whole). DaughterNet p must be OOF (fold column), never the ensemble. Official metric via tools/official. Gate: CONFIRMATION delta >= +0.001 vs the probe-35 config on the SAME x138 tails, net evaluable TP >= +2, added evaluable precision >= 0.31, 44b6 delta >= 0, adj_edge within 0.0005, node count identical (insert-at-ckpt may keep <= +0.05% nodes). Exclude the 4 dummy twins (44b6_0113de3b, 44b6_0b24845f, 6bba_05b6850b, 6bba_05db0fb1) from precision estimates. Caveat: x138's detector/edge network were trained on the 199 videos, so the POOL is in-sample and only the DaughterNet ranking is honest. Keep changes to ranking/caps, not to rules that trust edge_prob.",
+   "resources": [
+    {
+     "who": "kaggle-sasyami",
+     "hours": 10,
+     "what": "x138 tails on 199 train videos (2 sharded GPU sessions, ~5 h wall; estimate from exp51 capture 7.2 GPU-h + tail)"
+    },
+    {
+     "who": "kaggle-vitalii",
+     "hours": 1,
+     "what": "K-DN-score OOF for new candidate nodes (T4)"
+    },
+    {
+     "who": "kaggle-cpu",
+     "hours": 4,
+     "what": "replay grid SELECTION + one CONFIRMATION (or friend A laptop)"
+    },
+    {
+     "who": "agent-container",
+     "hours": 3,
+     "what": "extend build_probe_kernel --base x138 knobs + pre-short-track slot + tests"
+    },
+    {
+     "who": "kaggle-vitalii",
+     "hours": 1.5,
+     "what": "private dummy-test run of the probe kernel (after 26 Sep 00:00 reset)"
+    }
+   ],
+   "wallclock_to_scored_probe_hours": 40,
+   "earliest_scored_probe_utc": "2026-09-27T03:00Z (cache 26 Sep 00:30-06:00, scoring+grid to 12:00, kernel build + dummy run to 17:00, submit ~17:00, 7-10 h scoring). Last useful submit 29 Sep 10:00.",
+   "dependencies": "Probe 34 = ~0.953 (x138 is the base) and probe 35 not clearly negative (<= #34 - 0.003 kills the insertion line on x138). Needs friend A's availability or 10 sasyami GPU-h. Needs the x138 train-run harness (VALIDATOR block / friend A's cache builder).",
+   "risks": "Selection noise (1-4 events per config) can pick a lucky config (the v1-orphan confirmation fell from +0.0044 to +0.0010). The x138 train run may break on the 12 h limit if not sharded. The insertion cannot be distinguished from noise on the public LB (+-0.003), so the adoption rule must be 'not worse than #35 - 0.002' plus the lab gate, not 'better on the LB'.",
+   "not_closed_because": "Not a relink/knob line. The insertion is the only division change that transferred (LB +0.001). The v2 'do not re-tune the cap' verdict was measured on exp39 tails, and x138's pool and coordinates differ (readmit, gapfill, head). The pre-short-track slot was never tested.",
+   "needs_user_decision": "no (normal LB-slot approval only; asks friend A for ~10 GPU-h or his PC)"
+  },
+  {
+   "id": "edge-evidence-second-daughter",
+   "title": "Score second-daughter candidates with the edge network's own p(u->v) from x138's candidate-edge dump",
+   "mechanism": "Every fork in our output comes from post-hoc geometry (safe-div) or DaughterNet (node-level p_par x p_dau). Neither says whether v is u's daughter, as opposed to a neighbour's. This is exactly the within-parent ambiguity that sank B20 (DivNet 'one p per parent' -> 319 FP). The SimpleNodeTransformer scores every candidate pair (u, v) within the candidate radius with image + neighbourhood context, and it was trained on GT edges that include both daughter edges. Its evidence never reaches the output: the ILP's division weight 1.2 prevents forks, and the one-to-one relink would erase them anyway (see challenged_assumptions). x138 already has a switch that dumps candidate edges with their probability (BIOHUB_CACHE_EDGE_THRESHOLD, currently 1.0 = off). With the dump on, the insertion score becomes p_par(u) x p_dau(v) x p_dau(c1)^a x p_edge(u,v)^b. A second-daughter candidate then needs node-level mitosis evidence AND pairwise-link evidence. This resolves which v, which is the precision lever the linajea cell-state work shows (FP divisions 0.89 -> 0.11 when parent->daughter consistency constrains the solver).",
+   "change": "Kernel (--base x138): set BIOHUB_CACHE_EDGE_THRESHOLD=0.05 so the predictor writes candidate edges >= 0.05 per movie (edge_cache npz). In the tail, load them into a dict {(u,v): p}, mapping pre-ILP candidate ids to final node ids. Readmit/gapfill nodes have no candidate edges -> p_edge = 0 -> never inserted by this branch. In tools/div_insert.py add params beta (default 0 = exact no-op) and p_edge_min. Score = current score x p_edge(u,v)^beta, and require p_edge(u,v) >= p_edge_min when beta > 0. Optionally a steal branch requires p_edge(u,v) > p_edge(w,v) + margin (replaces the steal_prob_max rule, which today steals from any unscored 0.0 edge). Lab: build the x138 cache of idea 1 with the dump on and grid beta {0,0.5,1}, p_edge_min {0,0.2,0.4}.",
+   "evidence": [
+    {
+     "claim": "x138 predictor has a candidate-edge dump keyed by BIOHUB_CACHE_EDGE_THRESHOLD (1.0 = none cached) writing per-movie npz",
+     "source": "experiments/ext_x138/biohub-x138.ipynb cell 0 (env) and cell 4 ('candidate dump' patch)"
+    },
+    {
+     "claim": "B20 failed because DivNet gives one p per parent copied to every candidate daughter: 16 TP / 319 FP",
+     "source": "CONTEXT.md 2026-09-19 22:06 (experiments/local_friend_a_b20_divnet/results/b20_final.md)"
+    },
+    {
+     "claim": "linajea + cell-state classifier with parent->daughter ILP constraints: FP divisions 0.89 -> 0.11, FN flat",
+     "source": "https://arxiv.org/pdf/2208.11467 (search snippet; arxiv blocked); research/browser_research_2026-09-24_pass2.md l.174-180"
+    },
+    {
+     "claim": "Among 43 local FP forks, 15 have the ILP-side child wrong while the added child is right, often an unscored relink edge (p 0)",
+     "source": "research/wf_ideas_v2/r1_research_fork-midpoint-filter.json"
+    },
+    {
+     "claim": "Earlier own-model run: ILP forks were more precise than heuristic forks (24 TP / 103 FP vs 23 / 172, pre-official-metric, so TP counts are suspect)",
+     "source": "CONTEXT.md exp12 row (l.85) and the 2026-09-11 metric-fork warning (l.684)"
+    }
+   ],
+   "upper_bound": "If pairwise evidence lifts evaluable insertion precision to ~0.6 and allows 8 evaluable public forks (cap 6): dJ = 8 x (1.36 x 0.6 - 0.36)/50 = +0.073 -> +0.007 score. Under scenario D = 25: +0.015. This is the largest division ceiling reachable with existing models, and still far below +0.02 (= +0.2 J).",
+   "expected_public_gain": "+0.000..+0.002 (4-6 evaluable forks, precision 0.35-0.5: +0.005..+0.03 J). It can also be slightly negative if the edge network's division-edge probabilities are poorly calibrated off the training embryos.",
+   "expected_private_gain": "+0.000..+0.002 (same mechanism, lower break-even).",
+   "probability": "0.2. Unknown whether p_edge separates true second-daughter edges on unseen embryos. In the lab the edge network is IN-SAMPLE (trained on all 199), so a lab gain would be optimistic. This is the same trap as the edge filter: lab +0.016 -> LB 0.",
+   "validation_protocol": "The honest part: DaughterNet stays OOF. The p_edge part cannot be validated honestly in the lab because the edge network was trained on all 199 videos. So (1) pre-register the lab gate as a SANITY gate only: CONFIRMATION delta >= +0.002 AND evaluable precision >= 0.45 AND no adj_edge change > 0.0005, with the lab gain discounted by 50-100% (the edge-filter lesson). (2) Read the separation on the four dummy twins only as a smoke test. (3) Decide by ONE LB probe bundled against the probe-35 config: adopt only if LB >= best x138 score (a tie is acceptable because the change is precision-directed); if LB < best - 0.002, drop. Do not grid on the LB.",
+   "resources": [
+    {
+     "who": "agent-container",
+     "hours": 3,
+     "what": "div_insert beta/p_edge_min knobs + candidate-edge loader in the x138 tail + id mapping + tests (exact no-op at beta 0)"
+    },
+    {
+     "who": "kaggle-sasyami",
+     "hours": 0,
+     "what": "rides on idea 1's x138 cache run (set CACHE_EDGE_THRESHOLD 0.05 there; extra disk only)"
+    },
+    {
+     "who": "kaggle-cpu",
+     "hours": 2,
+     "what": "replay grid for beta / p_edge_min"
+    },
+    {
+     "who": "kaggle-vitalii",
+     "hours": 1.5,
+     "what": "private dummy-test run of the probe kernel"
+    }
+   ],
+   "wallclock_to_scored_probe_hours": 42,
+   "earliest_scored_probe_utc": "2026-09-27T06:00Z if bundled after idea 1's lab (submit ~27 Sep 20:00 at the latest to keep a 29 Sep fallback). A blind variant without the lab could be scored by 26 Sep ~12:00Z, but that is not recommended (in-sample trap, noise).",
+   "dependencies": "Idea 1's x138 train cache (with the edge dump switched on). Probe 34/35 outcome. Check that candidate ids survive readmit/relink renumbering (the edge cache is written in the predictor before the tail).",
+   "risks": "The candidate-edge dump at threshold 0.05 may be large (disk/RAM on the hidden test; the x138 run is already several hours, 12 h hard limit). Id mapping bugs across the tail. The edge network is in-sample on train, so the lab is optimistic. If the edge network puts low p on true second-daughter edges (plausible: the ILP never selects forks), beta > 0 just removes insertions. That is safe but gains nothing.",
+   "not_closed_because": "Not the closed 'edge filter' (which dropped relink edges by ILP evidence) and not 'ILP division weight' (whose probe could not reach the output, see challenged_assumptions). The pairwise edge probability has never been used as division evidence in any of our stages.",
+   "needs_user_decision": "no"
+  },
+  {
+   "id": "mirror-daughter-lowdet",
+   "title": "Recover missing second daughters from x138's sub-threshold peak dump at the mirror position",
+   "mechanism": "The detector misses one daughter in about a fifth of divisions because dividing nuclei shrink (half-max volume -0.17..-0.27 at +1..+3 frames). Parent + both daughters are detected for only 121-123/151 direct (136/151 under the window rule). A full-frame threshold-0.90 pass reaches 151/151 but at +24% nodes, which was closed on node budget. x138 already computes the needed side table: the LOWDET dump stores every peak >= 0.3 with its sigmoid score (int16 coords), and readmit/gapfill use only peaks within 4 um of open track ends/starts. A capped, targeted lookup costs ~0 nodes: only around high-p_par parents whose single child c1 has no admissible orphan sister, search the dump at t+1 near the mirror point 2u - c1.",
+   "change": "New branch 'mirror' in tools/div_insert.py (default off). For u with out-degree 1 (child c1 at t+1) and no orphan/steal triple, take the low peaks x at t+1 with score >= h_min (0.5/0.7/0.9), not within 2 um of an existing node, sister(c1,x) in [6, 14.5] um, |u-x| <= 11 um, cos(c1-u, x-u) <= 0.25, and |x - (2u - c1)| <= 5 um. Score = p_par(u) x p_dau(c1)^a x h(x) x exp(-|x - mirror|^2 / 2s^2). Add node x (flag mirror_synthetic) and edge u->x. If a free orphan start or low peak lies within 4 um at t+2, also add x->that (so the metric's grandchild fallback and the short-track filter are satisfied). Cap 1-2 per video. p_par for these u is needed: score them in the same DaughterNet pass (adds ~a few hundred crops per video, guess).",
+   "evidence": [
+    {
+     "claim": "B32/B35 reach: parent+both daughters detected 121/151 (direct), 136/151 window; full-frame 0.90 pass reaches 151/151 at +24% nodes",
+     "source": "CONTEXT.md 2026-09-22 B32 closure and 2026-09-23 B35 step A result"
+    },
+    {
+     "claim": "15 GT divisions unreachable with current detections; missing daughters exist as sub-threshold peaks",
+     "source": "research/wf_ideas_v2/r1_hyp_divisions.json (mirror-peak-daughter)"
+    },
+    {
+     "claim": "Dividing nuclei shrink: half-max volume -0.17/-0.20/-0.20 at +1..+3 frames",
+     "source": "CONTEXT.md l.915 (zhincez reproduction); research/discussions_summary.md l.268"
+    },
+    {
+     "claim": "x138 dumps low-detection peaks >= 0.3 (low_coords, low_score) per movie; readmit uses radius 4 um to open ends only",
+     "source": "experiments/ext_x138/biohub-x138.ipynb cell 0 (BIOHUB_LOWDET_THRESHOLD 0.3) and cell 4 ('lowdet peaks' patch); experiments/ext_x138/DIFF.md (readmit)"
+    },
+    {
+     "claim": "Geometry alone is useless in the orphan pool: 30 TP / 2,537 FP",
+     "source": "research/wf_ideas_v2/r1_hyp_divisions.json"
+    }
+   ],
+   "upper_bound": "Locally 15/151 (10%) divisions have no second daughter. Recovering all at zero FP: local J 0.119 -> 0.196 (+0.0077). Public (GUESS: 2-3 of ~22 FN are missing-daughter cases): +3 TP at 0 FP -> J 0.36 -> 0.42 (+0.006 score).",
+   "expected_public_gain": "+0.000..+0.0015 (0-1 net public TP; readmit on x138 already recovers part of these, amount unknown).",
+   "expected_private_gain": "+0.000..+0.0015",
+   "probability": "0.15. The detector is in-sample on train, so sub-threshold daughter peaks are likely stronger in the lab than on hidden embryos. Readmit overlap is unmeasured.",
+   "validation_protocol": "On idea 1's x138 train cache (the LOWDET npz is written there anyway). Step 0 (no p needed): count GT divisions whose missing daughter has a low peak within 3 um of it and within 5 um of the mirror point, vs the number of such low peaks around non-dividing single-child parents (prior). Kill if reach < 8/151 or the prior is < 1:50 at h >= 0.7. Then a SELECTION grid (h_min, cap, s) and ONE CONFIRMATION run. Gate: net evaluable TP >= +3, added precision >= 0.4, node ratio change < +0.02%, adj_edge within 0.0005.",
+   "resources": [
+    {
+     "who": "agent-container",
+     "hours": 3,
+     "what": "mirror branch in div_insert + replay support + tests"
+    },
+    {
+     "who": "kaggle-cpu",
+     "hours": 2,
+     "what": "step-0 reach audit + grid on the x138 cache"
+    },
+    {
+     "who": "kaggle-vitalii",
+     "hours": 1,
+     "what": "K-DN-score for the extra parents"
+    },
+    {
+     "who": "kaggle-vitalii",
+     "hours": 1.5,
+     "what": "private dummy-test run"
+    }
+   ],
+   "wallclock_to_scored_probe_hours": 46,
+   "earliest_scored_probe_utc": "2026-09-27T09:00Z (after idea 1's cache; step 0 by 26 Sep ~10:00)",
+   "dependencies": "Idea 1's x138 train cache including the LOWDET npz; DaughterNet scoring of extra parents.",
+   "risks": "Node-adding changes have repeatedly lost on the LB (node multiplier; readmit/leaf-prune interplay). Int16 unrefined low-peak coordinates are ~0.7 um worse than head-refined ones. The added node may be a duplicate of c1's other half (sister floor 6 um guards this). Probably redundant with readmit.",
+   "not_closed_because": "B35 step A closed a FULL-FRAME 0.90 pass on node budget (+24%). This is <= 2 nodes per video around ranked parents with a mirror prior, using a dump x138 already writes.",
+   "needs_user_decision": "no"
+  },
+  {
+   "id": "fork-precision-geometry-rider",
+   "title": "Model-free FP-fork removal on x138 safe-division forks (midpoint/angle), bundled with the insertion",
+   "mechanism": "With J_pub ~0.36, removing one evaluable FP fork is worth +0.007..0.015 J, i.e. about as much as a new TP at precision 0.5, and it cannot hurt edges much. Our FP forks are 'continuation + neighbour on the same side': the parent is not between the two children. Locally all 23 TP forks have mid = |P - (c1+c2)/2| <= 3.76 um and cos(c1-P, c2-P) <= 0.00, while 11-14 of 43 FP forks exceed mid 4.0 or cos 0.1. x138's safe-division gates check parent/sister radii, divergence and symmetry, but not midpoint or angle. The rule uses only geometry, which transfers (unlike rules that trust network confidence).",
+   "change": "Last graph edit before writing (after divinsert): for every fork created by safe divisions (edge_prob None & safe_division=1), un-fork when mid >= 4.5 um OR cos >= 0.1. Drop the ILP-side edge when its edge_prob is 0.0 (unscored relink), else drop the added edge. Never touch nodes or DaughterNet-inserted forks (their TP mids reach 5.9 um). New patch --patch forkmid for --base x138 with FORKMID_ENABLE (0 = byte-identical).",
+   "evidence": [
+    {
+     "claim": "exp39 final graph, 199 videos: 23 TP forks mid median 1.58 max 3.76 um; FP median 3.02; mid >= 4.0 removes 11 FP / 0 TP; mid >= 4.0 OR cos >= 0.1 removes 14 FP / 0 TP; 4.5 removes 6 FP / 0 TP",
+     "source": "research/wf_ideas_v2/r1_research_fork-midpoint-filter.json"
+    },
+    {
+     "claim": "Dropping the unscored ILP-side edge instead of the added edge: 10 FP edges and 1 TP edge removed vs 9/2",
+     "source": "research/wf_ideas_v2/r1_research_fork-midpoint-filter.json"
+    },
+    {
+     "claim": "v2 kept it as a rider: +0.0003..+0.0008, P(net positive) 0.65",
+     "source": "research/wf_ideas_v2/FINAL_REPORT.md l.36"
+    },
+    {
+     "claim": "x138 safe-div gates: parent 9, sister 14, mutual NN, divergence 2.25, symmetry 0.6, DeepCenter 0.25; no midpoint/angle gate",
+     "source": "experiments/ext_x138/biohub-x138.ipynb cell 5 add_safe_divisions_postlink"
+    }
+   ],
+   "upper_bound": "Scenario TP 18 / FP 10 / FN 22 (GUESS): removing 3 FP forks at 0 TP loss -> J 18/47 = 0.383 (+0.0023 score); in the D = 25 scenario, 2 FP removed -> +0.003. Losing 1 TP costs -0.02..-0.04 J, so the rule must be conservative (4.5 um).",
+   "expected_public_gain": "+0.0005..+0.0015 (1-2 evaluable FP forks removed, P(TP loss) ~2-4% per TP fork by a fitted tail, per r1_research_fork-midpoint-filter.json)",
+   "expected_private_gain": "+0.0003..+0.001",
+   "probability": "0.6 net non-negative, 0.3 of >= +0.001 (invisible on the LB alone)",
+   "validation_protocol": "The thresholds were read off all 199 exp39 videos, so the lab cannot validate them honestly. Instead re-measure on idea 1's x138 tails as an out-of-sample check (different stack, head coordinates): pass if 0 TP forks removed on both embryos AND >= 3 FP removed, else ship nothing. No separate LB slot: bundle with the idea 1 probe. Adoption rule for the bundle: LB >= #35 - 0.001.",
+   "resources": [
+    {
+     "who": "agent-container",
+     "hours": 2,
+     "what": "--patch forkmid for --base x138 + replay tail step + tests"
+    },
+    {
+     "who": "kaggle-cpu",
+     "hours": 0.5,
+     "what": "re-measure mid/cos TP/FP on x138 tails (from idea 1's cache)"
+    }
+   ],
+   "wallclock_to_scored_probe_hours": 40,
+   "earliest_scored_probe_utc": "2026-09-27T03:00Z bundled with idea 1. Standalone on x138+divins it could be submitted after the 26 Sep 00:00 GPU reset (dummy run ~1 h) -> scored ~26 Sep 10:00Z, but it is invisible alone.",
+   "dependencies": "x138 base confirmed by probe 34. The re-check needs idea 1's cache (otherwise ship at 4.5 um only, on exp39-derived evidence).",
+   "risks": "Asymmetric real divisions (GT mid p90 5.2 um) can be lost. Head coordinates shift nodes up to 2 um, so the 3.76 um TP maximum may move. Too few events to see on the LB.",
+   "not_closed_because": "Different signal from the closed exp36 hygiene (sister floor + already-divided) and the DivNet veto. A new gate, measured with official-equivalent labels on 199 videos.",
+   "needs_user_decision": "no"
+  }
+ ]
+}

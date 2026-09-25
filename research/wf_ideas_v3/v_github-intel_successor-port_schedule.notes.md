@@ -1,0 +1,11 @@
+# v_github-intel_successor-port_schedule notes
+- 2026-09-25T10:57:24Z start; read BRIEF, sibling value verdict (refuted, +0.0005), divins schedule verdict
+- 2026-09-25T10:58:01Z curl www.kaggle.com/api/v1 -> CONNECT 403 (blocked here: user's Kaggle API key would NOT work in this container; pulls/pushes must go via Vitalii laptop agent w/ kaggle.json or browser)
+- checked cited numbers: pass2 l.18 stub kernel (24 Sep, empty) OK; l.107-111 0.953 = 40->41 teams, Tennant r32 0.959, Pothula r58 0.956 OK; DIFF.md s.1 x138 = readmit-v1 + head OK
+- tools/build_probe_kernel.py: --base choices only {exp39,x138}; BASES hard-codes sha256 + cell indices (x138: config 2, predict 4, post 5) and x138 allows only divinsert/leafprune -> "--base <successor>" does not exist; a new base entry plus anchor checks is needed (_rep1 asserts anchor count == 1)
+- x138 runtime: REPAIR_DEADLINE_S 27000 (7.5 h guard); hidden scoring latency 7-10 h (CONTEXT l.1525); dummy run 15-40 min (BRIEF s.2)
+- exp56 metadata keeps docker_image pin + machine_shape NvidiaTeslaT4; a verbatim copy only needs the id changed (no builder change)
+- CONTEXT l.39/613: kaggle.json lives with the laptop agent (kernels push/status/output) -> discovery can be `kaggle kernels list` there, no browser needed
+- WebSearch (kaggle biohub thtennant/anvithpothula): no new notebook indexed; nothing new
+- verdict draft: unconditional P(scored probe by 29 Sep 10:00) ~0.2-0.25 (< 0.7); conditional on release ~0.8 -> refuted under lens, repairable as a zero-cost watch
+- 2026-09-25T10:59:33Z final JSON written

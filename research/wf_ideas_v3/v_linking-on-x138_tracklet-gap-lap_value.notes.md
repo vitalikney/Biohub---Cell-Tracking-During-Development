@@ -1,0 +1,4 @@
+- 2026-09-25T10:58:08Z start: no prior json; read BRIEF.md
+- 2026-09-25T10:59:23Z read fn_anatomy_exp39.md, l6 report, anatomy_exp39.md, DIFF.md, CONTEXT L160-270. Key: g=0 end->start pairs <6um = 0 (relink leaves none <5um, CONTEXT); relink_new_tight FP rate 0.76, relaxed 0.84; gap1 0.34 gap2 0.42; a_tail only ~115 ILP-attachable (l6 sec4); 1-frame gap bridges 28/58; stitch +0.0008 exp39
+- 2026-09-25T10:59:56Z arithmetic: per-edge 7.37e-6 ok; idea UB 0.0087 double-counts (424 subset of a_*); reachable ceiling ~ (115 a_tail attachable + <=58 gap bridges) = +0.0013 at 100% precision; at gap-edge precision 0.6 net ~+0.0005 lab; g=0 part idle (0 end->start pairs <6 um). Verdict: refute (public <+0.002, below LB noise).
+- 2026-09-25T11:00:21Z wrote final json (refuted=true)

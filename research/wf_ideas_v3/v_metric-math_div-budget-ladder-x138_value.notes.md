@@ -1,0 +1,8 @@
+- 2026-09-25T10:57Z started value/transfer check of div-budget-ladder-x138; read BRIEF.md
+- read h_metric-math.notes, v2 r1_hyp_divisions.notes, r1_research/verify div-cap-private-j (arith/feas/transfer JSONs), CONTEXT 1300-1321, 1505-1548, exp57b probe.json, tools/div_insert.py threshold semantics.
+- threshold is on the PRODUCT p_par*p_dau(v)*p_dau(c1) of ENSEMBLE p (ens 0.4 ~ OOF 0.5); ens p_par 99th pct 0.83 (CONTEXT ~1304) -> product >= 0.6 needs all three >~0.84 -> tight point ~= zero insertions ~= #34 (already scored). Ladder degenerates.
+- x138 insertion on 4 dummy clips: 12 forks (5 steals), 0 eligible on one clip (CONTEXT 1517). Public ~50 videos -> ~150 insertions; lab evaluable rate 15/466 = 3.2% -> ~5 evaluable public forks in the WHOLE insertion (guess).
+- lab marginals: cap 2->4 +2TP/+4FP (p .33); cap 4->6 0TP/+2FP; t0.6->0.5 +1/+2 (selection, 64 vids). CONTEXT 1310: "+0.002 needs about +5 net public TP ... more than the public test holds".
+- scratchpad/ladder.py: per FN->TP public 0.0010..0.0045 (G 20-60); tight removing 4 evaluable @p0.2 = +0.0004..+0.0016; @p0.27 = 0; loose +3 @p0 = -0.0011..-0.0049, @p0.33 = +0.0003..+0.0012. Realistic |delta| <= 0.0015 < 0.002 gate and < LB noise 0.003.
+- transfer: no x138 lab cache exists (friend A told to build one only after #34); DaughterNet OOF is by 44b6 leak group, not by embryo; 44b6 has ~1 evaluable TP at cap 4 -> per-embryo dTP>=+2 gate unreachable. Decision trigger #35-#34 expected ~+0.001 is inside noise.
+- VERDICT: refuted (value < +0.002, ladder branch chosen by noise, validation infeasible by deadline on x138 base).

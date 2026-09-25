@@ -1,0 +1,1 @@
+- 2026-09-25T10:59:46Z start: no prior json; read BRIEF.md, sibling split-aware schedule json, value notes
