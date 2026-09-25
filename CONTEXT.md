@@ -1516,5 +1516,34 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   >= 479 of them READMITTED nodes (36% of readmit) - confirms prune undoes readmit on x138, so exp57b (insertion only)
   is the right P35. Insertion on x138: 12 forks added (5 steals) over 4 test clips, forks 62 -> 74 (0 eligible on
   44b6_0b24845f). Compare script: scratchpad/cmp57.py (out_exp56 downloaded).
+- 2026-09-25 10:20 UTC ===== RESUME POINT (user may continue in a NEW CHAT; read this block first) =====
+  LB (public): best = 0.950 = exp51 (exp48 + x138 V1284 coordinate head; probe 31) and exp52 (exp51 + float output,
+  probe 32). exp48 = 0.948 (exp39 + leaf prune 0.3 + DaughterNet v1 insertion; probe 28). Closed today: edge filter
+  (#29 0.947, #30 0.946), float output coords (#32/#33 ties), head retrain on 199 (kill test fail: learns 6bba z offset).
+  PENDING on the LB (submitted 25 Sep): #34 = exp56 = anvithpothula/biohub-x138 VERBATIM on our account (id 56545267,
+  expect 0.953; author's own score, 41 teams reproduce it) and #35 = exp57b = x138 + DaughterNet v1 insertion only (id
+  56545786; +12 forks, nodes/coords identical to exp56). 1 slot left on 25 Sep UTC; 5 per day after. Scoring latency
+  7-10 h.
+  DECISION RULES when #34/#35 score: #34 == 0.953 -> x138 is the new base; #35 > #34 -> x138 + insertion is F1. If #34 <
+  0.953 -> environment difference (like takaito 0.948 -> 0.944): compare the kernel logs with x138's, keep exp51 as F1.
+  Do NOT add leaf prune on x138 (it removes readmitted nodes: 479 of 513 pruned leaves were readmit's). Float output is
+  harmless (optional in finals). Every new submission needs the user's explicit OK (memory project-lb-probe-approval).
+  FINALS (user ticks 2 by 29 Sep 20:00 UTC): F1 = best of {exp57b, exp56, exp51/exp52}; F2 = a structurally different
+  hedge (e.g. exp51 if F1 is x138-based, since the post-ILP stages differ) - workflow finals-emax-diversify rule.
+  Honest outlook (ideas workflow v2, research/wf_ideas_v2/FINAL_REPORT.md): ~0.955 expected, ceiling ~0.96; 0.97 needs
+  model retraining (detector localisation), not realistic before 29 Sep.
+  TOOLS: tools/build_probe_kernel.py (exp39 base: --patch leafprune|divinsert|edgefilter|stitch|swapfix|gshift|coordhead|
+  floatout; --base x138: only divinsert|leafprune; all patches exact no-ops when off; --push); lab
+  experiments/l2_daughternet/replay/replay.py (in-sample! trust only changes that do not lean on the edge network/ILP;
+  the division-insertion line did transfer: lab +0.0019 -> LB +0.001); coordinate-head capture/training
+  experiments/coordhead_retrain/ + tools/train_coordhead.py; ideas workflow experiments/workflows/biohub-idea-hunt-v2.js
+  (crash-safe, outputs research/wf_ideas_v2/); browser reports research/browser_research_2026-09-24*.md.
+  KERNELS on Kaggle (private): exp51 biohub-exp51-coordhead, exp52 -floatout, exp53, exp54 (== exp48 bytes), exp56
+  biohub-exp56-x138-verbatim, exp57 (x138+prune+ins, diagnostic only), exp57b biohub-exp57b-x138-divins-only.
+  FRIEND A: PC rebooted 24 Sep, L5 DaughterNet-B dropped; told to WAIT for #34 and, if 0.953, build a lab cache on the
+  x138 stack (experiments/exp56_x138_verbatim) for tuning the division insertion on the new base (PROMPT_FRIEND_A.md top
+  block). No commits from him since 24 Sep 04:12 MSK. GPU quota: Kaggle resets 26 Sep 00:00 UTC.
+  Paused: tools/kaggle_lab.py (Kaggle CPU lab port, unfinished). Idea needing the user's rules decision: overlap
+  consensus across overlapping test crops (transductive; recommended NOT to do).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
