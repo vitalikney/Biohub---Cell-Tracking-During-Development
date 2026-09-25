@@ -1,0 +1,259 @@
+{
+ "lens_summary": "Kaggle intel without Kaggle access (kaggle.com blocked here: one curl to the Kaggle API returned 000; WebSearch indexes Kaggle pages by title only, with no LB snippets). GitHub mirrors of other teams (JunhaoLiXD 0.942/0.944, alvaromendizabal 0.947, Kai-Gowers 0.927, Gluzdov 0.926, sota1111, davidlueng986, kito2718) contain NOTHING above 0.953 and no top-team method; searches for top names (Sergio Alvarez, yu4u, Tang, tatsutaka) and Japanese/X posts found nothing. New facts from this pass: (a) Kai-Gowers' reports show the public pilkwang primary was trained 400 epochs (epoch 381 picked on leaky val) on 4xL40S for ~2 days per seed, and a 179-video retrain with the same recipe scored 0.927 vs 0.942. A detector retrain like the top teams' cannot be done by 29 Sep, which matches the BRIEF. Public RETRAINED weights (georgexue666 pool-2/sigma-0.8, CC0) are the only feasible stand-in for a 'model improvement'. (b) Reading the x138 source (experiments/ext_x138/biohub-x138.ipynb) turned up a runtime guard that nobody on our side has audited. REPAIR_DEADLINE_S=27000 s is counted from kernel start. After 7.5 h, every remaining movie is post-processed without relink, gap closing, gap2, safe divisions or linefit. The repair loop runs after ALL GPU prediction, in sorted file order. Our own hidden-test runs of the same GPU stack take ~7.5 h end to end (#31: 17:09 -> 00:39), so x138 may cross its own guard. If so, the last movies in sorted order (possibly the whole private embryo) lose ~0.04-0.05 each. That is a finals risk and an edge over the 41 teams running x138 verbatim. (c) x138's readmit/gapfill nodes come from an unrefined int16 lattice dump, so they miss the head shift. (d) thtennant's private 0.959 was most likely built WITHOUT V1284: the head dataset was private until 24 Sep 03:04 and he is a separate team. His chain therefore likely holds another non-public lever, and his notebooks' version histories should be read. Honest ceiling of this lens: every idea here is worth 0 to +0.006 on public in expectation (sum of expectations ~+0.003-0.004). The only large number is the private insurance of the runtime-guard fix (up to +0.02 private if the guard fires). Realistic public landing: ~0.953-0.958. 0.99 is unreachable: it is 0.015 above the current #1 (0.975), and all disclosed top-team gains come from multi-day model retraining. On the user's Kaggle-API offer: the key would NOT help this container, because kaggle.com is blocked at the network level. It helps on friend A's PC or the user's laptop, for example `kaggle kernels output vitaliineibauer/biohub-exp56-x138-verbatim -p out56` (dummy log with per-movie timings), `kaggle kernels list --competition biohub-cell-tracking-during-development --sort-by dateRun` and `kaggle kernels pull <ref> -m`. Keep the key out of the repository and out of chat logs that get committed.",
+ "challenged_assumptions": [
+  {
+   "assumption": "x138 verbatim (#34, expected 0.953) is a safe base for the finals because 41 teams reproduce 0.953.",
+   "why_doubtful": "The reproductions only prove the PUBLIC score. x138 switches off relink, gap closing, gap2, safe divisions and linefit for every movie whose repair starts after 7.5 h of kernel time. The loop runs in sorted order after all GPU work, so any degradation falls on a contiguous block of the last movies. That block may be the private embryo, which the public LB never shows.",
+   "evidence": "experiments/ext_x138/biohub-x138.ipynb cell 0 (BIOHUB_REPAIR_DEADLINE_S=27000, KERNEL_START_TS) and cell 5 (_deadline_degrade, write_test_submission: geffs = sorted(...glob('*/METHOD/split_0/*.geff'))). Hidden-run latency of the same GPU stack: #31 exp51 17:09 -> 00:39 UTC (7.5 h), #32 00:02 -> <=07:50 (CONTEXT.md 2026-09-25 entries). Stage values on the LB: safe divisions off -0.036 (probe 26, experiments/RESULTS.md); relink off -0.002 (probe 21); linefit lab +0.0145 (B28, research/wf_ideas_v2/r1_hyp_kaggle-intel.json)."
+  },
+  {
+   "assumption": "thtennant's private 0.959 is x138 plus a few extra knobs, so nothing new can be learned from him.",
+   "why_doubtful": "The V1284 head dataset was private until 24 Sep 03:04 UTC. thtennant (rank 32, 0.959) is a different team from Anvith Pothula (rank 58, 0.956). His +0.012 over his own public 0.947 chain was therefore most likely reached WITHOUT the head, which points to a second lever that could stack with the head.",
+   "evidence": "research/browser_research_2026-09-24_pass2.md sections 1 and 4 (dataset made public 24 Sep 03:04; thtennant rank 32 = 0.959; thtennant's latest public kernel is readmit-v1 from 19 Sep; the two have never posted in the forum). It is a guess that they are not collaborating."
+  },
+  {
+   "assumption": "Detector retraining is 'the top-team route' and 23 h on the 5070 Ti is the cost of trying it.",
+   "why_doubtful": "The public primary that 0.947-0.953 runs on is a 400-epoch model: ~2 days per seed on 4xL40S. A same-recipe retrain on 179 videos scored 0.927 vs 0.942, and leonixis' 60-epoch all-199 retrain stayed at 0.947. A 23 h single-GPU run cannot match the reference, which fits our own 0.920 scratch result. The only 'retrained model' gain within reach is PUBLIC retrained weights used as an add-on.",
+   "evidence": "https://github.com/Kai-Gowers/biohub-cell-tracking-v2/blob/main/reports/2026-09-17-all199-training.md and README.md (LB table 0.927 vs 0.942); research/browser_research_2026-09-24_pass2.md section 4 (leonixis 0.947, easonyanyan 0.950)."
+  },
+  {
+   "assumption": "Dummy-test kernel runtimes can be used to judge whether a pipeline fits the hidden-test budget.",
+   "why_doubtful": "Byte-identical pipelines differ by ~50% on the dummy clips (exp51 ~29 min vs exp52 ~43 min, same stack plus a writer change). Setup and model loading dominate. Only the per-dataset timing lines inside the log (GPU phase, ILP seconds, '[dataset] repair Xs | kernel elapsed Ys'), scaled to ~100-130 hidden movies, are informative.",
+   "evidence": "experiments/RESULTS.md probe rows 31-35 (runtime column); CONTEXT.md line 14 (hidden test ~100-130 videos from the scoring-time ratio)."
+  },
+  {
+   "assumption": "In x138, readmitted and gap-filled nodes are refined like all other nodes.",
+   "why_doubtful": "The low-detection dump is taken from _detect_cells_pooled BEFORE _v1284_refine and cast to int16 full-resolution voxels. readmit_discarded_detections writes these lattice positions straight into nodes_by_id. On the dummy clips 1,337 readmitted nodes (1.1%) therefore sit off the annotation convention the head corrects for.",
+   "evidence": "experiments/ext_x138/biohub-x138.ipynb cell 4 ('lowdet peaks' / 'lowdet write': _lc.astype(np.int16)) and cell 5 (readmit_discarded_detections uses peaks['vox']); readmit count from CONTEXT.md 2026-09-25 08:40."
+  }
+ ],
+ "browser_todo": [
+  "OUR SUBMISSIONS https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/submissions : for #28, #31, #32, #33, #34 (exp56 x138 verbatim) and #35 (exp57b), record the exact submit time and the time the score appeared (hover the date; `kaggle competitions submissions -c biohub-cell-tracking-during-development` on a machine with Kaggle access prints the dates). Purpose: hidden-run latency of x138 vs our exp51 (runtime-guard idea).",
+  "OUR KERNEL LOGS (Kaggle API on friend A's PC or the user's laptop: `kaggle kernels output vitaliineibauer/biohub-exp56-x138-verbatim -p out56`; same for biohub-exp51-coordhead and biohub-exp57b-x138-divins-only). Extract: time at which the GPU prediction + ILP phase ends (last 'ILP' / detection timing line per shard), the ILP seconds per dataset, the lines '[<dataset>] repair Xs | kernel elapsed Ys' for each of the 4 movies, and any 'DEADLINE:' line. We need per-movie GPU seconds and repair seconds, excluding setup, to project a 100-130 movie hidden run.",
+  "x138 VERSIONS https://www.kaggle.com/code/anvithpothula/biohub-x138/versions : number of versions, 'ran in' time of each version (a runtime on the VISIBLE test only, but it shows the setup overhead), and the public score per version. Comments https://www.kaggle.com/code/anvithpothula/biohub-x138/comments (topic 742673): any post since 24 Sep about timeouts, the REPAIR_DEADLINE, hidden-run time, the head's training, or 's075'.",
+  "AUTHORS' NEW WORK: https://www.kaggle.com/thtennant/code and https://www.kaggle.com/anvithpothula/code sorted by most recent. List every notebook created or run since 21 Sep with its public score. For thtennant/biohub-frontier947-flow2-v1, -gapfill-v1, -gapfill-det096, -readmit-v1 and -divprec-v1, open the Versions tab and record each version's score and date; any version >= 0.950 -> pull it (`kaggle kernels pull thtennant/<slug> -v <n> -m`) and diff it against readmit-v1. Also check https://www.kaggle.com/thtennant/datasets and https://www.kaggle.com/anvithpothula/datasets for new weights or head files and new versions of biohub-v1284-head-s075.",
+  "CODE TAB BY SCORE https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/code?sortBy=scoreDescending : list every notebook with public score >= 0.953 (author, title, created date, score, votes, version count). CODE TAB BY DATE (?sortBy=dateCreated): every notebook since 24 Sep 12:00 UTC whose title or source mentions x138, v1284, head, 0.95x or 0.96x, with its score. For every one >= 0.954: pull it and report the cell-level diff vs anvithpothula/biohub-x138 (env knobs in cell 0, patches in cell 4, tail in cell 5). Flag forks that only change knobs picked by LB sweeps.",
+  "LEADERBOARD https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/leaderboard : number of teams at each public score 0.950-0.975 in 0.001 bins (vs the 24 Sep snapshot: 0.953 x41, 0.954 x15, 0.955 x14, 0.956 x12, 0.957 x7, 0.958 x11), top-20 names, scores and entry counts, and the current rows for Teddy Tennant, Anvith Pothula, zhincez / Le Quang Canh, easonyanyan/georgexue666, Justin CH123, OmerZalman, bhpepper and Majid Aleissa.",
+  "PRECISION DETECTOR https://www.kaggle.com/datasets/georgexue666/biohub-precision-pool2-weights : license (CC0?), full file list with sizes, and the full README. Needed from it: model class code or the repo it needs; input normalisation; xy/z pooling (pool=2 means which output grid?); peak extraction (threshold, NMS radius, top-K); the D1.json train/val movie lists (we need the 32 VAL stems as an honest localisation benchmark); per-epoch metrics. Also its 'Code' tab: which notebooks use it, their public scores, and the 'ran in' time on the visible test.",
+  "EXPOSURE-BIAS / CROSS-DOMAIN: https://www.kaggle.com/datasets/easonyanyan/biohub-exposure-bias-weights-v1 and https://www.kaggle.com/datasets/majidaleissa/biohub-bio122-cross-domain-secondary-v1 : README text and any notebook that uses them with its score. Only needed to judge whether team easonyanyan's 0.950 came from the detector or from the edge model.",
+  "hengck23 ARTEFACTS https://www.kaggle.com/hengck23/code (cell-point-detector, end2end-cell-linker-raw-edge-ja-0-9-no-ilp) and the dataset hengck23-cell-point-detector-demo : license, time per volume on T4, whether the outputs are in Kaggle-annotation coordinates (two-head delta) or FOCUS-3D centres, and any LB score.",
+  "DISCUSSION (sort by recent comments) https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion?sort=recent-comments : every post since 24 Sep 12:00 UTC. Specifically: 742965 (is x138 overfit? replies), 742266 (OmerZalman / Justin / Civitasmass: which part moved them), 742673 (x138 comments), 735352 (TWEAK 'plugin' details), 734604 and 737543 (Tang: WHAT preprocessing and architecture), 741386 (did the hosts answer how estimated_number_of_nodes is computed?). Search the forum for: 'timeout', 'runtime', 'hidden test size', 'how many test videos', 'REPAIR_DEADLINE', 'deadline', 'v1284', 'head', '0.96'.",
+  "HOSTS ON TEST SIZE: search the discussion and the Data tab (https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/data) for the number of hidden test videos or frames, and whether hidden test names follow the '<embryo>_<hash>' pattern. This decides which movies come last in x138's sorted repair loop.",
+  "DATASET SEARCH https://www.kaggle.com/datasets?search=biohub&sort=updated : datasets updated since 24 Sep whose name or README mentions head, v1284, refine, coord, precision, detector or weights. Give owner, size, and the LB rank/score of the owner."
+ ],
+ "hypotheses": [
+  {
+   "id": "runtime-guard-audit",
+   "title": "Audit and lift x138's 7.5 h repair deadline so the last hidden movies keep relink, gaps, safe divisions and linefit",
+   "mechanism": "x138 sets BIOHUB_REPAIR_DEADLINE_S=27000, counted from BIOHUB_KERNEL_START_TS (cell 0). The repair loop write_test_submission() starts only after GPU prediction and the ILP have finished for every hidden movie, and it walks the geffs in sorted path order (cell 5). The first movie whose repair starts after 7.5 h calls _deadline_degrade(). From then on OUTPUT_MOTION_RELINK, OUTPUT_GAP_CLOSE, OUTPUT_GAP2_RECOVERY, OUTPUT_SAFE_DIVISIONS and OUTPUT_LINEFIT_SMOOTH are False for all remaining movies ('edge filtering and short-track filtering only'). Our hidden runs of the SAME GPU stack (exp51: same models, TTA and head) take ~7.5 h from submit to score (#31 17:09 -> 00:39 UTC; CONTEXT.md). x138's tail (flow relink twice, readmit, gapfill) is in the same cost class. So x138 plausibly crosses its own guard near the end of the loop. The degraded block is a contiguous run of the alphabetically last movies, plausibly all of one embryo, so it can hit the private 71% while leaving public intact. Cost per degraded movie on the LB: safe divisions off -0.036 (probe 26); relink off -0.002 (probe 21); linefit +0.0145 in the lab (B28); gap closing +0.004 in the lab (RESULTS exp07+pp). That is roughly -0.04..-0.05 of score per degraded movie (a guess built from these numbers). Lifting the deadline to ~10 h costs nothing when the run is fast and recovers the tail when it is not.",
+   "change": "On the F1 base (exp56 = x138, or exp57b if #35 > #34), change ONE env value in cell 0: BIOHUB_REPAIR_DEADLINE_S 27000 -> 36000 (10 h). Optional second step (only after reading the dummy log's stage timings): keep linefit and safe divisions in _deadline_degrade(), because they are cheap per movie and worth ~0.05 together, and switch off only the relink/gap stages. Add a projected-finish print: elapsed + remaining_movies x max(repair_s so far) against 11.3 h. Implementation: tools/build_probe_kernel.py --base x138 currently allows only divinsert|leafprune, so add a '--set KEY=VALUE' passthrough for cell-0 env knobs. The dummy run must produce a CSV that is byte-identical to the base, because the 4 dummy movies finish in minutes.",
+   "evidence": [
+    {
+     "claim": "The deadline is 27,000 s from kernel start. Degradation switches off relink, gap close, gap2, safe divisions and linefit for all remaining datasets.",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/experiments/ext_x138/biohub-x138.ipynb (cell 0 env block 'Runtime hardening'; cell 5 _deadline_degrade and write_test_submission)"
+    },
+    {
+     "claim": "The repair loop iterates geffs = sorted((REPO_DIR/'predictions').glob('*/METHOD/split_0/*.geff')) after all GPU prediction.",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/experiments/ext_x138/biohub-x138.ipynb cell 5"
+    },
+    {
+     "claim": "The author's own comment: 'Kaggle reruns this notebook on a hidden test set larger than the visible one, so the repair loop watches the wall clock'.",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/experiments/ext_x138/biohub-x138.ipynb cell 5"
+    },
+    {
+     "claim": "Hidden-run latency of our same-GPU-stack probes is ~7.5-7.8 h (#31 17:09 -> 00:39; #32 00:02 -> <=07:50).",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/CONTEXT.md (2026-09-24 17:09, 2026-09-25 00:02 / 00:39 / 07:50 entries)"
+    },
+    {
+     "claim": "On the LB, safe divisions off = 0.911 vs 0.947 (-0.036) and motion relink off = 0.945 vs 0.947.",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/experiments/RESULTS.md (probe 26 exp45, probe 21 exp40)"
+    },
+    {
+     "claim": "Linefit w0.8/win2 0.9001 vs off 0.8856 on 12 videos (+0.0145).",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/research/wf_ideas_v2/r1_hyp_kaggle-intel.notes.md (B28)"
+    },
+    {
+     "claim": "The hidden test is ~100-130 videos by the ratio of scoring times.",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/CONTEXT.md line 14"
+    }
+   ],
+   "upper_bound": "Let f be the fraction of hidden GT-edge weight in degraded movies and L ~0.045 the per-movie loss (guess from -0.036 divisions, -0.002 relink, ~-0.01 linefit after an LB discount, -0.004 gaps). The total-score loss is ~L x f. Public ceiling if the degraded block is inside the public embryo: L x f/0.29, i.e. +0.015 at f = 0.1. Private ceiling: L x f/0.71, i.e. +0.006 at f = 0.1 and +0.019 at f = 0.3. If the guard never fires the gain is exactly 0: output is byte-identical because the code path is unchanged.",
+   "expected_public_gain": "E ~ +0.001 (range 0 to +0.015): P(guard fires on the hidden run) ~0.35 (guess) x P(the degraded block includes public movies | fires) ~0.3 x ~+0.01 = ~+0.001.",
+   "expected_private_gain": "E ~ +0.0015-0.002 (range 0 to +0.02): 0.35 x 0.7 x ~+0.006-0.008 at f ~0.1. This is mostly insurance for the finals and an edge over the 41 verbatim x138 copies.",
+   "probability": "~0.35 that the guard fires at all on the hidden run (guess). Arithmetic: exp51 (same GPU phase) needs ~7.5 h end to end; x138's tail is at least as heavy; so the 7.5 h mark falls inside the repair loop. The alternative is a GPU phase much shorter than latency suggests: latency includes queueing, and Kaggle may run the hidden set faster. P(no harm) ~0.98, if the 10 h limit keeps >= 1.5 h of margin.",
+   "validation_protocol": "Pre-registered: (1) From the exp56 dummy log (browser_todo item 2), compute GPU+ILP seconds per movie and repair seconds per movie without setup, then project to 100 and 130 movies. The fix is URGENT if the projected repair start exceeds 6.5 h or the projected end exceeds 7.5 h. (2) Compare #34's latency (browser_todo item 1) with #31's. If #34 takes >= 30 min longer, raise the priority. (3) Dummy run of the patched kernel: CSV sha256 identical to exp56 (or exp57b), no 'DEADLINE:' line, and the projected-finish print present. (4) LB rule: public >= base -> adopt the deadline change into BOTH finals (it cannot hurt a run that finishes in time). Public >= base + 0.003 -> the guard WAS firing on public movies. A tie is inconclusive for private but the change is still adopted. No in-sample lab is involved: the change touches no model and no geometry.",
+   "resources": [
+    {
+     "who": "agent-container",
+     "hours": 1.5,
+     "what": "add a --set passthrough to tools/build_probe_kernel.py for --base x138, build the patched kernel, write the projection print"
+    },
+    {
+     "who": "kaggle-vitalii",
+     "hours": 0.8,
+     "what": "dummy-test commit run of the patched kernel after the 26 Sep 00:00 UTC quota reset"
+    },
+    {
+     "who": "friend-a-5070ti",
+     "hours": 0.3,
+     "what": "run `kaggle kernels output` for the exp56/exp51 dummy logs and the submissions list (a machine with Kaggle access)"
+    }
+   ],
+   "wallclock_to_scored_probe_hours": 23,
+   "earliest_scored_probe_utc": "2026-09-26T10:00Z (build today, commit 26 Sep ~00:05, submit ~01:00 with the user's OK, 7.5-10 h scoring)",
+   "dependencies": "#34/#35 results (17:00-20:00 UTC today) pick the base. Dummy log from browser_todo item 2. The user's OK for the 26 Sep slot.",
+   "risks": "(a) If the hidden run is slower than projected, a 10 h deadline could push the kernel toward the 12 h hard limit and a Notebook Timeout (an errored final). Mitigation: stay at 36000 s or less, and use the projected-finish print to degrade early. (b) The gain is invisible on public if the degraded movies are private, so only the argument supports it. (c) The hidden test may be smaller than 100 movies, in which case the gain is 0.",
+   "not_closed_because": "It has never been examined. Our exp51 lineage has no guard, and the x138 port reviews (experiments/ext_x138/DIFF.md) labelled the guard 'runtime only, same result', which is true only on the visible test.",
+   "needs_user_decision": "no (one LB slot; the change is harmless when the run finishes early). The user should know that it matters for choosing the FINALS even without a probe."
+  },
+  {
+   "id": "harvest-x138-successors",
+   "title": "Harvest public successors of x138 (versions, forks, thtennant/anvithpothula new work) and port the first clean single-variable step",
+   "mechanism": "Every earlier public step appeared as a public notebook within days: 0.941 -> 0.946 -> 0.947 (sjlee101 lf-dctta) -> 0.953 (x138, +0.007 from one patch). The x138 authors are privately at 0.959 (thtennant, rank 32) and 0.956 (Anvith Pothula, rank 58). On 24 Sep there were ~60 teams at 0.954-0.958 above the 41 x138 copies, i.e. x138 + something. thtennant's 0.959 probably does not use V1284 (the head became public only on 24 Sep and they are separate teams), so his chain likely holds another lever that stacks with the head. In the last 4 days before a deadline, authors often publish their final versions. A verbatim fork of a proven >= 0.954 notebook is the cheapest step change available to us, and it avoids our in-sample lab entirely.",
+   "change": "Browser pass (browser_todo items 3-5 and 12) tonight. For each public notebook or version >= 0.954 created since 21 Sep, pull the source and diff it against experiments/ext_x138/biohub-x138.ipynb (cells 0, 4, 5). Accept a candidate only if the diff is a MECHANISM (a new patch or stage), not a set of LB-swept knobs. Port it as (i) a verbatim fork on our account (same docker pin, T4 x2) and, if its base is x138, (ii) the same diff applied to our F1 base via build_probe_kernel --base x138. Apply the runtime-guard fix (idea runtime-guard-audit) to any port whose runtime is larger than x138's.",
+   "evidence": [
+    {
+     "claim": "x138 = thtennant readmit-v1 (0.946) + V1284 head = 0.953: a single-variable public step of +0.007.",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/research/browser_research_2026-09-24.md (section 0 and the 12:xx update)"
+    },
+    {
+     "claim": "thtennant rank 32 = 0.959 and Anvith Pothula rank 58 = 0.956 privately. The head dataset was made public on 24 Sep 03:04 UTC. thtennant's latest public kernel is from 19 Sep.",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/research/browser_research_2026-09-24_pass2.md sections 1 and 4"
+    },
+    {
+     "claim": "LB histogram on 24 Sep: 0.953 x41, 0.954 x15, 0.955 x14, 0.956 x12, 0.957 x7, 0.958 x11.",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/research/browser_research_2026-09-24.md (update after the crash) and pass2 section 4"
+    },
+    {
+     "claim": "The public-notebook meta repeats: byte-identical notebooks give 0.946/0.942 (noise +-0.003), and title inflation is common (a '0.951' notebook's team sits at 0.947).",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/research/discussions_summary.md (updates 2026-09-08 and 2026-09-21)"
+    }
+   ],
+   "upper_bound": "+0.006 public = thtennant's private 0.959 - 0.953 if his exact lever were published and stacked additively. It could reach +0.009 if his lever is independent of the head AND stacks with x138 (0.959 - 0.950 + 0.953 - 0.953; a guess).",
+   "expected_public_gain": "E ~ +0.001 (range 0 to +0.006): P(a clean >= 0.954 successor is public by 27 Sep) ~0.3 (guess) x mean +0.003.",
+   "expected_private_gain": "Similar to public if the diff is a mechanism, ~0 or negative if it is an LB-swept knob set (then winner's curse of ~0.001-0.002, per research/wf_ideas_v2/FINAL_REPORT.md item 2).",
+   "probability": "0.3 that something usable exists (guess). 0.6 that a verbatim fork reproduces its author's score within 0.002, given that 41/41 x138 copies reproduced 0.953 and our takaito reproduction lost 0.004 (0.948 -> 0.944, RESULTS probe 24).",
+   "validation_protocol": "No local lab (it would be in-sample). Gates before a slot: (1) the diff vs x138 is fully explained, one mechanism, no hard-coded test outputs; (2) the dummy run on our account shows the expected stage counters; (3) the author's public score is >= 0.955, i.e. >= base + 0.002, which is outside the +-0.003 noise when combined with an independent mechanism argument. LB rule: adopt if our reproduction is >= F1 + 0.002. A tie means keep F1, and use the fork as F2 only if it is structurally different (E[max] rule).",
+   "resources": [
+    {
+     "who": "agent-container",
+     "hours": 2,
+     "what": "diff audit of pulled notebooks (after the user or friend A pulls them), fork build"
+    },
+    {
+     "who": "kaggle-vitalii",
+     "hours": 0.8,
+     "what": "dummy run of the fork"
+    }
+   ],
+   "wallclock_to_scored_probe_hours": 24,
+   "earliest_scored_probe_utc": "2026-09-26T11:00Z (browser pass tonight, commit after the 00:00 reset, submit ~01:00-02:00 UTC 26 Sep)",
+   "dependencies": "A browser pass (the user) or Kaggle API access on friend A's PC. Something must actually be published.",
+   "risks": "Nothing new may be public; forks may be LB-overfit knob sweeps; runtime of forks may exceed the 12 h limit or trigger x138's guard; license of attached datasets must be public/CC-compatible.",
+   "not_closed_because": "New line. Earlier Code-tab scans (24 Sep) predate the 41-team wave and the authors' likely final releases.",
+   "needs_user_decision": "no (browser time + 1 slot)"
+  },
+  {
+   "id": "precision-detector-localiser",
+   "title": "Use the public retrained precision detector (georgexue666 pool-2, sigma 0.8 um, CC0) as a second localiser and readmit source on the x138 stack",
+   "mechanism": "The loss is a node-POSITION problem. About 2,700 swap/diverted FN come from annotated nuclei that sit between two of our tracks (oracle +0.03-0.046). The 1,907 a_never FN have their nearest raw peak at a median of 8.65 um, i.e. just outside the 7 um gate (edge anatomy; wf_ideas_v2 r1_hyp_detection). The V1284 head, a 10% centre-error cut from frozen coarse features, gave +0.007 on the x138 base because x138's tail consumes positions. Top teams say their gains came from retraining the detector, which we cannot do by 29 Sep (400-epoch reference). A retrained detector is, however, public. georgexue666's UNet heatmap detector has twice the xy resolution of the public grid (pool=2) and a tight 0.8 um Gaussian trained directly on Kaggle GT. Its peaks therefore follow the ANNOTATION convention at finer resolution. Two uses: (a) localiser: move each x138 node toward the nearest precision peak within r (1.5-2 um), weighted, i.e. an independent second estimate of the same nucleus centre; (b) readmit source: precision peaks > 5 um from every node and within 4 um of an open track end are re-admitted the way x138 already readmits its own peaks. This targets under-segmentation in dense regions, which the sigma-0.8 map separates better. Neither use swaps the node set wholesale, which is the secondary-swap class closed on the LB.",
+   "change": "(1) Browser: dataset files, README, model code, D1.json (browser_todo item 7). (2) Friend A: run the model on the 32 D1-VAL movies (out-of-sample for it) and dump peaks. On CPU, compare against GT: for every annotated node, the distance to (i) the V1284-refined public peak (public head applied to our 199 captures, experiments/coordhead_retrain), (ii) the fused position for r in {1.0, 1.5, 2.0} um and weights w in {0.3, 0.5, 0.7}; also count the 7 um matches. (3) If the gate passes: a kernel patch after the V1284 refine in the predict script (x138 cell 4). The precision UNet runs once per frame without TTA on the GPU shard, fused positions replace arr before coord_offset, and variant (b) extends the readmit pool. Plus the runtime-guard fix.",
+   "evidence": [
+    {
+     "claim": "The dataset: retrained 3D UNet heatmap, pool=2, sigma 0.8 um, base channels 24, trained on 128 movies / 32 val (D1.json), checkpoint picked by Hungarian recall within 4 um at top-330 nodes per frame (0.7348). The owning team is at 0.950.",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/research/browser_research_2026-09-24_pass2.md sections 3 and 4"
+    },
+    {
+     "claim": "The V1284 shift alone carries exp51's gain (exp54 zero-mode CSV byte-identical to exp48), +0.007 on the x138 base and +0.002 on ours.",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/CONTEXT.md 2026-09-24 22:00 and 2026-09-25 07:50 entries"
+    },
+    {
+     "claim": "Swap FN are node-position errors: endpoints match GT at 4.4/4.7 um vs 1.8 um for correct edges; oracle +0.03-0.046.",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/CONTEXT.md 2026-09-24 13:45 (experiments/l2_daughternet/edge_anatomy/l6_fn_anatomy_report.md)"
+    },
+    {
+     "claim": "The 1,907 a_never FN come from 1,567 GT nodes whose nearest raw peak is at a median of 8.65 um; 424 have no peak within 10 um.",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/research/wf_ideas_v2/r1_hyp_detection.json (gate-aware-refine-head mechanism)"
+    },
+    {
+     "claim": "The reference primary was trained 400 epochs, ~2 days per seed on 4xL40S. Retraining is out of reach.",
+     "source": "https://github.com/Kai-Gowers/biohub-cell-tracking-v2/blob/main/reports/2026-09-17-all199-training.md"
+    },
+    {
+     "claim": "Tang (3rd): most of the gain comes from model improvements; the public ckpt 'hit a wall'.",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/research/discussions_summary.md (What top participants say works)"
+    }
+   ],
+   "upper_bound": "The position-fixable FN pool is the swap/diverted class, oracle +0.03-0.046 (edge anatomy). If the fusion cuts centre error by another ~10% on top of V1284, the public-LB response scales like V1284's own step on the same base: about +0.004..+0.007 (linear scaling is a guess). Variant (b): each recovered a_never FN is worth ~7.4e-6 in J (1/(122,151+6,846+6,732)). 1,000 recovered = +0.0074 in the lab before the ~0.5 transfer discount and the node-multiplier cost (+1% nodes = -0.001).",
+   "expected_public_gain": "E ~ +0.001 (range -0.002 to +0.006): P(the lab gate passes AND the gain transfers) ~0.2 x ~+0.004.",
+   "expected_private_gain": "Similar to public. The model never saw the hidden embryos, the same as the public head, so there is no extra overfit channel.",
+   "probability": "0.2 (guess). For: an independently trained, higher-resolution, annotation-convention localiser, and the team that built it is at 0.950. Against: its 0.735 recall@4 um at top-330 cannot be compared with anything we have; that team's 0.950 is not above ours; model code may be missing; extra GPU time.",
+   "validation_protocol": "Honest because the benchmark movies are out-of-sample for the NEW model. They are in-sample for the public detector and head, which biases the test AGAINST the idea. Pre-registered gate on the 32 D1-val movies, per embryo: fused mean GT distance <= 0.95 x V1284 distance on BOTH embryos, the share within 4 um up >= 0.5 points, 7 um match count not lower, and >= 60% of movies improved. For variant (b): recovered a_never GT nodes >= 3x the added unannotated-region nodes per 1,000, and total nodes +<= 1%. Then one replay on friend A's x138 lab cache with the official metric, reported as J and node multiplier separately per embryo. Only if both pass is a slot spent. LB rule: >= F1 + 0.002 -> adopt; a tie -> keep F1.",
+   "resources": [
+    {
+     "who": "friend-a-5070ti",
+     "hours": 5,
+     "what": "precision-model inference on the 32 D1-val movies, peak dump, distance/gate computation, replay on the x138 lab cache"
+    },
+    {
+     "who": "agent-container",
+     "hours": 3,
+     "what": "fusion/readmit patch for x138 cell 4/5, dataset attach, build"
+    },
+    {
+     "who": "kaggle-vitalii",
+     "hours": 1,
+     "what": "dummy run (measures the added GPU seconds per movie)"
+    }
+   ],
+   "wallclock_to_scored_probe_hours": 48,
+   "earliest_scored_probe_utc": "2026-09-27T11:00Z (lab 26 Sep, build 26 Sep evening, commit 27 Sep 00:05, submit ~01:00)",
+   "dependencies": "Browser pass on the dataset (model code + D1.json). Friend A's availability. The runtime-guard fix, because an extra GPU pass lengthens the hidden run toward the guard. #34/#35 for the base.",
+   "risks": "No model code in the dataset (then 1-2 h to reconstruct from the README, or drop the idea). The hidden-run time grows by the extra UNet pass (unknown; pool-2 means ~4x the voxels of the pool-4 grid, single view), so the guard or the 12 h limit could bite. The fusion can wreck the V1284 calibration if the two models' conventions differ by embryo (the same failure as our head retrain, which learned 6bba's z offset): check per-embryo mean offsets first. Licence must be CC0/permissive.",
+   "not_closed_because": "Closed lines cover swapping or blending the SECONDARY detector's node set (probes 7/10/13) and fine-tuning our own detector. This idea uses an independently retrained public model only to MOVE or readmit individual nodes, and it has an honest out-of-sample benchmark (its D1 val split) that no earlier test had.",
+   "needs_user_decision": "no (one friend-A session + one slot). Verify the dataset licence first."
+  },
+  {
+   "id": "refine-lowdet-pool",
+   "title": "Rider: apply the V1284 head to x138's low-detection pool so readmitted and gap-filled nodes get refined, float positions",
+   "mechanism": "In x138 the low-detection dump (peaks >= 0.3 feeding readmit and gapfill) is taken from _detect_cells_pooled before _v1284_refine, scaled to full resolution and cast to int16 ('lowdet write'). readmit_discarded_detections then inserts these raw lattice positions as nodes, and gapfill bridges through them. So the ~1.1% of nodes that readmit adds (1,337 of 121,777 on the dummy clips), plus up to 3% from gapfill, miss the head's median ~0.4-0.7 um shift toward the annotation convention (mean shift 0.74 um on the main peaks). They also carry the 1.625 um z lattice. These nodes sit at track ends and inside gaps, exactly where the swap/diverted errors live. The same head applied to them removes an inconsistency inside the stack that made the head pay (+0.007 on x138).",
+   "change": "In the x138 predict-script patch (cell 4 'lowdet peaks'), compute the scores at the integer peaks first (as now). Then apply _low = _v1284_refine(ds_path, t, _low, unet_out[:, f_idx]) (the same head, same features; the refine function already handles any peak array) and store _lc as float32 without the int16 cast. The readmit and gapfill code already reads low_coords as float64 (cell 5 load_low_detections). Guard it with a knob LOWDET_REFINE=0|1; 0 must be byte-identical to x138.",
+   "evidence": [
+    {
+     "claim": "lowdet is dumped before refinement and cast to int16.",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/experiments/ext_x138/biohub-x138.ipynb cell 4 ('lowdet peaks', 'lowdet write')"
+    },
+    {
+     "claim": "Readmit inserts peaks['vox'] positions directly as nodes; load_low_detections reads low_coords as float64.",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/experiments/ext_x138/biohub-x138.ipynb cell 5"
+    },
+    {
+     "claim": "1,337 readmitted nodes over 4 dummy clips (121,777 raw nodes); leaf prune removed 479 readmitted leaves (they are fragile track ends).",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/CONTEXT.md 2026-09-25 08:40"
+    },
+    {
+     "claim": "Head shift on the main peaks: mean 0.739 um, max 1.61 um.",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/experiments/ext_x138/DIFF.md section 4"
+    }
+   ],
+   "upper_bound": "If readmit/gapfill nodes (~2-4% of nodes, but concentrated at track ends) got the same benefit per node as the head gave overall (+0.007 for 100% of nodes on x138), the ceiling is ~0.03 x 0.007 = +0.0002..+0.0003, x2-3 for their end-of-track position: ~+0.001 at most.",
+   "expected_public_gain": "+0.0003 (range 0 to +0.001). Invisible on the LB alone; ride it with runtime-guard-audit.",
+   "expected_private_gain": "+0.0003 (same argument; no confidence-dependent channel).",
+   "probability": "0.6 that it is non-negative. It is the same learned shift applied to peaks of the same detector.",
+   "validation_protocol": "Dummy-run checks: (1) with LOWDET_REFINE=0 the CSV is byte-identical to the base; (2) with 1, the main (non-readmitted) node set and ILP counts are identical, readmitted counts change by < 10%, and the shift stats of the lowdet peaks resemble the main peaks (mean ~0.7 um, max < 2 um). If friend A's x138 lab cache exists, replay the tail with and without it and report J per embryo, trusting only the sign. No separate LB slot: it rides in the runtime-guard probe, where both parts are expected to be non-negative.",
+   "resources": [
+    {
+     "who": "agent-container",
+     "hours": 1,
+     "what": "patch + knob in the x138 base builder, parity check"
+    }
+   ],
+   "wallclock_to_scored_probe_hours": 23,
+   "earliest_scored_probe_utc": "2026-09-26T10:00Z (bundled into the runtime-guard probe)",
+   "dependencies": "runtime-guard-audit probe (shared slot); base choice from #34/#35.",
+   "risks": "A readmit pool with shifted positions changes the readmit/exclusion decisions (2 um exclusion, 4 um radius) slightly. It could add or remove a few nodes, so there is a node-multiplier effect of a few hundredths of a percent. Bundling hides attribution, which is acceptable for a +0.0003 rider.",
+   "not_closed_because": "New observation. The x138 port only reviewed the main-peak path.",
+   "needs_user_decision": "no"
+  }
+ ]
+}
