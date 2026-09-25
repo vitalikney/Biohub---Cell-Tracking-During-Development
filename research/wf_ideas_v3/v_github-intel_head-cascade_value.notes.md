@@ -1,2 +1,8 @@
 - 2026-09-25T11:00:27Z start: no prior json; read BRIEF.md
 - 2026-09-25T11:01:46Z read DIFF.md, out_full_P.log (none 1.686/public 1.525/new-heldout-by-movie 1.2375; public residual bias +0.40/+0.29/+0.35 all, 6bba +0.45/+0.33/+0.42, 44b6 +0.13/+0.05/-0.04; public all-peak mean shift ~0)
+- metric: adjusted = J*(1-0.1*(T_pred-T_true)/T_true), linear both sides (tools/official/metrics.md l.41-49). exp51 nodes -2.9% vs exp48 (x138 vs readmit-v1 -2.4%) => ~+0.0022..+0.0027 of x138's +0.007 is node multiplier, not localisation (DIFF.md s.4). Localisation part <= ~+0.005 per -0.16 um, itself one LB sample (noise ~0.003-0.004).
+- report.json MAE z/y/x: none 1.11/0.63/0.58, public 1.08/0.57/0.60 -> public head barely moves MAE (x worse); mean drop is median-driven (1.72->1.35: z-plane ambiguity).
+- Gaussian decomposition (my calc): public residual sigma/axis ~0.89 (6bba), 0.81 (44b6); same-embryo retrained head (leak5 new, optimistic: 44b6 crop leakage) sigma 0.775. Bias part = 0.14 um of 6bba mean dist, ~0 on 44b6. Pass 2 of public head has ~0 all-peak mean shift -> cannot touch the embryo convention bias; only the variance gap 0.89->0.775 is addressable, and only the 'undershoot' part of it.
+- Value: gate threshold -3% = -0.046 um -> ~+0.0012 at pass-1 marginal rate; -5% -> +0.002. x P(gate) 0.35 -> expected +0.0005. Below +0.002 and below LB noise. REFUTED under value lens.
+- Cheap repair: CPU pre-test of output scale s in {0.8..1.5} on existing captures (experiments/coordhead_retrain/captures, on Vitalii's PC) - if s_opt ~1, the head is calibrated and a cascade cannot help; kill without GPU.
+- 2026-09-25T11:03:28Z final json written (refuted=true)

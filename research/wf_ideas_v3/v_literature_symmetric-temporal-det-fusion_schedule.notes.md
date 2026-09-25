@@ -1,0 +1,2 @@
+- 2026-09-25T11:02:31Z schedule skeptic started; read BRIEF
+- 2026-09-25T11:03:50Z checked cited code: seen_frames l.394-404 OK, det loss over W l.842-849 OK, temporal attn MHA per voxel (no time pos-emb seen) OK; x138 cell4 patches: 8-view TTA, dual-seed blend, retention guard, bidir, lowdet dump, V1284 at coord_offset anchor; RESULTS: x138 dummy run ~40 min T4; builder --base x138 supports only divinsert/leafprune

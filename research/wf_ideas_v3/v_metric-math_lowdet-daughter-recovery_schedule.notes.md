@@ -1,1 +1,8 @@
 - 2026-09-25T11:01:47Z started schedule skeptic; no prior json; read BRIEF + sibling value verdict (refuted)
+- checked: CONTEXT.md l.1259-1262 B35 151/151 window rule at 0.90, +24% nodes (max 73%) - confirmed. r1_hyp_divisions.notes.md l.9: missing 23 / unscored relink 12 of 132 - confirmed (the 12 already have a node -> excluded by the '>2 um from any node' rule; addressable 23 = 17%).
+- tools/recover_daughters.py: DEFAULT_THRESHOLD 0.90, writes peaks90/*.npz -> B35 cache holds ONLY >=0.90 peaks. The protocol's 0.5 leg cannot be run from it; needs a new full-frame GPU pass on 199 videos (or the x138 train cache with LOWDET 0.3).
+- exp57b nb cell 4: LOWDET dump written to BIOHUB_CACHE_DIR/{name}.npz (low_coords int16 unrefined, low_score) -> in-kernel access from the divinsert cell is easy (CPU, seconds per movie). Implementation in-kernel: feasible.
+- no caches in this container (data_external absent); lab lives on Vitalii's laptop + friend A's machine. Friend A availability uncertain (BRIEF).
+- sibling schedule verdicts: divins-x138-lab-retune (x138 train cache 13-16 GPU-h, P scored of gated config ~0.2), edge-evidence (gated P 0.15-0.3; blind rider P~0.85 but uninformative). Same structure here.
+- verdict: refuted as described (validated path P ~0.1-0.25 < 0.7); blind rider feasible but uninformative vs 0.003 noise.
+- 2026-09-25T11:03:39Z wrote final json (refuted, not feasible)
