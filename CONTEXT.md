@@ -1794,6 +1794,10 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   121,777; readmit and gapfill counts within +-10%; final nodes within +-0.3% per clip; K1 sha256 check. The "only
   readmit/gapfill nodes and their edges differ from K1" condition becomes a SOFT check (relink/linefit knock-on on main
   nodes is expected).
+- 2026-09-25 14:37 UTC: #34 exp56 (x138 verbatim): 0.953, first seen 14:36:36Z (still PENDING at 14:26:33Z), submitted
+  08:09:00Z -> L34 in (6.29, 6.46] h <= 7.5 h. R1: x138 is the base AND #34 is proven non-degraded (runtime <= latency
+  < REPAIR_DEADLINE 7.5 h). x138 reproduces on our account (unlike takaito). #35 still pending (7.5 h mark = 16:03Z,
+  8.5 h = 17:03Z).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
