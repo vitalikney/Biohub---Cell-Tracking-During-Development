@@ -1,4 +1,4 @@
-# Browser intel (Kaggle), 2026-09-25 11:31 UTC
+# Browser intel (Kaggle), 2026-09-25 11:33 UTC
 
 Collected by the local session on the user's computer (Kaggle CLI + Chrome). Every fact has a source; guesses are marked.
 
@@ -404,6 +404,12 @@ offsets/centroids. 69: 6.0 (C) - spike exact, no public > 0.953. 70: Data tab si
   https://public.czbiohub.org/royerlab/ultrack/unet_weights/ : `unet-daxi.pt` 20 MiB, `unet-simview.pt` 84 MiB (11 Jan 2025).
   https://public.czbiohub.org/royerlab/ultrack/ lists `zebrafish_embryo.ome.zarr` ("Dense nuclear labeled zebrafish embryo") and
   curated tracks only for the neuromast and the breast-cancer set (no curated tracks for the zebrafish embryo on that page).
+
+- **Item 41 (Tang, 6th, 0.970)**: https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/734604 -
+  "I'd recommend retraining the model instead of just using the public ckpt"; improvements via "preprocessing, model architecture";
+  public ckpt "has kind of hit a wall"; on track optimisation: "i'm not working on that part". 737543: order of work "detection ->
+  linking -> division". (Both posts ~1 month old, no new replies.) So at least one top-6 team got to 0.970 mainly through the
+  detector/edge models, not post-processing. 735352 (TWEAK "plugin"): no new detail beyond the 24 Sep notes.
 
 ## 7. Top 5 takeaways for reaching 0.97+ (OPINION of the browser session, not facts)
 1. **Nobody public is above 0.953, and the crowd is stacking up just above it.** 241 teams sit at exactly 0.953 and a new
