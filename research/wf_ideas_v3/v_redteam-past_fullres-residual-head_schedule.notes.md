@@ -1,1 +1,11 @@
 - 2026-09-25T11:15:10Z started schedule skeptic for fullres-residual-head; read BRIEF
+- 2026-09-25T11:17:35Z laptop has captures (npz: int peaks + 224-d feats) + train zarr at repo root (register_44b6_dorado, kdn run_local use DATA=ROOT/biohub.../train). out_full_P/report.txt: 125,700 pairs confirmed; emb 6bba->44b6 new head learns x bias -0.296 too (not only z). public head leak5 bias ~+0.35/+0.3/+0.37 um -> a residual trained on (gt-public) learns that intercept; mean-shift<0.15 gate conflicts with most of the gain
+- tools/repo/scripts/predict_unet_transformer.py l.209-222 _load_frame: zarr_arr[t, ::dz, ::dy, ::dx] strided (claim holds).
+- exp56 cell 4 refine(ds_path, t, arr, feature): has ds_path + t -> full-res read inside a wrapper is feasible; arr is in the 64^3 feature grid (clip to feature.shape), SPACING; raises RuntimeError if |shift| > 2.00001 um -> residual must be applied after the assert or the total re-bounded.
+- build_probe_kernel --base x138 allows only divinsert|leafprune -> new --patch needed (~1.5-2 h incl. byte-identity).
+- x138 dummy runtime 1228 s on T4x2 (browser_intel.md l.82); runtime guard 27,000 s (exp56 cell 0) -> hidden run is long; extra per-frame full-res reads ~+2-3% (guess) may push more movies past the guard, invisible on the dummy clips.
+- Eric forum 742064 (browser_intel.md l.135): sub-voxel peak refinement +0.0078 local, -0.002 LB twice (same class).
+- Value sibling (v_redteam-past_fullres-residual-head_value.json): refuted, P(gate) ~0.2; z = 66% of error variance.
+- PMC8535160 blocked (ncbi egress) - not re-tried.
+- Verdict: logistics ~0.85 (laptop has data+captures, no friend A needed, scored 26-27 Sep, >2 days slack); P(gate pass) ~0.25 -> P(scored) ~0.2-0.25 < 0.7 -> refuted.
+- 2026-09-25T11:19:40Z final JSON written (refuted=true, feasible=false)

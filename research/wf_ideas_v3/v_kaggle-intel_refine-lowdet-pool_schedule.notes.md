@@ -1,0 +1,2 @@
+- 2026-09-25T11:18:40Z started; BRIEF read
+- 2026-09-25T11:20:33Z verified: x138 cell0 READMIT_MIN_SCORE 0.965, GAPFILL_MIN 0.5, EXCLUDE 2.0, LOWDET 0.3; refine operates in downsampled grid (SPACING 1.625 iso), unet_out in scope; anchors count 1 in exp56 cell4, patched cell compiles; CONTEXT L1515 1,337/121,777, 479/513; DIFF s4 mean 0.739 max 1.610; CONTEXT L1431 CSV writer rounds coords; sibling verdicts github-intel_lowdet-refine (feasible), linking refined-lowdet-pool (refuted as described), runtime-guard-audit (feasible rider)
