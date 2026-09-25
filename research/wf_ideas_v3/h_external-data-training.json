@@ -1,0 +1,296 @@
+{
+ "lens_summary": "External data for training, checked against the repo and the web on 25 Sep. (1) The only same-instrument, same-scale public recording is the Ultrack 'dorado' movie. It is the 44b6 embryo itself (tools/register_44b6_dorado.py), so it adds label DENSITY (458,519 Ultrack tracks with links, tools/dorado_crops.py) and ~5x more space-time of that embryo. It adds NO embryo diversity, and embryo shift is what sinks transfer: a 6bba-only scratch model scores 0.68 on 44b6 against 0.88 for the all-199 public model (experiments/RESULTS.md rows 80-81). The ultrack_supplementary repo shows this movie was tracked by the 'sparse_zebrafish' pipeline (DS_LENGTH 521, UNet weights unet-simview.pt; SimView is the multi-view design the hosts describe). The hosts' GT is proofread Ultrack: N_est is about 0.91 x the Ultrack count, and Ultrack sits a median 1.29 um from GT (research/wf_ideas_v2/r2_research_dorado-oos-lab.json). (2) The team has used external data only once: a dorado DaughterNet, closed at val AUC 0.62. Nobody has trained a DETECTOR on external dense labels. The planned dense fine-tune used SELF-teacher labels (no new information) and was cancelled before it ran (CONTEXT.md 473-495, 1005). So the detector line is untested, not closed. (3) Key new structural fact: in the x138 stack BIOHUB_SECONDARY_DETECTION_WEIGHT=0.80. The SECONDARY model provides 80% of the detection logits, while the V1284 head and the main edge net read only PRIMARY features. A dense-label SECONDARY therefore changes where nodes are without breaking the head. The lever is strong both ways: three sparse secondary swaps scored -0.016/-0.025/-0.007 on the LB (RESULTS.md lines 39, 42, 46). (4) Multiplier trap: in the lab, exp39's node ratio is 44b6 -0.164, 6bba -0.021 (GT-edge-weighted, l5_per_video_confirmation_vs_exp39.csv). A detector that imitates dense Ultrack (~1.1 N_est) would lose ~2.6% / ~1.2% of adj_edge through the node factor, so every dense model must be threshold-recalibrated to the baseline N_pred. (5) Other sources are weak for 4 days. Zebrahub single-objective ZSNS001-005 (DaXi, 1.24 x 0.439 x 0.439 um, a different optical design; tracks unverified) and CTC 3D nuclei sets (other organisms) are domain-shifted. FOCUS-3D/StarDist-type public detectors have no LB proof (hengck23). The Freitas synthetic set is closed. A head retrain on dorado pairs is dominated by the 44b6->6bba kill-test result: 44b6-trained head 1.5699 um vs public 1.5668 um (coordhead_retrain/out_full_P.log). It learns the 44b6 convention. HONEST CEILING OF THE LENS: only a detector-level change can reach >= +0.005. In the in-sample lab, fixing 25% of the detection + swap FN (5,104 of 6,732) at constant N_pred gives about +0.009 adj_edge. Model-ranking transfer to the LB is poor (hikaggler r ~ -0.2; our fine-tunes 0.944/0.943 vs 0.947). Realistic expectation for the best idea: ~0 +- 0.008 public, P(>= +0.005) about 10-15%. 0.99 is unreachable under this lens, and under any lens before 29 Sep: it would need adj_edge ~0.95 plus div_J ~0.4. The lens is worth one or two probes because it is the only route the top teams (Tang: 'most gains from model improvements') say worked.",
+ "challenged_assumptions": [
+  {
+   "assumption": "External/dorado data has been tried and is a closed line (BRIEF lists 'dorado-only DaughterNet' as closed).",
+   "why_doubtful": "The closure covers the DIVISION classifier only, where Ultrack's 4.5x inflated division rate poisons the labels. For DETECTION, Ultrack positions ARE the host annotation convention (GT = proofread Ultrack). No detector or secondary was ever trained on them.",
+   "evidence": "CONTEXT.md 2026-09-23 23:45 (L3 closed on AUC 0.62, division labels); CONTEXT.md 1005 (dense fine-tune cancelled 18 Sep, teacher never delivered); r2_research_dorado-oos-lab.json (N_est ~0.91 x Ultrack, 1.29 um median)"
+  },
+  {
+   "assumption": "Detector retraining is too slow (23 h scratch) and requires retraining the edge net and the head.",
+   "why_doubtful": "In x138 the SECONDARY supplies 80% of the detection logits and only 15% of the edge logits. The head is fed PRIMARY features at whatever peak positions come out. A 1-2 GPU-h joint fine-tune of the secondary (UNet + its own transformer together) changes detection without touching the head or primary edge net.",
+   "evidence": "experiments/exp56_x138_verbatim/exp56-x138-verbatim.ipynb: BIOHUB_SECONDARY_DETECTION_WEIGHT=0.80, blend (1-w)*primary + w*secondary_aligned, BIOHUB_SECONDARY_EDGE_WEIGHT=0.15; experiments/ext_x138/DIFF.md s1 (head uses primary unet_out)"
+  },
+  {
+   "assumption": "Dense labels can only help detection (more recall in dense regions).",
+   "why_doubtful": "The node factor rewards under-detection of unannotated cells. The lab node ratio is 44b6 -0.164 and 6bba -0.021. A detector trained on dense Ultrack labels will output ~Ultrack counts (~1.1 N_est) unless re-thresholded, which costs ~1-2.6% adj_edge.",
+   "evidence": "experiments/l2_daughternet/edge_anatomy/l5_per_video_confirmation_vs_exp39.csv (computed here); CONTEXT.md s4 metric facts ('Dense 44b6 videos already get +3..7%')"
+  },
+  {
+   "assumption": "Snapping to Ultrack is a dead end, so Ultrack positions are useless for localisation.",
+   "why_doubtful": "The test snapped OUTPUT nodes to REGISTERED dorado points, which adds registration noise (fractional z shift mean +0.26 voxel) plus raw Ultrack noise. It does not test Ultrack as a TRAINING target, where noise averages out over ~1M points. Still, the head kill test shows the convention is embryo-dependent, so I do not propose a dorado-trained head.",
+   "evidence": "research/wf_ideas_v2/r2_critic.notes.md:20; r2_research_dorado-oos-lab.json (shift_vox fractional z +0.262 voxel); experiments/coordhead_retrain/out_full_P.log (44b6->6bba 1.5699 vs 1.5668 um)"
+  },
+  {
+   "assumption": "The dorado OOS judge is refuted (v2 verifiers).",
+   "why_doubtful": "It was refuted as a judge of POST-PROCESSING items (resolution +-0.001, pseudo-GT noise 1.29 um). For a DETECTOR swap the effects are 10x larger (secondary swaps moved the LB by 0.007-0.025), and 7-um recall at a fixed node count does not depend on the 0.4 um convention offsets. As a kill gate for detector swaps it is adequate. It is still not a promotion gate.",
+   "evidence": "research/wf_ideas_v2/r2_verify_dorado-oos-lab_*.json; experiments/RESULTS.md probe 5/7/10/13 rows"
+  }
+ ],
+ "browser_todo": [
+  "https://public.czbiohub.org/royerlab/ultrack/ and .../ultrack/unet_weights/ : directory listing; file sizes of unet-simview.pt / unet-daxi.pt, and whether any second SimView embryo (other than zebrafish_embryo.ome.zarr) or other tracks bundles exist (blocked from the agent container).",
+  "https://zebrahub.sf.czbiohub.org/imaging : list the ZSNS001-005 embryos; do they have downloadable Ultrack tracks (inTRACKtive bundles / csv), voxel size, number of frames, stage (hpf) vs the Kaggle clips?",
+  "Kaggle dataset page of the pilkwang seed314159 temporal pack (the x138 secondary): training recipe (epochs, lr, det_neg_weight, window, augmentation, split_manifest) needed to fine-tune the secondary consistently.",
+  "Kaggle discussion search 'dense' / 'pseudo label' / 'ultrack' / 'dorado' / 'external data' sorted by recent (after 20 Sep): any top-50 team reporting detector training on Ultrack/dorado or on host-style pseudo-labels, with LB numbers.",
+  "Kaggle dataset georgexue666/biohub-precision-pool2-weights README: training data (did it use external data?), its public LB if posted anywhere.",
+  "Kaggle rules/overview page: confirm that public pretrained models (unet-simview.pt) may be embedded in the submission kernel (external data/models section wording)."
+ ],
+ "hypotheses": [
+  {
+   "id": "dense-dorado-secondary",
+   "title": "Fine-tune the x138 SECONDARY detector (80% of detection logits) on dorado dense Ultrack pseudo-tracks mixed with Kaggle sparse GT; primary, V1284 head and tail untouched",
+   "mechanism": "The loss is a density problem: in the densest 6bba quartile 52% of the loss comes from 37% swap and 29% never-detected FN (BRIEF; research/wf_ideas_v2/r2_critic.json). The public detectors were trained with ONE positive voxel per annotated nucleus. Every other voxel, including the 85-99% of nuclei that are not annotated, is a weak negative (tools/repo/scripts/train_unet_transformer.py:535, neg weight 0.01). So the model never received positive supervision in exactly the dense regions where it fails. The dorado Ultrack tracks label every nucleus with links, in the host annotation convention (GT = proofread Ultrack; N_est ~0.91 x Ultrack count). In x138 the secondary supplies 80% of the detection logits (SECONDARY_DETECTION_WEIGHT 0.80) while the V1284 head and the main edge net read the primary's features. So a dense-trained secondary changes node existence and placement without invalidating the head that gave x138 its +0.007.",
+   "change": "(1) Agent writes tools/dorado_clips.py, reusing the tools/dorado_crops.py streaming and tools/build_dense_gt.py geff writer. From dorado level 0 it cuts Kaggle-format clips (zarr 1x64x256x256 per frame, uint16, image_statistics quantiles 0.001/0.999 computed like the Kaggle clips, geff with all Ultrack points in the box plus their track edges, divisions kept, estimated_number_of_nodes = 0.91 x points). Clips are 20 frames long, over 3 time blocks x 2 z-chunks, keeping boxes whose Ultrack density is within the Kaggle 160-734 points/frame range: ~150 clips, about 3-4 GB compressed. Boxes overlapping placed 44b6 clips are allowed for training (the test is other embryos). One late block (t 380-420, z0 64, the 16 boxes free of 44b6 in r2_research_dorado-oos-lab.json) is HELD OUT. (2) The user runs it on Colab (public.czbiohub.org is reachable there, not from the container) and uploads it as a private Kaggle dataset with the Kaggle API token. (3) Kaggle GPU kernel: train_unet_transformer.py --init-weights <seed314159 secondary>, joint UNet+transformer (no freeze), data = competition train (199 sparse) + dorado clips at 1:1 window sampling, lr 3e-5, 1200-2000 iterations, bce, det_neg_weight 0.01. (4) Recalibrate: pick the secondary's detection threshold/alignment so the blended N_pred on 20 6bba lab videos stays within +-2% of the x138 baseline. (5) New build_probe_kernel.py --base x138 patch 'secondary': overrides BIOHUB_SECONDARY_WEIGHTS. The DEFAULT probe variant AVERAGES the aligned logits of seed314159 and the dense model inside the 0.8 secondary slot (variance control), and the full swap is the second variant. Everything else stays byte-identical to exp56/exp57b.",
+   "evidence": [
+    {
+     "claim": "x138 detection = 0.2 x primary + 0.8 x aligned secondary logits, retention guard 0.90; secondary edge weight 0.15",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/experiments/exp56_x138_verbatim/exp56-x138-verbatim.ipynb"
+    },
+    {
+     "claim": "V1284 head refines peaks from PRIMARY unet_out features only",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/experiments/ext_x138/DIFF.md"
+    },
+    {
+     "claim": "Secondary swaps moved the LB by -0.016, -0.025, -0.007 (sparse fine-tunes / scratch): the lever is large",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/experiments/RESULTS.md (lines 39, 42, 46)"
+    },
+    {
+     "claim": "Public detector loss: single-voxel positives at GT, all other voxels negative with weight 0.01",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/tools/repo/scripts/train_unet_transformer.py:535-580"
+    },
+    {
+     "claim": "Dorado: 522 frames at the Kaggle scale, 458,519 tracks with parent links, chunks (1,1,128,2217,2170) ~400 MB",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/tools/dorado_crops.py"
+    },
+    {
+     "claim": "N_est ~0.91 x Ultrack count per clip; Ultrack vs GT median 1.29 um, 97% within 7 um; OOS free boxes only at t>=300",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/research/wf_ideas_v2/r2_research_dorado-oos-lab.json"
+    },
+    {
+     "claim": "Dorado was tracked by the sparse_zebrafish pipeline (DS_LENGTH 521) with unet-simview weights",
+     "source": "https://raw.githubusercontent.com/royerlab/ultrack_supplementary/main/configuration/sparse_zebrafish/main.sh"
+    },
+    {
+     "claim": "Joint fine-tune is needed: moving the encoder under a frozen linker cost -0.0377 (Le Quang Canh)",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/research/discussions_summary.md (Update 2026-09-13)"
+    },
+    {
+     "claim": "Top teams: 'most of the gains come from model improvements' (Tang); a plain all-199 retrain gives 0.947 (leonixis)",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/research/browser_research_2026-09-24_pass2.md"
+    }
+   ],
+   "upper_bound": "Lab (in-sample) J = 122,151/(122,151+6,846+6,732) = 0.900. Detection+swap FN = a_* 2,929 + b_swap 2,175 = 5,104 (fn_anatomy_exp39.md). Fixing 25% of them at constant N_pred and FP: +1,276 TP -> J 0.9094 = +0.0094. With the secondary only at weight 0.8 (averaged variant: 0.4), take ~60% of that: about +0.006. Hard cap if every detection+swap FN were fixed: +0.038. Node factor: every +1% N_pred costs ~0.0009 adj.",
+   "expected_public_gain": "-0.004 .. +0.006 (central ~+0.001). Arithmetic: 25% capture scenario +0.006 x P(transfer ~0.35) minus a harm tail (3/3 earlier secondary swaps negative, mean -0.016; with the averaged variant and N_pred recalibration, assume a 30% chance of about -0.004).",
+   "expected_private_gain": "Similar to public, with slightly higher variance. Private is ~71% other embryos, and the dense labels come from the 44b6 embryo only (no embryo diversity).",
+   "probability": "P(LB >= base + 0.005) ~10%; P(>= +0.002) ~25%; P(<= -0.003) ~30%. Reasoning: a genuinely new label source on the strongest detection lever, but every model swap so far has been negative on the LB, and dorado adds density, not a new embryo.",
+   "validation_protocol": "PRE-REGISTERED, before any LB slot. (a) PARITY: a dorado box cut at a registered 44b6 placement (kaggle44b6_in_dorado.json) must reproduce that Kaggle clip: pixel Pearson r >= 0.99, and quantiles within 2%. Otherwise the normalisation differs: stop. (b) OOS KILL GATE on the held-out dorado block (t 380-420, 16 boxes never inside any 44b6 clip, unseen by the public models and excluded from fine-tuning). Run the full x138 prediction stage (raw ILP graph) with the base vs the new secondary. Score recall of Ultrack points at 7 um and at 3 um at matched N_pred (+-2%), plus edge-J vs the Ultrack pseudo-tracks cut at divisions. Gate: 7-um recall +1.0 pp or more AND pseudo edge-J +0.005 or more, with >= 11/16 boxes non-negative. Distances are not gated (convention bias, 1.29 um pseudo-GT noise). (c) IN-SAMPLE SANITY on 20 6bba lab videos with the official metric: the public models saw these videos, so the check is biased AGAINST the new model. It must not lose more than 0.005 adj_edge and must keep N_pred within 2%. (d) Only then one LB probe vs exp56/exp57b (same base, one change). Promotion needs LB >= base + 0.003 (LB noise ~0.003).",
+   "resources": [
+    {
+     "who": "agent-container",
+     "hours": 4,
+     "what": "write tools/dorado_clips.py (clip writer + parity test + held-out split) and the --base x138 'secondary' patch with byte-identity tests"
+    },
+    {
+     "who": "colab-t4",
+     "hours": 5,
+     "what": "stream ~25-40 GB of dorado chunks (logged 2-10 MB/s; guess faster on Colab), write ~150 clips, upload a ~4 GB private Kaggle dataset"
+    },
+    {
+     "who": "kaggle-vitalii",
+     "hours": 2,
+     "what": "joint fine-tune of the seed314159 secondary, 1200-2000 it (exp23-type run took ~50 min)"
+    },
+    {
+     "who": "kaggle-sasyami",
+     "hours": 2.5,
+     "what": "OOS dorado-box inference base vs new (16 boxes x 40 frames) + 20 6bba lab videos for the N_pred calibration"
+    },
+    {
+     "who": "kaggle-vitalii",
+     "hours": 1,
+     "what": "private dummy-test run of the probe kernel"
+    }
+   ],
+   "wallclock_to_scored_probe_hours": 34,
+   "earliest_scored_probe_utc": "2026-09-26T21:00Z (writer ready 25 Sep 15:00, Colab extraction and upload 15:00-22:00, fine-tune after the 26 Sep 00:00 quota reset, gates by 26 Sep 06:00, kernel + dummy run by 09:00, scoring 7-10 h); realistic slip to 27 Sep 06:00",
+   "dependencies": "The user runs Colab and shares the Kaggle API token (they offered it in this chat). The #34/#35 results fix the base (exp56 or exp57b). The Kaggle GPU quota reset on 26 Sep 00:00 UTC.",
+   "risks": "(1) Normalisation/parity mismatch between the stabilized dorado movie and the Kaggle clips (the parity gate catches it). (2) Node-factor loss if N_pred drifts (recalibration step). (3) The public post-processing is tuned to the seed314159 secondary: probe 7's lesson. The averaged variant is the hedge. (4) Ultrack label noise (~1% link errors per frame, over-segmentation) teaches duplicates in dense spots. (5) Streaming throughput: 2-10 MB/s logged means 1-5 h per 40 GB. (6) Uses 2 of ~21 LB slots with a ~30% harm chance, so it must not be a final unless it wins.",
+   "not_closed_because": "The closed lines are 'detector fine-tunes on the pilkwang stack' and 'secondary swaps'. All of them used the SAME sparse Kaggle labels the public models had already fit (exp03B/exp08/exp23) or a weaker scratch model (friend_a_full199_ep21). The new mechanism is a new label source: dense, host-convention pseudo-tracks with edges. The error in the old test is that it measured re-training on already-seen sparse data, not added information. Also, the previously planned dense fine-tune used self-teacher labels and never ran.",
+   "needs_user_decision": "yes: a ~40 GB public download on the user's Colab session, sharing the Kaggle API token for the dataset upload, and 1-2 LB slots for a line with ~30% harm risk"
+  },
+  {
+   "id": "dense-primary-headrefit",
+   "title": "Joint fine-tune of the x138 PRIMARY (UNet + edge transformer) on dorado dense tracks + Kaggle sparse, then re-fit the V1284 head on the new features with x138's 20-movie recipe",
+   "mechanism": "The primary drives the main edge logits, the head features and the readmit/gap-filler low-detection pool (sub-threshold primary peaks >= 0.3). Dense supervision moves localisation and dense-region peaks in all of these at once, where the secondary line moves only detection. A refined primary with a matching head attacks the ~2,700 swap-type FN, which are position errors (oracle +0.03-0.046, BRIEF), at the model level, instead of the 224->32->3 post-hoc head trained on 4,136 pairs. Pseudo-EDGES from Ultrack let the linker co-adapt (the review found teacher nodes without edges change nothing in the edge loss; CONTEXT.md 473-480).",
+   "change": "Reuse idea 1's dorado dataset. Kaggle GPU kernel: --init-weights <x138 primary> joint fine-tune, the same mix, lr 2e-5, 1200 it. Then a capture kernel on the SAME 20 balanced movies x138's head used (experiments/coordhead_retrain/build_capture_kernel.py; 20 movies ~0.7 GPU-h, scaled from 7.2 GPU-h for 199), then tools/train_coordhead.py on those pairs (x138 recipe: MLP, zero-init, bounded 2 um). Probe kernel: --base x138 with a new 'primary+head' patch (PRIMARY_OVERRIDE knob as in exp48 cell 4 + a COORDHEAD_HEAD_PATH knob). Recalibrate the detection threshold to hold N_pred.",
+   "evidence": [
+    {
+     "claim": "Head gives +0.007 on x138 (+0.002 on our base); its value depends on the post-ILP stages that consume positions",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/CONTEXT.md 2026-09-25 07:50"
+    },
+    {
+     "claim": "x138 head trained on 20 movies / 4,136 pairs; a 4-movie head was +14.9% worse; 199-video retrain failed the embryo kill test",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/experiments/ext_x138/DIFF.md; experiments/coordhead_retrain/out_full_P.log"
+    },
+    {
+     "claim": "Encoder moved under a frozen linker = -0.0377; joint training with teacher edges is required",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/research/discussions_summary.md (Update 2026-09-13)"
+    },
+    {
+     "claim": "Earlier primary fine-tunes on sparse data scored 0.944/0.943 vs 0.947",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/research/wf_ideas_v3/BRIEF.md"
+    },
+    {
+     "claim": "georgexue666 retrained a pool-2 heatmap detector for localisation (recall@4um 0.735); a detector-side localisation route exists publicly (no LB number)",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/research/browser_research_2026-09-24_pass2.md"
+    }
+   ],
+   "upper_bound": "Swap FN 2,175 + a_* 2,929 in the lab. If the primary fixes 30% of swap and 20% of a_* at constant N_pred: +(653+586) TP -> J +0.0091 (0.900 -> 0.909). The hard cap of the swap class is the +0.03-0.046 oracle (BRIEF). The node factor again costs 0.0009 per +1% N_pred.",
+   "expected_public_gain": "-0.008 .. +0.008 (central ~0). Higher variance than idea 1: primary, edge net, head and readmit pool all change. Arithmetic: +0.009 lab scenario x P(transfer ~0.3) against a ~35% chance of a -0.005..-0.01 regression (0.944/0.943 precedent).",
+   "expected_private_gain": "About the same as public; the head refit on 20 balanced movies keeps the embryo balance of the public head.",
+   "probability": "P(>= +0.005 on the LB) ~8%; P(harm >= 0.003) ~35%.",
+   "validation_protocol": "(a) Same OOS dorado kill gate as idea 1 (recall at matched N_pred, pseudo edge-J; held-out block never seen). (b) The head refit must pass the existing embryo-held-out kill test (tools/train_coordhead.py) vs a head refit on the OLD features with the same 20 movies. The new features must be no worse in both directions (44b6->6bba and 6bba->44b6). This removes the confound that any head retrain overfits. (c) 6bba in-sample sanity as in idea 1. Only then 1 LB probe. Kill if OOS recall gain < +1 pp.",
+   "resources": [
+    {
+     "who": "kaggle-vitalii",
+     "hours": 2,
+     "what": "primary joint fine-tune"
+    },
+    {
+     "who": "kaggle-sasyami",
+     "hours": 1.5,
+     "what": "20-movie feature capture with the new primary + OOS dorado inference"
+    },
+    {
+     "who": "agent-container",
+     "hours": 3,
+     "what": "primary+head override patch for --base x138, byte-identity tests, head-refit run on CPU (train_coordhead.py ~5 min)"
+    },
+    {
+     "who": "kaggle-vitalii",
+     "hours": 1,
+     "what": "dummy-test run"
+    }
+   ],
+   "wallclock_to_scored_probe_hours": 45,
+   "earliest_scored_probe_utc": "2026-09-27T08:00Z (needs idea 1's dataset by 25 Sep 22:00; fine-tune 26 Sep 02:00-04:00, capture + head 04:00-08:00, kernel 08:00-11:00, submit ~12:00, scored ~20:00 26 Sep at best; realistic 27 Sep 08:00)",
+   "dependencies": "The dorado dataset from idea 1. Best run after idea 1's OOS gate says dense labels raise recall at a fixed N_pred; if idea 1's gate fails, kill this without spending GPU.",
+   "risks": "The most coupled change in the stack: primary features feed the edge net, the head, DeepCenter-gated stages and readmit. The x138 tail was tuned on the public primary. The head refit adds a second learned component. The 12 h runtime is unchanged (same architecture).",
+   "not_closed_because": "The closed items are sparse fine-tunes (no new information) and the 199-video head retrain (embryo-convention overfit). This test adds dense external labels, and refits the head with the balanced 20-movie recipe that is known to transfer, not on 199 videos.",
+   "needs_user_decision": "yes: 1 LB slot on a high-variance change; only if idea 1's OOS gate passes"
+  },
+  {
+   "id": "ultrack-dense-6bba",
+   "title": "Run the hosts' own tracker (Ultrack; unet-simview boundaries if the weights load, else classical robust_invert) on all 199 Kaggle train clips to get dense pseudo-tracks for BOTH embryos, merged with sparse GT, as the dense set for ideas 1/2",
+   "mechanism": "Dorado covers only the 44b6 embryo, but 91% of the never-detected FN and the densest-quartile loss sit in 6bba (r2_critic.json: 'a_never ... 91% in 6bba, which has no Ultrack data'). The GT is proofread Ultrack, so running Ultrack on 6bba reproduces the annotation convention densely on the second embryo. The fine-tuned detector then gets dense supervision on BOTH training embryos (more embryo-balanced than dorado alone). The hidden test embryos are presumably annotated by the same Ultrack+proofreading methodology (Sergio Alvarez, rank 1).",
+   "change": "Kaggle CPU kernels with internet ON (training kernels may use internet; only the submission is offline): pip install ultrack (sqlite DB). Try to download unet-simview.pt; if it loads (torchscript), use its foreground/boundary maps, else use detect_foreground + robust_invert as in the ultrack zebrahub example. Config from ultrack_supplementary sparse_zebrafish (threshold 0.4, min_area 300, max_area 25000, max_distance 10, event weights -0.1), rescaled if the voxel counts differ. Per clip (64x256x256x100) export tracks; merge with GT via tools/build_dense_gt.py semantics (GT authoritative, pseudo nodes within 3.5 um of GT dropped), but KEEP pseudo edges (new flag). Write a dense geff set for 199 videos (small: geff only; images come from the competition source). Pilot on 3 videos first to measure runtime and quality.",
+   "evidence": [
+    {
+     "claim": "Ultrack runs on CPU with sqlite, classical foreground + robust_invert boundaries, pip-installable; zebrahub example config",
+     "source": "https://raw.githubusercontent.com/royerlab/ultrack/main/examples/zebrahub/zebrahub.ipynb"
+    },
+    {
+     "claim": "sparse_zebrafish config: threshold 0.4, min_area 300, max_area 25000, max_distance 10, appear/disappear/division -0.1; UNet weights unet-simview.pt",
+     "source": "https://raw.githubusercontent.com/royerlab/ultrack_supplementary/main/configuration/sparse_zebrafish/config.toml"
+    },
+    {
+     "claim": "44b6 GT coincides with dorado Ultrack points: 84% within 2.5 um at the right time offset vs 5-11% at wrong offsets",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/tools/register_44b6_dorado.py (docstring)"
+    },
+    {
+     "claim": "a_never FN: 1,907 (28%), 1,740 of them in 6bba",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/experiments/l2_daughternet/edge_anatomy/fn_anatomy_exp39.md"
+    },
+    {
+     "claim": "Hosts' annotations presumably Ultrack/HOCT + manual review; test = new images, same methodology",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/research/discussions_summary.md (Sergio Alvarez answer)"
+    }
+   ],
+   "upper_bound": "It feeds ideas 1/2, so the same ceilings apply (~+0.006..+0.009 lab scenario, hard cap +0.038). Extra value only through 6bba-type density: the 6bba densest quartile = 52% of the weighted loss.",
+   "expected_public_gain": "0 on its own. Adds ~+0.001..+0.002 in expectation to ideas 1/2 by covering the second embryo (guess).",
+   "expected_private_gain": "Slightly above public, since embryo balance matters more on 71% unseen embryos (guess).",
+   "probability": "P(the pseudo-labels pass the quality gate) ~50% (classical boundaries in dense tissue are weak; unet-simview input normalisation unknown). P(the downstream probe reaches +0.005) ~10%, as for idea 1.",
+   "validation_protocol": "QUALITY GATE on sparse GT, which the tracker never saw. On 20 6bba + 10 44b6 videos: (i) share of GT nodes with a pseudo point within 2.5 um >= 70% (dorado reference: 84%) and within 7 um >= 95%; (ii) pseudo count / N_est in [0.95, 1.25] (dorado reference 1/0.91 = 1.10); (iii) pseudo-edge agreement: for GT edges whose endpoints both have pseudo points, the same pseudo track links them in >= 90%; (iv) per-embryo z residual of pseudo vs GT reported (no gate, to see the convention). Fail -> use dorado only (idea 1).",
+   "resources": [
+    {
+     "who": "kaggle-cpu",
+     "hours": 20,
+     "what": "Ultrack on 199 clips: guess 5-15 min per clip on 4 vCPU, split over 4-5 parallel CPU kernels -> 4-6 h wall"
+    },
+    {
+     "who": "agent-container",
+     "hours": 3,
+     "what": "pilot kernel, merge script (build_dense_gt with a keep-edges flag), quality-gate script"
+    },
+    {
+     "who": "kaggle-vitalii",
+     "hours": 2,
+     "what": "fine-tune with the enlarged dense set (shared with idea 1/2 runs)"
+    }
+   ],
+   "wallclock_to_scored_probe_hours": 55,
+   "earliest_scored_probe_utc": "2026-09-27T18:00Z (pilot 25 Sep 16:00-19:00, full run overnight, gate 26 Sep 08:00, fine-tune + OOS gate 26 Sep, kernel/dummy 27 Sep morning, scored 27 Sep evening)",
+   "dependencies": "Kaggle CPU kernels with internet (pip + optional weight download). Idea 1's fine-tune/probe machinery. Optionally unet-simview.pt (browser_todo: size, reachability).",
+   "risks": "Ultrack runtime on dense clips is unmeasured (the ILP window may be slow). Classical boundaries under-segment dense tissue, which is the very failure we want to fix. unet-simview may expect a different scale or normalisation. The node factor (as idea 1).",
+   "not_closed_because": "Never tried. The only prior dense-label plan used the public detector as its own teacher (no new information). Ultrack is the hosts' annotation engine, an external, convention-matched teacher.",
+   "needs_user_decision": "no for the pilot (free CPU). Its probe inherits idea 1's decision."
+  },
+  {
+   "id": "simview-readmit-pool",
+   "title": "Rider: in-kernel unet-simview (public pretrained SimView UNet) foreground/centroid candidates added to x138's READMIT / gap-filler candidate pool (no model of ours changes)",
+   "mechanism": "x138's readmit and gap filler can only add nodes from the primary's own sub-threshold peaks (lowdet >= 0.3). About 31% of FN involve a node the detector never produced (BRIEF), in 44b6 mostly under-segmentation where Ultrack has ~44% more interior points (r2_critic.json). A domain-matched external detector supplies candidates exactly where the primary merged two nuclei. The readmit gates (within 4 um of an open track end/start, > 2 um from any node, <= 3% added nodes) keep the node factor small. Because the candidate source is external, lab gains are less in-sample than network-confidence rules.",
+   "change": "Upload unet-simview.pt as a private dataset. In the x138 predict patch, run it once per frame (torchscript, fp16, with (1,2,2) downsampling if runtime requires it) and take centroids of foreground components split by boundary-map maxima (simple watershed). Append them to _LOWDET with a score of 0.97 so they pass READMIT_MIN_SCORE 0.965. Gap filler: allow them as 'free sub-threshold peaks'. New patch 'simview' in build_probe_kernel --base x138, exact no-op when off.",
+   "evidence": [
+    {
+     "claim": "Readmit: peaks >= 0.965 discarded by the ILP, > 2 um from any node, within 4 um of an open end/start; gap filler <= 3% added nodes",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/experiments/ext_x138/DIFF.md s2"
+    },
+    {
+     "claim": "Detection-side FN whose matched end is a free track end/start: 424 (of 2,929); 1-frame gap bridges 28",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/experiments/l2_daughternet/edge_anatomy/fn_anatomy_exp39.md"
+    },
+    {
+     "claim": "Adding Ultrack points with no prediction within 4 um raises match<=7 0.988 -> 0.998 but at +30-40% nodes (ungated)",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/research/wf_ideas_v2/r2_critic.notes.md:20"
+    },
+    {
+     "claim": "unet-simview.pt is public, torchscript (torch.jit.load)",
+     "source": "https://raw.githubusercontent.com/royerlab/ultrack_supplementary/main/configuration/sparse_zebrafish/README.md"
+    }
+   ],
+   "upper_bound": "Readmit-reachable detection FN ~424 + 28 edges of 135,729 in the J denominator -> +0.0033 J if all were recovered with no FP. Realistically 30-50% -> +0.001..+0.0017, minus the node factor (+1% nodes = -0.0009).",
+   "expected_public_gain": "+0.000 .. +0.002 (central +0.0008). A rider, below the +0.005 target; listed because it is the cheapest network-free use of the external model and it also validates unet-simview for idea 3.",
+   "expected_private_gain": "+0.000 .. +0.002",
+   "probability": "P(> 0 on LB) ~40%; P(>= +0.002) ~15%; unresolvable on the LB (noise ~0.003) unless bundled.",
+   "validation_protocol": "Lab: friend A's planned x138 lab cache (PROMPT_FRIEND_A.md top block) + unet-simview candidates computed on the 199 train videos. Replay readmit/gap filler with vs without the external pool, on SELECTION (6bba odd) then one CONFIRMATION run (6bba even + 44b6), with the official metric. Gate: >= +0.0015, CI90 > 0 over leak groups, node ratio <= +1%, gain on both embryos. Caveat: unet-simview may have been trained on the 44b6/dorado embryo, so judge on 6bba mainly.",
+   "resources": [
+    {
+     "who": "colab-t4",
+     "hours": 1,
+     "what": "download unet-simview.pt, test load and normalisation on 2 Kaggle clips, upload as a dataset"
+    },
+    {
+     "who": "kaggle-sasyami",
+     "hours": 3,
+     "what": "unet-simview centroids on 199 train videos for the lab + runtime measurement"
+    },
+    {
+     "who": "friend-a-5070ti",
+     "hours": 3,
+     "what": "x138 lab cache (already planned for divinsert tuning) + replay"
+    },
+    {
+     "who": "agent-container",
+     "hours": 4,
+     "what": "simview patch + replay hook + tests"
+    }
+   ],
+   "wallclock_to_scored_probe_hours": 48,
+   "earliest_scored_probe_utc": "2026-09-27T12:00Z (depends on friend A's x138 cache; without it, submit only bundled with another change)",
+   "dependencies": "The friend A x138 lab cache. unet-simview normalisation is unknown (reverse engineering on Colab). The extra in-kernel runtime must fit the 12 h limit (x138 already takes several hours).",
+   "risks": "Runtime (a full-res 3D UNet pass over ~20k test frames). The model's expected input scale/normalisation is unknown. Candidates from a model that may have seen 44b6. A small gain inside LB noise.",
+   "not_closed_because": "Never tried. 'Snapping to Ultrack' (closed) MOVED existing nodes to registered points; this only ADDS gated candidates at open track ends, which is x138's own readmit mechanism with a second source.",
+   "needs_user_decision": "no (lab only); a probe needs the usual OK"
+  }
+ ]
+}

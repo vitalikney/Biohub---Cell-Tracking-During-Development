@@ -1,0 +1,11 @@
+# h_metric-math notes
+- 2026-09-25T10:41Z started; read BRIEF.md
+- 10:44Z read metrics.md + metrics.py (weights D=TP+FP+FN, no cap on multiplier, outdeg cap 2, merge-dup), v2 FINAL_REPORT, CONTEXT tail, discussions_summary, wf_ideas/hyp_nodes-metric notes (matched rate 3.2% uniform; short comps 0.9%; full-length 9.8%)
+- 10:48Z synthetic official-metric checks (scratchpad synth.py): unannotated track+fork free; N_est 2x -> adj 1.05 (no cap); isolated dup 0.5um from GT steals match -> 2TP become 2FN+2FP; fork at annotated non-div node -> +1 edge FP +1 div FP; late fork TP. min-track-len LB: 6->4 -0.002 (probe 6), 6->8 -0.001 (probe 9) CONTEXT.md:170,180
+- 10:53Z synth2: swap (GT between 2 tracks, ordering flips once) = 2TP/2FP/1FN vs 3/0/0 -> one swap costs 1FN+2FP. arith.py: targets table, public div p>=0.40 given J=.36, per-TP public +0.0010..0.0040, node price 1/1397 (44b6) 1/204 (6bba) TP edge
+- web: royerlab upstream metrics.md/metrics.py/division_metrics.py identical to tools/official (raw.githubusercontent diff). WebSearch gave no new metric facts. kaggle.com not tried (blocked by policy).
+- x138 code (exp56 notebook): readmit pulls from low-det dump (>=0.3 dumped; pool >= GAPFILL_MIN_SCORE 0.5, >2um from nodes), keeps >=READMIT_MIN_SCORE 0.965 within 4um of open end/start; isolated leftovers pruned. short-track filter min len 6 + rescue (trigger >=10% removed). => readmit threshold is a pure env knob.
+- Head attribution: exp51-exp48 = +0.002 ~= pure multiplier value of the head's -2.9% node drop (0.1*0.029*0.91=0.0026) -> on our base localisation share may be ~0; on x138 readmit recovers ILP-dropped nodes at open ends ("drop then readmit").
+- Div public inference: J=0.36 needs p>=0.40 (r<=0.8); lab in-sample p=0.35 -> public embryo division-easy. break-even p*=J/(1+J): 0.265 public, 0.106 lab-like private -> insertion at p>=0.3 positive under both; FP removal at ~0 TP positive under both.
+- BRIEF correction: video weight is D_i=TP+FP+FN (metrics.py summarise), not GT edge count; multiplier is linear with no kink at N_est.
+- 10:55Z final JSON written (4 hypotheses: div-budget-ladder-x138, lowdet-daughter-recovery, readmit-recall-knobs, fork-fp-removal-x138)

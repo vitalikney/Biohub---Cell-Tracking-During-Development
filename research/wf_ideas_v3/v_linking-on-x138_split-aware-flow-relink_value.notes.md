@@ -1,0 +1,11 @@
+# notes value-skeptic split-aware-flow-relink (2026-09-25T10:54Z)
+- read BRIEF.md
+- 10:55Z CONTEXT L730-750 GT base rates: div step med 5.745 p75 7.355 p90 9.07; sister med 10.57 p90 14.36; public gate funnel. v2 fork-midpoint notes: div_audit9 velocity-compensated midpoint WORSE than plain (TP max 4.4, 3 TP>=4); GT mid med 2.33 p90 5.24; fork TP mid med 1.58 vs FP 3.02. public TP19/FP13/FN21 assumption: +1TP=+0.0019 score, +1FP=-0.00066
+- exp56 cell 0 confirms caps 0.0076/0.00375, DC safe-div 0.25, sister max 14, symmetry 0.6, diverge 2.25.
+- forum (browser_research L94): "contested links: velocity extrapolation picks the true child 0/381 times" -> flow compensation has no power on contested (steal) links.
+- B32 steal pool: 97 positives / 16.3M triples (1:170k). Idea's gates keep ~45% of GT divisions (step<=7 both ~0.6, sister 5-14 ~0.85, cos<=-0.25 ~0.8) -> ~17 of the 39 steal-type GT divs on 199 videos reachable.
+- H3 lab (head coords) does not exist yet; exp39 fallback has no head coords -> the 'head makes it sharper' premise is untestable in the fallback.
+- arithmetic (public TP19/FP13/FN21): 7 evaluable forks at p=0.2 -> -0.0010; 0.27 -> +0.0001; 0.3 -> +0.0006; 0.4 -> +0.0023; 0.5 -> +0.0040. +0.002 public needs marginal precision >= ~0.4; best measured marginal steal precision (DaughterNet, trained) 0.27.
+- lab: +5TP/+15FP -> +0.0015 lab; ceiling (+18 TP, 0 FP) +0.0093 lab.
+- verdict: REFUTE (value/transfer).
+- 10:57Z wrote final JSON

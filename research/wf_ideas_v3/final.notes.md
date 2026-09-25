@@ -1,0 +1,8 @@
+- 2026-09-25T12:50:42Z final judge started; final.json absent -> full run
+- 2026-09-25T12:55:11Z read BRIEF, browser_intel, CONTEXT tail, both plans (in task), critic/verify notes, x138 anchors (cell0 env knobs, cell4 lowdet literals, cell5 deadline), build_probe_kernel DIVINS_CALL (l.302, ungated). Branch claude/practical-meitner-31k9ye.
+- 2026-09-25T12:59:02Z decisions: backbone = robust plan; grafts from moonshot: E[max] F2 option (conditional), DC-on-6bba strict gate + DC prob dumps, degrade-order keep safe-div+linefit, fail-soft on every stage, priority order, private-level honesty. Conflicts: DIVINS_DEADLINE 28800 (robust), F2 exp52 default, N1 trigger L34>8.0h / L35>8.5h / proj>9h, M2 rejected, M3 user decision default NO, 25 Sep slot exp57 optional only after #34/#35 visible. Kernel names exp58 (K2), exp58t (K1 twin), exp58fd, exp59 (K3), exp59dc (K3b), exp60 (C06 lab), exp61 (tempfuse), exp62 (parrepair). Stem exclusion list: tools/train_coordhead.py:197 x138_probable_train. Writing FINAL_REPORT.md now.
+- 2026-09-25T13:03:02Z FINAL_REPORT.md written (sections a, a2, b-j). Next: task cards LOCAL, CLOUD, FRIEND_A, FRIEND_C, COLAB.
+- 2026-09-25T13:05:57Z TASK_LOCAL_SESSION.md written; FD/FF split fixed in FINAL_REPORT (FD = deadline path, FF = DIVINS_FORCE_FAIL sha==exp56). Next: TASK_CLOUD_SESSION.
+- 2026-09-25T13:09:22Z all 6 files written (FINAL_REPORT + 5 TASK cards). Reviewing consistency.
+- 2026-09-25T13:10:03Z consistency fixes (branch A, R4, FD/FF). Writing final.json.
+- 2026-09-25T13:10:55Z final.json written (15 ranked items). Done.

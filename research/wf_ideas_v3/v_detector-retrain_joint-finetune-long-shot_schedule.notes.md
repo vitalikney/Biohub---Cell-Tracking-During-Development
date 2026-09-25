@@ -1,0 +1,11 @@
+# v_detector-retrain_joint-finetune-long-shot_schedule notes
+- 2026-09-25 ~11:10 UTC: started; no prior json. Read BRIEF.md and sibling _value.notes.md (value lens already found LOEO +0.0027 is a node artefact).
+- 11:20 UTC: FRIEND_A_RUN.md: local capture = exp51 stack, hardcoded PRIMARY_SHA 12f6881e (local_capture.py l.56) -> needs code change for a new primary. Capture 199/199 was actually done on Kaggle (vitaliineibauer/biohub-chcap-* kernels, 2x44b6 + 4x6bba shards, T4) = 7.2 GPU-h (CONTEXT l.1488). Head retrain P and Q both KILL TEST FAIL (out_full_P/Q.log).
+- build_probe_kernel.py --base x138 supports only divinsert/leafprune -> primary+head swap on x138 needs new builder code.
+- train_patches.py already has --init-weights, --freeze none default, --edge-loss-weight 1.0 -> exp03B was ALREADY a joint fine-tune; "joint" is not new. PU/round are new code (not written).
+- Friend A: no commits since 24 Sep 04:12 MSK, PC rebooted, first task after #34 = x138 lab cache (CONTEXT l.1543); H2 (dense-proposal) wants him 26 Sep morning-20:00. This idea is 3rd in his queue.
+- Hidden-run latency of same GPU stack ~7.5 h (#31 17:09->00:39); scoring 7-10 h (BRIEF).
+- Sibling value lens: refuted (exp11 +0.0027 is a node artefact; matched-node edge J -0.0015). Sibling H1 schedule lens: H1 gate as written very likely fails -> 'H1 recipe' dependency may not exist.
+- 11:35 UTC: critical path built (see json). Physical Kaggle-only path (no friend A): gate kernels after 00:00 reset, realistic push ~07:00 UTC 26 Sep, submit ~19:00-20:00 26 Sep, scored ~27 Sep 03:00-06:00 -> ~52 h slack. Friend-A path as written: 3rd in his queue (x138 lab cache, H2) -> start >= 26 Sep 20:00, scored ~28 Sep, P ~0.35.
+- But P(scored probe) = P(LOEO gate pass ~0.15) x P(head passes kill test on new features ~0.4; two prior 199-video heads failed) x P(no slip ~0.8) ~= 0.05. GPU: ~14.5 vitalii GPU-h of 30 (capture 7.2 + gate ~5 + final/dummy ~2.3) vs ~14 GPU-h of dummy runs for 21 slots.
+- Verdict: REFUTED under schedule lens (feasible_by_deadline=false). Repair: drop recapture/retrain, keep public head, 20-video capture check (~1.2 GPU-h); run gates on Kaggle, not friend A.

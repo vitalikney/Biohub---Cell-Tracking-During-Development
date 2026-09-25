@@ -1,0 +1,9 @@
+# notes two-tail-consensus value skeptic (2026-09-25)
+- 11:xx UTC: read BRIEF, CONTEXT l.1395-1549, ext_x138/DIFF.md s.2-4, discussions_summary 739685 (linker +0.001 LB vs CV 0.01-0.03; public notebooks tuned to public LB).
+- Code check: motion_relink_edges (exp56 cell 5 l.518+) is a FULL per-frame Hungarian re-assignment of all nodes t->t+1 (ILP edges replaced), cost = motion + RAW_COST*raw - 1.0*edge_prob. Ours (exp48 nb l.2007) hard-codes motion + 0.05*raw - bonus*prob, gates 5.5/10.
+- => voter 3 (x138 tail, FLOW_MODE off) = cost motion + 0*raw - prob, gates 5.5/10: differs from our relink only by 0.05*raw (~0.1 cost units at 2 um) -> near-duplicate of our voter on shared nodes. Majority vote ~= "x138 with flow prior off" (a relink-knob ablation, closed class) wherever the two main tails disagree.
+- Tie-break "3-frame motion residual" = the plain relink's own objective (constant-velocity predecessor) -> biased toward the non-flow choice too. Relink cost includes -edge_prob (in-sample net in lab).
+- Metric arithmetic (lab exp39 TP122151/FP6846/FN6732): J=0.900, dJ per FP+FN->TP flip = 1.4e-5; +0.002 needs ~143 net flips = 0.11% of GT edges. FN anatomy: ~40% swaps (node position, motion prefers ours 98.6% -> tie-break keeps them), ~31% missing detections -> neither reachable by parent re-choice on a fixed node set; linking-type FN <= ~29% of FN ~1.5% of GT edges.
+- Per-node majority of 3 global assignments is not an assignment: conflicts -> out-degree 2 (spurious forks, division FP) or orphan ends; needs a re-matching + short-track filter re-run (then node count changes).
+- Feasibility: needs friend A x138 lab cache (not started; waits #34 17-20 UTC today; availability uncertain).
+- JSON written; verdict refuted (vote degenerates to flow-off ablation; ceiling needs ~60/40 win ratio on disagreements).

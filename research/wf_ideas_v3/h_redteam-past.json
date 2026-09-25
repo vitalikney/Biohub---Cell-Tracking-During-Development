@@ -1,0 +1,297 @@
+{
+ "lens_summary": "Red-team audit of CONTEXT.md sections 10a/11/14, experiments/RESULTS.md, research/wf_ideas_v2 (FINAL_REPORT, final.json, r1/r2 files), the browser reports and the coordhead_retrain outputs. The most consequential error is the design of the 199-video head-retrain kill test (experiments/coordhead_retrain/out_full_P|Q/report.json, tools/train_coordhead.py lines 30-37). It pitted a head trained on ONE embryo against the public head, which was trained on ~10 videos of EACH embryo. 44b6 is 71 overlapping crops of one recording, so on the 6bba->44b6 fold the public head is effectively in-sample. The test also scored raw mean distance, which is dominated by an embryo-specific annotation z offset (no-shift z bias +0.18 um in 44b6, +0.82 um in 6bba). The linking stages consume frame-to-frame displacements, where a constant offset cancels, so the test measured the wrong quantity. Under a crude Gaussian model (my check), the bias-free residuals are: 6bba->44b6 P 1.34 vs public 1.29 vs none 1.48 um; 44b6->6bba P 1.45 vs public 1.43 vs none 1.50 um. In-domain (leak-group OOF, 179 videos the public head never saw) P is 1.24 vs public 1.43. So the out-of-embryo results show that a single-embryo P roughly matches an in-embryo public head. They say nothing about how a head trained on both embryos does on a third one. That question can only be answered on the LB, and one probe is cheap. Second finding: CONTEXT.md line ~1330 established that the pipeline is deterministic run to run (the takaito gap was a code or version difference), exp54 is byte-identical to exp48, and 41 teams sit at exactly 0.953. Yet the BRIEF and v2 still treat LB noise as +-0.003, a figure taken from two public notebooks with a leaky in-kernel 7-candidate sweep, one of them the max over 29 versions (research/discussions_summary.md lines 100-104). Our own deltas resolve to about 0.001 (display rounding). Third: v2's localisation ceiling (+0.001-0.002, polyphase dose-response) was measured as raw-ILP edge recall. That proxy excludes x138's position-consuming tail, where the public head realised +0.007. Fourth: x138's readmit and gap filler read UNREFINED int16 grid peaks (x138 notebook cell 4 'lowdet write', cell 5 load_low_detections), so the head never touches those nodes. Counter-finding that tempers everything: float output coordinates were a pure-geometry change with lab +0.0019/+0.0025 and scored LB ties twice. So geometric lab gains are inflated too, because the detector's train positions are in-sample, and not only rules that trust network confidence. Ceiling of this lens: re-opening closures does not reach 0.99, which is above the LB top of 0.975 (research/browser_research_2026-09-24.md line 207); nobody's evidence supports it. If x138 holds 0.953 (#34), the realistic re-opened upside is about +0.002-0.006 in expectation-weighted terms and about +0.01 in the best case, i.e. public ~0.955-0.963. 0.97+ would need a retrained detector and edge network, which the evidence (leonixis plain retrain = 0.947, Tang/Sergio forum hints) says must be targeted, and which the time budget cannot validate.",
+ "challenged_assumptions": [
+  {
+   "assumption": "Head retrain on 199 videos FAILED its kill test, so the retrained head is worse than the public head on unseen embryos (BRIEF 'closed lines'; CONTEXT.md 24 Sep ~23:00).",
+   "why_doubtful": "The comparator is not held out. The public head was trained on ~10 44b6 + 10 6bba videos, and 44b6 clips are overlapping crops of one recording, so on the 6bba->44b6 fold the public head has seen the same nuclei. The rule required the new head, trained on one embryo, to beat an in-embryo head by 3% on raw mean distance. That distance is dominated by the embryo-specific annotation z offset, which linking does not consume. In the 44b6->6bba fold the one-embryo P ties the public head (1.5699 vs 1.5668 um) and beats it on 7 um re-matches (112,260 vs 112,213) and 4 um re-matches (106,907 vs 106,510). On in-domain OOF P is 19% better (1.239 vs 1.538 um). The test could not answer the real question: does a head trained on BOTH embryos transfer to a THIRD one better than a 20-video head?",
+   "evidence": "experiments/coordhead_retrain/out_full_P/report.txt (fold tables + KILL TEST lines); tools/train_coordhead.py lines 30-37 and 197-204 (x138_probable_train = first 10 per embryo); CONTEXT.md 2026-09-23 23:30 (44b6 = crops of one recording); my Gaussian debias check: bias-free residual 6bba->44b6 P 1.336 / public 1.289 / none 1.478, 44b6->6bba 1.449 / 1.428 / 1.500, OOF179 1.239 / 1.426 / 1.512 um (crude isotropic model, guess-level)."
+  },
+  {
+   "assumption": "Public LB noise is ~+-0.003 per run, so single-probe deltas below 0.005 are not decisions (BRIEF section 1; CONTEXT.md section 11a NOISE FLOOR).",
+   "why_doubtful": "The 0.946/0.942 pair came from notebooks with a leaky in-kernel 7-candidate post-processing sweep at a 0.001 margin, and 0.946 was the max over 29 versions. Our own stack is deterministic: exp46 parity is sha256-identical, exp54 is byte-identical to exp48, and CONTEXT.md says the takaito gap was a different code/version, not run noise. exp29 reproduced 0.947 exactly and 41 teams reproduce 0.953 exactly. With the sweep off, the resolution is display rounding (~0.001). Consequences: ties are real ties (effect < ~0.001); probes 21/22/23 (-0.002 each) were real small negatives; #35 vs #34 can be read at 0.001. The ILP timeout (1200 s) in x138 is the one remaining non-determinism path on the hidden test.",
+   "evidence": "research/discussions_summary.md lines 100-104; CONTEXT.md 2026-09-24 00:30 UTC PARITY PASS entry; CONTEXT.md 2026-09-24 22:00 (exp54 CSV byte-identical); research/browser_research_2026-09-24_pass2.md line 209 (41 teams at exactly 0.953); experiments/ext_x138/DIFF.md (ILP timeout 1200 s)."
+  },
+  {
+   "assumption": "Localisation refinement is worth at most +0.001-0.002 (v2 dropped polyphase shift-and-stitch and sub-voxel refinement on this bound).",
+   "why_doubtful": "The bound was measured as the loss in RAW-ILP edge recall at 7 um under added xy jitter on 24 videos. It excludes the post-ILP stages (flow-prior relink with a 7 um tight gate, readmit within 4 um, gap filler at 3.5 um, linefit) that consume positions. The public head realised +0.007 on x138's base (0.946 -> 0.953, one change) against +0.002 on ours. The bound fits our base and is off by >=3x on x138. The v2 'learnability' test with 13^3 raw patches only targeted 7-10 um TAIL offsets, never sub-2 um refinement.",
+   "evidence": "research/wf_ideas_v2/r1_research_polyphase-shift-stitch-localisation.json (dose-response claim); research/wf_ideas_v2/r1_research_gate-aware-refine-head.json (learnability test on the >=7 um tail); experiments/ext_x138/DIFF.md section 1 (x138 = readmit-v1 + head only); BRIEF section 1 (+0.007 vs +0.002)."
+  },
+  {
+   "assumption": "Lab gains transfer when the change does not lean on network confidence (CONTEXT.md 24 Sep 16:55; BRIEF LAB CAVEAT).",
+   "why_doubtful": "Float output coordinates are pure geometry: lab +0.0019 on 199 videos (CI90 +0.00115..+0.00271) and +0.0025 on SELECTION, LB ties twice (exp52 = exp51 = 0.950, exp53 = exp48 = 0.948). The in-sample detector puts train peaks closer to GT than test peaks, so geometric lab gains are also inflated, or the public embryo is simply easier (lab exp39 0.914 vs LB 0.947). Every positional idea below therefore needs an LB probe; a lab gate only filters.",
+   "evidence": "research/wf_ideas_v2/final.json item 1 lab_protocol; CONTEXT.md 2026-09-24 22:00 and 2026-09-25 07:50 entries."
+  },
+  {
+   "assumption": "Retraining is impossible in time and does not pay (our all-199 scratch = 0.920; ~23 h per detector retrain; BRIEF 'Retraining so far').",
+   "why_doubtful": "The 0.920 came from a 21-epoch (undertrained) scratch model used as the SECONDARY at weight 0.8, with thresholds tuned for another model, on the old 0.945 base. It shows that a weak secondary hurts, not that retraining fails. leonixis' plain 60-epoch all-199 retrain scored 0.947: no gain, not a loss. The ~23 h figure is right for a detector (0.49 h/epoch on 126 videos from friend A's LOEO run, times 199/126 times 30 epochs) and even optimistic, since the edge net, DeepCenter and head would also need retraining. But it does not apply to the targeted localisation retrain: the V1284 head retrains in ~5 min of CPU on the 199 captures that already exist (7.2 GPU-h, already spent).",
+   "evidence": "CONTEXT.md section 11 probe #10 (exp27 = 0.920); RESULTS.md local Friend A exp02 (9.7 h for 20 epochs on 126 videos); research/browser_research_2026-09-24_pass2.md line 117 (leonixis 0.947); experiments/coordhead_retrain/out_full_P.log ('done in 313.5 s')."
+  },
+  {
+   "assumption": "0.97 is out of reach because the sum of all idea ceilings (+0.014) is below the gap (v2 FINAL_REPORT 'Honest outlook').",
+   "why_doubtful": "A sum of the ceilings of the ideas someone happened to keep is not a ceiling of the problem. The same report's FN anatomy puts a +0.03-0.046 oracle on node-position errors alone. Two inputs have also moved: x138 already delivers the +0.005 v2 assigned to the head, on a different base, and v2 dismissed the head retrain through the flawed kill test. The conclusion (0.97 unlikely by 29 Sep) is probably still right, but for another reason: the realistic levers are localisation retrains whose out-of-embryo transfer can only be read on the LB, which leaves ~15 usable slots.",
+   "evidence": "research/wf_ideas_v2/FINAL_REPORT.md 'Honest outlook'; experiments/l2_daughternet/edge_anatomy (FN anatomy, cited in BRIEF section 1)."
+  },
+  {
+   "assumption": "The head adds +0.007 on x138 but only +0.002 on our base BECAUSE x138's post-ILP stages consume positions (BRIEF).",
+   "why_doubtful": "This is plausible but untested. A competing account: the head lowers ILP nodes by ~2.8% on both bases (exp51 125,305 -> 121,777; x138 vs readmit-v1 124,246 -> 121,219). At J ~0.91 with N_pred/N_est ~0.9-1.0 that is worth ~+0.0024-0.0026 through the node multiplier (guess: the hidden-test node change is unknown). On our base this would leave ~0 for J itself. If so, the J gain is specific to x138's tail, and any stronger head (idea 1) should be probed on x138, not on exp51. #34 is the discriminating probe.",
+   "evidence": "experiments/ext_x138/DIFF.md sections 1 and 4 (node counts); tools/official/metrics.md (adjusted Jaccard formula)."
+  },
+  {
+   "assumption": "B35 recovered daughters failed because a second pass adds +24% nodes against a 0.3% budget (CONTEXT.md 2026-09-23 B35 STEP A).",
+   "why_doubtful": "This is a category error: +24% is the size of the CANDIDATE pool, while the 0.3% budget was meant for OUTPUT nodes. Candidates enter the submission only through an accepted division, so each accepted fork adds <= 1 node. The real costs are compute and precision. The reach went to 151/151 GT divisions. x138 already dumps sub-threshold peaks >= 0.3 per frame (LOWDET), so the candidate pool is free on the new base. Precision is still the binding constraint (break-even precision J/(1+J) ~0.265; v1 insertion 27%), so this is not a step change.",
+   "evidence": "CONTEXT.md 2026-09-23 B35 STEP A RESULT and 2026-09-24 00:40 L2 STEAL entry; experiments/ext_x138/biohub-x138.ipynb cell 4 ('lowdet peaks', BIOHUB_LOWDET_THRESHOLD 0.3)."
+  },
+  {
+   "assumption": "AdaBN is rejected: -0.0066 on the public stack (exp38).",
+   "why_doubtful": "The rejection used an in-sample regression: the public weights memorised those 12 videos, so any perturbation of the BN statistics can only hurt there. The only honest test (a scratch 6bba model on unseen 44b6) PASSED at +0.0073. The node-inflation mechanism (raw nodes 1.1-2.0x on 8/12 videos) is real, however, and on x138 AdaBN would also shift the z-scored inputs of the V1284 head and the edge net. Not re-opened as a top idea (low odds, high variance), but the closure reason as written is biased.",
+   "evidence": "RESULTS.md rows 'local Friend A / B5' and 'exp38 public-stack AdaBN regression'; CONTEXT.md 2026-09-21 exp38 entry."
+  },
+  {
+   "assumption": "B19 (re-calibrate the detection threshold of a fine-tuned primary to match node counts) was correctly dropped.",
+   "why_doubtful": "The gate was circular: B19 was meant to repair exp33's node excess, and it was cancelled because exp33 scored low. A29 (det 0.99 on the pilkwang model) is a different operation. The point is moot now, because any new primary breaks the V1284 head and the edge net, which are trained on public-primary features. Recorded for accuracy only.",
+   "evidence": "CONTEXT.md section 10a rows A24, A29, B19."
+  },
+  {
+   "assumption": "Public division J = 0.36 exactly ((0.947-0.911)/0.1).",
+   "why_doubtful": "Probe 26 removes the safe-division stage, and with it the second-daughter edges. The 0.036 therefore mixes 0.1 x div_J with the change in edge J from those edges. If those edges are net TP, div_J is below 0.36 and the break-even precision for added forks (J/(1+J)) falls from 0.265 toward ~0.24. This is a minor shift in the insertion arithmetic.",
+   "evidence": "CONTEXT.md 2026-09-24 02:00 PROBE 26 entry; tools/official/metrics.md."
+  }
+ ],
+ "browser_todo": [
+  "https://www.kaggle.com/datasets/anvithpothula/biohub-v1284-head-s075 - read the description, version history and Discussion tab: what 's075' means (target scale 0.75?), how many movies and which embryos the head was trained on, whether newer heads exist (other sNNN or more movies). Also list the author's other datasets.",
+  "https://www.kaggle.com/anvithpothula/code and https://www.kaggle.com/thtennant/code - any notebook versions after x138 (the authors sit privately at 0.956/0.959); diff their cell 0/4/5 against experiments/ext_x138/biohub-x138.ipynb, especially head changes, LOWDET refinement and linefit/flow knobs.",
+  "Kaggle discussion 742673 (x138 thread) and 742965 (fheizz 'overfit?'): any report of retraining the V1284 head on more movies, per-embryo z offsets, or head variants that scored above or below 0.953.",
+  "Competition Discussion search 'offset' / 'z offset' / 'annotation offset' / 'centroid': any host statement on how test-embryo GT points were placed (Ultrack segmentation centroid vs manual click). This decides whether a learned per-embryo z correction can transfer.",
+  "Leaderboard (public) on 25-26 Sep: is the 0.953 spike still exact (determinism check), and have new public notebooks above 0.953 appeared since 24 Sep 13:00 UTC?",
+  "Competition Data/Overview page: annotation density and acquisition of the hidden test embryos (same microscope and protocol as 6bba or as 44b6?), for choosing between raw P and bias-matched P."
+ ],
+ "hypotheses": [
+  {
+   "id": "head199-x138-two-arm",
+   "title": "Ship the already-trained 199-video V1284 head on the x138 base in two arms (raw P and bias-matched P), after a FAIR, bias-invariant lab gate",
+   "mechanism": "The public V1284 head (trained on 20 videos, 4,136 pairs) gave x138 +0.007 over its base, the largest single step in the competition's public lineage. Our head P, trained on all 199 videos (125,700 pairs), cuts matched distance 19% more than the public head in leak-group OOF on videos the public head never saw (1.239 vs 1.538 um). Its bias-free residual is 1.24 vs 1.43 um (my Gaussian estimate). It was killed by a test whose comparator was in-embryo (public head trained on both embryos; 44b6 is one recording) and whose metric was dominated by the embryo-specific z offset (0.18 vs 0.82 um). Neither matters to the relink/readmit/gap stages, which consume displacements. The real risk is narrower: P recognises the embryo from its features and applies that embryo's z convention; on a third embryo this may be wrong. Arm B removes exactly that risk. Per video (label-free) it subtracts P's mean shift over all peaks and adds the public head's mean shift, keeping P's per-node sharpening and the LB-validated global behaviour of the public head.",
+   "change": "(0) Prerequisite: #34 decides the base (x138 if it scores 0.953; exp57b if #35 > #34). (1) On the laptop where the captures live: extend tools/train_coordhead.py with --eval-debiased. It reports M1 = per-video debiased residual; M2 = GT-edge displacement error |(p'_{t+1}-p'_t)-(g_{t+1}-g_t)| on GT edges with both endpoints paired (offset-invariant, what linking consumes); and M3 = 7 um re-match. It adds a REPLICA comparator: the x138 recipe (same MLP, 20 videos, target scale 0.75) trained on the same single training embryo as P, so both are out-of-embryo. Arm B = P_matched: shift = P(x) - mean_frame(P) + mean_frame(public), with the means over all peaks of the frame. (2) Export P with --force-export to the private dataset vitaliineibauer/biohub-coordhead-199 (the script already supports it). (3) tools/build_probe_kernel.py --base x138: allow a new --patch headswap: V1284_HEAD path override + BIOHUB_COORDHEAD_BIASMATCH=0|1. With BIASMATCH=1, refine() loads both heads and applies the per-frame mean-matching; 0 with the public path must be byte-identical to exp56. (4) Kernels: exp58a = base + P raw; exp58b = base + P_matched.",
+   "evidence": [
+    {
+     "claim": "Leak-group OOF without x138's training videos: none 1.698, public 1.538, new P 1.239 um mean; <=1 um share 0.263/0.271/0.466; m7 119,374/119,339/119,482",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/experiments/coordhead_retrain/out_full_P/report.txt"
+    },
+    {
+     "claim": "Kill test: 6bba->44b6 P 1.4517 vs public 1.2963 (+12.0%); 44b6->6bba 1.5699 vs 1.5668 (+0.2%); P's all-peak mean z shift on 44b6 +0.567 vs public -0.021 um",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/experiments/coordhead_retrain/out_full_P/report.json (kill_test)"
+    },
+    {
+     "claim": "The public head was trained on ~10 videos per embryo (x138 validator order), so it is in-embryo on both held-out folds",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/tools/train_coordhead.py lines 30-37, 197-204"
+    },
+    {
+     "claim": "44b6 clips are overlapping space-time crops of ONE recording (62 pairs share 2,429 GT nodes)",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/CONTEXT.md 2026-09-23 21:30 UTC NIGHT LOG"
+    },
+    {
+     "claim": "x138 = readmit-v1 + head only; 0.946 -> 0.953; author: a 4-movie head was +14.9% worse, a 20-movie head -10.4% (more data helped out-of-sample)",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/experiments/ext_x138/DIFF.md section 1"
+    },
+    {
+     "claim": "x138 head on our stack: mean shift 0.74 um, ILP nodes -2.8%; P's in-sample mean shift 0.95 um",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/experiments/ext_x138/DIFF.md section 4; out_full_P.log final head line"
+    },
+    {
+     "claim": "Forum: a constant offset correction loses 0.0031 on LB; only a learned per-node offset pays",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/research/browser_research_2026-09-24.md (Le Quang Canh row)"
+    },
+    {
+     "claim": "Captures from the exp51 stack are bit-exact to x138's prediction path (pre-ILP coordinates identical)",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/experiments/ext_x138/DIFF.md section 4"
+    }
+   ],
+   "upper_bound": "The public head removed ~6% of the bias-free error (1.512 -> 1.426 um, OOF179) plus part of the bias, for +0.007 on x138's base, of which ~+0.0025 is plausibly node multiplier (guess). P in-domain removes ~18% (1.512 -> 1.239), ~3x the positional component. Linear extrapolation gives about +0.009-0.013 over no head, i.e. +0.005-0.009 over the public head on x138 (ceiling if the third embryo behaves like the train embryos). The FN anatomy caps all node-position fixes at +0.03-0.046, and a <2 um head reaches only part of that.",
+   "expected_public_gain": "+0.002 (range -0.003 .. +0.008). Arithmetic: P(>= +0.003) ~0.3 x ~+0.005, plus P(+0.001..+0.002) ~0.25 x +0.0015, plus P(0) ~0.2, plus P(< 0) ~0.25 x -0.002, gives about +0.0015..+0.002. Arm B has lower variance: -0.001 .. +0.004 (guess).",
+   "expected_private_gain": "Same sign as public with more spread. Private is 71% on other embryos, so a z-convention mismatch hits there as well. Arm B is the safer private choice; raw P only if it beats Arm B on public by >= 0.002.",
+   "probability": "P(Arm A or Arm B beats the base on public by >= 0.001) ~0.45. Reasoning: in-domain evidence is strong (19% OOF); the one-embryo out-of-embryo P ties an in-embryo public head; x138's own author saw more data help; but the hidden embryo's annotation convention is unknown, and pure-geometry lab gains have been inflated before (float).",
+   "validation_protocol": "PRE-REGISTERED, laptop CPU, from the existing 199 captures (no GPU). Folds: embryo-held-out in both directions, plus leak5 OOF. Arms: none, public (reported but NOT gating, because it is in-embryo), REPLICA-20 (x138 recipe on 20 videos of the training embryo), P, P_matched. GATE to build kernels: on BOTH embryo-held-out directions, P_matched M2 <= 0.98 x REPLICA-20 M2 and <= none M2; M3 >= REPLICA-20 M3 - 0.05%; and on leak5 OOF (excluding x138's probable training videos) M2 <= 0.95 x public. Raw P additionally needs M2 <= REPLICA-20 on both directions. If P_matched fails, stop (the concept, not only the offset, fails to transfer). LB rule (deterministic LB): adopt an arm if it scores >= base + 0.001. If both arms score and A > B by >= 0.002, keep A; otherwise keep B for private safety. Dummy-run check: node count within +-3% of exp56 on each of the 4 dummy clips, head ran on 4/4 movies, max shift < 2 um.",
+   "resources": [
+    {
+     "who": "agent-container",
+     "hours": 2.0,
+     "what": "Orchestrator agent on the user's laptop, where the captures and the P head live (Windows paths in out_full_P report): extend train_coordhead.py with the debiased metrics and the REPLICA-20 arm, run the gate (CPU minutes), export the dataset"
+    },
+    {
+     "who": "agent-container",
+     "hours": 1.5,
+     "what": "build_probe_kernel.py --base x138 --patch headswap (path override + biasmatch) with a byte-identity test vs exp56; build exp58a/exp58b"
+    },
+    {
+     "who": "kaggle-vitalii",
+     "hours": 1.3,
+     "what": "two private dummy-test GPU runs (~35-40 min each) right after the 26 Sep 00:00 UTC quota reset"
+    }
+   ],
+   "wallclock_to_scored_probe_hours": 23,
+   "earliest_scored_probe_utc": "2026-09-26T09:00Z (submit ~00:50 UTC 26 Sep after the GPU reset with the user's OK; scoring 7-10 h -> 08:00-11:00 UTC)",
+   "dependencies": "#34/#35 results (~17:00-20:00 UTC 25 Sep) choose the base; the captures and v1284_head.pt on the laptop; Vitalii's GPU quota reset at 00:00 UTC 26 Sep; 2 slots on 26 Sep; the user's OK.",
+   "risks": "(1) P applies a wrong embryo z convention on the hidden embryos (mitigated by Arm B). (2) Features are in-sample: the public detector saw all 199 videos, so a higher-capacity fit may learn in-sample residuals; the public head shares this issue and still transferred. (3) A larger mean shift (0.95 vs 0.74 um) changes the ILP node count; the sign on the node multiplier is unknown. (4) Anchor collisions in x138's cell 4 (x122 failed silently this way); assert the patch counts. (5) The runtime guard at 27,000 s: the head cost is unchanged and Arm B adds one extra MLP pass (negligible).",
+   "not_closed_because": "The kill test that closed it had two errors: an in-embryo comparator (public head trained on both embryos, 44b6 = one recording) and a metric dominated by an embryo-specific constant offset that linking does not use. It never tested the question that matters (a two-embryo head on a third embryo), which only the LB can answer. The in-domain evidence (-19%) is unrefuted.",
+   "needs_user_decision": "no (normal probe approval only)"
+  },
+  {
+   "id": "fullres-residual-head",
+   "title": "Second-stage residual refinement from FULL-RESOLUTION image intensity on top of the public head (the detector never sees 15/16 of the xy pixels)",
+   "mechanism": "The detector reads zarr[t, :, ::4, ::4] at phase (0,0), so its features, and the V1284 head built on them, live on a 1.625 um grid and never see 15/16 of the xy pixels. A small regressor fed physical, embryo-agnostic image features at full resolution (0.406 um xy) can remove the sub-grid residual left after the public head. The features are intensity-weighted centroid offsets in 3-4 window sizes, 3-point parabola sub-voxel fits per axis on a lightly smoothed full-res patch, and local peak asymmetry. Because both arms include the public head, the embryo-held-out comparison is FAIR: the public head's in-embryo advantage cancels. That fixes the kill-test flaw of idea 1 by design. v2 closed sub-voxel refinement on a proxy (raw-ILP recall) that excludes x138's position-consuming tail, and its image-learnability test only looked at 7-10 um tail offsets.",
+   "change": "Laptop CPU (train zarr is local): for every captured peak within 4 um of GT (125,700 pairs), cut a 5x17x17 full-res patch around the public-head-refined position and compute ~30 handcrafted features. Fit HistGradientBoosting or a ridge per axis to predict (gt - public_refined) clipped to 1 um. Evaluate leak5 OOF and embryo-held-out with M1/M2/M3 from idea 1. Kernel (x138 base): after _v1284_refine in the predict script, read the full-res frame t once, compute the features for the frame's peaks, add the bounded (<1 um) residual, and keep the float coordinates. The model ships as a small pickled or JSON tree/ridge in a private dataset.",
+   "evidence": [
+    {
+     "claim": "The detector reads frames with a phase-(0,0) strided slice, with no phase jitter in training or inference",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/research/wf_ideas_v2/r1_research_polyphase-shift-stitch-localisation.json (tools/repo/scripts/predict_unet_transformer.py l.209-222)"
+    },
+    {
+     "claim": "v2's localisation bound (+0.001-0.002) is a raw-ILP edge-recall proxy under added jitter",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/research/wf_ideas_v2/r1_research_polyphase-shift-stitch-localisation.json"
+    },
+    {
+     "claim": "v2 image-patch learnability test targeted only the >=7 um tail (|r| <= 0.09), not sub-2 um refinement",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/research/wf_ideas_v2/r1_research_gate-aware-refine-head.json"
+    },
+    {
+     "claim": "x138 head gain +0.007 on its base against +0.002 on ours: positions matter in x138's tail",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/research/wf_ideas_v3/BRIEF.md section 1; experiments/ext_x138/DIFF.md"
+    },
+    {
+     "claim": "Coarse heatmaps plus short-range offsets give sub-pixel localisation without high-resolution maps (CenterNet-style offset heads)",
+     "source": "https://lacuna.tiptreesystems.com/direction/sub-pixel-offset-regression-for-keypoint-localization/txn_a776d16fdc32489d9d8d0a93ad4410eb"
+    },
+    {
+     "claim": "Local Integral Regression Network for nuclei detection: sub-pixel regression from local image content",
+     "source": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8535160/"
+    }
+   ],
+   "upper_bound": "The residual after the public head is ~1.43 um bias-free in-domain (my estimate). If full-res xy features bring it to ~1.25 um (similar to P in-domain; guess), the positional component is ~2x the public head's, so with the x138 scaling above that is <= +0.004-0.006 over the public head. The z axis stays limited by the 1.625 um slice spacing (parabola fits only).",
+   "expected_public_gain": "+0.001 (range -0.001 .. +0.004), after a 2-4x lab-to-LB discount for geometric changes (float out: lab +0.0019 -> LB ~0).",
+   "expected_private_gain": "Similar or slightly better than public relative to idea 1: the image features are physical, not embryo-identity features, so they should transfer more evenly.",
+   "probability": "~0.3 that it beats its base by >= 0.001 on public: the fair lab test is informative, but the image-to-GT relation may carry annotation conventions too, and the lab-to-LB discount for geometry is large.",
+   "validation_protocol": "Pre-registered on the laptop: leak5 OOF and both embryo-held-out folds; arms = public, public+residual. Gate: M2 (GT-edge displacement error) <= 0.95 x public on BOTH embryo-held-out directions; M1 <= 0.95 x public; M3 >= public; mean residual shift on the all-peak sample < 0.15 um per axis (no global offset learned). Kernel check: the runtime on the 4 dummy clips may rise by at most 10% (the runtime guard at 27,000 s switches the tail off on the hidden test); node count within +-3%. LB: adopt at >= base + 0.001.",
+   "resources": [
+    {
+     "who": "agent-container",
+     "hours": 4.0,
+     "what": "patch extraction from the local train zarr for ~126k pairs + features + fit + gate (laptop CPU at idle priority)"
+    },
+    {
+     "who": "agent-container",
+     "hours": 2.0,
+     "what": "kernel patch after _v1284_refine, dataset upload, byte-identity test when off"
+    },
+    {
+     "who": "kaggle-vitalii",
+     "hours": 0.8,
+     "what": "private dummy-test run"
+    }
+   ],
+   "wallclock_to_scored_probe_hours": 40,
+   "earliest_scored_probe_utc": "2026-09-27T03:00Z (lab and build 26 Sep, submit ~26 Sep 18:00 UTC, scored 27 Sep 01:00-04:00)",
+   "dependencies": "The laptop's local train data and captures; the x138 base (#34); independent of idea 1 but stacks with it (residual on top of whichever head wins).",
+   "risks": "The full-frame reads add I/O on ~130 hidden videos (runtime guard). The residual may learn the embryo z convention (hence the mean-shift gate). A 2-4x lab-to-LB discount. It needs ~6 h of agent time on a day with competing tasks.",
+   "not_closed_because": "The earlier closures measured a proxy that excludes the position-consuming x138 tail (raw-ILP recall) and tested image learnability only for >=7 um tail offsets. Sub-2 um full-res refinement on top of a head was never tested.",
+   "needs_user_decision": "no"
+  },
+  {
+   "id": "refine-lowdet-peaks-x138",
+   "title": "Apply the V1284 head to x138's low-detection pool, so readmitted and gap-filled nodes are no longer grid-quantised",
+   "mechanism": "x138 refines only the main peaks. Readmit (peaks >= 0.965 the ILP discarded) and the gap filler (peaks >= 0.5) draw from low_coords, which x138 dumps as UNREFINED int16 grid peaks (1.625 um grid, up to 0.81 um z rounding). These nodes sit exactly at track ends and gaps, where the 4 um readmit radius, the 3.5 um line test and the 7 um flow gate are decided, and their neighbours are refined. A mix of refined and unrefined coordinates adds displacement noise precisely at the fragile links.",
+   "change": "In the x138 predict-patch cell, inside the 'lowdet peaks' replacement, pass _low through the same _v1284_refine(ds_path, t, _low, unet_out[:, f_idx]) before storing it. In 'lowdet write', keep float32 (do not cast to int16) after multiplying by downsample. The tail already reads low_coords as float64. The main-peak copy inside the low pool then coincides exactly with its refined node (distance 0 < 2 um exclusion), so exclusion stays correct. Add a knob BIOHUB_LOWDET_REFINE=0|1; 0 must be byte-identical.",
+   "evidence": [
+    {
+     "claim": "The low-detection dump is cast to int16 grid coordinates and never passes through the head",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/experiments/ext_x138/biohub-x138.ipynb cell 4 ('lowdet peaks', 'lowdet write')"
+    },
+    {
+     "claim": "Readmit and the gap filler read low_coords/low_score from the dump",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/experiments/ext_x138/biohub-x138.ipynb cell 5 (load_low_detections, readmit_discarded_detections)"
+    },
+    {
+     "claim": "1,337 readmitted peaks against 121,777 raw nodes on the 4 dummy clips (~1.1%); the gap filler may add <= 3%",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/CONTEXT.md 2026-09-25 08:40 UTC exp57 DIAGNOSTIC; experiments/ext_x138/DIFF.md (GAPFILL_MAX_ADDED_FRAC 0.03)"
+    },
+    {
+     "claim": "The head moves peaks by 0.74 um on average, the size of the grid quantisation",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/research/wf_ideas_v2/r1_research_gate-aware-refine-head.json"
+    }
+   ],
+   "upper_bound": "The affected nodes are ~1-4% of all nodes. Pro rata of the head's +0.007 that is ~+0.0001-0.0003; because they sit at break points, weight up to ~3x (guess), giving a ceiling of ~+0.001.",
+   "expected_public_gain": "+0.0003 (0 .. +0.001); probably invisible at the 0.001 display resolution.",
+   "expected_private_gain": "~+0.0003; no systematic risk (same head, same features).",
+   "probability": "~0.5 that it is non-negative and ~0.2 that it shows as >= +0.001 on public.",
+   "validation_protocol": "No honest lab (it needs GPU features). Dummy-run checks: exp56 byte-identical with the knob at 0; with 1, readmitted count and gap-fill count each within +-10% of exp56 on every dummy clip, and no REPAIR FAILED. Ship only as a rider inside a scored bundle, or as its own slot if slots are idle; adopt at >= base.",
+   "resources": [
+    {
+     "who": "agent-container",
+     "hours": 1.0,
+     "what": "kernel patch + knob + byte-identity test"
+    },
+    {
+     "who": "kaggle-vitalii",
+     "hours": 0.7,
+     "what": "private dummy-test run"
+    }
+   ],
+   "wallclock_to_scored_probe_hours": 23,
+   "earliest_scored_probe_utc": "2026-09-26T10:00Z (same build night as idea 1; one 26 Sep slot)",
+   "dependencies": "x138 base (#34). It composes with idea 1: whichever head is used must refine both the main and the low pools.",
+   "risks": "Anchor collisions in cell 4 (the x122 failure mode). Refined low peaks may cross the 2 um exclusion boundary differently, changing readmit counts. Gain below the display resolution.",
+   "not_closed_because": "Never examined: x138 made one change and our port copied it verbatim; nobody checked which node pools the head covers.",
+   "needs_user_decision": "no"
+  },
+  {
+   "id": "x138-tail-recalibration-refined-coords",
+   "title": "Re-calibrate x138's position-consuming tail (linefit weight/window, flow tight gate, readmit radius) for refined coordinates",
+   "mechanism": "Every tail knob in x138 was chosen on integer-grid coordinates: linefit (w0.8, win2) was tuned by the public author and confirmed unimodal on the 12-video port on grid coordinates, and the flow gate 7.0, readmit 4 um and gapfill 3.5 um were set by thtennant before the head existed. x138 changed only the head. Linefit, the largest post-processing stage (+0.0145), is a smoother: when per-node noise drops (the head removes ~6%, P up to ~18%), its optimal weight falls. Likewise the tight gates can shrink without losing true links, which cuts diverted/taken FN in dense regions (the density problem).",
+   "change": "On friend A's x138 lab cache (his pending task if #34 = 0.953): grid over linefit weight {0.5, 0.65, 0.8} x window {1, 2}, FLOW_TIGHT_UM {6.0, 6.5, 7.0} and READMIT_RADIUS_UM {3, 4}, one knob at a time from x138. Score with the official metric per embryo and split the result into J and node multiplier. Build the best single knob as a probe via --base x138 (it needs a --set pass-through for these env knobs).",
+   "evidence": [
+    {
+     "claim": "Linefit is the largest stage (+0.0145); public (w0.8, win2) is the unimodal optimum on the 12-video port on grid coordinates",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/experiments/RESULTS.md (Friend B per-stage table and B28 linefit grid rows)"
+    },
+    {
+     "claim": "x138 tail knobs: FLOW_TIGHT_UM 7.0, READMIT_RADIUS 4, GAPFILL PEAK_RADIUS 3.5, set on the frontier947-readmit base",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/experiments/ext_x138/DIFF.md section 2 (cell 0 knob table)"
+    },
+    {
+     "claim": "Loss is concentrated in dense videos (densest 6bba quartile = 52%; Spearman(J, nodes/frame) = -0.66)",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/research/wf_ideas_v2/r2_critic.json"
+    },
+    {
+     "claim": "Justin CH123: final edges come from the Hungarian relink; network prob enters only through a bonus of <= ~1 um against a 1.8 um median step (geometry dominates)",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/research/browser_research_2026-09-24.md (Justin CH123 row)"
+    }
+   ],
+   "upper_bound": "The linefit stage is worth +0.0145 in total; re-weighting is plausibly worth <= 10-15% of it (guess): ~+0.002. Gate tightening: the FN diverted/taken oracle is +0.016, and a gate change reaches a small fraction of it (guess <= +0.002). Combined ceiling ~+0.003-0.004.",
+   "expected_public_gain": "+0.0005 (0 .. +0.002), after the geometric lab-to-LB discount (float precedent) and the in-sample lab positions (train positions better than test, so the lab favours less smoothing and tighter gates than test warrants).",
+   "expected_private_gain": "~+0.0005; direction-consistent if the per-embryo lab split agrees.",
+   "probability": "~0.25 that the chosen knob is >= +0.001 on public.",
+   "validation_protocol": "Lab: selection on 6bba odd, confirmation on 6bba even + all 44b6 (the existing splits.json protocol). Pre-registered gate: >= +0.002 on confirmation, CI90 > 0, both embryos >= 0, >70% of the gain from J (not the multiplier), node count within +-0.5%. Bias control: shade the chosen knob one step toward the x138 default, because train positions are in-sample and flatter the lab toward less smoothing and tighter gates. LB: adopt at >= base + 0.001.",
+   "resources": [
+    {
+     "who": "friend-a-5070ti",
+     "hours": 6.0,
+     "what": "x138 lab cache on 199 videos (already his pending task) + tail grid on CPU"
+    },
+    {
+     "who": "agent-container",
+     "hours": 1.5,
+     "what": "--set pass-through for the tail knobs in build_probe_kernel.py --base x138, probe build"
+    },
+    {
+     "who": "kaggle-vitalii",
+     "hours": 0.7,
+     "what": "private dummy-test run"
+    }
+   ],
+   "wallclock_to_scored_probe_hours": 55,
+   "earliest_scored_probe_utc": "2026-09-27T18:00Z (cache 26 Sep if friend A is available, grid and build 27 Sep morning, scored 27 Sep evening; slips to 28 Sep without him)",
+   "dependencies": "#34 = 0.953 (x138 is the base); friend A's availability (uncertain; PC rebooted 24 Sep); ideally the head choice from idea 1 first, since the optimum depends on the head.",
+   "risks": "The in-sample lab flatters less smoothing. The gain may sit below the display resolution. Friend A may not be available. Interacts with idea 1 (re-tune after the head changes).",
+   "not_closed_because": "Linefit was closed (B28) on grid coordinates on our old stack, and the gates were never tuned for refined coordinates. The brief itself notes that closures on one base do not carry over to x138.",
+   "needs_user_decision": "no"
+  }
+ ]
+}

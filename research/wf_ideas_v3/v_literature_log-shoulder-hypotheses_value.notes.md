@@ -1,0 +1,10 @@
+- 2026-09-25 11:1x UTC: started value/transfer review of log-shoulder-hypotheses; no prior json.
+- 2026-09-25 ~11:20 UTC read BRIEF.md, h_literature.json (H1 = byte-lowscore-extension, its UB/capture 10-25%, node cost +1% nodes = -0.0009).
+- r2_critic.notes.md l.16: 44b6 a_never GT -> Ultrack pt median 2.3 um, our nearest pred 7.2 um and 1.9 um from ANOTHER Ultrack pt. Measured on 25/63 placeable 44b6 clips only. "z-blurred" is an interpretation; no measurement of shoulder (no-local-max) vs sub-threshold max.
+- r2_critic l.7: in 44b6 multi-copy regions, 46 a_never FN are DISCORDANT (TP in another crop of same pixels) vs 24 FN-in-all-copies (all classes) -> most 44b6 a_never is context/borderline-score, not a persistent geometric shoulder.
+- r2_critic l.18: repulsion +0.55..+1.0 um means the net DOES output two peaks for close pairs (selection caveat: merged pairs dropped). Not evidence for shoulders.
+- fn_anatomy_exp39.md: a_never 1,907 (44b6 167, 6bba 1,740). D = 122,151+6,846+6,732 = 135,729 -> 7.37e-6 / FN edge. 44b6 all = +0.00123; 6bba all = +0.0128; 30% of 6bba = +0.00385 (idea's number checks out, but it is pre-capture, pre-node-cost).
+- predict_unet_transformer.py l.256-295: strict local max 3x3x3 on the downsampled (1,4,4) grid = 1.625 um isotropic; threshold via sigmoid. Detector trained with single-voxel positives -> peaked map.
+- Toy 1D (scratchpad shoulder.py): two Gaussians on 1.625 um grid, sep 5/7/9 um, width 1-4 um, amp 1/0.6. LoG(sigma=1 vox) yields an extra peak where raw has 1 max in only 2/10 merged configs, and LOSES a raw peak in 4 configs. Grid too coarse for LoG to resolve much beyond raw maxima.
+- Estimate: 1907 x shoulder share (0.1-0.3, guess) x H1 capture (0.1-0.25) x 7.37e-6 = +0.00014..+0.0011 local gross, minus node cost -> ~+0.0002 local central. Public ~0..+0.0005; noise 0.003. REFUTED under value lens.
+- 11:13 UTC wrote final JSON (refuted=true).

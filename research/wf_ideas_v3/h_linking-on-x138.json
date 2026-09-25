@@ -1,0 +1,275 @@
+{
+ "lens_summary": "Linking/association on the x138 base. Main findings: (1) In x138 the ILP edge set is thrown away. filter_output_graph sets `edges = motion_edges` (exp56 cell 5, lines ~1947-1952). The final links come from a per-frame flow-prior Hungarian with cost = motion residual - 1.0*prob. It has no no-link cost, so any pair inside the gate is forced. It is one-to-one, so every fork comes from the capped safe-division stage. Readmit and gapfill use an UNREFINED low-detection dump on the 1.625 um grid (cell 4 'lowdet peaks' patch). (2) On the LB the whole association layer is worth about +-0.002. Relink off, bonus 2.5 and gshift all gave 0.945 vs 0.947. Min-track 4 and 8 gave 0.943 and 0.944. Seven tail knobs were all flat. (3) The large FN classes are NOT linking errors. Swap, diverted and taken total ~3,600 FN with an oracle of +0.03-0.046. They are node-position/detection errors (l6_fn_anatomy_report.md sec. 3), and a 2x2 swap rule measured -0.00004. Linking-only ceilings from the exp39 anatomy: breaks +0.0011; linefit-displaced nodes +0.005 (oracle); fragments/free-end gaps +0.0087 (oracle upper bound, overlapping); divisions (the only lever with a >= +0.005 arithmetic ceiling) up to +0.015 if every steal-reachable division were found at precision 1 (guess-based decomposition of J_pub 0.36). (4) Part of the head's gain is probably the node multiplier. Final nodes fall by 2.4-2.9%, worth up to +0.0024..+0.0029 via 0.1*dN/N_est at N_pred ~ N_est, and less if N_pred << N_est. So 'better positions feed the association' is real but smaller than +0.007. (5) Honest ceiling of this lens: expected public +0.002..+0.004 for all four ideas together, best case ~+0.01 (mostly divisions). 0.99 (+0.04) is unreachable by association changes. That would need the detection and localisation errors fixed at the source (retrained detector/head), where the swap and a_never oracles (+0.03-0.05) live. The single most useful move under this lens is the CPU 'x138-tail lab' (H3). It is buildable from the existing 199-video head captures, and without it none of the association ideas can be validated honestly before an LB slot.",
+ "challenged_assumptions": [
+  {
+   "assumption": "x138's +0.007 over readmit-v1 (and exp51's +0.002 over exp48) is localisation that the post-ILP chain converts into edges.",
+   "why_doubtful": "The head also shrinks the final node set by 2.4-2.9%. With the adjusted-edge multiplier (1 - 0.1*(N_pred-N_est)/N_est), that alone is worth up to 0.1*0.029 = +0.0029 at N_pred ~ N_est. On our base the whole head gain (+0.002) is therefore explainable by node count, which would make its localisation effect ~0 there. A forum user reported that LB changes tracked the predicted node count.",
+   "evidence": "experiments/ext_x138/DIFF.md sec.4 (122,704 -> 119,174 final nodes; x138 124,246 -> 121,219); CONTEXT.md L1495-1505; research/browser_research_2026-09-24.md L93 (Justin CH123: LB loss tracked node-count change)"
+  },
+  {
+   "assumption": "The swap/diverted FN mass (oracle +0.03-0.046) is a linking opportunity for multi-frame association.",
+   "why_doubtful": "Agreed with L6, and I add nothing that re-opens it. The GT link is 2.6 um while its matched predicted nodes are 9.4 um apart. Our competing links are smooth (motion prefers ours in 98.6%), and the 2x2 swap rule measured -0.00004. Multi-frame or Kalman association cannot fix a node that sits in the wrong place. Only the detector or head can.",
+   "evidence": "experiments/l2_daughternet/edge_anatomy/l6_fn_anatomy_report.md sec.3; l6_selection_swapfix.md"
+  },
+  {
+   "assumption": "The in-sample lab is optimistic for every post-processing change.",
+   "why_doubtful": "The sign depends on the change. For rules that trust the network/ILP it over-states: edge filter lab +0.016 -> LB 0, relink-off +0.0053 -> LB -0.002. For gap-closing/fragment rescue it should UNDER-state, because in-lab node recall is 0.983 and the ILP is near-perfect, so the lab has fewer breaks than the hidden test. This matters when reading H2/H3 lab numbers.",
+   "evidence": "research/wf_ideas_v3/BRIEF.md sec.1 (lab caveat, recall 0.983); CONTEXT.md L1207-1209 (exp40 relink off), L1446-1470 (probes 29/30)"
+  },
+  {
+   "assumption": "Relink knobs (gates, linefit, velocity weight) are a closed line.",
+   "why_doubtful": "They were closed on integer-grid positions. Before the head, positions sat on the (1,4,4)-downsampled 1.625 um grid (uniform quantisation, RMS 0.47 um per axis, ~0.81 um in 3D, ~1.15 um on a frame-to-frame displacement vs a 1.8 um median step). The head moves peaks by a mean of 0.74 um. That changes the noise model the gates and linefit (weight 0.8, window 2) were tuned for. Re-tuning is a new mechanism, but it can be tested honestly only in a lab with head coordinates, and the LB prior for tail knobs stays flat (+-0.002).",
+   "evidence": "experiments/ext_x138/DIFF.md sec.1 and 4 (SPACING 1.625, mean shift 0.739 um); exp56 cell 2 defaults (OUTPUT_LINEFIT_WEIGHT 0.8, WINDOW 2); CONTEXT.md L170-180, L265-266"
+  },
+  {
+   "assumption": "Leaf prune is closed on x138 because it removes readmitted nodes.",
+   "why_doubtful": "The mechanism is that readmitted nodes get edge_prob 0.0. They were not in the ILP solution, and learned_edge_probs is built only from ILP-solution edges, so leaf prune sees them as weak leaves. Giving readmit-involved pairs a neutral probability (H4) removes the conflict. Leaf prune was +0.0006 on the lab confirmation (tiny), so this is a rider, not a line.",
+   "evidence": "CONTEXT.md L1511-1517; exp56 cell 5 filter_output_graph (learned_edge_probs from raw ILP edges only) and readmit_discarded_detections"
+  }
+ ],
+ "browser_todo": [
+  "https://www.kaggle.com/code/anvithpothula/biohub-x138 -> Output/Logs tab of the scored version: per-dataset lines 'readmitted N', 'low-detection pool', 'after gap-closing', 'motion_relink_flow_frames', 'safe_divisions_added', FINAL nodes/edges. Needed to size H4 (readmit/gapfill share on the dummy test) and H2 (breaks/gaps). Also check whether a newer version changed tail knobs.",
+  "https://www.kaggle.com/code/thtennant (sort by recent) -> any frontier947/flow2/readmit/gapfill notebooks newer than 19 Sep, with LB and diff of MOTION_RELINK_FLOW_*, READMIT_*, GAPFILL_*, LINEFIT knobs. Extract only knob changes and scores (the author is at 0.959 private).",
+  "Kaggle discussion 740573 and 738217 (Le Quang Canh / zhincez): division base rates (continuation 1.72 um, division step 4.57 um, sister 8.85 um), the 'second daughter arc needs ~2x gate' figure and the 0/381 contested-link statistic. Extract the exact distributions (percentiles), which set H1's gates.",
+  "Kaggle competition discussion, sort=recent, search 'division' and 'relink' after 24 Sep: any top-team statement on division linking or tracklet gap closing (numbers only).",
+  "Our submissions page: exact public scores of #34 (exp56 x138 verbatim) and #35 (exp57b x138 + DaughterNet insertion). They decide the base for all four ideas and whether H1 stacks on or replaces the insertion."
+ ],
+ "hypotheses": [
+  {
+   "id": "split-aware-flow-relink",
+   "title": "Division slots inside the flow-prior relink (split-aware assignment with a flow-compensated sister-midpoint test)",
+   "mechanism": "On x138 every final edge comes from a one-to-one Hungarian (motion_relink_edges), so a dividing parent keeps one daughter. The second daughter is either orphaned or, more often, taken by a neighbouring track. Forks are then added only by add_safe_divisions_postlink, which starts from orphans and is capped at 0.375% of nodes per video and 0.76% per frame. The lab funnel (B32) is: orphan-only candidate reach 58/151 GT divisions (38%), steal reach 97/151 (64%), all three nodes detected 121/151 (80%). The pipeline finds 23-25/151 (lab J 0.10-0.12); public J_div ~0.36. The forum confirms that the relink destroys ILP forks and that the second daughter arc needs ~2x the continuation gate (division step 4.57 um vs 1.72 um). Head coordinates make a geometric division test sharper: the two daughters' midpoint should sit at the flow-predicted parent position (parent + neighbourhood flow), while a neighbour-steal does not. This test uses positions and the neighbourhood flow, not network confidence, which is the class of change that transferred best (insertion: lab +0.0019 -> LB +0.001).",
+   "change": "In exp56 cell 5 motion_relink_edges, after the final tight pass of each frame (flow present), add a division pass. For each matched source s -> d1, the candidates are targets d2 at t+1 within 2 x flow_tight (14 um) of s + flow(s) that are either unmatched or matched from a source s' whose own flow residual is > r_steal (e.g. 3 um) and that can be re-served by an unmatched target within gate (steal with repair). Score = |(d1+d2)/2 - (s+flow(s))| (sister midpoint residual) + w*| |d1-d2| - 8.9 um | + penalty lambda, with hard gates 5 <= |d1-d2| <= 14 um, cos(d1-s, d2-s) <= -0.25, and both steps 2-7 um. Solve per frame as a Hungarian over (sources x second-child columns) with a no-division column at cost lambda; lambda sets the fork count. Keep the DeepCenter safe-div veto (0.25) and the global/frame caps as hard limits, and mark the edges division=1 so the division-geometry filter keeps them. Ship it as a new tools/build_probe_kernel.py patch on --base x138 (the base currently allows only divinsert|leafprune) with ENABLE=0 byte-identical. If #35 (x138 + DaughterNet insertion) wins, run the pass before the insertion and let the insertion's steal skip parents that already have a fork.",
+   "evidence": [
+    {
+     "claim": "The relink replaces all ILP edges; its Hungarian is one-to-one and has no no-link cost.",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/experiments/exp56_x138_verbatim/exp56-x138-verbatim.ipynb (cell 5: motion_relink_edges, filter_output_graph `edges = motion_edges`)"
+    },
+    {
+     "claim": "Safe-div caps: frame 0.0076, global 0.00375; DeepCenter safe-div threshold 0.25 on x138.",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/experiments/exp56_x138_verbatim/exp56-x138-verbatim.ipynb (cell 0)"
+    },
+    {
+     "claim": "Division reach: orphan-only 58/151, steal 97/151, all three nodes detected 121/151.",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/experiments/RESULTS.md (B32 row); experiments/local_friend_a_b32_divpair/results/b32_step1_candidate_audit.md"
+    },
+    {
+     "claim": "J_pub = 0.36 (safe-div off 0.911 vs 0.947); break-even fork precision 0.265, floor 0.31.",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/CONTEXT.md L1319-1320"
+    },
+    {
+     "claim": "Relink destroys ILP forks; division step 4.57 um, sister 8.85 um; second-daughter arc ~2x gate.",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/research/browser_research_2026-09-24.md L94 (discussions 740573/732103/738217)"
+    },
+    {
+     "claim": "DaughterNet insertion (steal) lab +0.0019 -> LB +0.001; DivNet ranker closed (-0.012 lab).",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/research/wf_ideas_v3/BRIEF.md sec.1; experiments/RESULTS.md (B20 rows)"
+    }
+   ],
+   "upper_bound": "Division term only, with a GUESSED decomposition of J_pub 0.36 as TP 0.45D / FP 0.25D / FN 0.55D (D = public GT divisions). Adding 0.1D TP at precision 0.4 gives J 0.393 (+0.0033). Adding 0.2D at precision 0.5 gives J 0.448 (+0.0088). The whole steal reach (to TP 0.64D) at precision 1 gives J 0.512 (+0.015, the ceiling). The edge term is ~0: a correct fork turns the stolen neighbour edge (likely FP or free) into a TP daughter edge, with at most a few edge units (7.4e-6 each).",
+   "expected_public_gain": "+0.000 to +0.003 (central ~+0.001). The honest analogue is the DaughterNet steal insertion, which turned lab +0.0019 into LB +0.001. A geometry-only midpoint test is probably weaker than a trained DaughterNet at ranking but reaches more candidates. The low end means precision falls to the 0.265 break-even.",
+   "expected_private_gain": "Similar or slightly larger (+0.000 to +0.004). Private embryos are unseen, and geometry does not depend on the in-sample networks. Density differs by embryo, so fork precision may differ (44b6-like dense clips have lower precision).",
+   "probability": "0.35 that the LB gain is > 0; 0.15 that it is >= +0.002, which is visible above 0.003 noise only with luck. Reasoning: two earlier division rankers failed or were small (DivNet -0.012 lab, DaughterNet +0.001 LB). The new element (flow-compensated midpoint with head coordinates) is untested.",
+   "validation_protocol": "Pre-registered split experiments/l2_daughternet/splits.json: design and lambda grid on SELECTION (64 6bba), one CONFIRMATION run (71 44b6 + 64 6bba). Excludes the ~20 probable x138-head training videos, as in the coordhead report. Best bed: the H3 x138-tail lab with head coordinates. Fallback: the existing exp39 ckpt replay, applying the pass post-relink as a fork insertion with steal on the ckpt graph, using the same function as the kernel (as div_insert does). Gate, all on CONFIRMATION: division TP +8 or more; precision of added forks >= 0.31 on each embryo (P_min, CONTEXT L1320); adjusted-edge delta >= -0.0003; total delta >= +0.001 with 90% CI low > 0; node count identical (no new nodes). No threshold may be fitted on DivNet/network probabilities. LB: one probe on the base chosen by #34/#35. Adopt if >= base + 0.001, and never pick it over the base on a tie.",
+   "resources": [
+    {
+     "who": "agent-container",
+     "hours": 5,
+     "what": "implement division pass in motion_relink_edges + build_probe_kernel patch for --base x138 + unit tests (ENABLE=0 byte-identical)"
+    },
+    {
+     "who": "kaggle-cpu",
+     "hours": 3,
+     "what": "lab replay on SELECTION grid + one CONFIRMATION run (H3 lab or exp39 ckpt fallback)"
+    },
+    {
+     "who": "kaggle-vitalii",
+     "hours": 0.6,
+     "what": "private dummy-test run of the probe kernel (4 test clips)"
+    }
+   ],
+   "wallclock_to_scored_probe_hours": 46,
+   "earliest_scored_probe_utc": "2026-09-27T09:00Z (code Sat 26 morning, lab Sat 26 afternoon/evening, dummy run after 26 Sep 00:00 GPU reset, submit Sat 26 ~23:00, 7-10 h scoring)",
+   "dependencies": "Base decided by #34/#35 (expected 25 Sep 17:00-20:00 UTC). A relink-replaying lab (H3), or the exp39 ckpt replay fallback on friend A's laptop / Kaggle CPU. The user's OK for the slot.",
+   "risks": "Fork precision below 0.265 on the test embryo gives a net loss. Steal-with-repair can break a correct neighbour track (edge FP) in dense 6bba-like regions. The caps can hide the effect. Overlap with the DaughterNet insertion: they compete for the same forks, so gains do not add. Lab division counts are small (151 GT events), so the CIs are wide.",
+   "not_closed_because": "The closed lines are DivNet veto/ranker (network per-parent event score), the division pair model (candidate reach < 90% gate) and dorado-only DaughterNet. This idea uses no network. It changes WHERE forks are generated (inside the assignment, with steal-and-repair) and HOW they are tested (flow-compensated sister midpoint with head coordinates), neither of which any closed test used. B32 stopped at the reach gate for a learned pair model, not for geometric assignment.",
+   "needs_user_decision": "no (one LB slot; standard OK per submission)"
+  },
+  {
+   "id": "tracklet-gap-lap",
+   "title": "Global tracklet gap-closing LAP (u-track style, flow-extrapolated, g <= 3) before the short-track filter",
+   "mechanism": "x138 closes gaps in three greedy local stages: close_single_frame_gaps (1-frame, synthetic midpoint), recover_strict_gap2, and the gapfill (g <= 3, only through free sub-threshold peaks >= 0.5, ALLOW_SYNTHETIC 0, <= 3% added nodes). The short-track filter (min len 6) then deletes any fragment still unlinked. Lab anatomy of exp39: a_tail = 606 FN, where a node within 7 um existed but the tail removed it (mostly the short-track filter); b_break = 150; 424 detection-side FN whose matched end is a free track end/start. The LB rejects lowering the filter (min len 4 gave -0.002) and raising it (8 gave -0.001), so fragments are a mix of junk and real cells. The only way to keep the real ones is to link them into long tracks. A single global assignment over all end(t) -> start(t+1+g) pairs uses the extrapolation of the neighbourhood flow field summed over the gap. With head coordinates its costs are more accurate than greedy per-(t,g) Hungarians, and it lets real fragments survive the filter.",
+   "change": "After flow relink + readmit + relink (before close_single_frame_gaps), build tracklets. Solve ONE LAP per video over ends x starts with g in 0..3. Cost = |start - (end + sum of per-frame flow medians over g+1 frames)| / sqrt(g+1) + c_g*g. The no-link cost (diagonal) is set so that the gate is ~5 um at g=0 and ~7 um at g=3. Also require a direction test with the tracklets' own last/first velocity (cos >= -0.25, as gapfill CONTEXT does). This is the u-track gap-closing matrix, implementable in ~150 lines with scipy linear_sum_assignment, or with laptrack (BSD-3, pure python; the wheel must be vendored as a Kaggle dataset because kernels have no internet). Fill missing frames with a free low-det peak within 3.5 um of the interpolated point, else a synthetic interpolated node. Keep the existing DeepCenter gap veto (0.25) on synthetic points, and cap synthetic nodes at 1-2% of nodes to protect the node multiplier. Then run the existing gap1/gap2/gapfill (now mostly idle), safe divisions, and the short-track filter. Ship as a --base x138 patch with ENABLE=0 byte-identical.",
+   "evidence": [
+    {
+     "claim": "FN classes a_tail 606, b_break 150, a_linefit 354, a_never 1907; 424 detection-side FN at free ends; 28 one-frame gap bridges.",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/experiments/l2_daughternet/edge_anatomy/fn_anatomy_exp39.md; l6_fn_anatomy_report.md sec.1, sec.4"
+    },
+    {
+     "claim": "Min track len 4 = 0.943 (-0.002), 8 = 0.944 (-0.001) on LB.",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/CONTEXT.md L170-180, L261-266"
+    },
+    {
+     "claim": "gap1 edges FP rate 0.34, gap2 0.42, but dropping them costs -0.0011/-0.0002 (net positive on the lab).",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/experiments/l2_daughternet/edge_anatomy/anatomy_exp39.md"
+    },
+    {
+     "claim": "x138 gapfill knobs: MAX_GAP 3, MIN_SCORE 0.5, STEP 5, PEAK_RADIUS 3.5, ALLOW_SYNTHETIC 0, MAX_ADDED_FRAC 0.03.",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/experiments/ext_x138/DIFF.md sec.2 cell 0"
+    },
+    {
+     "claim": "The stitch (ILP end->start edges re-added) was only +0.0008 on exp39 and trusts the ILP; this idea uses flow geometry instead.",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/experiments/l2_daughternet/edge_anatomy/l6_fn_anatomy_report.md sec.2"
+    },
+    {
+     "claim": "LapTrack: LAP linking with gap closing, splitting, merging, 3D, custom costs, BSD-3.",
+     "source": "https://github.com/yfukai/laptrack"
+    }
+   ],
+   "upper_bound": "Lab oracle (exp39, 199 videos): (606 + 150 + 424) FN x 7.37e-6 = +0.0087. This is an upper bound: the classes overlap, and the x138 gapfill/readmit already recovers part. A realistic 15-30% capture gives +0.0013..+0.0026 lab. Node multiplier: each 1% of added synthetic nodes costs 0.1*0.01 = -0.001 at N_pred ~ N_est, but kept fragments were nodes already (only removed by the filter), so their cost counts too. Hence the 1-2% synthetic cap.",
+   "expected_public_gain": "+0.000 to +0.003 (central +0.001). The test embryo breaks more often than the in-sample lab, which argues for more; the LB flatness of every tail knob argues for less.",
+   "expected_private_gain": "+0.000 to +0.004. Unseen embryos should have more breaks (detector out-of-sample), so recovered links should be worth relatively more than on the in-sample lab.",
+   "probability": "0.4 that the gain is > 0 on LB; 0.15 that it is >= +0.002.",
+   "validation_protocol": "Needs the H3 lab: flow relink with head coordinates, replayed from raw. Grid only on SELECTION: gate at g=0 in {4,5}, gap penalty c_g in {0.5,1}, synthetic cap in {0,1%,2%}. That is 12 variants, pre-registered. One CONFIRMATION run of the single chosen variant. Gate: delta >= +0.002, each embryo >= +0.0005, 90% CI low > 0, node ratio change <= +0.5%, division TP not lower. Report the variant with synthetic cap 0 as its own control: it is the pure re-association part, with no new nodes. Because the lab under-states breaks, a borderline pass (+0.001..+0.002 with both embryos positive) may still justify one LB slot if a slot is otherwise idle. Flag that decision explicitly.",
+   "resources": [
+    {
+     "who": "agent-container",
+     "hours": 7,
+     "what": "tracklet LAP + fill + patch for --base x138 + tests; replay hook"
+    },
+    {
+     "who": "kaggle-cpu",
+     "hours": 5,
+     "what": "12-variant SELECTION grid + 1 CONFIRMATION on the H3 lab"
+    },
+    {
+     "who": "kaggle-vitalii",
+     "hours": 0.6,
+     "what": "dummy-test run of the probe kernel"
+    }
+   ],
+   "wallclock_to_scored_probe_hours": 70,
+   "earliest_scored_probe_utc": "2026-09-28T09:00Z (H3 lab ready Sat 26 evening, grid + confirmation Sun 27, kernel + dummy run Sun 27 night, submit Mon 28 ~00:30, scored ~08:00-10:00)",
+   "dependencies": "H3 lab (relink replay with head coordinates and x138 tail). Base from #34/#35. A vendored laptrack wheel only if laptrack is used; own scipy code avoids that.",
+   "risks": "Synthetic nodes inflate N_pred (node multiplier), and junk fragments linked into real tracks create FP edges. There is runtime risk from the 12 h limit: the LAP is cheap (ends x starts per video are at most thousands), but the synthetic refinement needs frame reads. The DeepCenter veto cannot be replayed exactly in the lab (DC scores exist only at raw nodes), so treat unknown points as 'accept', as the t55 builder does. The lab under-states test breaks, so a real gain can fail the gate.",
+   "not_closed_because": "The closed items are the stitch (network/ILP-trusting, closed with the edge filter), relink knobs, and min-track-length knobs. This is a different mechanism: a global flow-extrapolated tracklet assignment that runs BEFORE the short-track filter. It is never tested, and it does not rely on network confidence.",
+   "needs_user_decision": "no"
+  },
+  {
+   "id": "x138-tail-lab-headcoords",
+   "title": "CPU x138-tail lab with head coordinates, then a pre-registered re-tune of the position-consuming association knobs (flow gate, velocity/flow fusion, forward-backward consensus, linefit)",
+   "mechanism": "The head's value appears only through the post-ILP chain: +0.007 on x138's tail vs +0.002 on ours, with identical pre-ILP coordinates. Every association knob of that chain was tuned by thtennant on integer-grid positions before the head existed. That covers the flow tight gate 7.0, RAW_COST 0, readmit radius 4, gapfill radius 3.5, linefit weight 0.8/window 2, and the velocity weight 0.5, which is used only without a field. The old grid meant 1.625 um quantisation, ~1.15 um RMS noise on a frame-to-frame displacement against a 1.8 um median step. That is why the median-of-12 neighbour flow beat each cell's own velocity, and why linefit 0.8 paid. The head changes the noise model (mean shift 0.74 um, max 1.61 um on the dummy test; public-head GT distance 1.70 -> 1.54 um). So the optimal gates, smoothing and predictor mix probably move. We have no lab that runs this chain with head coordinates, so every association idea is currently unvalidatable. The existing 199-video head captures make one buildable on CPU: 4.83M captured peaks with 224-d features; the lab's 4.21M raw ILP nodes are integer-coordinate peaks from the same prediction stack; the head is a 224->32->3 MLP.",
+   "change": "(a) Lab build, CPU only. For each of the 199 train videos: take friend A's raw ILP graph (raw/<stem>.geff), map each node to its captured peak by integer (t,z,y,x), and apply the public head on CPU with x138's own refine code (float coordinates). Peaks the ILP dropped are the readmit pool: score >= 0.965 by construction. Run exp56 cell 5's filter_output_graph through the t55 builder's namespace approach: notebook functions verbatim, synthetic gap points refined on the train frames, DeepCenter gap veto 'unknown = accept'. Gapfill runs off, or on the readmit pool only, because the 0.5-0.965 low-det pool was not captured. Score with the official metric. Verify that the control reproduces a stable baseline and that head-off equals int coordinates. (b) A pre-registered 8-variant grid on SELECTION: flow tight gate {6.0, 7.0}; linefit weight {0.8, 0.5, 0.0} (and a displacement cap of 2 um); predictor = flow median vs flow + 0.3*own-velocity residual (Kalman-like fusion, now that own velocity is less noisy); a forward-backward relink consensus (run the relink also on the time-reversed graph, keep agreed edges, and resolve disagreements by the 3-frame second-difference cost on flow-compensated positions). Confirm only the single best variant. Ship as --set knobs on --base x138; the new predictor and consensus need a small patch.",
+   "evidence": [
+    {
+     "claim": "Head: +0.007 on x138's base vs +0.002 on ours; pre-ILP coordinates identical, so the gap is post-ILP.",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/CONTEXT.md L1495-1505"
+    },
+    {
+     "claim": "Captures on all 199 videos: 4,830,941 peaks; public-head mean GT distance 1.70 -> 1.54 um on 179 non-x138 videos; share within 4 um 0.9423 -> 0.9431.",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/experiments/coordhead_retrain/out_full_P/report.txt"
+    },
+    {
+     "claim": "Raw ILP nodes in the lab cache: 4,211,780.",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/experiments/RESULTS.md (B31 row)"
+    },
+    {
+     "claim": "raw -> ckpt replay through the notebook's own filter_output_graph, with the DeepCenter oracle / unknown handling, already exists for the exp29 tail.",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/experiments/l2_daughternet/relink55/build_t55_cache.py (docstring)"
+    },
+    {
+     "claim": "x138 knobs and linefit defaults: flow tight 7.0, RAW_COST 0, readmit 4 um, gapfill 3.5 um, linefit 0.8/2, velocity 0.5.",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/experiments/exp56_x138_verbatim/exp56-x138-verbatim.ipynb (cells 0 and 2)"
+    },
+    {
+     "claim": "a_linefit: 354 GT-matched nodes moved beyond 7 um by linefit; a displacement cap was never tested.",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/experiments/l2_daughternet/edge_anatomy/l6_fn_anatomy_report.md sec.4"
+    },
+    {
+     "claim": "Relink off / bonus 2.5 / gshift all 0.945 vs 0.947: the association layer is flat on LB.",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/CONTEXT.md L1207-1216"
+    }
+   ],
+   "upper_bound": "Linefit: the a_linefit oracle is 354 FN x 1.93 units x 7.37e-6 = +0.0050 (lab exp39), but linefit also rescues other nodes, so the net is far lower. Association re-tune: bounded by the linking-type FN (b_break +0.0011, plus the part of diverted/taken that is association; most of it is localisation) and by the LB prior that the whole relink stage is worth +-0.002. Combined ceiling ~+0.003-0.005 lab; LB prior +-0.002.",
+   "expected_public_gain": "+0.000 to +0.002 from the knob change itself (central +0.0005). The main value is enabling honest validation of H1/H2/H4 and a lab decomposition of where the head synergy lives (flow relink vs readmit vs linefit vs node count).",
+   "expected_private_gain": "+0.000 to +0.002; geometry-only knobs should transfer roughly equally.",
+   "probability": "0.9 that the lab is built and reproduces the control by Sun 27 06:00 UTC (the pieces exist). 0.3 that some knob variant passes the gate. 0.15 that it shows >= +0.002 on the LB.",
+   "validation_protocol": "Build checks before any grid: (1) with head shift = 0 the mapped coordinates equal the raw geff exactly; (2) 100% of raw nodes find a captured peak, otherwise the video is dropped and listed; (3) the control run is deterministic across two runs. Exclude the ~20 probable x138-head training videos (the head is in-sample there). Grid only on SELECTION (64 6bba); CONFIRMATION once for the single chosen variant; the variants are pre-registered here. Gate: delta >= +0.002, each embryo >= +0.0005, 90% CI low > 0, node ratio change <= +0.3%, division TP not lower. Rules that read network probabilities stay out of the grid (relink bonus fixed at 1.0).",
+   "resources": [
+    {
+     "who": "friend-a-5070ti",
+     "hours": 1,
+     "what": "upload the chcap capture npz (all 199) + raw/ graphs as a private Kaggle dataset (or run the lab locally on CPU)"
+    },
+    {
+     "who": "agent-container",
+     "hours": 6,
+     "what": "lab builder (capture->node mapping, CPU head apply, x138 cell-5 namespace replay, official scoring) + variant patches"
+    },
+    {
+     "who": "kaggle-cpu",
+     "hours": 8,
+     "what": "control + 8 variants on SELECTION + 1 confirmation (4 vCPU kernels, parallel sessions)"
+    },
+    {
+     "who": "kaggle-vitalii",
+     "hours": 0.6,
+     "what": "dummy-test run if a variant ships"
+    }
+   ],
+   "wallclock_to_scored_probe_hours": 58,
+   "earliest_scored_probe_utc": "2026-09-27T21:00Z (lab built Sat 26, grid Sat night, confirmation Sun 27 morning, submit Sun ~12:00, scored ~20:00-22:00)",
+   "dependencies": "The capture files and friend A's raw ILP graphs must reach a Kaggle CPU kernel or friend A's machine; they are not in this container. Competition train frames on Kaggle, for synthetic-point refinement. Friend A's availability (uncertain) or the user's upload.",
+   "risks": "Mapping failure if the capture stack differs from the lab's raw stack (exp29 vs exp51 prediction patches). Check that 100% of nodes map. The lab's ILP was solved with non-head edge probabilities, so it is not x138's node set (x138 drops 2.8% more nodes). The node-multiplier part of the head effect is therefore not reproduced, and conclusions about it are invalid. Gapfill's 0.5-0.965 pool is missing unless re-captured on GPU. The DeepCenter veto at new synthetic points is approximated. An in-sample detector and edge net remain for node selection.",
+   "not_closed_because": "Closed: relink knobs and global-shift relink, on integer coordinates. What is new is the positional noise model (head, float) that these knobs consume. Linefit displacement cap and weight on head coordinates were never tested (L6 left it open). The forward-backward consensus and the velocity+flow fusion were never tested.",
+   "needs_user_decision": "no (but needs friend A or the user to move the capture files)"
+  },
+  {
+   "id": "refined-lowdet-pool",
+   "title": "Apply the V1284 head to the low-detection pool (readmit and gapfill nodes) and give readmit pairs a neutral relink probability",
+   "mechanism": "x138 refines only above-threshold peaks. Its 'lowdet peaks' patch dumps sub-threshold peaks (>= 0.3) as unrefined int16 on the 1.625 um grid, before the head runs. Readmitted nodes (1,337 on the 4 dummy clips, ~1.1% of 121,777 raw nodes) and gapfill nodes (cap 3%) therefore sit exactly where tracks broke, with pre-head localisation (GT distance 1.70 vs 1.54 um mean). They also get edge_prob 0.0 in the relink (learned_edge_probs only covers ILP-solution edges). Each readmit pair is thus penalised by up to the bonus (1.0 x p, typically ~0.8 um) against ILP nodes, which biases the second relink against them. The same zero-probability is why leaf prune removed 479 of 513 readmitted leaves.",
+   "change": "(1) In the cell-4 'lowdet peaks' patch, after `_low = _detect_cells_pooled(...)`, pass `_low` through `_v1284_refine(ds_path, t, _low, unet_out[:, f_idx])` before the dump. The head module is already imported at that point once the V1284 patch is ordered first, or the lowdet patch is re-anchored after it (the anchor-ordering bug x138 documents). Then write float coordinates and drop the int16 cast of low_coords. The refine is per-peak and cheap. (2) In motion_relink_edges, give pairs that involve a readmitted node prob = the frame's median ILP-edge prob instead of 0, so the decision becomes purely geometric. (3) Optionally re-enable leaf prune on x138 at 0.3 as a separate variant: with (2), readmitted leaves are no longer auto-weak. Ship as --base x138 patches, each with ENABLE=0 byte-identical.",
+   "evidence": [
+    {
+     "claim": "The low-detection dump is taken from det_logits with _detect_cells_pooled at 0.3, scaled by downsample and cast to int16 (unrefined).",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/experiments/exp56_x138_verbatim/exp56-x138-verbatim.ipynb (cell 4, 'lowdet peaks' / 'lowdet write' patches)"
+    },
+    {
+     "claim": "1,337 readmitted nodes on the 4 dummy clips; leaf prune removed 513 leaves, >= 479 of them readmitted (edge_prob 0.0).",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/CONTEXT.md L1511-1517"
+    },
+    {
+     "claim": "Public head GT distance 1.70 -> 1.54 um (179 videos).",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/experiments/coordhead_retrain/out_full_P/report.txt"
+    },
+    {
+     "claim": "Leaf prune lab confirmation +0.0006 on exp39.",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/CONTEXT.md L1324-1328"
+    }
+   ],
+   "upper_bound": "The nodes affected are ~1.1% readmit + <= 3% gapfill (realised share unknown; see browser_todo), so ~2-4% of edges touch them. If the localisation part of the head effect on x138 is +0.002..+0.005 over 100% of nodes (after removing the node-multiplier share), scaling by 2-4% gives +0.0001..+0.0002. The relink-neutral probability affects the same ~1-2% of decisions, adding at most a few 1e-4. Leaf prune re-enabled adds <= +0.0006 (lab). Ceiling ~+0.001.",
+   "expected_public_gain": "+0.0000 to +0.0008 (central +0.0003). It is a rider and cannot be resolved by one LB probe (noise 0.003).",
+   "expected_private_gain": "+0.0000 to +0.001.",
+   "probability": "0.6 that it is non-negative; 0.05 that it is visible on the LB.",
+   "validation_protocol": "(1) is a strict improvement of the same operation (the head applied where it was forgotten). Validate it by the dummy-test log: readmitted/gapfill counts within +-10% of exp56, no REPAIR FAILED, head stats show the refined low peaks, submission valid. In the H3 lab, measure the GT distance of readmitted nodes before and after. (2) and (3) go through the H3 lab gate: delta >= +0.0005 on confirmation, no embryo negative, node ratio change <= 0. Ship only inside a scored bundle (e.g. with H1 or H3), never as its own slot.",
+   "resources": [
+    {
+     "who": "agent-container",
+     "hours": 2,
+     "what": "re-anchored lowdet patch with refine + float dump, neutral-prob patch, tests"
+    },
+    {
+     "who": "kaggle-vitalii",
+     "hours": 0.6,
+     "what": "dummy-test run (shared with the bundle it rides in)"
+    }
+   ],
+   "wallclock_to_scored_probe_hours": 24,
+   "earliest_scored_probe_utc": "2026-09-26T10:00Z (patch today, dummy run after the 26 Sep 00:00 GPU reset, submit ~01:00, scored ~09:00-11:00). Better used as a rider in the H1/H3 bundle on 27 Sep.",
+   "dependencies": "The #34/#35 outcome, to know that x138 is the base. Correct patch ordering in cell 4 (x138's comment on the anchor collision).",
+   "risks": "Refined low peaks shift by up to 2 um, so the readmit/gapfill exclusion (2 um from existing nodes) and the 4 um anchor radius select slightly different peaks. The node count may rise or fall by a few hundred. A float dump increases the npz size (trivial). The neutral probability could let readmitted junk win pairs from real nodes; that is why (2) is lab-gated.",
+   "not_closed_because": "Never tested. Leaf prune on x138 was closed for a concrete mechanism (prob 0.0 on readmitted pairs) that change (2) removes. Head refinement of the low pool is not the closed 'head retrain' line: it uses the public head unchanged.",
+   "needs_user_decision": "no"
+  }
+ ]
+}

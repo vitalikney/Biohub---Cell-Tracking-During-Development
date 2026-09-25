@@ -1,0 +1,137 @@
+{
+ "missing": "COMPLETENESS CRITIQUE (critic, 25 Sep ~13:10 UTC). Numbers marked (sim) come from a runtime simulation in research/wf_ideas_v3/s_critic.notes.md. Its inputs are the dummy per-clip timings (browser_intel.md s.6.0B/6.11). rho = density factor of private clips vs the dummies; the rho values are guesses. (a) RUNTIME/DEADLINE RISK. It is real, but C01 covers it only partly, and it is the only lever whose private stake beats the riders. Facts: x138 repairs strictly after all GPU shards finish, in ONE process, in alphabetical order (exp56 cell 4 l.540-567, cell 5 l.2088-2131). A dataset that starts after 27,000 s loses relink/readmit/gaps/safe divisions/linefit, which costs about 0.05-0.065 per dataset. An exception in any stage sends the whole dataset to fallback_output_graph (cell 5 l.2119-2131), and that happens silently. Exposure (sim, mean degraded share of all clips): x138 verbatim 0 at N=120 but 14% at N=140 and 55% at N=160 (rho 1.0), and 24-58% at N=120-140 if private clips are 1.6x denser. If the public embryo sorts first, all degraded clips are private, which is consistent with 241 identical 0.953s. The whole x138 block would then lose ~0.01-0.045 on private, and any runtime-safe F1 would jump it. C01 (34200 s + gated insertion) leaves 5-35% degraded at N=140-160 with rho 1.6 and 19% at N=180 (rho 1.0). Its line 'N=200 ends ~9.7-10.1 h' hides that ~50% of clips are degraded at N=199. exp57b VERBATIM (#35) at N=150 with rho 1.6 finishes at p50 12.2 h, i.e. it can TIME OUT, not just degrade. So a #35 error is informative, not a DaughterNet verdict. N=199 at dummy speed is excluded: the GPU phase alone (~7.8 h) would exceed 27,000 s and degrade the public clips, contradicting 0.953. So either N <~ 180 or the hidden hardware is faster. The s_merge bound 'N <~ 140' took exp51's latency against x138's tail. The correct comparison uses exp51's own dummy tail (exp51 = same GPU phase, ungated DaughterNet, no guard, scored <= 7.5 h), which is readable today for free. That is step 0 of N1. MISSING cheap engineering, now in N1: (1) multi-process repair. Per-dataset repair is independent and deterministic, cells 2+5 need only test_stems/predict_seconds from other cells (pyflakes), and the parent already initialises CUDA (cell 4 l.7), so the workers must be fresh subprocesses. The result is a byte-identical CSV and 0% degraded up to N~180 (sim). (2) Stage-level fail-soft: the divinsert block has NO try/except (tools/build_probe_kernel.py l.302-331), so a hidden-only failure (e.g. OOM or shape trouble on a dense private clip) silently costs the whole clip's repair. The same applies to any new C04/C05/C08 stage. (3) Zero-slot N back-calibration from the exp48/49/51 dummy logs plus the known latencies (#28/#31 7.5 h, #29/#30 7.0-7.2 h, #32/#33 7.8 h). NOT recommended: fewer TTA views or fp16 autocast (they change numerics and node sets, which breaks the 'F1 beats the x138 block by epsilon' logic of C02), and re-ordering clips (moot once repair is parallel). cudnn.benchmark only if N >= 175, and only when node/edge counts come out identical. Optional information: N2, a one-slot hidden-size probe, only if #34 has not scored by 15:40 UTC and step 0 is inconclusive. (b) TOP TEAMS / RETRAINING. The evidence is still only statements: Tang 6th, 'retrain, preprocessing, architecture'; Civitasmass retrained the detector; Ogurtsov 'all directions'. Nobody public beats 0.953. I agree with C11: no retraining or external-data path yields an honestly validated scored probe by 29 Sep 10:00 UTC. Blockers, one per path: Zebrahub ZSNS001/003 on Kaggle: DaXi optics 1.24x0.439 um vs 1.625x0.406 um, ~170 GB, and Ultrack teacher points weaker than the student (97.2% vs 0.988 within 7 um); it needs resampling plus a label converter plus a held-out-embryo A/B, >= 20 h. Freitas synthetic pretraining: hikaggler's +0.012 was vs his own scratch model (0.9146 -> 0.9269 hold-out, still below the public stack), and imissher's synthetic+real adaptation of the public secondary was -0.006 on LB. georgexue666 pool-2: no model code, no D1.json, within-embryo validation only, ~4x voxels of GPU time on a stack whose runtime is the binding constraint. leonixis v5: edge-predictor checkpoints only, warm-started and LB-picked. In x138 the final edges come from the flow-prior Hungarian, so a new edge net reaches only the ILP node selection. A scratch detector costs ~23 h on the 5070 Ti plus an edge net and a head refit, with friend A's availability unknown. What 0.97 would take is unchanged: adjusted edge ~0.93-0.94 on unseen embryos, i.e. new detection/localisation models validated embryo-out. (c) UNUSED RESOURCES/EVIDENCE. About 60 Kaggle GPU-h (vitaliineibauer 30 + sasyami 30) against ~12-15 GPU-h planned (dummies ~0.7 each, C06 4-6). Spend the spare on N1's dummies and, if C06 is built, on running it on all 199 videos (151 GT divisions instead of ~50-60 videos). Do not spend it on model training. sasyami could run N1's dummy TONIGHT (vitalii has ~0 GPU-h until 00:00 UTC), so N1 can ride the first 26 Sep F1 build. Kaggle CPU kernels (free) suit N2 and the scoring of C06 arms. Friend C and Colab have no role that changes the 29 Sep outcome. Node-count evidence (hikaggler, Justin, imissher): use node-count identity as the FIRST gate of every rider (C04/C05/N1 keep nodes identical; C07 +-1%). No node-count knob is left: min track len 4 and 8 were both negative (RESULTS.md l.38/41), and a leaf prune on x138 removes readmits. The asymmetric second-daughter gate is already inside x138 (parent <= 9 um, sister <= 14 um vs Le Quang Canh's 12 um covering 6/7). Refuted ideas that repair each other: N1 removes the runtime objection to ungated DaughterNet insertion (C03 needs no DIVINS_DEADLINE) and to C01's degrade-order patch. Two-stage exact DaughterNet scoring (C01 item 5) is then optional. The third-detector and simview ideas stay refuted on value, not runtime. ERRORS/OMISSIONS in s_merge to fix: (i) no fail-soft for added stages; (ii) C01 hides the degraded share at large N; (iii) the exp57b timeout risk; (iv) the N bound should use exp51's own tail (step 0).",
+ "hypotheses": [
+  {
+   "id": "N1-parallel-repair-failsoft",
+   "title": "Runtime-proof x138 finals: multi-process repair workers (byte-identical CSV) + fail-soft wrappers for every added stage + zero-slot N back-calibration",
+   "mechanism": "x138 runs its whole post-ILP chain in one process, in alphabetical order, after all GPU shards finish (exp56 cell 4 l.540-567 then cell 5 l.2088). The chain is relink, readmit, gapfill, safe divisions with the GPU DeepCenter veto, and linefit, plus DaughterNet in exp57b. While it runs, both T4s and most vCPUs sit idle. Two failure modes follow. A dataset that STARTS after REPAIR_DEADLINE_S loses its optional stages, costing ~0.05-0.065 per dataset. An exception in any stage replaces the whole dataset with fallback_output_graph (cell 5 l.2119-2131); both happen silently. The fix exists because per-dataset repair is independent and deterministic (241 teams at exactly 0.953). K worker subprocesses that exec the side-effect-free cell 2 plus the cell-5 definitions, with the parent writing the CSV through the ORIGINAL writer, reproduce the sequential CSV byte-for-byte and cut the repair phase ~K-fold. The deadline then stops being a cliff that C01 only moves: in the sim, 0% of clips are degraded up to N~180 at dummy density and up to N~160 at 1.6x density, vs 5-35% for C01 alone at N=140-160 with 1.6x density. The same change removes the timeout tail of insertion builds and the need to gate DaughterNet. Stage-level try/except turns a hidden-only failure of an ADDED stage into the loss of that stage only (+0.000x) instead of the clip's whole repair (-0.05).",
+   "change": "STEP 0 (zero slot, today). The local session runs `kaggle kernels output` for exp48, exp49, exp51, exp56 and exp57b (logs) and extracts per-dataset 'repair Xs', 'divinsert ... sec' and 'Prediction completed in' lines. The agent turns them and the known submit->score latencies (#28/#31 7.5 h, #29/#30 7.0-7.2 h, #32/#33 7.8 h; latency >= runtime) into an upper bound on hidden N. It also projects the hidden runtime of exp56, exp57b and every F1 candidate: all share the GPU phase, and exp51 carries an ungated DaughterNet and no guard, so runtime(exp57b) ~ G + R51 x r57b/r51. STEP 1, new `--patch parrepair` for --base x138 (and exp39). Knob BIOHUB_REPAIR_WORKERS, default 1 = the original code path (sha256-identical). With K > 1 the parent does the following: (a) writes /kaggle/working/_repair_mod.py = cell 2 + the divins glue cell if present + cell 5 with its last line removed; (b) launches K `python _repair_worker.py` subprocesses with CUDA_VISIBLE_DEVICES = i%2 and OMP_NUM_THREADS=1, inheriting os.environ so BIOHUB_KERNEL_START_TS, REPAIR_DEADLINE_S and all knobs are identical; (c) each worker claims datasets in sorted order via atomic lock files, applies the SAME per-dataset deadline check and try/except fallback, and pickles (nodes_by_id, edges, filter_stats) or an exception marker; (d) the parent then calls the UNCHANGED write_test_submission('base') with filter_output_graph monkey-patched to return the pickled result, raising on a marker so the original fallback runs. Row order, ids and assertions are therefore the author's code; (e) if a worker dies, the parent repairs its missing datasets itself. K = min(3, os.cpu_count()-1, floor(free RAM GB / 4)), printed in the log. STEP 2, fail-soft wrappers. The divinsert block is wrapped in try/except: on an exception, keep the input edges, set stats divins_failed=1 and print 'DIVINS FAILED'. The same wrapper goes on C04 forkmid and C05 lowrefine (in cell 4: keep the integer lattice coordinates on failure, i.e. x138's own behaviour). Test knob BIOHUB_DIVINS_FORCE_FAIL. Combine with C01: keep REPAIR_DEADLINE_S=34200 as the second line of defence; DIVINS_DEADLINE_S becomes unnecessary once K >= 2. Optional, only if step 0 or N2 puts N >= 175: measure torch.backends.cudnn.benchmark=True in cell 4's shards on the dummy and accept it only if node/edge counts are identical.",
+   "evidence": [
+    {
+     "claim": "Repair runs only after ALL GPU shards: cell 4 launches one subprocess per GPU, then _wait_for_prediction_shards + _merge_prediction_shards; cell 5 then loops `for geff_path in geffs` sequentially.",
+     "source": "experiments/exp56_x138_verbatim/exp56-x138-verbatim.ipynb cell 4 l.540-567, cell 5 l.2071-2139"
+    },
+    {
+     "claim": "Deadline 27,000 s from kernel start, checked when each dataset starts (sticky); _deadline_degrade switches off relink, gap close, gap2, safe divisions and linefit. A repair exception writes the ILP graph with basic filtering (REPAIR FAILED), silently.",
+     "source": "exp56 notebook cell 0 (BIOHUB_REPAIR_DEADLINE_S), cell 5 l.13-43, l.2113-2131"
+    },
+    {
+     "claim": "Cells 2+5 are self-contained except `test_stems` and `predict_seconds` (pyflakes). Cell-5 module-level side effects are only the DeepCenter load (l.2067) and the final write_test_submission('base') call (l.2219). Cell 2 has no side effects (config and prints only).",
+     "source": "s_critic.notes.md 13:05 (pyflakes/AST check on the exp56 notebook)"
+    },
+    {
+     "claim": "The parent process initialises CUDA before the repair (torch.cuda.get_device_name(0)), so fork-based workers cannot use the GPU DeepCenter/DaughterNet; workers must be fresh subprocesses (the same pattern x138 already uses for its GPU shards).",
+     "source": "exp56 notebook cell 4 l.7, l.561"
+    },
+    {
+     "claim": "The divinsert block has no try/except of its own: any exception inside DaughterNet scoring/insertion propagates to filter_output_graph and triggers the whole-dataset fallback.",
+     "source": "tools/build_probe_kernel.py l.302-331 (DIVINS_CALL); exp56 cell 5 l.2119-2131"
+    },
+    {
+     "claim": "Dummy per-clip costs: detection+edges 214-268 s per clip per shard (2 shards), ILP 5-90 s, x138 repair 11-109 s (sum 227 s over 4 clips), exp57b repair 19-276 s (491 s); exp57b's DaughterNet keeps running after _deadline_degrade.",
+     "source": "research/wf_ideas_v3/browser_intel.md s.6.0B, s.6.11"
+    },
+    {
+     "claim": "Submit->score latencies of our stacks with the same GPU phase: #29/#30 7.0-7.2 h, #28/#31 7.5 h, #32/#33 ~7.8 h (latency >= runtime; they include queueing). exp48/exp51 carry an ungated DaughterNet and no guard.",
+     "source": "research/wf_ideas_v3/v_ensembles-and-private_x138-budget-aware-deadline_schedule.json; CONTEXT.md 2026-09-24/25 entries"
+    },
+    {
+     "claim": "Sim (guess inputs): C01 alone leaves 5% / 35% of clips degraded at N=140 / 160 with 1.6x denser private clips and 19% at N=180 (rho 1). With 3 workers + 34200 s: 0% / 0% / 0%. x138 verbatim: 14% at N=140 and 55% at N=160 (rho 1). exp57b verbatim at N=150, rho 1.6 finishes at p50 12.2 h (timeout).",
+     "source": "research/wf_ideas_v3/s_critic.notes.md (12:45 sim table)"
+    },
+    {
+     "claim": "Per degraded dataset loss ~0.05-0.065 (safe divisions are the only fork source: probe 26 0.947 -> 0.911; linefit/gaps/relink ~0.02).",
+     "source": "research/wf_ideas_v3/v_ensembles-and-private_x138-budget-aware-deadline_value.json; experiments/RESULTS.md l.59"
+    },
+    {
+     "claim": "The x138 pipeline is deterministic across runs and processes: 241 teams at exactly 0.953; exp56 reproduces every per-clip count of x138.",
+     "source": "research/wf_ideas_v3/browser_intel.md s.6.0B, s.6.0C"
+    }
+   ],
+   "upper_bound": "Public 0 (byte-identical), unless the base's guard fired on public datasets. Private: when C01 alone would still degrade a share s of the clips, it recovers ~0.055*s/0.71 of private score, i.e. +0.004 (s=5%) .. +0.027 (s=35%) in the N=140-180 or dense-private worlds (sim). It also makes the rank jump over a degraded 241-team x138 block reachable.",
+   "expected_public_gain": "0 (byte-identical CSV by construction; the scored build must tie its unpatched twin).",
+   "expected_private_gain": "~+0.0005..+0.002 over C01 alone (guess: P(world where C01 still degrades) ~0.1-0.2 x conditional +0.004..+0.02). Plus insertion can run on every clip without a deadline gate (C03's +0..+0.001), and the exp57b-type timeout tail is removed. Never negative once the sha256 gate passes.",
+   "probability": "P(sha256-identical dummy at the first try) ~0.7, after one fix ~0.9. P(shipped inside a scored F1 by 27 Sep 12:00 UTC) ~0.75. P(it changes the private score) ~0.1-0.2 (= P(C01-only F1 would still degrade), guess from the sim and latency evidence). P(harm) < 0.03 (nondeterminism across processes is caught by the gate).",
+   "validation_protocol": "(a) Step 0 table before building: projected hidden runtime per candidate with an upper bound on N; if it proves N <= 125 with 1.6x density margin, downgrade N1 to optional insurance. (b) Build with K=1: notebook-level no-op, CSV sha256 == unpatched twin. (c) Dummy run with K=3 on the F1 configuration. Pass requires: submission.csv sha256 == the unpatched twin's dummy CSV (exp56, or exp57b for an insertion build); K workers and the per-dataset 'repair Xs' lines in the log; no REPAIR FAILED; no DEADLINE; repair-phase wall time reported. (d) In the same or a second dummy: BIOHUB_DIVINS_FORCE_FAIL=1 gives 'DIVINS FAILED' and a CSV equal to exp56's (only the insertion reverted); a test knob that kills worker 1 after its first dataset still gives an identical CSV (parent fallback). (e) LB: rides the F1 build that is submitted anyway; pass = public >= base - 0.001. Never judged by public score.",
+   "resources": [
+    {
+     "who": "local session (Kaggle CLI)",
+     "hours": 0.5,
+     "what": "step 0: download logs of exp48/49/51/56/57b; later push the parrepair dummy build(s) and read logs"
+    },
+    {
+     "who": "agent-container",
+     "hours": 4.5,
+     "what": "step 0 arithmetic (0.5 h); --patch parrepair (module writer, worker script, lock-file claiming, pickle hand-off, monkey-patched writer, fallback) + fail-soft wrappers + mock tests of dispatch/merge with a fake cell-5 namespace (4 h)"
+    },
+    {
+     "who": "kaggle-sasyami (tonight, if friend A agrees) or kaggle-vitalii (after 26 Sep 00:00 UTC)",
+     "hours": 1.4,
+     "what": "two dummy runs: K=3 sha256 run; forced DIVINS failure + worker-kill run"
+    }
+   ],
+   "wallclock_to_scored_probe_hours": 22,
+   "earliest_scored_probe_utc": "2026-09-26T10:00:00Z (rides the first 26 Sep F1 build if its dummy passes on sasyami tonight or at 00:05-00:50 UTC on vitalii; otherwise the 26 Sep evening F1' build, scored ~27 Sep 06:00-12:00 UTC)",
+   "dependencies": "#34/#35 scores (base choice x138 vs exp51); C01 (kept as the second line of defence); a host F1 build and the user's OK for that slot; the vCPU/RAM of the Kaggle T4x2 image (printed in the dummy log; 4 vCPU is a guess); C05/C04 patches if they share the build (fail-soft wrappers apply to them).",
+   "risks": "(1) Results not bit-identical across processes (BLAS thread count, cuDNN algorithm on the second T4): gate (c) catches it; fallback K=1. (2) RAM: K workers x frame caches (48 frames) + DaughterNet prepared frames could OOM-kill a worker. K is derived from free RAM, and the parent falls back. (3) If the T4x2 image has only 2 vCPUs, the speedup is ~1.7x, not ~2.7x. (4) Agent hours compete with C05/C04/C06 on 25-26 Sep. (5) The value cannot be observed on the public LB and rests on the runtime arithmetic; if step 0 bounds N <= 125 it is pure insurance. (6) More code in the finals file: mitigated by the K=1 default path and the sha256 gate.",
+   "not_closed_because": "Never proposed. A grep of all h_*/v_*/s_merge files finds no parallel/multi-process repair, no stage-level try/except and no back-calibration from exp48/exp51 logs. C01's fixed deadline only moves the cliff: 5-35% of clips are still degraded at N=140-160 with denser private clips (sim), and its own 'N=200 ends ~9.7-10.1 h' hides ~50% degraded clips. The divinsert failure path is unaddressed.",
+   "needs_user_decision": "No extra slot: it rides the F1 build the user approves anyway. Optional: ask friend A to run the dummy on sasyami tonight, so N1 can join the first 26 Sep build."
+  },
+  {
+   "id": "N2-hidden-size-bit-probe",
+   "title": "One-slot metadata probe of the hidden test size (total frames / clip count) read from the submission outcome",
+   "mechanism": "Every runtime decision hinges on the hidden set's total frames F (GPU phase) and clip count N (repair phase). Does the guard fire? Can exp57b time out? Is the 241-team x138 block degraded on private, making a runtime-safe F1 worth +0.01-0.03 private? The two sources disagree: the Data tab says 'approximately the same size as the training dataset' (~199 clips), while the latency arithmetic says <~140-180 at dummy speed. A CPU notebook can do the measurement in minutes. It lists the hidden test folder and reads each zarr array's shape, touching no voxels and no labels. It reports a size bucket through the submission OUTCOME (valid CSV scored ~0 / CSV not found / scoring error / exception), so the answer arrives in ~1-3 h instead of 7-10 h and is not confounded by queueing, unlike the latency polling in C01.",
+   "change": "Tiny CPU kernel, attached only to the competition data. It computes F = sum of T over test/*.zarr (array '0' shape[0]) and N = the clip count. Buckets (from the sim): F <= 13,000 -> write a minimal valid submission.csv (one node per dataset, no edges; score ~0); C01 alone is enough. 13,000 < F <= 16,000 -> write no CSV ('CSV not found'); N1 is required for insertion builds. 16,000 < F <= 19,000 -> write a CSV with a wrong header ('scoring error'); the x138 block is likely degraded on private (public must sort first), so N1 is mandatory for F1 and F2 must be guard-free (exp51/exp52). F > 19,000 -> raise ('exception'); additionally measure cudnn.benchmark and drop insertion. The visible commit run (F=400) must produce the valid CSV. Pre-register the bucket -> action table in CONTEXT.md before submitting. TRIGGER: submit only if #34 has not scored by ~15:40 UTC today (08:09 + 7.5 h) AND N1's step 0 cannot bound N <= 140; otherwise skip.",
+   "evidence": [
+    {
+     "claim": "Data tab: 'The size of the hidden test set is approximately the same size as the training dataset' (199 clips), clip count not stated; names follow {embryo}_{fov}.",
+     "source": "research/wf_ideas_v3/browser_intel.md s.5"
+    },
+    {
+     "claim": "At dummy speed N=199 would make the GPU phase alone ~7.8 h > 27,000 s and degrade the public clips too, contradicting x138's 241 identical 0.953s. So either N <~ 180 or the hidden hardware is faster: the two public facts conflict.",
+     "source": "research/wf_ideas_v3/s_critic.notes.md sim; browser_intel.md s.6.0B/6.0C"
+    },
+    {
+     "claim": "Latency polling only bounds runtime from above and mixes in queue time; the CLI prints submit times only, the Submissions page shows relative times.",
+     "source": "research/wf_ideas_v3/browser_intel.md s.6.0A"
+    },
+    {
+     "claim": "The decision the bucket drives is large in the bad world: at N=160 (rho 1.0) x138 verbatim degrades ~55% of clips; with public sorted first that is ~77% of private clips, i.e. ~0.04 private for every x138 copy.",
+     "source": "research/wf_ideas_v3/s_critic.notes.md sim table"
+    },
+    {
+     "claim": "Kaggle code competitions report distinct outcomes such as 'Notebook Threw Exception', 'Submission CSV Not Found' and 'Submission Scoring Error' (GUESS from general Kaggle practice; verify in the Code Competition FAQ linked from the Overview before relying on 4 states; with only 2 states use a single threshold at F = 14,000).",
+     "source": "guess - browser_todo: Code Competition FAQ page"
+    }
+   ],
+   "upper_bound": "No direct score. Decision value: it separates the 'C01 is enough' world from the 'N1 mandatory, guard-free F2, x138 block degraded on private' world. In the latter, correct choices are worth ~+0.01..+0.03 private (guess).",
+   "expected_public_gain": "0 (information only; the probe scores ~0 or errors by design).",
+   "expected_private_gain": "0 directly; indirect ~+0..+0.002 through runtime and finals choices (guess).",
+   "probability": "P(outcome readable and unambiguous) ~0.85 (guess; depends on distinct error messages). P(it changes a decision) ~0.25-0.35. P(triggered at all) ~0.4 (#34 late and step 0 inconclusive).",
+   "validation_protocol": "Local unit test with fake zarr dirs for each bucket (shape-only reads). The commit run on the 4 dummies must give a valid CSV and print F, N and the embryo prefixes. After scoring, read the status/error text with `kaggle competitions submissions` and apply the pre-registered table. No other interpretation is allowed.",
+   "resources": [
+    {
+     "who": "agent-container",
+     "hours": 0.5,
+     "what": "probe script + fake-dir tests + bucket/action table"
+    },
+    {
+     "who": "local session (Kaggle CLI)",
+     "hours": 0.3,
+     "what": "push CPU kernel, submit with the user's OK, read the outcome"
+    },
+    {
+     "who": "LB slot",
+     "hours": 0,
+     "what": "1 submission (the spare 25 Sep slot); no GPU"
+    }
+   ],
+   "wallclock_to_scored_probe_hours": 5,
+   "earliest_scored_probe_utc": "2026-09-25T18:00:00Z (if triggered ~16:00 UTC with the spare 25 Sep slot; short runtime, queue time unknown)",
+   "dependencies": "The user's OK and the team's view on LB probing. N1 step 0 and #34's latency, which decide whether it is needed at all. Verification that Kaggle shows distinct error texts.",
+   "risks": "Consumes a slot even when it errors (guess). Kaggle may show a generic error text, collapsing the buckets to 2 states. The information is only ~2 bits. A bug in the probe could be misread as a bucket (mitigated: the exception state is reserved for the largest bucket and the code is ~30 lines with local tests). It is LB probing of test metadata, so it needs a policy decision.",
+   "not_closed_because": "Not proposed in v3. v2's bit-probe targeted crop overlap, a different, transductive question. C01 relies on latency polling, which cannot separate queue from runtime and gives no information if #34 scores late.",
+   "needs_user_decision": "YES. Spend one slot (the spare 25 Sep one) on a probe that reads only the hidden folder's clip names and array shapes (no voxels, no labels) and returns a size bucket through the submission status. Only if #34 is still unscored at ~15:40 UTC and the log back-calibration (N1 step 0) cannot bound N."
+  }
+ ]
+}

@@ -1,0 +1,152 @@
+{
+ "headline": "0.99 (and 0.97) is out of reach by 29 Sep; the plan (robust backbone + grafts from the moonshot plan) protects the private score against the x138 runtime cliff and aims at private > the 241-team x138 block (ranks ~166-406, silver ~195 and bronze ~390 both inside it) with an expected public ~0.954.",
+ "outlook": "F1 = x138 + C01 runtime/fail-soft rider + C05 lowrefine + DaughterNet insertion only if #35 >= #34 (R2) + C04 forkmid after the x138-on-train audit. Expected public ~0.954 (80%: 0.953-0.955); P(public >= 0.955) ~0.25, >= 0.96 ~0.02, >= 0.97 < 0.005, 0.99 ~0. The absolute private level is set by the unseen embryos (train-embryo lab 0.90-0.92 vs public 0.947-0.953 for the same stack family; RESULTS.md), so it is not a lever. Our controllable delta vs x138 is +0.000..+0.002 (80% -0.001..+0.003), plus +0.01..+0.03 private in the slow-hidden-run world (P ~0.05-0.15 without C01; ~0.03-0.05 residual with it). P(max(F1,F2) private > x138 block) ~0.7-0.8 (guess). F2 = exp52 (guard-free, different post-ILP tail) unless F1 >= 0.954, runtime is proven comfortable and a held-out-gated variant exists. What 0.97+ would take (after the deadline): a detector (primary+secondary) retrained embryo-held-out on dense labels (dorado Ultrack for 44b6, Ultrack pseudo-labels for 6bba, optionally Zebrahub ZSNS mirrored on Kaggle, small Freitas synthetic pretrain), a debiased head refit, an edge net trained on its own detections, and a division model with honest OOF plus conditional fusion. That means >= 2-3 weeks and 50-100 GPU-h; C11 was refuted 10/10 for this window.",
+ "ranked": [
+  {
+   "id": "E1-C01-safetail",
+   "what": "Runtime/fail-soft rider on every x138-family build: --set REPAIR_DEADLINE_S=34200; DaughterNet insertion only if not _deadline_degraded and elapsed < DIVINS_DEADLINE_S=28800; try/except around insertion (keep input edges, 'DIVINS FAILED', test knob DIVINS_FORCE_FAIL); DIVINS_DUMP=0; after the deadline keep safe divisions + linefit. Tested by K1 sha256 twin, FD (forced deadline) and FF (forced failure) dummies.",
+   "public_gain": "0 (byte-identical CSV unless the guard fires)",
+   "private_gain": "+0.0002..+0.002 expected; +0.01..+0.03 in the slow-hidden-run world",
+   "probability": "P(harmless) ~0.97; P(an unpatched x138-family build degrades on private) ~0.05-0.15 (guess)",
+   "owner": "cloud session 1.5-2 h (patch+tests); local session 0.5 h; vitaliineibauer 3 dummies ~2 GPU-h",
+   "first_scored_probe": "inside K2: submit 26 Sep ~00:55 UTC, scored ~08:00-11:00 UTC"
+  },
+  {
+   "id": "E0-readout-step0",
+   "what": "Read #34/#35 scores and latencies (poll every 10 min from 14:30; thresholds 15:39/16:03 = 7.5 h, 16:09 = 8.0 h, 17:03 = 8.5 h) + step 0: per-clip timings from dummy logs of exp48/49/51/56/57b and known latencies -> upper bound on hidden N, projected runtime per build, branch A-E, R5/R6 verdicts.",
+   "public_gain": "0",
+   "private_gain": "decides base, insertion and the N1 trigger",
+   "probability": "-",
+   "owner": "local session 0.5-1 h + cloud session 0.5 h",
+   "first_scored_probe": "25 Sep 15:39-21:00 UTC (reads #34/#35)"
+  },
+  {
+   "id": "E11-C02-prereg-finals",
+   "what": "Pre-registered branch table, rules R1-R10 and finals rule written before #34/#35 are visible (CONTEXT.md by 15:30 UTC); F1 must contain C01 and must not be a byte-identical x138 copy; manual tick of F1/F2 by 29 Sep 20:00 UTC.",
+   "public_gain": "0",
+   "private_gain": "rank protection (silver/bronze vs none, via beating the x138 tie block by epsilon)",
+   "probability": "P(executed as written) ~0.95",
+   "owner": "cloud session 0.5 h; user ticks finals",
+   "first_scored_probe": "no probe"
+  },
+  {
+   "id": "E2-C05-lowrefine",
+   "what": "Readmitted nodes get the head-refined float coordinates: refine only the >= 0.965 part of x138's lowdet pool (peaks the head already refined before the ILP), keep 0.5-0.965 on the grid, drop the int16 cast, keep patch order lowdet -> V1284, fail-soft to lattice coords.",
+   "public_gain": "+0.0002 (invisible at the 0.001 step)",
+   "private_gain": "+0.0001..+0.0002, sign >= 0 with P 0.6-0.8",
+   "probability": "P(clean dummy first time) ~0.95",
+   "owner": "cloud session 1.5-2 h",
+   "first_scored_probe": "inside K2 (26 Sep ~00:55 submit)"
+  },
+  {
+   "id": "E6-C03-divinsert-R2",
+   "what": "DaughterNet insertion exactly in #35's config (steal 1, cap 4, frame cap 1, thr 0.4, alpha 1) in F1 only if #35 >= #34 (tie counts as include), only under E1; no ladder or grid; branch C re-test K1 if #35 is confounded by its guard.",
+   "public_gain": "+0..+0.001",
+   "private_gain": "+0..+0.001 (under E1); -0.01..-0.03 if shipped ungated and the guard fires",
+   "probability": "P(#35 >= #34 - 0.001) ~0.6 (guess)",
+   "owner": "shares E1's patch",
+   "first_scored_probe": "inside K2"
+  },
+  {
+   "id": "E3-C04-forkmid",
+   "what": "Last graph edit: un-fork safe-division forks (not inserted ones) with |P - (c1+c2)/2| >= 4.5 um; drop the edge_prob==0.0 side, else the added edge; nodes untouched; dose check on the dummy outputs, audit in the exp60 lab.",
+   "public_gain": "+0.0005..+0.0009 (P(<0) ~0.2)",
+   "private_gain": "+0.0003..+0.0008",
+   "probability": "P(audit passes) ~0.6; P(scored by 29 Sep) 0.7-0.8",
+   "owner": "cloud session 2-2.5 h; local session 0.25 h dose check",
+   "first_scored_probe": "K3: submit 26 Sep ~10:00-13:00 UTC, scored ~18:00-22:00 UTC"
+  },
+  {
+   "id": "E4-C06-x138-trainlab",
+   "what": "One Kaggle kernel exp60 = x138 on 50-60 division-rich train clips (both embryos, one per 44b6 leak group, excluding the 20 probable head stems and the 4 dummy twins), 2 shards, flagged final graphs, per-candidate DeepCenter probs, timings; tail arms (control parity, forkmid, insertion on/off, never-steal-from-0.0, linefit w0.7/win2, DeepCenter threshold on 6bba) with official scoring per embryo.",
+   "public_gain": "0 (enabler)",
+   "private_gain": "0 directly; no-harm checks + runtime at scale",
+   "probability": "P(clean by 26 Sep 18:00) 0.6-0.7",
+   "owner": "cloud session 3-5 h build + 2-3 h analysis; vitaliineibauer (or sasyami via friend A) 4-6 GPU-h",
+   "first_scored_probe": "no slot; results 26 Sep ~06:00-09:00 UTC"
+  },
+  {
+   "id": "E5-M1-deepcenter-6bba",
+   "what": "Safe-division DeepCenter threshold t* chosen on 6bba only (DeepCenter trained on the 71 44b6 clips; 6bba = its validation set, so an honest bed); gate: 6bba CONFIRMATION >= control +0.002 with a plateau, 44b6 >= -0.0005, marginal fork precision >= 0.35, nodes identical; into F1 only at +0.002 on LB (R4), else F2 candidate.",
+   "public_gain": "-0.001..+0.003 (central +0.0005)",
+   "private_gain": "-0.002..+0.004 (central +0.0005)",
+   "probability": "P(gate) ~0.3",
+   "owner": "cloud session 1 h; dummy ~0.7 GPU-h",
+   "first_scored_probe": "K3b: 26 Sep ~11:00-14:00 UTC"
+  },
+  {
+   "id": "E8-N1-parrepair-triggered",
+   "what": "Only if R6 fires (L34 > 8.0 h, #35 error/timeout, L35 > 8.5 h with insertion kept, or step-0 projection > 9 h): K subprocess repair workers, byte-identical CSV via the original writer, oom_score_adj=1000 in workers, parent watchdog, K=1 default.",
+   "public_gain": "0",
+   "private_gain": "+0.005..+0.02 in the triggered world; ~+0.0003 unconditional",
+   "probability": "P(trigger) ~0.1-0.2",
+   "owner": "cloud session 4.5 h; 2 dummies 1.4 GPU-h",
+   "first_scored_probe": "rides K3 or K4 (26 Sep)"
+  },
+  {
+   "id": "E7-C07-tempfuse",
+   "what": "Optional, cut first: detect frame t from the mean of pos-1 logits of window (t-1,t) and pos-0 of (t,t+1), per-frame top-K guard, TEMPFUSE=0 byte-identical; optional LOEO pre-test by friend A.",
+   "public_gain": "+0.0008 (0..+0.0015); P(>= +0.002) 0.10-0.15",
+   "private_gain": "-0.0005..+0.0015",
+   "probability": "P(clean dummy by 26 Sep 18:00) ~0.6 (guess)",
+   "owner": "cloud session 5 h; dummy 0.7 GPU-h; friend A optional",
+   "first_scored_probe": "S6 26 Sep ~18:00 or S7 27 Sep"
+  },
+  {
+   "id": "E10-C10-successor-watch",
+   "what": "Poll public kernels/LB every ~6 h until 29 Sep 07:00; port verbatim only a >= 0.956 public notebook with public sources and 1-2 explainable mechanisms.",
+   "public_gain": "+0.0003..+0.0005 expected (~+0.002 on trigger)",
+   "private_gain": "+0.0001..+0.0003",
+   "probability": "P(trigger) 0.15-0.2",
+   "owner": "local session 0.3 h/day",
+   "first_scored_probe": "trigger + 8-11 h"
+  },
+  {
+   "id": "E9-exp57-diagnostic",
+   "what": "Optional use of the only 25 Sep slot: existing exp57 v1 (x138 + leaf prune 0.3 + ungated insertion), submitted only after #34 and #35 are visible; never a final; Delta vs #35 decides whether leaf prune returns as a rider.",
+   "public_gain": "information only",
+   "private_gain": "-",
+   "probability": "-",
+   "owner": "local session 0.1 h (user OK)",
+   "first_scored_probe": "~02:00-06:00 UTC 26 Sep"
+  },
+  {
+   "id": "E12-C09-scale-pregate",
+   "what": "Idle-only CPU desk test of the V1284 shift scale s in {0.8..1.6} per embryo; cascade only if s_opt >= 1.25 and >= 4% on both embryos.",
+   "public_gain": "+0.0005 expected",
+   "private_gain": "+0.0003",
+   "probability": "P(reaches a slot) ~0.1",
+   "owner": "cloud session 1 h; user's PC 1-1.5 h CPU",
+   "first_scored_probe": "not before 26 Sep evening"
+  },
+  {
+   "id": "E13-C08-step0",
+   "what": "Optional friend C CPU audit on the 4 dummy clips: share of FN-edge GT nodes with a free low-score peak (>= 0.5) within 3 um; kill if < 15% or junk-dominated.",
+   "public_gain": "0 (close/open decision)",
+   "private_gain": "-",
+   "probability": "P(pass) ~0.3; overall ~0.1-0.15",
+   "owner": "friend C 2-3 h CPU",
+   "first_scored_probe": ">= 27 Sep and only on pass"
+  },
+  {
+   "id": "M3-dense-secondary",
+   "what": "User decision, recommendation NO: fine-tune the secondary detector on 44b6 + dorado dense Ultrack tracks, judged on held-out 6bba, full swap only.",
+   "public_gain": "-0.01..+0.005 (central -0.001)",
+   "private_gain": "+0.005..+0.015 conditional",
+   "probability": "P(passes all gates) ~0.06",
+   "owner": "cloud session 8-10 h; 4-5 GPU-h; Kaggle CPU kernel with internet (Colab only as attended fallback)",
+   "first_scored_probe": "not before 27 Sep ~01:00 UTC"
+  }
+ ],
+ "files_written": [
+  "/home/user/Biohub---Cell-Tracking-During-Development/research/wf_ideas_v3/FINAL_REPORT.md",
+  "/home/user/Biohub---Cell-Tracking-During-Development/research/wf_ideas_v3/TASK_LOCAL_SESSION.md",
+  "/home/user/Biohub---Cell-Tracking-During-Development/research/wf_ideas_v3/TASK_CLOUD_SESSION.md",
+  "/home/user/Biohub---Cell-Tracking-During-Development/research/wf_ideas_v3/TASK_FRIEND_A.md",
+  "/home/user/Biohub---Cell-Tracking-During-Development/research/wf_ideas_v3/TASK_FRIEND_C.md",
+  "/home/user/Biohub---Cell-Tracking-During-Development/research/wf_ideas_v3/TASK_COLAB.md",
+  "/home/user/Biohub---Cell-Tracking-During-Development/research/wf_ideas_v3/final.json",
+  "/home/user/Biohub---Cell-Tracking-During-Development/research/wf_ideas_v3/final.notes.md"
+ ],
+ "next_2_hours": "13:45-15:45 UTC 25 Sep. (1) Cloud session: copy the pre-registration (FINAL_REPORT.md section e rules R1-R10, branches A-E, section f finals, rank note, time thresholds) into CONTEXT.md and push BEFORE 15:30 UTC. Then start --patch safetail (C01 + fail-soft + degrade order) with tests, and tools/forkmid_dose.py. (2) Local session: from 14:30 start experiments/lb_poll/lb_poll.py (10-min polling, logs first-seen times). Download the exp48/49/51/56/57b dummy logs and commit the timing lines to experiments/runtime_step0/ for step 0. Keep exp56/exp57b submission.csv in _dl/ as sha256 references. Browser checks: tie-break rule, Code Competition FAQ error/timeout texts, whether scoring reruns use GPU quota. Watch the thresholds: #34 visible by 15:39 / #35 by 16:03 (7.5 h). (3) User: confirm the pre-registration. Decide on the optional exp57 slot (only after both #34 and #35 score). Message friend A (reply by 18:00: availability, sasyami shard B tonight, cancel B21). Say YES/NO on M3 by 18:00 (recommended NO). Plan to pre-approve K2 for ~00:55 UTC 26 Sep by ~21:00."
+}

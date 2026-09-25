@@ -1,0 +1,10 @@
+# v_divisions_edge-evidence-second-daughter_schedule notes
+- 2026-09-25T10:57:39Z start; read BRIEF.md, sibling schedule verdict v_divisions_divins-x138-lab-retune_schedule.json (refuted; x138 on 199 train = 13-16 GPU-h; REPAIR_DEADLINE_S guard; no x138 train harness)
+- 11:1x checked x138 dump: exp56 nb code cell 4 patches predict script at anchor 'candidates = sorted(' (dump off via BIOHUB_CACHE_EDGE_THRESHOLD=1.0); same try block as LOWDET patch -> anchor present at runtime (readmit works: 1,337 readmit on dummy, CONTEXT 25 Sep). No prior run with threshold<1 anywhere in repo (grep) -> untested path.
+- probs at the anchor = tools/repo/scripts/predict_unet_transformer.py:457-458: default edge_activation 'softmax' (l.74) over dim=0 = normalised over SOURCES per target; x138 does not override (no 'activation' in nb). So p(u->v) = 'u is v's parent among all sources', not an independent link prob; orphan v puts mass on nearest source (often u). Dual-seed blend applied before (cell 4 ~9.5k chars).
+- ids: build_graph (l.116-145) node_ids from bulk_add_nodes in coords order; dump stores coords -> map by id + positional assert (needs dummy-run check).
+- Post cell: learned_edge_probs only from ILP-selected raw edges; relink pairs get 0.0 (cell 5 filter_output_graph) -> dump is the only source of p for non-ILP pairs.
+- Verified: B20 16/319/135 (CONTEXT l.1011-1013); 15 of 43 FP forks ILP-child wrong/added right (r1_research_fork-midpoint-filter.json claim 2); exp12 24/103 vs 23/172 (CONTEXT l.684).
+- Dependency: idea 1 (divins-x138-lab-retune) refuted by sibling value AND schedule verdicts (P scored ~0.2; 13-16 GPU-h x138 train cache). Lab p_edge in-sample anyway -> sanity-only.
+- Estimate as described: P(scored by 29 Sep 10:00) ~0.15-0.3 -> refute. Blind rider path: ~0.85 but below LB resolution.
+- 2026-09-25T11:01:31Z final JSON written (refuted, feasible false as described; blind rider repair P~0.85)

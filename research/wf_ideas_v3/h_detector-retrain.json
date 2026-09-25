@@ -1,0 +1,284 @@
+{
+ "lens_summary": "Lens: model retraining that can finish and be scored by 29 Sep 10:00 UTC. Honest verdict: no retrain in this window has evidence for a step change (>= +0.005). All the evidence points one way. Plain retrains of the pilkwang stack land at or below the public weights: leonixis 199-video/60-epoch = 0.947; Kai-Gowers 400-epoch DDP = 0.927 vs 0.942 shipped, with detector recall 96.7 vs 98.3 %; our fine-tunes 0.944/0.943 vs 0.947; our scratch secondary 0.920. The only retrained detector known to beat the wall (georgexue666/easonyanyan: pool-2, sigma 0.8 um, plus a retrained edge model) reached 0.950, i.e. +0.003. The x138 head's +0.007 was probably at most ~+0.004 of localisation, because the head also cut final nodes by 2.9 %: 0.1 x 0.029 x 0.91 = +0.0026 of node multiplier. The v2 dose-response puts the ceiling of removing the remaining grid quantisation at +0.001..+0.002. Sharper targets or full XY resolution therefore cannot be the lever. The big lab error classes, b_swap 2,175 FN and a_never 1,907 FN, are 4-10 um geometric offsets. Mostly along z, they are unlearnable from raw patches (|r| <= 0.09). In 44b6 they are partly under-segmentation of z-blurred neighbours. The one retraining mechanism aimed at that is a dense-label proposal detector, and it is sub-step and slow. What the lens can deliver: (1) a corrected, embryo-robust V1284 head. It trains in CPU-minutes from the existing 199-video capture. The old kill test used an embryo-IN-sample reference and was biased against it. Expected -0.002..+0.002, no GPU, one probe. (2) A proposal-only copy of the detector trained on dense Ultrack/dorado labels. Its peaks would feed only x138's low-detection pool (readmit/gapfill), leaving the UNet features, edge network and head untouched, which avoids the -0.038 frozen-linker trap. Expected 0..+0.003, needs friend A. (3) A training-free test of whether the hidden annotations follow Ultrack's segmentation convention, which would make an Ultrack-derived localiser embryo-invariant. (4) A joint fine-tune, the top-team lever, as a gated long shot. Lens ceiling by 29 Sep: about +0.003..+0.005 if everything works, expected ~+0.001. 0.99 is out of reach: the LB top is 0.975, and 0.99 would need adjusted edge J >= ~0.94-0.95 at division J 0.4-0.5. The top teams got there with weeks of embryo-held-out model iteration, not with a 4-day retrain.",
+ "challenged_assumptions": [
+  {
+   "assumption": "The 199-video head retrain failed because it learns the 6bba z offset, so the head line is closed (kill test FAIL).",
+   "why_doubtful": "The kill-test reference is wrong. x138's validator trained the public head on ~10 stems per embryo, so in each embryo-held-out fold the public head is IN-embryo. 44b6 clips are overlapping crops of one recording, so dropping the 10 probable train stems does not remove that leakage. The new head is out-of-embryo. The test compares an out-of-embryo head against an in-embryo head and cannot pass by design. Per-embryo debiasing (run Q) already cut the embryo shift gap from 0.588 um (P) to 0.212/0.071 um. Q beats 'none' by 8.1 % (44b6) and 7.7 % (6bba) fully out-of-embryo. The public head beats 'none' by 13.5 % and 8.9 % while in-embryo. The fair comparator is the x138 recipe retrained on 10 stems of the TRAINING embryo only.",
+   "evidence": "experiments/coordhead_retrain/out_full_P.log and out_full_Q.log (emb tables, embryo-bias check lines); report.json args show Q = --debias embryo, Huber 0.5, 120 ep; tools/train_coordhead.py docstring (x138_probable_train); research/browser_research_2026-09-24_pass2.md sec.5 (x138 validator = first 10 stems per embryo); BRIEF.md (44b6 = overlapping crops)"
+  },
+  {
+   "assumption": "Top teams at 0.969-0.975 retrained the detector, so a detector retrain is our lever before 29 Sep.",
+   "why_doubtful": "Retraining pays only after long embryo-held-out iteration. Every quick or plain retrain we can see sits at or below the pilkwang weights, and the one localisation-oriented retrain with a public score gained +0.003.",
+   "evidence": "research/browser_research_2026-09-24_pass2.md sec.3-4 (leonixis 60 ep = 0.947; georgexue666 pool-2 sigma-0.8 team = 0.950); research/wf_ideas_v3/h_github-intel.notes.md (Kai-Gowers 400-ep DDP LB 0.927 vs 0.942, det recall 96.7 vs 98.3 %); experiments/RESULTS.md probes 10/11/15/17 (0.920/0.944/0.944/0.943); discussions_summary.md l.361-366 (hikaggler/Ogurtsov: detector/linker changes did not move the LB)"
+  },
+  {
+   "assumption": "Sharper targets or full-XY-resolution detection will fix localisation and give a step.",
+   "why_doubtful": "The grid is 1.625 um isotropic, with RMS 0.47 um per axis. Adding one more xy quantisation cost only 0.0013-0.0021 edge recall, so removing it is worth at most +0.001..+0.002 before linefit, and the V1284 head already removes most of it (mean shift 0.74 um). The FN that matter (swap, a_never) sit 4-10 um off.",
+   "evidence": "research/wf_ideas_v2/r1_research_polyphase-shift-stitch-localisation.json (jitter dose-response); research/wf_ideas_v2/r1_research_gate-aware-refine-head.json (head = de-quantiser, tail |r|<=0.09); experiments/l2_daughternet/edge_anatomy/fn_anatomy_exp39.md"
+  },
+  {
+   "assumption": "x138's +0.007 measures what better localisation is worth.",
+   "why_doubtful": "Adding the head cut final nodes by 2.9 % (-10.7 % on one clip). Through the adjusted-Jaccard factor that alone is worth ~+0.0026. The localisation share is therefore ~+0.004, and a better head can add only a fraction of that.",
+   "evidence": "experiments/ext_x138/DIFF.md sec.4 (exp51 vs exp48 nodes 122,704 -> 119,174); tools/official/metrics.md (adjusted_jaccard formula)"
+  },
+  {
+   "assumption": "Fine-tuning the encoder under the frozen linker is the only way to use a new detector.",
+   "why_doubtful": "A separate COPY of the detector can serve only as a proposal source. Its peaks go into x138's low-detection pool, which readmit and gapfill already gate. The UNet features that feed the edge network and the V1284 head do not change, so the -0.038 mechanism (moving the representation under the linker) does not apply.",
+   "evidence": "research/discussions_summary.md l.216-219 (Le Quang Canh: head-only -0.0033, head+encoder -0.0377); experiments/ext_x138/biohub-x138.ipynb cell 4 (lowdet dump low_coords/low_score) and cell 5 (load_low_detections -> readmit/gapfill)"
+  },
+  {
+   "assumption": "Intensity augmentation and similar embryo-robust fine-tunes were shown to hurt (exp14).",
+   "why_doubtful": "exp14 was judged on hold12 with a pilkwang-initialised model: same embryos, and the init weights saw every video. A robustness recipe can only look worse in-sample, so that test cannot reject it. It was never LOEO- or LB-tested. This matters only for H4.",
+   "evidence": "experiments/RESULTS.md exp14 row; CONTEXT.md l.235-244 (why local numbers lied)"
+  }
+ ],
+ "browser_todo": [
+  "https://www.kaggle.com/datasets/georgexue666/biohub-precision-pool2-weights - read the README and file list. Extract the model class/inference code (is it included?), the input downsample/pool, sigma, the train split file D1.json (which stems: both embryos?), the checkpoint size and any stated inference time per volume. This decides whether a precision proposal map can be added to x138 without training.",
+  "https://www.kaggle.com/datasets/pilkwang (DeepCenter / seed314159 / support-pack datasets) - open the DeepCenter split_manifest (71 stems). Are they exactly the 71 44b6 clips? If yes, DeepCenter never saw 6bba's 125 divisions (relevant to any division-model retrain).",
+  "Kaggle competition Data tab + Overview - copy the exact wording on HOW annotations were produced (Ultrack segmentation + proofreading? manual clicks?) and whether hidden test embryos used the same protocol as 44b6 or as 6bba. This decides H3.",
+  "https://www.kaggle.com/code/anvithpothula/biohub-x138 - Submissions/versions: the scoring run time on the hidden test (if shown) or the author's comments on runtime. Needed to know how much GPU time is left for an extra detector pass inside the 12 h limit.",
+  "Kaggle discussion search 'retrain detector' / 'dense labels' / 'ultrack' sorted by recent, 25-29 Sep - any top-20 post naming the detector recipe (target, sigma, resolution, epochs, LOEO).",
+  "https://www.kaggle.com/datasets/leonixis/biohub-v5-candidates - README: which epoch was LB-picked and its LB score vs epoch (learning-curve evidence for H4)."
+ ],
+ "hypotheses": [
+  {
+   "id": "coordhead-v2-embryo-robust",
+   "title": "V1284 head v2: debiased, embryo-balanced, bagged 199-video head with a corrected out-of-embryo gate (CPU-only retrain)",
+   "mechanism": "The x138 head de-quantises peaks on the 1.625 um grid: mean shift 0.74 um, pooled mean distance 1.686 -> 1.525 um. It was trained on only 4,136 pairs from 20 movies, and x138's own note says volume was its limit (4 movies +14.9 % worse, 20 movies -10.4 %). We already hold a bit-exact 199-video capture: 125,700 pairs, 30 s CPU per fit. Its failure was a biased test, not a biased model. With per-embryo debias (Q), the embryo shift gap drops to 0.07-0.21 um, and it improves on 'none' by 7.7-8.1 % in both out-of-embryo directions. The remaining risk on unseen embryos is the annotation convention, which differs by embryo (none-bias z +0.18 um on 44b6 vs +0.82 um on 6bba). Pairs are 85 % 6bba (106k of 125.7k), so balancing the loss 50/50 by embryo and bagging seeds reduce the convention and variance risk. Distilling toward the average of Q and the public head is a further hedge.",
+   "change": "tools/train_coordhead.py (Vitalii's machine, where experiments/coordhead_retrain/captures lives), ~60 lines: (a) --balance embryo: per-pair loss weight so each embryo carries 50 %; (b) --ref-stems: train the x138 recipe (same code, --debias none) only on x138's 10 validator stems of the TRAINING embryo, as the out-of-embryo analogue of the public head; (c) --bag 5 seeds, with the final head distilled into one 224->32->3 net on the capture's 1 % all-peak sample plus the pairs (the kernel's make_head() fixes that architecture), target = mean of the 5 heads' bounded shifts; (d) optional --distill-public 0.5 (target = 0.5 x public + 0.5 x bag). Ship as dataset vitaliineibauer/biohub-coordhead-v2 with a v1284_head.pt in the public format. Kernel = exp56 (x138 verbatim) with ONLY the head path changed; the x138 lookup rglob('biohub-v1284-head-s075/v1284_head.pt') must be pointed at the new dataset, or the dataset folder named to match. Keep x138's knobs unchanged. Do NOT combine with any other change.",
+   "evidence": [
+    {
+     "claim": "Embryo-held-out mean distance (um): 6bba->44b6 none 1.499 / public 1.296 / P 1.452 / Q 1.378; 44b6->6bba none 1.720 / public 1.567 / P 1.570 / Q 1.588; 7 um re-match counts change by <= 5/20k and <= 50/112k",
+     "source": "experiments/coordhead_retrain/out_full_P.log, out_full_Q.log"
+    },
+    {
+     "claim": "Embryo shift check: P max gap 0.588 um (learns 6bba convention); Q 0.212 / 0.071 um",
+     "source": "experiments/coordhead_retrain/out_full_P.log, out_full_Q.log (embryo-bias check lines)"
+    },
+    {
+     "claim": "Public head trained on the x138 validator's first 10 stems per embryo (20 movies, 4,136 pairs); 4-movie head +14.9 % worse",
+     "source": "research/browser_research_2026-09-24_pass2.md sec.1 and sec.5; experiments/ext_x138/DIFF.md sec.1"
+    },
+    {
+     "claim": "Capture = exp51 prediction stage = x138 pre-ILP coords exactly, so the head is valid for the x138 base",
+     "source": "experiments/ext_x138/DIFF.md sec.4; experiments/coordhead_retrain/FRIEND_A_RUN.md"
+    },
+    {
+     "claim": "Head on LB: +0.007 on x138, +0.002 on exp48; x138 head cut final nodes 2.9 %",
+     "source": "BRIEF.md sec.1; experiments/ext_x138/DIFF.md sec.4"
+    }
+   ],
+   "upper_bound": "Localisation part of the public head ~ +0.007 - 0.0026 (node multiplier) = +0.004 for a ~10 % distance cut. Suppose v2 removes a further 3-5 % of distance on the unseen embryo (the gate asks >= 3 % vs the out-of-embryo reference; a guess that it carries over). Linear scaling gives +0.001..+0.002. Hard ceiling = remaining de-quantisation, +0.001..+0.002 edge recall (v2 jitter test). Upper bound ~+0.002..+0.003.",
+   "expected_public_gain": "-0.002..+0.002 (central +0.0005). Arithmetic: +0.004 localisation value x (0..+0.4 relative improvement) minus the convention risk if the public embryo matches the public head's 10/10 mix better; LB noise 0.003 means a single probe cannot resolve it",
+   "expected_private_gain": "0..+0.002 (guess). 199 debiased videos should generalise to the other unseen embryos at least as well as a 20-movie head; this is the main reason to consider it for final 2",
+   "probability": "P(gate passes) ~0.5 (Q already beats 'none' by 8 %; unknown vs the 10-stem out-of-embryo reference). P(LB >= base) ~0.5. P(>= +0.005) < 0.05: not a step change",
+   "validation_protocol": "Pre-registered, CPU, no LB. Folds = emb_6bba_to_44b6 and emb_44b6_to_6bba (train one embryo, evaluate on all videos of the other). Reference REF = x138 recipe (debias none, same loss) trained on the 10 x138 validator stems of the training embryo only, i.e. out-of-embryo like the candidate. GATE (all must hold): in BOTH directions the candidate's fixed-pair mean distance <= 0.97 x REF; its 7 um re-match count >= REF's and >= 'none'; the all-peak mean shift differs from REF's by <= 0.2 um on every axis; the per-video win rate vs 'none' is >= 60 %. Also log the node count of the dummy-clip kernel run vs exp56 (node-multiplier readout). Pass -> build the final 199-video balanced bag. Fail -> stop; no probe. The public head is never used as the gate reference, because it is in-embryo.",
+   "resources": [
+    {
+     "who": "agent-container",
+     "hours": 1.5,
+     "what": "write the --balance/--ref-stems/--bag/--distill options + unit test on a synthetic capture (Vitalii then runs it)"
+    },
+    {
+     "who": "kaggle-cpu",
+     "hours": 0.3,
+     "what": "alternatively run train_coordhead on the capture uploaded as a private dataset (CPU fit, ~5-10 min per config set)"
+    },
+    {
+     "who": "kaggle-vitalii",
+     "hours": 0.8,
+     "what": "dummy-test run of exp56 + new head after the 26 Sep 00:00 UTC reset (x138 ~40 min on T4)"
+    }
+   ],
+   "wallclock_to_scored_probe_hours": 23,
+   "earliest_scored_probe_utc": "2026-09-26T10:00Z (code + gate 25 Sep 12:00-16:00; wait for #34 = x138 reproduction ~17:00-20:00; dummy run right after the 00:00 reset; submit ~01:00 26 Sep; scored 08:00-11:00)",
+   "dependencies": "#34 must confirm x138 = 0.953 on our account (base); capture folder on Vitalii's machine (experiments/coordhead_retrain/captures, 199 videos); one LB slot",
+   "risks": "(1) The public test embryo may share the public head's annotation mix, so a debiased head ties or loses on public while helping private: an unresolvable call inside the 0.003 noise. (2) Node-multiplier drift: a different head changes ILP/merges, so node count can move either way (+-1 % = +-0.0009). (3) The x138 head-lookup path must be patched correctly: the dummy run must print the new head's sha256.",
+   "not_closed_because": "The kill test that closed it compared an out-of-embryo head with an in-embryo public head (the error is listed in challenged_assumptions). The fair reference was never computed, and debias + balancing + bagging are new mechanisms against the convention risk.",
+   "needs_user_decision": "Only for finals: if public ties, putting a private-robustness head in final 2 is a judgement call"
+  },
+  {
+   "id": "dense-proposal-detector-copy",
+   "title": "Proposal-only detector copy fine-tuned on dense Ultrack/dorado labels, feeding ONLY x138's low-detection pool (readmit/gapfill)",
+   "mechanism": "The pilkwang detector was trained with a single positive voxel per ANNOTATED nucleus and all other voxels as negatives (train_unet_transformer.py l.560-590). With 0.2-1.3 % of 44b6 annotated, unannotated neighbours are taught as background. In dense tissue that gives under-segmentation of z-blurred neighbours: in 44b6, a_never GT sit 2.3 um from an Ultrack object while our nearest node is 1.9 um from ANOTHER Ultrack object; Ultrack has +44 % interior points vs our final nodes. It also gives a neighbour-repulsion localisation bias of +0.35..+1.0 um. The loss is a density problem: the densest 6bba quartile carries 52 % of the loss. A separate detector copy fine-tuned with DENSE targets finds those nuclei. Used only as candidate peaks in x138's existing low-det pool, the candidates enter the graph only next to an open track end/start (readmit: 4 um, score >= 0.965) or on a gap line (gapfill: 3.5 um, <= 3 % added nodes). The main node set, UNet features, edge network and V1284 head stay byte-identical, so the frozen-linker failure mode (-0.038) cannot occur.",
+   "change": "(1) Dense label builder (friend A, who holds data_external/dorado tracks.npz + kaggle44b6_in_dorado.json): for the 63 reliably registered 44b6 clips, write per-frame dense node lists = the Ultrack points inside the clip footprint, shifted by the registered offset (-0.43 um z-offset correction from r2 notes). Keep the Kaggle GT points and add the Ultrack ones; for 6bba keep the sparse GT but mask negatives farther than 7 um from any GT (positive-unlabelled masking, so unannotated 6bba nuclei are not taught as background). (2) Fine-tune a COPY of the pilkwang primary with experiments/_lib/train_patches.py: --init-weights pilkwang, --edge-loss-weight 0, 1200 it, lr 5e-5, amp, the exp03B recipe that took 27 min on 2xT4. (3) Kernel patch (tools/build_probe_kernel.py, new --patch denseprop): after the primary/secondary detection, run the copy once per frame (no TTA). Take its peaks >= 0.5 that are > 2 um from every primary peak, and append them to low_coords/low_score in the edge_cache npz (x138 cell 4 'lowdet peaks'). Add a separate readmit threshold for copy peaks, pre-registered at 0.9, and keep x138's 3 % gapfill cap.",
+   "evidence": [
+    {
+     "claim": "Detector target = single voxel at floor(gt/ds), BCE with neg weight; unannotated voxels are negatives",
+     "source": "tools/repo/scripts/train_unet_transformer.py l.541-593"
+    },
+    {
+     "claim": "44b6 a_never = under-segmentation of two Ultrack objects ~7 um apart; Ultrack has ~44 % more interior points than our final nodes; neighbour-repulsion bias +0.35..+1.0 um",
+     "source": "research/wf_ideas_v2/r2_critic.notes.md (ultrack.py/attract3.py lines)"
+    },
+    {
+     "claim": "FN anatomy (in-sample lab): a_never 1,907 (28 %), b_swap 2,175 (32 %, oracle +0.046); densest 6bba quartile = 52 % of loss",
+     "source": "experiments/l2_daughternet/edge_anatomy/fn_anatomy_exp39.md; BRIEF.md sec.1"
+    },
+    {
+     "claim": "x138 low-det pool (peaks >= 0.3, int16) feeds readmit (>= 0.965, 4 um) and gapfill (>= 0.5, 3.5 um, <= 3 % nodes); 1,337 readmitted nodes on the 4 dummy clips",
+     "source": "experiments/ext_x138/DIFF.md sec.2; experiments/ext_x138/biohub-x138.ipynb cells 4-5; CONTEXT.md l.1515"
+    },
+    {
+     "claim": "Dense fine-tune of the SHARED encoder under a frozen linker: -0.0377; head only: -0.0033",
+     "source": "research/discussions_summary.md l.216-219"
+    },
+    {
+     "claim": "Node cost is small: 1 TP edge ~ 350 extra nodes",
+     "source": "research/wf_ideas/hyp_nodes-metric.notes.md"
+    }
+   ],
+   "upper_bound": "In-sample lab, all 199 videos: one FN->TP is worth ~7.5e-6 (b_break oracle 0.00298/399, v2 r1_hyp_detection.json). Recovering all a_never (1,907 FN) = +0.014; only those next to an open end/start or a gap are reachable through readmit/gapfill. The FN anatomy counts 424 'matched end is a free track end/start' among detection-side FN (fn_anatomy_exp39.md), i.e. about 424 x 1.2 x 7.5e-6 = +0.004. Node cost at 3 % added nodes = -0.0028 if none are annotated, but gapfill's cap and the 2 um exclusion keep additions to ~1 %, i.e. -0.0009. Ceiling ~+0.003 lab; public embryo unknown (guess: larger if it is dense, like 44b6).",
+   "expected_public_gain": "0..+0.003 (central +0.001; guess). Arithmetic: ~25-50 % of the +0.004 reachable ceiling, minus ~0.0009 node cost",
+   "expected_private_gain": "0..+0.003 (guess); dense private embryos benefit more",
+   "probability": "P(passes the offline gate) ~0.35; P(LB gain > 0 | gate) ~0.5; P(>= +0.005) ~0.05",
+   "validation_protocol": "Embryo-held-out by construction: train the copy on DENSE 44b6 only (plus no 6bba). Evaluate on 12 6bba videos the copy never saw, with the honest-trained copy compared against the pilkwang primary; the pilkwang primary saw them, so the comparison is biased AGAINST the copy, which is conservative. Metrics, pre-registered: (a) of the GT nodes with no primary peak within 4 um, the share that gets a copy peak (score >= 0.9, > 2 um from primary peaks) within 4 um: GATE >= 25 %; (b) copy-only candidate peaks per primary node: GATE <= 0.10; (c) of the copy-only candidates within 7 um of a GT node, the share that are also >= 2 um from all GT nodes' matched primary peaks (not duplicates): >= 70 %. Pass -> retrain the copy on 44b6 dense + 6bba masked, then build the kernel. If friend A's lab can replay x138's tail (h_linking-on-x138 is building it), also run the official metric on those 12 6bba videos with and without copy peaks in the pool; GATE >= +0.001 with >= 7/12 videos non-negative.",
+   "resources": [
+    {
+     "who": "friend-a-5070ti",
+     "hours": 3,
+     "what": "dense label builder from dorado registration (agent-written script) + 44b6-only fine-tune (~1 h) + copy/primary inference on 12 6bba videos (~0.5 h)"
+    },
+    {
+     "who": "friend-a-5070ti",
+     "hours": 1.5,
+     "what": "final fine-tune on 44b6 dense + 6bba masked, upload weights as a private dataset"
+    },
+    {
+     "who": "agent-container",
+     "hours": 4,
+     "what": "label builder, gate script, kernel patch --patch denseprop + tests"
+    },
+    {
+     "who": "kaggle-vitalii",
+     "hours": 1.2,
+     "what": "dummy-test run (x138 + one extra UNet pass per frame, no TTA)"
+    }
+   ],
+   "wallclock_to_scored_probe_hours": 48,
+   "earliest_scored_probe_utc": "2026-09-27T12:00Z (friend A available from 26 Sep morning: labels + fine-tune + gate by 26 Sep 20:00; kernel build overnight; dummy run 27 Sep 01:00; submit 02:00; scored 09:00-12:00). Latest useful submit 29 Sep 10:00",
+   "dependencies": "Friend A with the dorado tracks and registration on disk (data_external/dorado, CONTEXT L3 section); x138 base confirmed by #34; ideally the x138-tail lab from h_linking-on-x138; the extra UNet pass must fit the 12 h hidden-test budget (browser_todo: x138 runtime)",
+   "risks": "(1) Registration noise on dorado labels (0.43 um z offset, 16 % of 44b6 GT > 2.5 um from Ultrack) could teach a biased copy; it is used only for proposals, so the bias reaches positions only through readmitted nodes. (2) The lab caveat: x138's gates trust detector scores, and a copy trained on 44b6 may be over-confident on 44b6-like test embryos. (3) Runtime: +1 UNet pass per frame, ~+10-20 % of detection time (guess). (4) Friend A availability is uncertain (BRIEF sec.2). (5) Overlaps the external-data lens (dorado): coordinate with h_external-data-training rather than duplicate.",
+   "not_closed_because": "The closed 'detector fine-tunes on the pilkwang stack' REPLACED the primary, which moved the features under the linker and the node calibration. Here the primary is untouched and the copy only adds gated candidates. The closed 'dorado-only DaughterNet' was a division model, not a detector.",
+   "needs_user_decision": "Yes, the resource commitment: it takes friend A's GPU day and competes with his division line (TEAM.md)"
+  },
+  {
+   "id": "ultrack-convention-localiser",
+   "title": "Test whether hidden annotations follow Ultrack's segmentation convention; if yes, snap/refine positions with Ultrack's public unet-simview (no training)",
+   "mechanism": "The embryo-dependent offset (none-bias z +0.18 um on 44b6 vs +0.82 um on 6bba) is what makes any learned head risky on unseen embryos. 44b6 GT are Ultrack dorado points: 84 % within 2.5 um, GT->Ultrack median 1.29 um with no z bias, vs our nodes->GT 1.42 um. In the swap zone the nearest Ultrack point is 2.4 um from GT vs 3.7 um for our node. If the hosts (royerlab = Ultrack authors) annotated every embryo by proofreading Ultrack segments, then Ultrack's own detector (unet-simview.pt, the SimView model used for the dorado tracks) reproduces the annotation convention on ANY embryo, and a position derived from it is embryo-invariant, unlike a head trained on two embryos' clicks. The earlier snap test lost <4 um share, but it snapped to dorado points through a registration with ~0.4 um z error. Running unet-simview on the clip itself removes that confound.",
+   "change": "Step 1 (test, no training): friend A installs ultrack and downloads unet-simview.pt (public.czbiohub.org/royerlab/ultrack/unet_weights/, reachable from his PC per CONTEXT). He runs it on 12 6bba + 12 44b6 train clips (foreground + contour maps at full resolution) and computes, for each of our pre-ILP peaks (capture coords), the foreground-weighted centroid of the Ultrack watershed basin containing the peak. Output: the train_coordhead fixed-pair table (none / public head / ultrack-centroid / 0.5-0.5 blend). Step 2 (only if the gate passes): kernel patch that runs unet-simview per frame (no TTA) and replaces the V1284 shift by the centroid shift where the basin centroid is within 2 um of the peak; ultrack wheels + weights shipped as a private dataset (no internet).",
+   "evidence": [
+    {
+     "claim": "44b6 GT = Ultrack dorado points (84 % within 2.5 um); GT->Ultrack median 1.29 um, no z bias; our nodes->Ultrack 1.46 um; swap zone GT->Ultrack 2.4 vs GT->pred 3.7 um",
+     "source": "research/wf_ideas_v3/h_external-data-training.notes.md; research/wf_ideas_v2/r2_critic.notes.md (ultrack.py/ultrack2.py lines)"
+    },
+    {
+     "claim": "Dorado tracks were produced with unet-simview.pt (ultrack_supplementary configuration/sparse_zebrafish)",
+     "source": "research/wf_ideas_v3/h_external-data-training.notes.md (raw.githubusercontent ultrack_supplementary)"
+    },
+    {
+     "claim": "Snapping final nodes to registered Ultrack points: median GT distance 1.42 -> 1.22 um but <4 um share 0.927 -> 0.908 (registration + Ultrack noise)",
+     "source": "research/wf_ideas_v2/r2_critic.notes.md (ultrack3.py line)"
+    },
+    {
+     "claim": "Counter-evidence: raw image-moment centroids are worse than the heatmap peak (<4 um share 0.900 -> 0.857); heuristic sub-voxel refinement lost -0.002 on the LB twice",
+     "source": "research/wf_ideas_v2/r1_hyp_detection.json; research/discussions_summary.md l.357"
+    }
+   ],
+   "upper_bound": "Same channel as the head: the localisation value is ~+0.004 for the public head's ~10 % distance cut. If Ultrack centroids reach GT 1.29 vs 1.42 um (-9 %) on an unseen embryo, WITHOUT convention risk, the ceiling is ~+0.002..+0.004 over no head, i.e. ~0..+0.002 over the public head. It is larger only if the swap-zone advantage (2.4 vs 3.7 um) survives, which would reach the b_swap class (oracle +0.046) that de-quantisation cannot touch. That part is a guess, and unlikely.",
+   "expected_public_gain": "-0.003..+0.003 (central 0; guess). This is mostly an information-gathering test whose value is deciding the convention question for H1",
+   "expected_private_gain": "-0.002..+0.004 (guess)",
+   "probability": "P(the 6bba test shows Ultrack centroids closer to GT than the public head) ~0.25 (6bba's +0.82 um z offset suggests a different convention than 44b6); P(>= +0.005 on LB) ~0.03",
+   "validation_protocol": "6bba is the honest arm: unet-simview never saw Kaggle GT, and 6bba is not in the dorado recording. 44b6 is a positive control: its GT come from the same model family, so it must show the effect or the implementation is wrong. GATE: on 6bba, the ultrack-centroid fixed-pair mean distance <= 0.97 x the public head's AND the <4 um share >= the public head's; on 44b6, <= 0.90 x the public head's. Fail on 6bba -> the hidden-embryo convention question stays open; drop Step 2 and prefer H1's debiased head.",
+   "resources": [
+    {
+     "who": "friend-a-5070ti",
+     "hours": 3,
+     "what": "ultrack install + unet-simview inference on 24 clips + centroid table (agent-written script)"
+    },
+    {
+     "who": "agent-container",
+     "hours": 3,
+     "what": "centroid script, table code reuse from tools/train_coordhead.py; Step 2 kernel patch + offline wheel packaging"
+    },
+    {
+     "who": "kaggle-vitalii",
+     "hours": 1.5,
+     "what": "dummy-test run with the unet-simview pass (Step 2 only)"
+    }
+   ],
+   "wallclock_to_scored_probe_hours": 60,
+   "earliest_scored_probe_utc": "2026-09-28T00:00Z (Step 1 by 26 Sep evening if friend A is free; Step 2 kernel 27 Sep; submit 27 Sep ~14:00; scored ~28 Sep 00:00)",
+   "dependencies": "Friend A GPU + internet on his PC; ultrack/torch versions that install offline in the Kaggle docker; browser_todo item on how annotations were produced",
+   "risks": "(1) 6bba annotations may not be Ultrack-derived (the z-bias difference hints at that), so the test may simply say 'no'. (2) Offline ultrack install in the kernel is fragile; Step 2 could fall back to running only the unet-simview network with torch and computing centroids with scikit-image watershed. (3) Runtime of a full-resolution 3D UNet pass per frame. (4) If it passes and ships, it replaces the head that x138's tail was tuned around.",
+   "not_closed_because": "Closed localisation lines were image moments, a constant shift and heuristic sub-voxel refinement. None used the annotators' own segmentation model; the only Ultrack test used registered dorado points with a known 0.4 um z registration error.",
+   "needs_user_decision": "Borderline: using Ultrack's public pretrained weights on test images is inference with an external public model (allowed like any pretrained model), not matching test clips to public tracks. Confirm with the user that this fits the team policy"
+  },
+  {
+   "id": "joint-finetune-long-shot",
+   "title": "The 'top-team lever' as a gated long shot: joint (detector + linker) fine-tune of the primary with a corrected sparse-label loss, then recapture and retrain the head",
+   "mechanism": "Top teams say most of their gain came from retraining the model. Our fine-tunes lost on the LB (exp33 0.944 vs 0.947), and the loss equals the node-multiplier arithmetic: +3.2 % nodes x 0.1 x 0.91 = -0.0029. B19 (recalibrate the threshold to pilkwang's node count) was dropped, never tested. Two loss changes attack the sparse-label pathology the forum describes (unannotated nuclei taught as negatives; overfit after 5-10 epochs): (i) positive-unlabelled masking (negatives only within 7 um of annotated nodes, plus hard negatives in background by intensity); (ii) a centred target convention (round instead of floor on the ds grid). Training the linker jointly, rather than freezing it, avoids the frozen-linker collapse. On x138 the head is tied to the primary's features, so the head must be recaptured and retrained on the new primary (FRIEND_A_RUN.md pipeline).",
+   "change": "experiments/_lib/train_patches.py: add --pu-mask-um 7 and --target-round to compute_detection_loss; fine-tune the pilkwang primary jointly (edge loss on), 1200 it, lr 5e-5, amp (exp03B recipe). Pick the det threshold so the dummy-clip N_pred equals pilkwang's within +-0.5 % (B19). Recapture the V1284 head with experiments/coordhead_retrain/local_capture.py on the new primary (199 videos: friend A ~5.5 h at ~100 s/video) and retrain it with H1's recipe. Kernel = x138 with PRIMARY and head swapped.",
+   "evidence": [
+    {
+     "claim": "Fine-tuned primary on the TTA stack: LB 0.944 vs 0.947 (exp30/exp33); +3.2 % nodes; B19 threshold recalibration dropped untested",
+     "source": "experiments/RESULTS.md probes 11/15; CONTEXT.md l.209"
+    },
+    {
+     "claim": "Sparse GT detector overfits after ~5-10 epochs: peaks/frame climb, unlabelled nuclei become negatives",
+     "source": "research/discussions_summary.md l.36-37, l.85-89"
+    },
+    {
+     "claim": "Honest LOEO fine-tune 6bba -> 44b6: 0.8798 -> 0.8825 raw (+0.0027, edge -0.0015)",
+     "source": "experiments/RESULTS.md exp11"
+    },
+    {
+     "claim": "Plain retrains fail on LB (leonixis 0.947; Kai-Gowers 0.927 vs 0.942)",
+     "source": "research/browser_research_2026-09-24_pass2.md sec.4; research/wf_ideas_v3/h_github-intel.notes.md"
+    },
+    {
+     "claim": "Head capture 7.2 Kaggle GPU-h for 199 videos, T4 208 s/video; 5070 Ti expected ~70-100 s/video; fine-tune 1200 it ~1 h on 5070 Ti, 27 min on Kaggle 2xT4",
+     "source": "BRIEF.md sec.2; experiments/coordhead_retrain/FRIEND_A_RUN.md; experiments/RESULTS.md exp03 B"
+    }
+   ],
+   "upper_bound": "No mechanism-level ceiling can be derived: the in-sample lab cannot measure a primary swap (lab caveat). From the evidence: our best fine-tune was +0.0048 raw on hold12 (leaky) and +0.0027 LOEO. After removing the -0.0029 node effect, the honest upside is ~+0.003..+0.005, and it could be negative (feature shift under the retrained head).",
+   "expected_public_gain": "-0.005..+0.004 (central -0.001; guess). Arithmetic: LOEO +0.0027 minus the risk of losing part of the head's ~+0.004 localisation value if the recaptured head is worse",
+   "expected_private_gain": "-0.005..+0.004 (guess)",
+   "probability": "P(>= +0.005) ~0.03; P(> 0) ~0.3. Do NOT start before H1 and H2 have used friend A's GPU; run only if friend A is idle",
+   "validation_protocol": "Two fine-tunes with the same recipe from the pilkwang init: 6bba-only -> official metric on the fixed 12 LOEO-44b6 videos, and 44b6-only -> 12 6bba videos. The references are pilkwang itself (in-sample, so conservative) and an exp03B-recipe control fine-tune on the same data (isolates the loss change). GATE: the PU/round recipe beats the control by >= +0.004 in BOTH directions at matched node count (threshold re-picked per run to N_pred = control +-0.5 %), with >= 8/12 videos non-negative. Then the recaptured head must pass H1's out-of-embryo gate on the new features. Any failure -> stop.",
+   "resources": [
+    {
+     "who": "friend-a-5070ti",
+     "hours": 5,
+     "what": "2 LOEO fine-tunes + 2 control fine-tunes (~1 h each) + official eval (~20 min each)"
+    },
+    {
+     "who": "friend-a-5070ti",
+     "hours": 7,
+     "what": "final all-199 fine-tune (1 h) + head recapture 199 videos (~5.5 h)"
+    },
+    {
+     "who": "kaggle-sasyami",
+     "hours": 3,
+     "what": "alternative: 44b6 part of the recapture (2 kernels, ~2.6 GPU-h)"
+    },
+    {
+     "who": "agent-container",
+     "hours": 3,
+     "what": "loss patch + tests, threshold matcher, kernel build"
+    },
+    {
+     "who": "kaggle-vitalii",
+     "hours": 1,
+     "what": "dummy-test run"
+    }
+   ],
+   "wallclock_to_scored_probe_hours": 70,
+   "earliest_scored_probe_utc": "2026-09-28T10:00Z (friend A from 26 Sep 08:00: gate by 26 Sep 16:00, final + recapture by 27 Sep 02:00, head + kernel by 27 Sep 08:00, dummy run 09:00, submit 10:00, scored ~20:00 27 Sep at best; realistic 28 Sep morning). Hard stop: no submission after 29 Sep 10:00",
+   "dependencies": "Friend A's full GPU for ~12 h and all 82 GB of data; H1's head recipe; x138 base; the one-change rule (primary + head swap is inevitably two coupled changes)",
+   "risks": "(1) Precedent: every quick retrain lost on the LB. (2) Primary + head swap is two coupled changes, so a loss cannot be attributed. (3) Recapture timing slips (Windows / symlink issues listed in FRIEND_A_RUN.md). (4) It consumes the GPU time H2 needs.",
+   "not_closed_because": "The closed fine-tunes (exp30/33/35) used the plain BCE loss and did not correct the +3.2 % node shift, whose arithmetic explains the whole LB loss. B19 was never tested, and the PU-masked, round-target loss is a new mechanism. exp14 (augmentation) was rejected on an in-sample test.",
+   "needs_user_decision": "Yes: a big resource commitment with low probability; recommended only if friend A would otherwise be idle"
+  }
+ ]
+}

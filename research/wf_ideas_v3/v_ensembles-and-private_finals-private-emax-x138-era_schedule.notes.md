@@ -1,0 +1,9 @@
+- 2026-09-25T11:12:46Z started schedule skeptic; read BRIEF
+- 11:20 read sibling value verdict (refuted under value lens, kept as zero-cost rule) and x138-budget-aware-deadline value verdict (guard gate: latency(#34) < 7.5 h => guard never fired).
+- 11:22 CONTEXT.md l.1494-1531: exp52 = #32, scored 0.950 at 07:50 UTC 25 Sep (tie with exp51); #34 exp56 id 56545267, #35 exp57b id 56545786 submitted ~08:00-09:00 UTC, expected 17:00-20:00 UTC. Current FINALS line l.1531: F1 best of {exp57b, exp56, exp51/52}, F2 structurally different (e.g. exp51).
+- 11:23 E[D+] recomputed (python): mu -.002 s .004 +0.00079 (Phi .31); s .006 +0.00153 (.37); mu -.003 s .004 +0.00052 (.23); s .006 +0.00119 (.31). Idea's table correct; P(F2 counts) 0.23-0.37 under its own guesses.
+- 11:24 exp56 notebook papermill metadata: x138 author's run duration 7106 s on the 4 dummy videos? (start 20:32 end 22:30, 9 Sep) - this is the author's committed run, not the hidden-test run.
+- 11:25 schedule: core rule needs no GPU, no slot, no friend A, no quota; only CONTEXT.md write (0.3-0.5 h, before ~17:00 UTC) + user ticking by 29 Sep 20:00. Optional guard-safe F1 needs: patch build 0.5-2 h (container), Kaggle dummy run after 26 Sep 00:00 quota reset (vitaliineibauer GPU), 1 slot + user OK, scoring 7-10 h -> scored ~26 Sep 09:00-12:00 UTC, 3 days slack. Only needed if latency(#34/#35) >= 7.5 h.
+- 11:26 hole found: if #34 < 0.953 (env mismatch) F1 falls back to exp51/exp52 and the rule 'F2 = exp52' makes F2 a near-copy of F1 (byte-level tie). Rule must then use F2 = best scored x138-family file (exp56/exp57b).
+- 11:26 hole 2: if the user does not tick, Kaggle auto-selects the top-2 public = two x138 near-copies (exp57b + exp56). Needs a reminder at ~29 Sep 12:00 UTC.
+- 11:13 wrote schedule json (not refuted; feasible; two holes patched)

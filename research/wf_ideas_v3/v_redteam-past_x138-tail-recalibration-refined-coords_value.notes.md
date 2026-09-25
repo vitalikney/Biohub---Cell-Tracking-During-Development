@@ -1,0 +1,13 @@
+# notes value-skeptic x138 tail recal (2026-09-25T11:20:14Z)
+- read BRIEF.md
+- RESULTS.md L104/L108: linefit +0.0145 (12 LOEO-44b6 vids, exp29); B28 grid w0.5 .8948 / w0.8 .9001 / w1.0 .8955 / win1 .8907 / win3 .8993. Quadratic fit (0.5,0.8,1.0): vertex w*=0.76, curvature a=-0.081/unit^2.
+- x138 cell 5 linefit code: pure position change (topology + node count unchanged) -> no node multiplier effect; acts only via 7um matching.
+- DIFF.md: readmit/gapfill peaks come from the lowdet dump = UNREFINED int16 -> 'refined coords' premise does not apply to readmit/gapfill nodes.
+- sibling verdict v_linking-on-x138_x138-tail-lab-headcoords_value.json already refuted the same class (+0.0003 pub).
+- B28 per-video (experiments/local_friend_b_exp02_public_port/results/exp29__linefit_*.json): 12 vids, GT edges ~4,363 (base TP4103/FP323/FN260). linefit total = 31 TP + 41 FP = ~72 edge events (+0.0145 => ~0.0002/event). w0.5 = -12TP/+14FP (26 ev), w1.0 = -9/+14 (23 ev), win1 -18/+29, win3 -3/+1. 44b6 = crops of ONE recording -> effective n smaller.
+- coordhead_retrain/out_full_P/report.txt: public head GT dist none->public: 6bba-heavy folds 1.73->1.60 (z bias .73->.35, i.e. much of the drop is a constant offset that cancels in smoothing); 44b6 (emb_6bba_to_44b6 row) 1.499->1.296 (-13.5%), bias small.
+- MSE sim (scratchpad lf.py, velocity random walk + iid obs noise, 5-pt symmetric fit): calibrated so w*=0.75 at sigma=1 (q=0.8): sigma -7% -> w* 0.70, gain vs 0.8 = 1.6% of linefit's MSE gain; -13% -> w* 0.675, 3.0%; -20% -> w* 0.65, 6.1%. B28 score curvature ~3.3x sharper than MSE model (w0.5/w1.0 lose 37%/32% of linefit's gain vs model 10%/12%) -> lab score gain from reweight ~ +0.0005..+0.0012 (in-sample lab, 44b6 12-vid scale).
+- PROTOCOL BUG: grid {0.5,0.65,0.8} + 'shade one step toward default' => if 0.65 wins, shading returns 0.8 (nothing ships); same for FLOW 6.5->7.0, READMIT 3->4, win1->2. Only an extreme winner ships anything.
+- Gates: LB chain flow2 0.947 -> +gapfill 0.947 -> +readmit 0.946 (v_metric-math_readmit-recall-knobs notes / browser_research_2026-09-24.md): whole stages ~0 on LB; relink knobs CLOSED in BRIEF; tight-gate misses fall to relaxed 10 um pass. Readmit/gapfill peaks are unrefined int16 -> premise n/a; radius changes node count (multiplier artefact).
+- Precedent: float output lab +0.0018 -> LB tie; divins lab +0.0019 -> LB +0.001; relink-off lab +0.0053 -> LB -0.002. LB noise 0.003 (byte-identical 0.946/0.942).
+- 2026-09-25T11:27:35Z wrote final JSON (refuted)

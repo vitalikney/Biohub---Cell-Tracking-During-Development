@@ -1,0 +1,10 @@
+# notes: image-z-convention / schedule skeptic (started 2026-09-25 ~11:20 UTC)
+- read BRIEF.md; no prior JSON exists.
+- 11:25 out_full_P/report.txt checked: none bias z 44b6 +0.177 / 6bba +0.824; public +0.131 / +0.447; 6bba-trained head on 44b6 bias -0.536 (bias = gt - pred; the 'shift' of that head on the all-peak sample is +0.567 z). Numbers in idea OK. report.json has no per-video bias -> the gate must be computed fresh.
+- report.json args: data_dir C:\Users\vital\...\train, captures experiments/coordhead_retrain/captures -> the USER's Windows PC holds train zarr+geff AND the 199 capture npz (not only friend A). Capture kernels chcap-* (vitaliineibauer, T4) also hold them as kernel outputs. Container: no data, no captures dir.
+- GT coords INTEGER voxels on both embryos (wf_ideas_v2 polyphase notes l.3). 6bba none bias +0.824 um = 0.507 slice ~ exactly half a slice: fingerprint of a rounding convention (ceil vs round) -> no image trace expected. Cheap image-free pre-test: histogram of (GT z - peak z) in slices per embryo.
+- r1_hyp_detection.notes.md l.12-13: half-max intensity centroid refinement WORSE (<4um 0.900->0.857); per-video GT-oracle mean shift gives NO gain (0.9843 -> 0.9831-0.9835). Sibling value verdict already refuted.
+- Runtime: x138 guard at 27,000 s (h_ensembles-and-private.json); ~130 hidden videos; an extra full-zarr pass per video at output stage could cost 45-130 min and push last datasets past the guard -> compute statistic at raw peaks during detection (frames already in memory) instead.
+- Schedule: gate script 2-3 h agent (Fri), run on user's PC ~1.5-3 h CPU (Fri eve/Sat morning), build 1.5-2 h, dummy T4 40 min after 26 Sep 00:00 reset, scoring 7-10 h -> scored Sat 26 ~21:00 - Sun 27 ~16:00 if gate passes. Clock not binding; P(gate pass) 0.1-0.2 is. P(scored by 29 Sep 10:00) ~0.08-0.17 < 0.7.
+- VERDICT: refuted (schedule lens: contingent on a gate that most likely fails; probe below LB resolution).
+- final JSON written

@@ -1,0 +1,10 @@
+# notes: value/transfer skeptic, dense-proposal-detector-copy (2026-09-25T10:58:58Z)
+- started; read BRIEF.md
+- 2026-09-25 read experiments/l2_daughternet/edge_anatomy/fn_anatomy_exp39.md + l6_fn_anatomy_report.md: a_never = "no raw ILP node within 7 um of GT" (not 4 um): 1907 = 167 (44b6) + 1740 (6bba). Detection-side FN 2929, of which 424 have the matched end = free track end/start (includes a_tail/a_linefit/a_taken, not only a_never); 1-frame gap bridges 28.
+- W = TP+FP+FN = 135,729 -> one FN->TP = 7.37e-6 (micro-avg, metrics.md l.125-160). Ceilings: 424 -> +0.0031; all a_never -> +0.0140; 44b6 a_never -> +0.0012.
+- r2_critic.notes.md l.15-16: the under-segmentation evidence (Ultrack 2.3 um, our node 1.9 um from another Ultrack obj; +44% Ultrack pts) is 44b6-only (25/63 clips) -> covers 167/1907 = 9% of a_never. 6bba a_never (91%) mechanism unmeasured. "23% of Ultrack pts have no pred within 7 um" -> 44b6 mostly unannotated -> copy peaks there are node cost only.
+- DIFF.md l.108-112: readmit = ILP-discarded primary peaks >= 0.965, >2 um from nodes, <=4 um from open end/start; one round then relink; gapfill peaks >= 0.5 from lowdet pool. x138 already readmits 1,337 nodes = 1.1% on dummy (CONTEXT.md l.1515) -> part of 424 already reached by primary peaks.
+- metrics.md: FP if source matches GT node linked to another target -> wrong copy node attached to an annotated end is FP (not free).
+- Realistic lab: 424 x x138-residual(0.6-0.9) x a_never share(0.5-0.8) x 4um geometry(0.5-0.8) x copy recall(0.25-0.5) x mult(1-1.2) x 0.9 -> +0.0001 / +0.0004 / +0.0010 (low/central/generous), minus node cost 0.1*dN/N (0.3% nodes -> -0.00027) and FP risk.
+- Transfer: public adj-edge ~0.91 vs lab adj-edge ~0.90 (0.9143 - 0.1*23/194) -> public detection FN share is not much larger than in-sample; no multiplier from "unseen embryo" argument. Copy = 1200-it fine-tune from the SAME pilkwang init -> errors correlated with primary on unseen embryos; learns Ultrack centroid convention of ONE recording (44b6 crops overlap one dorado movie).
+- LB noise 0.003 >> central +0.0003..+0.001 -> unmeasurable. VERDICT: refuted under value lens (< +0.002).

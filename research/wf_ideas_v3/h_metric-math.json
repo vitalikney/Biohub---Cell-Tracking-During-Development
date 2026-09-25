@@ -1,0 +1,246 @@
+{
+ "lens_summary": "METRIC ANATOMY (tools/official/src/tracking_cellmot/metrics.py, verified on synthetic graphs with the official code, scratchpad synth.py/synth2.py): score = sum_i D_i*J_i*(1-0.1*(N_pred_i-N_est_i)/N_est_i)/sum_i D_i + 0.1*divJ_micro, with D_i = TP_i+FP_i+FN_i (NOT the GT edge count as BRIEF says). The multiplier is linear with no kink and no cap above 1 (N_est=2*N_pred gives adj 1.05); only max(0,.) clips. N_est comes from GT metadata and is unknown at test time, but it does not matter for decisions: every node costs exactly 0.1*J_i/N_est_i whether we are above or below N_est. In TP-edge units a node costs 1/1397 of a TP edge on 44b6-type videos and 1/204 on 6bba-type videos (D and N_est per video from research/wf_ideas_v2/r1_hyp_metric.notes.md). Unannotated tracks and forks are free; an isolated duplicate 0.5 um from a GT node steals the match and turns 2 TP into 2 FN + 2 FP; a swap (GT nucleus between two of our tracks, closest-track order flips once) costs 1 FN + 2 FP, i.e. 3 error units; a fork on an annotated non-dividing cell costs 1 edge FP + 1 division FP; a fork 1 frame late is still a division TP. PUBLIC DECOMPOSITION: 0.950 = adj ~0.914 + 0.1*0.36 (J_div from probe 26: 0.947 -> 0.911 with zero forks, experiments/RESULTS.md:59). Reaching 0.96/0.97/0.975/0.99 needs +0.010/+0.020/+0.025/+0.040. By one term alone: division J 0.46/0.56/0.61/0.76; or adjusted edge 0.924/0.934/0.939/0.954, i.e. 12/23/29/47% fewer edge errors; or 11/22/27/44% fewer nodes with zero TP loss (scratchpad arith.py). 0.99 is not reachable legitimately by 29 Sep. It needs roughly half of all edge errors removed, or a mix such as adj 0.934 + J_div 0.56. That is beyond the 0.969-0.975 top teams, who retrained models over weeks. The only metric route to ~0.99 would be the multiplier: deleting nearly every unannotated node gives x1.09, so 0.914*1.09 ~ 0.997. That needs knowledge of which cells are annotated, which only the test labels give, so it is excluded. DIVISIONS are the most leveraged events on the public board. J=0.36 forces public fork precision >= 0.40 (recall <= 0.8), versus 0.35 in the in-sample lab. One extra division TP is worth +0.0010..+0.0040 of score and one removed FP fork +0.0004..+0.0015, depending on the unknown public GT division count G = 20-60. That is 40-150x a TP edge, and it matches the LB noise of ~0.003. The break-even precision for adding a fork is J/(1+J): 0.265 on public, ~0.106 if the private embryo is lab-like (J 0.12). So insertions with marginal precision >= 0.3 and FP removals at ~0 TP are positive under BOTH scenarios. Ceiling of the division term on public: precision 0.6 and recall 0.8 give J 0.52, +0.016. WHY NODE DELETION DID NOT TRANSFER: the bonus per deleted node is fixed and tiny, and the loss is ~1-2 TP edges per deleted annotated node. Break-even needs < ~0.07% (44b6) / ~0.5% (6bba) of the deleted nodes to be annotated. In-sample, the public detector and edge net were trained on those very annotations, so annotated cells get long clean tracks. Short fragments are then depleted of annotated nodes (0.9% vs 3.2% overall, research/wf_ideas/hyp_nodes-metric.notes.md), and a junkier pipeline sees a large 'free' bonus offline. On test, annotated tracks are the difficult ones (hengck23, research/discussions_summary.md) and fragment out of sample, so deletion hits them. LB evidence: min track len 6->4 -0.002 and 6->8 -0.001 (CONTEXT.md:170,180), det 0.99 -0.005, Justin CH123's losses tracked node drops, B25 pruning negative even in the lab. The asymmetric corollary: node ADDITIONS are nearly free on the multiplier. They lose only through match-stealing and wrong links, which the in-sample lab cannot measure (annotated recall 0.983). The recall side is therefore the direction the metric favours, but it is unvalidatable offline. HONEST CEILING OF THIS LENS: no hidden legitimate lever with ceiling >= +0.01 exists outside (a) the division term and (b) localisation/recall, which is detector work. The four ideas below are metric-grounded; each has a ceiling of +0.004 to +0.016 but an expected public gain of only +0.001 to +0.003. The realistic end state remains ~0.955-0.960 public, in line with the v2 synthesis, with the division term the only place where a +0.01 step is arithmetically possible.",
+ "challenged_assumptions": [
+  {
+   "assumption": "BRIEF: adjusted edge is weighted by GT edge count per video.",
+   "why_doubtful": "The official summarise() weights by w_i = TP_i+FP_i+FN_i, so a video's weight grows with its own FP. Harmless for ranking, but lab re-implementations should use D_i.",
+   "evidence": "tools/official/src/tracking_cellmot/metrics.py summarise(): weights = edge_tp+edge_fp+edge_fn; tools/official/metrics.md 'w_i = TP_i + FP_i + FN_i'."
+  },
+  {
+   "assumption": "Predicting fewer nodes than N_est is a special bonus region / matching N_est is a target.",
+   "why_doubtful": "The multiplier is linear in N_pred with no kink and no cap above 1, so the marginal value of a node is 0.1*J_i/N_est_i everywhere. N_est is irrelevant to any decision.",
+   "evidence": "metrics.py per_sample_metrics; synthetic check: N_est=2*N_pred -> adj 1.05, 0.5*N_pred -> 0.90 (scratchpad synth.py)."
+  },
+  {
+   "assumption": "The x138 head's gain on our base (+0.002) is localisation, reduced because our post-ILP stages do not consume positions.",
+   "why_doubtful": "The head drops final nodes by 2.9% on the dummy clips (10.7% on 44b6_0b24845f). At pure-bonus value that is 0.1*0.029*0.91 = +0.0026, the whole exp51-exp48 gain. On our base the localisation share may be ~0. On x138, readmit re-adds ILP-dropped peaks next to open track ends ('drop then readmit'). That also means the head's private gain depends on how many nodes it drops on the private embryo.",
+   "evidence": "experiments/ext_x138/DIFF.md section 4 (122,704 -> 119,174 nodes); CONTEXT.md 2026-09-25 00:39 (exp51 0.950 vs exp48 0.948); x138 readmit code in experiments/exp56_x138_verbatim/exp56-x138-verbatim.ipynb (readmit_discarded_detections)."
+  },
+  {
+   "assumption": "Min-track-length / node pruning should give the adjusted-Jaccard bonus (+0.012 for -13% nodes).",
+   "why_doubtful": "The bonus is real, but the loss side is measured in-sample, where annotated cells almost never fragment. On test, annotated 'difficult' tracks fragment. Break-even needs < 0.07-0.5% annotated among deleted nodes, while even in-sample short fragments are 0.9% annotated.",
+   "evidence": "research/wf_ideas/hyp_nodes-metric.notes.md; CONTEXT.md:170,180 (min len 4/8 both negative on LB); experiments/RESULTS.md:100 (B25 negative at every fraction); research/discussions_summary.md (Justin CH123, hengck23)."
+  },
+  {
+   "assumption": "v2: the lab's division numbers (J 0.12, p 0.35) calibrate division decisions.",
+   "why_doubtful": "Public J 0.36 is impossible at precision 0.35: it needs p >= 0.40 for any recall <= 0.8. The public embryo is division-easy and the break-evens differ (0.265 vs 0.106). A change is safe only if it is positive under both, e.g. insertions with marginal precision >= 0.3 and FP removals at ~0 TP.",
+   "evidence": "scratchpad arith.py; experiments/RESULTS.md:59; research/wf_ideas_v2/r1_research_div-cap-private-j.notes.md."
+  },
+  {
+   "assumption": "v2: ceiling ~0.962, 0.965+ arithmetically impossible by post-processing.",
+   "why_doubtful": "Mostly right for edges. But the division term alone has +0.016 of public headroom at p 0.6 / r 0.8, and the per-event value is so high that 4-5 extra public division TP is +0.01. It is unlikely (recall is bounded by detection and the orphan rule), not arithmetically impossible.",
+   "evidence": "scratchpad arith.py; experiments/local_friend_a_b32_divpair/results/b32_step1_candidate_audit.md; CONTEXT.md B35 step A (0.90 pass reaches 151/151 GT divisions)."
+  }
+ ],
+ "browser_todo": [
+  "Kaggle submissions page (competition biohub-cell-tracking-during-development, My Submissions): scores of #34 exp56 and #35 exp57b, needed for H1's ladder.",
+  "Kaggle notebook output log of vitaliineibauer/biohub-exp56-x138-verbatim (Logs tab, dummy run): per dataset 'readmitted N', 'low-detection pool', gapfill added vs budget (does GAPFILL_MAX_ADDED_FRAC 0.03 bind?), short_track_nodes_removed, safe-division counts. Needed to size H3/H4.",
+  "Kaggle discussion search 'min track length' / 'node count' in biohub-cell-tracking-during-development: the exact post with 'stricter min-track-length +0.013 offline, -0.004 public'. Extract which pipeline, how many nodes it removed, and whether offline validation was on train videos.",
+  "Kaggle discussion search 'division jaccard' / 'divisions off' for top teams (>= 0.965): any reported split of adjusted edge vs division J on the LB, to learn whether top teams gained mainly on divisions or on edges.",
+  "Kaggle competition Data tab / host posts: number of hidden test videos (to size the public GT division count G, which sets the per-TP value +0.001..+0.004)."
+ ],
+ "hypotheses": [
+  {
+   "id": "div-budget-ladder-x138",
+   "title": "Division budget on x138 set at the public break-even: DaughterNet insertion ladder, positive under both public and lab-like J",
+   "mechanism": "Division events carry 40-150x the value of an edge TP on the public board: +0.0010..+0.0040 per TP, +0.0004..+0.0015 per removed FP fork for G = 20-60 public GT divisions. Public J 0.36 implies precision >= 0.40, while the break-even precision for an added fork is J/(1+J) = 0.265 (0.106 if private is lab-like). Our fork budget was tuned in the lab at J 0.12, where insertion looks better and removal worse than on public. x138 ships with no insertion (safe-div + DeepCenter 0.25 only). The lab measured added-fork precision 4/15 = 27% (v1, steal), right at the public break-even. So the marginal forks must come from the upper part of the DaughterNet ranking, not from a bigger cap.",
+   "change": "On the x138 base (tools/build_probe_kernel.py --base x138 --patch divinsert): read #34/#35 first. If #35 >= #34, one probe with a TIGHTER high-precision insertion (DIVINS threshold 0.4 -> 0.6, cap 4 -> 2 per video, steal on). If #35 > #34 + 0.002, one probe with a LOOSER insertion (threshold 0.3, cap 6). Nodes and coordinates stay identical; only forks change.",
+   "evidence": [
+    {
+     "claim": "Public J_div = 0.36 (zero-fork probe 0.911 vs 0.947)",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/experiments/RESULTS.md"
+    },
+    {
+     "claim": "Added-fork precision 4/15 with DaughterNet v1 steal; lab +0.0019 -> LB +0.001",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/research/wf_ideas_v2/r1_hyp_divisions.notes.md"
+    },
+    {
+     "claim": "Beyond cap 4 the marginal is 0 TP / +2 FP in the lab",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/research/wf_ideas_v2/r1_research_div-cap-private-j.notes.md"
+    },
+    {
+     "claim": "Per-event values and p >= 0.40 inference",
+     "source": "scratchpad arith.py (numbers copied to /home/user/Biohub---Cell-Tracking-During-Development/research/wf_ideas_v3/h_metric-math.notes.md)"
+    },
+    {
+     "claim": "x138 + insertion adds 12 forks on the 4 dummy clips",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/CONTEXT.md (2026-09-25 08:40 UTC)"
+    }
+   ],
+   "upper_bound": "Division term headroom on public: 0.1*(1-0.36) = +0.064. Realistic ceiling at p 0.6 / r 0.8: J 0.52 -> +0.016 (arith.py). Insertion alone is bounded by the orphan/steal pool, 97/151 = 64% reach with steal in the lab (b32 audit). Ceiling of this change ~+0.006 (guess: +2-4 public TP at the high-G/low-G per-TP values).",
+   "expected_public_gain": "+0.000..+0.004 (e.g. +2 TP -1 FP at G=40: 2*0.0020-0.0007 = +0.003; 0 net TP = 0)",
+   "expected_private_gain": "+0.000..+0.002 (private per-TP value smaller because D_div is larger on 71% of the test; break-even 0.106 makes insertion safer if private is lab-like)",
+   "probability": "0.35 that the better of the two ladder points beats #35 by >= +0.002. The #28 precedent (+0.001) and LB noise 0.003 (~1 division TP) keep it low.",
+   "validation_protocol": "Pre-registered before any LB slot, on the lab replay with DaughterNet OOF-by-embryo p: (1) marginal forks of each ladder point vs its neighbour must have evaluable precision >= 0.30 on 199 videos AND on each embryo separately, with dTP >= +2; (2) nodes and edges not touched by forks byte-identical. LB adoption: >= #35 + 0.003 (above the noise quantum). Else keep #35, never pick a near-copy by max public score (winner's curse).",
+   "resources": [
+    {
+     "who": "agent-container",
+     "hours": 1.0,
+     "what": "build 2 ladder kernels with --base x138 --patch divinsert and knob sets; tests"
+    },
+    {
+     "who": "kaggle-vitalii",
+     "hours": 1.0,
+     "what": "2 private dummy-test runs (x138 ~30 min GPU each) after the 26 Sep 00:00 quota reset"
+    },
+    {
+     "who": "kaggle-cpu",
+     "hours": 1.0,
+     "what": "lab replay of threshold/cap ladder on 199 videos (existing l2 replay)"
+    }
+   ],
+   "wallclock_to_scored_probe_hours": 22,
+   "earliest_scored_probe_utc": "2026-09-26 10:00 (submit ~01:00 after the reset, 7-10 h scoring)",
+   "dependencies": "#34/#35 scores (~17:00-20:00 UTC 25 Sep); the user's OK for 1-2 slots on 26 Sep",
+   "risks": "Public-overfit on a division-easy embryo; LB quantisation (1 TP ~ noise). Private embryo may have a different division base rate (mitigated by the >= 0.30 precision gate, which is positive under both J scenarios).",
+   "not_closed_because": "The division-cap line was closed on the exp39 base with lab J 0.12. The public break-even (0.265) and the x138 base, which has no insertion, change the arithmetic. The high-precision (tighter) direction was never probed.",
+   "needs_user_decision": "no (normal LB probes; needs the usual per-submission OK)"
+  },
+  {
+   "id": "lowdet-daughter-recovery",
+   "title": "Second-daughter recovery from x138's in-kernel sub-threshold peak dump (no second GPU pass)",
+   "mechanism": "In the lab, ~27% of missed GT divisions have the second daughter missing: 23 with no node and 12 claimed by unscored relink, of 132 FN. A 0.90 full-frame pass reached 151/151 GT divisions (B35 step A). It was rejected only because it needed a second detector pass and +24% candidate NODES. x138 already dumps every peak >= 0.3 per frame (BIOHUB_LOWDET_THRESHOLD 0.3) for readmit/gapfill, so the candidate daughters exist in the kernel for free. On the metric side, the added node costs 1/204-1/1397 of a TP edge; one public division TP is worth +0.001..+0.004; one FP fork costs 0.0004..0.0015 plus one edge FP. Forks on unannotated cells are free.",
+   "change": "New post-linefit patch on x138: for single-child parents ranked by DaughterNet p (top of ranking, cap 2-4 per video), take the best free low-det peak at t+1 (>2 um from any node) at sister geometry. Geometry: 5-14 um from the existing child, <= 9 um from the parent, on the far side of the parent (mirror gate from base rates: step median 5.7 um, sister median 8.85 um). Add it as a node with the fork edge. Optionally extend it one frame with the next low-det peak within 5 um so the branch has a grandchild. Never touch existing nodes or edges.",
+   "evidence": [
+    {
+     "claim": "B35 step A: 0.90 pass reaches 151/151 GT divisions, +24% candidate nodes",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/CONTEXT.md (2026-09-23 B35 STEP A RESULT)"
+    },
+    {
+     "claim": "Missed divisions: 2nd daughter missing 23, claimed by unscored relink 12, of 132",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/research/wf_ideas_v2/r1_hyp_divisions.notes.md"
+    },
+    {
+     "claim": "x138 dumps sub-threshold peaks >= 0.3 per frame and pools >= 0.5 free peaks",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/experiments/ext_x138/DIFF.md"
+    },
+    {
+     "claim": "Division branch = child + its children; a matched leaf child suffices; fork 1 frame late is TP",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/tools/official/metrics.md + scratchpad synth.py"
+    }
+   ],
+   "upper_bound": "If ~27% of public FN divisions are missing-daughter cases and FN = 0.4-0.55 G: recovering all with 0 FP at G=40, D=50 gives ~5 TP -> +0.011. Realistic: half recovered at precision 0.4 -> +2 TP / +3 FP -> +0.002 (guess).",
+   "expected_public_gain": "+0.000..+0.003",
+   "expected_private_gain": "+0.000..+0.002 (a lab-like private embryo has more FN divisions, and break-even 0.106 makes additions safer)",
+   "probability": "0.2. Needs a working precision >= 0.3 on lab OOF, and the geometry-only daughter choice was weak in the orphan pool (AUDIT3b).",
+   "validation_protocol": "Lab: the exp39 replay plus friend A's B35 0.90 peak cache (tools/recover_daughters.py output) as the stand-in for the dump. DaughterNet p OOF by embryo. Pre-registered gate: added forks' evaluable precision >= 0.30 on each embryo, dTP >= +3 on 199, edge TP loss <= 5. The detector is in-sample, so peaks on annotated daughters are optimistic; require the gate at dump threshold 0.9 AND 0.5. LB: adopt only if >= base + 0.003.",
+   "resources": [
+    {
+     "who": "agent-container",
+     "hours": 5,
+     "what": "patch (post-linefit daughter recovery from the dump) + tests + lab runner"
+    },
+    {
+     "who": "friend-a-5070ti",
+     "hours": 2,
+     "what": "provide/refresh the B35 0.90 peak cache and run the lab gate (CPU on his machine)"
+    },
+    {
+     "who": "kaggle-vitalii",
+     "hours": 0.7,
+     "what": "private dummy-test run of the x138 + patch kernel"
+    }
+   ],
+   "wallclock_to_scored_probe_hours": 44,
+   "earliest_scored_probe_utc": "2026-09-27 08:00 (build 25-26 Sep, lab 26 Sep, submit 26 Sep ~22:00)",
+   "dependencies": "x138 confirmed as base (#34); DaughterNet v1 OOF scores; friend A's peak cache availability",
+   "risks": "Added daughters on annotated non-dividing cells cost 1 division FP + 1 edge FP each. The mirror peak may be the same nucleus as the child (a duplicate), mitigated by the 5 um sister floor. Friend A availability. Runtime is negligible.",
+   "not_closed_because": "B35 was closed on the cost of a second GPU pass and a +24% node pool. With x138 the dump is free and only accepted daughters become nodes. The v2 'mirror' variant was deduplicated into div-insert and never tested with a sub-threshold pool.",
+   "needs_user_decision": "no"
+  },
+  {
+   "id": "readmit-recall-knobs",
+   "title": "Recall-side node budget on x138: lower READMIT_MIN_SCORE and widen the gap-filler budget (env knobs only)",
+   "mechanism": "The metric prices a node at 1/204 (6bba-type) to 1/1397 (44b6-type) of a TP edge. The out-of-sample failure mode is fragmentation of annotated 'difficult' tracks, the same mechanism that made node deletion fail on the LB (min len 4/8 both negative, det 0.99 -0.005). x138's readmit re-adds only peaks >= 0.965 within 4 um of an open end or start. Readmitted peaks that do not link stay isolated and the prune removes them, so failed additions cost nothing. The x138 kernel already has the >= 0.3 peak dump, so sub-threshold continuations of broken tracks are one knob away. The in-sample lab cannot value this (annotated recall 0.983), so the LB is the only test.",
+   "change": "exp56 + env: BIOHUB_READMIT_MIN_SCORE 0.965 -> 0.85 (one probe); optionally BIOHUB_GAPFILL_MAX_ADDED_FRAC 0.03 -> 0.05 only if the dummy log shows the 3% budget binding. Nothing else changes.",
+   "evidence": [
+    {
+     "claim": "readmit code: pool from dump, >2 um exclusion, 4 um to open end/start, isolated leftovers pruned",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/experiments/exp56_x138_verbatim/exp56-x138-verbatim.ipynb (readmit_discarded_detections)"
+    },
+    {
+     "claim": "1,337 readmitted of 121,777 raw nodes on 4 dummy clips at 0.965",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/CONTEXT.md (2026-09-25 08:40 UTC)"
+    },
+    {
+     "claim": "readmit alone 0.946 on the head-less base; with the head 0.953",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/research/browser_research_2026-09-24.md"
+    },
+    {
+     "claim": "~31% of FN involve a node the detector never produced (in-sample)",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/research/wf_ideas_v3/BRIEF.md"
+    },
+    {
+     "claim": "node price per TP edge by embryo",
+     "source": "scratchpad arith.py (in notes)"
+    }
+   ],
+   "upper_bound": "Public FN ~0.045 D (J ~0.91, FP ~ FN). Never-detected share 31% -> 0.014 D -> ceiling +0.014 adj if all were recovered with zero steals. Readmit reaches only never-linked peaks next to open ends, so realistically 5-15% of that (guess): +0.001-0.002.",
+   "expected_public_gain": "+0.000..+0.002",
+   "expected_private_gain": "+0.000..+0.002 (a fragmentation-heavy private embryo benefits more; the node cost is negligible)",
+   "probability": "0.2 for >= +0.002 (readmit at 0.965 was -0.001 alone without the head; it only paid combined with it)",
+   "validation_protocol": "No honest offline lab exists (in-sample detector). Pre-registered readout on the private dummy run: readmitted count rises (expected 1.5-3x), final nodes change <= +1.5%, forks unchanged. LB adopt rule >= exp56 + 0.003; revert otherwise. Never combine with leaf prune (it deletes readmits).",
+   "resources": [
+    {
+     "who": "agent-container",
+     "hours": 0.5,
+     "what": "clone exp56 with the env change"
+    },
+    {
+     "who": "kaggle-vitalii",
+     "hours": 0.7,
+     "what": "private dummy-test run"
+    }
+   ],
+   "wallclock_to_scored_probe_hours": 20,
+   "earliest_scored_probe_utc": "2026-09-26 09:00",
+   "dependencies": "#34 = x138 reproduces (~0.953)",
+   "risks": "Steals: a readmitted peak nearer to a GT node than the tracked node flips 2 TP to 2 FN + 2 FP (synthetic check). The 2 um exclusion limits but does not remove this. The relink reshuffles, which can break existing links. Runtime is unchanged.",
+   "not_closed_because": "Readmit knobs were never swept, and 'readmit neutral' was measured on a base without the head. Threshold-sweep closures (probe 4) concerned the ILP input, not end-anchored readmission.",
+   "needs_user_decision": "no"
+  },
+  {
+   "id": "fork-fp-removal-x138",
+   "title": "Sign-robust division FP removal on x138 safe-division forks (midpoint >= 4.5 um), positive under every J scenario",
+   "mechanism": "An FP fork costs 0.1*J/D_div: +0.0004..+0.0015 per removed FP on public, where D_div is small and each event is worth a lot. Removing a fork at ~0 TP is positive under public J 0.36 and lab-like J 0.12. In the lab, TP forks have a parent-to-daughter-midpoint distance <= 3.8 um, while mid >= 4.0 removed 11 FP / 0 TP (25% of 43 FP). x138's safe-division stage uses DeepCenter 0.25 and none of our fork hygiene. It can ride in the same kernel as the div ladder, since both only edit forks.",
+   "change": "After linefit on x138: for safe-division forks only (never DaughterNet-inserted ones, whose TP midpoints reach 5.9 um), drop the second child edge when |P - (c1+c2)/2| >= 4.5 um. Keep all nodes.",
+   "evidence": [
+    {
+     "claim": "AUDIT7: mid >= 4.0 um removes 11 FP / 0 TP; TP max 3.8 um",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/research/wf_ideas_v2/r1_hyp_divisions.notes.md"
+    },
+    {
+     "claim": "repaired rule: safe-div forks only, 4.5 um, last graph edit",
+     "source": "/home/user/Biohub---Cell-Tracking-During-Development/research/wf_ideas_v2/FINAL_REPORT.md (idea 5)"
+    },
+    {
+     "claim": "per-FP public value",
+     "source": "scratchpad arith.py (in notes)"
+    }
+   ],
+   "upper_bound": "Public FP forks = TP/0.36 - G = 5-40 depending on G and recall (arith.py). Removing 25% at 0 TP: 1-10 FP -> +0.0005..+0.004.",
+   "expected_public_gain": "+0.0005..+0.002",
+   "expected_private_gain": "+0.0003..+0.001",
+   "probability": "0.6 that it is non-negative; 0.25 that it is visible (>= +0.002) on the public LB",
+   "validation_protocol": "Lab on 199 (the geometry rule does not use network confidence): 0 division TP lost on each embryo, division FP down >= 4, edge delta >= -0.0001, nodes identical. Ships only bundled with the div-budget ladder probe, or as its own probe if a slot is spare. Adopt if >= base.",
+   "resources": [
+    {
+     "who": "agent-container",
+     "hours": 2.5,
+     "what": "patch + lab run on exp39 replay (safe-div forks) + x138 build"
+    },
+    {
+     "who": "kaggle-vitalii",
+     "hours": 0.5,
+     "what": "dummy run (can share the ladder kernel)"
+    }
+   ],
+   "wallclock_to_scored_probe_hours": 22,
+   "earliest_scored_probe_utc": "2026-09-26 10:00",
+   "dependencies": "x138 base; can be bundled with div-budget-ladder-x138",
+   "risks": "The midpoint geometry changes with head-refined coordinates (not re-validated on x138); a real division with a lagging parent could be removed. The gain may be below LB resolution.",
+   "not_closed_because": "Kept by v2 as a rider but never built or probed. The public per-FP value (up to 0.0015) is 2-4x what the lab J 0.12 suggests.",
+   "needs_user_decision": "no"
+  }
+ ]
+}

@@ -1556,5 +1556,37 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   repair time (491 s vs 227 s on the dummy clips) and ignores the deadline flag -> exp57b may degrade or time out on
   the hidden run. If #35 errors or scores < #34, that is the likely cause; any insertion-on-x138 final must respect the
   deadline flag.
+- 2026-09-25 13:20 UTC, IDEAS WORKFLOW v3 DONE (user target 0.99 by 29 Sep; cloud session, 11 lenses x 4 ideas, 2
+  skeptics each = 44 ideas / 88 verdicts, + browser intel from a local Chrome session, + merge / completeness critic /
+  two independent plans / final judge; ~120 agents). Everything in research/wf_ideas_v3/: BRIEF.md, browser_intel.md
+  (LB 11:00 UTC: top 0.975, 6 teams >= 0.970, 39 >= 0.960, 401 >= 0.953, 241 exactly 0.953 = x138 copies, we ~456;
+  no public notebook > 0.953), h_*.json / v_*.json, s_*.json, FINAL_REPORT.md (Russian), task cards TASK_LOCAL_SESSION /
+  TASK_CLOUD_SESSION / TASK_FRIEND_A / TASK_FRIEND_C / TASK_COLAB.md; scripts experiments/workflows/biohub-hunt-v3.js
+  and biohub-plan-v3.js. VERDICT: 0.99 and 0.97 are out of reach by 29 Sep (every retraining path refuted for the
+  window, 10/10 skeptics); expected public ~0.954 (P>=0.955 ~0.25, P>=0.96 ~0.02). Main new risk: RUNTIME on the hidden
+  set (~199 clips per the Data tab): x138 GPU phase ~7.4 h at dummy speed vs REPAIR_DEADLINE_S 27000 s, after which
+  relink/readmit/gaps/safe divisions/linefit are switched off for later (alphabetical) clips; exp57b's DaughterNet
+  insertion is NOT gated by the deadline and doubles repair time. Plan backbone: K2 = exp58 = x138 + safetail (deadline
+  34200 s, insertion gated + fail-soft, DIVINS_DUMP=0) + lowrefine (head coords for readmitted peaks) + insertion per
+  rule R2; then forkmid (K3) and a DeepCenter threshold chosen on 6bba (K3b; DeepCenter trained on 44b6 only). F1 must
+  not be byte-identical to x138 (241-team tie block spans the medal cutoffs); F2 = exp52 by default. PROPOSED
+  PRE-REGISTRATION (branches A-E on #34/#35 score + latency, rules R1-R10, finals rule) = FINAL_REPORT.md sections e/f;
+  binding only after the user's OK. Other corrections: metric weights videos by TP+FP+FN; our kernels are deterministic,
+  so the 0.003 "LB noise" does not apply to them; swap FN are not reachable by localisation.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
+- 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
+  research/wf_ideas_v3/PROMPT_LOCAL_CHAT.md). tools/build_probe_kernel.py --patch safetail (x138 base only, applied after
+  all other patches): requires --set REPAIR_DEADLINE_S=34200 (other values need --lab); gate + fail-soft around the
+  DaughterNet insertion (BIOHUB_DIVINS_DEADLINE_S default 28800, 'DIVINS SKIPPED (deadline)', 'DIVINS FAILED'); sets
+  BIOHUB_DEGRADE_KEEP_DIV=1 (safe divisions + linefit survive the deadline); DIVINS_DUMP=1 / DIVINS_FORCE_FAIL need --lab
+  (probe.json then says "LAB/DUMMY BUILD: never submit"). tests/test_safetail.py 8/8 pass (exact-diff undo check vs the
+  unpatched cell, compile, exec'd gate / fail-soft / degrade mocks, builder refusals, a K1-like build). NOT done here:
+  pyflakes pass, lowrefine (T2) - the local chat builds K2 = K1 + lowrefine. Build commands (x138 exp57b insertion knobs):
+    K="--set DIVINS_ENABLE=1 --set DIVINS_STEAL=1 --set DIVINS_CAP=4 --set DIVINS_FRAME_CAP=1 --set DIVINS_ALPHA=1 --set DIVINS_THRESH=0.4"
+    K1: python tools/build_probe_kernel.py exp58t_x138_safe --base x138 --patch divinsert --patch safetail --set REPAIR_DEADLINE_S=34200 $K
+    FD: python tools/build_probe_kernel.py exp58fd_x138_safe --base x138 --patch divinsert --patch safetail --lab --set REPAIR_DEADLINE_S=1 $K
+    FF: python tools/build_probe_kernel.py exp58ff_x138_safe --base x138 --patch divinsert --patch safetail --lab --set REPAIR_DEADLINE_S=34200 --set DIVINS_FORCE_FAIL=1 $K
+    branch B (no insertion): drop --patch divinsert and $K.
+  Dummy gates as in FINAL_REPORT.md section e (K1 sha256 == exp57b dummy CSV; FD: 'DEADLINE' on dataset 1, insertion skipped,
+  safe divisions + linefit counters > 0; FF: 'DIVINS FAILED' on every clip, CSV == exp56 dummy).
