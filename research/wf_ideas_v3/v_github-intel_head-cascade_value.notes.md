@@ -1,1 +1,2 @@
 - 2026-09-25T11:00:27Z start: no prior json; read BRIEF.md
+- 2026-09-25T11:01:46Z read DIFF.md, out_full_P.log (none 1.686/public 1.525/new-heldout-by-movie 1.2375; public residual bias +0.40/+0.29/+0.35 all, 6bba +0.45/+0.33/+0.42, 44b6 +0.13/+0.05/-0.04; public all-peak mean shift ~0)
