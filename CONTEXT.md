@@ -1491,5 +1491,6 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   WORSE than public (learns 6bba's annotation z-offset), 44b6->6bba +0.2%; debiased Q also worse (+6.3% / +1.3%).
   Public head (balanced ~10+10 videos) transfers better; the hidden test is other embryos -> keep the public head.
   Files: experiments/coordhead_retrain/out_full_P|Q/, tools/train_coordhead.py.
+- 2026-09-25 00:02 UTC: probes #32 exp52 (id 56534391) and #33 exp53 (id 56534401) SUBMITTED (3 slots left on 25 Sep).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
