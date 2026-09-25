@@ -1798,6 +1798,16 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   08:09:00Z -> L34 in (6.29, 6.46] h <= 7.5 h. R1: x138 is the base AND #34 is proven non-degraded (runtime <= latency
   < REPAIR_DEADLINE 7.5 h). x138 reproduces on our account (unlike takaito). #35 still pending (7.5 h mark = 16:03Z,
   8.5 h = 17:03Z).
+- 2026-09-25 16:20 UTC: #35 exp57b (x138 + DaughterNet insertion, #35 config): **0.954** (our best; +0.001 over x138).
+  Latency bounds: last seen PENDING 15:16:44Z, first seen COMPLETE 16:16:55Z (the five polls 15:26-16:06Z got EMPTY CLI
+  output), submitted 08:33:25Z -> L35 in (6.72, 7.73] h (the 7.5 h mark is NOT provable; poller now retries on empty
+  output and logs stderr). BRANCH per §e: a = 0.953, b = 0.954 >= a, L35 <= 8.5 h -> **BRANCH A**: K2 = exp58 WITH the
+  insertion (R2), S3 held. R6 (N1): L34 <= 6.46 h (not > 8.0), #35 no error, L35 <= 7.73 h (not > 8.5) -> NOT triggered
+  (step-0 forecast pending). R5 note: #35 itself (ungated insertion) is admissible as a final fallback only if L35 <=
+  7.5 h, which is unproven -> #35 is not a finals candidate; K2 (gated, C01) is. S1 used: P36 = exp57 v1 diagnostic
+  (x138 + leaf prune 0.3 + ungated insertion; id 56555189, submitted 16:18:09Z; never a final); read by R4 with
+  delta = #36 - #35 (>= +0.002 -> leaf prune rider on 27.09; |delta| <= 0.001 -> closed; <= -0.002 -> confirms readmit
+  must stay); ignore if L36 or L35 > 7.5 h.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
