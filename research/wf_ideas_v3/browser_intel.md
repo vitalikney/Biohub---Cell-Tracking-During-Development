@@ -1,4 +1,4 @@
-# Browser intel (Kaggle), 2026-09-25 11:27 UTC (in progress)
+# Browser intel (Kaggle), 2026-09-25 11:40 UTC (in progress)
 
 Collected by the local session on the user's computer (Kaggle CLI + Chrome). Every fact has a source; guesses are marked.
 
@@ -238,3 +238,135 @@ question 743146 asks whether full training code for third-party weights must be 
 
 **Hand labelling (General rules)**: "submissions may not use or incorporate information from hand labeling or human prediction of
 the validation dataset or test data records". (Hand-labelling TRAIN or external data is not prohibited by this line.)
+
+## 6. Agent requests (browser_todo) and answers
+Requests = `research/wf_ideas_v3/BROWSER_TODO.md` (numbers below) = the `browser_todo` fields of `h_*.json`. Answered 25 Sep
+11:20-11:40 UTC. Many requests overlap; shared facts are stated once in 6.0 and referenced.
+
+### 6.0 Shared facts (used by many answers)
+**(A) Our probes #34/#35 (items 7, 14, 32, 48, 49, 60).** `kaggle competitions submissions` at 11:20 UTC: #35 (ref 56545786,
+exp57b) submitted 25 Sep 08:33:25 UTC, #34 (ref 56545267, exp56 x138 verbatim) submitted 08:09:00 UTC - **both PENDING**, no
+score yet. Earlier: #33 exp53 0.948, #32 exp52 0.950, #31 exp51 0.950 (submitted 24 Sep 17:09), #30 0.946, #29 0.947, #28 0.948,
+#27 0.947, #26 (divisions off) 0.911. The CLI prints only the submit time, not the time the score appeared, and the Submissions
+page shows only relative times -> exact scoring latency is NOT available from here (re-check #34/#35 around 17-20 UTC).
+
+**(B) Kernel logs on the 4 dummy clips (items 11, 12, 15, 33, 44, 59, 61).** Read from the Logs tabs
+https://www.kaggle.com/code/anvithpothula/biohub-x138/log (author's run, 1216.7 s) and
+https://www.kaggle.com/code/vitaliineibauer/biohub-exp56-x138-verbatim/log (ours, last line 1138 s). **Our exp56 reproduces
+x138 exactly** on every count below (detections, readmit, gap filler); only timings differ.
+
+| clip | detection+edges s (x138 / ours) | detections | ILP s (x138 / ours) | readmitted | low-det pool free (>0.5) | gap filler | safe-div: geom cand / DeepCenter rej / added | short-track comps removed | FINAL nodes / edges | repair s (x138 / ours) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 44b6_0113de3b | 220.4 / 233.2 | 26,532 | 25.3 / 32.0 | 94 | 1,744 -> 1,633 | +3 n, +4 e | 121 / 84 / 35 (mutual-NN rej 70, divergence rej 503) | 57 | 25,728 / 24,986 | 42.5 / 46.8 |
+| 44b6_0b24845f | 214.3 / 245.7 | 33,336 | 22.1 / 21.3 | 662 | 28,577 -> 27,798 | +67 n, +99 e | 155 / 149 / 6 (49, 727) | 375 | 19,522 / 18,323 | 53.8 / 59.3 |
+| 6bba_05b6850b | 223.4 / 229.9 | 7,370 | 4.7 / 5.5 | 84 | 1,983 -> 1,896 | +3 n, +4 e | 13 / 8 / 5 (6, 83) | 30 | 6,220 / 6,025 | 10.3 / 11.1 |
+| 6bba_05db0fb1 | 238.8 / 267.5 | 76,396 | 78.0 / 89.6 | 497 | 11,001 -> 10,431 | +37 n, +51 e | 222 / 203 / 16 (259, 2,242) | 142 | 69,749 / 67,707 | 95.8 / 109.3 |
+
+Other log facts: LOWDET peaks above 0.3 per clip = 27,877 / 51,793 / 8,518 / 81,321; "Low-detection dump applied" at 56.8 s;
+"V1284 head patched AFTER the readmit dump patch" at 446 s; "Prediction completed in 9.38 minutes" (x138) / 10.59 min (ours);
+repair of the 4 clips ends at kernel elapsed 1205 s (x138) / 1112 s (ours). No DEADLINE line. The GPU phase runs 2 shards
+(one per T4) with clips sequential inside a shard: ~215-270 s detection+edges per clip regardless of density (7k vs 76k
+detections), + ILP 5-90 s; the repair loop runs AFTER all prediction, sequentially, 10-110 s per clip (mean ~57 s).
+**Runtime projection (guess, arithmetic only):** if the hidden set has ~199 clips like train (Data tab: "approximately the same
+size as the training dataset"), GPU phase ~ 100 clips/shard x ~265 s = ~7.4 h, i.e. at or past `REPAIR_DEADLINE_S` = 27000 s
+(7.5 h); `_deadline_degrade()` then turns OFF motion relink, gap close, gap2, SAFE DIVISIONS and linefit for all remaining
+clips (x138 cell 5). x138 scoring 0.953 (vs our divisions-off probe 0.911) says the PUBLIC clips were repaired, so either the
+hidden set is smaller/faster than this projection or the public embryo's clips sort first. #34's latency and score are the test.
+Kaggle does not show hidden-run time on the notebook page (x138 page shows only the visible run: "20m 28s", 1228.4 s).
+
+**(C) Public code / LB (items 26-28, 30, 34-37, 45, 52, 54, 66, 69).** See sections 1-2: no public notebook above 0.953;
+kunaldesale2408 = x138 verbatim. `kaggle kernels list --user` at 11:22 UTC: **anvithpothula** - only new kernel after x138 is
+`biohub-v1284-head-s075-notebook` (24 Sep 03:28) = the default Kaggle template attached to the head dataset (1 cell, nothing new);
+x138 has "Version 1 of 1". **thtennant** - nothing after `biohub-frontier947-readmit-v1` (19 Sep 01:41). Public LB histogram
+(CLI, 1,200 top rows, ~11:27 UTC): 0.975 1, 0.974 1, 0.973 1, 0.971 2, 0.970 1, 0.969 2, 0.968 3, 0.967 2, 0.966 2, 0.965 3,
+0.964 4, 0.963 2, 0.962 4, 0.961 6, 0.960 7, 0.959 11, 0.958 9, 0.957 10, **0.956 19, 0.955 28, 0.954 47, 0.953 241**, 0.952 18,
+0.951 18, 0.950 23, 0.949 29, 0.948 101, 0.947 603. Vs 24 Sep (0.953 x41, 0.954 x15, 0.955 x14, 0.956 x12, 0.957 x7, 0.958 x11):
+the 0.953 spike is exact (x138 is deterministic) and a small shoulder is growing at 0.954-0.956 (private x138 tweaks worth
++0.001..+0.003; no public notebook behind it). Rows: Teddy Tennant #47 0.959 (last sub 24 Sep 23:55), Anvith Pothula #77 0.956,
+easonyanyan #132 0.954, Justin CH123 #166 0.953, Lê Quang Cảnh #408 0.952, OmerZalman #412 0.952, Majid Aleissa #454 0.950,
+D: Discipline #460 0.950. (zhincez, bhpepper not in the top 1,200 rows under those names.)
+
+### 6.1 detector-retrain (items 1-6)
+1. georgexue666/biohub-precision-pool2-weights (README, read 11:31): 3D UNet heatmap detector, "base channels: 24, pool: 2",
+   target Gaussian sigma 0.8 um; top checkpoints epoch 22 / 12 / 19 with "in-loop recall@K at 4um" 0.7348 / 0.7304 / 0.7290;
+   selection = Hungarian within 4.0 um, top-330 nodes/frame; trained on "D1.json (128 train movies, 32 validation movies)" - **D1.json
+   is NOT in the dataset** (files: MANIFEST.json, README.md, pool2_edge_best_ep10.pth 8.0 MB, pool2_edge_config.json,
+   precision_sigma08_pool2.pt / .r2.pt / .r3.pt 12.7 MB each). **No model class / inference code included**; CC0; "Code (0)" -
+   no public notebook uses it, no LB score anywhere; no inference time stated. Guess: 128/32 = a random split over both embryos.
+2. DeepCenter split_manifest (read from our local copy `external/pilkwang__biohub-deepcenter-unet3d-center-prior-v1/weights/full_frame_center/split_manifest.json`):
+   **train = exactly the 71 44b6 clips, val = the 128 6bba clips** (seed 2026). So DeepCenter never trained on 6bba (nor its
+   125 divisions); config: base_channels 24, pool_factor 4, gauss_sigma 1.0, 1000 epochs planned, history.csv 500 rows.
+3. Data tab: nothing on HOW annotations were made or on the test embryos' protocol. Only: sparse, integer voxel centroids,
+   `estimated_number_of_nodes` "provides an estimate of the true total cell count"; train/test embryo-disjoint (section 5).
+4. See 6.0 (B): hidden-run time is not shown anywhere; the x138 author posted nothing on runtime (3 comments: dataset made
+   public; "one private dataset"; Justin asks to publish the head).
+5. Discussion: no top-20 post naming a detector recipe in the last 10 days (section 3). Closest: hikaggler (442) synthetic
+   pretrain recipe (741749), imissher (743222) Kaggle-GPU training cost.
+6. leonixis/biohub-v5-candidates: description "Per-epoch checkpoints from the all-train (199 videos, 60 epochs, warm start from
+   v3res) run; LB checkpoint-pick set"; files = edge-predictor checkpoints `weights/unet_transformer/ep025, ep040, ep045, ep055,
+   ep059` (8.36 MB each, config.json 165 B) + full `repo/` (temporal_unet.py, train/predict scripts) + wheels. The repo README
+   (7 kB, nested) was not opened; no LB-picked epoch or score is stated on the page. 107 downloads.
+
+### 6.2 divisions (items 7-11)
+7. PENDING (6.0 A). 8. No >= 0.965 team published a division J or a zero-fork ablation in the last 10 days; known splits:
+   hikaggler div J ~0.22 at 0.939 (741749), Justin CH123 held-out 0.23 (742266), OpPrime qualitative (742266).
+9. pawanmali kernels (CLI): the division-model notebooks are `biohub-0926-learned-div-v1` (3 Sep), `biohub-cli-learned-div-v1`
+   (3 Sep), `biohub-0926-div-recovery-v1` / `-edgesteal-v1` (4-5 Sep), later `biohub-942tta-fork-*` (12-15 Sep) and
+   `biohub-zhincez947-fork-v1` / `-nodiv-ablation-v1` (19-20 Sep). Gates not extracted (time). 10. anvithpothula/divqc: it is a
+   **per-movie under-calling flag** from orphan/track-start counts (NumPy only), not a per-fork classifier; it states its own
+   blindness to over-calling. Measured on 50 movies: div TP 17 / FP 19 / FN 56 (J 0.185), 35 of 50 movies score 0. **No per-fork
+   TP/FP features to reuse.** 11. See 6.0 (B): safe-division stats per clip in the table (added 35/6/5/16; DeepCenter rejects
+   84/149/8/203 of 121/155/13/222 geometric candidates; LOWDET peaks 27,877/51,793/8,518/81,321).
+
+### 6.3 ensembles-and-private (items 12-19)
+12-13. exp56: 6.0 (B). exp57b log not read (time). 14. Not available (6.0 A). 15. 6.0 (B). 16. 6.1 item 6: v5 checkpoints are
+edge_predictor files in the support-pack layout (`weights/unet_transformer/epNNN/edge_predictor_best.pth` + config.json), same
+size as the pilkwang ones (8.36 MB) -> guess: drop-in for load_model() with the path changed; licence not shown. 17. 6.1 item 1
+(no code, pool 2 = 2x finer XY grid than the (1,4,4) detector; resampling needs their class definition, not published).
+18. Overview: "GPU Notebook <= 12 hours run-time"; nothing on how a timeout is displayed. 19. No host statement on hidden clip
+count beyond "approximately the same size as the training dataset"; no forum report of x138 copies timing out (searched lists).
+
+### 6.4 external-data-training (items 20-25)
+20-21. Not visited (outside Kaggle; time). **New: Zebrahub ZSNS001 and ZSNS003 are mirrored on Kaggle** by giorgosi
+(`biohub-zsns001-relay-leg1..11`, `biohub-zsns003-relay-leg1..4`, 11-17 GB each, CC0) with `ZSNS001_t0000.ome.zarr` chunks and
+`ZSNS001_tracks.csv` (section 4) - usable offline inside Kaggle kernels. 22. The seed314159 pack manifest: method
+`unet_transformer_alltrain_seed314159_v1`, 199 train (Eric 742064); recipe fields not read. 23. No post (section 3). 24. The
+precision-pool2 README says D1.json 128/32 movies; no external data mentioned; no LB anywhere. 25. Overview: "Freely & publicly
+available external data is allowed, including pre-trained models"; Rules 6b: "use of external data and models is acceptable
+unless specifically prohibited by the Host" (section 5). Winner licence caveat open (743146).
+
+### 6.5 github-intel (items 26-31)
+26-27, 28, 30: 6.0 (C). The head dataset has **one version** (v1, 33.91 kB, "Expected update frequency: Never"), description:
+"produced 0.953 score in ... biohub-x138". 29. Thread 742965 is **deleted** ("This topic has been deleted", posted ~24 Sep).
+31. Not checked.
+
+### 6.6 kaggle-intel (items 32-43)
+32: 6.0 (A). 33: 6.0 (B) for exp56; exp51/exp57b logs not read. 34: x138 = Version 1 of 1, 20m 28s, 0.953; comments in 6.1 item 4
+(nothing on timeouts / deadline / s075). 35-36: 6.0 (C) + section 2. 37: 6.0 (C). 38: 6.1 item 1. 39: easonyanyan weights =
+edge predictors only (`edge_predictor_best.pth`, epochs 8/11/12, 31 MB, no README); majidaleissa = 3 split edge predictors
+(split_0..2, manifest 20 Jul); no notebook uses either publicly -> easonyanyan's 0.954 is not explained by public material.
+40: not checked. 41: section 3 (742965 deleted; 741386: no host answer on N_est). 42: Data tab: names `{embryo_id}_{field_of_view}`,
+hidden size "approximately the same size as the training dataset"; no count. 43: section 4.
+
+### 6.7 linking-on-x138 (items 44-48)
+44: 6.0 (B) (readmitted 94/662/84/497; free low-det peaks; gap filler +3/+67/+3/+37 nodes; after-gap and FINAL counts). No newer
+x138 version. 45: nothing new from thtennant since 19 Sep. 46: 732103 thread (Lê Quang Cảnh): on 7 labelled divisions both
+parent->daughter steps fit a 7.0 um gate 2/7, 9.9 um 5/7, 12 um 6/7, 15 um 7/7; longest step median 8.47 um (5.69-13.65), sister
+separation median 10.22 um (7.87-13.12); his continuation step ~3 um. (740573 base rates are in `research/browser_research_2026-09-24.md`.)
+47: none. 48: PENDING.
+
+### 6.8 literature (items 49-54)
+49: PENDING. 50: not downloaded (no permission for downloads in this session); the log confirms "Low-detection dump applied |
+dir /kaggle/working/edge_cache | lowdet threshold 0.3". 51: the head dataset lists no training movies (single file, one-line
+description). 52: nothing new from thtennant. 53: no forum post with LB deltas for low-score readmission (section 3). 54: 6.0 (C).
+
+### 6.9 localisation-training-free (items 55-59)
+55: Data tab says nothing on how GT points were produced (section 5); hidden size "approximately the same size as the training
+dataset". 56: Eric (742064) wrote only "a sub-voxel peak refinement" (+0.0078 local, -0.002 LB twice) - method not described.
+57-58: not re-read (time). 59: 6.0 (B).
+
+### 6.10 metric-math (items 60-64) and redteam-past (items 65-70)
+60: PENDING. 61: 6.0 (B). 62-63: not found in the last 10 days. 64: no count published. 65: head dataset = single file, v1,
+"produced 0.953 score in ... biohub-x138"; no 's075' explanation, no movie list; author's newer datasets: none found.
+66: 6.0 (C). 67: no report of a retrained V1284 head in 742673 or the forum; 742965 deleted. 68: nothing from hosts on
+offsets/centroids. 69: 6.0 (C) - spike exact, no public > 0.953. 70: Data tab silent on acquisition/density of hidden embryos.
