@@ -1,1 +1,10 @@
 - 2026-09-25T11:01:56Z started; read BRIEF.md; no prior json
+- 2026-09-25 read exp56 notebook code (extracted): readmit_discarded_detections uses pool from load_low_detections (dump >=0.3, pool filtered >= GAPFILL_MIN_SCORE 0.5, >2 um from nodes); keeps peaks within 4 um of open end(t-1)/start(t+1) AND score >= READMIT_MIN_SCORE; single pass (extends each end by at most 1 frame); relink runs again afterwards (flow relink, 7 um tight gate, unscored pairs prob 0) -> readmits near open ends are nearly always linked, NOT isolated.
+- CONTEXT.md l.1511-1516: 1,337 readmitted of 121,777 (1.1%); leaf prune removed >=479 readmitted LEAVES (i.e. linked) -> "failed additions are free" is false; they cost node penalty.
+- browser_research_2026-09-24.md l.43-58,194: readmit log +84/+94/+497/+662 per dummy clip (0.4-3.2%); LB chain flow2 0.947 -> +gapfill 0.947 -> +readmit 0.946 (readmit alone ~0/-0.001).
+- fn_anatomy_exp39.md: detection-side FN (a_*) 2929 of 6732; matched end is a free track end/start in only 424 (6.3% of all FN); 1-frame bridges 28 (already gapfill's domain). a_never = 1907 (28.3%, not 31%).
+- Ceiling: 424/(122151+6846+6732=135729) = +0.0031 J in-sample, q=1, all peak scores. Public: 0.045 FN x ~0.5 det-side x 0.145 end-anchored ~ 0.0033 ceiling; band [0.85,0.965) guess 15-35% -> 0.0005-0.0012 at q=1; x q~0.6 -> +0.0003..+0.0007.
+- Node cost: 1% more nodes = -0.1*0.01*J ~ -0.0009 adj regardless of annotation density. Band readmits +0.5-2% pre-prune (idea's 1.5-3x), mostly linked -> -0.0004..-0.0015. Net ~ -0.001..+0.0005.
+- LB noise: identical notebooks 0.946/0.942 -> single-run sd ~0.002-0.003 -> P(noise >= +0.003 vs exp56) ~0.15-0.2: adopt rule is a noise detector. Dummy clips are train-embryo (in-sample) -> readout does not bound hidden-test node growth.
+- No web needed (all evidence local). Verdict: refuted on value.
+- 2026-09-25T11:04:38Z final JSON written (refuted=true)

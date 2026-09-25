@@ -1,2 +1,13 @@
 # notes: value/transfer skeptic, mirror-daughter-lowdet (2026-09-25T11:00:34Z)
 - read BRIEF.md; read sibling verdicts edge-evidence-second-daughter (refuted), div-budget-ladder (refuted)
+- 2026-09-25: idea = v2 'mirror-peak-daughter' (r1_hyp_divisions.json), merged in v2 dedupe into div-cap-private-J; v2 verifiers never measured the mirror arm itself.
+- Checked: CONTEXT.md l.1142-1152 (B32: 121/151 detector reach), l.1198 (A0 window 136/151, 44b6 24/26, 6bba 112/125), l.1259-1261 (0.90 full-frame 151/151 at +24% nodes). Numbers in the idea are correct.
+- x138 cell 0: READMIT_MIN_SCORE 0.965 radius 4 (so readmit only re-uses >=0.965 peaks -> no overlap with sub-threshold daughters); GAPFILL_MIN_SCORE 0.5 bridges end(t)->start(t+g+1) only (parent u is not an end -> no overlap either). So 'readmit may cover part' is mostly false; overlap ~0.
+- Metric: division J micro over videos, fallback grandchildren allowed (metrics.md l.73-93). Per public event (TP19/D53 guess): +1TP +0.00189, +1 evaluable FP -0.00066; break-even precision 0.26.
+- Public test ~30-38 videos (hidden test 100-130, CONTEXT l.14); cap 1-2 -> 30-76 insertions; evaluable fraction ~3% (15/466 lab) -> ~1-2.5 evaluable.
+- Public missing-daughter cases: 15/128 lab FN unreachable (12%) x ~21 public FN -> ~2.5 (range 2-5 on an unseen embryo).
+- MC (scratchpad/mirror_mc.py): central mean +0.0001, P(>=+0.002) 0.10; optimistic +0.0019 (P 0.39); pessimistic -0.0012.
+- Private (J 0.15-0.25, D~130-150): +0.0005..+0.0016 for 1.4-3 TP / 4-5 FP.
+- Transfer: h(x) is in-sample detector confidence (151/151 at 0.90 is in-sample); DaughterNet p not embryo-held-out; 44b6 has only 2 unreachable cases (26-24), all one recording -> per-embryo gate unevaluable. Under-segmented c1 (merged blob, v2: 17/54 claimed misses have matched node >4 um from daughter) puts mirror point ~u and sister(c1,x) <6 um -> geometry fails on exactly these cases.
+- Node multiplier: +<=2 nodes/video of ~30k -> ~7e-6, not an issue.
+- 2026-09-25T11:03:05Z final JSON written (refuted=true)
