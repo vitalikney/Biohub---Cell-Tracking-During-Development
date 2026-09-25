@@ -1808,6 +1808,12 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   (x138 + leaf prune 0.3 + ungated insertion; id 56555189, submitted 16:18:09Z; never a final); read by R4 with
   delta = #36 - #35 (>= +0.002 -> leaf prune rider on 27.09; |delta| <= 0.001 -> closed; <= -0.002 -> confirms readmit
   must stay); ignore if L36 or L35 > 7.5 h.
+- 2026-09-25 16:45 UTC, T7 STEP 0 (experiments/runtime_step0/step0.md): hidden N <= ~97-106 clips at dummy speed
+  (from L34 <= 6.46 h, L35 <= 7.73 h); the hidden rerun covers public+private in ONE run, so latencies already include
+  private. K2 forecast <= ~7.8 h (< 9.5 h repair deadline, < 8.0 h insertion gate at the worst case) -> R6 NOT triggered,
+  no N1. #35's own x138 7.5 h deadline may have degraded its last clips if its runtime exceeded 7.5 h (unprovable).
+  Dummies K2 (vitaliineibauer/biohub-exp58-x138-safe-lowref) and K1 (biohub-exp58t-x138-safe) pushed at ~16:35 UTC
+  (GPU quota 11 h left before the reset), FD/FF queued after them, so K2 can go at 00:00 UTC if the gates pass.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
