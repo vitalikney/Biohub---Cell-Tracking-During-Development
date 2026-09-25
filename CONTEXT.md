@@ -1814,6 +1814,16 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   no N1. #35's own x138 7.5 h deadline may have degraded its last clips if its runtime exceeded 7.5 h (unprovable).
   Dummies K2 (vitaliineibauer/biohub-exp58-x138-safe-lowref) and K1 (biohub-exp58t-x138-safe) pushed at ~16:35 UTC
   (GPU quota 11 h left before the reset), FD/FF queued after them, so K2 can go at 00:00 UTC if the gates pass.
+- 2026-09-25 17:20 UTC, DUMMY GATES (tools/dummy_gates.py, FINAL_REPORT §e with the K2 correction): K2 = exp58
+  (vitaliineibauer/biohub-exp58-x138-safe-lowref v1), K1 = exp58t, FD = exp58fd: **16/16 PASS**. K1 sha256 == exp57b
+  dummy (ef0eff86...) -> safetail is inert while no deadline fires; K2: 'Low-detection dump applied', LOWDET == exp56 per
+  clip, LOWREFINE refined 26,532/27,877, 33,336/51,793, 7,370/8,518, 76,396/81,321 peaks with 0 failed frames, no
+  hard-fail lines, raw nodes 121,777, readmitted 1,365 vs 1,337 (+2%), gapfill 111 vs 110, final nodes vs K1
+  +0.004% / +0.118% / 0 / +0.013%; FD: 'DEADLINE: 975s ... safetail keeps safe divisions + linefit', insertion skipped
+  on 4 clips, safe_div 76 and linefit 116,807 kept, CSV valid. FF still running (not required for the K2 submit).
+  -> K2 goes at 00:01 UTC 26 Sep (pre-approved). exp60 lab shard A pushed at 17:15 UTC with this week's remaining quota
+  (~9 h left before the expected Saturday reset), shard B queued after FF, so the forkmid / DeepCenter-threshold audit
+  (T9) can be done tonight instead of 26 Sep morning.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
