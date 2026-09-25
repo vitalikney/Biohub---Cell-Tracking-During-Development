@@ -1492,5 +1492,8 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   Public head (balanced ~10+10 videos) transfers better; the hidden test is other embryos -> keep the public head.
   Files: experiments/coordhead_retrain/out_full_P|Q/, tools/train_coordhead.py.
 - 2026-09-25 00:02 UTC: probes #32 exp52 (id 56534391) and #33 exp53 (id 56534401) SUBMITTED (3 slots left on 25 Sep).
+- 2026-09-25 00:39 UTC: probe #31 exp51 (exp48 + x138 V1284 head) = **0.950**, NEW BEST (+0.002 over exp48 0.948; x138
+  gained +0.007 on its own 0.946 base, so the head overlaps with our leaf prune / DaughterNet gains or part of x138's
+  gain was its node drop). exp51 becomes finals candidate F1 (with exp48 as the fallback). #32/#33 (float) pending.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
