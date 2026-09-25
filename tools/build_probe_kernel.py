@@ -66,6 +66,12 @@ Patches (`--patch NAME`, repeatable, any order; they always address the BASE cod
              'DIVINS SKIPPED (deadline)'), inside try/except (input edges kept, 'DIVINS FAILED'); BIOHUB_DEGRADE_KEEP_DIV
              (set to 1) keeps safe divisions + linefit after the deadline. --lab builds (dummy only, never submit) may
              set REPAIR_DEADLINE_S=1 (FD test), DIVINS_FORCE_FAIL=1 (FF test) and DIVINS_DUMP=1.
+  lowrefine  (x138 base only; ideas workflow v3 E2 = C05) x138's low-detection pool (readmit / gapfill) gets the V1284
+             head's coordinates for its rows with score >= BIOHUB_READMIT_MIN_SCORE (0.965: exactly the main peaks the
+             head already refined before the ILP); 0.5-0.965 rows stay on the grid; the pool's int16 cast is dropped
+             (float32). Edits only the 'lowdet' literals of the predict-patch cell (order lowdet -> V1284 unchanged).
+             Knob BIOHUB_LOWREFINE_ENABLE (the patch sets 1; 0 = byte-identical CSV). A refine exception keeps that
+             frame's grid coordinates and logs 'LOWREFINE FAILED'; per video 'LOWREFINE <name>: refined R of N ...'.
 """
 import argparse
 import hashlib
@@ -1462,6 +1468,95 @@ PATCHES = {"gshift": patch_gshift, "divinsert": patch_divinsert, "leafprune": pa
 META_PATCHES = {"divinsert": meta_divinsert, "coordhead": meta_coordhead}
 
 
+# ---- lowrefine (ideas workflow v3 E2 = s_merge.json C05, reduced variant): x138 base only. x138's predict-patch cell
+# writes the low-detection pool (readmit >= 0.965, gapfill >= 0.5) through the 'lowdet globals' / 'lowdet peaks' /
+# 'lowdet write' replacements of one string-literal list, on the INTEGER pooled grid, cast to int16; the V1284 head
+# (patched into the predict script AFTER that list: swapping the order made x122's 'LOW-DETECTION DUMP SKIPPED') refines
+# only the main peaks. lowrefine edits four spots inside those literals (runtime text below, escaped into the literal):
+# the pool rows with score >= READMIT_MIN_SCORE go through _v1284_refine AFTER the integer score lookup, with the same
+# unet_out[:, f_idx] feature map as the main peaks (same peaks, same features: in distribution); the int16 cast is
+# skipped (cell 5 load_low_detections reads low_coords as float64; readmit / gapfill use float(vox)). Runtime knob
+# BIOHUB_LOWREFINE_ENABLE: "0" runs the original statements (byte-identical pool, dump and CSV). Fail-soft: an exception
+# keeps that frame's grid coordinates and prints 'LOWREFINE FAILED' (first failing frame per video) + a failed-frame
+# counter in the per-video 'LOWREFINE <name>: refined R of N lowdet peaks' line.
+LOWREFINE_GLOBALS_ANCHOR = r"_LOWDET: list = []\n"  # 'lowdet globals' new text (a double-quoted literal)
+LOWREFINE_GLOBALS = (
+    "_LOWREFINE_ENABLE = os.environ.get('BIOHUB_LOWREFINE_ENABLE', '0').strip() not in ('', '0')\n"
+    "_LOWREFINE_MIN_SCORE = float(os.environ.get('BIOHUB_READMIT_MIN_SCORE', '0.965'))\n"
+    "_LOWREFINE_COUNTS = [0, 0, 0]  # lowrefine, per video: refined peaks, lowdet peaks, failed frames\n"
+)
+# 'lowdet peaks' new text (a single-quoted literal): the statement at 24 spaces inside `if len(_low):`
+LOWREFINE_PEAKS_ANCHOR = "_LOWDET.append((_low.astype(np.float32), _lsc.astype(np.float32)))"
+LOWREFINE_PEAKS = (
+    "if _LOWREFINE_ENABLE:\n"
+    "    _lowf = _low.astype(np.float32)\n"
+    "    _LOWREFINE_COUNTS[1] += len(_low)\n"
+    "    try:\n"
+    "        _lhi = np.asarray(_lsc, dtype=np.float64) >= _LOWREFINE_MIN_SCORE\n"
+    "        if bool(_lhi.any()):\n"
+    "            _lref = np.asarray(_v1284_refine(ds_path, t, _low[_lhi], unet_out[:, f_idx]), dtype=np.float32)\n"
+    "            if _lref.shape != _lowf[_lhi].shape or not np.array_equal(_lref[:, 0], _lowf[_lhi, 0]):\n"
+    "                raise RuntimeError(f\"refine returned shape {_lref.shape} for {int(_lhi.sum())} peaks\")\n"
+    "            _lowf[_lhi] = _lref\n"
+    "            _LOWREFINE_COUNTS[0] += int(_lhi.sum())\n"
+    "    except Exception as _lr_exc:\n"
+    "        _lowf = _low.astype(np.float32)\n"
+    "        if not _LOWREFINE_COUNTS[2]:\n"
+    "            print(f\"LOWREFINE FAILED (t={t}, {type(_lr_exc).__name__}: {_lr_exc}); grid coordinates kept\", flush=True)\n"
+    "        _LOWREFINE_COUNTS[2] += 1\n"
+    "    _LOWDET.append((_lowf, _lsc.astype(np.float32)))\n"
+    "else:\n"
+    "    " + LOWREFINE_PEAKS_ANCHOR
+)
+# 'lowdet write' new text (a double-quoted literal): the cast at 16 spaces, the per-video print at 12 spaces
+LOWREFINE_CAST_ANCHOR = r"                _lc = _lc.astype(np.int16)\n"
+LOWREFINE_CAST = (
+    "                if not _LOWREFINE_ENABLE:\n"
+    "                    _lc = _lc.astype(np.int16)\n"
+)
+LOWREFINE_PRINT_ANCHOR = r"            print(f'LOWDET {name}: {len(_lc)} peaks above {_LOWDET_THRESHOLD}', flush=True)\n"
+LOWREFINE_PRINT = (
+    "            if _LOWREFINE_ENABLE:\n"
+    "                print(f'LOWREFINE {name}: refined {_LOWREFINE_COUNTS[0]} of {_LOWREFINE_COUNTS[1]} lowdet peaks'\n"
+    "                      f' (score >= {_LOWREFINE_MIN_SCORE}), failed frames {_LOWREFINE_COUNTS[2]}', flush=True)\n"
+    "                _LOWREFINE_COUNTS[:] = [0, 0, 0]\n"
+)
+_LR_V1284_MARK = "(_ps.parent/'v1284_coordinate_refinement.py').write_text("
+
+
+def _lr_literal(text: str, quote: str, indent: int = 0) -> str:
+    """Runtime text -> its spelling inside an x138 cell-4 string literal delimited by `quote` (newlines as \\n;
+    continuation lines indented by `indent` spaces)."""
+    assert "\\" not in text and quote not in text, text[:60]
+    lines = text.split("\n")
+    return "\\n".join([lines[0]] + [(" " * indent + ln) if ln else ln for ln in lines[1:]])
+
+
+def lowrefine_predict_source(c4: str) -> str:
+    """x138 predict-patch cell (code cell 4): the four exact-once edits inside the 'lowdet' literals, all before the
+    V1284 block (the patch order lowdet -> V1284 is left as it is)."""
+    assert "_LOWREFINE_ENABLE" not in c4, "lowrefine already applied"
+    v1284_at = c4.index(_LR_V1284_MARK)
+    for anchor in (LOWREFINE_GLOBALS_ANCHOR, LOWREFINE_PEAKS_ANCHOR, LOWREFINE_CAST_ANCHOR, LOWREFINE_PRINT_ANCHOR):
+        assert c4.count(anchor) == 1, f"lowrefine anchor count {c4.count(anchor)} != 1: {anchor[:70]!r}"
+        assert c4.index(anchor) < v1284_at, f"lowrefine anchor after the V1284 block: {anchor[:70]!r}"
+    c4 = _rep1(c4, LOWREFINE_GLOBALS_ANCHOR, LOWREFINE_GLOBALS_ANCHOR + _lr_literal(LOWREFINE_GLOBALS, '"'))
+    c4 = _rep1(c4, LOWREFINE_PEAKS_ANCHOR, _lr_literal(LOWREFINE_PEAKS, "'", indent=24))
+    c4 = _rep1(c4, LOWREFINE_CAST_ANCHOR, _lr_literal(LOWREFINE_CAST, '"'))
+    return _rep1(c4, LOWREFINE_PRINT_ANCHOR, LOWREFINE_PRINT_ANCHOR + _lr_literal(LOWREFINE_PRINT, '"'))
+
+
+def patch_lowrefine(cells_src: dict) -> None:
+    """Ideas workflow v3 E2 (research/wf_ideas_v3/TASK_CLOUD_SESSION.md T2): V1284-refined coordinates for the
+    readmit-eligible (>= 0.965) rows of x138's low-detection pool. Knob BIOHUB_LOWREFINE_ENABLE (main() sets 1)."""
+    cells_src[CELL["predict"]] = lowrefine_predict_source(cells_src[CELL["predict"]])
+
+
+# registration on separate lines (parallel patch branches add their own lines)
+BASES["x138"]["patches"] += ("lowrefine",)
+PATCHES["lowrefine"] = patch_lowrefine
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("name", help="folder/kernel name, e.g. exp40_relink_off (lowercase, digits, _ or -)")
@@ -1510,6 +1605,15 @@ def main() -> None:
     for _k in ("BIOHUB_DIVINS_DEADLINE_S", "BIOHUB_DIVINS_FORCE_FAIL", "BIOHUB_DEGRADE_KEEP_DIV"):
         if _k in overrides and "safetail" not in a.patch:
             sys.exit(f"{_k.removeprefix('BIOHUB_')} needs --patch safetail")
+    if "lowrefine" in a.patch:
+        if a.base != "x138":
+            sys.exit("--patch lowrefine needs --base x138")
+        overrides.setdefault("BIOHUB_LOWREFINE_ENABLE", "1")
+    if "BIOHUB_LOWREFINE_ENABLE" in overrides:
+        if "lowrefine" not in a.patch:
+            sys.exit("LOWREFINE_ENABLE needs --patch lowrefine")
+        if overrides["BIOHUB_LOWREFINE_ENABLE"] not in ("0", "1"):
+            sys.exit(f"LOWREFINE_ENABLE must be 0 or 1, got {overrides['BIOHUB_LOWREFINE_ENABLE']!r}")
     if overrides.get("BIOHUB_DIVINS_FORCE_FAIL", "0") != "0" and not a.lab:
         sys.exit("DIVINS_FORCE_FAIL is a dummy test knob: needs --lab")
     if any(k.startswith("BIOHUB_DIVINS_") for k in overrides) and "divinsert" not in a.patch:
