@@ -1734,6 +1734,16 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
 
   Никогда не отмечать exp56 (x138 без изменений) и два файла с одинаковыми компонентами. Автовыбор Kaggle взял бы две
   лучшие по public почти-копии, поэтому отмечать только вручную.
+- 2026-09-25 13:58 UTC, BROWSER CHECKS (TASK_LOCAL_SESSION §4, read-only): (1) TIES: Rules §3.7.b "In the event of a tie, the
+  Submission that was entered first to the Competition will be the winner" (https://www.kaggle.com/competitions/
+  biohub-cell-tracking-during-development/rules) - so a late byte-copy of x138 ranks at the END of the 0.953 block;
+  public-LB tie order officially undocumented. (2) RUNTIME LIMIT = 12 h (Overview -> Code Requirements: "GPU Notebook
+  <= 12 hours run-time"), not 9 h. Error classes (https://www.kaggle.com/code-competition-debugging): "Notebook
+  Timeout", "Notebook Threw Exception", "Submission CSV Not Found", "Submission Scoring / Format Error", "Notebook
+  Exceeded Allowed Compute", "Kaggle Error"; errored submissions count toward the daily limit. #34/#35 showed
+  "Notebook Running" (hidden rerun still in progress ~6 h after submission). (3) GPU QUOTA: Settings shows "Kaggle GPU
+  18:56 / 30 hrs" (11 h 04 m left); reset weekly, per a 2020 staff post Saturday 00:00 UTC (= 26 Sep 00:00, unconfirmed
+  in current docs). Hidden-test reruns reportedly do NOT count against the quota (community answers only, unverified).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

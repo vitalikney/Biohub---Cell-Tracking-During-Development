@@ -9,3 +9,25 @@ ref,fileName,date,description,status,publicScore,privateScore
 
 56534391,submission.csv,2026-09-25 00:02:05.877000,probe 32: exp52 = exp51 (exp48 + x138 head) + float output coords (safe encoding: floor(w)=round(v)); lab +0.0025 on 6bba selection,SubmissionStatus.COMPLETE,0.950,
 
+=== 2026-09-25T13:46:07Z
+ref,fileName,date,description,status,publicScore,privateScore
+
+56545786,submission.csv,2026-09-25 08:33:25.043000,"probe 35: exp57b = x138 verbatim (exp56) + DaughterNet v1 division insertion with steal (exp48 knobs); +12 forks, nodes identical",SubmissionStatus.PENDING,,
+
+56545267,submission.csv,2026-09-25 08:09:00.723000,probe 34: exp56 = anvithpothula/biohub-x138 verbatim on our account (author public 0.953); same docker pin + machine shape,SubmissionStatus.PENDING,,
+
+56534401,submission.csv,2026-09-25 00:02:10.437000,probe 33: exp53 = exp48 (0.948) + float output coords (safe encoding); compare with exp48,SubmissionStatus.COMPLETE,0.948,
+
+56534391,submission.csv,2026-09-25 00:02:05.877000,probe 32: exp52 = exp51 (exp48 + x138 head) + float output coords (safe encoding: floor(w)=round(v)); lab +0.0025 on 6bba selection,SubmissionStatus.COMPLETE,0.950,
+
+=== 2026-09-25T13:56:09Z
+ref,fileName,date,description,status,publicScore,privateScore
+
+56545786,submission.csv,2026-09-25 08:33:25.043000,"probe 35: exp57b = x138 verbatim (exp56) + DaughterNet v1 division insertion with steal (exp48 knobs); +12 forks, nodes identical",SubmissionStatus.PENDING,,
+
+56545267,submission.csv,2026-09-25 08:09:00.723000,probe 34: exp56 = anvithpothula/biohub-x138 verbatim on our account (author public 0.953); same docker pin + machine shape,SubmissionStatus.PENDING,,
+
+56534401,submission.csv,2026-09-25 00:02:10.437000,probe 33: exp53 = exp48 (0.948) + float output coords (safe encoding); compare with exp48,SubmissionStatus.COMPLETE,0.948,
+
+56534391,submission.csv,2026-09-25 00:02:05.877000,probe 32: exp52 = exp51 (exp48 + x138 head) + float output coords (safe encoding: floor(w)=round(v)); lab +0.0025 on 6bba selection,SubmissionStatus.COMPLETE,0.950,
+
