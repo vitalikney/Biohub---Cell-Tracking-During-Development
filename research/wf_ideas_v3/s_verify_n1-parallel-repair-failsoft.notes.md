@@ -1,0 +1,2 @@
+- 12:30 start N1 verify
+- 12:31 verified cell4/cell5 structure: ILP inside GPU shards, repair sequential after merge; key test = latency bound vs sim N=140-180 worlds

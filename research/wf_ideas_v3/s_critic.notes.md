@@ -17,3 +17,7 @@
   exp57b VERBATIM N=150 rho1.6: finish p50 12.2 h => #35 could TIME OUT, not just degrade.
 - Reading: C01 alone leaves 5-35% of clips degraded when N=140-160 and private clips are ~1.6x denser than the dummies; 3 repair workers remove it up to N~180. x138 verbatim is degraded (private tail, public sorted first) in the N=140-160 world -> the 241-copy block would lose ~0.01-0.03 on private.
 - Latency back-calibration idea: exp48/exp51 (same GPU phase, DaughterNet ungated, NO guard) scored within 7.5 h -> their dummy per-clip repair seconds turn L=7.5 h into an N bound; zero slot, needs local session to read exp48/49/51 logs.
+- 13:05 pyflakes on exp56 cells 2+5: only undefined names = test_stems, predict_seconds; cell-5 module-level side effects = DeepCenter load (l.2067) + final write_test_submission call (l.2219); cell 2 side-effect free -> subprocess repair workers are cheap to build (monkey-patch filter_output_graph in the parent to return worker results -> original writer => byte-identical CSV).
+- Decision: 2 new ideas. N1 parallel repair + fail-soft stage wrappers + zero-slot latency back-calibration (exp48/49/51 logs). N2 one-slot hidden-size bit-probe via submission outcome (needs user decision; trigger: #34 unscored by 15:40 UTC and step 0 inconclusive).
+- (b) no honest retraining path by 29 Sep (agree with C11). (c) ~45 of ~60 GPU-h unplanned; min-track-len 4/8 both negative (RESULTS l.38/41) -> no node-count knob left.
+- 12:28 s_critic.json written (2 hypotheses)
