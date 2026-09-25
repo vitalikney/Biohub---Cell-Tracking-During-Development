@@ -1,2 +1,7 @@
 # h_ensembles-and-private notes
 - 2026-09-25 ~11:00 UTC: started; read BRIEF.md
+- 11:10 read CONTEXT.md (resume block l.1520-1549), experiments/ext_x138/DIFF.md, wf_ideas_v2/FINAL_REPORT.md, discussions_summary.md, browser_research_2026-09-24*.md
+- x138 runtime on hidden test: NOT in repo (no kernel logs stored; notebooks have 0 outputs). Proxies: our probes' scoring latency ~7.5 h (#28 03:45->11:20; #31 17:09->00:39; CONTEXT l.1488-1497, wf_ideas_v2 finals notes); exp51 dummy run 1,713 s / 4 videos (CONTEXT l.1424).
+- x138 cell 0: REPAIR_DEADLINE_S=27000 (7.5 h after kernel start the repair loop DEGRADES: relink, gap close, gap2, safe divisions, linefit OFF for the remaining datasets); ILP_TIMEOUT 1200 s/dataset. Repair loop iterates geffs in sorted order (test_stems sorted by name, cell 4 l.313) -> if the guard fires, the ALPHABETICALLY LAST datasets (likely one whole embryo prefix) lose the tail. Local value of those stages on exp29 tail ~ -0.026/movie (RESULTS.md per-stage table: gap +0.013, div +0.0084, veto -0.0035, linefit +0.0145, relink -0.0067).
+- x138 detection blend: primary = pilkwang support-pack 50ep, secondary = seed314159, SECONDARY_DETECTION_WEIGHT 0.80, edge weight 0.15, link mode low_margin_consensus, retention guard 0.90 (cell 3 l.651-660, cell 4 l.83-160). Head uses PRIMARY unet_out.
+- public third-party detectors: leonixis/biohub-v5-candidates (all-199 retrain, 60 ep, LB 0.947 alone), georgexue666/biohub-precision-pool2-weights (pool-2, sigma 0.8, different arch?) (browser_research pass2 l.76-77)
