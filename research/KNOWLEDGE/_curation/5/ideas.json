@@ -1,0 +1,88 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/ideas.json",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/IDEAS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/5/ideas.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/5/ideas.json"
+ ],
+ "alerts": [
+  {
+   "kind": "forgotten",
+   "what": "READ TABLE CLARIFICATION v3 (I-236: V1 pairs not labels, V2 checklist fix, V3 K2'' only / D4 dropped, V4 bound B, V5 scope, V6 ledger texts superseded, V7 poller stop rule + manual-poll job) is not in CONTEXT; a rule written after a visible score is post-hoc (R7)",
+   "evidence": "research/wf_ideas_v4/round5/report.json R5-A2 + plan_issues (VERBATIM CONTEXT BLOCK); CONTEXT.md ends at the 01:20 UTC entries l.2026-2038 (f05389e); research/KNOWLEDGE/IDEAS.md I-236",
+   "suggested_action": "Main session: append the verbatim block (replace <hh:mm>), commit as the user and push before the first #37/#38 result in poll.log (hard limit ~06:00Z); point the pending-OK line CONTEXT.md l.2023 at the OK REQUEST entry",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "The consolidated pre-score OK request (I-228) is still unposted and unrecorded; round 5 updated it to 7 items (K1, twin floor 0.952, row-2 F2, K2 resubmit, K2'' only if B > 9.0 h, close floatout / drop L1-L2, tick exactly two files)",
+   "evidence": "research/wf_ideas_v4/round5/scan_plancheck.json PC5-05; research/wf_ideas_v4/round5/v_plancheck_pc5-05.json (confirmed 03:35Z); research/wf_ideas_v4/round5/report.json R5-A3 + ok_message_ru",
+   "suggested_action": "Post the Russian text from R5-A3 now (chat + PushNotification); append 'OK REQUEST posted <UTC>; poll.log last header <ts>' to CONTEXT with the v3 commit; later log the answer time vs the first #37/#38 result times",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "Clean-proof background poll job (I-226 / R5-A1: one-shots 07:57:30, 08:00:45, 08:01:45Z, stamped after the call, every stamp < 08:02:12Z) is not started; the poller's own polls land ~07:54Z and ~08:04Z, straddling the K2 8.0 h mark, so a clean K2 would most likely read POSSIBLE",
+   "evidence": "research/wf_ideas_v4/round5/report.json R5-A1, plan_issues (1); research/wf_ideas_v4/round5/v_plancheck_pc5-02.json; research/wf_ideas_v4/round5/report.notes.md 03:36Z, 03:48Z; CONTEXT.md l.2032 (C6)",
+   "suggested_action": "Start the R5-A1 script once with Bash run_in_background well before 07:45Z (never import lb_poll.py, never restart PID 20052); record the start time in CONTEXT (v3 V7)",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "The runtime-trigger contingency cannot be built as written: the builder refuses any non-lab REPAIR_DEADLINE_S != 34200, D4 has no code, and the only accepted move (DIVINS alone) is the forbidden one; the K2'' = exp58d builder change (I-235) is not prepared",
+   "evidence": "research/wf_ideas_v4/round5/scan_plancheck.json PC5-01; tools/build_probe_kernel.py l.2016-2029; tests/test_safetail.py l.151-165; tools/runtime_ledger.py l.284; research/wf_ideas_v4/round5/report.json R5-A4, V3",
+   "suggested_action": "Optional now (outside 07:45-08:35Z), mandatory before any K2'' build: accept exactly (34200, 28800) or (37800, 32400), add tests, confirm the K2 rebuild keeps sha 1f1ddb6d63b47f54..., add a 10.5 h ledger family for exp58d",
+   "urgency": "today"
+  },
+  {
+   "kind": "contradiction",
+   "what": "The FINALS-TICK CHECKLIST says 'Never tick #34', but C3 and row 4 without K1 literally land on #34; the judge resolves it through the Never line and f2: #34 = exp56 is barred while the twin is eligible, so the pair is {twin #38, exp52}, else {#34, exp52}",
+   "evidence": "CONTEXT.md l.2038 (checklist) vs l.2029 (C3), l.1999 (row 4), l.2004-2005 (Never line), l.1893-1894 (f2); research/wf_ideas_v4/round5/report.json plan_issues (4), V1-V2, rejected (7); research/wf_ideas_v4/round5/report.notes.md 03:40Z",
+   "suggested_action": "Fix it with v3 V1-V2 in the same pre-score commit (I-236); at score time recommend the tick as a PAIR with refs",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "ledger.md prints stale contingency texts: A6 'K1 ... rebase K3 on K1' (K3 closed, C2 routes by error class), an A5 ask text offering D4 (dropped), A5-F 'Forecast F not supplied' (F = 7.87 h); a session reading it at score time could act on them",
+   "evidence": "experiments/lb_poll/ledger.md (03:43:33Z, A5-F line); research/wf_ideas_v4/round5/scan_plancheck.json PC5-06; tools/runtime_ledger.py l.313-327",
+   "suggested_action": "Neutralise now via v3 V6 in CONTEXT; the code fix (I-243) only after ~09:40Z, never inside 07:45-08:35Z",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "Poller stop rule: '~09:30Z' is 2 min before the 9.5 h marks (09:32:12Z / 09:32:18Z); stopping PID 20052 early could lose the R5 upper bound for K2/twin",
+   "evidence": "research/wf_ideas_v4/round5/scan_plancheck.json PC5-07; research/wf_ideas_v4/round5/report.json plan_issues (7), V7, R5-A5 (6); research/KNOWLEDGE/IDEAS.md I-010",
+   "suggested_action": "Keep PID 20052 until poll.log shows COMPLETE/ERROR for both 56563521 and 56563534, and at least to the first poll after 09:32:18Z if either is still PENDING",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "Round-5 closures and facts exist only in research files: I-238..I-241 refuted, I-004 N1 / I-009 D4 dropped, I-054 already-divided on x138 -0.00068 (fork-removal riders 0 for 5), I-157 AdaBN new blocker, I-168/I-242 post-freeze defect (+0.0063 lab ceiling, post-deadline item #1), R5H-1 (no private-only crash possible)",
+   "evidence": "research/wf_ideas_v4/round5/report.json R5-A6 (1)-(6), rejected; research/KNOWLEDGE/IDEAS.md ORPHANS 'Closed only in research-round files'",
+   "suggested_action": "Record them with the next CONTEXT write (R5-A6, due 26 Sep 12:00Z), including the 03:16Z intel line (#160/3,922) and marking WATCHLIST W44 done",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "contradiction",
+   "what": "CONTEXT l.22 says frozen/duplicated frames have 'GT still moving', but the exp60 recheck finds frozen GT steps have median 0 (GT copies positions on frozen frames); the real defect is post-freeze link errors on ~2x steps",
+   "evidence": "CONTEXT.md l.22; research/wf_ideas_v4/round5/report.json new_facts (17), R5-A6 (3); research/wf_ideas_v4/round5/v_recheck_r5-rc-a-post-freeze-transitions-on-x138.json",
+   "suggested_action": "Optionally correct CONTEXT l.22 with the R5-A6 write; no build (I-192, I-242)",
+   "urgency": "info"
+  },
+  {
+   "kind": "forgotten",
+   "what": "Round-5 report exists only as report.json 'report_md_ru' (the harness refused the judge's write); round2/REPORT.md is still missing (round3/4 saved in f05389e)",
+   "evidence": "research/wf_ideas_v4/round5/report.json R5-A8, report_md_ru_note; research/wf_ideas_v4/round5/report.notes.md 03:45Z; ls research/wf_ideas_v4/round2/ (no REPORT.md)",
+   "suggested_action": "Save round5/REPORT.md with the v3 commit (R5-A8); round2 at any quiet moment (I-232)",
+   "urgency": "today"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "I-233 (the poller logs error_description) is still the only strict orphan: no owner, 'revisit after 09:30Z'",
+   "evidence": "research/wf_ideas_v4/round4/report.json rejected, R4-A9; not mentioned in research/wf_ideas_v4/round5/report.json; research/KNOWLEDGE/IDEAS.md ORPHANS",
+   "suggested_action": "After both scores: close it with one line (the C2 one-liner covers the need) or implement it in a quiet window",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 5 of the IDEAS LEDGER (2026-09-26 ~04:05 UTC, HEAD f05389e + untracked research/wf_ideas_v4/round5/). The update is incremental from curation 4 (234 ideas), with IDs kept stable: 243 ideas in 12 clusters, 42 change records in ideas.json meta.curations[n=5]. New ideas are I-235 K2'' = exp58d (in-plan, trigger-only, at risk), I-236 CLARIFICATION v3 (in-plan, at risk: not in CONTEXT), I-237 runtime bound B, I-243 runtime_ledger text fix (at risk), I-242 post-freeze re-solve (deferred-after-deadline), plus four refuted ones: I-238 loosening the trigger, I-239 CPU replay of K2's tail, I-240 fail-soft guards, I-241 private-only crash hunt. Status changes: I-004 N1 went in-plan -> refuted (superseded by K2''). I-224, I-227 and I-229 are now recorded in CONTEXT l.2026-2038, so they are no longer orphans. I-009, I-007 and I-008 were reframed around K2''. I-054, I-157, I-168 and I-192 got the round-5 recheck numbers. #37/#38 are still PENDING at 03:53:33Z, so nothing new is lb-tested. Counts: lb-tested 38, lab-tested 20, refuted 139, deferred 20, in-plan 25, open-untested 1. Orphans: I-233 is the only strict one; at risk are I-226, I-228, I-232, I-235, I-236 and I-243. IDEAS.md was regenerated from ideas.json with the same renderer as curation 4."
+}

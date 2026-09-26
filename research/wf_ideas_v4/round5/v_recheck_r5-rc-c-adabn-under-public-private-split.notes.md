@@ -1,0 +1,9 @@
+- 2026-09-26: started verify of R5-RC-C (AdaBN recheck)
+- 2026-09-26: checked experiments/RESULTS.md B5 row (0.68034 -> 0.68761, guard applied 9/12, 6W/3L/3 ties, head EMA -0.0025) and exp38 row (0.90010 -> raw 0.85644 / guarded 0.89352, guard 4/12, 2W/2L; adj edge -0.00737; adapt ~78 s / 12 videos). Match the finding.
+- RESULTS.md own-train12 0.8332 vs LOEO 0.6803 (STEP 1b row) confirmed -> B5's regime = large embryo shift.
+- exp60_trainlab/results.md control rows: 44b6/ALL 0.9106 (17 clips), 6bba/ALL 0.9361 (39) -> matches 0.911/0.936. Weak evidence (different clip mix, in-sample), finding says so in scan_recheck.
+- v3 FINAL_REPORT l.463 item 13: head captures hold 224-d features -> head reads detector features. CONTEXT l.1495-1504: V1284 head x138 +0.007 on its own 0.946 base; +0.002 on ours. l.1750 lowrefine uses same features.
+- CONTEXT l.1673 R9: bans detector/edge/head retraining by 29 Sep and transductive test-crop consensus; AdaBN = transductive BN-stat re-estimation on test images -> within the spirit of R9 (interpretive, not literal). R8: new mechanisms end 27 Sep 12:00 UTC.
+- Round 3 scan_recheck R3-RC-C was axis-flip, not AdaBN -> no repetition. 
+- Only revival angle: private embryos (71%) might carry a 44b6-vs-6bba-sized shift. Not measurable: train has 2 embryos, both in-sample for pilkwang weights; head/DaughterNet were fitted on unadapted features; guard checks node count only, not head-feature drift. Verdict holds.
+- 2026-09-26: final JSON written (refuted=false)

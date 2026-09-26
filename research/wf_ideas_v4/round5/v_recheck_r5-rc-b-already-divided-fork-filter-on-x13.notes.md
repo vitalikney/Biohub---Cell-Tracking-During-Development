@@ -1,0 +1,11 @@
+# v_recheck R5-RC-B already-divided fork filter on x138 — notes
+- 2026-09-26 start: no prior JSON; reading CONTEXT.md tail, round reports, scan_recheck.json
+- 2026-09-26 ~06:40 UTC: read scan_recheck.json (B entry) + scan_recheck.notes.md 03:45 entry. Scratchpad (this session) recheck5.py / recheck5_out.json / recheck5_agg.py exist.
+- Re-ran recheck5_agg.py: numbers reproduce exactly. control 676 forks, 26 chained, labels TP1/FP2/ign23, dropped edges TP3/FP0/ign23, div 16/25 -> 15/23, 0.93340 -> 0.93272 (-0.00068); ins35 877/33 (4 inserted, all ignored), div 25/31 -> 24/29, -0.00055.
+- Whole effect sits in 2 clips: 44b6_deabac95 (2 FP forks removed BUT their 2 dropped far-child edges were TP -> nearest-child rule keeps the wrong child; edge TP 121->119) and 6bba_8b7818bf (1 TP division lost; its predicted ancestor fork is spurious). n is tiny (2 clips) -> "closed by measurement" is really "no evidence of gain, both failure mechanisms observed".
+- Implementation check vs exp36 notebook (experiments/exp36_sjlee947_tight55_divhygiene/*.ipynb, ALREADY_DIVIDED_FILTER block): exp36 uses a static divider set (ancestor counts even if filtered), recheck processes in time order and requires ancestor still to have >=2 kept kids; nearest child by um distance in both. Differences only matter for 3-deep chains; do not change the verdict (recheck variant is if anything less aggressive).
+- Break-even context: round2 report ANTIPAR 'lab break-even FP:TP >= 7.7'; here FP:TP 2:1 on forks and 0:3 on edges -> far below break-even.
+- Old evidence: RESULTS.md l.51 probe 18 exp36 0.946 vs 0.947 (bundle, older base); friend B local +0.0011 old base. Neither shows gain on the LB.
+- '0 for 5' nuance: DNVETO was closed WITHOUT a run (round2 report: same mechanism class) -> FACTS line should read 4 measured + 1 by analogue.
+- Verdict: not refuted. No build is correct; R8 (new mechanisms end 27 Sep 12:00) and R4 (public cannot read a 2-clip effect) also block.
+- 03:33 UTC: final JSON written (refuted=false).

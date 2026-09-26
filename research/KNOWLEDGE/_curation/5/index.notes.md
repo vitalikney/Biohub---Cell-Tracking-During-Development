@@ -1,0 +1,5 @@
+- 04:01Z index curator 5 start; no index.json existed; read INDEX (c4) + CHANGES tail
+- 04:01Z gathered line refs (IDEAS l.11/374, FACTS C-36..C-42, DECISIONS §2d l.214, WATCHLIST W55-W59); poll.log last 03:53:33Z both PENDING
+- 04:02Z INDEX.md written (72 lines); next CHANGES c5 section
+- 04:03Z CHANGES.md c5 section appended
+- 04:03Z index.json written; done

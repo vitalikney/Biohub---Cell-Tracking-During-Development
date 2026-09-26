@@ -1,0 +1,14 @@
+# scan_plancheck notes (round 5)
+- 2026-09-26T03:16:09Z started; no prior scan_plancheck.json
+- 03:16Z git: f05389e (READ TABLE CLARIFICATION v2, provisional tick rule) committed 01:20:05Z (04:20+03:00) = before any #37/#38 score; origin/main == f05389e (pushed).
+- 03:13:26Z last poll (poller PID 20052 alive, 602 s cycle, +2 s drift). #37 56563521 and #38 56563534 PENDING, L > 3.18 h. ledger.md A5-L(K2) WATCH; A5-F still 'Forecast F not supplied' (F=7.87 h computed in CONTEXT round 3 but never passed via --forecast-h).
+- 03:18Z C2 command (KaggleApi.competition_submissions ... error_description) tested read-only: works with kaggle 2.2.4, prints '' for all rows.
+- lb_poll.py: ts taken BEFORE the CLI call; ledger upper bound = ts + 210 s * failed attempts; duration of the SUCCESSFUL call is not added (small understatement). lb_poll.py has module-level while True -> never import it for a one-shot poll.
+- 03:20Z power: laptop on AC (Win32_Battery status 2, 78%), sleep timeout 0 (never) on AC and DC; no RebootRequired key. Poller PID 20052 alive.
+- Memory files current (MEMORY.md 02:13 local): RESUME POINT pointer + approvals updated; no finding.
+- tools/build_probe_kernel.py l.2021-2022: non-lab safetail builds REFUSE any REPAIR_DEADLINE_S != 34200 -> the A5 runtime-trigger option "move BOTH deadlines to 32400/37800" (FINAL_REPORT_v4 item 5, ledger ask text l.284) cannot be built for submission; DIVINS_DEADLINE_S alone IS buildable (only needs safetail) = the variant v4 forbids ("never DIVINS alone"). 'DIVINS_TWOSTAGE' (D4) exists nowhere in tools/ except the ledger text. No F1 rule for a deadline-moved K2' vs K2.
+- CONTEXT l.2038 checklist "Never tick #34" contradicts C3 [no OK: F1 = #34], row 4 [no K1, no OK: #34], f2 (#34 last resort) and WATCHLIST T10. Row 4 no-K1 branch gives F2 = exp52 even when the twin is f2-eligible (C3 gives F2 = twin): inconsistent.
+- Row 5 heuristic "L(twin) >= L(K2) - 0.3 h means queue delay dominates" is mis-specified: #34/#35 ran concurrently (#35 done <= 16:17Z, serial would be >= ~20:45Z), so K2/twin (6 s apart) share queue; L(K2)-L(twin) then measures the insertion RUNTIME cost (LB: L35-L34 in (0.26, 1.44) h; dummies K2 1,512 s vs twin 1,038 s kernel end), not queue. Queue must be read from L(twin) vs twin runtime bound (x138 runtime <= L34_hi 6.46 h, +0.1 h jitter from 818-1179 s start spread): runtime(K2) <= L(K2)_hi - L(twin)_lo + 6.56 h.
+- ledger A6 text (runtime_ledger.py l.~316) still says 'K2 ERROR -> K1 ... rebase K3 on K1' = stale vs C2 and K3 closed. A5-F 'Forecast F not supplied' although F = 7.87 h (CONTEXT l.1970). runtime_ledger.py is re-run as a subprocess each cycle -> an edit takes effect without restarting the poller.
+- WATCHLIST W45 (consolidated OK request, before any score) = 'not started'; no CONTEXT record of it being posted.
+- 2026-09-26T03:24:48Z wrote scan_plancheck.json (7 findings: PC5-01..07)

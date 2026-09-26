@@ -1,0 +1,45 @@
+{
+ "summary": "Round-5 delta scan, 03:16-03:25 UTC 26 Sep, compared with round 4 (LB 00:47 UTC). The public LB has 3,922 teams (+3). We are rank 160 (155 in round 4), still at 0.954 with 38 subs; the counted entry is still P36. Our place inside the 0.954 block has not changed: 6th of 73, behind Oleksandr Parfionov, Mthem77, Yam, Fanch and Homii_N. The rank drop has one cause: five more teams now score above 0.954 (Pai and Ivan Gevorkov 0.954->0.957, kusui26 0.953->0.957, Adam 0.953->0.955, BorisV and others moving higher), so the block shifted from 150-222 to 155-227. Block counts, with 00:47 in brackets: 0.953 = 302 (289), 0.954 = 73 (73), 0.955 = 41 (41), 0.956 = 24 (24), 0.957 = 16 (14), >=0.960 = 55 (52), >=0.970 = 6, >=0.953 = 529 (511). Silver (about 5% = rank 196) is still inside the 0.954 block; we are 36 ranks above it. Ranks 1-20 are unchanged. The top movers are Ad Space available (0.961 -> 0.965, #21), Nabil Hanif (0.959 -> 0.964, #27), Bio-Pirates (0.950 -> 0.960) and Jiman Kwon (0.955 -> 0.959). None of them has public biohub code. Fifteen more teams landed at the END of the 0.953 block (498-512), the fifth window in a row of late x138 copies. K2 #37 and twin #38 are still PENDING (poller 03:13Z). Nothing else changed: no public notebook has run since 25 Sep 09:09 UTC, none scores >= 0.954, there are no new datasets or models, no new discussion topics or comments, and no host announcement. Overview, timeline and runtime limits are unchanged, the data files are unchanged (creationDate 2026-06-26), and x138 is still Version 1 of 1. Nothing was pulled into experiments/ext_*.",
+ "findings": [
+  {
+   "id": "r5-lb-delta-0316",
+   "kind": "new-fact",
+   "what": "Public LB at 03:16 UTC 26 Sep: 3,922 teams. We are rank 160 (155 at 00:47) at 0.954, 38 subs, last 2026-09-25 16:18:09 (P36 still the counted entry). We are still 6th of 73 in the 0.954 block, which moved from 150-222 to 155-227 because five teams passed above it. The teams directly around us are unchanged: Homii_N at 159, Taisei at 161. Other blocks: 0.957 = 74-89 (16), 0.956 = 90-113 (24), 0.955 = 114-154 (41), 0.953 = 228-529 (302); >=0.960 = 55, >=0.970 = 6, >=0.953 = 529 (+18 in 2.5 h). Silver (about 5% of 3,922 = rank 196) is still inside the 0.954 block; we are 36 ranks above the line (41 in round 4). The Overview page shows 85,910 submissions, up 152 since ~01:00. Our rank moved only because other teams passed above the block, not because anything happened on our side, so it says nothing about K2 or the twin.",
+   "evidence": "python -m kaggle competitions leaderboard biohub-cell-tracking-during-development --download at 03:16:39 UTC. File: session scratchpad lb/r5/biohub-cell-tracking-during-development-publicleaderboard-2026-09-26T03_16_39.csv. Compared with lb/r4/...2026-09-26T00_47_21.csv using scratchpad lb/cmp.py and lb/blk.py. The competitions list CLI also shows userRank 160. https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/leaderboard",
+   "action": "Update the CONTEXT intel line to rank 160/3,922, still 6th of 73 in the 0.954 block (155-227), silver ~196, margin 36. No plan change.",
+   "urgency": "info"
+  },
+  {
+   "id": "r5-top-movers",
+   "kind": "new-fact",
+   "what": "Ranks 1-20 are unchanged (Gabriel and Sergio Alvarez 0.975, yu4u 0.973 ...). Movers since 00:47: Ad Space available 0.961 -> 0.965 (#21); Nabil Hanif 0.959 -> 0.964 (#27); BorisV 0.958 -> 0.960; Bio-Pirates 0.950 -> 0.960 (#50, 177 subs); Jiman Kwon 0.955 -> 0.959; Daikon99 0.957 -> 0.958; Pai 0.954 -> 0.957; kusui26 0.953 -> 0.957 (10 subs); Ivan Gevorkov 0.954 -> 0.957; Adam 0.953 -> 0.955. Into 0.954: Cyrus (0.946 -> 0.954, #176) and xiaoyukun1 (0.953 -> 0.954, #182), both below us. The mover subs date from 17:03-21:52 UTC 25 Sep. None of these teams has public biohub code or datasets.",
+   "evidence": "LB diff (cmp.py movers list). kaggle kernels list --user and datasets list --user for rainchen0411, richardsilence, nmh12345, kusui26, ivangevorkov, alexeyshmelev, potonglantie93, akankshatiwari2803, ankitlade12, jimankwon, bvoskresenskii, jamalsaeedi, xiaoyukun1. Their only public items are unrelated (for example kusui26 'Imitate, Calibrate, Scale' 12 Sep, jamalsaeedi ARC/Santa).",
+   "action": "None. The 0.955-0.965 band keeps filling with no public mechanism behind it, which fits private retrained models (ruled out for us by R9).",
+   "urgency": "info"
+  },
+  {
+   "id": "r5-late-copies-block-end",
+   "kind": "new-fact",
+   "what": "Fifteen more teams moved from 0.894-0.950 (or were new) to 0.953 and landed at ranks 498-512, the END of the 0.953 block: Jean-Francois DAVID, Peter Wang, Latif, Bocen Li, MBHUB (0.901), Eddy Despradel (NEW, 1 sub), mimimi (NEW, 2 subs), Ifeoluwa Adewumi, SAMIUL ISLAM, Samuels Winstons, Sam Barnett, StupidXie, Majid Aleissa, Leonid Kozinkin, ka4869. Their last subs fall between 18:21 and 20:24 UTC 25 Sep. yarden and yaeli went 0.949 -> 0.953 at #247. This is the fifth window in a row with the pattern: late byte-copies of x138 share its unrounded score and rank below earlier copies.",
+   "evidence": "LB 03:16 vs 00:47 (cmp.py).",
+   "action": "None. It reconfirms finals rule f(iv): never tick a verbatim x138 copy (exp56).",
+   "urgency": "info"
+  },
+  {
+   "id": "r5-k2-twin-still-pending",
+   "kind": "new-fact",
+   "what": "At 03:13Z the poller shows #37 K2 (56563521, submitted 00:02:12) and #38 twin (56563534, 00:02:18) still PENDING, 3 h 11 min after submission. P36 is COMPLETE 0.954. With builds taking ~7.8 h plus scoring, K2 and the twin should score at about 07:50-09:30 UTC. The LB CSV's LastSubmissionDate cannot show scoring order: Thirst's score changed (0.949 -> 0.952) with a last sub of 00:10:36, but an earlier sub of theirs may be the one that scored, so this says nothing about queue speed.",
+   "evidence": "experiments/lb_poll/poll.log block === 2026-09-26T03:13:26Z; LB CSV row 'Thirst' (#542).",
+   "action": "No action. As round 4 said, read K2 and the twin from their displayed scores in poll.log (READ TABLE + CLARIFICATION v2), not from the LB row or rank. P36's higher unrounded score keeps our LB row even if K2 scores 0.954.",
+   "urgency": "today"
+  },
+  {
+   "id": "r5-no-new-code-posts-announcements",
+   "kind": "new-fact",
+   "what": "Nothing new is public. (a) Code: the newest competition notebook run is still raunakdey07/biohub-harmonic-fusion-v3 (25 Sep 09:09 UTC; the Code tab now says 'Updated 18h ago', 0.953). The newest created notebook is still tobimichigan (24 Sep). No public notebook scores >= 0.954. (b) x138 (https://www.kaggle.com/code/anvithpothula/biohub-0-953-lb-original) is still 'Version 1 of 1' with 189 votes (187) and 266 copies (264), so the code is unchanged. (c) Discussion: there is no new topic or comment under either sort=published or sort=recent-comments. The newest activity is still Gabriel's comment on 'Beginner question: How do Public/Private splits...', now 'Last comment 5h ago by Gabriel', which is the same comment. Pinned host topics are unchanged (Workshop 10d, Discord 1mo, Welcome 2mo), so there is no announcement. (d) Overview is unchanged: 'Final Submission Deadline.' September 29, 2026; 'CPU Notebook <= 12 hours run-time' and 'GPU Notebook <= 12 hours run-time'; 3,918 Teams, 85,910 Submissions. (e) Data: files still show creationDate 2026-06-26; deadline 2026-09-29 23:59:00. (f) Datasets and models: nothing new since kragglenote2forwork/biohub-sub-cache2 (20:06 UTC 25 Sep). kabirk22/biohub2, fagbolapeter/biohub-trained-4ep and dariushafshar/kaggle-competition-leaderboard-intelligence were already logged in round 2, and the models list is the same as in round 4. Nothing was pulled into experiments/ext_*.",
+   "evidence": "Browser in its own new tab (closed at the end, group auto-removed): https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion?sort=published, ?sort=recent-comments, /overview, /code?sortBy=dateRun, and the x138 page. CLI: kernels list --competition with --sort-by dateRun, dateCreated and scoreDescending; datasets list --search biohub --sort-by updated; models list --search biohub; competitions list --search biohub; competitions files. Notes: research/wf_ideas_v4/round5/scan_browser.notes.md",
+   "action": "None. The next browser delta is round 6, ideally after K2 and the twin score (~08:00-09:30 UTC).",
+   "urgency": "info"
+  }
+ ]
+}

@@ -298,3 +298,31 @@ Curator logs: `research/KNOWLEDGE/_curation/4/`.
 - Curator disagreement settled here:
   - Floatout alert: the ideas curator dropped it because DECISIONS G15 already carries it; the facts and watch curators kept it. INDEX keeps it as [today], to be confirmed in the OK message.
   - Round-4 commit / REPORT.md urgency: "info" (ideas), "before-finals" (facts), "today" (watch). INDEX uses "today", because the commit is quiet-window work.
+
+## 5 - 2026-09-26 ~04:05 UTC (curation 5; git HEAD f05389e + untracked `research/wf_ideas_v4/round5/`)
+
+**Operations:** no score yet. #37 K2 (56563521) and #38 twin (56563534) are PENDING at 03:53:33Z (L > 3.85 h); nothing submitted since 00:02Z (`experiments/lb_poll/poll.log` l.2397-2402; `experiments/lb_poll/ledger.md` 03:53:35Z). Commit f05389e (01:20:05Z, pushed before any score) put CLARIFICATION v2, the round-4 records, the provisional tick rule and the 29 Sep checklist in CONTEXT (`CONTEXT.md` l.2026-2038). Intel: #160 of 3,922 at 03:16Z (`research/wf_ideas_v4/round5/report.json` new_facts).
+
+**Ideas** (`IDEAS.md` l.11; `ideas.json` meta.curations[n=5], 42 records; `_curation/5/ideas.json`):
+- New: I-235 K2'' = exp58d (in-plan, at risk), I-236 CLARIFICATION v3 (in-plan, at risk), I-237 bound B, I-243 ledger text fix (at risk), I-242 post-freeze re-solve (deferred-after-deadline); refuted I-238 (loosen trigger), I-239 (CPU replay of K2 tail), I-240 (fail-soft guards), I-241 (private-only crash hunt).
+- Status: I-004 N1 in-plan -> refuted (superseded by I-235); I-009 D4 dropped; I-007/I-008 reframed around K2''; I-054, I-157, I-168, I-192 got round-5 recheck numbers.
+- No longer at risk (in CONTEXT): I-224, I-227, I-229. At risk now: I-226, I-228, I-232, I-235, I-236, I-243. Strict orphan still I-233.
+- Counts c4 -> c5: 234 -> 243; refuted 134 -> 139, deferred 19 -> 20, in-plan 22 -> 25; lb-tested 38, lab-tested 20, open-untested 1 unchanged.
+
+**Facts and decisions** (`FACTS.md`, `DECISIONS.md`, lines marked [c5]; `_curation/5/facts.json`):
+- New facts: F-RUN-18 (concurrent runs; bound B), F-RUN-19 (one hidden run covers public + private), F-MOD-18 (builder refuses deadline moves; D4 has no code), F-MOD-19 (K2 failure behaviour), F-TRN-21 (post-freeze transitions, ceiling +0.0063), F-TRN-22 (already-divided -0.00068 on x138; fork removal 0 for 5), F-TRN-23 (AdaBN blocker).
+- Updated: F-DAT-11, F-LB-01/02/03/04/06/08, F-RUN-12/16/17, F-RUL-04/10/12, F-MOD-16; table rows F-LB-04/06 repaired.
+- Contradictions: C-31, C-32 resolved; C-30 partly resolved (round3/4 REPORT.md saved); C-33 still open; C-35 updated with round-5 ETAs. New: C-36 (GT on frozen frames vs CONTEXT l.22), C-37 (#34 fallback vs the Never line), C-38 (row-5 queue reading), C-39 (unbuildable runtime remedy), C-40 (stale ledger texts), C-41 (W44 status), C-42 (submission count off by one).
+- `DECISIONS.md`: §1 P37/P38 still PENDING; §1b G16-G19 (already-divided, post-freeze re-solve, AdaBN, runtime-trigger builds); §2 K2'' proposed row and pairs-not-labels; §2c marked in CONTEXT; new §2d proposed CLARIFICATION v3 + OK request.
+
+**Watchlist** (`WATCHLIST.md`; `_curation/5/watch.json`):
+- Done: W44 (v2 in CONTEXT), W48 rule text, W49 round-4 records, W50 checklist text, round3/4 REPORT.md; W33 floatout closed. W46 superseded by W55.
+- New: W55-W60 (R5-A1..A8), T21-T23, I39-I46. Resolved insights: I31-I33, I35, I37, I38.
+- Still overdue: W02/W03 friend A card, W04 admission table, W05 ext_* commit, W34 memory residue.
+
+**Alerts** (`INDEX.md` TOP ALERTS, 11 after dedup):
+- Resolved since curation 4: CLARIFICATION v2 not in CONTEXT; provisional tick rule / checklist not in CONTEXT; floatout contradiction C-31; round-4 closures into CONTEXT; round3/4 REPORT.md.
+- Carried over: OK request (now 7 items, R5-A3); clean-proof polls (now a background job, R5-A1); mechanical score read + provisional tick; poller uptime (stop rule moved to after 09:32:18Z); durable 29 Sep reminders; admission table / ext_* / friend A card; I-233 orphan.
+- New: CLARIFICATION v3 (V1-V7); unbuildable runtime trigger (K2'' prep); #34 pairs-not-labels contradiction; stale ledger texts; round-5 records incl. CONTEXT l.22 correction; round5/round2 REPORT.md missing; LB entry count C-42.
+- Dropped from INDEX: the thin insertion lab evidence (C-34) and `TEAM.md` "0.97" (C-04); both stay in `FACTS.md`.
+- Curator disagreement settled here: #34 contradiction is [today] (ideas) vs [now] (watch); INDEX folds it into alert 1 (v3, [now]). Stale ledger texts: [today] (ideas) vs [info] (facts); INDEX uses [today], neutralised by v3 V6. Clean-proof job: [today] (ideas) vs [now] (facts, watch); INDEX uses [now], since the job must be started well before 07:45Z.

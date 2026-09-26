@@ -1,0 +1,11 @@
+- 2026-09-26: round 5 start; _curation/5 was absent -> fresh run. Reading round-4 outputs and sources.
+- 03:53Z: sources changed since c4: CONTEXT f05389e (+13 lines: CLARIFICATION v2 C1-C6, round4 records, provisional tick rule/checklist), ledger 03:43:33Z (#37/#38 PENDING L>3.68h), round5/report.json 03:49Z (untracked), round3/4 REPORT.md now exist. Reading FACTS/DECISIONS.
+- 03:58Z: verified f05389e pushed (origin/main==f05389e), CONTEXT 01:20 entries l.2026-2038, round3/4 REPORT.md exist (round2 none), memory still w/o #37/#38 refs, l.2023 pending-OK line unchanged, poll 03:43:32Z PENDING. Checking builder PC5-01.
+- 03:59Z: PC5-01 verified (build_probe_kernel.py l.2021-2022 non-lab REPAIR!=34200 exits; TWOSTAGE only runtime_ledger.py l.284; exp58d -> safetail l.69). Plan: edit FACTS header, F-LB-01/02/03/04/06/08, F-DAT-11, F-RUN-12/16/17, F-RUL-04/10/12, F-MOD-16; new F-RUN-18/19, F-MOD-18/19, F-TRN-21/22/23; C-30/31/32/33/35 status; new C-36..C-41.
+- 04:05Z: FACTS LB/RUN rows updated; fixed 2 pre-existing broken table rows (F-LB-04 literal pipe, F-LB-06 stray pipe).
+- 04:10Z: FACTS new F-RUN-18/19, F-MOD-18/19, F-TRN-21/22/23; F-RUL-04/10/12, F-MOD-16 updated. Next: contradictions.
+- 04:14Z: FACTS contradictions done (C-30 partial, C-31/C-32 resolved, C-33 open, C-35 upd; new C-36..C-41). Next DECISIONS.
+- 04:22Z: DECISIONS updated (header, P37/P38, [c5] slot para, G12-G15 CONTEXT refs, G16-G19 new, §2 tick rule, K2'' row, §2b/§2c headers, new §2d v3, R3-R9/§f, closing note).
+- 04:24Z: added C-42 (submission count). Writing facts.json.
+- 03:59:32Z (real clock; earlier note stamps were estimates and run ~10 min ahead): ledger 03:53:35Z still #37/#38 PENDING. Writing facts.json.
+- 04:01Z: facts.json written (9 alerts). Done.

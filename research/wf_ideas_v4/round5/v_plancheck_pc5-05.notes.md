@@ -1,0 +1,7 @@
+- 2026-09-26T03:32:00Z start PC5-05 check
+- 03:3xZ verified: W44 CLARIFICATION v2 is in CONTEXT (commit f05389e 01:20:05Z). W45 OK request: no CONTEXT record (grep "OK REQUEST|consolidated|запрос" = none relevant); memory project-lb-probe-approval.md lists only f2 OK (22:06Z) + "L1/L2 still pending". RESUME POINT pending-OK line (CONTEXT ~l.2023) = "L1/L2, K1 by the table, twin floor 0.952" = short list, as claimed.
+- R4-A2 text (round4/report.json) has items (a)-(f)+(3)-(5), covered_by_existing_approval=false. PC5-01 (round5 scan_plancheck) shows (f) D4 unbuildable, REPAIR 37800 refused by builder l.2021-2022 -> replacing (f) with the K2'' pre-registered line is a correction, not a new mechanism (v4 item 5 already names 32400/37800).
+- PC5-03 row-4 mirror: F2 = twin by f2 (user-approved 22:06Z) -> consistency, low risk.
+- Timing: user TZ +03 (commit times). 03:35Z = 06:35 local. Twin earliest ~06:15Z. Tight but feasible; PushNotification tool is available (deferred) to reach user on phone.
+- Value: process only. Default world (R3, P~0.85-0.9) needs no OK. OK items swap near-identical files (twin vs #34, K1) or enable a runtime rescue; EV on private small but the cost is ~10 min and no Kaggle action. Not refuted.
+- 2026-09-26T03:33:24Z final JSON written (refuted=false)

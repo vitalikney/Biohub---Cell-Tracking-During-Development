@@ -1,0 +1,7 @@
+# R5H-8 skeptic notes (2026-09-26 ~03:35 UTC)
+- poll.log (experiments/lb_poll/poll.log): #37 56563521 and #38 56563534 still PENDING at 03:32 UTC. Trigger not met.
+- CONTEXT.md l.2028 C2: (c) 'Threw Exception'/'CSV Not Found'/'Scoring Error' on K2 only -> row 1 as written (K1 [OK]). The class alone fixes the action; there is no diagnosis step in it. (b) timeout on both -> ask the user.
+- CONTEXT l.1982: #35 (0.954, COMPLETE) is the scored proxy of K1 (K1 dummy sha == exp57b dummy). So K1's code path already ran on the hidden test without error.
+- exp60 lab (CONTEXT l.1918-1935; experiments/exp60_trainlab/kernel_a/probe.json): x138 + safetail + divinsert (dump), CPU tail-arm replay via tools/trainlab.py through the notebook's own code on all 56 clips; failed_hooks 0, missing [], parity pass, arm ins35 scored. So insertion + safe tail on 56 lab clips is ALREADY replayed. The only K2 piece not in exp60 is lowrefine (float pool) - covered by the K2 and twin dummies (no LOWREFINE FAILED, l.1958, l.1793).
+- A crash on the hidden test is data-dependent and the hidden logs are not visible; a train-clip CPU replay cannot reproduce it, and REPAIR FAILED = 0 only proves the caught path is not taken (Threw Exception = uncaught, e.g. non-fail-soft cells, writer, GPU OOM - not exercised on CPU).
+- Same idea already filed as "not recommended" in round5/scan_hypotheses.json (R5H-8). No gain on private; several CPU hours; would only delay the K1 slot.

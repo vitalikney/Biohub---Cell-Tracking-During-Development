@@ -1,0 +1,6 @@
+- 2026-09-26 03:51 UTC: start curation 5; no watch.json existed; reading WATCHLIST.md (v from 04:12 local)
+- 03:53Z: CONTEXT has 01:20 CLARIFICATION v2 + PROVISIONAL TICK + round4 records (f05389e pushed); round5 report.json 03:49Z untracked; K2/twin PENDING at 03:43Z
+- 03:56Z: status: W44/W48-rule/W49/W50-checklist done in CONTEXT l.2026-2038; W45 OK request still absent (grep "OK REQUEST"=0); v3/K2''/exp58d absent; only python PID 20052 running (no manual-poll job yet); round5 untracked, no REPORT.md; round2 REPORT.md missing; ext_* untracked; RESULTS no exp60; PROMPT_FRIEND_A top still 14:30; memory l.8 still K3/K3b/K4/N1, approval l.14 "~00:55".
+- 03:57Z: new IDs planned: W55 (R5-A1 manual poll job, supersedes W46), W56 (v3, R5-A2), W57 (R5-A6 records), W58 (R5-A4 K2'' builder prep), W59 (R5-A7 ledger text, absorbs W18), W60 (R5-A8 REPORT.md), T21 (K2 expected 07:50-09:30), T22 (09:40 post-score round); I39-I46.
+- 04:00Z: WATCHLIST.md written (curation 5); line refs verified (C3 l.2029, row4 l.1999, row5 l.2003, Never l.2004-2005, checklist l.2038)
+- 04:02Z: watch.json written and validated; done

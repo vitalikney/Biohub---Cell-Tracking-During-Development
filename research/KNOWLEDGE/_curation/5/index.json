@@ -1,0 +1,81 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/INDEX.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/CHANGES.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/5/index.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/5/index.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "what": "READ TABLE CLARIFICATION v3 (V1-V7) is not in CONTEXT. It also resolves the #34 contradiction: C3 and row 4 name #34 while the Never line and f2 bar it; the answer is pairs, not labels, i.e. {twin, exp52}.",
+   "evidence": "research/wf_ideas_v4/round5/report.json R5-A2 + plan_issues; CONTEXT.md l.2029, l.1999, l.2004-2005, l.2038; research/KNOWLEDGE/DECISIONS.md §2d; FACTS.md C-37; WATCHLIST.md W56",
+   "suggested_action": "Append the verbatim v3 block and point CONTEXT l.2023 at the OK REQUEST. Commit as the user and push before the first #37/#38 result in poll.log (hard limit ~06:00Z).",
+   "urgency": "now"
+  },
+  {
+   "kind": "forgotten",
+   "what": "The consolidated 7-item OK request (I-228) is still unposted and unrecorded",
+   "evidence": "research/wf_ideas_v4/round5/report.json R5-A3, ok_message_ru; FACTS.md C-33; WATCHLIST.md W45",
+   "suggested_action": "Post the Russian text in chat and as a PushNotification. Log 'OK REQUEST posted <UTC>', and later log the answer time against the first result times.",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "The clean-proof background poll job (07:57:30, 08:00:45 and 08:01:45Z, each stamped after the call) is not running. The poller's own polls at ~07:54Z and ~08:04Z straddle the 08:02:12Z mark.",
+   "evidence": "research/wf_ideas_v4/round5/report.json R5-A1; WATCHLIST.md W55; FACTS.md F-RUN-16/17; CONTEXT.md l.2032 (C6)",
+   "suggested_action": "Start the R5-A1 script with Bash run_in_background well before 07:45Z. Never import lb_poll.py and never restart PID 20052.",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "The runtime trigger (deadline move / D4) cannot be built as written. The builder refuses REPAIR_DEADLINE_S != 34200, D4 has no code, and DIVINS alone is harmful. K2'' = exp58d is not prepared.",
+   "evidence": "tools/build_probe_kernel.py l.2016-2029; FACTS.md F-MOD-18, C-39; research/wf_ideas_v4/round5/report.json R5-A4; WATCHLIST.md W58",
+   "suggested_action": "Prepare and test the K2'' builder change outside 07:45-08:35Z and keep the K2 sha unchanged. Build only on the trigger plus an OK.",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "Poller stop rule and finals: keep PID 20052 until both refs are terminal and at least until the first poll after 09:32:18Z. Finals are 0/2 ticked, so the provisional pair tick must follow the score read.",
+   "evidence": "research/wf_ideas_v4/round5/report.json plan_issues (7), R5-A5; WATCHLIST.md T16, W47, W54; FACTS.md F-RUL-12",
+   "suggested_action": "After the mechanical read with bound B, recommend the pair by ref (default 56563521 + 56563534) and verify 2/2 ticked.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "ledger.md still prints superseded texts: A6 'rebase K3 on K1', an A5 ask offering D4, and A5-F 'Forecast F not supplied'",
+   "evidence": "experiments/lb_poll/ledger.md (03:53:35Z); FACTS.md C-40; WATCHLIST.md W59",
+   "suggested_action": "Neutralise them via v3 V6 now. Fix tools/runtime_ledger.py only after ~09:40Z.",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "research/wf_ideas_v4/round5/ is untracked and has no REPORT.md; round2 also has no REPORT.md. The ext_* folders are uncommitted and the friend A card is stale.",
+   "evidence": "git status; research/wf_ideas_v4/round5/report.json report_md_ru_note; WATCHLIST.md W38/W60, W05, W02-W03",
+   "suggested_action": "Save report_md_ru as round5/REPORT.md in the v3 commit, and commit ext_* in a quiet window.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "The round-5 records are not in CONTEXT: #160 intel, the R5H facts, the post-freeze defect (CONTEXT l.22 'GT still moving' is wrong), fork removal 0 for 5, the AdaBN blocker, W44 done, and the curation-3 closures",
+   "evidence": "research/wf_ideas_v4/round5/report.json R5-A6, new_facts; FACTS.md C-36, C-41; WATCHLIST.md W57, W31",
+   "suggested_action": "Add them with the next CONTEXT write, by 26 Sep 12:00Z.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "deadline",
+   "what": "The durable 29 Sep 12:00/18:00 finals reminders and the admission table do not exist yet",
+   "evidence": "CONTEXT.md l.2034-2038; WATCHLIST.md W50, W04, T19",
+   "suggested_action": "Set them by 28 Sep evening, and start the admission table after the scores.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "I-233 (poller logs error_description) is the only strict orphan",
+   "evidence": "research/KNOWLEDGE/IDEAS.md l.60, ORPHANS l.374; WATCHLIST.md W53",
+   "suggested_action": "After both scores, close it in one line (C2 covers the need) or implement it in a quiet window.",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 5 index pass (2026-09-26 ~04:05 UTC; HEAD f05389e plus the untracked round5/).\n\nFiles:\n- research/KNOWLEDGE/INDEX.md was rewritten (72 lines, previously the curation-4 version). It has five sections: state in 10 lines, the knowledge-base and source map (with curation-5 line refs), top 8 open ideas, 11 deduplicated alerts, and how to use.\n- research/KNOWLEDGE/CHANGES.md got a new section '## 5 - 2026-09-26 ~04:05 UTC' covering ideas, facts, decisions, watchlist and alerts, plus how curator urgency disagreements were settled.\n\nState:\n- #37 and #38 are PENDING at 03:53:33Z. Best public is 0.954; rank #160/3,922.\n- CLARIFICATION v2 is in CONTEXT; v3 is not.\n- Finals are 0/2 ticked.\n- The ledger has 243 ideas.\n\nUrgent before ~06:00Z: push v3, post the OK request, start the clean-proof background job."
+}

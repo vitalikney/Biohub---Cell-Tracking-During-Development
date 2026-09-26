@@ -1,0 +1,11 @@
+# v_plancheck PC5-02 notes (2026-09-26 ~03:32Z)
+- No earlier answer file existed. Only local files read. No Kaggle calls were made, and poll.log was not touched.
+- experiments/lb_poll/lb_poll.py: `while True` sits at module level (trap (a) is real). ts is taken BEFORE poll(); timeout 180 s, up to 3 attempts.
+- tools/runtime_ledger.py: HEADER l.74 accepts any suffix; failed_attempts l.91-92 counts only '[empty stdout' / '[ERROR'; parse_log sorts polls by ts (l.135); first_result_upper = ts + 210 s * failed (l.193).
+- A5-L(K2) l.286-305: FIRED if lo_h (last PENDING poll) > 8.0 h; CLEAR if hi_h <= 8.0 h; else POSSIBLE. The 8.0 h mark is 08:02:12Z (ledger.md l.12).
+- Poller cadence: 02:13:16 -> 03:23:27 over 7 cycles = 601.6 s. Projected polls ~07:44:08, ~07:54:09 and ~08:04:11Z (the finding says 07:54:2x / 08:04:3x; close enough).
+- Forecast F(K2) = 7.87 h, so K2 should finish ~07:54:24Z, inside the poller's 07:54 -> 08:04 gap. That makes the manual polls pivotal for CLEAN vs POSSIBLE (READ TABLE rows 4/5 and the A5 user ask).
+- The poller PID started 02:12:45 as a Git-Bash python (a background task of the main session). A one-shot background task has the same lifetime dependency.
+- Issue found: stamping AFTER the call also moves a PENDING observation later. With timeout=100 s, a PENDING call started at 08:00:45-50 could be stamped after 08:02:12. Then lo_h > 8.0 would make A5-L FIRED spuriously. Fix: timeout <= 75 s (08:00:50 + 75 = 08:02:05).
+- Relative LOG path depends on cwd: use an absolute path.
+- Optional: add a 3rd poll at ~08:01:45 with timeout 20 s. It narrows the unprovable window from 08:00:4x-08:02:12 to 08:01:4x-08:02:12.

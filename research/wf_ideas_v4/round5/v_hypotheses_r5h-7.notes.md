@@ -1,0 +1,7 @@
+# R5H-7 verification notes (2026-09-26T03:32Z)
+- No prior v_hypotheses_r5h-7.json; fresh verification.
+- Code read: scratchpad r5hyp/k2.py. insert_divisions/_candidates l.2218-2407: parents need out-degree 1 and dt=1 to c1; v in frame t_u+1, orphan or single in-edge from w with out-degree 1 (stolen edge removed); used-set covers u,v,c1,w -> in<=1, out<=2, dt=1 hold after insertion. Added edge dicts carry NaN only in div_stolen_edge_prob (never written to CSV; writer uses source/target only, l.~4840).
+- Insertion runs inside its own try (DIVINS FAILED -> pre-insertion edges, l.4717) AND inside the per-dataset try (filter_output_graph, fallback_output_graph). CSV writer + cell 8 guard (l.4885-5064) + cell 12 asserts (l.5825-5838) are outside -> confirmed topology/NaN anomaly would ERROR whole submission. Also cell 8 raises if any dataset missing or retention records missing (x138 design).
+- lowrefine: _v1284_refine (v1284.py) raises on non-finite or >2 um displacement; lowrefine wraps it in try -> grid coords kept. Same refine function already runs on all primary peaks in x138. No NaN path.
+- CONTEXT l.1812: hidden rerun covers public+private in ONE run -> a scored (non-ERROR) submission cannot crash later on private; crash risk is fully revealed by the #37/#38 status. CONTEXT l.1741-1743 error classes; round4 REPORT C2 already pre-registers K2-ERROR handling (Kaggle Error -> retry K2 [OK]; exception only on K2 -> K1 [OK]).
+- Verdict: finding correct, info only, no action; not refuted.
