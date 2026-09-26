@@ -46,6 +46,7 @@ K2_ALT_TOKENS = ("exp58n",)    # K2 without insertion (branch C / R2 'exp58n_...
 UNKNOWN_WATCH_AFTER = dt.datetime(2026, 9, 25, 18, 0, tzinfo=dt.timezone.utc)   # K-build era: unknown family is loud
 K1_NOTE = "K1 = exp58t (vitaliineibauer/biohub-exp58t-x138-safe v1, already gated: sha256 == exp57b dummy)"
 DIVINS_GATE_H = 8.0            # DIVINS_DEADLINE_S = 28800
+K2PP_DIVINS_GATE_H = 9.0       # K2'' exp58d: DIVINS_DEADLINE_S = 32400 (REPAIR_DEADLINE_S = 37800 = 10.5 h)
 A5_L_TRIGGER_H = 8.0           # A5: L(K2) > 8.0 h
 A5_F_TRIGGER_H = 7.9           # A5: forecast F > 7.9 h
 K2_WATCH_H = (7.0, 8.5)        # A5: keep the poller alive 07:00-08:30 UTC for K2 at 00:01 UTC
@@ -58,6 +59,9 @@ FAMILIES = {
     "safetail": dict(deadline_h=9.5, divins_h=DIVINS_GATE_H, ungated=False,
                      label="safetail (C01) + gated insertion, 9.5 h (insertion gate 8.0 h)"),
     "safetail_noins": dict(deadline_h=9.5, divins_h=None, ungated=False, label="safetail (C01), no insertion, 9.5 h"),
+    "safetail_late": dict(deadline_h=10.5, divins_h=K2PP_DIVINS_GATE_H, ungated=False,
+                          label="K2'' exp58d: safetail (C01) + gated insertion, both deadlines moved, 10.5 h "
+                                "(insertion gate 9.0 h)"),
     "notimer": dict(deadline_h=None, divins_h=None, ungated=False, label="exp51/exp52, no timer: always admissible"),
     "unknown": dict(deadline_h=None, divins_h=None, ungated=False, label="family unknown (pass --family)"),
 }
@@ -66,6 +70,7 @@ EXP_RULES = [
     (r"exp56", "x138"),
     (r"exp57[a-z]*", "x138_ungated"),
     (r"exp58(n|p)[a-z]*", "safetail_noins"),
+    (r"exp58d", "safetail_late"),          # K2'' (CONTEXT 26 Sep v3 V3): REPAIR 37800 / DIVINS 32400
     (r"exp(58|59|61|62)[a-z]*", "safetail"),
     (r"exp5[12]", "notimer"),
 ]

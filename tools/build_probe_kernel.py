@@ -61,8 +61,10 @@ Patches (`--patch NAME`, repeatable, any order; they always address the BASE cod
              (polars, z/y/x as Float64) and asserts decimal points, floor(w) == round(v) (safe), ranges and node/edge
              counts. Replay: config key out.coords=round|safe|float.
   safetail   (x138 base only; ideas workflow v3 E1) runtime insurance, applied after every other patch: requires
-             --set REPAIR_DEADLINE_S=34200 (any other value needs --lab); DaughterNet insertion runs only while the
-             repair deadline has not fired and the kernel is younger than BIOHUB_DIVINS_DEADLINE_S (default 28800;
+             --set REPAIR_DEADLINE_S; non-lab builds accept exactly (REPAIR_DEADLINE_S, DIVINS_DEADLINE_S) =
+             (34200, 28800 default) or (37800, 32400) (K2'' exp58d; never DIVINS alone), any other pair needs --lab
+             (SAFETAIL_SUBMIT_DEADLINES); DaughterNet insertion runs only while the repair deadline has not fired
+             and the kernel is younger than BIOHUB_DIVINS_DEADLINE_S (default 28800;
              'DIVINS SKIPPED (deadline)'), inside try/except (input edges kept, 'DIVINS FAILED'); BIOHUB_DEGRADE_KEEP_DIV
              (set to 1) keeps safe divisions + linefit after the deadline. --lab builds (dummy only, never submit) may
              set REPAIR_DEADLINE_S=1 (FD test), DIVINS_FORCE_FAIL=1 (FF test) and DIVINS_DUMP=1.
@@ -1469,6 +1471,13 @@ def patch_safetail(cells_src: dict) -> None:
     cells_src[post] = c
 
 
+# Non-lab safetail builds accept exactly these (REPAIR_DEADLINE_S, DIVINS_DEADLINE_S) pairs, as --set strings; an absent
+# DIVINS_DEADLINE_S is the gate's default 28800. (34200, 28800) = K2/K1; (37800, 32400) = K2'' exp58d (CONTEXT 26 Sep
+# READ TABLE CLARIFICATION v3 V3, research/wf_ideas_v4/round5 R5-A4): both deadlines move together, never DIVINS alone.
+SAFETAIL_DIVINS_DEFAULT_S = "28800"
+SAFETAIL_SUBMIT_DEADLINES = (("34200", SAFETAIL_DIVINS_DEFAULT_S), ("37800", "32400"))
+
+
 # ---- trainlab (ideas workflow v3 E4 = C06, TASK_CLOUD_SESSION.md T5; x138 base, --lab only): x138 on TRAIN videos ----
 # The predict cell points TEST_DIR at a /tmp folder of zarr symlinks to this shard's train stems (so the retention
 # guard, the final checks and read_test_frame all see exactly these videos, and no .geff sits next to them as on the
@@ -1986,7 +1995,7 @@ def main() -> None:
     ap.add_argument("--dataset", action="append", default=[], help="extra Kaggle dataset source owner/slug, repeatable")
     ap.add_argument("--push", action="store_true")
     ap.add_argument("--lab", action="store_true",
-                    help="dummy/lab build, never a submission: allows DIVINS_DUMP=1, DIVINS_FORCE_FAIL and any REPAIR_DEADLINE_S")
+                    help="dummy/lab build, never a submission: allows DIVINS_DUMP=1, DIVINS_FORCE_FAIL and any REPAIR_DEADLINE_S / DIVINS_DEADLINE_S pair")
     ap.add_argument("--train-stems", default="",
                     help="--patch trainlab: comma-separated TRAIN stems or @path/split.json:SHARD")
     ap.add_argument("--owner", default="vitaliineibauer", help="Kaggle owner in kernel-metadata.json id")
@@ -2018,8 +2027,13 @@ def main() -> None:
             sys.exit("--patch safetail needs --base x138")
         if "BIOHUB_REPAIR_DEADLINE_S" not in overrides:
             sys.exit("--patch safetail needs --set REPAIR_DEADLINE_S=34200 (x138 default 27000 is the runtime cliff)")
-        if not a.lab and overrides["BIOHUB_REPAIR_DEADLINE_S"] != "34200":
-            sys.exit("submission builds with safetail use REPAIR_DEADLINE_S=34200; other values need --lab")
+        _pair = (overrides["BIOHUB_REPAIR_DEADLINE_S"],
+                 overrides.get("BIOHUB_DIVINS_DEADLINE_S", SAFETAIL_DIVINS_DEFAULT_S))
+        if not a.lab and _pair not in SAFETAIL_SUBMIT_DEADLINES:
+            sys.exit(f"submission builds with safetail accept exactly (REPAIR_DEADLINE_S, DIVINS_DEADLINE_S) = "
+                     f"(34200, 28800 default) or (37800, 32400); got ({_pair[0]}, {_pair[1]}"
+                     f"{'' if 'BIOHUB_DIVINS_DEADLINE_S' in overrides else ' default'}). Both deadlines move together, "
+                     f"never DIVINS_DEADLINE_S alone; other values need --lab (dummy only, never submit)")
         if not a.lab and overrides.get("BIOHUB_DIVINS_DUMP", "0") != "0":
             sys.exit("DIVINS_DUMP=1 is for --lab builds only")
         overrides.setdefault("BIOHUB_DEGRADE_KEEP_DIV", "1")

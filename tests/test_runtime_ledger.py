@@ -204,7 +204,34 @@ def test_exp_token_underscore_and_dash_build_names():
     assert rl.family_of("1", rl.exp_token("exp58n_x138_safe_lowref"), {}) == "safetail_noins"
 
 
-K2U = ("56560003", "2026-09-26 00:01:30.100000", "probe 37: exp58_x138_safe_lowref = K2 x138 + safetail + lowrefine")
+K2PP = ("56570001", "2026-09-26 12:00:00.000000",
+        '"probe 39: exp58d_x138_safe_lowref = K2\'\' (K2 with REPAIR_DEADLINE_S 37800, DIVINS_DEADLINE_S 32400)"')
+
+
+def test_exp58d_is_the_10_5h_safetail_family():
+    # CONTEXT 26 Sep v3 V3: K2'' = exp58d runs under its own 10.5 h repair deadline (insertion gate 9.0 h)
+    assert rl.exp_token(K2PP[2]) == "exp58d"
+    assert rl.family_of("1", "exp58d", {}) == "safetail_late"
+    fam = rl.FAMILIES["safetail_late"]
+    assert fam["deadline_h"] == 10.5 and fam["divins_h"] == 9.0 and fam["ungated"] is False
+    for tok, want in (("exp58", "safetail"), ("exp58t", "safetail"), ("exp58fd", "safetail"),
+                      ("exp58n", "safetail_noins"), ("exp59", "safetail")):
+        assert rl.family_of("1", tok, {}) == want, tok                 # the other families are unchanged
+    assert rl.family_of("1", "exp58d", {"exp58d": "safetail"}) == "safetail"     # --family still overrides
+    # L in (9.83, 10.17]: fails the 9.5 h safetail deadline, admitted under 10.5 h; the 9.0 h gate may have fired
+    text = (block("2026-09-26T21:50:00Z", [row(K2PP, "PENDING")])
+            + block("2026-09-26T22:10:00Z", [row(K2PP, "COMPLETE", "0.954")]))
+    rep, e = ledger(text)
+    k = e["56570001"]
+    assert k["family"] == "safetail_late" and k["r5"] == ("ADMIT", "ADMIT (a): L <= 10.17 h <= 10.5 h")
+    assert k["divins_gate"] == "L > 9.0 h: the insertion gate MAY have fired"
+    assert "safetail_late (10.5 h)" in rl.render_md(rep)
+    assert trig(rep, "A5-L(K2)")[0]["state"] == "WATCH" and not trig(rep, "family")   # exp58d is not picked as K2
+    rep, e = ledger(block("2026-09-26T22:40:00Z", [row(K2PP, "PENDING")]))
+    assert e["56570001"]["r5"][0] == "NO" and "10.5 h" in e["56570001"]["r5"][1]
+
+
+K2U = ("56560003","2026-09-26 00:01:30.100000", "probe 37: exp58_x138_safe_lowref = K2 x138 + safetail + lowrefine")
 K2N = ("56560004", "2026-09-26 00:55:00.000000", "probe 37: exp58n_x138_safe_lowref = K2 (no insertion)")
 
 

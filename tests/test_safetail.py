@@ -3,6 +3,7 @@ research/wf_ideas_v3/TASK_CLOUD_SESSION.md T1).
 
     python -m pytest tests/test_safetail.py
 """
+import hashlib
 import json
 import os
 import shutil
@@ -163,6 +164,91 @@ def test_builder_refusals():
         r = _run(*args)
         assert r.returncode != 0 and msg in r.stderr, (args, r.stderr[-300:])
     assert not (ROOT / "experiments" / "zz-safetail-refusal").exists()
+
+
+def test_builder_deadline_pairs_refused():
+    # non-lab safetail builds accept exactly (34200, 28800 default) or (37800, 32400) (CONTEXT 26 Sep v3 V3, R5-A4)
+    ins = ["--base", "x138", "--patch", "divinsert", "--patch", "safetail", "--set", "DIVINS_ENABLE=1"]
+    noins = ["--base", "x138", "--patch", "safetail"]
+    cases = [
+        (ins + ["--set", "REPAIR_DEADLINE_S=34200", "--set", "DIVINS_DEADLINE_S=32400"], "got (34200, 32400)"),  # DIVINS alone
+        (ins + ["--set", "REPAIR_DEADLINE_S=34200", "--set", "DIVINS_DEADLINE_S=36000"], "got (34200, 36000)"),
+        (ins + ["--set", "REPAIR_DEADLINE_S=37800"], "got (37800, 28800 default)"),                         # REPAIR alone
+        (noins + ["--set", "REPAIR_DEADLINE_S=37800"], "got (37800, 28800 default)"),
+        (ins + ["--set", "REPAIR_DEADLINE_S=37800", "--set", "DIVINS_DEADLINE_S=28800"], "got (37800, 28800)"),
+        (ins + ["--set", "REPAIR_DEADLINE_S=37800", "--set", "DIVINS_DEADLINE_S=36000"], "got (37800, 36000)"),
+        (ins + ["--set", "REPAIR_DEADLINE_S=41400", "--set", "DIVINS_DEADLINE_S=32400"], "got (41400, 32400)"),
+        (ins + ["--set", "REPAIR_DEADLINE_S=27000", "--set", "DIVINS_DEADLINE_S=28800"], "got (27000, 28800)"),
+    ]
+    for args, msg in cases:
+        r = _run(*args)
+        assert r.returncode != 0 and msg in r.stderr, (args, r.stderr[-300:])
+        assert "never DIVINS_DEADLINE_S alone" in r.stderr and "need --lab" in r.stderr
+    assert not (ROOT / "experiments" / "zz-safetail-refusal").exists()
+
+
+def _build(name: str, out_dir: str, *args: str) -> Path:
+    r = subprocess.run([sys.executable, BUILDER, name, "--out-dir", out_dir, *args], capture_output=True, text=True,
+                       cwd=ROOT)
+    assert r.returncode == 0, r.stderr[-500:]
+    return ROOT / "experiments" / out_dir
+
+
+def _code_cells(nb_path: Path) -> list:
+    nb = json.loads(nb_path.read_text(encoding="utf-8"))
+    return ["".join(c["source"]) for c in nb["cells"] if c["cell_type"] == "code"]
+
+
+# the documented branch-A K2 line (CONTEXT 25 Sep, BUILD COMMANDS FOR 26.09) and the committed K2 notebook (#37)
+K2_KNOBS = ["--set", "DIVINS_ENABLE=1", "--set", "DIVINS_STEAL=1", "--set", "DIVINS_CAP=4", "--set", "DIVINS_FRAME_CAP=1",
+            "--set", "DIVINS_ALPHA=1", "--set", "DIVINS_THRESH=0.4", "--set", "DIVINS_DUMP=0"]
+K2_PATCHES = ["--base", "x138", "--patch", "divinsert", "--patch", "safetail", "--patch", "lowrefine"]
+K2_NB = ROOT / "experiments" / "exp58_x138_safe_lowref" / "exp58-x138-safe-lowref.ipynb"
+K2_SHA = "1f1ddb6d63b47f540ad614232e821ad215f27fce0d901cdbb9f67a8beeb67855"
+
+
+def test_build_k2pp_pair_and_k2_sha_unchanged():
+    tmp = "zz-safetail-k2pp-test"
+    try:
+        k2 = _build("exp58_x138_safe_lowref", f"{tmp}/k2", *K2_PATCHES, *K2_KNOBS, "--set", "REPAIR_DEADLINE_S=34200",
+                    "--set", "DIVINS_DEADLINE_S=28800", "--set", "LOWREFINE_ENABLE=1",
+                    "--note", "K2: x138 + safetail + lowrefine + divinsert (#35 config)")
+        k2_nb = k2 / "exp58-x138-safe-lowref.ipynb"
+        assert hashlib.sha256(k2_nb.read_bytes()).hexdigest() == K2_SHA          # the builder change is inert for K2
+        if K2_NB.exists():
+            assert k2_nb.read_bytes() == K2_NB.read_bytes()
+        k2pp = _build("exp58d_x138_safe_lowref", f"{tmp}/k2pp", *K2_PATCHES, *K2_KNOBS, "--set",
+                      "REPAIR_DEADLINE_S=37800", "--set", "DIVINS_DEADLINE_S=32400", "--set", "LOWREFINE_ENABLE=1",
+                      "--note", "K2'': K2 with both deadlines moved")
+        a, b = _code_cells(k2_nb), _code_cells(k2pp / "exp58d-x138-safe-lowref.ipynb")
+        assert len(a) == len(b) and a[1:] == b[1:]                                 # only cell 0 differs
+        la, lb = a[0].splitlines(), b[0].splitlines()
+        diff = [(x, y) for x, y in zip(la, lb) if x != y]
+        assert len(la) == len(lb) and diff == [
+            ("# ---- exp58_x138_safe_lowref: probe overrides (tools/build_probe_kernel.py --base x138) ----",
+             "# ---- exp58d_x138_safe_lowref: probe overrides (tools/build_probe_kernel.py --base x138) ----"),
+            ('os.environ["BIOHUB_REPAIR_DEADLINE_S"] = "34200"', 'os.environ["BIOHUB_REPAIR_DEADLINE_S"] = "37800"'),
+            ('os.environ["BIOHUB_DIVINS_DEADLINE_S"] = "28800"', 'os.environ["BIOHUB_DIVINS_DEADLINE_S"] = "32400"'),
+        ], diff
+        probe = json.loads((k2pp / "probe.json").read_text(encoding="utf-8"))
+        assert "lab" not in probe
+        assert probe["change"]["REPAIR_DEADLINE_S"] == "37800" and probe["change"]["DIVINS_DEADLINE_S"] == "32400"
+        assert probe["change"]["PATCHES"] == "divinsert+lowrefine+safetail"
+    finally:
+        shutil.rmtree(ROOT / "experiments" / tmp, ignore_errors=True)
+
+
+def test_lab_build_keeps_any_deadline_pair():
+    # --lab rules unchanged: a DIVINS-only move (refused above without --lab) builds, marked as a lab build
+    tmp = "zz-safetail-lab-pair-test"
+    try:
+        out = _build("zz-safetail-lab-pair", tmp, "--base", "x138", "--patch", "divinsert", "--patch", "safetail",
+                     "--lab", "--set", "DIVINS_ENABLE=1", "--set", "REPAIR_DEADLINE_S=34200",
+                     "--set", "DIVINS_DEADLINE_S=32400")
+        probe = json.loads((out / "probe.json").read_text(encoding="utf-8"))
+        assert "lab" in probe and probe["change"]["DIVINS_DEADLINE_S"] == "32400"
+    finally:
+        shutil.rmtree(ROOT / "experiments" / tmp, ignore_errors=True)
 
 
 def test_build_k1_like():
