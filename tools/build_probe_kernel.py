@@ -79,6 +79,12 @@ Patches (`--patch NAME`, repeatable, any order; they always address the BASE cod
              snapshots per dataset + the safe-division DeepCenter scores -> /kaggle/working/trainlab/<dataset>.npz
              (tools/trainlab_io.py; BIOHUB_TRAINLAB_DUMP, set to 1); with divinsert on it must be dump-only
              (DIVINS_THRESH > 1, DIVINS_DUMP=1). CPU tail arms + official scoring: tools/trainlab.py.
+  overlapcons (x138 base only; OVERLAP-CONSENSUS K6, CONTEXT 26 Sep 08:58 UTC) tools/overlap_reg.py + overlap_splice.py
+             embedded verbatim; write_test_submission holds all final graphs, registers the test videos (GPU max-pool
+             when available), splices accepted pairs, then writes. Knobs BIOHUB_OVERLAPCONS_{ENABLE (0 = byte-identical
+             CSV), BUDGET_S 33000, MAX_S 1800, WORKERS 4, SAME_PREFIX 0, MIN_GAP, MAX_NONOWNER, FORCE_FAIL (--lab)};
+             fail-soft 'OVERLAPCONS FAILED' / 'OVERLAPCONS SKIPPED (budget|time)'. Order: after forkmid/forkblob,
+             before safetail.
 DIVINS_DUMP=1 needs --lab on every base. --owner / --out-dir set the metadata owner and the folder under experiments/.
 """
 import argparse
@@ -1981,6 +1987,242 @@ def patch_forkblob(cells_src: dict) -> None:
 PATCHES["forkblob"] = patch_forkblob
 BASES["x138"]["patches"] += ("forkblob",)
 
+# ---- overlapcons (OVERLAP-CONSENSUS, CONTEXT.md 2026-09-26 08:58 UTC gates; design research/wf_ideas_v2/
+# r2_research_overlap-consensus.json + its three verifiers): x138 base only. A new cell before the post-processing cell
+# holds tools/overlap_reg.py and tools/overlap_splice.py verbatim as module objects (own namespaces, so no notebook global
+# is shadowed and the __main__ block never runs) + knobs + the fail-soft glue. write_test_submission keeps every
+# dataset's final graph (after filter_output_graph / the REPAIR FAILED fallback) until the last one is done, then
+# overlapcons_final_graphs() registers all test videos (exact-content anchor hashing; torch max_pool3d on the GPU when
+# available) and splices the accepted pairs, and only then are the rows written (same order, same writer code).
+# BIOHUB_OVERLAPCONS_ENABLE=0 (default): each dataset is written right after its graph exactly as before (byte-identical
+# CSV); the only runtime difference is a one-element loop around the row writer. Fail-soft: any exception -> the input
+# graphs, 'OVERLAPCONS FAILED'; kernel elapsed > BUDGET_S (33000) -> 'OVERLAPCONS SKIPPED (budget)'; the stage itself
+# stops at MAX_S (1800) -> 'OVERLAPCONS SKIPPED (time)'.
+OVERLAPCONS_KNOBS = {"BIOHUB_OVERLAPCONS_ENABLE": "0", "BIOHUB_OVERLAPCONS_BUDGET_S": "33000",
+                     "BIOHUB_OVERLAPCONS_MAX_S": "1800", "BIOHUB_OVERLAPCONS_WORKERS": "4",
+                     "BIOHUB_OVERLAPCONS_SAME_PREFIX": "0", "BIOHUB_OVERLAPCONS_MIN_GAP": "",
+                     "BIOHUB_OVERLAPCONS_MAX_NONOWNER": "", "BIOHUB_OVERLAPCONS_FORCE_FAIL": "0"}
+OVERLAPCONS_GLUE = r'''
+# ======== kernel glue (tools/build_probe_kernel.py patch_overlapcons) ========
+_OC_REG = _oc_module("overlap_reg", OVERLAP_REG_SRC)
+_OC_SPLICE = _oc_module("overlap_splice", OVERLAP_SPLICE_SRC)
+
+
+def _oc_opt_float(name):
+    value = os.environ.get(name, "").strip()
+    return None if value in ("", "none", "None") else float(value)
+
+
+OVERLAPCONS_ENABLE = os.environ.get("BIOHUB_OVERLAPCONS_ENABLE", "0").strip() not in ("", "0")
+OVERLAPCONS_BUDGET_S = float(os.environ.get("BIOHUB_OVERLAPCONS_BUDGET_S", "33000"))
+OVERLAPCONS_MAX_S = float(os.environ.get("BIOHUB_OVERLAPCONS_MAX_S", "1800"))
+OVERLAPCONS_WORKERS = int(os.environ.get("BIOHUB_OVERLAPCONS_WORKERS", "4"))
+OVERLAPCONS_SAME_PREFIX = os.environ.get("BIOHUB_OVERLAPCONS_SAME_PREFIX", "0").strip() not in ("", "0")
+OVERLAPCONS_FORCE_FAIL = os.environ.get("BIOHUB_OVERLAPCONS_FORCE_FAIL", "0").strip() not in ("", "0")
+OVERLAPCONS_CFG = {"min_gap": _oc_opt_float("BIOHUB_OVERLAPCONS_MIN_GAP"),
+                   "max_nonowner": _oc_opt_float("BIOHUB_OVERLAPCONS_MAX_NONOWNER")}
+_OC_STATE: dict = {}  # registration result per video set (a second writer call does not register again)
+print(f"OVERLAPCONS: enable={int(OVERLAPCONS_ENABLE)} budget_s={OVERLAPCONS_BUDGET_S:.0f} max_s={OVERLAPCONS_MAX_S:.0f}"
+      f" workers={OVERLAPCONS_WORKERS} same_prefix={int(OVERLAPCONS_SAME_PREFIX)} cfg={OVERLAPCONS_CFG}"
+      f" force_fail={int(OVERLAPCONS_FORCE_FAIL)}", flush=True)
+
+
+def overlapcons_video(dataset):
+    """(read_frame(t), (T, Z, Y, X)) of one test video: the notebook's read_test_frame with a throwaway cache."""
+    meta = json.loads((TEST_DIR / f"{dataset}.zarr" / "0" / "zarr.json").read_text())
+    shape = tuple(int(v) for v in meta["shape"])
+    if len(shape) != 4:
+        raise ValueError(f"{dataset}: expected a (T, Z, Y, X) zarr, got shape {shape}")
+    return (lambda t, _ds=str(dataset): read_test_frame(_ds, int(t), {})), shape
+
+
+def overlapcons_register(names, stop_ts, video=None, workers=None):
+    """Anchors of every video (thread pool; GPU max-pool when available) + votes + exact voxel checks. Raises
+    TimeoutError once time.time() > stop_ts (checked before every frame)."""
+    video = video or overlapcons_video
+    readers, shapes = {}, {}
+    for name in sorted(names):
+        readers[name], shapes[name] = video(name)
+
+    def _frames(n_frames):
+        for t in range(int(n_frames)):
+            if _oc_time.time() > stop_ts:
+                raise TimeoutError(f"registration stopped at the {OVERLAPCONS_MAX_S:.0f}s stage limit")
+            yield t
+
+    def _job(name):
+        return name, _OC_REG.video_anchors(readers[name], shapes[name][0], frames=_frames(shapes[name][0]))
+
+    t0 = _oc_time.time()
+    with _OcPool(max(1, int(workers or OVERLAPCONS_WORKERS))) as pool:
+        anchor_sets = dict(pool.map(_job, sorted(readers)))
+    anchor_s = _oc_time.time() - t0
+    res = _OC_REG.register(anchor_sets, readers, shapes, same_prefix=OVERLAPCONS_SAME_PREFIX)
+    res["stats"]["anchor_s"] = round(anchor_s, 1)
+    res["stats"]["frames"] = int(sum(int(s[0]) for s in shapes.values()))
+    res["shapes"] = shapes
+    return res
+
+
+def overlapcons_check(dataset, nodes_in, nodes, edges):
+    """Invariants of a spliced graph (any failure -> the whole stage falls back to the input graphs)."""
+    if not nodes:
+        raise AssertionError(f"{dataset}: splice left no node")
+    cap = int(math.floor(_OC_SPLICE.NODE_CAP_FRAC * len(nodes_in)))
+    if len(nodes) - len(nodes_in) > cap:
+        raise AssertionError(f"{dataset}: +{len(nodes) - len(nodes_in)} nodes > cap {cap}")
+    indeg, outdeg = {}, {}
+    for edge in edges:
+        s, t = int(edge["source_id"]), int(edge["target_id"])
+        if s not in nodes or t not in nodes:
+            raise AssertionError(f"{dataset}: dangling edge {s}->{t} after the splice")
+        if int(nodes[t]["t"]) <= int(nodes[s]["t"]):
+            raise AssertionError(f"{dataset}: edge {s}->{t} does not go forward in time")
+        indeg[t] = indeg.get(t, 0) + 1
+        outdeg[s] = outdeg.get(s, 0) + 1
+    if max(indeg.values(), default=0) > 1 or max(outdeg.values(), default=0) > 2:
+        raise AssertionError(f"{dataset}: in-degree > 1 or out-degree > 2 after the splice")
+    for nid, node in nodes.items():
+        if int(node["node_id"]) != int(nid) or not all(np.isfinite(float(node[k])) for k in ("t", "z", "y", "x")):
+            raise AssertionError(f"{dataset}: bad node {nid}")
+
+
+def overlapcons_final_graphs(results, video=None):
+    """results = [(dataset, raw_node_count, nodes_by_id, edges, filter_stats)] in writing order (all datasets) ->
+    the same list (nothing accepted / skipped / failed) or a new list whose spliced datasets carry new (nodes, edges)."""
+    t0 = _oc_time.time()
+    elapsed = t0 - KERNEL_START_TS
+    if elapsed > OVERLAPCONS_BUDGET_S:
+        print(f"OVERLAPCONS SKIPPED (budget): kernel elapsed {elapsed:.0f}s > {OVERLAPCONS_BUDGET_S:.0f}s;"
+              " final graphs unchanged", flush=True)
+        return results
+    try:
+        if OVERLAPCONS_FORCE_FAIL:
+            raise RuntimeError("BIOHUB_OVERLAPCONS_FORCE_FAIL=1 (dummy test of the fail-soft path)")
+        names = [str(r[0]) for r in results]
+        key = tuple(sorted(names))
+        if key not in _OC_STATE:
+            _OC_STATE[key] = overlapcons_register(names, t0 + OVERLAPCONS_MAX_S, video=video)
+        reg = _OC_STATE[key]
+        s = reg["stats"]
+        print(f"OVERLAPCONS registration: videos {s['videos']} frames {s['frames']} anchors {s['anchors']}"
+              f" candidates {s['candidate_pairs']} accepted {s['accepted']} (cross-prefix {s['accepted_cross_prefix']})"
+              f" rejected frames/spatial/voxels {s['rejected_frames']}/{s['rejected_spatial']}/{s['rejected_voxels']}"
+              f" anchors {s['anchor_s']}s verify {s['verify_s']}s", flush=True)
+        for p in reg["pairs"]:
+            print(f"OVERLAPCONS accepted {p['a']} {p['b']} offset_tzyx_a_minus_b {p['offset']} votes {p['votes']}"
+                  f" frames {p['n_frames']} spatial {p['spatial_frac']} equal {p['equal_fracs']}", flush=True)
+        if not reg["pairs"]:
+            print(f"OVERLAPCONS: no accepted pair -> final graphs unchanged | {_oc_time.time() - t0:.1f}s", flush=True)
+            return results
+        graphs = {str(r[0]): (r[2], r[3]) for r in results}
+        out, st = _OC_SPLICE.splice_all(graphs, reg["shapes"], reg["pairs"], OVERLAPCONS_CFG,
+                                        log=lambda msg: print(msg, flush=True))
+        if _oc_time.time() > t0 + OVERLAPCONS_MAX_S:
+            raise TimeoutError(f"splice finished after the {OVERLAPCONS_MAX_S:.0f}s stage limit")
+        new_results = []
+        for rec in results:
+            ds = str(rec[0])
+            if out[ds] is graphs[ds]:
+                new_results.append(rec)
+                continue
+            nodes = {int(nid): (node if node.get("node_id") == nid else {**node, "node_id": int(nid)})
+                     for nid, node in out[ds][0].items()}  # imported nodes carry the owner's node_id
+            edges = list(out[ds][1])
+            overlapcons_check(ds, rec[2], nodes, edges)
+            print(f"OVERLAPCONS {ds}: nodes {len(rec[2])} -> {len(nodes)}, edges {len(rec[3])} -> {len(edges)}",
+                  flush=True)
+            new_results.append((rec[0], rec[1], nodes, edges, rec[4]))
+        t = st["total"]
+        print(f"OVERLAPCONS DONE: pairs {t['pairs']} components {t['components']} spliced {t['spliced']}"
+              f" (into a {t['spliced_into_a']}, into b {t['spliced_into_b']}) skipped fork/boundary/cap/gap/nonowner/"
+              f"third/invariant/fragment {t['skipped_fork']}/{t['skipped_boundary']}/{t['skipped_cap']}/"
+              f"{t['skipped_gap']}/{t['skipped_nonowner']}/{t['skipped_third']}/{t['skipped_invariant']}/"
+              f"{t['skipped_fragment']} nodes +{t['nodes_added']}/-{t['nodes_removed']} videos_changed"
+              f" {t['videos_changed']} | {_oc_time.time() - t0:.1f}s", flush=True)
+        return new_results
+    except TimeoutError as _oc_exc:
+        print(f"OVERLAPCONS SKIPPED (time): {_oc_exc}; final graphs unchanged", flush=True)
+        return results
+    except Exception as _oc_exc:
+        _oc_traceback.print_exc()
+        print(f"OVERLAPCONS FAILED ({type(_oc_exc).__name__}: {_oc_exc}); final graphs unchanged", flush=True)
+        return results
+'''
+_OC_WRITER_INIT = "    seen_datasets: set[str] = set()" + NL + "    row_id = 0" + NL
+_OC_WRITER_HOLD = ("    _oc_final: list = []  # overlapcons: final graphs held until the last dataset (OVERLAPCONS_ENABLE=1 only)"
+                   + NL)
+_OC_WRITER_SPLIT = ('            if not nodes_by_id:' + NL
+                    + '                raise AssertionError(f"{dataset}: post-processing removed every node")' + NL + NL)
+_OC_WRITER_ROWS = "            for node_id in sorted(nodes_by_id):" + NL
+_OC_WRITER_END = NL + "    expected_datasets = set(test_stems)" + NL
+OVERLAPCONS_WRITER_HOOK = r'''            # ---- overlapcons: hold every final graph, splice registered overlaps, then write; ENABLE=0 -> as before ----
+            if OVERLAPCONS_ENABLE:
+                _oc_final.append((dataset, raw_node_count, nodes_by_id, edges, filter_stats))
+                if len(_oc_final) < len(geffs):
+                    continue
+                _oc_final = overlapcons_final_graphs(_oc_final)
+            for dataset, raw_node_count, nodes_by_id, edges, filter_stats in (
+                    _oc_final if OVERLAPCONS_ENABLE else [(dataset, raw_node_count, nodes_by_id, edges, filter_stats)]):
+'''
+
+
+def _oc_literal(path: Path) -> str:
+    """A module file as a raw triple-quoted literal; eval() of it gives the file text back exactly."""
+    text = path.read_text(encoding="utf-8")
+    assert "'''" not in text and not text.endswith("\\"), path.name
+    lit = "r'''" + text + "'''"
+    assert eval(lit) == text, path.name  # noqa: S307 (builder-side self-check of our own file)
+    return lit
+
+
+def overlapcons_cell() -> str:
+    tools_dir = Path(__file__).resolve().parent
+    return ("# ---- overlapcons (tools/build_probe_kernel.py --patch overlapcons): OVERLAP-CONSENSUS candidate (K6)." + NL
+            + "# tools/overlap_reg.py (GT-free exact-content registration of overlapping test crops) and" + NL
+            + "# tools/overlap_splice.py (disagreement-component splice of their final graphs), embedded VERBATIM as" + NL
+            + "# module objects; write_test_submission calls overlapcons_final_graphs() once every final graph exists." + NL
+            + "# BIOHUB_OVERLAPCONS_ENABLE=0 (default): nothing runs; the CSV is byte-identical to the unpatched notebook." + NL
+            + "import math" + NL + "import time as _oc_time" + NL + "import traceback as _oc_traceback" + NL
+            + "import types as _oc_types" + NL + "from concurrent.futures import ThreadPoolExecutor as _OcPool" + NL + NL
+            + NL + "def _oc_module(name, source):" + NL
+            + "    module = _oc_types.ModuleType(name)" + NL
+            + '    module.__file__ = f"<embedded tools/{name}.py>"' + NL
+            + '    exec(compile(source, module.__file__, "exec"), module.__dict__)' + NL
+            + "    return module" + NL + NL + NL
+            + "# ======== tools/overlap_reg.py ========" + NL
+            + "OVERLAP_REG_SRC = " + _oc_literal(tools_dir / "overlap_reg.py") + NL
+            + "# ======== tools/overlap_splice.py ========" + NL
+            + "OVERLAP_SPLICE_SRC = " + _oc_literal(tools_dir / "overlap_splice.py") + NL
+            + OVERLAPCONS_GLUE)
+
+
+def overlapcons_writer_source(c: str) -> str:
+    """write_test_submission: hold list before the loop, the hook + a one-element loop around the unchanged (indented)
+    row-writing block (nodes, edges, stats row)."""
+    c = _rep1(c, _OC_WRITER_INIT, _OC_WRITER_INIT + _OC_WRITER_HOLD)
+    i0 = c.index(_OC_WRITER_SPLIT + _OC_WRITER_ROWS) + len(_OC_WRITER_SPLIT)
+    assert c.count(_OC_WRITER_SPLIT + _OC_WRITER_ROWS) == 1
+    i1 = c.index(_OC_WRITER_END, i0)
+    assert c.count(_OC_WRITER_END) == 1
+    block = c[i0:i1]
+    lines = block.splitlines(keepends=True)
+    assert all(not ln.strip() or ln.startswith(" " * 12) for ln in lines), "row block is not inside the dataset loop"
+    assert not re.search(r"^\s*(continue|break|return)\b", block, re.M), "row block has loop control"
+    body = "".join("    " + ln if ln.strip() else ln for ln in lines)
+    return c[:i0] + OVERLAPCONS_WRITER_HOOK + body + c[i1:]
+
+
+def patch_overlapcons(cells_src: dict) -> None:
+    """OVERLAP-CONSENSUS (x138 base): new cell before the post-processing cell + the writer hook (see OVERLAPCONS_GLUE)."""
+    post = CELL["post"]
+    cells_src[post] = overlapcons_writer_source(cells_src[post])
+    cells_src.setdefault(NEW_CELLS_KEY, []).append((CELL["predict"], overlapcons_cell()))
+
+
+PATCHES["overlapcons"] = patch_overlapcons
+BASES["x138"]["patches"] += ("overlapcons",)
+
 
 def main() -> None:
     ap = argparse.ArgumentParser()
@@ -2220,6 +2462,36 @@ def main() -> None:
         # right after forkmid: order ... -> forkmid -> forkblob -> safetail (safetail stays last)
         a.patch = ([p for p in a.patch if p not in ("forkmid", "forkblob", "safetail")]
                    + [p for p in a.patch if p == "forkmid"] + ["forkblob"] + [p for p in a.patch if p == "safetail"])
+    if any(k.startswith("BIOHUB_OVERLAPCONS_") for k in overrides):
+        if "overlapcons" not in a.patch:
+            sys.exit("OVERLAPCONS_* knobs need --patch overlapcons")
+        unknown = sorted(k for k in overrides if k.startswith("BIOHUB_OVERLAPCONS_") and k not in OVERLAPCONS_KNOBS)
+        if unknown:
+            sys.exit(f"unknown overlapcons knobs {unknown}; known: {sorted(OVERLAPCONS_KNOBS)}")
+        for _k in ("BIOHUB_OVERLAPCONS_ENABLE", "BIOHUB_OVERLAPCONS_SAME_PREFIX", "BIOHUB_OVERLAPCONS_FORCE_FAIL"):
+            if overrides.get(_k, "0") not in ("0", "1"):
+                sys.exit(f"{_k.removeprefix('BIOHUB_')} must be 0 or 1, got {overrides[_k]!r}")
+        for _k in ("BIOHUB_OVERLAPCONS_BUDGET_S", "BIOHUB_OVERLAPCONS_MAX_S", "BIOHUB_OVERLAPCONS_MIN_GAP",
+                   "BIOHUB_OVERLAPCONS_MAX_NONOWNER"):
+            if overrides.get(_k, ""):
+                try:
+                    _v = float(overrides[_k])
+                except ValueError:
+                    sys.exit(f"{_k.removeprefix('BIOHUB_')} must be a number, got {overrides[_k]!r}")
+                if not 0.0 <= _v < float("inf"):
+                    sys.exit(f"{_k.removeprefix('BIOHUB_')} must be finite and >= 0, got {overrides[_k]!r}")
+        if not re.fullmatch(r"[1-9]\d?", overrides.get("BIOHUB_OVERLAPCONS_WORKERS", "4")):
+            sys.exit(f"OVERLAPCONS_WORKERS must be an integer 1..99, got {overrides['BIOHUB_OVERLAPCONS_WORKERS']!r}")
+        if overrides.get("BIOHUB_OVERLAPCONS_FORCE_FAIL", "0") != "0" and not a.lab:
+            sys.exit("OVERLAPCONS_FORCE_FAIL is a dummy test knob: needs --lab")
+    if "overlapcons" in a.patch:
+        if a.base != "x138":
+            sys.exit("--patch overlapcons needs --base x138")
+        if overrides.get("BIOHUB_OVERLAPCONS_ENABLE", "0") == "0":
+            print("NOTE: --patch overlapcons with OVERLAPCONS_ENABLE=0 (default) writes a byte-identical submission.csv")
+        # after forkmid / forkblob, before safetail (which stays last)
+        a.patch = ([p for p in a.patch if p not in ("overlapcons", "safetail")] + ["overlapcons"]
+                   + [p for p in a.patch if p == "safetail"])
     if a.base == "exp39":
         overrides["BIOHUB_DIVNET_VERIFY"] = a.divnet or "1"
 
