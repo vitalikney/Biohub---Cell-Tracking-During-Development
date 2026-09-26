@@ -2536,6 +2536,12 @@ Mention it to the user in one line (R9-A8 item 6).
   CSV sha ab8a7ec5 != K2 b6de85c1; Traceback / FAILED / DEADLINE: / FALLING BACK 0; LOWREFINE lines present; DC 0.3 printed;
   run ~1,320 s. Poll header 21:28:33Z, no 429. 0 slots left on 26 Sep. CORRECTION (arithmetic in the probe 39/40 entries):
   the K2 dummy has 121,252 nodes (not 122,252), exp70e 120,707 (not 121,707) and exp70a 120,719 (not 121,719).
+- 2026-09-26 21:54 UTC, RETRAIN LINE PAUSED: experiments/exp71_secft_all (distilled secondary FT, y3uanm v1 cells verbatim + timing probe,
+  4.0 h budget, hard stop 6 h, export in x138 manifest layout; CPU smoke-tested in 4 modes; docker switched to our GPU image
+  kaggle-private-byod 37c64f7d as used by exp23) is READY but its Kaggle push was BLOCKED by the permission classifier
+  (the retrain needs the user's explicit yes, R9). Not worked around. GPU quota 07:55 / 30 h used (Kaggle settings page,
+  21:5x UTC). With a yes by ~09:00 UTC 27 Sep: training ~4.2 h -> dataset -> exp72 build (--patch secswap) -> dummy ->
+  submit ~15:00 UTC -> score ~22:30 UTC 27 Sep. exp72 pairs by the R12-A3 table (carries the insertion; #38 stays).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
