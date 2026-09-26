@@ -2003,6 +2003,26 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
      comparing L(twin): L(twin) >= L(K2) - 0.3 h means queue delay dominates.
   Never: K1 at d1 = -0.001 (R3 keeps lowrefine; a 0.001 K1-vs-K2 pick is barred by R7 and §f); exp56 while an admissible
   non-copy x138-family file exists; two files with identical components.
+- 2026-09-26 00:02 UTC ===== RESUME POINT (supersedes the 25 Sep 10:20 UTC block; read this and every dated entry after it) =====
+  SUBMITTED 26 Sep: #37 = K2 = exp58 (vitaliineibauer/biohub-exp58-x138-safe-lowref v1; x138 + safetail C01 + lowrefine
+  + DaughterNet insertion #35 config), ref 56563521, 00:02:12Z, under pre-approval (PRE-REG v3 §h.3) with 18/18 dummy
+  gates; #38 = TWIN = exp58n (vitaliineibauer/biohub-exp58n-x138-safe-lowref v1; K2 without the insertion), ref
+  56563534, 00:02:18Z, under the user's f2 OK (22:06 UTC) with twin gates PASS. P36 (exp57 v1 diagnostic, x138 + leaf
+  prune + ungated insertion) = 0.954 (L36 in (7.24, 7.42] h) - INFO ONLY by the 18:4x rule; leaf prune on x138 stays
+  closed. 3 slots left on 26 Sep; no rider exists (all T9 gates FAILED), so they stay empty unless the READ TABLE
+  (entry 23:12 UTC) calls for K1 with the user's OK.
+  LB: #34 x138 verbatim 0.953 (L34 <= 6.46 h); #35 x138 + insertion 0.954 (L35 in (6.72, 7.73] h); best = 0.954.
+  Branch A. Read K2 and the twin ONLY by the K2/TWIN READ TABLE (23:12 UTC); expected scores ~06:30-08:30 UTC; keep the
+  10-min poller (experiments/lb_poll/lb_poll.py, 60-line window) and tools/runtime_ledger.py (ledger.md) running.
+  FINALS: PRE-REG v3 §f (13:38) + AMENDMENT f2 (18:20; user OK 22:06) + READ TABLE. Default: F1 = K2, F2 = twin exp58n
+  (if scored without error, R5-admissible, public >= 0.953; else exp52). f2 verbatim keeps §f fallback item 4 (#34) as
+  the last resort before exp52; never tick two files with identical components; the user ticks both manually by
+  29 Sep 20:00 UTC (reminder 12:00 UTC).
+  CLOSED: K3 forkmid (power), K3b DeepCenter t*, forkblob, ANTIPAR, DNVETO, K4 tempfuse, I-072, swapfix on x138,
+  clip-boundary rescue, edge filter, float output, head retrain, leaf prune on x138. New mechanisms only until 27 Sep
+  12:00 UTC (R8). Pending user OKs (moot unless a READ TABLE row needs them): L1/L2, K1 by the table, twin floor 0.952.
+  Night research rounds: experiments/workflows/biohub-research-round.js (+ curator research/KNOWLEDGE/, start there:
+  INDEX.md); round reports in research/wf_ideas_v4/round<N>/REPORT.md.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
