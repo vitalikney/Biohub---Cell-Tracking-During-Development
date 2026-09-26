@@ -1,0 +1,18 @@
+# v_retrain notes (skeptic VALUE+FEASIBILITY) - 2026-09-26T20:43:34Z
+- v_retrain.json absent at start -> fresh run
+- 20:45Z `kaggle kernels status y3uanm/notebook0afc5663955|f6` = COMPLETE both; `kernels output ... --file-pattern` -> ONLY the .log (807 B): 6 entries, t=5..10 s, only nbconvert lines -> both public versions are QUICK SAVES (not executed). No weights output, no timing, no proof the recipe ever ran. Saved under experiments/ext_y3uanm-secondary-ft/out_v1, out_v2.
+- `kaggle datasets list --user y3uanm|delta47x` -> none. kernels list y3uanm: v2 lastRun 22 Sep 06:26, v1 21 Sep 01:06; nothing newer.
+- Verified recipe (cells 2-6) = as the plan says. Trainable: unet.decoder_blocks[-1], unet.head, detect_head; teacher in a plain dict (not in model.parameters -> not clipped/optimised). AdamW over all params but frozen have grad None -> untouched.
+- x138 fusion (code cell 4): secondary det LOGITS re-centred/re-scaled per frame to primary mean/std (scale ratio clamp 0.5-2) then 0.2*primary + 0.8*aligned -> a global logit shift of the FT is cancelled; only within-frame contrast changes pass.
+- x138 cell 3 L576 `_secondary_expected_sha256 = "9bac..."` hard-coded; L571 env BIOHUB_SECONDARY_ARTIFACT_MANIFEST exists; finder falls back to rglob of /kaggle/input (~210 s) -> wrong path = slow, not fatal. copy_or_extract_tree handles weights/ or weights.zip.
+- Builder: x138 patches = divinsert, leafprune, safetail, trainlab, lowrefine, forkmid, forkblob, overlapcons (no secswap). --set writes any BIOHUB_ knob (no whitelist for unknown knobs), --dataset appends.
+- CONTEXT R8 (L1671): NEW MECHANISMS until 27.09 12:00 UTC -> plan's "latest start 28 Sep 19:00Z under R8" is wrong unless R8 is lifted too.
+- CONTEXT 20:33Z: user's new finals strategy = one final for PUBLIC (best public-scoring), one for PRIVATE (default #37) -> RT-5 must be rewritten to that.
+- CONTEXT 20:34Z: user asleep ("делай. я спать"), autonomous night -> "OK by 21:00Z" gate cannot be met by an explicit R9 yes; timeline slips to the user's wake-up unless the main session reads "делай" as the yes.
+- LB history of our model swaps (CONTEXT L175-181, ledger): exp08 secondary -0.016, friend A ep21 secondary -0.025, exp23 FT secondary -0.007, exp03B primary -0.003, soup primary -0.004 -> 0/5 model swaps helped.
+- K2 dummy log (_dl/biohub-exp58-x138-safe-lowref): prints 'Secondary artifact: /kaggle/input/datasets/pilkwang/...', 'Secondary SHA256: 9bac...', detection weight=0.800 -> gate strings exist; own datasets mount at /kaggle/input/datasets/vitaliineibauer/<slug> (50 hits of biohub-ft-weights).
+- Builder trainlab: TRAINLAB_DUMP defaults to 1, DEGRADE_KEEP_DIV set by main for safetail -> plan's G2 command OK as written. exp60 lab had NO lowrefine (probe.json kernel_a) -> G2 without lowrefine is consistent.
+- Silent-no-op trap: --set SECONDARY_ARTIFACT_MANIFEST without secswap -> finder rejects our manifest (sha != 9bac), rglob finds pilkwang's -> K2 re-run, slot wasted. Needs a builder guard.
+- Metric memory: adj J = J*(1-0.1*(N_pred-N_est)/N_est); +3% nodes ~ -0.003; exp23 swap +3.9% nodes = -0.007. G1 upper bound 1.04 and dummy +-3% are too loose -> tighten to <= +1-1.5%.
+- 21:00Z writing v_retrain.json.
+- 2026-09-26T20:52:36Z v_retrain.json written (complete).

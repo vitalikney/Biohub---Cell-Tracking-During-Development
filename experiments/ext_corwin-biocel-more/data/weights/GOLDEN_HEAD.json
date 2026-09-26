@@ -1,0 +1,176 @@
+{
+ "schema": "BIOCEL_GOLDEN_HEAD_V1",
+ "date_u": "2026-09-08T07:55:38Z",
+ "generated_by": "osk_golden_test.py generate",
+ "input": {
+  "rng": "numpy.random.default_rng",
+  "seed": 20260908,
+  "call": "standard_normal",
+  "shape": [
+   4,
+   4,
+   11,
+   40,
+   40
+  ],
+  "dtype": "float32"
+ },
+ "device": "cpu",
+ "precision": "fp32",
+ "tolerance": 0.0001,
+ "torch_at_generation": "2.6.0+cu124",
+ "meta": {
+  "h44b6_s1": {
+   "held_embryo": "44b6",
+   "width": 32,
+   "in_channels": 4,
+   "epoch": 24,
+   "is_ema": true,
+   "n_state_tensors": 49,
+   "n_parameters": 2643777
+  },
+  "h44b6_s2": {
+   "held_embryo": "44b6",
+   "width": 32,
+   "in_channels": 4,
+   "epoch": 24,
+   "is_ema": true,
+   "n_state_tensors": 49,
+   "n_parameters": 2643777
+  },
+  "h44b6_s3": {
+   "held_embryo": "44b6",
+   "width": 32,
+   "in_channels": 4,
+   "epoch": 24,
+   "is_ema": true,
+   "n_state_tensors": 49,
+   "n_parameters": 2643777
+  },
+  "h44b6_s4": {
+   "held_embryo": "44b6",
+   "width": 32,
+   "in_channels": 4,
+   "epoch": 24,
+   "is_ema": true,
+   "n_state_tensors": 49,
+   "n_parameters": 2643777
+  },
+  "h44b6_s5": {
+   "held_embryo": "44b6",
+   "width": 32,
+   "in_channels": 4,
+   "epoch": 24,
+   "is_ema": true,
+   "n_state_tensors": 49,
+   "n_parameters": 2643777
+  },
+  "h6bba_s1": {
+   "held_embryo": "6bba",
+   "width": 32,
+   "in_channels": 4,
+   "epoch": 25,
+   "is_ema": true,
+   "n_state_tensors": 49,
+   "n_parameters": 2643777
+  },
+  "h6bba_s2": {
+   "held_embryo": "6bba",
+   "width": 32,
+   "in_channels": 4,
+   "epoch": 25,
+   "is_ema": true,
+   "n_state_tensors": 49,
+   "n_parameters": 2643777
+  },
+  "h6bba_s3": {
+   "held_embryo": "6bba",
+   "width": 32,
+   "in_channels": 4,
+   "epoch": 25,
+   "is_ema": true,
+   "n_state_tensors": 49,
+   "n_parameters": 2643777
+  },
+  "h6bba_s4": {
+   "held_embryo": "6bba",
+   "width": 32,
+   "in_channels": 4,
+   "epoch": 25,
+   "is_ema": true,
+   "n_state_tensors": 49,
+   "n_parameters": 2643777
+  },
+  "h6bba_s5": {
+   "held_embryo": "6bba",
+   "width": 32,
+   "in_channels": 4,
+   "epoch": 25,
+   "is_ema": true,
+   "n_state_tensors": 49,
+   "n_parameters": 2643777
+  }
+ },
+ "logits": {
+  "h44b6_s1": [
+   -6.321344375610352,
+   -6.026660919189453,
+   -5.114756107330322,
+   -5.7746357917785645
+  ],
+  "h44b6_s2": [
+   -7.434309482574463,
+   -5.142849445343018,
+   -3.7412211894989014,
+   -5.264644145965576
+  ],
+  "h44b6_s3": [
+   -5.349523067474365,
+   -5.6597161293029785,
+   -4.867456912994385,
+   -5.03405237197876
+  ],
+  "h44b6_s4": [
+   -5.497588157653809,
+   -2.8722779750823975,
+   -4.607229232788086,
+   -5.232191562652588
+  ],
+  "h44b6_s5": [
+   -4.26140832901001,
+   -2.5839531421661377,
+   2.2067649364471436,
+   -4.120076656341553
+  ],
+  "h6bba_s1": [
+   -7.247931480407715,
+   -5.971614837646484,
+   -6.157998085021973,
+   -6.029661655426025
+  ],
+  "h6bba_s2": [
+   -2.8461384773254395,
+   -3.825324058532715,
+   -2.554152250289917,
+   -1.6960012912750244
+  ],
+  "h6bba_s3": [
+   -7.039959907531738,
+   -5.684272766113281,
+   -7.449577331542969,
+   -3.470137119293213
+  ],
+  "h6bba_s4": [
+   -4.575328826904297,
+   -3.5881459712982178,
+   -3.780531167984009,
+   -4.075735092163086
+  ],
+  "h6bba_s5": [
+   -5.491366386413574,
+   -7.551800727844238,
+   -6.987698554992676,
+   -6.397383689880371
+  ]
+ }
+}

@@ -1,0 +1,149 @@
+{
+  "status": "ok",
+  "artifact": "FORGE-V11-THRESHOLD-CONTRACT",
+  "score_space": "platt",
+  "comparator": ">=",
+  "threshold_scope": "universal",
+  "threshold": 0.053,
+  "selection": {
+    "rule": "predeclared universal anchor P_div>=0.053",
+    "uses_GT_179_for_threshold": false,
+    "retuned_on_179": false,
+    "calibration_is_LOEO_proxy_supervised": true,
+    "historical_candidates_replayed_at_deployment": false
+  },
+  "calibrators": {
+    "6bba": {
+      "trained_on": "44b6",
+      "coef": 1.9431293386784736,
+      "intercept": -8.607705642875214,
+      "method": "Platt logit Newton numpy, sans class_weight",
+      "source_b1_result_sha256": "10c9693ab4d46188e289d6d2b64d8b4000bc75dc5acdcc3b63469e267a36f5ff",
+      "source_train_report_sha256": "56283d2aa191987d31ecc57177087b2d8d5a99e62d8ef90a2eb0df7dacdaff7d",
+      "source_checkpoint_sha256": {
+        "0": "8fd0166e9ac45a9b62696ee02e5d8c239a9d7a118cf6c9972f1b3357420c5a41",
+        "1": "98bb581341b3f8edb1f2b3fb4ac5cbb2123d208b6bcd7a28ed05d9c25061cd36",
+        "2": "11402e43def758f6fa83546df98e873a1241a164e0bb14b29d520ecdea3121f2"
+      }
+    },
+    "44b6": {
+      "trained_on": "6bba",
+      "coef": 1.3433750627445629,
+      "intercept": -5.206048979972261,
+      "method": "Platt logit Newton numpy, sans class_weight",
+      "source_b1_result_sha256": "10c9693ab4d46188e289d6d2b64d8b4000bc75dc5acdcc3b63469e267a36f5ff",
+      "source_train_report_sha256": "4440513ac3bfa4da7f3c1892c584be68e96ec91b6a3c241d838cde6ebdb3bc4f",
+      "source_checkpoint_sha256": {
+        "0": "4eebe653012a386da704d1535df6a717b380aefeca557e7d035327d98420dd06",
+        "1": "385a4b843fdb0d48298e628068fe214c614c80f0645c16bb80ae181d7d912795",
+        "2": "ab1299c6990a853ebbb37d2b7e72af8f92aed027285ae8ecf4d25f1848850163"
+      }
+    }
+  },
+  "source_bindings": {
+    "b1_result_sha256": "10c9693ab4d46188e289d6d2b64d8b4000bc75dc5acdcc3b63469e267a36f5ff",
+    "trainer_reports_sha256": {
+      "train:6bba": "56283d2aa191987d31ecc57177087b2d8d5a99e62d8ef90a2eb0df7dacdaff7d",
+      "train:44b6": "4440513ac3bfa4da7f3c1892c584be68e96ec91b6a3c241d838cde6ebdb3bc4f",
+      "score:6bba": "ab3ef14f4acb12711adc0e3479b4e7bcc46aa9bed0dfbb57f03b22313dc82b52",
+      "score:44b6": "128500f5fa6bd654dc19089359be76f45c97bc094919ff46c6fa61aa7587b8b2",
+      "merge:all": "768732dcef477923c06a525b5c9f91f9ead6b2ec0bb9135efbf05907828cd2ea"
+    },
+    "checkpoint_sha256": {
+      "6bba": {
+        "0": "8fd0166e9ac45a9b62696ee02e5d8c239a9d7a118cf6c9972f1b3357420c5a41",
+        "1": "98bb581341b3f8edb1f2b3fb4ac5cbb2123d208b6bcd7a28ed05d9c25061cd36",
+        "2": "11402e43def758f6fa83546df98e873a1241a164e0bb14b29d520ecdea3121f2"
+      },
+      "44b6": {
+        "0": "4eebe653012a386da704d1535df6a717b380aefeca557e7d035327d98420dd06",
+        "1": "385a4b843fdb0d48298e628068fe214c614c80f0645c16bb80ae181d7d912795",
+        "2": "ab1299c6990a853ebbb37d2b7e72af8f92aed027285ae8ecf4d25f1848850163"
+      }
+    }
+  },
+  "provenance": {
+    "calibration_artifact": {
+      "path": "/workspace/ulysse/mitose_work/forge-v11-runtime/FORGE-V11-CALIBRATION-HISTORICAL.json",
+      "sha256": "10c9693ab4d46188e289d6d2b64d8b4000bc75dc5acdcc3b63469e267a36f5ff"
+    },
+    "checkpoints": [
+      {
+        "held": "6bba",
+        "trained_on": "44b6",
+        "seed": 0,
+        "path": "/workspace/ulysse/mitose_work/forge-real-strict/real_held-6bba_seed-0.pt",
+        "sha256": "8fd0166e9ac45a9b62696ee02e5d8c239a9d7a118cf6c9972f1b3357420c5a41",
+        "bytes": 3521385
+      },
+      {
+        "held": "6bba",
+        "trained_on": "44b6",
+        "seed": 1,
+        "path": "/workspace/ulysse/mitose_work/forge-real-strict/real_held-6bba_seed-1.pt",
+        "sha256": "98bb581341b3f8edb1f2b3fb4ac5cbb2123d208b6bcd7a28ed05d9c25061cd36",
+        "bytes": 3521385
+      },
+      {
+        "held": "6bba",
+        "trained_on": "44b6",
+        "seed": 2,
+        "path": "/workspace/ulysse/mitose_work/forge-real-strict/real_held-6bba_seed-2.pt",
+        "sha256": "11402e43def758f6fa83546df98e873a1241a164e0bb14b29d520ecdea3121f2",
+        "bytes": 3521385
+      },
+      {
+        "held": "44b6",
+        "trained_on": "6bba",
+        "seed": 0,
+        "path": "/workspace/ulysse/mitose_work/forge-real-strict/real_held-44b6_seed-0.pt",
+        "sha256": "4eebe653012a386da704d1535df6a717b380aefeca557e7d035327d98420dd06",
+        "bytes": 3529449
+      },
+      {
+        "held": "44b6",
+        "trained_on": "6bba",
+        "seed": 1,
+        "path": "/workspace/ulysse/mitose_work/forge-real-strict/real_held-44b6_seed-1.pt",
+        "sha256": "385a4b843fdb0d48298e628068fe214c614c80f0645c16bb80ae181d7d912795",
+        "bytes": 3529449
+      },
+      {
+        "held": "44b6",
+        "trained_on": "6bba",
+        "seed": 2,
+        "path": "/workspace/ulysse/mitose_work/forge-real-strict/real_held-44b6_seed-2.pt",
+        "sha256": "ab1299c6990a853ebbb37d2b7e72af8f92aed027285ae8ecf4d25f1848850163",
+        "bytes": 3529449
+      }
+    ],
+    "trainer_reports": [
+      {
+        "key": "train:6bba",
+        "path": "/workspace/ulysse/mitose_work/forge-real-strict/train_held-6bba.json",
+        "sha256": "56283d2aa191987d31ecc57177087b2d8d5a99e62d8ef90a2eb0df7dacdaff7d"
+      },
+      {
+        "key": "train:44b6",
+        "path": "/workspace/ulysse/mitose_work/forge-real-strict/train_held-44b6.json",
+        "sha256": "4440513ac3bfa4da7f3c1892c584be68e96ec91b6a3c241d838cde6ebdb3bc4f"
+      },
+      {
+        "key": "score:6bba",
+        "path": "/workspace/ulysse/mitose_work/forge-real-strict/score_held-6bba.json",
+        "sha256": "ab3ef14f4acb12711adc0e3479b4e7bcc46aa9bed0dfbb57f03b22313dc82b52"
+      },
+      {
+        "key": "score:44b6",
+        "path": "/workspace/ulysse/mitose_work/forge-real-strict/score_held-44b6.json",
+        "sha256": "128500f5fa6bd654dc19089359be76f45c97bc094919ff46c6fa61aa7587b8b2"
+      },
+      {
+        "key": "merge:all",
+        "path": "/workspace/ulysse/mitose_work/forge-real-strict/head_real_strict.json",
+        "sha256": "768732dcef477923c06a525b5c9f91f9ead6b2ec0bb9135efbf05907828cd2ea"
+      }
+    ]
+  },
+  "payload_sha256": "4dfdf090da5ef09588400298ecc7aff82d3e32160581c5a31de10935681fb5e8"
+}

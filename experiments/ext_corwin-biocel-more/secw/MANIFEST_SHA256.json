@@ -1,0 +1,16 @@
+{
+ "produced_by": "ENG/KER10",
+ "role": "served",
+ "note": "ENG/DET3's NAMED export SERVED_A_ep025_034_swa10.pth, the served object of record per ZEUS 17:0xZ; proved tensor-for-tensor identical to the file taken from the mutable path (136/136 torch.equal, max abs diff 0.0), the 2 304 B difference being storage layout only",
+ "source_path": "D:\\tmp\\DET3_OFFVOL\\SERVED\\SERVED_A_ep025_034_swa10.pth",
+ "replaces_in_the_slot": "9bac2fa0dadc4a6fc1899e0caf187f4b553e0a7cd90ba1261a68b35ffe9e305f",
+ "state_dict_keys": 136,
+ "files": {
+  "edge_predictor_best.pth": "1168050414f7286d1b66692a2b57cc6a9e1d6068451627bfd6313ec459dde27d",
+  "config.json": "e9b4e396c58081bca08adf8275bd0bd1c2d3fd6eb091a1912a5116cb6de7b50a"
+ },
+ "bytes": {
+  "edge_predictor_best.pth": 8356270,
+  "config.json": 165
+ }
+}

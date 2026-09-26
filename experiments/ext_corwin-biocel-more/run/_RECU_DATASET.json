@@ -1,0 +1,235 @@
+{
+ "objet": "dataset prive du referee",
+ "sortie": "D:\\tmp\\SPRINT48\\dataset_D",
+ "n_fichiers": 23,
+ "octets_totaux": 473569,
+ "fichiers": {
+  "composantes.py": {
+   "sha256": "fa870479386b4862bc76a8a0c4e24a9ea763181ba53b166a2e2847e88824239e",
+   "octets": 28158,
+   "source": "D:\\Github\\BIOCELL_WINNING\\01_PLAN\\5_VICTOIRE\\SPRINT_48H\\REFEREE\\impl\\composantes.py",
+   "depuis": "commit 86053199 (octets de HEAD)",
+   "sha_du_recu": "dee89626ee063dc40393139284179ced2d629ae230a183c36813848fd2e89c9f",
+   "a_change_depuis_le_recu": true
+  },
+  "anomalies.py": {
+   "sha256": "ceadea53dc5e7f97c8255be14480096a7f0be737ed6b247cb9cbb38ea6fb04c8",
+   "octets": 16861,
+   "source": "D:\\Github\\BIOCELL_WINNING\\01_PLAN\\5_VICTOIRE\\SPRINT_48H\\PROOFREADER\\impl\\anomalies.py",
+   "depuis": "commit 5eb863a7 (octets de HEAD)",
+   "sha_du_recu": "ceadea53dc5e7f97c8255be14480096a7f0be737ed6b247cb9cbb38ea6fb04c8",
+   "a_change_depuis_le_recu": false
+  },
+  "oracle_local.py": {
+   "sha256": "319ecdca1963f0eaa011d248931be81532e8b8908a48d315c07e7c6b5d554150",
+   "octets": 18651,
+   "source": "D:\\Github\\BIOCELL_WINNING\\01_PLAN\\5_VICTOIRE\\SPRINT_48H\\CIBLAGE\\impl\\oracle_local.py",
+   "depuis": "commit 34b944b6 (octets de HEAD)",
+   "sha_du_recu": "319ecdca1963f0eaa011d248931be81532e8b8908a48d315c07e7c6b5d554150",
+   "a_change_depuis_le_recu": false
+  },
+  "infer.py": {
+   "sha256": "f76973e987d851460c5c5f5105f772497ee6e2969ea1f65d0b111870279e7758",
+   "octets": 23804,
+   "source": "D:\\Github\\BIOCELL_WINNING\\01_PLAN\\5_VICTOIRE\\SPRINT_48H\\REFEREE\\REF_MODEL\\impl\\infer.py",
+   "depuis": "commit 13fa9931 (octets de HEAD)",
+   "sha_du_recu": "d8774e59982bf267c9e118b027a446d7b9e5c2c44c40ed006047c5a719fb19d2",
+   "a_change_depuis_le_recu": true
+  },
+  "cell08_referee.py": {
+   "sha256": "6313d927dc93954c28090fbff769452d6ab721269f0c527d669b1f1d0aa307d8",
+   "octets": 29635,
+   "source": "D:\\Github\\BIOCELL_WINNING\\01_PLAN\\5_VICTOIRE\\SPRINT_48H\\REFEREE\\REF_EVAL\\impl\\cell08_referee.py",
+   "depuis": "commit 33a80c27 (octets de HEAD)",
+   "sha_du_recu": "7494efe89292e7b1ae866277526675d236351c37c4065bbdfdde446b07a08b26",
+   "a_change_depuis_le_recu": true
+  },
+  "composition_m2.py": {
+   "sha256": "155e7f1dbd613aa866ad8c89b2ad1b3493777f0c82d4d5d72b1089c88004a1e8",
+   "octets": 32852,
+   "source": "D:\\Github\\BIOCELL_WINNING\\01_PLAN\\5_VICTOIRE\\SPRINT_48H\\REFEREE\\REF_EVAL\\impl\\composition_m2.py",
+   "depuis": "commit b70fb7b6 (octets de HEAD)",
+   "sha_du_recu": "679ceac32634d5611aa0a4907366540cd92f15977661bd34b9852640b921e509",
+   "a_change_depuis_le_recu": true
+  },
+  "canonisation.py": {
+   "sha256": "b4ab43ce31c3b9711bc0315b25adea530f7e89285a8250a984049a17d350787d",
+   "octets": 6924,
+   "source": "D:\\Github\\BIOCELL_WINNING\\01_PLAN\\5_VICTOIRE\\SPRINT_48H\\REFEREE\\REF_EVAL\\impl\\canonisation.py",
+   "depuis": "commit b4b5a681 (octets de HEAD)",
+   "sha_du_recu": "b4ab43ce31c3b9711bc0315b25adea530f7e89285a8250a984049a17d350787d",
+   "a_change_depuis_le_recu": false
+  },
+  "referee_kaggle.py": {
+   "sha256": "388240d33601bc50212bcedfcf35bf4b42c22bd65fa5b94b10e8348b534d21ae",
+   "octets": 32893,
+   "source": "D:\\Github\\BIOCELL_WINNING\\01_PLAN\\5_VICTOIRE\\SPRINT_48H\\REFEREE\\impl\\referee_kaggle.py",
+   "depuis": "commit 2f86482d (octets de HEAD)",
+   "sha_du_recu": "482d18fdf9c1e2a4bfec6fee339393ffd1e2182d6c6c4310142784ebe254cae6",
+   "a_change_depuis_le_recu": true
+  },
+  "teacher.py": {
+   "sha256": "8165fe6c589f0972deece9b07e58ba54d776541db1ed8534d4f40b7afdf0e198",
+   "octets": 12233,
+   "source": "D:\\Github\\BIOCELL_WINNING\\01_PLAN\\5_VICTOIRE\\SPRINT_48H\\REFEREE\\REF_MODEL\\impl\\teacher.py",
+   "depuis": "commit 13fa9931 (octets de HEAD)",
+   "sha_du_recu": "2835efc9eb34e1735803b2b7078bf23293c088966ac662ee271f37f8eb3245d6",
+   "a_change_depuis_le_recu": true
+  },
+  "referee.py": {
+   "sha256": "bc60e688250259257b1313a415144050c9ceb6d7b1e1db0eb11a331812f1cb99",
+   "octets": 20866,
+   "source": "D:\\Github\\BIOCELL_WINNING\\01_PLAN\\5_VICTOIRE\\SPRINT_48H\\REFEREE\\REF_MODEL\\impl\\referee.py",
+   "depuis": "commit 74ae0d98 (octets de HEAD)",
+   "sha_du_recu": "3379126799dbc4e545220fa4bdc4a1ed9ba628062e17e6e7cc7ee06301f72ee0",
+   "a_change_depuis_le_recu": true
+  },
+  "schema_local.py": {
+   "sha256": "e933ed79c109b035e2c38b6c0c31f20bf90d827b93f278e6d36d0eae7e044348",
+   "octets": 21439,
+   "source": "D:\\Github\\BIOCELL_WINNING\\01_PLAN\\5_VICTOIRE\\SPRINT_48H\\REFEREE\\REF_MODEL\\impl\\schema_local.py",
+   "depuis": "commit bef364b2 (octets de HEAD)",
+   "sha_du_recu": "a33b10a809a5cb5dc45661783f98d5adb113a149489fa421df62e3285caaec6c",
+   "a_change_depuis_le_recu": true
+  },
+  "juge.py": {
+   "sha256": "82010e1abf14c8eff920b66567d3bb931c35c38924f7d74d15c41f1a216e0110",
+   "octets": 23280,
+   "source": "D:\\Github\\BIOCELL_WINNING\\04_SRC\\lifetwin\\radar\\juge.py",
+   "depuis": "commit f25195e5 (octets de HEAD)",
+   "sha_du_recu": "82010e1abf14c8eff920b66567d3bb931c35c38924f7d74d15c41f1a216e0110",
+   "a_change_depuis_le_recu": false
+  },
+  "cell08_proofreader.py": {
+   "sha256": "a0ef2cee6f089f44e9cdd5a0874dfa27d481f65b575ee321dda01389aef66cb8",
+   "octets": 17803,
+   "source": "D:\\Github\\BIOCELL_WINNING\\01_PLAN\\5_VICTOIRE\\SPRINT_48H\\PROOFREADER\\impl\\cell08_proofreader.py",
+   "depuis": "commit 5eb863a7 (octets de HEAD)",
+   "sha_du_recu": "a0ef2cee6f089f44e9cdd5a0874dfa27d481f65b575ee321dda01389aef66cb8",
+   "a_change_depuis_le_recu": false
+  },
+  "tache_d.py": {
+   "sha256": "288ff6a2165e0c67684c49b1750a578ff548e5143144421dc1992bc2ad854a73",
+   "octets": 21329,
+   "source": "D:\\Github\\BIOCELL_WINNING\\01_PLAN\\5_VICTOIRE\\SPRINT_48H\\CIBLAGE\\impl\\tache_d.py",
+   "depuis": "commit 2c563865 (octets de HEAD)",
+   "sha_du_recu": "288ff6a2165e0c67684c49b1750a578ff548e5143144421dc1992bc2ad854a73",
+   "a_change_depuis_le_recu": false
+  },
+  "referee_data.py": {
+   "sha256": "c2d49e71ab5211e9e66f6829e2102261a335088567fce3b6abe5fa721e5da9cd",
+   "octets": 19450,
+   "source": "D:\\Github\\BIOCELL_WINNING\\01_PLAN\\5_VICTOIRE\\SPRINT_48H\\REFEREE\\impl\\referee_data.py",
+   "depuis": "commit 86053199 (octets de HEAD)",
+   "sha_du_recu": "3af0660ee35024a5606ddaea482695bd7a213bd6664619916b9a7c4c3d72c2d7",
+   "a_change_depuis_le_recu": true
+  },
+  "famille_lissage.py": {
+   "sha256": "c6804f5f443003a607a4cd4e13975804b068de1e560df602885aa8558e0070a0",
+   "octets": 11227,
+   "source": "D:\\Github\\BIOCELL_WINNING\\01_PLAN\\5_VICTOIRE\\SPRINT_48H\\REFEREE\\REF_EVAL\\impl\\famille_lissage.py",
+   "depuis": "commit 74728079 (octets de HEAD)",
+   "sha_du_recu": "69776cc348ca257b014a730e29fb60a7a950662290063c86ee9b2fdef5ed9c3e",
+   "a_change_depuis_le_recu": true
+  },
+  "nuit_pc_e5_controle.py": {
+   "sha256": "84a1780e3f8e5e4f10479503a5f5a8925478434c6ac22632c470822c2a67b27f",
+   "octets": 16408,
+   "source": "D:\\Github\\BIOCELL_WINNING\\01_PLAN\\5_VICTOIRE\\20_NUIT_0309\\impl\\nuit_pc_e5_controle.py",
+   "depuis": "commit 5f62dd91 (octets de HEAD)",
+   "sha_du_recu": "84a1780e3f8e5e4f10479503a5f5a8925478434c6ac22632c470822c2a67b27f",
+   "a_change_depuis_le_recu": false
+  },
+  "famille_purge.py": {
+   "sha256": "0b7d2f350ede20a382590d9fe95999251d592078b1afdb79a5b00a6e76e4c10e",
+   "octets": 7834,
+   "source": "D:\\Github\\BIOCELL_WINNING\\01_PLAN\\5_VICTOIRE\\SPRINT_48H\\REFEREE\\REF_EVAL\\impl\\famille_purge.py",
+   "depuis": "commit 2f044b92 (octets de HEAD)",
+   "sha_du_recu": "0b7d2f350ede20a382590d9fe95999251d592078b1afdb79a5b00a6e76e4c10e",
+   "a_change_depuis_le_recu": false
+  },
+  "famille_insert_mere.py": {
+   "sha256": "ebfb431d959700ae624e8a26284922d4dcfa1f874f0a9e495282cd34af8e99e2",
+   "octets": 29050,
+   "source": "D:\\Github\\BIOCELL_WINNING\\01_PLAN\\5_VICTOIRE\\SPRINT_48H\\MITOSE\\impl\\famille_insert_mere.py",
+   "depuis": "commit 5c10f9fb (octets de HEAD)",
+   "sha_du_recu": "7f14811355667be8fc524cc884e5147bd1678cee0eaf82cc7ad56a0a329ce478",
+   "a_change_depuis_le_recu": true
+  },
+  "bornes_quantiles_propre.json": {
+   "sha256": "6b8f64e5f078467e31f6c2f9a3c41419ba45b2312e7209cae26f1d0d38f8b19f",
+   "octets": 58681,
+   "source": "D:\\Github\\BIOCELL_WINNING\\01_PLAN\\5_VICTOIRE\\SPRINT_48H\\MITOSE\\impl\\bornes_quantiles_propre.json",
+   "depuis": "commit b60f75e6 (octets de HEAD)",
+   "sha_du_recu": "6b8f64e5f078467e31f6c2f9a3c41419ba45b2312e7209cae26f1d0d38f8b19f",
+   "a_change_depuis_le_recu": false
+  },
+  "adaptateurs_insert.py": {
+   "sha256": "64f2d1af5922f746ceb837b224961cbc818cb5c53b2ab62b8d2e1c06183cdd77",
+   "octets": 9397,
+   "source": "D:\\Github\\BIOCELL_WINNING\\01_PLAN\\5_VICTOIRE\\SPRINT_48H\\REFEREE\\impl\\adaptateurs_insert.py",
+   "depuis": "commit 3e31d90c (octets de HEAD)",
+   "sha_du_recu": "cda86b81c72004945bb5f7e0ceaf0a2cc17d2be8af7535fcc2762f22aa28b9fc",
+   "a_change_depuis_le_recu": true
+  },
+  "manifeste_insert_mere.json": {
+   "sha256": "778cee2cee09d0da34a53ac599744e29bb5c5e3a2ea9f3a7ae9ec86242079620",
+   "octets": 6428,
+   "source": "D:\\Github\\BIOCELL_WINNING\\01_PLAN\\5_VICTOIRE\\SPRINT_48H\\MITOSE\\impl\\manifeste_insert_mere.json",
+   "depuis": "commit 5c10f9fb (octets de HEAD)",
+   "sha_du_recu": "49694581c095a88a462ec12088efea7e466012a1925a2340b9949aeface05ac2",
+   "a_change_depuis_le_recu": true,
+   "fenetres_autorisees": [
+    "6a9a2a5af7eda28db2530fb341c5e91083e91b33662a991ff2b8543350b735ae",
+    "6e97d3131c1ea5d3f13c09a58db9ca00b1ce88748b9a8bf48011b9bd56fa5b25",
+    "9f0c0e516d1357f5586a2833e5d6e231e67a5ef2d4ba51acac72009c525b0956",
+    "aff86b31caefad6cf89ca5e7c4d0517f72fbf30c2a96e4bb168872e44fdcaad3"
+   ],
+   "scalaires_declares": [
+    "min_interieurs_pour_controle",
+    "q_etoile_q250",
+    "q_etoile_q500",
+    "seuil_p_lieur",
+    "seuil_part_entiers",
+    "seuil_part_entiers_interieurs"
+   ]
+  },
+  "manifeste_insert_mere_D.json": {
+   "sha256": "5d5ea348563cac79fa82133854c376da47bfc8075fda641d68c79ed479e4a3b1",
+   "octets": 8366,
+   "source": "D:\\Github\\BIOCELL_WINNING\\01_PLAN\\5_VICTOIRE\\SPRINT_48H\\MITOSE\\impl\\manifeste_insert_mere_D.json",
+   "depuis": "commit bda8189c (octets de HEAD)",
+   "sha_du_recu": "5d5ea348563cac79fa82133854c376da47bfc8075fda641d68c79ed479e4a3b1",
+   "a_change_depuis_le_recu": false,
+   "fenetres_autorisees": [
+    "6a9a2a5af7eda28db2530fb341c5e91083e91b33662a991ff2b8543350b735ae",
+    "6e97d3131c1ea5d3f13c09a58db9ca00b1ce88748b9a8bf48011b9bd56fa5b25",
+    "9f0c0e516d1357f5586a2833e5d6e231e67a5ef2d4ba51acac72009c525b0956",
+    "aff86b31caefad6cf89ca5e7c4d0517f72fbf30c2a96e4bb168872e44fdcaad3",
+    "f4db8a0cc4ddba13db2948c40b11ccdf46dfc44cea5f446238510129918edf7e"
+   ],
+   "scalaires_declares": [
+    "min_interieurs_pour_controle",
+    "q_etoile_q250",
+    "q_etoile_q500",
+    "seuil_p_lieur",
+    "seuil_part_entiers",
+    "seuil_part_entiers_interieurs"
+   ]
+  }
+ },
+ "refuses": [],
+ "manquants": [
+  [
+   "referee.pt",
+   "non fourni (--poids)"
+  ]
+ ],
+ "aucun_fichier_au_dessus_de_100_Mo": true,
+ "noms_de_modules_conserves": "les `import` de REF-DATA, REF-MODEL et REF-EVAL imposent ces noms ; les rendre neutres casserait trois lanes pour un gain nul puisque le dataset est PRIVE. Le nom du DATASET, lui, est neutre.",
+ "imports_non_satisfaits": {},
+ "alias_lifetwin_pose_par_referee_kaggle": true,
+ "cloture_des_imports_complete": true,
+ "complet": false,
+ "date_u": "2026-09-06T00:07:36Z"
+}

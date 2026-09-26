@@ -1,0 +1,58 @@
+{
+  "coordinate_injection": {
+    "alpha": 1.0,
+    "cache_tag": "rz3d6ztta_zy_xyq1r180_",
+    "local_eval_score": 0.8396935807421629,
+    "local_eval_variant": "g3a1_xydist180e1r180",
+    "max_um": 3.0,
+    "note": "The runtime slot RprojQ_ens4off_tr171_xy_s0_ep1.pt intentionally contains the first-round xy TTA distillation checkpoint, matching local best g3a1_xydist180e1r180.",
+    "xy_refiner_effective": "RprojQdistill_rot180_ens4off_tr171_xy_s0_ep1.pt",
+    "xy_refiner_effective_sha256": "f9d25c6a0d956d48e478255dd106ff1529ad1018e3889e854a5e3b40965bfdc4",
+    "xy_refiner_slot": "RprojQ_ens4off_tr171_xy_s0_ep1.pt",
+    "xy_rots": [
+      0,
+      2
+    ],
+    "xy_views": [
+      0
+    ],
+    "z_rots": [
+      0
+    ],
+    "z_views": [
+      0,
+      3
+    ]
+  },
+  "file_sha256": {
+    "R_ens4off_tr171_z_s0_ep6.pt": {
+      "bytes": 32169917,
+      "sha256": "e0919797da9ccf523b55bde8a720ee335b5f96e8df8ca94d49dad06907bd4461"
+    },
+    "RprojQ_ens4off_tr171_xy_s0_ep1.pt": {
+      "bytes": 6594925,
+      "sha256": "f9d25c6a0d956d48e478255dd106ff1529ad1018e3889e854a5e3b40965bfdc4"
+    },
+    "RprojQ_ens4off_tr171_xy_s0_ep1.xyq1_backup.pt": {
+      "bytes": 6593829,
+      "sha256": "2327bc9a736de684658d0b6dd47826b523c1168a3e262a34655d8e8e59ea3e58"
+    },
+    "RprojQdistill_rot180_ens4off_tr171_xy_s0_ep1.pt": {
+      "bytes": 6594925,
+      "sha256": "f9d25c6a0d956d48e478255dd106ff1529ad1018e3889e854a5e3b40965bfdc4"
+    }
+  },
+  "files": [
+    "coord_inject_runtime.py",
+    "D_mix_offpeak_mix_s0_ep0.pt",
+    "M_seed1_offpeak_mix_s1_ep0.pt",
+    "M_seed2_offpeak_mix_s2_ep0.pt",
+    "M_seed3_offpeak_mix_s3_ep0.pt",
+    "R_ens4off_tr171_z_s0_ep6.pt",
+    "RprojQ_ens4off_tr171_xy_s0_ep1.pt",
+    "RprojQdistill_rot180_ens4off_tr171_xy_s0_ep1.pt",
+    "RprojQ_ens4off_tr171_xy_s0_ep1.xyq1_backup.pt"
+  ],
+  "inference_only": true,
+  "purpose": "Runtime coordinate injection for rock0926 public notebook: 4seed detector + z/xy coordinate refiners. No test predictions are included."
+}

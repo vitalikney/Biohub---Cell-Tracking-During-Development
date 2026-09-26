@@ -2434,6 +2434,14 @@ Mention it to the user in one line (R9-A8 item 6).
   since 16 Sep (test = new embryos, same size as train; only annotated test tracks scored; self-trained models allowed if
   reproducible; max score ~1.1; rerun limit 12 h vs 9 h unanswered). Georgy Mamarin: a public-best improvement wins on
   private ~3 in 4 in code competitions.
+- 2026-09-26 21:11 UTC, INTEL 0.960-0.966 (user asked to widen the band; 53 teams, 81 members; research/wf_ideas_v4/reach0955/intel_0960_0966.json):
+  no public inference notebook above 0.953 in the band; 47/81 members have no public artifact. Plug-in candidates: (1)
+  yuki0731/biohub-coord-inject (CC0; team LMM 0.961): node-position refiner (4-seed UNet3D + offset head + z/xy refiners;
+  nodes moved to the nearest refined detection within 3 um), built for a 0.926-era notebook, no measured gain, runtime
+  risk; (2) corwin1979/biocel-secw-3f1c84ad (CC0; Corwin 0.965): an independently trained secondary that fits x138's
+  secondary slot, but Corwin's own notes say the pilkwang secondary beats it on public placement -> EV <= 0. 11 band teams
+  jumped from the x138 level (<= 0.954) to 0.960-0.966 in few submissions (e.g. kusui26 0.953 -> 0.960 in 11 subs),
+  consistent with bringing their own models onto x138. Abnormal Guys 0.961 = private 'x138-s3forks' (no code).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

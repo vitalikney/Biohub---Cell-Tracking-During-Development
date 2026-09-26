@@ -1,0 +1,94 @@
+{
+ "schema": "MITOSE-INSERT-MERE-MANIFESTE-v1",
+ "date_u": "2026-09-05T21:50:18Z",
+ "scalaires": {
+  "seuil_p_lieur": {
+   "valeur_repr": "0.6046308279037476",
+   "dtype": "float64",
+   "provenance": "MINIMUM de p_lieur_u_p sur vivier_10000.parquet (sha 5bd962930a293fa140b4b9276bb7e82fc8724b7d9cdacaf49fba2aaa60834e93) -- c'est une BORNE DE TRONCATURE d'un top-10000, pas un seuil choisi"
+  },
+  "q_etoile_q250": {
+   "valeur_repr": "0.885781",
+   "dtype": "float64",
+   "provenance": "q* de la variante q250, plan juge sha 6218b5ab83f3030d577697b72d46bdfdf283d2d3260dfcb4c075fa7bd93bd33f"
+  },
+  "q_etoile_q500": {
+   "valeur_repr": "0.801532",
+   "dtype": "float64",
+   "provenance": "q* de la variante q500, plan juge sha 70b0ef73cc39da147299b037ff2e818f1dc27848837ec1797484a525a550e6c2"
+  },
+  "seuil_part_entiers": {
+   "valeur_repr": "0.99",
+   "dtype": "float64",
+   "provenance": "garde de PROPRIETE, voie production (ordre ZEUS 05/09 22:2xZ). Mesure du 05/09 sur les mondes reels, PAR FILM : monde BRUT V17 arrondi = 1.0000 sur les 199 films ; fenetres lissees legitimes = 0.0920 a 0.2409 (P1 flottant), 0.0000 (pos_parab), 0.0921 a 0.2409 (div_wide O3). La regle LEVE si la part atteint ce seuil."
+  },
+  "seuil_part_entiers_interieurs": {
+   "valeur_repr": "0.50",
+   "dtype": "float64",
+   "provenance": "controle FIN, sur les seuls noeuds INTERIEURS d'une chaine simple. Le lissage ne deplace QUE ceux-la : les extremites et les fourches gardent leur position mesuree, donc entiere, ce qui fait monter la part globale jusqu'a 0.2409 sur une fenetre parfaitement lissee et rend le seuil global tres lache. Sur les interieurs, mesure par film le 05/09 : BRUT V17 = 1.0000 partout ; P1 flottant 0.0277 a 0.1190 ; div_wide O3 0.0264 a 0.1190 ; pos_parab 0.0000. Seuil a 0.50 = quatre fois au-dessus du pire monde legitime, deux fois au-dessous du monde brut."
+  },
+  "min_interieurs_pour_controle": {
+   "valeur_repr": "200",
+   "dtype": "int64",
+   "provenance": "plancher sous lequel le controle fin ne s'applique pas, faute de population. Mesure : le film le plus pauvre de nos 199 porte 3 316 noeuds interieurs, soit 16 fois ce plancher ; il protege un film prive pathologiquement petit, pas nos mondes."
+  }
+ },
+ "bornes_quantiles": {
+  "sha256_contenu": "f3ca79bafa85b130ff22bdaa8e96cfb16a28df4bef44fd4eef6d7845832735e3",
+  "sha256_fichier": "6b8f64e5f078467e31f6c2f9a3c41419ba45b2312e7209cae26f1d0d38f8b19f",
+  "note": "DEUX sha existent pour le meme objet ; la regle verifie celui du CONTENU, rendu par charger_bornes"
+ },
+ "fenetre_de_calibration_HISTORIQUE": {
+  "sha256": "59e01c75ae2bc3e24311f1e12fac821b787cf0c0a80798acf498b3024eee9236",
+  "quoi": "MONDE_LISSE du 03/09 : le monde lisse ARRONDI (coordonnees ENTIERES). C'est sur lui que les bornes de quantile ont ete calibrees. IL N'EST PLUS DANS LA LISTE BLANCHE : le pack deploie le lissage SANS arrondi, et selectionner sur un monde arrondi au demi-voxel pres n'est pas selectionner sur le monde deploye. Conserve ici pour la tracabilite, jamais pour l'execution.",
+  "consequence_declaree": "ma parite 110/110 comparait la regle a un plan que la MEME regle avait produit sur la MEME fenetre : elle etait vraie et ne mesurait pas le chemin deploye"
+ },
+ "fenetres_autorisees": {
+  "6e97d3131c1ea5d3f13c09a58db9ca00b1ce88748b9a8bf48011b9bd56fa5b25": "FEN_P1_LISSE_SANS_ARRONDI, CANONISE : P1_V17 + famille lissage arrondi=False -- LA FENETRE QUE LE PACK DEPLOIE",
+  "9f0c0e516d1357f5586a2833e5d6e231e67a5ef2d4ba51acac72009c525b0956": "FEN_P1_LISSE_SANS_ARRONDI, BRUT : LE MEME MONDE avant canonisation. Les deux sont acceptes parce que `run_cell08` produit le brut et que le canoniser seulement pour se declarer ferait payer une canonisation au pack. Un hash de CONTENU (positions float64 triees par node_id, par film) rendrait ces deux lignes inutiles : c'est la bonne forme, et REF-EVAL peut la fournir -- a faire quand le chemin critique le permettra.",
+  "6a9a2a5af7eda28db2530fb341c5e91083e91b33662a991ff2b8543350b735ae": "POSPARAB_O1_LISSE_199_CANON : pos_parab apres lissage seul (sonde n 3, fenetre donnee par REF-EVAL le 05/09 19:4xZ ; la purge sort de la chaine sur ce monde ou elle coute -0,000114)",
+  "aff86b31caefad6cf89ca5e7c4d0517f72fbf30c2a96e4bb168872e44fdcaad3": "DIVWIDE_O3_199_CANON : nouvelle tete div_wide apres lissage PUIS purge (sonde n 3). Signature de position identique a P1 lisse (part d'entiers 0.0921 a 0.2409 par film) parce que la purge RETIRE des noeuds sans en deplacer aucun -- c'est ce qui permet a la garde de propriete de traverser les deux chaines.",
+  "f4db8a0cc4ddba13db2948c40b11ccdf46dfc44cea5f446238510129918edf7e": "DIVWIDE_O3_199, BRUT : le MEME monde que aff86b31 avant canonisation. C est ce que run_cell08 produit, donc ce que le pack reconstruit et hache. Reproduit AU BIT par REGLAGES-A le 06/09 (parite (D))."
+ },
+ "vivier_de_reference": {
+  "sha256": "5bd962930a293fa140b4b9276bb7e82fc8724b7d9cdacaf49fba2aaa60834e93",
+  "n": 10000
+ },
+ "fenetre_ordre": {
+  "6e97d3131c1ea5d3f13c09a58db9ca00b1ce88748b9a8bf48011b9bd56fa5b25": [
+   "lissage"
+  ],
+  "9f0c0e516d1357f5586a2833e5d6e231e67a5ef2d4ba51acac72009c525b0956": [
+   "lissage"
+  ],
+  "6a9a2a5af7eda28db2530fb341c5e91083e91b33662a991ff2b8543350b735ae": [
+   "lissage"
+  ],
+  "aff86b31caefad6cf89ca5e7c4d0517f72fbf30c2a96e4bb168872e44fdcaad3": [
+   "lissage",
+   "purge"
+  ],
+  "_lecture": "l'ORDRE des familles que le pack applique a v17 pour construire la vue que la regle recoit (ordre ZEUS 05/09 22:2xZ point 4). Une garde par IDENTITE dit 'ce monde-ci' et ne peut pas dire 'un monde construit ainsi' ; c'est pour cela qu'elle ne franchit pas la frontiere du deploiement et que la garde de propriete lui est adjointe.",
+  "f4db8a0cc4ddba13db2948c40b11ccdf46dfc44cea5f446238510129918edf7e": [
+   "lissage",
+   "purge"
+  ]
+ },
+ "garde_de_fenetre": {
+  "voie_1": "sha declare ET connu de fenetres_autorisees -> controle par IDENTITE",
+  "voie_2": "sinon la regle MESURE elle-meme la part de coordonnees entieres sur la vue recue et leve au-dela des seuils. Elle ne croit AUCUN drapeau de l'appelant : un 'production=True' rendrait la garde decorative.",
+  "reserve": "cette propriete distingue 'lisse' de 'brut arrondi', PAS 'lisse' de 'lisse puis autre chose'. Plus faible que l'identite ; c'est le prix du deploiement. La preuve forte reste la parite hors ligne au bit.",
+  "pourquoi": "la liste blanche ne franchit pas la frontiere du deploiement : le sha est celui du monde ENTIER apres lissage, or sur Kaggle ce monde est celui des 200 films PRIVES, jamais vus. Sans ce correctif la regle levait sur chaque film, la cellule attrapait par famille, et le kernel rendait un CSV valide egal a SAFE v1 : la sonde n'aurait RIEN mesure."
+ },
+ "sha256": "1b9ba99a8bd5f82dcab8b1f197c5932bcc0e51d1698d33eca1e372ea223dcbf8",
+ "arrondi_convention": {
+  "fonction": "np.round",
+  "equivalent": "np.rint -- np.round EST np.rint",
+  "regle": "moitie vers le PAIR : np.round(0.5) = 0 mais np.round(1.5) = 2",
+  "provenance": "famille_lissage.py ligne 114, dans moves_du_film() : `if arrondi: p = np.round(p)`. Ligne fournie TEXTO par REF-EVAL, pas deduite.",
+  "portee": "DOCUMENTAIRE. Aucun code ne lit cette clef. Elle existe pour que la convention d arrondi de l export soit ECRITE dans un objet scelle au lieu d etre le defaut silencieux d une bibliotheque.",
+  "mesure": "13,77 pct des coordonnees de la fenetre lissee valent EXACTEMENT 0,5, parce que le lissage moyenne des entiers. np.round et floor(x+0,5) divergent alors sur 823 730 coordonnees, soit 762 919 noeuds deplaces d un voxel = 19,11 pct du monde (R_M63, commit cc38a6cf).",
+  "pourquoi_np_round_et_non_la_moitie_en_haut": "la moitie-en-haut est MEILLEURE contre la GT (1,89376 um contre 1,92096, elle gagne sur 120 des 139 films tenus) mais elle PERD AU JUGE (-0,000064 sur les tenus, mesure REF-EVAL). L ecart de 0,027 um est deux ordres de grandeur sous la porte d appariement de 7 um : il ne fait basculer aucun appariement. Ma propre recommandation refutee par mon propre critere ; la convention reste np.round.",
+  "ou_elle_NE_doit_PAS_aller": "PAS dans `scalaires` : la regle y fait float(valeur_repr) sur CHAQUE entree (lignes 253, 370, 545). float(\"np.round\") leve ValueError au chargement, donc sur les 200 films PRIVES, apres l inference payee. Piege anticipe par MITOSE et par REGLAGES-A independamment."
+ }
+}

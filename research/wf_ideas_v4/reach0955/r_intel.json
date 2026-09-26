@@ -1,0 +1,107 @@
+{
+  "task": "r_intel: what are the 0.955-0.959 teams doing; any public weights/notebook usable now",
+  "written_utc": "2026-09-26T20:55Z",
+  "summary": "LB 20:30Z (3,935 teams): we are #217 at 0.954 (40 subs). Band 0.955-0.959 = 136 teams (0.959 14, 0.958 12, 0.957 18, 0.956 36, 0.955 56; ranks 69-204). NOBODY in the band has published the code or weights behind the score: the member scan (16 users via API before a 429 stop, ~35 profiles via the browser, priority to high sub counts and today's movers) found no biohub weights dataset and no biohub notebook newer than x138-era repros. The competition Models tab and Code tab top out at 0.953, and a dataset search for 'biohub' by date shows nothing new since round 11. The only public 'above-x138' engine is still y3uanm's training recipe (teacher-distilled fine-tune of the pilkwang seed314159 secondary). Its notebook OUTPUT IS EMPTY (Output 0 B, a 9.5 s quick-save), so its weights cannot be downloaded; we would have to train them ourselves. Method classes with evidence: (1) x138 plus private own tweaks, including both x138 authors (thtennant 0.959 with 45 subs, anvithpothula 0.956 with 133 subs). Today's jumps straight from exactly 0.953 to 0.955-0.959 (Rasheed 0.953->0.959, Rishabh Roy 0.953->0.957, Freeman Hui and mexlora 0.953->0.955) all carry no public source. (2) Many-submission LB tuning or selection: the band's median sub count is 41-70 vs 25 in the 0.953 block, and 31 band teams have >= 100 subs (zentropy 375, xanderr 293, Matt Goldfield 276, enddl22 227, To The Moon 215). Selecting the maximum over ~50 noisy variants is worth about +0.002-0.003 public with no true gain (variant jitter ~0.001-0.0015). (3) Independent or retrained pipelines. 6 band teams last submitted on or before x138's public date (e.g. Takumu Hata 0.957 with ONE sub on 18 Sep; Umesh Arampath 0.958, last sub 20 Sep), and 15 band teams have <= 12 subs. Forum: Civitasmass retrained the detector; 'detector retraining gave a top-3 team most of the gain'; y3uanm went 0.949 -> 0.956 with the distillation recipe (cause not proven). Counter-evidence for easy knob gains: Justin CH123 (now 0.956) and imissher saw every single-knob PP change lose on the LB, with the loss tracking the node count. HONEST ANSWER to 'why not us': we banned the two things the band does (R7 ladders, R9 retraining), and nothing is public to copy. If the user lifts those rules, two moves are available now: (A) a K2 single-knob ladder with today's 3 slots and the next days' slots (fast; expected +0.001..0.002 public mostly from selection, private ~0); (B) reproducing the y3uanm v1 distilled secondary on Kaggle GPU and swapping it into K2. A secondary swap leaves the V1284 head untouched. (B) is slower (ready ~27 Sep 03-06Z) but is the only evidenced mechanism above x138. Finals policy: keep #37 K2 in every scenario.",
+  "lb_census": {
+    "download_cmd": "PYTHONIOENCODING=utf-8 python -m kaggle competitions leaderboard biohub-cell-tracking-during-development --download -p <scratch>/reach",
+    "file": "C:/Users/vital/AppData/Local/Temp/claude/c--Users-vital-Documents-kAGGLE-Biohub---Cell-Tracking-During-Development/acabaea6-42c1-4115-a146-2ddc5bb7e8c8/scratchpad/reach/biohub-cell-tracking-during-development-publicleaderboard-2026-09-26T20_30_20.csv",
+    "band_list_file": "C:/Users/vital/AppData/Local/Temp/claude/c--Users-vital-Documents-kAGGLE-Biohub---Cell-Tracking-During-Development/acabaea6-42c1-4115-a146-2ddc5bb7e8c8/scratchpad/reach/lb955_959.txt",
+    "us": "#217, 0.954, 40 subs, last sub 2026-09-26 00:02:18",
+    "histogram": {">=0.960": 68, "0.959": 14, "0.958": 12, "0.957": 18, "0.956": 36, "0.955": 56, "0.954": 99, "0.953": 371},
+    "median_subs": {">=0.960": 70.5, "0.959": 65, "0.958": 28, "0.957": 69.5, "0.956": 45.5, "0.955": 41, "0.954": 40, "0.953": 25},
+    "band_teams_ge100_subs": 31,
+    "band_teams_le12_subs": 15,
+    "band_teams_last_sub_26sep": 109,
+    "top_by_subs_in_band": [
+      "zentropy (jessky, Competitions Master) 0.957, 375 subs",
+      "xanderr (arulprasadsp, joshnaacshas21cs, shalwinsanju) 0.959, 293",
+      "Matt Goldfield 0.957, 276",
+      "enddl22 0.959, 227",
+      "To The Moon (andrey4522, ispromashka, pavelsavchenkov, williamwu88) 0.958, 215",
+      "hikaggler (hikarukai, hono6b) 0.957, 188",
+      "Amin (aminvafaei) 0.959, 164",
+      "fromage _ 0.955, 157",
+      "Medéric Hurier (freaxmind) 0.956, 152",
+      "kkunizaw 0.957, 150",
+      "Ivan Gevorkov 0.957, 149",
+      "Filip Strzalka 0.955, 149"
+    ],
+    "movers_since_1620Z": [
+      "Teju Olarewaju 0.956->0.959 (24 subs; account joined 5 days ago, 1 competition)",
+      "Rasheed Khoshnaw 0.953->0.959 (45)",
+      "Saravanan Jaichandaran <0.953->0.959 (14)",
+      "Alfonso Sanchez 0.957->0.958 (114)",
+      "Rishabh Roy 0.953->0.957 (131)",
+      "automatylicza 0.955->0.956 (99)",
+      "Arda Ozcan 0.955->0.956 (20)",
+      "mexlora 0.953->0.955 (9)",
+      "Freeman Hui 0.953->0.955 (75)"
+    ],
+    "pre_x138_or_x138_day_last_sub": [
+      "Umesh Arampath 0.958 (138 subs, last 20 Sep)",
+      "Takumu Hata 0.957 (1 sub, 18 Sep)",
+      "nonca 0.957 (22 Sep)",
+      "CurveCowboy 0.955 (19 Sep)",
+      "hikarimaru 0.955 (21 Sep)",
+      "Ndabenhle Ngema 0.955 (21 Sep)"
+    ]
+  },
+  "member_artifact_check": {
+    "api_scan": "kernels_list/dataset_list for all 198 band members. The first parallel pass hit HTTP 429 account-wide, and so did the main session's lb_poll at 20:36:50Z. The scan was stopped, so only 16 users got a full API scan. Do not burst >~100 API calls on this account while lb_poll runs.",
+    "browser_profiles_checked": "aminvafaei, drfranklinh, tejuolarewaju, parfyon, r3takahashi, versavice, joshnaacshas21cs, shalwinsanju, saranchandar, rasheeed (0.959); ryotaro45123, ryosukehada, uarampath, pavelsavchenkov, weense, alfonso1799 (0.958); jessky, mgoldfield, takumuhata, tagirkhairutdinov, rajathrpai, codebeforework, vijay75, adilkhabibullin, ryota040, hikarukai (+datasets), ivangevorkov, omerzalman (+datasets), kkunizaw (0.957); maesaer (+datasets), freaxmind (+datasets), takamaruex, automatylicza, bharath111l (+datasets), y3uanm (+datasets), delta47x (0.956)",
+    "api_checked": "thtennant (frontier947-* 17-19 Sep only; x138 successor private), ladyfaye, saranchandar, arulprasadsp, enddl22 (biohub-exp084-repro, another-approach-repro, July), mige551 (DualSeed-001/002 logit blend, July), masarutada, rasheeed and 8 more: no biohub weights",
+    "result": "0 public biohub weights datasets and 0 biohub notebooks newer than ~9 days among the checked band members. The only biohub notebooks are old repros (alfonso1799 'Top 3 Push V49/V50' 0.907, 9 days old; bharath111l 0.885; y3uanm rule-based 0.82 + the two training notebooks).",
+    "discussion": "742266 (Justin CH123, now 0.956, 70 subs): 10 single-knob PP changes on Harmonic Fusion all LOST; the LB delta tracked the test node count, not offline edge J; he had not retrained (4 days ago). Civitasmass retrained the detector ('not all of the LB gain from the retrain') and warns of high PB overfitting. OmerZalman (now 0.957): 'improve all parts'. 742169, 742325: no method disclosures. imissher 743222: 8 LB probes, all negative. No new topics since 25 Sep beyond these.",
+    "code_models_tabs": "Code tab by score: max 0.953 (Harmonic Fusion V3, amanatar optimized-biohub-max-score (updated 7 h ago), Biohub Cell Tracking, x138 ORIGINAL). Models tab: Trackastra 0.616 and ModelBuddy 0.143 only.",
+    "datasets_search_biohub_by_updated": "Nothing new vs round 11. Known: majidaleissa bio122 cross-domain secondary (3 edge predictors, team 0.950), bigbag1983 rudi-fold0 edge predictor, fagbolapeter trained-4ep (worse than pretrained), krisdreemurr epoch402 runner (training tooling), kssrikar4 Biohub-Model (0.758 team), kragglenote2forwork sub-cache2 and koushikrudra seed-v7 (static CSVs, useless on the hidden rerun), kabirk22 biohub1-3 (tensors)."
+  },
+  "classification": [
+    {"class": "x138 + private own tweaks (successor-type)", "evidence": "x138 authors thtennant 0.959 and anvithpothula 0.956 are in the band. Today's jumps from exactly 0.953 to 0.955-0.959 (Rasheed, Rishabh Roy, Freeman Hui, mexlora) have no public source. Round 7 found the private 'x138-s3forks' 0.961 (Abnormal Guys).", "share_guess": "largest share"},
+    {"class": "LB knob tuning / selection over many subs", "evidence": "Band median subs 41-70 vs 25 in the 0.953 block; 31 band teams >= 100 subs, 5 >= 200. The max of ~50 noisy variants alone is worth +0.002-0.003 public. Justin CH123 and imissher show single knobs usually lose, so the winners are a lucky tail plus some real gains.", "share_guess": "large, overlaps with class 1"},
+    {"class": "retrained detector / secondary (own GPU)", "evidence": "y3uanm 0.949->0.956 with the distilled secondary fine-tune (public training code, weights private). Civitasmass retrained the detector. Forum: 'detector retraining gave a top-3 team most of the gain'. 6 band teams were at their score before or at x138's release, and 15 have <= 12 subs (Takumu Hata 0.957 in 1 sub on 18 Sep), which implies own pipelines.", "share_guess": "minority, but the only evidenced true-gain route"},
+    {"class": "division tweaks on x138", "evidence": "No direct public evidence. Our own DaughterNet insertion gave +0.001 (0.953->0.954), the same magnitude as the band's lower edge.", "share_guess": "unknown"}
+  ],
+  "public_usable_now": [
+    {"what": "y3uanm teacher-distilled secondary fine-tune recipe v1 (experiments/ext_y3uanm-secondary-ft/notebook0afc5663f6.ipynb)", "status": "code public, weights NOT public (output 0 B). Inputs: pilkwang deepcenter prior v1, temporal-unet3d-seed314159-v1, tracking support pack 50ep v1 + competition data, all public. Reproducible on a Kaggle T4 (training kernel may use internet; it is not a submission).", "plug": "Train -> upload edge_predictor_best.pth + config.json + a new ARTIFACT_MANIFEST.json (sha256) as a private dataset -> K2 build with --dataset <it> and BIOHUB_SECONDARY_ARTIFACT_MANIFEST pointed at the new manifest (verify in a dry build that x138's secondary loader and sha check accept it; watch the symlinked-weights pitfall). The swap touches only the secondary (detection weight 0.80, edge weight 0.15); the V1284 head reads PRIMARY features, so it is unaffected."},
+    {"what": "majidaleissa/biohub-bio122-cross-domain-secondary-v1 (3 edge predictors)", "status": "public, team only 0.950, no LB evidence above x138", "plug": "would replace the secondary artifact the same way; not recommended (no evidence)"},
+    {"what": "nothing else", "status": "no public notebook > 0.953, no band member weights; E10 port rule stays idle"}
+  ],
+  "items": [
+    {
+      "id": "RI-1",
+      "what": "INFO: the 0.955-0.959 band has no public recipe; their edge is private x138 tweaks, many-submission selection, and some retraining. We are behind because R7 and R9 forbid exactly those two routes, not because we missed a public artifact.",
+      "evidence": "See lb_census, member_artifact_check and classification above; notes in research/wf_ideas_v4/reach0955/r_intel.notes.md",
+      "expected_public_gain": "0 (information)",
+      "private_risk": "none",
+      "steps": "Show the user this answer. Their decision is whether to lift R7 (ladder) and/or R9 (retraining) for the remaining slots: 3 today (26 Sep, before 23:59Z), then 5 each on 27, 28 and 29 Sep. Finals must be ticked by 29 Sep 20:00Z, so the last useful submit is ~29 Sep 11:30Z (7.5 h run).",
+      "ready_by_utc": "2026-09-26T21:00Z"
+    },
+    {
+      "id": "RI-2",
+      "what": "IF the user lifts R7: a K2 single-knob public-LB ladder, which is what the high-count band teams do. Use today's 3 slots immediately, then up to 4-5 per day, and keep #37 K2 as a final in every case.",
+      "evidence": "Band median 41-70 subs; selection over noisy variants gives +0.002-0.003 public by itself. Counter-evidence: single knobs usually lose (Justin CH123 10/10, imissher 8/8, our probes 29/30 edge filter +0.016 lab -> 0 LB). Lab->public transfer ~1/6.",
+      "expected_public_gain": "+0.001 (central) to +0.002 by 29 Sep. P(reaching 0.955 public) ~35-50% over ~15 variants, mostly from selection.",
+      "private_risk": "True private gain ~0 +- 0.002. A ladder winner picked on the one public embryo can lose on private, so only let a winner replace the #38 twin (never #37), and only if its public score >= 0.956 (K2 + 0.002).",
+      "steps": "Base = K2 flags from experiments/exp58_x138_safe_lowref/probe.json: python tools/build_probe_kernel.py <exp> --base x138 --patch divinsert --patch lowrefine --patch safetail --set DIVINS_ENABLE=1 --set DIVINS_STEAL=1 --set DIVINS_CAP=4 --set DIVINS_FRAME_CAP=1 --set DIVINS_ALPHA=1 --set DIVINS_THRESH=0.4 --set REPAIR_DEADLINE_S=34200 --set DIVINS_DEADLINE_S=28800 --set LOWREFINE_ENABLE=1 --set DEGRADE_KEEP_DIV=1 + ONE extra --set per variant. Today's 3 (x138 defaults in brackets): (a) SECONDARY_DETECTION_WEIGHT=0.70 [0.80]; (b) SECONDARY_DETECTION_WEIGHT=0.90; (c) DIVINS_THRESH=0.3 [0.4] (more inserted divisions; our only proven +0.001 lever). Next days: DET_THRESHOLD 0.960/0.970 [0.965], LOWDET_THRESHOLD 0.25/0.35 [0.3], DEEPCENTER_GAP_THRESHOLD 0.20/0.30 [0.25], SECONDARY_EDGE_WEIGHT 0.10/0.20 [0.15], DIVINS_CAP 6. Each build: tools/dummy_gates.py, then push a private GPU kernel and submit ONLY with the user's explicit OK, then log it in tools/runtime_ledger.py. Build and gates take ~30-40 min, so start by ~22:45Z to submit before 23:59Z. Runtime family = safetail (9.5 h deadline).",
+      "ready_by_utc": "2026-09-26T23:30Z"
+    },
+    {
+      "id": "RI-3",
+      "what": "IF the user lifts R9: reproduce the y3uanm v1 teacher-distilled secondary fine-tune (1 epoch, lr 1e-5, freeze all but the last decoder block + heads, BN frozen, loss = softplus at GT + 0.5 BCE to the frozen teacher + 0.1 feature MSE) on a Kaggle T4, then swap it into K2 as the secondary.",
+      "evidence": "The only evidenced mechanism above x138: y3uanm 0.949 -> 0.956 (their v2 adds 10 epochs + non-public synthetic data; the cause of their jump is not proven). Our earlier secondary fine-tune lost (0.937) but had no distillation and was paired with a primary swap. A secondary swap does not touch the V1284 head. Weights are not downloadable (output 0 B), so we must train them.",
+      "expected_public_gain": "-0.002 to +0.003 (central ~+0.001). P(>= 0.955) ~25-35%.",
+      "private_risk": "Moderate. Trained on all 199 train videos, which cover both train embryos but not the test embryos; distillation to the frozen teacher limits drift. Kill test before submit: a local official-metric check on held-out-by-embryo clips must show no loss vs the original secondary, else do not submit. Never replaces #37; only the #38 twin, only at public >= 0.956.",
+      "steps": "1) Copy experiments/ext_y3uanm-secondary-ft/notebook0afc5663f6.ipynb into a new private training kernel (id vitaliineibauer/biohub-secft-distill-v1, GPU T4, internet ON allowed for training, same 3 pilkwang datasets + competition). Keep n_epochs=1; record the per-epoch time and stop if the ETA exceeds 3 h. Push/run only with the user's OK. 2) Download the output artifact (edge_predictor_best.pth + config.json), write ARTIFACT_MANIFEST.json with sha256, and create the private dataset vitaliineibauer/biohub-secft-distill-v1. 3) Build the K2 flags as in RI-2 plus --dataset vitaliineibauer/biohub-secft-distill-v1 --set SECONDARY_ARTIFACT_MANIFEST=/kaggle/input/datasets/vitaliineibauer/biohub-secft-distill-v1/ARTIFACT_MANIFEST.json. First confirm in a dummy run that the log prints the new 'Secondary weight:' path and no 'FALLING BACK TO SINGLE-SEED'. 4) tools/dummy_gates.py, then submit with the user's OK. Timeline: training ~1.5-3 h from the OK, then dataset + build + gates ~45 min, so the submit is ready ~27 Sep 01:00-04:00Z and the score ~27 Sep 09:00-12:00Z.",
+      "ready_by_utc": "2026-09-27T04:00Z"
+    },
+    {
+      "id": "RI-4",
+      "what": "Keep the E10 watch idle and do not chase band members' artifacts further: nothing is public, and a repeat scan costs API quota (429s hit lb_poll).",
+      "evidence": "0 public artifacts among ~50 checked members. y3uanm output 0 B. Code tab max 0.953.",
+      "expected_public_gain": "0",
+      "private_risk": "none",
+      "steps": "Continue the light P1 checks (few calls). Never run a >100-call member scan while lb_poll is active.",
+      "ready_by_utc": "2026-09-26T21:00Z"
+    }
+  ]
+}

@@ -1,0 +1,222 @@
+{
+ "schema": "BIOCEL_DATASET_MANIFEST_V1",
+ "date_u": "2026-09-08T15:53:03Z",
+ "lane": "KERNEL",
+ "run_id": "20260908T0615Z__KER__one-solver-kernel-and-transport-probe",
+ "purpose": "inputs for the one-solver transport probe: the ten head checkpoints with their golden test, the solver and head code in clear, the MITOSE module closure, the deployed cell_03/cell_05 texts, and the one-film parity witness",
+ "files": {
+  "arbiter/FEATURES.json": {
+   "sha256": "d061448a0fbf04bab7d9000b7552ee2d6cc0501dd705263951f406b309bc86de",
+   "sha16": "d061448a0fbf04ba",
+   "bytes": 6776
+  },
+  "arbiter/fold_0.txt": {
+   "sha256": "8d3b587932bdc8be047ddbda1ca9cf643f3684dd4f76d24654f6a49f263cf480",
+   "sha16": "8d3b587932bdc8be",
+   "bytes": 3551380
+  },
+  "arbiter/fold_1.txt": {
+   "sha256": "f20d53fd2e1cc26c7f0352d92747da321449a212a2320d043f107fc3e1ebe6d8",
+   "sha16": "f20d53fd2e1cc26c",
+   "bytes": 3452212
+  },
+  "arbiter/fold_2.txt": {
+   "sha256": "de8925267f3e639a20512352392d32de501a89cc19191ee095c6b1536efd338d",
+   "sha16": "de8925267f3e639a",
+   "bytes": 3449473
+  },
+  "arbiter/fold_3.txt": {
+   "sha256": "8180dc9b3897515e8f1e6ad90a74e0db153c67b9ca9f94d1fa83850a04415d2f",
+   "sha16": "8180dc9b3897515e",
+   "bytes": 3389188
+  },
+  "arbiter/fold_4.txt": {
+   "sha256": "3c1e9970e3b54ff9a66a8438759e35603893845d6192c83ecb6a66abeee96c71",
+   "sha16": "3c1e9970e3b54ff9",
+   "bytes": 3526729
+  },
+  "code/osk_compare_worlds.py": {
+   "sha256": "c73551bdace0e4c25eb3e0ddde673f201e7616d8811c5d33e107926bc33993ba",
+   "sha16": "c73551bdace0e4c2",
+   "bytes": 7224
+  },
+  "code/osk_export_canon.py": {
+   "sha256": "6c74a793e1f3851d76b6b7a978e15509cd98e18908887420bec888ca586716fa",
+   "sha16": "6c74a793e1f3851d",
+   "bytes": 6714
+  },
+  "code/osk_golden_test.py": {
+   "sha256": "5f15f1e08366bbf732a2f840e2bc4f71b884c9c244c05855effa38816e3a220c",
+   "sha16": "5f15f1e08366bbf7",
+   "bytes": 5785
+  },
+  "code/osk_head_score.py": {
+   "sha256": "20a07826a902fc68643f39a669f7cf1d3fa6aef4cba22473e3cbc267a396a01d",
+   "sha16": "20a07826a902fc68",
+   "bytes": 11642
+  },
+  "code/osk_plan_producer.py": {
+   "sha256": "91f705c1ee515389d00abd971517c3f07dc5437ccd60bdea631fde4566fb8d61",
+   "sha16": "91f705c1ee515389",
+   "bytes": 13766
+  },
+  "code/pil_lier.py": {
+   "sha256": "97c2f22d54597a894e14d75db0e5a2e4cd728b743be5b5a6eacc86c402e4114d",
+   "sha16": "97c2f22d54597a89",
+   "bytes": 37039
+  },
+  "code/pil_price_fork.py": {
+   "sha256": "1a06b98999fc2a01d5e949cc39271c3625c14bd7eb1830f7012a1dfe634f4e86",
+   "sha16": "1a06b98999fc2a01",
+   "bytes": 30142
+  },
+  "deployed/_CELL03_SRC__fa0c819628d8fd70.py": {
+   "sha256": "fa0c819628d8fd70f3c29e9731f17f62979427600d65d4bd9e77e92a39b5d48f",
+   "sha16": "fa0c819628d8fd70",
+   "bytes": 13769
+  },
+  "deployed/_CELL05_SRC__0946503857cfe38c.py": {
+   "sha256": "0946503857cfe38c7cd9bdd49020763494eab4dd9b6cccbee5f6a5511eb06e41",
+   "sha16": "0946503857cfe38c",
+   "bytes": 34518
+  },
+  "mitose_impl/cibles.py": {
+   "sha256": "d102d64817b672c45b26a724e57efd0db7d302d1544cc5a745a9847f143fde54",
+   "sha16": "d102d64817b672c4",
+   "bytes": 30293
+  },
+  "mitose_impl/cuisson.py": {
+   "sha256": "64743bc1c61ef388e21943e976a51b31c42e2687a6167efa0a80dc2590e52471",
+   "sha16": "64743bc1c61ef388",
+   "bytes": 25020
+  },
+  "mitose_impl/grille.py": {
+   "sha256": "576a3213a1197db20cfb64112dacf93b2f170cb93e35ad7e34a373d055aa597d",
+   "sha16": "576a3213a1197db2",
+   "bytes": 13398
+  },
+  "mitose_impl/mh_data.py": {
+   "sha256": "b60d50025a262c0f0fe252b8ee808414bd1dc04b59da7f82b9ea8e0743bd8134",
+   "sha16": "b60d50025a262c0f",
+   "bytes": 14152
+  },
+  "mitose_impl/mh_net.py": {
+   "sha256": "d9546c8b2ef2229b802ca3bb535ec9a5e784bb5d4395b342fb77382324745046",
+   "sha16": "d9546c8b2ef2229b",
+   "bytes": 3146
+  },
+  "mitose_impl/mhv6_bank.py": {
+   "sha256": "acfc12977238401d3083dbbd213d72aef43946113c4cf4f5bd611fc1731f4a1c",
+   "sha16": "acfc12977238401d",
+   "bytes": 27273
+  },
+  "mitose_impl/mhv6_net.py": {
+   "sha256": "31a1c2ff5286599244e1c2ca32569fe10eb306b02d3a6905a428123b729b7b2a",
+   "sha16": "31a1c2ff52865992",
+   "bytes": 6220
+  },
+  "mitose_impl/mhv6_pair_crop.py": {
+   "sha256": "585149a89d06eba3125c5a11711488097bbe18d0fbae1e460ae26bf7e5d7feda",
+   "sha16": "585149a89d06eba3",
+   "bytes": 17556
+  },
+  "mitose_impl/mhv6_score.py": {
+   "sha256": "721169959c45aef778fdd1e160ac739a155afc30890b1ccd5731700cd43826f4",
+   "sha16": "721169959c45aef7",
+   "bytes": 10122
+  },
+  "mitose_impl/mhv6_train.py": {
+   "sha256": "c9b11faf1c7d5b227816670c28830df940ae894f53113181dbae296f85f4c9ab",
+   "sha16": "c9b11faf1c7d5b22",
+   "bytes": 33108
+  },
+  "mitose_impl/normalisation.py": {
+   "sha256": "9dfedd5bd6b1315f73aef432d2bcc7da535ab35f805419c07499497a51e483ff",
+   "sha16": "9dfedd5bd6b1315f",
+   "bytes": 21932
+  },
+  "plan/EMPTY_PLAN_README.json": {
+   "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+   "sha16": "ca3d163bab055381",
+   "bytes": 3
+  },
+  "referee/cell08_proofreader.py": {
+   "sha256": "a0ef2cee6f089f44e9cdd5a0874dfa27d481f65b575ee321dda01389aef66cb8",
+   "sha16": "a0ef2cee6f089f44",
+   "bytes": 17803
+  },
+  "referee/cell08_referee.py": {
+   "sha256": "8f4ffcbd14632901527850ca5565e10a9bd94f37a7949f113a944bab3c497cba",
+   "sha16": "8f4ffcbd14632901",
+   "bytes": 30283
+  },
+  "weights/GOLDEN_HEAD.json": {
+   "sha256": "0b07640f28f331b306c849ac9b2346bae1979f854f94cda0ba893adc56d0f6d6",
+   "sha16": "0b07640f28f331b3",
+   "bytes": 3272
+  },
+  "weights/h44b6_s1__best_held_44b6.pt": {
+   "sha256": "99a403f82eec284b31d6697237f1b8f4f9b34883b67b2b4df1b857e4c7743c6b",
+   "sha16": "99a403f82eec284b",
+   "bytes": 10592440
+  },
+  "weights/h44b6_s2__best_held_44b6.pt": {
+   "sha256": "d0ec0c8b0238aa4674b8e5b181bf4ab9b2140c588dce8866d4b000db724a80bd",
+   "sha16": "d0ec0c8b0238aa46",
+   "bytes": 10592440
+  },
+  "weights/h44b6_s3__best_held_44b6.pt": {
+   "sha256": "c87964fbdd6773fa5f2bb40ecd269f8b625f7ad235bafe5c6498f65dc8043251",
+   "sha16": "c87964fbdd6773fa",
+   "bytes": 10592440
+  },
+  "weights/h44b6_s4__best_held_44b6.pt": {
+   "sha256": "c9b885db044e94ad44b3f938c966931d56dbe7f869aef9c282607811ce4ffbcd",
+   "sha16": "c9b885db044e94ad",
+   "bytes": 10592440
+  },
+  "weights/h44b6_s5__best_held_44b6.pt": {
+   "sha256": "0aa7e068306419a4016b6dd03d659fc3943c7f8aa2e25f0aa62ee3e6c3ce358b",
+   "sha16": "0aa7e068306419a4",
+   "bytes": 10592440
+  },
+  "weights/h6bba_s1__best_held_6bba.pt": {
+   "sha256": "96c50f5c785d11bf660df4fd4fadef4bc74943fa1376cdb8b418425b3c9b7b66",
+   "sha16": "96c50f5c785d11bf",
+   "bytes": 10592440
+  },
+  "weights/h6bba_s2__best_held_6bba.pt": {
+   "sha256": "87c30ba41fca88f2442efa40e32cda769d2f5ab73c14bf991a508a33612da9b8",
+   "sha16": "87c30ba41fca88f2",
+   "bytes": 10592440
+  },
+  "weights/h6bba_s3__best_held_6bba.pt": {
+   "sha256": "638b0f7bc7eaccdc415934e57854e5911f6527a854db8d2c816f1d8effcb17a1",
+   "sha16": "638b0f7bc7eaccdc",
+   "bytes": 10592440
+  },
+  "weights/h6bba_s4__best_held_6bba.pt": {
+   "sha256": "4666264f887ed5abaa507b5799ce3ccaa8afc12f38c0ae71a16b108a79458c8a",
+   "sha16": "4666264f887ed5ab",
+   "bytes": 10592440
+  },
+  "weights/h6bba_s5__best_held_6bba.pt": {
+   "sha256": "3cb862f94956023f3d582955e9ebd255f58d8e3ff02cb62f208238db38fb67f2",
+   "sha16": "3cb862f94956023f",
+   "bytes": 10592440
+  },
+  "witness/44b6_0113de3b.parquet": {
+   "sha256": "3ca27e842646bfaceb4c9a25f7d63fba17a786d03de6dcc6cd74eba003c436dc",
+   "sha16": "3ca27e842646bfac",
+   "bytes": 379556
+  },
+  "witness/world_44b6_0113de3b.csv": {
+   "sha256": "67318cee139b8686003ee8587973904feed4c35da1f788e83b01e10b49f16136",
+   "sha16": "67318cee139b8686",
+   "bytes": 2552060
+  }
+ },
+ "n_files": 42,
+ "total_bytes": 126645954,
+ "note_referee": "cell08_referee.py imports cell08_proofreader; both ship in referee/ and that folder must be on PYTHONPATH. Empty plan => byte-identical output (proven on a real world)."
+}

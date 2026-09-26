@@ -1,0 +1,15 @@
+# v_ladder notes (skeptic: value+feasibility)
+- 2026-09-26T20:43Z start; v_ladder.json absent -> fresh run
+- 20:44Z CONTEXT l.2388-2396 read: USER ALREADY LIFTED R7 at 20:33Z ("насчёт сабмитов забей - сделаем один под паблик другой под прайват"), slots at session's discretion; FINALS = one public-aimed (best public variant) + one private-aimed (logged default #37 K2 56563521). 20:34Z user asleep, autonomous. -> L0 question moot; L9 pair {V*, #38} and 'never {V*, #37}' contradict the logged user decision.
+- 20:45Z poll.log: last OK header 20:26:49Z; 20:36:50Z header = 429 on ListSubmissions (account-wide throttle from r_intel member scan). W6 needs an OK header.
+- 20:47Z dry builds (out-dir experiments/_vld, then moved to scratch reach/vld/builds; nothing left in experiments): K2 1f1ddb6d63b47f54 == experiments/exp58 ; exp70a 132438a9626400e4 ; exp70b b8e7ece1a33cd2a1 ; exp70d e0b8fc0cf87660c3 ; exp70e c0f3380c04af3ae6 -> all match r_ladder. DEGRADE_KEEP_DIV=1 auto-set by builder (setdefault) = K2 probe.json.
+- exp70a diff vs K2: cell0 +1 line, cell2 knob, cell7 prune_weak_leaf_nodes (not in try/except) called after short-track filter, before linefit and divinsert. DC: cell0 l.65 x138 '0.25', l.121 override '0.30'; cell2 reads it; cell3 l.658 hard-sets SECONDARY_DETECTION_WEIGHT 0.80 (L7 trap confirmed).
+- lowrefine (builder l.71, 1613+) = V1284 head coords for x138's READMIT/GAPFILL low-det pool; lp30 prunes readmitted leaves (95% of removals). SAME node population -> not additive; exp60 lp30 (+0.00083) was on x138 tails WITHOUT lowrefine/insertion; dc0.30 exp60 arm also on x138 control without insertion.
+- exp60 dc0.30: 44b6 edgeJ 0.9054->0.9042 (-0.0012), divJ 0.0526->0.0588; 6bba edge +0.0001, div 0.1429->0.1515. Value lives in div J (few evaluable public forks -> lottery).
+- div_insert.py l.24-32: insertion considers ORPHAN v with out-degree-1 parent u -> a safe fork vetoed by dc0.30 leaves v orphan/u out-degree 1 -> insertion (p>=0.4) can re-add it; cap slots shift. dc x insertion unmeasured.
+- forkmid lowrefine-sensitivity arm: 4 TP / 1 FP removed of 20 TP (the K2-relevant arm).
+- LB 20:30Z CSV (r_intel scratch): we are 13th of 99 in 0.954 block; 12 above us all last-subbed 26 Sep except one; 67 of 86 below subbed 26 Sep.
+- Team best is max(P36, K2) unrounded (unknown which). exp70a ~= P36 + lowrefine ~= K2 + lp30 -> gain over team best ~ min(lp, lr) (if both >=0) -> P36 evidence is ALREADY in the team best; P(exp70a flips display) ~0.05-0.15, not 0.2-0.3.
+- round12 plancheck: push->COMPLETE ~32 min (queue 11-12 min Sat night, run ~20 min exp56; K2 dummy ~1512 s); `kernels output ... --file-pattern '^(submission\.csv|run_stats\.csv)$'` 16 s vs 216 s full; 429 block ~6 min on output fetch.
+- Kaggle submit of a kernel version needs that version COMPLETE with submission.csv (project practice 'submit when complete', CONTEXT l.1331) -> 'submit anyway if dummy not COMPLETE' (L1) and 'dummy optional' (L2) are infeasible.
+- 20:50Z wrote v_ladder.json (go: L0,L1,L2,L3,L5,L7,L8,L9-amended; no-go: L4 blind S4, L6, submit-without-dummy, L9 as written)

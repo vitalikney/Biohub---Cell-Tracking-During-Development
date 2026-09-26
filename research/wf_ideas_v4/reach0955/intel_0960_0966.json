@@ -1,0 +1,1430 @@
+{
+ "meta": {
+  "created_utc": "2026-09-26T21:15Z",
+  "scope": "public LB 0.960-0.966 (ranks 16-68), read-only intel for 'reach 0.955+'",
+  "lb_snapshot": "kaggle competitions leaderboard --download at 20:39:43Z 26 Sep (3,935 teams; we are #217 at 0.954, 40 subs); vs 20:30Z only Makoto Nagatomo changed (75 -> 76 subs)",
+  "n_teams": 53,
+  "n_members": 81,
+  "score_histogram": {
+   "0.96": 6,
+   "0.961": 14,
+   "0.962": 6,
+   "0.963": 8,
+   "0.964": 6,
+   "0.965": 8,
+   "0.966": 5
+  },
+  "subs_median": 61,
+  "subs_min": 11,
+  "subs_max": 400,
+  "scan": "81/81 members: kernels_list(user, page_size 100, sort dateRun) + dataset_list(user), serial, >= 3.2 s between calls, 0 errors, 0 HTTP 429; 47/81 members have NO public kernel or dataset at all; only 7 of 53 teams have any public biohub trace (Corwin, LMM, Abnormal Guys, Vibes & Edges, Bio-Pirates, Biomed Foresight, OzanM.; the last two only old/known notebooks). Competition notebook sweep (kernels list --competition, sort dateRun, 11 pages, 1,042 public notebooks): no further band-member notebook. kernels list --dataset for the 6 datasets found: no public consumer notebook. Models not re-checked (round notes: only Trackastra 0.616 and ModelBuddy on the Models tab).",
+  "limits": "The API exposes no notebook scores; private notebooks appear only as '[Private Notebook]' placeholders (3, all LeeDongHyuk); Discord/private sharing is invisible. Chrome not used (other agents use it)."
+ },
+ "teams": [
+  {
+   "rank": 16,
+   "team": "Takahiro Katsumata (tkatsuma)",
+   "team_id": 16557477,
+   "score": 0.966,
+   "subs": 48,
+   "members": [
+    "alextfkd"
+   ],
+   "last_sub_utc": "2026-09-26 08:02:58",
+   "trajectory_seen_in_round_notes": [
+    "Takahiro Katsumata 0.953->0.963 (intel_browser 25 Sep)",
+    "Takahiro Katsumata 0.963->0.966 (round7 26 Sep)"
+   ],
+   "lowest_prior_score_seen": 0.953,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 1,
+   "method_class": "unknown (x138-era jump from <= 0.954)",
+   "evidence": "No public biohub kernel or dataset from any member (kernels list --user, datasets list --user, competition notebook sweep of 1,042 notebooks).",
+   "artifacts": []
+  },
+  {
+   "rank": 17,
+   "team": "Zyy7390",
+   "team_id": 16545035,
+   "score": 0.966,
+   "subs": 111,
+   "members": [
+    "zyy7390"
+   ],
+   "last_sub_utc": "2026-09-26 00:05:03",
+   "trajectory_seen_in_round_notes": [],
+   "lowest_prior_score_seen": null,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 1,
+   "method_class": "unknown (no public trace)",
+   "evidence": "No public biohub kernel or dataset from any member (kernels list --user, datasets list --user, competition notebook sweep of 1,042 notebooks).",
+   "artifacts": []
+  },
+  {
+   "rank": 18,
+   "team": "Bioinformatics is not solution",
+   "team_id": 16575737,
+   "score": 0.966,
+   "subs": 46,
+   "members": [
+    "dfgtde",
+    "yuyizhu"
+   ],
+   "last_sub_utc": "2026-09-26 02:37:29",
+   "trajectory_seen_in_round_notes": [
+    "Bioinformatics is not solution' (dfgtde, yuyizhu) 0.959->0.966",
+    "Bioinformatics is not solution' 0.959 -> 0.966",
+    "Bioinformatics is not solution' 0.959->0.966",
+    "Bioinformatics is not solution» 0.959 → 0.966"
+   ],
+   "lowest_prior_score_seen": 0.959,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 1,
+   "method_class": "unknown (no public trace)",
+   "evidence": "No public biohub kernel or dataset from any member (kernels list --user, datasets list --user, competition notebook sweep of 1,042 notebooks).",
+   "artifacts": []
+  },
+  {
+   "rank": 19,
+   "team": "Yizhou",
+   "team_id": 16712536,
+   "score": 0.966,
+   "subs": 56,
+   "members": [
+    "yaphellee"
+   ],
+   "last_sub_utc": "2026-09-26 09:42:41",
+   "trajectory_seen_in_round_notes": [
+    "Yizhou (0.965->0.966",
+    "Yizhou 0.964->0.965",
+    "Yizhou 0.965->0.966"
+   ],
+   "lowest_prior_score_seen": 0.964,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 1,
+   "method_class": "unknown (no public trace)",
+   "evidence": "No public biohub kernel or dataset from any member (kernels list --user, datasets list --user, competition notebook sweep of 1,042 notebooks).",
+   "artifacts": []
+  },
+  {
+   "rank": 20,
+   "team": "Ryo Hasegawa",
+   "team_id": 16552030,
+   "score": 0.966,
+   "subs": 116,
+   "members": [
+    "ryohasegawa926"
+   ],
+   "last_sub_utc": "2026-09-26 01:14:30",
+   "trajectory_seen_in_round_notes": [],
+   "lowest_prior_score_seen": null,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 1,
+   "method_class": "unknown (no public trace)",
+   "evidence": "No public biohub kernel or dataset from any member (kernels list --user, datasets list --user, competition notebook sweep of 1,042 notebooks).",
+   "artifacts": []
+  },
+  {
+   "rank": 21,
+   "team": "Corwin",
+   "team_id": 16679305,
+   "score": 0.965,
+   "subs": 97,
+   "members": [
+    "corwin1979",
+    "mathisbaguette"
+   ],
+   "last_sub_utc": "2026-09-26 08:05:02",
+   "trajectory_seen_in_round_notes": [
+    "Corwin #17 0.965; team y3uanm 0.949 -> 0.956"
+   ],
+   "lowest_prior_score_seen": 0.949,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [
+    "corwin1979/biocel-secw-3f1c84ad",
+    "corwin1979/biocel-aux-4d9e2c17",
+    "corwin1979/biocel-forge-v11",
+    "corwin1979/biocel-data-9c7a4266",
+    "corwin1979/biocel-run-62f17d18"
+   ],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 1,
+   "method_class": "retrained_models+own_post_processing",
+   "evidence": "6 public datasets (5 CC0, 1 'other'): biocel-secw (own SWA-trained secondary detector, same architecture as x138's, manifest 'replaces_in_the_slot' = the pilkwang seed314159 sha that x138 checks), biocel-forge-v11 (LOEO division classifier), biocel-data/run/aux (MITOSE division head + LightGBM trio arbiter, referee/proofreader, pair-GBM relink prior, track-end re-aim, HOCT fork veto, sub-voxel refinement). Agent-run lab (ENG/KER/ZEUS). Base = pilkwang dual-seed chain, not x138. Own note (k10_subvox.py, 19 Sep): pilkwang's secondary beats their detector by +0.006 public on placement.",
+   "artifacts": [
+    "corwin1979/biocel-secw-3f1c84ad",
+    "corwin1979/biocel-aux-4d9e2c17",
+    "corwin1979/biocel-data-9c7a4266",
+    "corwin1979/biocel-run-62f17d18",
+    "corwin1979/biocel-forge-v11",
+    "corwin1979/run-aux-260907"
+   ]
+  },
+  {
+   "rank": 22,
+   "team": "Shoko",
+   "team_id": 16738619,
+   "score": 0.965,
+   "subs": 36,
+   "members": [
+    "abreyton"
+   ],
+   "last_sub_utc": "2026-09-26 01:15:33",
+   "trajectory_seen_in_round_notes": [
+    "Shoko 0.957->0.965"
+   ],
+   "lowest_prior_score_seen": 0.957,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 0,
+   "method_class": "unknown (no public trace)",
+   "evidence": "No public biohub kernel or dataset from any member (kernels list --user, datasets list --user, competition notebook sweep of 1,042 notebooks).",
+   "artifacts": []
+  },
+  {
+   "rank": 23,
+   "team": "Syed Asad Ali",
+   "team_id": 16800114,
+   "score": 0.965,
+   "subs": 23,
+   "members": [
+    "syed3000"
+   ],
+   "last_sub_utc": "2026-09-26 16:26:16",
+   "trajectory_seen_in_round_notes": [
+    "Syed Asad Ali) 0.953 #417 -> 0.965 #20, LIN mimosa 0.957 -> 0.962",
+    "Syed Asad Ali, 0.953->0.965"
+   ],
+   "lowest_prior_score_seen": 0.953,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 0,
+   "method_class": "unknown (x138 start, then +0.012)",
+   "evidence": "0.953 (#417, x138 copy level) -> 0.965 on 25 Sep with 18 subs; the 3 public kernels ('our best private build' etc.) belong to another competition.",
+   "artifacts": []
+  },
+  {
+   "rank": 24,
+   "team": "OzanM.",
+   "team_id": 16453453,
+   "score": 0.965,
+   "subs": 151,
+   "members": [
+    "analyticaobscura"
+   ],
+   "last_sub_utc": "2026-09-26 11:07:17",
+   "trajectory_seen_in_round_notes": [],
+   "lowest_prior_score_seen": null,
+   "public_biohub_kernels": [
+    "analyticaobscura/biohub-lb-942",
+    "analyticaobscura/biohub-lb-941",
+    "analyticaobscura/biohub-cell-tracking-during-development"
+   ],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 0,
+   "method_class": "unknown (heavy LB iteration)",
+   "evidence": "Only old public notebooks (biohub-lb-941/942 = Harmonic Fusion copies, 4 Sep). 151 subs.",
+   "artifacts": []
+  },
+  {
+   "rank": 25,
+   "team": "tomohito shimura",
+   "team_id": 16671090,
+   "score": 0.965,
+   "subs": 52,
+   "members": [
+    "tomohitoshimura"
+   ],
+   "last_sub_utc": "2026-09-26 01:43:53",
+   "trajectory_seen_in_round_notes": [
+    "tomohito shimura (0.958 -> 0.964",
+    "tomohito shimura 0.958 -> 0.964",
+    "tomohito shimura 0.958->0.964",
+    "tomohito shimura 0.964->0.965",
+    "tomohito shimura and Yaroslav 0.964 -> 0.965"
+   ],
+   "lowest_prior_score_seen": 0.958,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 0,
+   "method_class": "unknown (no public trace)",
+   "evidence": "No public biohub kernel or dataset from any member (kernels list --user, datasets list --user, competition notebook sweep of 1,042 notebooks).",
+   "artifacts": []
+  },
+  {
+   "rank": 26,
+   "team": "Yaroslav",
+   "team_id": 16943367,
+   "score": 0.965,
+   "subs": 25,
+   "members": [
+    "yaroslavrogoza"
+   ],
+   "last_sub_utc": "2026-09-26 08:13:00",
+   "trajectory_seen_in_round_notes": [
+    "Yaroslav 0.964 -> 0.965",
+    "Yaroslav 0.964->0.965"
+   ],
+   "lowest_prior_score_seen": 0.964,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 1,
+   "method_class": "unknown (no public trace)",
+   "evidence": "No public biohub kernel or dataset from any member (kernels list --user, datasets list --user, competition notebook sweep of 1,042 notebooks).",
+   "artifacts": []
+  },
+  {
+   "rank": 27,
+   "team": "Quantizr",
+   "team_id": 16779186,
+   "score": 0.965,
+   "subs": 11,
+   "members": [
+    "quantizr"
+   ],
+   "last_sub_utc": "2026-09-26 10:54:15",
+   "trajectory_seen_in_round_notes": [
+    "Quantizr 0.956->0.960",
+    "Quantizr 0.960 -> 0.964",
+    "Quantizr 0.960->0.964",
+    "Quantizr 0.964->0.965"
+   ],
+   "lowest_prior_score_seen": 0.956,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 1,
+   "method_class": "unknown (own offline-validated pipeline likely: 11 subs)",
+   "evidence": "Discussion 742942 'errors in annotated ground truth' (GT centroids > 7 um off, wrong links). Seen 0.956 -> 0.960 -> 0.964 -> 0.965 with only 11 subs in total. No public code.",
+   "artifacts": []
+  },
+  {
+   "rank": 28,
+   "team": "Ad Space available",
+   "team_id": 16839023,
+   "score": 0.965,
+   "subs": 71,
+   "members": [
+    "rainchen0411",
+    "richardsilence"
+   ],
+   "last_sub_utc": "2026-09-26 05:36:11",
+   "trajectory_seen_in_round_notes": [
+    "Ad Space available (0.961 -> 0.965",
+    "Ad Space available 0.960 -> 0.961",
+    "Ad Space available 0.960->0.961",
+    "Ad Space available 0.961 -> 0.965",
+    "Ad Space available 0.961->0.965"
+   ],
+   "lowest_prior_score_seen": 0.96,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 1,
+   "method_class": "unknown",
+   "evidence": "Seen 0.960 -> 0.961 -> 0.965 (26 Sep). richardsilence's public 'Shared 3D-CNN' notebook is for the CUHK-X competition, not biohub.",
+   "artifacts": []
+  },
+  {
+   "rank": 29,
+   "team": "Vibes & Edges Trade-Off",
+   "team_id": 16454235,
+   "score": 0.964,
+   "subs": 400,
+   "members": [
+    "dorainren",
+    "i2nfinit3y",
+    "tahaalshatiri",
+    "tom99763",
+    "weishanshan033"
+   ],
+   "last_sub_utc": "2026-09-26 13:45:12",
+   "trajectory_seen_in_round_notes": [],
+   "lowest_prior_score_seen": null,
+   "public_biohub_kernels": [
+    "i2nfinit3y/biohub-download-from-drive",
+    "tom99763/tracksdata-tutorial-evaluation-mock-tests"
+   ],
+   "public_biohub_datasets": [
+    "weishanshan033/biohub-routed-leaf128-public-v1"
+   ],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 1,
+   "method_class": "alternative_linker_experiments+heavy_LB_iteration",
+   "evidence": "i2nfinit3y/biohub-download-from-drive (2 Sep): royerlab HOCT pretrained tracker run on the team's private focus3d masks; tom99763 celltrack-studio (GitHub PP debugger: threshold, gap_close scripts; no model); weishanshan033/biohub-routed-leaf128-public-v1 = cached submission.csv (21 Aug). 400 subs, 5 members.",
+   "artifacts": [
+    "i2nfinit3y/biohub-download-from-drive",
+    "weishanshan033/biohub-routed-leaf128-public-v1 (cached CSV)",
+    "github.com/tom99763/celltrack-studio"
+   ]
+  },
+  {
+   "rank": 30,
+   "team": "Biomed Foresight",
+   "team_id": 16508219,
+   "score": 0.964,
+   "subs": 52,
+   "members": [
+    "tsukasamiyaji",
+    "yudaiyamauchi"
+   ],
+   "last_sub_utc": "2026-09-26 12:52:20",
+   "trajectory_seen_in_round_notes": [
+    "Biomed Foresight 0.954->0.964"
+   ],
+   "lowest_prior_score_seen": 0.954,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 1,
+   "method_class": "unknown (association-variant work on the pilkwang stack, then a jump)",
+   "evidence": "yudaiyamauchi public lb-exploration A-E (mutual-best / hard-negative / rank association variants, 0.944-0.946, 21-23 Sep); team 0.954 -> 0.964 (#244 -> #30) in the 20:01Z 26 Sep snapshot; no public x138-era code.",
+   "artifacts": [
+    "yudaiyamauchi/lb-exploration-e-mutual-best (known, 0.944-0.946)"
+   ]
+  },
+  {
+   "rank": 31,
+   "team": "Samuel Sundararaman",
+   "team_id": 16673305,
+   "score": 0.964,
+   "subs": 70,
+   "members": [
+    "neopok919"
+   ],
+   "last_sub_utc": "2026-09-26 00:03:12",
+   "trajectory_seen_in_round_notes": [
+    "Samuel Sundararaman 0.959 -> 0.964",
+    "Samuel Sundararaman 0.959->0.964"
+   ],
+   "lowest_prior_score_seen": 0.959,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 1,
+   "method_class": "unknown (no public trace)",
+   "evidence": "No public biohub kernel or dataset from any member (kernels list --user, datasets list --user, competition notebook sweep of 1,042 notebooks).",
+   "artifacts": []
+  },
+  {
+   "rank": 32,
+   "team": "SoichiOzaki",
+   "team_id": 16734921,
+   "score": 0.964,
+   "subs": 131,
+   "members": [
+    "soichiozaki"
+   ],
+   "last_sub_utc": "2026-09-26 00:56:03",
+   "trajectory_seen_in_round_notes": [],
+   "lowest_prior_score_seen": null,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 1,
+   "method_class": "unknown (no public trace)",
+   "evidence": "No public biohub kernel or dataset from any member (kernels list --user, datasets list --user, competition notebook sweep of 1,042 notebooks).",
+   "artifacts": []
+  },
+  {
+   "rank": 33,
+   "team": "que la cuenten como quieran",
+   "team_id": 16557044,
+   "score": 0.964,
+   "subs": 23,
+   "members": [
+    "germanjurado1"
+   ],
+   "last_sub_utc": "2026-09-26 00:04:13",
+   "trajectory_seen_in_round_notes": [
+    "que la cuenten como quieran' (germanjurado1) 0.963->0.964"
+   ],
+   "lowest_prior_score_seen": 0.963,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 1,
+   "method_class": "unknown (no public trace)",
+   "evidence": "No public biohub kernel or dataset from any member (kernels list --user, datasets list --user, competition notebook sweep of 1,042 notebooks).",
+   "artifacts": []
+  },
+  {
+   "rank": 34,
+   "team": "Nabil Hanif",
+   "team_id": 16778653,
+   "score": 0.964,
+   "subs": 21,
+   "members": [
+    "nmh12345"
+   ],
+   "last_sub_utc": "2026-09-25 19:27:51",
+   "trajectory_seen_in_round_notes": [
+    "Nabil Hanif (0.959 -> 0.964",
+    "Nabil Hanif 0.959 -> 0.964",
+    "Nabil Hanif 0.959->0.964"
+   ],
+   "lowest_prior_score_seen": 0.959,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 1,
+   "method_class": "unknown (no public trace)",
+   "evidence": "No public biohub kernel or dataset from any member (kernels list --user, datasets list --user, competition notebook sweep of 1,042 notebooks).",
+   "artifacts": []
+  },
+  {
+   "rank": 35,
+   "team": "Zhu Chen 96",
+   "team_id": 16466353,
+   "score": 0.963,
+   "subs": 83,
+   "members": [
+    "zhuchen96"
+   ],
+   "last_sub_utc": "2026-09-26 12:55:15",
+   "trajectory_seen_in_round_notes": [
+    "Zhu Chen 96 0.959 -> 0.960",
+    "Zhu Chen 96 0.959->0.960"
+   ],
+   "lowest_prior_score_seen": 0.959,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 1,
+   "method_class": "unknown (no public trace)",
+   "evidence": "No public biohub kernel or dataset from any member (kernels list --user, datasets list --user, competition notebook sweep of 1,042 notebooks).",
+   "artifacts": []
+  },
+  {
+   "rank": 36,
+   "team": "Noah Öksüz",
+   "team_id": 16943822,
+   "score": 0.963,
+   "subs": 22,
+   "members": [
+    "noahksz"
+   ],
+   "last_sub_utc": "2026-09-26 08:13:27",
+   "trajectory_seen_in_round_notes": [],
+   "lowest_prior_score_seen": null,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 1,
+   "method_class": "unknown (no public trace)",
+   "evidence": "No public biohub kernel or dataset from any member (kernels list --user, datasets list --user, competition notebook sweep of 1,042 notebooks).",
+   "artifacts": []
+  },
+  {
+   "rank": 37,
+   "team": "Ascent",
+   "team_id": 16918262,
+   "score": 0.963,
+   "subs": 14,
+   "members": [
+    "ishaangangwani"
+   ],
+   "last_sub_utc": "2026-09-26 02:23:53",
+   "trajectory_seen_in_round_notes": [
+    "Ascent 0.960 -> 0.963",
+    "Ascent 0.960->0.963",
+    "Ishaan Gangwani new 0.960 with 9 subs (intel_browser 25 Sep)"
+   ],
+   "lowest_prior_score_seen": 0.96,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 1,
+   "method_class": "unknown (no public trace)",
+   "evidence": "No public biohub kernel or dataset from any member (kernels list --user, datasets list --user, competition notebook sweep of 1,042 notebooks).",
+   "artifacts": []
+  },
+  {
+   "rank": 38,
+   "team": "Jeff Horon",
+   "team_id": 16756161,
+   "score": 0.963,
+   "subs": 86,
+   "members": [
+    "jeffhoron"
+   ],
+   "last_sub_utc": "2026-09-26 00:02:29",
+   "trajectory_seen_in_round_notes": [
+    "Jeff Horon 0.948->0.961"
+   ],
+   "lowest_prior_score_seen": 0.948,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 1,
+   "method_class": "unknown (x138-era jump from <= 0.954)",
+   "evidence": "No public biohub kernel or dataset from any member (kernels list --user, datasets list --user, competition notebook sweep of 1,042 notebooks).",
+   "artifacts": []
+  },
+  {
+   "rank": 39,
+   "team": "goh",
+   "team_id": 16600445,
+   "score": 0.963,
+   "subs": 37,
+   "members": [
+    "bungohatayama"
+   ],
+   "last_sub_utc": "2026-09-25 12:03:04",
+   "trajectory_seen_in_round_notes": [],
+   "lowest_prior_score_seen": null,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 1,
+   "method_class": "unknown (no public trace)",
+   "evidence": "No public biohub kernel or dataset from any member (kernels list --user, datasets list --user, competition notebook sweep of 1,042 notebooks).",
+   "artifacts": []
+  },
+  {
+   "rank": 40,
+   "team": "LeeDongHyuk",
+   "team_id": 16667756,
+   "score": 0.963,
+   "subs": 244,
+   "members": [
+    "odyssey189"
+   ],
+   "last_sub_utc": "2026-09-26 00:02:27",
+   "trajectory_seen_in_round_notes": [],
+   "lowest_prior_score_seen": null,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 3,
+   "members_with_no_public_kernel_or_dataset": 0,
+   "method_class": "unknown (heavy LB iteration)",
+   "evidence": "244 subs; 3 private-notebook placeholders visible in kernels list; public kernels are for other competitions (July).",
+   "artifacts": []
+  },
+  {
+   "rank": 41,
+   "team": "Makoto Nagatomo",
+   "team_id": 16549666,
+   "score": 0.963,
+   "subs": 76,
+   "members": [
+    "makotonagatomo0926"
+   ],
+   "last_sub_utc": "2026-09-26 12:01:14",
+   "trajectory_seen_in_round_notes": [],
+   "lowest_prior_score_seen": null,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 1,
+   "method_class": "unknown (no public trace)",
+   "evidence": "No public biohub kernel or dataset from any member (kernels list --user, datasets list --user, competition notebook sweep of 1,042 notebooks).",
+   "artifacts": []
+  },
+  {
+   "rank": 42,
+   "team": "LIN mimosa",
+   "team_id": 16472193,
+   "score": 0.963,
+   "subs": 31,
+   "members": [
+    "achenyyc",
+    "linmimosa"
+   ],
+   "last_sub_utc": "2026-09-26 11:54:27",
+   "trajectory_seen_in_round_notes": [
+    "LIN mimosa 0.957 -> 0.962",
+    "LIN mimosa 0.957->0.962",
+    "LIN mimosa went 0.962->0.963"
+   ],
+   "lowest_prior_score_seen": 0.957,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 2,
+   "method_class": "unknown (no public trace)",
+   "evidence": "No public biohub kernel or dataset from any member (kernels list --user, datasets list --user, competition notebook sweep of 1,042 notebooks).",
+   "artifacts": []
+  },
+  {
+   "rank": 43,
+   "team": "cheng ren01",
+   "team_id": 16846037,
+   "score": 0.962,
+   "subs": 29,
+   "members": [
+    "chengren01",
+    "zsuzifan"
+   ],
+   "last_sub_utc": "2026-09-26 09:48:41",
+   "trajectory_seen_in_round_notes": [
+    "cheng ren01 0.952->0.962"
+   ],
+   "lowest_prior_score_seen": 0.952,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 2,
+   "method_class": "unknown (x138-era jump from <= 0.954)",
+   "evidence": "No public biohub kernel or dataset from any member (kernels list --user, datasets list --user, competition notebook sweep of 1,042 notebooks).",
+   "artifacts": []
+  },
+  {
+   "rank": 44,
+   "team": "laughingmen",
+   "team_id": 16459877,
+   "score": 0.962,
+   "subs": 41,
+   "members": [
+    "laughingmen"
+   ],
+   "last_sub_utc": "2026-09-25 15:01:46",
+   "trajectory_seen_in_round_notes": [],
+   "lowest_prior_score_seen": null,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 1,
+   "method_class": "unknown (no public trace)",
+   "evidence": "No public biohub kernel or dataset from any member (kernels list --user, datasets list --user, competition notebook sweep of 1,042 notebooks).",
+   "artifacts": []
+  },
+  {
+   "rank": 45,
+   "team": "yuto083",
+   "team_id": 16533694,
+   "score": 0.962,
+   "subs": 207,
+   "members": [
+    "yuto0712"
+   ],
+   "last_sub_utc": "2026-09-26 11:37:50",
+   "trajectory_seen_in_round_notes": [
+    "yuto083 0.956 -> 0.960",
+    "yuto083 0.956->0.960",
+    "yuto083 0.960 -> 0.962",
+    "yuto083 0.960->0.962"
+   ],
+   "lowest_prior_score_seen": 0.956,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 0,
+   "method_class": "unknown (no public trace)",
+   "evidence": "No public biohub kernel or dataset from any member (kernels list --user, datasets list --user, competition notebook sweep of 1,042 notebooks).",
+   "artifacts": []
+  },
+  {
+   "rank": 46,
+   "team": "Roronoa Zoro",
+   "team_id": 16655121,
+   "score": 0.962,
+   "subs": 31,
+   "members": [
+    "fevziyeniyol"
+   ],
+   "last_sub_utc": "2026-09-26 10:13:35",
+   "trajectory_seen_in_round_notes": [],
+   "lowest_prior_score_seen": null,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 1,
+   "method_class": "unknown (no public trace)",
+   "evidence": "No public biohub kernel or dataset from any member (kernels list --user, datasets list --user, competition notebook sweep of 1,042 notebooks).",
+   "artifacts": []
+  },
+  {
+   "rank": 47,
+   "team": "Deniz Özaydın",
+   "team_id": 16750423,
+   "score": 0.962,
+   "subs": 74,
+   "members": [
+    "deniz143wow",
+    "seymenaltnel"
+   ],
+   "last_sub_utc": "2026-09-26 14:03:09",
+   "trajectory_seen_in_round_notes": [],
+   "lowest_prior_score_seen": null,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 2,
+   "method_class": "unknown (no public trace)",
+   "evidence": "No public biohub kernel or dataset from any member (kernels list --user, datasets list --user, competition notebook sweep of 1,042 notebooks).",
+   "artifacts": []
+  },
+  {
+   "rank": 48,
+   "team": "Jiman Kwon",
+   "team_id": 16618295,
+   "score": 0.962,
+   "subs": 152,
+   "members": [
+    "jimankwon"
+   ],
+   "last_sub_utc": "2026-09-26 11:03:52",
+   "trajectory_seen_in_round_notes": [
+    "Jiman Kwon (0.955 -> 0.959",
+    "Jiman Kwon 0.955 -> 0.959",
+    "Jiman Kwon 0.959 -> 0.962",
+    "Jiman Kwon 0.959->0.962"
+   ],
+   "lowest_prior_score_seen": 0.955,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 1,
+   "method_class": "unknown (no public trace)",
+   "evidence": "No public biohub kernel or dataset from any member (kernels list --user, datasets list --user, competition notebook sweep of 1,042 notebooks).",
+   "artifacts": []
+  },
+  {
+   "rank": 49,
+   "team": "Jivansh",
+   "team_id": 16805586,
+   "score": 0.961,
+   "subs": 14,
+   "members": [
+    "jivanshc"
+   ],
+   "last_sub_utc": "2026-09-26 05:14:46",
+   "trajectory_seen_in_round_notes": [
+    "Jivansh 0.959 -> 0.961",
+    "Jivansh 0.959->0.961"
+   ],
+   "lowest_prior_score_seen": 0.959,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 0,
+   "method_class": "unknown (no public trace)",
+   "evidence": "No public biohub kernel or dataset from any member (kernels list --user, datasets list --user, competition notebook sweep of 1,042 notebooks).",
+   "artifacts": []
+  },
+  {
+   "rank": 50,
+   "team": "Jongwon",
+   "team_id": 16734955,
+   "score": 0.961,
+   "subs": 141,
+   "members": [
+    "impala9397"
+   ],
+   "last_sub_utc": "2026-09-26 00:20:18",
+   "trajectory_seen_in_round_notes": [
+    "Jongwon 0.957->0.961"
+   ],
+   "lowest_prior_score_seen": 0.957,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 1,
+   "method_class": "unknown (no public trace)",
+   "evidence": "No public biohub kernel or dataset from any member (kernels list --user, datasets list --user, competition notebook sweep of 1,042 notebooks).",
+   "artifacts": []
+  },
+  {
+   "rank": 51,
+   "team": "RicardoLópez",
+   "team_id": 16454955,
+   "score": 0.961,
+   "subs": 97,
+   "members": [
+    "richi2489"
+   ],
+   "last_sub_utc": "2026-09-25 22:06:50",
+   "trajectory_seen_in_round_notes": [],
+   "lowest_prior_score_seen": 0.948,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 1,
+   "method_class": "unknown (x138-era jump from <= 0.954)",
+   "evidence": "No public biohub kernel or dataset from any member (kernels list --user, datasets list --user, competition notebook sweep of 1,042 notebooks).",
+   "artifacts": []
+  },
+  {
+   "rank": 52,
+   "team": "BorisV",
+   "team_id": 16855245,
+   "score": 0.961,
+   "subs": 47,
+   "members": [
+    "bvoskresenskii"
+   ],
+   "last_sub_utc": "2026-09-26 03:24:44",
+   "trajectory_seen_in_round_notes": [
+    "BorisV 0.958 -> 0.960",
+    "BorisV 0.958->0.960",
+    "BorisV/Xie Zejian 0.960->0.961"
+   ],
+   "lowest_prior_score_seen": 0.958,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 0,
+   "method_class": "unknown (no public trace)",
+   "evidence": "No public biohub kernel or dataset from any member (kernels list --user, datasets list --user, competition notebook sweep of 1,042 notebooks).",
+   "artifacts": []
+  },
+  {
+   "rank": 53,
+   "team": "Boris Matsakov",
+   "team_id": 16809138,
+   "score": 0.961,
+   "subs": 17,
+   "members": [
+    "borismatsakov"
+   ],
+   "last_sub_utc": "2026-09-26 00:49:36",
+   "trajectory_seen_in_round_notes": [],
+   "lowest_prior_score_seen": null,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 1,
+   "method_class": "unknown (no public trace)",
+   "evidence": "No public biohub kernel or dataset from any member (kernels list --user, datasets list --user, competition notebook sweep of 1,042 notebooks).",
+   "artifacts": []
+  },
+  {
+   "rank": 54,
+   "team": "Abnormal Guys",
+   "team_id": 16461152,
+   "score": 0.961,
+   "subs": 117,
+   "members": [
+    "gwey1025",
+    "koushikrudra",
+    "liuyangmei",
+    "lxorbade",
+    "xinranju"
+   ],
+   "last_sub_utc": "2026-09-26 11:47:51",
+   "trajectory_seen_in_round_notes": [
+    "Abnormal Guys 0.947->0.961"
+   ],
+   "lowest_prior_score_seen": 0.947,
+   "public_biohub_kernels": [
+    "koushikrudra/biohub-dog-robust-centroid-v1"
+   ],
+   "public_biohub_datasets": [
+    "koushikrudra/biohub-zerogpu-consensus-v1"
+   ],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 3,
+   "method_class": "x138_plus_tuning",
+   "evidence": "Private kernel gwey1025/biohub-ends77-s3forks labelled 'RANK1-0.961-V8-x138-s3forks' in the kragglenote2forwork/biohub-sub-cache2 README (seen in round 7): x138 + track-end ('ends77') and fork ('s3forks') changes. koushikrudra: cached submission.csv dataset (useless on the hidden rerun) and a July DoG-centroid notebook. Seen 0.947 -> 0.961 on 25 Sep.",
+   "artifacts": [
+    "koushikrudra/biohub-zerogpu-consensus-v1 (cached CSV)"
+   ]
+  },
+  {
+   "rank": 55,
+   "team": "Choruru",
+   "team_id": 16610773,
+   "score": 0.961,
+   "subs": 153,
+   "members": [
+    "choruru"
+   ],
+   "last_sub_utc": "2026-09-26 08:40:12",
+   "trajectory_seen_in_round_notes": [
+    "Choruru 0.959 -> 0.960",
+    "Choruru 0.959->0.960",
+    "Choruru/Artalmaz31/BorisV/Xie Zejian 0.960->0.961"
+   ],
+   "lowest_prior_score_seen": 0.959,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 1,
+   "method_class": "unknown (no public trace)",
+   "evidence": "No public biohub kernel or dataset from any member (kernels list --user, datasets list --user, competition notebook sweep of 1,042 notebooks).",
+   "artifacts": []
+  },
+  {
+   "rank": 56,
+   "team": "LMM開発室のシルバーウィーク",
+   "team_id": 16667430,
+   "score": 0.961,
+   "subs": 142,
+   "members": [
+    "konbu17",
+    "yuki0731"
+   ],
+   "last_sub_utc": "2026-09-26 11:53:23",
+   "trajectory_seen_in_round_notes": [],
+   "lowest_prior_score_seen": null,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [
+    "yuki0731/biohub-coord-inject"
+   ],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 0,
+   "method_class": "own_models_stacked_on_public_notebook",
+   "evidence": "yuki0731/biohub-coord-inject (CC0, 25 Aug): own 4-seed Dense2 detector (UNet3D + offset head) + z/xy coordinate refiners that move every node of a public notebook's output to the nearest refined detection within 3 um; built for rockerritesh/0-926-biohub-divsub (a 0.926-era public notebook). konbu17 has no biohub public code.",
+   "artifacts": [
+    "yuki0731/biohub-coord-inject"
+   ]
+  },
+  {
+   "rank": 57,
+   "team": "TWEAK",
+   "team_id": 16461350,
+   "score": 0.961,
+   "subs": 364,
+   "members": [
+    "antonoof",
+    "l1ghtsource",
+    "markdjadchenko",
+    "tweakai",
+    "varianceofx"
+   ],
+   "last_sub_utc": "2026-09-26 00:27:10",
+   "trajectory_seen_in_round_notes": [],
+   "lowest_prior_score_seen": null,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 0,
+   "method_class": "unknown (heavy LB iteration; claimed a generic plugin)",
+   "evidence": "Discussion 735352: TWEAK claimed a generic 'plugin' giving +0.03..0.05 on public models (no details, ~1 month ago); Antonoof's node-deletion metric test (739686). 364 subs, 5 members. No biohub public code.",
+   "artifacts": []
+  },
+  {
+   "rank": 58,
+   "team": "syouya tobita",
+   "team_id": 16555250,
+   "score": 0.961,
+   "subs": 53,
+   "members": [
+    "syouyatobita"
+   ],
+   "last_sub_utc": "2026-09-25 16:53:38",
+   "trajectory_seen_in_round_notes": [],
+   "lowest_prior_score_seen": null,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 0,
+   "method_class": "unknown (no public trace)",
+   "evidence": "No public biohub kernel or dataset from any member (kernels list --user, datasets list --user, competition notebook sweep of 1,042 notebooks).",
+   "artifacts": []
+  },
+  {
+   "rank": 59,
+   "team": "Reuben Ernser",
+   "team_id": 16943742,
+   "score": 0.961,
+   "subs": 15,
+   "members": [
+    "reubenernser"
+   ],
+   "last_sub_utc": "2026-09-25 23:21:14",
+   "trajectory_seen_in_round_notes": [],
+   "lowest_prior_score_seen": null,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 1,
+   "method_class": "unknown (no public trace)",
+   "evidence": "No public biohub kernel or dataset from any member (kernels list --user, datasets list --user, competition notebook sweep of 1,042 notebooks).",
+   "artifacts": []
+  },
+  {
+   "rank": 60,
+   "team": "Michael Hernandez",
+   "team_id": 16596911,
+   "score": 0.961,
+   "subs": 148,
+   "members": [
+    "michaelhernandez4"
+   ],
+   "last_sub_utc": "2026-09-26 00:01:35",
+   "trajectory_seen_in_round_notes": [],
+   "lowest_prior_score_seen": null,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 0,
+   "method_class": "unknown (no public trace)",
+   "evidence": "No public biohub kernel or dataset from any member (kernels list --user, datasets list --user, competition notebook sweep of 1,042 notebooks).",
+   "artifacts": []
+  },
+  {
+   "rank": 61,
+   "team": "Artalmaz31",
+   "team_id": 16718308,
+   "score": 0.961,
+   "subs": 150,
+   "members": [
+    "andronhl",
+    "artalmaz31",
+    "isy640"
+   ],
+   "last_sub_utc": "2026-09-26 00:02:27",
+   "trajectory_seen_in_round_notes": [
+    "Artalmaz31/BorisV/Xie Zejian 0.960->0.961"
+   ],
+   "lowest_prior_score_seen": 0.96,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 0,
+   "method_class": "unknown (no public trace)",
+   "evidence": "No public biohub kernel or dataset from any member (kernels list --user, datasets list --user, competition notebook sweep of 1,042 notebooks).",
+   "artifacts": []
+  },
+  {
+   "rank": 62,
+   "team": "Xie Zejian",
+   "team_id": 16812172,
+   "score": 0.961,
+   "subs": 89,
+   "members": [
+    "xiezejian"
+   ],
+   "last_sub_utc": "2026-09-26 06:03:06",
+   "trajectory_seen_in_round_notes": [
+    "Xie Zejian 0.960->0.961"
+   ],
+   "lowest_prior_score_seen": 0.96,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 0,
+   "method_class": "unknown (no public trace)",
+   "evidence": "No public biohub kernel or dataset from any member (kernels list --user, datasets list --user, competition notebook sweep of 1,042 notebooks).",
+   "artifacts": []
+  },
+  {
+   "rank": 63,
+   "team": "rode1234",
+   "team_id": 16863417,
+   "score": 0.96,
+   "subs": 65,
+   "members": [
+    "rode1234"
+   ],
+   "last_sub_utc": "2026-09-26 00:01:57",
+   "trajectory_seen_in_round_notes": [],
+   "lowest_prior_score_seen": null,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 1,
+   "method_class": "unknown (no public trace)",
+   "evidence": "No public biohub kernel or dataset from any member (kernels list --user, datasets list --user, competition notebook sweep of 1,042 notebooks).",
+   "artifacts": []
+  },
+  {
+   "rank": 64,
+   "team": "Brothers",
+   "team_id": 16594300,
+   "score": 0.96,
+   "subs": 61,
+   "members": [
+    "talhabacak",
+    "tarikbacak"
+   ],
+   "last_sub_utc": "2026-09-26 05:21:18",
+   "trajectory_seen_in_round_notes": [
+    "Brothers 0.953->0.957",
+    "Brothers 0.957 -> 0.960",
+    "Brothers 0.957->0.960"
+   ],
+   "lowest_prior_score_seen": 0.953,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 2,
+   "method_class": "unknown (x138-era jump from <= 0.954)",
+   "evidence": "No public biohub kernel or dataset from any member (kernels list --user, datasets list --user, competition notebook sweep of 1,042 notebooks).",
+   "artifacts": []
+  },
+  {
+   "rank": 65,
+   "team": "Bio-Pirates",
+   "team_id": 16533430,
+   "score": 0.96,
+   "subs": 184,
+   "members": [
+    "akankshatiwari2803",
+    "ankitlade12",
+    "indarkarhana",
+    "jsaikrishna"
+   ],
+   "last_sub_utc": "2026-09-26 10:20:41",
+   "trajectory_seen_in_round_notes": [
+    "Bio-Pirates (0.950 -> 0.960",
+    "Bio-Pirates 0.950 -> 0.960",
+    "Bio-Pirates 0.950->0.960"
+   ],
+   "lowest_prior_score_seen": 0.95,
+   "public_biohub_kernels": [
+    "indarkarhana/biohub-structured-trajectory-candidate",
+    "indarkarhana/biohub-dual-seed-frame-retention-guard-v1"
+   ],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 3,
+   "method_class": "public_chain+learned_endpoint_repair_and_assignment",
+   "evidence": "indarkarhana/biohub-structured-trajectory-candidate (14 Sep): frozen public-config dual-seed chain + LOEO learned endpoint repair + structured assignment model; needs the PRIVATE runtime dataset biohub-trajectory-motion-runtime-v1. Older public notebook at 0.913 (28 Jul). Seen 0.950 -> 0.960.",
+   "artifacts": [
+    "indarkarhana/biohub-structured-trajectory-candidate",
+    "indarkarhana/biohub-dual-seed-frame-retention-guard-v1"
+   ]
+  },
+  {
+   "rank": 66,
+   "team": "mmtyeu",
+   "team_id": 16933058,
+   "score": 0.96,
+   "subs": 22,
+   "members": [
+    "guaijf",
+    "mmtyeu",
+    "turtti"
+   ],
+   "last_sub_utc": "2026-09-26 07:26:10",
+   "trajectory_seen_in_round_notes": [
+    "mmtyeu 0.951->0.960"
+   ],
+   "lowest_prior_score_seen": 0.951,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 3,
+   "method_class": "unknown (x138-era jump from <= 0.954)",
+   "evidence": "No public biohub kernel or dataset from any member (kernels list --user, datasets list --user, competition notebook sweep of 1,042 notebooks).",
+   "artifacts": []
+  },
+  {
+   "rank": 67,
+   "team": "kusui26",
+   "team_id": 16588726,
+   "score": 0.96,
+   "subs": 11,
+   "members": [
+    "kusui26"
+   ],
+   "last_sub_utc": "2026-09-25 20:10:32",
+   "trajectory_seen_in_round_notes": [
+    "kusui26 0.953 -> 0.957",
+    "kusui26 0.953->0.957",
+    "kusui26 0.957 -> 0.960",
+    "kusui26 0.957->0.960"
+   ],
+   "lowest_prior_score_seen": 0.953,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 0,
+   "method_class": "unknown (x138-era jump from <= 0.954)",
+   "evidence": "No public biohub kernel or dataset from any member (kernels list --user, datasets list --user, competition notebook sweep of 1,042 notebooks).",
+   "artifacts": []
+  },
+  {
+   "rank": 68,
+   "team": "Vodolay",
+   "team_id": 16738423,
+   "score": 0.96,
+   "subs": 61,
+   "members": [
+    "lacsirjohn"
+   ],
+   "last_sub_utc": "2026-09-26 12:27:21",
+   "trajectory_seen_in_round_notes": [],
+   "lowest_prior_score_seen": null,
+   "public_biohub_kernels": [],
+   "public_biohub_datasets": [],
+   "private_notebook_placeholders": 0,
+   "members_with_no_public_kernel_or_dataset": 0,
+   "method_class": "unknown (no public trace)",
+   "evidence": "No public biohub kernel or dataset from any member (kernels list --user, datasets list --user, competition notebook sweep of 1,042 notebooks).",
+   "artifacts": []
+  }
+ ],
+ "artifacts": [
+  {
+   "id": "corwin1979/biocel-secw-3f1c84ad",
+   "team": "Corwin (0.965 #21)",
+   "type": "weights dataset (secondary detector)",
+   "license": "CC0-1.0",
+   "date": "2026-09-11",
+   "what": "edge_predictor_best.pth = Corwin's 'SERVED_A_ep025_034_swa10' (SWA of epochs 25-34); config.json identical to the pilkwang primary/secondary; manifest 'replaces_in_the_slot' 9bac2fa0... = x138's expected secondary sha.",
+   "checked_locally": "136 keys / 2,077,996 params, shapes identical to the pilkwang weights; median relative L2 diff ~1.0 vs both pilkwang primary and secondary (independent training, not a fine-tune).",
+   "plug_into_x138": "yes, trivially: attach the dataset and point x138's secondary slot at it (copy over SECONDARY_WEIGHTS_PATH before the sha check, or set BIOHUB_SECONDARY_WEIGHTS after it; keep config.json). Could also replace the primary or be a third model (needs code).",
+   "evidence_of_value": "NEGATIVE or unknown: Corwin's k10_subvox.py (19 Sep): 'The vendor's secondary earns +0,006 public on PLACEMENT (3 um 0,68 against our 0,61; d_p90 4,2 against 5,1)'. No LB number for this exact file; training videos unknown (probably all train, so our exp60 lab is in-sample for it as it is for pilkwang's).",
+   "usable_now": "yes as an experiment (lab A/B on exp60 + one public probe); prior expected value <= 0",
+   "cost": "1 build flag + exp60 lab run (GPU) + 1 LB slot; runtime about unchanged (same architecture)"
+  },
+  {
+   "id": "yuki0731/biohub-coord-inject",
+   "team": "LMM開発室のシルバーウィーク (0.961 #56)",
+   "type": "weights dataset + runtime code (node coordinate refinement)",
+   "license": "CC0-1.0",
+   "date": "2026-08-25",
+   "what": "4-seed Dense2 detector (UNet3D base 24 + offset head, 4 flip views) + z refiner + xy refiner (rot180 TTA, distilled); inject_one() moves each predicted node to the nearest refined detection within 3.0 um (alpha 1). Node ids and edges unchanged.",
+   "checked_locally": "read the runtime (874 lines) and manifest; nothing executed.",
+   "plug_into_x138": "yes: a post-processing pass on K2's final nodes (port inject_one to submission.csv: per dataset and t, KD-tree in um, <= 3 um). Needs the 8 .pt files as an attached dataset and the zarr test volumes (already read by x138).",
+   "evidence_of_value": "unknown: manifest local_eval_score 0.8397 on its own old base (no baseline given); refiners trained on 171 train videos ('tr171'); placement is a real lever (Corwin: +0.006 public between two detectors).",
+   "usable_now": "yes as an experiment (port ~50 lines + lab A/B on exp60 with the in-sample caveat + timing on 2xT4 + 1 public probe)",
+   "cost": "~0.5 day engineering + GPU lab run + 1 LB slot; runtime risk: 16 detector forward passes + 2 refiners per frame"
+  },
+  {
+   "id": "corwin1979/biocel-forge-v11",
+   "team": "Corwin",
+   "type": "weights (LOEO division classifier)",
+   "license": "other",
+   "date": "2026-08-19",
+   "what": "6 LOEO checkpoints + a P_div >= 0.053 threshold contract with per-embryo Platt calibrators; feature-extraction code not in the dataset.",
+   "plug_into_x138": "no (inference code missing; licence 'other'; our DaughterNet insertion already fills this role)",
+   "usable_now": "no"
+  },
+  {
+   "id": "corwin1979/biocel-data-9c7a4266 + biocel-run-62f17d18 + run-aux-260907",
+   "team": "Corwin",
+   "type": "code + LightGBM arbiter boosters",
+   "license": "CC0-1.0",
+   "date": "2026-09-06/10",
+   "what": "MITOSE division-head training code, per-node ILP division pricing (pil_price_fork), trio arbiter boosters (5 folds), referee/proofreader, deployed cell sources of 8 Sep.",
+   "plug_into_x138": "no before the deadline: the 10 MITOSE head checkpoints the arbiter needs are not public; the rest is an agent-lab harness around the pilkwang chain.",
+   "usable_now": "no"
+  },
+  {
+   "id": "indarkarhana/biohub-structured-trajectory-candidate",
+   "team": "Bio-Pirates (0.960 #65)",
+   "type": "public notebook (bootstrap)",
+   "license": "n/a",
+   "date": "2026-09-14",
+   "what": "public chain + learned endpoint repair + structured assignment",
+   "plug_into_x138": "no (private runtime dataset)",
+   "usable_now": "no"
+  },
+  {
+   "id": "i2nfinit3y/biohub-download-from-drive",
+   "team": "Vibes & Edges Trade-Off (0.964 #29)",
+   "type": "public notebook (offline HOCT tracking)",
+   "license": "n/a",
+   "date": "2026-09-02",
+   "what": "royerlab HOCT pretrained tracker on private focus3d masks",
+   "plug_into_x138": "no (private masks, needs internet pip, no lab gate)",
+   "usable_now": "no"
+  },
+  {
+   "id": "weishanshan033/biohub-routed-leaf128-public-v1, koushikrudra/biohub-zerogpu-consensus-v1",
+   "team": "Vibes & Edges / Abnormal Guys",
+   "type": "cached submission.csv",
+   "license": "-",
+   "date": "2026-08-21 / 2026-09-26",
+   "what": "visible-test outputs",
+   "plug_into_x138": "no (useless on the hidden rerun)",
+   "usable_now": "no"
+  }
+ ],
+ "method_classes": {
+  "unknown (x138-era jump from <= 0.954)": [
+   "#16 Takahiro Katsumata (tkatsuma) 0.966",
+   "#38 Jeff Horon 0.963",
+   "#43 cheng ren01 0.962",
+   "#51 RicardoLópez 0.961",
+   "#64 Brothers 0.96",
+   "#66 mmtyeu 0.96",
+   "#67 kusui26 0.96"
+  ],
+  "unknown (no public trace)": [
+   "#17 Zyy7390 0.966",
+   "#18 Bioinformatics is not solution 0.966",
+   "#19 Yizhou 0.966",
+   "#20 Ryo Hasegawa 0.966",
+   "#22 Shoko 0.965",
+   "#25 tomohito shimura 0.965",
+   "#26 Yaroslav 0.965",
+   "#31 Samuel Sundararaman 0.964",
+   "#32 SoichiOzaki 0.964",
+   "#33 que la cuenten como quieran 0.964",
+   "#34 Nabil Hanif 0.964",
+   "#35 Zhu Chen 96 0.963",
+   "#36 Noah Öksüz 0.963",
+   "#37 Ascent 0.963",
+   "#39 goh 0.963",
+   "#41 Makoto Nagatomo 0.963",
+   "#42 LIN mimosa 0.963",
+   "#44 laughingmen 0.962",
+   "#45 yuto083 0.962",
+   "#46 Roronoa Zoro 0.962",
+   "#47 Deniz Özaydın 0.962",
+   "#48 Jiman Kwon 0.962",
+   "#49 Jivansh 0.961",
+   "#50 Jongwon 0.961",
+   "#52 BorisV 0.961",
+   "#53 Boris Matsakov 0.961",
+   "#55 Choruru 0.961",
+   "#58 syouya tobita 0.961",
+   "#59 Reuben Ernser 0.961",
+   "#60 Michael Hernandez 0.961",
+   "#61 Artalmaz31 0.961",
+   "#62 Xie Zejian 0.961",
+   "#63 rode1234 0.96",
+   "#68 Vodolay 0.96"
+  ],
+  "retrained_models+own_post_processing": [
+   "#21 Corwin 0.965"
+  ],
+  "unknown (x138 start, then +0.012)": [
+   "#23 Syed Asad Ali 0.965"
+  ],
+  "unknown (heavy LB iteration)": [
+   "#24 OzanM. 0.965",
+   "#40 LeeDongHyuk 0.963"
+  ],
+  "unknown (own offline-validated pipeline likely: 11 subs)": [
+   "#27 Quantizr 0.965"
+  ],
+  "unknown": [
+   "#28 Ad Space available 0.965"
+  ],
+  "alternative_linker_experiments+heavy_LB_iteration": [
+   "#29 Vibes & Edges Trade-Off 0.964"
+  ],
+  "unknown (association-variant work on the pilkwang stack, then a jump)": [
+   "#30 Biomed Foresight 0.964"
+  ],
+  "x138_plus_tuning": [
+   "#54 Abnormal Guys 0.961"
+  ],
+  "own_models_stacked_on_public_notebook": [
+   "#56 LMM開発室のシルバーウィーク 0.961"
+  ],
+  "unknown (heavy LB iteration; claimed a generic plugin)": [
+   "#57 TWEAK 0.961"
+  ],
+  "public_chain+learned_endpoint_repair_and_assignment": [
+   "#65 Bio-Pirates 0.96"
+  ]
+ },
+ "lb_dynamics": {
+  "x138_era_jumps": "11 of 53 band teams were seen at <= 0.954 (x138 copy level) in round notes of 25-26 Sep before reaching 0.960-0.966: Takahiro Katsumata 0.953->0.963->0.966, Syed Asad Ali 0.953->0.965 (18 subs), Biomed Foresight 0.954->0.964, cheng ren01 0.952->0.962, Jeff Horon 0.948->0.961->0.963, RicardoLopez 0.948->0.961, Abnormal Guys 0.947->0.961 (private kernel named x138-s3forks), Brothers 0.953->0.957->0.960, kusui26 0.953->0.957->0.960 (11 subs), mmtyeu 0.951->0.960, Bio-Pirates 0.950->0.960.",
+  "interpretation": "x138 (public 21 Sep) is the common base for a large part of the band; the extra +0.007..+0.013 came within 1-3 days and few subs for several teams (kusui26 11, Syed 18-23, Quantizr 11, Ascent 14, Jivansh 14). That fits bringing an existing own component (retrained detector/secondary, own division or placement model) onto x138 better than single-knob LB tuning (Justin CH123's 10 knob changes all lost; our own knob probes gave about +0.001). Only one team's method is documented (Abnormal Guys: x138 + ends/forks)."
+ },
+ "not_usable_summary": "No public inference notebook above 0.953 from any band team; no public weights from any band team except Corwin (secw, forge) and the LMM team (coord-inject)."
+}
