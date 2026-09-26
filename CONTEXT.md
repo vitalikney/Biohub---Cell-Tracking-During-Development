@@ -2079,6 +2079,7 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   L(twin)_lo = 0.85 h. FINALS PAIR TO TICK NOW (provisional-tick rule, reversible until the deadline): **#37 (56563521,
   'probe 37: exp58') + #38 (56563534, 'probe 38: exp58n')**. Never tick #35, P36, #34. The clean-proof one-shot job was
   stopped (moot). 26 Sep: 3 slots left, no rider exists -> slots stay empty (R8 cutoff 27 Sep 12:00 UTC).
+- 2026-09-26 08:21 UTC: user chose FULL research rounds every ~2.5 h until the R8 cutoff (27 Sep 12:00 UTC) (option "b"); round prompt updated with the scored finals #37 + #38.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
