@@ -1,0 +1,7 @@
+# v_browser r7-mass-jump-no-public-source notes
+- 2026-09-26T08:32:31Z start. No prior json. Finding already logged in CONTEXT.md 08:27 UTC wave check (lines ~2084-2095, commit 4d0c477): same conclusion 'private or Discord x138 variants / own work', E10 not met, plan unchanged.
+- 26 Sep ~08:50Z `kaggle kernels list --competition biohub-cell-tracking-during-development --sort-by dateRun`: newest run still raunakdey07/biohub-harmonic-fusion-v3 (25 Sep 09:09Z, 132 votes); amanatar/optimized-biohub-max-score last run 25 Sep 01:59Z, 53 votes (was 15; CONTEXT 08:27 entry). No new public heir -> E10 not met (confirms scan).
+- Timing confounder: the movers' subs fall 23:43-01:53Z = right after the 00:00Z daily quota reset (our own #37/#38 were sent 00:02Z too); with ~7 h hidden-rerun latency they all land 05:46-08:22Z. A burst in this window is expected every day and is not evidence of a new private source appearing overnight.
+- 0.946-0.952 -> 0.954 moves need no private variant: x138 is public (0.953, 270 copies) and +0.001 is within reach of small own tweaks (we got it with the insertion). Only big jumps (taiseiu 0.953->0.962 etc.) are unexplained, and those are team work we cannot copy.
+- amanatar notebook (public, votes 15->53 in the same window) is a plausible public contributor, so "no public source" is overclaimed; it is already rejected under R7 (CONTEXT 08:27 entry).
+- Verdict: refuted (no action possible under R1-R10, duplicate of CONTEXT 08:27 entry, gain 0).

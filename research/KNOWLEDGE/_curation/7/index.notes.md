@@ -1,0 +1,5 @@
+- 2026-09-26T08:59:07Z start: no _curation/7/index.json -> fresh run; read INDEX (c6), CHANGES tail, curator notes 7
+- 2026-09-26T09:00:07Z new since curators: commits 539ea8b+42d1a55 (08:58Z) OVERLAP-CONSENSUS candidate line + PAUSED pending curator (CONTEXT l.2110-2129); I-208 still 'refuted by R9' in IDEAS l.391 -> flag. poll.log last header 08:54:28Z
+- 2026-09-26T09:01:19Z INDEX.md written (72 lines, 10 alerts; overlap line added as alert 2). Next: CHANGES §7
+- 2026-09-26T09:01:45Z CHANGES §7 appended. Next: index.json
+- 2026-09-26T09:02:34Z index.json written, valid. DONE

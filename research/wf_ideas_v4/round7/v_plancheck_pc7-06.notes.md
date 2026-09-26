@@ -1,0 +1,8 @@
+# v_plancheck PC7-06 notes (2026-09-26T08:32:14Z)
+- 08:32Z: no prior v_plancheck_pc7-06.json. poll.log (4104 lines) headers 08:14:19Z and 08:24:20Z: 56563521 (#37) COMPLETE 0.954, 56563534 (#38) COMPLETE 0.953. tasklist: python.exe PID 20052 alive (poller, 600 s loop, experiments/lb_poll/lb_poll.py).
+- ledger.md 08:24:23Z: A5-L(K2) CLEAR (L<=7.54 h); the K2-only 'Keep the poller alive until' line no longer prints (tools/runtime_ledger.py l.297-298 prints it only while K2 is PENDING before 08:32:12Z); A6/D4 texts are state-dependent (l.289, l.321-325) and absent; only 'A5-F Forecast F not supplied' INFO remains (l.331).
+- CONTEXT.md l.2064-2081 (07:35Z read): row 3 strict, R5(a) ADMIT both, no new submission; l.2082 08:21Z user chose option (b) full rounds; l.2083+ 08:27Z wave check, E10 not met. (c) verified.
+- W6 (CONTEXT v4, 06:31Z): stop condition = every >=26 Sep submission terminal -> met. But a fixed 'until 29 Sep 12:00' is weaker than W6 for any later submission (needs submit + 7.5/9.5/10.5 h and the 29 Sep 20:00 tick). Better: keep until 29 Sep 20:00 UTC.
+- W59 value: cosmetic now; a generic keep-until line keyed on safetail families would NOT cover an E10 port (x138 heir -> family 'unknown' in the ledger unless mapped), so the manual W6 freshness check (< 15 min) is the real guard. W59 optional; do it only with pytest tests/test_runtime_ledger.py; ledger runs as a fresh fail-soft subprocess, no poller restart.
+- Commit rule: memory feedback-git-no-coauthor -> commit as the user without Co-Authored-By (consistent with finding).
+- Verdict: not refuted (facts correct), 0 LB value, two amendments.

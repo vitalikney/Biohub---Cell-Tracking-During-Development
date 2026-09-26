@@ -1,0 +1,5 @@
+- 2026-09-26T08:46:59Z start: no 7/watch.json; reading WATCHLIST.md + curation/6
+- 2026-09-26T08:48:11Z since curation 6: v4 at CONTEXT l.2058-2069 (64f0551 06:31Z), score read l.2070-2082 (b4144e9), user option b l.2083 (7107b6d), wave check l.2084-2095 (4d0c477). round7 report.json 08:45:40Z untracked; R7-A1..A8 open. API SELECTED 0 at 08:37Z.
+- 2026-09-26T08:49:17Z checks: PID 20052 alive, last poll 08:44:25Z; tick API 0 at 08:37:15Z (round7 new_facts 4); greps I-151/hysteresis/NEXT_RESEARCH/out_valid/efpost/'E10 PORT RULE'/'FINALS TICKED' in CONTEXT = 0; RESULTS #37/#38 filled l.70-71, exp60 = 0; MEMORY.md l.8 stale (mtime 02:13Z), approval file updated 07:36Z; friend A card unchanged since fea74ea; ext_corwin/ext_y3uanm untracked; round prompt l.35-36 '~4 h headroom' stale. Contradiction: chat plan ends E10 at 27 Sep 12:00 vs C10/R7 P1 29 Sep 00:00. Writing WATCHLIST.
+- 2026-09-26T08:51:10Z WATCHLIST.md written (curation 7), line refs verified (W6 l.2064, tick l.2079-2080, interp l.2095)
+- 2026-09-26T08:52:19Z watch.json written and validated; done

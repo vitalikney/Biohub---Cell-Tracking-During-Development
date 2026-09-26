@@ -1,0 +1,10 @@
+# v_recheck R7-RC-A notes
+- 2026-09-26: started skeptic check of R7-RC-A (gap LAP g1-3 + sandwich on x138)
+- 2026-09-26 ~11:40 local: no prior answer file existed. Read scan_recheck.json (finding A), scratchpad r7/r7_gaps.py, r7_gaps_out.json, r7_gaps.log.
+- Recount from r7_gaps_out.json section A: <20 um g1 TP1/FP137, g2 TP2/FP149, g3 TP2/FP172 (all match finding). <10 um: TP 2 / FP 63 (g1 1/9, g2 1/25, g3 0/29) match. Unevaluable <10 um = 457+1354+1843 = 3,654 (finding says ~3.9k: small overstatement, direction irrelevant). Mutual-NN <10 um FP 9/24/27 = 60 vs 2 TP: same picture.
+- All TP in 6bba (g1_6bba, g2_6bba, g3_6bba) confirmed. Sandwich holes 6+87=93, raw_miss 5+76=81 confirmed.
+- Script check: 7 um per-frame Hungarian = official max_distance 7.0 (tools/official/scripts/evaluate.py:64). TP requires free GT path + interpolation within 7 um (strict but correct for linear-interp bridge). FP proxy = matched end with GT successor or matched start with GT predecessor (approximation of the both-endpoints rule; interp nodes may or may not match). Pairs counted non-exclusively (not a LAP assignment) -> FP inflated, but mutual-NN arm bounds it; TP ceiling (5 gaps, ~12 edges vs ~40k GT edges, <= ~+0.0003) is what closes it, independent of the FP definition.
+- Caveats checked: exp60 trainlab is in-sample for the detector/edge net (CONTEXT l.1437-1444) -> residual gap rate on hidden embryos may be higher, but LB history already says gap widening/2-frame gaps do not help (gap radius 6.5 um LB -0.001; memory: 2-frame gaps no gain), and x138 gap/gap2 stages already run on test.
+- Side fact: x138 synthetic nodes match GT rarely (gap 58/5647, gap2 29/2968, readmitted 73/13284) -> more interpolation mostly adds node count; not actionable (finals ticked, R8 cutoff 27 Sep 12:00 UTC, would be a new LB-unanchored removal rule).
+- Feasibility: no build proposed -> nothing to gate; any revival would need a new build + dummy + probe before R8, not justified at ceiling <= +0.0003 (below 0.005 noise floor).
+- Verdict: NOT refuted (closure stands).

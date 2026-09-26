@@ -1,0 +1,53 @@
+{
+ "summary": "Round 7 hypotheses (08:25-08:55Z): no new mechanism is worth building before R8. Nothing triggers E10: no public notebook newer than 25 Sep 09:09Z or above 0.953, no successor signature on the LB (0.953->0.956 x2, ->0.955 x3 since 05:48Z), and P(trigger) is now ~5-10%. The focus premise is false: forkmid failed on three counts, not only power. ORIGINAL T9 needs a 44b6 FP, which a 6bba extension cannot supply. L3's lowrefine sensitivity flags 4 readmit-touching forks as adverse in the pooled 56 clips, whatever new clips are added. The only honest route is a fresh ext-only replication on a lowrefine lab build: P(pass) ~0.4, EV ~+2-4e-5 on private, cost 4-5 GPU-h + a builder change + a K3 slot. Do not run it. No other closure was power-only; leaf prune is closed by rule and was rechecked in round 4. Two cheap plan items: pre-register the E10 finals pair as {successor copy, K2} (needs the user's OK), and say in advance that losing public silver (margin 13 ranks, ~8 ranks/h drift) triggers nothing.",
+ "findings": [
+  {
+   "id": "r7h-1",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "E10 watch at 08:23Z: no x138 successor >= 0.956 is public. The newest public competition notebook ran 25 Sep 09:09Z (raunakdey07 harmonic-fusion-v3, already pulled as experiments/ext_biohub-harmonic-fusion-v3). No public notebook scores above 0.953. Nothing new since round 6 except an empty dataset, kabirk22/biohub3 (0 B, 06:03Z). The leaderboard shows no successor signature either. Since 05:48Z only 3 teams moved 0.953->0.955 and 2 moved 0.953->0.956; a newly published notebook would show a mass jump of x138 copies to one identical score. 20 more teams went 0.947->0.953 (x138 copies). Public position: #183/3,923 at 0.954, 12th of 87 in the 0.954 block (ranks 172-258). The 0.955 block is ranks 126-171; the 0.953 block is 259-583 (325 teams).",
+   "evidence": "kaggle kernels list --competition biohub-cell-tracking-during-development --sort-by dateRun / scoreDescending (08:25Z); kaggle datasets list -s biohub --sort-by updated; LB csv 2026-09-26T08_23_28 vs 05_48_25 in the session scratchpad lb/; notes research/wf_ideas_v4/round7/scan_hypotheses.notes.md",
+   "action": "No port and no build. Keep the CLI watch in every round and do not use the browser. Proposed trigger for the E10 search: >= 5 teams jump from <= 0.953 to one identical score >= 0.956 within a single round window, OR a public kernel appears with lastRunTime inside the window and a title/score claim >= 0.956. Either one starts the existing E10 procedure (pull, diff vs experiments/ext_x138, runtime check, dummy, user's OK). P(trigger by 27 Sep 12:00Z) is now ~5-10%, down from 15-20%: no public successor has appeared in 23 h."
+  },
+  {
+   "id": "r7h-2",
+   "kind": "plan-issue",
+   "urgency": "today",
+   "what": "The premise 'forkmid failed ONLY on power' is false, so the 6bba extension cannot rescue it under any frozen gate. (a) ORIGINAL T9 (in force without the L3 OK) requires >= 1 removed FP on 44b6. 44b6 has 12 removed forks and 0 FP, and a 6bba extension cannot supply 44b6 FP. (b) ADDENDUM L3 has a lowrefine-sensitivity half that fails structurally on the pooled 56 clips. Four metric-ignored forks touch readmitted nodes: two are removed (6bba_786893ac mid 4.68 um, 6bba_f8ffd5e7 4.83 um) and two lie within 0.7 um of 4.5 (6bba_969618f6 4.29, 6bba_cdcfe533 4.21). Counted as adverse, they give removed_tp = 4 whatever new clips are added. The only honest route is a fresh replication: a gate frozen before the run, scored on the 78 clean 6bba clips ONLY (no pooling with exp60), run on the K2 stack with lowrefine ON so the sensitivity is measured instead of proxied. Pass would need removed TP 0, evaluable FP >= 3, div_J(arm) >= control, adj_edge delta >= -0.0002 and nodes unchanged. Power arithmetic: GT density of the other 6bba clips is ~1.7x the parents of the exp60 6bba bed (72,083 vs 36,724 one-out GT parents). The bed would give ~56 removals x 1/28 evaluable-FP rate = mean ~2.0; a negative binomial with the 1-event rate uncertainty gives P(>= 3) ~0.46, and P(0 TP removed) ~0.9, so P(pass) ~0.4. Value if it passes: lab pooled +0.00013 (div_J +0.0010 x 0.1; 39 of 40 removals are unevaluable), i.e. ~+0.0001 on private x P(transfer) ~0.5. EV ~ +2e-5 to +4e-5, about 0.2-0.35 ranks at 87 teams per 0.001. Costs: there is no lab kernel with lowrefine (builder change plus tests, ~2-3 agent-h); 2 shards take ~4-5 GPU-h (quota is not binding after the 26 Sep 00:00Z reset, ~30 h); K3 = K2 + forkmid then needs a build, a dummy, a slot and a 7.5 h hidden run. R3 would then accept K3 as F1 even at public -0.001, so F1 could display 0.953. It is also a second test of an already-failed mechanism (forking paths).",
+   "evidence": "experiments/exp60_trainlab/results.md l.82-150 (forkmid_v2 and forkmid_v2_lowrefine_sensitivity JSON); experiments/exp60_trainlab/results.json clips[*].forkmid_audit (676 rows: evaluable TP 16 / FP 25; removed 40 = FP 1 + ignored 39; readmit-touching ignored rows listed above); tools/trainlab.py l.648-680 (lowdet_adverse relabels readmit-touching removed or near-4.5 rows as TP); train geff counts: exp60 6bba 39 clips 38,205 nodes / 88 divs, other 89 6bba clips 74,916 nodes / 37 divs; research/wf_ideas_v4/v_mine-old_m2-exp60-6bba-extension-for-deepcenter-ar_value.json (78 clean clips, 61 with 0 divisions, 17 divisions)",
+   "action": "Do NOT run the extension, and do not rewrite the L3 gate. Record in CONTEXT/KNOWLEDGE that forkmid is closed for the finals on three counts: power, the 44b6-FP clause and the lowrefine-sensitivity clause. S4/S12 stay empty for forkmid. If the user still wants the replication, it must be pre-registered in CONTEXT before any push (the gate text above, ext-only, K2+lowrefine lab build) by ~10:00Z, so that K3 can be submitted by ~16:00Z and scored before R8."
+  },
+  {
+   "id": "r7h-3",
+   "kind": "recheck-old",
+   "urgency": "info",
+   "what": "Audit of the lab-to-LB transfer record: no closed idea was closed ONLY for power. Transferred: the DaughterNet insertion, twice (+0.001: #35 vs #34, K2 vs twin). Did not transfer: the edge filter (+0.016 lab, 0 LB in probes 29/30), relink-off and float output; efpost belongs to the same 'trust in-sample net' class. Every other closure fails on sign or on a harm clause, not on sample size: K3b DeepCenter t*=0.30 (confirmation, plateau, 44b6 and precision all fail); forkblob (vetoed TP 1 : FP 6, below the 7.7 break-even; div_J 0.1290->0.1271); ANTIPAR (-0.00034); clip-boundary b4 (SELECTION 0.00000; 7 clips improve, 47 get worse); stitch (precision 0.20 vs 0.48 break-even); linefit w0.7 (-0.0031 on 44b6); tempfuse K4 (no honest bed, round 2). Leaf prune on x138 is the one closure where lab and LB agree in sign: lp30 +0.00083 with 51/56 clips improving, and P36's unrounded public is above #35's. It was closed by RULE (P36 info-only, f2, R4's +0.002 entry) and rechecked in round 4. The lab base had no lowrefine, and 95% of the pruned nodes are readmitted nodes that K2's lowrefine improves. No new evidence.",
+   "evidence": "CONTEXT.md entries 25 Sep 20:05Z (forkblob), 20:35Z (T9 read), 20:55Z (round 2: ANTIPAR/DNVETO), 23:12Z (round 3: b4), 26 Sep 01:20Z (round 4: leaf prune lp30, P36); research/wf_ideas_v4/round6/REPORT.md section 2 (stitch, linefit, efpost); memory project-edge-filter-finding",
+   "action": "None. Tell the curator that the 'closed only for power' set is empty (forkmid included, see r7h-2), so no power-rescue lab should be scheduled before R8."
+  },
+  {
+   "id": "r7h-4",
+   "kind": "new-hypothesis",
+   "urgency": "today",
+   "what": "E10 finals gap: the rules do not say which file an E10 port displaces. By R4 a verbatim successor at public >= 0.956 has delta >= +0.002 vs K2, so it becomes F1. The F2 choice is unwritten: K2 or the twin. Proposal (pre-register now, before any trigger): if E10 fires, the pair is {successor copy, K2 #37} and the twin drops out. Reasons: the twin's hedge (insertion harm on private only) is worth ~+0.0002 of option value, while K2 hedges the larger risk that the successor over-fits the public embryo (29% of the test). K2's insertion transferred twice. The copy is a byte copy of a public notebook, so on private it ties with every copier (earlier submission wins); that matters only for rank inside its tie block, not for the score. A 'successor + insertion' non-copy build is optional only if the trigger fires before ~27 Sep 06:00Z. It must reuse the K2 insertion knobs and gates (safetail C01, FF/FD-style dummies); no new knobs.",
+   "evidence": "CONTEXT.md l.1611/1616 (S8/S14 successor slots), l.1650 (R4 lists successors), AMENDMENT f2 (25 Sep 18:20Z; twin as F2), research/wf_ideas_v3/FINAL_REPORT.md l.117 (E10: P 0.15-0.2, ~+0.002 on trigger, lead time 8-11 h)",
+   "action": "Main session: add one E10-pair line to CONTEXT (pre-registered, no score involved). The user's OK is needed because it changes the f2 pair only in the E10 branch. Cost 0; nothing is built unless the trigger fires."
+  },
+  {
+   "id": "r7h-5",
+   "kind": "plan-issue",
+   "urgency": "today",
+   "what": "Public rank drift will soon cross the silver line, and nothing should react to it. At 05:48Z we were #162; at 08:23Z we are #183 (21 teams passed in 2.6 h, ~8/h). Silver is 5% of 3,923 = rank ~196, so the public margin is 13 ranks and will likely be gone within ~2 h. It is pure public-LB movement: the private (71%, other embryos) decides medals. Our scores did not change, and R7 already says rank is never a decision input.",
+   "evidence": "LB csv 05_48_25 vs 08_23_28 (scratchpad lb/); research/wf_ideas_v4/round6/REPORT.md section 2 (margin 34 at 05:46Z)",
+   "action": "When reporting to the user, state in advance that losing public silver is expected and triggers no submission, rider or finals change. Only E10 (r7h-1) or an error class can open a slot."
+  },
+  {
+   "id": "r7h-6",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "GPU quota is not a constraint. The weekly reset was expected at 26 Sep 00:00Z (~30 GPU-h). Nothing has been pushed since the twin dummy (25 Sep 20:55Z), and hidden reruns of #37/#38 do not count. The Kaggle API cannot read the quota, so it can only be confirmed on the Settings page. The quota therefore gives no reason to run a lab, and no pre-registered lab candidate exists (r7h-2, r7h-3).",
+   "evidence": "CONTEXT.md l.1252 and l.1545 (reset 26 Sep 00:00Z), l.1972 (hidden reruns do not consume quota), 25 Sep 20:55Z entry (last dummy push)",
+   "action": "None. Keep the quota for E10 (a successor port needs ~0.5-1 GPU-h of dummies)."
+  }
+ ]
+}

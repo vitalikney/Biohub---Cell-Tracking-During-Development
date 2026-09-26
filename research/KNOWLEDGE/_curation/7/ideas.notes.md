@@ -1,0 +1,9 @@
+# ideas curator 7 - notes
+
+- 2026-09-26 08:47 UTC start: no _curation/7/ideas.json -> fresh run. Previous = curation 6 (~06:27 UTC, 255 ideas, HEAD 2f6ec9d).
+- 08:50 UTC: delta = commits 64f0551 (v4 06:31Z, round6 REPORT.md), b4144e9 (score read 07:35Z: #37 K2 0.954 clean L (7.36,7.54], #38 twin 0.953; row 3 -> finals #37+#38), 7107b6d (08:21Z user chose full rounds 'b'), 4d0c477 (08:27Z 0.955/0.956 wave check, E10 not met, sub-cache not used); CONTEXT l.2058-2095; RESULTS l.70-71; untracked round7/ (report.json 08:45Z local 11:45).
+- 08:58 UTC: read round7 report.json (R7-A1..A8, new_facts 1-8, plan_issues, rejected 1-10, E10 PORT RULE P1-P8), scans r7h-1..6, PC7-01..06, R7-RC-A/B/C, NF node-miss; poll.log last header 08:44:25Z; ledger 08:44:28Z A5-L(K2) CLEAR. HEAD 4d0c477 (CONTEXT l.2058-2069 v4, l.2070-2081 score read, l.2082 option b, l.2083-2095 wave check; Literature l.2096). No R7 action is in CONTEXT yet.
+- plan: lb-tested I-001 (P37), I-036 lowrefine (P37/P38, d1=d2=0), I-090 twin (P38), I-062 +P37; applied/moot: I-217/I-224/I-236/I-244/I-245/I-246/I-250/I-226/I-228/I-003/I-010/I-248/I-249; moot->refuted: I-011, I-219, I-225, I-235, I-237, I-247, I-091; rechecks: I-186, I-141, I-042, I-128, I-038, I-144, I-156, I-007/8/9, I-071, I-075; new I-256.. (E10 port rule, RESUME POINT, API tick check, round focus text, forkmid 6bba replication, axial localisation, E10 dry run, wave-source hunt, leaked CSV caches, rounds cadence b).
+- 08:53 UTC: patch7.py -> ideas.json 265 ideas, 61 change records (new I-256..I-265). Counts c6->c7: refuted 143->153, lb 38->41, in-plan 32->28, deferred 21->22, lab 20, open 1. Orphans: strict I-233; at-risk I-229, I-232, I-243, I-256, I-257, I-259, I-262. Next: gen_md7.py -> IDEAS.md.
+- 08:54 UTC: IDEAS.md 432 lines / 265 rows, 62 c7 markers; JSON validated (unique IDs). Writing _curation/7/ideas.json.
+- 08:55 UTC: _curation/7/ideas.json written (9 alerts). DONE.

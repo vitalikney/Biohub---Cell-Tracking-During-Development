@@ -1,0 +1,7 @@
+# round7 report notes
+
+- 2026-09-26T08:36:42Z start: no report.json existed; building report from computed findings + skeptic verdicts.
+- 2026-09-26T08:37:29Z SELECTED group via API = 0 (read-only, 08:37:15Z); ALL page = 20 rows. Poller last header 08:34:23Z (alive). HEAD 4d0c477; poll.log/ledger.md modified uncommitted.
+- 2026-09-26T08:39:47Z CLI: userRank 185 / teamCount 3,920 (competitions list, 08:38:41Z); kernels dateRun top unchanged (harmonic-fusion-v3 25 Sep 09:09Z). Verified: build_probe_kernel.py BASES exp39/x138 (l.99), safetail exits unless --base x138 (l.2026-2027); runtime_ledger FAMILY_RE l.70-73 has no heir token, --family override exists (l.436). C10 text s_merge.json l.418 (poll until 29 Sep 07:00; >=10-team spike; own score >=0.956; 1-2 mechanisms; adopt >= max(#34,#35)+0.002; rider path after verbatim scored by 28 Sep 22:00). WATCHLIST T03 says S8 successor remains after R8.
+- 2026-09-26T08:41:54Z verdicts: 8 skeptics (5 confirmed w/ fixes: PC7-06, r7h-4, RC-A, RC-B, RC-C; 3 refuted: r7-mass-jump, PC7-03 part 1, r7h-3). Unreviewed plan items PC7-01/02/04/05 checked against sources (s_merge C10, builder, ledger, CONTEXT l.2006-2025 RESUME POINT 00:02Z). RESULTS.md rows #37/#38 already filled (W35 done). research-round.js hypotheses text still says "~4 h headroom" (stale).
+- 2026-09-26T08:45:40Z wrote report.json (8 actionable R7-A1..A8; texts e10_port_rule_text, resume_point_text, records_text, user_message_ru, report_md_ru). REPORT.md write refused by harness (subagent report-file rule) -> main session saves report_md_ru (R7-A8).

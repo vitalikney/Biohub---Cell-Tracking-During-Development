@@ -1,0 +1,74 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/ideas.json",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/IDEAS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/7/ideas.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/7/ideas.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "what": "Finals #37 + #38 are decided but NOT ticked (0/2). Without a tick Kaggle auto-selects from the 0.954 tie (#37, #35, P36) and may pick P36 + #35, which the finals rule forbids (I-227).",
+   "evidence": "research/wf_ideas_v4/round7/report.json R7-A1, new_facts 4 (API group=SELECTED = 0 at 08:32Z and 08:37:15Z; page 0/2 at ~08:34Z); CONTEXT.md l.2078-2080 (pair to tick now); research/wf_ideas_v4/round7/scan_plancheck.json PC7-03",
+   "suggested_action": "User ticks #37 56563521 + #38 56563534 now; verify with the API SELECTED check + one page read (I-258); log 'FINALS TICKED 2/2' in CONTEXT.",
+   "urgency": "now"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "E10 PORT RULE (P1-P8) is only in the round-7 report: no admission rule or finals pair exists for a port of a public x138 successor, and the user's conditional yes has to come before any trigger to count as pre-registered (I-256).",
+   "evidence": "research/wf_ideas_v4/round7/report.json R7-A2, e10_port_rule_text, plan_issues 3; CONTEXT.md ends at l.2095 with no such entry (HEAD 4d0c477)",
+   "suggested_action": "Paste e10_port_rule_text as a dated CONTEXT entry today, before ~19:00Z; ask for one conditional yes; log the reply time with date -u.",
+   "urgency": "today"
+  },
+  {
+   "kind": "contradiction",
+   "what": "The plan table sent to the user (~08:2xZ) ends the E10 watch at 27 Sep 12:00. The pre-registration (C10, slots S8/S14) runs to 29 Sep, capped by R8 at the last port submit 29 Sep 02:00 UTC, so the last useful trigger is ~29 Sep 00:00. The user's option b (full rounds) also stops at 27 Sep 12:00 (I-026, I-265).",
+   "evidence": "research/wf_ideas_v4/round7/scan_plancheck.json PC7-01; research/wf_ideas_v3/s_merge.json C10; CONTEXT.md l.2082",
+   "suggested_action": "One-line correction to the user (R7-A7): full rounds to 27 Sep 12:00, then light CLI E10 checks every ~6 h to 29 Sep 00:00 UTC (PORT RULE P1).",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "The newest RESUME POINT is still the pre-score 00:02Z block (read K2/twin by the table, pending OKs for K1, K2'' and the 0.952 floor). The MEMORY.md index still points to 25 Sep 10:20. A compacted session could reopen moot questions (I-257).",
+   "evidence": "CONTEXT.md l.2006-2025; research/wf_ideas_v4/round7/scan_plancheck.json PC7-04; report.json R7-A3, resume_point_text",
+   "suggested_action": "With the next CONTEXT write, add the post-score RESUME POINT (resume_point_text) and update the MEMORY.md index lines.",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "The closures from rounds 5-7 are only in research files: gap LAP + sandwich, z-split, the headroom family, forkmid as the one power-limited closure, the node-miss FACT, the API tick FACT, plus the round-6 stitch/linefit/efpost items. round7/REPORT.md is not saved; round2/REPORT.md is still missing (I-232).",
+   "evidence": "research/wf_ideas_v4/round7/report.json R7-A5, R7-A8, records_text; research/wf_ideas_v4/round6/report.json R6-A6; research/wf_ideas_v4/round7/report.notes.md 08:45:40Z",
+   "suggested_action": "Paste records_text (round 7) and the round-6 R6-A6 lines into CONTEXT by 26 Sep 12:00Z; save round7/REPORT.md from report_md_ru; commit as the user.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "The research-round prompt still invites runtime-headroom ideas ('~4 h headroom') and has no R8 line. Rounds after ~26 Sep 22:00Z cannot produce a final (I-259).",
+   "evidence": "research/wf_ideas_v4/round7/report.json R7-A4, plan_issues 5; research/wf_ideas_v4/round7/report.notes.md 08:41:54Z; experiments/workflows/biohub-research-round.js",
+   "suggested_action": "Before round 8 (~11:00Z): add the R8 hard line and the round-7 closures to the do-not-repropose list; remove the headroom text.",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "29 Sep tick checks: the durable 12:00 and 18:00 UTC reminders (W50) are still unconfirmed. The API SELECTED re-checks are needed on 28 Sep evening, 29 Sep 12:00 and 18:00; the hard end for ticks is 29 Sep 20:00 UTC (I-229, I-258).",
+   "evidence": "research/wf_ideas_v4/round7/report.json R7-A1, R7-A7; CONTEXT.md l.2038",
+   "suggested_action": "Ask the user to set calendar reminders (R7-A7 point 5); schedule the three API checks.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "risk",
+   "what": "The v4 W6 poller stop condition is met (#37/#38 COMPLETE), but an E10 port on 28-29 Sep needs poller coverage. Stopping the poller now would leave a port without a runtime proof (I-010, I-248).",
+   "evidence": "research/wf_ideas_v4/round7/scan_plancheck.json PC7-06; report.json R7-A6; experiments/lb_poll/ledger.md 08:44:28Z",
+   "suggested_action": "Keep lb_poll.py (PID 20052) running until 29 Sep 20:00 UTC; before any submit, check that the last poll.log header is < 15 min old.",
+   "urgency": "info"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "I-233 (the poller logs error_description) is still the only strict orphan. Its value is now limited to a possible E10 port.",
+   "evidence": "research/KNOWLEDGE/ideas.json I-233; research/wf_ideas_v4/round7/report.json (not mentioned)",
+   "suggested_action": "Close it with one line in the round-7 records (moot unless a port is submitted), or fold it into W59 (I-243).",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 7 (HEAD 4d0c477 + untracked round7/). The ledger now has 265 ideas (+10: I-256..I-265) and 61 change records in meta.curations[n=7]. Scored: #37 K2 0.954 (clean, L <= 7.54 h) and #38 twin 0.953, READ TABLE row 3, finals #37 + #38 (CONTEXT.md l.2070-2081). Moved to lb-tested: I-001 safetail/K2, I-090 twin, I-036 lowrefine (neutral, d1 = d2 = 0); I-062 insertion gets its second +0.001 transfer. CLARIFICATION v4 was committed pre-score (06:31:36Z vs first result 06:54:06Z), so I-244/I-245/I-248 are no longer at risk. Moot -> refuted: K1, K2 resubmit, twin floor, K2'', B/B', V3b, exp52 fallback. Round 7 adds the E10 PORT RULE (at risk), a post-score RESUME POINT (at risk), the API tick check, the round-focus/R8 text (at risk), an E10 dry run (at risk) and the option-b cadence. Refuted: the forkmid 6bba replication, hunting the wave's source, and the leaked CSV caches. Deferred: axial localisation. Closed by measurement on x138: gap LAP/sandwich and z-split; the headroom family is now closed on value, not runtime. Clusters are reordered: FINALS, BASE, RUN. Counts: lb 41, lab 20, refuted 153, deferred 22, in-plan 28, open 1. Top alert: the finals are 0/2 ticked (API SELECTED at 08:37Z). The user request 'давай б' (full rounds) matches the 08:21Z CONTEXT record (l.2082). Round 7 notes the E10 watch should outlast those rounds (to ~29 Sep 00:00 UTC)."
+}

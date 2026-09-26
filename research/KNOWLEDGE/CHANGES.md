@@ -353,3 +353,33 @@ Curator logs: `research/KNOWLEDGE/_curation/4/`.
 - Carried over: score read + provisional tick (now with cheat sheet, B'); poller stop rule (now also later 26 Sep submissions, C-45); round records into CONTEXT by 12:00 (now round 6 + l.22 + B5 l.196); durable 29 Sep reminders; admission table / ext_* / friend A card / memory residue; I-233 orphan.
 - New: CLARIFICATION v4 (W1-W8, B', F', V3b); late-OK rule vs T0; morning brief unsent; K2'' as likeliest decision; clean-proof window hygiene (T24); R5 blanket contradiction (C-44, folded into alert 1); edge-filter wording warning (C-46, folded into alert 8).
 - Curator disagreement settled here: finals reminders are [deadline/today] (ideas, facts) vs [before-finals] (watch); INDEX uses [before-finals] for the reminders themselves and asks for them today in the brief (alert 3). Round-6 REPORT.md: [today] (ideas) vs [info] (facts) vs [now] (watch); INDEX folds it into alert 1 ([now], same commit as v4).
+
+## 7 - 2026-09-26 ~09:05 UTC (curation 7; git HEAD 42d1a55 + untracked `research/wf_ideas_v4/round7/`)
+
+**Operations:** both finals scored. #37 K2 exp58 (56563521) = 0.954, clean, L in (7.36, 7.54] h; #38 twin exp58n (56563534) = 0.953, L in (6.69, 6.87] h; READ TABLE row 3 -> finals #37 + #38 (`CONTEXT.md` l.2070-2081; `experiments/RESULTS.md` l.70-71; `experiments/lb_poll/poll.log` headers 06:54:06Z twin, 07:34:12Z K2). CLARIFICATION v4 was committed pre-score (64f0551 06:31:36Z, `CONTEXT.md` l.2058-2069); no OK was given, strict text only. Clean-proof job stopped (moot). Commits since curation 6: 64f0551, b4144e9 (score read), 7107b6d (option b, l.2082), 4d0c477 (wave check, l.2083-2095), 4790f1f (rules check, l.2096-2109), 539ea8b + 42d1a55 (overlap-consensus line and its PAUSE, l.2110-2129; after the three curators' reads). Finals NOT ticked: API SELECTED = 0 at 08:37:15Z (`research/wf_ideas_v4/round7/report.json` new_facts 4). Rank #183 at 08:22Z, #185 at 08:38Z (`CONTEXT.md` l.2086; round7 `report.json` new_facts 1). Round 7 ran 08:45Z (untracked, no REPORT.md).
+
+**Ideas** (`IDEAS.md` l.11; `ideas.json` meta.curations[n=7], 61 records; `_curation/7/ideas.json`):
+- lb-tested: I-001 safetail/K2 (P37), I-090 twin (P38), I-036 lowrefine (d1 = d2 = 0); I-062 insertion gains its 2nd (P37) LB transfer.
+- Applied / no longer at risk: I-244 v4, I-245, I-246, I-248, I-217, I-224, I-236, I-250, I-226, I-228, I-003, I-010; I-249 superseded.
+- Moot -> refuted: I-011 K1, I-225, I-219 twin floor, I-235 K2'', I-237 B/B', I-247 V3b, I-091 exp52 fallback.
+- New (I-256..I-265): in-plan I-256 E10 PORT RULE, I-257 RESUME POINT, I-258 API tick check, I-259 round focus text, I-262 E10 dry run, I-265 cadence (option b); refuted I-260 forkmid 6bba replication, I-263 wave-source hunt, I-264 leaked CSVs; deferred I-261 axial localisation.
+- Rechecks on x138: I-186/I-141 gap LAP + sandwich closed (TP 5 / FP 458), I-042 z-split closed, I-038/I-144/I-156 closed on value/LB/R8, I-071 forkmid the one power-limited closure.
+- Counts c6 -> c7: 255 -> 265; lb-tested 38 -> 41, refuted 143 -> 153, deferred 21 -> 22, in-plan 32 -> 28; lab-tested 20, open-untested 1 unchanged. Strict orphan I-233; at risk I-229, I-232, I-243, I-256, I-257, I-259, I-262.
+- Not yet in the ledger (INDEX flag): I-208 overlap consensus still "refuted by R9" (`IDEAS.md` l.391) although `CONTEXT.md` l.2110-2129 makes it a paused candidate line (K6).
+
+**Facts and decisions** (`FACTS.md`, `DECISIONS.md`, lines marked [c7]; `_curation/7/facts.json`):
+- New facts: F-LB-10 (E10 definition/horizon), F-RUN-21 (headroom moot), F-RUL-13 (API reads ticks), F-RUL-14 (rules check: leaked CSVs not allowed; sweep and test-structure use not prohibited -> R7/R9 team policy), F-MOD-21 (verbatim port cannot carry C01), F-TRN-28 (gap LAP closed), F-TRN-29 (node-miss anatomy, z-offset excess).
+- ~30 rows updated (ranks, 0.954 block, insertion 3rd LB transfer, insertion cost <= 0.85 h, 0/2 ticked, K1/K2''/V3b moot); F-RUL-08 relabelled team policy.
+- Contradictions resolved/moot: C-33, C-35, C-43, C-44, C-45, C-47; updated C-02, C-30, C-36, C-40, C-42; new C-48..C-57 (E10 horizon, P(trigger), poller horizon, insertion cost, API ticks, headroom reason, power-limited closures, port vs §f(iii), live RESUME POINT, R9 rule vs policy).
+- `DECISIONS.md`: P37/P38 results + row-3 decision; slot note (26 Sep slots empty); G23-G26; §2 DECIDED (0/2 ticked) with an E10-port row; §2b/§2e marked applied/in CONTEXT; new §2f proposed E10 PORT RULE P1-P8; §3 R3/R5 applied, R6 never triggered, R7/R9 team policy.
+
+**Watchlist** (`WATCHLIST.md`; `_curation/7/watch.json`):
+- Done: W47, W61, W64, W35; K2'' and runtime reminders cancelled; resolved insights I48-I50, I55, I05, I26.
+- New: W69-W75 (E10 rule, RESUME POINT, round prompt, records, poller horizon, user message, REPORT.md), I56-I63.
+- Still open: W03 friend A card, W05 ext_* untracked, W26 NEXT_RESEARCH, W50 reminders, W54 tick.
+
+**Alerts** (`INDEX.md` TOP ALERTS, 10 after dedup):
+- Resolved since curation 6: CLARIFICATION v4 not in CONTEXT; late-OK rule (no OK given); morning brief (superseded); clean-proof window; score read; K2'' decision (moot, K2 clean); poller K2-only stop text (superseded by the 29 Sep 20:00 horizon).
+- Carried over: finals tick (now the top alert, 0/2 by API); round records into CONTEXT by 12:00 (now rounds 5-7); durable 29 Sep reminders; poller uptime; friend A card / ext_* / I-233.
+- New: overlap-consensus line paused for this report (from CONTEXT after the curators; I-208 stale); plan-table correction (E10 to 29 Sep 00:00, P ~5-10%, rank #185); E10 PORT RULE + conditional yes; stale RESUME POINT / MEMORY.md; round prompt text; insertion cost C-51 (info).
+- Curator disagreement settled here: plan-table correction is [today] (ideas, facts) vs [now] (watch); INDEX uses [now], sent with the tick request. Round records are [today] (ideas) vs [before-finals] (facts) vs [now] (watch); INDEX uses [today, by 12:00]. Poller horizon [info] (ideas, watch) vs [info] forgotten (facts): kept [info].
