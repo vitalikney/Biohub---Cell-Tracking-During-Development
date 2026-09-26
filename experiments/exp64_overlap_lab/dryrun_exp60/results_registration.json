@@ -1,0 +1,23 @@
+{
+ "pairs": [],
+ "rejected": [],
+ "stats": {
+  "videos": 56,
+  "anchors": 543081,
+  "buckets_multi": 16644,
+  "buckets_skipped_large": 0,
+  "pair_votes": 0,
+  "candidate_pairs": 0,
+  "accepted": 0,
+  "accepted_cross_prefix": 0,
+  "cross_prefix_candidates": 0,
+  "rejected_frames": 0,
+  "rejected_spatial": 0,
+  "rejected_voxels": 0,
+  "rejected_shape": 0,
+  "frames_read": 0,
+  "verify_s": 0.0,
+  "anchor_wall_s": 1.0
+ },
+ "source": "overlap_reg on 56 lab clips (C:\\Users\\vital\\Documents\\kAGGLE\\Biohub - Cell Tracking During Development\\biohub-cell-tracking-during-development\\train)"
+}
