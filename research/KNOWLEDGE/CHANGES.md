@@ -185,3 +185,116 @@ Curator logs: `research/KNOWLEDGE/_curation/3/`.
 - Curator disagreement settled here:
   - The `[:12]` slice is at `experiments/lb_poll/lb_poll.py` l.28 (verified at 1ca747b); `FACTS.md` F-RUN-14 and round 3 say l.27.
   - Poller urgency: the ideas and facts curators say "today", the watch curator says "now". INDEX uses "now", because the first quiet window is 23:15-23:55 tonight.
+
+## 4 - 2026-09-26 ~01:20 UTC (curation 4; git HEAD b2cb928 + untracked `research/wf_ideas_v4/round4/`)
+
+Previous curation: 3 (~23:15 UTC 25 Sep, 1ca747b). New inputs:
+- `CONTEXT.md` l.1967-2025: the 23:12 round-3 entry, the READ TABLE, and the 00:02 RESUME POINT.
+- Commits 1017c41 and b2cb928.
+- `experiments/lb_poll/ledger.md` (01:13:07Z).
+- `research/wf_ideas_v4/round4/report.json` + scan/v_*.json (01:15Z).
+
+Curator logs: `research/KNOWLEDGE/_curation/4/`.
+
+**State change in one line.** K2 (#37, ref 56563521) and the twin (#38, ref 56563534) were submitted at 00:02Z and are PENDING. P36 scored 0.954 and is info only. The READ TABLE is now in CONTEXT (1017c41, pushed 23:13:16Z). Round 4 found gaps in the table (CLARIFICATION v2), 0/2 finals ticked, and an unscheduled clean-proof poll. Sources: `CONTEXT.md` l.2006-2025; `experiments/RESULTS.md` l.69-71; `research/wf_ideas_v4/round4/report.json` R4-A1..A9.
+
+**Ideas** (`IDEAS.md` l.11-22; `ideas.json` meta.curations[n=4], 52 records changed):
+- New (11):
+  - I-224 CLARIFICATION v2, at risk.
+  - I-225 resubmit K2 on "Kaggle Error", needs an OK.
+  - I-226 extra clean-proof polls, at risk.
+  - I-227 provisional tick, at risk.
+  - I-228 combined OK request, at risk.
+  - I-229 29 Sep tick checklist, in-plan.
+  - I-232 save round REPORT.md files, at risk.
+  - I-233 poller error_description, open, strict orphan.
+  - Refuted: I-230 in-block rank criterion, I-231 lowrefine lab arm, I-234 thedivyanshpant re-uploads.
+- Status changes:
+  - I-136 P36: in-plan -> **lb-tested** 0.954.
+  - I-035 head-shift scale: at risk -> **refuted** (s_opt 0.75-1.0, round4 `scan_recheck.json` R4-RC-A).
+  - I-215 floatout on x138 -> **refuted/closed** (`CONTEXT.md` l.2021-2022).
+  - I-217 READ TABLE and I-223 poller `[:60]`: now in CONTEXT / APPLIED; no longer at risk.
+- Updated:
+  - I-001, I-090: submitted as #37 and #38.
+  - I-011, I-219.
+  - I-087, I-089, I-091.
+  - I-094: rank #155/3,919 at 00:47Z.
+  - I-135/I-201: exp60 replay lp30 +0.00083.
+  - I-043: stays closed.
+  - I-020, I-026, I-119: x138 renamed; y3uanm has no public weights.
+  - I-062.
+  - I-002 to I-004, I-008, I-010.
+- Counts, curation 3 -> 4:
+  - ideas 223 -> 234;
+  - lb-tested 37 -> 38, refuted 129 -> 134, in-plan 18 -> 22, open-untested 0 -> 1;
+  - lab-tested 20 and deferred 19 are unchanged.
+- At risk: {I-035, I-217, I-223} -> {I-224, I-226, I-227, I-228, I-232}. The strict orphan is I-233.
+
+**Facts and decisions** (`FACTS.md` and `DECISIONS.md`, lines marked [c4]; `_curation/4/facts.json`):
+- New facts:
+  - F-LB-09: the LB shows only our best entry, and P36's unrounded score is above #35's.
+  - F-RUN-16: refs, the 08:02:12Z clean mark, and ETAs.
+  - F-RUN-17: +210 s per failed poll attempt.
+  - F-RUL-12: 0/2 ticked, so auto-select would pick P36 and #35.
+  - F-MOD-16: K1 is ready; floatout is not ported.
+  - F-MOD-17: head-shift scale and lowrefine duplicates.
+  - F-TRN-19: leaf prune gives 0 on the LB and +0.0008 in the lab.
+  - F-TRN-20: insertion gain breakdown.
+- Updated: F-LB-01..08, F-RUN-03/12/14 (poller `[:60]` resolved), F-RUL-04/09/10, F-TRN-17.
+- Contradictions:
+  - Resolved: C-25 (f2 OK time), C-26 (stale RESUME POINT), C-27 (R3 reference), C-29 (workflow prompt).
+  - Moot: C-20.
+  - New:
+    - C-30: missing REPORT.md files.
+    - C-31: floatout status.
+    - C-32: READ TABLE gaps.
+    - C-33: incomplete pending-OK list.
+    - C-34: dense-half precision 1/3 vs 2/4.
+    - C-35: expected score times.
+- `DECISIONS.md`:
+  - §1: P36 scored; P37 and P38 submitted.
+  - §1b: G12-G15 (head-shift, duplicate collapse, leaf prune on x138, floatout).
+  - §2: 0/2 ticked.
+  - §2b: now in CONTEXT.
+  - New §2c: proposed CLARIFICATION v2.
+  - §3: R3-R9 and §f updated.
+
+**Watchlist** (`WATCHLIST.md`; `_curation/4/watch.json`):
+- Done: W06, W14, W16, W36, W37, W39, W40, W41 (a-c).
+- Cancelled or closed: W07 forkmid, W28 head-shift. W20/W21 are replaced by W47/W45.
+- New:
+  - W44-W52 (from R4-A1..A9);
+  - T13-T20;
+  - I31-I38 (auto-select default, best-entry-only LB row, error_description only via the API, insertion gain resting on 1 TP, the lp30 calibration point, the +210 s arithmetic, the x138 rename, the lowrefine and head-shift closures).
+- Still overdue: W02/W03 friend A card, W04 admission table, W05 the ext_* commit.
+
+**Alerts** (`INDEX.md` TOP ALERTS, 11 after dedup):
+- Resolved since curation 3:
+  - K2 + twin submit (#37/#38 at 00:02Z);
+  - READ TABLE not in CONTEXT (1017c41);
+  - stale 10:20 RESUME POINT (00:02 block l.2006);
+  - workflow prompt drift;
+  - poller window `[:60]`;
+  - runtime records and quota evidence into CONTEXT;
+  - P36 pending at the submit (it scored 23:42:50Z, before the submit);
+  - I-035 (closed by measurement).
+- Still open from curation 3:
+  - closures into CONTEXT (now rounds 2-4);
+  - untracked round folder and missing REPORT.md (now round 4, C-30);
+  - friend A card;
+  - admission table and ext_* folders;
+  - `TEAM.md` 0.97.
+- Morning OK list: carried over as the combined OK request (I-228).
+- New:
+  - CLARIFICATION v2;
+  - combined OK request;
+  - extra clean-proof polls;
+  - mechanical score read;
+  - 0/2 finals ticked, so a provisional tick is needed;
+  - keep the poller session alive to 08:32:12Z;
+  - floatout contradiction C-31;
+  - 29 Sep checklist and durable reminders;
+  - the thin lab evidence for the insertion (C-34).
+- Curator disagreement settled here:
+  - Floatout alert: the ideas curator dropped it because DECISIONS G15 already carries it; the facts and watch curators kept it. INDEX keeps it as [today], to be confirmed in the OK message.
+  - Round-4 commit / REPORT.md urgency: "info" (ideas), "before-finals" (facts), "today" (watch). INDEX uses "today", because the commit is quiet-window work.

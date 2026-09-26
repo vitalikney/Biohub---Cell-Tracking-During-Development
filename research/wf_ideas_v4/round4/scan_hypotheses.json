@@ -1,0 +1,69 @@
+{
+ "summary": "Round 4 (operational), 00:47-01:15 UTC 26 Sep. (1) Git check passes. The READ TABLE, the S4-S6 line and the round-prompt edit are in 1017c41 (23:13:12Z). The RESUME POINT is in b2cb928 (00:02:49Z). origin/main == HEAD, and K2/twin were still PENDING at the 00:43Z poll, so every item predates any score. The round-2/3 REPORT.md files were never saved (the text is only in report.json). (2) The mechanical score-read procedure and the 29 Sep finals-tick checklist are written in round4/scan_hypotheses.notes.md and in findings R4H-3/R4H-5. The READ TABLE has 2 gaps: twin ERROR in row 5, and row 2 needs an OK to keep K2 as F2. There is also one measurement issue. The poller should poll at ~07:54:2xZ and ~08:04:3xZ, and the clean mark is 08:02:12Z. A K2 completion in that ~8 min window, where F(K2) = 7.87 h lands, would read as 'not clean'. The fix is one extra poll at ~08:00:30-08:01:30Z. (3) Insertion on the exp60 lab (in-sample, info only). Pooled +0.0065, from 9 single-TP clips and 6 single-FP clips out of 56. Leave-top-5-out +0.0026; bootstrap P(<0) = 0.001. The gain is density-concentrated: Q0 has 7 of the 9 TPs, and the dense half has 2 TP / 4 FP. The 44b6 '+0.0157' is ONE event (SELECTION 0.0000). Private = max(F1, F2), so the twin already hedges this. (4) No new mechanism is honestly testable on the exp60 dumps before 27 Sep 12:00 without public feedback. The lowrefine lab arm is biased: it adds nodes, and it would be applied post hoc against the pre-registered table. The OOF insertion rescore has no decision value, and density-gated insertion is closed (R3S-2).",
+ "findings": [
+  {
+   "id": "R4H-1",
+   "kind": "recheck-old",
+   "what": "Pre-score records are verified in git and pushed. The READ TABLE (CONTEXT l.1978), the S4-S6 line (l.1968) and the plancheck/report prompt edits (experiments/workflows/biohub-research-round.js l.34, l.54) are in 1017c41, committed 2026-09-26T02:13:12+03:00 = 23:13:12Z. The RESUME POINT (l.2006) is in b2cb928 (00:02:49Z). origin/main == HEAD == b2cb928, and the working tree only has the poller files modified. K2 56563521 and twin 56563534 were PENDING at the 00:43:00Z poll.",
+   "evidence": "git log --date=iso-strict; git grep 'READ TABLE' 1017c41 -- CONTEXT.md; git rev-parse origin/main HEAD; experiments/lb_poll/ledger.md (00:46:03Z)",
+   "action": "None needed. In the score-read CONTEXT entry, cite 'table commit 1017c41 (23:13Z), pushed before the first K2/twin result seen at <ts>'.",
+   "urgency": "info"
+  },
+  {
+   "id": "R4H-2",
+   "kind": "plan-issue",
+   "what": "Poll alignment vs the 'clean' 8.0 h mark. The poller writes its timestamp before the CLI call and runs every 600 s with ~2 s drift (00:02:53, 00:12:55, ..., 00:43:00Z). The polls around the K2 8.0 h mark (08:02:12Z) should fall at ~07:54:2xZ and ~08:04:3xZ. A K2 completion in (07:54:2x, 08:02:12] is first seen at 08:04:3x. That gives an L upper bound of ~8.04 h, so d1 reads 'not clean' although the kernel was clean. The window sits on the forecast F(K2) = 7.87 h = 07:54:24Z, so P(completion in the window) is ~0.15. It matters only when d1 <= -0.002 (row 4 vs row 5), so the joint P is ~1-2%, but the fix costs nothing.",
+   "evidence": "experiments/lb_poll/lb_poll.py (ts written before the CLI call; sleep 600); poll.log headers 23:12:45..00:43:00Z; ledger A5-L(K2) 8.0 h mark 08:02:12Z; RESUME POINT F(K2) = 7.87 h",
+   "action": "Main session, before 07:50Z: schedule ONE extra poll with the same CMD and the same '=== <ts>' header format, appended to poll.log, starting at ~08:00:30-08:01:30Z. Start no later than 08:01:30, so that a retry (+210 s slack) cannot push it past the mark. Do not restart the main poller (round 3: never restart 06:00-09:30). This is a measurement change, not a rule change.",
+   "urgency": "today"
+  },
+  {
+   "id": "R4H-3",
+   "kind": "new-fact",
+   "what": "MECHANICAL SCORE-READ PROCEDURE. (0) Cite table commit 1017c41 < first result. (1) Run python tools/runtime_ledger.py --print and take the rows for K2 ref 56563521 and twin ref 56563534: status, public, and L '(lo, hi]'. (2) Act only when both are COMPLETE or ERROR. Exception: K2 ERROR goes to row 1 at once. (3) Work in thousandths: k = round(1000*K2), w = round(1000*twin); d1 = k-954, d2 = w-953, tk = w-k; clean = K2 COMPLETE and hi <= 8.00 (hi includes the +210 s retry slack; '?' = not clean). (4) First match wins: R1 K2 ERROR; R2 twin COMPLETE and tk >= 2; R3 d1 >= -1; R4 d1 <= -2 and clean; R5 d1 <= -2 and not clean (then d2 <= -2 -> as R4; d2 >= -1 -> keep K2). Outcomes follow the CONTEXT table text verbatim; without the user's OK, [OK] rows use their bracketed text. (5) Log k, w, d1, d2, tk, the L bounds, clean, the row, the F1/F2 refs and any OKs used, then commit. Likely cases: k in {954, 955} and w in {953, 954} -> R3 -> F1 = K2 56563521, F2 = twin 56563534. k = 953 -> d1 = -1 -> R3. k = 954, w = 956 -> R2: F1 = twin, and F2 = K2 only with the OK, else exp52.",
+   "evidence": "CONTEXT.md l.1978-2005 (READ TABLE); research/wf_ideas_v4/round4/scan_hypotheses.notes.md section 'SCORE-READ PROCEDURE'",
+   "action": "Main session: apply it verbatim at the K2/twin score (~06:30-08:30Z). Optionally paste it under the READ TABLE as a dated 'procedure, no rule change' entry before the first score.",
+   "urgency": "today"
+  },
+  {
+   "id": "R4H-4",
+   "kind": "plan-issue",
+   "what": "READ TABLE gaps to close BEFORE any score. (a) Row 5 needs d2, and a twin ERROR leaves d2 undefined; no row covers that case. Suggested strict text: F1 = K2 (a d1 that is not clean is no evidence against lowrefine, and R3 needs a clean read to remove it), F2 = exp52. (b) Row 2 (twin beats K2 by >= 0.002) sets F2 = exp52 without the user's OK, which drops K2 from the finals. The row-2 '[OK] F2 = K2' and the 'twin 0.952 floor' OK should go on the morning OK list now, before any score. (c) The rows are first-match over both scores, so the table must not be applied while the twin is PENDING (except row 1).",
+   "evidence": "CONTEXT.md l.1991-2005; round3 report.json R3-A9 OK list",
+   "action": "Add one dated CONTEXT line covering (a) and (c) (a tightening/clarification written pre-score, no OK needed) and commit it before ~06:00Z. Put (b) on the morning OK list.",
+   "urgency": "now"
+  },
+  {
+   "id": "R4H-5",
+   "kind": "new-fact",
+   "what": "FINALS-TICK CHECKLIST (29 Sep). Deadlines: ticks by 20:00 UTC (23:00 MSK); Kaggle's hard end is 23:59 UTC. Private uses the BEST of the selected submissions. With no ticks, Kaggle auto-selects by best public (kaggle.com/general/19028; CONTEXT l.1728). It could then pick the 0.954 ties #35 56545786 (L35 unproven) and P36 56555189 (diagnostic) and drop the twin hedge. Steps: (1) 28 Sep evening: confirm the F1/F2 refs by the table, plus any S12, in CONTEXT. No builds after 29 Sep 02:00 except S17 (hard stop 10:00). (2) 29 Sep 12:00 UTC (15:00 MSK): remind the user with the refs and the description heads. F1 = 'probe 37: exp58', 56563521 (00:02:12Z 26 Sep). F2 = 'probe 38: exp58n', 56563534 (00:02:18Z), or exp52 56534391 (00:02:05Z 25 Sep). (3) On the Submissions page, tick exactly 2, matched by ref and date, not by score: K2, #35 and P36 all show 0.954, and K2 and the twin were submitted 6 s apart. Untick everything else. (4) Reload, check that the ticks persisted, screenshot, log to CONTEXT and commit. Never tick: #34 exp56 (a byte-copy of x138 that loses the earlier-submission tie), #35, P36, or two files with identical components.",
+   "evidence": "research/wf_ideas_v3/FINAL_REPORT.md section f (l.304-334); CONTEXT l.2017-2021; ledger.md refs; https://www.kaggle.com/general/19028 ; https://www.kaggle.com/docs/competitions",
+   "action": "Main session: copy the checklist into CONTEXT near the RESUME POINT, and create a one-shot reminder for 29 Sep 12:00 UTC plus a backup at 18:00 UTC.",
+   "urgency": "later"
+  },
+  {
+   "id": "R4H-6",
+   "kind": "new-fact",
+   "what": "K2 vs twin on the exp60 lab (IN-SAMPLE, info only). ins35 vs control is the only K2-twin difference; node rows are identical on the dummies. Pooled delta: +0.00648 (adj +0.00015, div_J +0.0633; div TP/FP/FN 16/25/83 -> 25/31/74). Only 15 of 56 clips change an evaluable division: 9 clips get +1 TP each and 6 clips get +1 FP each. 186 of the 201 inserted forks are ignored, and 45 clips hit cap 4. No single clip dominates: the largest jackknife influence is +0.00078, and leave-top-k-out gives +0.0057 / +0.0049 / +0.0042 / +0.0026 for k = 1 / 2 / 3 / 5. Stratified clip bootstrap: 5-95% range +0.0028..+0.0107, P(<0) = 0.001. For 44b6 alone the 5% quantile is 0.0000. The '44b6 +0.0157' in CONTEXT is ONE TP in CONFIRMATION (44b6_d754aa59). 44b6 SELECTION is 0.0000, and 44b6/ALL is +0.0058 from 2 TP / 8 FP over 17 clips. Density quartiles (control nodes/frame; cuts 84.8 / 163.9 / 260.4): Q0 +0.0246 (7 TP / 2 FP), Q1 +0.0028, Q2 -0.0005, Q3 +0.0019. The TP clips have densities 46-75 (7 of 9), 128 and 286. Break-even per event: +1 TP adds 1/N to div_J and +1 FP subtracts J/N, so q* = J/(1+J). That is 0.114 in the lab (J 0.129) and ~0.26 on public (J ~0.35, from probe 26). In-sample dense-half precision is 2/6 = 0.33, not an OOF-safe margin above 0.26. A dense (later-stage) private embryo could therefore give K2 ~= twin, or slightly lower. Private = max(F1, F2), so the twin already covers this.",
+   "evidence": "experiments/exp60_trainlab/results.json (clips[].arms.control/ins35.row); scratchpad ins_conc.py using tools/score_geffs + tracking_cellmot.metrics.summarise; notes entry 01:00Z",
+   "action": "Info only; attach no rule. It supports keeping F2 = twin rather than a second file with the insertion.",
+   "urgency": "info"
+  },
+  {
+   "id": "R4H-7",
+   "kind": "new-hypothesis",
+   "what": "No new mechanism is honestly testable on the exp60 dumps before 27 Sep 12:00 UTC without public feedback. Candidates checked and dropped: (a) Lowrefine lab arm: needs an exp60 GPU rerun (~3.5 GPU-h). The lab reads every node-adding arm as positive (round 3, fact 16), and the only use would be a post-hoc tie-breaker for a pre-registered table. (b) OOF DaughterNet insertion rescore: no decision value, since R2 decided on the LB, finals = max(K2, twin), and the round-1 D1 verdict stands. The quota reset only makes it affordable as an optional diagnostic after 09:30Z. (c) Density-gated insertion or a density cap: closed (R3S-2). R4H-6's Q0 concentration would only give a lab-fitted ladder. (d) Any fork-set rider needs an LB read (R4, +0.002), which conflicts with 'without public feedback'. Expected gain is ~0 for all of them.",
+   "evidence": "round3 report.json 'rejected' (R3S-2..5); v_divisions-x138_d1-oof-lab-insertion_*.json; CONTEXT R8/R9",
+   "action": "None. Keep S4-S11 empty. What remains is operational: R4H-2, R4H-3, R4H-4 and R4H-5.",
+   "urgency": "info"
+  },
+  {
+   "id": "R4H-8",
+   "kind": "plan-issue",
+   "what": "The round REPORT.md files are missing on disk. round2/ and round3/ hold only report.json (with report_md_ru): the harness blocks agents from writing .md reports, and the main session never saved them. The task prompt and CONTEXT still cite round3/REPORT.md.",
+   "evidence": "ls research/wf_ideas_v4/round2 round3; round3 report.json report_md_ru_note",
+   "action": "Main session: after each round, write report_md_ru to round<N>/REPORT.md (by hand or with a one-line step in biohub-research-round.js) and commit.",
+   "urgency": "later"
+  }
+ ]
+}

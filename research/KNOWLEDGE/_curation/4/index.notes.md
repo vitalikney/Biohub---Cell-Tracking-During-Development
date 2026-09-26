@@ -1,0 +1,5 @@
+- 01:16Z 26 Sep: index curation 4 started; no index.json existed; read INDEX.md (curation 3) and CHANGES.md.
+- 01:17Z: verified HEAD b2cb928, poll 01:13:05Z #37/#38 PENDING, ledger 01:13:07Z; CONTEXT l.2006-2025 RESUME POINT, 9. Literature at l.2026; writing INDEX.md
+- 01:18Z: INDEX.md written; appending CHANGES section 4
+- 01:18Z: CHANGES section 4 appended; writing index.json
+- 01:19Z: index.json written and validated. DONE.

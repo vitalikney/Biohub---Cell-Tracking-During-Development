@@ -1,0 +1,5 @@
+- 2026-09-26T01:07:43Z start: no watch.json in _curation/4; reading prior WATCHLIST.md
+- 2026-09-26T01:08:09Z read CONTEXT to l.2025 (RESUME 00:02), round4/report.json (01:15Z, untracked), ledger
+- 2026-09-26T01:09:30Z verified: W06/W14/W16/W36/W37/W39/W40 done in 1017c41/b2cb928; friend A card unchanged (14c339e is C only); admission table absent; no CLARIFICATION v2 / provisional tick / 00:47 intel in CONTEXT; memory index fixed 23:13Z
+- 2026-09-26T01:10:04Z status mapping done; writing WATCHLIST v4 (new W44-W52 from R4-A1..A9, T13-T22, I31-I38)
+- 2026-09-26T01:13:18Z WATCHLIST.md written (curation 4); watch.json written and validated; done

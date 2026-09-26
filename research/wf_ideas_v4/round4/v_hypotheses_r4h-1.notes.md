@@ -1,0 +1,11 @@
+# v_hypotheses_r4h-1 notes (skeptic, 2026-09-26 ~00:58Z)
+- No prior json for this task; checked round4/ folder.
+- git log --date=iso-strict: 1017c41 committed 2026-09-26T02:13:12+03:00 = 23:13:12Z; b2cb928 03:02:49+03:00 = 00:02:49Z.
+- Push proof (commit date alone does not prove push): `git reflog show refs/remotes/origin/main` -> 1017c41 "update by push" 02:13:16+03:00 = 23:13:16Z; b2cb928 update by push 00:02:53Z.
+- After `git fetch`, origin/main == HEAD == b2cb928c1428...
+- git grep 1017c41 CONTEXT.md: READ TABLE header l.1978 (dated 23:12 UTC), S4-S6 l.1968. RESUME POINT 00:02 UTC at l.2006 in b2cb928.
+- git diff 1017c41 b2cb928 -- CONTEXT.md: pure append (RESUME POINT, +20 lines), READ TABLE text untouched. Working tree CONTEXT.md and biohub-research-round.js clean vs HEAD.
+- biohub-research-round.js diff in 1017c41: plancheck prompt (l.34) and report prompt (l.54) edited as claimed.
+- ledger.md: K2 56563521 submitted 00:02:12Z, twin 56563534 00:02:18Z, both PENDING; last PENDING now 00:53:02Z (finding said 00:43:00Z; newer poll exists, no contradiction).
+- Table pushed 23:13:16Z, ~49 min BEFORE K2 was even submitted -> pre-score is trivially true; stronger citation than "before first result".
+- Value: records hygiene only, zero LB effect; no rule R1-R10 implicated; nothing to build.

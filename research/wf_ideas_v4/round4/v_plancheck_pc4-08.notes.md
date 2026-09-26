@@ -1,0 +1,12 @@
+# v_plancheck_pc4-08 notes
+- 2026-09-26T00:57:18Z start; no prior json
+- 00:57Z Win32_Process: python lb_poll.py PID 20052, created 26.09 02:12:45 local = 23:12:45Z; RebootRequired / RebootPending keys absent. Power: on AC (BatteryStatus 2, 79%), STANDBYIDLE AC/DC = 0 (never), HIBERNATEIDLE AC = 0.
+- lb_poll.py: infinite while-loop, 600 s sleep, 3 retries x (180+30 s), ledger fail-soft. poll.log headers 23:42:50 .. 00:53:02 every ~10 min, no gap.
+- tools/runtime_ledger.py l.58-70: exp58(n|p) -> safetail_noins; exp(58|59|61|62)[a-z]* -> safetail (so exp58t = K1 -> safetail, gate 8.0 h; READ TABLE row 5 says K1 carries the same gate). DIVINS_GATE_H 8.0.
+- exp58 notebook cell 0 sets BIOHUB_KERNEL_START_TS=time(); cell 7 KERNEL_START_TS = env value; safetail_divins_allowed uses elapsed from it (build_probe_kernel.py l.1396-1403). Timer <= wall <= L, so L upper bound <= 8.0 h => gate (and 9.5 h repair deadline) never fired. Direction of proof OK.
+- git: 1017c41 at 02:13:12+03:00 = 23:13:12Z (READ TABLE), b2cb928 00:02:49Z; no K2/twin score yet (ledger 00:53Z PENDING). 
+- kaggle kernels list --mine --sort-by dateRun (00:58Z): exp58 16:20:17, exp58t 16:20:23, exp58n 20:35:41 (25 Sep) - no later runs => unchanged v1.
+- memory: MEMORY.md + project-lb-probe-approval.md modified 02:13 local (23:13Z); approval memory records f2 OK + plan to submit at 00:01, but NOT that #37/#38 were actually submitted (00:02Z). Minor staleness; CONTEXT RESUME POINT 00:02 is the source of truth.
+- ledger 'A5-F not supplied' = INFO line; F = 7.87 h in CONTEXT l.1971 (< 7.9 trigger by 0.03 h). Cosmetic, agreed.
+- Scope caveat: sibling round-4 findings PC4-02/03/04/06 and R4H-2/R4H-4 are 'now/today' pre-score actions (READ TABLE holes, error-class read, 08:00Z extra poll). PC4-08's 'rounds 5-6 monitoring-only' must not be read as 'nothing to do before the score'.
+- 2026-09-26T00:59:45Z wrote v_plancheck_pc4-08.json (refuted=false, action scope corrected)

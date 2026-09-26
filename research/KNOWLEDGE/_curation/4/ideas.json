@@ -1,0 +1,81 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/ideas.json",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/IDEAS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/4/ideas.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/4/ideas.json"
+ ],
+ "alerts": [
+  {
+   "kind": "forgotten",
+   "what": "READ TABLE CLARIFICATION v2 (I-224: C1 read only when both terminal, C2 error class, C3 row 1 without K1, C4 row-2 hole, C5 row 5 with d2 undefined, C6 extra polls) is not in CONTEXT; without it a row-2 world drops F2 to exp52 and a twin ERROR in row 5 matches no row",
+   "evidence": "research/wf_ideas_v4/round4/report.json R4-A1 + plan_issues (verbatim block); CONTEXT.md ends at the 00:02 RESUME POINT l.2006-2025 (b2cb928); research/KNOWLEDGE/IDEAS.md I-224",
+   "suggested_action": "Main session: append the verbatim block to CONTEXT, commit and push before any #37/#38 score (at the latest ~06:00 UTC; twin may score from ~06:15Z); also fix the pending-OK line CONTEXT.md l.2023",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "One consolidated pre-score OK message to the user (I-228): (a) K1, (b) twin floor 0.952, (c) row-2 F2 = K2/K1, (d) F1 = twin instead of #34, (e) K2 resubmit on Kaggle Error, (f) runtime trigger; recommend closing floatout; drop L1/L2. OKs after a visible score are post-hoc",
+   "evidence": "research/wf_ideas_v4/round4/report.json R4-A2 (covered_by_existing_approval false); research/wf_ideas_v4/round4/scan_plancheck.json PC4-04; CONTEXT.md l.2023 (incomplete list)",
+   "suggested_action": "Post it now (Russian); when the OK arrives, log its UTC time and the first twin/K2 result times in CONTEXT",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "Extra clean-proof polls for K2 (I-226) not scheduled: the poller lands ~07:54:2xZ and ~08:04:3xZ around the 08:02:12Z 8.0 h mark, so a clean K2 can be graded 'not clean' (P ~0.15; decisive only if d1 <= -0.002)",
+   "evidence": "research/wf_ideas_v4/round4/report.json R4-A3, rejected (R4H-2 arithmetic); scan_plancheck.json PC4-06; experiments/lb_poll/ledger.md A5-L(K2) 8.0 h mark 08:02:12Z",
+   "suggested_action": "Before 07:45Z schedule one-shot polls at ~07:57:30Z and ~08:00:45Z (exact command in R4-A3), only if #37 still PENDING; do not restart the poller",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "0/2 finals ticked; Kaggle auto-selects the best public files if < 2 are ticked - today P36 (diagnostic, never a final) and #35 (R5 unproven). Provisional tick rule (I-227) not yet in CONTEXT",
+   "evidence": "research/wf_ideas_v4/round4/scan_plancheck.json PC4-01 (Submissions page 00:57Z); report.json R4-A5; CONTEXT.md l.1735-1736 (§f: tick manually only)",
+   "suggested_action": "Add the PROVISIONAL TICK rule to CONTEXT/brief; the user ticks exactly two files (default #37 + #38) as soon as the READ TABLE resolves on 26 Sep",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "#37 K2 (56563521) and #38 twin (56563534) PENDING; expected twin ~06:20-07:40Z, K2 ~07:00-08:00Z. Apply the table only when both are terminal (K2 ERROR: at once, error class first via error_description one-liner)",
+   "evidence": "experiments/lb_poll/ledger.md (01:03:05Z); CONTEXT.md l.2007-2016; research/wf_ideas_v4/round4/report.json R4-A4, new_facts",
+   "suggested_action": "At the scores: runtime_ledger --print, compute k, w, d1, d2, tk, clean in thousandths from poll.log, log row + L(K2) - L(twin), commit; keep poller/session/AC alive to 08:32Z (R4-A9)",
+   "urgency": "today"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "Closures that live only in research-round files: round 4 I-035 head-shift scale (measured s_opt 0.75-1.0), I-043 duplicate collapse vs lowrefine, leaf-prune replay lp30 +0.00083 (I-135/I-201), I-230, I-231, I-234; round 3 I-151, I-173, I-218, I-220-I-222, I-201 rule; round 2 I-213",
+   "evidence": "research/wf_ideas_v4/round4/report.json R4-A6 (3)-(5), rejected; research/wf_ideas_v4/round3/report.json R3-A8; CONTEXT.md l.1974-1975 and l.2021-2022 name only swapfix, boundary rescue and the K-rider closures",
+   "suggested_action": "One grouped closure line in CONTEXT with the next write (by 26 Sep 12:00 UTC) so later rounds stop re-mining closed classes",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "RESUME POINT pending-OK line still lists L1/L2 (moot) and omits row-2 F2 = K2, row-4 F1 = twin, C2(a), C3, C4",
+   "evidence": "CONTEXT.md l.2023; research/wf_ideas_v4/round4/report.json R4-A1, R4-A2 (5); IDEAS.md I-008/I-073",
+   "suggested_action": "Fix together with the CLARIFICATION v2 entry",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "Round REPORT.md files never saved (round2/3/4 hold report.json only) while CONTEXT cites round2/REPORT.md and round3/REPORT.md (I-232)",
+   "evidence": "CONTEXT.md l.1938, l.1967; research/wf_ideas_v4/round4/report.json R4-A8, report_md_ru_note; scan_hypotheses.json R4H-8",
+   "suggested_action": "In a quiet moment write report_md_ru to round<N>/REPORT.md and commit; optionally add a save step to biohub-research-round.js",
+   "urgency": "info"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "I-233 poller error_description logging: rejected for tonight, 'revisit after 09:30Z only if useful' - no owner (the only strict orphan)",
+   "evidence": "research/wf_ideas_v4/round4/report.json rejected, R4-A9",
+   "suggested_action": "After 09:30Z 26 Sep implement in a quiet window or close with one line",
+   "urgency": "info"
+  },
+  {
+   "kind": "deadline",
+   "what": "29 Sep FINALS-TICK CHECKLIST (I-229) not in CONTEXT; reminders (12:00 + 18:00 UTC 29 Sep) must survive this session",
+   "evidence": "research/wf_ideas_v4/round4/report.json R4-A7; scan_hypotheses.json R4H-5; CONTEXT.md l.2019-2020 (only 'reminder 12:00 UTC')",
+   "suggested_action": "Copy the checklist into CONTEXT today; set reminders by 28 Sep (cloud routine or user calendar); match finals by ref, never #34/#35/P36",
+   "urgency": "before-finals"
+  }
+ ],
+ "summary": "Ideas curation 4 (2026-09-26 ~01:30 UTC, HEAD b2cb928 + untracked round4/): 223 -> 234 ideas, 12 clusters, 52 records changed (ideas.json meta.curations[n=4]). K2 #37 (I-001/I-036/I-062) and twin #38 (I-090) submitted 00:02Z, PENDING. P36 = 0.954 -> I-136 lb-tested, info only; leaf prune on x138 closed (I-135 + exp60 lp30 +0.00083). Recorded/closed: I-217 READ TABLE now in CONTEXT l.1978-2005; I-223 poller [:60] applied; I-035 head-shift scale closed by measurement; I-215 floatout on x138 closed (CONTEXT l.2021-2022). New from round 4: I-224 CLARIFICATION v2, I-225 K2 resubmit on Kaggle Error, I-226 extra clean-proof polls, I-227 provisional tick, I-228 consolidated OK request, I-229 29 Sep checklist, I-232 save REPORT.md (in-plan); I-233 error_description logging (open, strict orphan); I-230 in-block rank criterion, I-231 lowrefine lab arm, I-234 thedivyanshpant uploads (refuted). Counts: lb-tested 38, lab-tested 20, refuted 134, deferred 19, in-plan 22, open-untested 1. Orphans: strict I-233; at risk I-224, I-226, I-227, I-228, I-232."
+}

@@ -1,0 +1,71 @@
+{
+  "task": "round4 plancheck (26 Sep ~00:45 UTC): K2/twin pending, READ TABLE, finals prep",
+  "written_utc": "2026-09-26T01:00Z",
+  "summary": "Round 4 plan check, 00:45-01:00 UTC 26 Sep. The operational state is sound. The poller is alive (PID 20052, running since 23:12:45Z, no Windows reboot pending). K2 #37 (ref 56563521, exp58, family safetail) and the twin #38 (ref 56563534, exp58n, safetail_noins) are PENDING and tagged correctly in ledger.md. The READ TABLE was committed at 23:13Z, before any score. K1 = exp58t v1 is still COMPLETE and unchanged on Kaggle. The memory files are already current. Five issues need action before the scores arrive (the twin ~05:30-06:30, K2 ~06:30-08:30): (1) The Submissions page shows 0/2 finals selected and says Kaggle auto-fills from the best public scores when fewer than 2 are ticked. Today that means P36 (a diagnostic) and #35 (R5-unproven), both at 0.954. The user should tick exactly two files as soon as the table resolves, not wait for 29 Sep. (2) READ TABLE row 2 has a hole: if twin - K2 >= +0.002 and d1 <= -0.002, F2 is 'K1 if submitted', but no row ever submits K1 in that case, so F2 falls to exp52. (3) Row 1 (K2 ERROR -> K1) ignores the error class. The API exposes error_description, but the CLI CSV hides it. (4) The pending-OK list in the RESUME POINT misses two [OK] rows of the table plus the floatout and runtime-trigger decisions. These OKs should be asked before the first score. (5) The floatout 'S12 only' option contradicts §e and R8, and floatout is not ported to x138. Two info items: the 10-min poll cadence around the 08:02Z 'clean' mark (optional manual polls), and P36 finished before the submits (the queue caveat is moot).",
+  "findings": [
+    {
+      "id": "PC4-01",
+      "kind": "plan-issue",
+      "urgency": "today",
+      "what": "No finals are selected on Kaggle (0/2). The Submissions page says that if fewer than 2 are selected, Kaggle automatically selects from the best-scoring submissions. With the current board that means P36 (exp57 diagnostic, leaf prune + ungated insertion, 'never a final') and/or #35 (exp57b, R5 unproven), both 0.954. Ticking only ONE file also lets Kaggle auto-fill the second slot. The plan leaves all ticking to 29 Sep 20:00 UTC (WATCHLIST T09/T10). A missed or partial tick on the last day (PC off, user away, Kaggle outage) therefore defaults to two inadmissible near-copies. The old CONTEXT line 1364 ('currently exp29 + exp39') was a plan, not a tick; nothing is ticked.",
+      "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/submissions read 00:57Z (own tab, closed): '0/2', 'If less than 2 are selected, Kaggle will automatically select from your best scoring submissions', 'Auto-selection candidates'. PRE-REG v3 §f last paragraph (CONTEXT l.1735-1736) forbids auto-selection. research/KNOWLEDGE/WATCHLIST.md T09/T10.",
+      "action": "Add to CONTEXT and WATCHLIST: 'PROVISIONAL TICK: as soon as the READ TABLE resolves on 26 Sep (both K2 and the twin scored, or K2 ERROR handled), the user ticks EXACTLY TWO files per the table (default F1 = K2 #37, F2 = twin #38). Never leave 0/2 or 1/2 selected. Ticks can be changed until the deadline. Re-tick only if a later table row or S12 changes F1/F2. The 29 Sep 12:00 reminder becomes a check that the 2 ticks match the rules.' The user ticks by hand (UI action), so the main session only puts this in the morning brief."
+    },
+    {
+      "id": "PC4-02",
+      "kind": "plan-issue",
+      "urgency": "now",
+      "what": "Hole in READ TABLE row 2. Row 2 ('twin - K2 >= +0.002: F1 = twin; F2 = K2 if d1 >= -0.001 [OK], else K1 if submitted and scored [OK], [else exp52]') is matched first, so rows 4/5, which submit K1, never run. The failing case is twin - K2 >= +0.002 with d1 <= -0.002, e.g. K2 0.952, twin 0.954. Nothing then submits K1, so F2 falls to exp52 (0.950). Yet K1 (= #35 path + inert C01; its dummy sha equals the exp57b dummy; #35 scored 0.954) is the natural insertion hedge for a twin F1 that has no insertion. The case is rare (~3-5%), but it is exactly the world where the insertion+lowrefine interaction is suspect, and it must be written down before any score (R7: no choosing the rule by the result).",
+      "evidence": "CONTEXT.md l.1993-1994 (row 2) vs l.1997-2003 (rows 4/5, the only rows that submit K1); K1 = vitaliineibauer/biohub-exp58t-x138-safe v1, lastRunTime 2026-09-25 16:20:23Z, status COMPLETE (kaggle CLI 00:55Z).",
+      "action": "Append a timestamped pre-score clarification to CONTEXT (before the first K2/twin score in poll.log): 'READ TABLE row 2 addendum: if twin - K2 >= +0.002 AND d1 <= -0.002, submit K1 = exp58t v1 in the next 26 Sep slot [OK] (message starting \"probe NN: exp58t\"); F2 = K1 once scored without error, R5-admissible and >= 0.953, else exp52.' Add it to the morning OK list (PC4-04)."
+    },
+    {
+      "id": "PC4-03",
+      "kind": "plan-issue",
+      "urgency": "now",
+      "what": "READ TABLE row 1 (K2 ERROR -> K1) does not check the error class, and the poller cannot see it: the CLI CSV has no error column, while the Kaggle API object has error_description. (a) 'Kaggle Error' (infrastructure) with the twin COMPLETE: the clean replication is to resubmit K2 v1. K1 would drop lowrefine with no evidence of harm. (b) 'Notebook Timeout' / 'Notebook Exceeded Allowed Compute' on BOTH K2 and the twin: K1 has the same GPU phase and deadlines, so it would likely fail the same way. (c) 'Notebook Threw Exception' / 'Submission CSV Not Found' / 'Scoring Error' on K2 only (twin OK): the cause is the insertion/lowrefine interaction, so K1 as written is right.",
+      "evidence": "Python API check at 00:56Z: kaggle ApiSubmission fields include 'error_description' (empty for #37/#38 now). experiments/lb_poll/lb_poll.py uses the CLI '-v' CSV (ref,fileName,date,description,status,publicScore,privateScore). Error classes are listed in CONTEXT l.1741-1743.",
+      "action": "Pre-score clarification in CONTEXT: 'On ERROR of K2 or the twin, first read the class and log it: python -c \"from kaggle.api.kaggle_api_extended import KaggleApi as K; a=K(); a.authenticate(); [print(s.ref, s.status, repr(s.error_description)) for s in a.competition_submissions(\\\"biohub-cell-tracking-during-development\\\")[:4]]\". Then (a) Kaggle Error + twin COMPLETE -> resubmit K2 v1 [OK] (first token exp58, so the ledger picks the newest exp58 as K2); (b) timeout/compute on both -> no K1, ask the user (fallback §f -> exp52); (c) otherwise row 1 as written (K1 [OK]).' Add (a) and (b) to the morning OK list."
+    },
+    {
+      "id": "PC4-04",
+      "kind": "plan-issue",
+      "urgency": "now",
+      "what": "The pending-OK list in the 00:02 RESUME POINT ('L1/L2, K1 by the table, twin floor 0.952') is incomplete compared with the [OK] tags of the READ TABLE and round-3 R3-A9. Missing: row 2 'F2 = K2 if d1 >= -0.001'; row 4 'F1 = twin if no K1'; the PC4-02 and PC4-03 additions; the floatout decision (R3-A9 item 5); the runtime-trigger deadline-move/D4 (only if L(K2) > 8.0 h). Timing also matters. The twin has no insertion (dummy repair 219 s vs 509 s), so it will probably score ~1-2 h before K2, around 05:30-06:30 UTC, possibly before the user reads the brief. An OK given after a score is visible is a choice by result.",
+      "evidence": "CONTEXT.md l.2023 (pending OKs) vs l.1991-2003 ([OK] tags); round3/report.json R3-A9; twin dummy kernel 1,038 s vs K2 1,512 s (CONTEXT l.1958); ledger.md: both PENDING at 00:43Z.",
+      "action": "Main session: post ONE consolidated OK request in chat now (so the user sees it on waking). It lists every [OK] row: K1 by rows 1/2/4/5; K2 resubmit on Kaggle Error; no-K1 on double timeout; twin floor 0.952; row-2 F2 = K2; row-4 F1 = twin; floatout close/open; D4/deadline move only on the runtime trigger. State the default world (F1 = K2, F2 = twin, P ~0.85-0.9). When the OK arrives, record in CONTEXT its UTC time next to the first K2/twin score time in poll.log. If the OK comes after a score is visible, label it post-hoc."
+    },
+    {
+      "id": "PC4-05",
+      "kind": "plan-issue",
+      "urgency": "today",
+      "what": "The optional floatout rider is still open as 'S12 only' (R3-A9 item 5, round-2 rc-a), but that conflicts with the pre-registered rules. §e defines S12 as consolidating riders ALREADY accepted in different scored files, and R8 allows new mechanisms only until 27 Sep 12:00 UTC. A first-ever floatout-on-x138 build in S12 would enter F1-final with no R3 read. It is also not ready: floatout is not in BASES['x138']['patches'], and FLOATOUT_CHECK is a bare-assert last cell (a hidden-rerun assert = 'Notebook Threw Exception' = an ERRORED F1). Expected value ~+0.0001 (round-2 recheck: 2 LB ties, P(Float64 server) ~0.1-0.2).",
+      "evidence": "tools/build_probe_kernel.py: BASES['x138']['patches'] += trainlab (l.106), lowrefine (l.1683), forkmid (l.1801), forkblob (l.1973), no floatout; FLOATOUT_CHECK l.1315; research/wf_ideas_v4/round2/v_recheck_r2-rc-a-floatout-on-x138.json; CONTEXT §e S7/S12 rows (l.1610, l.1614) and R8 (l.1671).",
+      "action": "In the morning brief, recommend CLOSING floatout on x138: record 'closed by R8/S12 definition, E ~+0.0001'. If the user still wants it, pre-register this path: port it, make the check fail-soft (restore the integer CSV), then a dummy gate (sha of the mode-0 build == K2; safe mode rows == K2 rows except z/y/x text), then its own K file submitted by 27 Sep 12:00 UTC (S7) and read by R3 against K2. Never add it first in S12."
+    },
+    {
+      "id": "PC4-06",
+      "kind": "plan-issue",
+      "urgency": "today",
+      "what": "The 'clean' proof for d1 needs COMPLETE seen at a poll <= 08:02:12Z. The poller sleeps 600 s and can spend up to 3 x (180 s + 30 s) on failed attempts, so its polls land near :03/:13/.../:53 (00:43:00Z last). A K2 that finishes at 07:53-08:02 would be graded 'not clean' although its runtime is < 8.0 h. That pushes the d1 <= -0.002 case from row 4 to row 5 (the timing-confound path). Joint probability ~1%, but the fix is free.",
+      "evidence": "experiments/lb_poll/lb_poll.py (sleep 600, timeout 180, 3 retries); ledger.md 'K2 watch window 07:02:12Z - 08:32:12Z', 8.0 h mark 08:02:12Z; READ TABLE CLEAN definition (CONTEXT l.1986-1988).",
+      "action": "Only if K2 is still PENDING at 07:45Z: the main session runs a manual poll every 2 min from 07:45 to 08:01Z (avoid :43/:53/:03, the poller's minutes). Append each result to experiments/lb_poll/poll.log in the SAME format: '=== <UTC ts>Z' + the first 60 lines of 'python -m kaggle competitions submissions biohub-cell-tracking-during-development -v'. Then run 'python tools/runtime_ledger.py --print'. Do NOT restart the poller (06:00-09:30 rule)."
+    },
+    {
+      "id": "PC4-07",
+      "kind": "new-fact",
+      "urgency": "info",
+      "what": "P36 finished before the K2/twin submits. It was COMPLETE at 23:42:50Z (0.954, L36 in (7.24, 7.42] h), 19 min before #37/#38 at 00:02:12Z/00:02:18Z. The READ TABLE caveat that a P36 still PENDING at the submit would make L(K2) include own-queue time is therefore moot. K2 and the twin were submitted 6 s apart, so L(twin) stays the paired control for queue delay.",
+      "evidence": "experiments/lb_poll/ledger.md (P36 first result 23:42:50Z, last PENDING 23:32:48Z); poll.log block 00:43:00Z; CONTEXT l.1988.",
+      "action": "One line in CONTEXT next to the READ TABLE: 'P36 COMPLETE 23:42:50Z, before the 00:02 submits: no own-queue confound for L(K2).'"
+    },
+    {
+      "id": "PC4-08",
+      "kind": "recheck-old",
+      "urgency": "info",
+      "what": "Verified OK, no action needed. The poller (python lb_poll.py, PID 20052) has run since 23:12:45Z with the 60-line window and no gaps > 15 min, and no Windows reboot is pending. ledger.md assigns K2 = exp58/safetail (9.5 h, insertion gate 8.0 h 'open') and the twin = exp58n/safetail_noins. EXP_RULES map exp58t to safetail, so a K1 submit would be graded correctly. Kernel timers start at KERNEL_START_TS (build_probe_kernel.py l.1398, l.1410), so L <= 8.0 h proves the insertion gate never fired (queue time only loosens the bound). The READ TABLE commit 1017c41 (23:13Z) predates any score. K1 exp58t v1 is COMPLETE and unchanged (16:20:23Z). exp58 and exp58n v1 are unchanged. MEMORY.md and project-lb-probe-approval.md are already updated (R3-A5 done). Cosmetic: ledger.md keeps printing 'A5-F Forecast not supplied' because the poller calls the ledger without --forecast-h; F = 7.87 h is already recorded in CONTEXT. Do not restart the poller for this.",
+      "evidence": "Win32_Process query 00:50Z; HKLM RebootPending/RebootRequired keys absent; tools/runtime_ledger.py l.64-70; git log; kaggle kernels list --mine --search exp58 (00:55Z).",
+      "action": "None. Rounds 5-6 can be monitoring-only, as round 3 proposed. Do not build or push anything tonight: no rider exists, and slots S4-S6 stay empty unless a READ TABLE row plus a user OK calls for K1 or a K2 resubmit."
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+- 2026-09-26: run 4 started; no prior facts.json in _curation/4
+- 01:08Z: read CONTEXT l.1960-2025 (new: 23:12 round3 + READ TABLE in CONTEXT, 00:02 RESUME POINT; P36=0.954 L36 (7.24,7.42]; P37 56563521 00:02:12Z, P38 56563534 00:02:18Z)
+- 01:08Z: read ledger 01:03:05Z (P36 COMPLETE 0.954 @23:42:50Z, L36 (7.24,7.42]; #37/#38 PENDING >1.01h), RESULTS l.69-71, round4/report.json (R4-A1..A9, CLARIFICATION v2 not yet in CONTEXT)
+- 01:09Z: verified: lb_poll.py l.28 [:60] (F-RUN-14 resolved), prompt l.34 updated (C-29 resolved), memory 22:06 + new pointer (C-25/C-26 resolved), READ TABLE in CONTEXT l.1978-2005 commit 1017c41 23:13:12Z (C-27 resolved), no round*/REPORT.md (new C-30). Plan new C-30..C-35, F-LB-09, F-RUN-16/17, F-RUL-12, F-MOD-16/17, F-TRN-19/20. Editing FACTS
+- 01:11Z: FACTS.md done (C-20 moot, C-25/26/27/29 resolved, C-30..C-35 new; F-LB-09, F-RUN-16/17, F-RUL-12, F-MOD-16/17, F-TRN-19/20 new). Next DECISIONS
+- 01:12Z: DECISIONS §1 (P36 0.954, P37/P38 submitted), §1b (G07/G08 in CONTEXT, G12-G15), §2 finals (0/2 ticked), §2b in CONTEXT, §2c proposed CLARIFICATION v2 done; next §3 rules + closing note
+- 01:13Z: DECISIONS §3 + [c4] closing note done; writing facts.json
+- 01:14Z: facts.json written (9 alerts). Done.

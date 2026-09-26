@@ -1,0 +1,25 @@
+# scan_browser round4 notes (started 2026-09-26T00:46:26Z)
+- 00:46 UTC: no prior round4/scan_browser.json; folder created. Baseline = round3 scan_browser (LB 22:16:15 UTC, 3,914 teams, us #164, 18th of 65 in 0.954).
+- Poller 00:43Z: #37 K2 (56563521, 00:02:12) and #38 twin (56563534, 00:02:18) both PENDING; P36 COMPLETE 0.954.
+
+## 00:47 UTC LB (CLI leaderboard --download; scratchpad lb/r4/...2026-09-26T00_47_21.csv; cmp.py vs r3 22:16:15)
+- 3,919 teams (+5). Counts: 0.953 289 (280), 0.954 73 (65), 0.955 41 (40), 0.956 24 (23), 0.957 14 (14); >=0.960 52 (49); >=0.970 6; >=0.953 511 (491).
+- Blocks: 0.957 71-84; 0.956 85-108; 0.955 109-149; 0.954 150-222; 0.953 223-511.
+- OUR: rank 155 (22:16: 164), 0.954, 38 subs, last 16:18:09 (= P36 now counted). Inside 0.954 block: 6th of 73 (was 18th of 65). We jumped over 12 teams (Taisei..koucha, old ranks 151-163) but stay behind Homii_N; Mthem77 (new 0.954, sub 17:07) is 2nd in block -> order within a displayed score = unrounded score (confirms CONTEXT 18:20 note). => P36 unrounded public > #35 unrounded (both 0.954). INFO ONLY per P36 rule.
+- Silver ~5% of 3,919 = rank 196: inside 0.954 block (150-222), 26 ranks above block end; we are 41 ranks above line.
+- Top: 1-13 unchanged. The Boys 0.965->0.966 (#14), tomohito shimura 0.958->0.964 (#23). Others: yuto083 0.956->0.960 (#49), Ad Space available 0.960->0.961, Choruru 0.959->0.960, r3takahashi 0.958->0.959, Tiagomgfernandes NEW 0.956 with 1 sub (#95), RFeng12 0.948->0.956 (#99), Suuuiiii4 0.947->0.955.
+- Into 0.954: Mthem77 (2nd in block), Pai, Dmitriy Gerasimov, MAIDANG, mi6, Jessica Crisp (from 0.947), yamashu, taopy2.
+- Into 0.953 at block END (480-496): Ivo Georgiev, TheMightiestMan, Abu Kayyisah Basyid, Charismatic Pizza Party, MH (0.885), Siddhant Rajhans, Octavi Grau, wodedaodun, 4eta (NEW 1 sub), Yaroslav Polyakov, cp11122, Nf4d1l, xaxipiruli, Alex Lenzi, zhangjh11123, Ornate_show: last subs 15:52-18:18 = late x138 copies again.
+
+## 00:50 UTC CLI code/datasets/models
+- kernels list --competition --sort-by dateRun: newest still raunakdey07/biohub-harmonic-fusion-v3 (25 Sep 09:09) -> NO public notebook run since round 1. scoreDescending top: raunakdey07, amanatar/optimized-biohub-max-score, kunaldesale2408, anvithpothula/biohub-0-953-lb-original (listed title now 'Biohub 0.953 LB | ORIGINAL' 187 votes; check if x138 renamed), amanatar geometric fusion... nothing new. dateCreated newest = tobimichigan (24 Sep).
+- Movers' public code: mthem77 (0.953->0.954, 2nd in block) only has 21 Sep kernels (B0 harmonic fusion re-run, D1-2 zhincez 0947); tomohitoshimura, yuto0712, rfeng12, tiagomgfernandes, bharath111l (biohub-lgraph-gap-recovery-ship 4 Jul, old), jessicacrisp, rajathrpai, dmitriygerasimov (Aug datasets), taopy2 (private), yamashuuu, lowasitgoes: nothing new biohub.
+- datasets --search biohub --sort-by updated: nothing after kragglenote2forwork/biohub-sub-cache2 (20:06 UTC 25 Sep, empty). models --search biohub: thedivyanshpant/{biohub-deepcenter-unet3d-center-prior-v1, biohub-temporal-unet3d-seed314159-v1, biohub-tracking-support-pack-50ep-v1} (not in earlier notes; names = re-uploads of known public weights; his only kernel is 22 Sep) -> low value.
+- competitions files: creationDate 2026-06-26 unchanged. competitions list: deadline 2026-09-29 23:59:00, teamCount 3916, userRank 155.
+
+## 00:55-01:05 UTC browser (own tab 1196279883 in a fresh MCP group; closed at the end, group auto-removed)
+- Discussion sort=published + sort=recent-comments: no new topic, no new comment. Newest activity still topic 743006 'Beginner question: How do Public/Private splits...' 'Last comment 3h ago by Gabriel' (= the round-3 one-liner). imissher 'Eight leaderboard experiments...' Posted 16h ago; SamoraDC 1d; Quantizr 'errors in annotated ground truth' last comment 2d ago by Satwik. Pinned host topics unchanged (Workshop last comment 10d; Discord 1mo; Welcome 2mo) -> no announcement.
+- x138 URL https://www.kaggle.com/code/anvithpothula/biohub-0-953-lb-runnable-with-public-datasets now REDIRECTS to https://www.kaggle.com/code/anvithpothula/biohub-0-953-lb-original?scriptVersionId=351539814 ; title renamed to 'Biohub 0.953 LB | ORIGINAL' (+5 star emoji); still 'Version 1 of 1', Comments (3), 187 votes (183), 264 copies (260), 1,946 views (1,908). Code unchanged (V1). Our builds use local copy experiments/exp56_x138_verbatim (kernel_sources [] in exp58 metadata) -> no impact.
+- Overview: Timeline unchanged (Entry/Merger Sept 22; Final Submission Deadline September 29, 2026, 11:59 PM UTC); Code Requirements unchanged ('CPU Notebook <= 12 hours run-time', 'GPU Notebook <= 12 hours run-time', internet disabled, external data allowed). Stats: 3,916 Teams, 85,758 Submissions, '4 DAYS TO GO'.
+- Code tab Recently Run: Harmonic Fusion V3 'Updated 16h ago' 0.953; optimized-biohub-max-score 1d 0.953; exp003 Two Embryos 0.885; Biohub Cell Tracking 2d 0.953 -> same as CLI; nothing new, nothing >= 0.954, nothing pulled.
+- 00:54 UTC: final JSON written to research/wf_ideas_v4/round4/scan_browser.json.

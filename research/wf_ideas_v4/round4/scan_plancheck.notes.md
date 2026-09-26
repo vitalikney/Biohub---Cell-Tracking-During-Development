@@ -1,0 +1,17 @@
+# scan_plancheck notes (round 4) — started 2026-09-26T00:46:28Z
+- 00:47Z read CONTEXT.md l.1519-2025 (PRE-REG v3 e/f, ADDENDUM L, AMENDMENT f2, READ TABLE 23:12, RESUME POINT 00:02). No round3/REPORT.md on disk (only report.json); read round2+round3 scan_plancheck.json + round3/report.json. Round-3 next_focus: round 4 operational only.
+- MEMORY.md (system reminder in this session) still says "Resume point ... latest 25 Sep 10:20 UTC ... just above ## 9" and approval line "25 Sep batch approved: exp52, exp53, exp54" -> R3-A5 memory part NOT done.
+- 00:50Z poll.log 00:43:00Z: #37 K2 56563521 PENDING, #38 twin 56563534 PENDING, P36 COMPLETE 0.954 (L36 (7.24,7.42]). ledger.md: K2 family safetail, twin safetail_noins (correct); A5-F "not supplied" (poller runs ledger without --forecast-h); K2 watch 07:02-08:32Z.
+- git: READ TABLE committed 1017c41 at 23:13Z (before scores) OK; RESUME POINT b2cb928 00:02Z. MEMORY.md pointer + approval file ARE updated (system-reminder snapshot was stale) -> no memory finding.
+- runtime_ledger.py EXP_RULES: exp58t -> safetail (insertion gate col) OK. Kernel timers from KERNEL_START_TS (build_probe_kernel.py l.1398/1410) -> L<=8.0h proves insertion gate never fired (queue only loosens).
+- floatout NOT ported to x138 (BASES['x138']['patches'] has trainlab/lowrefine/forkmid/forkblob only; FLOATOUT_CHECK bare assert l.1315 per round2 rc-a). R3-A9 item 5 says 'S12 only' but S12 = consolidation of ALREADY-ACCEPTED riders (§e) and R8 = new mechanisms by 27 Sep 12:00 -> inconsistency.
+- lb_poll.py: 600 s sleep + up to 3x(180 s timeout + 30 s) -> clean-proof resolution ~10-20 min around the 08:02:12Z mark.
+- Kaggle CLI submissions CSV has no error-class column -> row 1 (K2 ERROR) cannot distinguish Kaggle Error / Timeout / Exception without the web UI.
+- 00:55Z poller alive: PID 20052 python lb_poll.py started 23:12:45Z; no Windows reboot pending (CBS/WU keys absent).
+- 00:55Z Kaggle kernels (read-only CLI): exp58t v1 lastRun 2026-09-25 16:20:23Z COMPLETE (K1 ready, unchanged); exp58 16:20:17Z, exp58n 20:35:41Z unchanged.
+- 00:56Z Kaggle API ApiSubmission HAS error_description (CLI CSV omits it) -> error class readable via python one-liner. No selection field in the API.
+- 00:57Z Submissions page https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/submissions (read-only, own tab, closed): "0/2" selected; page text: "If less than 2 are selected, Kaggle will automatically select from your best scoring submissions" + "Auto-selection candidates" button. K2/twin "Notebook Running". => with 0 or 1 ticks, auto-select fills from best public = P36 (0.954, diagnostic, never a final) / #35 (0.954, R5-unproven). Old CONTEXT l.1364 "currently exp29+exp39" was a plan, not a tick.
+- P36 COMPLETE 23:42:50Z, i.e. 19 min BEFORE the 00:02 submits -> READ TABLE caveat "P36 still PENDING at the submit" is moot (no own-queue confound).
+- READ TABLE hole: row 2 (twin-K2>=+0.002) with d1<=-0.002: F2 = "K1 if submitted and scored" but no row ever submits K1 in that world -> F2 falls to exp52 (0.950) although K1 (~#35 0.954 + C01) is the natural insertion hedge.
+- READ TABLE row 1 (K2 ERROR -> K1) ignores error class: 'Kaggle Error' (infra) -> resubmit K2 v1 is the clean replication; Timeout/compute on BOTH K2 and twin -> K1 shares runtime profile.
+- 01:00Z wrote scan_plancheck.json (8 findings PC4-01..08)
