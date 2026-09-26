@@ -2093,6 +2093,20 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   governor: conflicts with R7 (validator/sweep never on in our submissions; the hidden rerun sweeps other stems) and no
   public score >= 0.954 is shown -> not ported. E10 trigger (public x138 heir >= 0.956): NOT met. Interpretation: private
   or Discord x138 variants / own work; public-tuned knobs may not transfer to private. Plan unchanged: finals #37 + #38.
+- 2026-09-26 08:49 UTC, RULES CHECK (user question "official rule or our principle?"; browser, read-only, Rules/Data/Overview):
+  (1) Leaked private submission CSVs: rules 3.5.d "Privately sharing code or data outside of Teams is not permitted";
+  3.6.a sharing Competition Code between teams "may result in disqualification"; using leaked files is not named
+  explicitly but conflicts with 3.14.a "your Submission is your own original work" and 3.8.d (cheating/unfair
+  practices) -> NOT allowed in practice (and useless: static CSVs cannot score in the hidden rerun). (2) In-kernel
+  validator/PP sweep on the hidden rerun: NOT prohibited by the rules -> R7 is our methodological rule only.
+  (3) Test-set structure / overlap consensus: the only test-data prohibition is 3.4.b "submissions may not use or
+  incorporate information from hand labeling or human prediction of the validation dataset or test data records";
+  automated test-time use of test clips, leaks, test-set structure and LB probing are NOT MENTIONED -> not prohibited
+  by the rules (earlier caution was ours). Data page: hidden test "approximately the same size as the training dataset",
+  "Train and test sets are embryo-disjoint", "Multiple samples may share the same embryo"; overlap of test crops NOT
+  MENTIONED. External data/models allowed if "publicly available and equally accessible" (2.6.a, Code Requirements).
+  Recommendation to the user: overlap consensus is rule-legal but small (+0.0005 expected), conditional on overlapping
+  hidden crops, and too tight for R8 (27 Sep 12:00 UTC) -> not recommended; user decides.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
