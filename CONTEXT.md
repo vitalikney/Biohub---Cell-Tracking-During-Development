@@ -2451,6 +2451,27 @@ Mention it to the user in one line (R9-A8 item 6).
   Dummy: validate_csv ok (121,719 nodes vs K2 122,252; forks 75 = K2), Traceback 0, REPAIR FAILED 0, DEADLINE: 0, leaf
   prune on 4 clips, DIVINS ENABLED; run ~1,629 s. Poll header 21:08:29Z. exp70b dummy pushed 21:17Z (for 00:05Z); exp70d
   running (last slot today).
+- 2026-09-26 21:21 UTC, REACH0955 PLAN RECEIVED (workflow wf_fae804df-dfe; plan.json not written by the subagent - text kept in the
+  workflow journal and research/wf_ideas_v4/reach0955/plan.notes.md). Decisions by the main session (user asleep,
+  autonomous mode):
+  (1) SECURITY WARNING AUDIT: the harness flagged the ladder skeptic for 'Real-World Transactions'. Checked: the
+  submissions list holds only probes 37-40 (39/40 are ours, 21:15/21:17Z) and `kernels list --mine` holds only kernels
+  pushed by the main session (exp70a/e 20:49Z, exp70d 21:14Z and exp70b 21:17Z by ladder_wait.py, dryrun 20:02Z). No
+  unexpected push or submit found.
+  (2) FINALS: L9 (logged 20:49 UTC, before the first ladder submit) STAYS. The plan's alternative table F (a 0.955 knob
+  variant pairs with #37 and drops the twin) is NOT adopted: V* already carries K2's insertion, so pairing it with #37
+  gives up the only hedge against falling below the ~350 exact x138 copies if the insertion hurts on private (P
+  0.10-0.15, a medal-level rank cliff), while the cost of dropping #37 for V* is a knob-sized score change. Model or
+  pipeline changes (retrain, E10 port) pair with #37 as in E10 P6.
+  (3) RETRAIN (R9): the user's "сделай нам также!" (asked after being told the 0.955+ teams retrain or LB-tune) plus
+  "делай ... работай в автономном режиме" is read as a yes to ONE distilled-secondary run (exp71, y3uanm v1 recipe, own
+  Kaggle run, <= ~4.5 h T4) and ONE public probe (exp72 = K2 + that secondary via a new builder patch 'secswap'); R8 is
+  lifted for this item only. Finals change only by the user's own re-tick. The user can stop it in the morning. Prep
+  agents launched: T1 notebook experiments/exp71_secft_all (never submitted) and T4 builder patch + tests. Caveats on
+  record: y3uanm's notebooks are quick saves that never trained (logs 5-10 s), so nothing links their 0.956 to this
+  recipe; our model-swap record on the LB is 0/5.
+  (4) exp70g = K2 + DIVINS_CAP 6 built (sha 52c182a3; the only diff vs K2 is the name line and the cap). Reserve rung for
+  27 Sep S4 (00:05Z) if round 13's CPU arm 'ins_cap6' on exp60 is >= 0 pooled and no embryo < -0.0005; else exp70b.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
