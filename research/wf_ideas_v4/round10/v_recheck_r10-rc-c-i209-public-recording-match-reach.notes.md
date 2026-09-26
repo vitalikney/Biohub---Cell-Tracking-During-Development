@@ -1,0 +1,12 @@
+# Skeptic notes: R10-RC-C I-209 public-recording match (reach zero)
+- 2026-09-26: no earlier JSON for this task; started fresh.
+- CONTEXT.md l.1281-1288: 44b6 = crops of Ultrack dorado (63/71 placed, 654/777 GT nodes coincide); POLICY note. l.2096-2109 (08:49Z rules check): 3.4.b bans only hand labelling; "Train and test sets are embryo-disjoint"; "Multiple samples may share the same embryo"; external public data allowed (2.6.a).
+- ledger research/KNOWLEDGE/ideas.json I-209 (l.6543): status refuted, "Policy NO". I-203 refuted: same embryo as 44b6.
+- research/wf_ideas_v3/h_external-data-training.json lens_summary: "only same-instrument, same-scale public recording is dorado"; ZSNS001-005 DaXi 1.24 x 0.439 x 0.439 um.
+- research/wf_ideas_v3/browser_intel.md l.398-406: Zebrahub lists OpenSiMView ZMNS001, ZMNS002 as well (not discussed by the lens).
+- WEB CHECK https://zebrahub.sf.czbiohub.org/imaging : 2 OpenSiMView (ZMNS001/002) + 5 DaXi (ZSNS001-005, ZSNS001_tail).
+- https://public.czbiohub.org/royerlab/zebrahub/imaging/multi-view/ : ZMNS001.ome.zarr, ZMNS002.ome.zarr (dirs modified 27 Apr 2026), ZMNS001.json / ZMNS002.json 2.8 KiB, photo-manipulation/.
+- ZMNS001.json and ZMNS002.json: voxel z 1.97 um, y/x 0.485 um; 2 channels (mezzo, h2afva). Kaggle/dorado: 1.625 / 0.40625 um (tools/register_44b6_dorado.py SCALE). -> different scale (x1.19 xy, x1.21 z), 2-channel -> not the Kaggle acquisition as stored; a resampled crop cannot be excluded without TB-scale registration.
+- https://public.czbiohub.org/royerlab/zebrahub/imaging/multi-view/ZMNS001.ome.zarr/ : only pyramid levels 0-4 + .zattrs/.zgroup (dated 03/2023); NO labels/tracks folder -> no public labels to copy even with reach.
+- CORRECTION to the finding: "the only same-instrument public recording is dorado" is wrong wording: ZMNS001/002 are OpenSiMView (SimView design) too. Correct: "the only public recording at the Kaggle voxel scale is dorado (= 44b6 train); the two OpenSiMView ZMNS movies are at 0.485/1.97 um, two channels, image-only (no tracks)". Reach = none known, not proven zero; value even with reach ~0 for labels (none public), image context only.
+- Feasibility: nothing to build; matching would need TB downloads, new code, uploaded dataset, cannot meet R8 (27 Sep 12:00Z). Closure stands; reason reworded.

@@ -2227,6 +2227,77 @@ Mention it to the user in one line (R9-A8 item 6).
   it already records the R9-A6 items: I-276 refuted by measurement, I-222 with weight 0.80, I-177..I-181 notes, exp64 bed),
   intel pulls experiments/ext_corwin-biocel-aux, ext_y3uanm-secondary-ft, ext_robust-3d-cell-tracking, and the exp64 post-stop
   md/registration files. Round-9 status: A0-A7 done, A8 (user brief) in chat at the end of this turn, A9 (E10 check) in round 10.
+- 2026-09-26 16:04 UTC, ROUND 10 RECORD (research/wf_ideas_v4/round10/; info and hygiene, no decision):
+  (1) E10 P1 ~15:24Z (re-checked 15:33Z): P2 signal = amanatar/optimized-biohub-max-score v10 run started 13:18:11Z, status
+  RUNNING, unscored. P3 FAIL (in-kernel 45-key PP sweep + pass-2 rewrite, validator ON on held-out TRAIN stems, 5 new
+  default-OFF levers >> 1-2 mechanisms, no page score >= 0.956). P4b(c)/(d) FAIL (BIOHUB_VALIDATOR_ENABLE='1';
+  BIOHUB_REPAIR_DEADLINE_S overridden to 30600 in pass 2). No port. scoreDescending top-1 unchanged (Harmonic Fusion V3
+  0.953; amanatar 2nd, x138 4th). Crowd clause: 2 teams went from <= 0.953 to 0.956 (< 5). anvithpothula and thtennant
+  unchanged. E10 NOT met. Next P1 check <= ~21:30Z (round 11 at ~17:45Z does it).
+  (2) FINALS: API SELECTED 2/2 = [56563521, 56563534] at 15:23:10Z and 15:24:58Z.
+  (3) INTEL (R7, info only): LB 15:16:37Z, 3,930 teams. We are #210 at 0.954, 13th of 96 in the 0.954 block (198-293).
+  Public silver 196.5, so we are 14 ranks below it. Blocks: 0.957 90-107, 0.956 108-140, 0.955 141-197, 0.953 294-638
+  (345); >= 0.960 67; >= 0.970 7. 10th window of late x138 copies (17 at #608-624). No mover has a public source.
+  (4) x138 SLUG: the live slug is anvithpothula/biohub-0-953-lb-original (v1; lastRunTime 21 Sep 09:47:58Z; ipynb md5
+  97e22a53... = experiments/ext_x138/biohub-x138.ipynb). The old anvithpothula/biohub-x138 returns 404 on pull/status:
+  renamed, NOT deleted or changed. A version-pinned pull of another user's kernel returns 403 (CLI 2.2.4), so only the
+  latest version can be pulled (confirms P4b(c)).
+  (5) R9 ACTIONS VERIFIED (round 10, ~15:25Z): RESUME POINT 13:27, P4b, ledger rule exp63 -> x138 (+ test), OC
+  cherry-picks, NEVER_PUSH in exp65/exp66, finals notebooks sha unchanged (exp58 1f1ddb6d, exp58t a77bcd6b, exp58n
+  55038fd6). No exp65/exp66 push or submit. Test command = `python -m pytest -q tests` (184 passed). A bare `pytest` at the
+  repo root errors on experiments/l2_daughternet/kdn_score/test_adversarial.py; that is not a regression.
+  (6) FINALS INPUTS PROTECTION (until the private LB is final): never delete or make inaccessible
+  vitaliineibauer/biohub-ft-weights or the kernels vitaliineibauer/biohub-exp58-x138-safe-lowref and
+  vitaliineibauer/biohub-exp58n-x138-safe-lowref; never remove files from a biohub-ft-weights version (new versions only
+  add files).
+  (7) OPS: poller PID 20052 alive, last header 15:35:50Z, 0 gaps > 15 min. Windows Update NoAutoRebootWithLoggedOnUsers=1,
+  no pending reboot. Hygiene: round8/REPORT.md and round10/REPORT.md saved from the report JSON (the harness blocks .md
+  writes by subagents); one copy of the amanatar v10 intel kept (experiments/ext_optimized-biohub-max-score/v10_2026-09-26/,
+  ipynb md5 24ecb611...); the byte-identical duplicate folder and bash.exe.stackdump deleted.
+- 2026-09-26 16:04 UTC, E10 PORT RULE P4c (mechanical clarification of P3/P4/P4b within the user's 09:10 UTC conditional yes; no new
+  mechanism; written before any trigger; source research/wf_ideas_v4/round10/report.json R10-A2):
+  (1) BYTE-FOR-BYTE: a port is the scored version byte-for-byte, except the P4b(a) metadata fields. Any change to an env
+  default, flag, lever or source = no port. Flipping BIOHUB_VALIDATOR_ENABLE to '0', or hard-coding the levers a sweep
+  picked, is our own modification of an unscored configuration, not a port.
+  (2) VALIDATOR SCOPE: P3's 'no PP sweep or validator scoring test stems' covers a validator or PP sweep on TRAIN or TEST
+  stems. Either one fails P3.
+  (3) GREP = EVERY ASSIGNMENT, not the first hit. Every os.environ assignment of BIOHUB_VALIDATOR_ENABLE sets '0', and one
+  comes before the reader. A missing line counts as ON (x138's reader is os.environ.get('BIOHUB_VALIDATOR_ENABLE', '1') !=
+  '0'). Every os.environ assignment, os.environ.get fallback and preset-dict value of BIOHUB_REPAIR_DEADLINE_S equals
+  27000; a later override such as amanatar v10's os.environ['BIOHUB_REPAIR_DEADLINE_S'] =
+  os.environ.get('BIOHUB_REWRITE_DEADLINE_S', '30600') fails. There is no pass-2 rewrite, REWRITE/PPSWEEP/SWEEP gate or
+  in-kernel metric sweep.
+  (4) SOURCES: kernel_sources must be []. Any kernel source = P3 FAIL (it floats to the source's latest version and can
+  carry a cached CSV).
+  (5) DUMMY: the dummy log shows 'VALIDATOR: disabled (BIOHUB_VALIDATOR_ENABLE=0).' and 'enabled=False', and has no
+  'DEADLINE:' and no 'Re-writing submission.csv' line. Both CSVs (ours and the author's output of that version) pass
+  validate_csv, have no duplicate (dataset, node_id) rows and have finite x/y/z. Per-clip node counts agree within 1%
+  (sha256 equality recorded as info).
+  (6) TOOL: (1)-(5) are run by tools/e10_port_gate.py (read-only; it never touches a kernel; being written now, its commit
+  follows). Any FAIL = no port.
+  (7) BROWSER: the kernel API has no score field, so P3's score read needs the browser. If Claude in Chrome is not
+  connected at a trigger: notify the user and wait (strict P8 default).
+- 2026-09-26 16:04 UTC, E10 P1 SNAPSHOTS AND CHECK TIMES AFTER R8 (R10-A4): from the next check on, every P1 check writes
+  experiments/e10_watch/<YYYYMMDDTHHMMZ>.txt (tools/e10_snapshot.py, read-only CLI: dateRun and scoreDescending top-20,
+  --user anvithpothula / thtennant / amanatar, kernels status of amanatar/optimized-biohub-max-score and of the NEW x138
+  slug anvithpothula/biohub-0-953-lb-original, LB block counts) with a diff against the newest earlier file; a 404 on the
+  old x138 slug is not a signal. CHECK TIMES after R8: 27 Sep 12:00/18:00, 28 Sep 00:00/06:00/12:00/18:00, 29 Sep 00:00
+  UTC (plus the tick checks 28 Sep evening, 29 Sep 12:00/18:00 UTC). Wake mechanism: PENDING the user's answer (asked in
+  chat with the round-10 brief); until then this session's own timers. At each check confirm Claude in Chrome is
+  connected; a trigger with Chrome disconnected = notify the user and wait.
+- 2026-09-26 16:04 UTC, PRIVATE-READ PREDICTIONS (pre-registered, calibration only, NEVER a finals input; the finals are fixed at #37 +
+  #38): read on 30 Sep from the DISPLAYED 3-decimal private scores of #34 56545267 (x138 verbatim), #35 56545786 (x138 +
+  insertion), P36 56555189 (x138 + leaf prune + insertion), #37 56563521 (K2) and #38 56563534 (twin). Contrasts in
+  thousandths, with priors P(<0) / P(=0) / P(>0):
+  C1 insertion on plain x138 = #35 - #34: 0.10-0.15 / ~0.30 / 0.55-0.60.
+  C2 insertion on the K2 stack = #37 - #38: 0.10-0.15 / ~0.30 / 0.55-0.60.
+  C3 lowrefine + safetail = #38 - #34: ~0.10 / ~0.80 / ~0.10.
+  C4 leaf prune = P36 - #35: ~0.15 / ~0.70 / ~0.15 (lab +0.0008, public 0).
+  Reading: C1 and C2 with the same non-zero sign = the insertion transfers to the private embryos. One embryo split can
+  only fail to contradict the ~1/6 lab->LB rule, never confirm it. Our private result = max(#37, #38). No
+  rank-vs-0.953-block reading (rivals' private = max of their own two files; the block is not all x138 copies); if one
+  is reported anyway, compare only with the identifiable late x138-copy windows and label it confounded. Copied into
+  research/wf_ideas_v4/round9/LESSONS_draft.md s5 (with the R10-A5 text fixes a-g).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

@@ -1,0 +1,67 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/ideas.json",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/IDEAS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/10/ideas.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/10/ideas.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "what": "E10 P4c (I-280) and the read-only port gate tools/e10_port_gate.py (I-281) are not in CONTEXT or in code yet. The round-10 judge verified the underlying defects. P4b(d) is a first-hit grep, and a missing validator line counts as ON. amanatar v10 overrides REPAIR to 30600 at l.6583. validate_csv silently overwrites duplicate node keys",
+   "evidence": "research/wf_ideas_v4/round10/report.json R10-A2, R10-A3; scan_plancheck.json PC10-02, PC10-03; report.notes.md 15:37Z; tools/dummy_gates.py l.37-58; CONTEXT.md ends at the 13:34 UTC entry (l.2220-2229)",
+   "suggested_action": "Before the next E10 P1 check (<= ~21:30Z): append the R10-A2 text with date -u, then build the script and tests per R10-A3 without changing validate_csv defaults. Run `python -m pytest -q tests` and check that the finals sha is unchanged",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "Nothing written says what wakes the session for the E10 checks after R8 (27 Sep 12:00 -> 29 Sep 00:00 UTC). P1 diffs also have no snapshot file (I-282). The x138 slug was renamed, so P1 commands that use the old slug get a 404 that is not a signal",
+   "evidence": "research/wf_ideas_v4/round10/scan_plancheck.json PC10-04, PC10-05; report.json R10-A4, R10-A8 (b)",
+   "suggested_action": "Start experiments/e10_watch/<UTC>.txt with the next P1 check and use anvithpothula/biohub-0-953-lb-original. Append the post-R8 check times to CONTEXT and ask the user for the wake mechanism in R10-A8 (b)",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "PRIVATE-READ PREDICTIONS (I-283) are only useful if they are committed before the private LB is visible",
+   "evidence": "research/wf_ideas_v4/round10/report.json R10-A6; v_hypotheses_r10h-7.json (skeptic-fixed contrasts C1-C4)",
+   "suggested_action": "Append the R10-A6 block to CONTEXT with date -u, ideally in the R10-A1 commit, and copy it into LESSONS s5 with rows #35 56545786 and P36 56555189. It must be committed before 29 Sep 23:59Z",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "forgotten",
+   "what": "round8/REPORT.md is still missing. Commit 66a18e4 'round-8 report saved' added only report.json. round10/REPORT.md was refused again and exists only inside report.json R10-A0 (I-232). round10/ is untracked",
+   "evidence": "research/wf_ideas_v4/round10/scan_hypotheses.json r10h-2; scan_plancheck.json PC10-08; report.notes.md 15:40:41Z",
+   "suggested_action": "In the R10-A1 commit, write both REPORT.md files (UTF-8) and commit round10/ as the user with no trailer",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "Several items were decided in round 10 but are not in CONTEXT yet: the ROUND 10 RECORD, the 15:23:10Z/15:24:58Z tick checks, finals-input protection (I-284), and the curator records (I-146 measured, the I-097/I-107 structural block, the I-209 reason). poll.log and ledger.md are also uncommitted, and bash.exe.stackdump sits untracked at the repo root",
+   "evidence": "research/wf_ideas_v4/round10/report.json R10-A1, R10-A7; scan_hypotheses.json r10h-9; git status (M experiments/lb_poll/*, ?? bash.exe.stackdump, ?? two amanatar v10 folders)",
+   "suggested_action": "Make one main-session commit per R10-A1: commit only the v10_2026-09-26 copy of the v10 intel and delete the stackdump. The ledger already carries the R10-A7 records (curation 10)",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "Three user questions are still unanswered: full vs light rounds (I-265), the post-R8 wake mechanism (I-282), and the user's own 29 Sep 12:00/18:00 UTC reminders (I-229)",
+   "evidence": "research/wf_ideas_v4/round10/scan_hypotheses.json r10h-10; report.json R10-A8 (a)-(c); CONTEXT.md has no reply logged after 13:34 UTC",
+   "suggested_action": "Send R10-A8 once and log any reply with date -u. Until then the defaults are the current plan",
+   "urgency": "today"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "The LESSONS_draft corrections (six errors) and the consolidated 8-item post-deadline list exist only in the untracked round10 report.json (I-252)",
+   "evidence": "research/wf_ideas_v4/round10/report.json R10-A5 (a)-(g); scan_hypotheses.json r10h-6, r10h-8; research/wf_ideas_v4/round9/LESSONS_draft.md l.23, 30, 40-42, 50",
+   "suggested_action": "Apply R10-A5 to LESSONS_draft.md by 27 Sep 12:00Z (text only)",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "I-233 (the poller logs error_description) is still the only strict orphan. Round 10 does not mention it",
+   "evidence": "research/KNOWLEDGE/ideas.json I-233; research/wf_ideas_v4/round10/report.json R10-A0..A9",
+   "suggested_action": "Close it with one line: the C2 one-liner covers an E10 port read",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 10 ran at 2026-09-26 ~15:55 UTC on HEAD 6064d85, plus the untracked research/wf_ideas_v4/round10/ and the amanatar v10 pull. The ledger grew from 279 to 285 ideas; there are 38 change records in ideas.json meta.curations[n=10]. Counts c9 -> c10: lb-tested 41, lab-tested 21, refuted 159, deferred 26 -> 27, in-plan 31 -> 36, open 1.\n\nRound-9 actions verified as APPLIED:\n- I-257: 13:27 RESUME POINT, CONTEXT.md l.2205-2212, plus a pointer.\n- I-279: E10 P4b, l.2217-2218.\n- I-243: ledger exp63 -> x138 plus a test.\n- I-275: OC evidence cherry-picked into main; finals rebuild byte-identical; 184 tests; NEVER_PUSH, l.2220-2229.\n- I-259: round prompt ~330 block.\n\nRound 10 (15:16-15:43Z): E10 was not met. amanatar v10 was RUNNING and unscored, with the validator ON, a 45-key sweep, a 30600 override and 5 default-OFF levers, so it fails P3/P4b (I-025). x138's slug was renamed (I-020/I-026). Finals are still 2/2 at 15:23/15:24Z (I-258). Rank #210, 14 below public silver, info only (I-094).\n\nRechecks:\n- I-146 is refuted by measurement: x138 has a dormant short-track rescue; forced on it gives +0.00033, W/L 7/47.\n- I-097/I-107 are blocked on x138: V1284 head coupling makes a swap fail silently.\n- I-209 is now closed on reach, not policy.\n\nNew ideas:\n- I-280 P4c, I-281 e10_port_gate.py, I-282 e10_watch snapshots and wake mechanism (all in-plan, at risk).\n- I-283 PRIVATE-READ PREDICTIONS C1-C4 (at risk; commit before 29 Sep 23:59Z).\n- I-284 protect the finals' inputs.\n- I-285 pre-relink dump hook (post-deadline).\n\nThe r10h-8 post-deadline list is linked from I-222, I-261, I-029, I-242, I-079, I-208 and I-110.\n\nOrphans: I-233 is the only strict one. At risk: I-229, I-232, I-280, I-281, I-282, I-283."
+}

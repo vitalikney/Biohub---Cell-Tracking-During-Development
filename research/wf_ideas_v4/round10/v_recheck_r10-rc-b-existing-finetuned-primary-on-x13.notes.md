@@ -1,0 +1,8 @@
+# R10-RC-B verify notes (2026-09-26T15:32:40Z)
+- No prior JSON answer existed; started fresh.
+- experiments/RESULTS.md: probe 2 (exp06, 0.941 base + exp03B primary) LB 0.945 (+0.004); probe 11/exp30 0.944 (-0.003 vs exp29 0.947, confounded); probe 15/exp33 0.944 (-0.003, deconfounded); probe 17/exp35 soup03B_50 0.943 (-0.004, interpolates). 3/3 negatives on every >=0.945 stack; exp03B is a +3.2% node shift (node-count mechanism noted in RESULTS l.49).
+- exp56 x138 notebook (extracted to scratchpad x138.py): V1284 head = Linear(224,32)-SiLU-Linear(32,3) on sample_features(unet_out[:, f_idx]) (7-voxel centre + 6 directional differences of the PRIMARY encode map), normalised by saved mean/scale from x107's 20-movie capture (4,136 pairs). CONFIRMED head consumes primary features only.
+- CORRECTION: bounded() = 2*d/(1+|d|) has norm < 2 um by construction and the clip only shrinks shifts, so the 2.00001 um RuntimeError cannot fire from feature shift (only non-finite). A primary swap would NOT crash: it would silently apply out-of-distribution shifts up to 2 um (mean/scale normalisation also mismatched). Failure mode = silent harm, not fail-soft.
+- Feasibility: now ~15:35 UTC 26 Sep, R8 27 Sep 12:00 UTC (~20 h). Needs x138 GPU lab rerun (~5 GPU-h) + dummy + OK + ~7.5 h LB latency, and R4 >= 0.956 (#37 + 0.002). Head retrain on exp03B features = retraining (forbidden before 29 Sep). V1284_MODE=zero workaround drops the x138 V1284 gain -> not x138 anymore. Prior -0.003/-0.004 makes P(+0.002) tiny.
+- Verdict: finding NOT refuted; stays closed; curator note correct with the crash-vs-silent correction.
+- 2026-09-26T15:33:51Z final JSON written

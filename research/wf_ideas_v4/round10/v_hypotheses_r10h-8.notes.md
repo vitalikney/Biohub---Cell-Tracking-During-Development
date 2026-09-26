@@ -1,0 +1,14 @@
+# v_hypotheses_r10h-8 notes (2026-09-26T15:32:40Z)
+- No prior JSON answer existed; started fresh.
+- LESSONS_draft s4 (research/wf_ideas_v4/round9/LESSONS_draft.md l.45-51): 5 items (joint FT + axial loc; learned z; post-freeze; OC 'lower floors (58/62)'; leak-free bed).
+- VERIFIED: I-222 44b6 33.1% / 6bba 3.9% (26/39 clips at 0; ab78413d 93%), effective weight 0.80, arms + 6 clips = round9/report.json verbatim.
+- VERIFIED: 668 missing GT nodes, 477 (71%; 6bba 436) at 7-10 um, z-dominant 41% vs 25-28% (round7/report.json).
+- VERIFIED: head retrain 6bba->44b6 +12.0% worse (CONTEXT l.1490); Canh -0.003/-0.038 (CONTEXT l.191).
+- VERIFIED: z+0.1 vox ALL +0.00161, 6bba +0.00153, bias 0.152/0.45 um, transfer ~+0.0003 (round8/report.json).
+- VERIFIED: post-freeze +0.0063 pooled / +0.0068 per 6bba GT, freezes in 30/39 6bba clips and 0/17 44b6 (round5/report.json) -> 44b6 no-harm gate of item 4 is vacuous by construction; frozen frames look 6bba-acquisition-specific (GT copies positions; median step 0).
+- VERIFIED: 62/99 detected-unforked, 9.9 um, 33/62 at 8-12 um, 88/99 from 6bba (round8/report.json) -> item 6 evidence is 6bba-dominated.
+- VERIFIED: exp60 no pre-relink hook (round9 scan_recheck; tools/trainlab.py l.243 replays presafe/preshort tails only; build_probe_kernel.py l.1488-1492 three snapshots). P21-23 -0.002 reads were on the exp29 base (round9 report), not x138.
+- VERIFIED: OC exp64 G-B -0.00143 (boot lower -0.00200), CONTEXT l.2202.
+- Round9 report already names 6 of the 8 items as the post-deadline list; OK for R8 (doc edit only, no build/GPU/submit).
+- Caveats: draft item 5 (leak-free bed) is folded into item 8 only -> should stay a cross-cutting preamble for all 8 items; item 1 6bba side = 1 clip; items 2/3/8 are retrains (closed for finals, fine post-deadline).
+- 2026-09-26T15:34:46Z wrote v_hypotheses_r10h-8.json (refuted=false, 4 wording fixes)

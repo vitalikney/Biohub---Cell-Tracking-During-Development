@@ -1,0 +1,6 @@
+# v_recheck R10-RC-A I-146 (skeptic) notes
+- 2026-09-26T15:32Z start; no prior json. Scratchpad r10/rescue_summary.json numbers match finding (r88 pooled +0.000333, 44b6 SEL +0.00125/CONF -0.00018, WL 7/47, TP+20 FP-2, parity_all true).
+- 18:3xZ code check experiments/exp60_trainlab/kernel_a/exp60-x138-trainlab-a.ipynb filter_short_track_components: rescue block gated by removed_frac >= SHORT_TRACK_RESCUE_TRIGGER_REMOVED_FRAC; candidates len in [MIN_LEN=4, OUTPUT_MIN_TRACK_LEN=6) -> 4-5 nodes; mean prob >= 0.88, mean dist <= 3.0; budget min(120, round(1.2% nodes)). Matches finding.
+- run_stats short_track_rescue_triggered: exp60_a 0/28, exp60_b 0/28, K2 dummy exp58 0/4. Matches.
+- Both finals' dummy logs (_dl/biohub-exp58-x138-safe-lowref = #37, _dl/biohub-exp58n-x138-safe-lowref = #38) print identical rescue config (0.88/3.0/4/0.012/120/0.1). "Shared by both finals" holds (config-level; #37's inserted nodes can shift component sizes, so trigger behaviour is not guaranteed bit-identical, but the mechanism is the same).
+- Verdict: finding holds (stays closed). Facts verified; gain ~0; R8 impossible; node-count lab bias shape (W/L 7/47, 44b6 SEL/CONF sign split, top-3 tiny clips) matches round-3 boundary rescue + probe 6 L4 -0.002 anchor. refuted=false (the finding recommends no action; nothing to refute).

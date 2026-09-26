@@ -1,0 +1,6 @@
+# amanatar/optimized-biohub-max-score v10 (pulled 26 Sep 15:20 UTC; kernel status RUNNING since 13:18 UTC, NO score yet; page shows V1 0.910, best 0.953 V4, "Version 1 of 5")
+1. Diff vs the 25 Sep pull (../optimized-biohub-max-score.ipynb): adds five default-OFF "v10 ceiling-breaker" levers: L1 count_oracle (absolute node budget from estimated_number_of_nodes), L2 div_lineage (daughter-lineage completion), L3 gap_predict (constant-velocity 2-4 frame bridging), L4 stitch (endpoint stitching), L5 margin_repair (low-margin parent re-assignment); PP_SWEEP_KEYS 31 -> 45.
+2. The levers are switched on only by the validator-gated sweep on held-out TRAIN stems (BIOHUB_VALIDATOR_ENABLE="1"), i.e. in-sample selection; REPAIR_DEADLINE_S 27000 as x138.
+3. E10 port rule P4b(d) fails by construction (validator ON, PP sweep); families are closed for us (count-target prune I-149, stitch, gap LAP/sandwich, div completion ~ insertion).
+4. Verdict: not portable, no new idea. Only relevance: if the running version later shows >= 0.956 it would be public evidence that sweep-selected levers help on the hidden test; recheck next round.
+5. Source: https://www.kaggle.com/code/amanatar/optimized-biohub-max-score ; CLI `kernels status` = RUNNING at 15:18 UTC.

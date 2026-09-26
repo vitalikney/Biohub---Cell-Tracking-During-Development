@@ -523,3 +523,98 @@ Curator logs: `research/KNOWLEDGE/_curation/4/`.
   - E10 traps: [now] (watch) vs [today] (ideas, facts). INDEX uses [now, before ~15:30Z].
   - OC cherry-pick: [today] everywhere.
   - User message: [now] (watch) vs [today] (ideas, facts). INDEX uses [today].
+
+## 10 - 2026-09-26 ~15:55 UTC (curation 10; git HEAD 6064d85 = origin/main + untracked `research/wf_ideas_v4/round10/` and the amanatar v10 pull `experiments/ext_optimized-biohub-max-score/v10_2026-09-26/`)
+
+**Operations:**
+- **Commits since curation 9** (`git log --oneline 69d6be2..6064d85`):
+  - d6a0c73: round 9 records. This covers the 13:27 RESUME POINT, INTEL, the OC SEQUENCE NOTE, E10 P4b, the POINTER (`CONTEXT.md` l.2205-2219), the exp63 -> x138 ledger rule with a test, `research/wf_ideas_v4/round9/REPORT.md` and `LESSONS_draft.md`.
+  - 4a44a83: curation 9 and the intel pulls.
+  - 3d6a704..a782fa1: the 6 OC commits, cherry-picked.
+  - 6064d85: R9-A5 DONE. The finals rebuild is byte-identical, 184 tests pass, and exp65/exp66 hold NEVER_PUSH (`CONTEXT.md` l.2220-2229).
+- **Finals still ticked 2/2**, [56563521, 56563534]. The API showed SELECTED at 15:23:10Z and 15:24:58Z (`research/wf_ideas_v4/round10/report.notes.md`; `IDEAS.md` I-258).
+- **E10 not met** at ~15:24Z. amanatar v10 was running and unscored, with validator ON, a 45-key train-stem sweep and a 30600 s override. It fails P3/P4b, so it is info only (`experiments/ext_optimized-biohub-max-score/v10_2026-09-26/NOTES.md`; `IDEAS.md` I-025). x138's slug is now `anvithpothula/biohub-0-953-lb-original`; the old slug returns 404 (`FACTS.md` F-LB-05, C-73).
+- **LB:** #210 of 3,930 at 15:16:37Z, 14 ranks below public silver (8 at 12:46Z). No new submission (`FACTS.md` F-LB-02 [c10]).
+- **Round 10** ran 15:16-15:43Z. It is untracked, has `report.json` R10-A0..A9 and no REPORT.md; the harness refused the write again. round8/REPORT.md is also still missing (`research/wf_ideas_v4/round10/report.json` R10-A0).
+
+**Ideas** (`IDEAS.md` l.11; `ideas.json` meta.curations[n=10], 38 records; `_curation/10/ideas.json`):
+- **Applied:**
+  - I-257 (RESUME POINT l.2205-2212);
+  - I-279 (P4b l.2217);
+  - I-243 (ledger exp63 -> x138 + test);
+  - I-275 (OC cherry-pick, l.2220-2229);
+  - I-259 (round prompt block count).
+- **Status changes:**
+  - I-146: refuted by measurement. x138's dormant rescue forced on gives +0.00033, W/L 7/47.
+  - I-097/I-107: structurally blocked on x138 (V1284 head coupling).
+  - I-209: now closed on reach rather than policy.
+  Sources: `research/wf_ideas_v4/round10/scan_recheck.json`; `DECISIONS.md` G34, G35.
+- **New:**
+  - I-280 P4c, I-281 `tools/e10_port_gate.py`, I-282 e10_watch snapshots and the wake mechanism, I-283 PRIVATE-READ PREDICTIONS C1-C4. All four are in-plan and at risk.
+  - I-284 protect the finals' inputs (in-plan).
+  - I-285 pre-relink dump hook (deferred).
+  - The r10h-8 post-deadline list is linked from I-222, I-261, I-029, I-242, I-285, I-079, I-208 and I-110.
+- **Counts c9 -> c10:** 279 -> 285 ideas. Deferred 26 -> 27, in-plan 31 -> 36. Unchanged: lb-tested 41, lab-tested 21, refuted 159, open 1. Strict orphan: I-233. At risk: I-229, I-232, I-280, I-281, I-282, I-283 (I-243, I-257, I-262, I-275 and I-279 left the list).
+
+**Facts and decisions** (`FACTS.md`, `DECISIONS.md`, rows marked [c10]; `_curation/10/facts.json`):
+- **New facts:** F-RUN-23 (ops at 15:25-15:46Z: poller alive, 0 gaps, no pending reboot), F-MOD-23 (dormant ADAPTIVE_SHORT_TRACK_RESCUE in x138 and both finals) and F-TRN-36. 26 rows were updated.
+- **Contradictions:**
+  - Resolved: C-26, C-56, C-62, C-63, C-70, C-71.
+  - Updated: C-05, C-30, C-64, C-68, C-69.
+  - New:
+    - C-72: amanatar v10 REPAIR 27000 at the first hit, overridden to 30600 at l.6583.
+    - C-73: x138 slug.
+    - C-74: the validator scope in P3.
+    - C-75: stale MEMORY index injected into sessions.
+    - C-76: skeptic check time.
+    - C-77: LESSONS_draft numbers.
+    - C-78: 29 Sep slot use (no conflict).
+- **DECISIONS.md:** new gates G34/G35 in §1b; §2 CURRENT snapshot table; §2f (P4b in force, v10 no port, P4c proposed); §2g archived; [c10] lines on R1-R10.
+
+**Watchlist** (`WATCHLIST.md`; `_curation/10/watch.json`):
+- **Done:** W80 (resume hygiene), W87 (P4b), W88 (ledger exp63), W83 (cherry-picks), W89 (OC sequence note), rounds 9 and 10.
+- **Overdue:**
+  - W86 residue: round8 and round10 REPORT.md.
+  - W90/W71: records due 12:00 (CONTEXT l.22, l.196, out_valid, efpost), plus round prompt l.36.
+  - W03: friend A card.
+- **New:**
+  - W94: ROUND 10 RECORD and hygiene commit.
+  - W95: P4c.
+  - W96: gate script.
+  - W97: e10_watch and the post-R8 schedule.
+  - W98: lessons fixes.
+  - W99: private-read predictions.
+  - W100: curator records.
+  - W101: user message; absorbs W92.
+  - W102: finals-input protection.
+  - Insights I85-I95.
+
+**Alerts** (`INDEX.md` TOP ALERTS, 9 after dedup):
+- **Resolved since curation 9:**
+  - Resume hygiene: the RESUME POINT and POINTER were written; MEMORY.md was updated on disk.
+  - P4b is in CONTEXT, and the exp63 ledger rule is in place.
+  - The OC cherry-pick is done.
+  - round9 REPORT.md and LESSONS_draft are saved.
+  - The round prompt '~330' is fixed.
+- **Carried over:**
+  - The user message, which now has 3 questions (the wake mechanism is new).
+  - round8 REPORT.md.
+  - Missed records and prompt l.36.
+  - Friend A card.
+  - Tick re-checks and poller.
+  - "Public = one embryo" caveat.
+  - Stale MEMORY copy.
+  - I-233.
+- **New:**
+  - P4c and the gate script before the next P1 check.
+  - x138 slug rename and e10_watch snapshots.
+  - Finals-input protection.
+  - Private-read predictions before 29 Sep 23:59.
+  - Six LESSONS_draft errors.
+  - Uncommitted poll.log/ledger.md, a duplicate v10 folder and `bash.exe.stackdump`.
+  - Dormant rescue in the finals (info).
+- **Curator disagreements settled here:**
+  - User message: [now] (facts, watch) vs [today] (ideas). INDEX uses [now].
+  - Hygiene commit: [now] (watch) vs [today] (ideas, facts). INDEX uses [now, before round 11].
+  - Private-read predictions: [today] (watch) vs [before-finals] (ideas, facts). INDEX uses [before-finals] with the hard limit stated.
+  - LESSONS fixes: [before-finals] (ideas) vs [info] (facts). INDEX uses [before-finals, by 27 Sep 12:00].

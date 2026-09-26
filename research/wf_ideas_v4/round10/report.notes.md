@@ -1,0 +1,16 @@
+# round10 report notes
+- 2026-09-26T15:36:26Z started report writer; report.json absent -> fresh
+- 15:36Z inputs read: CONTEXT l.1950-2250 (last dated entry 13:34Z R9-A5; no user reply on light/full rounds or reminders logged), round9/REPORT.md + report.json (format), round10 scan_* + v_* (6 skeptic verdicts: none refuted, all with fixes).
+- 15:37Z own checks (read-only):
+  - git: main == origin/main 6064d85; dirty = poll.log, ledger.md; untracked bash.exe.stackdump, ext_optimized-biohub-max-score-v10/, ext_optimized-biohub-max-score/v10_2026-09-26/, research/wf_ideas_v4/round10/.
+  - duplicate intel: both v10 folders hold ipynb md5 24ecb6111ff26ac9af4705135ceda143 and kernel-metadata md5 462ac0ab...; only v10_2026-09-26/ has NOTES.md -> commit that one copy.
+  - x138 (experiments/ext_x138/biohub-x138.ipynb, joined code lines): l.72 os.environ["BIOHUB_VALIDATOR_ENABLE"]="0"; l.74 REPAIR 27000; reader l.4096 os.environ.get("BIOHUB_VALIDATOR_ENABLE","1") != "0" -> absent line = ON (PC10-02 confirmed).
+  - amanatar v10 (ext_optimized-biohub-max-score-v10/optimized-biohub-max-score.ipynb): l.121 VALIDATOR "1"; l.123 REPAIR "27000"; l.184 REWRITE_DEADLINE_S "30600"; l.320/326 preset dict 27000.0/30600.0; l.6583 os.environ["BIOHUB_REPAIR_DEADLINE_S"] = os.environ.get("BIOHUB_REWRITE_DEADLINE_S","30600") -> first-hit grep would pass wrongly (PC10-02 confirmed).
+  - tools/dummy_gates.py validate_csv l.37-58: nodes dict keyed (dataset,node_id) -> duplicates silently overwritten; no finite check; no per-clip 1% comparison code (PC10-02 confirmed).
+  - round8: git ls-files has report.json but no REPORT.md; report.json contains 'REPORT_MD_RU' once (r10h-2 / PC10-08 confirmed).
+  - LESSONS_draft.md l.23 '+28 readmits of 121,252'; l.30 'Jaccard ~0.36'; l.40 '~330', '#155 to #204'; l.41 'nine research rounds'; l.42 'ban only hand labelling ...'; l.50 OC 'lower floors (58/62)' (r10h-6 a-e confirmed).
+  - poller: PID 20052 alive (tasklist); last header 2026-09-26T15:35:50Z; ledger 158 polls, gaps > 15 min 0.
+  - refs: #34 56545267 0.953, #35 56545786 0.954, P36 56555189 0.954, #37 56563521 0.954, #38 56563534 0.953 (poll.log 15:35:50Z block).
+- Synthesis decisions: merge PC10-02 + PC10-03 + r10h-5 + skeptic PC10-01 fix (validator on TRAIN stems) into one CONTEXT entry 'E10 PORT RULE P4c'; gate script as a separate item (read-only; stricter CSV checks in the new script, not by changing validate_csv used by the finals' dummy tests); PC10-04 + r10h-10 -> watch files + post-R8 schedule + user question; r10h-6 + r10h-8 (+ skeptic wording) + R10-RC-A lesson -> one LESSONS edit; r10h-7 with skeptic contrasts C1-C4 -> PRIVATE-READ PREDICTIONS.
+- 15:40:41Z Write of round10/REPORT.md refused by harness ('Subagents should return findings as text'), as in rounds 8-9 -> REPORT_MD_RU goes into report.json action R10-A0 for the main session to save.
+- 15:43:43Z report.json written (10 actionable R10-A0..A9; builder scratchpad r10judge/build.py + report_ru.txt)

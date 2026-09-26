@@ -1,0 +1,5 @@
+- 2026-09-26 15:46 UTC: started run 10; no watch.json in _curation/10; reading WATCHLIST.md + _curation/9
+- 15:50Z read CONTEXT l.2120-2250 (new: 13:27 RESUME POINT, INTEL, OC SEQ NOTE, P4b, POINTER; 13:34 R9-A5 DONE), round10 report.json (R10-A0..A9) + notes, v10 NOTES
+- 15:55Z verified: W80(a,c,d) done (RESUME 13:27, POINTER, MEMORY disk 13:35Z); W87 P4b done; W88 done (runtime_ledger l.71 + test l.317); W83 done 13:34; W86 half (round9 REPORT tracked, round8 REPORT.md missing); W71 l.20 fixed, l.36 '~4 h headroom' remains; l.22/l.196/out_valid/efpost unchanged; no e10_watch, no e10_port_gate.py; poller hdr 15:45:51Z PID alive
+- 15:48Z (note: earlier note stamps 15:50/15:55 were estimates; real clock 15:46-15:48). Checked: 33.1% / ADAPTIVE_SHORT_TRACK_RESCUE / new x138 slug not in CONTEXT or FACTS; e10_watch + e10_port_gate absent
+- 15:51Z WATCHLIST.md written (curation 10: W94-W102, T31-T35, I85-I95; CONTEXT line cites corrected to l.2205-2229 layout). Writing watch.json. No other file touched.

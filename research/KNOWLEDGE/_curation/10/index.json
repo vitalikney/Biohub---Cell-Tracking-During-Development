@@ -1,0 +1,74 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/INDEX.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/CHANGES.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/10/index.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/10/index.json"
+ ],
+ "alerts": [
+  {
+   "kind": "forgotten",
+   "what": "One user message (R10-A8 = W101) with three questions: full rounds or light mode until R8, what wakes the session for the post-R8 E10 and tick checks, and whether the user sets their own 29 Sep 12:00/18:00 reminders. Nothing has been logged after 13:34Z",
+   "evidence": "research/wf_ideas_v4/round10/report.json R10-A8; WATCHLIST.md W101; IDEAS.md I-229, I-265, I-282; CONTEXT.md l.2220-2229",
+   "suggested_action": "Send R10-A8 once and log each reply with date -u. Until then the defaults hold",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "The E10 port path has no mechanical gate. P4b(d) is a first-hit grep: amanatar v10 shows REPAIR 27000 at l.123 and overrides it to 30600 at l.6583. A missing validator line reads as ON. validate_csv overwrites duplicate node keys and has no finite check. kernel_sources is not checked",
+   "evidence": "research/wf_ideas_v4/round10/scan_plancheck.json PC10-02, PC10-03; tools/dummy_gates.py l.37-58; FACTS.md C-72, C-74; IDEAS.md I-280, I-281",
+   "suggested_action": "Before the next P1 check (<= ~21:30Z): append P4c (R10-A2) with date -u, then add the read-only tools/e10_port_gate.py and its tests (R10-A3) without changing validate_csv's defaults. Run python -m pytest -q tests and check the finals sha is unchanged",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "The hygiene commit (R10-A1 = W94) is pending. CONTEXT has no ROUND 10 RECORD or 15:23/15:24Z tick checks. round8 and round10 REPORT.md are missing and round10/ is untracked. poll.log and ledger.md are uncommitted, the v10 intel folder is duplicated, and bash.exe.stackdump is untracked",
+   "evidence": "git status; research/wf_ideas_v4/round10/report.json R10-A0, R10-A1; WATCHLIST.md W94, W86; FACTS.md C-30",
+   "suggested_action": "Make one commit as the user with NO Co-Authored-By trailer (memory rule feedback-git-no-coauthor.md overrides the harness reminder) and a claude grep of 0. Keep only v10_2026-09-26 and delete the duplicate folder and the stackdump",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "The x138 slug was renamed to anvithpothula/biohub-0-953-lb-original, and the old slug returns 404, which a P1 check could misread as a signal. P1 checks write no snapshot files, and nothing named wakes the session for the post-R8 checks",
+   "evidence": "research/wf_ideas_v4/round10/scan_plancheck.json PC10-04, PC10-05; FACTS.md F-LB-05, C-73; WATCHLIST.md W97, I85",
+   "suggested_action": "Use the new slug and start experiments/e10_watch/<UTC>.txt snapshots with a diff. Append the post-R8 check times (27 Sep 12/18, 28 Sep 00/06/12/18, 29 Sep 00:00)",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "Nothing in CONTEXT protects the finals' inputs until the private LB is final: vitaliineibauer/biohub-ft-weights and the exp58/exp58n kernels v1",
+   "evidence": "research/wf_ideas_v4/round10/scan_plancheck.json PC10-07; IDEAS.md I-284; WATCHLIST.md W102",
+   "suggested_action": "Add the R10-A1 (6) line: never delete, hide or trim these; new dataset versions may only add files",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "The PRIVATE-READ PREDICTIONS C1-C4 only count as pre-registered if they are committed before the private LB is visible",
+   "evidence": "research/wf_ideas_v4/round10/report.json R10-A6; v_hypotheses_r10h-7.json; IDEAS.md I-283; WATCHLIST.md W99",
+   "suggested_action": "Append the block to CONTEXT in the R10-A1 commit and copy it into LESSONS s5. The hard limit is 29 Sep 23:59",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "contradiction",
+   "what": "LESSONS_draft has six errors: '+28 readmits' is dummy-only, 'J ~0.36' is the exp29 base, '~330' and '#204' are stale, and the rules are overstated. The OC row and the 8-item post-deadline list are missing. The 'public = one embryo' guess at l.7 is stated as fact",
+   "evidence": "research/wf_ideas_v4/round9/LESSONS_draft.md l.7, 23, 30, 40-42, 50; round10 report.json R10-A5; FACTS.md C-77; WATCHLIST.md W98, I69",
+   "suggested_action": "Apply the R10-A5 text fixes plus the I69 caveat by 27 Sep 12:00 (text only)",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "stale",
+   "what": "Curator records are missed. I-146 (measured), the I-097/I-107 block and the I-209 reason are not in CONTEXT. CONTEXT l.22 still says 'GT still moving', and B5 at l.196 lacks its blocker. out_valid and efpost are absent. The round prompt at l.36 says '~4 h headroom'. The friend A card is stale",
+   "evidence": "WATCHLIST.md W100, W71, W03; research/wf_ideas_v4/round10/report.json R10-A7; experiments/workflows/biohub-research-round.js l.36; PROMPT_FRIEND_A.md",
+   "suggested_action": "Fold these into the W94 CONTEXT write and commit",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "Schedule duties: E10 P1 every ~6 h to 29 Sep 00:00; R8 27 Sep 12:00; last port submit 29 Sep 02:00; tick re-checks on 28 Sep evening and 29 Sep 12:00/18:00; ticks final at 20:00; the poller runs until then. Info: the dormant rescue in both finals (F-MOD-23), the stale MEMORY copy injected into subagents (C-75), and the orphan I-233",
+   "evidence": "WATCHLIST.md NEXT 24 H l.50, LATER l.77; FACTS.md F-MOD-23, C-75; IDEAS.md ORPHANS l.423",
+   "suggested_action": "Before any submit, check that the last poll.log header is < 15 min old. Close I-233 with one line",
+   "urgency": "before-finals"
+  }
+ ],
+ "summary": "Curation 10 index (state ~15:55 UTC 26 Sep, HEAD 6064d85 plus the untracked round10/ and amanatar v10 pull).\n\nresearch/KNOWLEDGE/INDEX.md was rewritten incrementally (74 lines):\n- STATE: finals 2/2 by API at 15:23/15:24Z; #210/3,930, 14 below silver; E10 not met; x138 slug renamed; P4b weak spots; OC closed and its evidence in main; rechecks G34/G35; timeline; 285 ideas.\n- WHERE, with fresh line numbers for all KB files and for CONTEXT l.2205-2230.\n- TOP OPEN IDEAS: I-280..I-284, I-232, I-229/I-258/I-265, I-252/I-233.\n- 9 deduplicated TOP ALERTS and HOW TO USE.\n\nCHANGES.md has a new section '## 10': commits 69d6be2..6064d85; ideas (5 applied, 3 status changes, I-280..I-285, counts); facts (F-RUN-23, F-MOD-23, F-TRN-36; C-72..C-78; 6 resolved); DECISIONS G34/G35 and §2f; watchlist W94-W102 and I85-I95; alert resolution and curator urgency disagreements.\n\nNo other file was edited, nothing was committed, and Kaggle was not touched."
+}

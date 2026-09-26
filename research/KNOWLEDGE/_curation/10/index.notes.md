@@ -1,0 +1,5 @@
+- 2026-09-26T15:56:13Z start: no index.json found; reading INDEX.md (c9), CHANGES.md c9, curator outputs
+- 2026-09-26T15:56:56Z gathered line numbers: CONTEXT RESUME 13:27 l.2205-2212, INTEL l.2214, OC SEQ l.2215, P4b l.2217, POINTER l.2219, 13:34 l.2220-2229, ## 9 l.2230; IDEAS clusters l.43..405, ORPHANS l.423; FACTS §1 l.57..CONTRA l.224; DEC §1 l.43 §1b l.156 §2 l.213 §2f l.400 §2g l.451 §3 l.482; WATCH OVERDUE l.39 NEXT l.50 LATER l.77 INSIGHTS l.115. Writing INDEX.md next
+- 2026-09-26T15:58:01Z INDEX.md written; appending CHANGES c10
+- 2026-09-26T15:58:48Z CHANGES.md c10 appended; writing index.json
+- 2026-09-26T15:59:16Z index.json written; done

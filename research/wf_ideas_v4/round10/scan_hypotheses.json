@@ -1,0 +1,85 @@
+{
+ "findings": [
+  {
+   "id": "r10h-1",
+   "kind": "new-fact",
+   "what": "Round-9 actions R9-A1..A5 mostly landed on main (HEAD = origin/main = 6064d85 after fetch): RESUME POINT 13:27 UTC sits above '## 9. Literature' (l.2205 vs l.2230) and carries the 13:00:41Z tick check; round9/REPORT.md + LESSONS_draft.md tracked (d6a0c73); E10 P4b in CONTEXT (13:27 entry); ledger rule (r\"exp63[a-z]*\", \"x138\") at tools/runtime_ledger.py l.71 with tests/test_runtime_ledger.py l.317-321 (7.5 h); OC cherry-picks 3d6a704 b104355 c98242b 58a8452 09233dc a782fa1 in main; `git log main|origin/main --format='%an%n%cn%n%b' | grep -ci claude` = 0/0; `python -m pytest -q tests` = 184 passed (34 s, 15:18Z); committed finals notebooks unmodified with sha256 exp58 1f1ddb6d63b4 / exp58t a77bcd6bad52 / exp58n 55038fd6ac00 (= the 13:34 rebuild values); NEVER_PUSH.md present in experiments/exp65_overlap_probe and experiments/exp66_k6_overlapcons; MEMORY.md index + project-lb-probe-approval.md already updated (E10 in force, OC stopped); round prompt says '~330-team block'.",
+   "evidence": "git rev-parse origin/main HEAD; git show --stat d6a0c73; tools/runtime_ledger.py l.71; tests/test_runtime_ledger.py l.317-321; sha256sum experiments/exp58*_x138_*/*.ipynb; memory/MEMORY.md; experiments/workflows/biohub-research-round.js l.20",
+   "action": "Record one line 'R9 actions verified 15:2xZ (round 10)' with the next CONTEXT write; nothing to redo except r10h-2.",
+   "urgency": "info"
+  },
+  {
+   "id": "r10h-2",
+   "kind": "plan-issue",
+   "what": "round8/REPORT.md is still MISSING (R9-A1 asked to save it; commit 66a18e4 says 'round-8 report saved' but adds only round8/report.json). The full Russian text exists verbatim inside research/wf_ideas_v4/round8/report.json (the action item that starts 'The harness refused ...', after 'REPORT_MD_RU:').",
+   "evidence": "git ls-files research/wf_ideas_v4/round8 (no REPORT.md); git show --stat 66a18e4; research/wf_ideas_v4/round8/report.json l.75",
+   "action": "Extract the text after 'REPORT_MD_RU:\\n' from that action string into research/wf_ideas_v4/round8/REPORT.md and commit it with the next CONTEXT write (as the user, no trailer; claude grep = 0 before push).",
+   "urgency": "today"
+  },
+  {
+   "id": "r10h-3",
+   "kind": "new-fact",
+   "what": "No exp65/exp66 push or submit ever happened and the finals are intact: `kaggle kernels list --mine` newest = exp64 lab a/b (09:11-09:12Z), no exp65/exp66 slug; submissions newest = #38 56563534 / #37 56563521 (00:02Z 26 Sep), nothing after; API group=SELECTED at 15:23:10Z = [56563521, 56563534] (0.954/0.953). Poller: PID 20052 alive, last poll.log header 15:15:46Z (4 min old at check), 0 gaps > 15 min over 08:44-15:15Z; ledger.md 156 polls, gaps 0.",
+   "evidence": "kaggle kernels list --mine --sort-by dateRun; kaggle competitions submissions; KaggleApi.competition_submissions(group=SUBMISSION_GROUP_SELECTED) 15:23:10Z; experiments/lb_poll/poll.log; tasklist PID 20052",
+   "action": "Log the 15:23:10Z SELECTED check next to 09:10:07/10:45:26/13:00:41Z in the next CONTEXT write.",
+   "urgency": "info"
+  },
+  {
+   "id": "r10h-4",
+   "kind": "new-fact",
+   "what": "E10 P1 at 15:20Z: dateRun top changed - amanatar/optimized-biohub-max-score re-ran at 13:18:11Z (after the 13:00:51Z baseline; 58 votes) and is now #2 in scoreDescending (HF V3 0.953 first, so its listed score is <= 0.953). This fires P2's kernel clause as a LOOK only. The concurrent round-10 browser agent read the page (Version 1 of 5 shown, public 0.910, best 0.953 V4; newest version RUNNING, unscored) and pulled v10 to experiments/ext_optimized-biohub-max-score/v10_2026-09-26/; grep confirms os.environ['BIOHUB_VALIDATOR_ENABLE'] = '1' and a 45-key PP sweep choosing five default-OFF levers -> P3/P4b(d) FAIL by construction. Crowd clause: LB 15:16Z 0.956 = 33 (30 at 12:46Z), 0.957 = 18 (20); only 2 teams moved from <= 0.953 to 0.956 (Efthimios 0.947, wodedaodun 0.953) < 5 -> not met. anvithpothula (newest 24 Sep 03:28Z) and thtennant (19 Sep) unchanged; x138 v1. E10 NOT triggered. Us: #210/3,930 at 0.954 (info only, R7).",
+   "evidence": "kaggle kernels list --competition biohub-cell-tracking-during-development --sort-by dateRun / scoreDescending (15:20Z); --user anvithpothula / thtennant; research/wf_ideas_v4/round10/scan_browser.notes.md (15:16-15:20Z); experiments/ext_optimized-biohub-max-score/v10_2026-09-26/NOTES.md; https://www.kaggle.com/code/amanatar/optimized-biohub-max-score",
+   "action": "Next P1 check by ~21:20Z (6 h rule), then every ~6 h to 29 Sep 00:00Z. No port, no pull beyond what exists.",
+   "urgency": "today"
+  },
+  {
+   "id": "r10h-5",
+   "kind": "plan-issue",
+   "what": "Pre-trigger clarification needed for the amanatar line (actively iterating, now #2 by score): if a later version shows >= 0.956 with VALIDATOR '1' / PP sweep, P4b(d) fails, and the tempting 'fix' - flipping BIOHUB_VALIDATOR_ENABLE to '0' or hard-coding the sweep-picked levers - is our own modification of an unscored configuration, not a verbatim port (P4 allows only id/title/is_private/enable_internet/id_no changes; P4b(c) needs the displayed score on that exact version). P3's wording 'validator scoring test stems' could be misread as allowing a validator that scores held-out TRAIN stems (amanatar's does); P4b(d)'s first sentence ('must be 0') already closes it, but the ambiguity is cheap to remove now, before any score is visible.",
+   "evidence": "CONTEXT 09:03 E10 PORT RULE P3/P4 and 13:27 P4b (a)-(d); v10 notebook grep BIOHUB_VALIDATOR_ENABLE = \"1\"; ext NOTES.md item 2 ('validator-gated sweep on held-out TRAIN stems')",
+   "action": "Add one mechanical line to P4b (no new mechanism, within the 09:10 conditional yes, written before any trigger): 'A port is the scored version byte-for-byte except the P4b(a) metadata fields; any change to an env default, flag or lever = no port. A validator or PP sweep on train OR test stems fails P3.' Mention it to the user in one line.",
+   "urgency": "today"
+  },
+  {
+   "id": "r10h-6",
+   "kind": "plan-issue",
+   "what": "LESSONS_draft.md (round 9) has six fixable errors: (a) s3.8 overstates the rules ('the Kaggle rules ban only hand labelling of test data and private sharing') - CONTEXT 08:49 says the only TEST-DATA prohibition is 3.4.b; 3.14.a (original work) and 3.8.d (unfair practices) also bind; (b) s4 item 4 (overlap consensus at lower floors) omits that the owner-rule SPLICE hurt: exp64 G-B on the K2 stack -0.00143 (bootstrap lower -0.00200), exp39 proxy -0.00047; CONTEXT 13:11 sends it to post-deadline only with a new splice design, so registration floors are not the binding problem and the 58/62 count must not be used to set new floors on the same 199 videos; (c) the lowrefine row's '+28 readmits of 121,252' is the 4-clip DUMMY count (round 5: readmit 1,337 -> 1,365 on the dummies), not a lab/hidden number; (d) stale counts: rank drift '#155 to #204' -> #210 at 15:16Z, '~330 teams at 0.953' -> 345, 'nine research rounds' -> ten (or fill at finalisation); (e) s2 'public division Jaccard ~0.36' comes from P26 = exp29 minus divisions (0.947 - 0.911 = 0.036 = 0.1 x J), i.e. the exp29 base, not x138 (lab x138 J = 0.129); (f) s4 lacks three agreed post-deadline items (see r10h-8). Everything else checked matches sources (P27/P28, P34/P35, P28->P31, P29/P30, P20, P21-P23, P26, head +0.007 on the 0.946 thtennant base, 6bba->44b6 +12.0%, z bias 0.15/0.45 um, Canh -0.003/-0.038).",
+   "evidence": "research/wf_ideas_v4/round9/LESSONS_draft.md; CONTEXT 08:49 rules entry, 13:11 exp64 entry, l.1490, l.191; research/wf_ideas_v4/round5/scan_hypotheses.json l.39; research/KNOWLEDGE/FACTS.md F-LB-05; submissions list (P19-P38)",
+   "action": "Apply (a)-(f) to LESSONS_draft.md with the next commit (text only, no decision); add a transfer-table row 'Overlap-consensus splice | exp64 K2-stack -0.00143 (in-sample, post-stop info) | not submitted (G-A FAIL) | stopped by its own gate'.",
+   "urgency": "today"
+  },
+  {
+   "id": "r10h-7",
+   "kind": "new-hypothesis",
+   "what": "PRIVATE-READ PRE-REGISTRATION (finals strategy/lessons, no submission): write predictions into CONTEXT before the private LB is visible so 30 Sep can calibrate the lab->LB transfer rule. Mechanism of interest: hundreds of teams hold byte-identical x138 copies (345 at 0.953 public), so they get IDENTICAL private scores; our private position relative to that whole block depends only on sign(private(K2) - private(x138)) = insertion + lowrefine on the ~71% private embryos. Arithmetic: lab insertion +0.0058 (44b6) / +0.0065 (6bba) x transfer ~1/6 ~= +0.001; lowrefine d2 = 0 on public. Predictions: P1 private(K2) - private(twin) displayed in {0, +0.001, +0.002} with P ~0.8 (>= 0); P2 private(K2) > private(#34 x138 copy) with P ~0.75; P3 the twin sits inside the x138 copy cluster (|twin - #34| <= 0.001, P ~0.85). Kaggle shows private scores for all own submissions after the deadline, so #34/#35/P36 give free controls. Runtime cost 0; expected score gain 0 (calibration only).",
+   "evidence": "LESSONS_draft s1/s5; CONTEXT 07:35 read (d1 = d2 = 0); round9 report new_facts (insertion lab +0.0058/+0.0065 -> public +0.001, ~1/6); LB 15:16Z 345 teams at 0.953 (round10 scan_browser.notes.md)",
+   "action": "Add a 'PRIVATE-READ PREDICTIONS (pre-registered)' block to CONTEXT and LESSONS s5 (add rows for #34, #35, P36 as controls). Gate = the 30 Sep read itself; never a finals input (the finals are fixed).",
+   "urgency": "today"
+  },
+  {
+   "id": "r10h-8",
+   "kind": "new-hypothesis",
+   "what": "CONSOLIDATED POST-DEADLINE LIST (none is offered for submission; all miss R8): (1) GPU retention-guard counterfactual (I-222): the guard switches 44b6 33.1% / 6bba 3.9% of frames from the 0.80-weight blend to primary-only; arms guard-off / floor 0.8 / weight 0.475 on 44b6_9be80b04, e28840c6, eb2880fc, d2f34f90, c771cb04 + 6bba_ab78413d; sign unknown; ~1-2 GPU-h; gate = same sign on both embryos, read as shake-up analysis only. (2) Axial localisation of z-elongated nuclei in 6bba: 477/668 missing GT nodes (71%; 436 in 6bba) have a final node at 7-10 um and misses are z-dominant 41% vs 25-28% control; gate = embryo-held-out coordhead-v2 (train 6bba -> test 44b6 and reverse), distance improves in BOTH directions (the head retrain failed exactly this: +12.0%). (3) Learned per-node/per-video z correction inside that coordhead-v2: constant +0.1 vox gave +0.0016 in-sample (6bba +0.0015), transfer ~+0.0003 because the bias is embryo-dependent (0.15 vs 0.45 um); same gate. (4) Post-freeze-transition re-solve with geometric/flow cost only (never ILP/edge-net trust): x138 post-freeze excess ~0.0068 per 6bba GT; CPU-replayable on the exp60 presafe dump; gate = held-out 6bba clips + 44b6 no-harm. (5) OOF linker evidence with a PRE-RELINK dump hook: exp60 dumps are post-relink (tools/trainlab.py l.243; build_probe_kernel.py l.1492-1579), so no relink-family arm can be replayed; add the hook + a leak-group OOF edge net first; gate = the P21-P23 -0.002 public reads must be reproduced in sign by the lab before any relink arm is trusted. (6) Far-daughter 8-12 um slot as an extension of the insertion (round 8 I-079): 62/99 GT divisions detected but unforked, far-daughter median 9.9 um, 33/62 at 8-12 um; the insertion is the only mechanism that transferred, so the bar is lab >= +0.012 (1/6 transfer -> +0.002 public). (7) Overlap consensus only with a NEW splice design (owner rule hurt: -0.00143) and a new G-A whose floors are fixed on a held-out subset of pairs. (8) Joint detector + edge fine-tune on dense pseudo-labels that include teacher EDGES, on a leak-free embryo-held-out bed from day 1 (Canh: head-only -0.003, encoder-only -0.038).",
+   "evidence": "round9 report.json (I-222 clips, relink family), round7 report (node-miss anatomy), round8 report.json (z shift, I-079 far daughter), round5 R5-RC-A (post-freeze), CONTEXT 13:11 (exp64 G-B), CONTEXT l.191 (Canh), LESSONS_draft s4",
+   "action": "Replace LESSONS_draft s4 with this 8-item list (keeps the draft's items 1-5, adds I-222, the pre-relink hook and the far-daughter slot, rewrites OC per r10h-6b). No build, no GPU before 29 Sep.",
+   "urgency": "later"
+  },
+  {
+   "id": "r10h-9",
+   "kind": "plan-issue",
+   "what": "Small repo hygiene: (a) experiments/lb_poll/poll.log (+671 lines) and ledger.md are uncommitted since d6a0c73 - timing evidence belongs in git (R6-A3); (b) untracked bash.exe.stackdump at the repo root (Git Bash crash dump) must not be committed; (c) a bare `pytest` at the repo root errors at setup on experiments/l2_daughternet/kdn_score/test_adversarial.py (test_routing/test_partial take arguments without fixtures), so '184 passed' is specifically `python -m pytest -q tests`; a future check could misread the root error as a regression.",
+   "evidence": "git status --short (15:17Z); python -m pytest -q (root) -> 1 error after 126 s; python -m pytest -q tests -> 184 passed",
+   "action": "Commit poll.log + ledger.md with the next CONTEXT write; delete (or .gitignore) bash.exe.stackdump; write the exact test command 'python -m pytest -q tests' into the next RESUME POINT. Optional after 29 Sep: pytest.ini with testpaths = tests.",
+   "urgency": "today"
+  },
+  {
+   "id": "r10h-10",
+   "kind": "plan-issue",
+   "what": "The user's answers are still pending and must not be assumed: (1) full vs light research rounds (R9-A8 question); (2) own durable reminders for the 29 Sep 12:00 / 18:00 UTC tick checks (PC9-06). No answer is logged in CONTEXT after the 13:34 UTC entry. Arithmetic for the question: R8 cutoff 27 Sep 12:00 UTC; a mechanism needs lab gate + dummy + ~7.5 h hidden run + a new OK, so after ~26 Sep 22:00Z no round can yield a final even in principle (and rounds 8-10 produced none). The tick state is verifiable read-only by API in seconds (r10h-3).",
+   "evidence": "CONTEXT 13:27 RESUME POINT ('RESEARCH' and 'OPEN' lines), round9 REPORT.md R9-A8 / PC9-06; tail of CONTEXT.md (last entry 13:34 UTC)",
+   "action": "Re-ask both questions once in the round-10 brief (one line each, with the defaults: full rounds continue to R8; checks at 28 Sep evening + 29 Sep 12:00/18:00 by the session). Log any reply with `date -u`.",
+   "urgency": "today"
+  }
+ ],
+ "summary": "Round 10 hygiene + intel (15:16-15:25Z). Round-9 actions verified on main 6064d85 (= origin/main): RESUME POINT 13:27 above '## 9. Literature', P4b, ledger exp63->x138 + test, OC cherry-picks, claude grep 0/0, 184 tests (python -m pytest tests), finals notebook shas unchanged, NEVER_PUSH in exp65/exp66; no exp65/exp66 kernel or submit exists; ticks [56563521, 56563534] at 15:23:10Z; poller alive (15:15:46Z, 0 gaps). ONE gap: round8/REPORT.md was never saved (text sits in round8/report.json). E10: amanatar/optimized-biohub-max-score re-ran 13:18Z (P2 look fired) but v10 is unscored and has VALIDATOR '1' + a 45-key PP sweep -> P3/P4b(d) fail; 0.956 = 33, 0.957 = 18, only 2 crowd movers -> E10 NOT triggered; next P1 by ~21:20Z. Recommend a one-line pre-trigger P4b clarification (no flag flips; a validator on train stems also fails). LESSONS draft: six corrections (rules overstatement, OC splice harm omitted, dummy-count mislabel, stale counts, exp29-base div J, missing post-deadline items). New non-mechanism items: private-read predictions pre-registered (x138 copy block ties on private; our position hinges on sign(K2 - x138) on private) and an 8-item consolidated post-deadline list. User answers (light/full rounds, 29 Sep reminders) still pending; nothing assumed; no new mechanism offered."
+}
