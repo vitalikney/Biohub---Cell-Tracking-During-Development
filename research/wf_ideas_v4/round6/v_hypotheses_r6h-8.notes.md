@@ -1,0 +1,6 @@
+# R6H-8 verify notes
+- 2026-09-26T06:03:20Z start; no prior json. Reading CONTEXT l.1940-2074, round reports.
+- 2026-09-26 verify: cited lines checked. CONTEXT l.2004-2005 = Never line (K1 at d1=-0.001; exp56 bar; no identical components). l.1960-1966 = user OK on f2 (22:06Z) + principle "finals hedge different risks". l.2034-2038 = provisional tick rule (tick exactly two at table resolution). f2 text l.1887-1894: "exp52 only if the twin is unscored, failed, or in branch D" -> (c) correct. R7 l.1665-1670: "no pick between near-copies by 0.001 except via R3" -> (b) supports.
+- (b) nuance: Never line literally covers only d1 = -0.001; for d1 >= 0 the bar is that row 3 has no K1 slot + R7 + no OK; K1 dummy sha == exp57b dummy (near-copy of #35). Same idea already refuted in v4 RT1 (research/wf_ideas_v4/v_redteam-plan_rt1-submit-k1-in-s3-tonight_{value,feasibility}.json, both refuted=true) -> repeat, correctly closed.
+- (a) Kaggle UI selectability of PENDING files unverified (hedged as "may not"); moot because the table can still change the pair and ticks are reversible; provisional tick rule at resolution already covers the auto-select risk (0/2 selected -> P36/#35).
+- Verdict: finding accurate, action none; not refuted. Only fix: cite v4 RT1 as prior closure and word (b) precisely.

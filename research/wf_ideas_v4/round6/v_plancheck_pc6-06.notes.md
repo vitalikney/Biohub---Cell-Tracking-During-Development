@@ -1,0 +1,7 @@
+- 2026-09-26T06:03:22Z start PC6-06 verification
+- 06:05Z sources: CONTEXT.md l.2046 (V7), l.2030 (C4 'R5-admissible (9.5 h C01 deadline or step-0 margin >= 1 h)'), l.2044 (V3: K2'' needs L(K2'')_hi <= 10.5 h), l.1653-1657 (R5: latency only from our 10-min poll; no poll -> (a) unproven, (b) decides).
+- experiments/lb_poll/lb_poll.py: `while True` loop, sleep 600, no self-stop; ledger is a subprocess each poll (runtime_ledger.py edits take effect next poll, no restart needed).
+- tools/runtime_ledger.py l.52 K2_WATCH_H=(7.0,8.5); l.294-300 'Keep the poller alive until sub+8.5h' printed ONLY while K2 is PENDING -> disappears once K2 is terminal; no equivalent text for K1/C2(a)/K2''. Gap WATCH (l.272) only fires when the ledger runs, i.e. never once the poller is dead.
+- ledger.md 05:53:58Z: 'Keep the poller alive until 2026-09-26 08:32:12Z' (min bound, weaker than V7, not strictly contradictory; V6 says ledger.md is report-only).
+- PID 20052 alive at 06:03Z (python, started 26.09 02:12:45 local). Last poll 05:53:56Z.
+- Verdict: not refuted, low value/zero cost. Real stake: K2'' (V3 requires L_hi <= 10.5 h, R5(b) not offered) and K1 R5(a) (R5(b) forecast 7.87 h would still admit K1). Refine action: name the script not the PID, restart-if-dead, check alive before each new submit, cover submissions after 26 Sep too.

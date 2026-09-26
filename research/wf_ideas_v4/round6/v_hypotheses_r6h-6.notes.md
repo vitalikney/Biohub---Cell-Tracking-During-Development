@@ -1,0 +1,8 @@
+- 2026-09-26T06:03:23Z start R6H-6 skeptic check
+- 06:04Z checks: poll.log last lines (05:53:56Z) #37 56563521 and #38 56563534 both PENDING; ledger.md 05:53:58Z L > 5.86 h -> brief section 1 still true (status line must be refreshed at send time).
+- git: main == origin/main (2f6ec9d); v3 (f05389e) and K2'' builder (2f6ec9d) pushed before any #37/#38 score -> "rules committed before any score" true.
+- LB numbers from scan_hypotheses.notes.md l.6 (05:48Z CSV): #162/3,922, 6th of 77 in 0.954 block 157-233, silver ~196 -> margin 34; arithmetic checks out.
+- CONTEXT has no user OK entry after the 04:04Z OK REQUEST line -> item 1 of 'what to decide' still needed unless the chat shows an answer.
+- Cross-check vs READ TABLE rows 1-5 + C2-C5 + V1-V4 + round5 OK draft (round5/REPORT.md s.6): tick cases consistent, Never line matches V2/V3.
+- Wording defects: (a) row-2 case says 'K2 = 0.953'; table says d1 >= -0.001 i.e. K2 >= 0.953 (K2 0.954 / twin 0.956 not covered). (b) K2'' item 2 ignores OK item 5: with OK, B > 9 h -> build without asking again; only 8-9 h is a separate question. (c) 'K1 ... при ошибке K2' is broader than C2: Kaggle Error -> resubmit K2, timeout both -> ask; K1 only on exception/CSV/format (C2c). (d) row 4 final after K1 scores ({K1, #38} if twin >= 0.953, else {K1, exp52}) not stated.
+- Verdict: not refuted (pure communication, zero build/runtime risk, protects OK-before-score timing and 0/2 tick risk); send with the 4 wording fixes.

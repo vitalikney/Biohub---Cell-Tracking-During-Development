@@ -1,0 +1,9 @@
+- 2026-09-26T06:03:19Z start PC6-05 check
+- 06:05Z _dl/oneshot_poll.py l.2 stamps ts BEFORE subprocess.run (timeout 180), header '=== ts [oneshot]'; ledger HEADER regex (tools/runtime_ledger.py l.79) accepts it; first_result_upper = header ts + 210 s * failed attempts (l.198), duration of the successful call not counted. Claim is factually right.
+- _dl/clean_proof_polls.py: stamp after call, tmo = min(cap, MARK-now), MARK 08:02:10Z -> every stamp < 08:02:12Z and proves COMPLETE seen by then. Correct.
+- Processes (Get-CimInstance): PID 20052 lb_poll.py (created 02:12:45 local = 23:12:45Z), PID 13436 _dl/clean_proof_polls.py (07:04:37 local = 04:04:37Z). Both alive.
+- poll.log: 0 '[oneshot]' headers so far; poller headers 05:23:51, ..., 06:03:58Z (+~2 s/poll drift) -> ~07:54:2x, ~08:04:2x.
+- REPEAT: round5 PC5-02 / R5-A1 already raised 'round 4 one-liner stamps before the call' and the fix (background job, stamp after) is live and recorded in CONTEXT V7. PC6-05 only restates that the old helper still exists.
+- Harm path needs: someone runs oneshot_poll by hand in ~07:59-08:02:12Z although V7 says the job does it; AND K2 completes in the few seconds between 08:02:12Z and the server snapshot of that call (window ~ call duration, 5-20 s, vs an hours-wide runtime spread -> ~1e-3); AND consequence = CLEAN instead of 'unproven' -> K2'' question not raised; per V4 runtime 8.0-9.0 h loses < ~1e-4 (insertion on last-sorted clips). Expected value ~0.
+- Side note: the finding's 'poller header is safe' is not strictly true either: poller with 2 failed attempts stamps 07:54:2x, upper = +420 s = 08:01:2x, 3rd attempt may return up to 180 s later (after the mark). Same tiny-probability class; the read can just require a clean_proof header or a poller header with no failed attempts.
+- 06:05:16Z verdict written: refuted (repeat of PC5-02, EV~0)

@@ -1,0 +1,7 @@
+# ideas curator 6 - notes
+
+- 2026-09-26 06:19 UTC start: no _curation/6/ideas.json -> fresh run. Previous = curation 5 (~04:05 UTC, 243 ideas, HEAD f05389e). Current HEAD 2f6ec9d.
+- 06:20 UTC: delta read: CONTEXT l.2039-2057 (v3 04:04, ROUND 5 DONE, OK REQUEST posted, K2'' builder merged 04:12); commits fc51b75 04:04:45Z, 801de5a 04:11Z, 2f6ec9d 04:12Z; round6 report.json 06:17Z (R6-A1..A8, R6H-1..8, PC6-01..08, R6-RC-A/B/C, browser); poll 06:14Z #37/#38 PENDING; round6 REPORT.md and v4 not saved.
+- 06:22 UTC: plan: new I-244 v4 umbrella (at-risk), I-245 W1 OK timing (at-risk), I-246 R5 F'=8.27 h, I-247 V3b K2'' gate, I-248 W6 poller scope (at-risk), I-249 morning brief (at-risk), I-250 cheat sheet, I-251 efpost/K4 (refuted, lab +0.00174 6bba), I-252 lab->LB lessons (deferred), I-253 tick-before-score, I-254 F2 swap at k>=0.955, I-255 PC6-07 K1-timers wording (refuted). Orphan off: I-226 (job PID 13436 running), I-228 (posted 04:04Z), I-235 (builder merged), I-236 (v3 in CONTEXT). I-229 at-risk (W50 reminders). Writing scratchpad patch6.py from ideas_c5.json backup.
+- 06:26 UTC: patch6.py -> ideas.json 255 ideas, 50 change records (12 new I-244..I-255, 38 updated); gen_md6.py (reuses render4.py) -> IDEAS.md 420 lines, 255 rows. Orphans: strict I-233; at-risk I-229 (W50), I-232, I-243, I-244, I-245, I-248, I-249. Writing _curation/6/ideas.json next.
+- 06:27 UTC: _curation/6/ideas.json written (10 alerts; poll 06:24:02Z still PENDING). DONE.

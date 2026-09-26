@@ -1,0 +1,5 @@
+- 2026-09-26T06:28:05Z start: no index.json; read INDEX.md (72 l), CHANGES.md (328 l)
+- 2026-09-26T06:28:47Z gathered line refs (IDEAS l.9/13/386, FACTS C-43..47 l.213-217, DECISIONS 2e l.254, WATCH l.39/53/84/111, CONTEXT l.2039-2057, poll.log 06:24:02Z l.3312 both PENDING); writing INDEX.md
+- 2026-09-26T06:29:38Z INDEX.md written (curation 6); appending CHANGES.md section 6
+- 2026-09-26T06:29:59Z CHANGES.md section 6 appended; writing index.json
+- 2026-09-26T06:30:28Z index.json written; done

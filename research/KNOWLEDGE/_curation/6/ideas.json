@@ -1,0 +1,81 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/ideas.json",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/IDEAS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/6/ideas.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/6/ideas.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "what": "READ TABLE CLARIFICATION v4 (I-244: W1 OK timing with T0, W2-W8, V4b B', R5 line F' = 8.27 h, V3b K2'' gate) is not in CONTEXT. It must be committed before the first #37/#38 result, or it can only be recorded as post-hoc NOTES",
+   "evidence": "research/wf_ideas_v4/round6/report.json R6-A1, v4_text; research/wf_ideas_v4/round6/report.notes.md 06:17Z; git HEAD 2f6ec9d (CONTEXT.md ends at l.2057, the 04:12 entry); experiments/lb_poll/poll.log 06:24:02Z shows both 56563521 and 56563534 PENDING",
+   "suggested_action": "Main session: paste v4_text verbatim after the 04:12 entry. Right before the commit, grep poll.log for COMPLETE/ERROR of both refs. Commit and push as the user, together with round6/REPORT.md (R6-A8). The twin can complete from ~06:30Z",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "CONTEXT has no rule on when a late OK counts (I-245 / PC6-01, confirmed). The 04:04Z OK request has no recorded reply, and a 'yes' to the 0.952 twin floor sent after the twin's score is visible would be selection by result",
+   "evidence": "CONTEXT.md l.2049-2051; research/wf_ideas_v4/round6/v_plancheck_pc6-01.json; research/wf_ideas_v4/round6/report.notes.md 06:11Z; research/KNOWLEDGE/IDEAS.md I-245, I-219",
+   "suggested_action": "Commit W1 with v4. On any reply, run date -u and log it against T0 (the last poll.log header with both files PENDING). Log a late score-item OK as USER DECISION AFTER SCORE",
+   "urgency": "now"
+  },
+  {
+   "kind": "forgotten",
+   "what": "The round-6 morning brief (I-249: status, likely K2'' question, tick exactly 2 files, W50 reminders) is drafted and verified but not known to be sent",
+   "evidence": "research/wf_ideas_v4/round6/report.json R6-A2, morning_brief_ru; research/wf_ideas_v4/round6/v_hypotheses_r6h-6.json",
+   "suggested_action": "Send it once, right after the v4 commit (chat + PushNotification). Refresh the status line from poll.log first. Do not re-post the 04:04Z OK list",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "The most likely user decision today is K2'' (P(not clean) ~0.3-0.5, a guess), not K1. The B bound behind the recommendation is anti-conservative by ~0.7 h, so B' must be reported alongside it, and K2'' needs the V3b 6-check gate and poller coverage to +10.5 h",
+   "evidence": "research/wf_ideas_v4/round6/scan_hypotheses.json R6H-4; research/wf_ideas_v4/round6/scan_plancheck.json PC6-02, PC6-04, PC6-06; research/KNOWLEDGE/IDEAS.md I-235, I-237, I-247, I-248",
+   "suggested_action": "At the K2 read, compute clean (after the 08:01:45Z one-shot and the ~08:04Z poll), then B and B'. Raise the K2'' question only under the W4 scope. On a yes: build with the 04:12 command, run the V3b gate, use its own slug v1, and keep the poller alive to submit + 10.5 h",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "Poller stop rule: ledger.md prints the K2-only 'Keep the poller alive until 08:32:12Z'. No text covers later 26 Sep submissions (K2 resubmit, K1, K2'' at 10.5 h), so stopping PID 20052 early would cost those files their R5(a) proof",
+   "evidence": "experiments/lb_poll/ledger.md (06:14:02Z, A5-L(K2)); research/wf_ideas_v4/round6/v_plancheck_pc6-06.json; tools/runtime_ledger.py l.52 K2_WATCH_H; research/KNOWLEDGE/IDEAS.md I-248, I-243",
+   "suggested_action": "Keep PID 20052 (and never touch job PID 13436) until every 26 Sep submission is terminal and past its mark (W6). Put the generic keep-until text into runtime_ledger.py only after ~09:40Z (R6-A7)",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "Durable 29 Sep finals-tick reminders (W50) have no evidence of being set. This is the only open item from the round-6 readiness check, and Kaggle auto-selects P36/#35 if fewer than 2 files are ticked",
+   "evidence": "research/wf_ideas_v4/round6/scan_plancheck.json PC6-08; research/wf_ideas_v4/round6/report.json R6-A5; CONTEXT.md l.2034-2038; research/KNOWLEDGE/IDEAS.md I-229",
+   "suggested_action": "Ask the user today (brief point 4) to put 29 Sep 12:00 and 18:00 UTC reminders in their own calendar. Create a cloud routine only with an explicit OK",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "Round-6 closures and facts exist only in research files: stitch on x138 closed (I-164), the linefit rider is a null effect (I-184/I-183), K4 efpost refuted with the efpost FACT to be worded neutrally (I-251), the official edge FP validity rule (I-196), the 05:46Z intel line #162/3,922 (I-094), and the I-253/I-254/I-255 rejections",
+   "evidence": "research/wf_ideas_v4/round6/report.json R6-A6 (1)-(7), rejected (1)-(12), new_facts (1)-(8); research/KNOWLEDGE/IDEAS.md ORPHANS 'Closed only in research-round files'",
+   "suggested_action": "Record them in the next CONTEXT write (R6-A6, due 26 Sep 12:00Z). Do NOT reword I-161/I-162 or the memory note to 'public embryo has no frozen frames'",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "contradiction",
+   "what": "The 23:12 READ TABLE line 'F(K2) = 7.87 h ... R5(b) admits K2 and the twin unless they ERROR' fails R5(b)'s own 1 h margin once run-to-run variance is counted (8.58 h from L35_hi). Only the P36 anchor (F' = 8.27 h) passes",
+   "evidence": "CONTEXT.md l.1653-1657 (R5); research/wf_ideas_v4/round6/scan_plancheck.json PC6-03; research/wf_ideas_v4/round6/report.json plan_issues (4), v4_text 'R5 FOR #37/#38'; research/KNOWLEDGE/IDEAS.md I-246",
+   "suggested_action": "Replace the blanket with the v4 R5 line (I-246) in the v4 commit. It only matters if a file's own L_hi > 9.5 h",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "The round-6 report exists only as report.json 'report_md_ru' because the harness refused the judge's write. round2/REPORT.md is still missing",
+   "evidence": "research/wf_ideas_v4/round6/report.json R6-A8, report_md_ru_note; ls research/wf_ideas_v4/round6/ and round2/ (no REPORT.md); research/KNOWLEDGE/IDEAS.md I-232",
+   "suggested_action": "Save round6/REPORT.md with the v4 commit (R6-A8). Do round2 at any quiet moment",
+   "urgency": "today"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "I-233 (the poller logs error_description) is still the only strict orphan, not mentioned by round 5 or 6",
+   "evidence": "research/wf_ideas_v4/round4/report.json rejected, R4-A9; research/wf_ideas_v4/round6/report.json cheat_sheet ROW 1 (C2 one-liner on demand); research/KNOWLEDGE/IDEAS.md ORPHANS",
+   "suggested_action": "After both scores (~09:40Z), close it with one line or implement it together with W59 (I-243)",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 6 of the IDEAS LEDGER (2026-09-26 ~06:35 UTC, HEAD 2f6ec9d + untracked research/wf_ideas_v4/round6/) builds incrementally on curation 5 (243 ideas) and keeps IDs stable. The ledger now has 255 ideas in 12 clusters; ideas.json meta.curations[n=6] holds 51 change records (12 new, 39 updated). New ideas: I-244 READ TABLE CLARIFICATION v4 (at risk: not in CONTEXT, must precede the first result), I-245 W1 OK-timing rule with T0 (at risk), I-246 R5 basis F' = 8.27 h, I-247 V3b K2'' build gate, I-248 W6 poller scope for later 26 Sep submissions (at risk), I-249 morning brief (at risk), I-250 score-read cheat sheet and I-252 lab->LB lessons (deferred). Refuted: I-251 K4 = K2 + efpost private hedge (lab 6bba +0.00174, 44b6 0; kept as a FACT only), I-253 tick before scores, I-254 F2 swap at k >= 0.955 and I-255 'K1 shares both timers'. Recorded in CONTEXT before any score, so no longer at risk: I-236 v3 (l.2039-2046), I-228 OK request posted 04:04Z (no reply recorded), I-226 clean-proof job PID 13436 (V7), I-235 K2'' builder merged (l.2052-2057; not built). Rechecks on x138: I-164 stitch closed, I-184/I-183 linefit null, I-161/I-162 edge-filter closure kept with neutral wording, I-196 official edge FP validity rule. I-237 gains B' (B is anti-conservative by ~0.7 h). #37/#38 were still PENDING at 06:24:02Z, so nothing new is lb-tested. Counts: lb-tested 38, lab-tested 20, refuted 143, deferred 21, in-plan 32, open-untested 1. Orphans: I-233 is the only strict one; at risk are I-229 (W50 reminders), I-232, I-243, I-244, I-245, I-248 and I-249."
+}

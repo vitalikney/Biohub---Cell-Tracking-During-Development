@@ -1,0 +1,81 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/INDEX.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/CHANGES.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/6/index.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/6/index.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "what": "READ TABLE CLARIFICATION v4 (W1-W8, V4b B', R5 line F' = 8.27 h, V3b K2'' gate) is not in CONTEXT; it must be committed before the first #37/#38 result or it becomes post-hoc NOTES. It also resolves C-43/C-44/C-47",
+   "evidence": "research/wf_ideas_v4/round6/report.json R6-A1 v4_text; research/KNOWLEDGE/DECISIONS.md §2e l.254; research/KNOWLEDGE/FACTS.md C-43..C-47; experiments/lb_poll/poll.log 06:24:02Z both PENDING (0 COMPLETE/ERROR at 06:30Z)",
+   "suggested_action": "Grep poll.log for COMPLETE/ERROR of 56563521/56563534, paste v4_text verbatim after CONTEXT.md l.2057, save round6/REPORT.md from report_md_ru, commit as the user (no co-author) and push",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "No user reply to the 04:04Z OK request is recorded and CONTEXT has no rule on when a late OK counts; a score-reading OK after T0 would be selection by result",
+   "evidence": "CONTEXT.md l.2049-2051; research/KNOWLEDGE/IDEAS.md I-245; research/KNOWLEDGE/WATCHLIST.md W61; research/KNOWLEDGE/FACTS.md C-47",
+   "suggested_action": "Log any reply with date -u against T0 (last poll.log header with both PENDING); log score-reading OKs after T0 as USER DECISION AFTER SCORE",
+   "urgency": "now"
+  },
+  {
+   "kind": "forgotten",
+   "what": "Round-6 morning brief (status, likely K2'' question, tick exactly 2, W50 reminders) is not sent",
+   "evidence": "research/wf_ideas_v4/round6/report.json R6-A2 morning_brief_ru; research/KNOWLEDGE/WATCHLIST.md W63; research/KNOWLEDGE/IDEAS.md I-249",
+   "suggested_action": "Refresh the status line from poll.log and send once (chat + PushNotification) right after the v4 commit; do not re-post the OK list",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "Clean-proof window: only the poller (PID 20052) and clean_proof_polls.py (PID 13436) may poll in 07:45-08:05Z; no builds, code edits or submits in 07:45-08:35Z",
+   "evidence": "CONTEXT.md l.2046 (V7); research/KNOWLEDGE/WATCHLIST.md T24; experiments/lb_poll/ledger.md A5-L(K2)",
+   "suggested_action": "Leave both PIDs alone; run tools/runtime_ledger.py --print after 08:01:45Z and after the ~08:04Z poll",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "Mechanical score read with the round-6 cheat sheet (B and B', R5 line), commit poll.log + ledger.md at the first result, then the user ticks EXACTLY 2 files by ref (0/2 now; auto-select would pick P36 + #35)",
+   "evidence": "research/KNOWLEDGE/WATCHLIST.md W47, W64, W54; research/KNOWLEDGE/DECISIONS.md §2e; CONTEXT.md l.2034-2038",
+   "suggested_action": "Read rows 2-5 only when both are terminal; give the pair with refs (default 56563521 + 56563534); verify 2/2; record in CONTEXT",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "K2'' (exp58d) is the likeliest user decision today; the V3 sha-only gate cannot catch a mis-build and B is anti-conservative by ~0.7 h",
+   "evidence": "research/KNOWLEDGE/FACTS.md F-MOD-20, C-43; research/KNOWLEDGE/IDEAS.md I-235, I-237, I-247; research/KNOWLEDGE/WATCHLIST.md W65, T25",
+   "suggested_action": "Only on trigger + user yes: build with the CONTEXT.md l.2055-2057 command, run the V3b 6-check gate, own slug v1, submit by 27 Sep 12:00, keep the poller to +10.5 h",
+   "urgency": "today"
+  },
+  {
+   "kind": "contradiction",
+   "what": "ledger.md prints the K2-only 'keep the poller alive until 08:32:12Z'; V7 and the proposed W6 need it until every 26 Sep submission is terminal and past its mark",
+   "evidence": "experiments/lb_poll/ledger.md 06:24:03Z; research/KNOWLEDGE/FACTS.md C-45; research/KNOWLEDGE/IDEAS.md I-248, I-243",
+   "suggested_action": "Keep PID 20052; do the runtime_ledger.py text fix only after ~09:40Z",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "Round-6 records exist only in research files: intel #162 at 05:46Z, official edge FP rule, stitch/linefit closed, efpost neutral FACT, 15.4% runtime spread; plus CONTEXT l.22 and B5 l.196 fixes and curation-3 closures",
+   "evidence": "research/wf_ideas_v4/round6/report.json R6-A6, new_facts; research/KNOWLEDGE/WATCHLIST.md W66, W31; research/KNOWLEDGE/FACTS.md F-MET-03, F-RUN-20, F-TRN-24..26, C-36, C-46",
+   "suggested_action": "Add to the next CONTEXT write by 26 Sep 12:00; never reword I-161/I-162 to 'public has no frozen frames'",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "deadline",
+   "what": "Durable 29 Sep 12:00/18:00 finals-tick reminders and the admission table do not exist",
+   "evidence": "research/KNOWLEDGE/WATCHLIST.md W50, W04; research/wf_ideas_v4/round6/report.json R6-A5",
+   "suggested_action": "Ask in the morning brief for reminders in the user's own calendar (cloud routine only with a new OK); in place by 28 Sep evening",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "I-233 (poller logs error_description) is the only strict orphan; other open housekeeping: friend A card stale, ext_* untracked, RESULTS.md exp60 line, memory residue, A5-F ledger text",
+   "evidence": "research/KNOWLEDGE/IDEAS.md ORPHANS l.386; research/KNOWLEDGE/WATCHLIST.md OVERDUE l.39 (W03, W05, W34, W35); research/KNOWLEDGE/FACTS.md C-40",
+   "suggested_action": "Handle after both scores (~09:40Z), never inside 07:45-08:35Z",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 6 index (2026-09-26 ~06:30 UTC, HEAD 2f6ec9d + untracked research/wf_ideas_v4/round6/). research/KNOWLEDGE/INDEX.md rewritten incrementally (71 lines): state (best 0.954, #162/3,922 at 05:46Z; #37/#38 PENDING at 06:24:02Z; v3 in CONTEXT, v4 not; OK request unanswered; 0/2 ticked; K2'' likeliest decision), map of the KB and key sources with current line refs, 8 top open idea rows, 10 deduplicated alerts, how-to-use. research/KNOWLEDGE/CHANGES.md gained section '6' (operations, ideas 243->255 with I-244..I-255, facts F-RUN-20/F-MOD-20/F-TRN-24..27 and C-43..C-47, DECISIONS G20-G22 and §2e, watchlist W61-W67/T24-T27/I47-I55, resolved/carried/new alerts, curator disagreements settled)."
+}

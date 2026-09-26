@@ -1,0 +1,6 @@
+- 06:19Z 2026-09-26: round 6 start; _curation/6/facts.json absent -> fresh run. Base = curation 5 (04:01Z, HEAD f05389e).
+- 06:19Z: read CONTEXT diff f05389e..2f6ec9d (+19 lines l.2039-2057: v3 V1-V7, round5 records, OK REQUEST 04:04Z, K2'' builder 04:12Z), ledger 06:14:02Z (#37/#38 PENDING L>6.19h; A6/D4 texts gone, A5-F remains), round6 report.json (06:17Z, 8 actionable, v4 text not in CONTEXT).
+- 06:21Z: verified: metrics.py l.157-195 rule; builder/ledger lines; CONTEXT l.22 unchanged; RESULTS l.70-71 PENDING; round5/REPORT.md exists, round2/round6 missing; memory 0 hits for 56563521. Plan: [c6] edits F-MET-03, F-DAT-11, F-LB-01..08, F-RUN-10/12/13/16/17/18/19 + new F-RUN-20, F-RUL-10/11/12, F-MOD-16/18 + new F-MOD-20, F-TRN-02 + new F-TRN-24..27; C-30/33/35/36/37-42 status; new C-43..C-47.
+- 06:23Z: FACTS.md edited ([c6] header, 25 rows updated, new F-RUN-20, F-MOD-20, F-TRN-24..27, C-43..C-47); table column check run.
+- 06:25Z: DECISIONS.md edited (header, P37/P38, [c6] slot para, G11/G16-G19 + new G20-G22, §2 intro/table, §2d header+OK line, new §2e v4 proposal + cheat sheet, §3 R3-R10/§f, closing). Tables validated (0 bad), CRLF kept. Poll 06:24:02Z still PENDING (L>6.36h) -> F-LB-01 updated. Writing facts.json.
+- 06:26Z: facts.json written (9 alerts). Done.

@@ -326,3 +326,30 @@ Curator logs: `research/KNOWLEDGE/_curation/4/`.
 - New: CLARIFICATION v3 (V1-V7); unbuildable runtime trigger (K2'' prep); #34 pairs-not-labels contradiction; stale ledger texts; round-5 records incl. CONTEXT l.22 correction; round5/round2 REPORT.md missing; LB entry count C-42.
 - Dropped from INDEX: the thin insertion lab evidence (C-34) and `TEAM.md` "0.97" (C-04); both stay in `FACTS.md`.
 - Curator disagreement settled here: #34 contradiction is [today] (ideas) vs [now] (watch); INDEX folds it into alert 1 (v3, [now]). Stale ledger texts: [today] (ideas) vs [info] (facts); INDEX uses [today], neutralised by v3 V6. Clean-proof job: [today] (ideas) vs [now] (facts, watch); INDEX uses [now], since the job must be started well before 07:45Z.
+
+## 6 - 2026-09-26 ~06:30 UTC (curation 6; git HEAD 2f6ec9d + untracked `research/wf_ideas_v4/round6/`)
+
+**Operations:** no score yet. #37 K2 (56563521) and #38 twin (56563534) are PENDING at 06:24:02Z (L > 6.36 h, 0 gaps; `experiments/lb_poll/poll.log` l.3312-3317; `experiments/lb_poll/ledger.md` 06:24:03Z). Since curation 5, all pre-score: fc51b75 (04:04:45Z) put CLARIFICATION v3 V1-V7, the round-5 records and "OK REQUEST posted" in CONTEXT (`CONTEXT.md` l.2039-2051); 801de5a/2f6ec9d (04:11-04:12Z) merged the K2'' builder change (l.2052-2057; not built). Clean-proof job PID 13436 runs beside poller PID 20052 (V7, l.2046). No user reply to the OK request is recorded. Round 6 ran at 06:17Z (`research/wf_ideas_v4/round6/report.json`, untracked, no REPORT.md). Intel: #162 of 3,922 at 05:46Z (`FACTS.md` F-LB-02 [c6]).
+
+**Ideas** (`IDEAS.md` l.11; `ideas.json` meta.curations[n=6], 51 records; `_curation/6/ideas.json`):
+- New in-plan: I-244 CLARIFICATION v4 (at risk), I-245 W1 OK timing vs T0 (at risk), I-246 R5 basis F' = 8.27 h, I-247 V3b K2'' gate, I-248 W6 poller scope (at risk), I-249 morning brief (at risk), I-250 score-read cheat sheet. New deferred: I-252 lab->LB lessons. New refuted: I-251 K4 = K2 + efpost (kept as a FACT), I-253 tick before scores, I-254 F2 swap at k >= 0.955, I-255 "K1 shares both timers".
+- No longer at risk (in CONTEXT pre-score): I-236 v3, I-228 OK request, I-226 clean-proof job, I-235 builder change. I-237 gains B'. Rechecks on x138: I-164 stitch closed, I-184/I-183 linefit null, I-161/I-162 closure kept with neutral wording, I-196 official edge FP rule.
+- At risk now: I-229, I-232, I-243, I-244, I-245, I-248, I-249. Strict orphan still I-233.
+- Counts c5 -> c6: 243 -> 255; refuted 139 -> 143, deferred 20 -> 21, in-plan 25 -> 32; lb-tested 38, lab-tested 20, open-untested 1 unchanged.
+
+**Facts and decisions** (`FACTS.md`, `DECISIONS.md`, lines marked [c6]; `_curation/6/facts.json`):
+- New facts: F-RUN-20 (15.4% run-to-run spread, per-clip insertion cost), F-MOD-20 (V3 sha-only K2'' gate cannot catch a mis-build), F-TRN-24 (stitch closed), F-TRN-25 (linefit: no detectable effect), F-TRN-26 (efpost, neutral: 6bba +0.00174, 44b6 0), F-TRN-27 (lessons for after 29 Sep).
+- Updated: F-MET-03 (exact official edge FP rule, `tools/official/src/tracking_cellmot/metrics.py` l.157-195), F-DAT-11, F-LB-01..08, F-RUN-10/12/13/16-19, F-RUL-10/11/12, F-MOD-16/18 (builder accepts (37800, 32400)), F-TRN-02.
+- Contradictions: C-37, C-38, C-39, C-41 resolved by v3; C-40 resolved except the A5-F text; C-30, C-33, C-35, C-36, C-42 updated. New: C-43 (B vs B'), C-44 (R5 blanket vs F' = 8.27 h), C-45 (poller stop time), C-46 (reading the edge filter's LB zero), C-47 (no rule on when a late OK counts).
+- `DECISIONS.md`: P37/P38 rows + [c6] slot paragraph; G11, G16-G19 status; new G20-G22 (stitch, linefit, K4/efpost); §2d marked in CONTEXT; new §2e proposed v4 + cheat sheet; §3 R3-R10 and §f updated.
+
+**Watchlist** (`WATCHLIST.md`; `_curation/6/watch.json`):
+- Done: W56 (v3), W45 (OK request posted), W58 (builder), W57 (round-5 records listed), W60 for round 5 (REPORT.md committed). W55 running (PID 13436).
+- New: W61-W67, T24-T27, I47-I55. Resolved insights: I36, I40-I43, I45.
+- Still open: W03 friend A card, W04 admission table, W05 ext_* commit, W26, W31, W34 memory residue, W35 RESULTS.md rows, W50 reminders.
+
+**Alerts** (`INDEX.md` TOP ALERTS, 10 after dedup):
+- Resolved since curation 5: CLARIFICATION v3 not in CONTEXT; OK request unposted; clean-proof job not running; runtime trigger unbuildable (builder merged); stale A6/D4 ledger texts (gone for now); round-5 REPORT.md.
+- Carried over: score read + provisional tick (now with cheat sheet, B'); poller stop rule (now also later 26 Sep submissions, C-45); round records into CONTEXT by 12:00 (now round 6 + l.22 + B5 l.196); durable 29 Sep reminders; admission table / ext_* / friend A card / memory residue; I-233 orphan.
+- New: CLARIFICATION v4 (W1-W8, B', F', V3b); late-OK rule vs T0; morning brief unsent; K2'' as likeliest decision; clean-proof window hygiene (T24); R5 blanket contradiction (C-44, folded into alert 1); edge-filter wording warning (C-46, folded into alert 8).
+- Curator disagreement settled here: finals reminders are [deadline/today] (ideas, facts) vs [before-finals] (watch); INDEX uses [before-finals] for the reminders themselves and asks for them today in the brief (alert 3). Round-6 REPORT.md: [today] (ideas) vs [info] (facts) vs [now] (watch); INDEX folds it into alert 1 ([now], same commit as v4).

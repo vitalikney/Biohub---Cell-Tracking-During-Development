@@ -1,0 +1,10 @@
+- 2026-09-26T06:03:21Z start PC6-08 recheck
+- 06:03Z git: HEAD 2f6ec9d == origin/main after fetch (committer 07:12:15+03 = 04:12:15Z). Untracked round6/, ext_* only.
+- Win32_Process: 20052 = lb_poll.py, 13436 = _dl/clean_proof_polls.py, both alive; Win32_Battery status 2 (AC).
+- poll.log headers 05:43:54, 05:53:56, 06:03:58 -> ~+2 s/cycle -> ~07:54:2x, ~08:04:2x. Shots 07:57:30/08:00:45/08:01:45 do not overlap UNLESS a poller failed attempt (+<=210 s, lb_poll.py retry) shifts the cadence; worst case = two concurrent read-only CLI calls, header sort in runtime_ledger.py l.140 keeps order -> harmless.
+- clean_proof_polls.py: MARK 08:02:10Z, tmo=min(cap, MARK-now), skip <5 s, stamp after call. Caveat: writes any non-empty stdout even with rc!=0 (an error text block would parse as an empty poll, no false bounds).
+- runtime_ledger.py HEADER regex '^=== (ts)(.*)$' accepts the '[manual one-shot ...]' suffix. K2_TOKEN='exp58' exact; exp58n alt only; exp58d -> safetail_late family. pick_k2 = latest exp58 -> a resubmit becomes K2.
+- pytest tests: 116 passed (30 s); safetail+ledger 32 passed.
+- Ledger at 06:03:58Z: K2 56563521 PENDING, L > 6.02 h; 1 poll with failed attempts total.
+- MEMORY.md (mtime 23:13Z 25 Sep) says read LAST RESUME POINT; last = CONTEXT l.2006 26 Sep 00:02 UTC. OK.
+- W50: CONTEXT l.2038 still asks for durable reminders; no evidence of calendar/routine -> open. Verdict: finding holds, not refuted.

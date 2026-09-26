@@ -1,0 +1,6 @@
+- 2026-09-26 06:19 UTC: start; no _curation/6/watch.json -> doing task; existing WATCHLIST.md to update incrementally
+- 06:20Z: since curation 5: fc51b75 (04:04:45Z) v3 + OK REQUEST (CONTEXT l.2039-2051), 801de5a/2f6ec9d (04:11-04:12Z) K2'' builder (l.2052-2057); HEAD == origin/main 2f6ec9d. W56/W45(post)/W58/W60(r5) done; W55 running (PID 13436 _dl/clean_proof_polls.py) + poller 20052.
+- 06:21Z: poll.log 06:14:00Z both PENDING (L>6.19h). round6/report.json 06:17:22Z untracked, no REPORT.md; R6-A1 v4 NOW (grep 'CLARIFICATION v4' CONTEXT = 0), before ~06:24-06:34Z poll.
+- 06:22Z: still open: W03 friend A card (last change 25 Sep 13:41Z), W05 ext_* untracked, W04 admission 0, W35 RESULTS PENDING rows, W31 (I-151/hysteresis 0 in CONTEXT), W26, W34 memory l.8/l.14 unchanged (mtime 23:13Z), l.22 + B5 l.196 unfixed; no user OK reply recorded.
+- 06:23Z: new IDs: W61 (log OK reply vs T0), W62 (R6-A1 v4), W63 (R6-A2 brief), W64 (commit poll.log+ledger at first result), W65 (R6-A4 V3b gate), W66 (R6-A6 curator r6), W67 (round 7); T24-T27; I47-I55. Resolved: I36, I40, I41, I42, I43, I45.
+- 06:29Z: WATCHLIST.md written (curation 6), refs verified (v3 l.2039-2046, OK l.2049, builder l.2052); watch.json written and validated; done
