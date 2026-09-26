@@ -2151,6 +2151,13 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   OPEN: (1) E10 by the E10 PORT RULE (09:03 entry): CLI checks every ~6 h through 29 Sep 00:00 UTC; last port submit 29 Sep 02:00. (2) Research rounds every ~2.5 h (user's option b, 08:21) until 27 Sep 12:00 UTC (R8); after ~26 Sep 22:00Z they cannot yield a final -> E10 intel, finals hygiene, lessons. (3) Tick checks (API SELECTED + page) on 28 Sep evening, 29 Sep 12:00 and 18:00 UTC; the user's own durable reminders (W50). (4) Poller lb_poll.py (PID 20052) until 29 Sep 20:00 UTC; any submit needs a poll < 15 min old. (5) Curator records of rounds 5-7. Slots: 3 left on 26 Sep, empty unless E10; 5 on 27 Sep (S8); S14 on 28 Sep.
   LB (info only, R7): 08:38Z #185/3,920 at 0.954; the public silver line (~196) will likely pass us today through others' gains; private (~71%, other embryos) decides.
 - 2026-09-26 09:03 UTC: curator 7 notes the overlap-consensus line (PAUSED at 08:58Z) was not assessed by the curators; ledger I-208 still says "refused by team policy/R9" - superseded by the 08:49Z rules check (rule-legal) and the user's 08:58Z decision; the line awaits the user's resume/stop.
+- 2026-09-26 09:10 UTC: FINALS TICKED 2/2 = [56563521, 56563534] (#37 K2 exp58 + #38 twin exp58n), verified with the Kaggle API
+  (SUBMISSION_GROUP_SELECTED) at 09:10:07Z after the user's "финалы отметил". Re-check on 28 Sep evening and 29 Sep
+  12:00 / 18:00 UTC.
+- 2026-09-26 09:10 UTC: USER CONDITIONAL YES on the E10 PORT RULE (chat: "даю условное да") -> the rule recorded at 09:03 UTC is IN FORCE
+  from now (given before any trigger; P2/P3 not met at this time).
+- 2026-09-26 09:10 UTC: USER: resume the OVERLAP-CONSENSUS line ("запускай сверку кропов") under the gates G-A/G-P/G-B/G-D/G-LB
+  recorded at 08:58 UTC; candidate only; finals stay #37 + #38 unless G-LB is met.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
