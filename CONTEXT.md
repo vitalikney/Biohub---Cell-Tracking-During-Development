@@ -2392,6 +2392,8 @@ Mention it to the user in one line (R9-A8 item 6).
   29 Sep 20:00 UTC; (3) read the competition discussion thoroughly (dedicated read-only browser agent launched; output
   research/wf_ideas_v4/reach0955/discussions_2026-09-26.json). Retraining (R9) is part of "do the same" but its go/no-go
   waits for the reach0955 plan (feasibility and timeline).
+- 2026-09-26 20:34 UTC, USER (chat: "делай. я спать. работай в автономном режиме. ресерчеров не забывай запускать"): autonomous night; execute the
+  reach0955 plan (tonight's slots before 00:00 UTC, then 27 Sep), keep research rounds every ~2.5 h, E10 checks, poller.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
