@@ -383,3 +383,71 @@ Curator logs: `research/KNOWLEDGE/_curation/4/`.
 - Carried over: finals tick (now the top alert, 0/2 by API); round records into CONTEXT by 12:00 (now rounds 5-7); durable 29 Sep reminders; poller uptime; friend A card / ext_* / I-233.
 - New: overlap-consensus line paused for this report (from CONTEXT after the curators; I-208 stale); plan-table correction (E10 to 29 Sep 00:00, P ~5-10%, rank #185); E10 PORT RULE + conditional yes; stale RESUME POINT / MEMORY.md; round prompt text; insertion cost C-51 (info).
 - Curator disagreement settled here: plan-table correction is [today] (ideas, facts) vs [now] (watch); INDEX uses [now], sent with the tick request. Round records are [today] (ideas) vs [before-finals] (facts) vs [now] (watch); INDEX uses [today, by 12:00]. Poller horizon [info] (ideas, watch) vs [info] forgotten (facts): kept [info].
+
+## 8 - 2026-09-26 ~11:10 UTC (curation 8; git HEAD 24dcdea on the REWRITTEN main + untracked `research/wf_ideas_v4/round8/`)
+
+**Operations:**
+- **Finals ticked 2/2** = [56563521, 56563534] (#37 K2 + #38 twin). API-verified 09:10:07Z, still 2/2 at 10:45Z. Sources: `CONTEXT.md` l.2154-2156; `research/wf_ideas_v4/round8/report.notes.md`.
+- **E10 PORT RULE in CONTEXT** (09:03, l.2138-2147) and **in force** since the user's conditional yes at 09:10 (l.2157-2158). Not triggered at 10:17-10:23Z.
+- **Overlap-consensus line:** gates at 08:58 (l.2110-2128), paused, resumed at 09:10 (l.2159-2160). **STOPPED at 10:52 by G-A FAIL**: 43 of 62 pairs vs >= 60; proxy lab -0.00047 (l.2177-2186). No G-P and no K6 submission. The exp64 lab finishes as INFO only.
+- **Git history rewritten:** cloud branch at 10:09, main at 10:15 (l.2161-2176). Old hashes map via `experiments/git_rewrite_map_2026-09-26.txt`. Old-history worktree branches come in by cherry-pick only.
+- **LB:** no new submission; #188 at 10:17Z; silver margin 13 -> 7-8 ranks (`research/wf_ideas_v4/round8/scan_browser.json`).
+- **Round 8** ran 10:16-10:46Z. It is untracked and has only `report.notes.md` (no report.json or REPORT.md).
+- Commits since curation 7 (new hashes, `git log --oneline`): 3992fd0 (E10 rule), d3ca495 (ticks 2/2, E10 in force, OC resumed), 1953f18 (exp64 lab kernels), 86a2f75 (round prompt), da645e8 + 4e760fb (cloud day 2), fd23e0a + b41ec05 (rewrites), 24dcdea (OC stop).
+
+**Ideas** (`IDEAS.md` l.11; `ideas.json` meta.curations[n=8], 31 records; `_curation/8/ideas.json`):
+- **Applied:** I-227 and I-258 (ticks), I-256 (E10 rule in force), I-259 (round prompt, 86a2f75). I-257 is only partly applied.
+- **I-208 overlap consensus:** reopened by the rules check and user decision, then closed by G-A (ledger row updated; no longer "refused by R9").
+- **New I-266..I-276:**
+  - OC sub-ideas I-266 (G-P bit-probe and its variants), I-267 (K6 and hardening), I-268 (K6 finals rule), I-269 (dt-uniqueness), I-271 (position averaging) and I-273 (post-hoc G-A rescue) are refuted or moot.
+  - I-270 (exp64 G-B lab, INFO read) is in-plan.
+  - Deferred: I-272 (cross-copy division import) and I-276 (GT-noise mimicry).
+  - New ops items: I-274 (R9 amendment line, at risk) and I-275 (post-rewrite git hygiene).
+- **Round-8 rechecks:**
+  - I-029 constant z shift: corrected (+0.0016 in-sample, ~+0.0003 expected on new embryos) and deferred; I-041 cross-referenced.
+  - I-079 split-aware relink: deferred (reach <= 7/62).
+  - I-058 DivNet veto stays closed.
+- **Counts c7 -> c8:** 265 -> 276 ideas; refuted 153 -> 157; deferred 22 -> 26; in-plan 28 -> 31; lb-tested 41, lab-tested 20 and open-untested 1 unchanged. Strict orphan I-233. At risk: I-229, I-232, I-243, I-257, I-262, I-274 (I-256 and I-259 left the list; I-274 joined).
+
+**Facts and decisions** (`FACTS.md`, `DECISIONS.md`, lines marked [c8]; `_curation/8/facts.json`):
+- **New facts:**
+  - F-RUN-22: overlap registration runtime.
+  - F-MOD-22: OC artefacts, all outside main.
+  - F-TRN-30: proxy G-B -0.00047.
+  - F-TRN-31: z shift +0.0016 in the lab; not a finals candidate.
+  - F-TRN-32: DivNet veto and split-aware relink stay closed.
+  - About 20 rows updated (ticks, ranks, E10 in force); new header note on the rewritten hashes.
+- **Contradictions:**
+  - Resolved: C-48 (E10 horizon), C-50 (poller horizon), C-55 (port vs §f(iii), rule now in force), C-56 (live RESUME POINT).
+  - New C-58..C-67: R9 vs the user's OC decision; G-A 65 vs 62 pairs; G-LB vs R4/f2; the E10 pair had K6 been adopted; resume hygiene; old hashes; entries below `## 9.`; z-shift value; splice harm; "official metric" in G-B.
+- **`DECISIONS.md`:**
+  - P37/P38 marked ticked; G27-G30 added in §1b; §2 gains the tick paragraph plus K6 and E10 rows.
+  - §2f marked in force; new §2g holds the OC gates table.
+  - R1-R10 and the finals rule each get a [c8] status line.
+
+**Watchlist** (`WATCHLIST.md`; `_curation/8/watch.json`):
+- **Done:** W54 (tick), W69 (E10 rule), W74 (user message), W60/W75 (round-7 report and records), W26 (cloud day-2 check-in).
+- **Partly done:** W70 (RESUME POINT), W71 (round prompt).
+- **New:**
+  - W76 (rounds), W79 (sync local main), W80 (resume hygiene), W81 (records), W82 (exp64 INFO read), W83 (save OC evidence by cherry-pick);
+  - T26 (silver margin), T27 (~22:00Z line);
+  - insights I64-I73.
+- **Still open:** W03 friend A card, W05 ext_* untracked, W50 reminders.
+- **Note from INDEX:** local main equals origin/main 24dcdea at ~11:08Z (`git status -sb`), so the git part of W79 is resolved. `experiments/lb_poll/ledger.md` shows M from the live poller.
+
+**Alerts** (`INDEX.md` TOP ALERTS, 10 after dedup):
+- **Resolved since curation 7:** finals not ticked; E10 rule not in CONTEXT; plan-table correction sent; OC line waiting on the user (stopped by G-A); round 7 records (round 7 done; the rest carried over); I-208 ledger stale (fixed by the ideas curator).
+- **Carried over:** records into CONTEXT by 12:00 (remaining items); stale RESUME POINT / MEMORY.md; round prompt text (now "OC listed as active" plus l.36 headroom); durable 29 Sep reminders; poller uptime; friend A card, ext_* and I-233.
+- **New:**
+  - git after the rewrite: cherry-pick only, friend A reset, no Co-Authored-By trailer despite the harness reminder;
+  - exp64 G-B as INFO only;
+  - round 8 untracked, with the OC evidence only on worktree branches;
+  - R9 amendment line;
+  - E10 dry run skipped in round 8;
+  - "public = one embryo" is a guess;
+  - z shift post-deadline; old hashes; silver margin 7-8 (info).
+- **Curator disagreements settled here:**
+  - Git merge risk: [now] (facts, watch) vs [today] (ideas, I-275). INDEX uses [now].
+  - Records: [now] (watch). INDEX uses [now, by 12:00].
+  - R9 amendment: [today] (ideas) vs [info] (facts). INDEX folds it into resume hygiene [today].
+  - Local-main sync W79 [now]: resolved by the time of INDEX.

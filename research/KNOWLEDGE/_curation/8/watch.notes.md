@@ -1,0 +1,6 @@
+- 2026-09-26 10:52 UTC: run 8 started; no prior watch.json in _curation/8; reading WATCHLIST.md (run 7) + new sources since.
+- 10:57Z sources read: CONTEXT l.2083-2197 (local main b41ec05); origin/main 24dcdea (13:52 local = 10:52Z) adds OC STOP entry (G-A FAIL 43/62; proxy G-B -0.00047), NOT yet in local main working tree (local has uncommitted poll.log/ledger.md, which 24dcdea also touches).
+- Done since curation 7: W54 ticks 2/2 (CONTEXT l.2154), W69 E10 rule + OK (l.2138-2147, l.2157), W70 resume point (l.2148, placeholder unfilled), W60/W75 round7 REPORT.md (3992fd0), W57 round7 records (l.2130-2137), W71 round prompt (86a2f75; l.36 still '~4 h headroom'), W26 cloud day2 (l.2194-2197, below ## 9), memory pointer updated (l.8 stale: 'E10 proposed; OC paused').
+- Hash rewrite 10:15Z: old hashes -> experiments/git_rewrite_map_2026-09-26.txt (64f0551->093526c, b4144e9->b2be382, 4d0c477->9d04fce, 7107b6d->3ffe1f6).
+- round8: scans + v_ files only (report.json being written 10:43Z by judge); PC8-01..12, R8H-1..10, RC-A/B/C read.
+- 10:59Z WATCHLIST.md written (curation 8); watch.json written. User relayed request (rewrite main) already done at 10:15Z per CONTEXT l.2167; not acted on here.

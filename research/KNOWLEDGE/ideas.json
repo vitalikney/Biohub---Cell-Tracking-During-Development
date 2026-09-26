@@ -1,6 +1,6 @@
 {
  "meta": {
-  "generated": "2026-09-26 ~09:05 UTC (ideas curator, curation 7; git HEAD 4d0c477 + untracked research/wf_ideas_v4/round7/)",
+  "generated": "2026-09-26 ~11:10 UTC (ideas curator, curation 8; git HEAD 24dcdea (after the 10:15 UTC history rewrite) + untracked research/wf_ideas_v4/round8/)",
   "task": "IDEAS LEDGER: every idea/hypothesis/experiment ever proposed, deduplicated into clusters, with status and sources",
   "status_kinds": [
    "lb-tested",
@@ -14,8 +14,8 @@
    "strict": "proposed but never tested nor explicitly closed",
    "at-risk": "in the plan only as optional/idle work with no owner or build yet"
   },
-  "cluster_order_rule": "clusters sorted by realistic potential score impact for the remaining window (29 Sep 2026), then post-deadline ceiling; curation 7 reorders: FINALS (tick 0/2) and BASE (E10 port) lead, RUN drops to 3rd (resolved: K2 clean)",
-  "path_conventions": "paths are repo-relative; 'l.N' = line number at commit 4d0c477 (CONTEXT.md l.1-2057 unchanged since 2f6ec9d; the 00:02 UTC 26 Sep RESUME POINT is l.2006-2025, the 01:20 UTC entries are l.2026-2038, the 04:04 UTC entries l.2039-2051, the 04:12 UTC K2'' builder entry l.2052-2057, CLARIFICATION v4 (06:31 UTC) l.2058-2069, K2/TWIN SCORE READ (07:35 UTC) l.2070-2081, option b (08:21 UTC) l.2082, 0.955/0.956 WAVE CHECK (08:27 UTC) l.2083-2095; '## 9. Literature' at l.2096); section sign = section",
+  "cluster_order_rule": "clusters sorted by realistic potential score impact for the remaining window (29 Sep 2026), then post-deadline ceiling; curation 8 keeps the curation-7 order: FINALS (ticked 2/2, re-checks only) and BASE (E10 rule in force) lead; TESTSET stays last (OC line stopped by G-A)",
+  "path_conventions": "paths are repo-relative; 'l.N' = line number at commit 24dcdea (CONTEXT.md l.1-2095 unchanged since 4d0c477/9d04fce: the 00:02 UTC 26 Sep RESUME POINT is l.2006-2025, CLARIFICATION v4 (06:31 UTC) l.2058-2069, K2/TWIN SCORE READ (07:35 UTC) l.2070-2081, option b (08:21 UTC) l.2082, 0.955/0.956 WAVE CHECK (08:27 UTC) l.2083-2095; new: RULES CHECK (08:49) l.2096-2109, OC gates (08:58) l.2110-2128, OC paused l.2129, round-7 records (09:03) l.2130-2137, E10 PORT RULE (09:03) l.2138-2147, post-score RESUME POINT (09:03) l.2148-2152, curator note l.2153, FINALS TICKED 2/2 (09:10) l.2154-2156, E10 conditional yes (09:10) l.2157-2158, OC resumed l.2159-2160, branch/main history rewrites (10:09/10:15) l.2161-2176, OC STOPPED by G-A (10:52) l.2177-2186; '## 9. Literature' at l.2187; cloud check-in (09:40) l.2204-2207 below it). Commit hashes cited before curation 8 are pre-rewrite; map them via experiments/git_rewrite_map_2026-09-26.txt (e.g. 4d0c477 -> 9d04fce, 64f0551 -> 093526c)",
   "sources_read": [
    "CONTEXT.md (all, to l.1912)",
    "experiments/RESULTS.md (all)",
@@ -55,9 +55,13 @@
    "git log 2f6ec9d..4d0c477 (CONTEXT.md l.2058-2095, experiments/RESULTS.md l.70-71, research/wf_ideas_v4/round6/REPORT.md, experiments/workflows/biohub-research-round.js)",
    "experiments/lb_poll/ledger.md (08:44:28Z), poll.log (to 08:44:25Z)",
    "research/wf_ideas_v4/round7/ (report.json 08:45:40Z, report.notes.md, scan_hypotheses/plancheck/recheck/browser.json, v_*.json names)",
-   "experiments/ext_*/ (unchanged since 25 Sep)"
+   "experiments/ext_*/ (unchanged since 25 Sep)",
+   "git log 9d04fce..24dcdea (CONTEXT.md l.2096-2207, PROMPT_FRIEND_A.md top block, experiments/exp64_overlap_lab/kernel_{a,b}/probe.json, experiments/git_rewrite_map_2026-09-26.txt, experiments/workflows/biohub-research-round.js 86a2f75, research/wf_ideas_v3/day2_findings.md, research/wf_ideas_v4/round7/REPORT.md)",
+   "research/wf_ideas_v4/round8/ (untracked: scan_hypotheses/plancheck/recheck/browser.json, v_*.json, report.notes.md to 10:46Z; no REPORT.md yet)",
+   "experiments/lb_poll/ledger.md, poll.log (tail, 26 Sep)",
+   "experiments/ext_*/ (unchanged since 25 Sep; already covered)"
   ],
-  "previous_curation": "curation 6, 2026-09-26 ~06:35 UTC at 2f6ec9d (research/KNOWLEDGE/_curation/6/ideas.json)",
+  "previous_curation": "curation 7, 2026-09-26 ~09:05 UTC at 4d0c477 (= 9d04fce after the rewrite) (research/KNOWLEDGE/_curation/7/ideas.json)",
   "curations": [
    {
     "n": 2,
@@ -381,6 +385,44 @@
      "I-264": "NEW (refuted)",
      "I-265": "NEW (in-plan)"
     }
+   },
+   {
+    "n": 8,
+    "at": "2026-09-26 ~11:10 UTC",
+    "head": "24dcdea",
+    "changes": {
+     "I-208": "refuted -> refuted: REOPENED 08:58 (rules-legal, user decision), STOPPED 10:52 by its pre-registered G-A gate; proxy lab negative",
+     "I-266": "NEW (refuted)",
+     "I-267": "NEW (refuted)",
+     "I-268": "NEW (refuted)",
+     "I-269": "NEW (refuted)",
+     "I-270": "NEW (in-plan)",
+     "I-271": "NEW (refuted)",
+     "I-272": "NEW (deferred-after-deadline)",
+     "I-273": "NEW (refuted)",
+     "I-274": "NEW (in-plan)",
+     "I-275": "NEW (in-plan)",
+     "I-276": "NEW (deferred-after-deadline)",
+     "I-029": "refuted -> deferred-after-deadline: RECHECK: x138 lab +0.1 vox z shift = +0.0016 in-sample; skeptic: transfer ~+0.0003, not a finals candidate -> post-deadline",
+     "I-041": "refuted -> refuted: cross-ref: the per-video GT-oracle 'no gain' result does not hold for a constant shift on x138 (see I-029)",
+     "I-058": "lb-tested -> lb-tested: RECHECK: not in x138; stays closed on the x138 base",
+     "I-079": "refuted -> deferred-after-deadline: RECHECK: break-even premise superseded, but reach 7/62; closed for the finals, post-deadline as a learned far-daughter slot",
+     "I-227": "in-plan -> in-plan: APPLIED: FINALS TICKED 2/2 at 09:10 UTC (API-verified)",
+     "I-258": "in-plan -> in-plan: APPLIED: first positive read 09:10:07Z = {56563521, 56563534}; 10:45Z still 2/2",
+     "I-229": "in-plan -> in-plan: still at risk: calendar reminders unconfirmed",
+     "I-094": "in-plan -> in-plan: round 8 intel: rank 188-189, silver margin 8, wave slowing",
+     "I-257": "in-plan -> in-plan: PARTLY APPLIED: post-score RESUME POINT written 09:03; tick placeholder unfilled, MEMORY pointer stale, 2 entries below '## 9. Literature'",
+     "I-256": "in-plan -> in-plan: IN FORCE: recorded 09:03 UTC, user conditional yes 09:10 UTC (before any trigger)",
+     "I-026": "in-plan -> in-plan: round 8: E10 not met (10:17-10:23Z)",
+     "I-262": "in-plan -> in-plan: not done by round 8 (focus went to the OC line)",
+     "I-259": "in-plan -> in-plan: APPLIED: round prompt updated (86a2f75): R8 hard line, active lines, closed list, '~4 h headroom' removed",
+     "I-265": "in-plan -> in-plan: round 8 ran ~10:17-10:46Z",
+     "I-252": "deferred-after-deadline -> deferred-after-deadline: adds the OC G-A lesson and the z-shift recheck",
+     "I-243": "in-plan -> in-plan: PC8-11 (exp66 family) moot after the OC stop",
+     "I-233": "open-untested -> open-untested: not mentioned by round 8 except PC8-02's C2 error_description read (moot)",
+     "I-005": "refuted -> refuted: R9 amendment keeps N2 banned; G-P was the only allowed structure probe (never submitted)",
+     "I-232": "in-plan -> in-plan: round7/REPORT.md committed (3992fd0); round8 REPORT.md pending; round2 still missing"
+    }
    }
   ]
  },
@@ -388,18 +430,18 @@
   {
    "code": "FINALS",
    "title": "Finals choice / rank strategy (E[max], rank-aware F1, no-insertion twin F2)",
-   "impact": "0 on public; private premium ~+0.0002..+0.0005 and P(one final > raw x138) +0.01..+0.05 (research/wf_ideas_v4/FINAL_REPORT_v4.md section 1.3). DECIDED 07:35Z: #37 K2 0.954 + #38 twin 0.953 by READ TABLE row 3 (CONTEXT.md l.2070-2081). The only live lever left is the tick itself: 0/2 at 08:37Z; with no tick Kaggle may auto-pick P36 + #35 (research/wf_ideas_v4/round7/report.json R7-A1).",
-   "n": 27,
+   "impact": "0 on public; private premium ~+0.0002..+0.0005 and P(one final > raw x138) +0.01..+0.05 (research/wf_ideas_v4/FINAL_REPORT_v4.md section 1.3). DECIDED and TICKED: #37 K2 0.954 + #38 twin 0.953 (READ TABLE row 3, CONTEXT.md l.2070-2081), 2/2 API-verified at 09:10:07Z (CONTEXT.md l.2154-2156). Only re-checks (28 Sep evening, 29 Sep 12:00/18:00 UTC) and an E10 port could still change the pair.",
+   "n": 28,
    "by_status": {
     "in-plan": 15,
     "lb-tested": 1,
-    "refuted": 11
+    "refuted": 12
    }
   },
   {
    "code": "BASE",
    "title": "Base stack / public-notebook ports (public 0.941 -> sjlee 0.947 -> x138 0.953)",
-   "impact": "Realised the two largest LB steps: +0.006 (sjlee TTA stack, probe 14) and +0.003..+0.006 (x138, probe 34) (experiments/RESULTS.md rows 43, 67). Remaining window: only an E10 port of a public x138 successor >= 0.956 (P(trigger) ~5-10%, EV ~2-3e-4 x P) under a PORT RULE not yet recorded (research/wf_ideas_v4/round7/report.json R7-A2).",
+   "impact": "Realised the two largest LB steps: +0.006 (sjlee TTA stack, probe 14) and +0.003..+0.006 (x138, probe 34) (experiments/RESULTS.md rows 43, 67). Remaining window: only an E10 port of a public x138 successor >= 0.956 (P(trigger) ~5-10%, EV ~2-3e-4 x P) under the E10 PORT RULE, in force since 09:10 UTC (CONTEXT.md l.2138-2147, l.2157-2158); not triggered at 10:23Z (research/wf_ideas_v4/round8/scan_hypotheses.json R8H-8).",
    "n": 15,
    "by_status": {
     "in-plan": 3,
@@ -423,25 +465,25 @@
   {
    "code": "LOC",
    "title": "Localisation / coordinate head (V1284 coordhead, float output, lowrefine, head retrain)",
-   "impact": "Only in-window lever with a public proof: +0.002 on our base (probe 31), +0.007 inside x138 (CONTEXT.md l.1495-1504). lowrefine scored neutral (d1 = d2 = 0) and stays in both finals; post-deadline: axial localisation of z-elongated 6bba nuclei (I-261; research/wf_ideas_v4/round7/scan_recheck.json R7-NF-node-miss-anatomy-x138).",
+   "impact": "Only in-window lever with a public proof: +0.002 on our base (probe 31), +0.007 inside x138 (CONTEXT.md l.1495-1504). lowrefine scored neutral (d1 = d2 = 0) and stays in both finals. Round 8: a constant +0.1 vox z shift gains +0.0016 in-sample on the x138 lab but ~+0.0003 transfer-adjusted -> post-deadline (I-029); post-deadline also axial localisation of z-elongated 6bba nuclei (I-261).",
    "n": 22,
    "by_status": {
-    "deferred-after-deadline": 1,
+    "deferred-after-deadline": 2,
     "lab-tested": 1,
     "lb-tested": 3,
-    "refuted": 17
+    "refuted": 16
    }
   },
   {
    "code": "DIV",
    "title": "Divisions (safe-division gates, DivNet, DaughterNet insertion, forkmid/forkblob, DeepCenter threshold)",
    "impact": "0.1 x div_J; public div_J <= 0.36 (probe 26); realised +0.001 twice (probes 28, 35), insertion is inside K2. The fork-REMOVAL family is exhausted on exp60 (forkmid, forkblob, ANTIPAR FAIL; DNVETO dropped; K3b FAIL): lab break-even FP:TP >= 7.7 at J 0.129 (CONTEXT.md l.1918-1937; research/wf_ideas_v4/round2/report.json new_facts (7)). Round 3: the insertion is not a dense-clip risk (private harm needs OOF evaluable precision < ~11%) and the whole x138 tail is saturated (research/wf_ideas_v4/round3/report.json new_facts (11), (13)).",
-   "n": 44,
+   "n": 46,
    "by_status": {
-    "deferred-after-deadline": 1,
+    "deferred-after-deadline": 4,
     "lab-tested": 3,
     "lb-tested": 6,
-    "refuted": 34
+    "refuted": 33
    }
   },
   {
@@ -505,21 +547,22 @@
    "code": "VALID",
    "title": "Validation, labs and methodology (LOEO, port, official metric, replay lab, exp60, anatomy)",
    "impact": "No direct score; decides which ideas are trusted. Key lesson: labs on train are in-sample (CONTEXT.md l.1537-1538).",
-   "n": 22,
+   "n": 24,
    "by_status": {
     "deferred-after-deadline": 1,
-    "in-plan": 3,
+    "in-plan": 5,
     "lab-tested": 8,
     "refuted": 10
    }
   },
   {
    "code": "TESTSET",
-   "title": "Test-set structure / transductive / rules-policy ideas",
-   "impact": "Refused on rules/spirit (R9) or rules (proxy accounts).",
-   "n": 5,
+   "title": "Test-set structure / transductive / rules-policy ideas (overlap-consensus line)",
+   "impact": "Overlap consensus was re-opened as rule-legal (CONTEXT.md l.2096-2109) with a design ceiling of +0.004..+0.006 on a 44b6-type embryo and 0 on a 6bba-type one, then STOPPED by its own pre-registered G-A gate at 10:52 UTC (43/62 < 60; proxy lab -0.00047) (CONTEXT.md l.2177-2186). Nothing live remains in this cluster.",
+   "n": 11,
    "by_status": {
-    "refuted": 5
+    "in-plan": 1,
+    "refuted": 10
    }
   }
  ],
@@ -698,11 +741,13 @@
    },
    "sources": [
     "research/wf_ideas_v3/s_verify_n2-hidden-size-bit-probe.json",
-    "CONTEXT.md l.1673-1676"
+    "CONTEXT.md l.1673-1676",
+    "research/wf_ideas_v4/round8/scan_plancheck.json PC8-09",
+    "CONTEXT.md l.2177-2186"
    ],
    "status": {
     "kind": "refuted",
-    "detail": "Refused by R9 (info mostly free from latencies + step 0); last resort only with explicit user OK (CONTEXT.md l.1673-1676)."
+    "detail": "Refused by R9 (info mostly free from latencies + step 0); last resort only with explicit user OK (CONTEXT.md l.1673-1676). Curation 8: Round 8 PC8-09: the proposed R9 amendment allows only the one G-P overlap bit-probe; N2 and every other hidden-test metadata/size probe stay banned. G-P was never submitted (G-A FAIL; I-266) (research/wf_ideas_v4/round8/scan_plancheck.json PC8-09; CONTEXT.md l.2177-2186)."
    },
    "lb": [],
    "lab": "",
@@ -1251,15 +1296,17 @@
     "CONTEXT.md l.2083-2095",
     "research/wf_ideas_v4/round7/report.json new_facts 1-2",
     "research/wf_ideas_v4/round7/scan_browser.json r7-lb-delta-0822",
-    "research/wf_ideas_v4/round7/scan_hypotheses.json r7h-5"
+    "research/wf_ideas_v4/round7/scan_hypotheses.json r7h-5",
+    "research/wf_ideas_v4/round8/scan_browser.json r8-lb-delta-1017, r8-top-movers",
+    "research/wf_ideas_v4/round8/scan_hypotheses.json R8H-8"
    ],
    "status": {
     "kind": "in-plan",
-    "detail": "Adopted (research/wf_ideas_v4/FINAL_REPORT_v4.md §3 row 8). 22:16-22:23 UTC: 3,914 teams, we are #164 at 0.954 (18th of 65 in the 0.954 block = ranks 147-211); silver (~rank 196) inside the block, 32 ranks below us; all 7 ranks lost since 19:46 went to teams rising into >= 0.955; 16 late 0.953 risers at the END of the 0.953 block (byte-copies, earlier-submission tiebreak) (research/wf_ideas_v4/round3/report.json new_facts (1)-(3), R3-A7). 00:47Z 26 Sep: #155 of 3,919 at 0.954, 6th of 73 in the 0.954 block (150-222); silver ~#196 (41 ranks margin); 0.953 block 223-511; the rise comes only from P36 counting as best (research/wf_ideas_v4/round4/scan_browser.json r4-lb-delta-0047, r4-p36-unrounded-above-35). CONTEXT still carries the 22:16 line (#164) (CONTEXT.md l.1972-1973). Round 4 intel line now in CONTEXT.md l.2033 (1). 03:16Z 26 Sep: #160 of 3,922 at 0.954, still 6th of 73 in the 0.954 block (now 155-227; five teams passed above the block); silver ~196 (36 ranks margin); 0.953 block 228-529; >= 0.960 = 55 teams; movers (Ad Space available 0.965, Nabil Hanif 0.964, Bio-Pirates 0.960) have no public code (research/wf_ideas_v4/round5/scan_browser.json r5-lb-delta-0316, r5-top-movers; report.json new_facts (1)-(2)). Curation 6: 05:46-05:48Z: #162 of 3,922 at 0.954 (was #160), 6th of 76-77 in the 0.954 block (157-232/233); silver ~196 -> margin 34; blocks 0.957 = 76-90, 0.956 = 91-113, 0.955 = 114-156, 0.953 = 233/234-541, >= 0.960 = 57; Sergio Alvarez now #1 (0.975); movers (Ascent 0.963, yuto083 0.962, kusui26 0.960, Lien/tizawa3 0.955) have no public code; subs after ~00:00Z mostly not on the board yet (research/wf_ideas_v4/round6/scan_browser.json r6-lb-delta-0546, r6-top-movers; scan_hypotheses.json R6H-5; report.json new_facts (1)-(2)). The 03:16Z intel line is in CONTEXT.md l.2048 (1). Curation 7: round 7: 08:22Z 3,923 teams, #183 at 0.954 (12th of 87 in 172-258); CLI #185 at 08:38:41Z; blocks 0.957 = 83-99, 0.956 = 100-125, 0.955 = 126-171, 0.953 = 259-582; silver ~196, margin ~11-13, losing ~8 ranks/h, likely crossed today; the overnight rise follows the 00:00Z quota reset + ~7 h latency (daily pattern) (CONTEXT.md l.2083-2090; research/wf_ideas_v4/round7/report.json new_facts 1-2; scan_browser.json r7-lb-delta-0822; scan_hypotheses.json r7h-5). Info only (R7): nothing reacts to it."
+    "detail": "Adopted (research/wf_ideas_v4/FINAL_REPORT_v4.md §3 row 8). 22:16-22:23 UTC: 3,914 teams, we are #164 at 0.954 (18th of 65 in the 0.954 block = ranks 147-211); silver (~rank 196) inside the block, 32 ranks below us; all 7 ranks lost since 19:46 went to teams rising into >= 0.955; 16 late 0.953 risers at the END of the 0.953 block (byte-copies, earlier-submission tiebreak) (research/wf_ideas_v4/round3/report.json new_facts (1)-(3), R3-A7). 00:47Z 26 Sep: #155 of 3,919 at 0.954, 6th of 73 in the 0.954 block (150-222); silver ~#196 (41 ranks margin); 0.953 block 223-511; the rise comes only from P36 counting as best (research/wf_ideas_v4/round4/scan_browser.json r4-lb-delta-0047, r4-p36-unrounded-above-35). CONTEXT still carries the 22:16 line (#164) (CONTEXT.md l.1972-1973). Round 4 intel line now in CONTEXT.md l.2033 (1). 03:16Z 26 Sep: #160 of 3,922 at 0.954, still 6th of 73 in the 0.954 block (now 155-227; five teams passed above the block); silver ~196 (36 ranks margin); 0.953 block 228-529; >= 0.960 = 55 teams; movers (Ad Space available 0.965, Nabil Hanif 0.964, Bio-Pirates 0.960) have no public code (research/wf_ideas_v4/round5/scan_browser.json r5-lb-delta-0316, r5-top-movers; report.json new_facts (1)-(2)). Curation 6: 05:46-05:48Z: #162 of 3,922 at 0.954 (was #160), 6th of 76-77 in the 0.954 block (157-232/233); silver ~196 -> margin 34; blocks 0.957 = 76-90, 0.956 = 91-113, 0.955 = 114-156, 0.953 = 233/234-541, >= 0.960 = 57; Sergio Alvarez now #1 (0.975); movers (Ascent 0.963, yuto083 0.962, kusui26 0.960, Lien/tizawa3 0.955) have no public code; subs after ~00:00Z mostly not on the board yet (research/wf_ideas_v4/round6/scan_browser.json r6-lb-delta-0546, r6-top-movers; scan_hypotheses.json R6H-5; report.json new_facts (1)-(2)). The 03:16Z intel line is in CONTEXT.md l.2048 (1). Curation 7: round 7: 08:22Z 3,923 teams, #183 at 0.954 (12th of 87 in 172-258); CLI #185 at 08:38:41Z; blocks 0.957 = 83-99, 0.956 = 100-125, 0.955 = 126-171, 0.953 = 259-582; silver ~196, margin ~11-13, losing ~8 ranks/h, likely crossed today; the overnight rise follows the 00:00Z quota reset + ~7 h latency (daily pattern) (CONTEXT.md l.2083-2090; research/wf_ideas_v4/round7/report.json new_facts 1-2; scan_browser.json r7-lb-delta-0822; scan_hypotheses.json r7h-5). Info only (R7): nothing reacts to it. Curation 8: Round 8 (10:17-10:23Z): 3,924 teams, rank 188 (CLI 188; 189 at 10:23Z) at 0.954, 10th of 86 in the 0.954 block (179-264); blocks 0.957 = 86-102, 0.956 = 103-128, 0.955 = 129-178, 0.953 = 265-595; silver ~196 -> margin 8 (13 in round 7); pace slowing (+13 teams >= 0.953 in 1.9 h vs +41 in 2.6 h; ~125 subs/h vs ~185); top mover taiseiu 0.962 -> 0.971; ~10 more late x138 copies at the end of the 0.953 block (8th window) (research/wf_ideas_v4/round8/scan_browser.json r8-lb-delta-1017, r8-top-movers; scan_hypotheses.json R8H-8). Info only (R7)."
    },
    "lb": [],
    "lab": "",
-   "next_step": "Record the round-7 intel line (R7-A5 (1)); tell the user in advance that losing public silver triggers nothing (R7-A7).",
+   "next_step": "Info only; tell the user in one line that losing public silver is not a trigger (R7).",
    "orphan": false
   },
   {
@@ -1644,15 +1691,18 @@
     "CONTEXT.md l.2083-2095",
     "research/wf_ideas_v4/round7/report.json new_facts 3, plan_issues 2-3",
     "research/wf_ideas_v4/round7/scan_browser.json r7-e10-trigger-not-met, r7-wave-source-private-not-public",
-    "research/wf_ideas_v4/round7/scan_plancheck.json PC7-01, PC7-03"
+    "research/wf_ideas_v4/round7/scan_plancheck.json PC7-01, PC7-03",
+    "research/wf_ideas_v4/round8/scan_browser.json r8-e10-not-triggered-public-unchanged",
+    "research/wf_ideas_v4/round8/scan_hypotheses.json R8H-8",
+    "CONTEXT.md l.2157-2158"
    ],
    "status": {
     "kind": "in-plan",
-    "detail": "Triggered watch only; at 22:16-22:43 UTC 25 Sep no public notebook > 0.953, x138 still v1 (copies 258 -> 260), no competition notebook run since 09:09 UTC, no new discussions/announcements (research/wf_ideas_v4/round3/report.json new_facts (4); scan_browser.json r3-no-new-code-posts-announcements). 00:47Z 26 Sep: no competition notebook run since 25 Sep 09:09Z, none > 0.953; y3uanm's 0.956 route has no public weights, so C10 cannot fire from it (research/wf_ideas_v4/round4/scan_browser.json r4-no-new-code-posts-announcements; scan_recheck.json R4-NF-y3uanm-no-public-weights). 03:16Z 26 Sep: newest public run still raunakdey07/biohub-harmonic-fusion-v3 (0.953); nothing >= 0.954; no new topic/comment/announcement; no new biohub datasets/models; nothing pulled into experiments/ext_* (research/wf_ideas_v4/round5/scan_browser.json r5-no-new-code-posts-announcements; report.json new_facts (4)). Curation 6: 05:46Z: newest public run still raunakdey07/biohub-harmonic-fusion-v3 (0.953); nothing >= 0.954; no new topic/announcement; new dataset koushikrudra/biohub-zerogpu-consensus-v1 (03:36Z) = a cached submission.csv + text_decoder_v6.csv only, cannot score on the hidden rerun, not pulled (research/wf_ideas_v4/round6/scan_browser.json r6-new-dataset-cached-submission, r6-no-new-code-posts-announcements; report.json rejected (11)). Curation 7: 08:22-08:40Z: E10 NOT met: no public kernel/dataset/model >= 0.954; newest run still raunakdey07/biohub-harmonic-fusion-v3 (25 Sep 09:09Z); x138 'Version 1 of 1' (194 votes, 270 copies); kabirk22/biohub3 = normalized train tensors, not pulled; kragglenote2forwork/biohub-sub-cache2 = leaked cached CSVs incl. a private 'RANK1-0.961-V8-x138-s3forks' file, NOT used (I-264); P(trigger by 27 Sep 12:00) now ~5-10% (was 15-20%) (CONTEXT.md l.2083-2095; research/wf_ideas_v4/round7/report.json new_facts 3; scan_browser.json r7-e10-trigger-not-met, r7-wave-source-private-not-public). Round 7 PC7-01: the E10 watch must run to ~29 Sep 00:00 UTC (last port submit 29 Sep 02:00 by R8), not to 27 Sep 12:00 as the ~08:2x plan table told the user; no admission rule or pair exists yet for a port -> E10 PORT RULE (I-256). The Kaggle kernel list has no score field (CLI = change detector only) (scan_plancheck.json PC7-01, PC7-03)."
+    "detail": "Triggered watch only; at 22:16-22:43 UTC 25 Sep no public notebook > 0.953, x138 still v1 (copies 258 -> 260), no competition notebook run since 09:09 UTC, no new discussions/announcements (research/wf_ideas_v4/round3/report.json new_facts (4); scan_browser.json r3-no-new-code-posts-announcements). 00:47Z 26 Sep: no competition notebook run since 25 Sep 09:09Z, none > 0.953; y3uanm's 0.956 route has no public weights, so C10 cannot fire from it (research/wf_ideas_v4/round4/scan_browser.json r4-no-new-code-posts-announcements; scan_recheck.json R4-NF-y3uanm-no-public-weights). 03:16Z 26 Sep: newest public run still raunakdey07/biohub-harmonic-fusion-v3 (0.953); nothing >= 0.954; no new topic/comment/announcement; no new biohub datasets/models; nothing pulled into experiments/ext_* (research/wf_ideas_v4/round5/scan_browser.json r5-no-new-code-posts-announcements; report.json new_facts (4)). Curation 6: 05:46Z: newest public run still raunakdey07/biohub-harmonic-fusion-v3 (0.953); nothing >= 0.954; no new topic/announcement; new dataset koushikrudra/biohub-zerogpu-consensus-v1 (03:36Z) = a cached submission.csv + text_decoder_v6.csv only, cannot score on the hidden rerun, not pulled (research/wf_ideas_v4/round6/scan_browser.json r6-new-dataset-cached-submission, r6-no-new-code-posts-announcements; report.json rejected (11)). Curation 7: 08:22-08:40Z: E10 NOT met: no public kernel/dataset/model >= 0.954; newest run still raunakdey07/biohub-harmonic-fusion-v3 (25 Sep 09:09Z); x138 'Version 1 of 1' (194 votes, 270 copies); kabirk22/biohub3 = normalized train tensors, not pulled; kragglenote2forwork/biohub-sub-cache2 = leaked cached CSVs incl. a private 'RANK1-0.961-V8-x138-s3forks' file, NOT used (I-264); P(trigger by 27 Sep 12:00) now ~5-10% (was 15-20%) (CONTEXT.md l.2083-2095; research/wf_ideas_v4/round7/report.json new_facts 3; scan_browser.json r7-e10-trigger-not-met, r7-wave-source-private-not-public). Round 7 PC7-01: the E10 watch must run to ~29 Sep 00:00 UTC (last port submit 29 Sep 02:00 by R8), not to 27 Sep 12:00 as the ~08:2x plan table told the user; no admission rule or pair exists yet for a port -> E10 PORT RULE (I-256). The Kaggle kernel list has no score field (CLI = change detector only) (scan_plancheck.json PC7-01, PC7-03). Curation 8: Round 8 (10:17-10:23Z): E10 NOT met; code lists unchanged (newest run still raunakdey07/biohub-harmonic-fusion-v3, 25 Sep 09:09Z); x138 'Version 1 of 1', 200 votes, 277 copies; no new biohub kernels/datasets; cached-CSV datasets unchanged; P2 not met (movers submitted 00:02-06:11Z, daily pattern) (research/wf_ideas_v4/round8/scan_browser.json r8-e10-not-triggered-public-unchanged; scan_hypotheses.json R8H-8). Watch now runs under the E10 PORT RULE in force (I-256)."
    },
    "lb": [],
    "lab": "",
-   "next_step": "Watch by E10 PORT RULE P1 (CLI every ~6 h to 29 Sep 00:00 UTC) once recorded (I-256); port only under P3-P6.",
+   "next_step": "P1 CLI checks ~every 6 h to 29 Sep 00:00 UTC (I-256).",
    "orphan": false
   },
   {
@@ -1732,7 +1782,11 @@
    "id": "I-029",
    "cluster": "LOC",
    "name": "Constant sub-voxel offset arm (dz/dy/dx grid; subvoxel-bias-calibration)",
-   "aliases": [],
+   "aliases": [
+    "R8-RC-A",
+    "K7 zshift",
+    "embryo-constant z shift"
+   ],
    "description": "Apply a per-axis constant shift in the float-output harness.",
    "first_seen": {
     "date": "2026-09-24",
@@ -1740,15 +1794,19 @@
    },
    "sources": [
     "research/wf_ideas_v2/r1_dedupe.json float-output-coords",
-    "research/wf_ideas_v3/s_merge.json dropped image-z-convention"
+    "research/wf_ideas_v3/s_merge.json dropped image-z-convention",
+    "research/wf_ideas_v4/round8/scan_recheck.json R8-RC-A-embryo-constant-z-shift-on-x138",
+    "research/wf_ideas_v4/round8/v_recheck_r8-rc-a-embryo-constant-z-shift-on-x138.json",
+    "research/wf_ideas_v4/round8/report.notes.md",
+    "experiments/coordhead_retrain/out_full_P/report.txt"
    ],
    "status": {
-    "kind": "refuted",
-    "detail": "Low prior: forum constant dz lost 0.0031; per-video GT-oracle z shift gave no match gain (research/wf_ideas_v3/s_merge.json dropped)."
+    "kind": "deferred-after-deadline",
+    "detail": "Low prior: forum constant dz lost 0.0031; per-video GT-oracle z shift gave no match gain (research/wf_ideas_v3/s_merge.json dropped). Curation 8: Round 8 recheck on the x138 lab (exp60, 56 clips, official metric with writer rounding): z + 0.1 vox before rounding gives ALL +0.00161 (bootstrap 5/95 +0.00074/+0.00261), 44b6 +0.00251 (P<=0 0.12), 6bba +0.00153; every negative shift loses; identical on the K2-like ins35 arm (additive with the insertion); mechanism = positive post-head residual z bias on both train embryos (44b6 +0.152 um, 6bba +0.454 um) (research/wf_ideas_v4/round8/scan_recheck.json R8-RC-A-embryo-constant-z-shift-on-x138). Its skeptic REFUTED it as a candidate: only 14/56 clips change; 44b6 rests on 2 clips; the honest per-embryo size is the old +0.0003..+0.0005; the bias is embryo-dependent (Canh's constant correction lost 0.0031 on the LB); coordinate-only lab gains read 0 on the LB 3 times (floatout); no independent bed before R8. Verdict: old 'ceiling ~0 / LB noise' argument corrected, idea NOT reopened; post-deadline as a learned per-node/per-video z correction in an embryo-held-out coordhead-v2 (research/wf_ideas_v4/round8/v_recheck_r8-rc-a-embryo-constant-z-shift-on-x138.json; report.notes.md 'RC-A z-shift (not a finals candidate; post-deadline)')."
    },
    "lb": [],
-   "lab": "",
-   "next_step": "",
+   "lab": "Curation 8: x138 lab (exp60, 56 clips): z +0.1 vox ALL +0.00161, 44b6 +0.00251, 6bba +0.00153; +0.05 +0.00088; +0.15 +0.00125; negatives lose (research/wf_ideas_v4/round8/scan_recheck.json R8-RC-A).",
+   "next_step": "Before R8 only with a NEW user OK and the skeptic's fixes (per-embryo P(<=0) < 0.10, fresh 6bba bed, pair decision explicit); default: post-deadline learned z correction inside an embryo-held-out coordhead-v2 (with I-261).",
    "orphan": false
   },
   {
@@ -2066,15 +2124,17 @@
     "path": "research/wf_ideas_v3/h_localisation-training-free.json"
    },
    "sources": [
-    "research/wf_ideas_v3/s_merge.json dropped"
+    "research/wf_ideas_v3/s_merge.json dropped",
+    "research/wf_ideas_v4/round8/scan_recheck.json R8-RC-A-embryo-constant-z-shift-on-x138",
+    "research/wf_ideas_v4/round8/v_recheck_r8-rc-a-embryo-constant-z-shift-on-x138.json"
    ],
    "status": {
     "kind": "refuted",
-    "detail": "Even a GT-oracle per-video shift gave no match gain (research/wf_ideas_v3/s_merge.json dropped)."
+    "detail": "Even a GT-oracle per-video shift gave no match gain (research/wf_ideas_v3/s_merge.json dropped). Curation 8: Round 8: on the x138 lab a constant +0.1 vox z shift gains +0.0016 in-sample, so 'ceiling ~0' is corrected; transfer-adjusted value ~+0.0003; not reopened (research/wf_ideas_v4/round8/scan_recheck.json R8-RC-A; v_recheck_r8-rc-a-embryo-constant-z-shift-on-x138.json). See I-029."
    },
    "lb": [],
    "lab": "",
-   "next_step": "",
+   "next_step": "Post-deadline with I-029 (learned z correction).",
    "orphan": false
   },
   {
@@ -2537,11 +2597,13 @@
    },
    "sources": [
     "experiments/RESULTS.md l.53",
-    "CONTEXT.md l.1135-1141"
+    "CONTEXT.md l.1135-1141",
+    "research/wf_ideas_v4/round8/scan_recheck.json R8-RC-B-divnet-parent-veto-on-x138",
+    "research/wf_ideas_v4/round8/v_recheck_r8-rc-b-divnet-parent-veto-on-x138.json"
    ],
    "status": {
     "kind": "lb-tested",
-    "detail": "Lab +0.0023 (59 FP removed, 1 TP lost); probe 20 exp39 = 0.947 (tie); F2 until the x138 era (experiments/RESULTS.md l.53)."
+    "detail": "Lab +0.0023 (59 FP removed, 1 TP lost); probe 20 exp39 = 0.947 (tie); F2 until the x138 era (experiments/RESULTS.md l.53). Curation 8: Round 8 recheck: x138/K2 carry no DivNet veto (0 'divnet' in exp56 except inside the DaughterNet insertion). Stays closed on x138: DNVETO family (closed R2S-3), no honest bed (public DivNet is in-sample; exp60 dumps lack DivNet p), R8 cutoff, ~+65 min kernel time. The scan's 'P20 tie implies FP:TP ~2.8' argument was withdrawn by the skeptic (only ~6% of lab forks are evaluable; the tie bounds the effect to < ~0.0015, it does not measure the ratio) (research/wf_ideas_v4/round8/scan_recheck.json R8-RC-B-divnet-parent-veto-on-x138; v_recheck_r8-rc-b-divnet-parent-veto-on-x138.json)."
    },
    "lb": [
     {
@@ -2550,7 +2612,7 @@
     }
    ],
    "lab": "",
-   "next_step": "",
+   "next_step": "None (closed on x138).",
    "orphan": false
   },
   {
@@ -3131,22 +3193,27 @@
    "id": "I-079",
    "cluster": "DIV",
    "name": "Split-aware flow relink (division slots inside the relink)",
-   "aliases": [],
+   "aliases": [
+    "R8-RC-C",
+    "learned far-daughter slot"
+   ],
    "description": "Let the Hungarian assign two children.",
    "first_seen": {
     "date": "2026-09-25",
     "path": "research/wf_ideas_v3/h_linking-on-x138.json"
    },
    "sources": [
-    "research/wf_ideas_v3/s_merge.json dropped"
+    "research/wf_ideas_v3/s_merge.json dropped",
+    "research/wf_ideas_v4/round8/scan_recheck.json R8-RC-C-split-aware-flow-relink-reach",
+    "research/wf_ideas_v4/round8/v_recheck_r8-rc-c-split-aware-flow-relink-reach.json"
    ],
    "status": {
-    "kind": "refuted",
-    "detail": "Needs fork precision >= 0.40 vs expected 0.15-0.30 (research/wf_ideas_v3/s_merge.json dropped)."
+    "kind": "deferred-after-deadline",
+    "detail": "Needs fork precision >= 0.40 vs expected 0.15-0.30 (research/wf_ideas_v3/s_merge.json dropped). Curation 8: Round 8 recheck: the old 0.265 break-even is superseded (x138 lab J_div 0.129 -> fork break-even precision 0.114; private 0.11-0.20), but a reach audit on the exp60 x138 finals finds 62/99 GT divisions detected but unforked (steal 35 / orphan 27; 6bba 54, 44b6 8) and only <= 7/62 pass the idea's own gates (far daughter median 9.88 um, q75 11.12; near daughter median 1.82 um). Closed for the finals; post-deadline as a learned far-daughter slot (research/wf_ideas_v4/round8/scan_recheck.json R8-RC-C-split-aware-flow-relink-reach; v_recheck_r8-rc-c-split-aware-flow-relink-reach.json: not refuted, 7 is an upper bound)."
    },
    "lb": [],
-   "lab": "",
-   "next_step": "",
+   "lab": "Curation 8: exp60 x138 reach audit: 99 GT divisions = 12 TP forks + 62 detected-unforked (35 steal / 27 orphan) + 25 other; <= 7/62 within the gates.",
+   "next_step": "After 29 Sep: learned far-daughter slot (10-12 um) on the division list.",
    "orphan": false
   },
   {
@@ -6348,7 +6415,11 @@
    "cluster": "TESTSET",
    "name": "Overlap consensus across overlapping test crops (transductive)",
    "aliases": [
-    "overlap-consensus"
+    "overlap-consensus",
+    "overlap-consensus line",
+    "OC line",
+    "K6 overlapcons",
+    "sverka kropov"
    ],
    "description": "44b6-type embryos are overlapping crops; owner rule picks the better copy.",
    "first_seen": {
@@ -6358,15 +6429,29 @@
    "sources": [
     "research/wf_ideas_v2/FINAL_REPORT.md §4",
     "CONTEXT.md l.1452-1455",
-    "CONTEXT.md l.1673-1674"
+    "CONTEXT.md l.1673-1674",
+    "CONTEXT.md l.2096-2109",
+    "CONTEXT.md l.2110-2128",
+    "CONTEXT.md l.2129",
+    "CONTEXT.md l.2153",
+    "CONTEXT.md l.2159-2160",
+    "CONTEXT.md l.2177-2186",
+    "research/wf_ideas_v2/r2_research_overlap-consensus.json",
+    "research/wf_ideas_v4/round8/scan_plancheck.json PC8-01, PC8-09, PC8-12",
+    "research/wf_ideas_v4/round8/scan_hypotheses.json R8H-9, R8H-10",
+    "research/wf_ideas_v4/round8/v_plancheck_pc8-01.json",
+    "research/wf_ideas_v4/round8/v_hypotheses_r8h-9.json",
+    "research/wf_ideas_v4/round8/report.notes.md",
+    "experiments/exp64_overlap_lab/kernel_a/probe.json",
+    "experiments/exp64_overlap_lab/kernel_b/probe.json"
    ],
    "status": {
     "kind": "refuted",
-    "detail": "Refused by the team policy and R9 (transductive) (CONTEXT.md l.1583, l.1673-1674)."
+    "detail": "Refused by the team policy and R9 (transductive) (CONTEXT.md l.1583, l.1673-1674). Curation 8: The old 'refused by team policy/R9' closure was SUPERSEDED: the 08:49 UTC rules check found overlap consensus / test-set structure NOT prohibited by the Kaggle rules (only 3.4.b hand labelling of test data is), so R9 was our own rule (CONTEXT.md l.2096-2109); the user built it as a CANDIDATE with pre-registered gates G-A registration / G-P bit-probe / G-B lab splice / G-D dummy / G-LB (CONTEXT.md l.2110-2128), paused it at 08:58 (l.2129), resumed it at 09:10 (l.2159-2160). 10:52 UTC STOPPED BY ITS PRE-REGISTERED GATE: G-A FAIL: 43 of the 62 GT-linked 44b6 pairs found at the exact offset (gate '>= 60 of 65'; splits.json holds 62 links, '65' was a typo), 0 wrong offsets, 0 accepted 6bba pairs, 0 cross-embryo pairs, 49 accepted pairs (all 44b6, bit-exact); misses 11 at 2.2-4.8% spatial overlap (< 5%), 4 with 1-4 overlapping frames (< 5), 4 with < 30 votes; by 'G-A FAIL -> stop': NO G-P bit-probe, NO K6 submission. Supporting info: lab-GB proxy on exp39 tails of all 71 44b6 clips = splice delta -0.00047 (bootstrap lower -0.00216; clip wins/losses 22/37); a harmful fragment-drop in the splice was found and fixed (rollback). exp64 x138 lab kernels finish anyway, G-B read = INFO ONLY (CONTEXT.md l.2177-2186). Round 8: registration is exact and false-free (58/62 had a candidate at the GT offset; 6 extra accepted pairs are real copies missing from the GT link list); low recall costs gain, not harm, but continuing would be a post-hoc user decision (research/wf_ideas_v4/round8/scan_plancheck.json PC8-01; scan_hypotheses.json R8H-9; v_plancheck_pc8-01.json, v_hypotheses_r8h-9.json). Design ceiling was +0.004..+0.006 on a 44b6-type embryo, 0 on a 6bba-type one (research/wf_ideas_v2/r2_research_overlap-consensus.json)."
    },
    "lb": [],
-   "lab": "",
-   "next_step": "",
+   "lab": "Curation 8: G-A on 199 train videos: 43/62 GT-linked 44b6 pairs at exact offset, 0 wrong, 0 6bba, 0 cross (CONTEXT.md l.2177-2180). Lab-GB proxy (exp39 tails, 71 44b6 clips): splice delta -0.00047, bootstrap lower -0.00216, wins/losses 22/37 (CONTEXT.md l.2182-2183).",
+   "next_step": "None before the deadline unless the user logs a post-hoc 'continue' (dated, before any exp64 number). Record the exp64 G-B read as INFO (I-271). Post-deadline: note the lesson (gate text inconsistent with its own 5% floor, I-252).",
    "orphan": false
   },
   {
@@ -6784,15 +6869,17 @@
     "research/wf_ideas_v4/round6/report.json R6-A2, R6-A5, rejected (8)",
     "CONTEXT.md l.2070-2081",
     "research/wf_ideas_v4/round7/report.json R7-A1, new_facts 4",
-    "research/wf_ideas_v4/round7/scan_plancheck.json PC7-03"
+    "research/wf_ideas_v4/round7/scan_plancheck.json PC7-03",
+    "CONTEXT.md l.2154-2156",
+    "research/wf_ideas_v4/round8/report.notes.md"
    ],
    "status": {
     "kind": "in-plan",
-    "detail": "Submissions page at 00:57Z: 0/2 selected, 'If less than 2 are selected, Kaggle will automatically select from your best scoring submissions' (research/wf_ideas_v4/round4/scan_plancheck.json PC4-01). Not covered by existing approval (a user UI action); PRE-REG v3 §f forbids auto-selection (CONTEXT.md l.1735-1736). Curation 5: RECORDED in CONTEXT.md l.2034-2038 (f05389e, 01:20:05Z): tick EXACTLY TWO as soon as the table resolves (default #37 56563521 + #38 56563534). Still a user UI action: item 7 of the round-5 OK message; recommend the tick as a PAIR with refs (research/wf_ideas_v4/round5/report.json R5-A3 item 7, R5-A5 (5)). Curation 6: round 6: 'tick #37/#38 before they score' rejected (no value; the table can still change the pair; Kaggle may not allow selecting PENDING files) (I-253); the morning brief asks the user to tick exactly 2 files at resolution and to set 29 Sep reminders (I-249) (research/wf_ideas_v4/round6/scan_hypotheses.json R6H-8 (a); report.json R6-A2, R6-A5). Curation 7: the table resolved at 07:35 (#37 56563521 + #38 56563534); CONTEXT names the pair 'TO TICK NOW' (CONTEXT.md l.2078-2080). Round 7: API group=SELECTED = 0 at 08:32Z and 08:37:15Z, Submissions page 0/2 at ~08:34Z -> NOT ticked yet (research/wf_ideas_v4/round7/report.json new_facts 4, R7-A1). With no tick, Kaggle auto-selects from the 0.954 tie (#37, #35, P36), possibly P36 + #35, which the finals rule forbids (research/wf_ideas_v4/round7/scan_plancheck.json PC7-03)."
+    "detail": "Submissions page at 00:57Z: 0/2 selected, 'If less than 2 are selected, Kaggle will automatically select from your best scoring submissions' (research/wf_ideas_v4/round4/scan_plancheck.json PC4-01). Not covered by existing approval (a user UI action); PRE-REG v3 §f forbids auto-selection (CONTEXT.md l.1735-1736). Curation 5: RECORDED in CONTEXT.md l.2034-2038 (f05389e, 01:20:05Z): tick EXACTLY TWO as soon as the table resolves (default #37 56563521 + #38 56563534). Still a user UI action: item 7 of the round-5 OK message; recommend the tick as a PAIR with refs (research/wf_ideas_v4/round5/report.json R5-A3 item 7, R5-A5 (5)). Curation 6: round 6: 'tick #37/#38 before they score' rejected (no value; the table can still change the pair; Kaggle may not allow selecting PENDING files) (I-253); the morning brief asks the user to tick exactly 2 files at resolution and to set 29 Sep reminders (I-249) (research/wf_ideas_v4/round6/scan_hypotheses.json R6H-8 (a); report.json R6-A2, R6-A5). Curation 7: the table resolved at 07:35 (#37 56563521 + #38 56563534); CONTEXT names the pair 'TO TICK NOW' (CONTEXT.md l.2078-2080). Round 7: API group=SELECTED = 0 at 08:32Z and 08:37:15Z, Submissions page 0/2 at ~08:34Z -> NOT ticked yet (research/wf_ideas_v4/round7/report.json new_facts 4, R7-A1). With no tick, Kaggle auto-selects from the 0.954 tie (#37, #35, P36), possibly P36 + #35, which the finals rule forbids (research/wf_ideas_v4/round7/scan_plancheck.json PC7-03). Curation 8: APPLIED (done): FINALS TICKED 2/2 = [56563521, 56563534] (#37 K2 exp58 + #38 twin exp58n), verified with the Kaggle API (SUBMISSION_GROUP_SELECTED) at 09:10:07Z after the user's 'finaly otmetil' (CONTEXT.md l.2154-2156); still 2/2 at 10:45Z (research/wf_ideas_v4/round8/report.notes.md)."
    },
    "lb": [],
    "lab": "",
-   "next_step": "NOW: the user ticks #37 56563521 + #38 56563534; verify with the API SELECTED check (I-258) + one page read; log 'FINALS TICKED 2/2' in CONTEXT.",
+   "next_step": "Re-check (API SELECTED + page) on 28 Sep evening, 29 Sep 12:00 and 18:00 UTC (I-229, I-258).",
    "orphan": false
   },
   {
@@ -6860,15 +6947,17 @@
     "CONTEXT.md l.2041",
     "research/wf_ideas_v4/round6/scan_plancheck.json PC6-08",
     "research/wf_ideas_v4/round6/report.json R6-A5",
-    "research/wf_ideas_v4/round7/report.json R7-A1, R7-A7"
+    "research/wf_ideas_v4/round7/report.json R7-A1, R7-A7",
+    "CONTEXT.md l.2148-2152",
+    "CONTEXT.md l.2154-2156"
    ],
    "status": {
     "kind": "in-plan",
-    "detail": "RECORDED in CONTEXT.md l.2038 (f05389e): 28 Sep evening confirm refs; 29 Sep 12:00 UTC reminder + 18:00 backup; exactly 2 ticked by ref and date; reload, screenshot, log, commit; hard end 29 Sep 20:00 UTC for ticks, Kaggle 23:59 UTC. Round 5 (PC5-03, judge-corrected): its 'Never tick #34, #35, P36' clause contradicts C3/f2 literally; v3 V2 replaces it: never tick #35 or P36; tick #34 only when no eligible non-copy x138-family file exists (pair {#34, exp52}); replacement refs twin 56563534, K1 exp58t, K2'' exp58d, #34 56545267, exp52 56534391 (research/wf_ideas_v4/round5/report.json plan_issues (4), V2). Curation 6: v3 V2 (never #35/P36; #34 only when no eligible non-copy x138-family file exists; replacement refs) is in CONTEXT.md l.2041. W50 (reminders that survive the session: 29 Sep 12:00 + 18:00 UTC) is the only open item of the round-6 readiness check; no evidence of any reminder (research/wf_ideas_v4/round6/scan_plancheck.json PC6-08; report.json R6-A5). Curation 7: round 7 adds a machine check: API group=SELECTED must equal {56563521, 56563534} on 28 Sep evening, 29 Sep 12:00 and 18:00 UTC (research/wf_ideas_v4/round7/report.json R7-A1); the 29 Sep 12:00/18:00 durable reminders in the user's calendar (W50) are still unconfirmed and are point 5 of the proposed user message (R7-A7)."
+    "detail": "RECORDED in CONTEXT.md l.2038 (f05389e): 28 Sep evening confirm refs; 29 Sep 12:00 UTC reminder + 18:00 backup; exactly 2 ticked by ref and date; reload, screenshot, log, commit; hard end 29 Sep 20:00 UTC for ticks, Kaggle 23:59 UTC. Round 5 (PC5-03, judge-corrected): its 'Never tick #34, #35, P36' clause contradicts C3/f2 literally; v3 V2 replaces it: never tick #35 or P36; tick #34 only when no eligible non-copy x138-family file exists (pair {#34, exp52}); replacement refs twin 56563534, K1 exp58t, K2'' exp58d, #34 56545267, exp52 56534391 (research/wf_ideas_v4/round5/report.json plan_issues (4), V2). Curation 6: v3 V2 (never #35/P36; #34 only when no eligible non-copy x138-family file exists; replacement refs) is in CONTEXT.md l.2041. W50 (reminders that survive the session: 29 Sep 12:00 + 18:00 UTC) is the only open item of the round-6 readiness check; no evidence of any reminder (research/wf_ideas_v4/round6/scan_plancheck.json PC6-08; report.json R6-A5). Curation 7: round 7 adds a machine check: API group=SELECTED must equal {56563521, 56563534} on 28 Sep evening, 29 Sep 12:00 and 18:00 UTC (research/wf_ideas_v4/round7/report.json R7-A1); the 29 Sep 12:00/18:00 durable reminders in the user's calendar (W50) are still unconfirmed and are point 5 of the proposed user message (R7-A7). Curation 8: Ticks are in (09:10Z, I-227); the three API re-checks are in the RESUME POINT OPEN (3) (CONTEXT.md l.2148-2152). The user's own durable 29 Sep reminders (W50) are still not confirmed anywhere in CONTEXT."
    },
    "lb": [],
    "lab": "",
-   "next_step": "Ask the user (R7-A7) for 29 Sep 12:00 + 18:00 UTC calendar reminders; run the API SELECTED check at the three times.",
+   "next_step": "Ask the user once to confirm 29 Sep 12:00 + 18:00 UTC calendar reminders; run the API SELECTED check at the three times.",
    "orphan": "at-risk"
   },
   {
@@ -6951,15 +7040,17 @@
     "research/wf_ideas_v4/round6/report.notes.md",
     "research/wf_ideas_v4/round6/REPORT.md",
     "research/wf_ideas_v4/round7/report.json R7-A8",
-    "research/wf_ideas_v4/round7/report.notes.md"
+    "research/wf_ideas_v4/round7/report.notes.md",
+    "research/wf_ideas_v4/round7/REPORT.md (3992fd0)",
+    "research/wf_ideas_v4/round8/report.notes.md"
    ],
    "status": {
     "kind": "in-plan",
-    "detail": "Covered by existing approval; not done at b2cb928: round2/, round3/ and round4/ hold report.json only; CONTEXT l.1938 and l.1967 cite missing REPORT.md files (research/wf_ideas_v4/round4/report.json R4-A8). Curation 5: round3/REPORT.md and round4/REPORT.md committed in f05389e; round2/REPORT.md still missing; round5's report is in report.json 'report_md_ru' (harness refused the judge's write) -> R5-A8 (research/wf_ideas_v4/round5/report.json R5-A8, report_md_ru_note; report.notes.md 03:45Z). Curation 6: round5/REPORT.md committed in fc51b75; round6's report is again only in report.json 'report_md_ru' (harness refused the judge's write) -> R6-A8 asks to save it with the v4 commit; round2/REPORT.md still missing (ls research/wf_ideas_v4/round2/) (research/wf_ideas_v4/round6/report.json R6-A8, report_md_ru_note; report.notes.md 06:17Z). Curation 7: round6/REPORT.md committed in 64f0551 (06:31Z); round7 REPORT.md was refused to the subagent and must be saved by the main session from report_md_ru (research/wf_ideas_v4/round7/report.json R7-A8; report.notes.md 08:45:40Z); round2/REPORT.md still missing."
+    "detail": "Covered by existing approval; not done at b2cb928: round2/, round3/ and round4/ hold report.json only; CONTEXT l.1938 and l.1967 cite missing REPORT.md files (research/wf_ideas_v4/round4/report.json R4-A8). Curation 5: round3/REPORT.md and round4/REPORT.md committed in f05389e; round2/REPORT.md still missing; round5's report is in report.json 'report_md_ru' (harness refused the judge's write) -> R5-A8 (research/wf_ideas_v4/round5/report.json R5-A8, report_md_ru_note; report.notes.md 03:45Z). Curation 6: round5/REPORT.md committed in fc51b75; round6's report is again only in report.json 'report_md_ru' (harness refused the judge's write) -> R6-A8 asks to save it with the v4 commit; round2/REPORT.md still missing (ls research/wf_ideas_v4/round2/) (research/wf_ideas_v4/round6/report.json R6-A8, report_md_ru_note; report.notes.md 06:17Z). Curation 7: round6/REPORT.md committed in 64f0551 (06:31Z); round7 REPORT.md was refused to the subagent and must be saved by the main session from report_md_ru (research/wf_ideas_v4/round7/report.json R7-A8; report.notes.md 08:45:40Z); round2/REPORT.md still missing. Curation 8: round7/REPORT.md committed in 3992fd0 (12:03 local = 09:03Z; git log -- research/wf_ideas_v4/round7/REPORT.md). round8 has no REPORT.md yet (report agent started 10:43Z, research/wf_ideas_v4/round8/report.notes.md); round2/REPORT.md still missing (ls research/wf_ideas_v4/round*/REPORT.md)."
    },
    "lb": [],
    "lab": "",
-   "next_step": "Save round7/REPORT.md from report_md_ru with the next CONTEXT commit (R7-A8); round 2 optional.",
+   "next_step": "Commit round8/REPORT.md when written; round 2 optional.",
    "orphan": "at-risk"
   },
   {
@@ -6979,15 +7070,16 @@
     "research/wf_ideas_v4/round4/scan_plancheck.json PC4-03",
     "research/wf_ideas_v4/round5/report.json R5-A5 (1)",
     "research/wf_ideas_v4/round6/report.json cheat_sheet",
-    "research/wf_ideas_v4/round7/report.json"
+    "research/wf_ideas_v4/round7/report.json",
+    "research/wf_ideas_v4/round8/scan_plancheck.json PC8-02"
    ],
    "status": {
     "kind": "open-untested",
-    "detail": "Rejected for tonight (needs a poller restart inside the 06:00-09:30Z watch window); the read-only one-liner on demand is enough; 'revisit after 09:30Z, only if still useful' (research/wf_ideas_v4/round4/report.json rejected, R4-A9). No owner. Curation 5: not mentioned by round 5; the C2 one-liner (I-225) covers the need on demand. Curation 6: not mentioned by round 6 either; the cheat sheet reads the error class with the C2 one-liner on demand (research/wf_ideas_v4/round6/report.json cheat_sheet ROW 1). Still no owner. Curation 7: both finals COMPLETE without error, so the error-class read is needed only for a possible E10 port; not mentioned by round 7 (research/wf_ideas_v4/round7/report.json). Still no owner."
+    "detail": "Rejected for tonight (needs a poller restart inside the 06:00-09:30Z watch window); the read-only one-liner on demand is enough; 'revisit after 09:30Z, only if still useful' (research/wf_ideas_v4/round4/report.json rejected, R4-A9). No owner. Curation 5: not mentioned by round 5; the C2 one-liner (I-225) covers the need on demand. Curation 6: not mentioned by round 6 either; the cheat sheet reads the error class with the C2 one-liner on demand (research/wf_ideas_v4/round6/report.json cheat_sheet ROW 1). Still no owner. Curation 7: both finals COMPLETE without error, so the error-class read is needed only for a possible E10 port; not mentioned by round 7 (research/wf_ideas_v4/round7/report.json). Still no owner. Curation 8: Round 8 PC8-02 would have read the G-P error class with the C2 one-liner (error_description); moot after the OC stop. Still no owner (research/wf_ideas_v4/round8/scan_plancheck.json PC8-02)."
    },
    "lb": [],
    "lab": "",
-   "next_step": "Close with one line in the round-7 records (moot unless an E10 port is submitted), or fold into W59 (I-243).",
+   "next_step": "Close with one line (the C2 one-liner covers an E10 port) or fold into W59 (I-243).",
    "orphan": "strict"
   },
   {
@@ -7222,15 +7314,16 @@
     "experiments/lb_poll/ledger.md (06:14:02Z)",
     "tools/runtime_ledger.py l.52 K2_WATCH_H",
     "research/wf_ideas_v4/round7/report.json R7-A6, plan_issues 6",
-    "research/wf_ideas_v4/round7/scan_plancheck.json PC7-06"
+    "research/wf_ideas_v4/round7/scan_plancheck.json PC7-06",
+    "research/wf_ideas_v4/round8/scan_plancheck.json PC8-11"
    ],
    "status": {
     "kind": "in-plan",
-    "detail": "Optional cosmetic code fix after both scores (never inside 07:45-08:35Z); v3 V6 neutralises the texts in CONTEXT meanwhile; no poller restart needed (ledger runs as a fresh subprocess each cycle) (research/wf_ideas_v4/round5/report.json R5-A7). Not started. Curation 6: not done: the 04:12Z commit only added the safetail_late family (git diff f05389e..2f6ec9d -- tools/runtime_ledger.py); ledger.md 06:14:02Z still prints 'A5-F: Forecast F not supplied' and the K2-only 'Keep the poller alive until 08:32:12Z'. Round 6 R6-A7 extends the fix: replace the K2-only K2_WATCH_H text with a generic 'keep until submit + deadline_h' line for every PENDING safetail/safetail_noins/safetail_late entry, add a test, run pytest; after ~09:40Z, never 07:45-08:35Z; fold into WATCHLIST W59 (research/wf_ideas_v4/round6/report.json R6-A7; scan_plancheck.json PC6-06). Curation 7: round 7 (PC7-06): W59 is now cosmetic, only the INFO A5-F line remains in ledger.md; if done, also map the exp63 token to the x138 7.5 h family for an E10 port and run tests/test_runtime_ledger.py (research/wf_ideas_v4/round7/report.json R7-A6, plan_issues 6)."
+    "detail": "Optional cosmetic code fix after both scores (never inside 07:45-08:35Z); v3 V6 neutralises the texts in CONTEXT meanwhile; no poller restart needed (ledger runs as a fresh subprocess each cycle) (research/wf_ideas_v4/round5/report.json R5-A7). Not started. Curation 6: not done: the 04:12Z commit only added the safetail_late family (git diff f05389e..2f6ec9d -- tools/runtime_ledger.py); ledger.md 06:14:02Z still prints 'A5-F: Forecast F not supplied' and the K2-only 'Keep the poller alive until 08:32:12Z'. Round 6 R6-A7 extends the fix: replace the K2-only K2_WATCH_H text with a generic 'keep until submit + deadline_h' line for every PENDING safetail/safetail_noins/safetail_late entry, add a test, run pytest; after ~09:40Z, never 07:45-08:35Z; fold into WATCHLIST W59 (research/wf_ideas_v4/round6/report.json R6-A7; scan_plancheck.json PC6-06). Curation 7: round 7 (PC7-06): W59 is now cosmetic, only the INFO A5-F line remains in ledger.md; if done, also map the exp63 token to the x138 7.5 h family for an E10 port and run tests/test_runtime_ledger.py (research/wf_ideas_v4/round7/report.json R7-A6, plan_issues 6). Curation 8: Round 8 PC8-11: runtime_ledger.py has no family for exp66 (K6) or exp65 (G-P); moot after the OC stop; still relevant only for an E10 port token (research/wf_ideas_v4/round8/scan_plancheck.json PC8-11)."
    },
    "lb": [],
    "lab": "",
-   "next_step": "Optional: only if an E10 port is built (map exp63 -> x138 family); otherwise close with one line.",
+   "next_step": "Only if an E10 port is built (map its token to the x138 family); otherwise close with one line.",
    "orphan": "at-risk"
   },
   {
@@ -7572,11 +7665,14 @@
     "research/wf_ideas_v4/round6/scan_hypotheses.json R6H-7",
     "research/wf_ideas_v4/round6/report.json new_facts (10), R6-A6 (8)",
     "research/wf_ideas_v4/round7/scan_hypotheses.json r7h-3",
-    "research/wf_ideas_v4/round7/report.json rejected 3"
+    "research/wf_ideas_v4/round7/report.json rejected 3",
+    "research/wf_ideas_v4/round8/scan_plancheck.json PC8-01",
+    "research/wf_ideas_v4/round8/v_plancheck_pc8-01.json",
+    "research/wf_ideas_v4/round8/v_recheck_r8-rc-a-embryo-constant-z-shift-on-x138.json"
    ],
    "status": {
     "kind": "deferred-after-deadline",
-    "detail": "Written for after 29 Sep (research/wf_ideas_v4/round6/report.json R6-A6 (8), new_facts (10)). Curation 7: round 7 audit (r7h-3, partly refuted): transferred = the DaughterNet insertion twice (+0.001: #35 vs #34, K2 vs twin); did not transfer = edge filter (+0.016 lab, 0 LB), relink-off, float output (efpost in the same class); leaf prune on x138 is the one closure where lab and LB agree in sign; forkmid is the one power-limited closure (research/wf_ideas_v4/round7/scan_hypotheses.json r7h-3; report.json rejected 3). The user plan (~08:2x) has the curator write these lessons into CONTEXT after 29 Sep (research/wf_ideas_v4/round7/scan_plancheck.json PC7-01)."
+    "detail": "Written for after 29 Sep (research/wf_ideas_v4/round6/report.json R6-A6 (8), new_facts (10)). Curation 7: round 7 audit (r7h-3, partly refuted): transferred = the DaughterNet insertion twice (+0.001: #35 vs #34, K2 vs twin); did not transfer = edge filter (+0.016 lab, 0 LB), relink-off, float output (efpost in the same class); leaf prune on x138 is the one closure where lab and LB agree in sign; forkmid is the one power-limited closure (research/wf_ideas_v4/round7/scan_hypotheses.json r7h-3; report.json rejected 3). The user plan (~08:2x) has the curator write these lessons into CONTEXT after 29 Sep (research/wf_ideas_v4/round7/scan_plancheck.json PC7-01). Curation 8: Round 8 adds two lessons: (1) the OC G-A gate was internally inconsistent from the start ('>= 60 of 65' vs the design's own 5% / 5-frame floors; splits.json holds 62) (research/wf_ideas_v4/round8/scan_plancheck.json PC8-01; v_plancheck_pc8-01.json); (2) a closure argued with 'LB noise 0.003' (I-029/I-041) was wrong for deterministic kernels, although the transfer-adjusted value stayed small (research/wf_ideas_v4/round8/v_recheck_r8-rc-a-embryo-constant-z-shift-on-x138.json)."
    },
    "lb": [],
    "lab": "",
@@ -7686,16 +7782,20 @@
     "research/wf_ideas_v4/round7/v_hypotheses_r7h-4.json",
     "research/wf_ideas_v3/s_merge.json C10",
     "tools/build_probe_kernel.py BASES (l.99), safetail --base x138 check (l.2026-2027)",
-    "tools/runtime_ledger.py FAMILY_RE l.70-73, --family l.436"
+    "tools/runtime_ledger.py FAMILY_RE l.70-73, --family l.436",
+    "CONTEXT.md l.2138-2147",
+    "CONTEXT.md l.2157-2158",
+    "research/wf_ideas_v4/round8/scan_hypotheses.json R8H-8",
+    "research/wf_ideas_v4/round8/scan_plancheck.json PC8-05"
    ],
    "status": {
     "kind": "in-plan",
-    "detail": "Proposed by round 7 (08:45Z), NOT in CONTEXT (HEAD 4d0c477) and no user yes yet. Why: no admission rule or pair exists for an E10 port; section f(iii) needs C01, which a verbatim port cannot carry (builder BASES = exp39/x138; safetail exits unless --base x138); runtime_ledger maps an heir to 'unknown'; choosing the pair after the score would be post-hoc; a night trigger (user at UTC+3) can lose up to 8 h. EV small: P(trigger) ~5-10% x ~2-3e-4 (research/wf_ideas_v4/round7/report.json R7-A2, plan_issues 3). r7h-4's optional 'successor + insertion' build and the C10 rider path were dropped (new code after R8, unscored stack) (report.json rejected 5)."
+    "detail": "Proposed by round 7 (08:45Z), NOT in CONTEXT (HEAD 4d0c477) and no user yes yet. Why: no admission rule or pair exists for an E10 port; section f(iii) needs C01, which a verbatim port cannot carry (builder BASES = exp39/x138; safetail exits unless --base x138); runtime_ledger maps an heir to 'unknown'; choosing the pair after the score would be post-hoc; a night trigger (user at UTC+3) can lose up to 8 h. EV small: P(trigger) ~5-10% x ~2-3e-4 (research/wf_ideas_v4/round7/report.json R7-A2, plan_issues 3). r7h-4's optional 'successor + insertion' build and the C10 rider path were dropped (new code after R8, unscored stack) (report.json rejected 5). Curation 8: RECORDED as CONTEXT.md l.2138-2147 (09:03 UTC) and IN FORCE since the user's conditional yes at 09:10 UTC ('dayu uslovnoe da'), given before any trigger (CONTEXT.md l.2157-2158). P1 CLI checks every ~6 h to 29 Sep 00:00 UTC; round 8 10:23Z: no trigger (research/wf_ideas_v4/round8/scan_hypotheses.json R8H-8). PC8-05 (pair if K6 replaced K2) is moot after the OC stop."
    },
    "lb": [],
    "lab": "",
-   "next_step": "Today, before the user's evening (~19:00Z) and before any trigger: paste e10_port_rule_text as a dated CONTEXT entry, ask for ONE conditional yes, log the reply time with date -u (R7-A2).",
-   "orphan": "at-risk"
+   "next_step": "P1 CLI check ~every 6 h (next ~16:30Z) to 29 Sep 00:00 UTC; port only under P3-P6 (P8 autonomy granted).",
+   "orphan": false
   },
   {
    "id": "I-257",
@@ -7714,15 +7814,18 @@
    "sources": [
     "research/wf_ideas_v4/round7/report.json R7-A3, resume_point_text",
     "research/wf_ideas_v4/round7/scan_plancheck.json PC7-04",
-    "CONTEXT.md l.2006-2025"
+    "CONTEXT.md l.2006-2025",
+    "CONTEXT.md l.2148-2152",
+    "research/wf_ideas_v4/round8/scan_plancheck.json PC8-10",
+    "CONTEXT.md l.2204-2207"
    ],
    "status": {
     "kind": "in-plan",
-    "detail": "Proposed by round 7; not done at HEAD 4d0c477: the newest RESUME POINT is still the pre-score 00:02Z block (CONTEXT.md l.2006-2025), and the MEMORY.md index still names the 25 Sep 10:20 UTC block; with rounds every ~2.5 h, compactions are likely (research/wf_ideas_v4/round7/scan_plancheck.json PC7-04)."
+    "detail": "Proposed by round 7; not done at HEAD 4d0c477: the newest RESUME POINT is still the pre-score 00:02Z block (CONTEXT.md l.2006-2025), and the MEMORY.md index still names the 25 Sep 10:20 UTC block; with rounds every ~2.5 h, compactions are likely (research/wf_ideas_v4/round7/scan_plancheck.json PC7-04). Curation 8: APPLIED in part: the post-score RESUME POINT is CONTEXT.md l.2148-2152 (09:03 UTC). Round 8 PC8-10: its TICK STATUS placeholder is unfilled (ticks verified 09:10:07Z), its OPEN list lacks the OC line state and the post-rewrite git rules; the MEMORY.md 'Resume point' line still names the 25 Sep 10:20 UTC block and 'LB probe approval' the 25 Sep exp52-54 batch; two dated entries sit below '## 9. Literature' (25 Sep 14:05 T1 SAFETAIL; 26 Sep 09:40 cloud check-in, CONTEXT.md l.2204-2207) (research/wf_ideas_v4/round8/scan_plancheck.json PC8-10)."
    },
    "lb": [],
    "lab": "",
-   "next_step": "With the R7-A2 CONTEXT write (today): paste resume_point_text (fill tick status), update the MEMORY.md index lines (R7-A3).",
+   "next_step": "New RESUME POINT after the OC stop (finals 2/2, OC stopped, E10 rule in force, git rules); move the two entries above '## 9. Literature'; update the MEMORY.md pointer lines.",
    "orphan": "at-risk"
   },
   {
@@ -7742,15 +7845,17 @@
    "sources": [
     "research/wf_ideas_v4/round7/report.json R7-A1, new_facts 4, rejected 2, tick_check_cmd",
     "research/wf_ideas_v4/round7/scan_plancheck.json PC7-03",
-    "research/wf_ideas_v4/round7/v_plancheck_pc7-03.json"
+    "research/wf_ideas_v4/round7/v_plancheck_pc7-03.json",
+    "CONTEXT.md l.2154-2156",
+    "research/wf_ideas_v4/round8/report.notes.md"
    ],
    "status": {
     "kind": "in-plan",
-    "detail": "Round 7: PC7-03 part 1 ('the API cannot see finals ticks') REFUTED by its skeptic: SubmissionGroup.SUBMISSION_GROUP_SELECTED works and returned 0 at 08:32Z and 08:37:15Z, matching the page's 0/2 (research/wf_ideas_v4/round7/report.json rejected 2, new_facts 4). Covered by existing approval (read-only). The filter has not yet been seen returning a positive, so the first check needs a page read or screenshot too (R7-A1)."
+    "detail": "Round 7: PC7-03 part 1 ('the API cannot see finals ticks') REFUTED by its skeptic: SubmissionGroup.SUBMISSION_GROUP_SELECTED works and returned 0 at 08:32Z and 08:37:15Z, matching the page's 0/2 (research/wf_ideas_v4/round7/report.json rejected 2, new_facts 4). Covered by existing approval (read-only). The filter has not yet been seen returning a positive, so the first check needs a page read or screenshot too (R7-A1). Curation 8: The API filter returned the pair at 09:10:07Z (first positive read, matching the user's page tick) (CONTEXT.md l.2154-2156) and again at 10:45Z (research/wf_ideas_v4/round8/report.notes.md). Remaining: the three scheduled re-checks."
    },
    "lb": [],
    "lab": "",
-   "next_step": "After the user ticks: run the API check + one page read; log 'FINALS TICKED 2/2' in CONTEXT; repeat 28 Sep evening, 29 Sep 12:00 and 18:00 UTC.",
+   "next_step": "Re-check 28 Sep evening, 29 Sep 12:00 and 18:00 UTC; log each result.",
    "orphan": false
   },
   {
@@ -7770,16 +7875,17 @@
     "research/wf_ideas_v4/round7/report.json R7-A4, plan_issues 5",
     "research/wf_ideas_v4/round7/scan_plancheck.json PC7-05",
     "research/wf_ideas_v4/round7/report.notes.md 08:41:54Z",
-    "experiments/workflows/biohub-research-round.js"
+    "experiments/workflows/biohub-research-round.js",
+    "experiments/workflows/biohub-research-round.js (commit 86a2f75)"
    ],
    "status": {
     "kind": "in-plan",
-    "detail": "Proposed by round 7; the 7107b6d prompt update (08:21Z) added the scored finals only; the hypotheses lens still says 'runtime cost vs the ~4 h headroom' (research/wf_ideas_v4/round7/report.notes.md 08:41:54Z; report.json plan_issues 5)."
+    "detail": "Proposed by round 7; the 7107b6d prompt update (08:21Z) added the scored finals only; the hypotheses lens still says 'runtime cost vs the ~4 h headroom' (research/wf_ideas_v4/round7/report.notes.md 08:41:54Z; report.json plan_issues 5). Curation 8: APPLIED (done): commit 86a2f75 'Round prompt: R8 hard line, active lines (overlap consensus, E10), closed list' changed experiments/workflows/biohub-research-round.js: team rules labelled as ours, HARD LINE (R8), active lines, closed list; the hypotheses lens now asks for 'runtime cost on the ~100-clip hidden run' instead of '~4 h headroom'. (The recheck lens still mentions '~4 h headroom'.)"
    },
    "lb": [],
    "lab": "",
-   "next_step": "Before round 8 (~11:00Z): apply R7-A4 (a)-(c).",
-   "orphan": "at-risk"
+   "next_step": "Next round prompt: drop 'overlap consensus' from the active lines (stopped 10:52 UTC) and add it to the closed list.",
+   "orphan": false
   },
   {
    "id": "I-260",
@@ -7846,15 +7952,17 @@
     "path": "research/wf_ideas_v4/round7/report.json next_focus 4"
    },
    "sources": [
-    "research/wf_ideas_v4/round7/report.json next_focus 4"
+    "research/wf_ideas_v4/round7/report.json next_focus 4",
+    "research/wf_ideas_v4/round8/scan_hypotheses.json summary",
+    "research/wf_ideas_v4/round8/report.notes.md"
    ],
    "status": {
     "kind": "in-plan",
-    "detail": "Round-8 focus item only; no owner or result yet (research/wf_ideas_v4/round7/report.json next_focus)."
+    "detail": "Round-8 focus item only; no owner or result yet (research/wf_ideas_v4/round7/report.json next_focus). Curation 8: Round 8 did not run the E10 dry run; its scans covered the OC line and the E10 CLI check only (research/wf_ideas_v4/round8/scan_hypotheses.json summary; report.notes.md)."
    },
    "lb": [],
    "lab": "",
-   "next_step": "Round 8 (~11:00Z): run it without any push; record the time from trigger to submit.",
+   "next_step": "Next round (before ~22:00Z): walk P3-P5 on an already pulled public notebook without any push; record the trigger-to-submit time.",
    "orphan": "at-risk"
   },
   {
@@ -7928,15 +8036,343 @@
    "sources": [
     "CONTEXT.md l.2082",
     "research/wf_ideas_v4/round7/report.json resume_point_text OPEN (2), next_focus",
-    "research/wf_ideas_v4/round7/scan_plancheck.json PC7-01, PC7-05"
+    "research/wf_ideas_v4/round7/scan_plancheck.json PC7-01, PC7-05",
+    "research/wf_ideas_v4/round8/report.notes.md",
+    "research/wf_ideas_v3/day2_findings.md",
+    "CONTEXT.md l.2204-2207"
    ],
    "status": {
     "kind": "in-plan",
-    "detail": "USER DECISION 08:21 UTC: full research rounds every ~2.5 h until 27 Sep 12:00 UTC (option b) (CONTEXT.md l.2082); round 7 ran at 08:45Z. Round 7 adds: after ~26 Sep 22:00Z rounds cannot produce a final (R8) and should do E10 intel, finals hygiene and lessons; the E10 CLI watch (option-a style, every ~6 h) should continue to 29 Sep 00:00 UTC beyond the rounds (research/wf_ideas_v4/round7/report.json resume_point_text OPEN (1)-(2); scan_plancheck.json PC7-01, PC7-05)."
+    "detail": "USER DECISION 08:21 UTC: full research rounds every ~2.5 h until 27 Sep 12:00 UTC (option b) (CONTEXT.md l.2082); round 7 ran at 08:45Z. Round 7 adds: after ~26 Sep 22:00Z rounds cannot produce a final (R8) and should do E10 intel, finals hygiene and lessons; the E10 CLI watch (option-a style, every ~6 h) should continue to 29 Sep 00:00 UTC beyond the rounds (research/wf_ideas_v4/round7/report.json resume_point_text OPEN (1)-(2); scan_plancheck.json PC7-01, PC7-05). Curation 8: Round 8 ran ~10:17-10:46Z (research/wf_ideas_v4/round8/, report.notes.md; REPORT.md not yet written at 10:46Z). The cloud check-in (09:40 UTC) scheduled no further cloud sessions; rounds stay local (research/wf_ideas_v3/day2_findings.md; CONTEXT.md l.2204-2207)."
    },
    "lb": [],
    "lab": "",
-   "next_step": "Round 8 ~11:00Z; after 27 Sep 12:00 switch to the E10 PORT RULE P1 CLI checks (I-256).",
+   "next_step": "Round 9 ~13:00Z; after ~22:00Z rounds do E10 intel, finals hygiene and lessons only; after 27 Sep 12:00 only the E10 P1 CLI checks.",
+   "orphan": false
+  },
+  {
+   "id": "I-266",
+   "cluster": "TESTSET",
+   "name": "G-P hidden-test overlap bit-probe (1 slot: raise if >= 1 pair accepted; variants: 2-bit S/L public-private probe R8H-1, crash-separated malformed-CSV encoding PC8-02)",
+   "aliases": [
+    "G-P",
+    "exp65 overlap probe",
+    "bit-probe",
+    "R8H-1 2-bit probe",
+    "PC8-02 crash separation"
+   ],
+   "description": "One registration-only kernel on the hidden test that signals via the submission outcome whether overlapping test crops exist, so K6 is only submitted when it can act.",
+   "first_seen": {
+    "date": "2026-09-26",
+    "path": "CONTEXT.md l.2118-2120"
+   },
+   "sources": [
+    "CONTEXT.md l.2110-2128",
+    "CONTEXT.md l.2177-2186",
+    "research/wf_ideas_v4/round8/scan_hypotheses.json R8H-1",
+    "research/wf_ideas_v4/round8/v_hypotheses_r8h-1.json",
+    "research/wf_ideas_v4/round8/scan_plancheck.json PC8-02",
+    "research/wf_ideas_v4/round8/v_plancheck_pc8-02.json",
+    "research/wf_ideas_v4/round8/report.notes.md",
+    ".claude/worktrees/wf_b39793f6-e79-4/tools/overlap_probe.py"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "NOT SUBMITTED: the line stopped at G-A before G-P (CONTEXT.md l.2177-2181). Round 8: PC8-02 confirmed a real defect (any exception outside run_probe's try, e.g. module cell, import, OOM, reads as 'Threw Exception' = 'overlap exists'); fix = explicit malformed CSV for overlap, every crash class UNKNOWN (v_plancheck_pc8-02.json). R8H-1's 2-bit S/L variant REFUTED: 'public = one embryo' is a participants' guess, the host split may be by video, and the extra bit changes the action only in edge cases (v_hypotheses_r8h-1.json). R9 still bans N2-type hidden-test metadata/size probes; G-P was the only structure probe the user allowed (research/wf_ideas_v4/round8/scan_plancheck.json PC8-09)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-267",
+   "cluster": "TESTSET",
+   "name": "K6 = K2 + --patch overlapcons (exp66): overlap-consensus splice as a candidate F1 replacing K2 iff G-A, G-P(ERROR), G-B, G-D pass and public >= 0.954",
+   "aliases": [
+    "K6",
+    "exp66_k6_overlapcons",
+    "overlapcons patch"
+   ],
+   "description": "Build the splice into the K2 stack (fail-soft 'OVERLAPCONS FAILED', byte-identical to K2 with no accepted pair), submit once before R8, adopt by G-LB.",
+   "first_seen": {
+    "date": "2026-09-26",
+    "path": "CONTEXT.md l.2124-2128"
+   },
+   "sources": [
+    "CONTEXT.md l.2110-2128",
+    "CONTEXT.md l.2177-2186",
+    "research/wf_ideas_v4/round8/report.notes.md (K6 build wt5 exp66 probe.json)",
+    "research/wf_ideas_v4/round8/scan_plancheck.json PC8-03, PC8-06, PC8-11, PC8-12",
+    "research/wf_ideas_v4/round8/scan_hypotheses.json R8H-3, R8H-5, R8H-7",
+    "research/wf_ideas_v4/round8/v_hypotheses_r8h-5.json",
+    "research/wf_ideas_v4/round8/v_hypotheses_r8h-7.json"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Built in worktree wt5 (exp66: OVERLAPCONS_ENABLE=1, REPAIR 34200 / DIVINS 28800; rebased to the rewritten history at ff438f7) but NEVER SUBMITTED: stopped by G-A FAIL (CONTEXT.md l.2177-2186; research/wf_ideas_v4/round8/report.notes.md). Round-8 hardening that would have been required (all moot now): R8H-3 add dt == +1, t >= 0 and non-negative rounded coordinates to overlapcons_check (the x138 retention guard/final asserts would otherwise ERROR the whole run); PC8-03 MAX_S 1800 could silently SKIP the stage on ~10-20k hidden frames (K6 == K2) -> MAX_S 3600 (worst end 10.2 h > R5(a) 9.5 h); PC8-06 dummy_gates.py has no K6 mode and the 4 visible clips never exercise the splice; R8H-5 positive-path lab dummy on 44b6_0113de3b+c8e2a523 / 0b24845f+2f31fc2f (2 pairs; skeptic: holds); PC8-11 runtime_ledger has no exp66 family. R8H-7 (probe->K6 runtime ratio) REFUTED: hashing is 0.7% of stage time and threads beat spawn 3.06x vs 2.70x (v_hypotheses_r8h-7.json)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-268",
+   "cluster": "FINALS",
+   "name": "Finals rule for K6: G-LB precedence over R4/f2 at a 0.954 tie (PC8-04), tie table T1/T2/T3 keyed to probe bits (R8H-2), E10 pair if K6 replaced K2 (PC8-05)",
+   "aliases": [
+    "PC8-04",
+    "R8H-2",
+    "PC8-05",
+    "G-LB precedence"
+   ],
+   "description": "Pre-score lines saying how a K6 tie is read, which rule wins over R4, and which pair an E10 port joins if K6 is F1.",
+   "first_seen": {
+    "date": "2026-09-26",
+    "path": "research/wf_ideas_v4/round8/scan_plancheck.json PC8-04"
+   },
+   "sources": [
+    "research/wf_ideas_v4/round8/scan_plancheck.json PC8-04, PC8-05",
+    "research/wf_ideas_v4/round8/scan_hypotheses.json R8H-2",
+    "CONTEXT.md l.2110-2128",
+    "CONTEXT.md l.2138-2147",
+    "CONTEXT.md l.2177-2186"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "MOOT: K6 was never built into the finals (G-A FAIL, CONTEXT.md l.2177-2186); the finals stay #37 + #38 and the E10 PORT RULE P6 pair {port, K2 #37} stands (CONTEXT.md l.2144). Round-8 content kept for the lessons: an R4-class candidate (node set changes) adopted at delta >= 0 conflicts with R4/f2 unless a precedence line is written before the score; adoption at a tie would rest on the in-sample lab alone (edge-filter lesson) (research/wf_ideas_v4/round8/scan_plancheck.json PC8-04; scan_hypotheses.json R8H-2)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-269",
+   "cluster": "TESTSET",
+   "name": "dt-uniqueness check in overlap registration (reject a pair if dt-1 or dt+1 also passes the 99.9% voxel test; guard against frozen/duplicated frames)",
+   "aliases": [
+    "R8H-4",
+    "ambiguous_dt"
+   ],
+   "description": "Extra verify of the neighbouring time shifts after acceptance, as insurance for a hidden embryo with overlaps and frozen frames.",
+   "first_seen": {
+    "date": "2026-09-26",
+    "path": "research/wf_ideas_v4/round8/scan_hypotheses.json R8H-4"
+   },
+   "sources": [
+    "research/wf_ideas_v4/round8/scan_hypotheses.json R8H-4",
+    "research/wf_ideas_v4/round8/v_hypotheses_r8h-4.json",
+    "CONTEXT.md l.2177-2186"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "REFUTED by its skeptic: register() tries offsets in vote order and breaks at the first exact pass, so the true dt is always tried first; duplicate frames in 6bba are isolated singletons (10/99 frames), P(all 3 check frames duplicated) ~0.1^3; the check could even drop true pairs (research/wf_ideas_v4/round8/v_hypotheses_r8h-4.json). Moot anyway after G-A FAIL (CONTEXT.md l.2177-2186)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-270",
+   "cluster": "TESTSET",
+   "name": "exp64 x138 G-B lab (x138 + lowrefine + insertion dump on all 71 44b6 train clips, 2 shards) with the honest reading rules (R8H-6, PC8-07)",
+   "aliases": [
+    "exp64_overlap_lab",
+    "G-B",
+    "biohub-exp64-x138-k2lab-44b6-a/b",
+    "R8H-6",
+    "PC8-07"
+   ],
+   "description": "Kaggle GPU lab that replays the splice on K2-like tails; read on the official metric, per leak group, with a bootstrap lower bound.",
+   "first_seen": {
+    "date": "2026-09-26",
+    "path": "experiments/exp64_overlap_lab/kernel_a/probe.json"
+   },
+   "sources": [
+    "experiments/exp64_overlap_lab/kernel_a/probe.json",
+    "experiments/exp64_overlap_lab/kernel_b/probe.json",
+    "git 1953f18 (exp64 built and pushed)",
+    "CONTEXT.md l.2177-2186",
+    "research/wf_ideas_v4/round8/scan_hypotheses.json R8H-6",
+    "research/wf_ideas_v4/round8/scan_plancheck.json PC8-07, PC8-12",
+    "research/wf_ideas_v4/round8/report.notes.md"
+   ],
+   "status": {
+    "kind": "in-plan",
+    "detail": "Pushed 09:12Z (lab, never submit; shards A 36 / B 35 clips), RUNNING at 10:44Z (research/wf_ideas_v4/round8/report.notes.md). After the G-A stop its G-B read is recorded as INFO ONLY (CONTEXT.md l.2183-2185). Reading rules proposed by round 8: the 6bba 'zero changed edges' clause holds by construction (0 accepted 6bba pairs), not by lab; in-sample detector biases the gain low; report the delta on non-head-train stems, without leak group 0 and per group; gate on BOTH the tool's and the plain official 44b6 delta; only ins35_splice (PRIMARY) counts (research/wf_ideas_v4/round8/scan_hypotheses.json R8H-6; scan_plancheck.json PC8-07)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "When exp64 finishes: log the G-B numbers as INFO (post-stop) in CONTEXT; no decision rides on them.",
+   "orphan": false
+  },
+  {
+   "id": "I-271",
+   "cluster": "TESTSET",
+   "name": "Position averaging of AGREE nodes across overlapping copies (design option e)",
+   "aliases": [
+    "overlap position averaging"
+   ],
+   "description": "Average the coordinates of nodes that both copies agree on.",
+   "first_seen": {
+    "date": "2026-09-26",
+    "path": "research/wf_ideas_v2/r2_research_overlap-consensus.json"
+   },
+   "sources": [
+    "research/wf_ideas_v2/r2_research_overlap-consensus.json option e",
+    "research/wf_ideas_v4/round8/scan_hypotheses.json R8H-10 (a)",
+    "research/wf_ideas_v4/round8/v_hypotheses_r8h-10.json"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Cap +0.0005 (median GT distance 1.34 -> 1.24 um); coordinates are written as rounded ints (float output closed), so most of it vanishes; below any gate (research/wf_ideas_v4/round8/scan_hypotheses.json R8H-10 (a); v_hypotheses_r8h-10.json). Parent line stopped (I-208)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-272",
+   "cluster": "DIV",
+   "name": "Cross-copy division import across overlapping crops (forks skipped in overlap-consensus v1)",
+   "aliases": [
+    "overlap division import"
+   ],
+   "description": "Import a fork found in one copy of an overlapping region into the other copy.",
+   "first_seen": {
+    "date": "2026-09-26",
+    "path": "research/wf_ideas_v4/round8/scan_hypotheses.json R8H-10"
+   },
+   "sources": [
+    "research/wf_ideas_v4/round8/scan_hypotheses.json R8H-10 (b)",
+    "research/wf_ideas_v4/round8/v_hypotheses_r8h-10.json"
+   ],
+   "status": {
+    "kind": "deferred-after-deadline",
+    "detail": "44b6 has ~11 GT divisions in the 17 lab clips (exp60 control TP/FP/FN 1/8/10), division weight 0.1 -> no gate power; 'forks untouched' was pre-registered; new code after R8 -> post-deadline list (research/wf_ideas_v4/round8/v_hypotheses_r8h-10.json)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "After 29 Sep only, and only if overlap consensus is revisited.",
+   "orphan": false
+  },
+  {
+   "id": "I-273",
+   "cluster": "TESTSET",
+   "name": "Rescue G-A after the result: splice the 16 below-floor pairs (2-5% spatial, 1-4 frames), re-frame as '43/46 reachable', or count at-offset rejections (58/62)",
+   "aliases": [
+    "below-floor splice",
+    "43/46 reachable"
+   ],
+   "description": "Lower the pre-registered floors or change the G-A denominator after seeing the registration result.",
+   "first_seen": {
+    "date": "2026-09-26",
+    "path": "research/wf_ideas_v4/round8/scan_plancheck.json PC8-01"
+   },
+   "sources": [
+    "research/wf_ideas_v4/round8/scan_plancheck.json PC8-01",
+    "research/wf_ideas_v4/round8/scan_hypotheses.json R8H-9, R8H-10 (c)",
+    "research/wf_ideas_v4/round8/v_plancheck_pc8-01.json",
+    "research/wf_ideas_v4/round8/v_hypotheses_r8h-10.json",
+    "CONTEXT.md l.2177-2186"
+   ],
+   "status": {
+    "kind": "refuted",
+    "detail": "Post-hoc: a knob change after G-A; the wt4 ga_report '43/46 reachable' re-frame and the 58/62 count are both below/after the pre-registered '>= 60' (research/wf_ideas_v4/round8/scan_plancheck.json PC8-01; v_hypotheses_r8h-10.json (c)). Default STOP applied at 10:52 UTC (CONTEXT.md l.2177-2186)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "",
+   "orphan": false
+  },
+  {
+   "id": "I-274",
+   "cluster": "VALID",
+   "name": "R9 amendment line: overlap consensus allowed as a candidate under G-A..G-LB, one G-P structure probe allowed, N2 and all other hidden-test metadata/size probes stay banned",
+   "aliases": [
+    "PC8-09",
+    "R9 amended"
+   ],
+   "description": "Bring the pre-registration text (R9 and user decision (7)) in line with the 08:49 rules check and the 08:58/09:10 user decisions.",
+   "first_seen": {
+    "date": "2026-09-26",
+    "path": "research/wf_ideas_v4/round8/scan_plancheck.json PC8-09"
+   },
+   "sources": [
+    "research/wf_ideas_v4/round8/scan_plancheck.json PC8-09",
+    "CONTEXT.md l.1581-1583",
+    "CONTEXT.md l.1672-1675",
+    "CONTEXT.md l.2096-2109",
+    "CONTEXT.md l.2110-2128",
+    "CONTEXT.md l.2153",
+    "research/wf_ideas_v4/round8/report.notes.md"
+   ],
+   "status": {
+    "kind": "in-plan",
+    "detail": "Not written: R9 (CONTEXT.md l.1673) and user decision (7) (l.1581-1583) still list overlap consensus as refused; the 10:52 stop entry does not amend R9 (CONTEXT.md l.2177-2186). Round 8 lists it among the unconditional actions (research/wf_ideas_v4/round8/report.notes.md). Now mainly a record: the line is stopped."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "One CONTEXT line with the next write: R9 amended (OC allowed as candidate, G-P allowed, N2 still banned); line stopped by G-A.",
+   "orphan": "at-risk"
+  },
+  {
+   "id": "I-275",
+   "cluster": "VALID",
+   "name": "Post-rewrite git hygiene: old-history worktree branches (wf_b39793f6-e79-*) enter main only by cherry-pick / rebase --onto, never merge; friend A resets to origin/main; 0 Claude refs check before push",
+   "aliases": [
+    "PC8-08",
+    "git_rewrite_map_2026-09-26",
+    "cherry-pick only"
+   ],
+   "description": "Keep the rewritten main free of the pre-rewrite commits after the 10:15 UTC history rewrite.",
+   "first_seen": {
+    "date": "2026-09-26",
+    "path": "CONTEXT.md l.2167-2176"
+   },
+   "sources": [
+    "CONTEXT.md l.2161-2176",
+    "experiments/git_rewrite_map_2026-09-26.txt",
+    "PROMPT_FRIEND_A.md (top block, 26 Sep ~10:15 UTC)",
+    "research/wf_ideas_v4/round8/scan_plancheck.json PC8-08",
+    "research/wf_ideas_v4/round8/report.notes.md",
+    "CONTEXT.md l.2177-2186"
+   ],
+   "status": {
+    "kind": "in-plan",
+    "detail": "Rules recorded at 10:15 UTC (CONTEXT.md l.2167-2176); friend A notified (PROMPT_FRIEND_A.md top block). Round 8 (10:44Z): main has 0 Claude refs; wt5 (ff438f7) is on the rewritten main; wt1/wt4/wt6 are on the OLD history (merge-base 869ca00) -> cherry-pick only 9826517 + a012e32 (research/wf_ideas_v4/round8/report.notes.md; scan_plancheck.json PC8-08). 10:52: OC code kept out of main for now (CONTEXT.md l.2185-2186)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "Only if OC code is ever brought into main: cherry-pick the listed non-merge commits, then check git log main for 0 Claude refs before pushing.",
+   "orphan": false
+  },
+  {
+   "id": "I-276",
+   "cluster": "DIV",
+   "name": "Mimic GT division annotation noise (split marked at wrong coordinates; daughter dropped one frame later)",
+   "aliases": [
+    "GT-noise mimicry"
+   ],
+   "description": "Shape division output to match systematic GT division errors reported on the forum.",
+   "first_seen": {
+    "date": "2026-09-26",
+    "path": "research/wf_ideas_v4/round8/scan_browser.json r8-discussion-two-comments-known-threads"
+   },
+   "sources": [
+    "research/wf_ideas_v4/round8/scan_browser.json r8-discussion-two-comments-known-threads"
+   ],
+   "status": {
+    "kind": "deferred-after-deadline",
+    "detail": "Forum comment (Himanish Goel, thread 'errors in annotated ground truth') says an honest model may lose unless it replicates GT noise; round 8: no new mechanism, any mimicry idea is new code past R8 -> post-deadline list at most (research/wf_ideas_v4/round8/scan_browser.json r8-discussion-two-comments-known-threads)."
+   },
+   "lb": [],
+   "lab": "",
+   "next_step": "After 29 Sep: check on the exp60 lab whether GT division offsets are systematic before designing anything.",
    "orphan": false
   }
  ]

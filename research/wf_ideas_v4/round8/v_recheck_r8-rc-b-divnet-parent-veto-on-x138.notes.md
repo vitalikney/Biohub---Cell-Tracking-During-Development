@@ -1,0 +1,11 @@
+# R8-RC-B DivNet parent veto on x138 - skeptic notes (2026-09-26)
+- No prior JSON at start. Main already rewritten (b41ec05), nothing to do there for this task.
+- RESULTS.md l.53: probe 20 exp39 = exp29 + DivNet veto p>=0.5 -> 0.947 tie; lab (friend A 199 videos, public DivNet in-sample) div 24/96/127 -> 23/43/128 (53 FP, 1 TP removed). Dummy clips vetoed 36/64, 26/32, 6/10, 34/43 (~68%).
+- NOT fully "never on an x138-like stack": exp47/48/51 lineage = exp39 (+veto) + leaf prune + DaughterNet (+ x138 head for exp51). exp51 = 0.950 vs x138+insertion (#35) 0.954 (CONTEXT l.1500). Confounded (different base chain), but no sign the veto adds.
+- exp56/exp58 notebooks: DivNet appears only as the conv block reused by DaughterNet insertion (divinsert helpers); no veto on x138/K2. Confirmed.
+- exp60 control (56 clips): 44b6 1/8/10 J 0.053, 6bba 15/17/73 J 0.143, pooled 16/25/83 J 0.129. Forks emitted 235+441 = 676, evaluable 41 (~6%). => most vetoes land on unannotated ("free") forks -> zero effect either way.
+- Break-even arithmetic OK: removing an evaluable FP gains J/S, removing a TP loses 1/S -> FP:TP break-even 1/J = 7.7 (lab J .129), 2.8 (public J .36, probe 26 exp45).
+- FLAW in the finding: "tie at ~68% dose means ratio ~2.8:1 on public" is not identified. Division term weight 0.1; LB display +-0.0005 + noise; with ~6% of forks evaluable the veto changes only a handful of evaluable forks, so a tie is compatible with any FP:TP ratio (1:1 .. 53:1). The tie says the effect is < ~0.0015, nothing about the ratio.
+- Also it is DNVETO in disguise (closed R2S-3: parent-classifier veto, round2 notes l.3), and DivNet checkpoint is in-sample on train (AUC 0.829 in-sample vs DaughterNet OOF 0.848, CONTEXT l.1277) -> no honest lab bed; exp60 dumps lack DivNet p.
+- Feasibility: R8 hard line 27 Sep 12:00 + new user OK + no honest gate -> fails anyway. Runtime: exp39 ~100 min vs ~35 min base on 2xT4 (frame reads); K2 latency 7.4-7.5 h of 12 h, would fit but not free.
+- Verdict: conclusion (stays closed, nothing to build) confirmed; rationale for the curator note must drop the "public ratio ~2.8" inference.

@@ -1,0 +1,74 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/ideas.json",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/IDEAS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/8/ideas.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/8/ideas.json"
+ ],
+ "alerts": [
+  {
+   "kind": "stale",
+   "what": "R9 still lists overlap consensus as refused; no amendment line exists (I-274)",
+   "evidence": "CONTEXT.md l.1673 and l.1581-1583 vs the rules check l.2096-2109, user decisions l.2110-2128 / l.2159-2160, stop entry l.2177-2186; research/wf_ideas_v4/round8/scan_plancheck.json PC8-09",
+   "suggested_action": "One CONTEXT line with the next write: R9 amended (OC allowed as a candidate, one G-P probe allowed, N2 still banned); line stopped by G-A at 10:52 UTC",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "The post-score RESUME POINT has an unfilled tick placeholder, the MEMORY.md pointer still names the 25 Sep 10:20 UTC block, and two dated entries sit below '## 9. Literature' (I-257)",
+   "evidence": "CONTEXT.md l.2148-2152, l.2204-2207; research/wf_ideas_v4/round8/scan_plancheck.json PC8-10",
+   "suggested_action": "Write a new RESUME POINT after the OC stop (finals 2/2 at 09:10:07Z, OC stopped, E10 rule in force, git rules), move the two entries above '## 9. Literature', update the MEMORY.md pointer lines",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "The exp64 x138 G-B lab kernels are still running; their numbers must be logged as INFO only (post-stop) and no decision may ride on them (I-270)",
+   "evidence": "CONTEXT.md l.2183-2185; research/wf_ideas_v4/round8/report.notes.md 10:44Z (both RUNNING); experiments/exp64_overlap_lab/kernel_a/probe.json",
+   "suggested_action": "When exp64 finishes, record G-B numbers in CONTEXT tagged INFO (post-stop), using the R8H-6/PC8-07 reading (official metric, per leak group, non-head stems)",
+   "urgency": "today"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "Round 8 recheck: a constant +0.1 vox z shift gains +0.0016 in-sample on the x138 lab; the skeptic puts the transfer at ~+0.0003 and closes it for the finals (I-029, I-041)",
+   "evidence": "research/wf_ideas_v4/round8/scan_recheck.json R8-RC-A-embryo-constant-z-shift-on-x138; v_recheck_r8-rc-a-embryo-constant-z-shift-on-x138.json; report.notes.md",
+   "suggested_action": "Tell the user in one line that the old closure is corrected but not reopened and moves post-deadline (learned z correction in an embryo-held-out coordhead-v2). Before R8 only with a NEW OK and the skeptic's fixes",
+   "urgency": "today"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "The E10 readiness dry run (walk PORT RULE P3-P5 on a pulled notebook, time trigger-to-submit) was not done by round 8 (I-262)",
+   "evidence": "research/wf_ideas_v4/round7/report.json next_focus; research/wf_ideas_v4/round8/scan_hypotheses.json summary (OC focus only)",
+   "suggested_action": "Run it in the next round without any push, before ~22:00Z 26 Sep",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "The round prompt still names overlap consensus as an ACTIVE line (I-259)",
+   "evidence": "experiments/workflows/biohub-research-round.js (86a2f75) 'Active lines: the OVERLAP-CONSENSUS candidate'; CONTEXT.md l.2177-2186 (stopped 10:52 UTC)",
+   "suggested_action": "Before round 9: move overlap consensus to the closed list and drop the leftover '~4 h headroom' in the recheck lens",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "Finals ticked 2/2, but the 29 Sep 12:00 + 18:00 UTC durable reminders (W50) are still unconfirmed (I-229)",
+   "evidence": "CONTEXT.md l.2154-2156 (ticked 09:10:07Z), l.2148-2152 OPEN (3); no reminder confirmation in CONTEXT",
+   "suggested_action": "Ask the user once to confirm calendar reminders; run the API SELECTED re-check on 28 Sep evening, 29 Sep 12:00 and 18:00 UTC",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "risk",
+   "what": "Round-8 closures (G-P variants, K6 hardening, dt-uniqueness, position averaging, post-hoc G-A rescue, I-058/I-079 rechecks, the 62/99 unforked-division FACT) exist only in untracked round-8 files; round8/REPORT.md is not written yet (I-232)",
+   "evidence": "research/wf_ideas_v4/round8/ untracked (git status); report.notes.md 10:43-10:46Z",
+   "suggested_action": "Commit round8/ with its REPORT.md and add a one-line records entry in CONTEXT",
+   "urgency": "today"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "I-233 poller error_description logging remains the only strict orphan (no owner since round 4)",
+   "evidence": "research/KNOWLEDGE/ideas.json I-233; research/wf_ideas_v4/round8/scan_plancheck.json PC8-02 (C2 one-liner, moot)",
+   "suggested_action": "Close with one line (the C2 one-liner covers an E10 port) or fold into W59",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 8 (2026-09-26 ~11:10 UTC, HEAD 24dcdea after the 10:15 UTC history rewrite, plus untracked research/wf_ideas_v4/round8/). The ledger went from 265 to 276 ideas (I-266..I-276 added) with 31 change records in ideas.json meta.curations[n=8]. Counts: refuted 153->157, lb-tested 41, lab-tested 20, deferred 22->26, in-plan 28->31, open 1. Main changes: finals ticked 2/2 and API-verified at 09:10:07Z (I-227/I-258 applied). The E10 PORT RULE is in force after the user's conditional yes at 09:10 (I-256). The overlap-consensus line (I-208) was reopened as rule-legal and then STOPPED at 10:52 UTC by its own G-A gate (43/62 vs >= 60; proxy lab -0.00047); its sub-ideas I-266..I-273 are recorded as closed or moot, except the exp64 INFO read (I-270) and cross-copy division import (I-272, deferred). Round-8 rechecks: z-shift I-029 (+0.0016 in-sample, transfer ~+0.0003) and split-aware relink I-079 (reach <= 7/62) move to deferred; the DivNet veto I-058 stays closed on x138. Orphans: strict I-233; at risk I-229, I-232, I-243, I-257, I-262, I-274. Note: the relayed user request ('rewrite main too') was already done by the main session (CONTEXT.md l.2167-2176, commit b41ec05); this curator did not touch git."
+}

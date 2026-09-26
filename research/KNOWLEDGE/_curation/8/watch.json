@@ -1,0 +1,11 @@
+{
+  "task": "curation 8 WATCHLIST (incremental over curation 7, 08:50Z)",
+  "complete": true,
+  "written_utc": "2026-09-26T10:59Z",
+  "files_written": ["research/KNOWLEDGE/WATCHLIST.md", "research/KNOWLEDGE/_curation/8/watch.notes.md", "research/KNOWLEDGE/_curation/8/watch.json"],
+  "state": "Finals ticked 2/2 [56563521, 56563534] (CONTEXT l.2154-2156); E10 PORT RULE in force (l.2157); OC line STOPPED 10:52Z by G-A FAIL 43/62, proxy G-B -0.00047 (origin/main 24dcdea CONTEXT l.2177-2186); main history already rewritten 10:15Z (l.2167-2176, b41ec05); round 8 report in progress.",
+  "overdue": ["W79 pull origin/main 24dcdea into local main (stash poll.log/ledger.md, pull --ff-only)", "W80 resume hygiene: TICK STATUS placeholder l.2149, new RESUME POINT, move 2 entries below ## 9, MEMORY.md l.8 stale", "W03 friend A card", "W05 ext_ dirs untracked", "W02 moot"],
+  "next_24h": ["W57/W66/W31/W72/W81 curator records by 12:00 (incl. I-208 -> stopped by G-A)", "W76 round 8 save+commit, round 9 ~13:30Z", "W82 exp64 G-B info-only read ~11:30-12:15Z", "W83 keep OC evidence from old-history worktrees via cherry-pick only", "W19 poller", "W23 E10 P1 next ~16:30Z", "W50 reminders", "W71 residue l.36 '~4 h headroom'", "T26 silver margin 8", "T12 18:00", "T17 slots empty", "T27 22:00", "T18 27 Sep 00:00"],
+  "new_insights": ["I64", "I65", "I66", "I67", "I68", "I69", "I70", "I71", "I72", "I73"],
+  "done_since_c7": ["W54", "W69", "W74", "W60/W75", "W26", "W70 partly", "W71 mostly"]
+}

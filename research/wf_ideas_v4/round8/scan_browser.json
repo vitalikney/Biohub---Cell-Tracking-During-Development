@@ -1,0 +1,45 @@
+{
+ "summary": "Round-8 delta scan, 10:17-10:23 UTC 26 Sep, compared with round 7 (LB 08:22). Public LB: 3,924 teams. We are rank 188 (183), still 0.954 with 40 subs, now 10th of 86 in the 0.954 block (ranks 179-264; 12th before, because Yam and hana87hana moved up to 0.955/0.956). The silver line (5% = rank 196) is now 8 ranks below us (13 in round 7). The wave is slowing: >=0.953 grew 582->595 (+13 in 1.9 h, against +41 in 2.6 h), and submissions are ~125/h (~185/h). Block counts, round 7 in brackets: 0.953 = 331 (324), 0.954 = 86 (87), 0.955 = 50 (46), 0.956 = 26 (26), 0.957 = 17 (17), >=0.960 = 64 (62), >=0.970 = 7 (6). Top mover: taiseiu 0.962->0.971 (#39->#6, sub 02:10 UTC). Others: Kirill Makhankov 0.949->0.958 (8 subs), Jongwon 0.957->0.961, Jiman Kwon 0.959->0.962, zy 0.954->0.957. Ranks 1-5 are unchanged (0.975/0.975/0.973/0.971/0.971). About 10 more late x138 copies landed at the end of the 0.953 block (8th window). Public: nothing new. Code lists (recency, creation, score) are identical to round 7, and no public notebook scores >0.953. x138 is still 'Version 1 of 1' (200 votes, 277 copies). The all-Kaggle 'biohub' kernel and dataset searches show no new rows, and the cached-CSV datasets (koushikrudra consensus-v1, biohub-sub-cache2) are unchanged apart from download counts. E10 is NOT triggered, and nothing was pulled. Discussion has no new topic, only 2 new comments on known threads. On 742942 ('errors in annotated ground truth'), Himanish Goel reports GT division errors (daughter 'dropped 1 frame later', split at wrong coordinates). On 743006, Georgy Mamarin restates host facts and shake-up statistics. Neither is actionable. Overview, timeline (29 Sep 23:59 UTC), the 12 h limits and the Data files are unchanged. There is no host announcement. The finals decision (#37 + #38) is unaffected; public rank is info only (R7). Scope note: the relayed user request (rewrite main as well) is a git-history task and was not acted on by this read-only scan agent. HEAD b41ec05 already reads Main history rewritten.",
+ "findings": [
+  {
+   "id": "r8-lb-delta-1017",
+   "kind": "new-fact",
+   "what": "Public LB at 10:17 UTC 26 Sep: 3,924 teams. We are rank 188 (183 at 08:22; 162 at 05:46) at 0.954, 40 subs, last sub 00:02:18. We are 10th in the 0.954 block (179-264): Oleksandr Parfionov, ChenWenSheng, Mthem77, memecchi, qr Z1201, Euphor_M, Arturo Gutierrez Aguilar, Fanch and Homii_N are ahead, Taisei is #189. Blocks: 0.957 = 86-102 (17), 0.956 = 103-128 (26), 0.955 = 129-178 (50), 0.953 = 265-595 (331); >=0.960 = 64, >=0.970 = 7, >=0.953 = 595. Silver = 5% of 3,924 = 196.2, so our margin is 8 ranks (13 in round 7). The pace is slowing: +13 teams at >=0.953 in 1.9 h (+41 in 2.6 h before), and the Overview shows 86,805 submissions (+239 since 08:25, ~125/h against ~185/h). 141 teams had newly scored subs; the latest LastSubmissionDate is 09:32:44. The CLI competitions list shows userRank 188.",
+   "evidence": "python -m kaggle competitions leaderboard biohub-cell-tracking-during-development --download at 10:17:15 UTC, compared with the round-7 CSV using cmp.py (session scratchpad lb/r8/...2026-09-26T10_17_15.csv vs lb/r7/...2026-09-26T08_22_12.csv). Overview counts: https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/overview . Notes: research/wf_ideas_v4/round8/scan_browser.notes.md",
+   "action": "Update the CONTEXT intel line to rank 188/3,924, 10th of 86 in the 0.954 block (179-264), silver ~196, margin 8. Public silver may still slip during today's post-reset batch (subs made after 00:00 UTC 27 Sep land ~07:00 UTC). This is info only, with no plan change: finals stay #37 + #38 and R7 bars knob ladders.",
+   "urgency": "info"
+  },
+  {
+   "id": "r8-top-movers",
+   "kind": "new-fact",
+   "what": "35 teams changed score since 08:22, mostly from subs made 00:00-03:50 UTC 26 Sep. Movers: taiseiu 0.962->0.971 (#39->#6, 90 subs, sub 02:10:53), tomohito shimura 0.964->0.965, Yaroslav 0.964->0.965, Jiman Kwon 0.959->0.962, Jongwon 0.957->0.961, Choruru/Artalmaz31/BorisV/Xie Zejian 0.960->0.961, Mositaku 0.958->0.959, To The Moon 0.956->0.958, [RU] Kirill Makhankov 0.949->0.958 (8 subs), zy 0.954->0.957, hana87hana 0.954->0.956, zhehao liang/Yam 0.954->0.955, tokawa2997/isk54_34 0.953->0.955, and Haonan Zhou 0.947->0.954 (3 subs), zhanghao and Alex Lenzi 0.953->0.954. Ranks 1-5 are unchanged (Sergio Alvarez and Gabriel 0.975, yu4u 0.973, ymg_aq and tatsutaka 0.971). Late x138 copies: about 10 teams went from 0.947-0.950 (yamazaking from 0.143, plus the NEW team Bungalow0) to exactly 0.953 and landed at ranks 568-578, the end of the block, with subs at 01:57-03:42 UTC (8th window in a row).",
+   "evidence": "cmp.py movers list, r7 vs r8 LB CSVs (session scratchpad lb/r8).",
+   "action": "None. The movers have no public source, so the E10 watch continues. This reconfirms that a verbatim x138 copy is never a final.",
+   "urgency": "info"
+  },
+  {
+   "id": "r8-e10-not-triggered-public-unchanged",
+   "kind": "new-fact",
+   "what": "E10 trigger NOT met: no public notebook, dataset or model scores >0.953. The competition Code lists (dateRun, dateCreated, scoreDescending) are identical to rounds 6-7: the newest run is still raunakdey07/biohub-harmonic-fusion-v3 (25 Sep 09:09, 'Score: 0.953') and the newest created is tobimichigan (24 Sep). x138 https://www.kaggle.com/code/anvithpothula/biohub-0-953-lb-original shows 'Version 1 of 1', 200 votes (194), 277 copies (270), Comments (3). The all-Kaggle kernels --search biohub by dateRun has no new biohub kernel since ghazarosghazaros' DAE copy (25 Sep 13:48). datasets --search biohub has no new rows: koushikrudra/biohub-zerogpu-consensus-v1 is still the 03:36 cached submission.csv (10 downloads), kragglenote2forwork/biohub-sub-cache2 has 10 downloads (5), and kabirk22/biohub3 has 0. Nothing was pulled into experiments/ext_*.",
+   "evidence": "CLI kernels list --competition --sort-by dateRun|dateCreated|scoreDescending; kernels list --search biohub --sort-by dateRun; datasets list --search biohub|x138; datasets files koushikrudra/biohub-zerogpu-consensus-v1. Browser: https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/code?sortBy=dateRun ; x138 page.",
+   "action": "Keep the E10 watch under the port rule (until 29 Sep 00:00 UTC per round 7). Nothing to port.",
+   "urgency": "info"
+  },
+  {
+   "id": "r8-discussion-two-comments-known-threads",
+   "kind": "new-fact",
+   "what": "There is no new discussion topic, only two new comments on known threads. (a) On 'errors in annotated ground truth' (Quantizr, posted 2 days ago, seen in rounds 2-4), Himanish Goel (#3273) commented ~1 h before 10:19 UTC: 'sometimes a split is marked at the wrong coordinates and sometimes the daughter cell is dropped 1 frame later'. He adds that an honest model may hurt the score unless it replicates the GT noise. (b) On 'Beginner question: How do Public/Private splits...', Georgy Mamarin commented ~08:20 UTC. He restates host replies (the hidden test shares no embryos with train, is about the size of train, and uses the same protocol, instrument and stage) and gives shake-up statistics: a public improvement also beat the replaced sub on private 'roughly 8 times in 10' (~3 in 4 in code competitions), and 36-97% medal retention across 13 bio competitions. He recommends a whole-embryo hold-out and notes that the public checkpoints were trained on all 199 videos. Nothing new for us: GT-noise, in-sample and shake-up facts are already in CONTEXT/FACTS. The pinned host topics are unchanged (Workshop 10d, Discord 1mo, Welcome 2mo), so there is no announcement.",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/742942#3528660 ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/743006#3528586 ; discussion?sort=recent-comments",
+   "action": "None. The GT division-offset comment gives no new mechanism, and any 'mimic GT noise' idea is a new mechanism past R8 (post-deadline list at most).",
+   "urgency": "info"
+  },
+  {
+   "id": "r8-pages-unchanged",
+   "kind": "new-fact",
+   "what": "The Overview is unchanged: '4 DAYS TO GO', 'September 29, 2026 - Final Submission Deadline.' (11:59 PM UTC), 'CPU Notebook <= 12 hours run-time' / 'GPU Notebook <= 12 hours run-time', and the same metric text. It shows 3,921 teams, 4,478 participants and 86,805 submissions. The Data files still have creationDate 2026-06-26, so they are unchanged. There is no host announcement. The Rules page was not re-read because nothing points to a change.",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/overview ; kaggle competitions files biohub-cell-tracking-during-development",
+   "action": "None.",
+   "urgency": "info"
+  }
+ ]
+}

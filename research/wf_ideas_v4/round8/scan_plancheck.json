@@ -1,0 +1,102 @@
+{
+  "task": "round 8 PLAN CHECK (overlap-consensus line, E10 watch, R8 cutoff) - 2026-09-26 ~10:40Z",
+  "summary": "The plan is fine except for the overlap-consensus (OC) line. G-A has already FAILED as pre-registered, but that is not recorded, and work continues in the worktrees (G-P probe, K6 build, G-B lab). G-A needed >= 60 of 65 GT-linked 44b6 pairs at the GT offset. The measured result is 43/62, or 58/62 if you count candidates rejected at the correct offset. Precision is perfect: 0 wrong offsets, 0 pairs in 6bba, 0 cross-embryo pairs, and the 6 extra pairs are exact copies. The denominator 65 is a typo; splits.json has 62. By the pre-registration the default is STOP. Continuing needs a user decision after the result, logged with date -u before any exp64/G-B number is read (exp64 is still RUNNING). Other issues: (1) the G-P bit-probe gives 'overlap' and 'crash outside the try' the same error class; (2) K6 runs the stage in threads with MAX_S 1800 s and could silently equal K2 on the hidden set; the G-D 30-minute check on 4 clips cannot bound this; (3) G-LB (adopt at delta >= 0) conflicts with R4 and the f2 twin clause, and no precedence line exists; (4) E10 P6 has no pair defined if K6 is adopted; (5) dummy_gates.py has no K6/OVERLAPCONS mode, and the visible dummy clips never exercise the splice; (6) the G-B tool gates on a custom division weighting while the pre-registration says official metric; (7) the worktree commits sit on the old (pre-rewrite) history and must be cherry-picked; wt4/wt6 work is uncommitted; (8) the R9 amendment, the RESUME POINT and the MEMORY pointer are stale. Finals #37 + #38 stay ticked; E10 not triggered at 10:23Z (round-8 browser scan).",
+  "findings": [
+    {
+      "id": "PC8-01",
+      "kind": "plan-issue",
+      "what": "G-A (pre-registered 08:58Z: '>= 60 of the 65 GT-linked 44b6 pairs found at the exact GT offset (+-1 voxel); 0 accepted 6bba pairs; 0 cross-embryo pairs. FAIL -> stop') FAILED, and CONTEXT does not record it. Work continues: G-P probe (wt4), K6 build (wt5 e53b018), G-B lab (wt6). Measured: 43/62 accepted at the GT offset. Of the 19 misses, 13 were rejected by the pre-registered 5% spatial rule (frac 0.022-0.048), 4 by the >= 5-frame rule (1-4 frames), and 4 were never candidates. Counting rejected-at-offset candidates gives 58/62, still < 60. The precision half PASSES: wrong_offset 0, 6bba 0, cross-prefix 0, and the 6 extra accepted 44b6 pairs all have equal_fracs 1.0, i.e. real copies missing from the GT link list. '65' in CONTEXT is a typo: splits.json meta.shared_annotation_links = 62 (also CONTEXT l.1267). The wt4 ga_report re-frames the result as '43/46 reachable', which is post-hoc.",
+      "evidence": "worktree-wf_b39793f6-e79-1 commit e925955 (09:51Z) experiments/overlap_reg_train/ga_train.json check {found_at_gt_offset 43, gt_links 62, wrong_offset [], missing 19, extra_44b6_pairs 6}, stats {accepted 49, rejected_spatial 21, rejected_frames 4}; CONTEXT.md l.2116 (gate text), l.1267; experiments/l2_daughternet/splits.json (62 links); research/wf_ideas_v2/r2_research_overlap-consensus.json (60/65 and the 5% rule both in the design, so the gate was internally inconsistent from the start).",
+      "action": "NOW, before any exp64 dump is downloaded or G-B is scored: append a CONTEXT entry 'G-A = FAIL as written (43/62; 58/62 incl. at-offset rejections; precision 0 wrong / 0 6bba / 0 cross; 65 -> 62 typo noted, verdict unchanged). Default by the pre-registration: STOP (no G-P submit, no K6).' Then ask the user ONE question: keep STOP, or continue under G-A' = the precision half only (0 wrong offsets, 0 6bba, 0 cross-embryo, every accepted pair exact-equal). The missed pairs are small overlaps that the design's own acceptance floors exclude, so the misses cost value only, not safety. Log any 'continue' as USER DECISION AFTER RESULT (post-hoc, W1 style), with date -u, BEFORE the G-B read, so G-B stays a clean gate. Do not treat '43/46 reachable' as a pass.",
+      "urgency": "now"
+    },
+    {
+      "id": "PC8-02",
+      "kind": "plan-issue",
+      "what": "The G-P bit-probe mixes the overlap signal with generic crashes. Overlap -> raise RuntimeError -> 'Notebook Threw Exception'. But any exception outside run_probe's try block also gives 'Threw Exception' and would be misread as 'overlap exists'. This covers the module-writing cell, write_csv on the 'csv' path, and an OOM or dead kernel. A false ERROR would open the K6 path on a hidden set with no overlaps; K6 would then be a no-op copy of K2 and waste a slot plus a 7.5 h run. Probe failures inside the try correctly give 'CSV Not Found'.",
+      "evidence": ".claude/worktrees/wf_b39793f6-e79-4/tools/overlap_probe.py run_probe (the try covers only registration; the 'raise' and write_csv run after it), build_notebook (2 code cells with no outer guard); CONTEXT l.2118-2120 (G-P text); Kaggle error classes CONTEXT l.1731-1733.",
+      "action": "Before the G-P submit (an encoding change, not a gate change; log it in CONTEXT before the submit): (a) give the overlap signal its own class. With >= 1 accepted pair, let the notebook COMPLETE and write a deliberately malformed submission.csv (e.g. header only with a wrong column), which gives 'Submission Scoring / Format Error'. No pair -> valid minimal CSV (COMPLETE). Probe failure -> no CSV ('CSV Not Found'). Any 'Threw Exception', timeout or 'Kaggle Error' -> UNKNOWN -> no K6, ask the user. (b) Wrap kaggle_main and the csv write in one outer try that maps to 'nocsv'. (c) Read the class with the C2 API command (error_description) and put the class -> meaning table in CONTEXT before submitting. If the team keeps the raise design instead: only 'Notebook Threw Exception' counts as overlap, and ONLY if the commit run completed; every other class is unknown.",
+      "urgency": "now"
+    },
+    {
+      "id": "PC8-03",
+      "kind": "plan-issue",
+      "what": "K6 overlap-stage timing is unbounded, so K6 could silently equal K2 on the hidden set. The K6 glue runs registration in ThreadPoolExecutor(4) with the GPU max_pool3d path. G-A on the laptop used 4 processes at 0.1612 s/frame/worker (19.9k frames, 813 s). Hidden frames are ~10k (step 0: N <= 106 clips) up to ~20k (Data page: test 'approximately the same size as the training dataset'). If decode and hashing are GIL-bound, one-thread-equivalent time is ~1,600-3,200 s, above MAX_S 1800. The stage then logs 'OVERLAPCONS SKIPPED (time)' and K6 == K2: the G-LB read passes with zero effect, and nobody can tell (no hidden logs). G-D's 'registration + splice <= 30 min' is measured on the 4 visible clips and cannot bound this. The G-P latency is not a proxy either: it uses spawn processes on CPU, a different path.",
+      "evidence": "wt5 tools/build_probe_kernel.py l.2001-2002 (BUDGET_S 33000, MAX_S 1800), l.2057/2187 (_OcPool = ThreadPoolExecutor); wt4 overlap_probe.py l.167 (mp spawn Pool); ga_train.json stats; CONTEXT l.1811 (step 0), l.2106 (Data page); round8/scan_hypotheses.notes.md (same observation).",
+      "action": "Before the K6 dummy push: set BIOHUB_OVERLAPCONS_MAX_S=3600, keeping BUDGET_S 33000. Worst-case end = 36,600 s = 10.2 h < 12 h; with K2 runtime <= 7.54 h the expected end is ~8.5 h, still inside R5(a) 9.5 h. Alternatively switch _OcPool to a spawn process pool, the same code as G-P. Add to G-D: from the dummy log's 'OVERLAPCONS registration: ... frames' line and its wall time, project wall(20k frames) and require <= MAX_S/2. Record the projection in CONTEXT.",
+      "urgency": "today"
+    },
+    {
+      "id": "PC8-04",
+      "kind": "plan-issue",
+      "what": "G-LB conflicts with the binding rules, and the K6 submit has no explicit NEW user OK. The overlap splice changes node sets (G-B allows up to +0.5% nodes), so K6 is R4 class. Under R4, delta 0/+0.001 makes it an F2 candidate only, and f2 says 'an R4 F2 candidate does not displace the twin'. G-LB instead adopts K6 in place of K2 at public >= 0.954 (delta >= 0). No precedence line exists, so the rule would have to be chosen at read time, after the score. Separately, the R8 hard line requires a NEW user OK for a new mechanism's submit. The user's 08:58/09:10 words OK'd building the line and the G-P slot, not the K6 submit. Honest status: G-LB at delta >= 0 cannot confirm any gain (the public embryo may have no overlaps). K6's case rests on the in-sample G-B lab alone. Its 71 44b6 clips include the x138 head-train stems (exp60 excluded 20 of them) and DaughterNet-fold clips. The edge-filter lesson (+0.016 local, 0 on LB) applies.",
+      "evidence": "CONTEXT l.1665-1667 (R4), l.1887-1895 (f2), l.2126-2128 (G-LB), l.2110-2113 and 2159-2160 (user decisions); experiments/exp64_overlap_lab/kernel_a/probe.json (all 71 44b6 stems); CONTEXT l.1761 (exp60 excluded 20 head stems).",
+      "action": "Before any K6 submit, write a pre-score line: 'For K6 only, G-LB supersedes R4 and the f2 displacement clause (user decisions 08:58/09:10). Reason: K6 == K2 on any embryo without accepted pairs, so public delta 0 is the expected no-harm read. R7 0.001 clause n/a.' Then ask the user for the K6 submit OK, quoting G-A/G-A', G-B (PRIMARY delta, bootstrap lower bound, delta without leak group 0) and G-D. Log the reply time with date -u before the submit. Tell the user plainly that adoption rests on the in-sample lab, not on the LB.",
+      "urgency": "today"
+    },
+    {
+      "id": "PC8-05",
+      "kind": "plan-issue",
+      "what": "The E10 PORT RULE's P6 fixes the pair {port, K2 #37}. It does not say what happens if K6 has already replaced K2 under G-LB: {port, K2}, {port, K6} or {K6, twin}. Without a line written in advance, the choice would be made after both scores (R7/W1 problem).",
+      "evidence": "CONTEXT l.2144 (P6), l.2126-2128 (G-LB 'E10 keeps priority'), l.2159-2160.",
+      "action": "Add one line before any trigger or K6 score: 'If K6 met G-LB, P6's pair is {port, K6} (K6 takes K2's role); otherwise {port, #37}. Never three candidates, never {port, twin}.' Update the FINALS-TICK CHECKLIST refs for the K6 case (tick by ref, re-verify with the API SELECTED).",
+      "urgency": "today"
+    },
+    {
+      "id": "PC8-06",
+      "kind": "plan-issue",
+      "what": "The G-D dummy gate has no tooling, and the kernel splice path is never exercised on Kaggle. tools/dummy_gates.py has no K6 mode, and its K2 hard-fail list lacks 'OVERLAPCONS FAILED' and 'OVERLAPCONS SKIPPED'. Running it with --k2 <K6 dummy> would pass even if the stage failed. The 4 visible test clips (44b6_0113de3b, 44b6_0b24845f, 6bba_05b6850b, 6bba_05db0fb1) contain no accepted or rejected pair among themselves. So the Kaggle dummy tests only the no-pair path; the writer-hold plus splice glue runs for the first time on the hidden set. Fail-soft covers exceptions, but not silently wrong rows.",
+      "evidence": "tools/dummy_gates.py l.92, 107-108; ga_train.json (no pair among the visible stems); wt5 tests/test_overlapcons.py (local end-to-end test only); round8/scan_hypotheses.notes.md.",
+      "action": "Add a --k6 mode to dummy_gates.py: sha256(K6 dummy CSV) == sha256(K2 dummy CSV); log lines 'OVERLAPCONS: enable=1', 'OVERLAPCONS registration: videos 4', 'no accepted pair'; no 'OVERLAPCONS FAILED'/'SKIPPED'; timing line present. Also add an FF lab dummy (--lab, BIOHUB_OVERLAPCONS_FORCE_FAIL=1) whose log shows 'OVERLAPCONS FAILED' and whose CSV == K2 dummy. Locally, run the K6 glue (writer hold + splice) on one overlapping lab pair from the exp64 dumps (e.g. 44b6_0113de3b + 44b6_c8e2a523). Require its row digest to equal overlap_lab.py's ins35_splice rows for those clips.",
+      "urgency": "today"
+    },
+    {
+      "id": "PC8-07",
+      "kind": "plan-issue",
+      "what": "G-B's deciding number deviates from the pre-registration. G-B says 'official metric', but overlap_lab.py computes the 44b6 delta with a custom division weighting: a GT division in k lab clips weighs 1/k, FP forks are down-weighted. The plain official summarise is only reported next to it. Because forks must stay untouched, the two numbers should agree. If they differ, choosing one after the read is a post-hoc choice. Four arms are 'gated'; only PRIMARY decides, but gap3/csv/control_splice passing when PRIMARY fails would invite arm-picking, which is a knob ladder. The design notes '75% of the gain sits in the 24-video group 0'.",
+      "evidence": ".claude/worktrees/wf_b39793f6-e79-6/tools/overlap_lab.py docstring l.22-26, GATED l.66, gate_gb l.482-499, 'plain_official' l.677/694, G-B rule l.747-750; r2_research_overlap-consensus.json (group-0 concentration).",
+      "action": "Log before the G-B read: the gate passes only if BOTH the tool's 44b6 delta and the plain_official 44b6 delta are >= +0.002, and the bootstrap one-sided 95% lower bound is > 0. Only ins35_splice (PRIMARY) can be adopted; the other arms are info and never a fallback. Report delta_without_leak_group_0_unit to the user (info, no rule).",
+      "urgency": "today"
+    },
+    {
+      "id": "PC8-08",
+      "kind": "plan-issue",
+      "what": "Git after the 10:15Z rewrite. All four OC worktree branches sit on the OLD history (merge-base with main = 869ca00). The new commits are e925955 and bc325aa (wt1) and e53b018 (wt5); 05e366c is already in main as 1953f18. The merge commits 0074f6a, 1021a65 and 633d72b must not be brought in. The wt4 work (tools/overlap_probe.py, tests/test_overlap_probe.py, experiments/exp65_overlap_probe/) and wt6 work (tools/overlap_lab.py, tests/test_overlap_lab.py) is UNCOMMITTED and would be lost if the workflow removes its worktrees. The new commits carry no Claude trailers. This session's harness reminder asks for a Co-Authored-By trailer, which conflicts with the user's standing rule, and the user's rule wins.",
+      "evidence": "git worktree list; git log main..worktree-wf_b39793f6-e79-{1,4,5,6}; experiments/git_rewrite_map_2026-09-26.txt (05e366c286 -> 1953f18445); CONTEXT l.2172-2176 (rules); memory feedback-git-no-coauthor.md.",
+      "action": "Commit wt4/wt6 work in their worktrees now, as the user, with no trailer. Bring it to main only with git cherry-pick e925955 bc325aa e53b018 <wt4 commit> <wt6 commit> (non-merge commits only). Never merge a worktree branch into main. After cherry-picking, check that git log main --format='%an %ae %B' | grep -ci claude == 0 before pushing.",
+      "urgency": "today"
+    },
+    {
+      "id": "PC8-09",
+      "kind": "plan-issue",
+      "what": "Rule-text inconsistency. PRE-REG v3 user decision (7) and R9 still list 'no overlap consensus on test crops' as a refusal, and R9 bans N2-type hidden-test probes. The 08:49Z rules check and the user's 08:58/09:10Z decisions reverse this, and G-P is a hidden-test structure probe. No line amends R9, and curator ledger I-208 still says 'refused by team policy/R9'.",
+      "evidence": "CONTEXT l.1581-1583, l.1672-1675 (R9), l.2098-2113, l.2153, l.2159.",
+      "action": "Add a CONTEXT line: 'R9 AMENDED by the user (08:58/09:10Z): overlap consensus allowed as a candidate under G-A..G-LB; one G-P structure probe (1 bit, 1 slot) allowed; N2 and every other hidden-test metadata or size probe stay banned.' Hand it to the curator (I-208 -> active/candidate).",
+      "urgency": "today"
+    },
+    {
+      "id": "PC8-10",
+      "kind": "plan-issue",
+      "what": "Resume hygiene is stale. The 09:03Z RESUME POINT has an unfilled TICK STATUS placeholder ('<0/2 ... | 2/2 seen hh:mmZ>'; ticks were verified 09:10:07Z), and its OPEN list lacks the OC line, its gate states and the post-rewrite git rules. The MEMORY.md pointer still says the latest RESUME POINT is '25 Sep 10:20 UTC', and the LB-probe-approval memory lists the 25 Sep exp52-54 batch. Two dated log entries sit BELOW '## 9. Literature' (25 Sep 14:05 T1 SAFETAIL, 26 Sep 09:40 cloud check-in). A reader following 'last RESUME POINT just above ## 9' misses them.",
+      "evidence": "CONTEXT l.2148-2152, 2154-2156, 2177-2197; MEMORY.md index lines 'Resume point' and 'LB probe approval'.",
+      "action": "After the G-A disposition, write a new RESUME POINT: finals 2/2 ticked 09:10:07Z; OC line state per gate; E10 rule in force; rewrite rules. Move the two entries above '## 9. Literature'. Update the MEMORY.md pointer and mark the 25 Sep probe approval as historical.",
+      "urgency": "later"
+    },
+    {
+      "id": "PC8-11",
+      "kind": "plan-issue",
+      "what": "The runtime ledger cannot classify K6 or G-P. runtime_ledger.py maps build tokens to families (exp58 -> safetail, etc.) and has no entry for exp66 (K6) or exp65 (G-P). The poller refreshes ledger.md every cycle without --family, so K6 would show as 'family unknown' (WATCH) with R5(a) and the insertion gate NOT evaluated. G-LB needs R5 (9.5 h) for K6.",
+      "evidence": "tools/runtime_ledger.py l.44-77, 150, 226-227, 277-281; CONTEXT l.1896-1900.",
+      "action": "Add a token rule mapping exp66 -> safetail with a test (K6 carries C01 9.5 h and the 8.0 h insertion gate; the overlap stage runs after the per-clip loop). Or run the ledger with --family <K6 ref>=safetail when reading K6. Leave exp65 as unknown (never a final); note that in CONTEXT.",
+      "urgency": "today"
+    },
+    {
+      "id": "PC8-12",
+      "kind": "plan-issue",
+      "what": "Sequencing and slots for the next ~6 h, if the user continues the OC line. At 10:24Z both exp64 lab kernels were RUNNING (pushed 09:12Z). exp60 took 5,599-6,959 s for 28 clips per shard, so exp64 (36/35 clips) should finish ~11:30-12:15Z. The K6 dummy will probably queue behind them for GPU. No rule says what happens on a K6 'Kaggle Error'. K6 must not go out before G-P returns: a COMPLETE G-P means K6 == K2 on the hidden set.",
+      "evidence": "kaggle kernels status vitaliineibauer/biohub-exp64-x138-k2lab-44b6-{a,b} = RUNNING (10:24Z); CONTEXT l.1919-1921 (exp60 shard times), l.2126 (G-LB 'submitted once'), W6 l.2064.",
+      "action": "Pre-register the order: G-A disposition -> G-P submit (poll.log header < 15 min; 1 of the 3 slots left on 26 Sep) -> G-B read -> G-D (+FF) -> user OK -> K6 submit, target <= ~20:00Z 26 Sep so the score arrives before R8. K6 'Kaggle Error' -> one unchanged resubmit before 27 Sep 12:00Z, else finals stay {#37, #38}. Any G-P class other than the overlap class -> stop K6. Keep the E10 P1 CLI check at ~16:30Z (last check 10:23Z, no signal).",
+      "urgency": "today"
+    }
+  ]
+}
