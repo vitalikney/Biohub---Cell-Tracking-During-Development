@@ -2184,6 +2184,17 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   in the splice (now rollback). The exp64 x138 lab kernels finish anyway (no slots used); their G-B reading will be
   recorded as INFO ONLY (post-stop). Code kept out of main for now (branches worktree-wf_b39793f6-e79-* are on the
   pre-rewrite history except the patch-K6 branch, rebased to the new history at ff438f7). Finals unchanged: #37 + #38.
+- 2026-09-26 11:06 UTC, R9 / PRE-REG v3 DECISION (7) AMENDED BY THE USER (record of the 08:58 and 09:10 UTC decisions; no new
+  decision): overlap consensus was allowed as a CANDIDATE under gates G-A/G-P/G-B/G-D/G-LB, with exactly ONE hidden-test
+  probe (G-P, registration only, never a final) as part of that line; N2 and every other hidden-test probe stay banned.
+  G-A FAILED (entry 10:52 UTC; written before any exp64/G-B number was read - no exp64 output was on disk). Round 8
+  (research/wf_ideas_v4/round8/) confirms: count clause 43/62 fails ("65" in the 08:58 text was a typo for the 62
+  splits.json links; this does not change the verdict; even counting candidates rejected by our own floors gives 58/62);
+  precision clauses pass (0 wrong offsets, 0 6bba, 0 cross-embryo). Default = STOP; the user may only reopen it as a
+  logged post-hoc decision before any G-B number is read. Other round-8 facts: E10 not triggered (no public heir);
+  public rank #188-189 of 3,924 at 0.954, silver line ~196 (7-8 ranks margin) - falling below it is not a trigger
+  (private decides); the +0.1 voxel z-shift idea (+0.0015 on 6bba in-sample, ~+0.0003 expected out-of-sample) goes to
+  the post-deadline list. Curator: ledger I-208 -> "allowed as a candidate by the user 08:58/09:10Z; G-A FAILED 10:52Z".
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
