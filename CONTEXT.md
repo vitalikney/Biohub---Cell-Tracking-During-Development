@@ -2315,6 +2315,12 @@ Mention it to the user in one line (R9-A8 item 6).
   rewrite lines (P4c(5)). Also: a literal 27000.0 counts as 27000 (the reader applies float()); any use of the validator
   or deadline key that cannot be checked statically fails. Not checked offline: whether every source is public and
   listable from our account (P4b(b)); do that with the CLI at a trigger.
+- 2026-09-26 16:49 UTC, USER ANSWER (chat: "нет, продолжай делать полный ресерч. всё равно сейчас делать нечего больше"): FULL research
+  rounds continue every ~2.5 h until the R8 cutoff (27 Sep 12:00 UTC); no light mode. Rounds go back to generating NEW
+  hypotheses (not only hygiene), still under R8 (a new mechanism needs an honest lab gate, a dummy and a new user OK by
+  27 Sep 12:00 UTC; R4 needs +0.002 public, ~+0.012 lab by the ~1/6 transfer rule). Still unanswered: the post-R8 wake
+  mechanism (default: this session's own timers, no background watcher) and the user's own reminders for 29 Sep
+  12:00/18:00 UTC (default: the session checks the ticks itself).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
