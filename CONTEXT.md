@@ -2385,6 +2385,13 @@ Mention it to the user in one line (R9-A8 item 6).
   distilled secondary fine-tune into K2 (feasibility, timeline), a public-LB probe ladder on K2 with tonight's 3 slots
   first, skeptics, one plan with an OK list. R7/R9 are lifted only by the user's explicit yes on that concrete list; no
   submission before it. Finals #37 + #38 stay ticked meanwhile.
+- 2026-09-26 20:33 UTC, USER DECISION (chat: "не забудь ещё обсуждение посмотреть. насчёт сабмитов забей - сделаем один под паблик другой
+  под прайват"): (1) R7 LIFTED by the user: public-LB probes on K2 variants are allowed, slots at the session's discretion
+  (5/day; 3 left on 26 Sep until 00:00 UTC); (2) FINALS STRATEGY: one final aimed at PUBLIC (the best public-scoring
+  variant) and one aimed at PRIVATE (the robust pick; default #37 K2 56563521); never two byte-identical files; ticks by
+  29 Sep 20:00 UTC; (3) read the competition discussion thoroughly (dedicated read-only browser agent launched; output
+  research/wf_ideas_v4/reach0955/discussions_2026-09-26.json). Retraining (R9) is part of "do the same" but its go/no-go
+  waits for the reach0955 plan (feasibility and timeline).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
