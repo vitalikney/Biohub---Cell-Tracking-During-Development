@@ -1,0 +1,1356 @@
+{
+ "pairs": [
+  {
+   "a": "44b6_0113de3b",
+   "b": "44b6_c8e2a523",
+   "offset": [
+    45,
+    50,
+    11,
+    148
+   ],
+   "votes": 1446,
+   "n_frames": 55,
+   "spatial_frac": 0.08832,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  },
+  {
+   "a": "44b6_0b24845f",
+   "b": "44b6_2f31fc2f",
+   "offset": [
+    -49,
+    12,
+    88,
+    209
+   ],
+   "votes": 1011,
+   "n_frames": 51,
+   "spatial_frac": 0.097893,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  },
+  {
+   "a": "44b6_0c582fdc",
+   "b": "44b6_33b596bf",
+   "offset": [
+    -44,
+    20,
+    221,
+    88
+   ],
+   "votes": 199,
+   "n_frames": 56,
+   "spatial_frac": 0.061684,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  },
+  {
+   "a": "44b6_0c582fdc",
+   "b": "44b6_87bba6c4",
+   "offset": [
+    -82,
+    -43,
+    -72,
+    152
+   ],
+   "votes": 163,
+   "n_frames": 18,
+   "spatial_frac": 0.09581,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  },
+  {
+   "a": "44b6_0db75fae",
+   "b": "44b6_587a1e22",
+   "offset": [
+    -39,
+    10,
+    53,
+    -227
+   ],
+   "votes": 74,
+   "n_frames": 61,
+   "spatial_frac": 0.075793,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  },
+  {
+   "a": "44b6_12dfb391",
+   "b": "44b6_3a861e03",
+   "offset": [
+    -86,
+    6,
+    -114,
+    75
+   ],
+   "votes": 689,
+   "n_frames": 14,
+   "spatial_frac": 0.355414,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  },
+  {
+   "a": "44b6_12dfb391",
+   "b": "44b6_9bfa6a0a",
+   "offset": [
+    74,
+    -26,
+    132,
+    -89
+   ],
+   "votes": 290,
+   "n_frames": 26,
+   "spatial_frac": 0.187613,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  },
+  {
+   "a": "44b6_12dfb391",
+   "b": "44b6_b2c44266",
+   "offset": [
+    88,
+    -4,
+    -87,
+    87
+   ],
+   "votes": 1002,
+   "n_frames": 12,
+   "spatial_frac": 0.408568,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  },
+  {
+   "a": "44b6_144b256d",
+   "b": "44b6_66f9292d",
+   "offset": [
+    -91,
+    12,
+    -78,
+    -9
+   ],
+   "votes": 555,
+   "n_frames": 9,
+   "spatial_frac": 0.54508,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  },
+  {
+   "a": "44b6_144b256d",
+   "b": "44b6_cf2536e8",
+   "offset": [
+    -88,
+    -57,
+    -46,
+    38
+   ],
+   "votes": 34,
+   "n_frames": 12,
+   "spatial_frac": 0.076404,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  },
+  {
+   "a": "44b6_1574802b",
+   "b": "44b6_abf82518",
+   "offset": [
+    61,
+    -44,
+    -19,
+    -143
+   ],
+   "votes": 183,
+   "n_frames": 39,
+   "spatial_frac": 0.127702,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  },
+  {
+   "a": "44b6_1574802b",
+   "b": "44b6_deabac95",
+   "offset": [
+    -47,
+    38,
+    -45,
+    188
+   ],
+   "votes": 213,
+   "n_frames": 53,
+   "spatial_frac": 0.088942,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  },
+  {
+   "a": "44b6_1d530831",
+   "b": "44b6_40c45f5a",
+   "offset": [
+    65,
+    15,
+    -53,
+    217
+   ],
+   "votes": 503,
+   "n_frames": 35,
+   "spatial_frac": 0.09249,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  },
+  {
+   "a": "44b6_1d530831",
+   "b": "44b6_c96cfa10",
+   "offset": [
+    7,
+    23,
+    184,
+    -180
+   ],
+   "votes": 1145,
+   "n_frames": 93,
+   "spatial_frac": 0.05349,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  },
+  {
+   "a": "44b6_2a2eff9f",
+   "b": "44b6_cf2536e8",
+   "offset": [
+    92,
+    15,
+    -62,
+    1
+   ],
+   "votes": 250,
+   "n_frames": 8,
+   "spatial_frac": 0.577934,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  },
+  {
+   "a": "44b6_2a2eff9f",
+   "b": "44b6_e31261b4",
+   "offset": [
+    -32,
+    -55,
+    -78,
+    71
+   ],
+   "votes": 113,
+   "n_frames": 68,
+   "spatial_frac": 0.07066,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  },
+  {
+   "a": "44b6_2a2eff9f",
+   "b": "44b6_eb2880fc",
+   "offset": [
+    -61,
+    51,
+    3,
+    -102
+   ],
+   "votes": 199,
+   "n_frames": 39,
+   "spatial_frac": 0.12076,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  },
+  {
+   "a": "44b6_2f31fc2f",
+   "b": "44b6_db3c847b",
+   "offset": [
+    47,
+    5,
+    226,
+    103
+   ],
+   "votes": 142,
+   "n_frames": 53,
+   "spatial_frac": 0.064566,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  },
+  {
+   "a": "44b6_33b596bf",
+   "b": "44b6_f28707c6",
+   "offset": [
+    -43,
+    -14,
+    209,
+    120
+   ],
+   "votes": 370,
+   "n_frames": 57,
+   "spatial_frac": 0.076199,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  },
+  {
+   "a": "44b6_341df25f",
+   "b": "44b6_81c256f0",
+   "offset": [
+    94,
+    4,
+    -178,
+    -70
+   ],
+   "votes": 85,
+   "n_frames": 6,
+   "spatial_frac": 0.207539,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  },
+  {
+   "a": "44b6_3a861e03",
+   "b": "44b6_c8e2a523",
+   "offset": [
+    36,
+    -16,
+    -177,
+    -177
+   ],
+   "votes": 1061,
+   "n_frames": 64,
+   "spatial_frac": 0.071423,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  },
+  {
+   "a": "44b6_3a861e03",
+   "b": "44b6_c96cfa10",
+   "offset": [
+    63,
+    12,
+    -200,
+    80
+   ],
+   "votes": 865,
+   "n_frames": 37,
+   "spatial_frac": 0.122192,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  },
+  {
+   "a": "44b6_3bb3690f",
+   "b": "44b6_8cc6506c",
+   "offset": [
+    -91,
+    28,
+    -77,
+    79
+   ],
+   "votes": 288,
+   "n_frames": 9,
+   "spatial_frac": 0.271937,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  },
+  {
+   "a": "44b6_40c45f5a",
+   "b": "44b6_90724892",
+   "offset": [
+    -67,
+    3,
+    185,
+    123
+   ],
+   "votes": 515,
+   "n_frames": 33,
+   "spatial_frac": 0.137335,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  },
+  {
+   "a": "44b6_415c0a3a",
+   "b": "44b6_66f9292d",
+   "offset": [
+    92,
+    -20,
+    -25,
+    27
+   ],
+   "votes": 326,
+   "n_frames": 8,
+   "spatial_frac": 0.554933,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  },
+  {
+   "a": "44b6_415c0a3a",
+   "b": "44b6_eb2880fc",
+   "offset": [
+    -58,
+    -53,
+    72,
+    -29
+   ],
+   "votes": 566,
+   "n_frames": 42,
+   "spatial_frac": 0.109541,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  },
+  {
+   "a": "44b6_53f95252",
+   "b": "44b6_97725144",
+   "offset": [
+    -79,
+    27,
+    -51,
+    128
+   ],
+   "votes": 335,
+   "n_frames": 21,
+   "spatial_frac": 0.231476,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  },
+  {
+   "a": "44b6_551a5dba",
+   "b": "44b6_7a302da0",
+   "offset": [
+    -91,
+    -17,
+    42,
+    29
+   ],
+   "votes": 1391,
+   "n_frames": 9,
+   "spatial_frac": 0.544349,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  },
+  {
+   "a": "44b6_5740d24b",
+   "b": "44b6_74d0c52e",
+   "offset": [
+    91,
+    -30,
+    -40,
+    75
+   ],
+   "votes": 247,
+   "n_frames": 9,
+   "spatial_frac": 0.316921,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  },
+  {
+   "a": "44b6_5f15d135",
+   "b": "44b6_e57ff5c6",
+   "offset": [
+    -65,
+    50,
+    -47,
+    67
+   ],
+   "votes": 367,
+   "n_frames": 35,
+   "spatial_frac": 0.131849,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  },
+  {
+   "a": "44b6_668e0cc7",
+   "b": "44b6_eb2880fc",
+   "offset": [
+    50,
+    -53,
+    90,
+    46
+   ],
+   "votes": 580,
+   "n_frames": 50,
+   "spatial_frac": 0.091424,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  },
+  {
+   "a": "44b6_71a4179f",
+   "b": "44b6_9bfa6a0a",
+   "offset": [
+    -91,
+    -11,
+    57,
+    -46
+   ],
+   "votes": 498,
+   "n_frames": 9,
+   "spatial_frac": 0.528066,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  },
+  {
+   "a": "44b6_71a4179f",
+   "b": "44b6_b2c44266",
+   "offset": [
+    -77,
+    11,
+    -162,
+    130
+   ],
+   "votes": 78,
+   "n_frames": 23,
+   "spatial_frac": 0.149663,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  },
+  {
+   "a": "44b6_7a302da0",
+   "b": "44b6_c96cfa10",
+   "offset": [
+    -90,
+    10,
+    86,
+    -67
+   ],
+   "votes": 689,
+   "n_frames": 10,
+   "spatial_frac": 0.413661,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  },
+  {
+   "a": "44b6_7e557709",
+   "b": "44b6_9bfa6a0a",
+   "offset": [
+    89,
+    8,
+    -95,
+    63
+   ],
+   "votes": 800,
+   "n_frames": 11,
+   "spatial_frac": 0.414869,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  },
+  {
+   "a": "44b6_7e557709",
+   "b": "44b6_d29c9ab2",
+   "offset": [
+    -83,
+    16,
+    -123,
+    69
+   ],
+   "votes": 1448,
+   "n_frames": 17,
+   "spatial_frac": 0.284626,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  },
+  {
+   "a": "44b6_808952d6",
+   "b": "44b6_81c256f0",
+   "offset": [
+    -72,
+    4,
+    175,
+    103
+   ],
+   "votes": 636,
+   "n_frames": 28,
+   "spatial_frac": 0.177283,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  },
+  {
+   "a": "44b6_81c256f0",
+   "b": "44b6_db3c847b",
+   "offset": [
+    -92,
+    -28,
+    -57,
+    23
+   ],
+   "votes": 280,
+   "n_frames": 8,
+   "spatial_frac": 0.397971,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  },
+  {
+   "a": "44b6_8cc6506c",
+   "b": "44b6_d2f34f90",
+   "offset": [
+    -71,
+    39,
+    -104,
+    76
+   ],
+   "votes": 812,
+   "n_frames": 29,
+   "spatial_frac": 0.163078,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  },
+  {
+   "a": "44b6_8f5ab931",
+   "b": "44b6_949adeb1",
+   "offset": [
+    -61,
+    35,
+    170,
+    52
+   ],
+   "votes": 1572,
+   "n_frames": 39,
+   "spatial_frac": 0.121302,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  },
+  {
+   "a": "44b6_8f5ab931",
+   "b": "44b6_d5e7d891",
+   "offset": [
+    35,
+    56,
+    101,
+    56
+   ],
+   "votes": 628,
+   "n_frames": 65,
+   "spatial_frac": 0.059128,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  },
+  {
+   "a": "44b6_8f5ab931",
+   "b": "44b6_d78e09d9",
+   "offset": [
+    -60,
+    -16,
+    30,
+    -209
+   ],
+   "votes": 57,
+   "n_frames": 40,
+   "spatial_frac": 0.121559,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  },
+  {
+   "a": "44b6_8f9ecab4",
+   "b": "44b6_ddf577ad",
+   "offset": [
+    -93,
+    -6,
+    45,
+    -31
+   ],
+   "votes": 1088,
+   "n_frames": 7,
+   "spatial_frac": 0.656497,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  },
+  {
+   "a": "44b6_90724892",
+   "b": "44b6_c15fded2",
+   "offset": [
+    -39,
+    2,
+    239,
+    50
+   ],
+   "votes": 193,
+   "n_frames": 61,
+   "spatial_frac": 0.051766,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  },
+  {
+   "a": "44b6_949adeb1",
+   "b": "44b6_c50204e0",
+   "offset": [
+    78,
+    -22,
+    -120,
+    202
+   ],
+   "votes": 180,
+   "n_frames": 22,
+   "spatial_frac": 0.07354,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  },
+  {
+   "a": "44b6_95029e92",
+   "b": "44b6_d754aa59",
+   "offset": [
+    -64,
+    19,
+    -218,
+    78
+   ],
+   "votes": 163,
+   "n_frames": 36,
+   "spatial_frac": 0.07257,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  },
+  {
+   "a": "44b6_a2bb48bb",
+   "b": "44b6_d5e7d891",
+   "offset": [
+    -81,
+    18,
+    74,
+    -126
+   ],
+   "votes": 718,
+   "n_frames": 19,
+   "spatial_frac": 0.259485,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  },
+  {
+   "a": "44b6_c50204e0",
+   "b": "44b6_d5e7d891",
+   "offset": [
+    18,
+    43,
+    51,
+    -198
+   ],
+   "votes": 1151,
+   "n_frames": 82,
+   "spatial_frac": 0.059531,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  },
+  {
+   "a": "44b6_cf8fed6b",
+   "b": "44b6_eb2880fc",
+   "offset": [
+    87,
+    9,
+    90,
+    -96
+   ],
+   "votes": 962,
+   "n_frames": 13,
+   "spatial_frac": 0.348282,
+   "equal_fracs": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "cross_prefix": false
+  }
+ ],
+ "rejected": [
+  {
+   "a": "44b6_0c582fdc",
+   "b": "44b6_90724892",
+   "offset": [
+    -14,
+    57,
+    212,
+    -180
+   ],
+   "votes": 90,
+   "n_frames": 86,
+   "spatial_frac": 0.005581,
+   "equal_fracs": [],
+   "cross_prefix": false,
+   "reason": "spatial"
+  },
+  {
+   "a": "44b6_0c582fdc",
+   "b": "44b6_c50204e0",
+   "offset": [
+    55,
+    -24,
+    -238,
+    -215
+   ],
+   "votes": 83,
+   "n_frames": 45,
+   "spatial_frac": 0.007038,
+   "equal_fracs": [],
+   "cross_prefix": false,
+   "reason": "spatial"
+  },
+  {
+   "a": "44b6_0db75fae",
+   "b": "44b6_267148e4",
+   "offset": [
+    -28,
+    -22,
+    -51,
+    240
+   ],
+   "votes": 205,
+   "n_frames": 72,
+   "spatial_frac": 0.032845,
+   "equal_fracs": [],
+   "cross_prefix": false,
+   "reason": "spatial"
+  },
+  {
+   "a": "44b6_12dfb391",
+   "b": "44b6_7e557709",
+   "offset": [
+    -15,
+    -34,
+    227,
+    -152
+   ],
+   "votes": 140,
+   "n_frames": 85,
+   "spatial_frac": 0.021572,
+   "equal_fracs": [],
+   "cross_prefix": false,
+   "reason": "spatial"
+  },
+  {
+   "a": "44b6_12dfb391",
+   "b": "44b6_d29c9ab2",
+   "offset": [
+    -98,
+    -18,
+    104,
+    -83
+   ],
+   "votes": 168,
+   "n_frames": 2,
+   "spatial_frac": 0.288395,
+   "equal_fracs": [],
+   "cross_prefix": false,
+   "reason": "frames"
+  },
+  {
+   "a": "44b6_1d530831",
+   "b": "44b6_24264f12",
+   "offset": [
+    -8,
+    -34,
+    -208,
+    -155
+   ],
+   "votes": 247,
+   "n_frames": 92,
+   "spatial_frac": 0.034676,
+   "equal_fracs": [],
+   "cross_prefix": false,
+   "reason": "spatial"
+  },
+  {
+   "a": "44b6_1d530831",
+   "b": "44b6_7a302da0",
+   "offset": [
+    97,
+    13,
+    98,
+    -113
+   ],
+   "votes": 232,
+   "n_frames": 3,
+   "spatial_frac": 0.274728,
+   "equal_fracs": [],
+   "cross_prefix": false,
+   "reason": "frames"
+  },
+  {
+   "a": "44b6_1d530831",
+   "b": "44b6_949adeb1",
+   "offset": [
+    -11,
+    -41,
+    -198,
+    103
+   ],
+   "votes": 633,
+   "n_frames": 89,
+   "spatial_frac": 0.048662,
+   "equal_fracs": [],
+   "cross_prefix": false,
+   "reason": "spatial"
+  },
+  {
+   "a": "44b6_24264f12",
+   "b": "44b6_8f5ab931",
+   "offset": [
+    58,
+    -42,
+    -160,
+    206
+   ],
+   "votes": 73,
+   "n_frames": 42,
+   "spatial_frac": 0.025177,
+   "equal_fracs": [],
+   "cross_prefix": false,
+   "reason": "spatial"
+  },
+  {
+   "a": "44b6_24264f12",
+   "b": "44b6_d78e09d9",
+   "offset": [
+    -2,
+    -58,
+    -130,
+    -3
+   ],
+   "votes": 497,
+   "n_frames": 98,
+   "spatial_frac": 0.045602,
+   "equal_fracs": [],
+   "cross_prefix": false,
+   "reason": "spatial"
+  },
+  {
+   "a": "44b6_2a2eff9f",
+   "b": "44b6_abf82518",
+   "offset": [
+    51,
+    39,
+    125,
+    198
+   ],
+   "votes": 476,
+   "n_frames": 49,
+   "spatial_frac": 0.045288,
+   "equal_fracs": [],
+   "cross_prefix": false,
+   "reason": "spatial"
+  },
+  {
+   "a": "44b6_2f31fc2f",
+   "b": "44b6_87bba6c4",
+   "offset": [
+    -24,
+    60,
+    47,
+    -20
+   ],
+   "votes": 108,
+   "n_frames": 76,
+   "spatial_frac": 0.047039,
+   "equal_fracs": [],
+   "cross_prefix": false,
+   "reason": "spatial"
+  },
+  {
+   "a": "44b6_33b596bf",
+   "b": "44b6_c15fded2",
+   "offset": [
+    -9,
+    39,
+    230,
+    -218
+   ],
+   "votes": 70,
+   "n_frames": 91,
+   "spatial_frac": 0.005889,
+   "equal_fracs": [],
+   "cross_prefix": false,
+   "reason": "spatial"
+  },
+  {
+   "a": "44b6_341df25f",
+   "b": "44b6_db3c847b",
+   "offset": [
+    2,
+    -24,
+    -235,
+    -47
+   ],
+   "votes": 83,
+   "n_frames": 98,
+   "spatial_frac": 0.041857,
+   "equal_fracs": [],
+   "cross_prefix": false,
+   "reason": "spatial"
+  },
+  {
+   "a": "44b6_3a861e03",
+   "b": "44b6_d29c9ab2",
+   "offset": [
+    -12,
+    -24,
+    218,
+    -158
+   ],
+   "votes": 959,
+   "n_frames": 88,
+   "spatial_frac": 0.035515,
+   "equal_fracs": [],
+   "cross_prefix": false,
+   "reason": "spatial"
+  },
+  {
+   "a": "44b6_40c45f5a",
+   "b": "44b6_949adeb1",
+   "offset": [
+    -76,
+    -56,
+    -145,
+    -114
+   ],
+   "votes": 62,
+   "n_frames": 24,
+   "spatial_frac": 0.030064,
+   "equal_fracs": [],
+   "cross_prefix": false,
+   "reason": "spatial"
+  },
+  {
+   "a": "44b6_40c45f5a",
+   "b": "44b6_d5e7d891",
+   "offset": [
+    20,
+    -35,
+    -214,
+    -110
+   ],
+   "votes": 616,
+   "n_frames": 80,
+   "spatial_frac": 0.042397,
+   "equal_fracs": [],
+   "cross_prefix": false,
+   "reason": "spatial"
+  },
+  {
+   "a": "44b6_415c0a3a",
+   "b": "44b6_ddf577ad",
+   "offset": [
+    -6,
+    58,
+    -101,
+    -40
+   ],
+   "votes": 390,
+   "n_frames": 94,
+   "spatial_frac": 0.047894,
+   "equal_fracs": [],
+   "cross_prefix": false,
+   "reason": "spatial"
+  },
+  {
+   "a": "44b6_5f15d135",
+   "b": "44b6_97725144",
+   "offset": [
+    0,
+    -39,
+    214,
+    -150
+   ],
+   "votes": 674,
+   "n_frames": 100,
+   "spatial_frac": 0.026536,
+   "equal_fracs": [],
+   "cross_prefix": false,
+   "reason": "spatial"
+  },
+  {
+   "a": "44b6_66f9292d",
+   "b": "44b6_abf82518",
+   "offset": [
+    -38,
+    -45,
+    219,
+    244
+   ],
+   "votes": 60,
+   "n_frames": 62,
+   "spatial_frac": 0.002011,
+   "equal_fracs": [],
+   "cross_prefix": false,
+   "reason": "spatial"
+  },
+  {
+   "a": "44b6_87bba6c4",
+   "b": "44b6_db3c847b",
+   "offset": [
+    71,
+    -55,
+    179,
+    123
+   ],
+   "votes": 126,
+   "n_frames": 29,
+   "spatial_frac": 0.021975,
+   "equal_fracs": [],
+   "cross_prefix": false,
+   "reason": "spatial"
+  },
+  {
+   "a": "44b6_949adeb1",
+   "b": "44b6_d5e7d891",
+   "offset": [
+    96,
+    21,
+    -69,
+    4
+   ],
+   "votes": 339,
+   "n_frames": 4,
+   "spatial_frac": 0.483115,
+   "equal_fracs": [],
+   "cross_prefix": false,
+   "reason": "frames"
+  },
+  {
+   "a": "44b6_9bfa6a0a",
+   "b": "44b6_b2c44266",
+   "offset": [
+    14,
+    22,
+    -219,
+    176
+   ],
+   "votes": 42,
+   "n_frames": 86,
+   "spatial_frac": 0.02964,
+   "equal_fracs": [],
+   "cross_prefix": false,
+   "reason": "spatial"
+  },
+  {
+   "a": "44b6_a2bb48bb",
+   "b": "44b6_c50204e0",
+   "offset": [
+    -99,
+    -25,
+    23,
+    72
+   ],
+   "votes": 74,
+   "n_frames": 1,
+   "spatial_frac": 0.398638,
+   "equal_fracs": [],
+   "cross_prefix": false,
+   "reason": "frames"
+  },
+  {
+   "a": "44b6_abf82518",
+   "b": "44b6_cf2536e8",
+   "offset": [
+    41,
+    -24,
+    -187,
+    -197
+   ],
+   "votes": 973,
+   "n_frames": 59,
+   "spatial_frac": 0.038824,
+   "equal_fracs": [],
+   "cross_prefix": false,
+   "reason": "spatial"
+  }
+ ],
+ "stats": {
+  "videos": 71,
+  "anchors": 938423,
+  "buckets_multi": 34287,
+  "buckets_skipped_large": 0,
+  "pair_votes": 34637,
+  "candidate_pairs": 74,
+  "accepted": 49,
+  "accepted_cross_prefix": 0,
+  "cross_prefix_candidates": 0,
+  "rejected_frames": 4,
+  "rejected_spatial": 21,
+  "rejected_voxels": 0,
+  "rejected_shape": 0,
+  "frames_read": 294,
+  "verify_s": 8.327,
+  "anchor_wall_s": 9.4
+ },
+ "source": "overlap_reg on 71 lab clips (C:\\Users\\vital\\Documents\\kAGGLE\\Biohub - Cell Tracking During Development\\biohub-cell-tracking-during-development\\train)"
+}
