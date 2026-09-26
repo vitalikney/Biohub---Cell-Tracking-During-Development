@@ -618,3 +618,41 @@ Curator logs: `research/KNOWLEDGE/_curation/4/`.
   - Hygiene commit: [now] (watch) vs [today] (ideas, facts). INDEX uses [now, before round 11].
   - Private-read predictions: [today] (watch) vs [before-finals] (ideas, facts). INDEX uses [before-finals] with the hard limit stated.
   - LESSONS fixes: [before-finals] (ideas) vs [info] (facts). INDEX uses [before-finals, by 27 Sep 12:00].
+
+## 11 - 2026-09-26 ~17:50 UTC (curation 11; git HEAD df6996e + untracked `research/wf_ideas_v4/round11/` and `experiments/e10_watch/20260926T1701Z*.txt`)
+
+**Operations:**
+- **Commits since curation 10** (`git log --oneline 6064d85..df6996e`):
+  - 848e07a: ROUND 10 RECORD, finals-input protection, E10 P4c, post-R8 check times, PRIVATE-READ PREDICTIONS (`CONTEXT.md` l.2230-2300); round8/round10 REPORT.md.
+  - a79775f: `tools/e10_snapshot.py` + first snapshots (`experiments/e10_watch/20260926T1620Z.txt`).
+  - bea9d99: `tools/e10_port_gate.py` (72 tests, 275 total; x138 + exp56 PASS, amanatar v10 FAIL) and the P4c(3) wording fix (`CONTEXT.md` l.2301-2317).
+  - 8a3cf31: USER ANSWER, full research rounds until R8 (`CONTEXT.md` l.2318-2323).
+  - 99b127a: round workflow hypothesis lenses + "search IDEAS.md by mechanism" rule (`experiments/workflows/biohub-research-round.js`).
+  - a94626a: PRIVATE RANK FORECAST 16:54 (`CONTEXT.md` l.2324-2334).
+  - df6996e: USER OK to the successor-scenario PLAN only, 17:00 (`CONTEXT.md` l.2335-2341).
+- **Finals still 2/2** by API at 17:09Z (`IDEAS.md` I-258). **E10 not met** at 16:20Z / 17:01Z (`experiments/e10_watch/`; `IDEAS.md` I-026). **LB** #210 of 3,929 at 17:01Z (`FACTS.md` F-LB-02, C-79).
+- **Round 11** ran ~17:05-17:31Z (scans: browser, successor, detect, graph, outside, recheck, plancheck); untracked, REPORT.md refused again (text in `research/wf_ideas_v4/round11/report.json` R11-A0; `WATCHLIST.md` I95).
+
+**Ideas** (`IDEAS.md` l.13; `ideas.json` meta.curations[n=11], 42 records; `_curation/11/ideas.json`):
+- **Landed:** I-280 P4c, I-281 gate, I-283 predictions, I-284 protection (all RECORDED/BUILT); I-282 partly (snapshots, times; timers and wake still missing); I-232 (rounds 8/10); I-252 (LESSONS fixes); I-265 DECIDED (full rounds).
+- **New (I-286..I-294):**
+  - In-plan: I-286 E10 v2 PORT-ONLY (>= 0.954, pair {PORT, #37}, <= 2 ports, 3-hourly checks; needs one OK before 27 Sep 12:00); I-290 precedence P6 > f2 > R4.
+  - Refuted: I-287 SI as default (opt-in only by ~09:00 27 Sep), I-288 scoreDescending flag, I-289 P2_MIN 0.954, I-291 29 Sep 10:00 last submit, I-292 gate-failing successors (anhadmahajan06 0.946, amanatar v10 ERROR), I-293 raw-maxima recall arm (ceiling +0.0059), I-294 division-wave prior.
+- **Status/reason changes:** I-047 refuted by measurement (-0.0129/-0.0273); I-049 (0.149 < q* 0.161); I-079/I-062 q* = 0.161; I-122 (Trackastra has a pretrained 3D 'ctc' model); I-278 (#34 rank ~450-640); I-113/I-261/I-139 notes; I-262 now = HF v3 dry run (R11-A6).
+- **Counts c10 -> c11:** 285 -> 294. Refuted 159 -> 166, in-plan 36 -> 38; lb-tested 41, lab-tested 21, deferred 27, open 1 unchanged. Strict orphan I-233. At risk: I-229, I-232, I-262, I-282, I-286, I-290 (I-280, I-281, I-283 left the list).
+
+**Facts and decisions** (`FACTS.md`, `DECISIONS.md`, rows marked [c11]; `_curation/11/facts.json`):
+- **New facts:** F-DAT-07 (division timing in train GT), F-LB-11 (private-rank and crowd-model priors, info only), F-MOD-24 (K2 patch applies to successors mechanically), F-MOD-25 (Trackastra pretrained model), F-TRN-37 (round-11 lens ceilings).
+- **Contradictions:** new C-79 (team count 3,930/3,929/3,932), C-80 (which rule reads a 0.954-0.955 successor), C-81 (SI vs verbatim port), C-82 (post-R8 check cadence), C-83 (last port submit); resolved C-30, C-72, C-73, C-74, C-77.
+- **DECISIONS.md:** gates G36/G37 (§1b l.213-214); [c11] CURRENT finals snapshot (§2 l.289, SI row "not a candidate"); §2f P4c + gate tools in force and the E10 v2 V1-V8 table PROPOSED (l.484); [c11] status on R1-R10 and the finals rule.
+
+**Watchlist** (`WATCHLIST.md`; `_curation/11/watch.json`):
+- **Done:** W94 (round-10 record), W95 (P4c), W96 (gate), W97 (snapshots + times, partly), W98 (LESSONS a-g), W99 (predictions), W101 (a) (full rounds), W102 (protection in CONTEXT); amanatar v10 reminder moot (ERROR).
+- **New:** W103-W112 (R11-A0..A9) and reminders T36-T39 (23:00 P1 check, 27 Sep 06:00 dry run, ~09:00 SI opt-in, 3-hourly post-R8 checks); insights I96-I106 (I96: nothing flags a 0.954-0.955 successor automatically).
+- **Still overdue:** CONTEXT l.22, l.196, out_valid, efpost, 33.1%; round prompt '~4 h headroom'; LESSONS l.7 I69 caveat; friend A card.
+
+**Alerts** (`INDEX.md` TOP ALERTS, 9 after dedup):
+- **Resolved since curation 10:** P4c and gate script built before the P1 check; x138 slug + e10_watch snapshots started; finals-input protection and private-read predictions in CONTEXT; LESSONS errors fixed; round8/round10 REPORT.md; the "full vs light rounds" question answered.
+- **Carried over:** wake mechanism and user's 29 Sep reminders (asked twice); hygiene commit (now round 11); curator records and friend A card; I69 caveat; stale MEMORY copy; I-233.
+- **New:** E10 v2 OK before 27 Sep 12:00; SI claim correction; I96 detection gap; session timers; HF v3 dry run; precedence line; 23:00 P1 check and prompt fix; DaughterNet load outside fail-soft (keep W102); forecast calibration-only.
+- **Curator disagreements settled here:** hygiene commit [today] (ideas, facts) vs [now] (watch) -> [now, before round 12]; timers [now] (ideas, watch) vs [today] (facts) -> [now]; SI correction [now] (facts) vs [before-finals] (ideas) -> [now], since it rides in the R11-A9 message.

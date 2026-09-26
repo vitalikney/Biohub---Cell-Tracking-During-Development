@@ -1,0 +1,4 @@
+- 2026-09-26T17:46:04Z start curation 11 index; no prior index.json
+- 2026-09-26T17:47:25Z INDEX.md written; next CHANGES.md section 11
+- 2026-09-26T17:47:51Z CHANGES.md section 11 appended; next index.json
+- 2026-09-26T17:48:14Z index.json written. DONE

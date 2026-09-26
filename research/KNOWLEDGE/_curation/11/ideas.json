@@ -1,0 +1,67 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/ideas.json",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/IDEAS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/11/ideas.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/11/ideas.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "what": "E10 v2 PORT ONLY (I-286) needs one user OK, logged with date -u before 27 Sep 12:00 UTC and before any trigger. Without it the >= 0.956 rule stays and the 0.954-0.955 successor risk is accepted by default. The text is not in CONTEXT yet",
+   "evidence": "research/wf_ideas_v4/round11/report.json R11-A2 (E10_V2_TEXT, covered_by_existing_approval false), R11-A9; CONTEXT.md l.2335-2341 (the 17:00 UTC OK covers the plan only)",
+   "suggested_action": "Append E10_V2_TEXT to CONTEXT as PROPOSED together with R11-A1, then send R11-A9 once and log 'USER OK on E10 v2 (<quote>)' or 'USER NO'",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "No session timers exist yet for the post-R8 E10 checks and tick checks (R11-A4), and the wake mechanism has been asked twice (16:04, 16:49 UTC) without an answer. Session timers die with the session",
+   "evidence": "research/wf_ideas_v4/round11/report.json R11-A4, R11-A5; scan_plancheck.json PC11-13; CONTEXT.md l.2280-2287, l.2318-2323",
+   "suggested_action": "Create the R11-A4 timers now (3-hourly P1 checks from 27 Sep 12:00 to 29 Sep 00:00 UTC, tick checks 28 Sep 18:00 and 29 Sep 12:00/18:00) and log their ids in CONTEXT. Ask R11-A5 inside R11-A9",
+   "urgency": "now"
+  },
+  {
+   "kind": "forgotten",
+   "what": "Round 11 is untracked and nothing from it is in CONTEXT yet. That covers the ROUND 11 RECORD, the precedence line P6 > f2 > R4 (I-290), the RESUME slot fix 3/5/5/5 (I-257) and round11/REPORT.md (refused to the subagent again; I-232). The duplicate snapshot 20260926T1701Z-2.txt is still on disk, although R11-A1 (7) calls it deleted",
+   "evidence": "git status (?? research/wf_ideas_v4/round11/, ?? experiments/e10_watch/20260926T1701Z-2.txt); CONTEXT.md ends at l.2341 (17:00 UTC entry); research/wf_ideas_v4/round11/report.json R11-A0, R11-A1 (7)-(9); report.notes.md 17:27:43Z",
+   "suggested_action": "Run R11-A1 in one commit as the user with no trailer: delete the -2 file; append the ROUND 11 RECORD; write round11/REPORT.md from R11-A0; add poll.log, ledger.md and 20260926T1701Z.txt. Before committing, check pytest, the finals sha and the claude grep",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "The E10 port dry run on HF v3 (I-262, R11-A6) is the only measurement of trigger-to-submit time before a night trigger. Under E10 v2 that time sets the port's place inside its copy block",
+   "evidence": "research/wf_ideas_v4/round11/report.json R11-A6 (deadline: before 27 Sep 06:00 UTC, never submit); v_hyp_successor_r11s-8.json",
+   "suggested_action": "Run R11-A6 tonight: private dummy plus NEVER_SUBMIT.md. Record each step's wall time in CONTEXT and in the round-12 notes. Treat any gate FAIL as a procedure finding",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "The SI (successor + insertion) opt-in window closes ~09:00 UTC 27 Sep (I-287). R11-A9 also corrects the earlier chat claim that SI was the stronger option",
+   "evidence": "research/wf_ideas_v4/round11/report.json R11-A3 (SI_CONDITIONS), R11-A9, rejected",
+   "suggested_action": "Include the one-line SI explanation in R11-A9. Build nothing unless the user explicitly asks by ~09:00 UTC 27 Sep",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "stale",
+   "what": "Closures reached in round 11 are only in untracked JSON. They are: I-047 refuted by measurement on x138, new refuted I-293 raw-maxima arm and I-294 division-wave prior, and corrected reasons for I-049 (0.149 < q* 0.161), I-122 (Trackastra has a pretrained 3D 'ctc' model), I-278 (#34 rank ~450-640) and I-139. The ledger now carries them, but CONTEXT does not",
+   "evidence": "research/wf_ideas_v4/round11/report.json R11-A1 (5)-(6), R11-A7, rejected; research/KNOWLEDGE/ideas.json meta.curations[n=11]",
+   "suggested_action": "No extra work: the R11-A1 ROUND 11 RECORD text already contains (5) and (6). Append it verbatim",
+   "urgency": "today"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "Two round-11 lines for LESSONS s4 exist only in R11-A7: 'the metric has no unexploited lever' and 'oracle ceilings: nothing reaches R8'",
+   "evidence": "research/wf_ideas_v4/round11/report.json R11-A7; research/wf_ideas_v4/round9/LESSONS_draft.md l.47",
+   "suggested_action": "Add both lines to LESSONS_draft.md s4 (text only) before 27 Sep 12:00 UTC (I-252)",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "I-233 (the poller logs error_description) is still the only strict orphan. Round 11 does not mention it again",
+   "evidence": "research/KNOWLEDGE/ideas.json I-233; research/wf_ideas_v4/round11/report.json R11-A0..A9",
+   "suggested_action": "Close it with one line in CONTEXT: the C2 one-liner covers an E10 port's error class on demand",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 11 ran at 2026-09-26 ~17:45 UTC on HEAD df6996e, plus the untracked research/wf_ideas_v4/round11/ (report.json 17:31Z, R11-A0..A9 not yet applied) and the e10_watch 17:01Z snapshots. The ledger grew from 285 to 294 ideas; there are 42 change records in ideas.json meta.curations[n=11]. Counts c10 -> c11: lb-tested 41, lab-tested 21, refuted 159 -> 166, deferred 27, in-plan 36 -> 38, open 1.\n\nRound-10 actions verified as LANDED:\n- I-280 P4c: CONTEXT.md l.2257-2279, plus the P4c(3) wording fix at l.2301-2317.\n- I-281 tools/e10_port_gate.py: 72 tests, 275 in total (bea9d99).\n- I-282 tools/e10_snapshot.py plus snapshots (a79775f), and the check times at l.2280-2287. The timers and the wake mechanism are still missing.\n- I-283 private-read predictions: l.2288-2300, also in LESSONS s5.\n- I-284 finals-input protection: l.2249-2252.\n- I-232: round8 and round10 REPORT.md committed.\n- I-252: LESSONS fixes applied.\n\nUser decisions: I-265 full rounds until R8 (16:49 UTC). OK to the successor PLAN only (17:00 UTC, l.2335-2341).\n\nRound 11 new ideas:\n- I-286 E10 v2 PORT ONLY: >= 0.954, pair {PORT, #37}, at most two ports, 3-hourly checks. In-plan and at risk: it needs one OK before 27 Sep 12:00 UTC.\n- I-287 SI (successor + insertion): refuted as the default. An early port is at least as good for bronze. User opt-in only, by ~09:00Z 27 Sep. The transplant feasibility is kept as a FACT.\n- I-290 precedence P6 > f2 > R4 (at risk until R11-A1).\n- Refuted: I-288 scoreDescending flag, I-289 P2_MIN 0.954, I-291 29 Sep 10:00 last submit, I-292 gate-failing successors (anhadmahajan06 BioTrack-Omni 0.946, amanatar v10 ERROR), I-293 raw-maxima recall arm (ceiling +0.0059), I-294 division-wave prior.\n\nR11-A7 curator records applied:\n- I-047 refuted by measurement (-0.0129/-0.0273; image filter oracle +0.0054).\n- I-079 and I-062: q* = 0.161.\n- I-113: 6bba miss anatomy; r11d-5 aliased here.\n- I-261: cross-reference to I-113.\n- I-139: scope note.\n- I-122: Trackastra alias with the corrected premise.\n- I-049: corrected reason.\n- I-278: RC-C.\n- DIV and NODES headers: oracle ceilings.\nAlso updated: I-026, I-256, I-262 (HF v3 dry run R11-A6), I-025, I-020, I-094 (16:54 forecast), I-258 (2/2 at 17:09Z), I-248, I-259 (99b127a lenses), I-229, I-257, I-233.\n\nIDEAS.md now opens with a note for round agents, who read it per 99b127a: search by mechanism before proposing.\n\nOrphans: I-233 is the only strict one. At risk: I-229, I-232, I-262, I-282, I-286, I-290."
+}

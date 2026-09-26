@@ -1,0 +1,14 @@
+{
+  "task": "curation 11 WATCHLIST (incremental over curation 10, 15:51Z)",
+  "complete": true,
+  "written_utc": "2026-09-26T17:42Z",
+  "files_written": ["research/KNOWLEDGE/WATCHLIST.md", "research/KNOWLEDGE/_curation/11/watch.notes.md", "research/KNOWLEDGE/_curation/11/watch.json"],
+  "state": "Main HEAD df6996e (17:00Z). Finals 2/2 [56563521, 56563534] (API 17:09Z). E10 NOT met 17:01Z (amanatar v10 ERROR; anhadmahajan06 0.946 fails P4c(2)). User OK 17:00Z to successor PLAN only; round 11 (untracked, 17:01-17:31Z) proposes E10 v2 port-only >= 0.954 {PORT,#37}, SI opt-in only. Full rounds until R8 27 Sep 12:00Z. Poller 17:26:11Z PID 20052.",
+  "overdue": ["W57/W66/W31/W72 CONTEXT curator records (l.22, l.196, out_valid, efpost, 33.1%)", "W71 prompt l.40 '~4 h headroom'", "W98 residue: LESSONS l.7 one-embryo caveat (I69)", "W03 friend A card", "W02 moot"],
+  "next_24h": ["W103 = R11-A0 save round11/REPORT.md", "W104 = R11-A1 ROUND 11 RECORD commit before round 12 (~19:45Z), delete 1701Z-2", "W105 = R11-A2 E10 v2 PROPOSED + ask; OK before 27 Sep 12:00 and before any trigger", "W106 = R11-A3 SI not built; opt-in by 09:00Z 27 Sep", "W107 = R11-A4 session timers now, ids logged in CONTEXT", "W108 = R11-A5 wake question (asked twice, unanswered)", "W109 = R11-A6 HF v3 dry run before 27 Sep 06:00", "W110 = R11-A7 curator records before R8", "W111 = R11-A8 next P1 check <= 23:00Z + workflow edit", "W112 = R11-A9 user message now", "W102/W93/W19 standing", "W76 rounds until R8", "T12 18:00 M6 lapse", "T17", "T27 22:00", "T36 23:00", "T18 27 Sep 00:00", "T37 06:00", "T02 07-09", "T38 09:00", "T03 R8 12:00", "T32/T39 27 Sep 12/15/18/21"],
+  "later": ["T32/T39 28 Sep 3-hourly to 29 Sep 00:00", "T04/T05 empty", "T28 S14", "T19 28 Sep 18:00 tick check", "T35 28 Sep 22:00 admission formality", "T20 29 Sep 00:00", "T29 29 Sep 02:00", "T09 29 Sep 12:00/18:00", "T10 29 Sep 20:00", "T11 23:59", "T30 30 Sep private read + forecast calibration", "W29 post-deadline list + round-11 additions"],
+  "new_ids": ["W103", "W104", "W105", "W106", "W107", "W108", "W109", "W110", "W111", "W112", "T36", "T37", "T38", "T39", "I96", "I97", "I98", "I99", "I100", "I101", "I102", "I103", "I104", "I105", "I106"],
+  "done_since_c10": ["W94 (848e07a)", "W95 P4c", "W96 e10_port_gate (bea9d99)", "W97 (1)-(2) e10_snapshot (a79775f)", "W99 PRIVATE-READ", "W100 (KNOWLEDGE c10)", "W101 sent, (a) answered 16:49", "W102 CONTEXT line", "W86 rounds 8/10", "W05 (residue -> W104)", "W98 (a)-(g)", "W23 check 17:01Z"],
+  "moot": ["T31 amanatar v10 ERROR", "I93"],
+  "resolved_insights_since_c10": ["I86", "I87", "I85 recorded", "I90 recorded", "I92 recorded"]
+}

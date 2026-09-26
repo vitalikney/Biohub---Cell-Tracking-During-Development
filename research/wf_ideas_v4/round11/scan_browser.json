@@ -1,0 +1,45 @@
+{
+ "summary": "Round-11 delta scan at 17:01-17:10 UTC 26 Sep, compared with round 10 (LB CSV 15:16:37). E10 P1 snapshot experiments/e10_watch/20260926T1701Z.txt: the DIFF against 1620Z shows no kernel-list or status change, 4 histogram changes and no P2 look-check group, so E10 is NOT triggered. Public LB (17:01:50): 3,932 teams. We are still #210 at 0.954, now 12th of 97 in the 0.954 block (ranks 199-295); we were 13th because めめっち above us went 0.954->0.956. Block counts (round 10 in brackets): 0.953 = 354 (345), 0.954 = 97 (96), 0.955 = 55 (57), 0.956 = 35 (33), 0.957 = 17 (18), 0.958 = 12 (11), 0.959 = 12 (11), >=0.960 = 67, >=0.970 = 7, >=0.953 = 649 (638). The two new 0.954 entrants (Freeman Hui #223, nianyu #294) again landed below us. yu4u took #1 (0.973->0.978); the rest of the top 20 is unchanged. An 11th window of x138 copies (10 teams at exactly 0.953, #625-635) came from subs 08:41-10:02 UTC, so the ~7 h scoring lag holds. Public code: amanatar/optimized-biohub-max-score v10 ended in ERROR, and its page still shows 0.910 / best 0.953. The only new run, anhadmahajan06/biohub-track-your-cells (16:17 UTC, v9), is a known knob set at 0.946 and was not pulled. x138 is unchanged (v1, 199 votes, 280 copies). There is no new discussion topic or comment and no host announcement. Overview, timeline, 12 h limits and data files are unchanged; submissions are at 87,465 (~88/h). Two new datasets are irrelevant: a static submission.csv and tiny V-JEPA epoch-1 checkpoints. The finals (#37 + #38) are unaffected. Nothing was pulled to experiments/.",
+ "findings": [
+  {
+   "id": "r11-e10-p1-snapshot",
+   "kind": "new-fact",
+   "what": "E10 P1 snapshot at 17:01 UTC. The DIFF against 20260926T1620Z shows no change in comp_dateRun, comp_scoreDescending, the user lists (anvithpothula, thtennant, amanatar) or the statuses. The LB histogram changed: 0.959 11->12, 0.958 11->12, 0.957 18->17, 0.955 56->55. Eight teams have a new score >= 0.953, the best being Teju Olarewaju 0.956->0.959 (sub 10:19). The P2 look-check (teams now >= 0.956 that were <= 0.953, grouped by identical score) finds none, largest group 0. E10 is NOT triggered, so the port gate (tools/e10_port_gate.py) was not needed. A parallel agent's duplicate snapshot 20260926T1701Z-2.txt shows CHANGES=0 against this one.",
+   "evidence": "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/experiments/e10_watch/20260926T1701Z.txt (CHANGES=4); x138 live slug anvithpothula/biohub-0-953-lb-original, status unchanged.",
+   "action": "None. Keep the ~6 h P1 cadence. The overnight submit burst (~23:30-02:00 UTC) will show on the LB from ~07-09 UTC 27 Sep, given the ~7 h scoring lag.",
+   "urgency": "info"
+  },
+  {
+   "id": "r11-lb-delta-1701",
+   "kind": "new-fact",
+   "what": "Public LB at 17:01:50 UTC 26 Sep: 3,932 teams. We are #210 (unchanged), 0.954, 40 subs, last sub 00:02:18, now 12th of 97 in the 0.954 block (199-295; we were 13th of 96). Other blocks: 0.957 = 92-108 (17), 0.956 = 109-143 (35), 0.955 = 144-198 (55), 0.953 = 296-649 (354). >=0.960 = 67, >=0.970 = 7, >=0.955 = 198, >=0.953 = 649 (+11 in 1.75 h). Public silver = 5% of 3,932 = 196.6, so we are ~13 ranks below it (info only per R7). 28 teams changed score and 112 have new subs. The scored subs are from 07:56-10:51 UTC, which again fits the ~7 h latency. Both new 0.954 entrants are below us: Freeman Hui #223 (0.953->0.954, sub 10:14) and nianyu #294 (sub 09:25). The one team that left the block above us is めめっち, 0.954->0.956 (#202->#116).",
+   "evidence": "python -m kaggle competitions leaderboard biohub-cell-tracking-during-development --download, saved to the session scratchpad at lb/r11/biohub-cell-tracking-during-development-publicleaderboard-2026-09-26T17_01_50.csv and compared with lb/r10/...T15_16_37.csv using lb/r10/cmp10.py. Logged in research/wf_ideas_v4/round11/scan_browser.notes.md.",
+   "action": "Update the CONTEXT intel line to #210/3,932, 12th of 97 in the 0.954 block (199-295). Info only: finals stay #37 + #38, and there are no knob ladders. The new 0.954 teams that keep landing below us still suggest our unrounded score is in the upper part of the block.",
+   "urgency": "info"
+  },
+  {
+   "id": "r11-top-movers",
+   "kind": "new-fact",
+   "what": "Movers since 15:16: yu4u 0.973->0.978 (#3->#1, sub 10:47) now leads by 0.003 over Sergio Alvarez and Gabriel (0.975). Also Quantizr 0.964->0.965 (#26), Teju Olarewaju 0.956->0.959 (#140->#70), Alfonso Sánchez 0.957->0.958 (#91), datnt114 and Arda Özcan 0.955->0.956, and めめっち 0.954->0.956. The 11th x138-copy window has 10 teams at exactly 0.953 (#625-635): Liang Wan Yiu David, Roy Lo TW, 华风夏韵，洛水天依。, AMANI DD (new), Lixrixy, Ayodeji, Gurkirat Singh, Hira Norm, Sankalp Wanjari and ocean240812, with subs 08:41-10:02. Jordi Corbilla also went 0.947->0.953 (#316). Syed Asad Ali (#23, 0.965) submitted at 16:26, still unscored. Ranks 2-20 keep their order.",
+   "evidence": "cmp10.py changed list, r10 15:16:37 vs r11 17:01:50 LB CSVs.",
+   "action": "None. No mover has a public source, and the E10 watch continues.",
+   "urgency": "info"
+  },
+  {
+   "id": "r11-public-code-no-heir",
+   "kind": "new-fact",
+   "what": "No public x138 heir exists and nothing was pulled. amanatar/optimized-biohub-max-score v10, which round 10 saw RUNNING from 13:18, now has CLI status 'KernelWorkerStatus.ERROR'. Its page is unchanged: 'Version 1 of 5', Public 0.910, Best 0.953 V4, 58 votes, 69 copies, Comments (0). So its sweep-selected levers have no public score, and round 10's P4b(d) FAIL stands anyway. The only new run since round 10 is anhadmahajan06/biohub-track-your-cells (lastRun 16:17:45). Its page reads 'Version 6 of 9' with Public 0.946 and Best 0.946 V4 (13 votes, 10 copies). It is the known SECONDARY_LINK_MODE/relink-bonus knob set (research/discussions_summary.md l.343), so it is below 0.954 with no new idea and was not pulled. There are no new competition kernels by dateCreated since 24 Sep. x138 https://www.kaggle.com/code/anvithpothula/biohub-0-953-lb-original: 'Version 1 of 1', 0.953, 199 votes, 280 copies, Comments (3), all unchanged.",
+   "evidence": "https://www.kaggle.com/code/amanatar/optimized-biohub-max-score ; https://www.kaggle.com/code/anhadmahajan06/biohub-track-your-cells ; CLI kernels status / kernels list --sort-by dateRun|dateCreated|scoreDescending (the E10 snapshot plus a separate dateCreated call).",
+   "action": "None. Close the r10 'recheck amanatar v10' item: it errored, with no score.",
+   "urgency": "info"
+  },
+  {
+   "id": "r11-discussion-overview-data-unchanged",
+   "kind": "new-fact",
+   "what": "Discussion (sort=recent-comments) has no new topic or comment. The top entry is still 'Beginner question: How do Public/Private splits usually work in biological datasets?', last by Rishavendra Sharma 6 hours ago, with no host reply. Next is 'errors in annotated ground truth' (8 hours ago), then 'Eight leaderboard experiments on the public 0.947 stack' (a day ago). The pinned host topics are unchanged: Workshop 10 days, Discord a month, Welcome 2 months. The Overview shows '3 DAYS TO GO', Final Submission Deadline 'September 29, 2026', and 'CPU Notebook <= 12 hours run-time' / 'GPU Notebook <= 12 hours run-time', all unchanged. Counts: 13,475 Entrants, 4,491 Participants, 3,929 Teams, 87,465 Submissions (+154 since ~15:16, ~88/h). Data files still have creationDate 2026-06-26. Two new datasets are irrelevant. qwyi123/biohub-trackastra-soft-hybrid-d09fe74 (16:54) holds only a static submission.csv, which is useless in a code competition with a hidden test. santoshpaidi/biohub-vjepa-checkpoints-v3 (16:39) holds a 400 KB encoder and a 2 KB head at epoch 1.",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion?sort=recent-comments ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/overview ; CLI competitions files; CLI datasets list --search biohub --sort-by updated; datasets files for both new datasets.",
+   "action": "None.",
+   "urgency": "info"
+  }
+ ]
+}

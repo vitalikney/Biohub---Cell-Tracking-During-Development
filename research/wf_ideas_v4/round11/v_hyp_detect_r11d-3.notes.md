@@ -1,0 +1,9 @@
+- 2026-09-26T17:15:58Z start v_hyp_detect r11d-3 skeptic
+- Verified x138 knobs in experiments/ext_x138/biohub-x138.ipynb: READMIT_RADIUS_UM 4, READMIT_MIN_SCORE 0.965, GAPFILL_MAX_GAP 3, MIN_SCORE 0.5, STEP 5.0, PEAK_RADIUS 3.5, EXCLUDE 2.0, MAX_ADDED_FRAC 0.03, LOWDET_THRESHOLD 0.3. Matches the finding.
+- I-139 (research/KNOWLEDGE/IDEAS.md l.286): refuted, -0.0015..+0.0007, gapfill budget not binding. It covers READMIT_MIN_SCORE and budget, NOT GAPFILL_MAX_GAP explicitly.
+- MAX_GAP > 3 hole: covered instead by I-186/I-141 (IDEAS l.361, l.288: residual g=1..3 + sandwich TP 5 / FP 458, ceiling <= +0.0003) and by synthetic gap nodes matching GT ~1% (58/5,647; 29/2,968). Raising MAX_GAP is a public-knob change of an existing threshold, no lab, and past R8 practicality (27 Sep 12:00 UTC).
+- 73/13,284 readmitted match: round7 notes l.8, round9 v_hypotheses_r9h-4.notes l.3. Confirmed.
+- DC map not dumped: tools/trainlab_io.py l.171-182, dc = point lookups dict only. Confirmed.
+- "detection-map class 0/5 on LB": CONTEXT.md l.2135. Confirmed.
+- I-277 (DC readmit veto) already refuted as leaf prune in disguise (IDEAS l.298).
+- Verdict: finding stands (not refuted); wording fix: I-139 alone does not cover MAX_GAP; cite I-186/I-141 too.

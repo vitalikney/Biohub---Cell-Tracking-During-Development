@@ -1,0 +1,37 @@
+{
+  "summary": "Round 11 outside-knowledge scan (26 Sep ~17:05-17:40Z). Honest answer: NOTHING from outside knowledge reaches R8 (27 Sep 12:00Z). (1) Literature/GitHub 2024-2026 (Ultrack Nat Methods 2025, Trackastra, HOCT, mitosis-aware MHT, CTC linking benchmark, participant repos) offers no cheap x138 post-processing trick that the ledger has not already tried or closed; every family maps to an existing I-ID. (2) The one idea that was new to the ledger, a division-wave/synchrony prior for the insertion, is refuted by measurement on the 199 train GT geffs: 112/199 clips have 0 GT divisions, and of 95 within-clip division pairs only 4.2% are <= 2 frames apart (median 20 frames, 48 um). (3) Official metric re-audit (tools/official/src/tracking_cellmot/metrics.py): the only exploitable levers are the node-count bonus, free unannotated forks and dt=1-only edges, and all are already used or closed. The code-level filters (merge-dup collapse, out-degree cap by lowest EDGE_ID, dt!=1 drop) are inert on x138 (I-221 audit). Node dropping costs ~21x more than it gains at the ~3.3% annotation rate. Finals stay #37 + #38; no OK request. Notes: research/wf_ideas_v4/round11/scan_hyp_outside.notes.md.",
+  "findings": [
+    {
+      "id": "r11o-1",
+      "kind": "plan-issue",
+      "what": "No outside-knowledge mechanism can pass an honest lab gate, a dummy and a new user OK before R8 (27 Sep 12:00Z), and none reaches R4 (+0.002 public, ~+0.012 lab at the ~1/6 transfer). Say this plainly in the round report. Do not open a new line from this scan.",
+      "evidence": "Families checked against research/KNOWLEDGE/ideas.json (285 ideas): Ultrack multi-hypothesis segments / optional nodes -> I-142, I-044, I-117 (refuted/deferred); Trackastra / HOCT windowed association -> I-122, I-083, I-187; mitosis-aware MHT / k-best (arXiv 2403.15011) -> I-166; linajea parent vectors / cell-state classifier -> I-121, I-062 (in K2), I-073 forkblob; tracklet gap-closing LAP (u-track) -> I-186; RTS/Kalman smoothing -> I-184; temporal-reversal / bidirectional consistency -> I-154; cell-cycle / refractory priors -> I-213; drift compensation -> I-180; count-target pruning (amanatar count_oracle) -> I-149. Participant repos: github.com/JunhaoLiXD/Biohub_Cell_Tracking (0.944; Hungarian + gap + prune, nothing new), github.com/sota1111/biohub-claude (metric foundation only). Sources: https://www.nature.com/articles/s41592-025-02778-0, https://github.com/weigertlab/trackastra, https://arxiv.org/html/2607.11754, https://arxiv.org/pdf/2403.15011, https://celltrackingchallenge.net/latest-ctb-results/",
+      "action": "Round report: 'outside scan: no new mechanism; nothing reaches R8'. Finals stay #37 + #38. Add no new submit item.",
+      "urgency": "today"
+    },
+    {
+      "id": "r11o-2",
+      "kind": "new-fact",
+      "what": "A DIVISION-WAVE / SYNCHRONY PRIOR is refuted by measurement. The idea (new to the ledger: 0 hits for 'synchron'): borrow the zebrafish metachronous-division prior and lower the DaughterNet insertion threshold near other predicted divisions in space-time. GT shows no such clustering at this stage and annotation density: 151 divisions in 199 clips, count per clip {0:112, 1:46, 2:25, 3:10, 4:5, 5:1}. Of 95 within-clip division pairs, dt median = 20 frames, 4.2% have dt <= 2 and 1.1% have dt <= 2 AND <= 30 um (median distance 48 um). With ~0.76 divisions per clip there is no co-occurrence signal to condition on.",
+      "evidence": "Scratchpad script divwave.py (official tracksdata loader, scale 1.625/0.40625/0.40625) over biohub-cell-tracking-during-development/train/*.geff. Frames/clip median 100, GT nodes/clip median 659. Logged in research/wf_ideas_v4/round11/scan_hyp_outside.notes.md.",
+      "action": "Curator: add as a new ledger idea with status refuted ('division-wave prior: GT divisions not clustered in time, 4.2% of pairs within 2 frames; 56% of clips have 0 divisions'), so later rounds do not propose it again.",
+      "urgency": "info"
+    },
+    {
+      "id": "r11o-3",
+      "kind": "new-fact",
+      "what": "METRIC RE-AUDIT: we are not under-using the official metric. (a) The node-count bonus is linear, 0.1*J/T_true per dropped node, about 4.5e-6 on a ~20k-node clip. Dropping a node that turns out to be annotated costs ~2 TP edges, x 1/700 each, about 2.9e-3. At the ~3.3% annotation rate (659 GT nodes vs ~20k predicted per clip) the expected cost is ~9.5e-5, about 21x the gain. Break-even needs P(annotated) <= ~0.16%, and appearance cannot separate annotated from unannotated nuclei (B25 iteration 2, CONTEXT l.193). (b) The code-level behaviours are all inert on x138 (I-221: 0 isolated nodes, 0 nodes with > 2 children, 0 multi-parent nodes, 0 dt != 1 edges on 56 exp60 graphs): merge-dup collapse (lowest EDGE_ID kept), out-degree cap at 2 (lowest EDGE_ID), dt != 1 edges dropped. (c) Free forks on unannotated cells are already used by safe divisions and the insertion. Fork hedging, i.e. adding a second out-edge on an uncertain link, is net negative: an evaluable division FP costs ~3e-4 of score per event against ~1e-4 for an edge TP. (d) Private is micro-averaged over the TP/FP/FN of all clips: score = sum(TP_i*a_i)/sum(w_i), with no per-clip lever beyond node count.",
+      "evidence": "tools/official/src/tracking_cellmot/metrics.py l.63-156 (dt filter, merge-dup, out-degree cap, out_valid/in_valid), l.400-536 (per_sample_metrics, summarise); tools/official/metrics.md; research/KNOWLEDGE/ideas.json I-221, I-130, I-147, I-149; CONTEXT.md l.193 (B25 closure).",
+      "action": "None for the finals. Optional LESSONS line: 'the metric has no unexploited lever for x138; the node bonus pays only at P(annotated) < ~0.2%'.",
+      "urgency": "info"
+    },
+    {
+      "id": "r11o-4",
+      "kind": "new-hypothesis",
+      "what": "Post-deadline only (fails R8; no gate before 27 Sep 12:00Z): a Trackastra-style windowed association re-score. A pretrained general model (trackastra 'general_2d' has no 3D anisotropic nuclei model, so this means our own training) would score x138's relink pairs out-of-sample. That is a retraining item and duplicates I-122 / I-285. It is listed here only to record that the 2024-2026 literature's main cheap win, 'greedy linking on transformer association scores rivals ILP', needs a trained 3D association model we do not have. Expected gain: unknown; runtime: ~+1-2 min/clip.",
+      "evidence": "https://arxiv.org/html/2405.15700 (Trackastra: greedy ~ ILP given good association scores); https://github.com/weigertlab/trackastra (pretrained models are 2D/general; 3D requires training); ledger I-122 (deferred), I-285 (pre-relink dump hook, deferred).",
+      "action": "Curator: merge as an alias into I-122 (deferred-after-deadline). No new ID needed.",
+      "urgency": "later"
+    }
+  ]
+}

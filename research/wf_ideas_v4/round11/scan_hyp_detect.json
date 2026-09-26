@@ -1,0 +1,45 @@
+{
+ "summary": "Round 11 detection/localisation-recall scan, with a CPU measurement on exp60 (56 clips, raw train zarr, 371 s). Honest answer: nothing reaches R8. 80% of x138's 668 missing GT nodes are multi-frame runs; only 27 are single-frame through-track mislocalisations (ceiling +0.0013 lab). Missing cells are mostly peakless in the raw image: 31% have a local max within 5 um, vs 70% of matched GT. A raw-image orphan-maxima recall arm reaches only 23% of misses, and its ceiling is +0.0059 lab even at zero cost, below the +0.012 R4 bar. At realistic cost it is strongly negative: ~419k added nodes for <= 247 edges, break-even 1 edge per ~290 nodes. The UNet-map near-gap variant is x138's own LOWDET/GAPFILL/READMIT, i.e. the closed knob class I-139. Intensity-based z re-centring is the closed I-040/I-046 line. The whole missing-node pool caps at +0.029 lab. Recommendation: close this focus for the finals and spend the remaining time before R8 on the successor-scenario (E10 v2) analysis. Post-deadline, fold the run and peakless facts into I-261 (detector training).",
+ "findings": [
+  {
+   "id": "r11d-1",
+   "kind": "new-fact",
+   "urgency": "today",
+   "what": "MEASURED (CPU, exp60 56 clips, x138 final graphs, official 7 um match): the 668 missing GT nodes are mostly multi-frame runs, not single-frame mislocalisations. By GT-run structure: sandwich_through (both GT neighbours matched and the predicted track passes through a node at t, i.e. the true re-localisation target) 27 (4%); sandwich_open 66 (10%); one-side 43 (6%); runs of 2-4 consecutive missing frames 344 (51%); runs >= 5 frames 188 (28%). So ~80% of the node-miss mass is a cell that is untracked for several frames. The 7-10 um nearest-node statistic (71%) is mostly the neighbour spacing of a sparse-GT embryo, as round 7's control already showed.",
+   "evidence": "scratchpad/r11/r11_detect.py -> r11_detect_out.json (keys *_miss_<class>); research/wf_ideas_v4/round11/scan_hyp_detect.notes.md; round-7 control research/wf_ideas_v4/round7/v_recheck_r7-rc-b-zsplit-undersegmentation-on-x138.notes.md l.6",
+   "action": "Curator: record as a FACT next to I-042/I-261 (miss anatomy by run length). No build, no probe."
+  },
+  {
+   "id": "r11d-2",
+   "kind": "new-fact",
+   "urgency": "today",
+   "what": "RAW-IMAGE 'ORPHAN MAXIMA' RECALL ARM (new evidence at inference, not a UNet knob) FAILS ON ITS CEILING, BEFORE ANY GATE. Per-frame normalised raw volume, gaussian (0.8, 2.5, 2.5) vox, local max (3, 9, 9), threshold = 10th percentile of the smoothed value at matched GT. Missing GT nodes are dimmer and peakless: a local max within 5 um for 31% of missing GT (186/595 in 6bba) vs 70% of matched GT (4,444/6,388). Orphan maxima (> 5 um from every final node): 43 per frame in 6bba (+16% nodes) and 148 per frame in 44b6 (+57%). Only 139 missing GT nodes (23%) have an orphan within 4 um. Those orphans carry 247 FN edge-ends; 176 orphans sit on already matched GT (duplicates). Arithmetic: +1 recovered edge = +2.4e-5 (TP+FP+FN = 41,774); +1 added node = -8.2e-8, so break-even is 1 recovered edge per ~290 added nodes. The full-video arm adds ~419k nodes for at most 247 edges: <= +0.0059 gain vs ~-0.034 node penalty. Even at zero cost, its ceiling (+0.0059 lab, all 6bba) is below the R4 lab bar (+0.012). A tracklet or persistence filter can only lower the ceiling, not raise it.",
+   "evidence": "scratchpad/r11/r11_detect_out.json (6bba_ctl_pk_le5 4444/6388, 6bba_miss_pk_le5 186/595, 6bba_orphans 25641 in 599 frames, 44b6_orphans 3997 in 27 frames, *_orphan_hit, 6bba_orphans_near_matched_gt 176); experiments/exp60_trainlab/results.json control totals (GT edges 40,093; TP 38,388, FP 1,681, FN 1,705; pred nodes 1,124,511)",
+   "action": "Do not build a raw-maxima / LoG readmit or tracklet arm for the finals (not R8-admissible: ceiling < R4 bar). Record it in IDEAS as refuted by measurement (alias: raw-intensity orphan maxima, image-evidence recall, second-opinion raw detector). It overlaps the closed I-143 LoG/DoG and I-144 SimView pool lines."
+  },
+  {
+   "id": "r11d-3",
+   "kind": "recheck-old",
+   "urgency": "info",
+   "what": "'Local maxima of the existing UNet probability map near track ends and gaps' is not new evidence on x138. x138 already runs a UNet LOWDET pool at 0.3, GAPFILL (gaps up to 3 frames, min score 0.5, step 5 um, peak radius 3.5 um, budget 3% nodes) and READMIT (4 um, min score 0.965). Any variant is a knob change of existing thresholds: I-139 closed at -0.0015..+0.0007, and readmitted final nodes match GT only 73/13,284 = 0.5%, against the ~3.6% annotation base rate. The DeepCenter map is not dumped in exp60 (lookups only at candidate points), so a DC-map recall arm has no CPU lab. It would be a detection-map change (0/5 on LB) needing a GPU lab plus a dummy plus a user OK before 27 Sep 12:00 UTC, and it is bounded by the same missing-node pool (r11d-4).",
+   "evidence": "experiments/ext_x138/biohub-x138.ipynb (BIOHUB_LOWDET_THRESHOLD 0.3, BIOHUB_GAPFILL_*, BIOHUB_READMIT_*); IDEAS I-139, I-144, I-277; tools/trainlab_io.py trainlab_load (dc = point lookups only)",
+   "action": "None; keep closed. Mention in the round report that the UNet/DC-map sub-idea is x138's own gapfill/readmit."
+  },
+  {
+   "id": "r11d-4",
+   "kind": "plan-issue",
+   "urgency": "now",
+   "what": "HONEST ANSWER FOR THE ROUND FOCUS: nothing in detection or localisation recall reaches R8. The entire missing-node pool caps at +0.029 lab: 1,211 FN edge-ends over TP+FP+FN = 41,774, at 100% recall and precision. R4's +0.012 lab would need >= ~41% of every missing-node FN edge recovered at near-perfect precision, from cells the trained detector, the 0.3 lowdet pool and gapfill all missed, and which are mostly peakless in the raw image (r11d-2). The axial re-localisation target is also too small. Only 27 missing nodes (54 edge-ends) are single-frame through-track mislocalisations, a ceiling of +0.0013 lab. Intensity-profile z re-centring is the closed I-040/I-046 centroid line (Eric +0.0078 local became -0.002 LB twice), and the constant z shift is I-029. With ~18 h left to R8 and no GPU lab, this focus should be closed for the finals.",
+   "evidence": "scratchpad/r11/r11_detect_out.json (sandwich_through 27 nodes / 54 fnends; total 1,211 fnends); IDEAS I-029, I-040, I-046, I-261; CONTEXT.md 16:49 UTC entry (R4/R8 bar)",
+   "action": "Round 11 judge: state 'no detection-recall candidate before R8' and spend the remaining rounds on the successor-scenario analysis (E10 v2), which the user OKed at 17:00 UTC. No slot, no build."
+  },
+  {
+   "id": "r11d-5",
+   "kind": "new-hypothesis",
+   "urgency": "later",
+   "what": "POST-DEADLINE ONLY (extends I-261, not a new line): the recall residual is a detector-training target. It consists of dim or peakless 6bba nuclei (31% vs 70% have a raw local max), untracked for 2-4+ consecutive frames. Candidate: a sparse-label detector fine-tune (ignore unlabelled voxels / nnPU) with embryo-held-out evaluation, gated on missing-run recall, not node count. Cost: retraining, barred by R9 before 29 Sep. Expected value is unknown; the pool caps at +0.029 lab.",
+   "evidence": "scratchpad/r11/r11_detect_out.json; IDEAS I-261; CONTEXT.md l.140 (sparse-label loss plan)",
+   "action": "Curator: append the run-length and peakless facts to I-261's post-deadline gate text. Nothing before 29 Sep."
+  }
+ ]
+}

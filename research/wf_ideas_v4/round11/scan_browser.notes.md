@@ -1,0 +1,13 @@
+# round11 scan_browser notes (started 2026-09-26T17:01:05Z)
+- 17:01Z e10_snapshot: experiments/e10_watch/20260926T1701Z.txt, DIFF vs 1620Z: kernel lists/status no change; LB hist 0.959 11->12, 0.958 11->12, 0.957 18->17, 0.955 56->55. P2 look-check: none.
+- 17:01:50Z LB CSV (scratchpad lb/r11/...T17_01_50.csv) vs r10 15:16:37: 3,932 teams; us #210 (=), 0.954, 40 subs, 12th of 97 in 0.954 block (199-295). Blocks 0.953=354 (296-649), 0.954=97, 0.955=55, 0.956=35, 0.957=17, 0.958=12, 0.959=12, >=0.960=67, >=0.970=7, >=0.953=649 (+11). silver 5%=196.6.
+- Movers: yu4u 0.973->0.978 (#3->#1, sub 10:47); Quantizr 0.964->0.965; Teju Olarewaju 0.956->0.959 (#140->#70); めめっち 0.954->0.956 (#202->#116, was above us in block); datnt114, Arda Ozcan 0.955->0.956; Freeman Hui 0.953->0.954 #223, nianyu 0.953->0.954 #294 (both below us). 11th x138 copy window: 10 teams 0.946-0.949 -> 0.953 at #625-635, subs 08:41-10:02. Top-20 otherwise same order.
+- Kernel lists: anhadmahajan06/biohub-track-your-cells lastRun 16:17:45 (new since r10 15:16; 13 votes) - to check.
+- CLI kernels status amanatar/optimized-biohub-max-score -> KernelWorkerStatus.ERROR (was RUNNING at r10 15:18; already ERROR in 1620Z snapshot). Page https://www.kaggle.com/code/amanatar/optimized-biohub-max-score still 'Version 1 of 5', Public 0.910, Best 0.953 V4, 58 votes, 69 copies, Comments (0).
+- anhadmahajan06/biohub-track-your-cells (https://www.kaggle.com/code/anhadmahajan06/biohub-track-your-cells): page 'Version 6 of 9', Public 0.946, Best 0.946 V4, 13 votes, 10 copies. Known knob set (discussions_summary.md l.343). <0.954, no new idea -> not pulled.
+- x138 page: 'Version 1 of 1', 0.953, 199 votes, 280 copies, Comments (3) - unchanged.
+- Discussion recent-comments: no new topic/comment; top = 'Beginner question: How do Public/Private splits...' last by Rishavendra Sharma 6 hours ago; 'errors in annotated ground truth' 8 hours ago. Pinned unchanged (Workshop 10d, Discord 1mo, Welcome 2mo). No host announcement.
+- Overview: '3 DAYS TO GO'; Final Submission Deadline 'September 29, 2026'; CPU/GPU '<= 12 hours run-time'. 13,475 entrants, 4,491 participants, 3,929 teams, 87,465 submissions (+154 since r10 ~15:16 -> ~88/h).
+- Data files creationDate 2026-06-26 (unchanged). Kernel dateCreated list: nothing new since 24 Sep.
+- New datasets: qwyi123/biohub-trackastra-soft-hybrid-d09fe74 (16:54Z, single submission.csv 11.7 MB; a static csv, unusable in code comp), santoshpaidi/biohub-vjepa-checkpoints-v3 (16:39Z, 2 tiny epoch_1 .pth). Owners not identifiable at >=0.953. Irrelevant, not pulled.
+- Syed Asad Ali #23 0.965 last sub 16:26Z (score unchanged -> pending).

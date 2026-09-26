@@ -1,0 +1,117 @@
+{
+  "summary": "Round 11 plan check, 26 Sep ~17:05-17:25 UTC. (1) All round-10 actions are on main: origin/main is df6996e, every listed CONTEXT entry sits above '## 9. Literature', `python -m pytest -q tests` gives 275 passed, the finals sha values are unchanged (1f1ddb6d, 55038fd6, a77bcd6b) and the claude grep prints 0. (2) The E10 P1 check at 17:01Z shows no kernel or status change against 16:20Z and E10 is not met. amanatar v10 is ERROR, so it has no score. The newest run (anhadmahajan06, 16:17Z) is a clean-room rewrite with a PP sweep on train stems, so it fails P3. API SELECTED is 2/2 at 17:09Z and the poll.log header was 17:06Z. (3) The successor scenario, measured: the builder's divinsert, safetail and lowrefine patches apply to real x138 descendants (amanatar v10 and its older version). Each anchor appears exactly once, the cells compile, and the patch delta is identical to the K1 delta on x138 except for one preset-dict line. So 'successor + insertion' (S+ins) needs only a small builder change. What blocks it is the rules, not the code. P6 bars it as 'new code after R8'. R8 ends consolidation builds at 28 Sep 12:00. R4, P6 and f2 give different answers for a successor at 0.954 or 0.955. So an E10 v2 rule is valid only if it meets four conditions: (a) its code, tests and text are in git before 27 Sep 12:00 UTC; (b) the user's OK is logged before any qualifying successor is seen; (c) it explicitly amends P6, the R8 consolidation cutoff and the 'S12/S13 empty' line; (d) it states which rule takes precedence. A principled threshold is S >= 0.955, i.e. x138 + 0.002 by R4, because S+ins keeps our insertion and only S's own mechanism needs proof. At 0.954 the default is notify only, and the user can opt in with a separate OK. Recommended build: exactly the K1 command on S, which gives C01, R5(a) at 9.5 h and the 8.0 h insertion gate with no §f(iii) waiver. Recommended pair: {S+ins, K2 #37}. The explicit loss case is insertion < 0 AND X_S <= X, about 5-7%. Also missing: a ledger token (exp63* maps to the 7.5 h x138 family), S-specific dummy gates, a night-autonomy clause and the wake mechanism.",
+  "findings": [
+    {
+      "id": "PC11-01",
+      "kind": "recheck-old",
+      "what": "Round-10 actions landed on main (focus item 1): all verified, nothing missing.",
+      "evidence": "git fetch: origin/main = df6996e. git ls-files lists round10/REPORT.md, round8/REPORT.md, tools/e10_port_gate.py and tools/e10_snapshot.py. CONTEXT line numbers: ROUND 10 RECORD 2230, P4c 2257, P1 SNAPSHOTS + post-R8 times 2280, PRIVATE-READ PREDICTIONS 2288, PORT GATE BUILT + P4c(3) fix 2301, USER ANSWER (full rounds) 2318, PRIVATE RANK FORECAST 2324, USER OK successor-scenario plan (17:00) 2335; all above '## 9. Literature' (2342). `python -m pytest -q tests` = 275 passed (66.8 s). sha256: exp58 1f1ddb6d63b4..., exp58n 55038fd6ac00..., exp58t a77bcd6bad52... (unchanged). `git log main --format='%an%n%cn%n%b' | grep -ci claude` = 0. Working tree: ledger.md and poll.log modified (poller), e10_watch/20260926T1701Z*.txt and round11/ untracked.",
+      "action": "None beyond the next commit: add poll.log, ledger.md, round11/ and ONE 17:01Z snapshot (see PC11-14).",
+      "urgency": "info"
+    },
+    {
+      "id": "PC11-02",
+      "kind": "new-fact",
+      "what": "E10 P1 at 17:01Z: E10 NOT met. amanatar v10 finished in ERROR (no score), and the newest public run is a gate-failing clean-room rewrite. Finals 2/2, poller fresh.",
+      "evidence": "experiments/e10_watch/20260926T1701Z.txt (browser agent) and my duplicate 20260926T1701Z-2.txt: diff vs 20260926T1620Z.txt shows no change in the kernel lists or statuses. LB histogram: 0.959 11->12, 0.958 11->12, 0.957 18->17, 0.955 56->55. P2 look-check: largest group 0. We are #210, 12th of 97 in the 0.954 block (199-295). The 0.953 block has 354 teams (296-649), and 198 teams are at >= 0.955. `kaggle kernels status amanatar/optimized-biohub-max-score` = ERROR at 16:20Z and 17:01Z (round 10 saw RUNNING at 15:33Z). anhadmahajan06/biohub-track-your-cells (lastRun 16:17:45Z, pulled to the scratchpad only) is 'BioTrack-Omni': x138's 4 datasets incl. biohub-v1284-head-s075, rewritten classes, and Sections 8-9 run a metric evaluator on 8 held-out TRAIN stems plus a PPSweep that rewrites submission.csv. It fails P3/P4c(2), is not a byte descendant of x138, and its score is unknown. API SELECTED = [56563534, 56563521] at 17:09:5xZ. Last poll.log header 17:06:05Z; PID 20052 alive.",
+      "action": "Record in the round-11 CONTEXT entry. The next P1 check is due by ~23:00Z (round 12 or the ~6 h cadence). If amanatar re-runs, treat it as a P2 look only (it fails P4c by construction).",
+      "urgency": "info"
+    },
+    {
+      "id": "PC11-03",
+      "kind": "plan-issue",
+      "what": "R8 CLOCK FOR E10 v2. As written, the rules forbid successor + insertion: P6 ends with 'No successor + insertion build ... (new code after R8, unscored stack)'. R8 allows new mechanisms only until 27 Sep 12:00 and F1-final consolidation only until 28 Sep 12:00. The RESUME point says 'S12/S13 empty by rule'. S+ins is both a new stack and a consolidation. It is legitimate only if the rule and the code are fixed BEFORE R8 and before any trigger.",
+      "evidence": "CONTEXT l.2144 (P6 last sentence); l.1671-1672 (R8: 'Новые механизмы — до 27.09 12:00 UTC. Консолидация F1-final — до 28.09 12:00. После 29.09 02:00 только аварийный повтор (жёсткий край 10:00)'); l.2209 (RESUME 13:27: S12/S13 empty by rule); round7/REPORT.md l.95 rejected S+ins for 'no successor base in the builder; new code after R8'. Now = 26 Sep 17:10Z, R8 in ~19 h. The user is in MSK and probably asleep ~21:00-06:00Z, so the realistic OK windows are tonight before ~20:30Z or 27 Sep ~06:00-11:30Z.",
+      "action": "Commit order before 27 Sep 12:00Z: (1) builder option plus tests (PC11-04), with a byte-identical finals rebuild; (2) the E10 v2 text in CONTEXT, which must explicitly (a) replace P6's last sentence, (b) move the S+ins submit cutoff from R8's 28 Sep 12:00 consolidation line to 29 Sep 02:00 (the P7 port cutoff), and (c) amend 'S12/S13 empty' to 'empty unless E10/E10 v2'; (3) the user's OK logged with `date -u`. If there is no OK by 27 Sep 12:00Z, P6 stands unchanged and CONTEXT records 'S+ins not available; risk of a public 0.954-0.955 successor accepted'. Do not ask for a post-R8 exception afterwards.",
+      "urgency": "now"
+    },
+    {
+      "id": "PC11-04",
+      "kind": "new-fact",
+      "what": "FEASIBILITY MEASURED: the existing patches apply cleanly to real x138 descendants, and the patch delta is identical to the one applied to x138. Only one preset-dict line differs.",
+      "evidence": "Scratch harness (scratchpad simbuild.py; ROOT and BASES['x138'] nb/dir monkeypatched; nothing written in the repo, nothing pushed). (a) Harness check: the x138 base plus the documented K1 command gives notebook sha a77bcd6b... == committed experiments/exp58t_x138_safe (byte-identical). (b) The K1 command (divinsert+safetail+lowrefine, LOWREFINE_ENABLE=0) and the #35 config (divinsert only) both build and compile on amanatar v10 (experiments/ext_optimized-biohub-max-score/v10_2026-09-26, sha 96387e78..., 5 new levers + pass-2) and on the older amanatar (sha 371fc1f9...). All 13 anchors (gap2 insert, the linefit line, fallback_output_graph, SAFETAIL_DEGRADE_OLD, 4 lowrefine literals, the V1284 mark, read_test_frame, repair_frame_cache, KERNEL_START_TS, _deadline_degraded) sit in the same cells (predict 4, post 5), each exactly once; there are 12 code cells. (c) Cell-aligned delta (scratchpad delta3.py): built minus base on amanatar equals exp58t minus exp56 modulo the kernel name, except one line. The builder's --set rewrites amanatar's cell-1 preset '\"BIOHUB_REPAIR_DEADLINE_S\": 27000.0,' to 34200 (x138's cell 1 has no such key). In v10 the insertion still lands after linefit_smooth_output_graph, the last stage before FINAL (post-tail).",
+      "action": "Tooling spec (commit before R8): tools/build_probe_kernel.py gets `--succ-nb PATH --succ-meta DIR` (base 'succ'). The sha is recorded in probe.json, not pinned. It asserts 12 code cells and that the x138 cell roles hold by content (V1284 mark in cell 4, 'def filter_output_graph(' in cell 5). It allows ONLY the exact K1 knob set (PC11-07) and refuses --push. New tools/succ_delta_gate.py (read-only): the cell-aligned delta of the built S+ins vs S must equal the delta of exp58t vs exp56. It normalises the name. The only allowed extra lines are cell-1 preset lines '\"BIOHUB_<K>\": old,' -> new for K among the override keys. Every REPAIR_DEADLINE_S assignment in the built notebook must be 34200, and every DIVINS_DEADLINE_S 28800. Tests: x138-as-S -> byte-identical exp58t; amanatar v10 and v0 -> delta PASS with exactly 1 allowed preset line; a mutated S (one anchor duplicated or removed) -> build refuses. After that, run a byte-identical rebuild of exp58, exp58n and exp58t, then `python -m pytest -q tests`.",
+      "urgency": "today"
+    },
+    {
+      "id": "PC11-05",
+      "kind": "plan-issue",
+      "what": "RULE PRECEDENCE HOLE at 0.954-0.955. PRE-REG R4 already covers successors ('наследники'): delta vs the F1 candidate of 0 or +0.001 -> F2 candidate; +0.002 -> F1. P6 adopts only at >= 0.956 and otherwise keeps {#37,#38}. f2 (user OK, 25 Sep 22:06) makes the twin F2. So a 0.955 port reads 'F2 candidate' under R4 and 'no adoption' under P6. No written line says which wins.",
+      "evidence": "CONTEXT l.1650-1652 (R4 text, including 'наследники'); l.2144 (P6); l.1887 and l.1960-1966 (f2 + user OK); l.2058 (precedence chain v4 > v3 > v2 > READ TABLE > f2 > §f covers only the READ TABLE, not E10).",
+      "action": "E10 v2 must carry one precedence line: 'For public successors: E10 v2 > E10 PORT RULE (P1-P8, P4b, P4c) > f2 > R4; R4's successor rows are not read on their own.' Without E10 v2 the line still belongs in CONTEXT as a clarification: P6 > f2 > R4.",
+      "urgency": "today"
+    },
+    {
+      "id": "PC11-06",
+      "kind": "new-hypothesis",
+      "what": "THRESHOLD AND PAIR for E10 v2. S+ins keeps our insertion, so only S's own mechanism needs R4 proof, and R4 applies against S's real base, x138 (0.953). S >= 0.955 therefore meets R4's +0.002. That makes 0.955 the principled trigger, with no new rule needed. S = 0.954 (x138 + 0.001) does not meet R4. There: notify the user, record it as info, and act only with a separate explicit [OK] item. The pair should be {S+ins, K2 #37}; the twin leaves. Loss case: insertion effect I < 0 AND X_S <= X (x138 private), roughly (0.10-0.15) x (0.4-0.5) = 5-7%. Then both finals sit below the x138 copy block. Win case: X_S > X while S copies land above us, about 0.5-0.6 conditional on a genuine S. Alternatives: {K2, S verbatim} loses to the S copy block on ties, because ties go to the earlier submission. {S+ins, twin} gives up the insertion's upside when X_S <= X.",
+      "evidence": "R4 text CONTEXT l.1650-1652; private priors C1/C2 (P(<0) 0.10-0.15, P(=0) ~0.3, P(>0) 0.55-0.6) at l.2292-2295; private rank forecast l.2324-2334 (bronze ~395, central rank ~320, P(no medal) ~0.3 mostly 'both finals below X'); insertion on both train embryos +0.0058 (44b6) / +0.0065 (6bba); public insertion reads #35 = #34 + 0.001 and #37 = #38 + 0.001. Copy rate: 0.953 block 241 (25 Sep 13:38) -> 354 (26 Sep 17:01), ~100/day and rising. An S seen on 27 Sep could gather ~150-250 copies by the deadline, enough to move the bronze line past us if X_S > our private.",
+      "action": "Adopt row (pre-register): S+ins replaces the twin, pair {S+ins, #37}, iff ALL of: (i) S passes tools/e10_port_gate.py (P3/P4b/P4c) on the S verbatim dummy; (ii) S's own page score is >= 0.955 on the pulled latest version; (iii) the S+ins build passes PC11-04 and PC11-09; (iv) S+ins scores without error with R5(a) L_hi <= 9.5 h; (v) S+ins public >= S's page score and >= 0.954. If any fails: the pair stays {#37, #38}, and at S >= 0.956 P6 applies as written. When S >= 0.956, submit S verbatim and S+ins together (2 slots). Pick {S+ins, #37} if (iv)-(v) hold, else {S, #37} by P6. Put the 0.954 opt-in as a separate [OK] line with the 5-7% loss case spelled out.",
+      "urgency": "today"
+    },
+    {
+      "id": "PC11-07",
+      "kind": "plan-issue",
+      "what": "WHICH BUILD ON S: use exactly the K1 command (divinsert + safetail + lowrefine with LOWREFINE_ENABLE=0). Do not use the #35 config and do not use K2 (LOWREFINE_ENABLE=1).",
+      "evidence": "The #35 config (no safetail) runs under x138's 27000 s repair cliff, and #35 itself is 'R5-unproven' (L35 in (6.72, 7.73] h; CONTEXT l.2036). An S+ins at runtime(S) + <= 0.85 h (L(K2)_hi - L(twin)_lo) would often need R5(b), which has no basis for S. K1 includes C01 (REPAIR_DEADLINE_S 34200, the 8.0 h insertion gate and the try/except fail-soft), so R5(a) reads at 9.5 h and §f(iii) (C01 in F1) holds without P6's waiver. K2's dummy gate has x138-specific constants (raw nodes == 121,777; LOWDET == exp56; readmit 1,337 +-10%; tools/dummy_gates.py --k2 branch) that are wrong for any S, and lowrefine's private effect prior is ~0 (C3 P(=0) ~0.8). The K1 delta reference, exp58t (a77bcd6b), passed its sha gate on 25 Sep.",
+      "action": "Write into E10 v2: 'S+ins = S + the documented K1 command (CONTEXT l.1774 knobs), token exp67, slug vitaliineibauer/biohub-exp67-succins-<author>, v1, message \"probe NN: exp67 = <author>/<slug> v<N> + K1 insertion\"'. No other knob and no second version.",
+      "urgency": "today"
+    },
+    {
+      "id": "PC11-08",
+      "kind": "plan-issue",
+      "what": "LEDGER FAMILY TRAP: tools/runtime_ledger.py maps the token regex exp63[a-z]* to the x138 family (7.5 h, no insertion gate). An S+ins submitted with an 'exp63...' token would get R5(a) read at 7.5 h instead of 9.5 h, and the 8.0 h insertion-gate check would be skipped.",
+      "evidence": "tools/runtime_ledger.py l.71 `(r\"exp63[a-z]*\", \"x138\"),  # E10 successor port ... never safetail`; FAMILIES at l.55-66.",
+      "action": "Add `(r\"exp67[a-z]*\", \"safetail\")` (9.5 h deadline, 8.0 h insertion gate) plus a test. Keep exp63 for verbatim ports only. Ban any exp63 token on an S+ins message.",
+      "urgency": "today"
+    },
+    {
+      "id": "PC11-09",
+      "kind": "plan-issue",
+      "what": "S+ins DUMMY GATES are not written. tools/dummy_gates.py hard-wires x138 references in --k2. Its --k1 and --ff branches are generic sha comparisons and can be reused with S dummies. The DaughterNet weight load raises at cell level, outside the fail-soft, so an S with a different docker image or datasets is caught only by a dummy.",
+      "evidence": "tools/dummy_gates.py l.82-121 (--k1: sha == ref57b or ref56; --ff: 'DIVINS FAILED' on every clip and sha == ref56; --k2: 121,777 and LOWDET == exp56). DIVINS_GLUE in tools/build_probe_kernel.py: `raise FileNotFoundError(... no DaughterNet weights match ...)` at cell top. The twin gate (25 Sep 20:55) was: node rows identical, K2 = twin + 12 inserted fork edges - 5 stolen edges.",
+      "action": "Pre-register 4 dummies, run in parallel (~25-40 min each), all never-submit except the S+ins K1 build: D0 = S verbatim (also the P4c(5) port-gate dummy), D1 = S + #35 config, D2 = S+ins (K1 command), DFF = D2 with --lab DIVINS_FORCE_FAIL=1. Gates: `python tools/dummy_gates.py --ref56 D0 --ref57b D1 --k1 D2 --ff DFF`, i.e. sha(D2) == sha(D1), log clean, and sha(DFF) == sha(D0). Also: node rows of D2 == D0; every edge added in D2 vs D0 is a fork edge; the fork count on the dummy clips is within [0.5x, 2x] of exp58t's dummy (12 forks / 5 steals). A gross deviation means S already changes divisions, so no S+ins. 'DIVINS ENABLED: 1 DaughterNet model' must appear in the D2 log.",
+      "urgency": "today"
+    },
+    {
+      "id": "PC11-10",
+      "kind": "plan-issue",
+      "what": "TIMELINE (focus item 3). The latest useful S+ins submit is 29 Sep 02:00Z (R8/P7). That works only with night autonomy. Under the strict default ('notify and wait'), a trigger at the 29 Sep 00:00Z check waits for the user (~06:00Z) and misses 02:00. Build plus 4 dummies takes ~1.5 h, so the 00:00Z check barely fits.",
+      "evidence": "Latencies: #34 <= 6.46 h, twin 6.69-6.87 h, K2 7.36-7.54 h, #35 <= 7.73 h; the insertion adds <= 0.85 h (CONTEXT l.2074-2078). S+ins ~ runtime(S) + <= 0.85 h, and R5(a) caps admission at 9.5 h. A 02:00Z submit is visible by <= 11:40Z (9.5 h + a 10-min poll), 8.3 h before the 20:00Z tick end; the Kaggle 12 h limit gives worst terminal 14:00Z. Slots: 3 left on 26 Sep, 5 each on 27, 28 and 29 Sep (the RESUME point at l.2209 omits 29 Sep). Two slots are needed when S >= 0.956 (S verbatim + S+ins). P1 check times: 27 Sep 12/18, 28 Sep 00/06/12/18, 29 Sep 00 UTC. Crowd risk scales with the time S is public: an S first seen after 28 Sep 18:00Z has less than ~30 h to be copied.",
+      "action": "In E10 v2: (a) a P8-style [OK] autonomy clause for S+ins covering pull, build, 4 dummies, gates and ONE submit, with PushNotification at the trigger and at the submit. The re-tick stays with the user after the adopt row is met; if the user does not re-tick, the finals stay #37 + #38. (b) Last S+ins submit 29 Sep 02:00Z. The last trigger check is 29 Sep 00:00Z, and a trigger then is acted on only if all 4 dummies are terminal by 01:45Z. (c) Add a P1 check at 28 Sep 21:00Z so a late S has a comfortable path. (d) Fix the RESUME slot line to '3 / 5 / 5 / 5 (26-29 Sep)'.",
+      "urgency": "today"
+    },
+    {
+      "id": "PC11-11",
+      "kind": "plan-issue",
+      "what": "PRE-TRIGGER VALIDITY and GATE-FAILING SUCCESSORS. The user's point ('agree before it appears, else we fit to what we saw') needs a mechanical line. Also, the most likely 0.954-0.955 public notebooks (amanatar-type, and today's anhadmahajan06) use a validator or PP sweep on train stems and fail P4c(2). Neither a port nor S+ins is allowed for them, and without a written line this will be re-argued the moment one shows 0.955.",
+      "evidence": "amanatar v10 (ERROR now) and anhadmahajan06/biohub-track-your-cells both carry in-kernel metric evaluation with a sweep and rewrite (CONTEXT l.2231-2234; PC11-02). R7 (l.1665-1667): validator and PP sweep are always off in our submissions. P4c(2) (l.2262-2263): a validator or sweep on train OR test stems = P3 FAIL.",
+      "action": "Add to E10 v2: (1) 'E10 v2 applies only to an S first seen (by the ref and version in an e10_watch snapshot or on the page) AFTER the OK timestamp. Any S >= 0.954 first seen before the OK: notify and wait; no S+ins.' (2) 'An S that fails tools/e10_port_gate.py (validator or sweep, deadline override, kernel_sources, byte changes) gets neither a port nor an S+ins, whatever its score and however many teams copy it. This is an accepted risk, recorded once.' (3) 'An S whose diff vs x138 touches the division stages (add_safe_divisions_postlink, the division-geometry filter, DEEPCENTER safe-division thresholds, fork filters): no S+ins, because the insertion's lab evidence does not transfer. Port only via P6.'",
+      "urgency": "today"
+    },
+    {
+      "id": "PC11-12",
+      "kind": "plan-issue",
+      "what": "HONEST LAB GATE FOR S+ins (R8 wording 'honest lab gate, dummy, new OK'). There is no lab run on any S, so the substitute has to be named and marked as weaker than the x138 lab.",
+      "evidence": "R8 (CONTEXT l.1671-1672) and the round prompt's HARD LINE require an honest lab gate for any new mechanism. The insertion's evidence: lab on x138 tails with both train embryos positive (+0.0058 / +0.0065) and 2 public reads of +0.001 (#35 vs #34, #37 vs #38). There is no S-specific lab bed; the exp60 trainlab builds exist only on the x138 base.",
+      "action": "E10 v2 names the gate as: (a) code identity (PC11-04 delta gate); (b) S's diff = 1-2 mechanisms that do not touch the division stages (PC11-11(3)); (c) dummy fork-count sanity (PC11-09); (d) the public read (PC11-06 (v)). State that this is 'transfer by construction, not measured on S'. The user's OK covers that explicitly.",
+      "urgency": "today"
+    },
+    {
+      "id": "PC11-13",
+      "kind": "plan-issue",
+      "what": "WAKE MECHANISM after R8 is still unanswered (asked at 16:04 and 16:49). The default 'this session's own timers' is fragile: session-scoped cron jobs die with the session or a restart. Every P1 time after 27 Sep 12:00Z and any S+ins autonomy depend on it.",
+      "evidence": "CONTEXT l.2285-2287 ('Wake mechanism: PENDING the user's answer') and l.2321-2323 ('Still unanswered ...'). CronCreate is available in this environment as a deferred tool. Ticks are already 2/2 (API 17:09Z), so the 29 Sep 12:00/18:00 reminders are checks, unless E10 or E10 v2 changes the pair.",
+      "action": "Main session: (1) now, create session timers for 27 Sep 12:00/18:00, 28 Sep 00/06/12/18 (+21:00 per PC11-10), 29 Sep 00:00 (P1) and 29 Sep 12:00/18:00 (tick checks), and log their ids. (2) Add a Windows Task Scheduler job that runs `python tools/e10_snapshot.py` at the same times as a read-only data backstop, so snapshots exist even if the session is gone. (3) Ask the user once, in one line together with the E10 v2 OK: 'keep this laptop session open until 29 Sep 20:00Z, or set your own alarms for 29 Sep 12:00/18:00Z'.",
+      "urgency": "today"
+    },
+    {
+      "id": "PC11-14",
+      "kind": "plan-issue",
+      "what": "Two round-11 agents ran tools/e10_snapshot.py in the same minute, which left a duplicate snapshot. It does no harm to the diffs (find_previous orders by (stamp, n)), but it clutters the watch log and wastes CLI calls.",
+      "evidence": "experiments/e10_watch/20260926T1701Z.txt (browser agent, 17:01:22 LB) and 20260926T1701Z-2.txt (this plan check, 17:01:42 LB), CHANGES=0 between them. tools/e10_snapshot.py next_path() adds the '-2' suffix.",
+      "action": "Commit only 20260926T1701Z.txt and delete the -2 file. In experiments/workflows/biohub-research-round.js, only the browser/intel agent runs the snapshot; the plan-check agent reads the newest e10_watch file.",
+      "urgency": "later"
+    }
+  ]
+}

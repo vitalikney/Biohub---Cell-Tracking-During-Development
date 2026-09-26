@@ -1,0 +1,8 @@
+- 2026-09-26T17:16:03Z start PC11-01 verify; no prior json; HEAD=origin/main=df6996e
+- git fetch: origin/main = HEAD = df6996e74da8. ls-files: round10/REPORT.md, round8/REPORT.md, tools/e10_port_gate.py, tools/e10_snapshot.py all tracked.
+- CONTEXT.md (2362 lines): markers at 2230 (ROUND 10 RECORD), 2257 (P4c), 2280 (P1 SNAPSHOTS), 2288 (PRIVATE-READ PREDICTIONS), 2301 (PORT GATE BUILT + P4c(3) fix), 2318 (USER ANSWER), 2324 (PRIVATE RANK FORECAST), 2335 (USER OK 17:00), '## 9. Literature' 2342 -> all match the finding.
+- pytest -q tests: 275 passed in 64.98 s (re-run by me).
+- sha256 exp58 1f1ddb6d63b4..., exp58n 55038fd6ac00..., exp58t a77bcd6bad52... ; git status shows no change under experiments/exp58*.
+- git log main author/committer/body grep -ci claude = 0.
+- 1701Z vs 1701Z-2 diff: only CLI time, LB CSV timestamp (17:01:22 vs 17:01:42), download speed; same 3932 rows / 649 >= 0.953. Duplicate is redundant; keeping only 1701Z.txt loses nothing.
+- Verdict: finding accurate, info/hygiene only, no score value, no rule impact. Not refuted.

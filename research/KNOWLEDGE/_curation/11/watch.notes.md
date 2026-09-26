@@ -1,0 +1,5 @@
+- 2026-09-26T17:34Z start round-11 watch curation; no prior 11/watch.json
+- 17:34Z HEAD df6996e (17:00Z); 7 new commits since c10 (848e07a..df6996e); round11 report.json 17:31Z untracked; reading CONTEXT l.2229-2341
+- 17:35Z read round11 report.json (R11-A0..A9, new_facts 1-7, plan_issues 1-10); now verifying statuses
+- 17:36Z verified: W94/W95/W96/W97/W99/W102 done (848e07a, a79775f, bea9d99); W98 applied (LESSONS l.5) but l.7 I69 caveat open; W100 in KNOWLEDGE c10; round11 untracked, no REPORT.md, no ROUND 11 RECORD, no E10 v2 PROPOSED text, no timer log; prompt l.36 still '~4 h headroom'; CONTEXT l.22 unchanged; poller 17:26:11Z PID 20052
+- 17:38Z WATCHLIST.md written (curation 11: W103-W112, T36-T39, I96-I106; line cites checked). Writing watch.json. No other file touched.

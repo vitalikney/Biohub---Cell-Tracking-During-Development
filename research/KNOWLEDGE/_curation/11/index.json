@@ -1,0 +1,74 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/INDEX.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/CHANGES.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/11/index.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/11/index.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "what": "E10 v2 PORT-ONLY (I-286: >= 0.954, pair {PORT, #37}) needs one user OK logged with date -u before 27 Sep 12:00 UTC and before any trigger; the 17:00 OK covered only the plan",
+   "evidence": "research/wf_ideas_v4/round11/report.json R11-A2, R11-A9; CONTEXT.md l.2335-2341; research/KNOWLEDGE/FACTS.md C-80",
+   "suggested_action": "Append E10_V2_TEXT as PROPOSED, send R11-A9 once, log USER OK / USER NO",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "Earlier chat claim that SI (successor + our insertion) is stronger is refuted for bronze by round 11",
+   "evidence": "research/wf_ideas_v4/round11/report.json R11-A3, rejected; research/KNOWLEDGE/FACTS.md C-81",
+   "suggested_action": "Correct it inside R11-A9; build no SI unless the user opts in by ~09:00 UTC 27 Sep",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "Under E10 v2 nothing flags a 0.954-0.955 successor automatically: e10_snapshot.py P2_MIN is 0.956 and counts teams, not notebook scores",
+   "evidence": "tools/e10_snapshot.py l.52; research/KNOWLEDGE/WATCHLIST.md I96",
+   "suggested_action": "Add a browser score read of every new x138-family kernel to the R11-A4 timer steps and the E10 v2 text",
+   "urgency": "now"
+  },
+  {
+   "kind": "forgotten",
+   "what": "No session timers for post-R8 E10 checks and tick checks; wake question asked twice unanswered",
+   "evidence": "research/wf_ideas_v4/round11/report.json R11-A4, R11-A5; CONTEXT.md l.2285-2287, l.2321-2323",
+   "suggested_action": "Create 3-hourly timers (27 Sep 12:00 -> 29 Sep 00:00) + tick checks 28 Sep 18:00, 29 Sep 12:00/18:00; log ids in CONTEXT; re-ask in R11-A9",
+   "urgency": "now"
+  },
+  {
+   "kind": "forgotten",
+   "what": "Round 11 untracked, no REPORT.md, no ROUND 11 RECORD (precedence I-290, closures, RESUME slot fix); duplicate snapshot 20260926T1701Z-2.txt on disk; poll.log/ledger.md uncommitted",
+   "evidence": "git status; research/wf_ideas_v4/round11/report.json R11-A0, R11-A1; research/KNOWLEDGE/WATCHLIST.md W103, W104",
+   "suggested_action": "One commit as the user with no trailer before round 12 (~19:45Z); pytest green, finals sha unchanged, claude grep 0",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "HF v3 E10 port dry run (never submit) is the only trigger-to-submit timing measurement",
+   "evidence": "research/wf_ideas_v4/round11/report.json R11-A6; research/KNOWLEDGE/WATCHLIST.md W109, T37",
+   "suggested_action": "Run before 27 Sep 06:00 UTC with NEVER_SUBMIT.md; log step times",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "Round prompt l.37-40 still says '~4 h headroom' and lets two agents run the snapshot; next E10 P1 check due by 23:00",
+   "evidence": "experiments/workflows/biohub-research-round.js l.37-40; research/wf_ideas_v4/round11/report.json R11-A8",
+   "suggested_action": "Fix before round 12; browser agent only does the snapshot",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "Overdue curator records (CONTEXT l.22, l.196, out_valid, efpost, 33.1%), R11-A7 LESSONS s4 lines, I69 caveat at LESSONS_draft l.7, friend A card",
+   "evidence": "research/KNOWLEDGE/WATCHLIST.md OVERDUE l.54, W110; research/wf_ideas_v4/round9/LESSONS_draft.md l.7",
+   "suggested_action": "Add with the next CONTEXT write, before 27 Sep 12:00 UTC",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "I-233 poller error_description remains the only strict orphan",
+   "evidence": "research/KNOWLEDGE/IDEAS.md ORPHANS l.434",
+   "suggested_action": "Close with one line in CONTEXT (C2 one-liner on demand)",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 11 index (state ~17:50 UTC 26 Sep, HEAD df6996e + untracked round11/). INDEX.md rewritten (72 lines): state in 10 lines (finals 2/2 #37 0.954 + #38 0.953, #210/3,929, E10 >= 0.956 in force with P4c + gate + snapshot tools, not met; E10 v2 PORT-ONLY proposed and needs one OK before 27 Sep 12:00; SI not default; round-11 closures; decision times), map of KB with updated line anchors, 8 top open ideas (I-286, I-290, I-282, I-262, I-232, I-229/I-258, I-287, I-252/I-233), 9 deduplicated alerts, how-to-use. CHANGES.md got section '## 11' with commits 6064d85..df6996e, idea deltas (285 -> 294; refuted 159 -> 166, in-plan 36 -> 38; new I-286..I-294), new facts F-DAT-07/F-LB-11/F-MOD-24/F-MOD-25/F-TRN-37, contradictions C-79..C-83 new and C-30/72/73/74/77 resolved, gates G36/G37, watchlist W103-W112/T36-T39/I96-I106, and resolved/carried/new alerts with urgency disagreements settled. No other files edited; nothing committed; Kaggle untouched."
+}

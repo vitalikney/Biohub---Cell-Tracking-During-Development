@@ -1,0 +1,6 @@
+- 2026-09-26T17:17:21Z start r11o-4 skeptic; no prior json
+- Ledger: I-122 deferred-after-deadline (research/KNOWLEDGE/IDEAS.md l.260), I-285 pre-relink dump hook deferred (IDEAS.md l.402). Finding is the scan_hyp_outside.json l.31-33 item.
+- CONTEXT.md l.117: errdecomp on divset36 -> wrong association ~0; detection 3.6%, fragmentation 3.1%. l.492-494: multi-frame linker stays P3 for that reason. (older base, not x138; still the only decomposition on file)
+- FACT CHECK: https://raw.githubusercontent.com/weigertlab/trackastra/main/trackastra/model/pretrained.json lists general_2d, ctc (2D AND 3D CTC data, successor of ISBI 2024 CTC linking winner), general_2d_w_SAM2_features. So "public models are 2D or general, 3D requires training" is WRONG: a pretrained 3D-capable model exists.
+- Still not pre-deadline: Trackastra input = time,(z),y,x images + instance MASKS (x138 gives centroids -> would need pseudo-masks), offline wheel + weights dataset on Kaggle, integration into x138 relink costs, exp60 gate + dummy + user OK by 27 Sep 12:00Z (R8) -> infeasible in ~17 h. Domain gap (CTC 3D nuclei vs this light-sheet data) and runtime (~+1-2 min/clip is unsourced) unverified.
+- Value: relink/linker family has the worst lab->LB transfer on file (edge filter +0.016 lab -> 0 LB; relink-off no transfer) -> post-deadline bar lab >= 6x target.
