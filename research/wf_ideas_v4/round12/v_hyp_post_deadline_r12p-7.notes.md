@@ -1,0 +1,9 @@
+# r12p-7 notes (2026-09-26T20:45:17Z)
+- Sources read: scan_hyp_post_deadline.json r12p-2 (#3 I-222 arithmetic) + r12p-7; round9/v_recheck_r9-rc-c-i222-*.json (+notes: fallback frames blend 310->242 cands 44b6 (-22%), 224->190 6bba (-15%)); round3/scan_hypotheses.json R3S-5; round9/LESSONS_draft.md s4 item 1 ('sign unknown'); IDEAS I-222; FACTS F-TRN-18, C-68; memory metric = adj edge Jaccard + 0.1 div J.
+- NOT NEW: round3 scan_hypotheses.json R3S-5 already says verbatim 'The high primary-frame FN rate is a selection effect: those are the frames where the secondary drops candidates, i.e. hard frames.' F-TRN-18 [c9] already says 'confounded'. LESSONS s4 item 1 already says 'sign unknown'. The only text that reads the FN gap causally is r12p-2's own gain arithmetic (same scan) -> self-correction.
+- 'Upper bound' mislabelled: +0.0075 uses clip-level gap 6.43-4.16=2.27pp x 0.331. Within-mixed-clip gap 10.71-3.17=7.54pp x 0.331 = 2.50pp (~+0.025) -> 3.3x larger. Confounded gaps bound nothing; it is a naive causal reading.
+- The 6.43% all-primary figure = 529 edges in 2 clips (44b6_9be80b04, e28840c6); binomial SE ~1.1pp alone, clip variance larger -> 2.27pp gap ~2 SE on 2 clips.
+- 'Lower bound' unquantified. Relevant evidence: in fallback frames the blend keeps 22% fewer candidates (44b6) -> prior tilts to guard-off LOSING recall (guard likely net helpful), consistent with the design intent.
+- Gate '44b6 >= +0.002' derives from the flawed bound; 6bba side is effectively one clip (ab78413d 93%) -> same-sign gate weak (already noted in round 10).
+- Value 0 before deadline (both finals share the guard); feasibility trivially OK (text only). Verdict: refuted as a new finding (repeat of R3S-5 + wrong bound); keep a one-line citation.
+- 2026-09-26T20:47:56Z wrote final json (refuted=true)

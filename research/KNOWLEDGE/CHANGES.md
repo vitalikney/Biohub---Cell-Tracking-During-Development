@@ -656,3 +656,40 @@ Curator logs: `research/KNOWLEDGE/_curation/4/`.
 - **Carried over:** wake mechanism and user's 29 Sep reminders (asked twice); hygiene commit (now round 11); curator records and friend A card; I69 caveat; stale MEMORY copy; I-233.
 - **New:** E10 v2 OK before 27 Sep 12:00; SI claim correction; I96 detection gap; session timers; HF v3 dry run; precedence line; 23:00 P1 check and prompt fix; DaughterNet load outside fail-soft (keep W102); forecast calibration-only.
 - **Curator disagreements settled here:** hygiene commit [today] (ideas, facts) vs [now] (watch) -> [now, before round 12]; timers [now] (ideas, watch) vs [today] (facts) -> [now]; SI correction [now] (facts) vs [before-finals] (ideas) -> [now], since it rides in the R11-A9 message.
+
+## 12 - 2026-09-26 ~21:30 UTC (curation 12; git HEAD 9beb9f0 + untracked `research/wf_ideas_v4/round12/`, `research/wf_ideas_v4/reach0955/` committed in da6c699)
+
+**Operations:**
+- **Commits since curation 11** (`git log --oneline df6996e..9beb9f0`):
+  - 96ccff7: ROUND 11 RECORD, E10 v2 PROPOSED (`CONTEXT.md` l.2342-2361); 13a27a1: SESSION TIMERS (l.2362-2367).
+  - 52410cf: COMBO-ORACLE 19:13 (`CONTEXT.md` l.2368-2379); f00b337: user directive "reach 0.955+" (l.2380-2387); 620f718: USER DECISION ladder lift + one public / one private final 20:33 (l.2388-2394); 9ead9df: autonomous night 20:34 (l.2395-2396).
+  - cc0d57c: E10 dry run on HF v3, full gate PASS, ~45-60 min trigger-to-ready (l.2397-2406).
+  - a6a9ff4: K2 ladder exp70a/d/e/b + finals rule L9, logged before any ladder submit (l.2407-2424).
+  - 4d0e967: discussion intel (l.2425-2436); da6c699: intel 0.960-0.966 band, reach0955 files, 20:01Z snapshot (l.2437-2444).
+  - 34fdf40 / a9fa8eb: **probe 39 = exp70e** (56589025, 21:15:23Z), **probe 40 = exp70a** (56589065, 21:17:47Z), both PENDING; `tools/runtime_ledger.py` l.76 exp70* -> safetail (+ test) (l.2445-2453).
+  - 9beb9f0: reach0955 plan decisions: L9 kept, retrain line started (exp71 run + exp72 probe), exp70g built (l.2454-2474).
+- **First LB submits since 00:02:18Z** (probes 39/40); finals still 2/2 by API at 20:04:35Z (`research/wf_ideas_v4/round12/report.json` R12-A2 (3)). LB #217 of 3,935 at 20:01Z (`experiments/e10_watch/20260926T2001Z.txt`). E10 v1 not met at 20:01Z (`IDEAS.md` I-026).
+- **Round 12** ran ~20:10-21:01Z (browser, recheck, plancheck, fresh-eyes, post-deadline, private-read, red-team E10); untracked, REPORT.md refused again (text in `round12/report.json` R12-A0; `IDEAS.md` I-232).
+
+**Ideas** (`IDEAS.md` l.13-47; `ideas.json` meta.curations[n=12], 77 records; `_curation/12/ideas.json`):
+- **New cluster LADDER** (#2, `IDEAS.md` l.113): I-302 ladder; I-303 exp70a (probe 40), I-305 exp70e (probe 39), I-304 exp70d next, I-306 exp70b (S4 fallback, skeptic NO-GO), I-307 informed combos, I-326 exp70g cap6 (gated by round-13 ins_cap6 arm). Refuted: I-300 (11:00Z last submit, R8), I-308 tighter insertion, I-309 --set SECONDARY_*/DET_THRESHOLD, I-310 threshold neighbours. Open: I-311 Justin PP-only, I-312 "LB tracks node count".
+- **New FINALS rows:** I-295 one public + one private; I-296 L9 (kept); I-297 insertion-hedge table and I-301 rule reconciliation (not in CONTEXT); I-298 {V*, #37} refuted; I-299 E10 insertion-family rows (need OK); I-315 07:30Z morning message.
+- **New elsewhere:** I-313 API budget, I-314 E10 procedure hardening, I-316 transfer table, I-317 late-sub bed, I-318 D0, I-319 G0 gate, I-320 combo oracle (refuted: +0.0143 oracle only), I-321 daughter localisation (moot), I-322 test cleanup, I-323 Corwin secondary (EV <= 0), I-324 coord-inject (LOC), I-325 Bio-Pirates learned ends (not usable).
+- **Status/reason changes:** I-119 retrain STARTED on the session's reading (at risk); I-286 RECORDED as PROPOSED; I-262 dry run DONE; I-290 recorded; I-259 applied; I-034 reason inverted -> deferred post-deadline; I-147/I-148 negative on x138 (I-148 closed); I-033 reason fixed; I-222 bound ~+0.005; post-deadline ranks on I-113, I-242, I-079, I-261, I-029, I-110, I-122, I-285, I-208.
+- **Counts c11 -> c12:** 294 -> 326. Refuted 166 -> 172, in-plan 38 -> 56, deferred 27 -> 31, open 1 -> 5; lb-tested 41, lab-tested 21 unchanged. Strict orphan I-233. At risk: I-119, I-229, I-232, I-252, I-257, I-282, I-283, I-286, I-297, I-299, I-301, I-306, I-314, I-315, I-323, I-324, I-326 (I-262, I-290 left the list).
+
+**Facts and decisions** (`FACTS.md`, `DECISIONS.md`, rows marked [c12]; `_curation/12/facts.json`):
+- **New facts:** F-DAT-16, F-LB-12/13/14 (discussion + band intel), F-RUN-24/25, F-RUL-15/16/17 (API 429s, x138 config guard), F-MOD-26..29, F-TRN-38..41 (combo oracle, 0/5 model-swap record). Curation-11 duplicate F-DAT-07 renumbered F-DAT-15.
+- **Contradictions:** new C-84..C-95 (R7 vs R9 lift, private-aimed slot, L9 11:00Z vs R8 02:00Z, ladder odds, y3uanm source, node-count claim, poll gap, Justin inference, exp70 name clash, FT timing vs R8, UTC+3 labelled Z, exp70b blind slot) (`FACTS.md` l.359-370); resolved C-78, C-80, C-82, C-83.
+- **DECISIONS.md:** §1 planned ladder table; gates G38-G40 (§1b l.243-245); §2 c12 finals snapshot (l.330); §2f c12 paragraph; **new §2h ladder + L9** (l.589); §3 c12 status incl. an L9 row.
+
+**Watchlist** (`WATCHLIST.md`; `_curation/12/watch.json`):
+- **Done:** W110 (curation 11), W111 (20:01Z P1 check + prompt edit 13a27a1), round-11 record, E10 v2 text, timers, dry run; W112 superseded by W120.
+- **New:** W113-W129 (R12-A0..A10, ladder, runtime ledger, S4, retrain, reach0955 commit), reminders T40-T49 (23:50Z hard stop, round 13, 02:00Z P1, ladder reads 04-08Z, 07:30Z push, L5 combos, 28 Sep 12:00 consolidation, 29 Sep ~19:00 L9 read, 23:00 pre-reg), insights I107-I124.
+- **Still overdue:** CONTEXT l.22, out_valid, efpost, 33.1%; LESSONS l.7; friend A card; round prompt l.37/l.40.
+
+**Alerts** (`INDEX.md` TOP ALERTS, 10 after dedup):
+- **Resolved since curation 11:** E10 v2 text in CONTEXT (as PROPOSED); session timers created; HF v3 dry run done; 20:01Z P1 check done; round-11 record committed; SI correction moot under the new strategy; runtime ledger exp70* -> safetail (34fdf40; watch alert W127 was written at 4d0e967, before the fix).
+- **Carried over:** E10 v2 OK before 27 Sep 12:00 (now in the 07:30Z message); hygiene commit (now round 12 + `_pytest_oc_k2`); stale RESUME POINT / MEMORY; LESSONS + curator records; I-233.
+- **New:** R12-A3 reconciliation before exp70d (probes 39/40 already out); retrain consent; exp72 pair row; S4 exp70g vs exp70b and L9 class; API budget / one poller / x138 config guard; K2 dummy node reference 122,252 vs 121,252; private-read pre-reg v2; I-311/I-312/I-323/I-324 owners; y3uanm not evidence; UTC+3 labelled Z.
+- **Curator disagreements settled here:** reconciliation [deadline, now] (ideas, watch) vs [contradiction, now] (facts) -> one [now] alert; retrain [risk, now] (ideas) vs [risk, today] (facts, watch) -> [now], since prep is already running; S4 [now] (ideas) vs [today] (watch) -> [now], due 00:05Z; hygiene [today] (ideas, facts) vs [now] (watch) -> [today], after the reconciliation.

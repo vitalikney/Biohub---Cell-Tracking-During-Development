@@ -1,0 +1,16 @@
+{
+ "task": "round 12 verify R12RT-1 (version binding for E10 pulls), skeptic value+feasibility",
+ "written_utc": "2026-09-26T20:47Z",
+ "complete": true,
+ "refuted": false,
+ "reason": "Premise and mechanism hold, checked read-only. kaggle 2.2.4 kernels_pull (kaggle_api_extended.py l.6501-6629) writes blob.source and a metadata file with no version field. A version-pinned get_kernel ('amanatar/optimized-biohub-max-score/1', '/4', '/5') returns HTTP 403 at 20:44Z, so only the LATEST version can be pulled. The unpinned call returns current_version_number 5 and source sha 96387e7858e6, the same as the finding. The page shows the last SUCCESSFUL version ('Version 1 of 5'), so without an API version read, the page score and the pulled source can belong to different versions. That is exactly the wrong-version port that P4b(c) forbids. Version numbers only go up, so before == after == page M binds the pulled source to version M. The page must also show k == M. Every failure of the check means no port, and a numbering quirk (deleted or still-running versions) can only cause a false no-port, which is the safe direction. This is not a scoring mechanism and not a closed line. It carries out P4b(c) ('record the version number'), so no new OK and no R8 exposure. It is read-only and already tested on x138 (1/1, sha 6b655e39 = pinned). Limits: (1) its value is only protection. Expected LB change is 0 because no successor is near the v1 threshold of 0.956, but it prevents a harmful swap of twin #38. (2) As written, the step-2 script only PRINTS the versions. It does not take M or exit non-zero, and e10_port_gate.py uses --version as INFO only and never reads e10_pull.json (l.665-667, 959). So enforcement still depends on the operator reading the output.",
+ "fix": "Keep step 2, but make it fail-closed. Pass M (the page's 'Version k of M', with k == M required) as a 4th argument and have the script exit 1 unless version_before == version_after == M. Write e10_pull.json with M, page_k and the UTC time. Optional and stronger: bind in a single call by writing blob.source from the SAME get_kernel response whose metadata.current_version_number is read, since one response carries both (confirmed), and still keep the after-read. Re-read the version after the step-5 author-output download (kernels output also serves only the latest session). Mismatch -> redo from step 1, never port. Do not add a gate code change tonight, since the tool has 72 tests; an assert in the procedure script is enough.",
+ "realistic_gain": "0 expected LB/private delta (procedure safety only). It removes the one realistic path where an E10 trigger ports an errored or unscored latest version in place of twin #38 (amanatar-style 'Version 1 of 5'). It costs about 2 read-only API calls per trigger.",
+ "evidence": [
+  "C:/Users/vital/AppData/Local/Programs/Python/Python312/Lib/site-packages/kaggle/api/kaggle_api_extended.py l.6501-6629",
+  "get_kernel 20:44Z: amanatar cur 5 sha 96387e7858e6; '/N' suffix -> 403",
+  "CONTEXT.md l.2217 P4b(c)",
+  "tools/e10_port_gate.py l.639-667, 959",
+  "research/wf_ideas_v4/round12/scan_hyp_redteam_e10.json command_sequence step 2"
+ ]
+}

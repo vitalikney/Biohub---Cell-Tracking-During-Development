@@ -1,0 +1,6 @@
+- 2026-09-26T20:43:35Z start: verifying R12RT-10 (verdict 'add nothing'); no prior json.
+- source: scan_hyp_redteam_e10.json written_utc 2026-09-26T20:12:09Z (R12RT-10 = verdict 'add nothing to build list; all finals-strategy variants closed').
+- evidence check: round11/REPORT.md has sections 1 (Итог) and 5 (Отвергнуто); CONTEXT l.2368 COMBO-ORACLE 19:13Z: joint oracle +0.01428, best realistic +0.00039 in-sample, OOS <= 0 -> the R8-lab-bar sub-claim HOLDS. round12/scan_hyp_fresh_eyes R12FE-1/2 agree (edge arithmetic; retention guard <= ~+0.011).
+- SUPERSEDED: CONTEXT 20:30Z USER DIRECTIVE (reach 0.955+, reach0955 workflow), 20:33Z USER DECISION (R7 LIFTED; finals = one public-aimed + one private-aimed, default private #37), 20:34Z autonomous night; commits 620f718, 9ead9df (after 20:12Z).
+- reach0955/r_ladder.json: build list S1 exp70a K2+leafprune0.3, S2 exp70d K2+DeepCenter safe-div 0.30, S3 both; exp70b forkmid 4.5 on 27 Sep; pairing rule 'variant >=0.955 replaces #37, #38 stays'. r_retrain.json: secondary FT (needs R9 lift) replaces #38. E10 v2 V4: {PORT, #37}. => three mutually inconsistent pairing rules vs user's 'public slot / private slot (default #37)'.
+- verdict: refuted (action stale). Keep the sub-claim (no R8-lab-bar mechanism) as a lab fact; recast R12RT-5/6/7 into one pairing table with the ladder/retrain slots.

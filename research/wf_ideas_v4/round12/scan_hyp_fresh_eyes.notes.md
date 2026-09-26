@@ -1,0 +1,11 @@
+# scan_hyp_fresh_eyes notes (round 12, 2026-09-26T20:01:23Z)
+
+- 2026-09-26T20:02:08Z read INDEX.md, ideas.json (294 ideas I-001..I-294 listed compactly), CONTEXT.md l.2100-2400 (combo-oracle 19:13Z: joint oracle +0.0143, swap-relink oracle +0.0206 judged not actionable; best realistic +0.0004 in-sample).
+- 20:1xZ edge anatomy: FACTS F-TRN-15 (exp60, x138 tail): FN 1,705 of 40,093 GT edges = node misses 834 / swaps 730 / dangling 141; FP 1,681 (F-MET-03). TP 38,388 -> edge J = 38,388/41,774 = 0.919.
+  Marginal value: FN->TP fix = 1/41,774 = +2.4e-5; FP removal = J/41,773 = +2.2e-5; a swap fix (FN+FP) ~ +4.6e-5.
+  +0.012 lab therefore needs ~500 net FN fixes (29% of all FN) or ~545 net FP removals (32% of all FP) or ~260 net swap fixes, all at near-perfect precision.
+- Oracle ceilings already measured: swap-relink share of combo oracle ~+0.006 (0.0206 - 0.0143; combo_oracle/answer.json), judged not actionable; node-miss pool <= +0.029 (round 11) but realistic recall arms -0.03 (I-293), -0.0129 (I-047); dangling = stitch, 11 reachable FN, ceiling +0.0003 (F-TRN-24); FP side = edge filter family, +0.016 local / 0 LB (probes 29/30), efpost refuted (I-251).
+  => no edge-term mechanism can reach +0.012 without new detector/linker training (barred).
+- Per-embryo: the one large embryo-dependent mode switch in x138 is the retention guard (I-222): primary-only fallback 44b6 33.1% / 6bba 3.9% of frames; GT-edge FN 10.71% (primary-only frames) vs 3.17% (blended) - confounded by frame difficulty (round9 v_recheck_r9-rc-c). Fully causal upper bound of forcing the blend: 44b6 0.342*0.075 = 2.6% of 44b6 edges -> ~+0.026 on 44b6, x ~0.35 edge share ~+0.009 pooled, + 6bba 0.04*0.075*0.65 ~ +0.002 => <= ~+0.011 before the 22% candidate loss that triggers the fallback (sign likely negative). Needs a GPU lab (logits not cached). Already in the ledger (I-222 deferred) -> not a new idea.
+- Other fresh angles checked against ledger, all present: two-child hedge edges (in-degree 1 in CSV -> only to track starts = I-047 family); per-frame bipartite relink (I-186/I-187); per-embryo AdaBN (I-157); density-adaptive radius (I-181), density-gated insertion (I-220); node-count bonus (I-130/I-147/I-149, r11o-3: 21x cost ratio); z-shift (I-029 deferred); dedupe (I-043/I-221); linker window/TTA (I-122/I-154).
+- VERDICT: nothing reaches R8.

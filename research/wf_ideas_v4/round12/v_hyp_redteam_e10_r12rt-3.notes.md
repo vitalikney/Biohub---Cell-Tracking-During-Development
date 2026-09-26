@@ -1,0 +1,8 @@
+- 2026-09-26T20:43:31Z start R12RT-3 verification
+- 2026-09-26 (round 12) CODE: tools/e10_port_gate.py group_status() l.934-936 = FAIL>PASS>SKIP (a PASS masks a SKIP in the same group); main() l.973 returns 1 only on FAIL. Confirmed.
+- REPRO (read-only): --pulled experiments/ext_biohub-harmonic-fusion-v3/dry_2026-09-26 --port experiments/exp63dry_hfv3 --author _dl/hfv3_author_out --version 5 -> rc=0, 'RESULT: PASS', 3 [SKIP] lines, summary 'csv PASS' next to '[SKIP] csv: ours'. Finding reproduced exactly.
+- NARROWING: SKIP arises ONLY from an omitted argument (--port/--dummy/--author). With --dummy pointing at an EMPTY folder (failed/429 fetch) -> 3 FAIL, rc=1 (dummy-log 'no *.log', csv 'ours ... not found', node-counts 'cannot compare'). So the realistic hazard is only an operator typing the command without an arg.
+- ALREADY COVERED: research/wf_ideas_v4/round12/scan_hyp_redteam_e10.json command_sequence step 7 already has `grep -cE '^\[(FAIL|SKIP)\]' gate_full.txt` (expect 0) + rc=0; CONTEXT.md l.2354 (E10 v2 V2) wants 0 FAIL and 0 SKIP. Earlier noted in round11 v_hyp_successor_r11s-5.notes.md l.9.
+- GAP in the grep: --version missing is an INFO line, not SKIP -> grep passes. Version binding is in step 2 (e10_pull.json version_before==version_after==M), so harmless; optional extra grep 'author version: $M (recorded'.
+- Value: zero on score (process guard, not a mechanism); R1-R10 untouched (no submission byte changes). --strict flag optional; not needed since the fixed sequence command always passes all args.
+- 2026-09-26T20:44:42Z wrote final JSON (refuted=false, narrowed)

@@ -1,0 +1,21 @@
+{
+  "summary": "Nothing qualifies: after a full read of IDEAS.md/ideas.json (I-001..I-294) and INDEX.md, no inference-only idea that is new, lab-gateable on exp60/exp64 before 27 Sep 12:00 UTC and plausibly worth +0.012 lab exists; the edge term cannot reach +0.012 without retraining, and the only large per-embryo lever (retention guard, I-222) is already in the ledger and bounded at <= ~+0.011 even if fully causal.",
+  "findings": [
+    {
+      "id": "R12FE-1",
+      "kind": "new-fact",
+      "what": "Edge-term arithmetic closes the fresh-eyes pass: +0.012 lab needs ~500 net FN fixes (29% of all 1,705 FN) or ~545 net FP removals (32% of all 1,681 FP) or ~260 net swap fixes, all at near-perfect precision. The measured ceilings per FN class are below that (swaps ~+0.006 as an oracle and judged not actionable; dangling ~+0.0003; node misses need recall arms that measured -0.013 to -0.03). The FP side is the edge-filter family, which scored 0 on the LB. Every fresh angle checked (hedge second-child edges, per-frame bipartite relink, AdaBN, density-adaptive radius or insertion, node-count bonus, z-shift, dedupe, linker window/TTA) maps to a ledger entry. Nothing reaches R8.",
+      "evidence": "FACTS F-TRN-15 (FN 834/730/141), F-MET-03 (FP 1,681); TP 38,388 -> J 0.919; FN->TP +2.4e-5, FP removal +2.2e-5 each; research/wf_ideas_v4/combo_oracle/answer.json (swap share 0.0206-0.0143 ~ +0.006; realistic +0.0004 in-sample, <= 0 out-of-sample); F-TRN-24 (stitch 11 FN, +0.0003); I-293 (-0.03), I-047 (-0.0129/-0.0273); I-161/I-251 edge filter/efpost; ledger IDs I-047, I-157, I-181, I-186, I-187, I-220, I-130/I-147/I-149, I-029, I-043/I-221, I-122/I-154. Notes: research/wf_ideas_v4/round12/scan_hyp_fresh_eyes.notes.md",
+      "action": "None. Record 'round 12 fresh-eyes: nothing reaches R8' in one line; finals stay #37 + #38; the E10 line is unchanged.",
+      "urgency": "info"
+    },
+    {
+      "id": "R12FE-2",
+      "kind": "recheck-old",
+      "what": "Per-embryo check: the only large embryo-dependent mode switch acting on edges is x138's retention guard (I-222). It uses primary-only frames on 33.1% of 44b6 frames vs 3.9% of 6bba frames. GT-edge FN is 10.71% in primary-only frames vs 3.17% in blended frames, but frame difficulty confounds that gap. Even if forcing the blend were fully causal, the upper bound is ~+0.009 (44b6) + ~+0.002 (6bba) = <= ~+0.011 pooled. That is before the ~22% candidate loss that triggers the fallback, so the realistic sign is likely negative. It needs a GPU lab (logits not cached) and is a public-tuned knob. This is not a new idea. It stays post-deadline.",
+      "evidence": "research/wf_ideas_v4/round9/v_recheck_r9-rc-c-i222-retention-guard-embryo-depend.json; research/wf_ideas_v4/round3/scan_hypotheses.json R3S-5; ledger I-222 (deferred-after-deadline), I-190; arithmetic 0.342 x (0.1071-0.0317) = 2.6% of 44b6 GT edges, x ~0.35 edge share.",
+      "action": "None before R8. Keep the I-222 counterfactual on the post-deadline list (shake-up analysis only). Add the <= +0.011 causal upper bound to its ledger note.",
+      "urgency": "later"
+    }
+  ]
+}

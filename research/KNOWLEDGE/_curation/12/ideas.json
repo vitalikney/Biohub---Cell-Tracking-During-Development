@@ -1,0 +1,95 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/ideas.json",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/IDEAS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/12/ideas.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/12/ideas.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "what": "The R12-A3 RULE RECONCILIATION (I-297 insertion-hedge table, I-301 what was lifted + per-submit checks) was due before the first ladder submit. It is still not in CONTEXT, yet probes 39 (exp70e, 21:15:23Z) and 40 (exp70a, 21:17:47Z) are already submitted, and exp70d is next",
+   "evidence": "research/wf_ideas_v4/round12/report.json R12-A3 (deadline 'before the first ladder submit tonight'); CONTEXT.md l.2445-2453 (probes 39/40), l.2454-2474 (21:21 entry, no reconciliation text); research/KNOWLEDGE/ideas.json I-297, I-301",
+   "suggested_action": "Append R12-A3 (a)-(d) with date -u before the exp70d submit. Record in it that probes 39/40 were submitted before the entry but did pass W6 and the dummy checks (CONTEXT l.2445-2453)",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "Retraining consent: at 21:21 UTC the main session read the user's 20:30Z/20:34Z chat lines as an R9 yes to one distilled-secondary run (exp71) and one probe (exp72), with R8 lifted for it, and launched prep. Three sources say the opposite: the reach0955 plan agent's own 21:15Z revision (its draft that did exactly this was blocked as 'Instruction Poisoning'), v_retrain/v_intel ('a workflow message is not consent') and round-12 R12-A3 (a) all say R9 needs the user's EXPLICIT yes",
+   "evidence": "CONTEXT.md l.2454-2474 (3); research/wf_ideas_v4/reach0955/plan.notes.md '21:15Z REVISION'; research/wf_ideas_v4/reach0955/v_retrain.json go_items (a), corrections 1; v_intel.json go_items (RI-3 (a)); research/wf_ideas_v4/round12/report.json R12-A3 (a), R12-A7 (4)",
+   "suggested_action": "Keep tonight to local prep (notebook, secswap patch, tests) and push no training kernel until the user explicitly confirms. Make the 07:30Z morning message say plainly that the line was started on the session's reading, and ask the user to confirm or stop it",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "Two conflicting pair rules for a retrain FT that carries the insertion (exp72 = K2 + new secondary). The 21:21 entry pairs it with #37 ('as in E10 P6'), which puts the insertion in both finals. The round-12 insertion-hedge table has exp72 compete with V* for the insertion slot while #38 stays",
+   "evidence": "CONTEXT.md l.2454-2474 (2); research/wf_ideas_v4/round12/report.json R12-A3 (b), rejected (r_retrain 'FT replaces #38'); research/KNOWLEDGE/ideas.json I-297, I-298",
+   "suggested_action": "Settle the exp72 row in the reconciliation entry before exp72 can score. Put the choice to the user in the morning message",
+   "urgency": "today"
+  },
+  {
+   "kind": "contradiction",
+   "what": "Two conflicts in the 27 Sep 00:05Z S4 plan. First, exp70b (forkmid) is the fallback although the ladder skeptic ruled it NO-GO as a blind rung (reserve or error-resubmit instead). Second, the new exp70g (K2 + DIVINS_CAP 6) is outside L9's knob set {lp30, dc0.30, fm45}, so under L9 as written it is class C and can never be a final",
+   "evidence": "CONTEXT.md l.2407-2424, l.2454-2474 (4); research/wf_ideas_v4/reach0955/v_ladder.json no_go_items; experiments/exp70g_k2_cap6/probe.json; research/KNOWLEDGE/ideas.json I-306, I-326",
+   "suggested_action": "Before 00:05Z, round 13 runs ins_cap6. If exp70g is to be finals-eligible, log an L9 class-B amendment before it scores. Otherwise note it as class C. Decide explicitly between exp70b and an empty or error-resubmit slot",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "E10 v2 (I-286) lapses unless the user OKs it before 27 Sep 12:00Z, and the user has been asleep since 20:34Z. The planned 07:30Z push timer and the replacement of timer 2bd08ad3 (R12-A6) are not logged yet. The morning message (I-315) also carries the pair-row, R8 and retrain questions",
+   "evidence": "CONTEXT.md l.2352-2361, l.2362-2367, l.2395-2396; research/wf_ideas_v4/round12/report.json R12-A6, R12-A7, plan_issues (6), (7)",
+   "suggested_action": "Create the 07:30Z one-shot push and the 2bd08ad3 replacement now, and log their ids. Send R12-A7 at ~07:30Z and log each answer with date -u",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "Round 12 has not landed. research/wf_ideas_v4/round12/ is untracked; REPORT.md (R12-A0 embeds it because the harness refused the write again) is not saved; the ROUND 12 RECORD (R12-A2) is not in CONTEXT; the stray, pushable experiments/_pytest_oc_k2/ kernel-metadata is still on disk. The round-12 closures (the I-034 inverted reason, the I-147/I-148 x138 rechecks, the I-222 bound, the post-deadline agenda corrections) exist only in untracked JSON",
+   "evidence": "git status at 9beb9f0 (?? research/wf_ideas_v4/round12/, ?? experiments/_pytest_oc_k2/); research/wf_ideas_v4/round12/report.json R12-A0, R12-A1, R12-A2; report.notes.md 21:01:01Z",
+   "suggested_action": "Run R12-A1 + R12-A2 in one commit as the user with no trailer: save REPORT.md, append the ROUND 12 RECORD, rm -rf experiments/_pytest_oc_k2, commit round12/ and poll.log/ledger.md",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "The newest RESUME POINT is still from 13:27Z, and the MEMORY index still says 'E10 proposed; overlap consensus paused'. Since then the finals strategy, L9, the ladder (2 probes pending), the retrain line, the timers and the E10 v2 state have all changed, so the compaction risk is high during the autonomous night",
+   "evidence": "research/wf_ideas_v4/round12/report.json R12-A8, plan_issues (8); scan_plancheck.json PC12-08; CONTEXT.md l.2205-2212 (13:27Z block)",
+   "suggested_action": "After the reconciliation entry, write the R12-A8 RESUME POINT and the new project-lb-probe-approval MEMORY line. Include probes 39/40, exp70d, the S4 plan and the retrain status",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "The private-read pre-registration v2 (I-283, with the #35 runtime confound, the outcome table and rank calibration on the SELECTED pair) and the whole-history transfer table (I-316) are worth nothing unless committed before the first private score. Every ladder file submitted after 20:33Z is outside the pre-registered contrasts",
+   "evidence": "research/wf_ideas_v4/round12/report.json R12-A9 (deadline 29 Sep 23:00Z), plan_issues (9); scan_hyp_private_read.json R12P-1..R12P-4",
+   "suggested_action": "Commit the R12-A9 text into CONTEXT and LESSONS s5 tonight or at the latest by 29 Sep 23:00Z",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "risk",
+   "what": "The K2 dummy node count used for the retrain node gate disagrees across sources: 121,252 in v_retrain/v_intel ([-2%, +1%] gate) vs 122,252 in the probe-39/40 CONTEXT entries. The x138 exp56 dummy has 121,219. A 1,000-node error shifts the gate by ~0.8%",
+   "evidence": "research/wf_ideas_v4/reach0955/v_retrain.json go_items (RT-4), corrections 3; v_intel.json corrections (4); CONTEXT.md l.2445-2453; research/wf_ideas_v4/round12/report.json new_facts (6)",
+   "suggested_action": "Recount the K2 dummy CSV nodes (experiments/exp58 dummy output) once, and write the correct reference into the exp72 gate before it is used",
+   "urgency": "today"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "Two new plug-in mechanisms from the 0.960-0.966 intel have no owner, and R8 closes new mechanisms at 27 Sep 12:00Z. I-323 is Corwin's independent secondary (prior <= 0 by Corwin's own note; needs a secswap-type patch). I-324 is yuki0731 coord-inject (unproven, runtime risk)",
+   "evidence": "CONTEXT.md l.2437-2444; research/wf_ideas_v4/reach0955/intel_0960_0966.json artifacts; experiments/ext_corwin-biocel-more/NOTES.md; experiments/ext_yuki0731-biohub-coord-inject/NOTES.md",
+   "suggested_action": "Round 13: take them or close each with one line at R8 (default: close, post-deadline with coordhead-v2 / D program)",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "I-311 (Justin CH123's PP/division-only 0.953 -> 0.956 on x138) and I-312 (the 'LB tracks predicted node count' claim) are open-untested and exist only as round-13 focus text",
+   "evidence": "research/wf_ideas_v4/round12/report.json next_focus (4); research/wf_ideas_v4/reach0955/discussions_2026-09-26.json 742266, 741749, 743222; CONTEXT.md l.2425-2436",
+   "suggested_action": "Round 13: map each to existing builder knobs (at most 2 rungs, each with a node-count check) or close it with one line",
+   "urgency": "today"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "I-233 (the poller logs error_description) is still the only strict orphan. The round-12 red team already uses the C2 error_description one-liner as its port-error detector",
+   "evidence": "research/wf_ideas_v4/round12/scan_hyp_redteam_e10.json failure_modes; CONTEXT.md l.2028",
+   "suggested_action": "Close it with one CONTEXT line citing the red-team table",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 12 ran at 2026-09-26 ~21:30 UTC. The run started at df6996e and HEAD moved four times while it ran: da6c699, then 34fdf40/a9fa8eb (probes 39/40), then 9beb9f0 (reach0955 plan decisions). All of it is covered, together with the untracked research/wf_ideas_v4/round12/ (report.json R12-A0..A10).\n\nThe ledger grew from 294 to 326 ideas, with 77 change records in ideas.json meta.curations[n=12]. Counts c11 -> c12:\n- in-plan 38 -> 56\n- refuted 166 -> 172\n- deferred 27 -> 31\n- open-untested 1 -> 5\n- lb-tested 41 and lab-tested 21 unchanged\n\nNew cluster LADDER (#2 after FINALS), created after the user lifted the public knob-ladder ban at 20:33Z:\n- I-302 is the ladder itself.\n- I-303 exp70a and I-305 exp70e are submitted as probes 40 and 39, both pending.\n- I-304 exp70d is next. I-306 exp70b is the S4 fallback, which the skeptic says is NO-GO. I-326 exp70g (K2 + cap 6) is a new rung gated by a round-13 CPU arm.\n- I-307 covers the informed combos.\n- Refuted: I-300 (11:00Z last submit, blocked by R8), I-308 (tighter insertion), I-309 (--set on SECONDARY_* or DET_THRESHOLD is a no-op or crashes) and I-310 (threshold neighbours).\n- Open for round 13: I-311 (Justin's PP-only jump) and I-312 (LB tracks node count).\n\nFINALS:\n- I-295: the user's 'one public, one private' strategy.\n- I-296: L9, kept by the main session at 21:21.\n- I-297: the round-12 insertion-hedge table. Not logged yet, and the retrain row conflicts with the 21:21 entry.\n- I-298: {V*, #37} refuted by both the judge and the main session.\n- I-299: E10 insertion-family rows, which need an OK.\n- I-315: the 07:30Z morning message.\n\nBASE:\n- I-286: E10 v2 recorded as PROPOSED, still pending.\n- I-262: dry run DONE (full gate PASS, ~45-60 min trigger-to-ready).\n- I-314: E10 procedure hardening.\n- I-026: P1 at 20:01Z was not met.\n\nMODEL:\n- I-119: the retrain line was started at 21:21 on the main session's reading of the user's messages. The plan agent and round 12 said R9 needs an explicit yes, so this is flagged as a risk.\n- New: I-323 Corwin secondary (prior <= 0), I-324 coord-inject (LOC) and I-318 D0.\n\nOther new ideas:\n- I-320 combo oracle (refuted: +0.0143 only as an oracle, <= 0 out-of-sample).\n- I-321 daughter localisation (moot).\n- I-325 Bio-Pirates learned ends (not usable).\n- Post-deadline calibration: I-316 transfer table, I-317 late-sub bed, I-319 G0 gate.\n- Ops: I-313 API budget, I-322 test cleanup.\n\nRecheck updates:\n- I-034: inverted reason, now deferred post-deadline.\n- I-147 and I-148: x138 numbers; I-148 closed for good.\n- I-033: reason corrected.\n- I-222: bound corrected to ~+0.005.\n- Post-deadline agenda ranks added to I-113, I-242, I-079, I-261, I-029, I-110, I-122, I-285 and I-208.\n\nOps updates:\n- I-290 (recorded) and I-259 (applied).\n- Detail added to I-282 (timers), I-257 (RESUME stale), I-232 (round-12 REPORT refused), I-283 (private-read v2), I-252, I-258, I-229, I-094, I-230 (revived for the ladder read), I-248, I-233, I-126, I-070, I-082, I-102, I-135, I-074, I-071, I-220 and I-066.\n\nOrphans: I-233 is still the only strict one. At risk: I-119, I-229, I-232, I-252, I-257, I-282, I-283, I-286, I-297, I-299, I-301, I-306, I-314, I-315, I-323, I-324 and I-326."
+}

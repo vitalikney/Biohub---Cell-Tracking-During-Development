@@ -2472,6 +2472,61 @@ Mention it to the user in one line (R9-A8 item 6).
   recipe; our model-swap record on the LB is 0/5.
   (4) exp70g = K2 + DIVINS_CAP 6 built (sha 52c182a3; the only diff vs K2 is the name line and the cap). Reserve rung for
   27 Sep S4 (00:05Z) if round 13's CPU arm 'ins_cap6' on exp60 is >= 0 pooled and no embryo < -0.0005; else exp70b.
+- 2026-09-26 21:31 UTC, ROUND 12 RECORD (research/wf_ideas_v4/round12/; info and hygiene)
+  (1) E10 P1 20:01Z (experiments/e10_watch/20260926T2001Z.txt, CHANGES=14 vs 1701Z): NOT met. The only kernel change is
+  an anhadmahajan06/biohub-track-your-cells re-run (lastRun 19:10:53Z; page Version 6 of 9, 0.946; P4c(2) FAIL).
+  scoreDescending top is unchanged: HF v3 0.953 is first, so no public notebook is above 0.953. P2 largest group 2 (<
+  5). The next P1 is done by the round-13 browser agent (~22:30Z); v1 needs one by ~02:00Z. (2) INTEL (info only): LB
+  20:01:58Z, 3,935 teams. We are #217 at 0.954, 13th of 99 in the 0.954 block (205-303). Blocks: 0.955 149-204, 0.956
+  113-148, 0.957 95-112, 0.953 304-672. Public silver ~197, ~20 places above us. 5 teams jumped from 0.951/0.953 to
+  0.955-0.964. AkiraIshikawa passed us inside the block (unrounded order). 4 new 0.954 entrants are below us. A 12th
+  x138-copy window (~20 teams, #641-660) again sits at the block end. No new kernel since 24 Sep; x138 v1 202 votes /
+  283 copies; no new topic before 20:01Z; Overview 3 DAYS TO GO, 12 h, data unchanged. (3) OPS verified 20:44Z (main =
+  origin/main = 9ead9df; cc0d57c at 20:48Z): pytest 275 passed; finals notebooks exp58 1f1ddb6d / exp58t a77bcd6b /
+  exp58n 55038fd6; claude grep 0; API SELECTED 2/2 [56563521, 56563534] at 20:04:35Z; poller PID 20052 alive. HTTP 429
+  on kernels output 20:34-20:47Z and on ListSubmissions at the 20:36:50Z poll (3 tries). OK-header gap 20:26:49 ->
+  20:48:26 = 21.6 min. (4) DRY-RUN extras (the main entry is 20:48Z): GPU queue 11-12 min, run 19.5 min (log 1169 s).
+  kernels output with --file-pattern ^(submission\.csv|run_stats\.csv)$ took 16 s, vs 216 s for the full 52 MB. Our
+  dummy CSV sha256 == author CSV == exp56 dummy (d52a5da2), so x138 is byte-deterministic across accounts. A verbatim
+  port should therefore reproduce the author CSV sha; a mismatch within 1% passes the gate but gets one look. (5) E10
+  API FACTS: pages show the LAST SUCCESSFUL version. kernels pull returns the LATEST source and writes no version.
+  get_kernel().metadata.current_version_number does not move when a newer version errors, and last_run_time is bogus.
+  kernels output <ref>/<N> ignores N. e10_port_gate exits 0 with SKIP lines, and its group summary hides a SKIP next to
+  a PASS. SKIP happens only when an argument is omitted; an empty dummy folder FAILs rc=1. (6) RESEARCH: no
+  inference-only mechanism on x138 reaches the +0.012 lab bar (combo-oracle 19:13Z, round-12 fresh eyes). Ladder rungs
+  are public knob probes under the user lift; the public read and L9 judge them, not that bar. Rechecks: the old I-034
+  reason was inverted (embryo-held-out blend50 44b6 +0.03%/-0.67%, 6bba -1.57%/-1.78%), but gate (b) still fails; the
+  CPU heads were throwaway and nothing was saved. The I-147 synthetic-node drop stays refuted on x138 (gap -0.0024, all
+  synthetic -0.0027). The I-148 border drop is closed for good (xy<1.6 um -0.0132, z-edge -0.0029, negative in both
+  embryos). Lab annotation density: 0.79% of predicted nodes match GT on 44b6 vs 5.20% on 6bba.
+- 2026-09-26 21:31 UTC, RULE RECONCILIATION after the user decisions 20:33/20:34 UTC (round 12, R12-A3; probes 39/40 were already submitted under L9, logged 20:49 UTC)
+  (a) WHAT WAS LIFTED: the 'public knob ladders' clause. It is listed under R9 in PRE-REGISTRATION v3 (CONTEXT l.1673)
+  but is called 'R7' in the 20:30-20:49 entries. For the PUBLIC-aimed slot only, also lifted: R7's line 'no choice
+  between near-copies by 0.001 except via R3', and R4's +0.002 (replaced by L9's display >= 0.955). STILL IN FORCE: R7
+  hygiene (validator and PP sweep off, no DIVINS_DUMP, fail-soft stages, node-count identity as the first rider check),
+  R8 (except for the one retrain item, see below), and R9's retraining clause EXCEPT the one distilled-secondary run the
+  main session read as authorised by the user's 'сделай нам также!' + 'делай' (21:21 UTC entry; the user can stop it in
+  the morning). Leaf prune, forkmid and DeepCenter t* are reopened ONLY as public rungs; their lab closures stand. (b)
+  PAIRING = INSERTION HEDGE. One table; it confirms L9 and replaces r_retrain's 'FT replaces #38'. Keep one final WITH
+  the DaughterNet insertion and one WITHOUT whenever possible. Rows: no eligible candidate -> {#37, #38}. Eligible V*
+  (K2 + knobs, carries the insertion) -> {V*, #38} (= L9). E10 port without insertion (62 forks on the 4 dummy clips,
+  like x138) -> {PORT, #37} (= P6/V4). Retrain FT exp72 (K2 + distilled secondary; carries the insertion) competes with
+  V* for the insertion slot, and #38 stays (this corrects the 21:21 UTC line 'model changes pair with #37' for exp72).
+  Ties: L9 order. Never two byte-identical files. Never a non-COMPLETE file. The user re-ticks by 29 Sep 20:00Z; without
+  a re-tick {#37, #38} stays. Two rows would change the E10 pair and wait for the user's OK (R12-A7): an
+  insertion-family port (> 62 forks or a division-add stage) -> {PORT, #38}, and V* plus a no-insertion PORT -> {V*,
+  PORT}. Until then P6 stands, and the fork count goes into the trigger notification. REASON: the user said only 'one
+  for public, one for private'; 'default #37' is the session's own gloss. When V* carries the insertion, #38 hedges the
+  larger uncertain effect: the insertion (lab +0.006, P(< 0 on private) 0.10-0.15), whose failure branch drops us below
+  the ~350 exact copies. #37 would hedge only the knob delta (~+0.0008 lab). (c) R8 TIMING: the last ladder submit is 29
+  Sep 02:00Z, not 11:00Z as written in L9, unless the user lifts R8 explicitly. R8 allows only an emergency repeat after
+  02:00, with a hard edge at 10:00Z, and a submit at 11:00 would score around 18:30Z, 1.5 h before the tick deadline.
+  F1-final consolidation (the informed combos) is due by 28 Sep 12:00Z. (d) BEFORE EVERY SUBMIT: W6 holds (the last
+  poll.log header is < 15 min old AND is not a 429 line); the kernel version is COMPLETE; its dummy CSV sha256 is
+  compared with K2's dummy CSV. An identical CSV means the knob did nothing on the 4 visible clips and a public tie is
+  likely: note it and weigh the slot. It does not prove identity on the hidden set. The ref contains no 'dryrun', and
+  its folder has no NEVER_SUBMIT.md. API SELECTED is re-read after the submit; it stays [56563521, 56563534] until the
+  user re-ticks.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

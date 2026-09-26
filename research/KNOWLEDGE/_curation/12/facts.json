@@ -1,0 +1,84 @@
+{
+ "task": "curation 12 (facts): maintain research/KNOWLEDGE/FACTS.md and DECISIONS.md",
+ "state_utc": "2026-09-26T21:20Z",
+ "complete": true,
+ "files_written": [
+  "research/KNOWLEDGE/FACTS.md",
+  "research/KNOWLEDGE/DECISIONS.md",
+  "research/KNOWLEDGE/_curation/12/facts.notes.md",
+  "research/KNOWLEDGE/_curation/12/facts.json"
+ ],
+ "alerts": [
+  {
+   "kind": "contradiction",
+   "what": "Three pair rules disagree on which file keeps the private-aimed finals slot. L9 (in CONTEXT) says {V*, #38}, so #37 leaves. The v_ladder/v_intel skeptics and the 20:33 'default #37' gloss say {V*, #37}. r_retrain RT-5 says {exp72, #37}. E10 P6/v2 V4 says {PORT, #37}. The round-12 judge keeps L9 as an insertion hedge, but that reconciliation is not in CONTEXT, and the first ladder submit is due tonight",
+   "evidence": "CONTEXT 20:33 l.2391-2392, 20:49 l.2419-2423; research/wf_ideas_v4/reach0955/v_ladder.json corrections (3); research/wf_ideas_v4/round12/report.json plan_issues (1), R12-A3 (b); FACTS C-85; DECISIONS §2h",
+   "suggested_action": "Main session: log the R12-A3 RULE RECONCILIATION (lift scope, insertion-hedge table, R8 cap, per-submit checks) with date -u BEFORE the first exp70 submit. Put the pair choice in the 07:30Z morning message",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "L9 sets the last ladder submit at 29 Sep 11:00 UTC. That breaks R8: after 02:00 only an emergency repeat is allowed, with a hard edge at 10:00, and a submit at 11:00 would score only around 18:30Z",
+   "evidence": "CONTEXT 20:49 l.2417 vs PRE-REG v3 R8 l.1671-1672; research/wf_ideas_v4/round12/report.json plan_issues (2), R12-A3 (c); FACTS C-86",
+   "suggested_action": "Record 02:00Z as the default last ladder submit unless the user explicitly lifts R8 (morning question R12-A7 (3))",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "CONTEXT says 'R7 lifted', but in PRE-REG v3 R7 is hygiene and the public knob-ladder ban is a clause of R9. The mislabel risks dropping hygiene (validator off, no DIVINS_DUMP, fail-soft, node-count identity) or the retraining bar",
+   "evidence": "CONTEXT 20:30-20:49 l.2380-2424 vs l.1665-1673; research/wf_ideas_v4/round12/report.json plan_issues (3), R12-A3 (a); FACTS C-84",
+   "suggested_action": "State in CONTEXT that the lifted clause is R9's knob-ladder clause, that R7 hygiene and the R9 retraining clause still hold, and that R7's 0.001 line is lifted only for the public-aimed slot",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "The Kaggle API rate limit is account-wide. 429s hit ListSubmissions (poll 20:36:50Z) and kernels output (20:34-20:47Z) while several agents ran. The OK-header gap reached 21.6 min, which is more than W6 allows, yet the ledger reports 'no gaps > 15 min'. Tonight's ladder submits depend on W6 and on the latency evidence",
+   "evidence": "experiments/lb_poll/ledger.md 20:58:29Z; research/wf_ideas_v4/round12/report.json new_facts (4), R12-A5; FACTS F-RUL-15, C-90",
+   "suggested_action": "Apply the R12-A5 API budget: only the main session polls kernels status, only the browser agent snapshots, and the poller backs off after two 429s. Re-check W6 from the poll.log header before every submit",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "Cutoffs. Ladder L1-L3 by 23:50Z tonight (exp70d/exp70b dummies were not pushed at 21:02Z because of the 2-GPU cap). exp70b is set for 00:05Z, but the skeptic says NO-GO as a blind slot (C-95). Morning message ~07:30Z. E10 v2 OK and any new mechanism, including an FT line, by 27 Sep 12:00Z. F1-final consolidation by 28 Sep 12:00Z. Last ladder or port submit 29 Sep 02:00Z (R8). Ticks by 29 Sep 20:00Z",
+   "evidence": "CONTEXT 20:49 l.2415-2418, l.1671-1672; research/wf_ideas_v4/reach0955/plan.notes.md 21:02Z; research/wf_ideas_v4/round12/report.json R12-A6, R12-A7; DECISIONS §1 planned table",
+   "suggested_action": "Keep these times in the new RESUME POINT (R12-A8) and the session timers. Decide whether exp70b runs at 00:05Z or stays in reserve",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "y3uanm's 0.949 -> 0.956 is still credited to a public distilled secondary fine-tune (CONTEXT 20:30, FACTS F-LB-06 before c12, r_intel RI-3). Both public notebooks are quick saves: an 807 B log, no weights, no dataset. Nothing ties the jump to the recipe",
+   "evidence": "experiments/ext_y3uanm-secondary-ft/out_v1, out_v2; research/wf_ideas_v4/reach0955/v_retrain.notes.md 20:45Z; FACTS C-88",
+   "suggested_action": "Do not justify an R9 lift or an FT slot with y3uanm. Cite our own 0/5 model-swap record (F-TRN-41) and the skeptic prior P(>= 0.955) 15-25%",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "A retrain/FT line (exp72) cannot meet R8 unless the user's R9 yes comes early. The user has been asleep since 20:34Z, r_retrain's 'latest start 28 Sep 19:00Z' is wrong, and the secondary swap needs a builder secswap patch plus a guard; otherwise it silently re-runs K2",
+   "evidence": "research/wf_ideas_v4/reach0955/v_retrain.json corrections (1), (5); research/wf_ideas_v4/reach0955/v_intel.json corrections (4); FACTS F-MOD-27, C-93",
+   "suggested_action": "Log explicitly whether 20:34 'делай' counts as the R9 yes. If not, ask in the morning message and treat the FT as needing an R8 lift too",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "Hygiene is open. round12/REPORT.md was refused again (its text is in R12-A0). research/wf_ideas_v4/round12/ is untracked, and the stray experiments/_pytest_oc_k2/ (id vitaliineibauer/biohub-zz-oc-k2) must be deleted, never pushed. The 13:27 RESUME POINT and the memory index are stale (the injected index still says 'E10 port rule proposed; overlap-consensus line paused')",
+   "evidence": "research/wf_ideas_v4/round12/report.json R12-A0, R12-A1, R12-A8; git status 21:03Z; FACTS C-30, C-75, F-RUN-23",
+   "suggested_action": "Run R12-A1/A2/A8: commit as the user with no trailer, delete _pytest_oc_k2, and write the new RESUME POINT and MEMORY line",
+   "urgency": "today"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "Two public CC0 plug-ins from the 0.960-0.966 band are not on any rung list yet. yuki0731/biohub-coord-inject is a learned node refiner: every node moves to the nearest refined detection within 3 um. Its gain is unmeasured and it carries runtime risk. corwin1979/biocel-secw is a drop-in secondary, EV <= 0 by Corwin's own note. Any use before 29 Sep is a new mechanism under R8 (27 Sep 12:00Z)",
+   "evidence": "CONTEXT 21:11 l.2437-2444; research/wf_ideas_v4/reach0955/intel_0960_0966.notes.md; FACTS F-MOD-29, F-LB-14",
+   "suggested_action": "Round 13: decide coord-inject in or out (lab A/B on exp60 with the in-sample caveat, timing on 2xT4) before 27 Sep 12:00Z, or park it post-deadline. Leave biocel-secw out",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "Several research notes label local time (UTC+3) as 'Z' (discussions notes '~23:40Z start', intel notes '21:25Z'). The curation-11 row ID F-DAT-07 was a duplicate; it is now renumbered F-DAT-15",
+   "evidence": "research/wf_ideas_v4/reach0955/discussions_2026-09-26.notes.md; research/wf_ideas_v4/reach0955/intel_0960_0966.notes.md; FACTS C-94, F-DAT-15",
+   "suggested_action": "Agents should stamp times with date -u. INDEX/IDEAS curators should cite F-DAT-15 for GT division timing",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 12 updated FACTS.md and DECISIONS.md incrementally ([c12] marks, stable IDs, CRLF kept, table columns checked, no duplicate IDs). Sources: git 96ccff7..da6c699 (timers, combo-oracle, user decisions 20:30-20:34, E10 dry run, K2 ladder + L9, discussion intel, 0.960-0.966 intel); CONTEXT l.2342-2444; untracked round12 report.json (21:01Z); reach0955 r_/v_/intel/plan notes; exp70* probe.json; e10_watch 2001Z; poll.log up to 21:08:29Z. RESULTS.md unchanged. The main session's commit da6c699 (21:11Z) already contains this curation's first FACTS pass; part 2 and DECISIONS came after it. State: finals TICKED 2/2 = #37 + #38 (API 20:04:35Z). No submission since 00:02:18Z. The public-probe ban was lifted by the user at 20:33 (logged as 'R7'; it is R9's knob-ladder clause). Finals strategy is 'one for public, one for private', mechanised by L9: {V*, #38} if a ladder rung displays >= 0.955, else {#37, #38}. Ladder exp70a/d/e is due tonight, not yet submitted. E10 v2 is in CONTEXT as PROPOSED, with no OK. E10 P1 at 20:01Z was not met. LB 20:01Z: #217 of 3,935 at 0.954. FACTS: the duplicate F-DAT-07 is renamed F-DAT-15. New rows: F-DAT-16, F-LB-12/13/14, F-RUN-24/25, F-RUL-15/16/17, F-MOD-26..29, F-TRN-38..41, and contradictions C-84..C-95 (lift naming, private-slot pair, L9 11:00Z vs R8, ladder priors, y3uanm attribution, node-count claim, poll gap, Justin inference, exp70 name collision, FT vs R8, mislabelled Z times, exp70b blind slot). C-78/C-80/C-82/C-83 resolved. DECISIONS: §1 [c12] with a planned-ladder table, §1b G38-G40, §2 [c12] and a new 21:20Z snapshot table, §2f [c12], a new §2h (ladder + L9 + proposed reconciliation), [c12] status for R1-R10 and §f plus an L9 row, and a closing commit summary."
+}

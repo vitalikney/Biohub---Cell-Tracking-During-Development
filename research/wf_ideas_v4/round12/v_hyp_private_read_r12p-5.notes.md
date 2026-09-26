@@ -1,0 +1,7 @@
+# v_hyp_private_read R12P-5 notes (2026-09-26T20:43:32Z)
+- DUPLICATE: part (b) (private split as post-deadline gate) = R12P-3 in scan_hyp_post_deadline.json (same round 12; budget 15 late subs, 1 per item, read private delta vs #37 >= +0.001). Only the K1 factorial arm is unique.
+- K1 exp58t already pushed as kernel v1 (CONTEXT l.1815-1818, dummy 16/16 PASS, K1 dummy sha == exp57b dummy); rebuild a77bcd6b byte-identical (13:34Z). So zero build; feasibility fine IF late subs exist (unverified; R12P-3 already checks on 30 Sep).
+- K1 vs #35 on hidden: identical output unless x138's 7.5 h REPAIR_DEADLINE fired in #35 (K1: 9.5 h, divins 8 h). Runtime arithmetic: #34 L<=6.46 h, twin L (6.69,6.87], K2 L (7.36,7.54] (latency >= runtime) -> lowrefine+safetail ~0.3-0.4 h, so #35 runtime ~<= 7.1-7.2 h < 7.5 h: degrade unlikely; if it fired it hits only last-sorted clips (CONTEXT V4 row5: <~1e-4) -> K1-#35 very likely displays 0.000 = uninformative (scan_hyp_private_read rule: displayed 0 uninformative; API private_score is a 3-dp string, late subs have no LB rank for sub-display reads).
+- C1' = K1-#34 == C1 (#35-#34, free on 30 Sep) unless degrade; interaction C2 - C1' = difference of two 3-dp differences where lowrefine alone has prior P(=0) ~0.8 (C3) -> uninformative.
+- Only case where K1 adds info: C1 <= 0 while C2 > 0 (confound could explain it). -> conditional arm inside R12P-3, not a separate factorial.
+- Competition gain 0 (post-deadline); no R8/R1-R10 conflict since nothing before 30 Sep; each late sub needs user OK.

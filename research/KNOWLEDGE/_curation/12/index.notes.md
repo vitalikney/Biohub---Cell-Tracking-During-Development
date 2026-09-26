@@ -1,0 +1,5 @@
+- 21:27:04Z index curator c12 start; no index.json; reading INDEX.md, CHANGES.md c11
+- 21:27:35Z read INDEX/CHANGES/IDEAS/WATCHLIST anchors; ledger exp70 family already fixed in 34fdf40
+- 21:28:54Z INDEX.md written (72 lines), cites checked; next CHANGES.md section 12
+- 21:29:27Z CHANGES.md section 12 appended; next index.json
+- 21:30:08Z index.json written. DONE

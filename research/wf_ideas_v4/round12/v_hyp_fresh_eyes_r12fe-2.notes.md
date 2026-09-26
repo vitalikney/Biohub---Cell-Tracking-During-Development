@@ -1,0 +1,7 @@
+# v_hyp_fresh_eyes R12FE-2 (I-222 retention guard upper bound), skeptic notes
+## 2026-09-26 (round 12)
+- No prior JSON for this task. Sources: round9/v_recheck_r9-rc-c-i222-retention-guard-embryo-depend.json (33.1%/3.9% fallback, weight 0.80, blend keeps ~22%/15% fewer candidates in fallback frames); round3/scan_hypotheses.json R3S-5 + round3/scan_hypotheses.notes.md l.18-24 (GT-edge FN by frame pair; 40,093 GT edges total).
+- Edge counts in primary-only frames (all lab clips): prim-prim 1,960 + all-prim clips 529 + switch pairs 876 = 3,365 of 40,093 GT edges (8.4%), NOT 34% of 44b6 edges.
+- Causal upper bound recomputed from edge counts: 1960*(0.1071-0.0317)=148 + 529*(0.0643-0.0317)=17 + 876*(0.0605-0.0317)=25 = ~190 edges = 0.0047 of pooled GT edges. Metric is per-video J weighted by GT edge count, dJ <= dFN/GT (FP held fixed) -> pooled bound ~ +0.005, not +0.011.
+- Finding's arithmetic (0.342 x 0.0754 x 0.35 = 0.009; 0.04 x 0.0754 x 0.65 = 0.002) assumes fallback frames carry a frame-proportional share of GT edges; the measured counts say fallback frames carry far fewer GT edges (sparse annotation / under-predicted 44b6 clips 9be80b04 -0.55, e28840c6 -0.64 node ratio). Bound is ~2.3x too loose.
+- Conclusion unchanged: selection effect (R3S-5), blend drops 15-22% of candidates in those frames, logits not cached (GPU), node-set change (R4), public-tuned knob, cannot meet R8 (27 Sep 12:00 UTC). Both finals #37/#38 share the guard -> no finals impact.

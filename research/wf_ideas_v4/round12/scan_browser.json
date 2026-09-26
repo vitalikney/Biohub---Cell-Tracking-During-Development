@@ -1,0 +1,37 @@
+{
+ "summary": "Round-12 delta scan, 20:01-20:12 UTC 26 Sep, compared with round 11 (17:01 UTC). E10 P1 snapshot experiments/e10_watch/20260926T2001Z.txt has CHANGES=14. The only kernel change is anhadmahajan06/biohub-track-your-cells re-running at 19:10 (a known 0.946 knob set). The P2 look-check's largest identical-score group is 2 (0.959), under the >=5 signal, so E10 is NOT triggered and the port gate was not needed. Public LB at 20:01:58: 3,935 teams (the page says 3,932). We are #217 at 0.954 (was #210), 13th of 99 in the 0.954 block (205-303). Six teams jumped past us to >=0.955: Biomed Foresight 0.954->0.964, Saravanan Jaichandaran 0.951->0.959, Rasheed Khoshnaw 0.953->0.959, Rishabh Roy 0.953->0.957, mexlora 0.953->0.955 and Freeman Hui 0.954->0.955. AkiraIshikawa passed us inside the block with no change in displayed 0.954, which fits the known unrounded ordering. The 4 new 0.954 entrants all landed below us. Counts (r11 in brackets): 0.953 = 369 (354), 0.954 = 99 (97), 0.955 = 56 (55), 0.956 = 36 (35), 0.957 = 18 (17), 0.958 = 12 (12), 0.959 = 14 (12), >=0.960 = 68 (67), >=0.970 = 7, >=0.953 = 672 (649). A 12th x138-copy window has ~20 teams at exactly 0.953 (#641-660), subs 10:27-13:16 UTC, so the ~7 h scoring lag holds. Top 20: The Boys 0.966->0.968 (#18->#14) and Yizhou 0.965->0.966; yu4u is still #1 at 0.978. Nothing else changed: no new public notebook (none created since 24 Sep, none >=0.954), no new discussion topic or comment, no host announcement, and Overview, timeline, 12 h limits, metric text and data files are the same. The only new datasets appeared before 17:01 and were covered in round 11. Submissions are at 87,748 (+283, ~94/h). x138 is v1, 202 votes, 283 copies. Nothing was pulled. The finals (#37 + #38) are unaffected.",
+ "findings": [
+  {
+   "id": "r12-e10-p1-snapshot",
+   "kind": "new-fact",
+   "what": "E10 P1 snapshot at 20:01 UTC against 17:01Z has CHANGES=14. comp_dateRun has one change, anhadmahajan06/biohub-track-your-cells lastRun 16:17:45->19:10:53. comp_scoreDescending, the user lists (anvithpothula, thtennant, amanatar) and the statuses of x138 and amanatar are unchanged. Histogram changes: 0.968 3->4, 0.965 9->8, 0.964 5->6, 0.963 6->7, 0.962 7->6, 0.959 12->14, 0.957 17->18, 0.956 35->36, 0.955 55->56, >=0.955 198->204, >=0.960 67->68, OURS 210->217. The P2 look-check (teams now >=0.956 that were <=0.953, grouped by identical score) finds 0.959: 2 (Saravanan Jaichandaran, Rasheed Khoshnaw) and 0.957: 1 (Rishabh Roy). The largest group is 2, under the >=5 signal, so E10 is NOT triggered and tools/e10_port_gate.py was not run.",
+   "evidence": "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/experiments/e10_watch/20260926T2001Z.txt",
+   "action": "None. The next P1 is due at ~6 h cadence. The overnight burst (~23:30-02:00 UTC) will surface on the LB at ~07-09 UTC 27 Sep.",
+   "urgency": "info"
+  },
+  {
+   "id": "r12-lb-delta-2001",
+   "kind": "new-fact",
+   "what": "Public LB at 20:01:58 UTC: 3,935 teams. We are #217 (was #210), 0.954, 40 subs, last sub 00:02:18, 13th of 99 in the 0.954 block (205-303). Blocks: 0.955 = 149-204 (56), 0.956 = 113-148 (36), 0.957 = 95-112 (18), 0.953 = 304-672 (369). 43 teams changed score and 180 have new subs. Public silver line = 5% x 3,935 = 196.75, so we are ~20 ranks below it (info only, R7). The 7-rank drop has three parts. Five teams jumped from 0.953/0.951 to >=0.955: Biomed Foresight 0.954->0.964 (#244->#30), Saravanan 0.951->0.959, Rasheed Khoshnaw 0.953->0.959, Rishabh Roy 0.953->0.957 and mexlora 0.953->0.955. Freeman Hui went 0.954->0.955 (#223->#185). AkiraIshikawa stayed at displayed 0.954 but moved #218->#216, above us, after a sub at 12:00:34; in-block order follows the unrounded score, as already recorded (CONTEXT l.1849, round4/round9). New 0.954 entrants all rank below us: YunlinCity #244, Madhur Shyam Maurya #268, HongchenDai #273, Avner Gomes #299.",
+   "evidence": "Scratchpad lb/r12/biohub-cell-tracking-during-development-publicleaderboard-2026-09-26T20_01_58.csv compared with lb/r11/...T17_01_50.csv using lb/r10/cmp10.py; research/wf_ideas_v4/round12/scan_browser.notes.md",
+   "action": "Update the CONTEXT intel line to #217/3,935, 13th of 99 in the 0.954 block (205-303). This is info only: rank drift at a fixed 0.954 is not a signal. Finals stay #37 + #38, and there are no knob ladders.",
+   "urgency": "info"
+  },
+  {
+   "id": "r12-top-movers-and-copies",
+   "kind": "new-fact",
+   "what": "In the top 20 only The Boys (0.966->0.968, #18->#14, sub 15:30) and Yizhou (0.965->0.966, #20->#19) moved. yu4u 0.978, Sergio Alvarez 0.975 and Gabriel 0.975 lead unchanged. Below the top 20, LIN mimosa went 0.962->0.963 and automatylicza 0.955->0.956. A 12th x138-copy window has ~20 teams jumping to exactly 0.953 at #641-660, among them Kydyrbek Kozykorpesh, Yang Kuang Ou, Pang1101, X.franfran.X, Nimish Shinde (0.143->0.953), Aditya Goyal and Apex Blue, with subs 10:27-13:16 UTC. firat yavas (#314) and new team deeptrace12 (#322) also reached 0.953. The newest scored subs are from ~13:51 UTC, which fits the ~7 h latency. No mover has a public source.",
+   "evidence": "cmp10.py changed list, r11 17:01:50 vs r12 20:01:58 LB CSVs",
+   "action": "None.",
+   "urgency": "info"
+  },
+  {
+   "id": "r12-code-discussion-overview-unchanged",
+   "kind": "new-fact",
+   "what": "Public code: no competition kernel has been created since 24 Sep (CLI dateCreated). The only run since round 11 is anhadmahajan06/biohub-track-your-cells at 19:10. Its page still reads 'Version 6 of 9', Public 0.946, Best 0.946 V4, 13 votes, 10 copies. That is the known knob set, below 0.954, so it was not pulled. x138 https://www.kaggle.com/code/anvithpothula/biohub-0-953-lb-original reads 'Version 1 of 1', 0.953, 202 votes (+3), 283 copies (+3), Comments (3). Discussion (recent-comments) has no new topic or comment: the top entry is 'Beginner question: How do Public/Private splits usually work in biological datasets?', last comment 9h ago, then 'errors in annotated ground truth' at 11h ago. The pinned host topics are unchanged and there is no announcement. Overview: '3 DAYS TO GO', Final Submission Deadline 'September 29, 2026', 'CPU Notebook <= 12 hours run-time', metric text unchanged. Counts: 13,475 entrants, 4,500 participants (+9), 3,932 teams, 87,748 submissions (+283 in ~3 h, ~94/h). Data files still have creationDate 2026-06-26. No new datasets since the two round 11 already saw (qwyi123 16:54, santoshpaidi 16:39).",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion?sort=recent-comments ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/overview ; https://www.kaggle.com/code/anhadmahajan06/biohub-track-your-cells ; CLI kernels list --sort-by dateCreated|dateRun, datasets list --search biohub --sort-by updated, competitions files",
+   "action": "None. Nothing was pulled to experiments/.",
+   "urgency": "info"
+  }
+ ]
+}

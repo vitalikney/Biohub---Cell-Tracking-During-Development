@@ -1,0 +1,221 @@
+{
+ "task": "round 12 scan_hyp_redteam_e10: red-team the E10 night procedure + copy-paste command sequence + ideas",
+ "written_utc": "2026-09-26T20:12:09Z",
+ "complete": true,
+ "summary": "Red team of the E10 night procedure (v1 >= 0.956 in force; v2 >= 0.954 proposed). Every failure mode found ends in 'no port' with the ticked finals #37 + #38 unchanged; the harmful paths are a wrong-version port, an unenforced SKIP and an insertion-family successor replacing the twin. Measured fixes: (1) pages show the last SUCCESSFUL version while pull returns the latest; bind with get_kernel().metadata.current_version_number (x138 1, HF v3 5, amanatar 5 vs page 'Version 1 of 5', anhad 9 vs 'Version 6 of 9'); (2) `kernels output owner/slug/N` ignores N; (3) e10_port_gate exits 0 with SKIPs and its group summary hides them ('csv PASS' + '[SKIP] csv: ours'), so step 7 must grep FAIL|SKIP == 0; (4) the gate run with --dummy on the author's own output pre-checks the log before GPU is spent (HF v3: PASS, 62 forks, 16.8 min). v2 amendments to fold in before its OK (pre-trigger): insertion-family successor (forks > 62 on the 4 dummy clips) -> notify and wait; simultaneous or equal-score triggers -> highest score, ties notify; dataset updated after the scored run or blank docker/machine -> P3 FAIL. A copy-paste command sequence (trigger -> pull -> sanitise -> static gate -> author output -> push -> full gate -> submit -> SELECTED -> ledger -> notify) with expected outputs is in the JSON. No scoring mechanism reaches R8; finals unchanged.",
+ "findings": [
+  {
+   "id": "R12RT-1",
+   "kind": "plan-issue",
+   "urgency": "now",
+   "what": "Version binding. Kaggle notebook pages show the LAST SUCCESSFUL version, while `kernels pull` returns the LATEST version and writes no version number. P4b(c) cannot be checked with the recorded commands. The API field get_kernel().metadata.current_version_number, read in the same process as the pull, makes it mechanical: page 'Version k of M' with k == M == the API value before and after the pull.",
+   "evidence": "Read-only API 20:06Z: current_version_number x138 1, HF v3 5, amanatar 5, anhadmahajan06 9. Pages: amanatar 'Version 1 of 5' (0.910) while the pulled source sha256 96387e7858e6 = the errored latest (experiments/ext_optimized-biohub-max-score/v10_2026-09-26); anhadmahajan06 'Version 6 of 9' (round 11/12 browser). get_kernel().metadata.last_run_time = 2026-09-23 20:04 for all four (bogus). kaggle 2.2.4 kaggle_api_extended.py l.6603-6622 (metadata dump has no version).",
+   "action": "Tested 20:12Z in the scratchpad on x138: steps 2-4 print version_before 1 version_after 1 sha256 6b655e39bbfd2d3d (= the pinned X138_SHA256), no blank docker/machine, static gate rc=0, 0 FAIL, exactly 4 SKIP. Use step 2 of the command sequence (Python heredoc; no tool change) at every trigger; record version_before/after and sha256 in <pull dir>/e10_pull.json. This implements P4b(c) and needs no new OK."
+  },
+  {
+   "id": "R12RT-2",
+   "kind": "new-fact",
+   "urgency": "now",
+   "what": "`kaggle kernels output <owner>/<slug>/<N>` silently ignores N and serves the latest session. So the author CSV and log can come from a later version than the one pulled.",
+   "evidence": "kaggle 2.2.4 kaggle_api_extended.py l.6640-6745: parse_kernel_string returns the version, but ApiListKernelSessionOutputRequest gets only user_name + kernel_slug. The whole file is read into RAM (requests.get(...).content). --file-pattern exists. The dry-run author output was 52 MB with edge_cache/secondary_seed_weights/tracking_repo and took ~3 min.",
+   "action": "Download the author output right after the pull with --file-pattern '^submission\\.csv$' (the log is always written), then re-read current_version_number. If it changed, redo from the trigger."
+  },
+  {
+   "id": "R12RT-3",
+   "kind": "plan-issue",
+   "urgency": "now",
+   "what": "tools/e10_port_gate.py exits 0 when some lines are SKIP. Its group summary also hides a SKIP when the same group has a PASS: it printed 'csv PASS' next to '[SKIP] csv: ours'. E10 v2 asks for '0 FAIL and 0 SKIP' before the submit, so neither the exit code nor the summary can be used as the check.",
+   "evidence": "Measured 20:08Z (read-only): `python tools/e10_port_gate.py --pulled experiments/ext_biohub-harmonic-fusion-v3/dry_2026-09-26 --port experiments/exp63dry_hfv3 --author _dl/hfv3_author_out --version 5` -> 'RESULT: PASS (0 FAIL line(s)); exit code 0' with 3 [SKIP] lines; summary 'csv PASS'. Code: group_status() l.934-936, main() l.973.",
+   "action": "At step 7, require grep -cE '^\\[(FAIL|SKIP)\\]' gate_full.txt == 0 plus rc=0 (in the sequence). Optional before R8: a --strict flag (SKIP counts as FAIL) with 2 tests. Also always pass --version M: without it the version is only an INFO line."
+  },
+  {
+   "id": "R12RT-4",
+   "kind": "plan-issue",
+   "urgency": "today",
+   "what": "Pre-dummy check on the author's own log. Pointing --dummy at the author's output folder runs the dummy-log rules on the author's log before we spend GPU and 25-40 min. If the author's run printed the validator ON, a DEADLINE line or a rewrite, our byte-identical dummy would fail the same way. The same run prints the author's fork count.",
+   "evidence": "20:09Z: `--dummy _dl/hfv3_author_out` -> dummy-log PASS ('VALIDATOR: disabled (BIOHUB_VALIDATOR_ENABLE=0).', 'Validator: enabled=False held_out_samples=0'); author CSV 121,219 nodes / 4 clips / 117,041 edges / 62 forks; author visible run 1,008 s (max log time).",
+   "action": "Step 5 of the sequence. A FAIL there stops the port before the push. Informational only; it replaces no gate."
+  },
+  {
+   "id": "R12RT-5",
+   "kind": "plan-issue",
+   "urgency": "now",
+   "what": "Successor = x138 + a division insertion (our K2 family). E10 v2 V4 would pair it with #37 automatically. Both finals would then carry an insertion-type mechanism and the no-insertion twin would be dropped, which is the objection that rejected SI in round 11. A fork count classifies it cheaply: x138 has 62 forks on the 4 dummy clips and K2 has 74.",
+   "evidence": "CONTEXT l.1517 (insertion on x138: forks 62 -> 74 over the 4 test clips); author CSV of HF v3 = 62 forks (x138 clone); round11/REPORT.md section 1 item 3 (SI keeps the insertion in both finals and loses the insurance); private-read priors C2 P(<0) 0.10-0.15 (CONTEXT 16:04).",
+   "action": "Before the user's v2 OK (and before 27 Sep 12:00 UTC; it is pre-trigger, so not post-hoc), add one line to the PROPOSED v2 text: 'author CSV forks on the 4 dummy clips > 62, or a division-add stage in the diff vs exp56 -> notify and wait, no autonomous port'. Arithmetic: P(successor) 0.05-0.15 x P(division-add family | successor) ~0.3 x P(insertion harms on private) 0.10-0.15 x the loss of the twin insurance (~0.3 P(bronze) in that branch) = ~0.0005-0.002 P(bronze). Small, but it costs nothing if no such successor appears."
+  },
+  {
+   "id": "R12RT-6",
+   "kind": "plan-issue",
+   "urgency": "today",
+   "what": "Two triggers in one window are not covered. V5 only allows a LATER successor with a strictly higher score. Two successors in the same window, or two with equal scores, have no rule.",
+   "evidence": "CONTEXT 17:49 E10 v2 V5 text.",
+   "action": "Fold into v2 before the OK: 'several qualifying successors in one check -> gate all, port the highest page score; equal scores -> notify and wait'."
+  },
+  {
+   "id": "R12RT-7",
+   "kind": "plan-issue",
+   "urgency": "today",
+   "what": "Input drift and blank environment fields. dataset_sources are unpinned refs, so our push uses each dataset's latest version, not necessarily the one behind the author's scored run. Separately, a null or blank docker_image or machine_shape passes the gate (None == None) and would run on the current default environment.",
+   "evidence": "e10_port_gate.py KEEP_KEYS equality l.699-702 (no non-empty check); P4c(1) covers notebook bytes only; the only backstop is the 1% node-count gate on 4 clips.",
+   "action": "Fold into v2 before the OK: 'a source dataset updated after the version-M run date, or a blank docker_image/machine_shape = P3 FAIL'. The check is in step 3 (datasets list -v lastUpdated; the sanitise script prints blanks)."
+  },
+  {
+   "id": "R12RT-8",
+   "kind": "plan-issue",
+   "urgency": "today",
+   "what": "Several small steps are missing from the rule text. (a) No command to restart a stale poller. lb_poll.py writes to a relative path, so it must start in the repo root. (b) No API SELECTED check after the port submit. (c) No 'no retry' line for a port that ERRORs. (d) No handling of a PushNotification that is 'not sent'. (e) The GPU quota is not read at the checks.",
+   "evidence": "experiments/lb_poll/lb_poll.py (LOG = pathlib.Path('experiments/lb_poll/poll.log')); PushNotification doc (desktop only unless Remote Control; skipped when the user is at the terminal); CronCreate doc (fires only when the REPL is idle; up to 15 min jitter; 7-day expiry); CONTEXT l.38 (quota readable only on the Settings page).",
+   "action": "Use the command sequence (0b restart via Start-Process -WorkingDirectory; SELECTED re-check at step 8). Add 'no retry of an errored port' and 'log every not-sent notification' as mechanical lines. At the bedtime brief, ask the user whether phone pushes arrive. Read the quota on the Settings page at the next Chrome check."
+  },
+  {
+   "id": "R12RT-9",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "Failure asymmetry: every failure mode found here, including a dead session, a reboot, a disconnected Chrome, no quota and gate FAIL or SKIP, ends in 'no port' with the ticked finals #37 + #38 unchanged. Only the E10 option is lost. The harmful paths are a WRONG port (fixed by R12RT-1/2/3), an insertion-family port that drops the twin (R12RT-5) and an unnoticed change of SELECTED (R12RT-8b). Expected cost of all the benign failures: P(successor) 0.05-0.15 x P(missed) ~0.2 x +0.1-0.2 P(bronze) = ~0.001-0.006 P(bronze).",
+   "evidence": "Failure-mode table in research/wf_ideas_v4/round12/scan_hyp_redteam_e10.json (19 modes); finals ticked 2/2 (API SELECTED 09:10Z .. 17:09Z).",
+   "action": "No change to the finals. Put the procedure fixes above the 'more checks' items in priority."
+  },
+  {
+   "id": "R12RT-10",
+   "kind": "new-hypothesis",
+   "urgency": "info",
+   "what": "Honest verdict for new ideas: no inference-only or post-processing mechanism on x138 reaches R8 from this lens. Round 11 and the 19:13 combo-oracle already bound every remaining family below the ~+0.012 lab bar: best realistic +0.0004 in-sample, <= 0 out-of-sample. Every finals-strategy variant (SI, {SI, port}, #34 as a final, a lower crowd threshold) is closed. The only useful work before R8 is the procedure hardening above, plus the v2 amendments R12RT-5/6/7, which must go to the user together with the pending v2 OK.",
+   "evidence": "research/wf_ideas_v4/round11/REPORT.md sections 1 and 5; CONTEXT 19:13 COMBO-ORACLE entry; research/KNOWLEDGE/IDEAS.md (I-262, I-281, I-286).",
+   "action": "Put nothing on the build list. Put R12RT-5/6/7 in the same message as the v2 OK question, before 27 Sep 12:00 UTC."
+  },
+  {
+   "id": "R12RT-11",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "Dry-run timing so far (R11-A6 is running). The dry-run kernel was pushed 20:02:44Z and was QUEUED at 20:08:10Z (queue >= 5 min). The author's visible run takes 16.8 min and the author output download ~3 min. Expected trigger to submit-ready: ~35-50 min (pull 1 + gate 1 + author output 1-3 + queue 5+ + run ~17-25 + our output 1-3 + gate 1). So a trigger found at the 29 Sep 00:00 check makes the 01:45 dummy-terminal cutoff (V3) with ~1 h margin.",
+   "evidence": "`kaggle kernels list --mine` 20:08Z; `kernels status` QUEUED 20:08:10Z; _dl/hfv3_author_out log time max 1,007.8 s; file times 23:03-23:06 local.",
+   "action": "The main session records the final dry-run times (COMPLETE time, full gate result with --dummy) in CONTEXT when the run ends. Never submit it."
+  }
+ ],
+ "failure_modes": [
+  {
+   "mode": "pulled version != scored version",
+   "detection": "Page shows 'Version k of M' = the LAST SUCCESSFUL version (amanatar 'Version 1 of 5' vs API current 5 ERROR; anhadmahajan06 'Version 6 of 9' vs API 9). kernels pull writes no version; get_kernel().metadata.current_version_number does.",
+   "response": "Step 2: read current_version_number before and after the pull (same process); require k == M == before == after. Mismatch -> no port.",
+   "covered": "P4b(c) in words ('record the version number'); no mechanical way was named. GAP closed by step 2 (no rule change: it implements P4b(c))."
+  },
+  {
+   "mode": "author re-runs between pull and author-output download",
+   "detection": "kernels output ignores a /version suffix (kaggle 2.2.4 kernels_output never sends it) and serves the LATEST session.",
+   "response": "Download the author output right after the pull; re-read current_version_number after the download; changed -> redo from step 1.",
+   "covered": "Not in the text (P4b(e) says 'the author's output CSV of that version' with no means). Procedure fix only."
+  },
+  {
+   "mode": "private or unlistable source",
+   "detection": "blank '' source in pulled metadata (gate FAIL) or `kaggle datasets files <ref>` error.",
+   "response": "No port (P3 FAIL); notify only.",
+   "covered": "Yes: P4b(b); the loop in step 3."
+  },
+  {
+   "mode": "source dataset updated after the author's scored run (inputs not byte-identical)",
+   "detection": "`kaggle datasets list --user <owner> -s <slug> -v` lastUpdated later than the version-M run; node counts > 1% off on the 4 dummy clips (backstop).",
+   "response": "Proposed: FAIL (P3). Today only the node-count gate catches it, and only if the weights change the 4-clip counts by > 1%.",
+   "covered": "No. dataset_sources are unpinned refs; P4c(1) is about the notebook bytes only. Fold one line into v2 before its OK."
+  },
+  {
+   "mode": "docker pin / machine shape",
+   "detection": "gate KEEP_KEYS equality (docker_image, machine_shape, enable_gpu). x138-family = gcr.io/kaggle-private-byod/python@sha256:37c64f7d... + NvidiaTeslaT4, as our exp58 and the dry run.",
+   "response": "Keep as pulled; never pass --acc to push. Blank/null values pass the gate (None == None) and would give the current default environment -> proposed FAIL (step 3 prints them).",
+   "covered": "Equality yes (P4b(a)); blank/null values no."
+  },
+  {
+   "mode": "GPU quota exhausted or 2-session limit",
+   "detection": "push error text or a fast ERROR status; quota readable only on the Settings page; `kernels list --mine` for running sessions (dry run queued >= 5 min at 20:08Z).",
+   "response": "Quota: no dummy -> no port (V2 0 SKIP), notify. Limit: wait for a free session (queue delay only); never cancel lab kernels for it without the user.",
+   "covered": "Implicitly (no dummy = no port). Quota check not in any preflight; add the Settings-page read to the Chrome check."
+  },
+  {
+   "mode": "Claude in Chrome disconnected",
+   "detection": "tabs_context_mcp fails at the check.",
+   "response": "Notify and wait (no score read, no port). No non-browser score source exists (kernel API has no score; LB CSV gives team scores only).",
+   "covered": "Yes: P4c(7), V7."
+  },
+  {
+   "mode": "stale or dead poller",
+   "detection": "last '=== ' header in poll.log >= 15 min old (step 0 one-liner).",
+   "response": "Restart with Start-Process and -WorkingDirectory = repo root (the script uses a relative log path); submit only after a fresh header.",
+   "covered": "W6 forbids the submit; the restart command is not written anywhere. Procedure fix."
+  },
+  {
+   "mode": "two triggers in one window",
+   "detection": "two NEW/LASTRUN refs with page scores >= threshold in one snapshot.",
+   "response": "Proposed: gate both; port only the higher page score; equal scores -> notify and wait (the user picks).",
+   "covered": "Partly: V5 covers a LATER successor with a strictly higher score; simultaneous and equal-score cases are silent."
+  },
+  {
+   "mode": "successor = x138 + a division insertion (our K2 family) or lowrefine/safetail-like",
+   "detection": "author CSV forks on the 4 dummy clips > 62 (x138 = 62; K2 insertion = 74); diff vs exp56 shows a division-add stage.",
+   "response": "Proposed: notify and wait (no autonomous port). {PORT, #37} would put an insertion-type mechanism in both finals and drop the no-insertion twin - the exact objection that rejected SI in round 11.",
+   "covered": "No. v2 V4 would pair it with #37 automatically."
+  },
+  {
+   "mode": "author output CSV not downloadable (output off, too large, latest session empty)",
+   "detection": "no submission.csv after step 5.",
+   "response": "No port: V2 wants 0 SKIP; the gate gives csv FAIL (not found) or SKIP.",
+   "covered": "Yes (v2 0 FAIL / 0 SKIP; P4b(e))."
+  },
+  {
+   "mode": "gate SKIP",
+   "detection": "grep '^\\[SKIP\\]' in the full gate text.",
+   "response": "Treat any SKIP as FAIL at step 7. The tool exits 0 with SKIPs and its group summary shows 'csv PASS' while '[SKIP] csv: ours' (measured on the dry-run folders at 20:08Z).",
+   "covered": "Rule yes (V2); the tool no. The grep in step 7 closes it; or add a --strict flag (SKIP = FAIL) with a test, before R8."
+  },
+  {
+   "mode": "Kaggle error on the dummy or on the hidden port ('Notebook Exceeded Allowed Compute', 'Notebook Threw Exception', scoring error)",
+   "detection": "kernels status ERROR (dummy); poll.log status ERROR + error_description one-liner (C2 ROW 1) for the port.",
+   "response": "Dummy ERROR -> no port. Port ERROR -> pair stays {#37, #38}; no retry of the same port (a retry lands later in the tie block and is not a new successor).",
+   "covered": "Dummy: implied by P4. Port: V4 (no adopt). Retry: silent -> add 'no retry'."
+  },
+  {
+   "mode": "laptop sleep, reboot, power or network loss",
+   "detection": "gaps in poll.log headers; snapshot fetch FAILED; after a reboot the session and all timers are gone.",
+   "response": "Sleep is 'never' (checked 13:03Z), NoAutoRebootWithLoggedOnUsers=1 (round 10). After a restart: restart the poller, run step 0 at once; a trigger found late is still ported if before 29 Sep 02:00 and all gates pass.",
+   "covered": "Not in the rule text; failure is safe (finals ticked 2/2)."
+  },
+  {
+   "mode": "session dies (timers are session-only)",
+   "detection": "none from inside; the user sees it in the morning.",
+   "response": "Finals stay #37 + #38 (ticked). Only the E10 option is lost. Backups: the user's own reminders (W50, unconfirmed) and a Windows snapshot task (R11-A5, pending the user's answer).",
+   "covered": "Implicitly (no action = default pair)."
+  },
+  {
+   "mode": "timer late or skipped",
+   "detection": "CronCreate doc: fires only while the REPL is idle; recurring jitter up to 10% of the period (3 h -> up to 15 min); 7-day expiry (26 Sep 17:50 + 7 d, fine).",
+   "response": "Accept; a busy turn delays the check. Do not hold the REPL in long foreground work at hh:04 UTC after R8.",
+   "covered": "No; low impact."
+  },
+  {
+   "mode": "notification not delivered",
+   "detection": "PushNotification returns 'not sent' (user at the terminal, notifications off, or no Remote Control -> desktop only).",
+   "response": "Autonomous steps continue (V7); the 'notify and wait' branches wait until the user reads the chat. Log every 'not sent' in CONTEXT.",
+   "covered": "No. Ask the user once at bedtime whether phone pushes arrive."
+  },
+  {
+   "mode": "v2 not OK'd but a 0.954-0.955 successor appears",
+   "detection": "step 0 grep finds no 'E10 v2 ... USER OK' line.",
+   "response": "Threshold stays 0.956: notify only.",
+   "covered": "Yes (the 17:49 entry: without the OK the 09:03 rule stands)."
+  },
+  {
+   "mode": "new submit changes the finals selection",
+   "detection": "SELECTED one-liner right after the submit.",
+   "response": "Expected unchanged (manual picks stay); if not -> PushNotification at once, the user re-ticks.",
+   "covered": "No explicit check after a port submit; add it (step 8)."
+  }
+ ],
+ "command_sequence": "E10 NIGHT PORT - COPY-PASTE SEQUENCE (Git Bash; tools used as they are; every step read-only except PUSH and SUBMIT)\nR=/c/Users/vital/Documents/kAGGLE/Biohub\\ -\\ Cell\\ Tracking\\ During\\ Development ; cd \"$R\"\n\n# 0 PREFLIGHT (every P1 check, ~1 min)\ndate -u\npython tools/e10_snapshot.py; echo \"rc=$?\"\n#   expect: '======== DIFF vs <prev>.txt ========' ... last line 'E10-P1 SNAPSHOT experiments/e10_watch/<YYYYMMDDTHHMMZ>.txt CHANGES=<n>', rc=0.\n#   rc=1 = a CLI call failed after 3 tries: rerun once; still 1 -> no port this window, note it.\npython - <<'EOF'\nimport datetime as d\nh=[l for l in open('experiments/lb_poll/poll.log',encoding='utf-8') if l.startswith('=== ')][-1]\nt=d.datetime.strptime(h[4:24],'%Y-%m-%dT%H:%M:%SZ').replace(tzinfo=d.timezone.utc)\nprint(h.strip(),'age_min=%.1f'%((d.datetime.now(d.timezone.utc)-t).total_seconds()/60))\nEOF\n#   expect age_min < 15. Else 0b.\npython -c \"from kaggle.api.kaggle_api_extended import KaggleApi; from kagglesdk.competitions.types.competition_enums import SubmissionGroup as G; a=KaggleApi(); a.authenticate(); print(sorted(s.ref for s in a.competition_submissions('biohub-cell-tracking-during-development', group=G.SUBMISSION_GROUP_SELECTED)))\"\n#   expect ['56563521', '56563534']\ngrep -n \"E10 v2\" CONTEXT.md | grep -iE \"USER OK|IN FORCE since\"\n#   no line -> the threshold is 0.956 (v1). A 0.954-0.955 successor is then notify-only.\n#   Chrome: mcp tabs_context_mcp must answer. Not connected + a real P2 signal -> PushNotification 'E10: <ref> changed, Chrome disconnected, waiting' and STOP (P4c(7)).\n# 0b POLLER RESTART (PowerShell; lb_poll.py uses a RELATIVE log path, so the working directory matters)\n#   Start-Process -FilePath python -ArgumentList 'experiments/lb_poll/lb_poll.py' -WorkingDirectory 'C:\\Users\\vital\\Documents\\kAGGLE\\Biohub - Cell Tracking During Development' -WindowStyle Hidden\n#   then re-run the age check after ~1 min: expect a new '=== <now>' header, age_min < 2.\n\n# 1 TRIGGER (browser, read-only): on https://www.kaggle.com/code/<A>/<S> record 'Version k of M' and 'Public Score' SC.\n#   Go on only if k == M (the page shows the LAST SUCCESSFUL version: amanatar showed 'Version 1 of 5' while the pull returned v5 ERROR),\n#   SC >= threshold, and the notebook is x138-family. PushNotification 'E10 trigger: <A>/<S> vM public SC; gating now'.\nA=<author>; S=<slug>; M=<M from page>; SC=<score>; STAMP=$(date -u +%Y%m%dT%H%MZ)\nD=experiments/ext_$S/e10_$STAMP ; P=experiments/exp63_succ_$A ; O=_dl/e10_author_$A ; Q=_dl/biohub-exp63-succ-$A\n\n# 2 PULL, VERSION-BOUND (the CLI pull does not write the version; get_kernel carries it)\npython - \"$A\" \"$S\" \"$D\" <<'EOF'\nimport sys,json,hashlib,glob\nfrom kaggle.api.kaggle_api_extended import KaggleApi\nfrom kagglesdk.kernels.types.kernels_api_service import ApiGetKernelRequest\nA,S,D=sys.argv[1:4]; a=KaggleApi(); a.authenticate()\ndef ver():\n    with a.build_kaggle_client() as k:\n        r=ApiGetKernelRequest(); r.user_name=A; r.kernel_slug=S\n        return k.kernels.kernels_api_client.get_kernel(r).metadata.current_version_number\nv0=ver(); a.kernels_pull(f\"{A}/{S}\", path=D, metadata=True); v1=ver()\nnb=glob.glob(D+'/*.ipynb')[0]; sha=hashlib.sha256(open(nb,'rb').read()).hexdigest()\njson.dump({'ref':f'{A}/{S}','version_before':v0,'version_after':v1,'ipynb':nb,'sha256':sha},open(D+'/e10_pull.json','w'),indent=1)\nprint('version_before',v0,'version_after',v1,'sha256',sha[:16])\nEOF\n#   expect version_before == version_after == M. Otherwise: the author pushed meanwhile -> re-read the page; no port on a mismatch.\n#   (metadata.last_run_time from get_kernel is bogus: 2026-09-23 20:04 for every kernel on 26 Sep; never use it.)\n\n# 3 SANITISE METADATA (P4b(a))\nmkdir -p \"$P\" && cp \"$D\"/*.ipynb \"$P\"/\npython - \"$D\" \"$P\" \"$A\" <<'EOF'\nimport json,sys\nD,P,A=sys.argv[1:4]; A=A.lower()\nm=json.load(open(D+'/kernel-metadata.json',encoding='utf-8'))\nbad=[k for k in ('docker_image','machine_shape') if not m.get(k)]\nm.pop('id_no',None); m['id']='vitaliineibauer/biohub-exp63-succ-'+A; m['title']='biohub exp63 succ '+A\nm['is_private']=True; m['enable_internet']=False\nfor k in ('dataset_sources','model_sources','competition_sources'): m[k]=[s for s in (m.get(k) or []) if isinstance(s,str) and s.strip()]\njson.dump(m,open(P+'/kernel-metadata.json','w',encoding='utf-8'),indent=2)\nprint('BLANK docker/machine (proposed FAIL):',bad); print(json.dumps(m,indent=1))\nEOF\n#   expect: BLANK ... [] ; id vitaliineibauer/biohub-exp63-succ-<a>; docker_image gcr.io/kaggle-private-byod/python@sha256:... and machine_shape NvidiaTeslaT4 for x138-family.\nfor r in $(python -c \"import json;print(' '.join(json.load(open('$P/kernel-metadata.json'))['dataset_sources']))\"); do\n  python -m kaggle datasets files \"$r\" >/dev/null 2>&1 && echo \"LISTABLE $r\" || echo \"P3 FAIL $r\"; done\n#   expect LISTABLE for every source (x138 family: 4 pilkwang/anvithpothula datasets). Any 'P3 FAIL' -> no port.\n#   drift (proposed): python -m kaggle datasets list --user <owner> -s <slug> -v  -> lastUpdated must be before the page date of version M.\n\n# 4 STATIC GATE\npython tools/e10_port_gate.py --pulled \"$D\" --port \"$P\" --version $M > \"$P/gate_static.txt\"; echo \"rc=$?\"\ngrep -c '^\\[FAIL\\]' \"$P/gate_static.txt\"; grep '^\\[SKIP\\]' \"$P/gate_static.txt\"\n#   expect rc=0, FAIL count 0, exactly 4 SKIP lines (dummy-log; csv ours; csv author; node-counts). Any FAIL -> no port (log the line).\n\n# 5 AUTHOR OUTPUT + PRE-DUMMY LOG CHECK (before spending GPU)\npython -m kaggle kernels output \"$A/$S\" -p \"$O\" --file-pattern '^submission\\.csv$'\n#   expect 'Output file downloaded to _dl/e10_author_<a>/submission.csv' and 'Kernel log downloaded to _dl/e10_author_<a>/<S>.log'.\n#   The CLI IGNORES a /<version> suffix and always serves the LATEST session: re-run step 2's ver() now; it must still be M.\npython tools/e10_port_gate.py --pulled \"$D\" --port \"$P\" --dummy \"$O\" --author \"$O\" --version $M | grep -E '^\\[(PASS|FAIL|SKIP)\\] (dummy-log|csv)|forks|RESULT'\n#   expect dummy-log PASS on the AUTHOR's own log ('VALIDATOR: disabled (BIOHUB_VALIDATOR_ENABLE=0).', 'enabled=False'), csv PASS,\n#   'N nodes in 4 clips, E edges, F forks'. Record F (x138 = 62 on the 4 dummy clips; K2 = 74). A FAIL here = our dummy would fail too -> stop.\n\n# 6 PUSH PRIVATE DUMMY\npython -m kaggle kernels list --mine --sort-by dateRun --page-size 5 -v    # at most 1 own GPU session running (2-session limit)\npython -m kaggle kernels push -p \"$P\"\n#   expect 'Kernel version 1 successfully pushed.  Please check progress at https://www.kaggle.com/code/vitaliineibauer/biohub-exp63-succ-<a>'\n#   note the version V printed (1 for a new slug). A quota/limit error text -> no port (V2 needs the dummy); PushNotification it.\n#   wait (Monitor until-loop, ~5 min steps): python -m kaggle kernels status vitaliineibauer/biohub-exp63-succ-$A\n#   expect QUEUED (dry run: >= 5 min) -> RUNNING -> 'has status \"KernelWorkerStatus.COMPLETE\"' after ~17-30 min (author visible run 16.8 min).\n#   ERROR -> no port; keep the log.\n\n# 7 DUMMY OUTPUT + FULL GATE\npython -m kaggle kernels output vitaliineibauer/biohub-exp63-succ-$A -p \"$Q\" --file-pattern '^submission\\.csv$'\npython tools/e10_port_gate.py --pulled \"$D\" --port \"$P\" --dummy \"$Q\" --author \"$O\" --version $M > \"$P/gate_full.txt\"; echo \"rc=$?\"\ngrep -cE '^\\[(FAIL|SKIP)\\]' \"$P/gate_full.txt\"; tail -1 \"$P/gate_full.txt\"\n#   expect rc=0, count 0, 'RESULT: PASS (0 FAIL line(s)); exit code 0'. The exit code alone ignores SKIP and the group summary\n#   hides a SKIP when the group also has a PASS ('csv PASS' with '[SKIP] csv: ours'), so the grep count is the V2 check.\n\n# 8 SUBMIT (only if: date -u < 29 Sep 02:00 UTC; poll age < 15 min; SELECTED still the two finals; port #1, or #2 with a strictly higher SC)\npython -m kaggle competitions submit biohub-cell-tracking-during-development -k vitaliineibauer/biohub-exp63-succ-$A -v $V -f submission.csv -m \"probe 39: exp63 = $A/$S v$M verbatim (E10 port, page public $SC)\"\n#   expect 'Successfully submitted to Biohub - Cell Tracking During Development'\npython -c \"from kaggle.api.kaggle_api_extended import KaggleApi; from kagglesdk.competitions.types.competition_enums import SubmissionGroup as G; a=KaggleApi(); a.authenticate(); print(sorted(s.ref for s in a.competition_submissions('biohub-cell-tracking-during-development', group=G.SUBMISSION_GROUP_SELECTED)))\"\n#   expect still ['56563521', '56563534'] (a new submit must not change manual picks; if it does -> PushNotification at once).\n\n# 9 LEDGER\npython tools/runtime_ledger.py --print | grep -n \"exp63\"\n#   expect the new ref with family x138 (token exp63), PENDING; the poller refreshes ledger.md every ~10 min. Keep the poller until the port is\n#   terminal and >= submit + 7.5 h (P7).\n\n# 10 RECORD + NOTIFY\n#   CONTEXT.md dated entry (date -u): ref, version M, page score SC, pull sha256, gate_static/gate_full paths, forks F, submit ref, time.\n#   PushNotification: 'E10 port submitted: probe 39 exp63 = <A>/<S> vM (page SC). Finals unchanged until you re-tick; read ~+7.5 h.'\n#   READ (~+7.5 h): V4 -> PushNotification 'E10 read: port <score>, L_hi <h>; re-tick {port, #37}: yes/no'. The user ticks; the session re-checks SELECTED.\n",
+ "files": [
+  "research/wf_ideas_v4/round12/scan_hyp_redteam_e10.notes.md",
+  "tools/e10_port_gate.py",
+  "tools/e10_snapshot.py",
+  "experiments/exp63dry_hfv3/",
+  "_dl/hfv3_author_out/",
+  "experiments/e10_watch/20260926T2001Z.txt"
+ ]
+}

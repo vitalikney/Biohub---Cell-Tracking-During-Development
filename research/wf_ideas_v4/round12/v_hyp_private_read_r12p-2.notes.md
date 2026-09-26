@@ -1,0 +1,11 @@
+- 2026-09-26T20:43:32Z start R12P-2 skeptic (value+feasibility)
+- Sources read: round12/scan_hyp_private_read.json (R12P-1..8, original full text of R12P-2); CONTEXT l.2288-2301 (16:04Z PRIVATE-READ PREDICTIONS, C1..C4 defs + priors); CONTEXT l.2380-2398 (20:30/20:33/20:34Z user directive: R7 LIFTED, finals = one public-aimed + one private-aimed, public probe ladder on K2 variants tonight); LESSONS_draft s1 l.23 (lowrefine +28 readmits /121,252), s4 items 1-8, s5 table.
+- Determinism: CONTEXT l.1909 / l.796 / l.1574: our kernels are deterministic run to run -> sign rule on displayed differences is valid (not rerun noise).
+- CHECK monotone rounding: a>=b => round(a)>=round(b); so k(a)>k(b) => a>b. Displayed 0 => |a-b|<0.001. Correct.
+- FLAW 1 (exhaustive/overlap): C1>0 & C2=0 matches no row. C1<C2<0 matches both O-D and O-E, no precedence.
+- FLAW 2 (O-D sub-rule): 'C1 >= 0 and C2 < 0 => stack interaction' fails at C1 displayed 0: true C1 could be -0.0008, true C2 -0.0001 -> no interaction proven. Only C1 > 0 (displayed) proves C1_true > 0 > C2_true.
+- FLAW 3 (comparisons of contrasts): each displayed contrast has slop (-1,+1) units, so true(C2-C1) = disp +- <2; an ordering C1<C2 (O-E) is proven only if displayed gap >= 2.
+- FLAW 4 (C3 promotion): lowrefine changes ~0.02% of nodes; a displayed +-1 in C3 is most plausibly a ~1e-4 true effect crossing a rounding boundary (sign true, magnitude tiny). Linking it to promoting items 2-3 (axial localisation / z correction, bar lab >= +0.012) is over-inference; needs |C3| >= 2 or no promotion.
+- FLAW 5 (stale scope): after 20:33Z finals are 'one public-aimed + one private-aimed' and new K2-variant public probes will be scored tonight; table must state that only #34/#35/P36/#37/#38 contrasts are pre-registered and any later file is post-hoc/out of scope.
+- Feasibility: text-only, zero cost, no slot/runtime; R8 not applicable (no mechanism). Gate weak-ish (local git timestamps are editable) but fine internally.
+- Verdict: concept survives (not refuted) but must NOT be recorded verbatim; apply fixes first. Realistic gain 0 score; calibration only.

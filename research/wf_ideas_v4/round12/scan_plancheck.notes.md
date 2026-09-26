@@ -1,0 +1,20 @@
+# round12 plancheck notes
+- 2026-09-26T20:01:25Z start; round12 folder created; HEAD 52410cf
+- 2026-09-26T20:02:21Z dry-run folders: experiments/exp63dry_hfv3 (id vitaliineibauer/biohub-exp63-succ-dryrun-raunakdey07, private, internet off, kernel_sources [], NEVER_SUBMIT.md) + ext_biohub-harmonic-fusion-v3/dry_2026-09-26 (author meta); ipynb md5 76a4f419 all 3 identical; kernel status at 20:02Z = 403 (not pushed yet)
+- 20:04Z R11 verification: origin/main == main == 52410cf; round11/REPORT.md present; ROUND 11 RECORD (l.2342), E10 v2 PROPOSED (l.2352), SESSION TIMERS (l.2362), COMBO-ORACLE (l.2368) all above '## 9. Literature' (l.2380); pytest -q tests 275 passed (55 s); finals ipynb sha 1f1ddb6d/a77bcd6b/55038fd6 unchanged; builder last touched c98242b (13:20 local, before the 13:34Z rebuild check); claude grep main 0 / origin 0; API SELECTED 2/2 [56563534, 56563521] COMPLETE at 20:04:35Z.
+- e10_watch: 1620Z, 1701Z, 2001Z (new, untracked; browser agent wrote it). No duplicate -2 file.
+- CronList (main-session timers): 2bd08ad3 '4 0,3,..,21 27,28,29 9 *' local UTC+3 -> first fire 26 Sep 21:04Z (outside act-window, no-op), acts 27 Sep 12:04Z..29 Sep 00:04Z; tick one-shots 28 Sep 17:57Z, 29 Sep 11:57Z, 29 Sep 17:57Z. All session-only.
+- e10_port_gate static on dry folders (--pulled ext_biohub-harmonic-fusion-v3/dry_2026-09-26 --port exp63dry_hfv3): metadata PASS, notebook-bytes PASS, source PASS; dummy/csv/node SKIP; exit 0.
+- exp56 dummy runtime: log 1138 s (~19 min) + queue.
+- 20:07Z dry kernel vitaliineibauer/biohub-exp63-succ-dryrun-raunakdey07 status QUEUED (pushed ~20:05-20:07Z). HF v3 pulled ipynb md5 76a4f419 == 25 Sep pull == _dl/ext2 (26 Sep 11:26 local): HF v3 latest version unchanged since 25 Sep. P4b(b) sources listable from our account at 20:06Z (4/4 datasets, kaggle datasets files, 1-2 s each).
+- 20:08-20:12Z author-output fetch (scratchpad only): `kaggle kernels output raunakdey07/biohub-harmonic-fusion-v3` full = 216 s, 52 MB (tracking_repo/, secondary_seed_weights/, edge_cache/, jsonl...); with `--file-pattern '^(submission\.csv|run_stats\.csv)$'` = 16 s (log comes anyway). CLI 2.2.4.
+- FACT: HF v3 author submission.csv sha256 d52a5da2... == our exp56 x138-verbatim dummy CSV (byte-identical across accounts and runs; 121,219 nodes / 4 clips / 62 forks). ppsweep_selected.json = base, no overrides.
+- e10_port_gate full run with exp56 as a stand-in dummy + HF v3 author output: all 6 groups PASS, exit 0 (so the gate itself runs end to end; the real dry-run dummy is still QUEUED).
+- 20:13:53Z dry kernel still QUEUED (pushed ~20:02:44Z per redteam notes) -> >= 11 min GPU queue on Sat night; queue time is the variable part of trigger-to-submit.
+- e10_snapshot.py KERNEL_FIELDS = ref,title,author,lastRunTime,totalVotes: no version field -> E10 v2 V2 'first seen (ref + version in an e10_watch snapshot)' is not directly recordable; version only via page or kagglesdk get_kernel current_version_number (redteam fact 20:06Z).
+- cron 2bd08ad3 act window starts 27 Sep 11:30Z; before that P1 depends on the round chain only.
+- MEMORY.md index line for project-lb-probe-approval is stale ('E10 port rule proposed; overlap-consensus line paused'); the memory body is current.
+- Last RESUME POINT is 13:27Z; since then P4c, gate, snapshots, v2 PROPOSED, timers, combo-oracle, dry run.
+- 20:17:07Z preliminary scan_plancheck.json written (10 findings); waiting for the dry kernel to finish (background poll).
+- 20:34:26Z dry kernel COMPLETE (pushed ~20:02:44Z; RUNNING by 20:14:25Z; queue ~11-12 min, run ~20 min, push->COMPLETE ~32 min). 20:34:5xZ first output fetch -> HTTP 429 Too Many Requests (ListKernelSessionOutput), retry pending.
+- 20:41:55Z dry output fetched 20:41:06Z after 429 block (~6 min). Full gate on real dry output + HF v3 author output --version 5: RESULT PASS exit 0, SKIP=0, FAIL=0; dry CSV sha256 d52a5da2 == author == exp56; kernel log 1169 s (19.5 min). Final JSON written (11 findings).

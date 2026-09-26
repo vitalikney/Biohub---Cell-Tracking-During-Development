@@ -1,0 +1,14 @@
+# r12p-3 verify notes (2026-09-26T20:45:06Z)
+- No prior JSON for this task; CONTEXT grep 'R12P-2' / 'transfer table' over all subs = 0 hits (only C1-C4 at CONTEXT l.2288). Idea is new.
+- Pair audit vs experiments/lb_poll/ledger.md + poll.log descriptions:
+  - P29 exp49 / P30 exp50 = exp39 (P20, 0.947) + edge filter. Base is P20, NOT P28 (P28 = exp48 = exp39 + leafprune + insertion, 0.948). P28->P29/P30 would bake in -(leafprune+insertion) => biased negative, H-T contaminated.
+  - P12 exp30 = sjlee + exp03B primary + Z-flip (0.941); its base is P11 (0.944). P16 exp34 = exp29 realised + Z-flip (0.938); its base is P14 (0.947). 'P12->P16' compares two z-flip arms on different primaries = meaningless. Correct: P11->P12 and P14->P16.
+  - P19 exp37 = exp29 realised + axis flips: base P14 (exp29 verbatim, CONTEXT l.287), not 'P29-base' (scan json wording).
+  - P20/P21-23 bases = P14 (exp29 realised; P14 = exp29 verbatim with sweep -> tight55; OK proxy).
+  - P27->P28 insertion lab +0.0019 (199-video CONFIRMATION, CONTEXT l.1306) vs #35/#37 lab +0.0065 = exp60 ins35 6bba only (44b6 +0.0058; pooled ~+0.0063) AND labelled IN-SAMPLE UPPER BOUND (results.md l.74). Denominator mixes OOF-ish and in-sample numbers. No K2-stack insertion lab exists; +0.0065 for P38->P37 is borrowed.
+- r_priv arithmetic: denominator 0.0149; displayed deltas are integers of 0.001 with per-delta rounding error in (-1,+1) thousandth -> sum error up to +-3 -> r uncertainty up to +-0.2 while r is ~0.07-0.2. Possible r values 0, .067, .134, .201, .268 -> bar .02(clip)/.02/.015/.010/.0075: the bar is set by rounding.
+- SIGN BUG: if sum of the three private deltas < 0 (insertion hurt on private), r_priv < 0, 0.002/r < 0, clip to [+0.004,+0.02] -> +0.004 = the MOST lenient bar. Also sum 0 with non-zero parts (-1,0,+1) -> division by zero, rule only covers 'all 0'.
+- Known confound ignored: #35 latency (6.72,7.73] h vs its 7.5 h x138 deadline -> possible degrade lowers #35 (scan_hyp_private_read.json R12P-1). Enters r_priv numerator one-sided.
+- H-T counts displayed 0 as '<= 0'; public reads for T were already 0/negative for all 5 (LESSONS s1) -> P(H-T pass) ~0.9, near-vacuous. Displayed 0 is uninformative (R12P-1 rule).
+- Feasibility: text-only CONTEXT append, no kernel, no slot, no finals effect: trivially fits R1-R10. Value to the score: 0 (post-deadline calibration only).
+- 2026-09-26T20:46:53Z final JSON written (refuted=true, spec defects; fix = corrected pairs + interval r).
