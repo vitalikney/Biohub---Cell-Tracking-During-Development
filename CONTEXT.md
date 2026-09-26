@@ -2332,6 +2332,13 @@ Mention it to the user in one line (R9-A8 item 6).
   P(gold) ~0, P(no medal) ~0.3 (mostly: both finals below X -> below all ~350 copies, rank > ~650; or the bronze line
   lands inside the x138-variant crowd above us). Main drivers: insertion transfer to the private embryos (lab + on both
   train embryos: 44b6 +0.0058, 6bba +0.0065), growth of the >= 0.954 group, shake-up of public-tuned 0.955-0.957 teams.
+- 2026-09-26 17:00 UTC, USER OK ("хорошо") to the SUCCESSOR-SCENARIO PLAN (no rule change yet): the E10 rule covers only a public successor
+  with its own score >= 0.956; a public 0.954-0.955 successor is not covered, yet it is the bigger medal risk (crowd
+  copies tie on private above us; a late verbatim port sits at the bottom of its copy block because ties go to the earlier
+  submission). Plan: round 11 (started early, ~17:05 UTC) analyses thresholds, 'successor + our insertion' feasibility on
+  the builder, the finals-pair read table and the timeline; if feasible, contingency tooling is prepared before any
+  trigger (finals unaffected, byte-identical rebuild check); then ONE short pre-registered rule (E10 v2) goes to the user
+  for a separate OK. Until that OK the E10 PORT RULE (P1-P8, P4b, P4c) stays exactly as recorded.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
