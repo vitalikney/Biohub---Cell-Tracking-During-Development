@@ -2175,3 +2175,7 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
     branch B (no insertion): drop --patch divinsert and $K.
   Dummy gates as in FINAL_REPORT.md section e (K1 sha256 == exp57b dummy CSV; FD: 'DEADLINE' on dataset 1, insertion skipped,
   safe divisions + linefit counters > 0; FF: 'DIVINS FAILED' on every clip, CSV == exp56 dummy).
+- 2026-09-26 09:40 UTC, cloud check-in (scheduled research day 2): all five NEXT_RESEARCH.md questions were already answered
+  by the local chat overnight (runtime clean, branch A, exp60 riders closed, K2 #37 = 0.954 above the x138 block, finals
+  ticked); cloud recorded them in research/wf_ideas_v3/day2_findings.md and schedules no further check-in (budget); open
+  lines stay with the local chat.
