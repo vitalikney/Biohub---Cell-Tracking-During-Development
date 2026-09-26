@@ -2126,6 +2126,7 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   G-LB: K6 submitted once (before the R8 cutoff 27 Sep 12:00 UTC). K6 replaces K2 as F1 iff G-A, G-P(ERROR), G-B, G-D
       pass AND K6 scores without error, R5-admissible (9.5 h) and public >= 0.954; F2 stays the twin #38. Otherwise
       the finals stay #37 + #38. The E10 successor watch keeps priority if it triggers.
+- 2026-09-26 08:58 UTC: OVERLAP-CONSENSUS line PAUSED by the user ("стой, дождёмся куратора") right after its gates were recorded; nothing built, pushed or submitted. Resume only on the user's word after the round-7 curator report.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
