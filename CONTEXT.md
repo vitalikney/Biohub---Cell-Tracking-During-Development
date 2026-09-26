@@ -2547,6 +2547,79 @@ Mention it to the user in one line (R9-A8 item 6).
   6bba -0.00052), div 25/35/74, W/L 1/4, boot 90% -0.00125..-0.00011; its 85 extra insertions: 0 TP / 4 FP / 81 unannotated.
   cap 5 -0.00015, cap 8 +0.00003 (44b6 -0.00079). RULE -> exp70b (K2 + forkmid 4.5; dummy clean: 121,252 nodes, 74 forks,
   sha ed7101bf) goes at 00:05 UTC 27 Sep; exp70g is not submitted.
+- 2026-09-26 22:46 UTC, E10 PROCEDURE HARDENING (R12-A4; mechanical, no rule change; tools unchanged; applies to any port under v1 or v2)
+  (1) VERSION BINDING, fail-closed (R12RT-1 merged with the R12RT-2 skeptic). The author's `kaggle kernels status <ref>`
+  must be COMPLETE; RUNNING, QUEUED or ERROR means a newer session exists, so notify and wait or restart from the
+  trigger. The page must read 'Version k of M' with k == M (browser). Also check
+  get_kernel().metadata.current_version_number == M before and after the pull. That check is supplementary only, because
+  the value does not move when a newer version errors. The script exits 1 on any mismatch and writes <pull
+  dir>/e10_pull.json {M, page_k, version_before, version_after, sha256 S1, author status, author forks, utc}. (2) AUTHOR
+  OUTPUT: fetch it once, right after the static gate, with `kaggle kernels output <ref> -p _dl/<name> --file-pattern
+  '^(submission\.csv|run_stats\.csv)$' -o`. Never append /N; it is ignored. Then re-pull the source into a temp folder
+  and require sha256 == S1 with status still COMPLETE. Otherwise discard the CSV and restart. (3) AUTHOR-LOG PRE-CHECK
+  (R12RT-4): before the push, run the gate with --dummy pointed at the author output. The result is information only,
+  but a FAIL stops the port before any GPU time is spent. (4) FULL GATE: require rc == 0 AND `grep -cE
+  '^\[(FAIL|SKIP)\]' gate_full.txt` == 0 AND exactly one '[INFO] metadata: author version: M' line. Always pass
+  --version M. No --strict flag tonight. (5) 429: during a trigger, only the port session calls kernels output or
+  ListSubmissions. Retry with 60 s backoff for up to 20 min and log each try. If the limit persists, notify and wait
+  (the strict P8 default). (6) SUBMIT GUARD: print the ref. Refuse any ref containing 'dryrun' and any folder with
+  NEVER_SUBMIT.md. Re-check API SELECTED after the submit. Do not retry an errored port. Log every PushNotification that
+  comes back not-sent. Restart the poller with Start-Process -WorkingDirectory <repo root>, because lb_poll.py writes
+  relative paths. (7) Only if v2 is OK'd: port slug biohub-exp63-succ-<author>-v<M> (it still passes the gate prefix);
+  message token exp63, or exp63b for a second port.
+- 2026-09-26 22:46 UTC, PRIVATE-READ PRE-REGISTRATION v2 (R12-A9; calibration only, never a finals input; written before any private score; supersedes the 26 Sep 16:04 UTC contrasts where they differ)
+  (a) CONFOUND (R12P-1): #35 has L in (6.72, 7.73] h, so it may have crossed x138's own 7.5 h deadline, which can only
+  LOWER #35. That biases C1 down and C4 up. C1 > 0 and C4 <= 0 are clean reads; C1 <= 0 and C4 > 0 are ambiguous. The C1
+  prior P(<0) becomes 0.12-0.18. (b) OUTCOME TABLE, first match wins, over displayed contrasts in thousandths. (i) C2<0
+  & C1>0: stack interaction (lowrefine suspect). (ii) C2<0: the insertion is embryo-specific on the finals stack; demote
+  item 6. (iii) C1>0 & C2>0: promote item 6. (iv) C2>0 & C1<=0: clean on K2, C1 unresolved. (v) C1>0 & C2=0: weak, no
+  promotion. (vi) C1<0 & C2=0: #35 degrade or harm, not separable. (vii) C1=C2=0: uninformative. Ordering C1 against C2
+  needs |C2-C1| >= 2. C3 promotes or demotes only at |C3| >= 2. C4 <= 0 closes leaf prune; C4 > 0 is ambiguous. SCOPE:
+  only #34, #35, P36, #37 and #38 are pre-registered. Every file submitted after 26 Sep 20:33Z (the ladder, new finals)
+  is outside the table and post-hoc. (c) RANK CALIBRATION (R12P-3 amended): our result = the max over the pair actually
+  SELECTED at 29 Sep 20:00Z, each file with its own submit time. If that pair is not {#37, #38}, re-issue a dated
+  forecast before 29 Sep 23:59Z or label the read 'forecast was for a different pair'. Tie read, three cases: above
+  every earlier exact copy -> max > X; between the earlier and the later copies -> = X; below the whole run -> < X. The
+  margin read is replaced by the unrounded-order read: the fraction of public-0.955-0.957 teams ranked above the X copy
+  run, plus their median rank change. One draw, no rule. (d) PROCEDURE (R12P-4 amended): F = API SELECTED after 20:00Z.
+  Read list: #34 56545267, #35 56545786, P36 56555189, #37 56563521, #38 56563534, plus every probe from 26 Sep 20:33Z
+  on. Take a public LB snapshot on 29 Sep ~23:00-23:45Z with `python -m kaggle competitions leaderboard
+  biohub-cell-tracking-during-development -d -p experiments/private_read/`, rename it with a timestamp, and allow 3
+  retries with 60-120 s backoff. From 30 Sep 00:15Z, hourly: call competition_submissions(..., page_size=100), fail
+  loudly on a missing ref, and cross-check with the CLI using --page-size 100. Board check: our Score == max over F AND
+  the top-50 differs from the 23:30Z snapshot; otherwise use the Private tab, read-only. Compute the medal lines from N,
+  then C1-C5 and I. Report both reads: at first publication and after cleanup. (e) WHOLE-HISTORY TRANSFER TABLE (r12p-3
+  corrected): E = {P27->P28, P34->P35 (degrade flag), P38->P37, P28->P31}; T = {P20->P29, P20->P30, P14->P20, P11->P12,
+  P14->P16, P14->P19, P14->P21/22/23}; N = {P31->P32, P28->P33, P35->P36 (flag)}. Only non-zero displays count. H-E: at
+  least 2 non-zero E > 0 and none < 0. H-T: negatives outnumber positives among the non-zero T; not read with fewer than
+  3 non-zero. Report r as the interval [(S-k)/D, (S+k)/D], with and without P34->P35. Bar: 0.002/lower end (floor 0.004)
+  if the lower end > 1/6; +0.02 or learning only if the upper end < 1/6 or S <= 0; otherwise 1/6. Never divide by S <=
+  0. Calibration only. (f) One conditional late-sub arm (R12P-5 merged): K1 exp58t v1, no rebuild, only if C1 <= 0 and
+  C2 > 0 at 3 dp. It needs its own user OK on 30 Sep.
+- 2026-09-26 22:46 UTC ===== RESUME POINT (supersedes the 26 Sep 13:27 UTC block; read this and every dated entry after it) =====
+  FINALS TICKED 2/2 = [56563521 #37 K2 exp58 0.954, 56563534 #38 twin exp58n 0.953]; API SELECTED 2/2 at 20:04Z. The user
+  re-ticks by 29 Sep 20:00 UTC only if the pair rule changes the pair; the session checks SELECTED (timers 012fa6dd,
+  328f7392, 18ff4796).
+  USER DECISIONS 26 Sep: 16:49 full research rounds until R8; 20:33 public-knob-ladder ban lifted, "one final for public,
+  one for private", read the discussion; 20:34 autonomous night. Pending user answers: E10 v2 (>= 0.954, lapses 27 Sep
+  12:00 UTC), R8 cap for the last ladder submit (default 29 Sep 02:00 UTC, not 11:00), retrain exp71 (push blocked by the
+  permission classifier until an explicit yes), laptop/session until 29 Sep 20:00 UTC, own alarms.
+  PAIR RULE = INSERTION HEDGE (L9 20:49 UTC + reconciliation 21:31 UTC): no eligible variant -> {#37, #38}; K2 knob
+  variant V* displaying >= 0.955 (COMPLETE, L_hi <= 9.0 h, its single knobs >= 0.954) -> {V*, #38}; E10 port without
+  insertion -> {PORT, #37}; retrain exp72 competes with V* for the insertion slot, #38 stays. Never two byte-identical
+  files, never a non-COMPLETE file, never #34/#35/P36/dryrun/NEVER_SUBMIT refs.
+  LADDER: probe 39 exp70e 56589025 (21:15Z), probe 40 exp70a 56589065 (21:17Z), probe 41 exp70d 56589423 (21:38Z), scores
+  ~04:45-05:15 UTC 27 Sep; exp70b (forkmid 4.5) at 00:05 UTC 27 Sep; exp70g (cap 6) dropped (lab -0.00057). Informed combos
+  ~08:00 UTC 27 Sep from POSITIVE singles only; stop after two rungs without a better display; >= 2 slots reserve.
+  E10: v1 IN FORCE (>= 0.956, P1-P8, P4b, P4c, R12-A4 hardening); v2 PROPOSED. Snapshots experiments/e10_watch/ (only the
+  round's browser agent or timer 2f0d1fa1 runs tools/e10_snapshot.py). Gate usage: author status COMPLETE, page k == M,
+  tools/e10_port_gate.py rc 0 AND 0 [FAIL]/[SKIP] lines, --file-pattern for outputs, 429 backoff 60 s. The dry-run kernel
+  vitaliineibauer/biohub-exp63-succ-dryrun-raunakdey07 is NEVER submitted.
+  TIMERS (session-only): 2f0d1fa1 E10 P1 every 3 h; c7cd2e6b morning push ~07:30 UTC 27 Sep; bb224de9 final LB snapshot 29 Sep
+  ~23:27 UTC; research rounds every ~2.5 h via bash timers (round 13 running since 22:45 UTC).
+  POLLER experiments/lb_poll/lb_poll.py runs until 29 Sep 20:00 UTC; before any submit the last poll.log header must be
+  < 15 min old and not a 429 line. Tests: `python -m pytest -q tests` (308). Git: commit as the user, no trailer, claude
+  grep 0 before any push; never merge old worktree branches.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
