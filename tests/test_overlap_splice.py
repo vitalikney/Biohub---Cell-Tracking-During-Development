@@ -178,7 +178,26 @@ def test_short_fragments_dropped_without_change():
     a = background(G()).g()
     b = background(G(OFF_B)).track("f", (5, 6), 10, 80, 95).g()  # a 2-node track only B has
     a2, b2, st = S.splice_pair(a, b, SHAPE, SHAPE, OFF_B, {"node_cap_frac": 1.0})
+    assert a2 is a and b2 is b and st["skipped_fragment"] == 1 and st["spliced"] == 0
+    a2, b2, st = S.splice_pair(a, b, SHAPE, SHAPE, OFF_B, {"node_cap_frac": 1.0, "fragment_policy": "drop"})
     assert a2 is a and b2 is b and st["fragment_nodes_dropped"] == 2 and st["spliced"] == 0
+    with pytest.raises(ValueError):
+        S.splice_pair(a, b, SHAPE, SHAPE, OFF_B, {"fragment_policy": "keep"})
+
+
+def test_fragment_rollback_keeps_receiver_track():
+    # A (receiver, x 95 near its border) has a 3-node track t 5..7; B (owner) only t 5..6. Component {A6, A7, B6}:
+    # B's version imports B6 linked to the agree seam A5 -> a 2-node fragment. Default: roll the component back
+    # (result == input); 'drop': the fragment is dropped and A6, A7 stay deleted (pure deletion, the old behaviour).
+    a = background(G()).track("t", (5, 6, 7), 10, 50, 95).g()
+    b = background(G(OFF_B)).track("t", (5, 6), 10, 50, 95).g()
+    a2, b2, st = S.splice_pair(a, b, SHAPE, SHAPE, OFF_B)
+    assert st["components"] == 1 and st["owner_b"] == 1
+    assert a2 is a and b2 is b and st["skipped_fragment"] == 1 and st["spliced"] == 0
+    assert st["nodes_removed"] == 0 and st["fragment_nodes_dropped"] == 0
+    a2, _, st = S.splice_pair(a, b, SHAPE, SHAPE, OFF_B, {"fragment_policy": "drop"})
+    assert st["spliced"] == 1 and st["nodes_removed"] == 2 and st["nodes_added"] == 0
+    assert len(a2[0]) == len(a[0]) - 2 and degrees_ok(*a2)
 
 
 def test_receiver_edges_leaving_the_overlap_block_the_splice():

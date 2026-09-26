@@ -27,7 +27,10 @@ For one accepted pair (A, B) with offset d (B's node p sits at p + d in A's coor
         non-owner score, e.g. 3) and max_nonowner (e.g. 8); a third registered copy with a better score (with 3+
         copies the argmax owner decides; that copy's own pairs carry the splice); any in-degree > 1 or new fork after
         the tentative splice (rolled back);
-  (vii) imported nodes that end in a weakly connected component shorter than min_fragment (3) nodes are dropped.
+  (vii) imported nodes that would end in a weakly connected component shorter than min_fragment (3) nodes:
+        fragment_policy 'rollback' (default) rolls the whole component back (the receiver keeps its version,
+        skipped_fragment); 'drop' deletes only those imported nodes and keeps the rest of the splice (the receiver's
+        component nodes stay deleted -> pure deletion possible; net-harmful on adversarial synthetic scenes).
 Identity: no pair, no overlap node, or no applicable component -> the input objects are returned unchanged.
 Pure python + numpy + scipy.optimize.linear_sum_assignment.
 """
@@ -46,10 +49,10 @@ NODE_CAP_FRAC = 0.005
 MIN_FRAGMENT = 3
 DEFAULTS = {"match_um": MATCH_UM, "group_um": GROUP_UM, "margin_um": MARGIN_UM, "node_cap_frac": NODE_CAP_FRAC,
             "min_fragment": MIN_FRAGMENT, "min_gap": None, "max_nonowner": None, "scale_um": SCALE_UM,
-            "mark_key": None}
+            "mark_key": None, "fragment_policy": "rollback"}
 COUNTERS = ("pairs", "overlap_nodes_a", "overlap_nodes_b", "matched", "agree", "components", "owner_a", "owner_b",
             "spliced", "spliced_into_a", "spliced_into_b", "skipped_fork", "skipped_boundary", "skipped_cap",
-            "skipped_gap", "skipped_nonowner", "skipped_third", "skipped_invariant", "nodes_removed", "nodes_added",
+            "skipped_gap", "skipped_nonowner", "skipped_third", "skipped_invariant", "skipped_fragment", "nodes_removed", "nodes_added",
             "edges_removed", "edges_added", "edges_dropped_outside", "fragments_dropped", "fragment_nodes_dropped")
 
 
@@ -389,9 +392,14 @@ def _splice_component(comp, owner: str, info, W: dict, off, cfg, budget: dict, n
             wr.rollback()
             st["skipped_invariant"] += 1
             return
-    # (vii) drop imported nodes left in weakly connected components shorter than min_fragment
+    # (vii) imported nodes left in weakly connected components shorter than min_fragment
     frag_nodes = 0
     new_ids = set(new_id.values())
+    if cfg["fragment_policy"] == "rollback":
+        if any(wr.wcc_size(nid, cfg["min_fragment"]) < cfg["min_fragment"] for nid in sorted(new_ids)):
+            wr.rollback()
+            st["skipped_fragment"] += 1
+            return
     for nid in sorted(new_ids):
         if nid in wr.nodes and wr.wcc_size(nid, cfg["min_fragment"]) < cfg["min_fragment"]:
             seen, stack = {nid}, [nid]
@@ -436,6 +444,8 @@ def splice_pair(ga, gb, shape_a, shape_b, offset, cfg: dict | None = None, budge
     third(comp_positions_in_A_coords) -> best mean score of any OTHER registered copy covering them, or None.
     -> (ga', gb', stats); unchanged inputs are returned as the same objects."""
     cfg = {**DEFAULTS, **(cfg or {})}
+    if cfg["fragment_policy"] not in ("rollback", "drop"):
+        raise ValueError(f"fragment_policy {cfg['fragment_policy']!r} not in ('rollback', 'drop')")
     st = {k: 0 for k in COUNTERS}
     st["pairs"] = 1
     na, nb = names
@@ -518,7 +528,8 @@ def splice_all(graphs: dict, shapes: dict, pairs: list, cfg: dict | None = None,
             total[k] += st[k]
         if log is not None:
             log(f"OVERLAPCONS pair {a} {b} off {list(off)}: comps {st['components']} spliced {st['spliced']} "
-                f"(fork {st['skipped_fork']} bnd {st['skipped_boundary']} cap {st['skipped_cap']}) "
+                f"(fork {st['skipped_fork']} bnd {st['skipped_boundary']} cap {st['skipped_cap']} "
+                f"frag {st['skipped_fragment']}) "
                 f"nodes +{st['nodes_added']}/-{st['nodes_removed']}")
     total["videos_changed"] = sum(1 for n in graphs if out[n] is not graphs[n])
     total["net_nodes"] = {n: budget["used"][n] for n in graphs if budget["used"][n]}
