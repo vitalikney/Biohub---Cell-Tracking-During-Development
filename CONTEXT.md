@@ -2447,6 +2447,10 @@ Mention it to the user in one line (R9-A8 item 6).
   55 forks vs 75), log: Traceback 0, REPAIR FAILED 0, DEADLINE: 0, leaf prune 0.3 and DC 0.30 applied, DIVINS ENABLED 5
   models, dummy run ~1,464 s (K2 ~1,512 s). Poll header 21:08:29Z (< 15 min). Ledger: exp70* -> family safetail (+ test).
   2 slots left today; exp70a/exp70d next when COMPLETE; exp70b at 00:05Z.
+- 2026-09-26 21:17 UTC, SUBMIT probe 40 = exp70a (K2 + leaf prune 0.3; ladder L1, class A), ref 56589065 at 21:17:47Z, kernel vitaliineibauer/biohub-exp70a-k2-lp30 v1.
+  Dummy: validate_csv ok (121,719 nodes vs K2 122,252; forks 75 = K2), Traceback 0, REPAIR FAILED 0, DEADLINE: 0, leaf
+  prune on 4 clips, DIVINS ENABLED; run ~1,629 s. Poll header 21:08:29Z. exp70b dummy pushed 21:17Z (for 00:05Z); exp70d
+  running (last slot today).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
