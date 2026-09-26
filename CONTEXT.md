@@ -2531,6 +2531,11 @@ Mention it to the user in one line (R9-A8 item 6).
   acts only if the newest e10_watch snapshot is > 2 h 30 min old, until 29 Sep 00:30 UTC); c7cd2e6b = morning push + brief
   ~07:30 UTC 27 Sep; bb224de9 = final public LB snapshot 29 Sep ~23:27 UTC. Tick checks 012fa6dd / 328f7392 / 18ff4796 stay.
   Builder --patch secswap committed (ea5637e; 308 tests; finals + ladder rebuild byte-identical) for exp72.
+- 2026-09-26 21:38 UTC, SUBMIT probe 41 = exp70d (K2 + DeepCenter safe-div 0.30; ladder L2, class B), ref 56589423 at 21:38:33Z
+  (kernel vitaliineibauer/biohub-exp70d-k2-dc030 v1). Dummy: validate_csv ok, 121,240 nodes, 55 forks (K2 dummy 121,252 / 75),
+  CSV sha ab8a7ec5 != K2 b6de85c1; Traceback / FAILED / DEADLINE: / FALLING BACK 0; LOWREFINE lines present; DC 0.3 printed;
+  run ~1,320 s. Poll header 21:28:33Z, no 429. 0 slots left on 26 Sep. CORRECTION (arithmetic in the probe 39/40 entries):
+  the K2 dummy has 121,252 nodes (not 122,252), exp70e 120,707 (not 121,707) and exp70a 120,719 (not 121,719).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
