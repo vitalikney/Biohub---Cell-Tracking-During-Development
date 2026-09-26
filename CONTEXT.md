@@ -2527,6 +2527,10 @@ Mention it to the user in one line (R9-A8 item 6).
   likely: note it and weigh the slot. It does not prove identity on the hidden set. The ref contains no 'dryrun', and
   its folder has no NEVER_SUBMIT.md. API SELECTED is re-read after the submit; it stays [56563521, 56563534] until the
   user re-ticks.
+- 2026-09-26 21:33 UTC, TIMERS REPLACED (R12-A6; session-only, die with the session): 2bd08ad3 -> 2f0d1fa1 (E10 P1 every 3 h at hh:04 UTC,
+  acts only if the newest e10_watch snapshot is > 2 h 30 min old, until 29 Sep 00:30 UTC); c7cd2e6b = morning push + brief
+  ~07:30 UTC 27 Sep; bb224de9 = final public LB snapshot 29 Sep ~23:27 UTC. Tick checks 012fa6dd / 328f7392 / 18ff4796 stay.
+  Builder --patch secswap committed (ea5637e; 308 tests; finals + ladder rebuild byte-identical) for exp72.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
