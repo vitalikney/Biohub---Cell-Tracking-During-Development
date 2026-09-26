@@ -2298,6 +2298,23 @@ Mention it to the user in one line (R9-A8 item 6).
   rank-vs-0.953-block reading (rivals' private = max of their own two files; the block is not all x138 copies); if one
   is reported anyway, compare only with the identifiable late x138-copy windows and label it confounded. Copied into
   research/wf_ideas_v4/round9/LESSONS_draft.md s5 (with the R10-A5 text fixes a-g).
+- 2026-09-26 16:30 UTC, E10 PORT GATE BUILT (R10-A3) + P4c(3) WORDING FIX (mechanical, written before any trigger, within the 09:10 UTC
+  conditional yes): tools/e10_port_gate.py (read-only: no network, no subprocess, no file writes; imports
+  dummy_gates.validate_csv unchanged) + tests/test_e10_port_gate.py (72 tests). Checks: metadata (P4b(a), blank sources,
+  kernel_sources == []), notebook bytes (P4c(1)), source (P4c(3)), dummy log (P4c(5)), CSV (validate_csv + duplicate
+  (dataset, node_id) + finite x/y/z), per-clip node counts within 1%. Results: x138 (experiments/ext_x138) + exp56 dummy
+  (_dl/biohub-exp56-x138-verbatim) -> PASS, exit 0; amanatar v10 -> FAIL, exit 1 (L121 validator '1'; L6583 deadline
+  override to os.environ.get('BIOHUB_REWRITE_DEADLINE_S', '30600'); 80 new sweep/rewrite code hits); exp56 used as a port
+  folder fails only on the id prefix. `python -m pytest -q tests`: 275 passed (184 + 19 snapshot + 72 gate).
+  P4c(3) WORDING FIX: x138 v1 itself carries a validator-gated, dormant sweep/rewrite block (BIOHUB_PPSWEEP_* at L63-64,
+  PP_SWEEP_KEYS, 'Re-writing submission.csv' at L4831, os.environ["BIOHUB_" + key] at L4838; all off with
+  BIOHUB_VALIDATOR_ENABLE=0). So "no pass-2 rewrite, REWRITE/PPSWEEP/SWEEP gate or in-kernel metric sweep" means: none
+  BEYOND x138 v1's own dormant block. The gate passes a marker hit in code only if it is a copy of an x138 v1 code line
+  (reference experiments/ext_x138/biohub-x138.ipynb, sha256 6b655e39...; each baseline line passes at most as often as
+  it occurs in x138); any other code hit fails. The dummy log must still show the validator disabled and no sweep or
+  rewrite lines (P4c(5)). Also: a literal 27000.0 counts as 27000 (the reader applies float()); any use of the validator
+  or deadline key that cannot be checked statically fails. Not checked offline: whether every source is public and
+  listable from our account (P4b(b)); do that with the CLI at a trigger.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
