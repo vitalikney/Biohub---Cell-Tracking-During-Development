@@ -8494,3 +8494,5 @@ ref,fileName,date,description,status,publicScore,privateScore
 
 56145113,submission.csv,2026-09-10 13:28:18.870000,"probe 11: sjlee101 lf-dctta-v020 (public 0.947 TTA stack) + PRIMARY := exp03B, validator off",SubmissionStatus.COMPLETE,0.944,
 
+=== 2026-09-26T20:36:50Z [empty stdout, rc=1, stderr='429 Client Error: Too Many Requests for url: https://api.kaggle.com/v1/competitions.CompetitionApiService/ListSubmissions'] [empty stdout, rc=1, stderr='429 Client Error: Too Many Requests for url: https://api.kaggle.com/v1/competitions.CompetitionApiService/ListSubmissions'] [empty stdout, rc=1, stderr='429 Client Error: Too Many Requests for url: https://api.kaggle.com/v1/competitions.CompetitionApiService/ListSubmissions']
+

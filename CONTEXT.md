@@ -2394,6 +2394,16 @@ Mention it to the user in one line (R9-A8 item 6).
   waits for the reach0955 plan (feasibility and timeline).
 - 2026-09-26 20:34 UTC, USER (chat: "делай. я спать. работай в автономном режиме. ресерчеров не забывай запускать"): autonomous night; execute the
   reach0955 plan (tonight's slots before 00:00 UTC, then 27 Sep), keep research rounds every ~2.5 h, E10 checks, poller.
+- 2026-09-26 20:48 UTC, E10 PORT DRY RUN DONE (R11-A6; raunakdey07/biohub-harmonic-fusion-v3 = x138 without comments; never submitted;
+  private kernel vitaliineibauer/biohub-exp63-succ-dryrun-raunakdey07, folders experiments/exp63dry_hfv3 (NEVER_SUBMIT.md)
+  and experiments/ext_biohub-harmonic-fusion-v3/dry_2026-09-26): pull 2 s (notebook sha256 9ab32885..., version not
+  exposed by the CLI - read it on the page); 4 sources listable 7 s; sanitised metadata; static gate PASS 1 s; push
+  20:02:39Z -> COMPLETE 20:35:18Z (~33 min incl. queue); author output (52 MB) ~3 min; OUR output download hit HTTP 429
+  'Too Many Requests' on kernels output from 20:35 to 20:47Z (several agents were using the API), so the full gate first
+  FAILED closed (missing files - correct behaviour); after the retry: full gate PASS (metadata, notebook bytes, source,
+  dummy log, CSV, node counts), our CSV sha256 == author CSV (d52a5da2... = exp56 dummy). Trigger-to-submit-ready ~45 min
+  without rate limits, ~60 min with them. PROCEDURE FIX: at a trigger pause other Kaggle-API agents, retry 429s with 60 s
+  backoff (kernels output is the sensitive endpoint), and never read a gate FAIL on missing files as a content failure.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
