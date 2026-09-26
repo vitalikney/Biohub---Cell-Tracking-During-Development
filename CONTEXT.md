@@ -2365,6 +2365,18 @@ Mention it to the user in one line (R9-A8 item 6).
   tick checks 012fa6dd (28 Sep 17:57 UTC), 328f7392 (29 Sep 11:57 UTC, with a push reminder), 18ff4796 (29 Sep 17:57 UTC,
   push). Research rounds keep their own bash timers (round 12 at 20:00 UTC). The round prompt now tells the plan-check
   agent to read the newest experiments/e10_watch/ file instead of running the snapshot (R11-A8).
+- 2026-09-26 19:13 UTC, COMBO-ORACLE MEASUREMENT (user question 'maybe the three together give +0.01?'; workflow wf_872c8805-5e6, 10 agents,
+  2 skeptics per measurement; research/wf_ideas_v4/combo_oracle/; info only, no decision). exp60 ins35 bed (56 clips,
+  ALL 0.93988, div 25/31/74), all edits on one graph. JOINT ORACLE like-for-like (GT removal of every FP fork + perfect
+  gated orphan attach + link oracle without swaps): +0.01428 pooled (44b6 +0.0086, 6bba +0.0146; div 32/0/67; W/L 27/3);
+  singles sum 0.01276, so +0.0015 super-additive through the division Jaccard denominator (130 -> 99). Round 11's
+  'linking <= +0.003' measured +0.0011. Wider oracles: with swap relinks +0.0206; wide orphan pool (26 TP) +0.035..+0.041,
+  but the skeptics judged swaps a GT identity jump or an offset detection (not actionable). BEST REALISTIC combination
+  (forkmid 4.5 -> flow link R8 -> mirror attach res 1.0, knobs picked in-sample): +0.00039 (44b6 0.0000, 6bba +0.0004;
+  W/L 3/2; boot 90% -0.0008..+0.0020) = ~3% of the oracle; out-of-sample <= 0 (leave-one-clip -0.0004, cross-embryo
+  -0.0024 or 0, half-split CV mean -0.0013). Attach precision 2.4-3.4% vs break-even ~16%. Reaching +0.012 would need
+  classifiers at AUC ~0.94 on both edit classes (binormal model, not measured). VERDICT: reaches the bar only as an
+  oracle; nothing before R8; finals #37 + #38 unchanged; the ceiling goes to post-deadline I-079.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

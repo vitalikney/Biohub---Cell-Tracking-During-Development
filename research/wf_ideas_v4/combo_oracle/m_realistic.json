@@ -1,0 +1,362 @@
+{
+ "task": "m_realistic: best realistic (non-oracle) F+O+L combination on the exp60 ins35 bed",
+ "numbers": [
+  {
+   "arm": "base",
+   "pooled_delta": 0.0,
+   "delta_44b6": 0.0,
+   "delta_6bba": 0.0,
+   "div_tp_fp_fn": "25/31/74",
+   "edge_tp_fp_fn": "38397/1684/1696",
+   "clip_w_l": "0/0",
+   "note": "ins35 bed (K2 minus lowrefine), ALL 0.93988; reproduces round 11 | added edges TP/FP/ign 0/0/0; removed forks TP/FP/ign 0/0/0; new forks TP/FP 0/0"
+  },
+  {
+   "arm": "F_forkmid_3.5",
+   "pooled_delta": -0.001868,
+   "delta_44b6": 0.000851,
+   "delta_6bba": -0.002352,
+   "div_tp_fp_fn": "22/28/77",
+   "edge_tp_fp_fn": "38395/1680/1698",
+   "clip_w_l": "3/3",
+   "note": "grid point | added edges TP/FP/ign 0/0/0; removed forks TP/FP/ign 3/3/105; new forks TP/FP 0/0"
+  },
+  {
+   "arm": "F_forkmid_4.5",
+   "pooled_delta": 0.000171,
+   "delta_44b6": 0.0,
+   "delta_6bba": 0.000212,
+   "div_tp_fp_fn": "25/30/74",
+   "edge_tp_fp_fn": "38397/1683/1696",
+   "clip_w_l": "1/0",
+   "note": "best F (in-sample pick); 1 FP fork removed, 0 TP, 39 ignored; all gain from 1 clip (6bba_cdcfe533); 2.7% of oracle_F | added edges TP/FP/ign 0/0/0; removed forks TP/FP/ign 0/1/39; new forks TP/FP 0/0; clip-bootstrap 90% [+0.00000,+0.00048]"
+  },
+  {
+   "arm": "F_forkmid_5.5",
+   "pooled_delta": 0.0,
+   "delta_44b6": 0.0,
+   "delta_6bba": 0.0,
+   "div_tp_fp_fn": "25/31/74",
+   "edge_tp_fp_fn": "38397/1684/1696",
+   "clip_w_l": "0/0",
+   "note": "11 forks removed, all metric-ignored | added edges TP/FP/ign 0/0/0; removed forks TP/FP/ign 0/0/11; new forks TP/FP 0/0"
+  },
+  {
+   "arm": "F_antipar_0.0",
+   "pooled_delta": -0.000769,
+   "delta_44b6": 0.000851,
+   "delta_6bba": -0.001051,
+   "div_tp_fp_fn": "23/26/76",
+   "edge_tp_fp_fn": "38395/1679/1698",
+   "clip_w_l": "5/2",
+   "note": "grid point | added edges TP/FP/ign 0/0/0; removed forks TP/FP/ign 2/5/158; new forks TP/FP 0/0"
+  },
+  {
+   "arm": "F_antipar_0.25",
+   "pooled_delta": -0.000119,
+   "delta_44b6": 0.000851,
+   "delta_6bba": -0.000304,
+   "div_tp_fp_fn": "24/27/75",
+   "edge_tp_fp_fn": "38396/1680/1697",
+   "clip_w_l": "4/1",
+   "note": "ANTIPAR rule as in exp60 M4 | added edges TP/FP/ign 0/0/0; removed forks TP/FP/ign 1/4/108; new forks TP/FP 0/0"
+  },
+  {
+   "arm": "F_antipar_0.5",
+   "pooled_delta": -0.000628,
+   "delta_44b6": 0.0,
+   "delta_6bba": -0.000723,
+   "div_tp_fp_fn": "24/30/75",
+   "edge_tp_fp_fn": "38396/1683/1697",
+   "clip_w_l": "1/1",
+   "note": "grid point | added edges TP/FP/ign 0/0/0; removed forks TP/FP/ign 1/1/51; new forks TP/FP 0/0"
+  },
+  {
+   "arm": "F_anymid_4.5",
+   "pooled_delta": -0.003659,
+   "delta_44b6": -0.005555,
+   "delta_6bba": -0.003322,
+   "div_tp_fp_fn": "20/29/79",
+   "edge_tp_fp_fn": "38392/1681/1701",
+   "clip_w_l": "2/5",
+   "note": "any 2-child fork incl. inserted; removes 5 TP forks | added edges TP/FP/ign 0/0/0; removed forks TP/FP/ign 5/2/112; new forks TP/FP 0/0"
+  },
+  {
+   "arm": "F_anymid_6.0",
+   "pooled_delta": 0.0,
+   "delta_44b6": 0.0,
+   "delta_6bba": 0.0,
+   "div_tp_fp_fn": "25/31/74",
+   "edge_tp_fp_fn": "38397/1684/1696",
+   "clip_w_l": "0/0",
+   "note": "19 forks removed, all ignored | added edges TP/FP/ign 0/0/0; removed forks TP/FP/ign 0/0/19; new forks TP/FP 0/0"
+  },
+  {
+   "arm": "F_anymid_7.5",
+   "pooled_delta": 0.0,
+   "delta_44b6": 0.0,
+   "delta_6bba": 0.0,
+   "div_tp_fp_fn": "25/31/74",
+   "edge_tp_fp_fn": "38397/1684/1696",
+   "clip_w_l": "0/0",
+   "note": "2 forks removed, all ignored | added edges TP/FP/ign 0/0/0; removed forks TP/FP/ign 0/0/2; new forks TP/FP 0/0"
+  },
+  {
+   "arm": "O_mirror_res1.0",
+   "pooled_delta": 0.0002,
+   "delta_44b6": 0.0,
+   "delta_6bba": 0.000179,
+   "div_tp_fp_fn": "26/35/73",
+   "edge_tp_fp_fn": "38400/1686/1693",
+   "clip_w_l": "2/2",
+   "note": "best O; new-fork evaluable precision 20% (1/5); gain from 1 clip (6bba_debd7bfa +0.026), 2 clips lose | added edges TP/FP/ign 3/2/172; removed forks TP/FP/ign 0/0/0; new forks TP/FP 1/4; clip-bootstrap 90% [-0.00086,+0.00168]"
+  },
+  {
+   "arm": "O_mirror_res1.5",
+   "pooled_delta": -0.000539,
+   "delta_44b6": -0.0025,
+   "delta_6bba": -0.000171,
+   "div_tp_fp_fn": "27/44/72",
+   "edge_tp_fp_fn": "38402/1698/1691",
+   "clip_w_l": "4/9",
+   "note": "stricter gate asked for by the task; new forks 13% precise | added edges TP/FP/ign 5/14/755; removed forks TP/FP/ign 0/0/0; new forks TP/FP 2/13"
+  },
+  {
+   "arm": "O_mirror_res3.0",
+   "pooled_delta": -0.012853,
+   "delta_44b6": -0.012147,
+   "delta_6bba": -0.013051,
+   "div_tp_fp_fn": "32/231/67",
+   "edge_tp_fp_fn": "38438/1880/1655",
+   "clip_w_l": "7/39",
+   "note": "= round-11 orph_mirror (3.4%) | added edges TP/FP/ign 41/196/8881; removed forks TP/FP/ign 0/0/0; new forks TP/FP 7/200"
+  },
+  {
+   "arm": "L_flow_R3.0",
+   "pooled_delta": 0.0,
+   "delta_44b6": 0.0,
+   "delta_6bba": 0.0,
+   "div_tp_fp_fn": "25/31/74",
+   "edge_tp_fp_fn": "38397/1684/1696",
+   "clip_w_l": "0/0",
+   "note": "0 links: ILP already links every end->free start closer than ~8 um | added edges TP/FP/ign 0/0/0; removed forks TP/FP/ign 0/0/0; new forks TP/FP 0/0"
+  },
+  {
+   "arm": "L_flow_R5.0",
+   "pooled_delta": 0.0,
+   "delta_44b6": 0.0,
+   "delta_6bba": 0.0,
+   "div_tp_fp_fn": "25/31/74",
+   "edge_tp_fp_fn": "38397/1684/1696",
+   "clip_w_l": "0/0",
+   "note": "0 links | added edges TP/FP/ign 0/0/0; removed forks TP/FP/ign 0/0/0; new forks TP/FP 0/0"
+  },
+  {
+   "arm": "L_flow_R8.0",
+   "pooled_delta": 2.4e-05,
+   "delta_44b6": 0.0,
+   "delta_6bba": 2.6e-05,
+   "div_tp_fp_fn": "25/31/74",
+   "edge_tp_fp_fn": "38398/1684/1695",
+   "clip_w_l": "1/0",
+   "note": "best L; 8 links in 56 clips; 14% of the end->free-start oracle | added edges TP/FP/ign 1/0/7; removed forks TP/FP/ign 0/0/0; new forks TP/FP 0/0; clip-bootstrap 90% [+0.00000,+0.00007]"
+  },
+  {
+   "arm": "G_gap_R5.0",
+   "pooled_delta": -1e-06,
+   "delta_44b6": -2e-06,
+   "delta_6bba": -1e-06,
+   "div_tp_fp_fn": "25/31/74",
+   "edge_tp_fp_fn": "38397/1684/1696",
+   "clip_w_l": "0/14",
+   "note": "gap close t->t+2 with interpolated node (declared after seeing L empty, before scoring) | added edges TP/FP/ign 0/0/48; removed forks TP/FP/ign 0/0/0; new forks TP/FP 0/0"
+  },
+  {
+   "arm": "G_gap_R8.0",
+   "pooled_delta": -5e-05,
+   "delta_44b6": -0.000272,
+   "delta_6bba": -3e-05,
+   "div_tp_fp_fn": "25/31/74",
+   "edge_tp_fp_fn": "38397/1686/1696",
+   "clip_w_l": "0/30",
+   "note": "gap close; 0 TP; W/L 0/30 | added edges TP/FP/ign 0/2/236; removed forks TP/FP/ign 0/0/0; new forks TP/FP 0/0"
+  },
+  {
+   "arm": "oracle_F",
+   "pooled_delta": 0.006288,
+   "delta_44b6": 0.006951,
+   "delta_6bba": 0.005768,
+   "div_tp_fp_fn": "25/0/74",
+   "edge_tp_fp_fn": "38388/1662/1705",
+   "clip_w_l": "15/5",
+   "note": "CEILING: drop one child edge of each of the 31 FP forks | added edges TP/FP/ign 0/0/0; removed forks TP/FP/ign 0/31/0; new forks TP/FP 0/0"
+  },
+  {
+   "arm": "oracle_L",
+   "pooled_delta": 0.000143,
+   "delta_44b6": 0.0,
+   "delta_6bba": 0.000156,
+   "div_tp_fp_fn": "25/31/74",
+   "edge_tp_fp_fn": "38403/1684/1690",
+   "clip_w_l": "5/0",
+   "note": "CEILING: end->free-start (t+1, <=12 um) pairs that are GT edges (6 edges); the sibling m_joint_oracle relink oracle with swaps is +0.0073 | added edges TP/FP/ign 6/0/0; removed forks TP/FP/ign 0/0/0; new forks TP/FP 0/0"
+  },
+  {
+   "arm": "oracle_O",
+   "pooled_delta": 0.001737,
+   "delta_44b6": 0.004193,
+   "delta_6bba": 0.001916,
+   "div_tp_fp_fn": "46/169/53",
+   "edge_tp_fp_fn": "38556/1684/1537",
+   "clip_w_l": "33/9",
+   "note": "GT-edge oracle on the 1-child pool; NOT a division oracle (creates 138 FP forks); info only | added edges TP/FP/ign 159/0/0; removed forks TP/FP/ign 0/0/0; new forks TP/FP 21/138"
+  },
+  {
+   "arm": "oracle_FLO",
+   "pooled_delta": 0.003903,
+   "delta_44b6": 0.005498,
+   "delta_6bba": 0.00431,
+   "div_tp_fp_fn": "46/147/53",
+   "edge_tp_fp_fn": "38562/1662/1531",
+   "clip_w_l": "37/8",
+   "note": "F + L + GT-edge O (info only, same caveat) | added edges TP/FP/ign 174/0/0; removed forks TP/FP/ign 0/31/0; new forks TP/FP 21/138"
+  },
+  {
+   "arm": "C_best3_fm45_L8_O1.0",
+   "pooled_delta": 0.000391,
+   "delta_44b6": 0.0,
+   "delta_6bba": 0.000412,
+   "div_tp_fp_fn": "26/34/73",
+   "edge_tp_fp_fn": "38401/1685/1692",
+   "clip_w_l": "3/2",
+   "note": "BEST REALISTIC COMBO (each knob picked in-sample): 2 clips carry it (debd7bfa +0.028, cdcfe533 +0.007), 3 clips lose; 2.9% of the +0.0135 joint oracle | added edges TP/FP/ign 4/2/180; removed forks TP/FP/ign 0/1/39; new forks TP/FP 1/4; clip-bootstrap 90% [-0.00076,+0.00197]"
+  },
+  {
+   "arm": "C_mid3_fm45_L5_O1.5",
+   "pooled_delta": -0.000384,
+   "delta_44b6": -0.0025,
+   "delta_6bba": 2.6e-05,
+   "div_tp_fp_fn": "27/43/72",
+   "edge_tp_fp_fn": "38402/1697/1691",
+   "clip_w_l": "5/9",
+   "note": "PRE-DECLARED MIDDLE combo (forkmid 4.5, R 5, res 1.5): negative | added edges TP/FP/ign 5/14/758; removed forks TP/FP/ign 0/1/39; new forks TP/FP 2/13; clip-bootstrap 90% [-0.00229,+0.00169]"
+  },
+  {
+   "arm": "C_FO_fm45_O1.0",
+   "pooled_delta": 0.000368,
+   "delta_44b6": 0.0,
+   "delta_6bba": 0.000386,
+   "div_tp_fp_fn": "26/34/73",
+   "edge_tp_fp_fn": "38400/1685/1693",
+   "clip_w_l": "3/2",
+   "note": "pair F+O | added edges TP/FP/ign 3/2/173; removed forks TP/FP/ign 0/1/39; new forks TP/FP 1/4"
+  },
+  {
+   "arm": "C_FL_fm45_L8",
+   "pooled_delta": 0.000195,
+   "delta_44b6": 0.0,
+   "delta_6bba": 0.000238,
+   "div_tp_fp_fn": "25/30/74",
+   "edge_tp_fp_fn": "38398/1683/1695",
+   "clip_w_l": "2/0",
+   "note": "pair F+L | added edges TP/FP/ign 1/0/7; removed forks TP/FP/ign 0/1/39; new forks TP/FP 0/0"
+  },
+  {
+   "arm": "C_LO_L8_O1.0",
+   "pooled_delta": 0.000224,
+   "delta_44b6": 0.0,
+   "delta_6bba": 0.000205,
+   "div_tp_fp_fn": "26/35/73",
+   "edge_tp_fp_fn": "38401/1686/1692",
+   "clip_w_l": "2/2",
+   "note": "pair L+O | added edges TP/FP/ign 4/2/179; removed forks TP/FP/ign 0/0/0; new forks TP/FP 1/4"
+  },
+  {
+   "arm": "C_ap25_L8_O1.0",
+   "pooled_delta": 0.000115,
+   "delta_44b6": 0.000851,
+   "delta_6bba": -8.3e-05,
+   "div_tp_fp_fn": "25/31/74",
+   "edge_tp_fp_fn": "38400/1682/1693",
+   "clip_w_l": "6/3",
+   "note": "ANTIPAR instead of forkmid | added edges TP/FP/ign 4/2/181; removed forks TP/FP/ign 1/4/108; new forks TP/FP 1/4"
+  },
+  {
+   "arm": "C_fm45_ap25_L8_O1.0",
+   "pooled_delta": 0.000115,
+   "delta_44b6": 0.000851,
+   "delta_6bba": -8.3e-05,
+   "div_tp_fp_fn": "25/31/74",
+   "edge_tp_fp_fn": "38400/1682/1693",
+   "clip_w_l": "6/3",
+   "note": "forkmid + ANTIPAR + L + O | added edges TP/FP/ign 4/2/181; removed forks TP/FP/ign 1/4/114; new forks TP/FP 1/4"
+  },
+  {
+   "arm": "C_fm45_L8_G8_O1.0",
+   "pooled_delta": 0.000341,
+   "delta_44b6": -0.000273,
+   "delta_6bba": 0.000381,
+   "div_tp_fp_fn": "26/34/73",
+   "edge_tp_fp_fn": "38401/1687/1692",
+   "clip_w_l": "3/29",
+   "note": "best3 + gap closing: W/L 3/29 | added edges TP/FP/ign 4/4/418; removed forks TP/FP/ign 0/1/39; new forks TP/FP 1/4"
+  },
+  {
+   "arm": "oracle_Ostrict",
+   "pooled_delta": 0.015863,
+   "delta_44b6": 0.005568,
+   "delta_6bba": 0.017611,
+   "div_tp_fp_fn": "45/31/54",
+   "edge_tp_fp_fn": "38417/1684/1676",
+   "clip_w_l": "17/0",
+   "note": "CEILING: second daughter added only where both child edges are GT edges (<=12 um pool, no mirror gate), 20 TP forks | added edges TP/FP/ign 20/0/0; removed forks TP/FP/ign 0/0/0; new forks TP/FP 20/0"
+  },
+  {
+   "arm": "oracle_Odiv",
+   "pooled_delta": 0.005415,
+   "delta_44b6": 0.0,
+   "delta_6bba": 0.006339,
+   "div_tp_fp_fn": "32/31/67",
+   "edge_tp_fp_fn": "38401/1687/1692",
+   "clip_w_l": "7/0",
+   "note": "CEILING: round-11 mirror pool (res<=3) filtered to the picks that become official TP forks (7) = r11 +0.0054 | added edges TP/FP/ign 4/3/0; removed forks TP/FP/ign 0/0/0; new forks TP/FP 7/0"
+  },
+  {
+   "arm": "oracle_F_L_Ostrict",
+   "pooled_delta": 0.027113,
+   "delta_44b6": 0.016347,
+   "delta_6bba": 0.028009,
+   "div_tp_fp_fn": "45/0/54",
+   "edge_tp_fp_fn": "38414/1662/1679",
+   "clip_w_l": "27/4",
+   "note": "JOINT CEILING with a perfect filter on the wide orphan pool: +0.0271 | added edges TP/FP/ign 26/0/0; removed forks TP/FP/ign 0/31/0; new forks TP/FP 20/0"
+  },
+  {
+   "arm": "oracle_F_L_Odiv",
+   "pooled_delta": 0.013533,
+   "delta_44b6": 0.006951,
+   "delta_6bba": 0.013911,
+   "div_tp_fp_fn": "32/0/67",
+   "edge_tp_fp_fn": "38398/1665/1695",
+   "clip_w_l": "21/4",
+   "note": "JOINT CEILING, round-11 definitions: +0.0135 > sum of parts 0.0118 (super-additive through the division Jaccard) | added edges TP/FP/ign 10/3/0; removed forks TP/FP/ign 0/31/0; new forks TP/FP 7/0; clip-bootstrap 90% [+0.00892,+0.01870]"
+  }
+ ],
+ "conclusion": "No, not with rules we can actually apply. As oracles the three do add up to more than +0.01, but realistic versions capture about 3% of that. Measured on the exp60 ins35 bed (56 clips, official metric; base 0.93988, div 25/31/74 reproduced; GT never used to decide an edit). ORACLES: joint F + L + O with the round-11 definitions = +0.0135 (44b6 +0.0070, 6bba +0.0139; clip-bootstrap 90% +0.0089..+0.0187), more than the sum 0.0063 + 0.0054 + 0.0001 = 0.0118, because removing FP forks and adding TP forks compound in the division Jaccard. With a perfect filter on the wide orphan pool (20 TP forks) the joint oracle is +0.0271. (The sibling m_joint_oracle.json, whose relink oracle includes swaps, gets +0.0206.) REALISTIC: best combination = forkmid 4.5 um -> flow-compensated end->free-start link R 8 um -> mirror orphan attach residual <= 1.0 um. Each knob was picked in-sample from a 3-point grid, so this is optimistic. Result: +0.00039 pooled (44b6 0.00000, 6bba +0.00041); 3 clips win and 2 lose; clip-bootstrap 90% [-0.0008, +0.0020]. Almost all of it is one recovered division in one clip (6bba_debd7bfa +0.028). The pre-declared middle setting (forkmid 4.5, R 5, residual 1.5) is NEGATIVE: -0.00038 (44b6 -0.0025; 5 clips win, 9 lose). Per family: (1) Fork removal: best +0.00017 (forkmid 4.5 removes 1 FP fork, 0 TP, 39 metric-ignored = 2.7% of the +0.0063 oracle). Every other grid point is <= 0: ANTIPAR -0.0001..-0.0008, any-fork midpoint 4.5 um -0.0037 (removes 5 TP forks). (2) Orphan attach: best +0.00020 at residual 1.0 (new forks 1 TP / 4 FP = 20% evaluable precision). Residual 1.5: 2/13 = 13%, -0.0005. Residual 3.0: 7/200 = 3.4%, -0.0129. Break-even precision is ~26.5%. (3) Linking: +0.00002. The t+1 end->free-start pool is empty below ~8 um because the ILP already links everything closer; R 8 makes 8 links in 56 clips, 1 TP. Gap closing t->t+2 with an interpolated node gives 0 TP and is slightly negative. Most edits the rules can make without GT land on unannotated cells (metric-ignored), and the evaluable ones are <= 20% precise. At the observed ~1/6 lab-to-public transfer, +0.00039 lab is ~+0.00007 public, against the R4 bar of +0.002 public (~+0.012 lab), so ~30x short. Answer: a realistic combination is barely positive in-sample at its best grid point, but it is noise-level, driven by one clip, negative at the pre-declared setting, and far below the bar. The line stays closed. Not measured here: a realistic swap/relink rule (the part of the sibling's link oracle that comes from swaps). The nearest measured realistic analogue, RE-AIM, was a no-op.",
+ "files": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/wf_ideas_v4/combo_oracle/m_realistic.json",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/wf_ideas_v4/combo_oracle/m_realistic.notes.md",
+  "C:/Users/vital/AppData/Local/Temp/claude/c--Users-vital-Documents-kAGGLE-Biohub---Cell-Tracking-During-Development/acabaea6-42c1-4115-a146-2ddc5bb7e8c8/scratchpad/combo/m_realistic/combo_arms.py",
+  "C:/Users/vital/AppData/Local/Temp/claude/c--Users-vital-Documents-kAGGLE-Biohub---Cell-Tracking-During-Development/acabaea6-42c1-4115-a146-2ddc5bb7e8c8/scratchpad/combo/m_realistic/combos.json",
+  "C:/Users/vital/AppData/Local/Temp/claude/c--Users-vital-Documents-kAGGLE-Biohub---Cell-Tracking-During-Development/acabaea6-42c1-4115-a146-2ddc5bb7e8c8/scratchpad/combo/m_realistic/singles.json",
+  "C:/Users/vital/AppData/Local/Temp/claude/c--Users-vital-Documents-kAGGLE-Biohub---Cell-Tracking-During-Development/acabaea6-42c1-4115-a146-2ddc5bb7e8c8/scratchpad/combo/m_realistic/singles_agg.json",
+  "C:/Users/vital/AppData/Local/Temp/claude/c--Users-vital-Documents-kAGGLE-Biohub---Cell-Tracking-During-Development/acabaea6-42c1-4115-a146-2ddc5bb7e8c8/scratchpad/combo/m_realistic/combos_out.json",
+  "C:/Users/vital/AppData/Local/Temp/claude/c--Users-vital-Documents-kAGGLE-Biohub---Cell-Tracking-During-Development/acabaea6-42c1-4115-a146-2ddc5bb7e8c8/scratchpad/combo/m_realistic/combos_out_agg.json",
+  "C:/Users/vital/AppData/Local/Temp/claude/c--Users-vital-Documents-kAGGLE-Biohub---Cell-Tracking-During-Development/acabaea6-42c1-4115-a146-2ddc5bb7e8c8/scratchpad/combo/m_realistic/agg.py",
+  "C:/Users/vital/AppData/Local/Temp/claude/c--Users-vital-Documents-kAGGLE-Biohub---Cell-Tracking-During-Development/acabaea6-42c1-4115-a146-2ddc5bb7e8c8/scratchpad/combo/m_realistic/boot.py",
+  "C:/Users/vital/AppData/Local/Temp/claude/c--Users-vital-Documents-kAGGLE-Biohub---Cell-Tracking-During-Development/acabaea6-42c1-4115-a146-2ddc5bb7e8c8/scratchpad/combo/m_realistic/boot_out.json",
+  "C:/Users/vital/AppData/Local/Temp/claude/c--Users-vital-Documents-kAGGLE-Biohub---Cell-Tracking-During-Development/acabaea6-42c1-4115-a146-2ddc5bb7e8c8/scratchpad/combo/m_realistic/finalize.py",
+  "C:/Users/vital/AppData/Local/Temp/claude/c--Users-vital-Documents-kAGGLE-Biohub---Cell-Tracking-During-Development/acabaea6-42c1-4115-a146-2ddc5bb7e8c8/scratchpad/combo/m_realistic/singles.log",
+  "C:/Users/vital/AppData/Local/Temp/claude/c--Users-vital-Documents-kAGGLE-Biohub---Cell-Tracking-During-Development/acabaea6-42c1-4115-a146-2ddc5bb7e8c8/scratchpad/combo/m_realistic/combos.log"
+ ]
+}

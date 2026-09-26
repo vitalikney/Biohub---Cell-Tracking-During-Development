@@ -1,0 +1,97 @@
+{
+ "task": "combo_oracle m_transfer: transfer, timeline and arithmetic check of the joint oracle (fork removal + orphan attach + linking)",
+ "written_utc": "2026-09-26T18:26Z",
+ "complete": true,
+ "numbers": [
+  {
+   "arm": "base ins35 (K2 minus lowrefine)",
+   "pooled_delta": 0.0,
+   "delta_44b6": 0.0,
+   "delta_6bba": 0.0,
+   "div_tp_fp_fn": "25/31/74",
+   "edge_tp_fp_fn": "38397/1684/1696",
+   "note": "ALL 0.93988; divJ 0.1923; W=41,777 edges; one edge flip ~2.4e-5, one division TP ~7.7e-4"
+  },
+  {
+   "arm": "O_FP (measured, r11)",
+   "pooled_delta": 0.00629,
+   "delta_44b6": 0.00695,
+   "delta_6bba": 0.00577,
+   "div_tp_fp_fn": "25/0/74",
+   "edge_tp_fp_fn": "38388/1662/1705",
+   "clip_w_l": "15/5",
+   "note": "analytic div-only 0.1*(25/99-25/130)=+0.00602; the other +0.00027 is the edge side effect (31 child edges dropped: 22 FP, 9 TP edges)"
+  },
+  {
+   "arm": "perfect orphan attach, gated pool (7 TP)",
+   "pooled_delta": 0.00555,
+   "delta_44b6": 0.0,
+   "delta_6bba": 0.00649,
+   "div_tp_fp_fn": "32/31/67",
+   "note": "div-only exactly +0.00538 (32/130); edge +0..+0.00017 if each recovered division adds its GT edge; all 7 TP are 6bba"
+  },
+  {
+   "arm": "perfect orphan attach, wide pool (17 TP)",
+   "pooled_delta": 0.01348,
+   "delta_44b6": 0.00557,
+   "delta_6bba": 0.01483,
+   "div_tp_fp_fn": "42/31/57",
+   "note": "div +0.01308 + edge +0.00041 (hi bound)"
+  },
+  {
+   "arm": "linking ceiling (136 dangling FN edges at 100%)",
+   "pooled_delta": 0.00324,
+   "delta_44b6": 0.00481,
+   "delta_6bba": 0.0031,
+   "note": "edge term only; 8% of 1,705 FN (I-200) spread pro rata over clips"
+  },
+  {
+   "arm": "JOINT O_FP + attach7",
+   "pooled_delta": 0.01353,
+   "delta_44b6": 0.00695,
+   "delta_6bba": 0.01391,
+   "div_tp_fp_fn": "32/0/67",
+   "note": "divJ 0.323; div +0.01309 vs separate sum 0.01140 -> superadditive by +0.00169 (both shrink the same Jaccard denominator)"
+  },
+  {
+   "arm": "JOINT O_FP + attach7 + link (user's 'all three')",
+   "pooled_delta": 0.01677,
+   "delta_44b6": 0.01176,
+   "delta_6bba": 0.01701,
+   "div_tp_fp_fn": "32/0/67",
+   "note": "oracle, GT-labelled; the user's '+0.01' is right and even low: +0.0168 lab. Public at 1/6: +0.0028"
+  },
+  {
+   "arm": "JOINT O_FP + attach17 + link",
+   "pooled_delta": 0.02711,
+   "delta_44b6": 0.02116,
+   "delta_6bba": 0.02747,
+   "div_tp_fp_fn": "42/0/57",
+   "note": "upper oracle on the wide pool"
+  },
+  {
+   "arm": "realistic joint, cues at AUC 0.73 (binormal model)",
+   "pooled_delta": 0.00025,
+   "note": "best threshold: remove ~3.5 FP / 0.5 TP forks, add ~0.4 TP / 1.7 FP; ~2% of the joint oracle; public ~0"
+  },
+  {
+   "arm": "realistic joint, AUC 0.90 / 0.95",
+   "pooled_delta": 0.0036,
+   "note": "AUC 0.90: +0.0036 (7-pool) / +0.0051 (17-pool); AUC 0.95: +0.0061 / +0.0092. 70% of the joint div oracle needs AUC ~0.99"
+  }
+ ],
+ "conclusion": "(a) ARITHMETIC. Score = size-weighted adjusted edge Jaccard + 0.1 x POOLED division Jaccard; base ins35 div 25/31/74, J 0.1923. Removing all false forks gives 25/99 = 0.2525, i.e. +0.00602 on the division term; the measured +0.00629 adds +0.00027 on the edge side, because 22 of the 31 dropped child edges were FP edges and 9 were TP edges. A perfect gated attach gives 32/130, i.e. +0.00538, matching the +0.0054 (edge side +0 to +0.00017). The wide pool gives 42/130, i.e. +0.01308. Both together: 32/(32+0+67) = 0.323, i.e. +0.01309 on the division term. That is MORE than the sum 0.00602 + 0.00538 = 0.01140, by +0.0017. The two edits shrink the same Jaccard denominator, so they are superadditive, not overlapping. With edge effects the joint is +0.0135, and +0.0168 with the dangling-link ceiling (+0.0032). By embryo: 44b6 +0.0118, 6bba +0.0170. The per-embryo numbers are pooled separately and do not sum to ALL. With the wide pool the joint is +0.0239, or +0.0271 with linking. So the user is right: the three oracles together give ~+0.017 lab, above the ~+0.012 bar. Caveats: this is an analytic combination of separate per-clip rows, and a sequential run could free extra orphans (the m_joint_oracle agent measures that). All attach TPs are 6bba. (b) TRANSFER. Evidence (LESSONS_draft l.13-24): insertion lab +0.0058/+0.0065 -> public +0.001 twice (~1/6); edge filter +0.016/+0.0095 -> 0/-0.001; float coords +0.002 -> 2 ties; leaf prune +0.0006/+0.0008 -> 2 ties; DivNet veto +0.0023 -> tie; relink-off +0.0053 -> -0.002; x138 head: +0.002 on our base, +0.007 on its own. At 1/6, the joint7+link oracle is +0.0028 public (+0.002 shown for sure). 70% of it: lab +0.0117 -> +0.0020 (+0.002 shown with P~0.96). 50%: +0.0084 -> +0.0014 (+0.001 sure, +0.002 P~0.40). 30%: +0.0050 -> +0.0008 (+0.001 P~0.84). 10%: +0.0017 -> +0.0003 (P~0.28, i.e. a tie). Only >= ~70% of the joint oracle clears R4 (+0.002 public). The 1/6 is the optimistic end: fork-removal riders went 0 for 5, and the only transferring mechanism was an adder with a separate network. (c) CLASSIFIER BEFORE R8. Requirements: at the margin, fork removal must hit >= 84% false forks among the removed (break-even D/(D+T) = 130/155); the base fork pool is 55% false. Attach break-even precision is 0.161. For 70% of the joint: with perfect removal, the attach class needs >= 33% precision at full recall on the 7-pool (<= 13 FP) or >= 46% on the 17-pool (<= 19 FP), from base rates of 3.4% / 2.4%. With a perfect attach, removal needs >= 18/31 false forks with 0 true forks lost (21 with 1 lost, 25 with 2). In an equal-variance ROC model this needs AUC ~0.99 for both classes. The best measured cues give AUC 0.73 (I-056; single feature, old base, ranker never measured) or precision 4-15% (I-076). At AUC 0.73 the model gives +0.00025 lab (~2% of the oracle); at 0.90 +0.004-0.005; at 0.95 +0.006-0.009. Data: the lab has 56 forks (31 false) and 7-17 orphan TPs, all 6bba. All 199 train videos would give ~3.5x that (extrapolated): ~110 false forks and ~25-60 orphan TPs. That is too few to estimate precision: Wilson 90% CI for 8/17 is 0.29-0.66, and for 20/25 it is 0.64-0.90. Leak: DaughterNet, the edge net and the x138 head all saw these videos, so any net-derived feature is in-sample. Only 2 embryos exist, so an honest leak-group OOF means embryo-held-out. 44b6 holds 2 TP forks, 8 false forks and 0 gated orphan TPs, so a 6bba->44b6 gate has almost no power. The head retrain already failed that exact test (+12% worse). Time: 26 Sep 18:25Z -> R8 27 Sep 12:00Z is ~17.5 h. It needs raw-zarr crop features (~half a day of code), a classifier, an OOF gate, a Kaggle notebook integration, a dummy run and a new user OK, overnight. VERDICT: the joint ceiling is real (+0.0135 to +0.0168 lab, ~+0.0028 public at oracle), but reaching 70% of it needs a near-perfect (AUC ~0.99) classifier where we measured 0.73. It cannot be built or honestly gated before R8. Finals stay #37 + #38. The joint-oracle number belongs to the post-deadline item 6 / I-079 agenda.",
+ "files": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/wf_ideas_v4/combo_oracle/m_transfer.json",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/wf_ideas_v4/combo_oracle/m_transfer.notes.md",
+  "C:/Users/vital/AppData/Local/Temp/claude/c--Users-vital-Documents-kAGGLE-Biohub---Cell-Tracking-During-Development/acabaea6-42c1-4115-a146-2ddc5bb7e8c8/scratchpad/combo/m_transfer_arith.py",
+  "C:/Users/vital/AppData/Local/Temp/claude/c--Users-vital-Documents-kAGGLE-Biohub---Cell-Tracking-During-Development/acabaea6-42c1-4115-a146-2ddc5bb7e8c8/scratchpad/combo/m_transfer_arith_out.json",
+  "C:/Users/vital/AppData/Local/Temp/claude/c--Users-vital-Documents-kAGGLE-Biohub---Cell-Tracking-During-Development/acabaea6-42c1-4115-a146-2ddc5bb7e8c8/scratchpad/combo/m_transfer_arith.log",
+  "C:/Users/vital/AppData/Local/Temp/claude/c--Users-vital-Documents-kAGGLE-Biohub---Cell-Tracking-During-Development/acabaea6-42c1-4115-a146-2ddc5bb7e8c8/scratchpad/combo/m_transfer_vis.py",
+  "C:/Users/vital/AppData/Local/Temp/claude/c--Users-vital-Documents-kAGGLE-Biohub---Cell-Tracking-During-Development/acabaea6-42c1-4115-a146-2ddc5bb7e8c8/scratchpad/combo/m_transfer_vis_out.json",
+  "C:/Users/vital/AppData/Local/Temp/claude/c--Users-vital-Documents-kAGGLE-Biohub---Cell-Tracking-During-Development/acabaea6-42c1-4115-a146-2ddc5bb7e8c8/scratchpad/r11_graph_arms_out.json",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/wf_ideas_v4/round9/LESSONS_draft.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/wf_ideas_v4/round11/scan_hyp_graph.json",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/wf_ideas_v4/round11/v_hyp_graph_r11g-2.json"
+ ]
+}

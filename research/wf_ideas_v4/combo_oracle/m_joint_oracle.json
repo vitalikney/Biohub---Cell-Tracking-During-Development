@@ -1,0 +1,231 @@
+{
+ "task": "joint oracle O_FP+O_ATT+O_LINK on exp60 ins35 bed",
+ "complete": true,
+ "numbers": [
+  {
+   "arm": "base ins35",
+   "pooled_delta": 0.0,
+   "delta_44b6": 0.0,
+   "delta_6bba": 0.0,
+   "div_tp_fp_fn": "25/31/74",
+   "edge_tp_fp_fn": "38397/1684/1696",
+   "clip_w_l": "0/0",
+   "note": "reproduced: ALL 0.93988 (0.9398779), divJ 0.1923"
+  },
+  {
+   "arm": "O_FP",
+   "pooled_delta": 0.00629,
+   "delta_44b6": 0.00695,
+   "delta_6bba": 0.00577,
+   "div_tp_fp_fn": "25/0/74",
+   "edge_tp_fp_fn": "38388/1662/1705",
+   "clip_w_l": "15/5",
+   "note": "oracle drop of one child edge of each of 31 official FP forks (r11 rule); reproduces r11 +0.00629; d_adjEdge +0.00027, d_0.1*divJ +0.00602"
+  },
+  {
+   "arm": "O_FPgt",
+   "pooled_delta": 0.00671,
+   "delta_44b6": 0.00979,
+   "delta_6bba": 0.00597,
+   "div_tp_fp_fn": "25/0/74",
+   "edge_tp_fp_fn": "38397/1653/1696",
+   "clip_w_l": "20/0",
+   "note": "info: same, dropped child edge chosen by GT (no edge-TP loss); d_adjEdge +0.00068, d_0.1*divJ +0.00602"
+  },
+  {
+   "arm": "O_ATT_g",
+   "pooled_delta": 0.00541,
+   "delta_44b6": 0.0,
+   "delta_6bba": 0.00634,
+   "div_tp_fp_fn": "32/31/67",
+   "edge_tp_fp_fn": "38401/1687/1692",
+   "clip_w_l": "7/0",
+   "note": "perfect filter on mirror/sister-gated orphan pool (9,852 pairs): 7 TP forks kept, 0 FP; matches r11 derived +0.0054; d_adjEdge +0.00003, d_0.1*divJ +0.00538"
+  },
+  {
+   "arm": "O_ATT_w",
+   "pooled_delta": 0.02039,
+   "delta_44b6": 0.00557,
+   "delta_6bba": 0.02292,
+   "div_tp_fp_fn": "51/31/48",
+   "edge_tp_fp_fn": "38418/1689/1675",
+   "clip_w_l": "21/0",
+   "note": "perfect filter on wide nearest-parent pool (90,729 pairs): 26 TP kept (GT-strict picks; greedy pool had 17), edge +21 TP; d_adjEdge +0.00039, d_0.1*divJ +0.02000"
+  },
+  {
+   "arm": "O_LINK",
+   "pooled_delta": 0.00734,
+   "delta_44b6": 0.01658,
+   "delta_6bba": 0.00655,
+   "div_tp_fp_fn": "25/30/74",
+   "edge_tp_fp_fn": "38548/1523/1545",
+   "clip_w_l": "41/0",
+   "note": "no-node GT relink: 25 both-matched inconsistent edges removed, 151 end->successor attaches (15 to free starts, 136 swaps off a wrong in-edge); d_adjEdge +0.00719, d_0.1*divJ +0.00015"
+  },
+  {
+   "arm": "O_FP+O_ATT_g",
+   "pooled_delta": 0.01339,
+   "delta_44b6": 0.00695,
+   "delta_6bba": 0.01375,
+   "div_tp_fp_fn": "32/0/67",
+   "edge_tp_fp_fn": "38392/1665/1701",
+   "clip_w_l": "18/4",
+   "note": "sum of singles 0.01170; super-additive +0.00169 (all from div term); d_adjEdge +0.00030, d_0.1*divJ +0.01309"
+  },
+  {
+   "arm": "O_FP+O_ATT_w",
+   "pooled_delta": 0.03294,
+   "delta_44b6": 0.01635,
+   "delta_6bba": 0.03458,
+   "div_tp_fp_fn": "51/0/48",
+   "edge_tp_fp_fn": "38409/1667/1684",
+   "clip_w_l": "28/3",
+   "note": "sum of singles 0.02668; super-additive +0.00626; d_adjEdge +0.00066, d_0.1*divJ +0.03228"
+  },
+  {
+   "arm": "O_FP+O_LINK",
+   "pooled_delta": 0.01346,
+   "delta_44b6": 0.02354,
+   "delta_6bba": 0.01211,
+   "div_tp_fp_fn": "25/0/74",
+   "edge_tp_fp_fn": "38539/1502/1554",
+   "clip_w_l": "43/0",
+   "note": "sum 0.01363; slightly sub-additive -0.00017 (LINK already removed 1 FP fork, both touch edge FP); d_adjEdge +0.00744, d_0.1*divJ +0.00602"
+  },
+  {
+   "arm": "O_LINK+O_ATT_g",
+   "pooled_delta": 0.0128,
+   "delta_44b6": 0.01658,
+   "delta_6bba": 0.01294,
+   "div_tp_fp_fn": "32/30/67",
+   "edge_tp_fp_fn": "38552/1526/1541",
+   "clip_w_l": "42/0",
+   "note": "sum 0.01275; additive; d_adjEdge +0.00722, d_0.1*divJ +0.00558"
+  },
+  {
+   "arm": "O_LINK+O_ATT_w",
+   "pooled_delta": 0.02869,
+   "delta_44b6": 0.02215,
+   "delta_6bba": 0.03061,
+   "div_tp_fp_fn": "52/30/47",
+   "edge_tp_fp_fn": "38570/1528/1523",
+   "clip_w_l": "46/0",
+   "note": "sum 0.02773; +0.00096; d_adjEdge +0.00761, d_0.1*divJ +0.02108"
+  },
+  {
+   "arm": "O_FP+O_ATT_g+O_LINK",
+   "pooled_delta": 0.02056,
+   "delta_44b6": 0.02354,
+   "delta_6bba": 0.02009,
+   "div_tp_fp_fn": "32/0/67",
+   "edge_tp_fp_fn": "38543/1505/1550",
+   "clip_w_l": "44/0",
+   "note": "FULL JOINT (gated). sum of singles 0.01904; joint +0.02056 (+0.00152 super-additive, div 32/0/67); d_adjEdge +0.00747, d_0.1*divJ +0.01309"
+  },
+  {
+   "arm": "O_FP+O_ATT_w+O_LINK",
+   "pooled_delta": 0.04115,
+   "delta_44b6": 0.03294,
+   "delta_6bba": 0.04208,
+   "div_tp_fp_fn": "52/0/47",
+   "edge_tp_fp_fn": "38561/1507/1532",
+   "clip_w_l": "47/0",
+   "note": "FULL JOINT (wide). sum 0.03402; joint +0.04115 (+0.00713 super-additive, div 52/0/47); d_adjEdge +0.00786, d_0.1*divJ +0.03329"
+  },
+  {
+   "arm": "O_EDGEALL",
+   "pooled_delta": 0.06462,
+   "delta_44b6": 0.10218,
+   "delta_6bba": 0.06087,
+   "div_tp_fp_fn": "25/0/74",
+   "edge_tp_fp_fn": "39204/8/889",
+   "clip_w_l": "53/0",
+   "note": "info, looser ceiling: remove EVERY official FP edge (1,676, of which 1,651 have one end unmatched) + 807 end attaches; edge FP 1684->8; d_adjEdge +0.05860, d_0.1*divJ +0.00602"
+  },
+  {
+   "arm": "O_FP+O_ATT_w+O_EDGEALL",
+   "pooled_delta": 0.1111,
+   "delta_44b6": 0.14926,
+   "delta_6bba": 0.1073,
+   "div_tp_fp_fn": "70/0/29",
+   "edge_tp_fp_fn": "39247/10/846",
+   "clip_w_l": "53/0",
+   "note": "info: absolute no-new-node ceiling of this bed; d_adjEdge +0.05962, d_0.1*divJ +0.05148"
+  },
+  {
+   "arm": "O_FPgt+O_ATT_w+O_LINK",
+   "pooled_delta": 0.04157,
+   "delta_44b6": 0.03583,
+   "delta_6bba": 0.04228,
+   "div_tp_fp_fn": "52/0/47",
+   "edge_tp_fp_fn": "38570/1498/1523",
+   "clip_w_l": "47/0",
+   "note": "info: wide joint with GT-chosen FP drop; d_adjEdge +0.00828, d_0.1*divJ +0.03329"
+  },
+  {
+   "arm": "L_attach_only",
+   "pooled_delta": 0.00026,
+   "delta_44b6": 0.0,
+   "delta_6bba": 0.00029,
+   "div_tp_fp_fn": "25/31/74",
+   "edge_tp_fp_fn": "38408/1684/1685",
+   "clip_w_l": "8/0",
+   "note": "decomp: pure end->free-start links (11) = the round-11 'dangling end' notion; d_adjEdge +0.00026, d_0.1*divJ +0.00000"
+  },
+  {
+   "arm": "L_attach_swap",
+   "pooled_delta": 0.00621,
+   "delta_44b6": 0.01314,
+   "delta_6bba": 0.00559,
+   "div_tp_fp_fn": "25/31/74",
+   "edge_tp_fp_fn": "38537/1555/1556",
+   "clip_w_l": "40/0",
+   "note": "decomp: attach incl. 129 swaps (v's parent w is an unmatched neighbour track, |wv| median 1.6 um vs |uv| 7.3 um); d_adjEdge +0.00621, d_0.1*divJ +0.00000"
+  },
+  {
+   "arm": "L_remove_only",
+   "pooled_delta": 0.0007,
+   "delta_44b6": 0.00133,
+   "delta_6bba": 0.00067,
+   "div_tp_fp_fn": "25/30/74",
+   "edge_tp_fp_fn": "38397/1659/1696",
+   "clip_w_l": "13/0",
+   "note": "decomp: only remove 25 both-matched GT-inconsistent edges; d_adjEdge +0.00055, d_0.1*divJ +0.00015"
+  },
+  {
+   "arm": "L_remove_attach_noswap",
+   "pooled_delta": 0.00106,
+   "delta_44b6": 0.00165,
+   "delta_6bba": 0.00104,
+   "div_tp_fp_fn": "25/30/74",
+   "edge_tp_fp_fn": "38412/1659/1681",
+   "clip_w_l": "17/0",
+   "note": "decomp: removal + free-start attach, no swaps; d_adjEdge +0.00091, d_0.1*divJ +0.00015"
+  },
+  {
+   "arm": "EA_remove_only",
+   "pooled_delta": 0.0445,
+   "delta_44b6": 0.06607,
+   "delta_6bba": 0.04214,
+   "div_tp_fp_fn": "25/0/74",
+   "edge_tp_fp_fn": "38397/8/1696",
+   "clip_w_l": "53/0",
+   "note": "decomp: remove every official FP edge, no attach; d_adjEdge +0.03848, d_0.1*divJ +0.00602"
+  }
+ ],
+ "conclusion": "MEASURED on the exp60 ins35 bed (56 clips, official metric; base reproduced exactly: ALL 0.93988, div 25/31/74). As ORACLES, yes: the three together give more than +0.01, and they add up slightly better than the plain sum. FP-fork removal + gated orphan attach + no-node relink = +0.02056 pooled (44b6 +0.0235, 6bba +0.0201, div 32/0/67, 44 clip wins/0 losses). The sum of the singles is +0.00629 + 0.00541 + 0.00734 = +0.01904. With the wide attach pool the joint is +0.04115, against a sum of +0.03402.\nSuper-additivity comes almost entirely from the division Jaccard J = TP/(TP+FP+FN). Base is 25/130 = 0.1923. Removing the 31 FP forks shrinks the denominator to 99, so each attached TP is then worth 0.1/99 = +0.00101 instead of 0.1/130 = +0.00077. Example: FP alone gives 25/99, +0.00602. Gated ATT alone gives 32/130, +0.00538. Together they give 32/99 = 0.3232, +0.01309, which is +0.00169 more than the sum. That is exactly the measured FP+ATT_g excess. FP+LINK is slightly sub-additive (-0.00017) because both act on edge FP and LINK already removes one FP fork. LINK+ATT is roughly additive.\nTwo corrections to the round-11 ceilings. (a) The gated attach ceiling +0.0054 is confirmed (7 TP). The wide pool with GT picks has 26 TP, not 17, so its ceiling is +0.0204, not +0.0131. (b) 'Links <= +0.003' only holds for end->free-start links: +0.0003 attach-only, +0.0011 with the 25 both-matched removals. The full no-node relink oracle is +0.0073, and 85% of that (+0.0062) comes from 129 SWAPS. In a swap, a matched track end u's true successor v is already linked to an unmatched neighbour track w: |wv| median 1.6 um versus |uv| 7.3 um, and w has a parent in 94% of cases. So the ILP gave the closer, unannotated neighbour the link during fast motion. A looser info ceiling removes every official FP edge (1,651 of 1,676 have one end unmatched), which needs knowledge of which cells are annotated. It gives +0.0646 alone, and +0.111 with wide attach.\nWhat this means for the bar: the joint CEILING is 1.7x (gated) to 3.4x (wide) the +0.012 lab bar. To clear the bar, a real mechanism would have to capture about 58% of the gated joint, or about 29% of the wide joint, at near-zero added error. The realistic versions measured so far all lose or do nothing. Orphan attach: -0.0129 (mirror, 3.4% precision) and -0.0273 (nearest, 2.4%); break-even for an added fork is ~26.5% precision. Fork removal: 0 for 5 on the LB. The swap relink would need to tell a 7 um true move from a 1.6 um neighbour without GT, and no such cue has been measured. So the answer to 'three together = +0.01?' is: as a ceiling, yes, about +0.021 (up to +0.041). As a realizable gain, nothing measured gets there. With the ~1/6 lab-to-public transfer, even a perfect gated joint would be about +0.003 public.",
+ "files": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/wf_ideas_v4/combo_oracle/m_joint_oracle.json",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/wf_ideas_v4/combo_oracle/m_joint_oracle.notes.md",
+  "C:/Users/vital/AppData/Local/Temp/claude/c--Users-vital-Documents-kAGGLE-Biohub---Cell-Tracking-During-Development/acabaea6-42c1-4115-a146-2ddc5bb7e8c8/scratchpad/combo/combo_oracle.py",
+  "C:/Users/vital/AppData/Local/Temp/claude/c--Users-vital-Documents-kAGGLE-Biohub---Cell-Tracking-During-Development/acabaea6-42c1-4115-a146-2ddc5bb7e8c8/scratchpad/combo/combo_out.json",
+  "C:/Users/vital/AppData/Local/Temp/claude/c--Users-vital-Documents-kAGGLE-Biohub---Cell-Tracking-During-Development/acabaea6-42c1-4115-a146-2ddc5bb7e8c8/scratchpad/combo/combo_agg.json",
+  "C:/Users/vital/AppData/Local/Temp/claude/c--Users-vital-Documents-kAGGLE-Biohub---Cell-Tracking-During-Development/acabaea6-42c1-4115-a146-2ddc5bb7e8c8/scratchpad/combo/combo.log",
+  "C:/Users/vital/AppData/Local/Temp/claude/c--Users-vital-Documents-kAGGLE-Biohub---Cell-Tracking-During-Development/acabaea6-42c1-4115-a146-2ddc5bb7e8c8/scratchpad/combo/link_decomp.py",
+  "C:/Users/vital/AppData/Local/Temp/claude/c--Users-vital-Documents-kAGGLE-Biohub---Cell-Tracking-During-Development/acabaea6-42c1-4115-a146-2ddc5bb7e8c8/scratchpad/combo/decomp_out.json",
+  "C:/Users/vital/AppData/Local/Temp/claude/c--Users-vital-Documents-kAGGLE-Biohub---Cell-Tracking-During-Development/acabaea6-42c1-4115-a146-2ddc5bb7e8c8/scratchpad/combo/decomp_agg.json",
+  "C:/Users/vital/AppData/Local/Temp/claude/c--Users-vital-Documents-kAGGLE-Biohub---Cell-Tracking-During-Development/acabaea6-42c1-4115-a146-2ddc5bb7e8c8/scratchpad/combo/swap_geom.py",
+  "C:/Users/vital/AppData/Local/Temp/claude/c--Users-vital-Documents-kAGGLE-Biohub---Cell-Tracking-During-Development/acabaea6-42c1-4115-a146-2ddc5bb7e8c8/scratchpad/combo/swap_geom.json",
+  "C:/Users/vital/AppData/Local/Temp/claude/c--Users-vital-Documents-kAGGLE-Biohub---Cell-Tracking-During-Development/acabaea6-42c1-4115-a146-2ddc5bb7e8c8/scratchpad/combo/agg.py"
+ ]
+}

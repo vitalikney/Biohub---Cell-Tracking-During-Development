@@ -1,0 +1,10 @@
+# v_realistic_1 notes (2026-09-26T19:01:41Z)
+- no prior v_realistic_1.json; starting skeptic (interpretation lens)
+- 19:03Z read m_realistic.json/notes, combo_arms.py, agg.py, boot.py. summarise = micro div Jaccard + weighted adj edge. Round-11 report: division-add break-even q*=J/(1+J)=0.161 on ins35 (0.265 obsolete) -> m_realistic's '~26.5% break-even' is the obsolete number; O res1.0 at 1/5=20% is ABOVE 0.161 (consistent with its + delta).
+- 22:1xZ scratchpad/combo/v_real1/check.py (log check.log; reads m_realistic singles.json + combos_out.json, no re-run of graphs): ALL numbers in the claim reproduce (base 0.93988 25/31/74; best3 +0.00039 = adj +0.00007 + div +0.00032; joint F+L+Odiv +0.01353 = adj +0.00044 (additive: 0.00027+0.00014+0.00003) + div +0.01309 vs singles div 0.00602+0.00538 -> super-additivity +0.00169 entirely in div Jaccard (25/99 and 32/130 vs 32/99). Explanation correct.
+- ERROR: break-even '~26.5%' is the obsolete 0.265; on ins35 q* = J/(1+J) = 0.161. O res1.0 1/5 = 20% is ABOVE it (div 26/35/73 -> +0.00017), res1.5 13% below. Failure of O res1.0 is volume (5 evaluable forks), not precision.
+- SELECTION OPTIMISM quantified: leave out 6bba_debd7bfa -> best3 -0.00038, O res1.0 -0.00053; drop debd+cdcf -> best3 -0.00053. Cross-embryo knob selection: pick on 44b6 -> F=forkmid3.5 (+0.00085) -> 6bba -0.00235, O/L pick base; pick on 6bba -> fm4.5/res1.0/R8 -> 44b6 0.00000. Random half-split CV (200 reps, sum of per-family picks): mean -0.0013, p5 -0.0044, p95 0. Honest realistic estimate <= 0.
+- 44b6 = exactly 0 for every positive realistic arm; all gain 6bba (39/56 clips). Test = 2 other embryos.
+- Transfer context: joint oracle +0.0135 /6 = +0.0023 public (just over the +0.002 bar); +0.0206 (swaps) /6 = +0.0034. Realistic +0.0004 even at 1:1 is < 0.001 public display resolution.
+- verdict: conclusion HOLDS (not refuted); corrections: break-even, honest estimate <= 0, 'one clip' is stronger (sign flips without it).
+- 19:04Z wrote v_realistic_1.json (refuted=false)
