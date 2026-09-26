@@ -2067,6 +2067,18 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   V4b RUNTIME BOUND (report-only addition to V4; the bands stay on B as approved): also report B' = min(L(K2)_hi, L(K2)_hi - L(twin)_lo + 7.31 h, L(twin)_hi + 2.66 h) (twin runtime <= 6.46 + 0.58 GPU run variance + 0.13 setup + 0.14 lowrefine; +0.71 h K2-vs-twin run variance; the 1.95 h insertion term is a mean). OK item 5 acts on B; if B <= 9.0 h < B', do not act: ask the user with both numbers.
   R5 FOR #37/#38 (replaces the 23:12 sentence 'F(K2) = 7.87 h ... R5(b) admits K2 and the twin unless they ERROR'): R5(b) basis F' = min(L35_hi 7.73, L36_hi 7.42) + 0.14 lowrefine + 0.71 run variance = 8.27 h (margin 1.23 h -> passes). If a file's own L_hi > 9.5 h, R5(b) needs its runtime bound <= 8.5 h (K2: B'; twin: L(twin)_hi - L(K2)_lo + B'); else R5 is UNPROVEN for that file -> ask the user; strict default = the V1 pair without that file.
   V3b K2'' GATE (only after the V3 trigger AND the user's yes): (1) dummy CSV sha256 == K2 dummy CSV; (2) the log has 'SAFETAIL: repair deadline 37800s, divins deadline 32400s'; (3) probe.json REPAIR_DEADLINE_S 37800 / DIVINS_DEADLINE_S 32400 and the notebook diff vs K2 = those lines + the name comment; (4) tools/dummy_gates.py with --k2 <K2'' dummy dir> passes; (5) its own slug biohub-exp58d-x138-safe-lowref v1, never v2 of the K2 slug (keeps C2(a) 'K2 v1 unchanged' unambiguous); (6) the message's first exp token is 'exp58d'.
+- 2026-09-26 07:35 UTC, K2/TWIN SCORE READ (mechanical, by the READ TABLE 23:12 UTC [commit 1017c41, pushed 23:13:16Z] +
+  CLARIFICATION v2 [f05389e, 01:20Z] + v3 [fc51b75, 04:04Z] + v4 [64f0551, 06:31Z]; first result seen in poll.log at
+  06:54:06Z = twin; K2 first seen COMPLETE at 07:34:12Z; the user gave no OK on the 04:04 list, so only strict text applies
+  and none was needed):
+  #37 K2 = exp58 (56563521) = **0.954**, L in (7.36, 7.54] h -> CLEAN (<= 8.0 h: the insertion gate never fired),
+  R5(a) ADMIT (<= 9.5 h). #38 TWIN = exp58n (56563534) = **0.953**, L in (6.69, 6.87] h, R5(a) ADMIT.
+  k = 954, w = 953; d1 = K2 - #35 = 0; d2 = twin - #34 = 0; twin - K2 = -1 (thousandths). Row 1 (error): no. Row 2
+  (twin - K2 >= +2): no. Row 3 (d1 >= -1): YES -> lowrefine kept; F1 = K2 #37; F2 = twin #38 (>= 0.953, f2 conditions
+  met). No K1, no K2'' (clean), no new submission needed. Insertion runtime cost on the hidden run <= L(K2)_hi -
+  L(twin)_lo = 0.85 h. FINALS PAIR TO TICK NOW (provisional-tick rule, reversible until the deadline): **#37 (56563521,
+  'probe 37: exp58') + #38 (56563534, 'probe 38: exp58n')**. Never tick #35, P36, #34. The clean-proof one-shot job was
+  stopped (moot). 26 Sep: 3 slots left, no rider exists -> slots stay empty (R8 cutoff 27 Sep 12:00 UTC).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
