@@ -2359,6 +2359,12 @@ Mention it to the user in one line (R9-A8 item 6).
   V7 AUTONOMY [part of the same OK]: as P8, for up to two ports: pull, dummy, gates and submit without waking the user; PushNotification at the trigger, at each submit and at the read. Claude in Chrome disconnected at a trigger = notify and wait (P4c(7)).
   V8 NOT IN v2: successor + our insertion (SI). P6's last sentence stands (new code, no lab gate on the successor; round 11: an early port is at least as good for bronze).
   SCALE (priors, not measurements): P(a clean x138-family successor >= 0.954 appears by 29 Sep 00:00) ~5-15%; given one, an early port vs doing nothing ~+0.02 to +0.26 P(bronze) (central ~+0.1-0.2; worst modelled case -0.01); unconditional ~+0.005-0.015 over the >= 0.956 rule. In the ~85-95% no-trigger world it changes nothing.
+- 2026-09-26 17:50 UTC, SESSION TIMERS SET (R11-A4; session-only, they die with this Claude session; cron is in local time UTC+3):
+  recurring 2bd08ad3 = E10 P1 check at hh:04 UTC every 3 h (acts only between 27 Sep 11:30 and 29 Sep 00:30 UTC and when
+  no round is running: e10_snapshot, poller header, API SELECTED, Chrome connected, gate on any real P2 signal); one-shot
+  tick checks 012fa6dd (28 Sep 17:57 UTC), 328f7392 (29 Sep 11:57 UTC, with a push reminder), 18ff4796 (29 Sep 17:57 UTC,
+  push). Research rounds keep their own bash timers (round 12 at 20:00 UTC). The round prompt now tells the plan-check
+  agent to read the newest experiments/e10_watch/ file instead of running the snapshot (R11-A8).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
