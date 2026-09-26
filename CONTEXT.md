@@ -2080,6 +2080,19 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   'probe 37: exp58') + #38 (56563534, 'probe 38: exp58n')**. Never tick #35, P36, #34. The clean-proof one-shot job was
   stopped (moot). 26 Sep: 3 slots left, no rider exists -> slots stay empty (R8 cutoff 27 Sep 12:00 UTC).
 - 2026-09-26 08:21 UTC: user chose FULL research rounds every ~2.5 h until the R8 cutoff (27 Sep 12:00 UTC) (option "b"); round prompt updated with the scored finals #37 + #38.
+- 2026-09-26 08:27 UTC, 0.955/0.956 WAVE CHECK (user alert; CLI by the main session + round-7 browser agent, notes
+  research/wf_ideas_v4/round7/scan_browser.notes.md): LB 08:22-08:24Z: 3,923 teams; 0.953: 325, 0.954: 87, 0.955: 46
+  (was 28 on 25 Sep 11:27), 0.956: 26 (was 19), 0.957: 17, >=0.960: 62. We are #183 at 0.954 (#162 at 05:46Z; 12th in
+  the 0.954 block); public silver line ~rank 196 is 13 ranks below us. 26 teams rose into >=0.954 with submissions made
+  23:43-01:53Z (scored overnight), 15 of them to >=0.955. SOURCE: NOT public - no new public notebook (newest run is
+  Harmonic Fusion V3, 0.953), no new discussion topic/comment, no host announcement. Datasets: kragglenote2forwork/
+  biohub-sub-cache2 = cached submission CSVs "recovered from the checkmyacckraggle repo", incl. "RANK1-0.961-V8-x138-
+  s3forks (gwey1025/biohub-ends77-s3forks)" = a PRIVATE kernel (403) of team "Abnormal Guys" (#47, 0.961) and a
+  "metric-hack" file -> leaked material, not a method; static CSVs cannot score in a code competition; NOT used.
+  amanatar/optimized-biohub-max-score (votes 15 -> 53) = x138 + in-kernel validator + metric-aligned PP sweep under a 9 h
+  governor: conflicts with R7 (validator/sweep never on in our submissions; the hidden rerun sweeps other stems) and no
+  public score >= 0.954 is shown -> not ported. E10 trigger (public x138 heir >= 0.956): NOT met. Interpretation: private
+  or Discord x138 variants / own work; public-tuned knobs may not transfer to private. Plan unchanged: finals #37 + #38.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
