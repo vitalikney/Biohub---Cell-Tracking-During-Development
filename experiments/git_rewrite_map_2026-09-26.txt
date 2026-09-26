@@ -1,0 +1,114 @@
+# git history rewrite 2026-09-26 (Claude authorship/trailers removed): old hash -> new hash for main and claude/practical-meitner-31k9ye
+# CONTEXT.md cites old hashes; look them up here. Commit dates and file trees are unchanged.
+fa8db4bc55 -> fd23e0af69  Log: cloud branch history rewritten (Claude authorship removed); stop mirroring main to it
+a153fc56f4 -> 4e760fb7a0  Merge remote-tracking branch 'origin/claude/practical-meitner-31k9ye'
+6d4cde738d -> da645e8ccf  Cloud research day 2: questions already answered locally; findings recorded, no further cl
+d28d97bcb9 -> 86a2f75765  Round prompt: R8 hard line, active lines (overlap consensus, E10), closed list
+05e366c286 -> 1953f18445  exp64 overlap-consensus lab kernels (71 44b6 clips, K2 stack, 2 shards) built and pushed
+e21d4304b7 -> d3ca49566b  Finals ticked 2/2 (API-verified); E10 port rule in force; overlap-consensus line resumed
+5336567127 -> 3992fd0a66  Round 7: records, post-score RESUME POINT, proposed E10 port rule (pending OK), report
+42d1a55b28 -> 6b82db194d  Overlap-consensus line paused pending the curator
+539ea8b8fa -> 6eca06b002  Overlap-consensus candidate line: pre-registered gates G-A/G-P/G-B/G-D/G-LB
+4790f1f4fb -> 5eccf36d1f  Rules check: leaked CSVs not allowed; in-kernel sweep and test-structure use not prohibite
+4d0c477d58 -> 9d04fceb91  0.955/0.956 wave check: no public source, E10 not triggered; leaked sub-cache not used
+7107b6d0fd -> 3ffe1f61a3  Research rounds continue until R8; round prompt updated with scored finals
+b4144e90c1 -> b2be38211e  K2 #37 = 0.954 (clean, 7.54 h), twin #38 = 0.953: READ TABLE row 3 -> finals #37 + #38
+64f055126c -> 093526c0c1  Night round 6: READ TABLE clarification v4 (pre-score), round report
+2f6ec9d4ef -> 81c77a2a1a  K2'' builder change merged (deadline pairs), ledger family exp58d
+1a4c908f04 -> 13f4dac104  Merge branch 'worktree-agent-a2cfc8ea52343f923'
+801de5a882 -> 6d7757356f  R5-A4: safetail builder accepts exactly (34200, 28800) or (37800, 32400) on non-lab builds
+fc51b756c3 -> 708861e9df  Night round 5: READ TABLE clarification v3 (pre-score), clean-proof polls job, OK request
+f05389ebfb -> 85a7ca8413  Night round 4: READ TABLE clarification v2 (pre-score), provisional finals tick rule, chec
+b2cb928c14 -> c44e20a990  K2 (#37) and twin (#38) submitted; P36 = 0.954 info only; RESUME POINT 26 Sep
+1017c41bce -> 581277b644  Night round 3: K2/twin READ TABLE (pre-score), S4-S6 empty, runtime records, poller widene
+1ca747b7ea -> d383c4788e  User OK on AMENDMENT f2: F2 = exp58n twin; submit with K2 at 00:01 UTC
+4f5d325145 -> b6bf3af456  Night round 2 (ANTIPAR/DNVETO closed, K4 dropped; addendum M noted post-hoc); twin dummy g
+da154cbf6a -> e685650842  exp60 T9 lab read: no K3 (forkmid power fail), no K3b (DeepCenter fail); insertion in-samp
+ec8cd864ef -> ef51154d5b  exp60 lab: forkblob gate FAIL (div_J down) -> closed
+1a888ca56b -> 8eb3af2000  CONTEXT timestamp correction
+9545e91db8 -> aff728ae97  v4 amendment code merged (trainlab gates L1-L5, forkblob, runtime ledger); curator v4 know
+a230c7f514 -> 8807d91bb2  Merge branch 'worktree-wf_9606c7ef-11e-3'
+154cdcbccf -> 170e94a0fd  Merge branch 'worktree-wf_9606c7ef-11e-2'
+deec19661f -> 02b03f02bc  Merge branch 'worktree-wf_9606c7ef-11e-1'
+b4c9f63ae1 -> 2aa2c50114  runtime_ledger: exp token reads underscore/dash build names (exp58_x138_safe_lowref, exp58
+28c325658f -> 6cac7f9d3f  forkblob (ADDENDUM L4): --patch forkblob for x138 (after forkmid, ENABLE=0 no-op, fail-sof
+314b82e1eb -> 4e188d0ace  trainlab gates: PRE-REGISTRATION v3 ADDENDUM L (L1/L2 DeepCenter evaluable precision + Wil
+597eec3483 -> 08261001a2  A5 runtime ledger: tools/runtime_ledger.py (poll.log -> experiments/lb_poll/ledger.md: fir
+14c339e07a -> f8e9c78621  exp58n twin (f2 candidate) built; friend C: C08 step 0 cancelled
+3ba06d42de -> af21b2ccd4  Research round 1 (v4) + PRE-REGISTRATION ADDENDUM L and AMENDMENT f2 recorded before any e
+5ea53f9781 -> 5e90623d52  Knowledge curator workflow (research/KNOWLEDGE/), hooked after every research round
+8e79493b79 -> 4f67ef5889  Night plan: periodic research rounds (script), K2 at 00:01 UTC
+fcebebe60d -> 60bc0f8371  FF dummy 2/2 PASS: insertion fail-soft restores exp56 exactly
+584f6d1856 -> 0fa2c7a923  Dummy gates K2/K1/FD 16/16 PASS; exp60 lab shard A pushed
+8ba6e32c21 -> 2eaa06b47b  tools/dummy_gates.py: automated dummy gates of plan v3 §e (with the K2 correction)
+e04f6bfc01 -> 6f79a3469b  T7 step 0: N <= ~100, K2 forecast ~7.8 h, R6 not triggered; branch-A kernels K2/K1/FD/FF b
+f0d7f0cd40 -> a2a288c067  #35 = 0.954 (branch A: K2 with insertion), R6 not triggered; P36 exp57 v1 diagnostic submi
+5f40002206 -> 28d68fd77a  #34 exp56 (x138 verbatim) = 0.953, L34 <= 6.46 h: x138 is the base
+ad436b82fe -> c2118d68d0  T2 lowrefine, T3 forkmid_dose, T5 exp60 lab, T6 forkmid merged (69 tests pass); build comm
+b80f8a8db7 -> 88f9d861c9  Merge branch 'worktree-wf_0b307a70-4af-2'
+bb218f524d -> 464726bf88  Merge branch 'worktree-wf_0b307a70-4af-3'
+acb4a59b54 -> 70ab6a18fc  Merge branch 'worktree-wf_0b307a70-4af-4'
+cc0bfa9929 -> cbb29b6ae3  Merge branch 'worktree-wf_0b307a70-4af-1'
+6cb04f596c -> b29f967de8  T5 exp60 x138 train lab: --patch trainlab (lab-only, train stems via /tmp zarr symlinks, 3
+e6fbf5cdd2 -> 5b8872bdc1  Browser checks: tie rule (earlier submission wins), 12 h runtime limit, error classes, GPU
+10f7854b27 -> 247d164ae6  T2 --patch lowrefine for --base x138: V1284-refined coords for lowdet rows >= READMIT_MIN_
+160aca7b50 -> bddfcd7d66  T6: --patch forkmid for --base x138 (C04 un-fork safe-division forks with parent >= 4.5 um
+e29701b4cd -> 7dc4246038  T3: tools/forkmid_dose.py (C04 forkmid dose on submission.csv) + test; exp56 62 forks 3.2%
+fea74ea271 -> a25a6e5986  Friends A and C: point to the v3 task cards
+36c4bdd0d3 -> c0119cdcf5  Merge remote-tracking branch 'origin/claude/practical-meitner-31k9ye'
+25b7856a2f -> e1c5004b37  Research day 2 agenda (moderate budget, starts 26 Sep ~09:30 UTC)
+4039392c27 -> 9f6177301e  Step 0: dummy-run timing extracts for exp48/49/51/56/57b (experiments/runtime_step0/*_timi
+89b187bae5 -> e5b00ca25b  PRE-REGISTRATION v3: user OK on FINAL_REPORT §e/§f and §h decisions (before #34/#35 scores
+a32f631f9b -> c81eddc2dd  Merge remote-tracking branch 'origin/main'
+f7a93022c2 -> 20480924f8  Merge branch 'claude/practical-meitner-31k9ye' (ideas workflow v3, browser intel, safetail
+f709d0dfd9 -> a8414b855a  T1 safetail: --patch safetail for the x138 base (deadline 34200, gated fail-soft DaughterN
+aa43624cc6 -> 5f251d24a6  v3 plan: prompt for the local chat (cloud takes only T1 safetail; everything else local)
+589ec68b5b -> a1dcdb68bc  Ideas workflow v3 done: FINAL_REPORT.md, plans, task cards; CONTEXT entry
+9227d31ab4 -> fa78316f1f  Ideas workflow v3: agent logs (auto-commit)
+c88d027aac -> 209a6f6257  Ideas workflow v3: agent logs (auto-commit)
+aea5a48e5f -> 10be5bad83  Ideas workflow v3: agent logs (auto-commit)
+6f8acd3155 -> aceb284678  Ideas workflow v3: agent logs (auto-commit)
+749f270a13 -> e367c7e7c5  Ideas workflow v3: agent logs (auto-commit)
+a5f637b2ad -> e27e6957b7  Ideas workflow v3: agent logs (auto-commit)
+4b0cb61b29 -> a14aba989f  Ideas workflow v3: agent logs (auto-commit)
+80c70fc001 -> 9926815b74  Ideas workflow v3: agent logs (auto-commit)
+70c700f69c -> 8faf5e7817  Ideas workflow v3: agent logs (auto-commit)
+7c9a88072f -> 98ec54500b  Ideas workflow v3: agent logs (auto-commit)
+91e9cdc468 -> b27ec73bc3  Ideas workflow v3: agent logs (auto-commit)
+e579db0601 -> 05c79341b8  Ideas workflow v3: agent logs (auto-commit)
+e65aa2483d -> 0250d31d69  Merge pull request #1 from vitalikney/claude/practical-meitner-31k9ye
+4171c46deb -> a38458436a  Ideas workflow v3: agent logs (auto-commit)
+f973792ec3 -> bfcd593cca  Ideas workflow v3: agent logs (auto-commit)
+de2e7525d4 -> ad083bf852  Ideas workflow v3: all 6 hunt groups done (44 ideas, 88 skeptic verdicts)
+5a0c1c3332 -> 7a7892af21  Ideas workflow v3: synthesis in progress
+666c988dbd -> a6be2a61fe  Ideas workflow v3: synthesis workflow script (merge, critic, two plans, final report)
+869ca00475 -> 869ca00475  Browser intel summary; exp57b runtime risk vs x138 repair deadline
+24392804a7 -> dcbeaf280d  Browser intel: Kaggle leaderboard, notebooks, discussions (11:33 UTC)
+7a36a0c2a2 -> 810615f434  Browser intel: divinsert ignores the repair deadline (exp57b code fact)
+d0e3e12954 -> 88101f63cd  Browser intel: Kaggle leaderboard, notebooks, discussions (11:31 UTC)
+ff5dd1e5f6 -> 22a093641c  Browser intel part 6: answers to agent browser_todo requests (logs, LB histogram, datasets
+b83cb69d0a -> 0fb0d92f63  Ideas workflow v3: hunters and skeptics (5/6 groups done)
+bf9e00a30c -> 684797c86c  Ideas workflow v3: agent logs (auto-commit)
+734dc50d3f -> 8fe1aab903  Ideas workflow v3: in-progress agent notes
+d134722775 -> c27800bf6c  Ideas workflow v3: in-progress agent notes
+6885270bbd -> 4daf962cae  Ideas workflow v3: agent logs (auto-commit)
+1de89093a3 -> 7ebf14e898  Browser intel part 5: rules, data and overview facts
+091295bd65 -> 726e3a79c4  Browser intel part 4: datasets updated 18-25 Sep
+3098463d22 -> b78e1a8695  Ideas workflow v3: in-progress agent notes
+b1b412cbc0 -> dba853f88d  Ideas workflow v3: all 11 hunters done; BROWSER_TODO.md compiled for the browser session
+a6f8a7fa67 -> 576e44b7fb  Ideas workflow v3: agent logs (auto-commit)
+11ec71f82a -> 2381b66a8b  Browser intel part 3: discussions of the last 10 days
+43c9d3291f -> 564d39e2bb  Ideas workflow v3: agent logs (auto-commit)
+38989af211 -> dbe4cba8ce  Browser intel part 2: public notebooks (nothing above x138 0.953), 5 pulled kernels with N
+c53516922f -> f3c83bbcc0  Ideas workflow v3: in-progress agent notes
+acd7e70ca0 -> c9129e9cdc  Ideas workflow v3: in-progress agent notes
+8eec08c616 -> 35e728f806  Ideas workflow v3: in-progress agent notes
+0d1dc0cda3 -> 12dea97429  Ideas workflow v3: in-progress agent notes
+694fc9f681 -> 9f12875192  Ideas workflow v3: in-progress agent notes
+28b1665f95 -> ff6aa4a124  Ideas workflow v3: in-progress agent notes
+8b63e3dad2 -> 98a10b094c  Browser intel part 1: leaderboard snapshot (11:00 UTC)
+d465c5ce80 -> c6b0cfab36  Ideas workflow v3: in-progress agent notes
+62d675359a -> 190a238fb5  Ideas workflow v3: prompt for the local browser session (Kaggle intel), agent notes
+58f615dcbd -> e03e615869  Ideas workflow v3: in-progress agent notes
+9447943431 -> 6eaf521fd9  Ideas workflow v3: in-progress agent notes
+b8ab8daf93 -> d0452a4ffd  Ideas workflow v3 started: brief (target 0.99 by 29 Sep), 11-lens hunt script, log folder

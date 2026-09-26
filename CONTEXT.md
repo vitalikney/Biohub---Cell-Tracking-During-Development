@@ -2164,6 +2164,16 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   (git filter-branch in a temp clone); final tree identical, 480 commits; force-pushed with lease (a153fc5 -> 4e760fb).
   Local backup ref: backup/claude-branch-before-rewrite (a153fc5, not pushed). main is NOT rewritten and still contains
   the original commits (via PR #1 and the merges). From now on main is NOT mirrored to that branch any more.
+- 2026-09-26 10:15 UTC: MAIN HISTORY REWRITTEN at the user's request (same filter as the cloud branch): Claude authorship (5 commits)
+  -> Vitaly Neybauer; Co-Authored-By/Claude-Session trailers (8+8) removed; 112 commits from b8ab8da onward rewritten;
+  tree identical; force-pushed with lease (fa8db4b -> fd23e0a); main and claude/practical-meitner-31k9ye share the
+  rewritten history again (4e760fb). OLD HASHES cited in CONTEXT (e.g. READ TABLE 1017c41 -> 581277b, v2 f05389e ->
+  85a7ca8, v3 fc51b75 -> 708861e, v4 64f0551 -> 093526c) map via experiments/git_rewrite_map_2026-09-26.txt; commit dates
+  are unchanged, so every "written before the score" timestamp still holds. Local backup refs (not pushed):
+  backup/main-before-rewrite (fa8db4b), backup/claude-branch-before-rewrite (a153fc5). RULES FROM NOW: (1) the running
+  overlap-consensus workflow branches (worktree-wf_b39793f6-e79-*) are based on the OLD history - bring their work in by
+  cherry-pick / rebase --onto, NEVER by merge (a merge would re-import the Claude commits); (2) friend A (and any other
+  clone) must `git fetch && git reset --hard origin/main` before committing again (PROMPT_FRIEND_A.md notified).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
