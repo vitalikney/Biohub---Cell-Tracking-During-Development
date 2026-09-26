@@ -2321,6 +2321,17 @@ Mention it to the user in one line (R9-A8 item 6).
   27 Sep 12:00 UTC; R4 needs +0.002 public, ~+0.012 lab by the ~1/6 transfer rule). Still unanswered: the post-R8 wake
   mechanism (default: this session's own timers, no background watcher) and the user's own reminders for 29 Sep
   12:00/18:00 UTC (default: the session checks the ticks itself).
+- 2026-09-26 16:54 UTC, PRIVATE RANK FORECAST (answer to the user's question; info and calibration only, no decision): field at 16:20Z
+  (experiments/e10_watch/20260926T1620Z.txt): 3,929 teams; >= 0.960 67; 0.955-0.959 131; 0.954 95 (we are 12th of 95 by
+  unrounded score, #210); 0.953 353 (mostly exact x138 copies). Teams at >= 0.954 grew 195 (25 Sep 18:08Z) -> 293 (26 Sep
+  16:20Z), ~4/h. Medal lines at ~3,950 teams: gold ~17, silver ~197 (5%), bronze ~395 (10%). Model: exact x138 copies share
+  one private score X; our private = max(#37, #38) with #38 ~ X (a few lowrefine nodes) and #37 = #38 + insertion (prior
+  C2: P(>0) 0.55-0.6, P(=0) ~0.3, P(<0) 0.10-0.15); public-selected variants keep ~0.3-0.5 of their public margin plus
+  ~0.001 noise; the >= 0.954 group may reach ~450-550 teams by the deadline. Forecast: P(max(#37,#38) > X) ~0.85-0.9;
+  given that, ~250-400 teams end above us (central rank ~320); P(bronze or better) ~0.65-0.7, P(silver) ~0.10-0.15,
+  P(gold) ~0, P(no medal) ~0.3 (mostly: both finals below X -> below all ~350 copies, rank > ~650; or the bronze line
+  lands inside the x138-variant crowd above us). Main drivers: insertion transfer to the private embryos (lab + on both
+  train embryos: 44b6 +0.0058, 6bba +0.0065), growth of the >= 0.954 group, shake-up of public-tuned 0.955-0.957 teams.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
