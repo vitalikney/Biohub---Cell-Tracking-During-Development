@@ -1,0 +1,74 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/INDEX.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/CHANGES.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/9/index.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/9/index.json"
+ ],
+ "alerts": [
+  {
+   "kind": "stale",
+   "what": "Resume hygiene (W80 = R9-A1), flagged by two rounds: the newest RESUME POINT is still the 09:03 block (tick placeholder unfilled, OC shown as active); 2 dated entries sit below '## 9. Literature'; the MEMORY.md 'LB probe approval' line is stale",
+   "evidence": "CONTEXT.md l.2148-2152, l.2205-2225; research/wf_ideas_v4/round9/report.json R9-A1; research/KNOWLEDGE/WATCHLIST.md W80; FACTS.md C-26, C-62, C-64",
+   "suggested_action": "Main session, one commit as the user: append the R9-A1 (a) RESUME POINT (API checks 09:10:07Z, 10:45:26Z, 13:00:41Z; never '11:42'), move the 2 entries up, replace the MEMORY approval line",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "E10 port traps before the next trigger check: pulled author metadata is public/internet-on/id_no and the CLI pulls only the latest version (P4b missing from CONTEXT); tools/runtime_ledger.py has no exp63 rule and its docstring maps exp63 to safetail, so a 7.5-9.5 h port would be wrongly admitted",
+   "evidence": "research/wf_ideas_v4/round9/scan_plancheck.json PC9-02, PC9-03; report.json R9-A3, R9-A4; experiments/ext_y3uanm-secondary-ft/kernel-metadata_0afc5663955.json; tools/runtime_ledger.py l.23, l.69-74",
+   "suggested_action": "Before ~15:30Z: append P4b to CONTEXT with date -u; add (r\"exp63[a-z]*\", \"x138\") + docstring fix + one test, run pytest",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "OC evidence and code exist only on local worktree branches (9c85782 aa5b834 ff438f7 9826517 a012e32 1986fb9), while CONTEXT 13:11 cites tools/overlap_lab.py; a worktree cleanup would erase the evidence behind a pre-registered stop",
+   "evidence": "research/wf_ideas_v4/round9/scan_plancheck.json PC9-04; report.json R9-A5; CONTEXT.md l.2200; WATCHLIST.md W83, W93",
+   "suggested_action": "Cherry-pick the 6 commits in order (never merge); grep -ci claude == 0, pytest, K2 sha 1f1ddb6d unchanged; add 'exp65/exp66 never push or submit'; commit as the user with no Co-Authored-By trailer",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "round8/REPORT.md and round9/REPORT.md were never saved (harness refused both writes); round9/ and exp64 results_info_post_stop.md are untracked",
+   "evidence": "research/wf_ideas_v4/round8/report.json R8-A0; research/wf_ideas_v4/round9/report.json R9-A0; git status; WATCHLIST.md W86, W05",
+   "suggested_action": "Write both REPORT.md files from R8-A0/R9-A0 (UTF-8) and commit them with round9/ and the next CONTEXT commit",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "Pending user questions: light mode vs full rounds (I-265) and own reminders for the 29 Sep 12:00/18:00 tick checks (I-229); ticks, E10 and the poller all depend on this laptop",
+   "evidence": "research/wf_ideas_v4/round9/report.json R9-A8; scan_plancheck.json PC9-06; WATCHLIST.md W92",
+   "suggested_action": "Send the single R9-A8 message and log both replies in CONTEXT with date -u",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "Curator records due 26 Sep 12:00 were missed (CONTEXT l.22 'GT still moving', B5 l.196, out_valid/efpost, R9-A6 facts); round prompt still says '241-team block' (l.20) and '~4 h headroom' (l.36)",
+   "evidence": "WATCHLIST.md W90, W71; research/wf_ideas_v4/round9/report.json R9-A6; experiments/workflows/biohub-research-round.js l.20, l.36",
+   "suggested_action": "Fold into the next CONTEXT write; fix the round prompt before round 10 (~15:30Z)",
+   "urgency": "today"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "The LESSONS draft (r9h-5) exists only in an untracked scan file; it states 'public = one embryo' as fact and '241+' teams",
+   "evidence": "research/wf_ideas_v4/round9/scan_hypotheses.json r9h-5; report.json R9-A7; FACTS.md C-69; WATCHLIST.md W91, T30",
+   "suggested_action": "Save as research/wf_ideas_v4/round9/LESSONS_draft.md with '~330' and the one-embryo caveat by 27 Sep 12:00; fill the private column on 30 Sep",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "deadline",
+   "what": "Remaining dates: E10 P1 ~15:30Z (latest ~19:00Z) then every ~6 h to 29 Sep 00:00; M6 lapse 26 Sep 18:00; slot reset 27 Sep 00:00; R8 cutoff 27 Sep 12:00; last port submit 29 Sep 02:00; tick re-checks 28 Sep evening, 29 Sep 12:00/18:00; ticks final 29 Sep 20:00",
+   "evidence": "CONTEXT.md l.2138-2151; research/wf_ideas_v4/round9/report.json R9-A9, next_focus; WATCHLIST.md NEXT 24 H l.50, LATER l.74",
+   "suggested_action": "Keep the schedule; before any submit the last poll.log header must be < 15 min old",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "contradiction",
+   "what": "Secondary detection weight is effectively 0.80 (not the 0.475 label; the '47%' fallback is unreproduced); an '11:42 UTC' tick check is in no log; the MEMORY copy injected into subagents still says '25 Sep batch approved'",
+   "evidence": "FACTS.md C-68, C-71; research/wf_ideas_v4/round9/report.json R9-A6 (3); WATCHLIST.md I80, I82",
+   "suggested_action": "Quote 0.80 and the fallback shares 33.1%/3.9%; cite only the 3 logged checks; only E10 has a submit OK. Close I-233 with one line",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 9 index done at ~13:30 UTC 26 Sep (HEAD 69d6be2 = origin/main; untracked round9/ and exp64 results_info_post_stop.md). INDEX.md rewritten incrementally (74 lines): finals still 2/2 (#37 0.954 + #38 0.953; API checks 09:10:07Z, 10:45:26Z, 13:00:41Z); rank #204/3,928, 8 below the silver line (info only); OC closed (G-A fail 10:52, R9 amendment 11:06, post-stop G-B -0.00143); E10 the only active line, not triggered at 13:00:51Z; 279 ideas (lb 41, lab 21, refuted 159, deferred 26, in-plan 31, open 1); top open ideas I-279, I-243, I-257, I-275, I-232, I-229/I-258, I-265/I-252, I-262/I-233; 9 deduplicated alerts. CHANGES.md gained section '9' (operations, 4 commits since c8, 36 idea records incl. I-270->lab-tested, I-276->refuted, I-222->deferred, new I-277..I-279; F-TRN-33..35, C-68..C-71, G31-G33; watchlist W86-W93, T30, I74-I84; resolved/carried/new alerts and severity settlements). No other file touched; no commit; Kaggle not touched."
+}

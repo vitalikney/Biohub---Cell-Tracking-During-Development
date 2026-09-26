@@ -1,0 +1,23 @@
+{
+ "SCHEMA": "BIOCEL_PAIR_NAMES_V1 : the 15 CORE15 columns IN ORDER, read out of the booster own feature_names line. A consumer must build its matrix in exactly this order. This file exists because ENG/KV12 shipped a model whose .names.json was loaded UNGUARDED and was not on the machine (ENG/KER11 STATE.md, the one blocker) -- pair_ship.py loads this one GUARDED and works without it.",
+ "model_file": "pair_gbm_core15_boot.txt",
+ "model_sha256": "289fd9d81d4a62fde8b54d8f01077f8f8c84fec2cdc1ca770f639b736f6a51c1",
+ "n_columns": 15,
+ "columns": [
+  "disp_norm",
+  "disp_dz",
+  "disp_rho",
+  "flow_defined",
+  "flow_norm",
+  "res_norm",
+  "res_cos",
+  "n_cand_s_10",
+  "n_cand_s_15",
+  "n_cand_d_10",
+  "n_cand_d_15",
+  "rank_s",
+  "rank_d",
+  "ratio_s",
+  "ratio_d"
+ ]
+}

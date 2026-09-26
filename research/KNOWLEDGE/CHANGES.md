@@ -451,3 +451,75 @@ Curator logs: `research/KNOWLEDGE/_curation/4/`.
   - Records: [now] (watch). INDEX uses [now, by 12:00].
   - R9 amendment: [today] (ideas) vs [info] (facts). INDEX folds it into resume hygiene [today].
   - Local-main sync W79 [now]: resolved by the time of INDEX.
+
+## 9 - 2026-09-26 ~13:25 UTC (curation 9; git HEAD 69d6be2 = origin/main + untracked `research/wf_ideas_v4/round9/` and `experiments/exp64_overlap_lab/results_info_post_stop.md`)
+
+**Operations:**
+- **Finals still ticked 2/2**, [56563521, 56563534]. A third API SELECTED check ran at 13:00:41Z. The "11:42" check in a task text is in no log (C-71). Sources: `CONTEXT.md` l.2154-2156; `research/wf_ideas_v4/round9/report.notes.md`.
+- **Overlap consensus closed for good.** The R9 amendment was recorded at 11:06 (`CONTEXT.md` l.2187-2197). The post-stop exp64 G-B on the K2 stack is -0.00143, bootstrap lower -0.00200 (`CONTEXT.md` l.2198-2204; `experiments/exp64_overlap_lab/results_info_post_stop.md`). The round prompt now lists E10 as the only active line (69a35b4).
+- **E10:** not triggered at 12:47Z or 13:00:51Z. `experiments/ext_robust-3d-cell-tracking/` is a CPU classical baseline scoring 0.432, so it is irrelevant (`research/wf_ideas_v4/round9/scan_browser.json` r9-e10-not-triggered-public-unchanged).
+- **LB:** no new submission. We are #204 of 3,928 at 12:46Z, 8 ranks below the ~196 silver line (was 7-8 above it). The 0.953 block is ~330 teams (`research/wf_ideas_v4/round9/scan_browser.json` r9-lb-delta-1246).
+- **Round 9** ran 12:46-13:10Z. It is untracked, has `report.json` R9-A0..A9 and no REPORT.md; round 8 also has no REPORT.md.
+- **Commits since curation 8** (`git log --oneline 24dcdea..69d6be2`): 957d8bf + 66a18e4 (R9 amendment record, round-8 report.json), 69a35b4 (round prompt), 69d6be2 (exp64 post-stop info).
+
+**Ideas** (`IDEAS.md` l.11; `ideas.json` meta.curations[n=9], 36 records; `_curation/9/ideas.json`):
+- **Status changes:** I-270 in-plan -> lab-tested (G-B -0.00143); I-276 deferred -> refuted (reach 1/83 FN, 1/25 FP); I-222 refuted -> deferred (embryo-dependent fallback, GPU counterfactual after 29 Sep).
+- **Applied:** I-274 (R9 amendment in CONTEXT 11:06).
+- **New:** I-277 DeepCenter readmit veto (refuted; a leaf prune in disguise), I-278 F2 -> P36/#34 (refuted), and I-279 E10 PORT RULE P4b (in-plan, at risk).
+- **Notes and aliases:**
+  - I-177/179/180/181: probes 21-23 are real -0.002 reads.
+  - I-102: secondary weight 0.80.
+  - I-062: ~1/6 lab-to-public transfer.
+  - I-066: OOF insertion threshold.
+  - I-029: z shift + insertion.
+  - Ops notes updated on I-208, I-229, I-232, I-243, I-257, I-258, I-259, I-262, I-265, I-275 and others.
+- **Counts c8 -> c9:** 276 -> 279 ideas. Refuted 157 -> 159, lab-tested 20 -> 21. Unchanged: lb-tested 41, deferred 26, in-plan 31, open 1. Strict orphan: I-233. At risk: I-229, I-232, I-243, I-257, I-262, I-275, I-279 (I-274 left the list; I-275 and I-279 joined).
+
+**Facts and decisions** (`FACTS.md`, `DECISIONS.md`, rows marked [c9]; `_curation/9/facts.json`):
+- **New facts:** F-TRN-33 (division-loss anatomy), F-TRN-34 (link family: real -0.002 reads), F-TRN-35 (exp64 bed fully in-sample). About 30 rows updated (ticks, rank #204, E10 checks).
+- **Contradictions:**
+  - Resolved: C-58 (R9 amendment recorded) and C-59 (the splice hurts on the real stack).
+  - Corrected: C-26 (MEMORY "Resume point" line was already right).
+  - New: C-68 (secondary weight 0.80 vs the 0.475 label), C-69 ("public = one embryo" is an inference), C-70 (OC stop sequence; the PC9-01 honesty gap is refuted), C-71 (the unlogged "11:42" check).
+- **DECISIONS.md:** new lab gates G31-G33 in §1b (G-B post-stop; round-9 rechecks; last-window ideas). §2 gains a still-2/2 paragraph. §2f adds the proposed P4b and the ledger fix. §2g is marked CLOSED. R1-R10 and the finals rule get [c9] lines.
+
+**Watchlist** (`WATCHLIST.md`; `_curation/9/watch.json`):
+- **Done:** W79 (local main in sync), W81 (I-208 row), W82 (exp64 INFO read), rounds 8 and 9, R8-A1/A3.
+- **Overdue:**
+  - W80 (resume hygiene, = R9-A1).
+  - W86 (both REPORT.md files).
+  - W57/W66/W31/W72 (curator records missed at 12:00).
+  - W71 (round prompt l.20, l.36).
+  - W03 (friend A card).
+  - W05 (untracked items).
+- **New:** W87 (P4b), W88 (ledger exp63), W89 (OC sequence note), W90 (records), W91 (lessons draft), W92 (user message; absorbs W50), W93 (never push exp65/exp66); T30 (30 Sep private column); insights I74-I84.
+
+**Alerts** (`INDEX.md` TOP ALERTS, 9 after dedup):
+- **Resolved since curation 8:**
+  - The exp64 G-B INFO read (done, -0.00143).
+  - The R9 amendment line (in CONTEXT 11:06).
+  - The round prompt listing OC as active (69a35b4).
+  - The local-main sync.
+  - Round-8 report.json (committed in 66a18e4; REPORT.md still missing).
+- **Carried over:**
+  - Resume hygiene (now [now]).
+  - Git cherry-pick of the OC evidence (commit list grew to 6).
+  - Records (deadline missed).
+  - Round prompt l.20/l.36.
+  - 29 Sep reminders (now part of the user message).
+  - Tick re-checks and poller.
+  - "Public = one embryo".
+  - Friend A card, ext_* and I-233.
+- **New:**
+  - E10 port traps: P4b metadata, exp63 ledger rule.
+  - Round-9 artefacts unsaved.
+  - Lessons draft only in a scan file.
+  - Light-mode question.
+  - Weight 0.80 vs 0.475.
+  - Stale MEMORY copy injected into subagents.
+  - Unlogged "11:42" check.
+- **Curator disagreements settled here:**
+  - Resume hygiene: [now] (facts, watch) vs [today] (ideas). INDEX uses [now].
+  - E10 traps: [now] (watch) vs [today] (ideas, facts). INDEX uses [now, before ~15:30Z].
+  - OC cherry-pick: [today] everywhere.
+  - User message: [now] (watch) vs [today] (ideas, facts). INDEX uses [today].

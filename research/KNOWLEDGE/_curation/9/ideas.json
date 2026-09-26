@@ -1,0 +1,67 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/ideas.json",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/IDEAS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/9/ideas.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/9/ideas.json"
+ ],
+ "alerts": [
+  {
+   "kind": "risk",
+   "what": "The G-A evidence and all OC code live only in local worktree branches. A worktree cleanup would erase the evidence behind a pre-registered stop (I-275)",
+   "evidence": "research/wf_ideas_v4/round9/scan_plancheck.json PC9-04; report.json R9-A5; report.notes.md (9c85782 aa5b834 ff438f7 9826517 a012e32 1986fb9 are not in main 69a35b4 or on origin)",
+   "suggested_action": "Before removing any worktree: cherry-pick the six commits onto main in order (no merges). Check grep -ci claude == 0, pytest, and that the K2 rebuild sha is unchanged. Add the CONTEXT line 'exp65/exp66 never push'",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "The E10 PORT RULE P4b clarification is not in CONTEXT. Without it, a port would push the author's public, internet-on metadata, which cannot be scored (I-279). The ledger also lacks the exp63 -> x138 rule (I-243)",
+   "evidence": "research/wf_ideas_v4/round9/report.json R9-A3, R9-A4; scan_plancheck.json PC9-02, PC9-03; experiments/ext_y3uanm-secondary-ft/kernel-metadata_0afc5663955.json; tools/runtime_ledger.py l.23, l.69-74",
+   "suggested_action": "Before the next E10 check (~15:30Z): append the P4b text to CONTEXT with date -u, apply R9-A4 (EXP_RULES exp63 -> x138, docstring, one test), and tell the user in one line",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "The RESUME POINT is still the 09:03Z block (unfilled tick placeholder, OC shown as active). Two dated entries still sit below '## 9. Literature', and the MEMORY 'LB probe approval' line predates the E10 yes and the OC stop (I-257)",
+   "evidence": "CONTEXT.md l.2148-2152, l.2205-2225; research/wf_ideas_v4/round9/scan_plancheck.json PC9-05; report.json R9-A1 (a)-(d) (ready text)",
+   "suggested_action": "Main session, one commit: append R9-A1 (a), move the two stray entries up, replace the MEMORY approval line. Do not write '11:42 UTC' (no log shows that check)",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "round8/REPORT.md and round9/REPORT.md were never saved, because the harness refused both subagent writes. Their texts exist only inside report.json, and round9/ is untracked (I-232)",
+   "evidence": "research/wf_ideas_v4/round8/report.json R8-A0; research/wf_ideas_v4/round9/report.json R9-A0; report.notes.md 13:09Z; git ls-files research/wf_ideas_v4 (REPORT.md only for rounds 3-7)",
+   "suggested_action": "Write both REPORT.md files (UTF-8) from R8-A0/R9-A0 and commit them with round9/ and the next CONTEXT commit",
+   "urgency": "today"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "The full LESSONS draft (r9h-5, 8,329 chars) exists only in an untracked scan file (I-252)",
+   "evidence": "research/wf_ideas_v4/round9/scan_hypotheses.json r9h-5; report.json R9-A7",
+   "suggested_action": "Save it as research/wf_ideas_v4/round9/LESSONS_draft.md with the '241+ -> ~330 teams at 0.953' fix. Finalise it after the private LB",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "deadline",
+   "what": "Two user questions are pending: light mode vs full rounds (I-265), and the 29 Sep 12:00/18:00 UTC reminders, which are still unconfirmed (I-229)",
+   "evidence": "research/wf_ideas_v4/round9/report.json R9-A8 (4), (5); scan_hypotheses.json r9h-2; scan_plancheck.json PC9-06",
+   "suggested_action": "Send the R9-A8 message once and log both answers with date -u. If the user picks light mode, rewrite the round prompt (I-259), which also still says '241-team block'",
+   "urgency": "today"
+  },
+  {
+   "kind": "contradiction",
+   "what": "The round task quoted an '11:42 UTC' API tick check that is in no log. The logged checks are 09:10:07Z, 10:45:26Z and 13:00:41Z (I-258)",
+   "evidence": "research/wf_ideas_v4/round9/report.notes.md; report.json new_facts; CONTEXT.md l.2154-2156",
+   "suggested_action": "Cite only the three logged times, and never write 11:42 into CONTEXT",
+   "urgency": "info"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "I-233 (the poller logs error_description) is still the only strict orphan. Round 9 does not mention it",
+   "evidence": "research/KNOWLEDGE/ideas.json I-233; research/wf_ideas_v4/round9/report.json actionable R9-A0..A9",
+   "suggested_action": "Close it with one line: the C2 one-liner covers an E10 port read",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 9 ran at 2026-09-26 ~13:40 UTC on HEAD 69d6be2, plus the untracked research/wf_ideas_v4/round9/ and experiments/exp64_overlap_lab/results_info_post_stop.md. The ledger grew from 276 to 279 ideas; there are 36 change records in ideas.json meta.curations[n=9]. Counts c8 -> c9: refuted 157 -> 159, lb-tested 41, lab-tested 20 -> 21, deferred 26, in-plan 31, open 1.\n\nOverlap consensus: the R9 amendment was recorded at 11:06 UTC (CONTEXT.md l.2187-2197), so I-274 is APPLIED. The post-stop exp64 G-B read gives -0.00143 (boot lower -0.00200), which confirms the stop (CONTEXT.md l.2198-2204). I-270 moves to lab-tested, and I-208 stays refuted. Round 9 refuted the PC9-01 'honesty gap' claim, and no user STOP/continue answer is logged, so the default STOP stands.\n\nRound 9 verdict (r9h-2): no honest mechanism can reach R8. R4 needs ~+0.012 in the lab at the ~1/6 transfer, and the judge offers light mode.\n\nMeasured rechecks:\n- I-276 GT-noise mimicry is refuted (reach 1/83 FN, 1/25 FP). New DIV fact: the loss comes from missing forks and isolated false forks.\n- I-222 retention guard moves to deferred (embryo-dependent fallback 33.1%/3.9%; effective weight 0.80). A GPU counterfactual is planned after 29 Sep.\n- The notes for the I-177/179/180/181 link family were updated: probes 21-23 are real -0.002 reads; relink OFF on x138 kills readmit; gshift is plausibly subsumed by the flow prior.\n\nNew ideas: I-277 DC readmit veto (refuted), I-278 F2 -> P36/#34 (refuted), and I-279 E10 P4b (in-plan, at-risk). New aliases: OOF insertion threshold under I-066; z shift + insertion under I-029.\n\nOrphans: I-233 is the only strict orphan. At risk: I-229, I-232, I-243, I-257, I-262, I-275, I-279."
+}

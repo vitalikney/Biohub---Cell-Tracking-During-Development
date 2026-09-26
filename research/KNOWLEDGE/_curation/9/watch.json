@@ -1,0 +1,13 @@
+{
+  "task": "curation 9 WATCHLIST (incremental over curation 8, 10:58Z)",
+  "complete": true,
+  "written_utc": "2026-09-26T13:22Z",
+  "files_written": ["research/KNOWLEDGE/WATCHLIST.md", "research/KNOWLEDGE/_curation/9/watch.notes.md", "research/KNOWLEDGE/_curation/9/watch.json"],
+  "state": "Main HEAD 69d6be2 (13:11Z). Finals 2/2 [56563521, 56563534] (API 09:10:07Z, 10:45:26Z, 13:00:41Z; round9/report.notes.md). E10 only active line, not triggered 13:00:51Z. OC STOPPED (G-A 43/62, CONTEXT l.2177-2186); exp64 post-stop G-B -0.00143 (l.2198-2204). Round 9 done 13:09Z (untracked), 10 actionable R9-A0..A9 all pending. Poller last header 13:05:23Z, PID 20052 alive. Public #204, 8 below silver (info).",
+  "overdue": ["W80 = R9-A1 resume hygiene (new RESUME POINT, move entries below ## 9 l.2207-2225, MEMORY l.8, intel line)", "W86 = R9-A0/R8-A0 save round8+round9 REPORT.md; commit untracked round9/", "W57/W66/W31/W72 curator records due 12:00 missed (l.22, l.196, out_valid, efpost, R8-A8)", "W71 prompt l.20 '241-team', l.36 '~4 h headroom'", "W03 friend A card", "W05 untracked (ext_*, exp64 results_info_post_stop.md, round9/, stackdump)", "W02 moot"],
+  "next_24h": ["W92 = R9-A8 user message (light mode? own reminders 29 Sep 12:00/18:00) now", "W87 = R9-A3 E10 P4b into CONTEXT before ~15:30Z", "W88 = R9-A4 ledger exp63 -> x138 + test", "W83 = R9-A5 cherry-pick 9c85782 aa5b834 ff438f7 9826517 a012e32 1986fb9 before worktree removal", "W89 = R9-A2 OC sequence note", "W90 = R9-A6 curator records", "W76 round 10 ~15:30Z; rounds end 27 Sep 12:00", "W23 E10 P1 ~15:30Z / by ~19:00Z", "W19 poller", "W91 = R9-A7 lessons draft by 27 Sep 12:00 (+I69 caveat)", "W93 never push exp65/exp66", "T12 18:00", "T17", "T27 22:00", "T18 27 Sep 00:00", "T02", "T03 R8 27 Sep 12:00"],
+  "later": ["T04/T05 28 Sep 12:00/16:00 empty by rule", "T28", "T19 28 Sep evening tick check + first page read", "T20 29 Sep 00:00", "T29 29 Sep 02:00", "T09 29 Sep 12:00/18:00", "T10 29 Sep 20:00 ticks + poller stop", "T11 23:59", "T30 30 Sep lessons private column", "W29 post-deadline list"],
+  "new_ids": ["W86", "W87", "W88", "W89", "W90", "W91", "W92", "W93", "T30", "I74", "I75", "I76", "I77", "I78", "I79", "I80", "I81", "I82", "I83", "I84"],
+  "done_since_c8": ["W79", "W82", "W81", "W76 rounds 8-9 (round9 untracked)", "R8-A1/A3", "R8-A4 effectively", "W50 merged into W92"],
+  "moot_since_c8": ["R8-A5", "R8-A6"]
+}

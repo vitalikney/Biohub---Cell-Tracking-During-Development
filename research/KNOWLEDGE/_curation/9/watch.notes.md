@@ -1,0 +1,4 @@
+- 2026-09-26T13:12:13Z start: no watch.json in _curation/9; reading existing WATCHLIST.md + _curation/8
+- 13:12Z main HEAD 69d6be2 (13:11Z); origin pulled (W79 done: no local diffs). CONTEXT 2225 lines; new entries 11:06Z (R9 amend) l.2187-2197, 13:11Z (exp64 post-stop -0.00143) l.2198-2204. TICK placeholder l.2149 still unfilled; 2 entries still below ## 9 (l.2207-2225). MEMORY.md l.8 still stale. round9/report.json exists (13:09Z) untracked.
+- 13:15Z read round9 report.json (R9-A0..A9, all pending at 13:14Z), round8 report.json, exp64 results_info_post_stop.md (untracked; -0.00143), poll.log last header 13:05:23Z, PID 20052 alive. OC commits 9c85782..1986fb9 NOT in main. l.22/l.196/out_valid/efpost unchanged. Friend A card unchanged since b41ec05.
+- 13:17Z WATCHLIST.md written (curation 9: W86-W93, T30, I74-I84); watch.json written. No other file touched.
