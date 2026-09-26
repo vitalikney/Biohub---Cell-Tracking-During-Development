@@ -2174,6 +2174,16 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   overlap-consensus workflow branches (worktree-wf_b39793f6-e79-*) are based on the OLD history - bring their work in by
   cherry-pick / rebase --onto, NEVER by merge (a merge would re-import the Claude commits); (2) friend A (and any other
   clone) must `git fetch && git reset --hard origin/main` before committing again (PROMPT_FRIEND_A.md notified).
+- 2026-09-26 10:52 UTC, OVERLAP-CONSENSUS LINE STOPPED BY ITS PRE-REGISTERED GATE (workflow wf_b39793f6-e79, 10 agents):
+  G-A FAIL: registration on all 199 train videos found 43 of the 62 GT-linked 44b6 pairs at the exact offset (the
+  gate said ">= 60 of 65"; splits.json holds 62 links), 0 wrong offsets, 0 accepted 6bba pairs, 0 cross-embryo pairs,
+  49 accepted pairs (all 44b6, all bit-exact). Misses: 11 with 2.2-4.8% spatial overlap (< 5%), 4 with 1-4 overlapping
+  frames (< 5), 4 with < 30 votes. By the 08:58 UTC text ("G-A FAIL -> stop") the line stops: NO bit-probe (G-P), NO K6
+  submission. Supporting evidence (info): the lab-GB proxy on exp39 tails of all 71 44b6 clips gave splice delta
+  -0.00047 (bootstrap lower -0.00216; clip wins/losses 22/37). The algo reviewer found and fixed a harmful fragment-drop
+  in the splice (now rollback). The exp64 x138 lab kernels finish anyway (no slots used); their G-B reading will be
+  recorded as INFO ONLY (post-stop). Code kept out of main for now (branches worktree-wf_b39793f6-e79-* are on the
+  pre-rewrite history except the patch-K6 branch, rebased to the new history at ff438f7). Finals unchanged: #37 + #38.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
