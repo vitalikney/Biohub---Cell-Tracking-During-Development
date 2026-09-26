@@ -1,0 +1,18 @@
+# round9 plancheck notes
+- 2026-09-26 12:46 UTC start; no prior scan_plancheck.json (folder created)
+- 12:50Z poller alive: ledger.md 12:45:21Z, 141 polls, gaps>15min none (experiments/lb_poll/ledger.md).
+- G-A FAIL commit 24dcdea at 10:52:55Z; exp64 dumps downloaded _dl/exp64_a 12:05-12:32Z, _dl/exp64_b 12:32-12:34Z -> sequence clean (download after the FAIL record). No G-B info entry in CONTEXT yet.
+- R8-A9 not done: latest RESUME POINT is 09:03Z with unfilled TICK STATUS placeholder; two dated entries still below '## 9. Literature' (CONTEXT l.2201-2218); MEMORY.md pointer still says 25 Sep 10:20.
+- Task prompt says finals API-verified 11:42 UTC; CONTEXT only has 09:10:07Z (+10:45:26Z in round8 report) -> 11:42 check not logged.
+- Round prompt (biohub-research-round.js, 69a35b4) still says '241-team block at exactly 0.953' (round8: 0.953 block = 265-595, 331 teams) - stale.
+- Worktree branches worktree-wf_b39793f6-e79-1/4/5/6 still exist locally (R8-A7 cherry-pick not verified yet).
+- 12:58Z tools/runtime_ledger.py docstring example says '--family exp63=safetail' (9.5 h) but E10 P5 requires exp63 -> x138 (7.5 h); EXP_RULES has no exp63 entry -> poller's auto ledger shows exp63 as 'unknown' (no R5 eval).
+- Pulled metadata example experiments/ext_y3uanm-secondary-ft/kernel-metadata_0afc5663955.json: is_private false, enable_internet TRUE, id_no present, two "" dataset_sources (inaccessible/private). E10 P4 'change only id and title' would keep internet on + public + blanks. exp56 metadata (tested path): is_private true, enable_internet false, no id_no. Kaggle CLI 2.2.4.
+- 13:05Z SEQUENCE: wt6 commit 1986fb9 at 10:45:32Z (git log, iso) = proxy G-B on exp39 tails, 44b6 delta -0.00047, FAIL on proxy; G-A FAIL logged in main CONTEXT at 24dcdea 10:52:55Z. So a G-B-type number existed 7 min BEFORE the G-A FAIL record; CONTEXT 11:06 says 'written before any exp64/G-B number was read' (true only for exp64). No user STOP/continue answer logged with date -u.
+- round8/REPORT.md not saved (only report.json; R8-A0 asked for REPORT.md).
+- worktree branches wt1 bc325aa, wt4 9826517, wt5 ff438f7, wt6 1986fb9: none is an ancestor of main (69a35b4).
+- 13:15Z cherry-pick candidates 9c85782 aa5b834 ff438f7 (wt5, new history) + 9826517 a012e32 1986fb9 (old-based): all non-merge, 0 claude refs in author/committer/body. 633d72b is a merge (never). main advanced past b41ec05 (69a35b4) -> R8-A7 'fast-forward main to ff438f7' no longer possible; G-A evidence (experiments/overlap_reg_train/ga_train.json, experiments/exp65_overlap_probe/ga_report.json, exp64_overlap_lab/proxy_exp39tail/results.json) exists only in local unpushed branches (origin has main/claude/detector/friend-b only).
+- x138 (experiments/exp56_x138_verbatim) sets BIOHUB_VALIDATOR_ENABLE=0 and REPAIR_DEADLINE_S=27000 explicitly -> usable as P3/P5 grep anchors for a port.
+- W50 durable tick reminders: no CONTEXT record that they were set (grep W50/reminder). Ticks 2/2 at 09:10:07Z so only matters if E10 changes the pair.
+- trainlab.py / forkmid_dose.py: not re-audited (all riders closed; no active consumer in the next 3-6 h).
+- 13:20Z wrote scan_plancheck.json (7 findings)

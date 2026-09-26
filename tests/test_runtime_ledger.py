@@ -312,3 +312,10 @@ def test_empty_log():
 
 if __name__ == "__main__":
     sys.exit(pytest.main([__file__, "-q"]))
+
+
+def test_exp63_successor_port_is_x138_family():
+    # E10 successor port (CONTEXT 26 Sep P4b): x138 type, 7.5 h, never safetail
+    assert rl.family_of("1", "exp63", {}) == "x138"
+    assert rl.family_of("1", "exp63b", {}) == "x138"
+    assert rl.FAMILIES[rl.family_of("1", "exp63", {})]["deadline_h"] == 7.5

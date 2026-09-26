@@ -1,0 +1,7 @@
+# v_browser_r9-inblock-order-unrounded notes
+- 2026-09-26T12:56:44Z start; no prior json. Reading scan_browser.json, CONTEXT tail, round reports.
+- Source finding: scan_browser.json (round9, LB CLI CSV 12:46:30Z vs r8b 10:23:43Z; CSV since deleted from shared scratchpad, numbers only in scan_browser.notes.md). 13th of 93 in block = 14% -> arithmetic ok.
+- REPEAT CHECK: in-block order by unrounded score is already recorded: CONTEXT.md l.1849 ("within one displayed score the order follows the unrounded score"); intel_browser.notes.md l.8/25 (25 Sep 17:20, 34/43 teams below us submitted earlier); v_intel_rank-arithmetic-watch_value/feasibility notes (inversion counts); round4/scan_browser.notes.md l.8 + CONTEXT l.2033 item (2) "P36 unrounded > #35 unrounded, INFO ONLY"; round6/scan_hypotheses l.6; round7/scan_browser l.17 (6 teams passed us inside 0.954 same way). -> no new fact, just 4 more instances.
+- VALUE: public in-block position = ~29% of test (one embryo), sub-0.0005 unrounded; zero info on private. No mechanism, no gate, no dummy; nothing byte-identical to check. Finals #37+#38 unchanged (READ TABLE row 3). Using in-block rank to choose finals would be a public knob ladder (forbidden). 
+- Caveat: LB CSV only has 3-decimal scores; unrounded order inferred from rank position (strong, repeated evidence; Kaggle doc: ties broken by earlier sub).
+- VERDICT: refuted=true as a finding with value (repeat of known info, no action). The stated action "None" is correct; record at most a 1-line intel note.

@@ -1,0 +1,53 @@
+{
+ "summary": "Round-9 delta scan, 12:46-12:50 UTC 26 Sep, compared with round 8 (LB 10:23 UTC). Public LB: 3,928 teams. We are rank 204 (189), still 0.954 with 40 subs, 13th of 93 in the 0.954 block (ranks 192-284). Public silver (5% = rank 196) is now 8 ranks ABOVE us; in round 8 we were 7 ranks inside it. This is info only per R7 and the 11:06 UTC record, because private decides. The overnight batch (subs 02:30-06:30 UTC) landed. >=0.953 grew 597->619 (+22 in 2.4 h). Block counts (round 8 in brackets): 0.953 = 335 (333), 0.954 = 93 (85), 0.955 = 55 (50), 0.956 = 30 (27), 0.957 = 20 (17), >=0.960 = 67 (64), >=0.970 = 7 (7). We lost 15 ranks: about 9 teams from below jumped to >=0.955, and 4 teams that also show 0.954 were placed ahead of us (cesare from 0.947, PavelLiashkov, Ernesto Santiesteban, and MAIDANG, whose sub moved it from #228 to #203). This fits in-block order by the unrounded score. Top mover: 'Bioinformatics is not solution' 0.959->0.966 (#66->#17). Ranks 1-16 are unchanged. 17 more x138 copies landed at exactly 0.953 (#586-602), the 9th window in a row. Public: nothing to port. The only new or updated public notebook is sarveshchhetri/robust-3d-cell-tracking (0.432; another round-9 agent already pulled it). The only new dataset is kssrikar4/biohub-model (UNETR++ .pth, owner at 0.758). x138 is still v1 (199 votes, 277 copies). E10 is NOT triggered. Discussion has no new topic and one new comment: the 743006 author asks whether the 44b6/6bba prefixes identify embryos, with no host reply. The Overview has no changes apart from the countdown ('3 DAYS TO GO', 29 Sep deadline, 12 h limits). Data files are unchanged (2026-06-26). There is no host announcement. Submissions are 87,065 (~105/h, slowing). The finals (#37 + #38) are unaffected.",
+ "findings": [
+  {
+   "id": "r9-lb-delta-1246",
+   "kind": "new-fact",
+   "what": "Public LB at 12:46:30 UTC 26 Sep: 3,928 teams. We are rank 204 (189 at 10:23; 188 at 10:17) at 0.954, 40 subs, last sub 00:02:18. We are 13th of 93 in the 0.954 block (192-284). Ahead of us in the block: ChenWenSheng, cesare, PavelLiashkov, Mthem77, memecchi, Ernesto Santiesteban, qr Z1201, Euphor_M, Arturo Gutierrez Aguilar, Fanch, Homii_N and MAIDANG; Taisei is #205. Blocks: 0.957 = 87-106 (20), 0.956 = 107-136 (30), 0.955 = 137-191 (55), 0.953 = 285-619 (335); >=0.960 = 67, >=0.970 = 7, >=0.953 = 619 (+22 in 2.4 h). Silver = 5% of 3,928 = 196.4, so we are now 8 ranks BELOW the public silver line; in round 8 we were 7 inside it. 159 teams have new subs and 4 teams are new. The latest scored sub is 12:41:49. The CLI competitions list shows userRank 204.",
+   "evidence": "python -m kaggle competitions leaderboard biohub-cell-tracking-during-development --download at 12:46:30 UTC, compared with the round-8 CSV (10:23:43) using cmp.py in the session scratchpad lb/. The r9 CSV was later removed by another agent sharing the scratchpad; a 12:47:44 copy from that agent remains, and the numbers are logged in research/wf_ideas_v4/round9/scan_browser.notes.md. Overview: https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/overview",
+   "action": "Update the CONTEXT intel line to #204/3,928, 13th of 93 in the 0.954 block (192-284), public silver ~196, now 8 ranks below. Info only. Falling below public silver is not a trigger (11:06 UTC record, R7): finals stay #37 + #38, and there are no knob ladders. Expect another post-reset batch after 00:00 UTC 27 Sep that may push us further down the public board.",
+   "urgency": "info"
+  },
+  {
+   "id": "r9-inblock-order-unrounded",
+   "kind": "recheck-old",
+   "what": "Four teams that show exactly 0.954 were placed ahead of us even though their subs came 00:34-06:09 UTC 26 Sep, after ours. cesare (0.947->0.954) is #193, PavelLiashkov (0.953->0.954) #194, Ernesto Santiesteban (0.953->0.954) #197, and MAIDANG (0.954 at #228 -> 0.954 at #203 after a 04:44 sub, same displayed score). So order inside a displayed 0.954 block follows the unrounded score, and the earlier-submission tie-break only applies to exact ties such as the x138 copies at 0.953. This agrees with the round-4 note 'P36 unrounded > #35 unrounded (in-block rank)'. Our 0.954 sits in the top ~14% of the block by unrounded score.",
+   "evidence": "cmp.py, block listing of the r9 CSV vs r8b: rank 192 ChenWenSheng (old #181), 193 cesare (old #740, 0.947), 194 PavelLiashkov (old #266), 197 Ernesto Santiesteban (old #557), 203 MAIDANG (old #228, 0.954), 204 D: Discipline (old #189).",
+   "action": "None. Info for the finals write-up: public in-block rank carries unrounded information and is no reason to re-order the finals.",
+   "urgency": "info"
+  },
+  {
+   "id": "r9-top-movers",
+   "kind": "new-fact",
+   "what": "47 teams changed score since 10:23, from subs made ~00:08-06:30 UTC 26 Sep. Movers: 'Bioinformatics is not solution' (dfgtde, yuyizhu) 0.959->0.966 (#66->#17, 46 subs), Jivansh 0.959->0.961, Brothers 0.957->0.960, Knight of Favonius 0.958->0.959, Tagir Analyzes / hikaggler 0.953->0.957, OmerZalman 0.952->0.957, Oleksandr Parfionov 0.954->0.957, Yaroslav Polyakov / ikki1111 0.953->0.956, and the NEW 1-sub team Elooquence at 0.956. Also Mike Kim / NorthStar 0.953->0.955, xiaoyukun1 and woominyo 0.954->0.955, and Zenith Ye 0.947->0.955. Ranks 1-16 are unchanged (Sergio Alvarez and Gabriel 0.975, yu4u 0.973, ymg_aq, tatsutaka and taiseiu 0.971, Tang 0.970). Late x138 copies: 17 teams (mostly from 0.947, plus the NEW team jaysefh26) went to exactly 0.953 at #586-602, with subs 03:42-06:11 UTC (9th window). The latest scored subs are Quantizr 0.964 #30 (10:51, score unchanged) and latentm 0.955 #188 (12:22).",
+   "evidence": "cmp.py movers list, r8b 10:23:43 vs r9 12:46:30 LB CSVs.",
+   "action": "None. No mover has a public source, so the E10 watch continues. This reconfirms that a verbatim x138 copy is never a final.",
+   "urgency": "info"
+  },
+  {
+   "id": "r9-e10-not-triggered-public-unchanged",
+   "kind": "new-fact",
+   "what": "E10 trigger NOT met, and nothing was pulled by this agent. The competition Code by dateRun has one new run: https://www.kaggle.com/code/sarveshchhetri/robust-3d-cell-tracking ('Version 7 of 8', run 12:40 UTC, 1m58s, 'Public Score 0.432', a classical temporal-filter and mitosis baseline). It is irrelevant, and scan_hypotheses already pulled it to experiments/ext_robust-3d-cell-tracking. The dateCreated and scoreDescending lists are unchanged: the top is still raunakdey07/biohub-harmonic-fusion-v3 at 0.953, and no public notebook scores >0.953. x138 https://www.kaggle.com/code/anvithpothula/biohub-0-953-lb-original shows 'Version 1 of 1', 199 votes (200), 277 copies (277), Comments (3). Datasets: the only new one is kssrikar4/biohub-model (12:47 UTC, one file best_unetr_pp_cell_tracker_model.pth, 55 MB, no description). Its owner team 'SURYA SRIKAR' is at 0.758, so it is irrelevant. koushikrudra/biohub-zerogpu-consensus-v1 is unchanged (03:36, 14 downloads), and kabirk22 (K_K, 0.762) biohub1-3 are irrelevant.",
+   "evidence": "CLI kernels list --competition --sort-by dateRun|dateCreated|scoreDescending; kernels list --search biohub --sort-by dateRun; datasets list --search biohub --sort-by updated; datasets files kssrikar4/biohub-model. Browser: the notebook page and the x138 page above.",
+   "action": "Keep the E10 watch under the port rule. Nothing to port.",
+   "urgency": "info"
+  },
+  {
+   "id": "r9-discussion-one-comment",
+   "kind": "new-fact",
+   "what": "There is no new discussion topic and one new comment. On 'Beginner question: How do Public/Private splits...', topic author Rishavendra Sharma (#1449) replied ~2 h before 12:47 UTC. He thanks Georgy Mamarin and asks whether an authoritative movie-to-embryo mapping exists: 'do prefixes such as 44b6 and 6bba identify embryos or something else?' There is no host reply yet, and Gabriel (#2) earlier wrote 'I am also curious about the answer'. 'errors in annotated ground truth' has had no comment since Himanish Goel (known from round 8). The pinned host topics are unchanged (Workshop 10d, Discord 1mo, Welcome 2mo), so there is no announcement. Other topics are unchanged: imissher, SamoraDC and Yang Kuang Ou were all posted 1-3 days ago and are known.",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/743006 ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion?sort=recent-comments",
+   "action": "None. Recheck next round in case a host answers the embryo-prefix question. A host statement that the prefixes are embryos would support our whole-embryo lab split. It would not change the finals.",
+   "urgency": "info"
+  },
+  {
+   "id": "r9-pages-unchanged",
+   "kind": "new-fact",
+   "what": "The Overview is unchanged apart from the countdown: '3 DAYS TO GO', 'September 29, 2026 - Final Submission Deadline.', and 'CPU Notebook <= 12 hours run-time' / 'GPU Notebook <= 12 hours run-time'. It shows 3,925 teams, 4,487 participants and 87,065 submissions (+260 since ~10:20, ~105/h, down from ~125/h). The Data files still have creationDate 2026-06-26, so they are unchanged. There is no host announcement. The Rules page was not re-read because nothing points to a change.",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/overview ; kaggle competitions files biohub-cell-tracking-during-development",
+   "action": "None.",
+   "urgency": "info"
+  }
+ ]
+}

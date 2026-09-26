@@ -1,0 +1,16 @@
+{
+ "task": "round9 skeptic VALUE+FEASIBILITY on R9-RC-B-link-stage-lb-family-on-x138",
+ "complete": true,
+ "refuted": false,
+ "reason": "I tried to refute this CLOSURE and could not. The facts hold. (1) Determinism: exp46 parity is sha256-identical to exp39 (CONTEXT l.1310-1312), and the curator (c) note (l.1909-1910) says a 0.001 public step between our kernels is real on the public embryo. So P21-P23 (0.945 vs exp29 0.947) are real negatives on public. With 3-dp rounding, the true delta lies somewhere in (0.001, 0.003). (2) x138 relink (exp56 cell 0): bonus 1.0 against a code default of 0.75, seed flow K 12, R 40, GATE 1, FLOW_TIGHT 7.0, TIGHT 5.5, RAW_COST 0. Cell 5 has 0 gshift hits. readmit_discarded_detections is called inside `if OUTPUT_MOTION_RELINK:` (~char 83350), so relink OFF removes both the flow prior and readmit. fill_gaps_from_low_detections runs after the relink and without a condition (~86320), so it survives; the finding's 'inside or after' is accurate. (3) The exp60 dumps are presafe/preshort only (tools/trainlab.py l.243; build_probe_kernel.py l.1492-1579). Both are post-relink, so there is no pre-relink replay. The lab would also be in-sample for the linker. (4) R8: nothing is proposed, so feasibility does not apply. Three wording caveats: (a) P21-P23 were run on the exp29 plain relink (no flow prior, no readmit), not on x138. Their -0.002 says nothing numeric about x138 and nothing about private (transfer is open, per the curator). (b) 'gshift subsumed' is plausible but unmeasured. The seed gate (5.5 um) covers the measured 0.5-2.3 um per-frame drift (l.1204-1206), but I-185 itself was neutral alone on LB. (c) P24 (exp43) is takaito's whole stack verbatim, not an association ablation. Also, RESULTS.md l.57 still says 'same notebook, 0.004 apart', while l.1312 attributes the gap to a different code/version.",
+ "fix": "Keep the closure; no probe; no plan change. Curator wording: I-177/I-179/I-180 LB reads -> 'real -0.002 (in (0.001,0.003) after rounding) on the public embryo vs exp29 (deterministic kernels), measured on the exp29 plain relink, not on x138; private transfer unknown'. I-180 add: 'plausibly subsumed on x138 by the seed neighbourhood-flow prior (I-185; seed gate 5.5 um > measured 0.5-2.3 um drift); unmeasured'. I-177 add: 'on x138 relink OFF also disables READMIT (called inside the relink branch); gapfill is unaffected'. I-181: say that P24 is a whole-stack verbatim read, not an association ablation. RESULTS.md l.57: align with CONTEXT l.1312 ('different code/version, not run noise').",
+ "realistic_gain": "0 for the finals (nothing is built or submitted). The value is bookkeeping only: it prevents the link-stage family from being reopened as knob probes. Post-deadline, a relink study would need a pre-relink dump hook and out-of-fold (embryo-held-out) linker evidence.",
+ "sources": [
+  "CONTEXT.md l.1203-1217, l.1310-1312, l.1904-1917",
+  "experiments/RESULTS.md l.54-57",
+  "experiments/exp56_x138_verbatim/exp56-x138-verbatim.ipynb cells 0, 2, 5",
+  "tools/trainlab.py l.243",
+  "tools/build_probe_kernel.py l.1492-1579",
+  "research/KNOWLEDGE/ideas.json I-177/179/180/181/185"
+ ]
+}

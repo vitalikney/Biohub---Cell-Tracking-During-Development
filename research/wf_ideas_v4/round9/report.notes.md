@@ -1,0 +1,18 @@
+# round9 report notes
+
+- 2026-09-26 12:59 UTC: start; report.json absent -> writing fresh. Inputs: task findings + skeptic verdicts; round9 scan_*.json and v_*.json on disk.
+- 13:00:41Z API SELECTED (read-only, KaggleApi.competition_submissions group=SUBMISSION_GROUP_SELECTED) = [56563521, 56563534] (0.954 'probe 37: exp58', 0.953 'probe 38: exp58n'). Replaces the unlogged '11:42' claim: log 09:10:07Z (CONTEXT), 10:45:26Z (round8 report.json), 13:00:41Z (this agent).
+- 13:00:51Z E10 P1 re-check (kaggle kernels list --competition ... --sort-by dateRun): top unchanged since 12:47Z (sarveshchhetri/robust-3d-cell-tracking 12:40Z is newest; then Harmonic Fusion V3 25 Sep 09:09Z). Not triggered.
+- Poller alive: poll.log last header 12:55:21Z; ledger.md 12:55:23Z, 142 polls, gaps > 15 min: 0.
+- PC9-02 verified: experiments/ext_y3uanm-secondary-ft/kernel-metadata_0afc5663955.json is_private false, enable_internet true, id_no 135335612, two "" dataset_sources; exp56 metadata is_private true, enable_internet false, no id_no. Note: CLI pull/output fetch the LATEST version only -> (c) version check must be done on the page.
+- PC9-03 verified: tools/runtime_ledger.py l.23 docstring '--family exp63=safetail'; EXP_RULES l.69-74 has no exp63; lb_poll.py LEDGER has no --family.
+- PC9-04 verified: 9c85782 aa5b834 ff438f7 9826517 a012e32 1986fb9 not ancestors of main 69a35b4; all 0 'claude' refs; diffs are file additions (9 A + 1 M for wt5 range; 9826517 7 files +1458; a012e32 5 files +14480; 1986fb9 3 files +25990); 633d72b and 0074f6a are merges (never). tools/overlap_{reg,splice,lab,probe}.py, experiments/overlap_reg_train, exp65, exp66 absent from main; experiments/exp64_overlap_lab present (kernel_a/b only). origin = main/claude/detector-baseline-v2/friend-b. Worktrees 1/4/5/6 still registered.
+- r9h-3(d) STALE: _dl/exp64_b now complete (trainlab/ 36 files, kernel log biohub-exp64-x138-k2lab-44b6-b.log, submission.csv; log mtime 15:57 local = 12:57Z). No exp64 G-B results file exists yet anywhere (main or wt1/4/5/6).
+- MEMORY.md (mtime 09:04Z): Resume point line already correct (skeptic PC9-05 right); stale line = 'LB probe approval' (E10 proposed; OC paused). project-lb-probe-approval.md body also predates E10 yes / OC stop.
+- r9h-5 LESSONS FULL TEXT present in scan_hypotheses.json (8,329 chars); item 6 says '241+ teams at 0.953' -> fix to '~330 (335 at 12:46Z)'.
+- 13:0xZ poller process PID 20052 alive (Win32_Process, started 26 Sep 02:12:45 local). powercfg SUB_SLEEP STANDBYIDLE: AC index 0x0, DC index 0x0 = sleep after idle NEVER (PC9-06 power part satisfied; lid/shutdown/update restarts not covered).
+- Cherry-pick check: wt5 range modifies only tools/build_probe_kernel.py (M); main has not touched it since b41ec05 -> no conflict expected; all other files are additions. After the pick: pytest + K2 rebuild sha (1f1ddb6d...) must be unchanged; if not, revert ff438f7 only (evidence sits in 9c85782/9826517/1986fb9).
+- tools/dummy_gates.py has validate_csv (l.37) -> usable for P4b(e).
+- Verdict tally: refuted 2 (r9-inblock-order-unrounded = repeat; PC9-01 core = no honesty gap, optional neutral note kept), confirmed 5 (PC9-05 with MEMORY sub-claim stale; r9h-4 with (A) correction; RC-A; RC-B with wording caveats; RC-C with weight 0.80 correction). Unverified by skeptics but checked here: PC9-02, PC9-03, PC9-04 (all confirmed by file/git reads), PC9-06 (power part measured), PC9-07 (no violation).
+- 13:10Z writing REPORT.md (ru) and report.json.
+- 13:09 UTC: report.json written (10 actionable R9-A0..A9); REPORT.md Write refused by harness ("Subagents should return findings as text") -> Russian text embedded in R9-A0 for the main session; not written by any other route.

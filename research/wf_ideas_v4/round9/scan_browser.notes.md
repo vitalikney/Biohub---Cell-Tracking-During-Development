@@ -1,0 +1,18 @@
+# round9 scan_browser notes (2026-09-26T12:46:12Z)
+- 12:46Z no prior round9 scan_browser.json; started. LB CLI download 12:46:30Z (session scratchpad lb/r9/...2026-09-26T12_46_30.csv) vs r8b 10:23:43Z.
+  3,928 teams (+4). 0.953 335 (333), 0.954 93 (85), 0.955 55 (50), 0.956 30 (27), 0.957 20 (17), >=0.96 67 (64), >=0.97 7 (7), >=0.953 619 (597, +22 in 2.4 h).
+  Blocks: 0.957 87-106, 0.956 107-136, 0.955 137-191, 0.954 192-284, 0.953 285-619.
+  OUR rank 204 (189 in r8b), 0.954, 40 subs. 13th in 0.954 block. Silver 5% of 3928 = 196.4 -> we are 8 ranks BELOW the public silver line (was 7 above).
+  Ahead of us in block now incl. newcomers cesare (0.947->0.954), PavelLiashkov (0.953->), Ernesto Santiesteban (0.953->), MAIDANG (0.954 r228 -> r203, same displayed score: unrounded order).
+  159 teams with new subs; 4 new teams; latest LastSubmissionDate 12:41:49. 47 changed.
+  Movers: 'Bioinformatics is not solution' 0.959->0.966 (#66->#17); Jivansh 0.959->0.961; Brothers 0.957->0.960; OmerZalman 0.952->0.957; Tagir 0.953->0.957; hikaggler 0.953->0.957; Oleksandr Parfionov 0.954->0.957; Yaroslav Polyakov, ikki1111 0.953->0.956; NEW Elooquence 0.956 (1 sub); Zenith Ye 0.947->0.955; 17 more x138 copies to exactly 0.953 (ranks 586-602, subs 03:42-06:11Z; 9th window).
+  Top 16 unchanged (Sergio Alvarez, Gabriel 0.975; yu4u 0.973; ...).
+- 12:47Z browser (own tab 1196279909, fresh MCP group 1831044974). discussion?sort=recent-comments: NO new topic. Only new comment: https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/743006 topic author Rishavendra Sharma (#1449) reply ~10:50Z: thanks, asks whether an authoritative movie->embryo mapping exists ('do prefixes such as 44b6 and 6bba identify embryos'). No host reply. 742942 unchanged since r8 (last comment Himanish Goel 3h ago). Pinned unchanged (Workshop 10d, Discord 1mo, Welcome 2mo). Header now '3 DAYS TO GO'.
+- 12:47Z CLI kernels --competition: dateRun top = NEW run sarveshchhetri/robust-3d-cell-tracking (26 Sep 12:40Z, 3 votes, V7 of 8, 'Public Score 0.432', 1m58s CPU) -> irrelevant; already pulled by scan_hypotheses to experiments/ext_robust-3d-cell-tracking (not duplicated). dateCreated and scoreDescending lists unchanged (Harmonic Fusion V3 0.953 top). All-Kaggle kernels --search biohub: nothing new besides sarveshchhetri.
+- ~12:48Z browser x138 https://www.kaggle.com/code/anvithpothula/biohub-0-953-lb-original : 'Version 1 of 1', '199 votes' (200 in r8), '277 copies' (277), 'Comments (3)', 0.953. Unchanged.
+- ~12:49Z /overview: '3 DAYS TO GO'; 'September 29, 2026' '- Final Submission Deadline.'; 'CPU Notebook <= 12 hours run-time' / 'GPU Notebook <= 12 hours run-time' unchanged; 3,925 Teams, 4,487 Participants, 87,065 Submissions (+260 since ~10:20Z = ~105/h, down from ~125/h). Tab closed (group auto-removed).
+- 12:48Z datasets --search biohub: NEW kssrikar4/biohub-model (12:47Z, one file best_unetr_pp_cell_tracker_model.pth 55 MB, no description, 28 dl); owner team 'SURYA SRIKAR' LB 0.758 #3221 -> irrelevant. koushikrudra consensus-v1 dl 14 (10), still 03:36Z. kabirk22 (K_K, 0.762) biohub3 06:03Z irrelevant. competitions files creationDate 2026-06-26 -> Data unchanged. competitions list userRank 204, teamCount 3925.
+- Latest LB subs: Quantizr 0.964 #30 last sub 10:51Z (score unchanged), latentm 0.955 #188 12:22Z.
+- NOTE: my scratchpad lb/r9 CSV was removed by another agent sharing the session scratchpad (lb/ now holds only its 12:47:44 CSV); numbers above were recorded before that. E10 NOT triggered. Nothing pulled by me.
+- 12:50Z writing scan_browser.json
+- 12:51Z scan_browser.json written

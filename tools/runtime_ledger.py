@@ -20,7 +20,7 @@ Conventions (the same as CONTEXT.md 25 Sep 14:37 / 16:20 UTC):
 
     python tools/runtime_ledger.py                              # experiments/lb_poll/poll.log -> ledger.md
     python tools/runtime_ledger.py --forecast-h 7.7 --json experiments/lb_poll/ledger.json
-    python tools/runtime_ledger.py --family exp63=safetail --family 56555189=x138_ungated --k2 56560000
+    python tools/runtime_ledger.py --family 56555189=x138_ungated --k2 56560000
 """
 from __future__ import annotations
 
@@ -68,6 +68,7 @@ FAMILIES = {
 # first 'exp<N><suffix>' token of the description -> family (first match wins); --family overrides
 EXP_RULES = [
     (r"exp56", "x138"),
+    (r"exp63[a-z]*", "x138"),             # E10 successor port (CONTEXT 26 Sep P4b): x138 type, 7.5 h, never safetail
     (r"exp57[a-z]*", "x138_ungated"),
     (r"exp58(n|p)[a-z]*", "safetail_noins"),
     (r"exp58d", "safetail_late"),          # K2'' (CONTEXT 26 Sep v3 V3): REPAIR 37800 / DIVINS 32400
