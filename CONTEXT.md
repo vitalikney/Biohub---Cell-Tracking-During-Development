@@ -2542,6 +2542,11 @@ Mention it to the user in one line (R9-A8 item 6).
   (the retrain needs the user's explicit yes, R9). Not worked around. GPU quota 07:55 / 30 h used (Kaggle settings page,
   21:5x UTC). With a yes by ~09:00 UTC 27 Sep: training ~4.2 h -> dataset -> exp72 build (--patch secswap) -> dummy ->
   submit ~15:00 UTC -> score ~22:30 UTC 27 Sep. exp72 pairs by the R12-A3 table (carries the insertion; #38 stays).
+- 2026-09-26 21:56 UTC, CAP-6 LAB ARM (pre-registered rule for the 00:05 UTC slot; research/wf_ideas_v4/reach0955/ins_cap6.json): parity with
+  ins35 exact (ALL 0.9398779, div 25/31/74, row hashes match results.json). cap 6 vs ins35: pooled -0.00057 (44b6 -0.00079,
+  6bba -0.00052), div 25/35/74, W/L 1/4, boot 90% -0.00125..-0.00011; its 85 extra insertions: 0 TP / 4 FP / 81 unannotated.
+  cap 5 -0.00015, cap 8 +0.00003 (44b6 -0.00079). RULE -> exp70b (K2 + forkmid 4.5; dummy clean: 121,252 nodes, 74 forks,
+  sha ed7101bf) goes at 00:05 UTC 27 Sep; exp70g is not submitted.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

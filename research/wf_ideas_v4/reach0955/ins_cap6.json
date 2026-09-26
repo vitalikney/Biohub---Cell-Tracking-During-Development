@@ -1,0 +1,509 @@
+{
+ "task": "exp60 x138 lab: DaughterNet insertion per-clip cap 6 (exp70g) vs ins35 (#35/K2 config, cap 4); caps 5 and 8 for context",
+ "written_utc": "2026-09-26T21:55Z",
+ "complete": true,
+ "decision": {
+  "rule": "exp70g (cap 6) at 00:05 UTC iff pooled delta >= 0 AND neither embryo < -0.0005; otherwise exp70b",
+  "pooled_delta": -0.000572,
+  "delta_44b6": -0.000793,
+  "delta_6bba": -0.000519,
+  "checks": {
+   "pooled_ge_0": false,
+   "44b6_ge_-0.0005": false,
+   "6bba_ge_-0.0005": false
+  },
+  "branch": "exp70b",
+  "note": "All three checks fail (pooled -0.00057; 44b6 -0.00079; 6bba -0.00052). In-sample for DaughterNet, so this is a sign check only; it is negative even in-sample."
+ },
+ "parity": {
+  "recorded_ins35_ALL": 0.93988,
+  "recorded_div": [
+   25,
+   31,
+   74
+  ],
+  "replayed_cap4_ALL": 0.9398778623742904,
+  "replayed_cap4_div": [
+   25,
+   31,
+   74
+  ],
+  "per_clip_row_mismatch": {
+   "ins35_vs_cap4": [],
+   "control_vs_control": []
+  },
+  "tool_insert35_equals_cap4_all_clips": true,
+  "divins_graph_match_all": true,
+  "note": "cap-4 replay = recorded ins35 exactly: ALL 0.9398779 (0.93988), div 25/31/74, per-clip official rows and writer digests identical to experiments/exp60_trainlab/results.json for ins35 and control on all 56 clips; trainlab.insert35 == params override cap 4 on all clips; divins dump graph == final graph on all clips"
+ },
+ "config": {
+  "ins35": {
+   "enable": 1,
+   "steal": 1,
+   "cap_video": 4,
+   "cap_frame": 1,
+   "alpha": 1.0,
+   "threshold": 0.4
+  },
+  "only_change": "cap_video (4 -> 5/6/8)",
+  "steal_cap_note": "div_insert derives steal_cap = floor(0.5 * cap_video), as the kernel does from BIOHUB_DIVINS_CAP: cap 4 -> 2 steals/clip, 5 -> 2, 6 -> 3, 8 -> 4 (so cap 6 also raises the per-clip steal limit; this is what exp70g runs)",
+  "exp70g_notebook_env": "BIOHUB_DIVINS_ENABLE 1, STEAL 1, CAP 6, FRAME_CAP 1, ALPHA 1, THRESH 0.4 (checked in experiments/exp70g_k2_cap6/exp70g-k2-cap6.ipynb)"
+ },
+ "arms": {
+  "control_no_insertion": {
+   "ALL": {
+    "score": 0.933401,
+    "delta_vs_ins35": -0.006477,
+    "delta_adj_edge": -0.00015,
+    "delta_div_term": -0.006328,
+    "div_tp_fp_fn": [
+     16,
+     25,
+     83
+    ],
+    "edge_tp_fp_fn": [
+     38388,
+     1681,
+     1705
+    ]
+   },
+   "44b6": {
+    "score": 0.910646,
+    "delta_vs_ins35": -0.005821,
+    "delta_adj_edge": -0.000558,
+    "delta_div_term": -0.005263,
+    "div_tp_fp_fn": [
+     1,
+     8,
+     10
+    ],
+    "edge_tp_fp_fn": [
+     2994,
+     209,
+     199
+    ]
+   },
+   "6bba": {
+    "score": 0.936123,
+    "delta_vs_ins35": -0.006548,
+    "delta_adj_edge": -0.000113,
+    "delta_div_term": -0.006435,
+    "div_tp_fp_fn": [
+     15,
+     17,
+     73
+    ],
+    "edge_tp_fp_fn": [
+     35394,
+     1472,
+     1506
+    ]
+   },
+   "clip_W_L": [
+    6,
+    9
+   ],
+   "wins": {
+    "6bba_337b1b3a": 0.000171,
+    "6bba_3c5691b6": 0.000171,
+    "6bba_4f99ce20": 0.000171,
+    "6bba_4ffd3da3": 0.000171,
+    "6bba_78a7bd97": 0.000171,
+    "6bba_969618f6": 0.000171
+   },
+   "losses": {
+    "44b6_d754aa59": -0.000815,
+    "6bba_55b7eebe": -0.000793,
+    "6bba_6ca87370": -0.000793,
+    "6bba_784a78c9": -0.000793,
+    "6bba_7d3058ae": -0.000793,
+    "6bba_8b7818bf": -0.000815,
+    "6bba_b204cac7": -0.000815,
+    "6bba_cdcfe533": -0.000793,
+    "6bba_ef7b4f7e": -0.000793
+   },
+   "boot90_clips": [
+    -0.01069,
+    -0.00291
+   ],
+   "boot90_embryo_stratified": [
+    -0.01068,
+    -0.00275
+   ],
+   "boot_P_delta_lt_0": 1.0
+  },
+  "ins35_cap4": {
+   "ALL": {
+    "score": 0.939878,
+    "delta_vs_ins35": 0.0,
+    "delta_adj_edge": 0.0,
+    "delta_div_term": 0.0,
+    "div_tp_fp_fn": [
+     25,
+     31,
+     74
+    ],
+    "edge_tp_fp_fn": [
+     38397,
+     1684,
+     1696
+    ]
+   },
+   "44b6": {
+    "score": 0.916467,
+    "delta_vs_ins35": 0.0,
+    "delta_adj_edge": 0.0,
+    "delta_div_term": 0.0,
+    "div_tp_fp_fn": [
+     2,
+     8,
+     9
+    ],
+    "edge_tp_fp_fn": [
+     2995,
+     208,
+     198
+    ]
+   },
+   "6bba": {
+    "score": 0.942671,
+    "delta_vs_ins35": 0.0,
+    "delta_adj_edge": 0.0,
+    "delta_div_term": 0.0,
+    "div_tp_fp_fn": [
+     23,
+     23,
+     65
+    ],
+    "edge_tp_fp_fn": [
+     35402,
+     1476,
+     1498
+    ]
+   },
+   "insertions": {
+    "added_total": 201,
+    "added_steal": 60,
+    "added_by_embryo": {
+     "44b6": 55,
+     "6bba": 146
+    },
+    "clips_added_eq_cap": 45,
+    "clips_cap_cut_eligible": 45,
+    "clips_uncapped_would_add_more": 46,
+    "inserted_parent_labels": {
+     "TP": 9,
+     "FP": 6,
+     "ignored": 186
+    }
+   }
+  },
+  "cap5": {
+   "ALL": {
+    "score": 0.939731,
+    "delta_vs_ins35": -0.000147,
+    "delta_adj_edge": 0.0,
+    "delta_div_term": -0.000147,
+    "div_tp_fp_fn": [
+     25,
+     32,
+     74
+    ],
+    "edge_tp_fp_fn": [
+     38397,
+     1684,
+     1696
+    ]
+   },
+   "44b6": {
+    "score": 0.916467,
+    "delta_vs_ins35": 0.0,
+    "delta_adj_edge": 0.0,
+    "delta_div_term": 0.0,
+    "div_tp_fp_fn": [
+     2,
+     8,
+     9
+    ],
+    "edge_tp_fp_fn": [
+     2995,
+     208,
+     198
+    ]
+   },
+   "6bba": {
+    "score": 0.942486,
+    "delta_vs_ins35": -0.000185,
+    "delta_adj_edge": 0.0,
+    "delta_div_term": -0.000185,
+    "div_tp_fp_fn": [
+     23,
+     24,
+     65
+    ],
+    "edge_tp_fp_fn": [
+     35402,
+     1476,
+     1498
+    ]
+   },
+   "clip_W_L": [
+    1,
+    1
+   ],
+   "wins": {
+    "6bba_786893ac": 2.2e-05
+   },
+   "losses": {
+    "6bba_7f87b3d8": -0.000169
+   },
+   "boot90_clips": [
+    -0.00049,
+    5e-05
+   ],
+   "boot90_embryo_stratified": [
+    -0.00051,
+    4e-05
+   ],
+   "boot_P_delta_lt_0": 0.641,
+   "insertions": {
+    "added_total": 246,
+    "added_steal": 68,
+    "added_by_embryo": {
+     "44b6": 66,
+     "6bba": 180
+    },
+    "clips_added_eq_cap": 45,
+    "clips_cap_cut_eligible": 41,
+    "clips_uncapped_would_add_more": 40,
+    "inserted_parent_labels": {
+     "TP": 9,
+     "FP": 7,
+     "ignored": 230
+    }
+   }
+  },
+  "cap6": {
+   "ALL": {
+    "score": 0.939306,
+    "delta_vs_ins35": -0.000572,
+    "delta_adj_edge": 2e-06,
+    "delta_div_term": -0.000574,
+    "div_tp_fp_fn": [
+     25,
+     35,
+     74
+    ],
+    "edge_tp_fp_fn": [
+     38398,
+     1685,
+     1695
+    ]
+   },
+   "44b6": {
+    "score": 0.915675,
+    "delta_vs_ins35": -0.000793,
+    "delta_adj_edge": -0.000266,
+    "delta_div_term": -0.000526,
+    "div_tp_fp_fn": [
+     2,
+     9,
+     9
+    ],
+    "edge_tp_fp_fn": [
+     2995,
+     209,
+     198
+    ]
+   },
+   "6bba": {
+    "score": 0.942152,
+    "delta_vs_ins35": -0.000519,
+    "delta_adj_edge": 2.6e-05,
+    "delta_div_term": -0.000545,
+    "div_tp_fp_fn": [
+     23,
+     26,
+     65
+    ],
+    "edge_tp_fp_fn": [
+     35403,
+     1476,
+     1497
+    ]
+   },
+   "clip_W_L": [
+    1,
+    4
+   ],
+   "wins": {
+    "6bba_786893ac": 2.2e-05
+   },
+   "losses": {
+    "44b6_e29f0176": -0.000169,
+    "6bba_268e1230": -0.000169,
+    "6bba_6ca87370": -0.000169,
+    "6bba_7d3058ae": -0.000101
+   },
+   "boot90_clips": [
+    -0.00125,
+    -0.00011
+   ],
+   "boot90_embryo_stratified": [
+    -0.00127,
+    -0.00011
+   ],
+   "boot_P_delta_lt_0": 0.984,
+   "insertions": {
+    "added_total": 286,
+    "added_steal": 90,
+    "added_by_embryo": {
+     "44b6": 74,
+     "6bba": 212
+    },
+    "clips_added_eq_cap": 39,
+    "clips_cap_cut_eligible": 38,
+    "clips_uncapped_would_add_more": 34,
+    "inserted_parent_labels": {
+     "TP": 9,
+     "FP": 10,
+     "ignored": 267
+    }
+   }
+  },
+  "cap8": {
+   "ALL": {
+    "score": 0.939911,
+    "delta_vs_ins35": 3.3e-05,
+    "delta_adj_edge": 4e-06,
+    "delta_div_term": 2.8e-05,
+    "div_tp_fp_fn": [
+     26,
+     36,
+     73
+    ],
+    "edge_tp_fp_fn": [
+     38399,
+     1686,
+     1694
+    ]
+   },
+   "44b6": {
+    "score": 0.915675,
+    "delta_vs_ins35": -0.000793,
+    "delta_adj_edge": -0.000266,
+    "delta_div_term": -0.000526,
+    "div_tp_fp_fn": [
+     2,
+     9,
+     9
+    ],
+    "edge_tp_fp_fn": [
+     2995,
+     209,
+     198
+    ]
+   },
+   "6bba": {
+    "score": 0.942848,
+    "delta_vs_ins35": 0.000177,
+    "delta_adj_edge": 2.8e-05,
+    "delta_div_term": 0.000149,
+    "div_tp_fp_fn": [
+     24,
+     27,
+     64
+    ],
+    "edge_tp_fp_fn": [
+     35404,
+     1477,
+     1496
+    ]
+   },
+   "clip_W_L": [
+    2,
+    5
+   ],
+   "wins": {
+    "6bba_3fda6b25": 0.000793,
+    "6bba_786893ac": 2.2e-05
+   },
+   "losses": {
+    "44b6_e29f0176": -0.000169,
+    "6bba_268e1230": -0.000169,
+    "6bba_6ca87370": -0.000169,
+    "6bba_7d3058ae": -0.000101,
+    "6bba_ef7b4f7e": -0.000169
+   },
+   "boot90_clips": [
+    -0.00123,
+    0.0017
+   ],
+   "boot90_embryo_stratified": [
+    -0.00121,
+    0.00163
+   ],
+   "boot_P_delta_lt_0": 0.519,
+   "insertions": {
+    "added_total": 345,
+    "added_steal": 115,
+    "added_by_embryo": {
+     "44b6": 85,
+     "6bba": 260
+    },
+    "clips_added_eq_cap": 25,
+    "clips_cap_cut_eligible": 23,
+    "clips_uncapped_would_add_more": 23,
+    "inserted_parent_labels": {
+     "TP": 10,
+     "FP": 11,
+     "ignored": 324
+    }
+   }
+  }
+ },
+ "cap_binding": {
+  "cap4": {
+   "clips_inserting_exactly_4": 45,
+   "clips_where_cap_cut_eligible_candidates": 45,
+   "clips_that_would_insert_more_uncapped": 46
+  },
+  "cap6": {
+   "clips_inserting_exactly_6": 39,
+   "clips_where_cap_cut_eligible_candidates": 38,
+   "clips_that_would_insert_more_uncapped": 34
+  },
+  "uncapped_total_insertions": 525,
+  "clips": 56
+ },
+ "cap6_marginal_insertions": {
+  "n": 85,
+  "steals": 30,
+  "superset_of_cap4": true,
+  "parent_fork_labels": {
+   "TP": 0,
+   "FP": 4,
+   "ignored_unannotated": 81
+  },
+  "fp_clips": [
+   "44b6_e29f0176",
+   "6bba_268e1230",
+   "6bba_6ca87370",
+   "6bba_7d3058ae"
+  ],
+  "edge_effect": "edge TP +1 / FP +1 / FN -1 pooled (6bba_786893ac +0.00002 is the one clip win)",
+  "div_score_median": {
+   "cap4_insertions": 0.587,
+   "extra_cap6_insertions": 0.505
+  },
+  "note": "each evaluable FP fork costs ~-0.00017 pooled (div J 25/130 -> 25/131); 0 TP / 4 FP evaluable among the extras. Small-n: at the ~0.16 break-even precision, 0 of 4 has probability ~0.5, so the lab cannot say cap 6 is harmful out of sample, only that it shows no gain even in-sample."
+ },
+ "context_caps": "cap 5: -0.00015 pooled (44b6 0, 6bba -0.00019; div 25/32/74; W/L 1/1). cap 8: +0.00003 pooled (44b6 -0.00079, 6bba +0.00018; div 26/36/73; W/L 2/5; boot90 -0.0012..+0.0017), its only TP is one extra division in 6bba_3fda6b25 (+0.00079); fails the 44b6 check too.",
+ "in_sample_caveat": "DaughterNet v1 saw these clips (4/5 folds; exp60 ADDENDUM L5): in-sample upper bound, sign check only.",
+ "files": {
+  "scratch_script": "scratchpad/cap6/cap_sweep.py (+ analyse.py)",
+  "raw": "scratchpad/cap6/cap_sweep_raw.json",
+  "agg": "scratchpad/cap6/cap_sweep_agg.json",
+  "runtime": "177 s wall, 6 worker processes"
+ }
+}
