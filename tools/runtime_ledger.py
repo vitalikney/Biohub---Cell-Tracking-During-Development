@@ -73,6 +73,7 @@ EXP_RULES = [
     (r"exp58(n|p)[a-z]*", "safetail_noins"),
     (r"exp58d", "safetail_late"),          # K2'' (CONTEXT 26 Sep v3 V3): REPAIR 37800 / DIVINS 32400
     (r"exp(58|59|61|62)[a-z]*", "safetail"),
+    (r"exp70[a-z]*", "safetail"),             # K2 public ladder (CONTEXT 26 Sep 20:49 UTC): K2 + knobs, REPAIR 34200 / DIVINS 28800
     (r"exp5[12]", "notimer"),
 ]
 # '_' and '-' are separators: build names are exp58_x138_safe_lowref / exp58n_x138_safe_lowref / biohub-exp58t-x138-safe

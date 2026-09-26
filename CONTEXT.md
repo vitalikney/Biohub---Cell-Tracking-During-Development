@@ -2442,6 +2442,11 @@ Mention it to the user in one line (R9-A8 item 6).
   secondary slot, but Corwin's own notes say the pilkwang secondary beats it on public placement -> EV <= 0. 11 band teams
   jumped from the x138 level (<= 0.954) to 0.960-0.966 in few submissions (e.g. kusui26 0.953 -> 0.960 in 11 subs),
   consistent with bringing their own models onto x138. Abnormal Guys 0.961 = private 'x138-s3forks' (no code).
+- 2026-09-26 21:15 UTC, SUBMIT probe 39 = exp70e (K2 + leaf prune 0.3 + DeepCenter safe-div 0.30; ladder L3), ref 56589025 at
+  21:15:23Z (kernel vitaliineibauer/biohub-exp70e-k2-lp30-dc030 v1). Dummy: validate_csv ok (121,707 nodes vs K2 122,252;
+  55 forks vs 75), log: Traceback 0, REPAIR FAILED 0, DEADLINE: 0, leaf prune 0.3 and DC 0.30 applied, DIVINS ENABLED 5
+  models, dummy run ~1,464 s (K2 ~1,512 s). Poll header 21:08:29Z (< 15 min). Ledger: exp70* -> family safetail (+ test).
+  2 slots left today; exp70a/exp70d next when COMPLETE; exp70b at 00:05Z.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

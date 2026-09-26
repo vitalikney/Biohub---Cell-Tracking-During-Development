@@ -319,3 +319,9 @@ def test_exp63_successor_port_is_x138_family():
     assert rl.family_of("1", "exp63", {}) == "x138"
     assert rl.family_of("1", "exp63b", {}) == "x138"
     assert rl.FAMILIES[rl.family_of("1", "exp63", {})]["deadline_h"] == 7.5
+
+
+def test_exp70_ladder_is_safetail_family():
+    assert rl.family_of("1", "exp70e", {}) == "safetail"
+    assert rl.family_of("1", "exp70a", {}) == "safetail"
+    assert rl.FAMILIES[rl.family_of("1", "exp70b", {})]["deadline_h"] == 9.5
