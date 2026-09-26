@@ -2107,6 +2107,25 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   MENTIONED. External data/models allowed if "publicly available and equally accessible" (2.6.a, Code Requirements).
   Recommendation to the user: overlap consensus is rule-legal but small (+0.0005 expected), conditional on overlapping
   hidden crops, and too tight for R8 (27 Sep 12:00 UTC) -> not recommended; user decides.
+- 2026-09-26 08:58 UTC, USER DECISION: build the OVERLAP-CONSENSUS line (rules check 08:49 UTC: not prohibited) as a CANDIDATE only;
+  it never displaces the finals #37 + #38 unless every gate below passes. Design = research/wf_ideas_v2/
+  r2_research_overlap-consensus.json (exact-content anchor hashing registration; disagreement-component splice with the
+  border-distance owner rule; forks skipped; node cap 0.5%) with its three skeptic verdicts (not refuted; ceiling
+  +0.004..+0.006 on a 44b6-type embryo, exactly 0 on a 6bba-type one, harm ~0 by construction).
+  PRE-REGISTERED GATES (written before any result):
+  G-A REGISTRATION on the 199 train videos (GT-free): >= 60 of the 65 GT-linked 44b6 pairs found at the exact GT offset
+      (+-1 voxel); 0 accepted 6bba pairs (with the >= 5-frame and >= 5% spatial rules); 0 cross-embryo pairs. FAIL -> stop.
+  G-P BIT-PROBE (1 slot, user-approved as part of this line): a registration-only kernel on the hidden test raises an
+      exception if >= 1 pair is accepted (ERROR = overlapping crops exist) and otherwise writes a trivial valid CSV
+      (COMPLETE = none -> the line has no possible effect on public or private -> stop). Never a final.
+  G-B LAB SPLICE on x138/K2 tails of all 71 44b6 train clips (Kaggle GPU lab, trainlab dumps), official metric:
+      44b6 delta >= +0.002 with leak-group bootstrap CI lower bound > 0; 6bba: zero changed edges; node count <= +0.5%;
+      forks untouched; report per leak group. FAIL -> stop.
+  G-D DUMMY: candidate K6 = K2 + --patch overlapcons; with no accepted pair the CSV is byte-identical to the K2 dummy;
+      fail-soft 'OVERLAPCONS FAILED'; registration + splice time <= 30 min.
+  G-LB: K6 submitted once (before the R8 cutoff 27 Sep 12:00 UTC). K6 replaces K2 as F1 iff G-A, G-P(ERROR), G-B, G-D
+      pass AND K6 scores without error, R5-admissible (9.5 h) and public >= 0.954; F2 stays the twin #38. Otherwise
+      the finals stay #37 + #38. The E10 successor watch keeps priority if it triggers.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
