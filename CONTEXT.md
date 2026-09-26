@@ -2158,6 +2158,12 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   from now (given before any trigger; P2/P3 not met at this time).
 - 2026-09-26 09:10 UTC: USER: resume the OVERLAP-CONSENSUS line ("запускай сверку кропов") under the gates G-A/G-P/G-B/G-D/G-LB
   recorded at 08:58 UTC; candidate only; finals stay #37 + #38 unless G-LB is met.
+- 2026-09-26 10:09 UTC: BRANCH claude/practical-meitner-31k9ye REWRITTEN at the user's request: commits authored/committed by
+  "Claude <noreply@anthropic.com>" (5) now authored by Vitaly Neybauer <pedrosemyonson@gmail.com>; "Co-Authored-By:
+  Claude ..." and "Claude-Session: ..." trailer lines (8 each) removed; 111 commits from b8ab8da onward rewritten
+  (git filter-branch in a temp clone); final tree identical, 480 commits; force-pushed with lease (a153fc5 -> 4e760fb).
+  Local backup ref: backup/claude-branch-before-rewrite (a153fc5, not pushed). main is NOT rewritten and still contains
+  the original commits (via PR #1 and the merges). From now on main is NOT mirrored to that branch any more.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
