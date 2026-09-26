@@ -2195,6 +2195,13 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
   public rank #188-189 of 3,924 at 0.954, silver line ~196 (7-8 ranks margin) - falling below it is not a trigger
   (private decides); the +0.1 voxel z-shift idea (+0.0015 on 6bba in-sample, ~+0.0003 expected out-of-sample) goes to
   the post-deadline list. Curator: ledger I-208 -> "allowed as a candidate by the user 08:58/09:10Z; G-A FAILED 10:52Z".
+- 2026-09-26 13:11 UTC, OVERLAP-CONSENSUS POST-STOP INFO (no decision; the line was stopped by G-A at 10:52 UTC): exp64 lab kernels
+  (x138 + lowrefine + insertion dump-only replayed on CPU, all 71 44b6 train clips, 2 shards, 0 missing, 0 failed hooks)
+  scored with tools/overlap_lab.py (worktree branch worktree-wf_b39793f6-e79-6): registration accepted 49 pairs (0
+  cross-prefix), 59 clips changed, 5,556 components spliced (nodes +18,390 / -20,928). G-B (ins35_splice vs ins35):
+  44b6 delta **-0.00143**, bootstrap lower -0.00200 -> the splice HURTS on the real K2 stack (proxy on exp39 tails was
+  -0.00047). This confirms the stop; the idea goes to the post-deadline list only with a new design (not the owner rule).
+  Output: experiments/exp64_overlap_lab/results_info_post_stop.json.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
