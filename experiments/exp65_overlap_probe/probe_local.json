@@ -1,0 +1,9 @@
+{
+ "note": "exp65-overlap-probe.ipynb code cells exec'd locally (notebook-style, 4 spawn workers, nice -n 19, laptop), 26 Sep ~10:30 UTC. NOT pushed, NOT submitted.",
+ "runs": [
+  {"set": "dummy test dir (4 visible clips)", "outcome": "csv", "result": "COMPLETED, submission.csv 20 rows == sample_submission.csv line for line", "accepted": 0, "frames": 400, "wall_s": 26.7, "reader": "blosc2"},
+  {"set": "synthetic hidden: 12 train 44b6 zarrs (junctions) incl. GT-linked 44b6_0113de3b|44b6_c8e2a523", "outcome": "raise", "result": "RuntimeError: OVERLAP PROBE: 3 accepted pairs (0113de3b|c8e2a523, 551a5dba|7a302da0, 5740d24b|74d0c52e; all at the G-A offsets, equal 1.0)", "frames": 1200, "wall_s": 41.6, "wall_per_frame_s": 0.0343},
+  {"set": "negative control: 12 train 6bba zarrs", "outcome": "csv", "result": "COMPLETED, 0 candidates, 60-row CSV", "frames": 1200, "wall_s": 40.6, "wall_per_frame_s": 0.0338}
+ ],
+ "runtime_estimate_hidden": "anchor pass ~0.034-0.044 s/frame wall on 4 local processes; 100 clips x 100 frames = 10k frames -> ~6-8 min local, ~10-15 min on a 4-vCPU Kaggle CPU session (assumed 1.5-2x slower); ~200 clips (Data page: hidden ~ train size) -> ~20-30 min; verification ~1-2 min (G-A: 96.6 s for 74 candidate pairs)"
+}

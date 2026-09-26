@@ -1,0 +1,19 @@
+{
+ "id": "vitaliineibauer/biohub-exp65-overlap-probe",
+ "title": "biohub-exp65-overlap-probe",
+ "code_file": "exp65-overlap-probe.ipynb",
+ "language": "python",
+ "kernel_type": "notebook",
+ "is_private": true,
+ "enable_gpu": false,
+ "enable_tpu": false,
+ "enable_internet": false,
+ "keywords": [],
+ "dataset_sources": [],
+ "kernel_sources": [],
+ "competition_sources": [
+  "biohub-cell-tracking-during-development"
+ ],
+ "model_sources": [],
+ "docker_image": "gcr.io/kaggle-private-byod/python@sha256:37c64f7dd9c54116ecd1bcc88817c5469b88387388fade02bfa8bf3fc647d461"
+}
