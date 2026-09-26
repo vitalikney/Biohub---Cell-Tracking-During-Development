@@ -2404,6 +2404,24 @@ Mention it to the user in one line (R9-A8 item 6).
   dummy log, CSV, node counts), our CSV sha256 == author CSV (d52a5da2... = exp56 dummy). Trigger-to-submit-ready ~45 min
   without rate limits, ~60 min with them. PROCEDURE FIX: at a trigger pause other Kaggle-API agents, retry 429s with 60 s
   backoff (kernels output is the sensitive endpoint), and never read a gate FAIL on missing files as a content failure.
+- 2026-09-26 20:49 UTC, K2 PUBLIC LADDER + PRE-REGISTERED FINALS RULE L9 (R7 lifted by the user 20:33 UTC; written BEFORE any ladder
+  push or submit; source research/wf_ideas_v4/reach0955/r_ladder.json + skeptic v_ladder notes). Builds (tools/build_probe_kernel.py,
+  K2 recipe + one change; K2 rebuild still 1f1ddb6d): exp70a = K2 + leaf prune 0.3 (sha 132438a9); exp70d = K2 +
+  DEEPCENTER_SAFE_DIV_THRESHOLD 0.30 (e0b8fc0c); exp70e = both (c0f3380c); exp70b = K2 + forkmid 4.5 (b8e7ece1). All
+  private, internet off, x138's 4 datasets + biohub-ft-weights. Honest priors: +0.000..+0.0003 public each (skeptic:
+  P(exp70a flips the display to 0.955) ~0.05-0.15, since the P36 evidence is already in our team best); 0.956+ is not
+  reachable with knobs. Schedule: dummies pushed now; submit exp70a, exp70e, exp70d tonight when COMPLETE (hard 23:50Z);
+  exp70b at 00:05Z 27 Sep; informed combos ~08:00Z 27 Sep only from POSITIVE singles (display >= 0.955, or 0.954 with a
+  move up inside the block); never a combo with a NEGATIVE knob (<= 0.953); no threshold neighbours; stop after two
+  rungs without a better display; last ladder submit 29 Sep 11:00 UTC; >= 2 slots kept in reserve. TRAP: x138 cell 3
+  hard-sets the SECONDARY_* / DUAL_SEED_* knobs, so --set on them is silently ignored (never probe them this way).
+  FINALS RULE L9 ("one for public, one for private"): classes A = exp70a, B = K2 + any subset of {lp30, dc0.30, fm45},
+  C = anything else (never a final). A variant is ELIGIBLE iff COMPLETE without error, runtime L_hi <= 9.0 h by
+  tools/runtime_ledger.py (family safetail), displayed public >= 0.955, and each of its knobs has a single-knob variant
+  displayed >= 0.954 where scored. V* = the highest display; ties -> class A, then fewer knobs, then the earlier submit.
+  PAIR = {V* (public-aimed), twin #38 56563534 (private safety: the no-insertion hedge against falling below the ~350
+  exact x138 copies)}; #37 leaves because V* contains K2's insertion. No eligible V* -> the pair stays {#37, #38}.
+  Never two byte-identical files; the user re-ticks by 29 Sep 20:00 UTC (push reminder).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
