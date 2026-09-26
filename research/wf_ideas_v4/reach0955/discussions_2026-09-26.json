@@ -1,0 +1,335 @@
+[
+ {
+  "topic_url": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/742266",
+  "title": "Stuck at 0.947 after ten board tests. What I measured, and one question about the relink stage",
+  "date": "2026-09-21 (last comment 2026-09-26 20:15Z)",
+  "author": "Justin CH123 (now LB 0.956, #130, 70 subs); comments by OmerZalman (0.957), OpPrime (0.953), Civitasmass (0.953), Gourav Roy (team Rishabh Roy 0.957), You WeiLin, nusrati",
+  "what_it_says": "Justin: 10 single-knob changes on the public 0.947 stack all lost; LB loss tracked the change in predicted node count, not offline edge J; final edges come from the Hungarian relink. On 23 Sep he wrote he had NOT retrained the detector, only post-processing, and that his division J ~0.23 is where he thinks the gap is. He then went 0.953 (x138 copy, 24 Sep) -> 0.956 (by 25 Sep 19:46Z), i.e. +0.003 over x138 most likely from post-processing/division work alone. OmerZalman (0.957): 'you have to improve all parts', echoed by a 0.969 player. Civitasmass: retrained detector, but not all of his LB gain came from the retrain; check that local gains are spread across videos, not 1-2 outliers. OpPrime: division links are lost at every stage (pre-ILP, ILP, relink/validation). NEW today: nusrati asks Justin how he got the jump - unanswered.",
+  "relevance_to_0955": "high",
+  "actionable_for_us": "Watch this thread for Justin's answer (only concrete public trace of a 0.953->0.956 PP-only jump). Supports continuing division-side post-processing on x138 (our DaughterNet insertion line) rather than knob sweeps; apply Civitasmass's per-video spread check to any candidate before a probe."
+ },
+ {
+  "topic_url": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/743222",
+  "title": "Eight leaderboard experiments on the public 0.947 stack - all negative, here are the numbers",
+  "date": "2026-09-25",
+  "author": "imissher (LB 0.947)",
+  "what_it_says": "Paired LB results on the dual-seed 0.947 stack: relink off 0.946 (local +0.017), ILP candidate threshold 0.48->0.30 LB 0.000 (local +0.009), Z-flip TTA 8->16 views 0.946, det threshold 0.960 0.946 and 0.970 0.945 (0.965 is the optimum), secondary det weight 0.80->0.65 0.945, own model in secondary slot 0.939, secondary adapted 6 h at lr 1e-5 on 600 synthetic + 40 real videos 0.939. Changes that trust the learned association more failed; geometric repair helped. Trap: the in-kernel validator excludes train stems present in TEST_DIR, so the hidden rerun scores a different 8 videos and can pick a different PP config than the commit log shows. Training cost: 2xT4, 64^3 windows, batch 16 OOM, 12-14 s/step, 35-40 min/epoch.",
+  "relevance_to_0955": "medium",
+  "actionable_for_us": "Negative list to avoid in the last 2 days: do not move det threshold, do not add Z-flip TTA, do not change secondary det weight, do not lower the ILP candidate threshold or disable relink. Validator trap does NOT hit us: x138 sets BIOHUB_VALIDATOR_ENABLE=0 (checked experiments/exp56_x138_verbatim). A naive secondary swap / synthetic adaptation lost 0.006-0.009, so any retrained secondary needs the teacher-anchored recipe (cf. y3uanm), not a plain fine-tune."
+ },
+ {
+  "topic_url": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/742942",
+  "title": "errors in annotated ground truth",
+  "date": "2026-09-24 (last comment 2026-09-26 09:31Z)",
+  "author": "Quantizr (LB 0.965, #27, only 11 subs); Satwik (0.955), sghwr (team 0.952), Himanish Goel",
+  "what_it_says": "Many train annotations look wrong (centroids >7 um off, wrong links, a 'division' whose daughter already existed). Quantizr: models he expected to do worse on manual labels 'seem to do better on the actual test set'. sghwr: blind human review found ~70% of their model's FPs could be TPs. Satwik: his detector has ~0.975 recall, misses mostly faint cells. Himanish (new, 26 Sep): splits sometimes at wrong coordinates, daughter dropped one frame later; an 'honest' model may lose unless it replicates GT noise.",
+  "relevance_to_0955": "low",
+  "actionable_for_us": "None in 2 days. Implication only: test GT is presumably made the same way (tracker + review), so 'fixing' GT-style quirks (e.g. daughter appearing one frame late) is not a safe lever; per-class FP rates from local anatomy are upper bounds."
+ },
+ {
+  "topic_url": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/743006",
+  "title": "Beginner question: How do Public/Private splits usually work in biological datasets?",
+  "date": "2026-09-24 (last comment 2026-09-26 10:41Z)",
+  "author": "Rishavendra Sharma; Georgy Mamarin; Gabriel (LB 0.975, #3)",
+  "what_it_says": "Georgy Mamarin restates host facts (hidden test = new embryos, ~train size, same protocol/instrument/stage) and his base rate: a public-best improvement also ranks higher on private ~8 in 10 times, ~3 in 4 in code competitions; medal-zone retention 97%..36% on 13 bio boards, unrelated to public share. Recommends whole-embryo hold-out. Rishavendra asks if prefixes 44b6/6bba are embryos - no reply here, but the host already answered this on 7 Jul in 723694 (embryo_id = prefix, rest = crop id). Gabriel (#3) only says he is curious too.",
+  "relevance_to_0955": "low",
+  "actionable_for_us": "None for the score. For final selection: a genuine public gain carries to private ~75% of the time in code comps, which supports keeping our best public (x138-based) as one final."
+ },
+ {
+  "topic_url": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/743146",
+  "title": "Winner deliverables when using permitted third-party pretrained weights",
+  "date": "2026-09-25",
+  "author": "SamoraDC",
+  "what_it_says": "Asks the hosts how rule section 2.8 (training-code delivery) applies to unchanged third-party public weights whose training source is not redistributable. No host answer.",
+  "relevance_to_0955": "low",
+  "actionable_for_us": "None (open rules question; only matters for prize eligibility, which the pilkwang-based stack shares with the whole field)."
+ },
+ {
+  "topic_url": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/742794",
+  "title": "New to Biohub? Fork this CPU cell-tracking baseline + validation toolkit",
+  "date": "2026-09-23",
+  "author": "Yang Kuang Ou (LB 0.953, x138 copy)",
+  "what_it_says": "Promotes a CPU threshold + connected-components + greedy NN starter; no score claimed.",
+  "relevance_to_0955": "low",
+  "actionable_for_us": "none"
+ },
+ {
+  "topic_url": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/742777",
+  "title": "Luxar from biohub : 3D Gaussian Splats of Embyro Cells",
+  "date": "2026-09-23",
+  "author": "hengck23 (LB 0.946)",
+  "what_it_says": "Links royerlab/luxar and a Zenodo record of 3D Gaussian-splat embryo renderings. Visualisation only.",
+  "relevance_to_0955": "low",
+  "actionable_for_us": "none"
+ },
+ {
+  "topic_url": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/742702",
+  "title": "whats the difference between today and the september 29 deadline",
+  "date": "2026-09-23",
+  "author": "thisArmin; answer by Satwik (0.955)",
+  "what_it_says": "Satwik (not a host): 23 Sep was the entry/team-merger deadline; submissions are allowed until 29 Sep and 'any submissions that finish before the deadline count'.",
+  "relevance_to_0955": "low",
+  "actionable_for_us": "Treat 29 Sep 23:59 UTC as the hard line and submit finals early; the ~7 h scoring lag means late subs will not show a public score before the deadline (community claim, not host-confirmed)."
+ },
+ {
+  "topic_url": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/742456",
+  "title": "unable to uplift my score from 0.947 anymore",
+  "date": "2026-09-22",
+  "author": "Developer kgf",
+  "what_it_says": "Asks how top teams break 0.947; no replies.",
+  "relevance_to_0955": "low",
+  "actionable_for_us": "none"
+ },
+ {
+  "topic_url": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/742169",
+  "title": "A few question for top 100 people?",
+  "date": "2026-09-20",
+  "author": "OmerZalman (now LB 0.957); Ogurtsov (VOXEL ART 0.968); Gourav Roy (team Rishabh Roy 0.957)",
+  "what_it_says": "Questionnaire to the top 100; only answer is Ogurtsov: room for improvement in all directions. No recipe.",
+  "relevance_to_0955": "medium",
+  "actionable_for_us": "none (confirms that 0.957+ teams improved several stages, not one knob)"
+ },
+ {
+  "topic_url": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/742131",
+  "title": "Any ideas or successful approaches for model blending?",
+  "date": "2026-09-20",
+  "author": "sghwr (team 0.952); Yunk-S",
+  "what_it_says": "Two private models 0.015-0.020 below the public best; no blending/ensembling attempt improved the public LB. Only reply: public code is near its limit.",
+  "relevance_to_0955": "low",
+  "actionable_for_us": "none (negative evidence for naive blending of weaker private models into the public stack)"
+ },
+ {
+  "topic_url": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/742064",
+  "title": "Public 0.947-stack weights were trained on all 199 train videos - any hold-out from train is in-sample",
+  "date": "2026-09-19",
+  "author": "Eric (his team is now LB 0.962, #43)",
+  "what_it_says": "Secondary split_manifest lists all 199 videos; DeepCenter 71; sub-voxel peak refinement +0.0078 on 12 local videos but -0.002 LB twice. He now trusts locally only models that never saw the evaluation videos and decides everything else on the LB. His team since reached 0.962.",
+  "relevance_to_0955": "medium",
+  "actionable_for_us": "Keep treating in-sample ILP/edge-net local gains as untrusted (matches our edge-filter probes 29/30). No new step."
+ },
+ {
+  "topic_url": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/741749",
+  "title": "Model changes don't move the LB above the public plateau - what actually did for you?",
+  "date": "2026-09-17 (last 2026-09-18)",
+  "author": "hikaggler (now LB 0.957, #104); Ogurtsov (VOXEL ART 0.968); TWEAK (0.961); MOHAMMADJAFAR ZAMANI (0.955)",
+  "what_it_says": "hikaggler (own pipeline was 0.939 on 18 Sep, now 0.957): deeper UNet, longer training, heatmap losses, wider temporal window, a division head (local divJ 0.07->0.19) all ~0 on LB; only levers were synthetic pretraining (497 of 2,174 sequences, +0.012 on hold-out, pushes node count up) and CONDITIONAL two-model fusion, using the second model 'only on columns where the primary is uncertain'. Node-count calibration predicts LB best; locally chosen PP settings carry over, local ranking of trained weights does not (r ~ -0.2). Ogurtsov: 0.947->0.957 reachable from the published UNet only partly, and risky for the private LB.",
+  "relevance_to_0955": "high",
+  "actionable_for_us": "Candidate 2-day inference-only idea: uncertainty-gated fusion (replace/augment x138's fixed 0.2/0.8 blend only where the primary is uncertain) with a model we already have (e.g. our fine-tuned primary). Needs one LB probe and cannot be trusted locally; hikaggler's jump 0.939->0.957 suggests he combined his models with the x138 stack."
+ },
+ {
+  "topic_url": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/741386",
+  "title": "A few questions about external zebrafish data",
+  "date": "2026-09-14 (last 2026-09-22)",
+  "author": "Masha Mikhisor (VOXEL ART 0.968); Sergio Alvarez (0.975); MOHAMMADJAFAR ZAMANI (0.955); OmerZalman",
+  "what_it_says": "Sergio: the public Ultrack embryo (2024_03_22_dorado) is a different embryo with the same spacing, usable after cutting 64x256x256 chunks; hosts never said how tracks were made (likely ultrack/HOCT + manual review). Open questions (Janelia 160328 independence, how estimated_number_of_nodes is computed, frame interval) unanswered by hosts. OmerZalman (22 Sep) asks Masha for hints - no answer.",
+  "relevance_to_0955": "low",
+  "actionable_for_us": "none in 2 days (a third-embryo validation volume, no tracks)"
+ },
+ {
+  "topic_url": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/741651",
+  "title": "I foresee some shakeup.",
+  "date": "2026-09-16 (last 2026-09-21)",
+  "author": "Vaibhav Nakrani; Pavel (team To The Moon 0.958)",
+  "what_it_says": "Pavel: '0.850 CV -> 0.914 Public LB, 0.919 CV -> 0.914 Public LB'. Expect ranks 50-500 to move.",
+  "relevance_to_0955": "low",
+  "actionable_for_us": "none"
+ },
+ {
+  "topic_url": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/742325",
+  "title": "Anyone share the same opinion?",
+  "date": "2026-09-21",
+  "author": "You WeiLin (0.953)",
+  "what_it_says": "Opinion: public notebooks overfit and are too slow.",
+  "relevance_to_0955": "low",
+  "actionable_for_us": "none"
+ },
+ {
+  "topic_url": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/741868",
+  "title": "Agents collaborate with Humans - Dashboards are key!",
+  "date": "2026-09-17 (last 2026-09-20)",
+  "author": "Chris Deotte; hengck23",
+  "what_it_says": "Agent-built 3D dashboards / napari MCP; points to tom99763's tracksdata tutorial. No competition content.",
+  "relevance_to_0955": "low",
+  "actionable_for_us": "none"
+ },
+ {
+  "topic_url": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/738217",
+  "title": "focus3d : one of the best 3d cell segmentation",
+  "date": "2026-08-30 (last 2026-09-20)",
+  "author": "hengck23; Satwik (0.955); Lê Quang Cảnh (0.952); others",
+  "what_it_says": "Only post-20 Sep item: hengck23 is hunting a model that does not over-estimate the node count. Earlier (known): dense-label encoder fine-tune -0.038, detection-head-only -0.003; Satwik: FOCUS3D-dense detector recall 1.0, sparse-GT transformer linker 0.83 LB, Ultrack pseudo-tracks did not help.",
+  "relevance_to_0955": "low",
+  "actionable_for_us": "none new"
+ },
+ {
+  "topic_url": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/740145",
+  "title": "magic or overfitting?",
+  "date": "2026-09-08 (last 2026-09-15)",
+  "author": "hengck23",
+  "what_it_says": "refine_prob head removes 13% of peaks at 99.45% recall of annotated nodes; many FPs sit very close to a true node (localisation, not existence); the metric matches only the first two predictions near a GT node so an edge may attach to the 'wrong' duplicate; Ultrack's pretrained UNets are public. Known (discussions_summary B25/B31).",
+  "relevance_to_0955": "medium",
+  "actionable_for_us": "none new (node-budget pruning already tested; blind thresholding loses on LB)"
+ },
+ {
+  "topic_url": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/735352",
+  "title": "Possible big leaderboard shakeup",
+  "date": "2026-08-15 (last 2026-09-17)",
+  "author": "mikelou1; TWEAK (0.961); Sergio; Tang (0.971); Georgy Mamarin",
+  "what_it_says": "TWEAK claims a generic 'plugin' adding 0.03-0.05 to any public model (no details); Tang: build a reliable CV, use external/synthetic data for divisions; Georgy's 13-board shake-up table.",
+  "relevance_to_0955": "low",
+  "actionable_for_us": "none"
+ },
+ {
+  "topic_url": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/739516",
+  "title": "I measured my own division_jaccard (0.22). What's yours?",
+  "date": "2026-09-04",
+  "author": "hikaggler (now 0.957)",
+  "what_it_says": "Divisions-off ablation: LB 0.929 -> 0.907, so divJ ~0.22 (confounded with parent->daughter edges). Two teams at the same score can need opposite work.",
+  "relevance_to_0955": "medium",
+  "actionable_for_us": "If a spare slot exists, the Arul Prasad fork-free probe (734192) gives our exact edge/division split on the LB; otherwise none."
+ },
+ {
+  "topic_url": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/734192",
+  "title": "How much points are you guys getting",
+  "date": "2026-08-10",
+  "author": "Arul Prasad S P (team xanderr 0.959)",
+  "what_it_says": "summarise() drops the division term when a submission has no divisions, so one fork-free submission returns pure adjusted edge J and the division term by subtraction.",
+  "relevance_to_0955": "medium",
+  "actionable_for_us": "Only as a diagnostic probe (costs one LB slot); tells whether our remaining gap vs 0.957 is edge-side or division-side."
+ },
+ {
+  "topic_url": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/737543",
+  "title": "what layer did ur gains actually come from",
+  "date": "2026-08-26",
+  "author": "kevin park; Tang (0.971); Lime1123 (0.952)",
+  "what_it_says": "Tang: work order detection -> linking -> division, most of his gains from model improvements. Lime1123: divisions are sensitive to ~3 um localisation even though the metric uses 7 um; kevin park found 39% of his division nodes >3 um off.",
+  "relevance_to_0955": "medium",
+  "actionable_for_us": "For the DaughterNet insertion: prefer daughter positions from the refined (x138 V1284) coordinates and gate on localisation confidence; no new probe by itself."
+ },
+ {
+  "topic_url": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/734604",
+  "title": "What is the best model for this domain so far?",
+  "date": "2026-08-12",
+  "author": "Moawiz; Tang (0.971); Mendrika Ramarlina",
+  "what_it_says": "Tang: retrain rather than use the public checkpoint (preprocessing, architecture); the public ckpt 'has kind of hit a wall'. Mendrika: decompose node recall / linking / oracle ceiling / division recall@K.",
+  "relevance_to_0955": "medium",
+  "actionable_for_us": "none in 2 days (retrain line already running as r_retrain)"
+ },
+ {
+  "topic_url": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/737101",
+  "title": "Stuck at 0.928",
+  "date": "2026-08-23",
+  "author": "mikelou1; Soheil Ayati (0.968)",
+  "what_it_says": "Soheil: split missed edges into missing endpoint nodes vs wrong associations; many 'linking' issues originate in node selection; validate whole movies with the official scorer and movie-level OOF.",
+  "relevance_to_0955": "low",
+  "actionable_for_us": "none new"
+ },
+ {
+  "topic_url": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/730924",
+  "title": "What model/feature diversity helped beyond the two-seed logit-blend plateau (~0.91)?",
+  "date": "2026-07-30",
+  "author": "mige551 (now 0.959)",
+  "what_it_says": "Two-seed 50/50 logit blend reduced emitted nodes ~1.7% and raised the score: diversity improved detection precision. FOYSAL: use an extra view only where models disagree.",
+  "relevance_to_0955": "medium",
+  "actionable_for_us": "Same family as hikaggler's conditional fusion: a disagreement-gated extra detector view is the one fusion form reported to help."
+ },
+ {
+  "topic_url": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/739686",
+  "title": "Metric problem",
+  "date": "2026-09-05",
+  "author": "Antonoof (TWEAK 0.961); Sergio Alvarez; Ogurtsov",
+  "what_it_says": "Deleting 44.7% of nodes/edges left public LB at 0.954 (later retracted); Sergio: every removal he made moved LB/CV; hosts are aware the node factor is unbounded (intended).",
+  "relevance_to_0955": "low",
+  "actionable_for_us": "none"
+ },
+ {
+  "topic_url": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/739018",
+  "title": "Question about the node-count adjustment in the metric (adj_edge_jaccard can exceed 1)",
+  "date": "2026-09-02",
+  "author": "Michael Hernandez (0.961); hengck23",
+  "what_it_says": "No ceiling on the node factor; hengck23: detect just enough annotated nodes (<= N_est).",
+  "relevance_to_0955": "low",
+  "actionable_for_us": "none new"
+ },
+ {
+  "topic_url": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/741242",
+  "title": "Saving ~75 min in the dual-seed + HOCT veto pipeline",
+  "date": "2026-09-14",
+  "author": "Hammad Farooq",
+  "what_it_says": "The in-kernel PP sweep always picks tight55 on train stems; HOCT veto has a 10 h deadline risk.",
+  "relevance_to_0955": "low",
+  "actionable_for_us": "none (x138 has the validator off)"
+ },
+ {
+  "topic_url": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/723694",
+  "title": "Zebra fish cell tracking EDA (host reply)",
+  "date": "2026-07-07",
+  "author": "Thibgolds (HOST)",
+  "what_it_says": "Host: embryo_id is the prefix (e.g. 44b6), the rest is the crop id; the task is to track all cells, but at test time you are evaluated only on the tracks annotated in the test set (sparse). This answers the still-open 743006 embryo-prefix question.",
+  "relevance_to_0955": "low",
+  "actionable_for_us": "none (confirms our embryo = prefix assumption for LOEO checks)"
+ },
+ {
+  "topic_url": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/716793",
+  "title": "Only 2 groups of embryo_id? (host reply)",
+  "date": "2026-07-01",
+  "author": "Thibgolds (HOST)",
+  "what_it_says": "Two embryo_ids in train; the test set is roughly similar in size with no embryo overlap.",
+  "relevance_to_0955": "low",
+  "actionable_for_us": "none"
+ },
+ {
+  "topic_url": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/724386",
+  "title": "Two training embryos: same developmental stage? Same imaging protocol? (host reply)",
+  "date": "2026-07-13",
+  "author": "Jordão Bragantini (HOST)",
+  "what_it_says": "All data follow the same protocol (instrument, developmental stage); each embryo acquired in a separate session.",
+  "relevance_to_0955": "low",
+  "actionable_for_us": "none"
+ },
+ {
+  "topic_url": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/725015",
+  "title": "What if anyone will get 0.999 on lb ... (host reply)",
+  "date": "2026-07-14",
+  "author": "Thibgolds (HOST)",
+  "what_it_says": "Best possible score is ~1.1, and slightly above 1.1 is theoretically possible via the adjusted Jaccard; not expected.",
+  "relevance_to_0955": "low",
+  "actionable_for_us": "none"
+ },
+ {
+  "topic_url": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/724502",
+  "title": "Clarification on Using a Self-Trained Model in Notebook Submission (host reply)",
+  "date": "2026-07-13",
+  "author": "Jordão Bragantini (HOST)",
+  "what_it_says": "Self-trained models are permitted but must be reproducible if you win (Winning Model Documentation guidelines).",
+  "relevance_to_0955": "low",
+  "actionable_for_us": "Keep training notebooks/weights provenance for any retrained model we submit as a final."
+ },
+ {
+  "topic_url": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/734330",
+  "title": "Is public Zebrahub data allowed as external training data? (host reply)",
+  "date": "2026-08-13",
+  "author": "Thibgolds (HOST)",
+  "what_it_says": "Zebrahub data and resources are allowed; no overlap with the test set.",
+  "relevance_to_0955": "low",
+  "actionable_for_us": "none"
+ },
+ {
+  "topic_url": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/727154",
+  "title": "Division Metric exploit and patch (host)",
+  "date": "2026-07-18",
+  "author": "Thibgolds (HOST)",
+  "what_it_says": "Division-metric exploit patched and all submissions rescored (completed 23 Jul per admin 728324); patched metric public in royerlab/kaggle-cell-tracking-competition. Host (723655): perfectly duplicated edges are filtered, each GT edge gives at most one TP.",
+  "relevance_to_0955": "low",
+  "actionable_for_us": "none"
+ },
+ {
+  "topic_url": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/738833",
+  "title": "Cell Tracking In-Person Workshop (host, pinned)",
+  "date": "2026-09-01",
+  "author": "Jordão Bragantini (HOST)",
+  "what_it_says": "Eligible prize winners will be invited to a workshop in Redwood City, 30 Nov - 3 Dec 2026. Last host post in the forum is from 16 Sep (a reply); no host statement on the private LB or final evaluation since.",
+  "relevance_to_0955": "low",
+  "actionable_for_us": "none"
+ }
+]

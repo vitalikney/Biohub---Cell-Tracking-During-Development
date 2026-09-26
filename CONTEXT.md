@@ -2422,6 +2422,18 @@ Mention it to the user in one line (R9-A8 item 6).
   PAIR = {V* (public-aimed), twin #38 56563534 (private safety: the no-insertion hedge against falling below the ~350
   exact x138 copies)}; #37 leaves because V* contains K2's insertion. No eligible V* -> the pair stays {#37, #38}.
   Never two byte-identical files; the user re-ticks by 29 Sep 20:00 UTC (push reminder).
+- 2026-09-26 20:51 UTC, DISCUSSION INTEL (user asked; read-only agent read all 120 topics / 584 messages via the forum API in its own
+  Chrome tab; research/wf_ideas_v4/reach0955/discussions_2026-09-26.json + .notes.md). No recipe for 0.955-0.957 is posted.
+  (1) Justin CH123 (0.956, topic 742266): 0.953 x138 copy (24 Sep) -> 0.956 (25 Sep 19:46Z) WITHOUT retraining, post-
+  processing / divisions (his div J ~0.23); the only public trace of a PP-only +0.003 over x138; unanswered question to him
+  at 20:15Z. (2) hikaggler (0.957, 741749): only synthetic pretraining and CONDITIONAL two-model fusion (second model used
+  only where the primary is uncertain) moved his LB; plain averaging did nothing. (3) Several 0.957+ teams retrained their
+  own detectors (Civitasmass, Quantizr 0.965 with 11 subs, Eric's team). (4) imissher's LOST list on the 0.947 stack:
+  det threshold away from 0.965, z-flip TTA, secondary weight 0.65, relink off, own/adapted secondary (0.939). (5) Several
+  players: LB moves with the predicted node count (the metric's node factor), not with local edge J. Hosts: nothing new
+  since 16 Sep (test = new embryos, same size as train; only annotated test tracks scored; self-trained models allowed if
+  reproducible; max score ~1.1; rerun limit 12 h vs 9 h unanswered). Georgy Mamarin: a public-best improvement wins on
+  private ~3 in 4 in code competitions.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
