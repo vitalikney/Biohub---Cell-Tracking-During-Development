@@ -2049,6 +2049,12 @@ the user's original 0.933; public notebook 0.941; LB top 0.970.
 - 2026-09-26 04:04 UTC, OK REQUEST posted in chat (updated list per round 5: K1 by the table; twin floor 0.952; row-2 pairs;
   K2 "Kaggle Error" -> one resubmit; K2'' = exp58d only if the runtime trigger fires with B > 9.0 h; floatout closed,
   L1/L2 dropped; tick exactly two files as soon as the table resolves). poll.log: #37/#38 still PENDING at 04:04Z.
+- 2026-09-26 04:12 UTC: K2'' builder change merged (round 5 R5-A4; no kernel built or pushed): non-lab safetail builds accept only
+  (REPAIR_DEADLINE_S, DIVINS_DEADLINE_S) = (34200, 28800) or (37800, 32400); everything else (incl. DIVINS alone) is
+  refused; runtime_ledger family 'safetail_late' (10.5 h deadline, 9.0 h insertion gate) for token exp58d. K2 rebuild
+  sha256 unchanged (1f1ddb6d...). 116 tests pass. K2'' is built only if the V3 runtime trigger fires AND the user says yes:
+  python tools/build_probe_kernel.py exp58d_x138_safe_lowref --base x138 --patch divinsert --patch safetail --patch
+  lowrefine <K2 DIVINS knobs> --set REPAIR_DEADLINE_S=37800 --set DIVINS_DEADLINE_S=32400 --set LOWREFINE_ENABLE=1.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
