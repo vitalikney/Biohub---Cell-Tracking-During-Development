@@ -85,6 +85,15 @@ Patches (`--patch NAME`, repeatable, any order; they always address the BASE cod
              CSV), BUDGET_S 33000, MAX_S 1800, WORKERS 4, SAME_PREFIX 0, MIN_GAP, MAX_NONOWNER, FORCE_FAIL (--lab)};
              fail-soft 'OVERLAPCONS FAILED' / 'OVERLAPCONS SKIPPED (budget|time)'. Order: after forkmid/forkblob,
              before safetail.
+  secswap    (x138 base only; research/wf_ideas_v4/reach0955 T4) swap the secondary detector (pilkwang seed314159) for
+             another dataset of the same layout (ARTIFACT_MANIFEST.json with model.weight_sha256 +
+             weights[/.zip]/unet_transformer/split_0/{edge_predictor_best.pth, config.json}): code cell 3's hard-coded
+             expected sha line reads BIOHUB_SECONDARY_EXPECTED_SHA256 instead (default = the same sha); the manifest
+             path is x138's own BIOHUB_SECONDARY_ARTIFACT_MANIFEST. Needs both knobs (--set; sha = 64 lowercase hex !=
+             the parent, manifest = /kaggle/input/.../ARTIFACT_MANIFEST.json inside a --dataset). Either knob without
+             the patch is refused (x138 would keep pilkwang's secondary), and so is any --set of the SECONDARY_* /
+             DUAL_SEED_* knobs x138 re-sets after the override block (X138_HARDSET_KNOBS). Log proof: 'Secondary
+             artifact: <manifest folder>' and 'Secondary SHA256: <sha>'.
 DIVINS_DUMP=1 needs --lab on every base. --owner / --out-dir set the metadata owner and the folder under experiments/.
 """
 import argparse
@@ -2223,6 +2232,50 @@ def patch_overlapcons(cells_src: dict) -> None:
 PATCHES["overlapcons"] = patch_overlapcons
 BASES["x138"]["patches"] += ("overlapcons",)
 
+# ---- secswap (research/wf_ideas_v4/reach0955 T4, r_retrain.json RT-2): x138 base only. x138 code cell 3 already reads
+# the secondary detector's manifest path from BIOHUB_SECONDARY_ARTIFACT_MANIFEST (default pilkwang's seed314159 dataset)
+# but pins the secondary by a HARD-CODED weight sha256: the finder accepts only a manifest whose model.weight_sha256
+# equals it (any other manifest is skipped and the /kaggle/input rglob finds pilkwang's again = a silent K2 re-run) and
+# the copied weights must hash to it. secswap turns that one line into BIOHUB_SECONDARY_EXPECTED_SHA256 (default = the
+# same sha, so with the knob unset the cell runs as x138). Nothing else changes: the fusion knobs stay hard-set, and the
+# log already proves the swap ('Secondary artifact: <manifest folder>', 'Secondary SHA256: <sha of the copied weights>').
+SECSWAP_PARENT_SHA256 = "9bac2fa0dadc4a6fc1899e0caf187f4b553e0a7cd90ba1261a68b35ffe9e305f"  # pilkwang seed314159
+SECSWAP_SHA_ANCHOR = f'_secondary_expected_sha256 = "{SECSWAP_PARENT_SHA256}"' + NL
+SECSWAP_SHA_NEW = ('_secondary_expected_sha256 = os.environ.get("BIOHUB_SECONDARY_EXPECTED_SHA256", '
+                   f'"{SECSWAP_PARENT_SHA256}").strip().lower()' + NL)
+SECSWAP_MANIFEST_READ = ('_secondary_manifest_explicit = Path(os.environ.get(' + NL
+                         + '    "BIOHUB_SECONDARY_ARTIFACT_MANIFEST",' + NL)
+SECSWAP_KNOBS = ("BIOHUB_SECONDARY_EXPECTED_SHA256", "BIOHUB_SECONDARY_ARTIFACT_MANIFEST")
+# knobs x138 re-sets with os.environ[...] = ... AFTER the cell-0 override block (cell 3 l.652-663, cell 4 l.85/306-307):
+# a --set of any of them is silently overwritten (research/wf_ideas_v4/reach0955/r_ladder.notes.md TRAP)
+X138_HARDSET_KNOBS = ("BIOHUB_SECONDARY_WEIGHTS", "BIOHUB_SECONDARY_EDGE_WEIGHT", "BIOHUB_SECONDARY_DETECTION_WEIGHT",
+                      "BIOHUB_SECONDARY_LINK_MODE", "BIOHUB_SECONDARY_MIX_TEMPERATURE", "BIOHUB_SECONDARY_LOW_MARGIN_MAX",
+                      "BIOHUB_SECONDARY_EDGE_FEATURE_TTA", "BIOHUB_SECONDARY_EDGE_FEATURE_TTA_WEIGHT",
+                      "BIOHUB_DUAL_SEED_EDGE_THRESHOLD", "BIOHUB_DUAL_SEED_MIN_CANDIDATE_RETENTION")
+BASES["x138"]["secondary"] = 3  # the code cell with the secondary finder
+
+
+def secswap_secondary_source(c3: str) -> str:
+    """x138 code cell 3: the one hard-coded expected-sha line -> the BIOHUB_SECONDARY_EXPECTED_SHA256 knob."""
+    assert "BIOHUB_SECONDARY_EXPECTED_SHA256" not in c3, "secswap already applied"
+    assert c3.count(SECSWAP_PARENT_SHA256) == 1, "the parent sha must occur only in the pinned line"
+    assert c3.count(SECSWAP_MANIFEST_READ) == 1, "x138 no longer reads BIOHUB_SECONDARY_ARTIFACT_MANIFEST"
+    assert c3.index(SECSWAP_MANIFEST_READ) < c3.index(SECSWAP_SHA_ANCHOR) < c3.index("def _find_secondary_artifact_root(")
+    return _rep1(c3, SECSWAP_SHA_ANCHOR, SECSWAP_SHA_NEW)
+
+
+def patch_secswap(cells_src: dict) -> None:
+    """Secondary-detector swap (x138 base): one exact-once line in the secondary cell; the manifest path is x138's own
+    BIOHUB_SECONDARY_ARTIFACT_MANIFEST. main() requires both knobs (--set) and the dataset (--dataset)."""
+    sec = CELL["secondary"]
+    others = [k for k, s in cells_src.items() if isinstance(k, int) and k != sec and SECSWAP_PARENT_SHA256 in s]
+    assert not others, f"parent secondary sha also pinned in code cells {others}"
+    cells_src[sec] = secswap_secondary_source(cells_src[sec])
+
+
+PATCHES["secswap"] = patch_secswap
+BASES["x138"]["patches"] += ("secswap",)
+
 
 def main() -> None:
     ap = argparse.ArgumentParser()
@@ -2492,6 +2545,33 @@ def main() -> None:
         # after forkmid / forkblob, before safetail (which stays last)
         a.patch = ([p for p in a.patch if p not in ("overlapcons", "safetail")] + ["overlapcons"]
                    + [p for p in a.patch if p == "safetail"])
+    _hardset = sorted(k.removeprefix("BIOHUB_") for k in overrides if k in X138_HARDSET_KNOBS)
+    if a.base == "x138" and _hardset:
+        sys.exit(f"{', '.join(_hardset)}: x138 cells 3/4 re-set these after the override block, so a --set is silently "
+                 f"overwritten (the kernel would re-run the base)")
+    if any(k in overrides for k in SECSWAP_KNOBS) and "secswap" not in a.patch:
+        # x138 reads the manifest knob but keeps the hard-coded pilkwang sha: a silent K2 re-run with pilkwang's secondary
+        sys.exit("SECONDARY_EXPECTED_SHA256 / SECONDARY_ARTIFACT_MANIFEST need --patch secswap")
+    if "secswap" in a.patch:
+        if a.base != "x138":
+            sys.exit("--patch secswap needs --base x138")
+        _missing = [k.removeprefix("BIOHUB_") for k in SECSWAP_KNOBS if not overrides.get(k)]
+        if _missing:
+            sys.exit(f"--patch secswap needs --set {' and --set '.join(m + '=...' for m in _missing)}")
+        _sha = overrides["BIOHUB_SECONDARY_EXPECTED_SHA256"]
+        if not re.fullmatch(r"[0-9a-f]{64}", _sha):
+            sys.exit(f"SECONDARY_EXPECTED_SHA256 must be 64 lowercase hex digits, got {_sha!r}")
+        if _sha == SECSWAP_PARENT_SHA256:
+            sys.exit("SECONDARY_EXPECTED_SHA256 is the parent (pilkwang seed314159) sha: that is the base, not a swap")
+        _man = overrides["BIOHUB_SECONDARY_ARTIFACT_MANIFEST"]
+        if (not re.fullmatch(r"/kaggle/input(/[A-Za-z0-9_.-]+)+/ARTIFACT_MANIFEST\.json", _man)
+                or any(p in (".", "..") for p in _man.split("/"))):
+            sys.exit(f"SECONDARY_ARTIFACT_MANIFEST must be a plain /kaggle/input/.../ARTIFACT_MANIFEST.json path, "
+                     f"got {_man!r}")
+        if not a.dataset:
+            sys.exit("--patch secswap needs --dataset owner/slug (the dataset with the new secondary)")
+        if not any(ds.count("/") == 1 and f"/{ds.split('/')[1]}/" in _man for ds in a.dataset):
+            sys.exit(f"SECONDARY_ARTIFACT_MANIFEST {_man!r} is not inside any --dataset {a.dataset}")
     if a.base == "exp39":
         overrides["BIOHUB_DIVNET_VERIFY"] = a.divnet or "1"
 
