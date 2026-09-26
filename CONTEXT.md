@@ -2377,6 +2377,14 @@ Mention it to the user in one line (R9-A8 item 6).
   -0.0024 or 0, half-split CV mean -0.0013). Attach precision 2.4-3.4% vs break-even ~16%. Reaching +0.012 would need
   classifiers at AUC ~0.94 on both edit classes (binormal model, not measured). VERDICT: reaches the bar only as an
   oracle; nothing before R8; finals #37 + #38 unchanged; the ceiling goes to post-deadline I-079.
+- 2026-09-26 20:30 UTC, USER DIRECTIVE (chat: "так. теперь много команд с 0.957, 0.956, 0.955 - почему у нас не также? сделай нам также!"):
+  the user wants us to reach the 0.955-0.957 group. Our own rules R9 (no retraining before 29 Sep) and R7 (no public-LB
+  knob ladders) are what kept us out of the two routes the 0.955+ teams appear to use (retrained detectors/secondaries,
+  e.g. y3uanm's public distilled secondary fine-tune, team 0.949 -> 0.956; public-LB tuning). No 0.955+ team has public
+  inference code. Launched workflow wf_fae804df-dfe (research/wf_ideas_v4/reach0955/): intel on the 0.955-0.959 teams,
+  distilled secondary fine-tune into K2 (feasibility, timeline), a public-LB probe ladder on K2 with tonight's 3 slots
+  first, skeptics, one plan with an OK list. R7/R9 are lifted only by the user's explicit yes on that concrete list; no
+  submission before it. Finals #37 + #38 stay ticked meanwhile.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
