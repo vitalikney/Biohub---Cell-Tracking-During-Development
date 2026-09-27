@@ -2783,6 +2783,9 @@ Mention it to the user in one line (R9-A8 item 6).
   a7271d4e/7ed29dd3/b009bedd), dummy mandatory, submit preferably by ~09:30Z. L_hi clocks (first COMPLETE header by): e
   05:15:23Z/06:15:23Z, a 05:17:47Z/06:17:47Z, d 05:38:33Z/06:38:33Z, b 08:05:50Z/09:05:50Z (8.0 h / 9.0 h). One user
   re-tick after D2 at most.
+- 2026-09-27 02:29 UTC, WATCH TIMERS (R14-A5, session-only): liveness + D1 checks 5b23a3ed (04:21Z), 54a8f20d (05:21Z), cdd738f1 (06:31Z),
+  file-only inside the 04:10-06:45Z quiet window. Detached watcher launch at 03:35Z (background task b8v8e31bj). Round 15 at
+  05:30Z (files only, audits the D1 read). Morning push 65b1b746 at 07:30Z (R14-A4 variants P-A/P-B/P-C).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
