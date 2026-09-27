@@ -2620,6 +2620,9 @@ Mention it to the user in one line (R9-A8 item 6).
   POLLER experiments/lb_poll/lb_poll.py runs until 29 Sep 20:00 UTC; before any submit the last poll.log header must be
   < 15 min old and not a 429 line. Tests: `python -m pytest -q tests` (308). Git: commit as the user, no trailer, claude
   grep 0 before any push; never merge old worktree branches.
+- 2026-09-27 00:06 UTC, SUBMIT probe 42 = exp70b (K2 + forkmid 4.5; ladder L4, class B), ref 56592350 at 00:05:50Z 27 Sep (kernel
+  vitaliineibauer/biohub-exp70b-k2-fm45 v1; dummy clean: 121,252 nodes, 74 forks, sha ed7101bf; run ~1,740 s). Poll header
+  23:59:11Z, no 429. 4 slots left on 27 Sep; informed combos after probes 39-42 score (~05:00-07:45 UTC).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
