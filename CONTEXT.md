@@ -2911,6 +2911,9 @@ Mention it to the user in one line (R9-A8 item 6).
     the variant is not back by the first 43/44 terminal header, only 'class C allowed' counts as pre-registered and the
     variant is USER DECISION AFTER SCORE. Echo the parsed answer in one line before any irreversible step (exp71 push,
     re-tick instruction, submit).
+- 2026-09-27 09:15 UTC, R16-A2 message sent (chat + push requested). Updated forecast (round 16, files only): default {#37,#38} P(bronze+)
+  ~0.55 (0.3-0.85), P(silver+) ~0.15-0.2; {exp70b,#38} ~0.59/0.23; if 43/44 >= 0.955: {V*_C,#37} ~0.72/0.41, {V*_C,#38} ~0.54/0.34
+  (model estimates; research/wf_ideas_v4/round16/scan_hyp_forecast_update.json). The #38 twin is a narrow hedge, not a floor.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
