@@ -3198,6 +3198,11 @@ Mention it to the user in one line (R9-A8 item 6).
   11:15:12 = probe 45) -> **#162**, 113 TeamIds passed -> code P6 (>= 0.956). New team best. Row for W1 (R19-A2): 45 = P6; 46 still
   PENDING -> 45's row = B (exp76e, exp76a, exp76d) unless 46 reads first. FINALS: exp70g is a K2 knob variant (class B) with
   display >= 0.955 -> eligible V*; pair options go to the user (L9 {exp70g, #38} vs the user's (b)-style {exp70g, #37}).
+- 2026-09-27 19:01 UTC, AFTER THE 0.956: cap-direction rungs built for 28 Sep: exp78a = K2 + cap 8 (sha 8d8d9c28, dummy pushed 18:58Z),
+  exp78b = K2 + cap 12 + FRAME_CAP 2 (d54d810c), exp76e = exp70b + cap 6 (92caef83); dummies chained in one GPU lane (78a -> 76e
+  -> 78b). exp77 (N2: epoch-2 continuation of exp71 on GPU0 + fresh lr 3e-5 on GPU1; built and reviewed, all local checks pass)
+  goes into the other lane as soon as the exp76a dummy finishes. Finals question sent to the user (A: {exp70g, #37} recommended,
+  B: {exp70g, #38}).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
