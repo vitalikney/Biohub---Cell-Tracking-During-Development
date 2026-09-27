@@ -3304,6 +3304,10 @@ Mention it to the user in one line (R9-A8 item 6).
   exp79a DUMMY PASS (exp70g + CI: 121,252 nodes / 81 forks / 117,083 edges = exp70g; COORDINJECT 4/4, 91.5% moved; ~1,712 s; 0
   errors). exp80a (cap 24 + fc2) dummy pushed. W1 per R20-A2: ~00:05Z exp78b (cap 12 + fc2), ~00:06Z exp79a (CI on cap 6),
   00:50Z exp78a (cap 8).
+- 2026-09-27 22:27 UTC, PROBE 46 READ (R20-A8 / table v3): exp70q (cap 6 + DIVINS_THRESH 0.3 + forkmid) 56611472 COMPLETE 0.956 at the
+  22:25:30Z header; S0 ladder_watch/20260927T185549Z (count 47, #162) -> S1 22:26Z (count 48, LSD 14:36:59 = 46, #165), 0 TeamIds
+  passed -> code 0 (exp70g still holds our unrounded best): thr 0.3 + forkmid add nothing visible on top of cap 6. L (7.64, 7.81] h,
+  insertion gate did NOT fire. W1 unchanged (46 changes W1 in no row): exp78b, exp79a, exp78a.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
