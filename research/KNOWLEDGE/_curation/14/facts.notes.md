@@ -1,0 +1,6 @@
+- 2026-09-27T02:14:34Z round 14 start; no prior _curation/14/facts.json; last round c13 state 27 Sep 01:40Z (HEAD 5e57346)
+- 02:15Z sources read: round14 report.json (02:11:57Z, R14-A0..A9, 14 new_facts, 10 plan_issues), e10_watch 0147Z (rank 242, count 40), poll.log to 02:09:38Z (39-42 PENDING), git f2f843e/f24ff72 (watcher pushed 01:54:14Z). CONTEXT unchanged since 5e57346 (last entry 01:32Z).
+- 02:17Z verified: ladder_watch/ and run_ladder_watch.sh absent at 02:17Z; HARD_CAP 09:40Z l.66; 35 test fns; ledger 02:09:40Z 221 polls 6 empty 0 gaps; L lower bounds e 4.90 a ? d 4.51 b 2.06. Plan: python helper appends [c14] + new rows F-RUN-27, F-TRN-44, F-RUL-18, C-104..C-110; DECISIONS header, P39-P42 [c14], s2 c14 snapshot, s2f c14, s2h rows, s3 c14
+- 02:20Z FACTS.md edited ([c14] header; appends F-LB-01/02/03/04/06/08/10/11/15, F-RUN-26, F-RUL-12, F-MOD-28, F-TRN-41, C-75, C-103; new F-RUN-27, F-RUL-18, F-TRN-44, C-104..C-110). Escaped pipes in F-LB-04 title. CRLF kept. Next: DECISIONS.md
+- 02:22Z DECISIONS.md edited (header; P39-P42 [c14]; s1 update para; s2 [c14] para + snapshot replaces c13 table; s2f [c14]; s2h 4 rows; s3 7 appends + 2 new rows; closing). Table check OK, CRLF kept. Next: facts.json
+- 02:23Z poll 02:19:40Z: 39-42 still PENDING. facts.json written (8 alerts). Done.

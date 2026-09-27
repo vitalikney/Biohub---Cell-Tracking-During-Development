@@ -1,0 +1,4 @@
+- 2026-09-27T02:14Z start curation 14 watch; no prior 14/watch.json; reading WATCHLIST.md + 13/
+- 02:17Z read CONTEXT l.2623-2749 (ROUND 13 RECORD, LADDER PRE-SCORE REG l.2664, EXP71/72 GOV l.2722, TIMERS UPDATED l.2747); commits 3d48d35/5e57346/f2f843e/f24ff72; round14/report.json complete 02:11:57Z (R14-A0..A9); watcher code committed but not launched (ladder_watch/ absent; only python PID 20052); poll header 02:09:38Z all PENDING
+- 02:22Z verified: W133/W135/W137/W132/W139 done (3d48d35 l.2626/2664/2722); timers 65b1b746+2e87e414 (CronList 02:1xZ, l.2747); NEW DEFECT: round prompt l.37 browser scan 'FIRST run tools/e10_snapshot.py' + CLI fallback, FOCUS_NOTE (l.35) only in plancheck l.38 -> round 15 in 04:10-06:45 window would call API; exp70g still no NEVER_SUBMIT; LESSONS l.7 unchanged; RESULTS no 39-42; CONTEXT l.22 unchanged. Writing WATCHLIST (W143-W150, T62-T66, I136-I148).
+- 02:29Z WATCHLIST.md and watch.json written (complete). No other file touched.

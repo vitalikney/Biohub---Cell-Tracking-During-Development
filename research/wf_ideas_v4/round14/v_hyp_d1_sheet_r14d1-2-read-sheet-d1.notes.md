@@ -1,0 +1,10 @@
+- 2026-09-27 (round14 skeptic) start: no prior json for r14d1-2
+- 2026-09-27 02:00Z: cited lines verified: CONTEXT l.2407 = L9 (20:49Z), l.2502 = R12-A3 (21:31Z), l.2664 = R13-A1 (01:31Z).
+- poll.log 01:59:36Z header: all four ladder refs PENDING. Submit dates (poll.log date column): e 21:15:23.887, a 21:17:47.170, d 21:38:33.837, b 00:05:50.347 -> sheet clock times (+8 h / +9 h, truncated to the second) are correct and conservative by < 1 s; ledger hi = first COMPLETE header + 210 s x failed attempts (tools/runtime_ledger.py l.200, RETRY_SLACK_S=210); fmt_hi ceils to 0.01 h but the comparison uses raw hi.
+- divins_gate() texts (runtime_ledger.py l.246-257): 'insertion gate 8.0 h did NOT fire (L <= x h)', 'L > 8.0 h: ... MAY have fired', 'open', 'UNPROVEN' -> sheet D1-2 string match is exact.
+- ladder_watch.py: POS_MIN 0.955 / NEG_MAX 0.953, unit_status/ref_verdict l.277-298 match the CODES; watch.log writes 'S0 <folder>: rank ...' and 'EVENT n | ...' lines, so STEP 0(i) is checkable. OUT_DIR experiments/lb_poll/ladder_watch does NOT exist yet at 02:00Z (watcher due by 04:10Z).
+- Cross-check vs L9: e needs a,d not <= 0.953 'where scored' (ERROR passes) - matches; ties class A > fewer knobs > earlier submit = a > d > e - matches. BASE B-1/B-2 = L5v2 (BLOCKED, tie order) - matches.
+- Issue 1 (wording): D1-1 'V* = the highest display' must be 'the highest display among refs that meet the D1-1 conditions' (world a P5 0.956 L_hi 9.2 + d P5 0.955 L_hi 8.5 -> L9 gives V*=d; literal sheet reading gives a). Low probability (<0.5%) but the sheet is meant to be mechanical.
+- Issue 2 (cosmetic): STEP 0(iii) text 'after probes 39-41' vs R13-A1(4) 'after probes 39-42'; sheet version is the accurate one at D1.
+- Issue 3 (minor): STEP 0 has no timeout if one ref stays PENDING; harmless because the tick is only after probe 42 reads and deadline is 29 Sep 20:00Z.
+- Verdict: not refuted. Pure mechanical read sheet, no new mechanism, no R8/R1-R10 conflict, no submit. Value = misread prevention only, zero direct score.

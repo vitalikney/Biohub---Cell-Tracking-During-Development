@@ -1,0 +1,74 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/INDEX.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/CHANGES.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/14/index.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/14/index.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "what": "The ladder watcher is written (f24ff72) but not launched: experiments/lb_poll/ladder_watch/ and run_ladder_watch.sh were absent at 02:24Z. It is not fail-soft. If it is not live by 04:10Z, the A-only extension (I-328) is dropped and every 0.954 reads N4.",
+   "evidence": "research/wf_ideas_v4/round14/report.json R14-A1; research/KNOWLEDGE/FACTS.md F-RUN-27, C-104, C-108; research/KNOWLEDGE/WATCHLIST.md W134",
+   "suggested_action": "At 03:30-03:45Z (hard 04:10Z), start run_ladder_watch.sh detached with --s0 experiments/e10_watch/20260927T0147Z.txt --hard-cap 2026-09-27T11:30Z. Within 5 min, check that watch.log has the S0 line (rank 242, count 40), calls.jsonl has one line, and there is no Traceback. Never open state.json.",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "The R14-A2 PRE-SCORE NOTES are not in CONTEXT.md, which is unchanged since 5e57346. The notes cover S0, literal readings (1)-(6), the V* tie order, the fm45 POS reading and SELECTED after 06:45Z. round14/, REPORT.md (R14-A0) and the 0147Z snapshot are uncommitted.",
+   "evidence": "CONTEXT.md l.2747-2750; git status 02:24Z; research/wf_ideas_v4/round14/report.json R14-A0, R14-A2; research/KNOWLEDGE/WATCHLIST.md W143, W144",
+   "suggested_action": "Paste the R14-A2 text with a date -u stamp right after the watcher launch, and replace the stale S0 at CONTEXT l.2679. Commit as the user with no trailer and push before the first COMPLETE header (hard 04:25Z). Log the pushed hash.",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "Round 15 would break the 04:10-06:45Z API quiet window. The browser scan prompt (l.37) says 'FIRST run tools/e10_snapshot.py' and falls back to the CLI, and FOCUS_NOTE (l.35) reaches only the plancheck agent.",
+   "evidence": "experiments/workflows/biohub-research-round.js l.35-38; research/KNOWLEDGE/WATCHLIST.md W150, I136",
+   "suggested_action": "Edit l.37 before launching round 15, or run round 15 without the browser scan or after 06:45Z.",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "Nobody owns the watcher liveness checks at ~04:20, 05:20 and 06:30Z, and no timer exists for them.",
+   "evidence": "research/wf_ideas_v4/round14/report.json R14-A5; research/KNOWLEDGE/WATCHLIST.md W145",
+   "suggested_action": "Set session timers or assign the checks to round 15. They are file-only checks (process, newest watch.log line, calls.jsonl).",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "The D1 read (~04:45-05:40Z) follows READ SHEET v1 mechanically. The 8.0 h marks are e 05:15:23Z, a 05:17:47Z and d 05:38:33Z. An A-only miss by an UNPROVEN L_hi counts as a miss by rule. Close I-312 after probe 40. RESULTS rows 39-42 are missing.",
+   "evidence": "research/wf_ideas_v4/round14/report.json R14-A3; research/KNOWLEDGE/DECISIONS.md §2h l.698, §1 l.125-128; research/KNOWLEDGE/WATCHLIST.md W141, W126",
+   "suggested_action": "Log the D1 line with date -u. Add a RESULTS.md row and the probe.json score for each probe as it scores. D2 follows after probe 42 (~07:45-08:30Z).",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "The 07:30Z push (65b1b746) needs the P-A/P-B/P-C variant that matches the D1 row, plus two corrected brief lines. First, the insertion '+0.006' is in-sample; the OOF figure is +0.0019 with P(<0) 0.10-0.20. Second, FT-weight swaps are 0/4. The push also carries E10 v2 (lapses 12:00Z), Q1-Q3 (a yes is needed by ~09:00Z) and the R8 cap. Read SELECTED then, not at D1.",
+   "evidence": "research/wf_ideas_v4/round14/report.json R14-A4, R14-A6; research/KNOWLEDGE/FACTS.md C-105, C-106, C-107, F-TRN-44",
+   "suggested_action": "Log the ROUND 14 RECORD before 07:30Z. Send one push and log 'push sent', each answer, and the SELECTED read with date -u.",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "exp70g has no NEVER_SUBMIT.md, and LESSONS_draft.md l.7 still states the '~29%' split as fact.",
+   "evidence": "experiments/exp70g_k2_cap6/; research/wf_ideas_v4/round9/LESSONS_draft.md l.7; research/KNOWLEDGE/WATCHLIST.md W142, W98",
+   "suggested_action": "Add the guard file with the next commit, and reword l.7 by 12:00Z.",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "A ladder pair is only a recommendation until the user re-ticks by 29 Sep 20:00. The HINDSIGHT GUARD (I-336) must be pushed before 29 Sep 23:00Z. The W57 family is still overdue.",
+   "evidence": "research/wf_ideas_v4/round14/report.json R14-A3, R14-A8; research/KNOWLEDGE/DECISIONS.md §2 [c14]; research/KNOWLEDGE/WATCHLIST.md W57",
+   "suggested_action": "Put the exact re-tick line in the push after D2. Apply R14-A7/A8 after 12:00Z.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "contradiction",
+   "what": "Two statuses were corrected: I-063 moves refuted -> deferred (noise-level gap), and I-106 moves refuted -> open-untested (never run). All six timers are session-only, and the MEMORY index line is stale.",
+   "evidence": "research/wf_ideas_v4/round14/scan_recheck.json R14-RC-A, R14-RC-B; research/KNOWLEDGE/FACTS.md C-110, C-75",
+   "suggested_action": "Carry both corrections into CONTEXT through R14-A6. Keep the session alive, and recreate the timers after any restart.",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 14 index at 2026-09-27 ~02:25Z (HEAD f24ff72; round14/ untracked; CONTEXT.md unchanged since 5e57346). INDEX.md is rewritten in 79 lines: STATE IN 10 LINES, WHERE THINGS ARE with curation-14 line anchors, TOP OPEN IDEAS (8 rows), TOP ALERTS (9, deduplicated from the three curators), RESOLVED and HOW TO USE. State: finals TICKED 2/2 #37 0.954 + #38 0.953; probes 39-42 PENDING at 02:19:40Z; rank #242; the watcher is written but not launched. CHANGES.md gets section 14: commits f2f843e/f24ff72; ideas I-336..I-340; I-063 -> deferred and I-106 -> open-untested; counts 335 -> 340; facts F-RUN-27, F-RUL-18, F-TRN-44 and C-104..C-110; DECISIONS [c14] rows; watchlist W143-W150; resolved, carried and new alerts; curator disagreements settled (SELECTED read after 06:45Z; W150 kept [now]). No other file was edited, nothing was committed, and Kaggle was not touched."
+}

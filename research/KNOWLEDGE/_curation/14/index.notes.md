@@ -1,0 +1,5 @@
+- 02:24Z start curation 14 index; no index.json yet
+- 02:24Z read INDEX c13, CHANGES c13, 14/*.notes, IDEAS/FACTS/DECISIONS/WATCHLIST anchors; HEAD f24ff72; poll 02:19:40Z all PENDING; ladder_watch/ absent. Writing INDEX.md
+- 02:26Z INDEX.md written (79 lines). Next: CHANGES.md section 14
+- 02:26Z CHANGES.md section 14 appended
+- 02:27Z index.json written; DONE

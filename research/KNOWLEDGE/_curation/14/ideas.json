@@ -1,0 +1,60 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/ideas.json",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/IDEAS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/14/ideas.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/14/ideas.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "what": "The ladder watcher (I-327) is written but NOT launched at 02:21Z: experiments/lb_poll/ has no ladder_watch/ folder and no run_ladder_watch.sh. It is not fail-soft. A dead or unlaunched watcher DROPS the A-only extension (I-328).",
+   "evidence": "research/wf_ideas_v4/round14/report.json R14-A1, R14-A5, plan_issues (1)-(3); research/wf_ideas_v4/round14/scan_plancheck.json PC14-02, PC14-03, PC14-04; experiments/lb_poll/ listing at 02:21Z; research/KNOWLEDGE/ideas.json I-327",
+   "suggested_action": "At ~03:30-03:45Z (hard 04:10Z), write experiments/lb_poll/run_ladder_watch.sh (the restart loop with --s0 experiments/e10_watch/20260927T0147Z.txt --hard-cap 2026-09-27T11:30Z) and start it detached with Start-Process. Within 5 min, check the S0 line in watch.log, one line in calls.jsonl and no Traceback. Run the liveness checks at ~04:20, 05:20 and 06:30Z.",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "The R14-A2 PRE-SCORE NOTES are not in CONTEXT.md, which is unchanged since 5e57346 (last entry TIMERS UPDATED l.2747-2749). The entry holds the S0 choice, the literal readings, the V* scoping and the SELECTED move. It must be committed AND pushed before the first poll.log header with any ladder ref COMPLETE (hard 04:25Z); otherwise the D1 readings become post-hoc. It should also commit the untracked round14/, the E10 snapshot 20260927T0147Z.txt and round14/REPORT.md (R14-A0, not yet saved).",
+   "evidence": "research/wf_ideas_v4/round14/report.json R14-A0, R14-A2, plan_issues (2), (4), (6); git status 02:21Z (?? research/wf_ideas_v4/round14/, ?? experiments/e10_watch/20260927T0147Z.txt); research/KNOWLEDGE/ideas.json I-302, I-232, I-257",
+   "suggested_action": "Paste the R14-A2 TEXT with a date -u stamp right after the watcher launch. Save REPORT.md from report_md_ru. Commit as the user with no trailer, then push. Log the pushed hash and the origin reflog time.",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "D1 read (~04:45-05:40Z): apply the R14-A3 READ SHEET v1 mechanically. The L_hi header clocks are e 05:15:23Z, a 05:17:47Z, d 05:38:33Z (8.0 h) and b 08:05:50Z. Close I-312 with the R13-A6 wording after probe 40. Read API SELECTED only after 06:45Z (moved out of the quiet window).",
+   "evidence": "research/wf_ideas_v4/round14/report.json R14-A3, R14-A2 (6); research/wf_ideas_v4/round14/scan_plancheck.json PC14-07; experiments/lb_poll/ledger.md (02:09:40Z, all four PENDING); research/KNOWLEDGE/ideas.json I-302, I-328, I-312, I-258",
+   "suggested_action": "Round 15 (~04:15-04:45Z, files only) audits the watcher events and fills in the D1 template line. The main session logs it with date -u, then reads SELECTED with the 07:30Z push.",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "The 07:30Z push (timer 65b1b746) must use the round-14 variants P-A/P-B/P-C and the two corrected brief lines. First, the insertion hedge's '+0.006' is in-sample; the honest OOF is +0.0019 and P(<0) is 0.10-0.20. Second, retrain evidence is 0/4 FT-weight swaps on public stacks and the exact exp72 setup is untested. Several decisions lapse today: E10 v2 (12:00Z), Q1-Q3 (a yes by ~09:00Z) and the R8 cap.",
+   "evidence": "research/wf_ideas_v4/round14/report.json R14-A4; research/wf_ideas_v4/round14/scan_recheck.json R14-RC-A, R14-RC-C; research/KNOWLEDGE/ideas.json I-315, I-286, I-119, I-300, I-299",
+   "suggested_action": "Send exactly one RU push matching the D1 row, then paste the corrected brief. Log 'push sent' or the not-sent result, and each answer, with date -u. Nothing moves without explicit answers.",
+   "urgency": "today"
+  },
+  {
+   "kind": "contradiction",
+   "what": "Two IDEAS statuses changed on recheck. I-106 (exp23 secondary with the public primary) was 'refuted' by the family closure but was never run; round 14 reopens it as untested, with exp72 as its class. I-063 (DaughterNet v2) was closed as 'insertion worse than v1', but the gap is noise-level (1-4 events); it is now deferred after the deadline with a post-deadline arm.",
+   "evidence": "research/wf_ideas_v4/round14/scan_recheck.json R14-RC-A, R14-RC-B; research/wf_ideas_v4/round14/report.json R14-A6 (6), (7), R14-A7; CONTEXT.md l.301-303, l.1321-1323",
+   "suggested_action": "Applied in ideas.json/IDEAS.md curation 14. Carry both corrections into CONTEXT through the R14-A6 ROUND 14 RECORD (before 07:30Z).",
+   "urgency": "info"
+  },
+  {
+   "kind": "forgotten",
+   "what": "New zero-cost items exist only as R14-A7/A8 text: the HINDSIGHT GUARD commit (I-336, which must be PUSHED before 29 Sep 23:00Z), the rule-register template (I-338), the descriptive B arm (I-337) and the full LESSONS edit set R14L-1..5 (I-252). research/wf_ideas_v4/round9/LESSONS_draft.md is unchanged since bf07763.",
+   "evidence": "research/wf_ideas_v4/round14/report.json R14-A7, R14-A8; research/wf_ideas_v4/round14/scan_hyp_lessons.json R14L-1..R14L-9; research/KNOWLEDGE/ideas.json I-252, I-336, I-337, I-338",
+   "suggested_action": "After 12:00Z (R8 closed): apply R14-A7 s3 item 11 + E-s3.*, and make the R14-A8 commit and push, before the first private score. Apply the remaining s1/s2/s4/s5 edits by 30 Sep.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "stale",
+   "what": "E10: P1 at 01:47Z was not met (largest P2 group 3). amanatar/optimized-biohub-max-score is RUNNING a renumbered version ('Version 1 of 6', 'No Hack' title) whose lineage failed P3/P4b. A new score there is a look signal only.",
+   "evidence": "experiments/e10_watch/20260927T0147Z.txt; research/wf_ideas_v4/round14/scan_browser.json r14-e10-p1-snapshot, r14-amanatar-rerun; research/wf_ideas_v4/round14/report.json R14-A9; research/KNOWLEDGE/ideas.json I-026, I-025",
+   "suggested_action": "No API P1 inside 04:10-06:45Z. Timer 2e87e414 takes the next P1 at >= 06:45Z. If amanatar scores >= 0.956, run the full P3/P4b/P4c + I-314 hardening before anything else.",
+   "urgency": "today"
+  }
+ ],
+ "summary": "Curation 14 (2026-09-27 ~02:25 UTC; HEAD f24ff72 + uncommitted round14/). This is an incremental update from the curation-13 backup, and IDs are stable. CONTEXT.md and RESULTS.md are unchanged since 5e57346, so every change comes from research/wf_ideas_v4/round14/ (R14-A0..A9, new_facts, plan_issues, rejected, scans), the watcher commit f24ff72, the 01:47Z E10 snapshot and the 02:09Z poll (probes 39-42 all PENDING). The ledger now has 340 ideas in 13 clusters (lb-tested 41, lab-tested 21, refuted 177, deferred 38, in-plan 61, open-untested 2) and 30 change records. There are 5 new IDs: I-336 hindsight guard (in-plan, at-risk), I-337 route-robustness read (refuted, replaced by a descriptive B arm), I-338 rule-register template (in-plan), and I-339/I-340, the rejected watcher variants PC14-05/06. Status changes: I-063 refuted -> deferred-after-deadline and I-106 refuted -> open-untested (owned by exp72/I-119). Updated rows: I-302/I-307/I-328/I-229 (R14-A3 read sheet + literal readings), I-327 (watcher written, restart loop, S0, hard cap 11:30Z, liveness; not launched), I-258 (SELECTED read after 06:45Z), I-315 (push variants + corrected brief), I-297/I-062/I-069/I-283 (insertion '+0.006' is in-sample, honest OOF +0.0019, C2 band 0.10-0.20), I-119/I-317 (0/4 FT evidence, R14L-8 counterfactual R9 read), I-252 (R14L-1..5 LESSONS set), I-026/I-025/I-282/I-094 (intel), I-232/I-257/I-265 (ops). IDEAS.md was regenerated (622 lines, 340 rows) with a CHANGES (14) section and ORPHANS: strict I-233; at-risk I-119, I-229, I-252, I-286, I-299, I-315, I-327, I-336; plus the easy-to-lose and closed-only-in-round-files lists, where round 14 is uncommitted and REPORT.md is not saved."
+}

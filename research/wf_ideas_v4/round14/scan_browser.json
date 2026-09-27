@@ -1,0 +1,53 @@
+{
+ "summary": "Round-14 delta scan, 01:47-01:56 UTC 27 Sep, compared with round 13 (22:46 UTC). E10 P1 snapshot experiments/e10_watch/20260927T0147Z.txt has CHANGES=17. The only kernel change that matters is amanatar/optimized-biohub-max-score: status ERROR->RUNNING, lastRun 01:39:05Z. It is not COMPLETE and has no new score, so there is nothing to gate. The P2 look-check's largest group is 3 (0.956: Vyas, mikelou1, umizora), under the >=5 signal, so E10 is NOT triggered and tools/e10_port_gate.py was not run. x138 v1 is still COMPLETE. Public LB at 01:48:20: 3,940 CSV rows (3,937 teams). We are #242 at 0.954 (was #229), 16th of 97 in the 0.954 block (227-323). SubmissionCount is 40 and LastSubmissionDate is 26 Sep 00:02:18, so probes 39-42 are not scored yet, as expected. 13 teams passed us. Oikantik Basu went 0.954->0.959 and wzyxp_123 0.954->0.957. Four teams reached 0.956 and six reached 0.955. Two passed us inside the 0.954 block. Counts (r13 in brackets): 0.953 = 380 (372), 0.954 = 97 (100), 0.955 = 68 (63), 0.956 = 41 (38), 0.957 = 20 (19), 0.958 = 14 (12), 0.959 = 14, >=0.960 = 69 (68), >=0.970 = 7, >=0.953 = 703 (686). In the top 20 only The Boys moved (0.968->0.969, #14->#8). A 14th x138-copy window has ~15 teams at #674-688. The Boys' 22:30Z sub and Cyrus's 21:39Z sub were already scored by 01:48Z, so their latency was under 3.3 h and 4.2 h. No new topic. One new comment on 'Question for host' comes from a participant, not the host: 'It has to finish before the deadline to count.' There is no host announcement. Overview, timeline, 12 h limits, metric text and data files are unchanged. Submissions are at 88,195 (+219, ~73/h). No new public notebook or dataset, nothing above 0.953, and nothing was pulled. The finals (#37 + #38) are unaffected.",
+ "findings": [
+  {
+   "id": "r14-e10-p1-snapshot",
+   "kind": "new-fact",
+   "what": "E10 P1 snapshot at 01:47Z against 22:46Z: CHANGES=17. Kernel changes: amanatar/optimized-biohub-max-score STATUS ERROR->RUNNING, lastRunTime 26 Sep 13:18:11 -> 27 Sep 01:39:05 (now pos 1 by dateRun). y3uanm/notebook0afc5663955 entered the dateRun top 20, but its lastRun is 22 Sep (old); anhadmahajan06/biohub-track-your-cells dropped out. No change for x138 (anvithpothula/biohub-0-953-lb-original: COMPLETE, v1), the anvithpothula and thtennant user lists, or scoreDescending order (except amanatar's lastRun). Leaderboard: >=0.955 214->226, 0.955 63->68, 0.956 38->41, 0.958 12->14, OURS 229->242. The P2 look-check finds 0.956: 3 (Vyas 0.953->, mikelou1 0.950->, umizora 0.952->), so the largest group is 3, under the >=5 signal. E10 is NOT triggered and the port gate was not run.",
+   "evidence": "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/experiments/e10_watch/20260927T0147Z.txt",
+   "action": "None now. The next P1 (timer 2e87e414) should read amanatar's run result. The earlier lineage failed P3/P4b (validator ON, BIOHUB_REPAIR_DEADLINE_S override; CONTEXT 26 Sep 16:04Z), so any new score there needs the full P3/P4b/P4c check before it counts as a signal. Its page still shows Public 0.910 / Best 0.953 V4.",
+   "urgency": "info"
+  },
+  {
+   "id": "r14-amanatar-rerun",
+   "kind": "new-fact",
+   "what": "amanatar/optimized-biohub-max-score is running a new version (Code tab 'Updated 11m ago' at ~01:51Z; CLI RUNNING since 01:39:05Z). The page shows 'Version 1 of 6'; earlier rounds saw v10, so the version history looks renumbered or reset. Title cell: 'Biohub 132 | Clean Short-Track Rescue + Light Local CV | No Hack'. Runtime 37m 26s on GPU T4 x2. Inputs are 'Biohub Tracking Support Pack' and 'cellmot-baseline-artifacts'. Public 0.910, Best 0.953 V4, 61 votes (was 53), 75 copies, 0 comments. The author's text claims 'Kaggle has addressed the historical metric exploit' (unverified author claim; there is no host post about it).",
+   "evidence": "https://www.kaggle.com/code/amanatar/optimized-biohub-max-score ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/code?sortBy=scoreDescending",
+   "action": "Info only. Nothing was pulled: it is not COMPLETE, it scores under 0.954, and the lineage is known (experiments/ext_optimized-biohub-max-score/v10_2026-09-26/). The next P1 or round re-reads its status and score.",
+   "urgency": "info"
+  },
+  {
+   "id": "r14-lb-delta-0148",
+   "kind": "new-fact",
+   "what": "Public LB at 01:48:20 UTC: 3,940 CSV rows. We are #242 (was #229), 0.954, SubmissionCount 40, LastSubmissionDate 26 Sep 00:02:18 (= #38; probes 39-42 are not scored yet), 16th of 97 in the 0.954 block (227-323). Blocks: 0.957 = 98-117 (20), 0.956 = 118-158 (41), 0.955 = 159-226 (68), 0.953 = 324-703 (380). Public silver line = 197.0, so we are 45 ranks below it (info only). 45 teams changed score and 156 have new subs. The 13 teams that passed us: Oikantik Basu 0.954->0.959 (#277->#75), wzyxp_123 0.954->0.957 (#102), Vyas 0.953->0.956, mikelou1 0.950->0.956, Dragibus 0.954->0.956, umizora 0.952->0.956, Akhil Chinta 0.954->0.955, LYD 0.953->0.955, MengYe 0.953->0.955, Baidalin Adilzhan [dsml.kz] 0.953->0.955, Cyrus 0.954->0.955, Jordi Corbilla 0.953->0.954 (#230, above us by unrounded order), and Lonnie, who stayed at 0.954 but moved #298->#238 in the block. Their subs were at 14:48-21:39Z. Below us: new 0.954 entrants interplinker and Sailor Ren; also Fanch 0.954->0.955. For the L5v2 attribution protocol, the 0.954 block shrank by 3 and teams keep crossing us, so the UP test (a TeamId above us in S0 falls below us in S1) will have plenty of candidates.",
+   "evidence": "Scratchpad lb/r14/biohub-cell-tracking-during-development-publicleaderboard-2026-09-27T01_48_20.csv compared with lb/r13/...T22_46_47.csv using lb/r10/cmp10.py; research/wf_ideas_v4/round14/scan_browser.notes.md",
+   "action": "Update the CONTEXT intel line to #242/3,937, 16th of 97 in the 0.954 block (227-323). This is info only; finals stay #37 + #38. If the ladder watcher needs an S0 before ~04:10Z, this download (01:48:20Z, our SubmissionCount 40) qualifies as a fresh pre-event S0. It is stored in the scratchpad, though, not in experiments/lb_poll/ladder_watch/.",
+   "urgency": "info"
+  },
+  {
+   "id": "r14-top-movers-latency-copies",
+   "kind": "new-fact",
+   "what": "In the top 20 only The Boys moved (0.968->0.969, #14->#8). Their last sub at 22:30:57Z was already scored by 01:48Z, so their latency was under 3.3 h, and Cyrus's 21:39:18Z sub scored in under 4.2 h. Short-runtime kernels score quickly; this says nothing about our ~7.4 h K2-family runs. yu4u still leads at 0.978, then Sergio Alvarez 0.975 and Gabriel 0.975. Other movers: Knight of Favonius 0.959->0.960 (#67), CrazyML 0.956->0.958, and Anurag Bihani 0.955->0.958 (#96), who was the 1-sub newcomer in r13. A 14th x138-copy window of ~15 teams sits at #674-688, all 0.953: Taewoong Kim, 王子铖, Suncrest, Van-Phuc Huynh, Raikou's fanclub, Dhruv Bansal 0.885->, shash, Asterios Terzis, BlackCat, StephenNedumpally, Mollah Hamza, Evgeny Bratkovsky NEW, HIVE, Dazai_is_not_here. Their subs were at 16:16-19:17Z. No mover has a public source.",
+   "evidence": "cmp10.py output, r13 22:46:47 vs r14 01:48:20 LB CSVs",
+   "action": "None.",
+   "urgency": "info"
+  },
+  {
+   "id": "r14-discussion-late-scoring-comment",
+   "kind": "new-fact",
+   "what": "No new discussion topic since r13. One new comment, on 'Question for host' (OmerZalman), by Satwik (participant #186, not host, ~23:50Z): 'It has to finish before the deadline to count.' This is an unverified participant claim; the host has not answered. The pinned topics are unchanged and there is no host announcement. The other latest comments ('errors in annotated ground truth' by Peter Green, 'Stuck at 0.947...' by nusrati) were already logged in r13.",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/743765 ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion?sort=recent-comments ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion?sort=published",
+   "action": "None for the finals. The conservative reading already holds: the R12-A3(c) last ladder submit at 29 Sep 02:00Z plus a <= 9-10 h run finishes before 23:59Z, and finals #37/#38 are scored. Keep treating 'must finish before the deadline' as the safe assumption for any late submit.",
+   "urgency": "info"
+  },
+  {
+   "id": "r14-code-overview-data-unchanged",
+   "kind": "new-fact",
+   "what": "Public code: no competition kernel created since 24 Sep (CLI dateCreated top is still tobimichigan 24 Sep 00:21). By dateRun, only amanatar is new. The Code tab by Public Score tops out at 0.953: Harmonic Fusion V3 (154 votes), optimized-biohub-max-score (61), Biohub Cell Tracking (222), and x138 'Biohub 0.953 LB | ORIGINAL' (205 votes, +1; 3 comments; updated 6d ago). Next is Geometric Fusion 0.948. Nothing scores above 0.953 and nothing was pulled. Datasets by updated: newest is still qwyi123 26 Sep 16:54 (seen in r11). Overview: '3 DAYS TO GO', timeline unchanged ('September 29, 2026 - Final Submission Deadline', 11:59 PM UTC), 'CPU Notebook <= 12 hours run-time', metric text unchanged. Counts: 13,475 entrants, 4,506 participants (+2), 3,937 teams, 88,195 submissions (+219 in ~3 h, ~73/h). Data files still have creationDate 2026-06-26.",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/code?sortBy=scoreDescending ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/overview ; CLI kernels list --sort-by dateCreated|dateRun, datasets list --search biohub --sort-by updated, competitions files, kernels status anvithpothula/biohub-0-953-lb-original = COMPLETE",
+   "action": "None. Nothing was pulled to experiments/.",
+   "urgency": "info"
+  }
+ ]
+}

@@ -1,0 +1,11 @@
+# v_hyp_lessons_r14l-8 notes (skeptic VALUE + FEASIBILITY), 2026-09-27 ~02:10 UTC
+- No earlier json for this task; started fresh.
+- Source finding: round14/scan_hyp_lessons.json R14L-8. It already sits inside R14L-4 s4 tier 1 item 1 ("first arm = exp71 ... which also measures what R9 cost (R14L-8)"), so it is a duplicate cross-reference, not a new item.
+- CONTEXT.md l.2722-2746 (01:31Z governance): Q1-Q3 unanswered; exp72 final only if Q3 yes AND COMPLETE, L_hi <= 8.0 h, display >= 0.956 and > any V*, G2 >= -0.0005 by 29 Sep 12:00Z. So the counterfactual cost of R9 is NOT "exp72 - #37 private"; it is [max(exp72,#38) - max(#37,#38)] private x 1[eligible under this rule]. A late sub returns public too, so the rule can be evaluated post hoc (except L_hi on the original hardware, G2 by the date).
+- CONTEXT.md l.88 exp16: seed variance +-0.005 ~ fine-tune gain. R14L-8's own prior effect +0.002..+0.003 public -> one training draw has SNR < 1; a post-deadline rerun is a new stochastic draw (GPU training not bit-deterministic), not the run that would have happened on 27 Sep.
+- R14L-4 G0 (same scan): trained items need >= 3 seeds per arm, pass only above 2x control-vs-control SD. R14L-8 spends ONE late sub on ONE seed -> conflicts with the tier it claims to lead.
+- I-317 / round12 v_hyp_post_deadline_r12p-4.json fix (a): late sub eligible only at pre-declared lab >= +0.006 pooled on both embryos; retrained arms only after the paired-retrain gate. R14L-8 gates on a G0-FT KILL test only (leaky: teacher pilkwang trained on all 199 videos incl. 6bba) -> bypasses the I-317 eligibility.
+- Late submissions for this competition: unverified (I-317). Model-swap record 0/5: reach0955/v_retrain.notes.md l.12 (-0.016, -0.025, -0.007, -0.003, -0.004).
+- "+0.001 = 40-60 places" uses PUBLIC block sizes (63/38/19 at 22:46Z, CONTEXT l.2632-2637); private block structure is unknown; the rank of a late sub is not computed by Kaggle.
+- Feasibility pre-deadline: nothing to do (no yes to Q1; classifier block stands, CONTEXT l.2539-2544). Byte-identical/fail-soft not at issue (no finals change). Rules R1-R10 not touched.
+- 02:00Z final JSON written: refuted=true (duplicate of R14L-4 tier1 arm1; wrong estimand vs 01:31Z Q3 eligibility; single seed SNR<1; bypasses G0 >=3 seeds and I-317 +0.006 gate).

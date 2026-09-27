@@ -1,0 +1,9 @@
+# v_recheck R14-RC-B I-063 notes
+- 2026-09-27T01:59:16Z start; no prior json. Reading CONTEXT l.1290-1330, IDEAS I-062/063/310.
+- CONTEXT l.1314-1317 (24 Sep 01:30Z): v2 = kdn-train v3, 17,143 GT + 11,117 pool rows; pool-block OOF parent-vs-cont AUC 0.875 (v1 0.825), daughter 0.743 (v1 0.718); p_dau gate role 0.68 (weakest); GT-block parent AUC 0.841 (v1 0.848, i.e. v2 slightly LOWER on GT).
+- CONTEXT l.1321-1323 (02:10Z): v2 SELECTION orphan +0.0010 (v1 +0.0044), steal cap6 +0.0032 (v1 cap4 +0.0058); "1-4 division events, inside noise". l.1327 (03:10Z): v1+v2 average "not better than v1 on SELECTION"; ens threshold map OOF 0.5 ~ ens 0.4.
+- v1 CONFIRMATION: orphan +0.0010, steal +0.0019 (l.1297-1307) -> SELECTION optimism ~0.003-0.004, bigger than v1-v2 gap. Finding's numbers verified.
+- Public reads of v1 insertion: P28 0.948 vs P27 0.947, P35 0.954 vs P34 0.953, P37 0.954 vs P38 0.953 (RESULTS l.61-72). "3 x +0.001" correct.
+- No earlier round (2-13) rechecked I-063 (grep). v2 never on CONFIRMATION/x138/LB: no CONTEXT line after l.1327 mentions v2 DN.
+- Skeptic caveats: (1) pool AUC is global ranking over ~11k rows, insertion uses only top cap 2-6 per video -> AUC is not the decision estimand, calling it "the non-noise measure" overstates; (2) three noise-level SELECTION reads (orphan, steal, average) all point the same way (v1 >= v2) - weak, not zero evidence; (3) v2 GT-block AUC lower; (4) pool rows at exp39 predicted coords, x138 coords differ (coordhead, -2.9% nodes) -> v2's hard-example edge may not carry to x138.
+- Feasibility: no pre-deadline action proposed; finals #37+#38 fixed; wrong-model risk (kdn-train output = v2) only affects a post-deadline lab, not the scored kernels (they load flat fold_k.pt from biohub-ft-weights). Verdict: holds as ledger correction, wording softened. Gain for 29 Sep = 0.

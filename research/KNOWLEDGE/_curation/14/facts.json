@@ -1,0 +1,67 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/FACTS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/DECISIONS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/14/facts.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/14/facts.json"
+ ],
+ "alerts": [
+  {
+   "kind": "risk",
+   "what": "The ladder watcher is committed (f24ff72) but NOT running at 02:17Z: experiments/lb_poll/ladder_watch/ and run_ladder_watch.sh do not exist. Its default HARD_CAP is 09:40Z, and the S0 named in R13-A1 (2) (the '03:04Z timer snapshot') never existed. If the watcher is not live by 04:10Z, the A-only 0.954-UP extension is DROPPED and every 0.954 reads N4. The earliest ladder score is ~04:33Z; P(any COMPLETE before 04:10Z) ~5-10%. The watcher is not fail-soft (main() catches only KeyboardInterrupt; os.replace can raise PermissionError).",
+   "evidence": "FACTS F-RUN-27, F-LB-15, C-104, C-108; research/wf_ideas_v4/round14/report.json R14-A1, plan_issues (1)-(3), new_facts (8)-(10); experiments/lb_poll/ladder_watch.py l.66, l.418",
+   "suggested_action": "Main session: launch R14-A1 at ~03:30-03:45Z (hard 04:10Z) as a detached bash restart loop with --s0 experiments/e10_watch/20260927T0147Z.txt --hard-cap 2026-09-27T11:30Z. Within 5 min, check that watch.log has the S0 line (rank 242 score 0.954 count 40) and calls.jsonl has one ListSubmissions line. Run the file-only liveness checks at ~04:20, 05:20 and 06:30Z (R14-A5)",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "CONTEXT.md has had no entry since 01:32. The round-14 pre-score notes (S0 choice, watcher launch, literal readings (1)-(6), READ SHEET v1 pointer, SELECTED timing) must be in CONTEXT, committed as the user without a trailer, and pushed before the first poll.log header that shows any ladder ref COMPLETE (hard 04:25Z). Otherwise they are post-hoc. R14-A0 (save REPORT.md from report_md_ru) goes into the same commit",
+   "evidence": "CONTEXT l.2747-2750 (last entry 01:32, then '## 9. Literature'); research/wf_ideas_v4/round14/report.json R14-A0, R14-A2; DECISIONS.md section 2h row 'Pre-score notes + literal readings [c14]'",
+   "suggested_action": "Paste the R14-A2 text, stamped with date -u, right after the watcher launch. Run the claude grep, then commit and push. Log the pushed hash and the origin reflog time",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "The time of the API SELECTED read changed. ROUND 13 RECORD (4) and the curation-13 alert said ~05:00Z at the first probe read, which falls inside the 04:10-06:45Z API quiet window. Round 14 moves it to the first main-session API touch after 06:45Z (the 07:30Z push). SELECTED has not been read since 20:04:35Z",
+   "evidence": "FACTS C-106, F-RUL-12 [c14]; CONTEXT 01:31 l.2646-2648 vs 01:32 l.2747-2749; research/wf_ideas_v4/round14/report.json plan_issues (4), R14-A2 (6)",
+   "suggested_action": "Read and log 'API SELECTED 2/2 [56563521, 56563534] at hh:mmZ (after probes 39-41|42)' at ~07:30Z, not earlier. Read it again after any re-tick",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "The 07:30Z push and brief (timer 65b1b746) must carry three items: the E10 v2 question (lapses 12:00Z), the R8 cap for the last ladder submit, and exp71/exp72 Q1-Q3 (Q1 needs a yes by ~09:00Z). Two brief lines need round 14's corrections. (a) Insertion hedge: '+0.006 lab' is in-sample; the OOF figure is +0.0019 on the old base (precision 0.27), P(<0 private) 0.10-0.20. (b) Q1 evidence: FT weights on public stacks are 0/4, not '0/5' or 'one confounded precedent'",
+   "evidence": "FACTS C-105, C-107, F-TRN-41 [c14], F-TRN-44; research/wf_ideas_v4/round14/report.json R14-A4 (1)-(3)",
+   "suggested_action": "Pick the push variant P-A/P-B/P-C by the D1 row and use the corrected lines. Log any user answer with date -u before acting",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "experiments/RESULTS.md still has no rows for probes 39-42 (the last row is P38). Ladder scores are expected ~04:33-05:00Z (39-41) and ~07:45-08:30Z (42), with D1/D2 verdicts under READ SHEET v1",
+   "evidence": "experiments/RESULTS.md (P38 is the last LB row); DECISIONS.md section 1 rows P39-P42 [c14]; experiments/lb_poll/poll.log 02:19:40Z (all four PENDING)",
+   "suggested_action": "Add each RESULTS row as the probe scores: display, latency bounds from the ledger, the insertion-gate text and the unit code (NEG/N4/U4/P5/ERR)",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "Any finals move from the ladder ({V*, #38}, {exp70a, #38}, {exp70b, #38} or a combo) is only a recommendation until the user re-ticks by 29 Sep 20:00Z. Round 14's procedure: one re-tick after D2 (~08:30Z), and a second only if a combo becomes V* (~17:00Z)",
+   "evidence": "DECISIONS.md section 2 [c14] paragraph and snapshot; research/wf_ideas_v4/round14/report.json R14-A3 RE-TICK LINES / RE-TICK TIMING",
+   "suggested_action": "Once D1/D2 decide, put the exact EN/RU re-tick line with refs into the push. Tick-check timers 012fa6dd / 328f7392 / 18ff4796 verify SELECTED",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "Round 14 contradicts two IDEAS statuses. I-063 (DaughterNet v2) is marked 'refuted' but is unresolved at noise level. I-106 (FT secondary with the public primary) is marked 'refuted' but is untested, and exp72 is its class. The R14-A7 text edits are queued, not applied",
+   "evidence": "FACTS C-110, F-TRN-44; research/KNOWLEDGE/IDEAS.md l.254, l.305; research/wf_ideas_v4/round14/report.json R14-A7",
+   "suggested_action": "Ideas curator: apply the R14-A7 wording after 12:00Z. No finals effect",
+   "urgency": "info"
+  },
+  {
+   "kind": "contradiction",
+   "what": "The memory index injected into subagent sessions is still stale ('E10 port rule proposed; overlap-consensus line paused', 'LAST RESUME POINT (26 Sep post-score)')",
+   "evidence": "FACTS C-75 [c14]",
+   "suggested_action": "Subagents should read the 22:46 RESUME POINT (CONTEXT l.2599-2622) and every entry after it",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 14 (state 27 Sep 02:20Z; HEAD f24ff72, watcher pushed 01:54:14Z). CONTEXT.md has no entry since 01:32, so all round-14 items (report.json 02:11:57Z, R14-A0..A9) are PROPOSED. Finals are still ticked 2/2 = #37 K2 0.954 + #38 twin 0.953 (API SELECTED last read 20:04:35Z). Probes 39-42 are all PENDING at 02:19:40Z. Latency lower bounds at 02:09Z: P39 > 4.90 h, P40 > 4.86 h, P41 > 4.51 h, P42 > 2.06 h. Round-14 ETAs: e ~04:33-04:45Z, d ~04:44-04:56Z, a ~04:49-05:00Z, b ~07:45-08:30Z. LB 01:47:50Z: #242 of 3,937, SubmissionCount 40; E10 P1 not met. FACTS.md: [c14] notes on F-LB-01/02/03/04/06/08/10/11/15, F-RUN-26 (latency scaling, L_hi clock), F-RUL-12 (SELECTED read after 06:45Z), F-MOD-28 (combo shas re-verified), F-TRN-41 (swap record 0/4), C-75 and C-103. New rows: F-RUN-27 (watcher: 35 tests, not fail-soft, NOT running at 02:17Z), F-RUL-18 (finish-before-deadline claim; 88,195 submissions) and F-TRN-44 (insertion prior: +0.006 in-sample vs +0.0019 OOF; I-063 unresolved). New contradictions C-104..C-110: the S0 snapshot never existed; +0.006 vs +0.0019; SELECTED timing; 0/5 vs 0/4; hard cap 09:40Z vs exp70b; D1-1 priors; I-063/I-106 status. DECISIONS.md: [c14] notes on P39-P42 (latency, ETA, L_hi clock, role in the read sheet) and a section 1 update on combo build/submit. Section 2 gets a [c14] paragraph (literal readings (1)-(6), D1 table) and a new snapshot table. Section 2f adds the 01:47Z E10 result. Section 2h gets four rows (S0 + watcher launch, pre-score notes, READ SHEET v1, liveness). Section 3 gets [c14] notes on R5/R8/R9/L9, the pre-score registration, the private read and exp71/72, plus two new rule rows (round-14 pre-score notes, hindsight guard), and a closing 'Since 01:40' paragraph. Tables validated, CRLF kept."
+}

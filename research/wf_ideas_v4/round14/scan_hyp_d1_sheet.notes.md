@@ -1,0 +1,15 @@
+# scan_hyp_d1_sheet notes (round 14)
+- 2026-09-27T01:47:32Z start; no prior json. Reading CONTEXT.md tail, round13 report.json R13-A9.
+- 2026-09-27T01:52Z poll.log: 39/40/41/42 all PENDING (latest header ~01:4xZ); #37 0.954, #38 0.953 COMPLETE. ladder_watch.py exists (experiments/lb_poll/ladder_watch.py) + tests/test_ladder_watch.py untracked; ladder_watch/ folder not yet created.
+- 2026-09-27T01:52Z SCRATCH REBUILD (tools/build_probe_kernel.py --out-dir _r14_shacheck/<x>, exact R13-A9 commands; folder deleted after, git status unchanged apart from pre-existing untracked files):
+  exp70c a7271d4e9a758607c298b26f35268a4a9796fdbc368962351eb31f150ea08453 (== R13)
+  exp70h 7ed29dd35a32774f43c16b0756434f9ed951cf4f080751bd667a79c176be8407 (== R13)
+  exp70f b009bedd4ce4b2f673f1e50d4ef7e7675a30c77678bb37ef2bbef55085396915 (== R13)
+  exp70b parity b8e7ece1a33cd2a184c2fd199700c1cd8320fde170f28a139265f76babd8b911 == experiments/exp70b_k2_fm45 (builder unchanged since submit)
+  kernel ids: biohub-exp70c-k2-lp30-fm45 / biohub-exp70h-k2-dc030-fm45 / biohub-exp70f-k2-lp30-dc030-fm45; PATCHES strings divinsert+leafprune+lowrefine+forkmid+safetail (c,f), divinsert+lowrefine+forkmid+safetail (h). --note only goes to probe.json (sha-neutral); the NAME goes into cell 0 (sha-relevant) -> use the exact names.
+- 2026-09-27T02:00Z rules read: CONTEXT l.2407-2424 (L9 20:49Z), l.2502-2529 (R12-A3 21:31Z), l.2664-2721 (R13-A1 01:31Z), l.2722-2746 (R13-A3); round13/report.json R13-A9 and next_focus. R13-A1 committed at 3d48d35 (01:32Z, before 04:25Z). ladder_watch.py tracked; tests/test_ladder_watch.py + experiments/e10_watch/20260927T0147Z.txt untracked at 01:52Z.
+- 2026-09-27T02:05Z tools/runtime_ledger.py: L_hi = first COMPLETE poll header - submit time (+210 s per failed retry); divins_gate text 'insertion gate 8.0 h did NOT fire (L <= x h)' only when COMPLETE and hi <= 8.0; UNPROVEN otherwise. Clock limits 8.0/9.0 h: e 05:15:23/06:15:23Z, a 05:17:47/06:17:47Z, d 05:38:33/06:38:33Z, b 08:05:50/09:05:50Z.
+- 2026-09-27T02:10Z scratch simulator (scratchpad sheet_sim.py/d2_sim.py; 7 states per ref: ERR, <=0.953, 0.954 UP/NEU/AMB, 0.955, 0.956; 343 D1 worlds, 2,401 D1+D2 worlds) implements L5v2 + L9 + A-only ext literally. Edge cases found: (i) e NEG + a P5 -> V* = a (L9) but BASE none (BLOCKED); (ii) A-only ext fires even with e NEG (N/4U/X); (iii) e eligible for V* when its single ERRORed ('where scored'); (iv) b P5 beats e at equal display (fewer knobs), loses ties to a (class A) and d (earlier submit); (v) fm45 POS by display 0.955 does not require b to beat a 0.955 base.
+- 2026-09-27T02:12Z push drafts measured: 143/163/156 chars with placeholders, 151/169/156 filled (< 200).
+- New mechanisms: none reaches R8 (12:00Z): rounds 12-13 best lab candidates dc0.30+div2.5 +0.0018..0.0034 (15-25% of bar), node pruning +0.0015; user asleep until ~07:30Z, dummy ~30-35 min, so only items with a finished lab gate now could qualify - none.
+- 2026-09-27T01:56:04Z final JSON written: research/wf_ideas_v4/round14/scan_hyp_d1_sheet.json (8 findings).

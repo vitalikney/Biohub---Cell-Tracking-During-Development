@@ -1,0 +1,10 @@
+- 2026-09-27 start: no prior json; checking evidence
+- 2026-09-27 ~02:40Z verified sources:
+  - CONTEXT l.1304-1307: v1 steal CONFIRMATION (135 videos, single-fold OOF p, thr 0.5, cap 4, exp39 base) +0.0019, 44b6 +0.0015, 6bba +0.0021, TP 16->20 FP 28->39, 4/15. Confirmed.
+  - exp60 results.md l.13-30: ins35 44b6/ALL +0.0058 (div 1/8/10 -> 2/8/9), 6bba/ALL +0.0065 (15/17/73 -> 23/23/65) = +8 TP/+6 FP, 8/14 = 0.57. l.74 in-sample label. Confirmed.
+  - CONTEXT l.2520 R12-A3(b) cites 'lab +0.006, P(<0 on private) 0.10-0.15' without the in-sample tag. l.2291-2293 C1/C2 priors 0.10-0.15; l.2572-2573 R12-A9(a) already moved C1 to 0.12-0.18. l.2329-2334 16:54Z forecast also cites in-sample 44b6 +0.0058 / 6bba +0.0065 as 'main driver'.
+  - s_merge C03: private break-even 0.11-0.20. Round3 REPORT l.37: harmful on private only if OOF precision < ~11%.
+  - Wilson 80% 4/15 recomputed by hand: [0.149, 0.431]. OK. Break-even 6bba lab J=0.1429 -> J/(1+J)=0.125 OK.
+  - Beta posterior on precision (Jeffreys 4.5/11.5; uniform 5/12): P(p<0.11)=0.04/0.03, P(p<0.125)=0.06/0.04, P(p<0.15)=0.11/0.08, P(p<0.20)=0.25/0.20. So P(true private effect<0) spans ~0.03-0.25 over the break-even range; DISPLAYED <0 (3 dp) is lower. The 0.10-0.20 band is defensible, the upper end is a judgment call.
+  - R12-A9(e) E = {P27->P28, P34->P35, P38->P37 (all insertion), P28->P31 (coordhead)}: 3/4 insertion. Confirmed.
+- Caveats: the '~3x inflation' ratio is confounded (exp39 base vs x138; 135 vs 56 clips; OOF single-fold thr 0.5 vs 5-fold ensemble thr 0.4; 44b6 in-sample +0.0058 = ONE event). The +0.0019 is an old-base OOF number, not an x138 OOF number. No decision changes (pair rule keeps a no-insertion file whatever the band). Verdict: not refuted, as an info line with wording fixes.

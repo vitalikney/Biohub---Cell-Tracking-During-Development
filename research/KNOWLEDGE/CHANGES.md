@@ -764,3 +764,33 @@ Curator logs: `research/KNOWLEDGE/_curation/4/`.
   - exp72 / G2: [today] (ideas, watch) vs [info] (facts) -> [today], since a yes is needed by ~09:00Z.
   - Timer 2f0d1fa1 in the quiet window: [today] (watch) -> resolved by 2e87e414.
   - SELECTED re-read: [today] (ideas, facts) -> [today], at D1.
+
+## 14 - 2026-09-27 ~02:25 UTC (curation 14; git HEAD f24ff72 + untracked `research/wf_ideas_v4/round14/` and `experiments/e10_watch/20260927T0147Z.txt`)
+
+**Operations:**
+- **Commits since curation 13** (`git log --oneline 5e57346..f24ff72`): f2f843e curation 13 + round 13 files; f24ff72 read-only ladder watcher `experiments/lb_poll/ladder_watch.py` (35 tests, dry run OK, pushed 01:54:14Z) with poller-phase and restart fixes.
+- **CONTEXT.md and RESULTS.md are unchanged since 5e57346** (last entry TIMERS UPDATED l.2747-2749). Everything new comes from round 14 (`research/wf_ideas_v4/round14/report.json`, 02:11:57Z, R14-A0..A9; REPORT.md not saved), the 01:47Z E10 snapshot and the polls.
+- **LB:** probes 39-42 all PENDING at 02:19:40Z (`experiments/lb_poll/poll.log`); finals unchanged (TICKED 2/2, SELECTED last read 20:04:35Z). Rank #242 of 3,937 at 01:47:50Z (was #229); 226 teams >= 0.955 (`experiments/e10_watch/20260927T0147Z.txt`; `FACTS.md` F-LB-15 [c14]).
+- **Watcher not launched:** `experiments/lb_poll/ladder_watch/` and `run_ladder_watch.sh` absent at 02:24Z (`FACTS.md` F-RUN-27).
+
+**Ideas** (`IDEAS.md` CHANGES (14) l.61; `ideas.json` meta.curations[n=14], 30 records; `_curation/14/ideas.json`):
+- **New (I-336..I-340):** I-336 HINDSIGHT GUARD (in-plan, at risk; R14-A8); I-337 route-robustness read (refuted -> descriptive B arm); I-338 rule-register template (in-plan; R14L-9); I-339 / I-340 rejected watcher variants PC14-05 / PC14-06 (refuted).
+- **Status changes:** I-063 DaughterNet v2 refuted -> deferred-after-deadline (gap at noise level; R14-RC-B); I-106 exp23 secondary with the public primary refuted -> open-untested (never run; exp72 is its class; R14-RC-A).
+- **Updated rows:** I-302/I-307/I-328/I-229 (READ SHEET v1, literal readings); I-327 (restart loop, S0 = 0147Z, hard cap 11:30Z, liveness); I-258 (SELECTED after 06:45Z); I-315 (push variants P-A/P-B/P-C + corrected brief); I-297/I-062/I-069/I-283 (insertion '+0.006' in-sample, OOF +0.0019, C2 P(<0) 0.10-0.20); I-119/I-317 (0/4 FT swaps; R14L-8); I-252 (R14L-1..5); intel I-026/I-025/I-282/I-094; ops I-232/I-257/I-265.
+- **Counts c13 -> c14:** 335 -> 340; refuted 176 -> 177, deferred 37 -> 38, in-plan 59 -> 61, open 1 -> 2; lb-tested 41 and lab-tested 21 unchanged. Orphans: strict I-233; at risk I-119, I-229, I-252, I-286, I-299, I-315, I-327, I-336.
+
+**Facts and decisions** (`FACTS.md`, `DECISIONS.md`, rows marked [c14]; `_curation/14/facts.json`):
+- **New facts:** F-RUN-27 (watcher: 35 tests, not fail-soft, NOT running; default HARD_CAP 09:40Z at `ladder_watch.py` l.66); F-RUL-18 (discussion 743765: 'a submit must finish before the deadline', participant only); F-TRN-44 (insertion prior: +0.006 in-sample vs +0.0019 OOF; I-063 unresolved). [c14] notes on F-LB-01..15, F-RUN-26 (latency scaling, L_hi clocks), F-RUL-12, F-MOD-28 (combo shas re-verified), F-TRN-41 (0/4), C-75, C-103.
+- **Contradictions:** new C-104..C-110 (`FACTS.md` l.413-419): S0 snapshot never existed; +0.006 vs +0.0019; SELECTED timing (D1 -> after 06:45Z); 0/5 vs 0/4; hard cap 09:40Z vs exp70b; D1-1 priors; I-063/I-106 status.
+- **DECISIONS.md:** P39-P42 [c14] (latency bounds, ETAs, 8.0 h clocks e 05:15:23Z, a 05:17:47Z, d 05:38:33Z, b 08:05:50Z); §2 [c14] paragraph + snapshot (l.400); §2f 01:47Z P1 not met (l.637); §2h four rows (S0 + launch, pre-score notes, READ SHEET v1, liveness; l.696-699); §3 [c14] notes on R5/R8/R9/L9 + two rule rows (round-14 pre-score notes, hindsight guard).
+
+**Watchlist** (`WATCHLIST.md`; `_curation/14/watch.json`):
+- **Done:** W132, W133, W135, W137, W139. Partly done: W134 (code done, launch pending), W136 (timer 65b1b746), W140 (timer 2e87e414 defers in the quiet window).
+- **New:** W143-W150 (R14-A0..A6; W150 round-prompt defect), reminders T62-T67, insights I136-I148. W71 / W118 merged into W150; W138 / W123 into W147.
+- **Still overdue:** W57 family (CONTEXT l.22, out_valid, efpost, 33.1%); W98 LESSONS l.7; W142 exp70g NEVER_SUBMIT.md; W126 RESULTS rows 39-42 (await scores).
+
+**Alerts** (`INDEX.md` TOP ALERTS, 9 after dedup):
+- **Resolved since curation 13:** watcher code written and pushed (f24ff72); curation-13 files committed (f2f843e); pre-score registration pushed before any score (3d48d35); timers with quiet-window deferral (5e57346).
+- **Carried over:** watcher launch by 04:10Z (now: restart loop, S0 = 0147Z, cap 11:30Z); 07:30Z push (E10 v2, Q1-Q3, R8 cap); re-tick; exp70g NEVER_SUBMIT; W57 / LESSONS l.7; I-233; stale MEMORY line (C-75).
+- **New:** R14-A2 pre-score notes committed and pushed by 04:25Z (+ REPORT.md, round14/, 0147Z snapshot); round-15 browser scan would call the API in the quiet window (W150); liveness checks without an owner (W145); READ SHEET v1 at D1; SELECTED read moved to ~07:30Z; corrected brief lines (in-sample +0.006, 0/4); ROUND 14 RECORD before 07:30Z; HINDSIGHT GUARD before 29 Sep 23:00Z; I-063 / I-106 status corrections; timers session-only.
+- **Curator disagreements settled here:** SELECTED read: c13 'at D1' vs c14 'after 06:45Z' -> after 06:45Z (R14 plan_issues (4)). I-063/I-106: facts curator 'queued, info' vs ideas curator 'applied' -> applied in `IDEAS.md`, CONTEXT wording via R14-A6/A7. W150 raised only by the watch curator -> kept as [now].

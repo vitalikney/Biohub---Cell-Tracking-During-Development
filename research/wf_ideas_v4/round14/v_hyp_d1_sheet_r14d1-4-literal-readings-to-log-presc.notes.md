@@ -1,0 +1,10 @@
+- 2026-09-27 01:59 UTC start verifier R14D1-4; no prior json
+- 02:05Z poll.log header 01:59:36Z: 56589025/065/423/56592350 all PENDING -> pre-score logging still possible. No 'LITERAL READINGS' line in CONTEXT yet.
+- (1) r_ladder.json L9 (2) source wording: "every knob in it has its own single-knob variant displayed >= 0.954 wherever that single was scored" -> ERR single = vacuous is literal. GAP: r_ladder steps allow an unchanged re-run of an ERRORed eligible variant (by 29 Sep 11:00Z) and R13-A1(5) ranks 'unchanged resubmit of an ERRORed finals-relevant file' above the combo; if exp70a/exp70d ERR and is resubmitted, its later score DOES count (L9 read at 19:00Z 29 Sep). Reading (1) must say 'until a resubmit of that single scores'.
+- (2) R13-A1(1): 'BLOCKED for combos' only; A-only ext (3) has no e condition -> literal OK.
+- (3) L9 ties class A > fewer knobs > earlier submit: a(A) > d(1 knob, 21:38Z) > b(1 knob, 00:05Z) > e(2 knobs) -> OK.
+- (4) R13-A1(1) POS definition = display >= 0.955 regardless; the NOTE ('POS fm45 means exp70b beat that base') is a derived remark and is false for base 0.955 / b 0.955. Reading = definition wins; label it as correcting the NOTE.
+- (5) tools/runtime_ledger.py l.246-257: 'did NOT fire' only if COMPLETE and hi <= 8.0; else 'MAY have fired' / 'UNPROVEN' / 'open'. 21:17:47Z + 8 h = 05:17:47Z. Literal OK.
+- (6) Not a reading of text (L9 only says 'by 29 Sep 20:00 UTC'); it is a procedural recommendation - fine but label it so; with the (1) resubmit gap a third re-tick can be needed.
+- Verdict: not refuted (governance-only, zero cost, pre-score). Value on private ~0 directly; avoids finals-selection error/post-hoc dispute.
+- 02:08Z JSON written; verdict refuted=false with amendments to (1),(4),(6).

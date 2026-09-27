@@ -2747,6 +2747,42 @@ Mention it to the user in one line (R9-A8 item 6).
 - 2026-09-27 01:32 UTC, TIMERS UPDATED (R13-A4/A8): morning push c7cd2e6b -> 65b1b746 (07:30 UTC 27 Sep; ladder reads, L9/A-only
   outcome, exp71/exp72 Q1-Q3, E10 v2, R8, laptop); E10 P1 2f0d1fa1 -> 2e87e414 (same schedule; defers inside the 04:10-06:45 UTC
   API quiet window). Ladder watcher (R13-A2, read-only) being written; start by 04:10 UTC.
+- 2026-09-27 02:28 UTC, ROUND 14 PRE-SCORE NOTES (R14-A2; written before any ladder score; no rule change; probes 39-42 PENDING at the last header before this entry)
+  (1) R13-A1 was pre-registered in 3d48d35, pushed 01:31:34Z.
+  (2) S0 = experiments/e10_watch/20260927T0147Z.txt. Our row: rank 242, 0.954, SubmissionCount 40,
+    LastSubmissionDate 00:02:18; 241 TeamIds above. It is valid under R13-A1 (2)'s 'any fresh download' clause. The
+    named '03:04Z timer snapshot' never existed (the E10 timer ran at 01:47Z).
+  (3) WATCHER launch scheduled 03:35Z (detached Start-Process of bash; a background task checks it at +4 min)
+    (experiments/lb_poll/run_ladder_watch.sh): a restart loop (rc != 0 -> restart after 120 s; state.json resumes)
+    with --hard-cap 2026-09-27T11:30Z as insurance for exp70b. LIVENESS: file-only checks at ~04:20, 05:20 and 06:30Z.
+    A gap is logged; an event whose ref completed inside a gap stays AMBIGUOUS. Agents read watch.log and calls.jsonl
+    only.
+  (4) LITERAL READINGS (no rule change):
+    (1) An ERRORed single is not scored for L9's knob clause until an unchanged resubmit of that single scores. L9
+      is re-read on every new score up to the 29 Sep 19:00Z read.
+    (2) BLOCKED affects combos only, not L9 or the A-only extension.
+    (3) V* ties at equal display: a > d > b > e.
+    (4) fm45 POS = exp70b displays >= 0.955, or 0.954 with an attributable UP, whether or not it beat the base. This
+      supersedes the R13-A1 (1) NOTE, which is inexact when the base displays 0.955.
+    (5) The A-only extension needs the ledger text 'did NOT fire'. UNPROVEN does not qualify, and watcher timestamps
+      do not replace the ledger.
+    (6) PROCEDURE (not a reading): the user re-ticks once after D2. Again only if a combo becomes V* or a
+      resubmitted single changes eligibility.
+  (5) D1/D2 SHEET = research/wf_ideas_v4/round14/report.json R14-A3, the mechanical form of L9 + R12-A3 + R13-A1. In
+    it, V* = the highest display among the refs that satisfy ALL of L9's conditions (ties a > d > e). A ref still
+    PENDING at the watcher hard cap is read as not scored.
+  (6) API SELECTED is read at the first main-session API touch after 06:45Z (with the 07:30Z push), not at ~05:00Z
+    inside the quiet window. This corrects ROUND 13 RECORD (4). SELECTED cannot change without a user re-tick.
+- 2026-09-27 02:28 UTC, READ SHEET v1 (round 14, R14-A3; the mechanical form of L9 + R12-A3 + R13-A1 + the R14-A2
+  readings; no new rule; full text research/wf_ideas_v4/round14/report.json R14-A3, simulated over 343 D1 and 2,401
+  D1+D2 worlds). Codes: NEG <= 0.953; N4 = 0.954 without an attributable UP; U4 = 0.954 with an UP attributed to that
+  ref; P5 >= 0.955; ERR. D1-1: V* = highest-display P5 among a/d/e that is COMPLETE with L_hi <= 9.0 h (e only if
+  neither a nor d <= 0.953; ties a > d > e) -> provisional {V*, #38}; D1-2: A-only extension (a = U4, watcher ran, a's
+  ledger says the 8.0 h insertion gate did NOT fire) -> {exp70a, #38}; D1-3 otherwise {#37, #38}. D2 after probe 42:
+  combo only if BASE exists and fm45 is POS (exp70c/exp70h/exp70f with the pre-built commands and sha
+  a7271d4e/7ed29dd3/b009bedd), dummy mandatory, submit preferably by ~09:30Z. L_hi clocks (first COMPLETE header by): e
+  05:15:23Z/06:15:23Z, a 05:17:47Z/06:17:47Z, d 05:38:33Z/06:38:33Z, b 08:05:50Z/09:05:50Z (8.0 h / 9.0 h). One user
+  re-tick after D2 at most.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

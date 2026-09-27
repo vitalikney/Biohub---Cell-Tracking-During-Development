@@ -1,0 +1,122 @@
+{
+ "files_written": [
+  "research/KNOWLEDGE/WATCHLIST.md",
+  "research/KNOWLEDGE/_curation/14/watch.notes.md",
+  "research/KNOWLEDGE/_curation/14/watch.json"
+ ],
+ "alerts": [
+  {
+   "kind": "risk",
+   "what": "W150: the round prompt makes round 15's browser agent call the Kaggle API inside the 04:10-06:45Z quiet window. l.37 says 'FIRST run python tools/e10_snapshot.py' with a CLI fallback, and FOCUS_NOTE (l.35) reaches only the plancheck scan (l.38), so round 14's 'no API calls by any agent' next_focus cannot reach it. l.38 is also still stale",
+   "evidence": "experiments/workflows/biohub-research-round.js l.35, l.37, l.38, l.44; round14/scan_browser.notes.md l.2-3 (the round-14 agent ran e10_snapshot at 01:47Z and downloaded the LB at 01:48:20Z); round14/report.json next_focus",
+   "suggested_action": "Before launching round 15, edit l.37 (read the newest e10_watch file, no CLI inside the window), or launch round 15 only after 06:45Z or without the browser scan",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "W134 (R14-A1): the ladder watcher is committed (f24ff72) but NOT launched. It needs the restart loop run_ladder_watch.sh with --s0 20260927T0147Z.txt and --hard-cap 11:30Z (the code default is 09:40Z), started detached. A dead or missing watcher DROPS the A-only extension",
+   "evidence": "experiments/lb_poll/ladder_watch/ absent; tasklist shows only python PID 20052 (poller); ladder_watch.py l.66, l.886; CONTEXT.md l.2693; round14/report.json R14-A1",
+   "suggested_action": "Launch at 03:30-03:45Z (hard 04:10Z); within 5 min check watch.log S0 line (rank 242, count 40), calls.jsonl, no Traceback; record the PID",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "W143 (R14-A2) + W144 (R14-A0): ROUND 14 PRE-SCORE NOTES (S0 = 0147Z snapshot, literal readings 1-6, V* tie order, fm45 POS reading, SELECTED after 06:45Z) must be logged, committed as the user with no trailer, and PUSHED before the first COMPLETE header (hard 04:25Z); save round14 REPORT.md",
+   "evidence": "grep 'ROUND 14' CONTEXT.md = 0; git status: round14/ and e10_watch/20260927T0147Z.txt untracked; round14/report.json R14-A0, R14-A2",
+   "suggested_action": "Paste the R14-A2 text right after the watcher launch, commit and push, and log the pushed hash",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "W145 (R14-A5): nobody owns the watcher liveness checks at ~04:20, 05:20 and 06:30Z while the user sleeps; no timer exists for them",
+   "evidence": "CronList 02:1xZ (6 timers, none for liveness); round14/report.json R14-A5, plan_issues (5)",
+   "suggested_action": "Set session timers or assign them to round 15; file-only checks; never open state.json from Python (I137)",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "W141 (R13-A9 + R14-A3): D1 read ~04:45-05:40Z with the R14-A3 sheet. 8.0 h marks: e 05:15:23Z, a 05:17:47Z, d 05:38:33Z. D2 after probe 42 (~07:45-08:30Z; 8.0 h mark 08:05:50Z). Combo only if BASE exists and fm45 is POS; submit preferably by ~09:30Z, hard 28 Sep 02:00Z. One re-tick after D2",
+   "evidence": "poll.log l.10451 (all PENDING at 02:09:38Z); round14/report.json R14-A3, new_facts (10); CONTEXT.md l.2665-2710",
+   "suggested_action": "Apply the sheet mechanically; log the D1 line; RESULTS rows and probe.json scores (W126)",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "W136 (R14-A4): the 07:30Z morning push and brief must use two corrected lines: the #38 hedge (+0.006 is in-sample; honest OOF +0.0019, P(<0) 0.10-0.20) and the Q1 evidence (0/4 FT swaps on the LB). Read API SELECTED at this first post-06:45Z API touch",
+   "evidence": "CronList 65b1b746 (07:30Z); round14/report.json R14-A4, plan_issues (7), new_facts (12)-(13)",
+   "suggested_action": "Send the P-A/P-B/P-C variant by D1 row; log 'push sent'; Q1-Q3, E10 v2 and the R8 cap are questions only",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "W146 (R14-A6): ROUND 14 RECORD (E10 01:47Z not met, amanatar RUNNING, #242, insertion prior correction, 0/4 retrain record, I-063 correction) is not in CONTEXT",
+   "evidence": "round14/report.json R14-A6; CONTEXT.md ends at l.2749 with TIMERS UPDATED 01:32",
+   "suggested_action": "Log before 07:30Z (may go with the D1 entry)",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "User answers awaited: E10 v2 (lapses 27 Sep 12:00Z), Q1 push exp71 / Q2 / Q3 (a yes by ~09:00Z is needed for a 27 Sep exp72 score), the R8 cap; exp71 push stays blocked; if Q3 = yes, G2 needs a second SECFT_PREFIX training run landing by 29 Sep 12:00Z",
+   "evidence": "CONTEXT.md l.2722-2746; round13/v_plancheck_pc13-05.json",
+   "suggested_action": "Carry in the 07:30Z push; log every reply with date -u",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "W142: exp70g (cap 6, dropped) still has no NEVER_SUBMIT.md, while exp71 has one",
+   "evidence": "ls experiments/exp70g_k2_cap6 (ipynb, kernel-metadata.json, probe.json only); CONTEXT.md l.2673 ('no cap6')",
+   "suggested_action": "Add the guard file with the next commit",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "W98: LESSONS_draft l.7 still states 'public LB (one embryo, ~29% of the hidden test)' as fact; R14-A7 does not cover it",
+   "evidence": "research/wf_ideas_v4/round9/LESSONS_draft.md l.7; last change bf07763",
+   "suggested_action": "Reword as a participants' estimate by 12:00Z (or fold into R14-A7)",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "W57 family: CONTEXT l.22 'frozen/duplicated frames' error and the out_valid / efpost / 33.1% records are still missing",
+   "evidence": "CONTEXT.md l.22; grep -c = 0 for out_valid, efpost, 33.1% (02:2xZ)",
+   "suggested_action": "Curator pass into CONTEXT (overdue since 26 Sep 12:00)",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "stale",
+   "what": "CONTEXT l.2679 still names 'the 03:04Z timer snapshot' as S0; it never existed (the 03:04Z timer is a no-op because the 0147Z snapshot is < 2.5 h old). The R13-A1 (1) NOTE on fm45 (l.2673-2674) is superseded by the R14-A2 literal reading (4)",
+   "evidence": "CONTEXT.md l.2530-2531, l.2673-2679; round14/report.json plan_issues (2), R14-A2 (2) and (4)(4)",
+   "suggested_action": "Covered by W143; make sure both corrections are in the pre-score entry",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "All six timers are session-only; a session restart kills the 07:30Z push, the E10 P1 checks, the tick checks and the 23:27Z LB snapshot",
+   "evidence": "CronList '[session-only]'; CONTEXT.md l.2530",
+   "suggested_action": "Keep the session alive until 29 Sep 23:59Z; after any restart, recreate the timers from CONTEXT",
+   "urgency": "info"
+  },
+  {
+   "kind": "deadline",
+   "what": "R8 cutoff 27 Sep 12:00Z; F1 consolidation 28 Sep 12:00Z; combo hard edge 28 Sep 02:00Z; last ladder/E10 submit 29 Sep 02:00Z; ticks 29 Sep 20:00Z (reminders 11:57Z and 17:57Z); final LB snapshot 23:27Z; hindsight-guard push before 23:00Z; deadline 23:59Z (a submit must finish before it)",
+   "evidence": "CONTEXT.md l.1671-1672, l.2704-2710, l.2515-2516; CronList; round14/report.json R14-A8, new_facts (6)",
+   "suggested_action": "Keep timers alive; stop the poller at 29 Sep 20:00Z",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "risk",
+   "what": "Insight at risk: the watcher is not fail-soft, and os.replace on state.json fails with PermissionError while another handle holds it; agents must read watch.log and calls.jsonl only",
+   "evidence": "round14/report.json new_facts (8), R14-A1 notes",
+   "suggested_action": "Put the 'never open state.json' rule in the round-15 prompt and in W143 (3)",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "Insight at risk: exp70a's 8.0 h mark is 05:17:47Z and L_hi comes from 10-min polls, so a completion near it reads UNPROVEN and the A-only extension fails (the fix PC14-05 was rejected)",
+   "evidence": "round14/scan_plancheck.json PC14-05; round14/report.json rejected",
+   "suggested_action": "Info for the D1 read: an A-only miss by UNPROVEN is by rule, do not reopen it",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 14 (27 Sep 02:25Z), incremental over curation 13. Sources: CONTEXT.md at f24ff72 (new l.2626-2749: ROUND 13 RECORD, LADDER PRE-SCORE REGISTRATION, EXP71/EXP72 GOVERNANCE, TIMERS UPDATED), commits 3d48d35/5e57346/f2f843e/f24ff72, round14/report.json (R14-A0..A9, 02:11:57Z, untracked), poll.log 02:09:38Z (39-42 all PENDING), CronList, tasklist. Done since 01:35Z: W132, W133 (pushed before any score), W135, W137, W139; partly done: W134 (watcher code, not launched), W136 (timer 65b1b746), W140 (timer 2e87e414). New W143-W150, T62-T67, I136-I148. The most urgent item, new in this curation: W150. The round prompt's browser scan runs e10_snapshot / Kaggle CLI, and FOCUS_NOTE reaches only plancheck, so a round 15 inside the 04:10-06:45Z quiet window would call the API. Then: watcher launch 03:30-03:45Z (hard 04:10Z), R14-A2 pre-score notes + push before the first COMPLETE header (hard 04:25Z), liveness checks 04:20/05:20/06:30Z, D1 ~04:45-05:40Z, 07:30Z push with the corrected insertion and retrain lines, D2 ~07:45-08:30Z. Still overdue: W57 family (CONTEXT l.22), W98 LESSONS l.7 (12:00Z), exp70g NEVER_SUBMIT (W142), RESULTS rows 39-42 pending scores."
+}
