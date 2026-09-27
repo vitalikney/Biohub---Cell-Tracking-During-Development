@@ -2992,6 +2992,12 @@ Mention it to the user in one line (R9-A8 item 6).
   GPU: exp71 training (1 session until ~15:30Z); exp70n dummy COMPLETE 12:46Z (not submitted); exp70q dummy pushed 12:46Z;
   exp75 dummy follows exp70q. LAST 27 SEP SLOT: exp75 if its dummy passes by ~14:30Z (best odds), else exp70q/exp70r per
   the 43 read. 28 Sep: exp72 at 00:05Z (if exp71 trains cleanly), then the best of exp75/exp73*/exp74 per the reads.
+- 2026-09-27 13:14 UTC, PROBES 43/44 READ (R15-A1 (3), R16-A1 (3)): first header with both terminal 2026-09-27T13:12:33Z: 43 exp70j (DC 0.20)
+  56598763 COMPLETE 0.954, 44 exp70k (DC 0.225) 56598765 COMPLETE 0.954. One LB download 13:14Z vs the 07:37Z S1: our row
+  #255 -> #268, 0.954, SubmissionCount 44 -> 46, 0 TeamIds passed -> neither beat our best (exp70b). Both 0.954 -> DC closed
+  on this side; no V*_C -> the user's class-C letter (b) does not fire; the pair stays {#37 56563521, #38 56563534}; no
+  re-tick. Private-read L6/L7 recorded as 0.954/0.954. Last 27 Sep slot: not exp70r (43 < 0.955); exp75 if its dummy passes by
+  ~14:30Z, else exp70q.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
