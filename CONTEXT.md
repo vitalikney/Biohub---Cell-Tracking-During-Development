@@ -3283,6 +3283,21 @@ Mention it to the user in one line (R9-A8 item 6).
   - at most ONE DIV step in the winning direction. cap 48 fc2 is allowed only after two strict steps (exp70g < exp78b
     < exp80a in display).
   Not allowed: a threshold change, N1, or N2 as a new single rung.
+- 2026-09-27 21:06 UTC UTC, N2 PRE-REGISTRATION (round 20, PC20-07 as amended by the judge).
+  - The N2 file = exp70g + the ONE GPU0 epoch-2 secondary (continuation of exp71 ed8c616b, same recipe). The GPU1
+    fresh-from-parent recipe is never submitted.
+  - Gates: private dataset + SHA256 line; detection proxy student/teacher inside the exp71 band (~0.99-1.01); dummy
+    nodes within -2%/+1% of 121,252; 0 errors; <= 1,920 s.
+  - Use: it is the ONE SEC file of 28 Sep (R20-A2 (3)/(4)) and replaces exp79d. exp79d is the fallback if the N2 dummy
+    has not passed by the W2a decision.
+  - It is coded against exp70g 0.956 and is public-only while Q3 is open.
+  - A '+' N2 secondary may sit inside the W4 full stack. N2 is never a new single rung in W3/W4.
+  - If SEC reads '-' or '0', N2 goes to the post-deadline list.
+- 2026-09-27 21:06 UTC, LEDGER + BUILD (R20-A4/A5): tools/runtime_ledger.py gains family safetail_ci (admit L_hi <= 10.75 h; insertion gate
+  on L_hi - 2.2 h) and rules exp75*/exp76[acfhi]/exp79a* -> safetail_ci, exp7[2-9]*/exp8x* -> safetail (+ test; 24 pass);
+  56611472 now prints family safetail. exp78b DUMMY PASS logged (121,252 nodes / 95 forks / 117,092 edges, ~1,368 s, 0 errors).
+  exp79d DUMMY PASS (121,061 nodes / 86 forks, Secondary ed8c616b, ~1,305 s, 0 errors). exp80a = K2 + cap 24 + FRAME_CAP 2
+  built (sha da984964; W2-only), dummy after exp79a starts / a lane frees.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

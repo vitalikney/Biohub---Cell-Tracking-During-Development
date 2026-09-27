@@ -325,3 +325,12 @@ def test_exp70_ladder_is_safetail_family():
     assert rl.family_of("1", "exp70e", {}) == "safetail"
     assert rl.family_of("1", "exp70a", {}) == "safetail"
     assert rl.FAMILIES[rl.family_of("1", "exp70b", {})]["deadline_h"] == 9.5
+
+
+def test_round20_families():
+    for e in ("exp78a", "exp78b", "exp80a", "exp76e", "exp79d", "exp72", "exp76d"):
+        assert rl.family_of("1", e, {}) == "safetail", e
+    for e in ("exp79a", "exp76a", "exp75"):
+        assert rl.family_of("1", e, {}) == "safetail_ci", e
+    assert rl.FAMILIES["safetail_ci"]["deadline_h"] == 10.75
+

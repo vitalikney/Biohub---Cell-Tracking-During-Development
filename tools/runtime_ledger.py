@@ -56,6 +56,7 @@ FAMILIES = {
     "x138": dict(deadline_h=7.5, divins_h=None, ungated=False, label="x138 type, REPAIR_DEADLINE 7.5 h"),
     "x138_ungated": dict(deadline_h=7.5, divins_h=None, ungated=True,
                          label="x138 + ungated insertion (#35/exp57), 7.5 h, no R5(b)"),
+    "safetail_ci": dict(deadline_h=10.75, divins_h=10.2, ungated=False, label="safetail + coordinject: admit L_hi <= 10.75 h; insertion gate read on L_hi - CI_lo 2.2 h ('did NOT fire' iff L_hi <= 10.2 h)"),
     "safetail": dict(deadline_h=9.5, divins_h=DIVINS_GATE_H, ungated=False,
                      label="safetail (C01) + gated insertion, 9.5 h (insertion gate 8.0 h)"),
     "safetail_noins": dict(deadline_h=9.5, divins_h=None, ungated=False, label="safetail (C01), no insertion, 9.5 h"),
@@ -73,6 +74,11 @@ EXP_RULES = [
     (r"exp58(n|p)[a-z]*", "safetail_noins"),
     (r"exp58d", "safetail_late"),          # K2'' (CONTEXT 26 Sep v3 V3): REPAIR 37800 / DIVINS 32400
     (r"exp(58|59|61|62)[a-z]*", "safetail"),
+    (r"exp75[a-z]*", "safetail_ci"),          # coordinject stacks (CONTEXT 27 Sep round 20 R20-A4)
+    (r"exp76[acfhi]", "safetail_ci"),
+    (r"exp79a[a-z]*", "safetail_ci"),
+    (r"exp7[2-9][a-z]*", "safetail"),         # 28 Sep public rungs (K2 family)
+    (r"exp8\d[a-z]*", "safetail"),
     (r"exp70[a-z]*", "safetail"),             # K2 public ladder (CONTEXT 26 Sep 20:49 UTC): K2 + knobs, REPAIR 34200 / DIVINS 28800
     (r"exp5[12]", "notimer"),
 ]
