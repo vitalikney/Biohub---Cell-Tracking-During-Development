@@ -1,0 +1,67 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/INDEX.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/CHANGES.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/18/index.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/18/index.json"
+ ],
+ "alerts": [
+  {
+   "kind": "stale",
+   "what": "User question: the research rounds run on average every ~2.5-3 h (mean 2.72 h, median 2.52 h, range 1.73-4.25 h; last gap 4.25 h). There is no fixed cron: session timers launch them back to back, and no job exists for rounds 19/20. The ~2.5 h mandate ended 27 Sep 12:00Z. E10 v3 watch runs hourly (4 runs, 0 signals); LB poller every ~10 min. The reply must also correct the chat: W1 = exp76a/exp76d (exp72/exp75 fallbacks), and exp75 is a sign probe (P ~0.35-0.45), not 'the best chance'.",
+   "evidence": "research/KNOWLEDGE/FACTS.md F-RUN-33 l.266, C-144, C-148; research/wf_ideas_v4/round18/report.json R18-A0; experiments/e10_watch/watch_loop.log",
+   "suggested_action": "Send the R18-A0 text. Offer a fixed local-time timer (every 2.5 h to 29 Sep 18:00Z) only if the user asks (I-388).",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "The round-18 pre-score card (R18-A1: codes P5/U4/N4/NEG/ERR, MASKED, 'v' suffix for L_hi > 8.0 h, CI/secFT public-only, 28 Sep branch table) is not in CONTEXT. P45 can score from ~17:56Z.",
+   "evidence": "research/wf_ideas_v4/round18/report.json R18-A1, R18-A10; CONTEXT.md last entry l.3007-3010; experiments/lb_poll/poll.log 16:03:10Z (P45/P46 PENDING)",
+   "suggested_action": "Append R18-A1 before 17:50Z with fields from the latest poll header; commit it with round18/ by named paths, as the user, no trailer.",
+   "urgency": "now"
+  },
+  {
+   "kind": "forgotten",
+   "what": "There has been no RESUME POINT since 26 Sep 22:46Z (CONTEXT l.2599), MEMORY l.8-9 are stale, and no timers exist for the P45 read, the P46 read, the 00:03Z W1 batch or the 06:30Z watcher restart. The fired one-shots are still listed.",
+   "evidence": "research/wf_ideas_v4/round18/report.json R18-A2; research/KNOWLEDGE/WATCHLIST.md W185; research/KNOWLEDGE/FACTS.md C-26",
+   "suggested_action": "R18-A2: one-shot timers with LOCAL cron '5 22 27 9 *', '45 1 28 9 *', '3 3 28 9 *', '30 9 28 9 *'; delete 5b23a3ed/54a8f20d/cdd738f1; write the RESUME POINT; fix MEMORY.",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "exp76a/exp76d are not built (no experiments/exp76* folder). The exp75 dummy has been QUEUED since 13:18Z, and exp76a shares its coord-inject dataset, so W1 could lose its CI file. There are silent build traps: sha depends on knob order, and Git Bash rewrites /kaggle/ paths.",
+   "evidence": "research/wf_ideas_v4/round18/report.json R18-A3, R18-A4; research/KNOWLEDGE/WATCHLIST.md W186, W187, I191; ls experiments/exp76* = none at 16:05Z",
+   "suggested_action": "Build exp76a (1bc05bc9) and exp76d (87d257ba) with MSYS_NO_PATHCONV=1 and the KQ knob order, then push both dummies. Re-push exp76a once if QUEUED >= 30 min. At 19:00Z, drop CI from W1 if it is still stuck, and tell the user.",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "tools/runtime_ledger.py has no family for exp72-76, so CI latency would read as 'insertion gate MAY have fired'.",
+   "evidence": "research/KNOWLEDGE/FACTS.md F-RUN-32 l.265; research/wf_ideas_v4/round18/report.json R18-A5",
+   "suggested_action": "Add the safetail_ci family (10.75 h), the exp72-76 rules and one test before 28 Sep 00:05Z; pass --family until then.",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "P45 (~17:56-18:59Z, 8.0 h mark 19:15Z) and P46 (~21:18-22:21Z, 8.0 h mark 22:37Z) reads need the 'v' check, because latency is drifting up. After P46: the slot table and one brief with 2 yes/no questions (lift the 29 Sep 02:00Z cap? exp74? default no). W1 dummies must PASS by 23:45Z.",
+   "evidence": "research/KNOWLEDGE/FACTS.md F-RUN-31 l.264, C-86; research/wf_ideas_v4/round18/report.json R18-A6..A8",
+   "suggested_action": "At each read, check L_hi against 8.0 h and grep 'DIVINS SKIPPED (deadline)'. Treat 02:00Z as binding until the user answers.",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "The exp72 dummy gates are not in CONTEXT (the 14:37 entry says 'dummy running'). The exp72/exp75 probe.json files still say 'compare with exp56'. RESULTS.md ends at P38. exp70j/k have no NEVER_SUBMIT.md, and exp70n has no status.",
+   "evidence": "experiments/exp72_k2_secft/probe.json l.20; experiments/exp75_k2_coordinject/probe.json l.20; research/wf_ideas_v4/round18/report.json R18-A3 (5); research/KNOWLEDGE/WATCHLIST.md W126, W182",
+   "suggested_action": "Log the exp72 gates (121,061 nodes -0.158%, CSV d78093ac, 80 forks, 0 errors); fix the rule text; add RESULTS rows P39-P46 at the hygiene commit.",
+   "urgency": "today"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "ROUND 14-18 RECORDs, LESSONS H1 and fb_ins35.py (scratchpad only) are still missing. Post-deadline ideas I-384..I-387 and I-368 need to go into LESSONS s4. The SI name token 'exp73' collides with exp73a..v. x138's alignment cancels exp71's bias shift, which weakens exp76d.",
+   "evidence": "research/wf_ideas_v4/round18/report.json R18-A9; research/KNOWLEDGE/WATCHLIST.md W176, I189, I190; research/KNOWLEDGE/IDEAS.md ORPHANS l.610",
+   "suggested_action": "Copy fb_ins35 into experiments/exp60_trainlab/forkblob_ins35/ now. Write the records and H1 after the P46 read, and fold the post-deadline list into LESSONS s4 by 30 Sep.",
+   "urgency": "before-finals"
+  }
+ ],
+ "summary": "Curation 18 index (state ~16:05 UTC 27 Sep, HEAD b853642).\n\nTo the user's question: the research rounds run on average every 2.5-3 hours, not on a fixed schedule. The mean gap is 2 h 43 min (median 2.5 h, range 1.7-4.25 h), and the last gap was the longest. Session timers launch rounds one after another, and no timer exists for rounds 19/20. The '~2.5 h' mandate ended at 12:00 UTC today. The notebook watcher runs strictly hourly (4 runs, 0 signals), and the LB poller runs every ~10 min.\n\nState: the finals #37 + #38 are unchanged, and P43/P44 both scored 0.954. P45 (~17:56-18:59Z) and P46 (~21:18-22:21Z) are pending at 16:03Z. We are rank #283 of 3,952 at 0.954.\n\nRound 18 changed the 28 Sep plan: W1 is now exp76a (exp70b + coordinate refiner) and exp76d (exp70b + fine-tuned secondary), with exp72/exp75 as fallbacks. exp75 is a sign probe (~35-45%), not 'the best chance'. Neither exp76 file is built yet, and the exp75 dummy has been stuck since 13:18Z.\n\nWrote research/KNOWLEDGE/INDEX.md (76 lines, 8 deduped alerts) and appended the curation-18 section to research/KNOWLEDGE/CHANGES.md. Ideas: 388 (+16). Facts: 6 new, C-144..C-149. I committed nothing and did not touch Kaggle."
+}

@@ -1,0 +1,12 @@
+# round18 plancheck notes (2026-09-27T15:17:32Z)
+- 15:20Z CONTEXT last entry 14:37Z (probe 46 submit). No RESUME POINT after 26 Sep 22:46Z (grep 'RESUME POINT' last hit l.2599) -> R17-A7 (due ~15:00Z) not done. No R17-A5 pre-score card (grep R17-A5 = 0). 'ROUND 1[5-7] RECORD' = 0 hits. E10 v3 submit edges not logged.
+- ledger.md: 43/44 L (7.56/7.57, 7.74] h (up from #37 7.36-7.54, exp70b 7.41-7.58). 45 56606948 / 46 56611472 PENDING at 15:12:59Z header.
+- tools/runtime_ledger.py EXP_RULES l.68-78: exp70* -> safetail; exp72/exp73*/exp74/exp75 match nothing -> family 'unknown' (no R5(a), no insertion-gate text). R13-A3 exp72 eligibility and R17-A5 card need 'L_hi (runtime_ledger family safetail)'.
+- tools/coordinject_patch.py: deadline KERNEL_START+37800 s (10.5 h), per-video skip when now+1.25*slowest > deadline, kill at +900 s. check_coord_refiner.json runtime: total latency ~8.75 h est -> exceeds the 9.0 h L_hi ceiling used in R15-A1(4)/R17-A5 for finals proposals.
+- e10_watch 20260927T1517Z.txt: >=0.955 276 teams, ours rank 282, pos 6/113 of 0.954 block (ranks 277-389); 0.955 block 79 (198-276). watch loop runs 3/3 OK, 0 signals.
+- bigger_levers/prep_div_combos.json: D outcome = D0 (43/44 both 0.954) -> rows R4/R5/R6 by C (probe 45). R5 = exp73s, exp73c, exp73a, exp73m (4 rungs) + exp72 + exp75 = 6 > 5 slots; R17-A4 wanted 2 slots/day held for E10 v3.
+- 15:30Z CronList (session): 012fa6dd 28 Sep 17:57Z tick check, 328f7392 29 Sep 11:57Z, 18ff4796 29 Sep 17:57Z, bb224de9 29 Sep 23:27Z LB snapshot, 2e87e414 E10 P1 3-hourly (backup), and PAST one-shots 5b23a3ed/54a8f20d/cdd738f1 still listed. No timer for the 45 read (~19:00Z), 46 read (~22:40Z), 28 Sep 00:03Z submit batch. No research-round cron in this session.
+- Round cadence (first-file mtime, local UTC+3 -> UTC): r10 15:20Z 26/9, r11 17:04Z, r12 20:03Z, r13 22:49Z, r14 01:52Z 27/9, r15 05:37Z, r16 08:36Z, r17 11:05Z, r18 15:17Z; gaps 1.7/3.0/2.8/3.1/3.75/3.0/2.5/4.2 h, median ~3.0 h.
+- tools/build_probe_kernel.py l.106 + l.2318 SUCC_TOKEN='exp73': E10 v3 SI copies are named exp73[x]_si_<author>, colliding with division rungs exp73a..exp73v (q,r unused) in ledger tokens / CONTEXT.
+- tools/dummy_gates.py has no exp72/exp75 gates (manual only). exp72 R13-A3 gate results (runtime <=1,920 s, 4 LOWREFINE, DIVINS ENABLED, CSV sha != b6de85c1) not in CONTEXT; chat only reports hash/path, nodes -0.16%, forks 80 vs 75.
+- 15:36Z final JSON written (9 findings).

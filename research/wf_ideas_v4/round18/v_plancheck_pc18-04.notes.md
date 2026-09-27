@@ -1,0 +1,11 @@
+# v_plancheck_pc18-04 notes
+- 2026-09-27T15:31:30Z start; no prior json
+- 15:36Z Kaggle status (read-only `kaggle kernels status`): exp75-k2-coordinject QUEUED (pushed 13:19Z); exp72-k2-secft COMPLETE (pushed 13:27Z, i.e. AFTER exp75, yet ran and finished) -> exp75's queue is not lane contention by our own kernels; lanes are idle now. exp73a/s/c kernels do not exist (never pushed).
+- `kaggle kernels list --mine`: last runs exp72 13:27Z, exp75 13:19Z, exp70q 12:46Z, exp70n 12:24Z, exp71 11:11Z.
+- Builder tools/build_probe_kernel.py sha256 now d46a8b2d... (= HEAD c86fd5a, no working-tree diff); prep recorded df0fe7c7, check 0ec0fd1b -> drifted twice.
+- Rebuilt exp73a/c/m/s/u/h in a scratchpad mirror (tools/ + exp56/exp39 bases) with prep_div_combos_build.sh args: all 6 notebooks + kernel-metadata byte-identical to experiments/exp73*/ (e.g. a e41fd78a, c a33bac91, h 6137df2b, s cabedf86, m 76c81122, u 0410daeb).
+- Rows after D0 (CONTEXT 13:14Z, 43/44 both 0.954): R4 C+ u,s,m,c; R5 C0 s,c,a,m; R6 C- h,a. With PC18-03 over-subscription only ~2 rungs get slots -> first two of each row matter: s,c (R5), u,s (R4), h,a (R6).
+- Dummy runtime noise: K2 1,512 s, exp70b 1,740 s (hidden L <=7.58 h like K2), exp70k 1,449 s, exp70q 1,874 s (> prep gate 1,450-1,700 s, submitted anyway). CONTEXT l.2745 uses <= 1,920 s. prep gate quotes K2 nodes 121,265 but K2 dummy = 121,252 (CONTEXT l.2538 correction).
+- GPU quota: 07:55/30 h used at 26 Sep 21:5x (CONTEXT l.2542); since then exp71 ~2.1 h + ~6 dummies ~3 h -> est ~13-15 h left, week resets after the deadline. 4-6 dummies ~2-3 h fit, but E10 copies / exp74 also need GPU.
+- Verdict: not refuted. Cheap, reversible, byte-identical, no slot used. Corrections: push NOW, one at a time (keep 1 lane for exp75), order s > c > a > m; value of rungs themselves weak.
+- 2026-09-27T15:35:36Z final JSON written

@@ -1,0 +1,9 @@
+# v_plancheck_pc18-01 (skeptic, round 18) - notes
+- 2026-09-27 15:31Z start. No prior JSON for this task.
+- CONTEXT.md 3031 lines; grep 'R17-A5' / 'pre-score' after 14:37Z: none. Last dated entry = 14:37Z SUBMIT probe 46 (exp70q, 56611472). Finding's 'card missing' CONFIRMED.
+- ledger.md (ledger time 15:23:04Z, last poll 15:23:02Z): 56611472 exp70q PENDING L>0.76; 56606948 exp70g PENDING L>4.13; both 'insertion gate 8.0 h: open'. 43/44 L (7.56-7.57,7.74]; 42 (7.41,7.58]; 40 (6.87,7.04].
+- Probe 45 submitted 11:15:12Z -> +6.69 h = 17:56Z, +6.87 h = 18:07Z, +7.74 h = 18:59Z. R17-A5 deadline 'before 17:50Z' still correct.
+- ISSUE 1: finding (a) says 'passes its family runtime clause'. Ledger family clause R5(a) for safetail = 9.5 h, but the pre-registered finals eligibility is L_hi <= 9.0 h (CONTEXT l.2419, 2608, 2779, 2930; R17-A5 text in round17/report.json). Using 9.5 h would be a post-hoc loosening -> must say L_hi <= 9.0 h.
+- ISSUE 2: finding (c) codes an UNPROVEN insertion-gate outcome as 'C0 (uninformative)'. In the pre-built decision table (research/wf_ideas_v4/bigger_levers/prep_div_combos.json outcome_codes) C0 already means 'probe 45 = 0.954' (a real read) and drives rungs ('D0 and C0' pattern). Reusing C0 conflates void with a read. Use a distinct code (Cv/Lv = void), default to the C0/L0 rung branch for action but record it as void for calibration/private-read.
+- Minor: 'insertion gate did NOT fire' is proven only by L_hi <= 8.0 h (L includes queue; DIVINS_DEADLINE_S 28800 s is kernel runtime), so 8.0 < L_hi does not prove the insertion was skipped - 'UNPROVEN' wording ok.
+- Value: process hygiene only (pre-score declaration keeps post-FREEZE rungs honest; finals are the user's call). No private-score effect; zero runtime / byte-identity risk (a log line). Covered by existing approval (R17-A5 covered_by_existing_approval=true).

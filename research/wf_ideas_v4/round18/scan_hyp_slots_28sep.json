@@ -1,0 +1,281 @@
+{
+ "task": "round 18 scan_hyp_slots_28sep: plan the 5 slots of 28 Sep (+29 Sep morning) for a public display >= 0.955-0.957 by 29 Sep ~19:00Z",
+ "written_utc": "2026-09-27T15:58Z",
+ "complete": true,
+ "summary": "Files only: nothing pushed, submitted or committed. The gap to 0.955 is tiny. We are 6th of 113 in the 0.954 block, so exp70b sits ~5e-5 below the rounding edge, and K2-based files start ~1.6e-4 below it. Rebase everything on exp70b, or on exp70q if probe 46 reads U4/P5. Nine combos (exp76a-i) were built and verified in scratch, with exact commands and shas. W1 at 00:05Z 28 Sep: exp76a (exp70b + coordinject, P ~0.45), exp76d (exp70b + secFT, P ~0.25) and one division file from the 45/46 branch table (exp76c/exp76e/exp73m). Later waves stack attributable UPs. Overall P(display >= 0.955 by 29 Sep 19:00Z) ~0.55. Plan issues: runtime_ledger has no family for exp72-76, and CI latency would fail the 9.0 h card; the watcher must be running to attribute UPs; the exp73 table is stale; coordinject needs a no-op gate. Research rounds run about every 3 h (1-4 h spread).",
+ "build_env_git_bash": "export MSYS_NO_PATHCONV=1; B=\"--base x138 --patch divinsert --patch safetail --patch lowrefine\"; K=\"--set DIVINS_ENABLE=1 --set DIVINS_STEAL=1 --set DIVINS_CAP=4 --set DIVINS_FRAME_CAP=1 --set DIVINS_ALPHA=1 --set DIVINS_THRESH=0.4 --set DIVINS_DUMP=0 --set REPAIR_DEADLINE_S=34200 --set DIVINS_DEADLINE_S=28800 --set LOWREFINE_ENABLE=1\"; KQ=\"--set DIVINS_ENABLE=1 --set DIVINS_STEAL=1 --set DIVINS_FRAME_CAP=1 --set DIVINS_ALPHA=1 --set DIVINS_DUMP=0 --set REPAIR_DEADLINE_S=34200 --set DIVINS_DEADLINE_S=28800 --set LOWREFINE_ENABLE=1 --set DIVINS_CAP=6 --set DIVINS_THRESH=0.3\"; FM=\"--patch forkmid --set FORKMID_ENABLE=1\"; CI=\"--patch coordinject --set COORDINJECT_ENABLE=1 --set COORDINJECT_ALPHA=0.5\"; SW=\"--patch secswap --set SECONDARY_EXPECTED_SHA256=ed8c616bcc5990d3cccfe728d0e00469feb40ca8a0590137045f7ef225903f2e --set SECONDARY_ARTIFACT_MANIFEST=/kaggle/input/datasets/vitaliineibauer/biohub-secft-all-v1/ARTIFACT_MANIFEST.json --dataset vitaliineibauer/biohub-secft-all-v1\"",
+ "builds": {
+  "exp76a_k2_fm_ci": {
+   "what": "exp70b (K2 + forkmid 4.5) + coordinject alpha 0.5, MAX_UM 3.0",
+   "cmd": "python tools/build_probe_kernel.py exp76a_k2_fm_ci $B $K $FM $CI --note \"r18: exp70b + coordinject a0.5 3um\"",
+   "sha256": "1bc05bc9695861de69e67c78d19f7a6c13c5703e10df103034351fccd57331cd"
+  },
+  "exp76b_k2_fm_ci2": {
+   "what": "exp70b + coordinject alpha 0.5, MAX_UM 2.0",
+   "cmd": "python tools/build_probe_kernel.py exp76b_k2_fm_ci2 $B $K $FM $CI --set COORDINJECT_MAX_UM=2.0 --note \"r18: exp70b + coordinject a0.5 2um\"",
+   "sha256": "ccff7ff3a1ed14ced739f6252ad7d8be5d02e9d1f62a941fd42e1c437e1c4c43"
+  },
+  "exp76c_k2_maxdiv_ci": {
+   "what": "exp70q (probe 46: cap 6 + thr 0.3 + forkmid) + coordinject a0.5 3um",
+   "cmd": "python tools/build_probe_kernel.py exp76c_k2_maxdiv_ci $B $KQ $FM $CI --note \"r18: exp70q + coordinject a0.5 3um\"",
+   "sha256": "1bb648a42f4688e6a1b6f47d08d561fbb0d0b883c39f63ef014099f3744c8be7"
+  },
+  "exp76d_k2_fm_secft": {
+   "what": "exp70b + exp71 secondary FT (= exp72 on the forkmid base)",
+   "cmd": "python tools/build_probe_kernel.py exp76d_k2_fm_secft $B $K $FM $SW --note \"r18: exp70b + secFT\"",
+   "sha256": "87d257bad783c9e1ce5b60f1924009d70900476375b67de747e9db10a7f0cac2"
+  },
+  "exp76e_k2_fm_cap6": {
+   "what": "exp70b + insertion cap 6 (thr 0.4) = probe 45's knob on the forkmid base",
+   "cmd": "python tools/build_probe_kernel.py exp76e_k2_fm_cap6 $B $K $FM --set DIVINS_CAP=6 --note \"r18: exp70b + cap6\"",
+   "sha256": "d5c5ff5e72c6c14b98cd72cf2f8209942c230d36954b407c29f497c0da5a41da"
+  },
+  "exp76f_k2_fm_secft_ci": {
+   "what": "exp70b + secFT + coordinject (stack)",
+   "cmd": "python tools/build_probe_kernel.py exp76f_k2_fm_secft_ci $B $K $FM $SW $CI --note \"r18: exp70b + secFT + CI\"",
+   "sha256": "68e3919edc7eb961d9ac136fa888611428c70e1788634996afa2ddeec0ad53f1"
+  },
+  "exp76g_k2_maxdiv_secft": {
+   "what": "exp70q + secFT",
+   "cmd": "python tools/build_probe_kernel.py exp76g_k2_maxdiv_secft $B $KQ $FM $SW --note \"r18: exp70q + secFT\"",
+   "sha256": "17bf5872b988357d6ca90b6fa02e38cf3b11c811c310dec8670f78d59986e3b2"
+  },
+  "exp76h_k2_maxdiv_secft_ci": {
+   "what": "exp70q + secFT + coordinject (stack)",
+   "cmd": "python tools/build_probe_kernel.py exp76h_k2_maxdiv_secft_ci $B $KQ $FM $SW $CI --note \"r18: exp70q + secFT + CI\"",
+   "sha256": "3819c1b0aa8d8d3ed4effbcee5b7338bcfc1dbc05662f3ba9e2016f3e894187f"
+  },
+  "exp76i_k2_fm_cap6_ci": {
+   "what": "exp70b + cap6 + coordinject",
+   "cmd": "python tools/build_probe_kernel.py exp76i_k2_fm_cap6_ci $B $K $FM --set DIVINS_CAP=6 $CI --note \"r18: exp70b + cap6 + CI\"",
+   "sha256": "e1dd9646cdb1ae767677bcb76d12b30ebcf81641fef133dfb76286bc49c290da"
+  }
+ },
+ "build_verification": "Built in a scratch ROOT (repo untouched). The refs K2/exp70b/exp75/exp72/exp70q reproduce byte-identically with builder sha d46a8b2d (tools/build_probe_kernel.py) and coordinject_patch 78cae2a9. The exp70q family needs the KQ order (CAP/THRESH after LOWREFINE). Rebuild and check the sha right before each push, because the builder keeps changing.",
+ "ranking_p_display_ge_0955": [
+  {
+   "rank": 1,
+   "file": "exp76c (exp70q + CI)",
+   "p_ge_0955": "0.55-0.65 if probe 46 reads U4; target already met if 46 reads P5; not submitted if 46 <= N4",
+   "why": "stacks CI on the only base that would then be publicly above exp70b"
+  },
+  {
+   "rank": 2,
+   "file": "exp76a (exp70b + CI 3um)",
+   "p_ge_0955": "0.40-0.50 (central 0.45); P(<= 0.953) ~0.25",
+   "why": "CI delta prior ~N(+0.0004, 0.002): in-sample kernel-path lab +0.0022 shrunk ~1/5; learned-refiner class (V1284 +0.002 / +0.007 public) vs hand refinements (-0.002 LB twice, I-046); needs only > ~6e-5 on exp70b; includes ~0.1 risk of a no-op or partial coverage"
+  },
+  {
+   "rank": 3,
+   "file": "exp75 (K2 + CI, as built)",
+   "p_ge_0955": "0.35-0.45",
+   "why": "same draw as exp76a but needs > ~1.6e-4 (no fm45); dominated by exp76a -> keep as the CI runtime-reference dummy, no slot"
+  },
+  {
+   "rank": 4,
+   "file": "exp76e (exp70b + cap6)",
+   "p_ge_0955": "0.50-0.60 if 45 reads U4; ~0.08 if 45 N4; ~0.02 if 45 NEG",
+   "why": "45 U4 means cap6 on K2 beat exp70b (> fm45 ~9e-5), which exceeds the ~6e-5 gap on the fm base if additive"
+  },
+  {
+   "rank": 5,
+   "file": "exp76d (exp70b + secFT)",
+   "p_ge_0955": "0.20-0.30",
+   "why": "light distillation FT (rel L2 0.3-4.4%, nodes -0.16%, forks 80 vs 75 on the dummy); full weight swaps were 0/5 on our LB; prior median ~-0.0005, sd ~0.002 (round18 scan_hyp_new_levers: most likely 0.954)"
+  },
+  {
+   "rank": 6,
+   "file": "exp72 (K2 + secFT, as built, dummy clean)",
+   "p_ge_0955": "0.15-0.25",
+   "why": "same draw without fm45; user-approved (Q2) as is; submit it only if exp76d's dummy is not ready at 00:05Z"
+  },
+  {
+   "rank": 7,
+   "file": "exp76b (exp70b + CI 2um)",
+   "p_ge_0955": "0.40-0.50 alone; 0.15-0.20 given exp76a fails",
+   "why": "kernel-path lab +0.0045 with no negative clip vs 3um +0.0022; correlated ~0.7 with exp76a -> wave-2 variant"
+  },
+  {
+   "rank": 8,
+   "file": "exp73f/g (fm + DC 0.225/0.20)",
+   "p_ge_0955": "0.10-0.15",
+   "why": "43/44 (DC on K2) did not pass exp70b -> DC effect < fm45 (~9e-5); on the fm base it must land in (6e-5, 9e-5)"
+  },
+  {
+   "rank": 9,
+   "file": "exp74 (K2 + Corwin secondary)",
+   "p_ge_0955": "0.08-0.10",
+   "why": "skeptic centre 0.948 (secondary = 80% of the detection mix); dataset not uploaded; wave 2 only if CI and secFT both fail"
+  },
+  {
+   "rank": 10,
+   "file": "exp73m/s/c (I3/I4 packages, cap 12)",
+   "p_ge_0955": "0.05-0.10; exp73m 0.25-0.35 only if 46 reads U4/P5",
+   "why": "lab: insertions beyond cap 4 = 0 TP (85 extra: 0 TP / 4 FP / 81 unannotated); amanatar V6 looser division gates = 0.901"
+  },
+  {
+   "rank": 11,
+   "file": "exp73a/h (DC 0.15)",
+   "p_ge_0955": "~0.05",
+   "why": "sjlee 0.15 = 0.946 vs 0.20 = 0.947; 43/44 flat"
+  },
+  {
+   "rank": "pending",
+   "file": "probe 45 exp70g (cap 6 on K2) / probe 46 exp70q (cap6+thr0.3+fm)",
+   "p_ge_0955": "45: 0.08-0.12; 46: 0.12-0.18",
+   "why": "45 needs > ~1.6e-4 over K2 with lab -0.00057; 46 needs > ~6e-5 over exp70b"
+  }
+ ],
+ "branch_45_46": [
+  {
+   "outcome": "46 = P5 (>= 0.955)",
+   "wave1": [
+    "exp76c (exp70q+CI)",
+    "exp76g (exp70q+secFT)",
+    "exp73m (I3+fm) if 45 >= N4, else exp76a"
+   ],
+   "note": "target met; wave 1 aims at 0.956; R17-A5 card -> propose {exp70q, #37} to the user"
+  },
+  {
+   "outcome": "46 = U4 (0.954 + attributable UP over exp70b)",
+   "wave1": [
+    "exp76c",
+    "exp76g",
+    "exp73m if 45 >= N4, else exp76a"
+   ],
+   "note": "exp70q is the new public best; stack on it"
+  },
+  {
+   "outcome": "46 <= N4 and 45 = P5/U4",
+   "wave1": [
+    "exp76e (exp70b+cap6)",
+    "exp76a",
+    "exp76d"
+   ],
+   "note": "thr 0.3 or the combination hurt, cap6 alone helped; 45 = P5 already meets the target"
+  },
+  {
+   "outcome": "46 = N4 and 45 = N4",
+   "wave1": [
+    "exp76a",
+    "exp76d"
+   ],
+   "note": "division side flat: hold slot 3 for wave 2 (28 Sep 09:30-10:30Z)"
+  },
+  {
+   "outcome": "46 = NEG or 45 = NEG (either <= 0.953)",
+   "wave1": [
+    "exp76a",
+    "exp76d"
+   ],
+   "note": "division push closed on public: drop every exp73 and exp76c/e/g/h/i; hold slot 3"
+  },
+  {
+   "outcome": "45 or 46 = ERROR",
+   "wave1": [
+    "use the other ref's row"
+   ],
+   "note": "an ERRORed class-C rung is never resubmitted (R15-A1 (2)); if 46 ERRORs, drop exp76c/g/h (same stack)"
+  }
+ ],
+ "waves": {
+  "W1": "28 Sep 00:05Z / 00:25Z / 00:45Z (staggered by 20 min so completions can be attributed one by one)",
+  "W2": "28 Sep ~09:30-10:30Z, after the W1 reads (~07:40Z for secFT/fm files, ~08:30-09:30Z for CI files). CI >= U4 and secFT >= U4 -> exp76f (or exp76h on the exp70q base). CI only -> exp76b (2um) + CI on the best division base (exp76c/exp76i). secFT only -> secFT on the best division base (exp76g). Neither -> exp74 (only if uploaded and its dummy passed), plus exp76b if CI read N4 (not NEG).",
+  "W3": "28 Sep ~19:30-23:30Z, after the W2 reads: the best stack of attributable UPs, else hold",
+  "W4": "29 Sep 00:05Z: up to 3 stack/variant files of the positives",
+  "W5": "29 Sep last readable submits: CI files by ~09:30Z (L up to 9.3 h + poll gap), K2-like files by ~11:15Z (L <= 7.74 h) -> read before ~19:00Z, ticks by 20:00Z"
+ },
+ "gpu_dummy_schedule": {
+  "limit": "2 concurrent sessions; the queue has been 1-1.5 h today; each dummy runs ~25-35 min -> ~2 h per dummy per lane",
+  "lane_A": [
+   "exp75 (queued since ~13:18Z; CI runtime reference: mean COORDINJECT_WORKER s/video <= 130)",
+   "exp76c (push ~16:30-17:30Z, speculative for 46)",
+   "exp76f (stack, ~19:30Z)",
+   "exp76b (2um, ~21:30Z)"
+  ],
+  "lane_B": [
+   "exp76a NOW (~15:45Z)",
+   "exp76d (~17:45Z)",
+   "after the 45 read (~19:00Z): exp76e if 45 >= U4, else exp76g",
+   "exp76h/exp76i (~21:45Z) only if their branch is live; exp74 only after its dataset upload"
+  ],
+  "deadline": "every W1 dummy COMPLETE by ~23:30Z; W2 dummies by ~09:00Z 28 Sep (night slack)",
+  "gates": "COMPLETE; 0 Traceback/FAILED/DEADLINE:/FALLING BACK; knob lines printed. CI files: 'COORDINJECT_WORKER start ... device=cuda' on both shards, 'COORDINJECT SUMMARY: videos=4/4', replaced > 0, NOT 'no video was refined', mean worker s/video <= 130 (130-165 ok, partial coverage), ids/edges identical to the parent dummy CSV (exp70b dummy 121,252 nodes / 74 forks, sha ed7101bf) with coordinates changed. secFT files: 'Secondary SHA256: ed8c616b...' and 'Secondary artifact: .../biohub-secft-all-v1', nodes within -2%/+1% of the parent. fm files: forks <= the parent's. cap6 files: divinsert added = min(6, eligible). Before any submit: last poll.log header < 15 min old and not a 429.",
+  "push": "PYTHONIOENCODING=utf-8 python -m kaggle kernels push -p experiments/<name> (after building into experiments/<name> with the commands above)"
+ },
+ "findings": [
+  {
+   "id": "R18S-1",
+   "kind": "new-fact",
+   "urgency": "now",
+   "what": "The gap to a 0.955 display is tiny and depends on the base. We are 6th of 113 in the 0.954 block, so our best file (exp70b) sits ~5e-5 (range 3e-5 to 2e-4) below the ~0.9545 rounding edge. K2-based files start ~1.6e-4 below it: fm45 was worth ~+9e-5 (K2 was 16-17th of ~100 before the exp70b UP and 8th after it). A file on the exp70b base needs only ~+6e-5 on public.",
+   "evidence": "experiments/e10_watch/20260927T1517Z.txt (rank 282, position 6 of 113, block 277-389, >= 0.955: 276). Position history across all e10_watch snapshots: 26 Sep 16:20 12/95 ... 27 Sep 05:31 17/102 -> 08:31 8/113 -> 15:17 6/113. The exp70b UP passed 6 TeamIds (CONTEXT 07:41 UTC entry). Uniform and exponential in-bin density models give 4.4e-5 and 6.3e-5. Related but different: I-230 used in-block rank as a finals criterion (rejected); here it only prices slot candidates.",
+   "action": "Rebase every 28 Sep candidate on exp70b, or on exp70q if probe 46 reads U4/P5. Do not spend a slot on exp75 or exp72 as built unless the rebased dummy is not ready at 00:05Z."
+  },
+  {
+   "id": "R18S-2",
+   "kind": "new-hypothesis",
+   "urgency": "now",
+   "what": "Rebased combos are built and verified (scratch only). The best W1 draw is exp76a = exp70b + coordinject (a0.5, 3um): P(display >= 0.955) ~0.45 (0.40-0.50), P(<= 0.953) ~0.25. It adds 35-110 min on ~100 hidden clips (L ~8.2-9.3 h); the CI kill at 10.75 h keeps the K2 rows of unprocessed videos.",
+   "evidence": "Scratch builds reproduce K2 1f1ddb6d, exp70b b8e7ece1, exp75 ab621c13, exp72 f3d23bcd and exp70q 33ab04d1 byte-identically. exp76a (sha 1bc05bc9) differs from exp70b only in 2 cell-0 lines, the CI cell and the dataset yuki0731/biohub-coord-inject. It differs from exp75 only in the FORKMID line and cell 7. forkmid changes topology only (build_probe_kernel.py l.1735); coordinject changes positions only (coordinject_patch.py l.210). Lab: kernel path +0.00215 pooled (-0.0029/+0.0125/0/+0.0029), in-sample (bigger_levers/check_coord_refiner.json).",
+   "action": "Build into experiments/ with builds.exp76a_k2_fm_ci (Git Bash, MSYS_NO_PATHCONV=1), check sha 1bc05bc9 and push its dummy on the free lane now. Submit it at 00:05Z 28 Sep in every branch except 46 >= U4, where exp76c goes instead."
+  },
+  {
+   "id": "R18S-3",
+   "kind": "new-hypothesis",
+   "urgency": "today",
+   "what": "Plan the slots in waves that stack attributable UPs. W1: 28 Sep 00:05/00:25/00:45Z, 2-3 independent levers (CI, secFT, one division file chosen by the branch table). W2: ~09:30-10:30Z after the W1 reads. W3: ~19:30-23:30Z. W4: 29 Sep 00:05Z. W5: last readable submits on 29 Sep (CI files by ~09:30Z, K2-like by ~11:15Z). Overall P(team display >= 0.955 by 29 Sep 19:00Z) ~0.55 (0.35-0.70), P(>= 0.956) ~0.2, P(>= 0.957) ~0.1.",
+   "evidence": "Latencies from ledger.md: K2-like 6.87-7.74 h. CI adds 35-110 min (check_coord_refiner.json runtime). On 27 Sep, 8 public rungs gave one attributable UP (fm45) and none crossed 0.9545. The W1 draws are roughly independent: positions, secondary weights, insertion.",
+   "action": "Adopt branch_45_46 and waves. Keep 1 slot/day free for an E10 v3 trigger only if the user OKs R17-A4 (still open)."
+  },
+  {
+   "id": "R18S-4",
+   "kind": "plan-issue",
+   "urgency": "today",
+   "what": "tools/runtime_ledger.py maps only exp70* to the safetail family, so exp72/exp73*/exp74/exp75/exp76* read as 'family unknown' (no R5(a), no insertion-gate text). A CI file's total latency includes the post-hoc CI stage. The ledger would then print 'insertion gate MAY have fired' or UNPROVEN, and the R17-A5 / R15-A1 (4) 'L_hi <= 9.0 h' clause could drop a CI file that displays >= 0.955 from the finals proposal. Yet DIVINS_DEADLINE_S counts from KERNEL_START_TS and the K2 part ends at ~7.5 h. Same finding as PC18-02/PC18-05.",
+   "evidence": "tools/runtime_ledger.py l.54-78 (EXP_RULES), l.222-257 (r5_admission, divins_gate); coordinject deadline 37800 s + kill (coordinject_patch.py l.258-310); round18/scan_plancheck.json PC18-02, PC18-05.",
+   "action": "Pre-register in CONTEXT before the first 28 Sep submit: (a) pass --family <ref>=safetail for the exp72/exp76* refs; (b) for CI files the card condition is L_hi <= 10.75 h, and the insertion gate is read on L_hi minus the CI stage measured on the dummy (mean worker s/video x N/2). Otherwise state that CI files are public-only unless the user OKs them."
+  },
+  {
+   "id": "R18S-5",
+   "kind": "plan-issue",
+   "urgency": "today",
+   "what": "Reading a 0.954 display needs one completion per LB snapshot. The ladder watcher stopped at 07:37Z. Probes 45 and 46 finish ~3.5 h apart, so the hourly E10 snapshots can serve as S0/S1. Three W1 refs submitted together would co-complete (NEU), and W2 could not stack.",
+   "evidence": "R13-A1 (2) attribution rule; watcher STOP 07:37:07Z (CONTEXT 07:41 UTC entry); experiments/lb_poll/run_ladder_watch.sh; hourly E10 loop (e10_watch_loop.py).",
+   "action": "Stagger the W1 submits by 20 min (CI files also finish ~1 h later because of runtime). Restart run_ladder_watch.sh (read-only, 300 s) for the W1 refs from ~07:00Z 28 Sep."
+  },
+  {
+   "id": "R18S-6",
+   "kind": "plan-issue",
+   "urgency": "today",
+   "what": "The exp73 decision table (prep_div_combos.json) is stale. D is now D0 (43/44 = 0.954, no UP), so its DC-push rows are dead, and C0 must split into U4 and N4. Rows R4/R5 still put exp73s/exp73c/exp73a (P ~0.05-0.10) into slots. Every exp73 rung is on K2 or has no cap6-on-fm single.",
+   "evidence": "CONTEXT 13:14 UTC probes 43/44 read; prep_div_combos.json decision_table R4-R6; ins_cap6 lab (0 TP / 4 FP / 81 unannotated); amanatar V6 = 0.901; round18/scan_plancheck.json PC18-03 (28 Sep over-subscribed).",
+   "action": "Replace the exp73 table with branch_45_46. The only division files kept are exp76e (cap6 on fm, if 45 >= U4), exp73m (I3+fm, if 46 >= U4) and the exp70q stacks exp76c/g/h. Drop all DC 0.15 and I4 rungs."
+  },
+  {
+   "id": "R18S-7",
+   "kind": "plan-issue",
+   "urgency": "today",
+   "what": "Coordinject can silently do nothing. A new version of yuki0731/biohub-coord-inject (sha mismatch) or a failed worker leaves submission.csv unchanged, and the slot is spent on a byte-identical exp70b.",
+   "evidence": "coordinject_patch.py l.324 'no video was refined; submission.csv unchanged', l.355 FAILED (fail-soft); check_coord_refiner.json fixes (dataset version since 25 Aug).",
+   "action": "Dummy gate: replaced > 0 on 4/4 videos, and the CSV coordinates differ from the parent dummy CSV. Before each CI submit, confirm with a read-only check that the dataset version is unchanged."
+  },
+  {
+   "id": "R18S-8",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "Nothing new reaches R8 in this round. Every candidate above combines items the user has already approved: the coordinject/exp75 slot plan (12:49Z), exp72 (Q2 yes) and the division rungs of aggressive mode (11:14-11:16Z). The constant z shift (I-029) is not proposed: in-sample lab +0.0016 on both embryos, but judged oversold, the forum dz lost 0.0031 on the LB, and it needs new code plus a new user OK. Overlap-consensus, DC <= 0.15 pushes and the other closed families are not re-proposed.",
+   "evidence": "research/KNOWLEDGE/IDEAS.md I-029, I-310, I-343, I-345, I-349; round8/v_recheck_r8-rc-a-embryo-constant-z-shift-on-x138.json.",
+   "action": "None."
+  },
+  {
+   "id": "R18S-9",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "Answer to the user's question: yes, roughly. Research rounds run every 2-4 h (median ~3 h), not strictly every 2-3 h. The workflow launches them; the E10 watch loop is separate and runs hourly.",
+   "evidence": "round report.json times (UTC): r10 26 Sep 15:43, r11 17:31, r12 21:01, r13 27 Sep 01:27, r14 02:11, r15 06:00, r16 08:57, r17 11:28, r18 started 15:17 -> gaps 1.8/3.5/4.4/0.7/3.8/3.0/2.5/3.8 h. CONTEXT 22:46 UTC RESUME POINT: 'research rounds every ~2.5 h via bash timers'. The round-18 browser and plancheck scans give the same answer (start gaps 1.7-4.2 h).",
+   "action": "Tell the user: about every 3 h (1-4 h spread). Tighten the timer if a strict 2-3 h cadence is wanted."
+  }
+ ],
+ "notes": "research/wf_ideas_v4/round18/scan_hyp_slots_28sep.notes.md"
+}

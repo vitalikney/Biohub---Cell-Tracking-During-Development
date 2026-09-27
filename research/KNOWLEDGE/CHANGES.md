@@ -973,3 +973,73 @@ Curator logs: `research/KNOWLEDGE/_curation/4/`.
   - 12:00Z line: all three curators said [now] 'log R17-A1' -> [now] 'complete it', because a6ffbc9 landed after they ran.
   - Aggressive-rung evidence: [info] (facts) vs [now] (watch) -> folded into the [now] R17-A3 alert.
   - Untracked levers: [before-finals] (facts) vs [today] (ideas, watch) -> [today], because 28 Sep slots start at 00:00Z and exp72 keeps 00:05Z.
+
+## 18 - 2026-09-27 ~16:05 UTC (curation 18; git HEAD b853642 = origin/main + untracked `research/wf_ideas_v4/round18/`, `experiments/e10_watch/20260927T1343Z..1543Z.txt`, `experiments/ds_secw_corwin_v1/weights/`)
+
+**Sources since curation 17:**
+- `CONTEXT.md` l.2952-3010, 7 entries: 12:00 line; R8 FULL RECORD 12:12; last-slot pre-score line 12:12; bigger levers 12:49; P43/P44 READ 13:14; exp71 done + exp72 built 13:27; P46 exp70q submitted 14:37.
+- Commits ac08c5e, c86fd5a, f28d5f5, 0408ab1, 2981590, b853642 (`git log`).
+- Round 18: `research/wf_ideas_v4/round18/REPORT.md`, `report.json` R18-A0..A10.
+- Polls and LB: `experiments/lb_poll/poll.log` 16:03:10Z (P45/P46 PENDING); `experiments/e10_watch/watch_loop.log` (4 runs, 0 signals); `experiments/e10_watch/20260927T1543Z.txt` (rank 283 / 3,952).
+
+**Ideas** (`IDEAS.md` CHANGES (18) l.88-99; `ideas.json` meta.curations[n=18]; `_curation/18/ideas.json`):
+- **New:**
+  - I-373..I-377, I-379: exp70b rebase and the exp76a/d/c/g/h/e/i/f builds.
+  - I-380: R18S-3 waves, rejected.
+  - I-381..I-383: slot budget, CI no-op/queue-stall guard, ledger families.
+  - Post-deadline or rejected: I-378 (exp76b), I-384..I-387.
+  - I-388: fixed round timer, only if the user asks.
+- **Status changes:**
+  - lb-tested: I-341, I-342 (0.954/0.954) and I-344 (letter (b) did not fire).
+  - refuted: I-362 (exp70r), I-360 (exp70n), I-366 (27 Sep collision moot).
+  - Other: I-361 submitted as P46; I-324 exp75 downgraded to a sign probe; I-119 exp72 dummy clean.
+- **Counts c17 -> c18:** 372 -> 388. lb-tested 48 -> 51, refuted 186 -> 192, deferred 42 -> 45, in-plan 73 -> 76, open 2 -> 3; lab-tested 21 is unchanged. The strict orphan is still I-233.
+
+**Facts and decisions** (`FACTS.md`, `DECISIONS.md`, rows marked [c18]; `_curation/18/facts.json`):
+- **New facts:**
+  - F-RUN-31: latency drift; P45/P46 windows (l.264).
+  - F-RUN-32: coordinject runtime budget; no ledger family (l.265).
+  - F-RUN-33: round cadence, mean 2.72 h, median 2.52 h, range 1.73-4.25 h (l.266).
+  - F-MOD-34: exp75/exp76 CI line (l.328).
+  - F-MOD-35: primary-logit roles (l.329).
+  - F-TRN-49: display-edge arithmetic (l.383).
+- **Contradictions:** new C-144..C-149, e.g. C-144 'exp75 best chance' vs sign probe and C-148 cadence (l.532-537); 14 contradictions updated.
+- **DECISIONS.md:**
+  - §1: P46 row (l.177) and the new built/planned table (l.319).
+  - §2: snapshot l.523 (#37 + #38 TICKED; CI and secFT files public-only).
+  - §2f: E10 v3 loop live (l.786).
+  - §2h: rows for the R8 record, the last-slot line, the 43/44 read, the round-18 card and the 28 Sep slot budget (l.861-866).
+  - §3: the R8 cutoff is logged; the 02:00Z cap question is open.
+
+**Watchlist** (`WATCHLIST.md`; `_curation/18/watch.json`):
+- **Done:** 12:00/12:12 records, the last-slot line, the 43/44 read, E10 v3 committed and live, round 17 committed, exp71/exp72, P46 submitted.
+- **Superseded:** W173 -> W184, W175 -> W185, W172 -> W189, W180 submit step -> W190.
+- **New:** W183-W194, reminders T100-T108, insights I187-I197.
+- **Still overdue:** W126 (RESULTS rows P39-P46), W176 (ROUND RECORDs), W182 (NEVER_SUBMIT for exp70j/k), H1, `fb_ins35.py`.
+
+**Alerts** (`INDEX.md` TOP ALERTS, 8 after dedup):
+- **Resolved since curation 17:**
+  - The 12:00Z line was completed by the 12:12 full record (`CONTEXT.md` l.2955-2971).
+  - The R17-A3 line was logged before any 43/44 score (l.2972-2982).
+  - The exp70q dummy ran and P46 was submitted (l.3007-3010).
+  - E10 v3 tooling was committed (c86fd5a) and the loop is live.
+  - The untracked 28 Sep levers were committed and logged (l.2983-2994).
+  - The 43/44 read happened (l.2995-3000).
+- **Carried over, re-keyed to round 18:**
+  - Pre-score card: R17-A5 -> R18-A1.
+  - RESUME POINT/MEMORY/timers: R17-A7 -> R18-A2.
+  - RESULTS rows, ROUND RECORDs, NEVER_SUBMIT, HINDSIGHT GUARD, `fb_ins35.py`, I-233.
+- **New:**
+  - User cadence answer and the three plan corrections (R18-A0).
+  - Build and push exp76a/d.
+  - exp75 queue stall and the CI risk for W1 (19:00Z decision).
+  - runtime_ledger families.
+  - exp72 gate values not logged; probe.json boilerplate.
+  - The 'v' suffix for L_hi > 8.0 h.
+  - The 02:00Z cap and exp74 questions.
+  - sha and MSYS path traps.
+  - The exp73 SI-name collision.
+- **Curator disagreements settled here:**
+  - Pre-score card: [now] (ideas, facts) vs [today] (watch) -> [now], because the 17:50Z deadline is <2 h away.
+  - RESUME POINT/timers: [now] (ideas, watch) vs [today] (facts) -> [now], because the 45 read timer must exist before ~17:56Z.
+  - The cadence answer was marked stale/contradiction/risk by the three curators -> one [now] alert that carries the plan corrections.

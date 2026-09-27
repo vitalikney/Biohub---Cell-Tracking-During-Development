@@ -1,0 +1,80 @@
+{
+ "task": "round 18 scan_hyp_new_levers: NEW BIGGER LEVERS (retrain-family and fusion) for >= +0.002 public within 2 days",
+ "written_utc": "2026-09-27T15:35Z",
+ "complete": true,
+ "summary": "Honest answer: no new lever has P(public >= +0.002) above ~10-15%. The retrain family is 0 for 5 on our LB (exp08 -0.016, friend A -0.025, exp23 -0.007, exp03B -0.003, soup -0.004), and imissher measured a synthetic-adapted secondary at -0.008 on the 0.947 stack. exp71 turned out to be a very small nudge: rel L2 0.3-4.4% on 3 modules, plus a detect_head bias shift that x138's per-frame mean/std alignment cancels. Its dummy moved nodes -0.16% and forks 75 -> 80. So exp72 is most likely to display 0.954. Only ONE new item is worth building now, because it is nearly free: N1, a delta-extrapolation dose rung (ExPO-style theta0 + 2*(theta_ft - theta0)). It needs no training GPU, only CPU plus one ~0.5 GPU-h dummy, and it is submitted only if exp72 reads UP. N2 (a longer or stronger fine-tune run as two recipes on the two idle T4s of one session) is also conditional on an exp72 UP. Everything else does not reach the bar or re-proposes a closed family: the head-only primary FT (feature-safe for V1284 but value-bounded), synthetic pretraining (I-120), gated fusion or WiSE interpolation (I-126/I-335) and a DeepCenter retrain (no trainer, asymmetric downside). Plan issue: pre-register the exp72 decision table now and move exp74 (Corwin secondary) behind exp72's read. The best existing odds remain exp75 (coordinject, P(>= 0.955) ~0.35 per check_coord_refiner.json). Research-round cadence so far (REPORT.md headers): r10 15:16Z, r11 17:05Z, r12 20:00Z, r13 22:45Z, r14 01:45Z, r15 05:30Z, r16 08:30Z, r17 11:00Z, r18 ~15:20Z. Gaps are 1.8-4.3 h, median ~3 h; the last gap was 4.3 h.",
+ "findings": [
+  {
+   "id": "R18NL-1",
+   "kind": "new-hypothesis",
+   "what": "N1 DELTA-EXTRAPOLATION DOSE RUNG (task-vector scaling; new, not in IDEAS). exp71x2 weights = theta0 + 2*(theta_ft - theta0) on the 10 changed keys (decoder_blocks.1 conv/BN affine, unet.head, detect_head); BN running stats unchanged; optional reserve k=3. MECHANISM: exp71 is a first-order small step (lr 1e-5, 1 epoch, rel L2 <= 4.4%), so ExPO-style extrapolation approximates a 'longer/stronger' distilled FT without training. x138 re-aligns secondary logits per frame (mean/std, clamp 0.5-2), so the bias part cancels and k scales only the shape change. ARITHMETIC: if exp72's true effect is e1, k=2 gives ~2*e1 in the linear regime. To reach +0.002 display, e1 >= ~+0.001 is needed, i.e. exp72 must itself show an attributable UP. P(exp72 UP) ~0.2 x P(k=2 >= 0.955 | UP) ~0.5 = ~0.10 unconditional. RUNTIME: identical architecture, so the hidden run stays ~7.4-7.6 h (K2 ledger); the dummy is ~26-31 min. GATE: submit ONLY if exp72 displays >= 0.955, or 0.954 with an attributable UP (passed-teams test). Dummy: 'Secondary SHA256: <new sha>' + 'Secondary artifact: .../biohub-secft-x2-v1'; nodes within [-2%, +1%] of 121,252; forks reported, and k=2 forks should move in the same direction as exp72's 75 -> 80; 0 Traceback/FAILED/DEADLINE:/FALLING BACK; runtime <= 1,920 s. A second-order check: the k=2 dummy node delta should be ~2x exp72's -0.16%; a non-linear jump means stop. RISK: extrapolation leaves the teacher anchor that kept exp71 small; the downside is limited to one public-only slot (class C, never a final without Q3).",
+   "evidence": "_dl/exp71_secft_all/exp71_train_log.json (param_deltas: detect_head.bias rel 0.498, others 0.003-0.044; proxy ratio 0.995/1.007); _dl/biohub-exp72-k2-secft/biohub-exp72-k2-secft.log l.129-137; research/wf_ideas_v4/reach0955/v_retrain.json corrections 3 (per-frame alignment); ExPO https://arxiv.org/abs/2404.16792 ; WiSE-FT https://arxiv.org/abs/2109.01903 ; CONTEXT 13:27Z entry (exp72 dummy -0.16% nodes, forks 80 vs 75)",
+   "action": "Main session, optional and cheap: write the k=2 weights on CPU from _dl/exp71_secft_all/secft (a ~20-line torch script; assert only the 10 keys differ and all are finite), create the private dataset vitaliineibauer/biohub-secft-x2-v1 (--dir-mode zip; manifest model.weight_sha256 = new sha, parent 9bac2fa0), build exp72x2 with the exp72 command but the new sha/manifest/dataset, and push the dummy tonight on a free lane after exp75/exp72. Log in CONTEXT, BEFORE the exp72 score, that exp72x2 is submitted only on an exp72 UP. Needs the user's OK as a new public rung (Q2 covered exp72 only).",
+   "urgency": "today"
+  },
+  {
+   "id": "R18NL-2",
+   "kind": "new-fact",
+   "what": "The exp71 session had 2 T4s visible (n_visible_gpus 2) and used only one. Any further fine-tune can train two recipes in ONE session: CUDA_VISIBLE_DEVICES=0 and 1 as two processes, num_workers 2 each (the box has 4 vCPUs, so data loading may slow each run from 0.40 to ~0.5 s/it). One epoch is ~2.1-2.6 h plus ~0.5 h overhead. Whether T4x2 costs more quota per hour than one T4 is UNVERIFIED; read the Settings page before and after.",
+   "evidence": "_dl/exp71_secft_all/exp71_train_log.json: cuda_device Tesla T4, n_visible_gpus 2, 0.403 s/it with num_workers 4, train 7,539 s for 18,707 it",
+   "action": "Use only if N2 is started; otherwise info.",
+   "urgency": "info"
+  },
+  {
+   "id": "R18NL-3",
+   "kind": "new-hypothesis",
+   "what": "N2 LONGER / STRONGER DISTILLED FT PAIR (conditional). In one T4x2 session: GPU0 = continue from ed8c616b for epoch 2 (same recipe, loader seed 271828); GPU1 = fresh 1 epoch from 9bac2fa0 at lr 3e-5 (3x). Keep the teacher-BCE, the feature MSE and the frozen BN; do NOT unfreeze more modules. The encoder feeds the secondary edge features (0.15 edge weight + edge-feature TTA), so unfreezing changes linking too; that is the exp23/imissher failure direction (-0.007/-0.008). ARITHMETIC: same as N1; true training may track the loss better than extrapolation, but the evidence says more drift = harm. P(>= +0.002) ~0.05-0.10 unconditional. RUNTIME: training ~3 h wall; the inference hidden run is unchanged (~7.5 h). GATE: start only after exp72 reads UP (~07:30-08:00Z 28 Sep). Then train 08:15-11:30Z, dataset+build+dummy ~12:30Z, submit ~13:00Z, score ~20:30Z 28 Sep. The dummy gates are the same as N1. Of N1/N2 only the better-looking one gets a slot, chosen by its dummy node delta closest to 2x exp72's; no stacking.",
+   "evidence": "research/wf_ideas_v4/reach0955/r_retrain.json RT-6 (multi-epoch NO-GO then: 3 epochs 7-15 h estimate; now measured 2.1 h/epoch); v_retrain.json no_go_items (drift raises peak confidence -> nodes); imissher https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/743222 ; exp23 probe 13 -0.007",
+   "action": "Do not start speculatively unless the GPU quota after the scheduled dummies (exp72, exp75, exp74, exp73 rungs ~0.5 h each) is >= 10 h. Default: start only on an exp72 UP. Needs a user OK (new training, beyond Q1).",
+   "urgency": "later"
+  },
+  {
+   "id": "R18NL-4",
+   "kind": "new-hypothesis",
+   "what": "FINE-TUNED PRIMARY, V1284-safe form = detect_head-only distilled FT of the PRIMARY: unet features stay byte-identical, so the V1284 head (reads primary unet_out[:, f_idx]), lowrefine, DaughterNet and the edge predictor are unaffected; only the primary detection logits change. VERDICT: does not reach. The primary enters detection at 0.2 after alignment (0.8 is the secondary; the retention guard only switches movies to primary-only below 0.90 retention). A linear 1x1 head on fixed features under distillation moves less than exp71 did, so the expected public effect is <= ~1/4 of exp72's, i.e. far below +0.002. Any FT of the primary's decoder or encoder hits the silent V1284 OOD failure (I-097/I-107; bounded() caps at 2 um, so the guard cannot fire). Do not build.",
+   "evidence": "experiments/exp56_x138_verbatim (cell 4 l.525: _v1284_refine(..., unet_out[:, f_idx])); IDEAS I-097, I-107 (R10-RC-B); x138 cell 3 l.658 BIOHUB_SECONDARY_DETECTION_WEIGHT 0.80; exp72 dummy log l.137 retention guard 0.90",
+   "action": "None; record as closed on value (post-deadline: a primary FT only together with a V1284 head retrain).",
+   "urgency": "info"
+  },
+  {
+   "id": "R18NL-5",
+   "kind": "recheck-old",
+   "what": "SYNTHETIC PRETRAINING (hikaggler) stays closed (I-120), with fresh evidence against it on a public stack. imissher: a secondary adapted for 6 h at lr 1e-5 on 600 synthetic + 40 real videos = 0.939 on the 0.947 stack (-0.008). hikaggler's +0.012 was on his own 0.939-era model, not a public-stack gain. y3uanm's synthetic set is non-public. A usable pretrain (>= 500 sequences) plus a distilled FT does not fit in 2 days with an honest read. Not re-proposed.",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/743222 ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/741749 ; research/wf_ideas_v4/reach0955/r_retrain.json RT-1 (v2 synthetic not public)",
+   "action": "None (post-deadline list only).",
+   "urgency": "info"
+  },
+  {
+   "id": "R18NL-6",
+   "kind": "recheck-old",
+   "what": "UNCERTAINTY-GATED FUSION of our FT secondary with the original is the I-126/I-335 family (deferred/refuted). Two new facts make it worse now. (a) exp71's delta is tiny, so gating between two nearly equal maps changes almost nothing. (b) Running both secondaries costs one more encode per window (~+25% of the GPU phase, the I-156 runtime note), pushing the hidden run from ~7.5 h toward ~9 h against the safetail margin. WiSE-style interpolation (alpha < 1) only dilutes a delta that is already small. The only dose direction with any upside is alpha > 1 (N1). Not re-proposed.",
+   "evidence": "IDEAS I-126, I-335, I-156, I-352 (amanatar V6 max-blend bundle = 0.901); WiSE-FT https://arxiv.org/abs/2109.01903",
+   "action": "None.",
+   "urgency": "info"
+  },
+  {
+   "id": "R18NL-7",
+   "kind": "new-hypothesis",
+   "what": "DEEPCENTER FINE-TUNE ON BOTH EMBRYOS (DC was trained on 44b6 only; the safe-division DC gate is the most sensitive public term: dc0.30 -0.005, while dc0.20/0.225 = 0.954). VERDICT: does not reach. No DeepCenter trainer exists in the repo (only the pilkwang weights). The 0.25 threshold is calibrated to the current DC output distribution, so a retrain acts like an uncalibrated DC rung plus a shape change, and the public DC response is asymmetric (up: 0 at 0.20/0.225; down: -0.005 at 0.30). Estimate P(>= +0.002) ~0.10, P(<= -0.003) ~0.30. Cost: new training code + ~3-4 GPU-h + dummy; earliest ~28 Sep evening. Post-deadline, with the LOEO DC bed (I-368).",
+   "evidence": "IDEAS I-074, I-304, I-341, I-342; CONTEXT 04:58Z D1 read (dc0.30 = 0.949) and 13:14Z 43/44 read (both 0.954); a grep for a DeepCenter trainer found only replay/runner scripts under .claude/worktrees",
+   "action": "Add to the post-deadline list; do not build.",
+   "urgency": "info"
+  },
+  {
+   "id": "R18NL-8",
+   "kind": "plan-issue",
+   "what": "The exp72 read has no pre-registered follow-up table, and exp74 (Corwin secondary swap, centre ~0.948, P(>= 0.955) ~0.10) is scheduled independently of it. exp72 is the cheapest measurement of how sensitive the public embryo is to the secondary slot, so its read should steer both the FT line and exp74. Proposed table, logged BEFORE the exp72 score (~07:30-08:00Z 28 Sep). (i) >= 0.955, or 0.954 with an attributable UP: submit N1 (exp72x2), and exp74 stays a free-slot lever. (ii) 0.954 without UP: FT line closed, no N1/N2; exp74 only if a slot would otherwise idle. (iii) <= 0.953: the slot is harmful to touch; close the FT line and drop exp74 (a much larger swap in the same slot). exp72's fork change (75 -> 80 on the dummy) means the most likely public mover is the division term (one TP ~0.0015-0.0023), not detection; read it with the division-unit scale (I-347).",
+   "evidence": "research/wf_ideas_v4/bigger_levers/check_corwin_secondary.json (centre 0.948, p_ge_0955 0.10, 'schedule after exp72 unless a slot would otherwise be idle'); CONTEXT 12:49Z and 14:37Z entries (28 Sep plan); CONTEXT 13:27Z (exp72 dummy)",
+   "action": "Main session: write this 3-row table into CONTEXT before 00:05Z 28 Sep (exp72 submit) and order the 28 Sep slots as exp72 -> exp75 -> (division rungs per the 45/46 reads) -> exp74 last.",
+   "urgency": "today"
+  },
+  {
+   "id": "R18NL-9",
+   "kind": "plan-issue",
+   "what": "Honest ceiling for this focus: nothing new reaches the old R8 standard (lab gate + dummy + OK by 27 Sep 12:00Z), and no new retrain-family item has P(public >= +0.002) above ~0.10-0.15. Our models were trained on all 199 videos, and hidden embryos differ, so there is no honest lab for any detector change; the only reads are the LB and dummy node/fork deltas. The 0.957+ teams built their own full pipelines over weeks (Corwin: SWA-trained secondary + GBM trio + MITOSE head; Quantizr: an offline-validated pipeline in 11 subs), not a 1-epoch delta on the public secondary. Rank-wise, the realistic best remaining shots are already built: exp75 (P(>= 0.955) ~0.35), division rungs by the 45/46 reads, then N1 only on an exp72 UP.",
+   "evidence": "research/wf_ideas_v4/reach0955/intel_0960_0966.json (Corwin, Quantizr rows); IDEAS I-097..I-107 LB rows; research/wf_ideas_v4/bigger_levers/check_coord_refiner.json public_display",
+   "action": "Tell the user plainly: the retrain line is a lottery ticket with a small prize; do not spend 28 Sep slots on N2 or on unconditional FT variants.",
+   "urgency": "today"
+  }
+ ]
+}

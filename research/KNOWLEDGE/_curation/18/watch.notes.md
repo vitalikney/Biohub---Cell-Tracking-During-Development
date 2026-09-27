@@ -1,0 +1,6 @@
+- 2026-09-27T15:48:38Z start round 18 watch; no prior watch.json in 18
+- 2026-09-27T15:49:07Z read CONTEXT l.2940-3010 (new entries 12:01-14:37Z), round18 REPORT.md + notes (complete 15:46Z)
+- 2026-09-27T15:49:47Z checks: 0 ROUND 14-18 RECORD; last RESUME POINT l.2599; RESULTS last row probe 38 (l.71); no exp76* dirs; no NEVER_SUBMIT; E10 loop RUN 4 15:44Z 0 signals; 45/46 PENDING 15:43:07Z; MEMORY l.8/9 stale; round18 untracked
+- 2026-09-27T15:50:59Z status decided: done W168/W169/W170/W171/W174(loop), I172/I173 resolved; new W183-W194 (R18-A0..A10 + round cadence), T100-T107, I187-I196. CronList: no round timer, no 45/46/00:03Z timers, 3 fired one-shots still listed. Writing WATCHLIST
+- 2026-09-27T15:52:56Z WATCHLIST.md written (curation 18); writing watch.json
+- 2026-09-27T15:53:41Z watch.json written (complete, 15 alerts). No other repo file touched.

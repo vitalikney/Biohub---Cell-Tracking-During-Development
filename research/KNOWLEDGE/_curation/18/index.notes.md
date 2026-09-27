@@ -1,0 +1,4 @@
+- 16:03Z start: index.json absent; read INDEX (c17) and CHANGES tail.
+- 16:08Z gathered: HEAD b853642; CONTEXT 3031 lines, `## 9.` l.3011, new entries l.2952-3010; poll 16:03:10Z P45/P46 PENDING; snapshot 1543Z rank 283/3952, >=0.955 277; watch loop 4 runs 0 signals; no experiments/exp76*; fb_ins35 not in repo. IDEAS c18 l.88-99 (388 ideas); FACTS F-RUN-31..33 l.264-266, F-MOD-34/35 l.328-329, F-TRN-49 l.383, C-144..149 ~l.532-537; DECISIONS P46 l.177, built table l.319, snapshot l.523, 2h card l.864-866, R-table l.872; WATCHLIST OVERDUE l.65, NEXT 24H l.79, LATER l.110, INSIGHTS l.143.
+- next: write INDEX.md, append CHANGES §18, index.json.
+- 16:15Z wrote INDEX.md (76 lines) and appended CHANGES §18; writing index.json.

@@ -3008,6 +3008,58 @@ Mention it to the user in one line (R9-A8 item 6).
   (dummy clean: 121,252 nodes / 82 forks, run ~1,874 s vs K2 ~1,512 s). exp75 was still QUEUED on Kaggle at 14:36Z (pushed
   13:18Z), so the last 27 Sep slot went to exp70q as logged. 0 slots left today. Scores: 45 ~18:30-19:00Z, 46 ~22:00-22:30Z.
   28 Sep: exp72 at 00:05Z (dummy running), exp75 when its dummy passes, then per the reads.
+- 2026-09-27 16:08 UTC, ROUND 18 PRE-SCORE CARD (R17-A5 as corrected by round 18; no new rule, only the read map). Written while the last poll.log header 15:52:5xZ (last before this entry) shows 56606948 (45 exp70g) and 56611472 (46 exp70q) PENDING.
+  (1) CODES per ref. Read at the first poll header where the ref is terminal, plus one LB download (TeamIds passed vs
+    the previous snapshot, as at 13:14Z):
+  P5 = display >= 0.955;
+  U4 = 0.954 and >= 1 TeamId passed that no other completion explains;
+  N4 = 0.954 and 0 passed;
+  NEG = <= 0.953;
+  ERR = ERROR.
+  MASKED = no UP, but it completed after another of our files showed an UP in the same window. The lever stays open;
+    this is not N4.
+  Suffix 'v' = the ledger insertion-gate column is not 'did NOT fire' (L_hi > 8.0 h). The display stands, but the read
+    does not open or close the cap/threshold line. Upgrade 'v' to 'confounded' only if the kernel log shows 'DIVINS
+    SKIPPED (deadline)'.
+  Old table names: C+/L+ = P5 or U4; C0/L0 = N4; C-/L- = NEG.
+  (2) FINALS (class-C letter (b), 11:09:39Z).
+  - A non-coordinject file that is COMPLETE, displays >= 0.955 and has ledger L_hi <= 9.0 h (the pre-registered finals
+    clause, NOT the 9.5 h R5(a) clause) -> one chat message proposing {it, #37 56563521}. If several qualify, one
+    message with display, dummy forks, insertion yes/no, L bounds and current SELECTED. The session never re-ticks.
+  - A coordinject file (exp75, exp76a/b/c/f/h/i) is PUBLIC-ONLY. A >= 0.955 display is reported as info with the
+    caveat 'post-CSV integer coordinate shift, ~1e-4 nudge read on one embryo, refiner lab in-sample'. It becomes a
+    finals option only if the user re-ticks after reading that.
+  - secFT files (exp72, exp76d/g) stay public-only while Q3 is unanswered.
+  - Display <= 0.954 -> info + code only.
+  (3) LEDGER. Until EXP_RULES is fixed (R18-A5), pass --family <ref>=safetail for exp72/exp73*/exp74/exp76d/e/g. For
+    coordinject files, admit L_hi <= 10.75 h (COORDINJECT deadline 37800 s + 900 s kill) and read the insertion gate on
+    L_hi minus the CI stage (dummy mean COORDINJECT_WORKER s/video x up to 65 videos per worker).
+  (4) BRANCH TABLE for 28 Sep W1 (replaces the prep_div_combos rows; the 13:14Z D0 read already closed the DC side):
+  - 46 in {P5, U4} -> exp76c (exp70q+CI), exp76g (exp70q+secFT), and exp73m if 45 is not NEG, else exp76a.
+  - 46 in {N4, MASKED} and 45 in {P5, U4} -> exp76e (exp70b+cap6), exp76a, exp76d.
+  - 46 = N4 and 45 = N4 -> exp76a, exp76d; slot 3 held for W2.
+  - Either NEG -> exp76a, exp76d; drop every exp73* and exp76c/e/g/h/i; slot 3 held.
+  - ERR -> use the other ref's row; an ERRORed rung is never resubmitted; 46 ERR drops exp76c/g/h.
+  - Fallback when a W1 file has no COMPLETE passing dummy by 23:45Z: exp76a -> exp72 (as built, dummy clean) -> exp75
+    (only if its dummy passed).
+  - Out: DC 0.15 rungs exp73a/h/l/p/v; exp73s/c; exp76b (MAX_UM knob rung).
+  (5) COORDINJECT outcomes (exp76a or exp75):
+  - display tie -> no alpha/MAX_UM follow-up;
+  - attributable UP -> one 29 Sep stack 'best division file + coordinject' with the same knobs (ALPHA 0.5, MAX_UM
+    3.0);
+  - <= 0.953 -> coordinject closed.
+  (6) FINE-TUNE outcomes (exp76d or exp72):
+  - P5 or U4 -> the line stays open, but no N1/N2 build before the deadline;
+  - N4 -> the fine-tune line is closed; exp74 only as idle-slot filler with a user OK;
+  - NEG -> close the line and drop exp74.
+  (7) PROBE 46: if its ledger L_hi > 8.0 h -> code with 'v' (see 1).
+  (8) Add 56606948, 56611472 and every 28 Sep ref to the private-read list.
+- 2026-09-27 16:08 UTC, REBASE FOR 28 SEP (round 18 R18S-1): the 28 Sep files move onto exp70b (K2 + forkmid 4.5; our best public file):
+  exp76a = exp70b + coordinject ALPHA 0.5 (sha 98a9e647), exp76d = exp70b + our distilled secondary (sha 89d71960; dummy
+  pushed 16:1xZ); exp72 (dummy clean) and exp75 (dummy QUEUED on Kaggle since 13:19Z, page shows "Queued...", T4 x2)
+  stay as fallbacks. Security-warning audit (round-18 report agent): kernels list --mine and the submissions list show
+  nothing unexpected (last kernel exp72 13:27Z, last submit probe 46 14:36:59Z); no exp76 kernel existed before the
+  main session pushed exp76d.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

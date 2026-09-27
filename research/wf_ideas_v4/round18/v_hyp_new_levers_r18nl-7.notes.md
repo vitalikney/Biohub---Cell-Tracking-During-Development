@@ -1,0 +1,11 @@
+# v_hyp_new_levers R18NL-7 skeptic notes (DeepCenter fine-tune on both embryos)
+- 2026-09-27T15:34Z start. No prior v_hyp_new_levers_r18nl-7.json existed.
+- Source finding: research/wf_ideas_v4/round18/scan_hyp_new_levers.json R18NL-7 (written 15:35Z).
+- F-DAT-12 (research/KNOWLEDGE/FACTS.md l.187): DeepCenter trained on the 71 44b6 clips only, VALIDATED/checkpoint-selected on 6bba -> 6bba is the only honest bed for its threshold. Confirms the premise.
+- Public reads (CONTEXT l.2796-2803, 13:14Z entry): dc0.30 (probe 41 exp70d) = 0.949 vs K2 0.954 (-0.005; forks 75->55 on dummy clips); dc0.20 (43, 96 forks) and dc0.225 (44, 88 forks) = 0.954 each, 0 TeamIds passed -> no UP. Asymmetry claim holds (display-bin level).
+- Trainer check: grep over tools/ and experiments/ *.py for deepcenter + optimizer/backward -> only experiments/local_friend_a_b32_divpair/runner.py (division-pair model, DC used as a veto input, not trained). No DC trainer. Weights are a third-party pack (pilkwang support pack, CONTEXT l.791); recipe unknown.
+- I-368 (IDEAS l.562) = post-deadline LOEO OOF division-transfer bed (DeepCenter-OOF) -> correct pointer. I-348 (per-embryo DC study) is also relevant, post-deadline.
+- Rules: R8 passed 12:00Z; user lifts cover only exp72 (Q2), E10 v3 ports, division-side public rungs (11:14/11:16Z). A DC retrain is none of these -> needs a new user OK. GPU queue congested (exp75 dummy QUEUED since 13:18Z per 14:37Z entry). 28 Sep slots already routed: exp72 00:05Z, exp75, then per 45/46 reads.
+- Extra feasibility point the finding omits: training on BOTH embryos consumes 6bba, the only honest validation/threshold bed -> no checkpoint selection and no threshold calibration possible; only a LOEO scheme (I-368) is honest, which doubles the GPU cost.
+- Value: retrain/model-swap family 0 for 5 on LB (v_retrain.json via R18NL-5 sibling); DC band is the most sensitive public division term, so a distribution shift of DC scores acts like an uncalibrated threshold rung; downside (-0.005 at one step) > upside (0 at two steps). P(+0.002) ~0.10 looks generous; ~0.05 is closer.
+- Verdict: claim + action (post-deadline, do not build) hold -> refuted=false, with the minor corrections above.

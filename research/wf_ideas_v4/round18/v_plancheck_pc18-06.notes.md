@@ -1,0 +1,10 @@
+- 2026-09-27 15:31Z start PC18-06 verify. No prior json. CONTEXT.md 3031 lines; last RESUME POINT l.2599 (26 Sep 22:46Z).
+- 15:33Z grep CONTEXT.md: RESUME POINT hits l.2006/2148/2205/2599; last = 26 Sep 22:46Z. CONFIRMED missing R17-A7 block (due ~15:00Z).
+- ROUND RECORD grep: ROUND 10-13 RECORD present (l.2230/2342/2475/2626); ROUND 14 only PRE-SCORE NOTES (l.2750); ROUND 15/16/17 RECORD = 0 hits. CONFIRMED.
+- E10 v3 (l.2917) has no submit-edge line (target <= 29 Sep 02:00Z; final 19:00Z - (latency + 0.5 h), per round17 R17-A6). grep 'latest submit|02:00Z' last hit l.2730 (Q2 exp72). CONFIRMED.
+- CronList 15:3xZ: 012fa6dd, 328f7392, 18ff4796, bb224de9, 2e87e414 (recurring hours 0,3,..,21 LOCAL), 5b23a3ed/54a8f20d/cdd738f1 (07:21/08:21/09:31 local = 04:21/05:21/06:31Z, past). Shell TZ = RTZ +0300 -> cron fields are LOCAL. No timer for 45 read / 46 read / 00:03Z batch. CONFIRMED.
+- 2e87e414 ticks at 18:04Z, 21:04Z, 00:04Z (local 21/0/3) but its prompt is E10 P1 only -> does not cover the reads or submits.
+- MEMORY.md l.8 'E10 v1 in force, v2 pending; retrain needs explicit yes' = stale (E10 v3 11:08Z; exp71/72 yes 11:11:40Z; aggressive mode 11:16Z). l.9 'latest 26 Sep 22:46 UTC' becomes stale once RP written. CONFIRMED (the system-reminder copy is older still).
+- fb_ins35.py: still only in scratchpad r16rcb/ (fb_ins35.py, out.json); not in experiments/exp60_trainlab/ (grep fork = none). CONFIRMED; session-scratch risk.
+- Timing: 45 = 11:15:12Z + 7.36-7.74 h -> 18:37-18:59Z (min 6.87 h -> 18:07Z); 46 = 14:36:59Z + same -> 21:59-22:21Z, but exp70q dummy 1,874 s vs K2 1,512 s (+24%) -> may run later; 22:45Z one-shot needs re-poll until terminal.
+- Verdict: upheld (hygiene, not a mechanism; no rule conflict). Fixes: local-time cron fields; card keyed by action/time; copy fb_ins35 now.

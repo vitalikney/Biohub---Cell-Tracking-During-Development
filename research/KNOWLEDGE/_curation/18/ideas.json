@@ -1,0 +1,74 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/ideas.json",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/IDEAS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/18/ideas.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/18/ideas.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "what": "The R18-A1 pre-score card (the R17-A5 card, still missing) must be in CONTEXT before 17:50Z. It holds the read codes P5/U4/N4/NEG/ERR/MASKED, the 'v' suffix for L_hi > 8.0 h, the rule that coordinject and secFT files are public-only, and the 28 Sep branch table. Probe 45 can score from ~17:56Z.",
+   "evidence": "research/wf_ideas_v4/round18/report.json R18-A1, new_facts (8); research/wf_ideas_v4/round18/scan_plancheck.json PC18-01; CONTEXT.md ends at l.3010 (14:37Z entry); research/KNOWLEDGE/ideas.json I-365, I-298",
+   "suggested_action": "Append the R18-A1 text to CONTEXT with the <> fields taken from the latest poll.log header. Commit it with round18/ per R18-A10: named paths only, as the user, no trailer.",
+   "urgency": "now"
+  },
+  {
+   "kind": "forgotten",
+   "what": "Nothing wakes the session for the probe 45 read (~17:56-19:15Z), the 46 read (~21:18-22:37Z), the W1 batch (00:03Z) or the ladder-watcher restart (06:30Z). The last RESUME POINT is 26 Sep 22:46Z, and MEMORY l.8/l.9 are stale.",
+   "evidence": "research/wf_ideas_v4/round18/report.json R18-A2; research/wf_ideas_v4/round18/scan_plancheck.json PC18-06; research/KNOWLEDGE/ideas.json I-257, I-229",
+   "suggested_action": "Run R18-A2 now. Create one-shot timers with LOCAL cron fields (UTC+3): '5 22 27 9 *', '45 1 28 9 *', '3 3 28 9 *' and '30 9 28 9 *'. Delete the fired timers, write the new RESUME POINT and fix MEMORY l.8/l.9.",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "The last chat message says 'ready for 00:05Z: exp72 ... exp75 (best chance)'. Round 18 replaces both W1 files with exp70b-based builds: exp76a (exp70b + coordinject) and exp76d (exp70b + secFT). exp72 and exp75 are now fallbacks only. It also calls exp75 a sign probe (~0.35-0.45), not 'the best chance'.",
+   "evidence": "research/wf_ideas_v4/round18/report.json R18-A0, R18-A3, R18-A7, plan_issues (3), (10); research/wf_ideas_v4/round18/scan_hyp_slots_28sep.json R18S-1, R18S-2; research/KNOWLEDGE/ideas.json I-373, I-374, I-375, I-324",
+   "suggested_action": "Send the R18-A0 text to the user. It answers the cadence question and carries the three plan corrections.",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "The exp75 dummy has been QUEUED since 13:19Z while our other lanes were idle. exp76a uses the same dataset (yuki0731/biohub-coord-inject), so W1 could lose its CI file silently. No experiments/exp76* folder exists yet.",
+   "evidence": "research/wf_ideas_v4/round18/report.json R18-A3, R18-A4, new_facts (4), (6); CONTEXT.md l.3007-3010; research/KNOWLEDGE/ideas.json I-374, I-382",
+   "suggested_action": "Build exp76a (sha 1bc05bc9) and exp76d (sha 87d257ba) and push both dummies now. Check the exp76a queue after 20-30 min. If it is still stuck at 19:00Z, drop CI from W1 and tell the user in one line.",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "tools/runtime_ledger.py has no family for exp72-76. Every 28 Sep file would print 'family unknown', and a CI file's latency would read as 'insertion gate MAY have fired'.",
+   "evidence": "research/wf_ideas_v4/round18/report.json R18-A5; research/wf_ideas_v4/round18/scan_plancheck.json PC18-02; research/KNOWLEDGE/ideas.json I-383",
+   "suggested_action": "Add the safetail_ci family, the exp72-76 rules and one test before 00:05Z 28 Sep. Until then pass --family.",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "The exp72 dummy-gate values are not in CONTEXT; the 14:37Z entry still says 'dummy running'. exp72/probe.json still carries the 'compare with exp56' boilerplate.",
+   "evidence": "research/wf_ideas_v4/round18/report.json R18-A3 (5), new_facts (5); research/wf_ideas_v4/round18/scan_plancheck.json PC18-07; experiments/exp72_k2_secft/probe.json; research/KNOWLEDGE/ideas.json I-119",
+   "suggested_action": "Log the gates as PASS/FAIL with values: SHA/artifact lines, 0 errors, LOWREFINE 8, 121,061 nodes (-0.158%), CSV sha d78093ac, 80 forks. Fix the probe.json rule text.",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "r16rcb/fb_ins35.py and out.json still exist only in the session scratchpad. LESSONS H1 was due after the 43/44 read. The ROUND 15-18 RECORDs are not in CONTEXT.",
+   "evidence": "research/wf_ideas_v4/round18/report.json R18-A2 (4), (5), R18-A9; research/KNOWLEDGE/ideas.json I-073, I-252, I-336",
+   "suggested_action": "Copy fb_ins35 into experiments/exp60_trainlab/forkblob_ins35/ now. Write H1 and the round records after the 46 read.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "The post-deadline list grows: N1 narrow form (I-384), N2 with a pinned teacher (I-385), primary detect_head FT with a V1284 head retrain (I-386), LOEO DeepCenter (I-368). They are lost if the R18-A9 (e) list is never written into LESSONS s4.",
+   "evidence": "research/wf_ideas_v4/round18/report.json R18-A9 (e), rejected; research/KNOWLEDGE/IDEAS.md ORPHANS",
+   "suggested_action": "Fold them into LESSONS s4 with I-252 by 30 Sep.",
+   "urgency": "info"
+  },
+  {
+   "kind": "stale",
+   "what": "The user's question: rounds 2-18 ran every 1.73-4.25 h (mean 2.72 h, median 2.52 h, ~3 h since round 10). They are launched back-to-back by session timers, not a fixed cron. The user's 'every ~2.5 h until R8' window ended at 27 Sep 12:00Z. The E10 loop is strictly hourly and the LB poller runs every ~10 min.",
+   "evidence": "research/wf_ideas_v4/round18/report.json R18-A0, new_facts (1); research/wf_ideas_v4/round18/scan_browser.json r18-cadence-answer; experiments/e10_watch/watch_loop.log; research/KNOWLEDGE/ideas.json I-265, I-388",
+   "suggested_action": "Answer with the R18-A0 text. Set a fixed timer (e.g. every 2.5 h to 29 Sep 18:00Z, local-time cron) only if the user asks.",
+   "urgency": "now"
+  }
+ ],
+ "summary": "Curation 18 (incremental over curation 17): ideas.json went from 372 to 388 ideas, with 64 change records and new I-373..I-388; IDEAS.md was regenerated. Sources: CONTEXT l.2952-3010 (43/44 read 0.954/0.954 with D0, so class C (b) did not fire; probe 46 = exp70q; exp71 done; E10 v3 loop live) and round 18 R18-A0..A10 (exp70b rebase with W1 exp76a/exp76d, slot budget, CI guard, ledger families; N1/N2/primary-FT go post-deadline). The user's question: rounds run every ~2.5-3 h on average (range 1.7-4.25 h), not on a fixed schedule; see I-265 and I-388. Status counts: lb-tested 51, in-plan 76, refuted 192, deferred 45, open 3."
+}

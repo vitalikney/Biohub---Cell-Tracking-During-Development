@@ -1,0 +1,80 @@
+{
+ "task": "Round 18 plan check (team D: Discipline), 27 Sep ~15:20Z; files + CronList only, no Kaggle API, no e10_snapshot run",
+ "written_utc": "2026-09-27T15:35Z",
+ "complete": true,
+ "summary": "Round 18 plan check, 15:17-15:35Z. No rule violation found in the 13:14Z 43/44 read, the 14:37Z probe-46 submit or the finals: #37 + #38 unchanged, and the user's class-C letter did not fire. Three things are overdue or time-critical. (1) The R17-A5 pre-score card for 45/46/exp72/exp75/exp73* is not in CONTEXT, and probe 45 can score from ~18:07Z. (2) The R17-A7 RESUME POINT (due ~15:00Z) is not written: the last one is 26 Sep 22:46Z. MEMORY.md still points to it, and the E10 v3 submit edges are unlogged. (3) tools/runtime_ledger.py maps exp72, exp73*, exp74 and exp75 to family 'unknown'. So the L_hi and insertion-gate text needed by R13-A3 and the card will be missing from the 00:05Z submits on. Also: the E10 v3 SI copies share the exp73 prefix with the division rungs. 28 Sep is over-subscribed: exp72 + exp75 + 3-4 table rungs + exp74 + R17-A4's 2 slots held for E10, against 5 slots. None of the exp73 row dummies has been pushed yet, although Kaggle GPU queueing has already cost exp75 more than 1.5 h. Latency is creeping up (43/44 ran (7.56, 7.74] h, #37 7.36-7.54 h), so the read of 45/46 must quote the 8.0 h insertion-gate text. exp75's estimated ~8.75 h would fail the 9.0 h L_hi finals ceiling, and that needs a pre-registered exp75-specific clause. On the user's question: research rounds run about every 3 h (gaps 1.7-4.2 h, median ~3.0 h). They are started by the workflow, not by a session cron. The E10 v3 watch loop is separate and runs hourly (3/3 OK, 0 signals).",
+ "findings": [
+  {
+   "id": "PC18-01",
+   "kind": "plan-issue",
+   "what": "The R17-A5 PRE-SCORE CARD IS MISSING. round17 R17-A5 required one pre-score line before probe 45 can score (deadline 17:50Z). grep 'R17-A5' in CONTEXT = 0 hits, and the last entry is 14:37Z. The card has also grown since round 17: it must now cover 46 exp70q (56611472), exp72, exp75, the exp73 row rungs, exp74 and any E10 v3 copy. The earliest 45 score is ~18:07Z (insertion-family minimum L 6.87 h after the 11:15:12Z submit). At 43/44's 7.74 h it is ~18:59Z.",
+   "evidence": "CONTEXT.md last entry 2026-09-27 14:37 UTC (l.3007-3010); round17/report.json actionable R17-A5 (deadline 'before 17:50Z'); experiments/lb_poll/ledger.md rows 20-23 (45/46 PENDING at 15:12:59Z; 43/44 L (7.56/7.57, 7.74] h)",
+   "action": "Before 17:50Z, append one dated line (quote the last poll.log header showing 56606948 and 56611472 PENDING). (a) Any of 45, 46, exp72, exp75, exp73*, exp74 or an E10 copy that is COMPLETE, displays >= 0.955 and meets the family runtime clause (PC18-02/PC18-05) -> one chat proposal as the public-aimed final, default partner #37 (the user's (b) letter). No mechanical re-tick. If two or more qualify, send one message with display, dummy forks, insertion yes/no and the current API SELECTED. (b) A display <= 0.954 -> info plus a decision-table outcome code only. (c) For 45/46, the C and L codes of prep_div_combos count only if the ledger says 'insertion gate 8.0 h did NOT fire'. If it says UNPROVEN (L_lo > 8.0 h), a <= 0.954 display is coded C0/uninformative, not C-. (d) Add every ref to the private-read list (calibration only).",
+   "urgency": "now"
+  },
+  {
+   "id": "PC18-02",
+   "kind": "plan-issue",
+   "what": "RUNTIME LEDGER FAMILIES MISSING FOR THE 28 SEP FILES, AND AN exp73 NAME COLLISION. In tools/runtime_ledger.py, EXP_RULES maps only exp56, exp57*, exp58*, exp59/61/62, exp63*, exp70* and exp51/52. exp72, exp73a-v, exp74 and exp75 all fall to 'unknown', so the ledger prints n/a instead of R5(a) and the insertion-gate text. R13-A3 (exp72 eligibility: 'L_hi <= 8.0 h (runtime_ledger family safetail)') and the card therefore cannot be read mechanically. Separately, the E10 v3 SI builder names copies exp73[x]_si_<author> (SUCC_TOKEN='exp73'), which collides with the division rungs exp73a..exp73v (q and r are unused). An SI copy exp73a_si_* would get the K2 family and share a token with exp73a_k2_dc015 in ledger rows and CONTEXT.",
+   "evidence": "tools/runtime_ledger.py l.55-78 (FAMILIES, EXP_RULES), l.152-160 family_of; tools/build_probe_kernel.py l.106 and l.2318 SUCC_TOKEN = 'exp73'; tools/e10_port_gate.py l.133 SI_ID_RX; bigger_levers/check_div_combos.json fixes[6] (name hygiene)",
+   "action": "Before the 00:05Z submits (code + 1 test, as the user commits): (1) EXP_RULES: add (r'exp7[234][a-v]?', 'safetail') for exp72, the exp73 rungs and exp74 (same REPAIR 34200 / DIVINS 28800 tail). Add (r'exp75[a-z]*', 'safetail_ci') with a new FAMILIES entry deadline_h=9.5, divins_h=8.0, label 'K2 tail + coordinject post-step (own guard 10.5 h, kill +0.25 h): coverage of the refiner UNPROVEN if L > 9.5 h'. (2) Reserve exp73w/x/y/z for E10 v3 SI copies (never a..v), and map (r'exp73[wxyz]', 'unknown') ABOVE the rung rule so the ledger stays loud until --family is passed. Or pass --family <ref>=... on every SI submit. (3) Re-run the ledger once after the first 28 Sep submit and check that the family column is not 'unknown'.",
+   "urgency": "today"
+  },
+  {
+   "id": "PC18-03",
+   "kind": "plan-issue",
+   "what": "28 SEP SLOTS ARE OVER-SUBSCRIBED AND NO TABLE IS LOGGED. The 43/44 read gave outcome D0, so the prep_div_combos rows are R4 (C+: exp73u, exp73s, exp73m, exp73c), R5 (C0: exp73s, exp73c, exp73a, exp73m) or R6 (C-: exp73h, exp73a + 2 free). Add exp72 (00:05Z, user Q2 yes), exp75 (best single odds, P(>=0.955) ~0.35 by its skeptic) and exp74 (listed in the chat plan). R17-A4 additionally keeps 2 slots per day for E10 v3 until 29 Sep 12:00Z, and the loop has 0 signals in 3 runs (0 public notebooks > 0.953 in 6+ days). That is 6-8 candidates for 5 slots. The chat plan ('exp72, exp75, then by 45/46 Corwin or division combos') contradicts both R17-A4 and the row sizes.",
+   "evidence": "research/wf_ideas_v4/bigger_levers/prep_div_combos.json decision_table R4-R6 and modifiers; round17/report.json R17-A4; CONTEXT 13:14Z (D0) and 14:37Z; experiments/e10_watch/watch_loop.log (runs 1-3, signals 0)",
+   "action": "Log one 28 Sep slot line after the 46 read (~22:40Z), before 00:00Z. Proposed default (the user can reorder in one word): hold only ONE slot for E10 v3 and release it at 12:00Z if no signal (a 12:00Z submit still scores by ~19:45Z). Order the other 4 by the pre-registered P(display >= 0.955): exp75 (when its dummy passes), the first 2 rungs of the row chosen by C and L, then exp72. exp74 only enters R6 free slots (its skeptic: centre ~0.948, P ~0.10). Q2 authorised exp72's submit, not its first place. Push the user a one-line summary of the table.",
+   "urgency": "today"
+  },
+  {
+   "id": "PC18-04",
+   "kind": "plan-issue",
+   "what": "THE exp73 ROW DUMMIES ARE NOT PUSHED, AND GPU QUEUEING IS THE BOTTLENECK. check_div_combos: 'none pushed' at 11:39Z, and no exp73 dummy appears in CONTEXT since. The exp75 dummy has been QUEUED since 13:18Z (more than 1.5 h). A row can only be submitted at 00:05Z if its dummies pass tonight. Waiting for the 45 read (~19:00Z) and the 46 read (~22:40Z) leaves about 5 h for 3-4 dummies at 25-30 min each plus queue waits.",
+   "evidence": "bigger_levers/check_div_combos.json dummy_status; prep_div_combos.json dummy_priority [exp73s, exp73c, exp73m, exp73a, exp73u, exp73h, ...] and gpu_lanes; CONTEXT 14:37Z (exp75 QUEUED since 13:18Z)",
+   "action": "As soon as a lane frees after exp75 starts, push the dummies that are in every D0 row whatever C is: exp73a (R5, R6), then exp73s and exp73c (R4, R5), then exp73m. After the 45 read, push exp73u (R4) or exp73h (R6). Re-run prep_div_combos_build.sh and the hash check first (the builder sha drifted: df0fe7c7 -> 0ec0fd1b). Use the check_div_combos dummy gates (per-clip divins_added, steals <= floor(cap/2), DC 0.15 forks > 84 on 4 clips).",
+   "urgency": "now"
+  },
+  {
+   "id": "PC18-05",
+   "kind": "new-fact",
+   "what": "LATENCY IS DRIFTING UP, AND exp75 WILL FAIL THE 9.0 h CEILING. K2-family L: #37 7.36-7.54 h, exp70b 7.41-7.58 h, 43/44 (7.56, 7.74] h. Probe 46's dummy took 1,874 s vs K2's ~1,512 s (+24%). The dummy runtime is a weak predictor (exp70b's +15% dummy scored at K2 latency), but if 46's L_lo exceeds 8.0 h its insertion gate is UNPROVEN. exp75: check_coord_refiner estimates ~8.75 h total (the refiner starts after K2's tail and has its own 10.5 h guard with per-video skips), so an exp75 at >= 0.955 fails the 'L_hi <= 9.0 h' ceiling of R15-A1 (4)/R17-A5 and would silently be public-only. A COMPLETE score means the whole hidden set (public + private) finished in one run: late-video refiner skips dilute exp75, they do not break it.",
+   "evidence": "experiments/lb_poll/ledger.md rows 20-23 and the exp70b/#37 rows; CONTEXT 14:37Z (1,874 s vs 1,512 s); tools/coordinject_patch.py l.16-18, l.83-84, l.268-271, l.304-310; bigger_levers/check_coord_refiner.json runtime ('total ~8.75 h', dummy gate <= 130 s/video)",
+   "action": "In the PC18-01 card: (a) for exp75, a finals PROPOSAL needs COMPLETE plus display >= 0.955, with no 9.0 h ceiling. Quote the ledger 'safetail_ci' text and label refiner coverage UNPROVEN when L > 9.5 h. The user decides. (b) For 45/46 and the exp73 rungs, keep L_hi <= 9.0 h and quote the 8.0 h insertion-gate text. (c) Record the exp75 dummy's mean COORDINJECT_WORKER s/video against the 130/165 s bands before it is submitted.",
+   "urgency": "today"
+  },
+  {
+   "id": "PC18-06",
+   "kind": "plan-issue",
+   "what": "RESUME POINT, MEMORY AND TIMERS ARE STALE (R17-A7 / R17-A6 (2) / R17-A8 not done). The last RESUME POINT is 26 Sep 22:46Z (CONTEXT l.2599). Since then: E10 v3, the class-C letter, the Q1/Q2 yes, the FREEZE lift, aggressive mode, probes 43-46, the exp71/72/75 chain. MEMORY.md still says 'E10 port rule proposed; overlap-consensus line paused' and '(26 Sep post-score)'. The E10 v3 submit edges (target <= 29 Sep 02:00Z; a finals-relevant copy by ~11:00Z 29 Sep for a 7.5 h notebook) are not logged. CronList: the past one-shots 5b23a3ed, 54a8f20d and cdd738f1 are still listed. There is NO timer for the 45 read (~19:00Z), the 46 read (~22:40Z) or the 28 Sep 00:03Z submit batch; only the tick checks (28 Sep 17:57Z, 29 Sep 11:57Z / 17:57Z), the 23:27Z LB snapshot and the 3-hourly E10 P1 backup. 'ROUND 15/16/17 RECORD' = 0 hits in CONTEXT. fb_ins35.py is still not in experiments/exp60_trainlab/.",
+   "evidence": "grep 'RESUME POINT' CONTEXT.md (last l.2599); grep 'ROUND 1[5-7] RECORD' = 0; CronList output 15:30Z (crons in local UTC+3); round17/report.json R17-A6/A7/A8; ls experiments/exp60_trainlab (no fb_ins35.py)",
+   "action": "Now, before the evening reads: write the R17-A7 RESUME POINT regenerated from CONTEXT as it stands at 15:xxZ. Include the finals, the decisions answered and open, the slot table (PC18-03), the E10 v3 edges, and a restore card with absolute UTC + local cron times. Add one-shot crons for 19:05Z (45 read), 22:45Z (46 read and slot line) and 28 Sep 00:03Z (submit batch; local 03:03). Delete the three fired one-shots. Fix the two MEMORY.md lines. Hygiene (ROUND RECORDs, fb_ins35.py copy) can wait until after 46.",
+   "urgency": "now"
+  },
+  {
+   "id": "PC18-07",
+   "kind": "plan-issue",
+   "what": "The exp72 DUMMY GATE RESULTS are not in the record. CONTEXT 14:37Z still says 'exp72 ... (dummy running)'. The chat reports path/hash match, nodes -0.16% and forks 80 vs 75, but R13-A3's gate list also needs: runtime <= 1,920 s, 4 LOWREFINE lines, DIVINS ENABLED, validate_csv ok, CSV sha != K2 b6de85c1, 0 Traceback/FAILED/DEADLINE:/FALLING BACK, and a fresh poll header. tools/dummy_gates.py has no exp72 or exp75 mode, so these gates are manual. exp72/exp75 probe.json still carry the stale boilerplate 'rule: compare with exp56 ... above exp56 adopt'.",
+   "evidence": "CONTEXT l.2742-2750 (R13-A3 exp72 DUMMY GATE) and l.3002-3010; experiments/exp72_k2_secft/probe.json; experiments/exp75_k2_coordinject/probe.json; tools/dummy_gates.py (x138/K1/K2/FD/FF gates only)",
+   "action": "Log one dated line with every R13-A3 gate as PASS/FAIL and its value before the 00:05Z submit. Do the same for exp75 (COORDINJECT line present, not FAILED/SKIPPED, s/video, nodes/edges identical to K2, positions moved <= 3 um). Ignore the probe.json 'rule' field: the card governs.",
+   "urgency": "today"
+  },
+  {
+   "id": "PC18-08",
+   "kind": "new-fact",
+   "what": "LB AT 15:17Z (browser snapshot, read-only): 3,952 teams; >= 0.955 = 276 (was 275); >= 0.960 = 85. The 0.955 block has 79 teams (ranks 198-276), 0.954 has 113 (277-389), 0.953 has 397. We are #282, 6th of 113 in the 0.954 block. Our best unrounded score therefore sits near the top of its bin: one net extra division TP event (~0.0015-0.0023 by the R15-A1 scale note) displays 0.955+ and moves us into ranks ~198-276. The E10 v3 loop ran 3 times (12:43Z, 13:43Z, 14:44Z), 8/8 fetches OK, 0 x 429, 0 signals. The 15:17Z snapshot DIFF shows no kernel change, and the P2 group is 0.",
+   "evidence": "experiments/e10_watch/20260927T1517Z.txt (histogram + DIFF vs 1443Z); experiments/e10_watch/watch_loop.log",
+   "action": "Info. Quote these numbers in the evening brief. No E10 action.",
+   "urgency": "info"
+  },
+  {
+   "id": "PC18-09",
+   "kind": "new-fact",
+   "what": "ANSWER TO THE USER'S QUESTION ('do research agents run every 2-3 hours?'). Mostly yes, about every 3 h: round start times (UTC) were r10 15:20Z 26 Sep, r11 17:04Z, r12 20:03Z, r13 22:49Z, r14 01:52Z 27 Sep, r15 05:37Z, r16 08:36Z, r17 11:05Z, r18 15:17Z. The gaps are 1.7 / 3.0 / 2.8 / 3.1 / 3.75 / 3.0 / 2.5 / 4.2 h, median ~3.0 h. Rounds are launched by the workflow script; this session's CronList has no research-round cron. Separate from the rounds: the E10 v3 notebook watch runs hourly (background loop, to 29 Sep 12:00Z), the LB poller every ~10 min, and the 3-hourly E10 P1 timer is a backup.",
+   "evidence": "research/wf_ideas_v4/round10..round18 first-file mtimes (local UTC+3); CronList 15:30Z; experiments/e10_watch/watch_loop.log",
+   "action": "Tell the user in one line: ~every 3 h (1.7-4.2 h); the notebook watch is hourly; the LB poll every 10 min. If they want a fixed 2 h grid until 29 Sep, it has to be set in the workflow schedule (not done here).",
+   "urgency": "info"
+  }
+ ]
+}

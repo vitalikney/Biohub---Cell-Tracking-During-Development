@@ -1,0 +1,10 @@
+- 2026-09-27T15:32:30Z start verification of R18-RC-C
+- 2026-09-27T15:34Z verified sources:
+  - tools/build_probe_kernel.py l.1415-1437: SAFETAIL_DIVINS_DEADLINE_S default 28800; safetail_divins_allowed(dataset) is per dataset, kernel elapsed vs KERNEL_START_TS -> 'DIVINS SKIPPED (deadline)'. Confirmed.
+  - tools/coordinject_patch.py l.1-27, 257-273: runs after write_test_submission; deadline 37800 s; per-worker no-new-video guard (1.25 x slowest); kill at deadline+900 s; fail-soft; ENABLE=0 byte-identical. Confirmed.
+  - ledger.md: K2 56563521 (7.36,7.54]; exp70a (6.87,7.04]; exp70d (7.19,7.36]; exp70b (7.41,7.58]; exp70j/k (7.56/7.57,7.74]; exp70q 56611472 PENDING (submitted 14:36:59Z). Confirmed.
+  - CONTEXT dummy wall times: K2 1,512 (l.2448), exp70a 1,629 (l.2452), exp70d 1,320 (l.2537), exp70b 1,740 (l.2624), exp70j/k 1,500/1,449 (l.2811), exp70q 1,874 (l.3008). Confirmed. Rank order dummy vs latency inconsistent (exp70a longest-but-one dummy, fastest latency) -> (b) holds.
+  - tools/runtime_ledger.py l.252-257 ALREADY auto-labels 'L > 8.0 h: the insertion gate MAY have fired' -> the pre-registration adds only the interpretation rule (cheap, not redundant).
+  - Correction: '1.7 h' coordinject cost is optimistic. check_coord_refiner.notes.md l.29: hidden 100-130 videos, <=65 per worker; 65 x 130 s = 2.35 h -> 7.74 + 2.35 = 10.09 h < 10.5 h guard (still fits). Full-coverage bound at 7.74 h baseline = (10.5-7.74) h / 65 = ~153 s/video (was ~165 s at 7.5 h). Over the bound -> partial coverage, not a timeout (per-worker guard).
+  - Latency L = submit->complete (queue + scoring included), so kernel elapsed < L: the '> 8.0 h' trigger is conservative (can flag unconfounded runs, never misses a confounded one).
+  - No new mechanism, no R8 issue; prior rounds: no duplicate pre-registration found (grep round1*/CONTEXT).

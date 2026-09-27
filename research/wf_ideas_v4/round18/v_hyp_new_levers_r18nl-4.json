@@ -1,0 +1,17 @@
+{
+  "task": "round18 skeptic verify R18NL-4 (primary detect_head-only fine-tune, V1284-safe)",
+  "written_utc": "2026-09-27T15:36Z",
+  "complete": true,
+  "refuted": true,
+  "reason": "The lever does not survive; the finding's own 'do not build' is right. Its value argument is wrong, though. CONFIRMED part: detect_head is a 33-parameter 1x1x1 Conv3d on unet_out (train_unet_transformer.py l.444, l.508-510), so a head-only FT keeps the features read by V1284 (unet_out[:, f_idx], exp56 cell 4 l.526) and by the edge predictor byte-identical. WRONG part: the 'primary is only 0.2 of the blend, so <= ~1/4 of exp72' bound. In x138 the primary's logits set the mean and scale of the aligned secondary: aligned = (s - s_mean) * clamp(p_std/s_std, 0.5, 2) + p_mean. The retention guard counts primary peaks and falls back to primary-only detection on 33.1% of 44b6 frames and 3.9% of 6bba frames (F-TRN-18), and lowdet also reads det_logits. So the effect is not bounded small. It is embryo-dependent, and its affine part (a*p + b becomes a*blend + b) is just a detection-threshold shift, i.e. a public knob in disguise. FEASIBILITY: it misses the R8 hard line (27 Sep 12:00Z; now 15:34Z). The retraining clause was lifted only for the named exp71 (Q1). The retrain family is 0/5 on the LB. There is no honest gate for a 33-parameter recalibration on training movies the primary already fit.",
+  "fix": "Do not build. Post-deadline list only, next to the V1284 head retrain (I-097/I-107). When logged, correct the rationale: the primary head also drives the aligned-secondary mean and scale, the retention-guard fallback and lowdet, so it is not a 0.2-weight term. Its affine component equals a det-threshold knob.",
+  "realistic_gain": "~0 before the deadline (not submittable under R8). Sign unknown and embryo-dependent even if built; no evidence of >= +0.001 public.",
+  "sources": [
+    "tools/repo/scripts/train_unet_transformer.py l.444, l.493-511",
+    "experiments/exp56_x138_verbatim/exp56-x138-verbatim.ipynb cell 3 l.659 (weight 0.80); cell 4 blend/retention-guard/lowdet patches; l.526 V1284 call",
+    "research/KNOWLEDGE/FACTS.md F-MOD-01, F-TRN-18",
+    "research/KNOWLEDGE/IDEAS.md I-097, I-107",
+    "research/KNOWLEDGE/DECISIONS.md R9 [c17]",
+    "research/wf_ideas_v4/round18/scan_hyp_new_levers.json"
+  ]
+}

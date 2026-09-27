@@ -1,0 +1,7 @@
+- 2026-09-27T15:48Z start round 18 facts curation; no prior 18/facts.json. Prior round 17 ended 11:58Z.
+- 15:49Z sources read: CONTEXT l.2952-3010 (11:14..14:37Z entries; '## 9' now l.3011), ledger 15:43:09Z (302 polls), watch_loop.log RUN1-4 (0 signals), round18 REPORT.md/report.json (R18-A0..A10, written 15:50Z), v_browser_r18-cadence-answer.json, git HEAD b853642
+- 15:52Z CONTEXT entry lines mapped; e10 snapshots 1443Z #281 (chat's number), 1517Z #282, 1543Z #283 of 3,952 (>=0.955: 277). exp72 probe.json rule still 'compare with exp56' (R18-A3 (5)).
+- 15:55Z plan: scratch c18.py edits FACTS (header, ~24 appends, new F-RUN-31/32/33, F-MOD-34/35, F-TRN-49, C-144..149) and DECISIONS (header, P43/44/45 appends, new P46, §1 [c18] table, §2 para+snapshot, §2f, §2h rows, §3 appends+rows, closing)
+- 15:58Z FACTS.md edited via scratchpad c18_facts.py (header, 23 appends, F-RUN-31/32/33, F-MOD-34/35, F-TRN-49, 14 C appends, C-144..C-149); CRLF kept; column counts checked. Next: DECISIONS
+- 16:01Z DECISIONS.md edited via c18_dec.py (header; P43/P44/P45 [c18]; new P46 row; §1 [c18] para + built/planned table; §2 para + c18 snapshot replaces c17; §2f para; §2h 6 rows; §3 19 appends + 2 rows; closing). Line refs fixed (12:49 entry l.2984-2994). CRLF kept, table col counts checked (0 bad). Poll 15:53:09Z: 45/46 still PENDING, CONTEXT unchanged (## 9 l.3011). Next: facts.json
+- 16:02Z facts.json written (9 alerts). Done.

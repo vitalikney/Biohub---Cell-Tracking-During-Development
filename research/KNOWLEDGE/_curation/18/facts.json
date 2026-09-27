@@ -1,0 +1,74 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/FACTS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/DECISIONS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/18/facts.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/18/facts.json"
+ ],
+ "alerts": [
+  {
+   "kind": "contradiction",
+   "what": "User question 'do the research agents run every 2-3 h?': roughly yes, but there is no fixed schedule. Rounds 2-18 had a mean gap of 2 h 43 min, a median of 2.5 h and a range of 1.7-4.25 h. The gap has been ~3 h since round 10, and the last one (r17 -> r18, 11:05 -> 15:20Z) was the longest, 4.25 h. Session bash timers start rounds one after another. The user's '~2.5 h full rounds' mandate ended at R8 (27 Sep 12:00Z). The E10 v3 watch runs strictly hourly until 29 Sep 12:00Z, and the LB poller runs every ~10 min.",
+   "evidence": "FACTS F-RUN-33, C-148; research/wf_ideas_v4/round18/report.notes.md 15:38Z; research/wf_ideas_v4/round18/v_browser_r18-cadence-answer.json (refuted: false); research/wf_ideas_v4/round18/report.json R18-A0; experiments/e10_watch/watch_loop.log",
+   "suggested_action": "Send the ready R18-A0 Russian answer. If the user wants a guaranteed cadence, offer a fixed session timer (e.g. every 2.5 h until 29 Sep 18:00Z; cron fields in LOCAL time, UTC+3) and log it in CONTEXT",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "No pre-score card for P45/P46 is in CONTEXT (R17-A5 was never logged, and R18-A1 is only proposed). P45 can score from ~17:56Z (6.69 h); its 8.0 h mark is 19:15Z. Without a card logged first, the 45 read (codes P5/U4/N4/NEG/ERR, MASKED, suffix 'v', the 9.0 h finals clause, CI/secFT public-only, the 28 Sep branch table) is not pre-registered",
+   "evidence": "DECISIONS §2h row 'Round-18 pre-score card', §3 row R18-A1; FACTS F-RUN-31; research/wf_ideas_v4/round18/report.json R18-A1, plan_issues (1); experiments/lb_poll/poll.log header 15:53:09Z (45/46 PENDING); CONTEXT last entry 14:37 l.3007-3010",
+   "suggested_action": "Log R18-A1 in CONTEXT before 17:50Z, with the <> fields filled from the latest poll.log header. Commit and push it with round18/ (R18-A10), staging named paths only",
+   "urgency": "now"
+  },
+  {
+   "kind": "forgotten",
+   "what": "The last RESUME POINT is still 26 Sep 22:46Z, and round 18 reports MEMORY.md l.8/l.9 as stale. No timers exist for the 45 read (~19:05Z), the 46 read (~22:45Z), the 00:05Z W1 batch or the 06:30Z watcher restart. Fired timers are still listed",
+   "evidence": "FACTS C-26 [c18]; research/wf_ideas_v4/round18/report.json R18-A2, plan_issues (2); CONTEXT l.2599",
+   "suggested_action": "Carry out R18-A2: RESUME POINT, one-shot timers with LOCAL cron fields ('5 22 27 9 *', '45 1 28 9 *', '3 3 28 9 *', '30 9 28 9 *'), MEMORY fix, and delete the fired timers",
+   "urgency": "today"
+  },
+  {
+   "kind": "contradiction",
+   "what": "The 28 Sep W1 files disagree. CONTEXT 13:27/14:37 says exp72 at 00:05Z, then exp75 when its dummy passes. Round 18 says exp76a (exp70b + coordinject) and exp76d (exp70b + secFT) first, rows keyed on the 45/46 codes, staggered 00:05/00:25/00:45Z, with exp72/exp75 as fallbacks. No experiments/exp76* folder or dummy exists yet, and W1 needs PASSED dummies by 23:45Z",
+   "evidence": "FACTS C-145, C-136 [c18], F-TRN-49 (exp70b ~5e-5 below the 0.9545 edge, K2 files ~1.0-1.3e-4); DECISIONS §1 [c18] built/planned table; research/wf_ideas_v4/round18/report.json R18-A1 (4), R18-A3, R18-A7",
+   "suggested_action": "Decide and log which plan governs. If exp76a/exp76d, build them with the exact commands (check shas 1bc05bc9 / 87d257ba, builder d46a8b2d) and push both dummies now while the lanes are idle",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "The exp75 dummy has been QUEUED since 13:18-13:19Z (2 h 20 min at 15:39Z) while both lanes were idle; exp72, pushed later, ran first. Its only metadata difference from exp72 is dataset yuki0731/biohub-coord-inject. exp76a carries the same dataset, so W1 could lose its coordinject file without notice",
+   "evidence": "FACTS F-RUN-30 [c18], F-MOD-34; research/wf_ideas_v4/round18/report.notes.md 15:39Z; research/wf_ideas_v4/round18/report.json R18-A4",
+   "suggested_action": "R18-A4: if exp76a is also QUEUED >= 30 min while exp76d runs, re-push it once. If it is still stuck at 19:00Z, drop CI from W1 and tell the user. Before any CI submit, check that the dataset lists the same 10 files dated 2026-08-25",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "tools/runtime_ledger.py has no family for exp72-76, so they print 'unknown' with no R5(a) or insertion-gate text. A coordinject file's latency includes the post-CSV stage (up to ~2.35 h) and would be misread as a fired insertion gate",
+   "evidence": "FACTS F-RUN-32, C-146; research/wf_ideas_v4/round18/report.json R18-A5; research/wf_ideas_v4/round18/report.notes.md (EXP_RULES l.66-75)",
+   "suggested_action": "R18-A5 before 00:05Z 28 Sep: add safetail_ci (10.75 h) and the exp72-76 rules plus one test. Until then pass --family <ref>=safetail",
+   "urgency": "today"
+  },
+  {
+   "kind": "contradiction",
+   "what": "The chat (14:54Z) and CONTEXT 12:49 called exp75 the 'best chance/best odds'. Round 18 calls it a sign probe: P(display >= 0.955) ~0.35-0.45 on the exp70b base (~0.3-0.4 on K2), the lab is in-sample on 4 clips, and the nearest transfer record for a coordinate refinement is lab +0.0078 -> LB -0.002",
+   "evidence": "FACTS C-144, F-MOD-34, F-MET-10 [c18]; CONTEXT 12:49 l.2993-2994; research/wf_ideas_v4/round18/report.json R18-A0, plan_issues (10)",
+   "suggested_action": "Correct the wording in the next user message (R18-A0 text already does). Do not present a coordinject display >= 0.955 as a finals candidate without the caveat",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "Does the 29 Sep 02:00Z last-submit cap still bind? The 12:01 line says R8 'no longer binds' the aggressive public rungs. Round 18 treats the 02:00Z cap as standing and wants to ask the user to lift it for a last wave (default no). It also wants to ask for an explicit OK for exp74 (default no)",
+   "evidence": "FACTS C-86 [c18], F-MOD-32 [c18]; CONTEXT 12:01 l.2952-2954; research/wf_ideas_v4/round18/report.json R18-A6",
+   "suggested_action": "After the 46 read, send the R18-A6 brief with the two yes/no questions (02:00Z cap; exp74). Treat 02:00Z as binding until the user answers",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "stale",
+   "what": "experiments/RESULTS.md still ends at P38 (last commit b2be382, 26 Sep 07:35Z). P39-P44 are scored and P45/P46 are PENDING",
+   "evidence": "FACTS C-118 [c18]; DECISIONS §1 rows P39-P46",
+   "suggested_action": "Add rows P39-P46 with refs, descriptions and scores at the next hygiene commit (after the 46 read)",
+   "urgency": "before-finals"
+  }
+ ],
+ "summary": "Curation 18 (state 15:50 UTC 27 Sep, HEAD b853642; poll 15:53:09Z still shows P45/P46 PENDING). FACTS.md: new header; [c18] notes on 23 facts (F-MET-10, F-LB-01/02/03/04/10/11/15, F-RUN-03/26/29/30, F-RUL-05/10/12, F-MOD-27/32/33, F-TRN-42/48); 6 new facts: F-RUN-31 (latency drift, P45/P46 windows), F-RUN-32 (coordinject runtime budget, missing ledger families), F-RUN-33 (session cadence, the answer to the user's question), F-MOD-34 (exp75/exp76 coordinject line), F-MOD-35 (primary-logit roles, secondary-swap evidence), F-TRN-49 (display-edge arithmetic); 14 contradiction updates and new C-144..C-149. DECISIONS.md: P43/P44 read (0.954/0.954, N4, no V*_C, class-C letter (b) did not fire, pair #37 + #38 unchanged); P45 updated; new row P46 (exp70q 56611472, 14:36:59Z); 27 Sep slots 5/5 used; new §1 built/planned table (exp70n/q/r, exp71, exp72, exp75, exp76a-i, exp73, exp74, E10 v3); §2 finals snapshot replaced (#37 + #38 TICKED; P45/P46 pending proposal rule; CI and secFT files public-only per the round-18 proposal); §2f E10 v3 loop live, 0 signals; §2h rows for the R8 record, the last-slot line, the 43/44 read, the round-18 card, the slot budget and the other proposals; R1-R10 status updated (R8 cutoff logged 12:01/12:12, 02:00Z cap question open; R9 retrain done by user yes). Answer to the user's question: research rounds run roughly every 2.5-3 h (mean 2 h 43 min, median 2.5 h, range 1.7-4.25 h, last gap 4.25 h). They are started by session timers, not a fixed schedule, and the ~2.5 h mandate ended at 27 Sep 12:00Z. The E10 notebook watch is strictly hourly and the LB poller runs every ~10 min."
+}
