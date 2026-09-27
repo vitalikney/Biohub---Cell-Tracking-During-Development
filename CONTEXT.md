@@ -3203,6 +3203,11 @@ Mention it to the user in one line (R9-A8 item 6).
   -> 78b). exp77 (N2: epoch-2 continuation of exp71 on GPU0 + fresh lr 3e-5 on GPU1; built and reviewed, all local checks pass)
   goes into the other lane as soon as the exp76a dummy finishes. Finals question sent to the user (A: {exp70g, #37} recommended,
   B: {exp70g, #38}).
+- 2026-09-27 19:05 UTC, exp76a DUMMY CLEAN (exp70b + CI: 121,252 nodes / 74 forks / 117,076 edges; COORDINJECT 4/4, 91.5% moved; ~1,896 s).
+  exp77 (N2 training) PUSHED 19:04Z (T4 x2, ~2.5-3 h). New cap6-based builds: exp79a = exp70g + coordinject a0.5 (5f9b265d),
+  exp79d = exp70g + our secondary (5e0fdeac); their dummies follow exp78b in the lane (79d first, then 79a). 28 Sep plan
+  (re-ranked after the 0.956): cap direction (exp78a cap 8, exp78b cap 12 + fc2), cap6 + forkmid (exp76e), cap6 + SEC (exp79d),
+  cap6 + CI (exp79a); probe 46 (cap 6 + thr 0.3 + forkmid, ~22:00Z) refines the order.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
