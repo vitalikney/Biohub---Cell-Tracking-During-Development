@@ -3062,6 +3062,11 @@ Mention it to the user in one line (R9-A8 item 6).
   main session pushed exp76d.
 - 2026-09-27 16:33 UTC, exp76d DUMMY CLEAN (121,061 nodes, 79 forks, Secondary SHA256 ed8c616b, FORKMID on, 0 errors, ~1,402 s) -> ready for
   00:05Z 28 Sep. exp76a dummy pushed 16:33Z; exp75 still QUEUED since 13:19Z.
+- 2026-09-27 17:21 UTC, exp75 DUMMY COMPLETE 17:20Z (after ~4 h in the Kaggle queue): validate_csv ok, nodes/forks/edges identical to K2
+  (121,252 / 75 / 117,077); COORDINJECT SUMMARY videos=4/4, 91.5% of node rows moved, median shift 0.51-0.69 um (p95 1.1-1.35
+  um); CI stage 443 s on 2 T4s for 4 videos (78-238 s per video, scales with detections). Hidden-set estimate: ~100 videos /
+  2 GPUs x ~150 s = ~2.1 h on top of K2's ~7.5 h -> L ~9.6-9.8 h (< 12 h; the 10.5 h COORDINJECT deadline keeps K2 rows for any
+  video not reached). Also exp72 dummy complete earlier. For 00:05Z: exp76a (exp70b + CI) if its dummy passes, else exp75.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

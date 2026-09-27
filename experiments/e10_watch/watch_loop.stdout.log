@@ -5,3 +5,5 @@
 2026-09-27T14:44:10Z RUN 3 snapshot 20260927T1443Z.txt CHANGES=11 fetch OK 8/8 | calls 8 429s 0 | signals 0 | next run 2026-09-27T15:43:42Z
 2026-09-27T15:43:42Z skip: within 35 s of lb_poll's last poll 15:43:07Z (period 603 s); next call in 26 s
 2026-09-27T15:44:21Z RUN 4 snapshot 20260927T1543Z.txt CHANGES=5 fetch OK 8/8 | calls 8 429s 0 | signals 0 | next run 2026-09-27T16:43:42Z
+2026-09-27T16:43:42Z skip: within 24 s of lb_poll's last poll 16:43:18Z (period 602 s); next call in 37 s
+2026-09-27T16:44:38Z RUN 5 snapshot 20260927T1643Z.txt CHANGES=9 fetch OK 8/8 | calls 8 429s 0 | signals 0 | next run 2026-09-27T17:43:42Z
