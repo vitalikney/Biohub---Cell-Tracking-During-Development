@@ -2934,6 +2934,9 @@ Mention it to the user in one line (R9-A8 item 6).
   exp72» — запущу сразу'). Parsed (echoed to the user): Q1 = YES (push exp71, distilled secondary fine-tune, ~4.5 GPU-h), Q2 =
   YES (submit exp72 = K2 + that secondary via --patch secswap after its dummy gates; R8 lifted for this item); Q3 (exp72 as a
   final) NOT answered -> exp72 is public-only until the user says otherwise. Expected score ~22:30-23:30 UTC 27 Sep.
+- 2026-09-27 11:12 UTC, exp71 PUSHED 11:11:50Z (vitaliineibauer/biohub-exp71-secft-all v1, private, GPU T4, internet on, docker 37c64f7d),
+  status RUNNING at 11:12Z; expected done ~15:15-15:45Z (4.0 h training budget + overheads). Next: T3 private dataset
+  vitaliineibauer/biohub-secft-all-v1 from its output, T5 exp72 build (--patch secswap), dummy + T6 gates, submit (Q2 yes).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
