@@ -2980,6 +2980,18 @@ Mention it to the user in one line (R9-A8 item 6).
   as the dummy passes). GPU queue note: the exp70n dummy has been QUEUED since 11:15Z (Kaggle GPU queue; exp71
   training holds the other session), so the exp70q dummy starts only after it; E10 v3 collision default (R17-A4): a
   verbatim copy that passes its gates takes the slot first.
+- 2026-09-27 12:49 UTC, BIGGER LEVERS READY (workflow wf_f049ef51-9f4, committed c86fd5a; 483 tests; finals rebuild 1f1ddb6d/55038fd6):
+  (1) exp75 = K2 + --patch coordinject (yuki0731/biohub-coord-inject node-position refiner, CC0, team LMM 0.961), ALPHA 0.5,
+  MAX_UM 3.0; local CPU lab on 4 full train clips (in-sample for the refiner): alpha 0.5 +0.0032 pooled adj edge J
+  (-0.021/+0.0125/0/+0.0083 per clip), alpha 1.0 -0.0057; skeptic: central ~+0.001 public, P(display >= 0.955) ~0.35,
+  P(<= 0.953) ~0.2; runtime to be read from the dummy (guard 10.5 h; unprocessed videos keep K2 rows). (2) exp74 = K2 +
+  secswap to Corwin's CC0 secondary repacked as a private dataset vitaliineibauer/biohub-secw-corwin-v1 (not uploaded yet);
+  skeptic: centre ~0.948, P(>= 0.955) ~0.10, high variance (the secondary carries 80% of the detection mix). (3) exp73a-v =
+  20 aggressive division rungs with a decision table by the 43/44/45 reads (research/wf_ideas_v4/bigger_levers/). E10 v3
+  tooling (--base succ SI builder, gate --mode verbatim/si, hourly read-only watch loop LIVE since 12:43Z, 0 signals).
+  GPU: exp71 training (1 session until ~15:30Z); exp70n dummy COMPLETE 12:46Z (not submitted); exp70q dummy pushed 12:46Z;
+  exp75 dummy follows exp70q. LAST 27 SEP SLOT: exp75 if its dummy passes by ~14:30Z (best odds), else exp70q/exp70r per
+  the 43 read. 28 Sep: exp72 at 00:05Z (if exp71 trains cleanly), then the best of exp75/exp73*/exp74 per the reads.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
