@@ -313,7 +313,8 @@ def read_poll_headers(path, tail_bytes=65536):
 
 def poller_period(headers):
     """Median spacing of the last headers (600 s sleep + the poll + the ledger run); POLLER_PERIOD_S by default."""
-    d = [(b - a).total_seconds() for a, b in zip(headers[-9:], headers[-8:])]
+    tail = headers[-9:]
+    d = [(b - a).total_seconds() for a, b in zip(tail, tail[1:])]
     d = [x for x in d if 590 <= x <= 900]
     return statistics.median(d) if d else float(POLLER_PERIOD_S)
 
@@ -424,8 +425,9 @@ class Watcher:
         if self.state_path.exists():
             self.state = dict(new_state(), **json.loads(self.state_path.read_text(encoding="utf-8")))
             return "resumed from state.json"
-        metas = sorted(p for p in self.out_dir.glob("*/meta.json"))
-        for m in reversed(metas):
+        metas = sorted((json.loads(p.read_text(encoding="utf-8")).get("utc", ""), p.parent.name, p)
+                       for p in self.out_dir.glob("*/meta.json"))
+        for _, _, m in reversed(metas):
             meta = json.loads(m.read_text(encoding="utf-8"))
             if meta.get("fresh") and meta.get("ours"):
                 self.state["s0"] = {"folder": m.parent.name, "statuses": meta["statuses"], "ours": meta["ours"]}
