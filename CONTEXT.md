@@ -2806,6 +2806,11 @@ Mention it to the user in one line (R9-A8 item 6).
   ~0.2-0.3, P(<= 0.953) ~0.3. CLASS: both are threshold neighbours = class C under L9 (never a final) UNLESS the user
   explicitly allows a class-C file as the public-aimed final (asked in the morning brief); the pair rule otherwise stays.
   Slots 27 Sep: 4 left -> these 2, keep 2 in reserve (E10 port, resubmits).
+- 2026-09-27 05:28 UTC, SUBMIT probe 43 = exp70j (K2 + DC 0.20), ref 56598763 at 05:28:13Z, and probe 44 = exp70k (K2 + DC 0.225),
+  ref 56598765 at 05:28:22Z (class C exploration, see 04:58 UTC entry). Dummies clean: exp70j 121,265 nodes / 96 forks (K2 75),
+  run ~1,500 s, CSV sha 464da57e; exp70k 121,265 / 88 forks, ~1,449 s, sha b7b4d9ce; Traceback/FAILED/DEADLINE:/FALLING BACK
+  0; DC value printed. Poll header 05:20:12Z, no 429; watcher paused during the submits. 2 slots left on 27 Sep. Scores
+  expected ~12:30-13:00 UTC. The watcher (hard cap 11:30Z) does not cover them; poll.log is the record.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

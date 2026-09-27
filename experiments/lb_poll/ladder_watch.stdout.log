@@ -40,3 +40,9 @@
 2026-09-27T04:56:16Z status change: 56589423 exp70d COMPLETE 0.949
 2026-09-27T04:56:17Z LB download 20260927T045616Z: rank 255 score 0.954 count 43 last 2026-09-26 21:38:33; fresh (expected count 43, ERROR counted: n.a.)
 2026-09-27T04:56:17Z EVENT 3 | changed: 56589423 exp70d COMPLETE 0.949 | S0 20260927T043106Z -> S1 20260927T045616Z (fresh after 1 download(s); count 43 vs expected 43 (40 + 3 COMPLETE); ERROR counted: n.a.; LastSubmissionDate ok) | ours rank 255->255 score 0.954->0.954 count 42->43 (+1) last 2026-09-26 21:17:47->2026-09-26 21:38:33 | passed TeamIds 0 | UP test FAIL; no UP | 56589423 exp70d: NEG unit NEG
+2026-09-27T05:01:19Z ListSubmissions: exp70e COMPLETE, exp70a COMPLETE, exp70d COMPLETE, exp70b PENDING
+2026-09-27T05:06:21Z ListSubmissions: exp70e COMPLETE, exp70a COMPLETE, exp70d COMPLETE, exp70b PENDING
+2026-09-27T05:11:23Z ListSubmissions: exp70e COMPLETE, exp70a COMPLETE, exp70d COMPLETE, exp70b PENDING
+2026-09-27T05:16:24Z ListSubmissions: exp70e COMPLETE, exp70a COMPLETE, exp70d COMPLETE, exp70b PENDING
+2026-09-27T05:21:25Z ListSubmissions: exp70e COMPLETE, exp70a COMPLETE, exp70d COMPLETE, exp70b PENDING
+2026-09-27T05:26:27Z ListSubmissions: exp70e COMPLETE, exp70a COMPLETE, exp70d COMPLETE, exp70b PENDING
