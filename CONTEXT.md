@@ -3004,6 +3004,10 @@ Mention it to the user in one line (R9-A8 item 6).
   --patch secswap (sha f3d23bcd), dummy pushed; gates per R13-A3 (Secondary artifact/SHA256 lines, nodes within -2%/+1% of
   121,252, 0 errors, runtime). Submit at 00:05Z 28 Sep (today's last slot goes to exp75/exp70q). Public-only unless the user
   answers Q3.
+- 2026-09-27 14:37 UTC, SUBMIT probe 46 = exp70q (K2 + insertion cap 6 + DIVINS_THRESH 0.3 + forkmid 4.5), ref 56611472 at 14:36:59Z
+  (dummy clean: 121,252 nodes / 82 forks, run ~1,874 s vs K2 ~1,512 s). exp75 was still QUEUED on Kaggle at 14:36Z (pushed
+  13:18Z), so the last 27 Sep slot went to exp70q as logged. 0 slots left today. Scores: 45 ~18:30-19:00Z, 46 ~22:00-22:30Z.
+  28 Sep: exp72 at 00:05Z (dummy running), exp75 when its dummy passes, then per the reads.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
