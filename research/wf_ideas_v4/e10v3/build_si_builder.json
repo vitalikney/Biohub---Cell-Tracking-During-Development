@@ -1,0 +1,33 @@
+{
+ "task": "E10 v3 (B): --base succ successor base path in tools/build_probe_kernel.py (successor + our insertion = SI)",
+ "status": "DONE",
+ "files_changed": ["tools/build_probe_kernel.py", "tests/test_si_builder.py (new)"],
+ "usage": "python tools/build_probe_kernel.py exp73_si_<author> --base succ --base-ipynb experiments/ext_<slug>/<nb>.ipynb --base-meta experiments/ext_<slug>/kernel-metadata.json [--base-sha256 <sha>] --patch divinsert --patch safetail --patch lowrefine --set DIVINS_ENABLE=1 --set DIVINS_STEAL=1 --set DIVINS_CAP=4 --set DIVINS_FRAME_CAP=1 --set DIVINS_ALPHA=1 --set DIVINS_THRESH=0.4 --set DIVINS_DUMP=0 --set REPAIR_DEADLINE_S=34200 --set DIVINS_DEADLINE_S=28800 --set LOWREFINE_ENABLE=0|1 [--patch forkmid --set FORKMID_ENABLE=1] [--patch leafprune --set LEAF_PRUNE_MIN_EDGE_PROB=0.3] --note ...",
+ "design": {
+  "cell_layout": "x138 code-cell indices (config 2, secondary 3, predict 4, post 5); same patch functions as --base x138",
+  "patches_supported": ["divinsert (required)", "safetail", "lowrefine", "forkmid", "leafprune"],
+  "audit": "succ_anchor_audit() on the PRISTINE base cells before cell 0 or any patch is touched: 'once' anchors exactly once in the expected cell and in no other code cell; linefit call directly followed by the FINAL print; our knob/function names absent from the base; lowrefine literals before the V1284 block; REPAIR_DEADLINE_S read once in the post cell and never re-assigned after cell 0. Any FAIL -> exit non-zero listing every failing anchor, no output folder. A patch AssertionError after the audit is also a refusal. INFO lines (never refuse): validator switch in cell 0; DET_THRESHOLD/READMIT_MIN_SCORE vs 0.965 for lowrefine.",
+  "metadata": "E10 P4b(a): id vitaliineibauer/biohub-exp73[x]-si-<author>[-suffix], title = slug, code_file ours, is_private true, enable_internet false, id_no removed, key order and every other field (docker_image, machine_shape, enable_gpu, sources) kept; + vitaliineibauer/biohub-ft-weights when DIVINS_ENABLE != 0. Refused: blank source, kernel_sources != [], no docker_image, base owned by us, code_file != ipynb file name.",
+  "records": "cell-0 tag '# ---- <name>: probe overrides (tools/build_probe_kernel.py --base succ <author>/<slug> sha256=<pulled nb sha256>) ----'; probe.json base_sha256, succ {ref, author, slug, ipynb, ipynb_sha256, meta, meta_sha256, serial, code_cells, anchors[]}",
+  "other_refusals": "--base-sha256 mismatch, name not exp73[x]_si_<author>[_suffix], slug > 50, --owner != vitaliineibauer, --dataset, --train-stems, --push, --set outside SUCC_KNOBS (e.g. DEEPCENTER_SAFE_DIV_THRESHOLD), REPAIR_DEADLINE_S without safetail, non-lab safetail deadline pairs other than (34200,28800)/(37800,32400)",
+  "unchanged_paths": "exp39 / x138 builds take the old code paths (tag, serialisation, new-cell dicts, metadata)"
+ },
+ "verification": {
+  "byte_identical_rebuilds": {"exp58": "1f1ddb6d", "exp58t": "a77bcd6b", "exp58n": "55038fd6", "exp70a": "132438a9", "exp70b": "b8e7ece1", "exp70d": "e0b8fc0c", "exp70e": "c0f3380c", "exp70g": "52c182a3", "exp70j": "61a8d3c1", "exp70k": "adef8bcb", "note": "notebook AND kernel-metadata.json == committed files, after the final edit"},
+  "x138_as_successor": "ext_x138 (sha 6b655e39): K2 -> exp58, K1 -> exp58t, K2+fm45 -> exp70b notebooks differ only in the cell-0 tag line; swapping that line back reproduces the committed bytes; metadata differs only in id/title/code_file",
+  "real_successors": {
+   "raunakdey07/biohub-harmonic-fusion-v3 (ext_ and dry_2026-09-26, sha 9ab32885)": "APPLIES: K2, K1, #35-config, K2+fm45, K2+lp30; SI hunks == x138->K2 hunks (cells 0/4/5 + the same 2 new cells); HF v3 is an x138 clone (comments stripped)",
+   "amanatar/optimized-biohub-max-score v6 (27 Sep pull, sha e6c3f729, 13 code cells, no public V6 score seen)": "APPLIES: all 5 recipes, hunks equal; INFO DET_THRESHOLD 0.960 -> lowrefine premise shifts, prefer K1 (LOWREFINE_ENABLE=0)",
+   "amanatar old (sha 371fc1f9) and v10 (sha 96387e78)": "REFUSED for every safetail recipe: [knob] REPAIR_DEADLINE_S re-assigned in code cell 10 (pass-2 rewrite); K2+lp30 also refused (own leaf pruning); divinsert-only builds with INFO 'validator ON' (P3/P4c-fail bases anyway)"
+  },
+  "tests": "tests/test_si_builder.py 23 passed; python -m pytest -q tests 440 passed (343 before + 23 here + 74 from parallel agents' new test files)"
+ },
+ "hard_rules": "no submit, no kernel push, no commit; scratch under experiments/_scratch_e10v3/ (now absent) and the session scratchpad",
+ "open_issues": [
+  "TOKEN COLLISION: other agents are creating experiments/exp73a..exp73v_k2_* (K2 variants) while the SI spec uses exp73-si-<author>. Slugs cannot collide (-si-), but submit-message tokens and a runtime_ledger rule would share exp73. SUCC_TOKEN is one constant if the orchestrator wants another token.",
+  "tools/runtime_ledger.py has no exp73 rule (not edited here); an SI submit needs --family exp73=safetail or a rule (R11 SI_CONDITIONS (c)).",
+  "The builder does not judge policy (successor score, P3 mechanism count, validator); the E10 port gate / procedure does. Validator state is only an INFO line.",
+  "SI dummies (D0 verbatim, D2 SI, DFF with --lab DIVINS_FORCE_FAIL=1) are not run; dummy_gates --k1 style checks against the successor's own D0 are the next step at a trigger.",
+  "Module docstring documents --base succ; CONTEXT.md not edited (main session logs)."
+ ]
+}

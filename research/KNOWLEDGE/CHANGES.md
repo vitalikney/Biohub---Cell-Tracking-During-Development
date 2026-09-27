@@ -884,3 +884,92 @@ Curator logs: `research/KNOWLEDGE/_curation/4/`.
   - exp70b risk: [info] (facts) vs [before-finals] (ideas) -> [before-finals], because the letter has a practical expiry of 29 Sep ~18:00Z.
   - RESULTS rows: [before-finals] (facts) vs [today] (ideas, watch) -> [today], folded into the R16-A5 commit.
   - R16-A2: [now] (facts, watch); ideas nested it inside its R16-A1 alert -> a separate [now] alert.
+
+## 17 - 2026-09-27 ~12:05 UTC (curation 17; git HEAD a6ffbc9 = origin/main + untracked `research/wf_ideas_v4/round17/`, `research/wf_ideas_v4/bigger_levers/`, `research/wf_ideas_v4/e10v3/`, `experiments/exp73a..exp73v/`, `experiments/exp74_k2_secw_corwin/`, `experiments/ds_secw_corwin_v1/`, `experiments/e10_watch/20260927T1101Z.txt`)
+
+**Operations:**
+- **Commits since curation 16** (`git log --oneline 0bd1408..a6ffbc9`):
+  - 289bd52 R16-A1 read addendum + round-16 report; 06f1a02 R16-A2 message + forecast.
+  - 61e0737 USER E10 v3; 659cef3 USER class-C letter (b), pre-score; 5bce47f USER Q1/Q2 yes; d1ccc85 exp71 pushed.
+  - 9cdc047 aggressive mode, P45 exp70g submitted, exp70q/exp70r built.
+  - a6ffbc9 12:00 UTC line, which also commits `experiments/lb_poll/e10_watch_loop.py` and `run_e10_watch_loop.sh`.
+- **CONTEXT.md:** nine new entries at l.2880-2954; `## 9. Literature` is now at l.2955. `experiments/RESULTS.md` is unchanged (last row P38).
+- **User decisions 11:08-11:16Z** (`CONTEXT.md` l.2917-2951):
+  - E10 v3: trigger = a public notebook >= 0.955; (A) verbatim copy, (B) copy + SI, (C) port into K2; autonomous submit.
+  - Class-C letter (b), pre-registered at 11:09:39Z with both refs PENDING: V*_C -> {V*_C, #37}.
+  - Q1/Q2 yes: exp71 pushed 11:11:50Z; exp72 set for 28 Sep 00:05Z; Q3 is open.
+  - FREEZE lifted 11:14Z.
+  - Aggressive mode 11:16Z: P45 = exp70g (K2 + cap 6, 56606948) submitted 11:15:12Z. The last 27 Sep slot goes to exp70r if P43 >= 0.955 by ~13:00Z, else exp70q.
+- **LB:**
+  - Rank #260 of 3,945, 6th of 115 in the 0.954 block (`experiments/e10_watch/20260927T1101Z.txt` l.930).
+  - E10 P1 was not met at 11:01Z. amanatar V6 now shows 0.901 (`FACTS.md` F-LB-04 [c17]).
+  - P43/P44/P45 were PENDING at the 12:01:34Z header (`experiments/lb_poll/poll.log` l.14050). Finals are unchanged: #37 + #38.
+- **Round 17** was judged at 11:28-11:40Z (`research/wf_ideas_v4/round17/report.json` R17-A0..A11). Only R17-A1 is (partly) done: a6ffbc9 at `CONTEXT.md` l.2952-2954.
+- **Built but untracked:**
+  - 20 exp73 division rungs (`research/wf_ideas_v4/bigger_levers/prep_div_combos.json`).
+  - exp74 K2 + Corwin's secondary (`prep_corwin_secondary.json`; the dataset upload is not done).
+  - exp75 coord-inject prep (`prep_coord_refiner.notes.md`, `tools/coordinject_patch.py`).
+  - E10 v3 tooling (`research/wf_ideas_v4/e10v3/`). `tools/e10_snapshot.py` (`take_snapshot`) is still uncommitted, and the loop is not running.
+
+**Ideas** (`IDEAS.md` CHANGES (17) l.80-89; `ideas.json` meta.curations[n=17], 74 records; `_curation/17/ideas.json`):
+- **New (I-360..I-372):**
+  - Rungs: I-360 exp70n (thr 0.3), I-361 exp70q, I-362 exp70r, I-363 exp73 ladder.
+  - I-364 E10 v3.
+  - Round 17: I-365 pre-score card, I-366 slot-collision default (needs the user's OK), I-367 override-budget lesson, I-368 post-deadline division-transfer bed.
+  - Rejected: I-369..I-372 (2-3x OOF bar; private_read.py before the deadline; 'FINALS FROZEN' at 20:05Z; 'slots = E10 v1 insurance only').
+- **Status changes:**
+  - E10 v2 I-286 -> refuted/superseded.
+  - Revived to in-plan: SI I-287, {X, #37} pair I-298, P45 exp70g I-326.
+  - Deferred -> in-plan: exp74 Corwin's secondary I-323, exp75 coord-inject I-324.
+  - FREEZE I-345: in-plan -> refuted/closed.
+  - Updated: I-344 (letter (b) logged), I-119/I-330 (Q1/Q2 yes, Q3 open), I-354 (still open; the letter did not name exp70b).
+- **Counts c16 -> c17:** 359 -> 372. in-plan 62 -> 73, refuted 184 -> 186; lb-tested 48, lab-tested 21, deferred 42 and open 2 are unchanged. The strict orphan is still I-233.
+
+**Facts and decisions** (`FACTS.md`, `DECISIONS.md`, rows marked [c17]; `_curation/17/facts.json`):
+- **New facts:**
+  - F-RUN-30: GPU lanes and the exp71 run.
+  - F-MOD-32: Corwin's CC0 secondary.
+  - F-MOD-33: insertion-cap anatomy. The cap binds on 3 of 4 dummy clips, so thr 0.3 is near-inert.
+  - F-TRN-48: public evidence on 'more divisions'.
+  - [c17] notes on F-LB-01/02/03/04/10/11/15, F-RUN-03/29, F-RUL-12, F-MOD-27, F-TRN-42 and F-DAT-05.
+- **Contradictions:**
+  - New C-132..C-143 (`FACTS.md` l.497-508), including: FREEZE vs new rungs (C-132); which E10 rule is in force (C-134); the 12:00Z line content (C-135); the partner #37 vs #38 (C-137); 'more divisions' (C-138); thr 0.3 inert (C-139); slots left (C-140); Corwin's secondary (C-142).
+  - Resolved: C-121..C-123.
+  - Updated: C-05, C-26, C-111, C-114, C-118, C-120, C-128, C-129.
+- **DECISIONS.md:**
+  - §1: new P45 row (l.167) and the built/planned table (l.292: exp70n/q/r, exp72, E10 v3 copies, exp73a..v, exp74, exp75).
+  - §2: [c17] paragraph l.475 and a new snapshot at l.482 (replaces c16).
+  - §2f: E10 v3 at l.736.
+  - §2h: 7 appends and 5 new rows.
+  - §3: R1-R10 and others updated, plus 6 new rows (e.g. R17-A1 corrected line, R17-A4 default, read cards R17-A2/A5).
+
+**Watchlist** (`WATCHLIST.md`; `_curation/17/watch.json`):
+- **Done:** W158 (R16-A1, 289bd52), W159 (round16/REPORT.md), W160 (R16-A2 sent; push status open), W154 (letter (b)), W135/W128/W106 (Q1/Q2 yes, exp71 pushed), W156a (FREEZE lifted).
+- **Superseded:** W161 -> W169 (R17-A1), W165a E10 v2 -> v3, W164 -> W174, W163 -> W175.
+- **New:** W168-W182, reminders T87-T98, insights I172-I186.
+- **Still overdue:** W176 (ROUND 14-17 RECORDs), W126 (RESULTS rows 39-42), W182 (NEVER_SUBMIT for exp70j/k), the W57 family, W150 (round prompt), and the R16-A2 push status.
+
+**Alerts** (`INDEX.md` TOP ALERTS, 8 after dedup):
+- **Resolved since curation 16:**
+  - R16-A1 logged and pushed pre-score.
+  - R16-A2 sent.
+  - Class-C letter received and pre-registered.
+  - E10 v2 question superseded by the user.
+  - exp71 yes/push.
+  - The exp70b/(b)-partner ambiguity for 43/44: #37, per the letter.
+- **Partly resolved after the curators ran:** the 12:00Z line is logged (a6ffbc9, `CONTEXT.md` l.2952-2954) with the corrected wording. It still lacks the slot count, bracket check, push status and deviation record, so the alert was downgraded from 'log it' to 'complete it'.
+- **Carried over:** 43/44 read (now R17-A2 with the (b) re-tick text), RESUME POINT/MEMORY (C-26), ROUND RECORDs, RESULTS rows, NEVER_SUBMIT, HINDSIGHT GUARD, `fb_ins35.py`, round prompt, I-233.
+- **New:**
+  - R17-A3 last-slot line before the first 43/44 header.
+  - No dummy for exp70q/r.
+  - E10 v3 tooling uncommitted and the loop not running.
+  - Untracked 28 Sep levers (exp73/74/75).
+  - Pre-score card R17-A5 by 17:50Z.
+  - R17-A4 slot-collision ask.
+  - GPU quota not re-read.
+  - 20:00Z is our buffer, not a Kaggle freeze.
+  - exp70n name reuse.
+- **Curator disagreements settled here:**
+  - 12:00Z line: all three curators said [now] 'log R17-A1' -> [now] 'complete it', because a6ffbc9 landed after they ran.
+  - Aggressive-rung evidence: [info] (facts) vs [now] (watch) -> folded into the [now] R17-A3 alert.
+  - Untracked levers: [before-finals] (facts) vs [today] (ideas, watch) -> [today], because 28 Sep slots start at 00:00Z and exp72 keeps 00:05Z.

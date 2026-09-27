@@ -1,0 +1,5 @@
+- 12:00Z start curation 17 index; no index.json existed
+- 12:04Z sources read: 3 curator jsons, INDEX c16, CHANGES 16, CONTEXT l.2917-2954 (new a6ffbc9 12:00Z line l.2952-2954 after curators), poll 12:01:34Z 43/44/45 PENDING, tools/e10_snapshot.py still uncommitted (HEAD has no take_snapshot), no watch_loop log. Writing INDEX.md
+- 12:07Z INDEX.md written (78 lines). Next: CHANGES 17
+- 12:08Z CHANGES.md section 17 appended
+- 12:09Z index.json written (8 alerts). DONE

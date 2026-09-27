@@ -1,0 +1,67 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/INDEX.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/CHANGES.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/17/index.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/17/index.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "what": "The 12:00Z line is logged (a6ffbc9, CONTEXT.md l.2952-2954) with the corrected wording, but it is incomplete. It lacks the R17-A1 slot count (4 used, 1 left), the bracket check, the R16-A2 push status and the DEVIATION RECORD for exp71 and the post-FREEZE rungs. round17/REPORT.md (R17-A0) is not saved.",
+   "evidence": "CONTEXT.md l.2952-2954; git log a6ffbc9; research/wf_ideas_v4/round17/report.json R17-A0, R17-A1; FACTS.md C-135; WATCHLIST.md W168, W169",
+   "suggested_action": "Add the missing R17-A1 fields to the next CONTEXT entry (the R17-A3 line), save round17/REPORT.md, commit as the user with no trailer, and push.",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "The R17-A3 last-slot pre-score line is due before the first 43/44 terminal header (earliest 12:11Z; expected 12:21-13:11Z). It covers the mapping (exp70r if P43 >= 0.955 by ~13:00Z, else exp70q) and the facts: V6 = 0.901, cap-6 lab -0.00057 with 0 TP / 4 FP, thr 0.3 near-inert because the cap binds, and exp70q stacking on the unread P45.",
+   "evidence": "research/wf_ideas_v4/round17/report.json R17-A3; FACTS.md F-TRN-48, C-138, C-139; IDEAS.md I-361, I-362; experiments/lb_poll/poll.log 12:01:34Z header (all PENDING)",
+   "suggested_action": "Log R17-A3 in CONTEXT now, then commit and push.",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "exp70q/exp70r have no dummy, and both GPU lanes are busy: exp71 is RUNNING and the exp70n dummy is queued, although exp70n has no slot today. A dummy takes ~25-29 min, and the submit is planned for ~13:00Z.",
+   "evidence": "FACTS.md F-RUN-30; WATCHLIST.md W171; CONTEXT.md l.2946-2951",
+   "suggested_action": "Start the exp70q/r dummy (or cancel the exp70n dummy) by ~12:15-12:30Z. Do not submit without a COMPLETE dummy, and tell the user if it slips.",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "The 43/44 read must use the pruned R17-A2 card. Under letter (b), a V*_C gives the re-tick text 'untick 56563534, tick V*_C, keep 56563521' from API SELECTED, and the user re-ticks. The hard trigger is the 14:28:22Z header, with a 14:40Z fallback.",
+   "evidence": "research/wf_ideas_v4/round17/report.json R17-A2; CONTEXT.md l.2927-2932; DECISIONS.md §2 l.475-482",
+   "suggested_action": "Write one CONTEXT line and one user line. The user line carries the read, the R17-A3 facts, the R17-A4 slot-collision ask, whether exp70n gets a slot, and Q3 for exp72.",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "The E10 v3 watch loop is not running. experiments/lb_poll/e10_watch_loop.py (committed a6ffbc9) imports take_snapshot, which exists only in the uncommitted tools/e10_snapshot.py. The gate modes, SI builder and tests are also uncommitted, and the SI token exp73 collides with the exp73a..v folders.",
+   "evidence": "git show HEAD:tools/e10_snapshot.py (no take_snapshot); no experiments/e10_watch/watch_loop*.log; research/wf_ideas_v4/e10v3/build_watch.json, build_si_builder.json; research/wf_ideas_v4/round17/report.json R17-A6",
+   "suggested_action": "Commit the tooling and tests by named paths. Start run_e10_watch_loop.sh in the background and confirm 2 good runs before 15:00Z.",
+   "urgency": "today"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "The 28 Sep levers (20 exp73 rungs, exp74 with Corwin's secondary, exp75 coord-inject) are built but untracked. They have no CONTEXT entry and no pre-score lines. I4 'ultra' is a cliff risk, Corwin's own note gives -0.006 vs pilkwang, and the GPU quota has not been re-read since 26 Sep.",
+   "evidence": "research/wf_ideas_v4/bigger_levers/prep_div_combos.notes.md, prep_corwin_secondary.notes.md; FACTS.md F-MOD-32, C-142; WATCHLIST.md W181, I185; IDEAS.md I-363, I-323, I-324",
+   "suggested_action": "Log a decision table and pre-score lines (extend R17-A5). Present the row choice to the user with the V6/cap-6 facts, and read the GPU quota before queueing dummies.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "Records are overdue:\n- The R17-A5 pre-score card (P45, exp70q/r, exp72, E10 v3) is due before 17:50Z.\n- The RESUME POINT (26 Sep 22:46Z) and the MEMORY.md pointer are stale.\n- The ROUND 14-17 RECORDs are missing.\n- RESULTS.md has no rows for P39+.\n- exp70j/k have no NEVER_SUBMIT.md.\n- fb_ins35.py is only in a scratchpad.",
+   "evidence": "research/wf_ideas_v4/round17/report.json R17-A5, R17-A7, R17-A8; FACTS.md C-26, C-118; WATCHLIST.md W126, W173, W175, W176, W182",
+   "suggested_action": "Log R17-A5 before 17:50Z. Write the RESUME POINT, restore card and MEMORY fix by ~15:00Z. Do one R17-A8 hygiene commit.",
+   "urgency": "today"
+  },
+  {
+   "kind": "contradiction",
+   "what": "Finals wording to get right:\n- The partner of any new >= 0.955 file is #37, not #38.\n- 29 Sep 20:00Z is our buffer, not a Kaggle freeze, so read SELECTED after 23:59Z.\n- Cite exp70n as 'thr 0.3' because the name is reused.\n- The round prompt is stale.",
+   "evidence": "FACTS.md C-137; WATCHLIST.md I179, I181, W150; IDEAS.md I-333, I-360, I-371",
+   "suggested_action": "Name what is unticked and ticked from API SELECTED in any re-tick message. Fix the round template before round 18.",
+   "urgency": "before-finals"
+  }
+ ],
+ "summary": "Curation 17: INDEX.md rewritten (78 lines, HEAD a6ffbc9) and CHANGES.md section 17 appended.\n\nSince curation 16 (0bd1408):\n- 8 commits.\n- The user's 11:08-11:16Z decisions:\n  - E10 v3.\n  - Class-C letter (b), giving {V*_C, #37}.\n  - Q1/Q2 yes, and exp71 pushed.\n  - FREEZE lifted.\n  - Aggressive mode: P45 exp70g submitted, and exp70q/r built for the last 27 Sep slot.\n- The 12:00Z line was logged in a6ffbc9 after the curators ran. It is partial: no slot count, bracket check or deviation record.\n\nIdeas: 359 -> 372 (in-plan 73, refuted 186). New facts: F-RUN-30, F-MOD-32/33 and F-TRN-48. New contradictions: C-132..C-143. Watchlist: new W168-W182.\n\nP43/P44/P45 were PENDING at the 12:01:34Z header. Finals are unchanged: #37 + #38.\n\nMost urgent:\n- The R17-A3 last-slot line before the first 43/44 header.\n- A dummy for exp70q/r.\n- Completing the 12:00Z line.\n- Committing the E10 v3 tooling and starting the loop."
+}

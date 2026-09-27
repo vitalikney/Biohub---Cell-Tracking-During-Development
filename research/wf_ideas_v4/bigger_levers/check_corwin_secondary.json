@@ -1,0 +1,39 @@
+{
+ "checked_utc": "2026-09-27T11:43Z",
+ "candidate": "exp74_k2_secw_corwin",
+ "ok": true,
+ "build": {
+  "rebuild_sha256": "17835c019b550e28707fc69f3c5c19973a93c072ab8f79f6fb91cd5775106d9a",
+  "matches_staged": true,
+  "meta_probe_identical": true,
+  "diff_vs_K2": "cell0: header comment + 2 env lines; cell3: 1 sha line; metadata equal",
+  "K2_sha256_unchanged": "1f1ddb6d63b47f540ad614232e821ad215f27fce0d901cdbb9f67a8beeb67855",
+  "pytest": "440 passed",
+  "tracked_notebooks_modified": 0
+ },
+ "runtime": {
+  "silent_K2_rerun_possible": false,
+  "repack_sha_ok": true,
+  "zip_mode_layout_ok": true,
+  "checkpoint": "bare OrderedDict, 136 keys identical to our exp08 ft weights, config identical, safe globals only (static pickletools)",
+  "dataset_exists": false,
+  "gpu_sessions_busy": "exp71 RUNNING + exp70n QUEUED (2/2) at 11:36Z"
+ },
+ "public_estimate": {
+  "range": [
+   0.938,
+   0.957
+  ],
+  "centre": 0.948,
+  "p_ge_0955": 0.1,
+  "why": "secondary carries 80% of detection logits (not a bounded nudge); Corwin measured pilkwang's secondary better on placement (3um 0.68 vs 0.61, d_p90 4.2 vs 5.1, +0.006 public); fusion knobs tuned for pilkwang"
+ },
+ "fixes": [
+  "correct expected_public to 0.938-0.957 centre ~0.948; drop the 'bounded swing' claim",
+  "upload repack dataset only on a go, then verify datasets status ready + files at root",
+  "push dummy only when <2 sessions; gates: Secondary artifact/SHA lines, weights_found=True, COMPLETE, Traceback 0, nodes/forks vs K2 122252/75",
+  "schedule after exp72 (same lever class) unless a slot would otherwise be idle",
+  "optional: patch to make SECONDARY_DETECTION_WEIGHT settable (e.g. 0.5) for a swapped secondary"
+ ],
+ "notes": "research/wf_ideas_v4/bigger_levers/check_corwin_secondary.notes.md"
+}

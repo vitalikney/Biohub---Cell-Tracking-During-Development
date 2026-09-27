@@ -1,0 +1,524 @@
+{
+ "version": 1,
+ "last_run_utc": "2026-09-27T12:43:42Z",
+ "runs": 1,
+ "signals": 0,
+ "streak_429": 0,
+ "good": {
+  "kernels": {
+   "comp_dateRun": [
+    {
+     "ref": "mtoshidesu/testbiohub-lf-dctta020-sectta1",
+     "title": "Testbiohub-lf-dctta020-sectta1",
+     "author": "m-toshi desu",
+     "lastRunTime": "2026-09-27 06:13:56.090000",
+     "totalVotes": "49"
+    },
+    {
+     "ref": "amanatar/optimized-biohub-max-score",
+     "title": "optimized-biohub-max-score",
+     "author": "Aman Atar",
+     "lastRunTime": "2026-09-27 01:39:05.377000",
+     "totalVotes": "65"
+    },
+    {
+     "ref": "sarveshchhetri/robust-3d-cell-tracking",
+     "title": "Robust 3D Cell Tracking",
+     "author": "Sarvesh Chhetri",
+     "lastRunTime": "2026-09-26 12:40:40.220000",
+     "totalVotes": "3"
+    },
+    {
+     "ref": "raunakdey07/biohub-harmonic-fusion-v3",
+     "title": "Biohub: Harmonic Fusion V3",
+     "author": "Raunak Dey",
+     "lastRunTime": "2026-09-25 09:09:04.280000",
+     "totalVotes": "179"
+    },
+    {
+     "ref": "denpugovkin/biohub-exp003-two-embryos",
+     "title": "Biohub exp003 \u2014 Two Embryos",
+     "author": "Den Pugovkin",
+     "lastRunTime": "2026-09-24 20:37:41.813000",
+     "totalVotes": "4"
+    },
+    {
+     "ref": "kunaldesale2408/biohub-cell-tracking",
+     "title": "Biohub Cell Tracking",
+     "author": "Kunal Desale",
+     "lastRunTime": "2026-09-24 06:13:53.007000",
+     "totalVotes": "230"
+    },
+    {
+     "ref": "tobimichigan/robust-cell-tracking-during-development-via-chan",
+     "title": "Robust Cell Tracking During Development via Chan.",
+     "author": "Handsonlabs Software Academy",
+     "lastRunTime": "2026-09-24 00:21:35.650000",
+     "totalVotes": "11"
+    },
+    {
+     "ref": "junaid512/biohub-cell-tracking-strategic-submission",
+     "title": "Biohub \u2014 Cell Tracking \u00b7 Strategic Submission",
+     "author": "Muhammad Junaid",
+     "lastRunTime": "2026-09-23 09:05:19.973000",
+     "totalVotes": "1"
+    },
+    {
+     "ref": "segamega/biohub-cell-tracking-during-development",
+     "title": "Biohub - Cell Tracking During Development",
+     "author": "Sega Mega",
+     "lastRunTime": "2026-09-22 23:39:12.177000",
+     "totalVotes": "1"
+    },
+    {
+     "ref": "zalejohn/submission-csv",
+     "title": "submission.csv",
+     "author": "Zale John",
+     "lastRunTime": "2026-09-22 22:45:05.837000",
+     "totalVotes": "0"
+    },
+    {
+     "ref": "thedivyanshpant/biohub-cell-tracking-during-developmentv1",
+     "title": "Biohub - Cell Tracking During DevelopmentV1",
+     "author": "DIVYANSH PANT",
+     "lastRunTime": "2026-09-22 20:55:37.953000",
+     "totalVotes": "0"
+    },
+    {
+     "ref": "giorgosin/notebook447aed80b2",
+     "title": "notebook447aed80b2",
+     "author": "Giorgos In",
+     "lastRunTime": "2026-09-22 20:47:51.327000",
+     "totalVotes": "0"
+    },
+    {
+     "ref": "binasalama/biohub-learned-unet-transformer-ilp-gap-recovery",
+     "title": "Biohub Learned UNet Transformer ILP Gap Recovery",
+     "author": "Bina Salama",
+     "lastRunTime": "2026-09-22 16:05:05.523000",
+     "totalVotes": "2"
+    },
+    {
+     "ref": "evgendvorkin/biohub-0-947-lb-proxy-score-0-9490",
+     "title": "Biohub  0.947 LB PROXY_SCORE=0.9490",
+     "author": "\u0414\u0432\u043e\u0440\u043a\u0438\u043d \u0415\u0432\u0433\u0435\u043d\u0438\u0439 \u0412\u043b\u0430\u0434\u0438\u043c\u0438\u0440\u043e\u0432\u0438\u0447",
+     "lastRunTime": "2026-09-22 15:39:25.977000",
+     "totalVotes": "137"
+    },
+    {
+     "ref": "seyitkaangunes/biohub-035-deconfounded-edge-stack",
+     "title": "Biohub 035 Deconfounded Edge Stack",
+     "author": "Seyit kaan Gunes",
+     "lastRunTime": "2026-09-22 15:17:27.923000",
+     "totalVotes": "2"
+    },
+    {
+     "ref": "flexonafft/biohub-lineage-forge-precision-tracking",
+     "title": "Biohub Lineage Forge \u2014 Precision Tracking",
+     "author": "Igor Zharov",
+     "lastRunTime": "2026-09-22 14:03:58.943000",
+     "totalVotes": "111"
+    },
+    {
+     "ref": "asymortenson/biohub-v5c-final",
+     "title": "biohub-v5c-final",
+     "author": "Asy Mortenson",
+     "lastRunTime": "2026-09-22 13:38:21.270000",
+     "totalVotes": "1"
+    },
+    {
+     "ref": "crystalbaby/biohub-geometric-fusion",
+     "title": "Biohub Geometric Fusion",
+     "author": "Sung Jin-woo",
+     "lastRunTime": "2026-09-22 10:41:10.177000",
+     "totalVotes": "6"
+    },
+    {
+     "ref": "newwang12/biohub-v1-grouped",
+     "title": "biohub-v1-grouped",
+     "author": "\u0e2d\u0e18\u0e34\u0e04\u0e21 \u0e2b\u0e27\u0e31\u0e07\u0e40\u0e08\u0e23\u0e34\u0e0d\u0e27\u0e07\u0e28\u0e4c",
+     "lastRunTime": "2026-09-22 10:08:09.433000",
+     "totalVotes": "35"
+    },
+    {
+     "ref": "beraterolelk/0-947-lb-biohub-deepcenter-ilp-tracker",
+     "title": "\ud83d\udd2c [0.947 LB] BioHub DeepCenter + ILP Tracker",
+     "author": "Berat Erol \u00c7EL\u0130K",
+     "lastRunTime": "2026-09-22 07:41:01.787000",
+     "totalVotes": "42"
+    }
+   ],
+   "comp_scoreDescending": [
+    {
+     "ref": "raunakdey07/biohub-harmonic-fusion-v3",
+     "title": "Biohub: Harmonic Fusion V3",
+     "author": "Raunak Dey",
+     "lastRunTime": "2026-09-25 09:09:04.280000",
+     "totalVotes": "179"
+    },
+    {
+     "ref": "amanatar/optimized-biohub-max-score",
+     "title": "optimized-biohub-max-score",
+     "author": "Aman Atar",
+     "lastRunTime": "2026-09-27 01:39:05.377000",
+     "totalVotes": "65"
+    },
+    {
+     "ref": "kunaldesale2408/biohub-cell-tracking",
+     "title": "Biohub Cell Tracking",
+     "author": "Kunal Desale",
+     "lastRunTime": "2026-09-24 06:13:53.007000",
+     "totalVotes": "230"
+    },
+    {
+     "ref": "anvithpothula/biohub-0-953-lb-original",
+     "title": "Biohub 0.953 LB | ORIGINAL \u2b50\ufe0f\u2b50\ufe0f\u2b50\ufe0f\u2b50\ufe0f\u2b50\ufe0f",
+     "author": "Anvith Pothula",
+     "lastRunTime": "2026-09-21 09:47:58.620000",
+     "totalVotes": "215"
+    },
+    {
+     "ref": "amanatar/biohub-geometric-fusion",
+     "title": "Biohub Geometric Fusion",
+     "author": "Aman Atar",
+     "lastRunTime": "2026-09-21 09:18:35.700000",
+     "totalVotes": "170"
+    },
+    {
+     "ref": "evgendvorkin/biohub-0-947-lb-proxy-score-0-9490",
+     "title": "Biohub  0.947 LB PROXY_SCORE=0.9490",
+     "author": "\u0414\u0432\u043e\u0440\u043a\u0438\u043d \u0415\u0432\u0433\u0435\u043d\u0438\u0439 \u0412\u043b\u0430\u0434\u0438\u043c\u0438\u0440\u043e\u0432\u0438\u0447",
+     "lastRunTime": "2026-09-22 15:39:25.977000",
+     "totalVotes": "137"
+    },
+    {
+     "ref": "flexonafft/biohub-harmonic-fusion",
+     "title": "Biohub Harmonic Fusion",
+     "author": "Igor Zharov",
+     "lastRunTime": "2026-09-10 16:39:37.593000",
+     "totalVotes": "288"
+    },
+    {
+     "ref": "reyhanksatria/biohub-cell-tracking-0-947-lb",
+     "title": "Biohub Cell Tracking: 0.947 LB",
+     "author": "Reyhan Ksatria",
+     "lastRunTime": "2026-09-13 03:52:47.293000",
+     "totalVotes": "40"
+    },
+    {
+     "ref": "flexonafft/biohub-lineage-forge-precision-tracking",
+     "title": "Biohub Lineage Forge \u2014 Precision Tracking",
+     "author": "Igor Zharov",
+     "lastRunTime": "2026-09-22 14:03:58.943000",
+     "totalVotes": "111"
+    },
+    {
+     "ref": "sjlee101/biohub-lf-dctta",
+     "title": "biohub-lf-dctta",
+     "author": "Seung Jae Lee",
+     "lastRunTime": "2026-09-09 20:31:52.350000",
+     "totalVotes": "83"
+    },
+    {
+     "ref": "sjlee101/biohub-lf-dctta-v020",
+     "title": "biohub-lf-dctta-v020",
+     "author": "Seung Jae Lee",
+     "lastRunTime": "2026-09-09 20:31:56.890000",
+     "totalVotes": "75"
+    },
+    {
+     "ref": "sjlee101/biohub-lf-dctta020-sectta1",
+     "title": "biohub-lf-dctta020-sectta1",
+     "author": "Seung Jae Lee",
+     "lastRunTime": "2026-09-10 09:27:55.707000",
+     "totalVotes": "11"
+    },
+    {
+     "ref": "crystalbaby/biohub-lf-dctta-v020",
+     "title": "biohub-lf-dctta-v020",
+     "author": "Sung Jin-woo",
+     "lastRunTime": "2026-09-10 09:59:59.767000",
+     "totalVotes": "35"
+    },
+    {
+     "ref": "sjlee101/biohub-lf-dctta025-sectta1",
+     "title": "biohub-lf-dctta025-sectta1",
+     "author": "Seung Jae Lee",
+     "lastRunTime": "2026-09-10 11:12:27.937000",
+     "totalVotes": "9"
+    },
+    {
+     "ref": "sjlee101/biohub-lf-dctta020-sectta1-sister16",
+     "title": "biohub-lf-dctta020-sectta1-sister16",
+     "author": "Seung Jae Lee",
+     "lastRunTime": "2026-09-10 12:57:11.383000",
+     "totalVotes": "6"
+    },
+    {
+     "ref": "zhehaoliang/biohub-p26-o01-exact-public-0947",
+     "title": "Biohub P26 O01 Exact Public 0947",
+     "author": "zhehao liang",
+     "lastRunTime": "2026-09-10 20:57:54.190000",
+     "totalVotes": "4"
+    },
+    {
+     "ref": "mtoshidesu/test-biohub-lf-dctta",
+     "title": "Test biohub-lf-dctta",
+     "author": "m-toshi desu",
+     "lastRunTime": "2026-09-10 23:16:44.990000",
+     "totalVotes": "2"
+    },
+    {
+     "ref": "arnav170/biohub-harm",
+     "title": "biohub-harm",
+     "author": "Arnav170",
+     "lastRunTime": "2026-09-11 08:23:47.327000",
+     "totalVotes": "2"
+    },
+    {
+     "ref": "rogerrogerroger3r/biohub-run91",
+     "title": "biohub-run91",
+     "author": "rogerrogerroger3r",
+     "lastRunTime": "2026-09-11 09:28:10.373000",
+     "totalVotes": "12"
+    },
+    {
+     "ref": "sjlee101/biohub-lf-hoctveto-b",
+     "title": "biohub-lf-hoctveto-b",
+     "author": "Seung Jae Lee",
+     "lastRunTime": "2026-09-11 12:53:42.593000",
+     "totalVotes": "4"
+    }
+   ],
+   "user_anvithpothula": [
+    {
+     "ref": "anvithpothula/biohub-v1284-head-s075-notebook",
+     "title": "biohub v1284 head s075 notebook",
+     "author": "Anvith Pothula",
+     "lastRunTime": "2026-09-24 03:28:30.973000",
+     "totalVotes": "1"
+    },
+    {
+     "ref": "anvithpothula/biohub-0-953-lb-original",
+     "title": "Biohub 0.953 LB | ORIGINAL \u2b50\ufe0f\u2b50\ufe0f\u2b50\ufe0f\u2b50\ufe0f\u2b50\ufe0f",
+     "author": "Anvith Pothula",
+     "lastRunTime": "2026-09-21 09:47:58.620000",
+     "totalVotes": "215"
+    },
+    {
+     "ref": "anvithpothula/divqc-ground-truth-free-division-qc",
+     "title": "divqc ground truth free division QC",
+     "author": "Anvith Pothula",
+     "lastRunTime": "2026-09-19 03:54:48.853000",
+     "totalVotes": "0"
+    },
+    {
+     "ref": "anvithpothula/biohub-x56",
+     "title": "biohub-x56",
+     "author": "Anvith Pothula",
+     "lastRunTime": "2026-09-04 22:42:07.213000",
+     "totalVotes": "9"
+    },
+    {
+     "ref": "anvithpothula/aisec-jedcd6",
+     "title": "aisec-jedcd6",
+     "author": "Anvith Pothula",
+     "lastRunTime": "2026-08-31 01:57:22.693000",
+     "totalVotes": "1"
+    },
+    {
+     "ref": "anvithpothula/aisec-jedcdprobe",
+     "title": "aisec-jedcdprobe",
+     "author": "Anvith Pothula",
+     "lastRunTime": "2026-08-29 00:22:31.860000",
+     "totalVotes": "1"
+    },
+    {
+     "ref": "anvithpothula/biohub-dual-seed-harmonic-bidirectional-fusion",
+     "title": "Biohub Dual-Seed + Harmonic Bidirectional Fusion",
+     "author": "Anvith Pothula",
+     "lastRunTime": "2026-08-27 02:24:23.170000",
+     "totalVotes": "5"
+    },
+    {
+     "ref": "anvithpothula/rsna-base",
+     "title": "rsna-base",
+     "author": "Anvith Pothula",
+     "lastRunTime": "2026-08-25 17:03:27.470000",
+     "totalVotes": "109"
+    },
+    {
+     "ref": "anvithpothula/new-benchmark-task-00052",
+     "title": "New Benchmark Task 00052",
+     "author": "Anvith Pothula",
+     "lastRunTime": "2026-08-11 14:10:20.607000",
+     "totalVotes": "4"
+    },
+    {
+     "ref": "anvithpothula/biohub-0-95",
+     "title": "Biohub 0.95",
+     "author": "Anvith Pothula",
+     "lastRunTime": "2026-07-21 19:12:54.273000",
+     "totalVotes": "64"
+    }
+   ],
+   "user_thtennant": [
+    {
+     "ref": "thtennant/biohub-frontier947-readmit-v1",
+     "title": "Biohub frontier947 readmit v1",
+     "author": "Teddy Tennant",
+     "lastRunTime": "2026-09-19 01:41:22.390000",
+     "totalVotes": "1"
+    },
+    {
+     "ref": "thtennant/biohub-frontier947-divprec-v1",
+     "title": "Biohub frontier947 divprec v1",
+     "author": "Teddy Tennant",
+     "lastRunTime": "2026-09-19 00:22:36.233000",
+     "totalVotes": "0"
+    },
+    {
+     "ref": "thtennant/biohub-frontier947-gapfill-v1",
+     "title": "Biohub frontier947 gapfill v1",
+     "author": "Teddy Tennant",
+     "lastRunTime": "2026-09-19 00:13:02.263000",
+     "totalVotes": "0"
+    },
+    {
+     "ref": "thtennant/biohub-frontier947-gapfill-det096-v1",
+     "title": "Biohub frontier947 gapfill det096 v1",
+     "author": "Teddy Tennant",
+     "lastRunTime": "2026-09-18 02:51:33.717000",
+     "totalVotes": "12"
+    },
+    {
+     "ref": "thtennant/biohub-frontier947-fast-det096-tight60-v1",
+     "title": "Biohub frontier947 fast det096 tight60 v1",
+     "author": "Teddy Tennant",
+     "lastRunTime": "2026-09-18 01:25:14.057000",
+     "totalVotes": "0"
+    },
+    {
+     "ref": "thtennant/biohub-frontier947-flow2-det096-v1",
+     "title": "Biohub frontier947 flow2 det096 v1",
+     "author": "Teddy Tennant",
+     "lastRunTime": "2026-09-18 01:24:53.413000",
+     "totalVotes": "0"
+    },
+    {
+     "ref": "thtennant/biohub-frontier947-flow2-v1",
+     "title": "Biohub frontier947 flow2 v1",
+     "author": "Teddy Tennant",
+     "lastRunTime": "2026-09-18 00:21:28.137000",
+     "totalVotes": "1"
+    },
+    {
+     "ref": "thtennant/biohub-frontier947-fast-tight60-v1",
+     "title": "Biohub frontier947 fast tight60 v1",
+     "author": "Teddy Tennant",
+     "lastRunTime": "2026-09-18 00:21:24.803000",
+     "totalVotes": "0"
+    },
+    {
+     "ref": "thtennant/biohub-frontier947-fast-det096-v1",
+     "title": "Biohub frontier947 fast det096 v1",
+     "author": "Teddy Tennant",
+     "lastRunTime": "2026-09-17 00:46:25.387000",
+     "totalVotes": "0"
+    },
+    {
+     "ref": "thtennant/biohub-frontier947-fast-v1",
+     "title": "Biohub frontier947 fast v1",
+     "author": "Teddy Tennant",
+     "lastRunTime": "2026-09-17 00:19:51.617000",
+     "totalVotes": "0"
+    }
+   ],
+   "user_amanatar": [
+    {
+     "ref": "amanatar/rsna-knee-super-ensemble-0920",
+     "title": "RSNA Knee Super Ensemble 0920",
+     "author": "Aman Atar",
+     "lastRunTime": "2026-09-27 02:12:58.663000",
+     "totalVotes": "14"
+    },
+    {
+     "ref": "amanatar/optimized-biohub-max-score",
+     "title": "optimized-biohub-max-score",
+     "author": "Aman Atar",
+     "lastRunTime": "2026-09-27 01:39:05.377000",
+     "totalVotes": "65"
+    },
+    {
+     "ref": "amanatar/s6e9-realmlp-exact-value-neural-network-gpu",
+     "title": "S6E9: RealMLP Exact-Value Neural Network GPU",
+     "author": "Aman Atar",
+     "lastRunTime": "2026-09-23 01:37:06.037000",
+     "totalVotes": "4"
+    },
+    {
+     "ref": "amanatar/enveda-casmi-2026",
+     "title": "Enveda CASMI 2026",
+     "author": "Aman Atar",
+     "lastRunTime": "2026-09-21 10:23:34.017000",
+     "totalVotes": "1"
+    },
+    {
+     "ref": "amanatar/biohub-geometric-fusion",
+     "title": "Biohub Geometric Fusion",
+     "author": "Aman Atar",
+     "lastRunTime": "2026-09-21 09:18:35.700000",
+     "totalVotes": "170"
+    },
+    {
+     "ref": "amanatar/bend-the-knee-tta-elite-optimized",
+     "title": "Bend the Knee TTA - Elite Optimized",
+     "author": "Aman Atar",
+     "lastRunTime": "2026-09-20 01:43:27.503000",
+     "totalVotes": "1"
+    },
+    {
+     "ref": "amanatar/s6e9-sota-meta-blend",
+     "title": "S6E9: SOTA Meta-Blend",
+     "author": "Aman Atar",
+     "lastRunTime": "2026-09-19 14:22:05.600000",
+     "totalVotes": "10"
+    },
+    {
+     "ref": "amanatar/s6e9-samart-sota-meta-blend-lb-0-94656-champion",
+     "title": "\u26a1 S6E9:SAmart SOTA Meta-Blend (LB 0.94656 Champion",
+     "author": "Aman Atar",
+     "lastRunTime": "2026-09-19 02:31:11.953000",
+     "totalVotes": "34"
+    },
+    {
+     "ref": "amanatar/s6e9-smart-titan-meta-blend",
+     "title": "S6E9: Smart Titan Meta-Blend",
+     "author": "Aman Atar",
+     "lastRunTime": "2026-09-16 11:25:12.097000",
+     "totalVotes": "4"
+    },
+    {
+     "ref": "amanatar/s6e9-elite-master-xgboost-cpu",
+     "title": "S6E9: Elite Master XGBoost (CPU)",
+     "author": "Aman Atar",
+     "lastRunTime": "2026-09-14 16:29:29.093000",
+     "totalVotes": "1"
+    }
+   ]
+  },
+  "status": {
+   "status_amanatar__optimized-biohub-max-score": "COMPLETE",
+   "status_anvithpothula__biohub-0-953-lb-original": "COMPLETE"
+  }
+ },
+ "good_from": {
+  "comp_dateRun": "20260927T1243Z.txt",
+  "comp_scoreDescending": "20260927T1243Z.txt",
+  "user_anvithpothula": "20260927T1243Z.txt",
+  "user_thtennant": "20260927T1243Z.txt",
+  "user_amanatar": "20260927T1243Z.txt",
+  "status_amanatar__optimized-biohub-max-score": "20260927T1243Z.txt",
+  "status_anvithpothula__biohub-0-953-lb-original": "20260927T1243Z.txt"
+ }
+}

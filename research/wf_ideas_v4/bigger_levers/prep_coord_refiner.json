@@ -1,0 +1,20 @@
+{
+ "candidate": "yuki0731/biohub-coord-inject (CC0, team LMM 0.961) as a final post-step on K2's submission.csv: --patch coordinject",
+ "generated_utc": "2026-09-27T12:35Z",
+ "feasible": true,
+ "built": "experiments/exp75_k2_coordinject (K2 + coordinject, ALPHA 0.5, MAX_UM 3.0, DEADLINE_S 37800, 2 GPU workers)",
+ "notebook_sha256": "ab621c13654e0a530d8468fa242cce59cdbde643b7fb4547adb8264d29c80535",
+ "build_command": "K=\"--set DIVINS_ENABLE=1 --set DIVINS_STEAL=1 --set DIVINS_CAP=4 --set DIVINS_FRAME_CAP=1 --set DIVINS_ALPHA=1 --set DIVINS_THRESH=0.4 --set DIVINS_DUMP=0\"; python tools/build_probe_kernel.py exp75_k2_coordinject --base x138 --patch divinsert --patch safetail --patch lowrefine --patch coordinject $K --set REPAIR_DEADLINE_S=34200 --set DIVINS_DEADLINE_S=28800 --set LOWREFINE_ENABLE=1 --set COORDINJECT_ENABLE=1 --set COORDINJECT_ALPHA=0.5",
+ "code": ["tools/coordinject_patch.py", "tools/build_probe_kernel.py (registration + one check() call)", "tests/test_coordinject.py"],
+ "tests": "tests/test_coordinject.py 14 pass (+1 CPU e2e pass with COORDINJECT_WEIGHTS_DIR); full suite 454 passed, 1 skipped",
+ "off_is_identical": "COORDINJECT_ENABLE=0 build = K2 + one cell that prints one line (CSV byte-identical); K2 rebuilt by the builder == exp58 bytes modulo name; exp58 sha 1f1ddb6d unchanged",
+ "v1284_overlap": "Same job (node coordinate refinement). V1284: 224->32->3 head on x138's frozen features, <= 2 um, pre-ILP, public-head OOF median 1.525 um. coord-inject: independent 4-seed detector + z/xy refiners, snaps post-hoc <= 3 um; its own eval medians 1.59-1.67 um (not better on paper). Float-level disagreement with V1284 ~0.45 um median. In-sample lab: GT distance improves but the verbatim alpha-1 snap LOSES edges (-0.0057 pooled); a 0.5 blend of the two is +0.0032 pooled.",
+ "lab": {"clips": ["44b6_c50204e0", "44b6_eb2880fc", "6bba_784a78c9", "6bba_bb9f20c3"], "in_sample_for_coord_inject": true,
+         "pooled_adj_edge_delta": {"a1.0_3um": -0.00573, "a1.0_3um_unique": -0.00285, "a0.7": -0.00059, "a0.5_3um": 0.00315, "a0.5_2um_unique": 0.00358, "a0.3": 0.00107, "a1.0_1.5um": -0.00514},
+         "per_clip_a0.5": [-0.0209, 0.0125, 0.0, 0.0083], "division_tp_change": 0},
+ "runtime": "CPU 6.5 s/frame detector (16 fwd) + 0.75 s/frame refiners at 16 threads; T4 estimate ~1.2-2 min per 100-frame video per GPU -> ~60-100 min for ~100 hidden clips on 2 workers after K2's 7.4-7.6 h (~9.1 h); guard: no new video after 10.5 h kernel elapsed, kill at +15 min, partial coverage keeps the other videos' K2 rows",
+ "dummy": "not pushed: exp71 + exp70n RUNNING (2 sessions) at 12:34Z",
+ "expected_public": "~0 to +0.003 (lab in-sample +0.003 at alpha 0.5; alpha 1 negative); V1284 gave +0.002 on our base, float output 0",
+ "risks": "in-sample lab on 4 clips (noise ~one edge = 0.003); one 44b6 clip -0.021; runtime untimed on T4 (dummy needed: per-video seconds x25 must fit); skimage/zarr import inside the worker unverified on the x138 docker until the dummy; hidden embryos differ from training",
+ "go": "build ready; push the dummy when a GPU session frees; submit only after dummy gates pass and a slot is decided"
+}

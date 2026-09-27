@@ -1,0 +1,35 @@
+{
+  "task": "E10 v3 hourly READ-ONLY watch loop",
+  "status": "built, tested, NOT started",
+  "files": {
+    "loop": "experiments/lb_poll/e10_watch_loop.py (sha256 cde2845d892c1ffae41d77ab1d61a6ebf2396d88e6e2069e8b95b968a065ee87)",
+    "restart_script": "experiments/lb_poll/run_e10_watch_loop.sh (sha256 cf9ae3649896c52e5c62420ece8d55e93045adf8f06cd10e301f4de8d455f8ba)",
+    "snapshot_tool_refactor": "tools/e10_snapshot.py: main() -> take_snapshot(); behaviour unchanged (sha256 0377cb4c87def06a7082e717b7fb2166fa66b94ae17ffa0d2bcbf1b233a1824f)",
+    "tests": "tests/test_e10_watch_loop.py (32 tests)",
+    "notes": "research/wf_ideas_v4/e10v3/build_watch.notes.md"
+  },
+  "start": "bash experiments/lb_poll/run_e10_watch_loop.sh   (background; exits at 2026-09-29T12:00Z)",
+  "one_shot": "python experiments/lb_poll/e10_watch_loop.py --once",
+  "outputs": {
+    "log": "experiments/e10_watch/watch_loop.log (RUN / INFO / WARN lines with UTC prefix; signal lines start with 'E10 SIGNAL: ')",
+    "stdout": "experiments/e10_watch/watch_loop.stdout.log (via the restart script)",
+    "signals_json": "experiments/e10_watch/watch_loop_signals.jsonl",
+    "state": "experiments/e10_watch/watch_loop_state.json",
+    "snapshots": "experiments/e10_watch/<YYYYMMDDTHHMMZ>.txt hourly (~70 KB each, ~48 files to the end)"
+  },
+  "signals": {
+    "a": "ref above TOP_REF raunakdey07/biohub-harmonic-fusion-v3 in the scoreDescending top-20 (new or re-run), plus TOP_REF's own new lastRunTime; if TOP_REF leaves the list, the highest already-known ref is the anchor (WARN)",
+    "b": "ref new in the scoreDescending top-5",
+    "c": "new lastRunTime: anvithpothula and thtennant any kernel; amanatar only Biohub-related (non-Biohub = INFO)",
+    "note": "kernel API has no score: a signal starts a look; the E10 v3 trigger is a public notebook whose own public score >= 0.955"
+  },
+  "api_budget": "8 read-only calls per hour; per-call gate: PAUSE files (experiments/e10_watch/PAUSE, experiments/lb_poll/ladder_watch/PAUSE) and +-60 s of lb_poll's last/next poll from poll.log; 429: 60 s back-off x2 then cut the run, next run +30 min per consecutive cut (cap +60)",
+  "tests": "tests/test_e10_watch_loop.py 32 passed; tests/test_e10_snapshot.py 19 passed; full suite 412 passed",
+  "backtest": "real snapshots 26 Sep 16:20Z..27 Sep 11:01Z: one signal ((c) amanatar/optimized-biohub-max-score re-run, 27 Sep 01:47Z snapshot); rsna-knee re-run INFO only; no (a)/(b)",
+  "hard_rules": "no submit, no push, no commit, no kernel/builder file touched; the loop is not imported by any kernel",
+  "open_issues": [
+    "commit 9cdc047 (main session) already contains e10_watch_loop.py but not the tools/e10_snapshot.py take_snapshot refactor it imports: commit both together",
+    "position-based (a) cannot tell a tie at 0.953 ordered above HF v3 from a better score; history shows a stable order, a signal still needs the score look",
+    "the main session starts the loop and should watch watch_loop.log for 'E10 SIGNAL:' (e.g. Monitor/grep)"
+  ]
+}

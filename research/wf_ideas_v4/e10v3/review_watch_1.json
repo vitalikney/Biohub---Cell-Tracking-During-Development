@@ -1,0 +1,23 @@
+{
+  "review": "E10 v3 hourly watch loop, review 1 (safety and rule fit)",
+  "utc": "2026-09-27T11:36Z",
+  "ok": true,
+  "rule_fit": "detection only: no build, push, submit or finals path; signal (a) (ref above HF v3 0.953, or HF v3 re-run) covers any notebook >= 0.955; ties give false positives only; the >= 0.955 trigger stays a manual score look",
+  "read_only_guard": "verified: only e10_snapshot queries and LB_ARGS plus one temp dir pass; everything else raises before a subprocess starts",
+  "fix_applied": {
+    "file": "experiments/lb_poll/e10_watch_loop.py (run_once)",
+    "bug": "good lists advanced and state saved before the signal lines and jsonl were written; a write failure or kill in between lost the signal permanently (run() saved the advanced state)",
+    "change": "state good lists and signal count advance and save only after the RUN/INFO/SIGNAL log lines and the jsonl are written; a failure repeats the signal next run",
+    "test": "tests/test_e10_watch_loop.py::test_a_failed_signal_write_repeats_the_signal_next_run (fails on HEAD 9cdc047 loop, passes now)",
+    "sha256_loop": "903bbdea8675a89ae39e5caf9c0bbed11714d56c3bae8b86d6c69fd18656b4ac",
+    "sha256_tests": "b254a2946e0c7fe8af21e64a6b55937818fd0264412869dd725fc1df8624c53d"
+  },
+  "tests": "test_e10_watch_loop 33 passed; test_e10_snapshot 19 passed; full suite 438 passed + 1 transient si_builder failure caused by another agent editing build_probe_kernel.py/test_si_builder.py mid-run; rerun of test_si_builder+test_safetail+test_secswap (finals hashes) 66 passed",
+  "open": [
+    "END 29 Sep 12:00Z is conservative vs the 23:59Z deadline; --end 2026-09-29T13:30Z would keep the watch open while a ~9.5 h verbatim copy can still score",
+    "detection latency up to 60 min (120 min after 429 cuts); run --once by hand when needed",
+    "commit tools/e10_snapshot.py (take_snapshot) together with the loop, tests and restart script; this review's loop fix is uncommitted too",
+    "a corrupt state file makes the wrapper restart every 120 s silently (no calls); check watch_loop.stdout.log for '=== restart' after starting"
+  ],
+  "hard_rules": "no submit, push, commit, Kaggle call or builder/kernel change; scratch in the session scratchpad, removed"
+}

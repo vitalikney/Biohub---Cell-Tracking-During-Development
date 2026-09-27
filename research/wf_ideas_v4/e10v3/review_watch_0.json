@@ -1,0 +1,23 @@
+{
+  "review": "E10 v3 hourly watch loop, review 0 (correctness lens)",
+  "utc": "2026-09-27T12:27Z",
+  "ok": true,
+  "refactor_equivalence": "HEAD vs working tools/e10_snapshot.py on the same dry-run cache: snapshot file identical (except the timing line) and stdout identical; test_e10_snapshot 19/19",
+  "read_only": "the only subprocess path is es.run_cli -> GatedRunner -> assert_read_only -> subprocess.run; submit/push/pull/output/other list args raise before any subprocess (run_cli logs the raise as a failed attempt)",
+  "fixes_applied": [
+    {"file": "experiments/lb_poll/e10_watch_loop.py (run)", "bug": "a state save failure in the except path crashed the process; the restart wrapper re-ran at once: reproduced 8 Kaggle calls every ~3 min", "change": "except-path save_state is best-effort; the process keeps its in-memory hourly schedule"},
+    {"file": "experiments/lb_poll/e10_watch_loop.py (say)", "bug": "a failed watch_loop.log append raised, which could crash the loop or stop signal lines from printing", "change": "the line is printed first; a log OSError is echoed as a WARN"},
+    {"file": "tests/test_e10_watch_loop.py", "change": "8 tests: save failure, log failure, failed fetch keeps the good list, live bootstrap skips -dryrun files, no call after END under PAUSE, --once when not due, sleep capped at END, known kernel moving above HF v3 without a re-run"}
+  ],
+  "mutation": "30 mutants: 27 killed; 3 harmless survivors (retry sleep after abort, PAUSE poll period, lastRunTime == oldest edge)",
+  "tests": "test_e10_watch_loop 41 passed; full suite 483 passed, 1 skipped (finals/ladder byte-identity tests included and passing)",
+  "sha256": {"loop": "36afdc3e8abb07a0e33e825b32e694ed3e155408b22853822be238cc46ca2bf1", "tests": "2b4109077e33faafbee397ab78783e8adcd18d8ff0dac1303bef59d1fa6e407f", "e10_snapshot": "0377cb4c87def06a7082e717b7fb2166fa66b94ae17ffa0d2bcbf1b233a1824f"},
+  "open": [
+    "commit tools/e10_snapshot.py (take_snapshot) and tests/test_e10_watch_loop.py: HEAD a6ffbc9 has the loop (with this fix) but not take_snapshot, so a checkout of HEAD alone fails at import",
+    "no single-instance lock: start the wrapper only once (two loops double the calls and share one state file)",
+    "after a long PAUSE the next run may fall due immediately (8 extra calls)",
+    "END 29 Sep 12:00Z vs 23:59Z deadline: consider --end 2026-09-29T13:30Z",
+    "tie jitter near pos 5/6 or around HF v3 would repeat (a)/(b) signals; the order has been stable so far"
+  ],
+  "hard_rules": "no submit, push, commit or Kaggle call; no builder/kernel file touched; scratchpad removed"
+}

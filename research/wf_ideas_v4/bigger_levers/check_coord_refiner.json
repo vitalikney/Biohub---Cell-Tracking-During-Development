@@ -1,0 +1,41 @@
+{
+ "candidate": "exp75_k2_coordinject = K2 + --patch coordinject (yuki0731/biohub-coord-inject), ALPHA 0.5, MAX_UM 3.0",
+ "checked_utc": "2026-09-27T12:50Z",
+ "ok": true,
+ "build": {
+  "rebuild_sha256": "ab621c13654e0a530d8468fa242cce59cdbde643b7fb4547adb8264d29c80535",
+  "matches_experiments_exp75": true,
+  "kernel_metadata_identical": true,
+  "diff_vs_K2": "cell 0: header name + 2 env lines (COORDINJECT_ENABLE=1, COORDINJECT_ALPHA=0.5); one inserted code cell (idx 8) after the post cell (write_test_submission) and before the retention guard; nothing else. dataset_sources += yuki0731/biohub-coord-inject",
+  "k2_rebuild_sha256": "1f1ddb6d63b47f540ad614232e821ad215f27fce0d901cdbb9f67a8beeb67855 (== exp58 final)",
+  "globals_used_defined_upstream": ["KERNEL_START_TS (cell 7 from env set in cell 0)", "test_stems (cell 4)", "TEST_DIR (cell 2)", "SUBMISSION_PATH (cell 2)"],
+  "runtime_module_sha256_matches_local": true
+ },
+ "tests": "tests/test_coordinject.py 14 passed + 1 skipped; full suite with COORDINJECT_WEIGHTS_DIR (CPU e2e) 484 passed, 0 failed",
+ "finals_byte_identical": true,
+ "lab_recheck_kernel_path": {
+  "why": "prep lab blended FLOAT V1284 coords then rounded once; the kernel blends the CSV's INTEGER coords and rounds again",
+  "script": "scratchpad chk75_lab.py (kernel's coordinject_positions + coordinject_cell; cached refined npz; official metric)",
+  "per_clip_order": ["44b6_c50204e0", "44b6_eb2880fc", "6bba_784a78c9", "6bba_bb9f20c3"],
+  "a0.5_3um": {"per_clip": [-0.0029, 0.0125, 0.0, 0.0029], "pooled": 0.00215},
+  "a1.0_3um": {"per_clip": [-0.0608, 0.0, 0.0, -0.0009], "pooled": -0.00498},
+  "a0.3_3um": {"per_clip": [0.0, 0.0, 0.0, -0.0029], "pooled": -0.00125, "note": "sign flip vs float path +0.0011 -> noise floor ~ effect size"},
+  "a0.5_2um": {"per_clip": [0.0, 0.0125, 0.0, 0.0079], "pooled": 0.00453},
+  "division_tp_change": 0
+ },
+ "runtime": {
+  "clips": "all 100 frames x 64x256x256",
+  "t4_estimate": "0.3-1 s/frame -> 40-100 s/video -> 35-110 min for 100-130 hidden on 2 workers; total ~8.1-9.3 h",
+  "limits": "12 h hard; guard: no new video after 10.5 h, kill 10.75 h; validator disabled in K2 so only cheap cells follow",
+  "dummy_gate": "mean COORDINJECT_WORKER seconds per video <= 130 s (full coverage at 130 hidden videos); 130-165 s acceptable; > 165 s -> partial coverage (safe, diluted)"
+ },
+ "public_display": "0.955 block ~ranks 144-198 (silver ~197). Central ~+0.001 (range -0.003..+0.004) after shrinking the in-sample +0.002; P(display >= 0.955) ~0.35, P(<= 0.953) ~0.2. Can move the display; the downside is limited to a probe slot.",
+ "fixes": [
+  "Correct the expected lab gain to +0.002 (kernel integer path), not +0.003 (float path).",
+  "Dummy gates: add 'COORDINJECT_WORKER start ... device=cuda' on both shards and mean per-video worker time <= 130 s; keep 'SUMMARY videos=4/4', no FAILED, ids/edges identical to K2's dummy CSV.",
+  "Before submitting, confirm yuki0731/biohub-coord-inject has not had a new version since 25 Aug (a sha mismatch makes it a silent no-op).",
+  "Optional, not required: MAX_UM 2.0 variant (kernel-path +0.0045, c502 0 instead of -0.003); within noise, so keep 3.0 unless a second slot is spare."
+ ],
+ "dummy_status": "NOT pushed: at 12:45Z exp71 and exp70n are both RUNNING. exp70n was pushed 12:24Z, a ~30-min K2 dummy. Once it is COMPLETE: PYTHONIOENCODING=utf-8 python -m kaggle kernels push -p experiments/exp75_k2_coordinject",
+ "verdict": "GO as a risk probe once the dummy passes; not a finals candidate without its own public score"
+}

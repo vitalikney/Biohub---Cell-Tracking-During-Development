@@ -20,6 +20,30 @@ Check groups (each prints PASS / FAIL / SKIP lines with reasons; INFO lines neve
   node-counts     per-clip node counts of the two CSVs within 1%; sha256 equality is INFO (--dummy and --author)
 Exit code 0 only if no line is FAIL, 1 otherwise.
 
+Modes (--mode; E10 v3 = the user's instruction of 27 Sep 11:08 UTC, CONTEXT.md):
+  default   the E10 PORT RULE gate above, unchanged.
+  verbatim  (A) a verbatim copy of a scored public notebook. Same metadata, notebook-bytes, csv and node-counts checks,
+            but the P4c(2)/(3) source checks (validator, deadline override, sweep / rewrite markers) are INFO, not FAIL:
+            a byte copy of the scored version reproduces the author's scored run (x138 was byte-deterministic across
+            accounts). An unreadable notebook still FAILS. Dummy log: 'Traceback', 'REPAIR FAILED' and 'DEADLINE:'
+            lines FAIL; the validator / sweep / rewrite lines of the default mode are INFO.
+  si        (B) successor + our insertion (SI): --port is the SI build, --si-ref our reference build of the SAME recipe
+            on x138 and --si-ref-base its base (default experiments/exp56_x138_verbatim). The notebook-bytes group
+            then checks that the SI notebook differs from the pulled successor by our patch diff only: the difflib
+            hunks (removed lines, added lines, in order) of pulled -> SI over all cells (a cell marker line + the
+            source lines per cell) equal those of ref-base -> ref, after normalising the builder's override tag line
+            '# ---- <name>: probe overrides (tools/build_probe_kernel.py ...) ----'. A pure insertion / deletion
+            matches in any form reachable by sliding it through its own equal context (difflib may show a new cell
+            as [marker, source] or [source, marker]; seen on the HF v3 SI build); a rotation that is not such a slide
+            does not match. The reference base must be the pinned x138 v1 (FAIL otherwise); an INFO line names the
+            reference recipe (K2 exp58 / K1 exp58t / other). The notebook's non-cell keys equal the pulled notebook's.
+            Metadata: port id = vitaliineibauer/biohub-exp73[x]-si-<author>[-suffix] (the builder's --base succ slug
+            rule, SUCC_TOKEN; SI_ID_RX), and each source list = the
+            pulled non-blank sources + the sources our reference build added to its base (the DaughterNet weights).
+            Source checks are INFO as in verbatim (they run on the pulled notebook). Dummy log: as verbatim, plus
+            'DIVINS ENABLED:' required and 'DIVINS FAILED' / 'DIVINS SKIPPED' / 'LOWREFINE FAILED' FAIL.
+  --id-prefix overrides the port id prefix of any mode.
+
 Source-grep rules (line numbers refer to the code cells joined with a newline, as in round 10's 'l.6583'):
   * BIOHUB_VALIDATOR_ENABLE: every assignment (os.environ[...] =, setdefault, putenv, %env, dict-literal preset,
     keyword argument) must be the literal '0', and one must come before the first reader (os.environ.get, getenv,
@@ -41,6 +65,7 @@ from __future__ import annotations
 import argparse
 import ast
 import csv
+import difflib
 import hashlib
 import io
 import json
@@ -101,6 +126,23 @@ LOG_REQUIRED = ("VALIDATOR: disabled (BIOHUB_VALIDATOR_ENABLE=0).", "enabled=Fal
 LOG_FORBIDDEN = ("DEADLINE:", "Re-writing submission.csv", "POST-PROCESS SWEEP", "SWEEP TABLE")
 CSV_NEED = ("dataset", "row_type", "node_id", "z", "y", "x")
 NODE_TOL_PCT = 1
+
+MODES = ("default", "verbatim", "si")
+SI_ID_PREFIX = "vitaliineibauer/biohub-exp73-si-"   # = build_probe_kernel.py SUCC_TOKEN (--base succ)
+# the builder's full --base succ slug rule: biohub-exp73[x]-si-<author>[-suffix] (build_probe_kernel.py, SUCC_TOKEN)
+SI_ID_RX = re.compile(r"vitaliineibauer/biohub-exp73[a-z0-9]*-si-(?P<rest>[a-z0-9][a-z0-9-]*)")
+# our finals' notebooks as an SI reference (info: which recipe the SI carries)
+SI_REF_KNOWN = {"1f1ddb6d63b47f540ad614232e821ad215f27fce0d901cdbb9f67a8beeb67855": "K2 final exp58 recipe",
+                "a77bcd6bad527e7bd5c01cbde2147b5169c3c4b51a1507cc0c34276af8dd2b03": "K1 exp58t recipe"}
+MODE_ID_PREFIX = {"default": PORT_ID_PREFIX, "verbatim": PORT_ID_PREFIX, "si": SI_ID_PREFIX}
+SI_REF_BASE = ROOT / "experiments" / "exp56_x138_verbatim"
+LOG_HARD_FORBIDDEN = ("Traceback", "REPAIR FAILED", "DEADLINE:")          # verbatim + si: FAIL
+SI_LOG_REQUIRED = ("DIVINS ENABLED:",)
+SI_LOG_FORBIDDEN = ("DIVINS FAILED", "DIVINS SKIPPED", "LOWREFINE FAILED")
+OVERRIDE_TAG_RX = re.compile(r"^# ---- [A-Za-z0-9_.-]+: probe overrides \(tools/build_probe_kernel\.py[^)]*\) ----$")
+OVERRIDE_TAG_NORM = "# ---- <name>: probe overrides (tools/build_probe_kernel.py <tag>) ----"
+CELL_MARK = "\x00CELL "
+SCOPE_RX = re.compile(r"divis|fork|daughter|linefit|sister", re.I)   # R11-A3 SI_CONDITIONS (e), info only
 
 MAGIC_RX = re.compile(r"^\s*(?:%%?[A-Za-z_]|!(?!=))")
 ENV_MAGIC_RX = re.compile(r"^\s*%(?:env|set_env)\s+(?P<key>\w+)(?:\s*=\s*|\s+)(?P<val>.*?)\s*$")
@@ -634,10 +676,227 @@ def check_source(nb_path: Path, x138_ref: Path | None = None) -> list[Line]:
     return out
 
 
+def source_as_info(lines: list[Line], mode: str) -> list[Line]:
+    """verbatim / si: the P4c(2)/(3) source checks become INFO (a byte copy of the scored version reproduces the
+    author's scored run). An unreadable notebook stays FAIL."""
+    out = [Line("source", INFO, f"{mode} mode: the validator / deadline / sweep-rewrite checks below are INFO, "
+                                f"not FAIL (E10 v3: a byte copy of the scored version reproduces the author's scored "
+                                f"run)")]
+    for ln in lines:
+        if ln.status in (FAIL, PASS) and not ln.msg.startswith("cannot read the notebook"):
+            out.append(Line(ln.group, INFO, f"[{mode} mode: would be {ln.status}] {ln.msg}", ln.details))
+        else:
+            out.append(ln)
+    return out
+
+
+# --------------------------------------------------------------------------------------------------- si patch diff
+
+def flatten_notebook(nb_path: Path) -> tuple[dict, list[str], int]:
+    """(non-cell keys, lines, n_tag): per cell a marker line CELL_MARK + cell_type, then its source lines; the builder's
+    override tag line is normalised (n_tag = how many were)."""
+    nb = json.loads(Path(nb_path).read_text(encoding="utf-8"))
+    if not isinstance(nb, dict) or not isinstance(nb.get("cells"), list):
+        raise ValueError("not an nbformat-4 notebook (no 'cells' list)")
+    shell = {k: v for k, v in nb.items() if k != "cells"}
+    lines: list[str] = []
+    n_tag = 0
+    for c in nb["cells"]:
+        if not isinstance(c, dict):
+            raise ValueError("a cell is not a JSON object")
+        lines.append(f"{CELL_MARK}{c.get('cell_type')}")
+        src = c.get("source", "")
+        for ln in ("".join(src) if isinstance(src, list) else str(src)).split("\n"):
+            if OVERRIDE_TAG_RX.match(ln):
+                ln, n_tag = OVERRIDE_TAG_NORM, n_tag + 1
+            lines.append(ln)
+    return shell, lines, n_tag
+
+
+def diff_hunks(a: list[str], b: list[str]) -> list[tuple[tuple[str, ...], tuple[str, ...]]]:
+    """Ordered (removed lines, added lines) of every non-equal difflib opcode a -> b (positions dropped)."""
+    sm = difflib.SequenceMatcher(None, a, b, autojunk=False)
+    return [(tuple(a[i1:i2]), tuple(b[j1:j2])) for op, i1, i2, j1, j2 in sm.get_opcodes() if op != "equal"]
+
+
+Hunk = tuple  # (removed lines, added lines, frozenset of equivalent (removed, added) forms, frozenset of code cells)
+CODE_MARK = f"{CELL_MARK}code"
+
+
+def code_cell_prefix(a: list[str]) -> list[int]:
+    """pre[i] = number of code-cell marker lines in a[:i] (the code-cell ordinal of a hunk starting at line i; markdown
+    cells, which some successors interleave, do not count)."""
+    pre = [0]
+    for x in a:
+        pre.append(pre[-1] + (x == CODE_MARK))
+    return pre
+
+
+def diff_hunks_slid(a: list[str], b: list[str]) -> list[Hunk]:
+    """diff_hunks + every equivalent form of a pure insertion / deletion: difflib may place the same inserted block at
+    any position inside the surrounding equal run, which rotates the block (e.g. a new cell seen as [marker, source] or
+    as [source, marker] when the next line is also a cell marker). The forms reachable by sliding the block through its
+    own context (bounded by the neighbouring hunks) are all the same edit. Element 3 = the code-cell ordinals
+    (code_cell_prefix) of every such form's start in a: where the hunk sits, for the SI position check."""
+    ops = [o for o in difflib.SequenceMatcher(None, a, b, autojunk=False).get_opcodes() if o[0] != "equal"]
+    pre = code_cell_prefix(a)
+    out: list[Hunk] = []
+    for k, (op, i1, i2, j1, j2) in enumerate(ops):
+        rm, add = tuple(a[i1:i2]), tuple(b[j1:j2])
+        forms = {(rm, add)}
+        cells = {pre[i1]}
+        lo = ops[k - 1][2] if k else 0
+        hi = ops[k + 1][1] if k + 1 < len(ops) else len(a)
+        if op == "insert" and add:
+            for step in (-1, 1):
+                blk, i = list(add), i1
+                while True:
+                    if step < 0 and i > lo and a[i - 1] == blk[-1]:
+                        blk, i = [a[i - 1]] + blk[:-1], i - 1
+                    elif step > 0 and i < hi and a[i] == blk[0]:
+                        blk, i = blk[1:] + [a[i]], i + 1
+                    else:
+                        break
+                    forms.add(((), tuple(blk)))
+                    cells.add(pre[i])
+        elif op == "delete" and rm:
+            n = len(rm)
+            for step in (-1, 1):
+                i = i1
+                while True:
+                    if step < 0 and i > lo and a[i - 1] == a[i + n - 1]:
+                        i -= 1
+                    elif step > 0 and i + n < hi and a[i] == a[i + n]:
+                        i += 1
+                    else:
+                        break
+                    forms.add((tuple(a[i:i + n]), ()))
+                    cells.add(pre[i])
+        out.append((rm, add, frozenset(forms), frozenset(cells)))
+    return out
+
+
+def hunks_match(x: Hunk, y: Hunk) -> bool:
+    return bool(x[2] & y[2])
+
+
+def _hunk_str(h: tuple[tuple[str, ...], tuple[str, ...]]) -> str:
+    def show(xs: tuple[str, ...]) -> str:
+        first = next((x for x in xs if x.strip()), xs[0] if xs else "")
+        return _cut(first.replace(CELL_MARK, "<cell> ").strip(), 90)
+    return f"-{len(h[0])} +{len(h[1])} | -[{show(h[0])}] +[{show(h[1])}]"
+
+
+def si_added_sources(ref: Path, ref_base: Path) -> tuple[dict, str]:
+    """{source key: refs our reference build added to its base} (e.g. the DaughterNet weights dataset)."""
+    rm, err = load_meta(ref)
+    if rm is None:
+        return {}, f"reference build: {err}"
+    bm, err = load_meta(ref_base)
+    if bm is None:
+        return {}, f"reference base: {err}"
+    return {k: [s for s in (rm.get(k) or []) if s not in (bm.get(k) or [])]
+            for k in SOURCE_KEYS if k != "kernel_sources"}, ""
+
+
+def check_si_diff(pulled: Path, port: Path | None, si_ref: Path | None, si_ref_base: Path | None = None) -> list[Line]:
+    """--mode si: the SI notebook differs from the pulled successor by our patch diff only (= ref_base -> ref)."""
+    G = "notebook-bytes"
+    if port is None:
+        return [Line(G, SKIP, "no --port given (the SI build folder)")]
+    if si_ref is None:
+        return [Line(G, FAIL, "--mode si needs --si-ref (our reference build of the same recipe on x138)")]
+    paths: dict[str, Path] = {}
+    for who, d in (("pulled", Path(pulled)), ("reference build", Path(si_ref)),
+                   ("reference base", Path(si_ref_base) if si_ref_base is not None else SI_REF_BASE)):
+        nb, why = find_notebook(d)
+        if nb is None:
+            return [Line(G, FAIL, f"{who} notebook: {why}")]
+        paths[who] = nb
+    qm, err = load_meta(Path(port))
+    if qm is None:
+        return [Line(G, FAIL, f"port: {err}")]
+    cf = qm.get("code_file")
+    if not isinstance(cf, str) or not cf or not (Path(port) / cf).is_file():
+        return [Line(G, FAIL, f"port code_file {cf!r} not found in {port}")]
+    paths["SI"] = Path(port) / cf
+    out = [Line(G, INFO, f"{who} {p.name}: sha256 {sha256(p)[:16]}..., {p.stat().st_size} bytes")
+           for who, p in paths.items()]
+    if sha256(paths["reference base"]) != X138_SHA256:   # our patch diff is defined on the pinned x138 v1 only
+        out.append(Line(G, FAIL, f"reference base {paths['reference base'].name} is not the pinned x138 v1 "
+                                 f"({X138_SHA256[:16]}...): the reference patch diff must be ours on x138"))
+    known = SI_REF_KNOWN.get(sha256(paths["reference build"]), "not a pinned final recipe (exp58 / exp58t)")
+    out.append(Line(G, INFO, f"reference build = {known}"))
+    try:
+        flat = {who: flatten_notebook(p) for who, p in paths.items()}
+    except Exception as e:  # noqa: BLE001
+        return out + [Line(G, FAIL, f"cannot read a notebook: {type(e).__name__}: {e}")]
+    (ps, pl, pt), (ss, sl, st), (_, rl, rt), (_, bl, bt) = (
+        flat[k] for k in ("pulled", "SI", "reference build", "reference base"))
+    diff_keys = sorted(k for k in set(ps) | set(ss) if ps.get(k, _MISSING) != ss.get(k, _MISSING))
+    out.append(Line(G, FAIL, f"SI notebook non-cell keys differ from the pulled notebook: {diff_keys}") if diff_keys
+               else Line(G, PASS, f"SI notebook non-cell keys equal the pulled notebook ({', '.join(sorted(ps))})"))
+    out.append(Line(G, INFO, f"override tag lines normalised: SI {st}, reference build {rt}, pulled {pt}, "
+                             f"reference base {bt}"))
+    got, want = diff_hunks_slid(pl, sl), diff_hunks_slid(bl, rl)
+    n_add, n_rm = sum(len(h[1]) for h in got), sum(len(h[0]) for h in got)
+    n_slid = sum(h[:2] != w[:2] for h, w in zip(got, want))
+    if len(got) == len(want) and all(hunks_match(h, w) for h, w in zip(got, want)):
+        out.append(Line(G, PASS, f"SI vs pulled = our patch diff only: {len(got)} hunk(s), +{n_add} / -{n_rm} lines, "
+                                 f"identical (content and order) to reference base -> reference build"
+                                 + (f"; {n_slid} insertion(s) matched as the same block slid within its context"
+                                    if n_slid else ""),
+                        [_hunk_str(h[:2]) for h in got[:20]]))
+        n_pc, n_bc = sum(x == CODE_MARK for x in pl), sum(x == CODE_MARK for x in bl)
+        if n_pc != n_bc:
+            out.append(Line(G, INFO, f"hunk position check skipped: the pulled notebook has {n_pc} code cells, the "
+                                     f"reference base {n_bc}"))
+        else:
+            moved = [f"hunk {k + 1}: SI code cell {sorted(h[3])} vs reference {sorted(w[3])}: {_hunk_str(h[:2])}"
+                     for k, (h, w) in enumerate(zip(got, want)) if not h[3] & w[3]]
+            out.append(Line(G, FAIL, f"{len(moved)} SI hunk(s) sit in a different code cell than in the reference "
+                                     f"patch diff", moved[:10]) if moved else
+                       Line(G, PASS, f"every SI hunk sits in the same code cell as in the reference patch diff "
+                                     f"({n_pc} code cells)"))
+    else:
+        used: set[int] = set()
+        extra = []
+        for h in got:
+            k = next((k for k, w in enumerate(want) if k not in used and hunks_match(h, w)), None)
+            if k is None:
+                extra.append(h)
+            else:
+                used.add(k)
+        missing = [w for k, w in enumerate(want) if k not in used]
+        details = [f"only in SI vs pulled: {_hunk_str(h[:2])}" for h in extra[:10]]
+        details += [f"only in the reference patch diff: {_hunk_str(h[:2])}" for h in missing[:10]]
+        le = Counter(x for h in extra for x in h[0] + h[1])
+        lm = Counter(x for h in missing for x in h[0] + h[1])
+        details += [f"line only in the SI hunks: {_cut(x.strip(), 120)}" for x in list((le - lm).elements())[:6]]
+        details += [f"line only in the reference hunks: {_cut(x.strip(), 120)}" for x in list((lm - le).elements())[:6]]
+        if not extra and not missing:
+            details.append("the same hunks in a different order")
+        out.append(Line(G, FAIL, f"SI vs pulled is NOT our patch diff only: {len(got)} hunk(s) vs {len(want)} in the "
+                                 f"reference ({len(extra)} extra, {len(missing)} missing)", details))
+    scope = diff_hunks(bl, pl)
+    touch = [x for h in scope for x in h[0] + h[1] if SCOPE_RX.search(x)]
+    out.append(Line(G, INFO, f"successor vs reference base: {len(scope)} hunk(s), +{sum(len(h[1]) for h in scope)} / "
+                             f"-{sum(len(h[0]) for h in scope)} lines; {len(touch)} changed line(s) mention division / "
+                             f"fork / daughter / linefit / sister (R11-A3 SI_CONDITIONS (e))",
+                    [_cut(x.strip(), 120) for x in touch[:10]]))
+    return out
+
+
 # ------------------------------------------------------------------------------------------ metadata + notebook bytes
 
-def check_metadata(pulled: Path, port: Path | None = None, version: int | None = None) -> list[Line]:
+def check_metadata(pulled: Path, port: Path | None = None, version: int | None = None,
+                   prefix: str = PORT_ID_PREFIX, extra_sources: dict | None = None,
+                   id_rx: re.Pattern | None = None) -> list[Line]:
+    """extra_sources (--mode si): {source key: [refs]} our reference build added to its base; the port must carry them
+    on top of the pulled non-blank sources. id_rx (--mode si without --id-prefix): the port id must fullmatch it
+    instead of starting with prefix."""
     G = "metadata"
+    extra_sources = extra_sources or {}
     out: list[Line] = []
     pm, err = load_meta(Path(pulled))
     if pm is None:
@@ -673,13 +932,17 @@ def check_metadata(pulled: Path, port: Path | None = None, version: int | None =
         out.append(Line(G, FAIL, f"port: {err}"))
         return out
     pid = qm.get("id")
-    id_ok = isinstance(pid, str) and pid.startswith(PORT_ID_PREFIX) and len(pid) > len(PORT_ID_PREFIX)
-    out.append(Line(G, PASS if id_ok else FAIL, f"port id {pid!r}" + ("" if id_ok else
-                                                                     f": must be {PORT_ID_PREFIX}<author>")))
+    if id_rx is not None:   # --mode si: the builder's slug rule biohub-exp73[x]-si-<author>[-suffix]
+        mt = id_rx.fullmatch(pid) if isinstance(pid, str) else None
+        id_ok, rest, need = mt is not None, (mt.group("rest") if mt else ""), f"match {id_rx.pattern}"
+    else:
+        id_ok = isinstance(pid, str) and pid.startswith(prefix) and len(pid) > len(prefix)
+        rest, need = (pid[len(prefix):] if id_ok else ""), f"be {prefix}<author>"
+    out.append(Line(G, PASS if id_ok else FAIL, f"port id {pid!r}" + ("" if id_ok else f": must {need}")))
     if id_ok and pm is not None:
         author = str(pm.get("id", "")).split("/")[0].lower()
-        if pid[len(PORT_ID_PREFIX):] != author:
-            out.append(Line(G, INFO, f"port id suffix {pid[len(PORT_ID_PREFIX):]!r} != pulled author {author!r}"))
+        if rest != author and not (id_rx is not None and rest.startswith(author + "-")):
+            out.append(Line(G, INFO, f"port id suffix {rest!r} != pulled author {author!r}"))
     title = qm.get("title")
     t_ok = isinstance(title, str) and bool(title.strip())
     out.append(Line(G, PASS if t_ok else FAIL, f"port title {title!r}" + ("" if t_ok else ": must be non-empty")))
@@ -703,11 +966,15 @@ def check_metadata(pulled: Path, port: Path | None = None, version: int | None =
     for k in SOURCE_KEYS:
         want = [] if k == "kernel_sources" else sorted(
             s for s in (pm.get(k) or []) if isinstance(s, str) and s.strip())
+        add = [] if k == "kernel_sources" else [s for s in extra_sources.get(k, []) if s not in want]
+        want = sorted(want + add)
         got = qm.get(k, [])
         same = isinstance(got, list) and all(isinstance(s, str) for s in got) and sorted(got) == want
-        out.append(Line(G, PASS, f"port {k} == pulled non-blank ({len(want)})") if same else
+        plus = f" + {len(add)} added by our reference build {add}" if add else ""
+        out.append(Line(G, PASS, f"port {k} == pulled non-blank ({len(want) - len(add)}){plus}") if same else
                    Line(G, FAIL, f"port {k} {got!r} != {want!r}" +
-                        (" (must be [])" if k == "kernel_sources" else " (the pulled non-blank sources)")))
+                        (" (must be [])" if k == "kernel_sources" else " (the pulled non-blank sources" +
+                         (" + our reference build's added sources)" if add else ")"))))
     other = sorted(k for k in (set(pm) | set(qm)) - PORT_MAY_DIFFER - set(SOURCE_KEYS) - set(KEEP_KEYS)
                    if pm.get(k, _MISSING) != qm.get(k, _MISSING))
     same_keys = sorted((set(pm) | set(qm)) - PORT_MAY_DIFFER - set(SOURCE_KEYS) - set(KEEP_KEYS) - set(other))
@@ -760,7 +1027,7 @@ def read_log_lines(p: Path) -> list[str]:
     return [ln for chunks in streams.values() for ln in "".join(chunks).splitlines()]
 
 
-def check_dummy_log(dummy: Path | None) -> list[Line]:
+def check_dummy_log(dummy: Path | None, mode: str = "default") -> list[Line]:
     G = "dummy-log"
     if dummy is None:
         return [Line(G, SKIP, "no --dummy given")]
@@ -769,6 +1036,8 @@ def check_dummy_log(dummy: Path | None) -> list[Line]:
         return [Line(G, FAIL, f"no *.log in {dummy}")]
     lines = [ln for p in logs for ln in read_log_lines(p)]
     out = [Line(G, INFO, f"{len(lines)} log lines from {', '.join(p.name for p in logs)}")]
+    if mode != "default":
+        return out + _dummy_log_copy_mode(lines, mode)
     for s in LOG_REQUIRED:
         hits = [_cut(ln.strip()) for ln in lines if s in ln]
         out.append(Line(G, PASS, f"has {s!r} ({len(hits)} line(s))", hits[:3]) if hits else
@@ -780,6 +1049,38 @@ def check_dummy_log(dummy: Path | None) -> list[Line]:
     bad = [_cut(ln.strip()) for ln in lines if "Validator:" in ln and "enabled=True" in ln]
     out.append(Line(G, FAIL, "validator summary says enabled=True", bad[:3]) if bad else
                Line(G, PASS, "no 'Validator: ... enabled=True' summary line"))
+    return out
+
+
+def _log_hits(lines: list[str], s: str) -> list[str]:
+    return [_cut(ln.strip()) for ln in lines if s in ln]
+
+
+def _dummy_log_copy_mode(lines: list[str], mode: str) -> list[Line]:
+    """verbatim / si: crash, repair-failure and deadline lines FAIL; the author's own validator / sweep / rewrite
+    setting is reproduced by the byte copy, so those lines are INFO. si also needs the insertion to have run."""
+    G, out, tag = "dummy-log", [], f"{mode} mode: info"
+    for s in LOG_HARD_FORBIDDEN:
+        hits = _log_hits(lines, s)
+        out.append(Line(G, FAIL, f"{len(hits)} line(s) with {s!r}", hits[:5]) if hits else
+                   Line(G, PASS, f"no line with {s!r}"))
+    for s in LOG_REQUIRED:
+        hits = _log_hits(lines, s)
+        out.append(Line(G, INFO, f"{'has' if hits else 'no'} {s!r} ({len(hits)} line(s); {tag})", hits[:3]))
+    for s in (x for x in LOG_FORBIDDEN if x not in LOG_HARD_FORBIDDEN):
+        hits = _log_hits(lines, s)
+        out.append(Line(G, INFO, f"{len(hits)} line(s) with {s!r} ({tag})", hits[:5]))
+    bad = [_cut(ln.strip()) for ln in lines if "Validator:" in ln and "enabled=True" in ln]
+    out.append(Line(G, INFO, f"{len(bad)} 'Validator: ... enabled=True' summary line(s) ({tag})", bad[:3]))
+    if mode == "si":
+        for s in SI_LOG_REQUIRED:
+            hits = _log_hits(lines, s)
+            out.append(Line(G, PASS, f"has {s!r} ({len(hits)} line(s))", hits[:3]) if hits else
+                       Line(G, FAIL, f"missing {s!r} (the SI dummy must run the DaughterNet insertion)"))
+        for s in SI_LOG_FORBIDDEN:
+            hits = _log_hits(lines, s)
+            out.append(Line(G, FAIL, f"{len(hits)} line(s) with {s!r}", hits[:5]) if hits else
+                       Line(G, PASS, f"no line with {s!r}"))
     return out
 
 
@@ -917,14 +1218,29 @@ def check_node_counts(ours: dict | None, auth: dict | None, both_given: bool = T
 # ---------------------------------------------------------------------------------------------------------- driver
 
 def run(pulled: Path, port: Path | None = None, dummy: Path | None = None, author: Path | None = None,
-        version: int | None = None, x138_ref: Path | None = None) -> list[Line]:
+        version: int | None = None, x138_ref: Path | None = None, mode: str = "default",
+        si_ref: Path | None = None, si_ref_base: Path | None = None, id_prefix: str | None = None) -> list[Line]:
+    if mode not in MODES:
+        raise ValueError(f"mode {mode!r} is not one of {MODES}")
     pulled = Path(pulled)
     port, dummy, author = (Path(x) if x is not None else None for x in (port, dummy, author))
-    lines = check_metadata(pulled, port, version)
-    lines += check_notebook_bytes(pulled, port)
+    prefix = id_prefix or MODE_ID_PREFIX[mode]
+    extra: dict = {}
+    lines: list[Line] = []
+    if mode == "si" and si_ref is not None:
+        extra, err = si_added_sources(Path(si_ref), Path(si_ref_base) if si_ref_base is not None else SI_REF_BASE)
+        if err:
+            lines.append(Line("metadata", FAIL, f"si: {err}"))
+    lines += check_metadata(pulled, port, version, prefix, extra,
+                            SI_ID_RX if mode == "si" and not id_prefix else None)
+    lines += check_si_diff(pulled, port, si_ref, si_ref_base) if mode == "si" else check_notebook_bytes(pulled, port)
     nb, why = find_notebook(pulled)
-    lines += check_source(nb, x138_ref) if nb is not None else [Line("source", FAIL, f"pulled notebook: {why}")]
-    lines += check_dummy_log(dummy)
+    if nb is None:   # a missing pulled notebook FAILS in every mode (verbatim / si downgrade only check_source's findings)
+        lines.append(Line("source", FAIL, f"pulled notebook: {why}"))
+    else:
+        src = check_source(nb, x138_ref)
+        lines += src if mode == "default" else source_as_info(src, mode)
+    lines += check_dummy_log(dummy, mode)
     csv_lines, ours, auth = check_csvs(dummy, author)
     lines += csv_lines
     lines += check_node_counts(ours, auth, dummy is not None and author is not None)
@@ -933,6 +1249,8 @@ def run(pulled: Path, port: Path | None = None, dummy: Path | None = None, autho
 
 def group_status(lines: list[Line], group: str) -> str:
     st = [ln.status for ln in lines if ln.group == group]
+    if st and all(x == INFO for x in st):   # only INFO lines (verbatim / si source group with downgraded checks)
+        return INFO
     return FAIL if FAIL in st else PASS if PASS in st else SKIP
 
 
@@ -959,16 +1277,33 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--version", type=int, help="the author's version number of the pulled notebook (info)")
     ap.add_argument("--x138-ref", type=Path,
                     help=f"x138 v1 notebook for the marker baseline (sha256-pinned; default {X138_REFS[0]})")
+    ap.add_argument("--mode", choices=MODES, default="default",
+                    help="default = E10 PORT RULE gate (unchanged); verbatim = E10 v3 (A) byte copy of a scored public "
+                         "notebook (source checks INFO); si = E10 v3 (B) successor + our insertion (needs --si-ref)")
+    ap.add_argument("--si-ref", type=Path,
+                    help="--mode si: our reference build of the SAME recipe on x138 "
+                         "(folder, e.g. experiments/exp58t_x138_safe)")
+    ap.add_argument("--si-ref-base", type=Path,
+                    help=f"--mode si: the reference build's base folder (default {SI_REF_BASE})")
+    ap.add_argument("--id-prefix", help=f"port id prefix (default {PORT_ID_PREFIX} for default / verbatim, "
+                                        f"{SI_ID_PREFIX} for si)")
     a = ap.parse_args(argv)
     try:
         sys.stdout.reconfigure(errors="backslashreplace")  # notebook lines may not fit the console code page
     except (AttributeError, ValueError):
         pass
-    lines = run(a.pulled, a.port, a.dummy, a.author, a.version, a.x138_ref)
+    lines = run(a.pulled, a.port, a.dummy, a.author, a.version, a.x138_ref, a.mode, a.si_ref, a.si_ref_base,
+                a.id_prefix)
     header = ["E10 PORT GATE (read-only: local files only; no Kaggle call, no push, no submit)"]
     header += [f"  --{k:<8} {v if v is not None else '-'}" for k, v in
                (("pulled", a.pulled), ("port", a.port), ("dummy", a.dummy), ("author", a.author),
                 ("version", a.version))]
+    if a.mode != "default":   # the default mode's header stays exactly as it was
+        extra = (("mode", a.mode), ("id-prefix", a.id_prefix or (SI_ID_RX.pattern if a.mode == "si"
+                                                                  else MODE_ID_PREFIX[a.mode])))
+        if a.mode == "si":
+            extra += (("si-ref", a.si_ref), ("si-ref-base", a.si_ref_base or f"{SI_REF_BASE} (default)"))
+        header += [f"  --{k:<11} {v if v is not None else '-'}" for k, v in extra]
     print(render(lines, header))
     return 1 if any(ln.status == FAIL for ln in lines) else 0
 

@@ -1,0 +1,81 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/FACTS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/DECISIONS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/17/facts.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/17/facts.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "what": "The 12:00:00Z R8 line is due now. The R16-A3 template is false after the user's 11:08-11:16Z messages: it says 'E10 v2 lapsed, E10 v1 stays, 2 slots left, exp72 only on a yes'. Log the corrected R17-A1 line instead: R8 passed with nothing research-originated; E10 v2 superseded by E10 v3; R8 lifted by the user for exp72 and the division rungs; letter bracket check (11:01:09Z and 11:11:11Z both PENDING); 1 slot left on 27 Sep",
+   "evidence": "FACTS C-134, C-135; DECISIONS §3 rows R8 [c17] and 'Corrected 12:00Z line (R17-A1)'; research/wf_ideas_v4/round17/report.json R17-A1, plan_issues (2); CONTEXT l.2917-2951",
+   "suggested_action": "Main session: at >= 12:00:00Z (date -u), log R17-A1 with the fields filled in, then commit and push. Stage named paths only",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "The last 27 Sep slot is planned for exp70q or exp70r around 13:00Z, but no dummy of either is logged. That stack (cap 6 + thr 0.3 + forkmid 4.5, plus DC 0.20 for exp70r) has never run together on Kaggle. Both GPU sessions were busy at 11:24-11:28Z (exp71 running, exp70n dummy queued), so the 'dummy before submit' step may not fit before ~13:00Z",
+   "evidence": "FACTS F-RUN-30, F-MOD-33; DECISIONS §1 [c17] built/planned table; CONTEXT 11:16 l.2946-2951; research/wf_ideas_v4/bigger_levers/prep_div_combos.notes.md 11:24Z",
+   "suggested_action": "Check GPU lanes before the slot. If exp70q/r cannot get a COMPLETE dummy by the submit time, tell the user in the post-read line; do not submit without one",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "The 43/44 read is expected ~12:21-13:11Z; the conservative earliest is the 12:11Z header, and the fallback trigger is 14:28:22Z (14:40Z ListSubmissions). The user's letter (b) is pre-registered, so a V*_C gives the re-tick text from API SELECTED: untick 56563534, tick V*_C, keep 56563521. The P43 display also picks exp70r (if >= 0.955 by ~13:00Z) or exp70q. If max(43,44) <= 0.953, say that it is a public read against more safe-division forks",
+   "evidence": "FACTS F-RUN-29 [c17], F-RUL-12 [c17]; DECISIONS §1 P43/P44 [c17], §2 [c17]; CONTEXT 09:15 (3)-(4) l.2898-2905, 11:09:39 l.2927-2932; research/wf_ideas_v4/round17/report.json R17-A2, R17-A3",
+   "suggested_action": "Run the pruned R17-A2 card at the first terminal header, then send one user line with the read, the re-tick text if any, and the R17-A3 facts (V6 0.901, cap-6 lab -0.00057, thr 0.3 unsupported). Commit and push",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "The E10 v3 hourly watch loop is built but not running: there is no watch_loop log at 11:45Z. The loop depends on the uncommitted take_snapshot refactor in tools/e10_snapshot.py. E10 v3 is the user's only autonomous-submit line, and ties at 0.955 go to the earlier submission",
+   "evidence": "FACTS F-LB-10 [c17]; DECISIONS §2f [c17]; research/wf_ideas_v4/e10v3/build_watch.notes.md (NOTE: 'commit both'; 'Not started'); research/wf_ideas_v4/round17/report.json R17-A6",
+   "suggested_action": "Commit tools/e10_snapshot.py with e10_watch_loop.py after the tests pass. Start bash experiments/lb_poll/run_e10_watch_loop.sh in the background (baseline 1101Z) and confirm 2 good runs before 15:00Z",
+   "urgency": "today"
+  },
+  {
+   "kind": "contradiction",
+   "what": "An E10 v3 trigger ('submit a copy as fast as possible') and the user's 11:16Z plan ('last 27 Sep slot -> exp70q/r') have no ordering rule. Round 17's default, that a verbatim copy takes the slot, needs the user's one-line OK. P(trigger today) is small",
+   "evidence": "FACTS C-140; DECISIONS §3 row 'E10-v3-vs-last-slot default (R17-A4)'; research/wf_ideas_v4/round17/report.json R17-A4, plan_issues (3)",
+   "suggested_action": "Ask this in the post-read user line (one line, default stated)",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "No pre-score card is logged for P45 exp70g (56606948), exp70q/r, exp72 or E10 v3 copies. Under the 11:14Z directive, a display >= 0.955 becomes a finals proposal with #37. The earliest plausible P45 score is ~17:56Z",
+   "evidence": "DECISIONS §1 P45 row, §3 'Read cards (R17-A2, R17-A5)'; research/wf_ideas_v4/round17/report.json R17-A5, plan_issues (5); ledger 11:31:20Z (L45 > 0.26 h)",
+   "suggested_action": "Log the R17-A5 line (COMPLETE and L_hi <= 9.0 h; >= 0.955 -> proposal with #37, no mechanical re-tick; <= 0.954 info only; add to the private-read list) before ~17:50Z, then commit and push",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "Records are behind. The newest RESUME POINT is still 26 Sep 22:46Z, and MEMORY routes a new chat there. ROUND 15-17 RECORDs are not in CONTEXT. round17 REPORT.md is not saved (the text is only in report_md_ru). experiments/RESULTS.md has no rows for P39-P45. No deviation record exists for exp71 or the post-FREEZE rungs",
+   "evidence": "FACTS C-26 [c17], C-118 [c17], C-111 [c17]; CONTEXT l.2599; research/wf_ideas_v4/round17/report.json R17-A0, R17-A7, R17-A8, plan_issues (9), (12)",
+   "suggested_action": "After the 43/44 read: save REPORT.md, write the RESUME POINT regenerated from CONTEXT (not from the stale round-17 scans), add the ROUND 15-17 RECORDs and the deviation record, then commit and push",
+   "urgency": "today"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "Research agents built 20 division rungs exp73a..exp73v and exp74 (K2 + Corwin's CC0 secondary, with a repacked dataset in experiments/ds_secw_corwin_v1). None is tracked, pushed or in CONTEXT. exp74 needs a Kaggle dataset upload, and its own source says Corwin's secondary lost to pilkwang's by 0.006 public. The prep notes call I4 (cap 16) a 'real cliff risk'",
+   "evidence": "FACTS F-MOD-32, F-MOD-33, C-142; DECISIONS §1 [c17] table; research/wf_ideas_v4/bigger_levers/prep_div_combos.notes.md, prep_corwin_secondary.notes.md",
+   "suggested_action": "Main session: decide whether any exp73/exp74 build gets a 28 Sep slot after the 43/44/45 reads. Log the choice in CONTEXT; do not let the builds drift untracked",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "risk",
+   "what": "Evidence for the aggressive division rungs is mixed. For them: dc0.30 -0.005 public; insertion +0.001 twice. Against them or unsupported: the cap-6 lab arm (-0.00057; 0 TP / 4 FP / 81 unannotated), DIVINS_THRESH 0.3 (no lab support, and nearly inert because the per-video cap binds on 3 of 4 dummy clips and 45/56 lab clips), and amanatar V6 with looser gates (0.901 public). exp70n (thr 0.3 alone) probably adds little over K2",
+   "evidence": "FACTS F-TRN-48, C-138, C-139, F-LB-04 [c17]; research/wf_ideas_v4/round17/report.json new_facts (1), (5)",
+   "suggested_action": "State these facts once to the user with the 43/44 read (R17-A3). Do not spend a slot on exp70n unless its dummy shows a changed fork count",
+   "urgency": "info"
+  },
+  {
+   "kind": "contradiction",
+   "what": "The finals partner changed from L9's {V*, #38} to #37, by the user's letter (b) and the 11:14Z directive. So in every >= 0.955 branch the no-insertion hedge #38 leaves the pair. exp70b as a final and Q3 (exp72 as a final) are still unanswered: exp72 is public-only",
+   "evidence": "FACTS C-137, F-RUL-12 [c17]; DECISIONS §2 [c17], §3 L9 [c17]; CONTEXT l.2927-2936, l.2944-2945",
+   "suggested_action": "No action by rule. In any re-tick message, name what is unticked and ticked from API SELECTED, and re-read SELECTED afterwards",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 17 (11:45 UTC 27 Sep; HEAD 9cdc047 on origin; last poll header 11:51:28Z, where P43, P44 and P45 are all PENDING). New CONTEXT since curation 16 (l.2880-2951): the 09:15 R16-A1 read addendum and the R16-A2 message/forecast; 11:08Z USER E10 v3 (trigger = a public notebook >= 0.955; verbatim / +SI / port; autonomous submit); the 11:09:39Z class-C letter = option (b), pre-registered: a V*_C gives {V*_C, #37} and #38 leaves; 11:11:40Z Q1/Q2 yes, with exp71 pushed 11:11:50Z and exp72 set for 00:05Z 28 Sep (Q3 open, so public-only); 11:14Z FREEZE lifted, with any new >= 0.955 file proposed as a final with #37; 11:16Z aggressive mode, P45 = exp70g (K2 + cap 6) 56606948 submitted 11:15:12Z, and the last 27 Sep slot goes to exp70r or exp70q depending on P43. The finals are still TICKED 2/2 = #37 + #38. LB 11:01:37Z: #260 of 3,945, 6th of 115 at 0.954. E10 P1 11:01Z not met. amanatar V6 now shows 0.901. FACTS.md changes: new header; [c17] notes on F-LB-01/02/03/04/10/11/15, F-RUN-03/29, F-RUL-12, F-MOD-27, F-TRN-42 and F-DAT-05; new F-RUN-30 (GPU lanes / exp71), F-MOD-32 (Corwin secondary / exp74), F-MOD-33 (cap binds; exp73a..v) and F-TRN-48 (public evidence on 'more divisions'); C-05/26/111/114/118/120/128/129 updated and C-121..C-123 resolved; new contradictions C-132..C-143. DECISIONS.md changes: new header; P43/P44 [c17]; new P45 row; §1 [c17] paragraph and built/planned table (exp70n/q/r, exp72, E10 v3 copies, exp73a..v, exp74, exp75); §2 [c17] paragraph plus an 11:45Z candidates snapshot that replaces c16; §2f E10 v3; §2h 7 appends and 5 new rows; §3 R1-R10, §f, L9, ladder, private-read, exp71/72, FREEZE, R16-A1 and R16-A3 updated, plus 6 new rows (letter (b), E10 v3, user overrides and the 8-break tally, R17-A1, R17-A2/A5, R17-A4). The exp70g reserve row is marked as submitted. Round-17 actions R17-A0..A11 are not in CONTEXT at 11:45Z. Tables were column-checked, and CRLF line endings are kept."
+}

@@ -1,0 +1,46 @@
+{
+ "review": "review_gate_verbatim_0 (correctness lens) of build_gate_verbatim: tools/e10_port_gate.py --mode verbatim / si",
+ "utc_done": "2026-09-27T12:28Z",
+ "ok": true,
+ "problems": [
+  "FIXED false PASS (si): hunk matching ignored position; an insertion moved to another line or ANOTHER CELL, or a replace applied to the other of two identical lines, matched the reference patch diff",
+  "FIXED false PASS (verbatim + si): a pulled folder with no notebook gave RESULT PASS on a static run (no --port) because source_as_info downgraded the 'pulled notebook: ...' FAIL to INFO",
+  "Test gaps: mutants 'slide_unbounded' and 'order_insensitive' survived the delivered tests (closed with 2 new tests)",
+  "Not reproducible now: test_si_real_builder_on_hfv3 self-skips; the current parallel-edited builder refuses HF v3 (FAIL [knob] KERNEL_START_TS computed-key os.environ write in code cell 10). The claim 'HF v3 SI PASS with the real builder' holds only for the builder at build time; another agent's scratch build si_hfv3_k1 did gate PASS (incl. the new position check)",
+  "Concurrency: a parallel agent edited tools/e10_port_gate.py during this review (SI_ID_RX, SI_REF_KNOWN, FAIL on a non-x138 reference base); both edit sets are present and tested together",
+  "Open design points (unchanged): verbatim keeps kernel_sources == [] as FAIL; runtime evidence <= 12 h and scored-version == pulled latest not checked; si does not require recipe-specific log lines (LOWREFINE for a K2-recipe SI); within-cell hunk position unchecked"
+ ],
+ "fixes_applied": {
+  "tools/e10_port_gate.py": [
+   "CODE_MARK + code_cell_prefix(); diff_hunks_slid() returns a 4th element = code-cell ordinals of every slid form",
+   "check_si_diff(): after a content PASS, PASS/FAIL 'every SI hunk sits in the same code cell as in the reference patch diff' (INFO skip when the pulled notebook's code-cell count differs from the base's)",
+   "run(): a missing pulled notebook appends a FAIL directly in every mode; only check_source's findings are downgraded in verbatim / si"
+  ],
+  "tests/test_e10_port_gate_modes.py": [
+   "test_same_hunks_in_swapped_order_do_not_match",
+   "test_slid_forms_record_their_code_cells",
+   "test_si_hunk_moved_to_another_cell_fails",
+   "test_si_position_check_passes_on_exp58t",
+   "test_missing_pulled_notebook_fails_in_copy_modes[verbatim|si]",
+   "test_slide_is_bounded_by_the_neighbouring_hunk",
+   "test_si_diff_same_hunks_in_swapped_order_fails"
+  ]
+ },
+ "evidence": {
+  "pytest_full_before": "454 passed, 1 skipped",
+  "pytest_full_after": "483 passed, 1 skipped (skip = real-builder HF v3 test); pyflakes clean",
+  "mutation": "14 mutants: 12 killed first pass; 2 survivors killed after the new tests; reverting the missing-notebook fix is killed",
+  "default_mode_vs_HEAD": "byte-identical output on 4 inputs (HF v3 full dry run rc0, amanatar v10 rc1, x138+exp56 port rc1, x138+exp56 dummy/author rc0)",
+  "verbatim_hfv3_dry_run": "rc 0, 0 [FAIL]/[SKIP] lines, 1 'author version: 3' line",
+  "finals_rebuild": "twice, all 10 byte-identical to expected and committed: exp58 1f1ddb6d, exp58t a77bcd6b, exp58n 55038fd6, exp70a 132438a9, exp70b b8e7ece1, exp70d e0b8fc0c, exp70e c0f3380c, exp70g 52c182a3, exp70j 61a8d3c1, exp70k adef8bcb",
+  "no_submit_push": "gate has no subprocess/network/kaggle call; test subprocess only runs the local builder into experiments/_scratch_e10v3 and cleans up"
+ },
+ "sha256_after": {
+  "tools/e10_port_gate.py": "3e0c68aa1dc8",
+  "tests/test_e10_port_gate_modes.py": "89f2ba70970c"
+ },
+ "not_done": [
+  "no commit, no push, no submit",
+  "experiments/_scratch_e10v3 removed"
+ ]
+}

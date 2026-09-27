@@ -95,6 +95,22 @@ Patches (`--patch NAME`, repeatable, any order; they always address the BASE cod
              DUAL_SEED_* knobs x138 re-sets after the override block (X138_HARDSET_KNOBS). Log proof: 'Secondary
              artifact: <manifest folder>' and 'Secondary SHA256: <sha>'.
 DIVINS_DUMP=1 needs --lab on every base. --owner / --out-dir set the metadata owner and the folder under experiments/.
+
+`--base succ --base-ipynb <pulled .ipynb> --base-meta <pulled kernel-metadata.json> [--base-sha256 <sha>]` (E10 v3 (B),
+CONTEXT 27 Sep 11:08 UTC): a pulled public x138-family successor is the base (successor + our insertion = SI). The same
+patch code as on x138, at x138's code-cell indices; supported --patch divinsert (required), safetail, lowrefine,
+forkmid, leafprune and only their --set knobs + REPAIR_DEADLINE_S (SUCC_KNOBS); no --dataset / --push. Before anything
+is edited, succ_anchor_audit() checks every anchor of every requested patch on the successor's own cells (exactly once,
+in the expected cell, nowhere else; no stage between linefit and the FINAL print; none of our knob / function names
+already in the base; REPAIR_DEADLINE_S read in the post cell and never re-assigned after cell 0) and refuses the build
+with the list of failing anchors. Name = exp73[x]_si_<author>[_suffix] -> id vitaliineibauer/biohub-exp73[x]-si-<author>
+[-suffix]; kernel-metadata.json = the pulled one sanitised per E10 P4b(a) (private, internet off, no id_no; docker /
+machine / GPU / every source kept; a blank source, a kernel source or no docker pin refuses) + biohub-ft-weights when
+DIVINS_ENABLE != 0. The cell-0 tag line reads '--base succ <author>/<slug> sha256=<pulled notebook sha256>' and
+probe.json records base_sha256, the provenance and every anchor line. A non --lab succ build also needs --patch safetail
+and DIVINS_ENABLE != 0, REPAIR_DEADLINE_S / KERNEL_START_TS must be bound once and named nowhere else after cell 0, and
+the output folder must not hold another kernel's kernel-metadata.json. On the x138 notebook itself the K2 / K1 recipes
+give the exp58 / exp58t notebooks except that one tag line (tests/test_si_builder.py).
 """
 import argparse
 import hashlib
@@ -2276,13 +2292,293 @@ def patch_secswap(cells_src: dict) -> None:
 PATCHES["secswap"] = patch_secswap
 BASES["x138"]["patches"] += ("secswap",)
 
+# ---- coordinject (research/wf_ideas_v4/bigger_levers/prep_coord_refiner.notes.md): yuki0731/biohub-coord-inject as a
+# final post-step on submission.csv (new cell after the post-processing cell); code and knobs in tools/coordinject_patch.py
+try:
+    from tools import coordinject_patch as _coordinject
+except ImportError:  # run as a script: tools/ is sys.path[0]
+    import coordinject_patch as _coordinject
+PATCHES["coordinject"] = lambda cells_src: _coordinject.patch(cells_src, CELL["post"], NEW_CELLS_KEY)
+META_PATCHES["coordinject"] = _coordinject.meta
+BASES["x138"]["patches"] += ("coordinject",)
+
+
+# ---- succ base (E10 v3 (B), CONTEXT 27 Sep 11:08 UTC 'USER INSTRUCTION = E10 v3'; design research/wf_ideas_v4/round11
+# report.json R11-A3 SI_CONDITIONS): a PULLED public x138-family notebook (`kaggle kernels pull -m`) is the base and our
+# existing patches are applied to it with the SAME patch code as on x138, at x138's code-cell indices (config 2,
+# secondary 3, predict 4, post 5). Before any patch runs, succ_anchor_audit() checks every anchor of every requested
+# patch on the successor's own cells: each 'once' anchor occurs exactly once, in the expected cell, and in no other
+# code cell; 'present' names exist in the expected cell; 'absent' texts (our own knob / function names) occur nowhere;
+# every --set base knob (REPAIR_DEADLINE_S) is read in the post cell and never re-assigned after cell 0 (else our cell-0
+# override would be silently overwritten). Any failure refuses the build and lists every failing anchor. The pulled
+# kernel-metadata.json is sanitised per E10 P4b(a) (id vitaliineibauer/biohub-exp73-si-<author>, new title, private,
+# internet off, no id_no, docker_image / machine_shape / enable_gpu and every source kept; a blank source or a kernel
+# source refuses) plus our biohub-ft-weights dataset when the insertion is on. The cell-0 tag line and probe.json record
+# the base notebook's sha256.
+SUCC_TOKEN = "exp73"
+SUCC_OWNER = "vitaliineibauer"
+SUCC_PATCHES = ("divinsert", "safetail", "lowrefine", "forkmid", "leafprune")
+# --set knobs a succ build accepts (without BIOHUB_): the patches' own knobs + the one successor knob safetail moves
+SUCC_KNOBS = ("DIVINS_ENABLE", "DIVINS_STEAL", "DIVINS_CAP", "DIVINS_FRAME_CAP", "DIVINS_ALPHA", "DIVINS_THRESH",
+              "DIVINS_DUMP", "DIVINS_DEADLINE_S", "DIVINS_FORCE_FAIL", "DEGRADE_KEEP_DIV", "REPAIR_DEADLINE_S",
+              "LOWREFINE_ENABLE", "FORKMID_ENABLE", "FORKMID_MIN_UM", "FORKMID_FORCE_FAIL", "LEAF_PRUNE_MIN_EDGE_PROB")
+# knobs the SUCCESSOR itself reads (our cell-0 override must reach its reader): knob -> reader text in the post cell
+SUCC_BASE_KNOB_READERS = {"REPAIR_DEADLINE_S": 'os.environ.get("BIOHUB_REPAIR_DEADLINE_S"'}
+SUCC_ROLES = {"config": 2, "secondary": 3, "predict": 4, "post": 5}
+_SUCC_GAP2_ANCHOR = ('''                "x": refined_point[2],
+            }
+            inserted_ids.append(node_id)
+''')
+# (patch, kind, role, label, text): kind once = exactly once in the role's cell and nowhere else; present = >= 1 in the
+# role's cell; absent = in no code cell (role None); before_v1284 = its predict-cell occurrence precedes the V1284 block
+SUCC_ANCHORS = (
+    ("*", "once", "post", "post cell: def filter_output_graph(", "def filter_output_graph("),
+    ("divinsert", "once", "post", "gap2 node dict end (gap2_synthetic flag)", _SUCC_GAP2_ANCHOR),
+    ("divinsert", "once", "post", "linefit call (insertion point)", _LP_LINEFIT_CALL),
+    ("divinsert", "once", "post", "FINAL print", _FM_FINAL_PRINT),
+    ("divinsert", "once", "post", "linefit call directly followed by the FINAL print (no stage after the insertion)",
+     _LP_LINEFIT_CALL + _FM_FINAL_PRINT),
+    ("divinsert", "present", "post", "repair_frame_cache (insertion frame cache)", "repair_frame_cache"),
+    ("divinsert", "once", "post", "def read_test_frame( (insertion frame reader)", "def read_test_frame("),
+    ("divinsert", "absent", None, "no BIOHUB_DIVINS_ knob in the base", "BIOHUB_DIVINS_"),
+    ("divinsert", "absent", None, "no gap2_synthetic in the base", "gap2_synthetic"),
+    ("divinsert", "absent", None, "no DIVINS_BUNDLE in the base", "DIVINS_BUNDLE"),
+    ("divinsert", "absent", None, "no DaughterNet code in the base", "daughternet"),
+    ("divinsert", "absent", None, "no DivNet helper names in the base", "_DivNetConvBlock"),
+    ("divinsert", "absent", None, "no prepare_divnet_input in the base", "prepare_divnet_input"),
+    ("divinsert", "absent", None, "no candidate_triples in the base", "candidate_triples"),
+    ("divinsert", "absent", None, "no insert_divisions in the base", "insert_divisions"),
+    ("safetail", "once", "post", "blank lines + def fallback_output_graph(", NL + NL + NL + "def fallback_output_graph("),
+    ("safetail", "once", "post", "x138 deadline-degrade block", SAFETAIL_DEGRADE_OLD),
+    ("safetail", "present", "post", "_deadline_degraded (runtime guard)", "_deadline_degraded"),
+    ("safetail", "present", "post", "KERNEL_START_TS (runtime guard)", "KERNEL_START_TS"),
+    ("safetail", "once", "post", "KERNEL_START_TS binding (the insertion deadline gate's clock)",
+     'KERNEL_START_TS = float(os.environ.get("BIOHUB_KERNEL_START_TS"'),
+    ("safetail", "once", "post", "REPAIR_DEADLINE_S binding", 'REPAIR_DEADLINE_S = float(os.environ.get("BIOHUB_REPAIR_DEADLINE_S"'),
+    ("safetail", "absent", None, "no SAFETAIL code in the base", "SAFETAIL"),
+    ("safetail", "absent", None, "no BIOHUB_DEGRADE_KEEP_DIV in the base", "BIOHUB_DEGRADE_KEEP_DIV"),
+    ("safetail", "absent", None, "no BIOHUB_DIVINS_DEADLINE_S in the base", "BIOHUB_DIVINS_DEADLINE_S"),
+    ("lowrefine", "once", "predict", "V1284 module write (predict cell marker)", _LR_V1284_MARK),
+    ("lowrefine", "before_v1284", "predict", "lowdet globals literal", LOWREFINE_GLOBALS_ANCHOR),
+    ("lowrefine", "before_v1284", "predict", "lowdet peaks literal", LOWREFINE_PEAKS_ANCHOR),
+    ("lowrefine", "before_v1284", "predict", "lowdet int16 cast literal", LOWREFINE_CAST_ANCHOR),
+    ("lowrefine", "before_v1284", "predict", "LOWDET per-video print literal", LOWREFINE_PRINT_ANCHOR),
+    ("lowrefine", "present", "predict", "_v1284_refine (refiner the literal calls)", "_v1284_refine"),
+    ("lowrefine", "present", "predict", "unet_out[:, f_idx] (feature map the literal uses)", "unet_out[:, f_idx]"),
+    ("lowrefine", "absent", None, "no _LOWREFINE_ in the base", "_LOWREFINE_"),
+    ("lowrefine", "absent", None, "no BIOHUB_LOWREFINE_ENABLE in the base", "BIOHUB_LOWREFINE_ENABLE"),
+    ("forkmid", "once", "post", "blank lines + def filter_output_graph(", _FM_FILTER_DEF),
+    ("forkmid", "once", "post", "FINAL print", _FM_FINAL_PRINT),
+    ("forkmid", "absent", None, "no FORKMID code in the base", "FORKMID"),
+    ("forkmid", "absent", None, "no forkmid_ code in the base", "forkmid_"),
+    ("leafprune", "once", "config", "OUTPUT_LINEFIT_WINDOW knob line",
+     'OUTPUT_LINEFIT_WINDOW = int(os.environ.get("BIOHUB_OUTPUT_LINEFIT_WINDOW", "2"))' + NL),
+    ("leafprune", "once", "config", "output_linefit_window display line",
+     '    "output_linefit_window": OUTPUT_LINEFIT_WINDOW,' + NL),
+    ("leafprune", "once", "post", "blank lines + def filter_output_graph(", _FM_FILTER_DEF),
+    ("leafprune", "once", "post", "stats dict end", '        "linefit_skipped_nodes": 0,' + NL + "    }" + NL),
+    ("leafprune", "once", "post", "short-track print + linefit call", _LP_SHORT_TRACK_PRINT + _LP_LINEFIT_CALL),
+    ("leafprune", "absent", None, "no LEAF_PRUNE knob in the base", "LEAF_PRUNE"),
+    ("leafprune", "absent", None, "no prune_weak_leaf_nodes in the base", "prune_weak_leaf_nodes"),
+)
+_SUCC_ENV_ASSIGN = r'os\.environ\[\s*["\']%s["\']\s*\]\s*=(?!=)|os\.environ\.update\(|os\.putenv\(\s*["\']%s["\']'
+
+
+def succ_anchor_audit(cells: dict, patches, knobs=()) -> tuple[list[str], list[str]]:
+    """Check every anchor of `patches` (and the '*' rows) on the base code cells {index: source} BEFORE any patch runs.
+    `knobs` = the --set keys WITHOUT BIOHUB_ that the successor itself must read (SUCC_BASE_KNOB_READERS).
+    Returns (report lines, failure lines); any failure means: refuse the build."""
+    report, fails = [], []
+    idx = [k for k in cells if isinstance(k, int)]
+    n = len(idx)
+    need = max(SUCC_ROLES.values()) + 1
+    if n < need:
+        fails.append(f"[structure] the base has {n} code cells; the x138 layout needs >= {need} (config 2, predict 4, post 5)")
+        return report, fails
+
+    def where(text):
+        return {k: cells[k].count(text) for k in idx if text in cells[k]}
+
+    for patch, kind, role, label, text in SUCC_ANCHORS:
+        if patch != "*" and patch not in patches:
+            continue
+        hits = where(text)
+        cell = SUCC_ROLES.get(role)
+        tag = f"[{patch}] {label}" + (f" (cell {cell} {role})" if role else "")
+        if kind in ("once", "before_v1284"):
+            ok = hits == {cell: 1}
+            why = "" if ok else f"expected exactly once in code cell {cell}, found {hits or 'nowhere'}"
+            if ok and kind == "before_v1284":
+                c = cells[cell]
+                if c.count(_LR_V1284_MARK) != 1 or c.index(text) > c.index(_LR_V1284_MARK):
+                    ok, why = False, "not before the V1284 block of the predict cell"
+        elif kind == "present":
+            ok = hits.get(cell, 0) >= 1
+            why = "" if ok else f"expected in code cell {cell}, found {hits or 'nowhere'}"
+        elif kind == "absent":
+            ok = not hits
+            why = "" if ok else f"must not occur in the base, found in code cells {hits}"
+        else:
+            raise AssertionError(kind)
+        line = ("OK   " + tag) if ok else ("FAIL " + tag + ": " + why)
+        report.append(line)
+        if not ok:
+            fails.append(line)
+    # INFO only (the E10 port gate decides): the successor's validator / PP-sweep switch as cell 0 sets it
+    _val = re.findall(r"""os\.environ\[\s*["']BIOHUB_VALIDATOR_ENABLE["']\s*\]\s*=\s*["']([^"']*)["']""", cells[0])
+    _val_later = sorted(k for k in idx if k >= 1 and re.search(r"""["']BIOHUB_VALIDATOR_ENABLE["']\s*\]\s*=(?!=)""",
+                                                                 cells[k]))
+    report.append(f"INFO [validator] cell 0 sets BIOHUB_VALIDATOR_ENABLE={_val[-1] if _val else 'unset'!r}"
+                  + (f"; also assigned in code cells {_val_later}" if _val_later else "")
+                  + ("" if _val and _val[-1] == "0" and not _val_later
+                     else "; NOT off: the successor's validator / PP sweep would run (E10 P4c(2) territory)"))
+    if "lowrefine" in patches:  # INFO only: lowrefine's 0.965 split = x138's DET_THRESHOLD (the head-refined main peaks)
+        vals = {}
+        for key in ("BIOHUB_DET_THRESHOLD", "BIOHUB_READMIT_MIN_SCORE"):
+            m = re.findall(r"""os\.environ\[\s*["']%s["']\s*\]\s*=\s*["']([^"']*)["']""" % key, cells[0])
+            vals[key.removeprefix("BIOHUB_")] = m[-1] if m else "unset"
+        same = all(v == "0.965" for v in vals.values())
+        report.append(f"INFO [lowrefine] successor cell 0: {vals} (x138: 0.965 / 0.965)"
+                      + ("" if same else "; lowrefine's '>= 0.965 = head-refined main peaks' premise shifts: "
+                                         "prefer the K1 recipe (LOWREFINE_ENABLE=0)"))
+    post = cells[SUCC_ROLES["post"]]
+    # (review_si_builder_1) a value our gate depends on must have ONE Python binding in cells >= 1 (no later
+    # `NAME = ...` / `NAME += ...`) and its env key must not be written after cell 0: the knob we --set, and under
+    # safetail the kernel clock KERNEL_START_TS that the insertion deadline gate reads
+    guarded = [(knob, SUCC_BASE_KNOB_READERS[knob]) for knob in knobs]
+    if "safetail" in patches:
+        guarded.append(("KERNEL_START_TS", 'KERNEL_START_TS = float(os.environ.get("BIOHUB_KERNEL_START_TS"'))
+    for knob, reader in guarded:
+        key = "BIOHUB_" + knob
+        tag = f"[knob] {knob}"
+        n_read = post.count(reader)
+        pat = re.compile(_SUCC_ENV_ASSIGN % (re.escape(key), re.escape(key)))
+        writes = {k: len(pat.findall(cells[k])) for k in idx if k >= 1 and pat.search(cells[k])}
+        bind = re.compile(r"^[ \t]*%s[ \t]*(?:[-+*/%%]|//|\*\*)?=(?!=)" % re.escape(knob), re.M)
+        binds = {k: len(bind.findall(cells[k])) for k in idx if k >= 1 and bind.search(cells[k])}
+        # any other quoted mention of the env key in cells >= 1 (e.g. a list / dict fed to an os.environ[k] = v loop)
+        # except the reader itself and a cell-1 guard entry '"KEY": <number>,' (which the builder rewrites to --set)
+        guard1 = re.compile(r'^\s*"%s": -?\d+(\.\d+)?,\s*$' % re.escape(key), re.M)
+        other = {}
+        for k in idx:
+            if k < 1:
+                continue
+            n = len(re.findall(r"""["']%s["']""" % re.escape(key), cells[k]))
+            n -= cells[k].count(reader) if k == SUCC_ROLES["post"] else 0
+            n -= len(guard1.findall(cells[k])) if k == 1 else 0
+            if n > 0:
+                other[k] = n
+        if n_read != 1:
+            msg = f"FAIL {tag}: reader {reader!r} expected once in code cell 5 post, found {n_read}"
+        elif writes:
+            msg = (f"FAIL {tag}: re-assigned after cell 0 in code cells {writes} (os.environ[...] = / update / putenv): "
+                   f"the cell-0 override would be overwritten")
+        elif binds != {SUCC_ROLES["post"]: 1}:
+            msg = (f"FAIL {tag}: Python binding '{knob} =' expected once (the reader, code cell 5), found {binds}: "
+                   f"a later re-binding would bypass our value")
+        elif other:
+            msg = (f"FAIL {tag}: {key!r} also named in code cells {other} (outside the reader / cell-1 guard): "
+                   f"cannot prove the cell-0 value reaches the reader")
+        else:
+            msg = f"OK   {tag}: read once in the post cell, bound once, never re-assigned after cell 0"
+        report.append(msg)
+        if msg.startswith("FAIL"):
+            fails.append(msg)
+    return report, fails
+
+
+def _succ_author_norm(author: str) -> str:
+    return re.sub(r"[^a-z0-9]+", "-", author.lower()).strip("-")
+
+
+def succ_base(a) -> tuple[dict, bytes, dict, dict]:
+    """--base succ: load and check the pulled notebook + kernel-metadata.json. Returns (base dict for CELL / the
+    writer, raw notebook bytes, pulled metadata, provenance dict). sys.exit with a reason on any refusal."""
+    if not a.base_ipynb or not a.base_meta:
+        sys.exit("--base succ needs --base-ipynb <pulled .ipynb> and --base-meta <pulled kernel-metadata.json>")
+    nb_path, meta_path = Path(a.base_ipynb), Path(a.base_meta)
+    for p in (nb_path, meta_path):
+        if not p.is_file():
+            sys.exit(f"--base succ: {p} is not a file")
+    raw = nb_path.read_bytes()
+    sha = hashlib.sha256(raw).hexdigest()
+    if a.base_sha256 and a.base_sha256.lower() != sha:
+        sys.exit(f"--base-sha256 {a.base_sha256} != sha256 {sha} of {nb_path}")
+    meta_raw = meta_path.read_bytes()
+    try:
+        meta = json.loads(meta_raw.decode("utf-8"))
+        nb = json.loads(raw.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        sys.exit(f"--base succ: cannot parse the pulled files ({exc})")
+    ref = meta.get("id", "")
+    if not re.fullmatch(r"[A-Za-z0-9_-]+/[A-Za-z0-9_.-]+", ref or ""):
+        sys.exit(f"--base-meta: id {ref!r} is not <author>/<slug>")
+    author, slug = ref.split("/")
+    if author.lower() == SUCC_OWNER:
+        sys.exit("--base-meta: the base is one of our own kernels, not a public successor")
+    if meta.get("code_file") != nb_path.name:
+        sys.exit(f"--base-meta: code_file {meta.get('code_file')!r} != the --base-ipynb file name {nb_path.name!r} "
+                 f"(notebook and metadata must come from the same pull)")
+    blanks = [f"{k}[{i}]" for k in ("dataset_sources", "model_sources", "competition_sources", "kernel_sources")
+              for i, s in enumerate(meta.get(k) or []) if not str(s).strip()]
+    if blanks:
+        sys.exit(f"--base-meta: blank source(s) {blanks} (E10 P4b(b): P3 FAILS)")
+    if meta.get("kernel_sources"):
+        sys.exit(f"--base-meta: kernel_sources {meta['kernel_sources']} != [] (E10 P4c(4))")
+    if not meta.get("docker_image"):
+        sys.exit("--base-meta: no docker_image pin (P4b(a) keeps the author's environment; refusing an unpinned one)")
+    cells = nb.get("cells", [])
+    code = [c for c in cells if c.get("cell_type") == "code"]
+    if len(code) < max(SUCC_ROLES.values()) + 1:
+        sys.exit(f"--base succ: {len(code)} code cells; the x138 layout needs >= {max(SUCC_ROLES.values()) + 1}")
+    str_src = all(isinstance(c.get("source"), str) for c in cells)
+    if not str_src and not all(isinstance(c.get("source"), list) for c in cells):
+        sys.exit("--base succ: mixed cell source types (string and list)")
+    if json.dumps(nb, separators=(",", ":"), ensure_ascii=False).encode("utf-8") == raw:
+        serial = "compact"
+    elif json.dumps(nb, indent=1, ensure_ascii=False).encode("utf-8") == raw:
+        serial = "indent1"
+    elif (json.dumps(nb, indent=1, ensure_ascii=False) + NL).encode("utf-8") == raw:
+        serial = "indent1nl"
+    else:
+        serial = "compact"
+        print("NOTE: --base succ: the pulled notebook bytes are not reproduced by a JSON round-trip; writing compact JSON")
+    base = {"dir": meta_path.parent, "nb": nb_path, "sha256": sha, "compact": str_src, "serial": serial,
+            "cell_ids": all("id" in c for c in cells), **SUCC_ROLES, "divnet": None, "patches": SUCC_PATCHES}
+    prov = {"ref": ref, "author": author, "slug": slug, "ipynb": str(nb_path), "ipynb_sha256": sha,
+            "meta": str(meta_path), "meta_sha256": hashlib.sha256(meta_raw).hexdigest(), "serial": serial,
+            "code_cells": len(code)}
+    return base, raw, meta, prov
+
+
+def succ_meta(pulled: dict, name: str, nb_name: str, owner: str = SUCC_OWNER) -> dict:
+    """E10 P4b(a) sanitised copy of the pulled metadata (key order kept): id owner/biohub-<name>, title = slug,
+    code_file = our notebook, is_private true, enable_internet false, id_no dropped; everything else unchanged."""
+    slug = "biohub-" + name.replace("_", "-")
+    meta = {}
+    for k, v in pulled.items():
+        if k == "id_no":
+            continue
+        meta[k] = json.loads(json.dumps(v))
+    meta["id"] = owner + "/" + slug
+    meta["title"] = slug
+    meta["code_file"] = nb_name
+    meta["is_private"] = True
+    meta["enable_internet"] = False
+    meta.setdefault("dataset_sources", [])
+    return meta
+
 
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("name", help="folder/kernel name, e.g. exp40_relink_off (lowercase, digits, _ or -)")
     ap.add_argument("--set", action="append", default=[], help="KNOB=value (without BIOHUB_), repeatable")
-    ap.add_argument("--base", choices=sorted(BASES), default="exp39",
-                    help="base notebook: exp39 (default) or x138 (= exp56, anvithpothula/biohub-x138 verbatim)")
+    ap.add_argument("--base", choices=sorted(BASES) + ["succ"], default="exp39",
+                    help="base notebook: exp39 (default), x138 (= exp56, anvithpothula/biohub-x138 verbatim) or succ "
+                         "(a pulled public x138-family notebook: --base-ipynb + --base-meta; E10 v3 (B))")
+    ap.add_argument("--base-ipynb", default="", help="--base succ: the pulled notebook (kaggle kernels pull -m)")
+    ap.add_argument("--base-meta", default="", help="--base succ: the pulled kernel-metadata.json of the same pull")
+    ap.add_argument("--base-sha256", default="", help="--base succ: optional expected sha256 of --base-ipynb")
     ap.add_argument("--divnet", choices=["0", "1"], default=None,
                     help="DivNet veto on (1, exp39, the default) or off (0, exp29); exp39 base only")
     ap.add_argument("--note", default="", help="one line for probe.json")
@@ -2300,7 +2596,13 @@ def main() -> None:
         sys.exit("name must be lowercase letters/digits/_/-")
     if not re.fullmatch(r"[a-z0-9][a-z0-9_-]*", a.owner):
         sys.exit("--owner must be a Kaggle user name")
-    base = BASES[a.base]
+    succ = None  # --base succ: provenance of the pulled successor (succ_base)
+    if a.base == "succ":
+        base, _succ_raw, succ_pulled, succ = succ_base(a)
+    else:
+        if a.base_ipynb or a.base_meta or a.base_sha256:
+            sys.exit("--base-ipynb / --base-meta / --base-sha256 need --base succ")
+        base = BASES[a.base]
     CELL.clear()
     CELL.update(base)
     if base["patches"] is not None:
@@ -2317,9 +2619,50 @@ def main() -> None:
         if not k or not _:
             sys.exit(f"bad --set {item!r}")
         overrides["BIOHUB_" + k.strip().removeprefix("BIOHUB_")] = v.strip()
+    if succ is not None:
+        _slug = "biohub-" + a.name.replace("_", "-")
+        _auth = _succ_author_norm(succ["author"])
+        if not re.fullmatch(rf"biohub-{SUCC_TOKEN}[a-z0-9]*-si-{re.escape(_auth)}(-[a-z0-9-]+)?", _slug):
+            sys.exit(f"--base succ: the name must give the slug biohub-{SUCC_TOKEN}[x]-si-{_auth}[-suffix] "
+                     f"(e.g. {SUCC_TOKEN}_si_{_auth.replace('-', '_')}); got {_slug}")
+        if len(_slug) > 50:
+            sys.exit(f"--base succ: slug {_slug} is longer than 50 characters")
+        if a.owner != SUCC_OWNER:
+            sys.exit(f"--base succ: the kernel id is {SUCC_OWNER}/<slug> (E10 P4b(a)); got --owner {a.owner}")
+        if "divinsert" not in a.patch:
+            sys.exit("--base succ builds successor + our insertion (SI): --patch divinsert is required "
+                     "(a verbatim copy is a port, pushed from the pulled folder, not a builder build)")
+        if a.dataset:
+            sys.exit(f"--base succ: no --dataset (the successor's sources + our weights only); got {a.dataset}")
+        if a.train_stems:
+            sys.exit("--base succ: no --train-stems")
+        _bad = sorted(k.removeprefix("BIOHUB_") for k in overrides if k.removeprefix("BIOHUB_") not in SUCC_KNOBS)
+        if _bad:
+            sys.exit(f"--base succ accepts only --set {', '.join(SUCC_KNOBS)}; got {_bad}")
+        if "BIOHUB_REPAIR_DEADLINE_S" in overrides and "safetail" not in a.patch:
+            sys.exit("--base succ: REPAIR_DEADLINE_S moves the successor's own deadline: only with --patch safetail")
+        # (review_si_builder_1) a submission SI build carries the insertion switched ON and inside safetail's deadline
+        # gate + fail-soft (R11-A3 SI_CONDITIONS (b)); a divinsert-only or insertion-off build is a --lab dummy (D1)
+        if not a.lab and "safetail" not in a.patch:
+            sys.exit("--base succ: a submission SI build needs --patch safetail (insertion deadline gate + fail-soft); "
+                     "divinsert without safetail only with --lab (dummy, never submit)")
+        if not a.lab and overrides.get("BIOHUB_DIVINS_ENABLE", "0") == "0":
+            sys.exit("--base succ: DIVINS_ENABLE is off, so this would be the successor with dead code, not SI; "
+                     "--set DIVINS_ENABLE=1 (or --lab for a dummy)")
+        _od = ROOT / "experiments" / (a.out_dir or a.name) / "kernel-metadata.json"
+        if _od.is_file():
+            try:
+                _od_id = json.loads(_od.read_text(encoding="utf-8")).get("id", "")
+            except (UnicodeDecodeError, json.JSONDecodeError):
+                _od_id = "<unreadable>"
+            if _od_id != SUCC_OWNER + "/" + _slug:
+                sys.exit(f"--base succ: {_od.parent} already holds kernel {_od_id!r}; refusing to overwrite another "
+                         f"kernel's folder (finals / ladder folders are never a build target)")
+        if a.push:
+            sys.exit("--base succ: no --push from the builder (push the checked folder with kaggle kernels push -p)")
     if "safetail" in a.patch:
-        if a.base != "x138":
-            sys.exit("--patch safetail needs --base x138")
+        if a.base not in ("x138", "succ"):
+            sys.exit("--patch safetail needs --base x138 (or succ)")
         if "BIOHUB_REPAIR_DEADLINE_S" not in overrides:
             sys.exit("--patch safetail needs --set REPAIR_DEADLINE_S=34200 (x138 default 27000 is the runtime cliff)")
         _pair = (overrides["BIOHUB_REPAIR_DEADLINE_S"],
@@ -2337,8 +2680,8 @@ def main() -> None:
         if _k in overrides and "safetail" not in a.patch:
             sys.exit(f"{_k.removeprefix('BIOHUB_')} needs --patch safetail")
     if "lowrefine" in a.patch:
-        if a.base != "x138":
-            sys.exit("--patch lowrefine needs --base x138")
+        if a.base not in ("x138", "succ"):
+            sys.exit("--patch lowrefine needs --base x138 (or succ)")
         overrides.setdefault("BIOHUB_LOWREFINE_ENABLE", "1")
     if "BIOHUB_LOWREFINE_ENABLE" in overrides:
         if "lowrefine" not in a.patch:
@@ -2490,8 +2833,8 @@ def main() -> None:
         if overrides.get("BIOHUB_FORKMID_FORCE_FAIL", "0") != "0" and not a.lab:
             sys.exit("FORKMID_FORCE_FAIL is a dummy test knob: needs --lab")
     if "forkmid" in a.patch:
-        if a.base != "x138":
-            sys.exit("--patch forkmid needs --base x138")
+        if a.base not in ("x138", "succ"):
+            sys.exit("--patch forkmid needs --base x138 (or succ)")
         if overrides.get("BIOHUB_FORKMID_ENABLE", "0") == "0":
             print("NOTE: --patch forkmid with FORKMID_ENABLE=0 (default) builds an exact no-op of the base")
         # the last graph edit: applied after every other patch except safetail (which stays last)
@@ -2572,6 +2915,9 @@ def main() -> None:
             sys.exit("--patch secswap needs --dataset owner/slug (the dataset with the new secondary)")
         if not any(ds.count("/") == 1 and f"/{ds.split('/')[1]}/" in _man for ds in a.dataset):
             sys.exit(f"SECONDARY_ARTIFACT_MANIFEST {_man!r} is not inside any --dataset {a.dataset}")
+    _ci_err = _coordinject.check(a.base, a.patch, overrides, a.lab)
+    if _ci_err:
+        sys.exit(_ci_err)
     if a.base == "exp39":
         overrides["BIOHUB_DIVNET_VERIFY"] = a.divnet or "1"
 
@@ -2591,12 +2937,26 @@ def main() -> None:
         cells[i]["outputs"] = []
         cells[i]["execution_count"] = None
 
+    if succ is not None:
+        # every anchor of every requested patch on the successor's own (pristine) cells, BEFORE cell 0 or any
+        # patch is touched
+        _cells0 = {k: src(code[k]) for k in range(len(code))}
+        _knobs = [k for k in SUCC_BASE_KNOB_READERS if "BIOHUB_" + k in overrides]
+        succ["anchors"], _fails = succ_anchor_audit(_cells0, a.patch, _knobs)
+        if _fails:
+            sys.exit(f"--base succ REFUSED: {len(_fails)} anchor check(s) failed on {succ['ref']} "
+                     f"(sha256 {succ['ipynb_sha256'][:12]}), patches {'+'.join(a.patch)}:" + NL
+                     + NL.join("  " + f for f in _fails))
+        print(f"--base succ: {len(succ['anchors'])} anchor checks OK on {succ['ref']} (sha256 "
+              f"{succ['ipynb_sha256'][:12]}), patches {'+'.join(a.patch)}")
     c0 = src(code[0])
     if a.base == "exp39":
         assert "BIOHUB_PRESET = 'exp39_sjlee947_tight55_divnetveto'" in c0
         c0 = c0.replace("BIOHUB_PRESET = 'exp39_sjlee947_tight55_divnetveto'", f"BIOHUB_PRESET = '{a.name}'")
     if overrides or a.base == "exp39":  # x138: its preset name stays; no overrides -> cell 0 untouched
         tag = "tools/build_probe_kernel.py" + ("" if a.base == "exp39" else f" --base {a.base}")
+        if succ is not None:  # the successor's ref and the pulled notebook's sha256 (x138 / exp39 tags unchanged)
+            tag += f" {succ['ref']} sha256={succ['ipynb_sha256']}"
         block = NL + f"# ---- {a.name}: probe overrides ({tag}) ----" + NL
         block += NL.join(f'os.environ["{k}"] = "{v}"' for k, v in overrides.items()) + NL
         c0 = c0.rstrip(NL) + NL + block
@@ -2615,7 +2975,13 @@ def main() -> None:
         # afterwards
         cells_src = {k: src(code[k]) for k in range(len(code))}
         for name in a.patch:
-            PATCHES[name](cells_src)
+            if succ is None:
+                PATCHES[name](cells_src)
+                continue
+            try:
+                PATCHES[name](cells_src)
+            except AssertionError as exc:  # the audit should have caught it; never a partial successor build
+                sys.exit(f"--base succ REFUSED: --patch {name} failed on {succ['ref']}: {exc}")
         new_cells = cells_src.pop(NEW_CELLS_KEY, [])
         for k, s in cells_src.items():
             if s != src(code[k]):
@@ -2623,12 +2989,13 @@ def main() -> None:
         cell_ids = {c.get("id") for c in cells}
         for after in sorted({k for k, _ in new_cells}, reverse=True):
             for s in reversed([s for k, s in new_cells if k == after]):
-                if base["compact"]:  # Kaggle-export base (x138): cell ids, source as one string
+                if base.get("cell_ids", base["compact"]):  # Kaggle-export base (x138): cell ids, one-string source
                     cid = hashlib.sha256(s.encode("utf-8")).hexdigest()[:8]
                     assert cid not in cell_ids, cid
                     cell_ids.add(cid)
-                    new = {"id": cid, "cell_type": "code", "source": s, "metadata": {}, "outputs": [],
-                           "execution_count": None}
+                    new = {"id": cid, "cell_type": "code",
+                           "source": s if base["compact"] else s.splitlines(keepends=True), "metadata": {},
+                           "outputs": [], "execution_count": None}
                 else:
                     new = {"cell_type": "code", "execution_count": None, "metadata": {}, "outputs": [],
                            "source": s.splitlines(keepends=True)}
@@ -2643,16 +3010,23 @@ def main() -> None:
         sys.exit("--out-dir: a relative path under experiments/")
     out_dir.mkdir(parents=True, exist_ok=True)
     nb_name = a.name.replace("_", "-") + ".ipynb"
-    if base["compact"]:
+    serial = base.get("serial", "compact" if base["compact"] else "indent1")
+    if serial == "compact":
         # x138's own serialisation (Kaggle export): compact separators; json.loads -> dumps reproduces it byte for byte
         (out_dir / nb_name).write_bytes(json.dumps(nb, separators=(",", ":"), ensure_ascii=False).encode("utf-8"))
+    elif succ is not None:  # the successor's own indent-1 serialisation (succ_base detected it), LF newlines
+        (out_dir / nb_name).write_bytes((json.dumps(nb, indent=1, ensure_ascii=False)
+                                         + (NL if serial == "indent1nl" else "")).encode("utf-8"))
     else:
         json.dump(nb, open(out_dir / nb_name, "w", encoding="utf-8"), indent=1, ensure_ascii=False)
-    meta = json.load(open(base["dir"] / "kernel-metadata.json"))
     slug = "biohub-" + a.name.replace("_", "-")
-    meta["id"] = a.owner + "/" + slug
-    meta["title"] = slug
-    meta["code_file"] = nb_name
+    if succ is not None:  # E10 P4b(a): the pulled metadata sanitised (never the author's as-is)
+        meta = succ_meta(succ_pulled, a.name, nb_name, a.owner)
+    else:
+        meta = json.load(open(base["dir"] / "kernel-metadata.json"))
+        meta["id"] = a.owner + "/" + slug
+        meta["title"] = slug
+        meta["code_file"] = nb_name
     for name in a.patch:
         if name in META_PATCHES:
             META_PATCHES[name](meta, overrides)
@@ -2674,6 +3048,14 @@ def main() -> None:
         probe["base"] = ("x138 verbatim = exp56 (anvithpothula/biohub-x138, author public 0.953; x138 datasets, docker pin "
                          "and machine shape); built by tools/build_probe_kernel.py --base x138")
         probe["rule"] = "compare with exp56 (x138 verbatim on our account); above exp56 adopt, ties recorded"
+    if succ is not None:
+        probe["base"] = (f"succ = {succ['ref']} as pulled ({succ['ipynb']}, sha256 {succ['ipynb_sha256']}; metadata "
+                         f"{succ['meta']}, sha256 {succ['meta_sha256']}); built by tools/build_probe_kernel.py --base succ "
+                         f"(x138 cell layout, anchors audited before patching)")
+        probe["base_sha256"] = succ["ipynb_sha256"]
+        probe["succ"] = succ
+        probe["rule"] = ("E10 v3 (B) SI = successor + our insertion: compare with the verbatim copy (A) of the same "
+                         "successor version; dummy before any submit; the finals change only on the user's re-tick")
     json.dump(probe, open(out_dir / "probe.json", "w", encoding="utf-8"), indent=1, ensure_ascii=False)
     print("built", out_dir.relative_to(ROOT), "overrides", overrides)
     if a.push:

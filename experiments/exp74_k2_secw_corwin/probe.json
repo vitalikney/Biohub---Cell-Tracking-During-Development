@@ -1,0 +1,21 @@
+{
+ "base": "x138 verbatim = exp56 (anvithpothula/biohub-x138, author public 0.953; x138 datasets, docker pin and machine shape); built by tools/build_probe_kernel.py --base x138",
+ "change": {
+  "DIVINS_ENABLE": "1",
+  "DIVINS_STEAL": "1",
+  "DIVINS_CAP": "4",
+  "DIVINS_FRAME_CAP": "1",
+  "DIVINS_ALPHA": "1",
+  "DIVINS_THRESH": "0.4",
+  "DIVINS_DUMP": "0",
+  "REPAIR_DEADLINE_S": "34200",
+  "DIVINS_DEADLINE_S": "28800",
+  "LOWREFINE_ENABLE": "1",
+  "SECONDARY_EXPECTED_SHA256": "1168050414f7286d1b66692a2b57cc6a9e1d6068451627bfd6313ec459dde27d",
+  "SECONDARY_ARTIFACT_MANIFEST": "/kaggle/input/datasets/vitaliineibauer/biohub-secw-corwin-v1/ARTIFACT_MANIFEST.json",
+  "DEGRADE_KEEP_DIV": "1",
+  "PATCHES": "divinsert+lowrefine+secswap+safetail"
+ },
+ "note": "exp74: K2 + secswap to Corwin's CC0 secondary (corwin1979/biocel-secw-3f1c84ad repacked as vitaliineibauer/biohub-secw-corwin-v1)",
+ "rule": "compare with exp56 (x138 verbatim on our account); above exp56 adopt, ties recorded"
+}

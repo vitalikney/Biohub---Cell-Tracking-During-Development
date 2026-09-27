@@ -1,0 +1,7 @@
+- 2026-09-27T11:30Z start run 17; no prior watch.json in 17; existing WATCHLIST.md 29KB (12:03 local)
+- 2026-09-27T11:31:31Z git: 5 new commits since 0bd1408 (289bd52 R16 addendum, 06f1a02 R16-A2 msg, 61e0737 E10 v3, 659cef3 class C (b), 5bce47f user yes exp71/exp72, d1ccc85 exp71 pushed, 9cdc047 probe45 exp70g aggressive). round17 report.json 11:28Z
+- 2026-09-27T11:32:40Z poll 11:31:15Z: 43/44/45 PENDING; no NEVER_SUBMIT anywhere in exp70*; untracked exp73a-v (20 builds), exp74 secw_corwin, bigger_levers/, e10v3/
+- 2026-09-27T11:33:57Z E10 v3 loop NOT running (no watch_loop log); tools/e10_snapshot.py take_snapshot uncommitted (loop depends); CronList same 8 jobs; ROUND 14-17 RECORD count 0
+- 2026-09-27T11:35:59Z exp70q/r: no _dl dummy dir, CONTEXT l.2946-2951 says only exp70n dummy running -> alert. statuses decided: W158/W159/W160/W154 done, W161->W169 (R17-A1), FREEZE lifted 11:14Z, Q1/Q2 yes. New W168-W182, T87-T99, I172-I186. Writing WATCHLIST
+- 2026-09-27T11:38:23Z WATCHLIST.md written (curation 17); line cites checked (2878/2883/2931/2935/2949/2736/2726)
+- 2026-09-27T11:41:32Z watch.json written (complete, 15 alerts). No other repo file touched.

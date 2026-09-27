@@ -1,0 +1,29 @@
+{
+ "written": "2026-09-27T11:46Z",
+ "checked": "research/wf_ideas_v4/bigger_levers/prep_div_combos.json (20 rungs exp73a..exp73v_k2_*)",
+ "ok": true,
+ "build": {
+  "builder_sha256_now": "0ec0fd1b5e644539fa... (prefix 0ec0fd1b5e644539); prep JSON records df0fe7c7 -> stale, builder edited again by another agent",
+  "script_sha256": "d2afdfb7f82002af0444ccfa877807fc7bcb0c97d394ff01bde362e4e3491f68 (matches)",
+  "rebuild": "20/20 notebooks and kernel-metadata.json byte-identical with the current builder (rebuilt into a temp out-dir, deleted after)",
+  "diff_vs_K2": "a..e: cell 0 only; f..v: cell 0 + cell 7 (forkmid). vs exp70b (K2+forkmid, dummied+scored): cell 0 only. Only knob lines differ; metadata private/internet off/T4/docker 37c64f7d/K2 datasets",
+  "k2_finals": "exp58 1f1ddb6d63b47f540ad614232e821ad215f27fce0d901cdbb9f67a8beeb67855 unchanged and reproduced by the current builder; exp58n (#38) clean in git",
+  "pytest": "454 passed, 1 skipped (11:41Z)"
+ },
+ "runtime_risk": "low: insertion scores all triples regardless of cap/threshold, DC is a gate, forkmid ran in exp70b (+1-4% per clip on dummy). Expect ~K2 7.54 h hidden; safetail deadlines unchanged",
+ "public_move": {
+  "dummy_safe_forks": "K2 63, DC0.30 43 (-20 -> -0.005 public), DC0.225 76, DC0.20 84; frac caps never bind -> DC0.15 adds more (untested count)",
+  "assessment": "DC side is the credible lever (sign confirmed on public, DeepCenter-ranked). Cap/threshold side is lab-negative (break-even precision 0.161, ins_cap6 marginal 0/4, orphan attach 3.4%) and doubles/quadruples steals (floor(cap/2): I4 up to 8/video) which also risks the edge term. Realistic: D+ rows ~0.5 chance at least one of 4 rungs shows >= 0.955; D0/D- rows ~0.2-0.35; I4 rungs more likely down than up unless probe 45 is C+."
+ },
+ "fixes": [
+  "Update prep_div_combos.json builder sha to 0ec0fd1b... (hashes of all 20 notebooks still valid); re-run the build script + hash check right before each push, the builder keeps changing",
+  "State the R8 cap in the plan: last ladder submit 29 Sep 02:00Z (lifted only for exp72 and E10 v3); '29 Sep slots to push the winner' = 00:00-02:00Z only unless the user lifts R8 for these rungs",
+  "Add dummy gates: per-clip divins_added / divins_added_steal (steals <= floor(cap/2), added > K2's 4/0/4/4 where eligible), and for DC0.15 rungs safe-division added > 84 on the 4 clips (DC0.20 value); for DC combos check safe-div 'added' matches the DC single",
+  "Diversify: at most one I4 rung per row except R1 (C+ and D+); in R4/R5 put exp73m or exp73c ahead of a second I4 so one bad cap read does not sink 2 slots",
+  "Combos are not additive: safe-div and insertion compete for the same orphan starts; judge combos against their single, not the sum",
+  "Today's last-slot dummy (exp70q/exp70r, not yet on Kaggle) needs a lane before exp73 dummies; queue order after exp70n: exp70q|r, then exp73s/c/m/a (after exp71 ends ~15:30Z, exp72 dummy has priority on that lane)",
+  "Name hygiene: builder E10 v3 SI kernels are exp73[x]_si_<author>; always quote full exp73 names in ledger/CONTEXT"
+ ],
+ "dummy_status": "none pushed: 11:39Z exp71-secft-all RUNNING, exp70n-k2-thr03 QUEUED (2/2 lanes)",
+ "notes": "research/wf_ideas_v4/bigger_levers/check_div_combos.notes.md"
+}

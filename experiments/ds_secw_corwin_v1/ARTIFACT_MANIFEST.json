@@ -1,0 +1,13 @@
+{
+  "artifact_name": "biohub-secw-corwin-v1",
+  "artifact_type": "biohub_secondary_edge_predictor_repack",
+  "source_dataset": "corwin1979/biocel-secw-3f1c84ad (CC0-1.0), downloaded 2026-09-27; files byte-identical, only the layout changed to the pilkwang seed314159 layout that x138 code cell 3 expects",
+  "source_manifest": "CORWIN_MANIFEST_SHA256.json (verbatim copy of the source MANIFEST_SHA256.json)",
+  "replaces_in_the_slot": "9bac2fa0dadc4a6fc1899e0caf187f4b553e0a7cd90ba1261a68b35ffe9e305f",
+  "model": {
+    "weight_path": "weights/unet_transformer/split_0/edge_predictor_best.pth",
+    "weight_sha256": "1168050414f7286d1b66692a2b57cc6a9e1d6068451627bfd6313ec459dde27d",
+    "config_path": "weights/unet_transformer/split_0/config.json",
+    "config_sha256": "e9b4e396c58081bca08adf8275bd0bd1c2d3fd6eb091a1912a5116cb6de7b50a"
+  }
+}

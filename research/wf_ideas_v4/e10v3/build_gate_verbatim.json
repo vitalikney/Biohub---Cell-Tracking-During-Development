@@ -1,0 +1,38 @@
+{
+ "task": "E10 v3 tooling: tools/e10_port_gate.py --mode verbatim (A) and --mode si (B)",
+ "utc_done": "2026-09-27T11:35Z",
+ "files": [
+  "tools/e10_port_gate.py",
+  "tests/test_e10_port_gate_modes.py",
+  "research/wf_ideas_v4/e10v3/build_gate_verbatim.notes.md",
+  "research/wf_ideas_v4/e10v3/build_gate_verbatim.json"
+ ],
+ "sha256": {
+  "tools/e10_port_gate.py": "21e916f8c424",
+  "tests/test_e10_port_gate_modes.py": "ce83bc1a944b"
+ },
+ "modes": {
+  "default": "unchanged; output byte-identical to HEAD's gate on 4 inputs (HF v3 full dry run, amanatar v10, x138+exp56 port, x138+exp56 dummy/author); the 72 existing tests unchanged and passing",
+  "verbatim": "metadata (P4b(a) + blank sources + kernel_sources == []) and notebook-bytes (sha256 identity) as default; source P4c(2)/(3) checks -> INFO ('[verbatim mode: would be FAIL] ...'), unreadable notebook still FAIL; dummy log FAIL only on 'Traceback' / 'REPAIR FAILED' / 'DEADLINE:', validator/sweep/rewrite lines INFO; csv (validate_csv, no duplicate node rows, finite x/y/z) and node counts within 1% as default",
+  "si": "--port = SI build, --si-ref = our same-recipe build on x138 (e.g. experiments/exp58t_x138_safe), --si-ref-base default experiments/exp56_x138_verbatim. notebook-bytes group: SI non-cell keys == pulled; difflib hunks pulled->SI == ref_base->ref in content and order (override tag line normalised; pure insertions/deletions match in any form reachable by sliding through their own context). Metadata: id prefix vitaliineibauer/biohub-exp73-si- (= builder SUCC_TOKEN), sources = pulled non-blank + what the ref added to its base (biohub-ft-weights). Source INFO. Dummy log as verbatim + 'DIVINS ENABLED:' required, 'DIVINS FAILED'/'DIVINS SKIPPED'/'LOWREFINE FAILED' FAIL. INFO line: successor-vs-x138 hunks and lines mentioning division/fork/daughter/linefit/sister (R11-A3 (e))"
+ },
+ "cli": "python tools/e10_port_gate.py --pulled <pull dir> --port <port dir> --dummy <our dummy out> --author <author out> --version M --mode verbatim | --mode si --si-ref experiments/exp58t_x138_safe [--si-ref-base ...] [--id-prefix ...]",
+ "evidence": {
+  "verbatim_hfv3_dry_run": "PASS, 0 FAIL / 0 SKIP lines",
+  "verbatim_amanatar_v10_byte_copy": "PASS (default mode FAILs on source only)",
+  "si_exp58t_as_SI_of_x138": "PASS, 8 hunks +976/-4",
+  "si_real_builder_base_succ_x138": "PASS",
+  "si_real_builder_base_succ_hfv3": "PASS after the slide fix (1 insertion matched as slid); FAILED before it",
+  "si_K2_against_K1_reference": "FAIL, names BIOHUB_LOWREFINE_ENABLE 1 vs 0"
+ },
+ "tests": "tests/test_e10_port_gate_modes.py 41 passed; tests/test_e10_port_gate.py 72 passed unchanged; full `python -m pytest -q tests` 438 passed (343 baseline + 41 new here + other agents' new tests)",
+ "finals_rebuilds": "all 10 byte-identical with the current builder (built into scratch): exp58 1f1ddb6d, exp58t a77bcd6b, exp58n 55038fd6, exp70a 132438a9, exp70b b8e7ece1, exp70d e0b8fc0c, exp70e c0f3380c, exp70g 52c182a3, exp70j 61a8d3c1, exp70k adef8bcb",
+ "not_done": ["no commit, no push, no submit", "builder untouched by this task (the parallel agent's --base succ path was only exercised into scratch)"],
+ "open_issues": [
+  "Token collision: the SI builder uses SUCC_TOKEN exp73 (slug biohub-exp73-si-<author>) while another workflow agent has created ladder folders experiments/exp73a_k2_dc015 ... exp73v_k2_i4_fm_dc015 (slugs biohub-exp73[a-v]-k2-...). Ids do not collide, but a runtime-ledger rule 'exp73[a-z]*' and submit-message tokens would; pick one owner of exp73 before any push. The gate's SI prefix follows the builder (change via --id-prefix or SI_ID_PREFIX).",
+  "si mode checks the notebook against the reference pair; the operator must pass a reference built with the SAME recipe on x138 (K1 recipe -> exp58t; K2 recipe -> exp58). A different recipe FAILs by design.",
+  "Verbatim mode keeps the port id prefix exp63-succ-; the R12-A4 full-gate protocol (rc 0, no [FAIL]/[SKIP] lines, one 'author version: M' line) works unchanged with --mode verbatim.",
+  "Group header shows 'source: INFO' in verbatim/si mode (all source lines INFO); the R12-A4 grep counts only [FAIL]/[SKIP] line prefixes, so it is unaffected.",
+  "Not checked offline (as before): sources public/listable from our account; scored version == pulled latest (browser/CLI at the trigger)."
+ ]
+}

@@ -1,0 +1,117 @@
+{
+ "task": "curation 17: WATCHLIST + forgotten items (research/KNOWLEDGE/WATCHLIST.md)",
+ "complete": true,
+ "files_written": [
+  "research/KNOWLEDGE/WATCHLIST.md",
+  "research/KNOWLEDGE/_curation/17/watch.notes.md",
+  "research/KNOWLEDGE/_curation/17/watch.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "what": "W169 (R17-A1): at 12:00:00Z log the CORRECTED R8 line, not the R16-A3 template ('no letter', 'E10 v2 lapsed', '2 slots', 'exp72 only on a yes' are now false). It must include the E10 v3 supersession, the user messages 11:08-11:16Z, the bracket check, the push sent/not-sent, the slots (4 used / 1 left) and the DEVIATION RECORD; with W168 (save round17/REPORT.md)",
+   "evidence": "research/wf_ideas_v4/round17/report.json R17-A0/R17-A1, plan_issues (2); CONTEXT.md l.2917-2951",
+   "suggested_action": "Log the R17-A1 text at 12:00:00Z (date -u), save REPORT.md, commit named paths as the user (no trailer), push",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "I172/W171: the last 27 Sep slot (~13:00Z, exp70q or exp70r) has no dummy. Both GPU lanes are busy (exp71 RUNNING, exp70n dummy QUEUED although exp70n has no slot today); a dummy takes ~25-29 min",
+   "evidence": "no _dl/biohub-exp70q*/exp70r*; research/wf_ideas_v4/bigger_levers/prep_corwin_secondary.notes.md 11:28Z; CONTEXT.md l.2448, l.2946-2951",
+   "suggested_action": "Start the exp70q (or exp70r) dummy as soon as a lane frees (by ~12:15-12:30Z), or cancel the exp70n dummy; log the R17-A3 pre-score line (branch mapping, V6 0.901, cap-6 lab facts, max(43,44) <= 0.953 branch) before the first 43/44 terminal header (earliest 12:11Z)",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "I177/I176: amanatar V6 (looser division/detection gates) scored public 0.901 (-0.052). Lab cap 6 = -0.00057 with 85 extra insertions 0 TP / 4 FP; thr is near-inert because the cap binds. These facts must reach the user before the exp70q/r submit",
+   "evidence": "round17/report.json new_facts (1), R17-A3 (2); research/wf_ideas_v4/bigger_levers/prep_div_combos.notes.md 11:21Z",
+   "suggested_action": "Include them in the R17-A3 line and the post-read user message",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "W170 (R17-A2): 43/44 read with the pruned card; under the (b) letter a V*_C -> re-tick text untick 56563534 / tick V*_C / keep 56563521, written from API SELECTED; the user re-ticks",
+   "evidence": "round17/report.json R17-A2; CONTEXT.md l.2927-2932; experiments/lb_poll/poll.log header 11:31:15Z both PENDING",
+   "suggested_action": "Read at the first header with both refs terminal (expected 12:21-13:11Z; hard 14:28:22Z header, 14:40Z fallback); one CONTEXT line + one user line",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "W174/I173: the E10 v3 hourly loop is built but not running, and it depends on uncommitted tools/e10_snapshot.py (take_snapshot). build_probe_kernel.py (+372) and e10_port_gate.py (+316) are also uncommitted",
+   "evidence": "research/wf_ideas_v4/e10v3/build_watch.notes.md NOTE; git diff --stat; no experiments/e10_watch/watch_loop*.log",
+   "suggested_action": "Commit the E10 v3 tooling by named paths, start bash experiments/lb_poll/run_e10_watch_loop.sh in the background, confirm 2 good runs before 15:00Z, and log the E10 v3 edges (target 29 Sep 02:00Z; hard ~06:30Z/~11:00Z)",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "W176 (R17-A8): no ROUND 14/15/16/17 RECORD in CONTEXT; the v6 NOTES item 4 is wrong; the v6 folder, the 1101Z snapshot, ledger and poll.log are uncommitted; fb_ins35.py lives only in the session scratchpad",
+   "evidence": "grep -c 'ROUND 1[4-7] RECORD' CONTEXT.md = 0; experiments/ext_optimized-biohub-max-score/v6_2026-09-27/NOTES.md l.5; round17/report.json R17-A8",
+   "suggested_action": "One hygiene commit today after the 12:00Z line",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "W126/W182: no RESULTS.md rows for probes 39-42 (the last row is probe 38); no NEVER_SUBMIT.md in the class-C folders exp70j/exp70k; the 'above exp56 adopt' boilerplate is now in 22 more probe.json files",
+   "evidence": "experiments/RESULTS.md l.71; ls experiments/exp70*/NEVER_SUBMIT* = none; experiments/exp70q_k2_maxdiv/probe.json",
+   "suggested_action": "Add RESULTS rows 39-42 (and 43-45 when read) and NEVER_SUBMIT.md in exp70j/exp70k",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "W175 (R17-A7): the last RESUME POINT is 26 Sep 22:46Z and names stale timers; MEMORY.md still points to it and says 'E10 port rule proposed; overlap-consensus paused'. A restore card keyed by action/time is missing",
+   "evidence": "CONTEXT.md l.2599, l.2618; memory/MEMORY.md l.9; round17/v_hyp_post_r8_plan_r17p-f9.notes.md",
+   "suggested_action": "Write the regenerated RESUME POINT after the 43/44 read, by ~15:00Z; fix MEMORY.md; delete the past one-shots 5b23a3ed/54a8f20d/cdd738f1",
+   "urgency": "today"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "W181: 20 division rungs exp73a-v, exp74 (Corwin secondary; dataset upload not done) and exp75 coord-inject prep exist on disk, but no CONTEXT entry mentions them and no pre-score card covers them. Priors: cap binds, thr near-inert; I4 cliff risk; Corwin's own +0.006 against their secondary; secondary swaps 0/5 on the LB",
+   "evidence": "research/wf_ideas_v4/bigger_levers/prep_div_combos.notes.md; prep_corwin_secondary.notes.md; CONTEXT.md l.2726-2727",
+   "suggested_action": "Log them plus a pre-score card (extend R17-A5) before any 28 Sep slot or dummy use; exp72 at 00:05Z keeps priority per the user",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "W173 (R17-A5): pre-score card for probe 45 (56606948), exp70q/r, exp72 and E10 v3 copies (>= 0.955 -> finals proposal with #37, the user picks)",
+   "evidence": "round17/report.json R17-A5; experiments/lb_poll/ledger.md 56606948 PENDING",
+   "suggested_action": "Log it before 17:50Z (earliest 45 score ~17:56Z; 9.0 h clock 20:15:12Z)",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "I182: exp72 submits 28 Sep 00:05Z, but Q3 (exp72 as a final) is unanswered, so it is public-only; G2 must land by 29 Sep 12:00Z for eligibility",
+   "evidence": "CONTEXT.md l.2935-2936, l.2736; round17/report.json R17-A7 (c)",
+   "suggested_action": "Ask Q3 once in the post-read user line, before exp72 scores (~07-08Z 28 Sep)",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "I185: GPU quota not re-read since 26 Sep ~21:5x (07:55 / 30 h used, ~22 h left at Q1). exp71 (~4.5 h) + ~25 queued dummies is about 10-12 h; the next reset is after the deadline",
+   "evidence": "CONTEXT.md l.2542, l.2729, l.1545, l.2448",
+   "suggested_action": "Read the Kaggle Settings GPU usage before queueing the exp73 dummies; keep quota for exp72 and E10 v3",
+   "urgency": "today"
+  },
+  {
+   "kind": "contradiction",
+   "what": "I179/I181: the tick-check texts treat 29 Sep 20:00Z as a Kaggle freeze; it is our buffer (re-ticks are allowed until 23:59Z), and F should be read after 23:59Z. Session-only timers fire only while the REPL is idle",
+   "evidence": "round17/report.json plan_issues (7), R17-A7 (e); round17/v_hyp_post_r8_plan_r17p-f9.notes.md",
+   "suggested_action": "Word the ~20:05Z check without 'FINALS FROZEN'; add a post-23:59Z SELECTED read; keep the user's own alarms",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "deadline",
+   "what": "Later clock: 28 Sep 00:00 slot reset (exp72 00:05Z; 2 kept for E10 v3 only on the user's OK, R17-A4); 28 Sep 17:57 / 29 Sep 11:57 / 17:57 tick checks; 29 Sep 02:00Z E10 v3 target (hard ~06:30Z/~11:00Z); 29 Sep ~19:00Z last read; 29 Sep 23:00Z LESSONS H2 + private-read definitions; 23:27Z snapshot; 23:59Z deadline; 30 Sep 00:15Z private read keyed on privateScore",
+   "evidence": "round17/report.json R17-A4/A6/A7/A9/A10; CronList ~11:34Z",
+   "suggested_action": "Follow the LATER table in research/KNOWLEDGE/WATCHLIST.md",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "stale",
+   "what": "W57 family (curator CONTEXT records due 26 Sep 12:00) and W150 (round prompt js 13a27a1: '~4 h headroom', 'R8 hard line', 'no public knob ladders' stale) still open",
+   "evidence": "grep counts in CONTEXT.md (11:33Z); experiments/workflows/biohub-research-round.js; round17/report.json R17-A11 (f)",
+   "suggested_action": "Fix the round template before round 18; the curator records by 30 Sep",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 17 (11:40Z 27 Sep, HEAD 9cdc047). The user changed the regime at 11:08-11:16Z: E10 v3 (copy any public notebook >= 0.955; R8 lifted), class-C letter (b) {V*_C, #37} pre-registered, Q1/Q2 yes (exp71 pushed 11:11:50Z; exp72 28 Sep 00:05Z; Q3 open), FREEZE lifted, aggressive mode (probe 45 exp70g 56606948 at 11:15:12Z; last slot today exp70q/r ~13:00Z). Done: R16-A1 addendum, R16-A0, R16-A2 (push unconfirmed), class-C letter. Round 17 complete 11:28Z; none of R17-A0..A11 done. Most urgent: the corrected 12:00Z line (R17-A1, not the stale R16-A3 text); the R17-A3 last-slot pre-score line before the first 43/44 terminal header (earliest 12:11Z); exp70q/r have no dummy while both GPU lanes are busy; 43/44 read 12:21-13:11Z (hard 14:28:22Z); the E10 v3 loop is not running and depends on uncommitted tools/e10_snapshot.py; RESUME POINT + MEMORY fix by ~15:00Z; A5 pre-score card by 17:50Z. Overdue: ROUND 14-17 RECORDs, RESULTS rows 39-42, NEVER_SUBMIT in exp70j/k, W57 family. New insights I172-I186 (GPU lane/quota, uncommitted E10 tooling, page-score blind spot, negative secondary-swap prior for exp72/exp74, cap binds / thr inert, V6 0.901, 20:00Z is our buffer, timers fire only when idle, 22 unlogged exp73/exp74 builds)."
+}

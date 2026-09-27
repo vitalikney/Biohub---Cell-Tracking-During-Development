@@ -1,0 +1,402 @@
+{
+ "written": "2026-09-27T11:31Z",
+ "task": "aggressive division-side rungs for 28 Sep, pre-built for every outcome of probes 43/44/45 and today's last slot",
+ "status": "BUILT, NOT PUSHED (no free GPU session at 11:20Z: exp71 RUNNING, exp70n dummy QUEUED); never submitted, never committed",
+ "k2_finals_check": {
+  "exp58_x138_safe_lowref sha256": "1f1ddb6d63b47f540ad614232e821ad215f27fce0d901cdbb9f67a8beeb67855 (unchanged; rebuild with the same builder reproduced it byte for byte, and exp70q 33ab04d1 too)",
+  "pytest": "438 passed (python -m pytest -q tests, 11:27Z)"
+ },
+ "builder": {
+  "file": "tools/build_probe_kernel.py (working tree, has uncommitted succ-base edits by another agent)",
+  "sha256": "df0fe7c700d5eff0c955d76ff4deb8b54f7eb041e3dcfd4d6557a79e87ce86bc",
+  "script": "research/wf_ideas_v4/bigger_levers/prep_div_combos_build.sh (sha256 d2afdfb7f82002af0444ccfa877807fc7bcb0c97d394ff01bde362e4e3491f68); rebuild: bash that script from the repo root",
+  "vars": {
+   "B": "--base x138 --patch divinsert --patch safetail --patch lowrefine",
+   "BF": "$B --patch forkmid",
+   "K": "--set DIVINS_ENABLE=1 --set DIVINS_STEAL=1 --set DIVINS_CAP=4 --set DIVINS_FRAME_CAP=1 --set DIVINS_ALPHA=1 --set DIVINS_THRESH=0.4 --set DIVINS_DUMP=0 --set REPAIR_DEADLINE_S=34200 --set DIVINS_DEADLINE_S=28800 --set LOWREFINE_ENABLE=1",
+   "FM": "--set FORKMID_ENABLE=1",
+   "I2": "--set DIVINS_CAP=8 --set DIVINS_FRAME_CAP=2",
+   "I3": "--set DIVINS_CAP=12 --set DIVINS_FRAME_CAP=2 --set DIVINS_THRESH=0.3",
+   "I4": "--set DIVINS_CAP=16 --set DIVINS_FRAME_CAP=2 --set DIVINS_THRESH=0.2"
+  },
+  "diff_check": "every exp73 notebook differs from K2 (no forkmid) or exp70b (forkmid) ONLY in cell-0 override lines: the header comment with the name, the changed DIVINS_* values and, where set, one DEEPCENTER_SAFE_DIV_THRESHOLD line; metadata private, internet off, T4, x138 docker pin"
+ },
+ "outcome_codes": {
+  "D (probes 43 DC0.20 / 44 DC0.225, expected ~12:30-13:30Z)": "D+ = max(43,44) >= 0.955; D0 = best 0.954; D- = both <= 0.953. d* = the DC with the higher display (tie -> 0.20, more divisions; this tie rule is for rungs only, the class-C finals tie rule stays 44). DC push: if d* = 0.20 and disp(0.20) >= disp(0.225) push to 0.15; if 0.225 > 0.20 the peak is 0.225, no push.",
+  "C (probe 45 cap 6, expected ~18:30-19:00Z)": "C+ >= 0.955; C0 = 0.954; C- <= 0.953.",
+  "L (last slot today: exp70r if D+ with 0.20 >= 0.955 by ~13:00Z, else exp70q; expected ~19:30-21:00Z)": "L+ = last slot >= 0.955 and >= every single it combines; L- = last slot <= 0.953 while its parts read >= 0.954.",
+  "T (exp70n thr 0.3 alone, if it gets a slot today)": "T- = <= 0.953; T+ = >= 0.955."
+ },
+ "decision_table": [
+  {
+   "row": "R1",
+   "pattern": "D+ and C+",
+   "d*=0.20 (push 0.15)": [
+    "exp73v_k2_i4_fm_dc015",
+    "exp73o_k2_i3_fm_dc020",
+    "exp73a_k2_dc015",
+    "exp73c_k2_cap12"
+   ],
+   "d*=0.225 (peak)": [
+    "exp73t_k2_i4_fm_dc0225",
+    "exp73n_k2_i3_fm_dc0225",
+    "exp73s_k2_i4_fm",
+    "exp73c_k2_cap12"
+   ]
+  },
+  {
+   "row": "R2",
+   "pattern": "D+ and C0",
+   "d*=0.20 (push 0.15)": [
+    "exp73p_k2_i3_fm_dc015",
+    "exp73h_k2_fm_dc015",
+    "exp73a_k2_dc015",
+    "exp73k_k2_i2_fm_dc020"
+   ],
+   "d*=0.225 (peak)": [
+    "exp73n_k2_i3_fm_dc0225",
+    "exp73j_k2_i2_fm_dc0225",
+    "exp73f_k2_fm_dc0225"
+   ]
+  },
+  {
+   "row": "R3",
+   "pattern": "D+ and C-",
+   "d*=0.20 (push 0.15)": [
+    "exp73h_k2_fm_dc015",
+    "exp73a_k2_dc015",
+    "exp73g_k2_fm_dc020"
+   ],
+   "d*=0.225 (peak)": [
+    "exp73f_k2_fm_dc0225"
+   ],
+   "free_slots": "other levers (exp74 secondary swap, E10 port)"
+  },
+  {
+   "row": "R4",
+   "pattern": "D0 and C+",
+   "rungs": [
+    "exp73u_k2_i4_fm_dc020",
+    "exp73s_k2_i4_fm",
+    "exp73m_k2_i3_fm",
+    "exp73c_k2_cap12"
+   ]
+  },
+  {
+   "row": "R5",
+   "pattern": "D0 and C0",
+   "rungs": [
+    "exp73s_k2_i4_fm",
+    "exp73c_k2_cap12",
+    "exp73a_k2_dc015",
+    "exp73m_k2_i3_fm"
+   ]
+  },
+  {
+   "row": "R6",
+   "pattern": "D0 and C-",
+   "rungs": [
+    "exp73h_k2_fm_dc015",
+    "exp73a_k2_dc015"
+   ],
+   "free_slots": "2 to other levers"
+  },
+  {
+   "row": "R7",
+   "pattern": "D- and C+",
+   "rungs": [
+    "exp73s_k2_i4_fm",
+    "exp73m_k2_i3_fm",
+    "exp73c_k2_cap12",
+    "exp73i_k2_i2_fm"
+   ]
+  },
+  {
+   "row": "R8",
+   "pattern": "D- and C0",
+   "rungs": [
+    "exp73s_k2_i4_fm",
+    "exp73m_k2_i3_fm",
+    "exp73c_k2_cap12"
+   ]
+  },
+  {
+   "row": "R9",
+   "pattern": "D- and C-",
+   "rungs": [],
+   "free_slots": "division side closed on public: all slots to other levers"
+  }
+ ],
+ "modifiers": [
+  "L+ : combos add up -> in rows R1/R2/R4/R5/R7 move every rung one step more aggressive (I2->I3, I3->I4, a single -> its I4 combo) and put the I4 x d* combo first if not already there.",
+  "L- : the combination hurts -> drop the fm/thr combos: replace each I3/I4 rung by the matching single (exp73c cap 12 or exp73b cap 8) and each fm+DC rung by the DC single (exp73a); keep at most 3 rungs.",
+  "T- (thr 0.3 alone <= 0.953) : replace I3 rungs by I2 (same DC; I2 keeps thr 0.4) and I4 rungs by exp73c (cap 12 single). T+ : exp73e (thr 0.2 single) may take the last rung of any C+/C0 row.",
+  "Row R3/R6/R9 free slots go to non-division levers (exp74 secondary swap, E10 port), not to more division rungs.",
+  "Order inside a row = most aggressive first = submit order; all rungs of a row go on 28 Sep right after exp72 (00:05Z) and their dummies, so scores land by ~08:00-10:00Z and 29 Sep keeps 5 slots to push the winner one step further (e.g. I4 -> cap 24, DC 0.15 -> 0.10) before the finals re-tick."
+ ],
+ "coverage_rows_per_rung": {
+  "exp73c_k2_cap12": 6,
+  "exp73a_k2_dc015": 5,
+  "exp73s_k2_i4_fm": 5,
+  "exp73m_k2_i3_fm": 4,
+  "exp73h_k2_fm_dc015": 3,
+  "exp73n_k2_i3_fm_dc0225": 2,
+  "exp73f_k2_fm_dc0225": 2,
+  "exp73v_k2_i4_fm_dc015": 1,
+  "exp73o_k2_i3_fm_dc020": 1,
+  "exp73t_k2_i4_fm_dc0225": 1,
+  "exp73p_k2_i3_fm_dc015": 1,
+  "exp73k_k2_i2_fm_dc020": 1,
+  "exp73j_k2_i2_fm_dc0225": 1,
+  "exp73g_k2_fm_dc020": 1,
+  "exp73u_k2_i4_fm_dc020": 1,
+  "exp73i_k2_i2_fm": 1
+ },
+ "built_but_in_no_row": {
+  "exp73b_k2_cap8": "L- modifier (cap single instead of I2/I3 combos)",
+  "exp73e_k2_thr02": "T+ modifier (last rung of a C+/C0 row)",
+  "exp73l_k2_i2_fm_dc015": "T- modifier (replaces exp73p in R2 with d*=0.20)",
+  "exp73d_k2_fcap2": "reserve only (frame cap 2 alone is inert while the video cap 4 binds; kept for a 29 Sep attribution read)"
+ },
+ "dummy_priority": [
+  "exp73s_k2_i4_fm",
+  "exp73c_k2_cap12",
+  "exp73m_k2_i3_fm",
+  "exp73a_k2_dc015",
+  "exp73u_k2_i4_fm_dc020",
+  "exp73h_k2_fm_dc015",
+  "exp73o_k2_i3_fm_dc020",
+  "exp73v_k2_i4_fm_dc015"
+ ],
+ "dummy_gates": "as for exp70g/j/k: COMPLETE, ~1,450-1,700 s, 0 x Traceback / FAILED / DEADLINE: / FALLING BACK, the override values printed (DIVINS params, FORKMID enable=1, DC value), node count within ~0.1% of K2's 121,265, fork count on the 4 dummy clips moves in the expected direction (see dummy_expected_forks); divinsert lines show added = min(cap, eligible) under the frame cap.",
+ "gpu_lanes": "11:20Z: exp71 RUNNING (until ~15:30Z), exp70n dummy QUEUED -> 2/2 sessions busy, nothing pushed. Tonight: after exp70n, the lane runs today's last-slot dummy (exp70q or exp70r); after ~15:30Z the second lane frees (exp72 dummy first). Dummies take ~25-30 min each, so the 8 priority dummies fit between ~16:00Z and ~23:30Z on one lane; run the row-specific ones as soon as D (~13:30Z) and C (~19:00Z) are known.",
+ "builds": {
+  "exp73a_k2_dc015": {
+   "what": "K2 + DeepCenter safe-div 0.15",
+   "family": "single-DC",
+   "notebook": "experiments/exp73a_k2_dc015/exp73a-k2-dc015.ipynb",
+   "sha256": "e41fd78a8b8657562a08a1736975b1a787dcd4a53f7ca7180208bbf6edd460c1",
+   "kernel_id": "vitaliineibauer/biohub-exp73a-k2-dc015",
+   "build_args": "python tools/build_probe_kernel.py exp73a_k2_dc015 $B $K --set DEEPCENTER_SAFE_DIV_THRESHOLD=0.15 --note '...'",
+   "dummy_push": "PYTHONIOENCODING=utf-8 python -m kaggle kernels push -p experiments/exp73a_k2_dc015",
+   "dummy_expected_forks": "> 96"
+  },
+  "exp73b_k2_cap8": {
+   "what": "K2 + insertion cap 8 (steal cap 4)",
+   "family": "single-cap",
+   "notebook": "experiments/exp73b_k2_cap8/exp73b-k2-cap8.ipynb",
+   "sha256": "c20443ac2e676c95ca7a09ad304797d5dcb1f557de6e50d0ac83ae1655b54048",
+   "kernel_id": "vitaliineibauer/biohub-exp73b-k2-cap8",
+   "build_args": "python tools/build_probe_kernel.py exp73b_k2_cap8 $B $K --set DIVINS_CAP=8 --note '...'",
+   "dummy_push": "PYTHONIOENCODING=utf-8 python -m kaggle kernels push -p experiments/exp73b_k2_cap8",
+   "dummy_expected_forks": "~85-87"
+  },
+  "exp73c_k2_cap12": {
+   "what": "K2 + insertion cap 12 (steal cap 6)",
+   "family": "single-cap",
+   "notebook": "experiments/exp73c_k2_cap12/exp73c-k2-cap12.ipynb",
+   "sha256": "a33bac91d09960fa2a33f89e8ecfa6c124057fb12971c38d30f5117876f9e1df",
+   "kernel_id": "vitaliineibauer/biohub-exp73c-k2-cap12",
+   "build_args": "python tools/build_probe_kernel.py exp73c_k2_cap12 $B $K --set DIVINS_CAP=12 --note '...'",
+   "dummy_push": "PYTHONIOENCODING=utf-8 python -m kaggle kernels push -p experiments/exp73c_k2_cap12",
+   "dummy_expected_forks": "~92-99"
+  },
+  "exp73d_k2_fcap2": {
+   "what": "K2 + insertion frame cap 2",
+   "family": "single-cap",
+   "notebook": "experiments/exp73d_k2_fcap2/exp73d-k2-fcap2.ipynb",
+   "sha256": "69e9f4e89c3a676b611450df8cd4f1e85f68d68baeb718655e7324536291c5fe",
+   "kernel_id": "vitaliineibauer/biohub-exp73d-k2-fcap2",
+   "build_args": "python tools/build_probe_kernel.py exp73d_k2_fcap2 $B $K --set DIVINS_FRAME_CAP=2 --note '...'",
+   "dummy_push": "PYTHONIOENCODING=utf-8 python -m kaggle kernels push -p experiments/exp73d_k2_fcap2",
+   "dummy_expected_forks": "~75 (video cap 4 binds first)"
+  },
+  "exp73e_k2_thr02": {
+   "what": "K2 + insertion threshold 0.2",
+   "family": "single-thr",
+   "notebook": "experiments/exp73e_k2_thr02/exp73e-k2-thr02.ipynb",
+   "sha256": "3be9bdaeef0d96e437c8bb9c344cfc9645db9a06035ad2ff9cb47f10277c8cf1",
+   "kernel_id": "vitaliineibauer/biohub-exp73e-k2-thr02",
+   "build_args": "python tools/build_probe_kernel.py exp73e_k2_thr02 $B $K --set DIVINS_THRESH=0.2 --note '...'",
+   "dummy_push": "PYTHONIOENCODING=utf-8 python -m kaggle kernels push -p experiments/exp73e_k2_thr02",
+   "dummy_expected_forks": "~75 (video cap 4 binds first)"
+  },
+  "exp73f_k2_fm_dc0225": {
+   "what": "K2 + forkmid 4.5 + DC 0.225",
+   "family": "fm+DC",
+   "notebook": "experiments/exp73f_k2_fm_dc0225/exp73f-k2-fm-dc0225.ipynb",
+   "sha256": "90455c1d4500709649199473d6e3ba314cda71dbd834a0baf7220d9734eb67ce",
+   "kernel_id": "vitaliineibauer/biohub-exp73f-k2-fm-dc0225",
+   "build_args": "python tools/build_probe_kernel.py exp73f_k2_fm_dc0225 $BF $K $FM --set DEEPCENTER_SAFE_DIV_THRESHOLD=0.225 --note '...'",
+   "dummy_push": "PYTHONIOENCODING=utf-8 python -m kaggle kernels push -p experiments/exp73f_k2_fm_dc0225",
+   "dummy_expected_forks": "~87"
+  },
+  "exp73g_k2_fm_dc020": {
+   "what": "K2 + forkmid 4.5 + DC 0.20",
+   "family": "fm+DC",
+   "notebook": "experiments/exp73g_k2_fm_dc020/exp73g-k2-fm-dc020.ipynb",
+   "sha256": "e4d841381ec25ed77ef31f4beda1a3d62209c1778d57e0fbb5ba3bfd9cd3ac96",
+   "kernel_id": "vitaliineibauer/biohub-exp73g-k2-fm-dc020",
+   "build_args": "python tools/build_probe_kernel.py exp73g_k2_fm_dc020 $BF $K $FM --set DEEPCENTER_SAFE_DIV_THRESHOLD=0.20 --note '...'",
+   "dummy_push": "PYTHONIOENCODING=utf-8 python -m kaggle kernels push -p experiments/exp73g_k2_fm_dc020",
+   "dummy_expected_forks": "~95"
+  },
+  "exp73h_k2_fm_dc015": {
+   "what": "K2 + forkmid 4.5 + DC 0.15",
+   "family": "fm+DC",
+   "notebook": "experiments/exp73h_k2_fm_dc015/exp73h-k2-fm-dc015.ipynb",
+   "sha256": "6137df2b3b63ff3d7ed18aea439f0788bd5d2a75323c164c9b117e2a015e2793",
+   "kernel_id": "vitaliineibauer/biohub-exp73h-k2-fm-dc015",
+   "build_args": "python tools/build_probe_kernel.py exp73h_k2_fm_dc015 $BF $K $FM --set DEEPCENTER_SAFE_DIV_THRESHOLD=0.15 --note '...'",
+   "dummy_push": "PYTHONIOENCODING=utf-8 python -m kaggle kernels push -p experiments/exp73h_k2_fm_dc015",
+   "dummy_expected_forks": "> 95"
+  },
+  "exp73i_k2_i2_fm": {
+   "what": "K2 + I2 (cap 8, frame cap 2, thr 0.4) + forkmid 4.5",
+   "family": "i2+fm",
+   "notebook": "experiments/exp73i_k2_i2_fm/exp73i-k2-i2-fm.ipynb",
+   "sha256": "3e597edc73da24968ce688a27ffc54c243255968ee852fa8fc94dff263cdd902",
+   "kernel_id": "vitaliineibauer/biohub-exp73i-k2-i2-fm",
+   "build_args": "python tools/build_probe_kernel.py exp73i_k2_i2_fm $BF $K $I2 $FM --note '...'",
+   "dummy_push": "PYTHONIOENCODING=utf-8 python -m kaggle kernels push -p experiments/exp73i_k2_i2_fm",
+   "dummy_expected_forks": "~86-90"
+  },
+  "exp73j_k2_i2_fm_dc0225": {
+   "what": "K2 + I2 (cap 8, frame cap 2, thr 0.4) + forkmid 4.5 + DC 0.225",
+   "family": "i2+fm+DC",
+   "notebook": "experiments/exp73j_k2_i2_fm_dc0225/exp73j-k2-i2-fm-dc0225.ipynb",
+   "sha256": "4babe77b4804d70b84d709ec4ba0de668a4870019f924d3a1f072da0798cc2da",
+   "kernel_id": "vitaliineibauer/biohub-exp73j-k2-i2-fm-dc0225",
+   "build_args": "python tools/build_probe_kernel.py exp73j_k2_i2_fm_dc0225 $BF $K $I2 $FM --set DEEPCENTER_SAFE_DIV_THRESHOLD=0.225 --note '...'",
+   "dummy_push": "PYTHONIOENCODING=utf-8 python -m kaggle kernels push -p experiments/exp73j_k2_i2_fm_dc0225",
+   "dummy_expected_forks": "~86-90 plus the DC delta (0.225 +13, 0.20 +21, 0.15 more)"
+  },
+  "exp73k_k2_i2_fm_dc020": {
+   "what": "K2 + I2 (cap 8, frame cap 2, thr 0.4) + forkmid 4.5 + DC 0.20",
+   "family": "i2+fm+DC",
+   "notebook": "experiments/exp73k_k2_i2_fm_dc020/exp73k-k2-i2-fm-dc020.ipynb",
+   "sha256": "00aeceabd950bbee86ad4725ef7dee6dcf6c59e4f61e6be4d3088cabe179dc57",
+   "kernel_id": "vitaliineibauer/biohub-exp73k-k2-i2-fm-dc020",
+   "build_args": "python tools/build_probe_kernel.py exp73k_k2_i2_fm_dc020 $BF $K $I2 $FM --set DEEPCENTER_SAFE_DIV_THRESHOLD=0.20 --note '...'",
+   "dummy_push": "PYTHONIOENCODING=utf-8 python -m kaggle kernels push -p experiments/exp73k_k2_i2_fm_dc020",
+   "dummy_expected_forks": "~86-90 plus the DC delta (0.225 +13, 0.20 +21, 0.15 more)"
+  },
+  "exp73l_k2_i2_fm_dc015": {
+   "what": "K2 + I2 (cap 8, frame cap 2, thr 0.4) + forkmid 4.5 + DC 0.15",
+   "family": "i2+fm+DC",
+   "notebook": "experiments/exp73l_k2_i2_fm_dc015/exp73l-k2-i2-fm-dc015.ipynb",
+   "sha256": "293517e49ac58191e8bf986391e267b8871b34aa01b5695df7b0bbb2f790b231",
+   "kernel_id": "vitaliineibauer/biohub-exp73l-k2-i2-fm-dc015",
+   "build_args": "python tools/build_probe_kernel.py exp73l_k2_i2_fm_dc015 $BF $K $I2 $FM --set DEEPCENTER_SAFE_DIV_THRESHOLD=0.15 --note '...'",
+   "dummy_push": "PYTHONIOENCODING=utf-8 python -m kaggle kernels push -p experiments/exp73l_k2_i2_fm_dc015",
+   "dummy_expected_forks": "~86-90 plus the DC delta (0.225 +13, 0.20 +21, 0.15 more)"
+  },
+  "exp73m_k2_i3_fm": {
+   "what": "K2 + I3 (cap 12, frame cap 2, thr 0.3) + forkmid 4.5",
+   "family": "i3+fm",
+   "notebook": "experiments/exp73m_k2_i3_fm/exp73m-k2-i3-fm.ipynb",
+   "sha256": "76c811224381533022da970add9495320244f3fec2b138edc34b97f44901d3fa",
+   "kernel_id": "vitaliineibauer/biohub-exp73m-k2-i3-fm",
+   "build_args": "python tools/build_probe_kernel.py exp73m_k2_i3_fm $BF $K $I3 $FM --note '...'",
+   "dummy_push": "PYTHONIOENCODING=utf-8 python -m kaggle kernels push -p experiments/exp73m_k2_i3_fm",
+   "dummy_expected_forks": "~95-100"
+  },
+  "exp73n_k2_i3_fm_dc0225": {
+   "what": "K2 + I3 (cap 12, frame cap 2, thr 0.3) + forkmid 4.5 + DC 0.225",
+   "family": "i3+fm+DC",
+   "notebook": "experiments/exp73n_k2_i3_fm_dc0225/exp73n-k2-i3-fm-dc0225.ipynb",
+   "sha256": "1901ac1c3257c5168718bd6480ddfacad4359ae26b5509634a87002548f4db56",
+   "kernel_id": "vitaliineibauer/biohub-exp73n-k2-i3-fm-dc0225",
+   "build_args": "python tools/build_probe_kernel.py exp73n_k2_i3_fm_dc0225 $BF $K $I3 $FM --set DEEPCENTER_SAFE_DIV_THRESHOLD=0.225 --note '...'",
+   "dummy_push": "PYTHONIOENCODING=utf-8 python -m kaggle kernels push -p experiments/exp73n_k2_i3_fm_dc0225",
+   "dummy_expected_forks": "~95-100 plus the DC delta (0.225 +13, 0.20 +21, 0.15 more)"
+  },
+  "exp73o_k2_i3_fm_dc020": {
+   "what": "K2 + I3 (cap 12, frame cap 2, thr 0.3) + forkmid 4.5 + DC 0.20",
+   "family": "i3+fm+DC",
+   "notebook": "experiments/exp73o_k2_i3_fm_dc020/exp73o-k2-i3-fm-dc020.ipynb",
+   "sha256": "1ac66ed973a1ad27de64b07f07f4697f85e2d7b5368611b9dbb4bf9bda4fae91",
+   "kernel_id": "vitaliineibauer/biohub-exp73o-k2-i3-fm-dc020",
+   "build_args": "python tools/build_probe_kernel.py exp73o_k2_i3_fm_dc020 $BF $K $I3 $FM --set DEEPCENTER_SAFE_DIV_THRESHOLD=0.20 --note '...'",
+   "dummy_push": "PYTHONIOENCODING=utf-8 python -m kaggle kernels push -p experiments/exp73o_k2_i3_fm_dc020",
+   "dummy_expected_forks": "~95-100 plus the DC delta (0.225 +13, 0.20 +21, 0.15 more)"
+  },
+  "exp73p_k2_i3_fm_dc015": {
+   "what": "K2 + I3 (cap 12, frame cap 2, thr 0.3) + forkmid 4.5 + DC 0.15",
+   "family": "i3+fm+DC",
+   "notebook": "experiments/exp73p_k2_i3_fm_dc015/exp73p-k2-i3-fm-dc015.ipynb",
+   "sha256": "1305ea2118b39f94d9744e6a50bcebf52f6010a686ea01200277ea8a06d91fba",
+   "kernel_id": "vitaliineibauer/biohub-exp73p-k2-i3-fm-dc015",
+   "build_args": "python tools/build_probe_kernel.py exp73p_k2_i3_fm_dc015 $BF $K $I3 $FM --set DEEPCENTER_SAFE_DIV_THRESHOLD=0.15 --note '...'",
+   "dummy_push": "PYTHONIOENCODING=utf-8 python -m kaggle kernels push -p experiments/exp73p_k2_i3_fm_dc015",
+   "dummy_expected_forks": "~95-100 plus the DC delta (0.225 +13, 0.20 +21, 0.15 more)"
+  },
+  "exp73s_k2_i4_fm": {
+   "what": "K2 + I4 ultra (cap 16, frame cap 2, thr 0.2) + forkmid 4.5",
+   "family": "i4+fm",
+   "notebook": "experiments/exp73s_k2_i4_fm/exp73s-k2-i4-fm.ipynb",
+   "sha256": "cabedf86947202990279a64cfdcd4e2e0a0ba93200249401c942c3cabfeb28b6",
+   "kernel_id": "vitaliineibauer/biohub-exp73s-k2-i4-fm",
+   "build_args": "python tools/build_probe_kernel.py exp73s_k2_i4_fm $BF $K $I4 $FM --note '...'",
+   "dummy_push": "PYTHONIOENCODING=utf-8 python -m kaggle kernels push -p experiments/exp73s_k2_i4_fm",
+   "dummy_expected_forks": "~100-112"
+  },
+  "exp73t_k2_i4_fm_dc0225": {
+   "what": "K2 + I4 ultra (cap 16, frame cap 2, thr 0.2) + forkmid 4.5 + DC 0.225",
+   "family": "i4+fm+DC",
+   "notebook": "experiments/exp73t_k2_i4_fm_dc0225/exp73t-k2-i4-fm-dc0225.ipynb",
+   "sha256": "5cdf20a64f60e9b994b461aef254e3398049e4358bd617e8a279a8261e4431bf",
+   "kernel_id": "vitaliineibauer/biohub-exp73t-k2-i4-fm-dc0225",
+   "build_args": "python tools/build_probe_kernel.py exp73t_k2_i4_fm_dc0225 $BF $K $I4 $FM --set DEEPCENTER_SAFE_DIV_THRESHOLD=0.225 --note '...'",
+   "dummy_push": "PYTHONIOENCODING=utf-8 python -m kaggle kernels push -p experiments/exp73t_k2_i4_fm_dc0225",
+   "dummy_expected_forks": "~100-112 plus the DC delta (0.225 +13, 0.20 +21, 0.15 more)"
+  },
+  "exp73u_k2_i4_fm_dc020": {
+   "what": "K2 + I4 ultra (cap 16, frame cap 2, thr 0.2) + forkmid 4.5 + DC 0.20",
+   "family": "i4+fm+DC",
+   "notebook": "experiments/exp73u_k2_i4_fm_dc020/exp73u-k2-i4-fm-dc020.ipynb",
+   "sha256": "0410daeb65d69592f0486ffb2d103f1bca4624ef138cfd1d5132419277d0a8cb",
+   "kernel_id": "vitaliineibauer/biohub-exp73u-k2-i4-fm-dc020",
+   "build_args": "python tools/build_probe_kernel.py exp73u_k2_i4_fm_dc020 $BF $K $I4 $FM --set DEEPCENTER_SAFE_DIV_THRESHOLD=0.20 --note '...'",
+   "dummy_push": "PYTHONIOENCODING=utf-8 python -m kaggle kernels push -p experiments/exp73u_k2_i4_fm_dc020",
+   "dummy_expected_forks": "~100-112 plus the DC delta (0.225 +13, 0.20 +21, 0.15 more)"
+  },
+  "exp73v_k2_i4_fm_dc015": {
+   "what": "K2 + I4 ultra (cap 16, frame cap 2, thr 0.2) + forkmid 4.5 + DC 0.15",
+   "family": "i4+fm+DC",
+   "notebook": "experiments/exp73v_k2_i4_fm_dc015/exp73v-k2-i4-fm-dc015.ipynb",
+   "sha256": "a5f0ca8ccd206d82d647b95dea02d215b4c868e62fbf75a8ce0649fb2d113459",
+   "kernel_id": "vitaliineibauer/biohub-exp73v-k2-i4-fm-dc015",
+   "build_args": "python tools/build_probe_kernel.py exp73v_k2_i4_fm_dc015 $BF $K $I4 $FM --set DEEPCENTER_SAFE_DIV_THRESHOLD=0.15 --note '...'",
+   "dummy_push": "PYTHONIOENCODING=utf-8 python -m kaggle kernels push -p experiments/exp73v_k2_i4_fm_dc015",
+   "dummy_expected_forks": "~100-112 plus the DC delta (0.225 +13, 0.20 +21, 0.15 more)"
+  }
+ },
+ "existing_rungs": {
+  "exp70g_k2_cap6": {
+   "sha256": "52c182a3...",
+   "status": "probe 45 submitted ~11:15Z 27 Sep"
+  },
+  "exp70n_k2_thr03": {
+   "sha256": "f301f21e...",
+   "status": "dummy QUEUED 11:20Z; maybe today's slot 4"
+  },
+  "exp70q_k2_maxdiv": {
+   "sha256": "33ab04d14a75313d176674b06132c4edf33d8c4d02260ef8f68f219d9594e72d",
+   "status": "built, not pushed; last slot today if D not +"
+  },
+  "exp70r_k2_maxdiv_dc020": {
+   "sha256": "369adc03c602fc19eb181b514cfbf7771099e45fde72732c5419286a7e095bf2",
+   "status": "built, not pushed; last slot today if 43 >= 0.955"
+  }
+ },
+ "risks": [
+  "Lab evidence is against larger caps (ins_cap6: cap 6 -0.00057 pooled, 0 TP / 4 FP marginal forks; cap 8 +0.00003) and the lab sign was wrong for DC (dc0.30 lab +0.001, public -0.005), so these are public-only bets; the public division term is sensitive (~0.0015-0.0023 per TP event, model estimate).",
+  "I4 ultra (cap 16, thr 0.2) can add up to ~12 x 100-130 = 1,200-1,600 extra insertions on the hidden test; if their precision is low the division Jaccard falls fast (DC0.30's -20 forks cost -0.005); it is placed first only where cap 6 already read up (C+) or nothing else moved (R5).",
+  "DC 0.15 is outside every public read; x138-family evidence at 0.15 on another stack was -0.001 (sjlee 0.946 vs 0.947).",
+  "Class C: none of these is a final unless the user re-ticks; finals stay {#37, #38} (or class-C option (b) from 43/44).",
+  "Runtime: DC and cap change no model work; insertion runs only under the 8.0 h DIVINS gate (safetail), otherwise it is skipped and the file equals the no-insertion graph (safe).",
+  "The builder in the working tree has uncommitted edits by another agent; K2 and exp70q rebuild byte-identically with it now; if it changes again, re-verify with the build script before any push.",
+  "Slots: 28 Sep has 5; exp72 takes 00:05Z; exp74 / E10 may compete for the other 4, so rows list at most 4 and the free-slot rows leave room."
+ ]
+}

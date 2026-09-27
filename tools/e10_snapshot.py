@@ -608,6 +608,33 @@ def display(p):
         return p.as_posix()
 
 
+def take_snapshot(out_dir, started, runner=subprocess.run, sleep=time.sleep, attempts=ATTEMPTS, dry=None):
+    """One snapshot: run the queries through `runner`, write <out_dir>/<stamp>[-n][-dryrun].txt with the DIFF against
+    the newest earlier snapshot -> {path, state (load_state of the body), diff (lines), changes, fetches, lb, failed}.
+    main() and experiments/lb_poll/e10_watch_loop.py (hourly E10 v3 watch, which passes a gated runner) use this."""
+    t0 = time.monotonic()
+    fetches, lbf = collect(runner=runner, sleep=sleep, attempts=attempts)
+    body = render_body(started, time.monotonic() - t0, fetches, lbf, dry)
+    cur = load_state(body)
+    out_dir = Path(out_dir)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    path, key = next_path(out_dir, started, dry is not None)
+    prev = find_previous(out_dir, key, live=dry is None)
+    if prev is None:
+        diff, n = [sec("DIFF: baseline (no earlier snapshot)")], 0
+    else:
+        lines, n = diff_states(load_state(prev.read_text(encoding="utf-8", errors="replace")), cur)
+        pk = snap_key(prev.name)
+        h = (started - stamp_dt(pk[0])).total_seconds() / 3600
+        diff = [sec(f"DIFF vs {prev.name}"),
+                f"window: {stamp_dt(pk[0]):%Y-%m-%d %H:%M}Z -> {started:%Y-%m-%d %H:%M}Z ({h:.1f} h)"
+                + ("; the earlier snapshot is a DRY RUN" if pk[2] else "")] + lines
+    diff.append(f"CHANGES: {n}. {NOTE}")
+    path.write_text(body + "\n".join(diff) + "\n", encoding="utf-8", newline="\n")
+    return {"path": path, "state": cur, "diff": diff, "changes": n, "fetches": fetches, "lb": lbf,
+            "failed": [f["key"] for f in fetches + [lbf] if f["state"] == "FAILED"]}
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description="E10 PORT RULE P1 watch snapshot (read-only Kaggle CLI calls). " + NOTE)
     ap.add_argument("--out-dir", default=str(OUT_DIR), help="snapshot folder (default: experiments/e10_watch)")
@@ -624,30 +651,12 @@ def main(argv=None):
         print(f"e10_snapshot: --dry-run-from {dry} is not a folder", file=sys.stderr)
         return 2
     started = parse_now(a.now) if a.now else dt.datetime.now(dt.timezone.utc)
-    t0 = time.monotonic()
     if dry is not None:
-        fetches, lbf = collect(runner=CacheRunner(dry), sleep=lambda _s: None, attempts=1)
+        snap = take_snapshot(a.out_dir, started, runner=CacheRunner(dry), sleep=lambda _s: None, attempts=1, dry=dry)
     else:
-        fetches, lbf = collect()
-    body = render_body(started, time.monotonic() - t0, fetches, lbf, dry)
-    cur = load_state(body)
-    out_dir = Path(a.out_dir)
-    out_dir.mkdir(parents=True, exist_ok=True)
-    path, key = next_path(out_dir, started, dry is not None)
-    prev = find_previous(out_dir, key, live=dry is None)
-    if prev is None:
-        diff, n = [sec("DIFF: baseline (no earlier snapshot)")], 0
-    else:
-        lines, n = diff_states(load_state(prev.read_text(encoding="utf-8", errors="replace")), cur)
-        pk = snap_key(prev.name)
-        h = (started - stamp_dt(pk[0])).total_seconds() / 3600
-        diff = [sec(f"DIFF vs {prev.name}"),
-                f"window: {stamp_dt(pk[0]):%Y-%m-%d %H:%M}Z -> {started:%Y-%m-%d %H:%M}Z ({h:.1f} h)"
-                + ("; the earlier snapshot is a DRY RUN" if pk[2] else "")] + lines
-    diff.append(f"CHANGES: {n}. {NOTE}")
-    path.write_text(body + "\n".join(diff) + "\n", encoding="utf-8", newline="\n")
-    print("\n".join(diff))
-    failed = [f["key"] for f in fetches + [lbf] if f["state"] == "FAILED"]
+        snap = take_snapshot(a.out_dir, started)
+    path, n, failed = snap["path"], snap["changes"], snap["failed"]
+    print("\n".join(snap["diff"]))
     if failed:
         print("CLI FAILED after retries (see the snapshot): " + ", ".join(failed))
     print(f"E10-P1 SNAPSHOT {display(path)} CHANGES={n}")

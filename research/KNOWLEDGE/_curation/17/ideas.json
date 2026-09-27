@@ -1,0 +1,67 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/ideas.json",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/IDEAS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/17/ideas.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/17/ideas.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "what": "The 12:00:00Z line must NOT use the R16-A3 template. That template would log 'no user letter', 'E10 v2 LAPSED', 'E10 v1 stays' and '2 slots left', and all of these are false after the 11:08-11:16Z user messages. Use the R17-A1 corrected line instead. It includes the bracket check, the slot count (4 used, 1 left), the E10 v3 cadence and the DEVIATION RECORD for exp71 and the post-FREEZE rungs.",
+   "evidence": "research/wf_ideas_v4/round17/report.json R17-A1, plan_issues (2); CONTEXT.md l.2917-2951; research/KNOWLEDGE/ideas.json I-259, I-345, I-286",
+   "suggested_action": "At 12:00:00Z (date -u), log the R17-A1 text with the <...> fields filled from the last poll.log header. Save round17/REPORT.md (R17-A0). Commit as the user with no trailer, and push.",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "The last-slot pre-score line (R17-A3) is due before the first 43/44 terminal header, which can come as early as the 12:11Z header. The line covers the exp70r/exp70q mapping and the facts: amanatar V6 at 0.901 public, cap 6 lab -0.00057 with 0 TP, thr 0.3 with no lab support, and exp70q stacking on probe 45, which has not been read. The submit itself is planned for ~13:00Z.",
+   "evidence": "research/wf_ideas_v4/round17/report.json R17-A2, R17-A3; experiments/lb_poll/poll.log 11:41:21Z header (56598763/56598765/56606948 PENDING); research/KNOWLEDGE/ideas.json I-361, I-362, I-341",
+   "suggested_action": "Log R17-A3 (1)-(4) in CONTEXT together with the 12:00Z commit. Put the facts into the post-read user line.",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "The E10 v3 tooling is built and tested but uncommitted, and the hourly watch loop is NOT running (no watch_loop.log). HEAD 9cdc047 contains e10_watch_loop.py but not the tools/e10_snapshot.py take_snapshot refactor it imports, nor the review-1 bug fix. The SI builder's SUCC_TOKEN exp73 collides with the exp73a..v ladder folders.",
+   "evidence": "research/wf_ideas_v4/e10v3/build_watch.json open_issues; research/wf_ideas_v4/e10v3/review_watch_1.notes.md; research/wf_ideas_v4/e10v3/build_si_builder.json open_issues; research/wf_ideas_v4/round17/report.json R17-A6; research/KNOWLEDGE/ideas.json I-364, I-288, I-287",
+   "suggested_action": "Commit the loop, tools/e10_snapshot.py, the gate modes, the --base succ builder and the three test files together. Start run_e10_watch_loop.sh in the background and confirm 2 good runs before 15:00Z. Pick one owner for the exp73 token before any push.",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "No pre-score card exists yet for probe 45 (exp70g, earliest plausible score ~17:56Z), exp70q/r, exp72 or an E10 v3 copy. R17-A5 requires it before 17:50Z. Without it, a >= 0.955 read has no declared handling beyond the 11:14Z directive.",
+   "evidence": "research/wf_ideas_v4/round17/report.json R17-A5; CONTEXT.md l.2940-2951; research/KNOWLEDGE/ideas.json I-365, I-326",
+   "suggested_action": "Log the R17-A5 card in CONTEXT before 17:50Z.",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "Three sets of 28 Sep levers exist only as untracked folders, with no CONTEXT entry, no pre-score line and no user go per row: 20 exp73 division rungs, exp74 (K2 + Corwin's secondary, repack dataset not uploaded) and the exp75 coord-inject prep. The builder notes that the lab is against bigger caps and that I4 'ultra' (cap 16, thr 0.2) is a cliff risk of ~1,200-1,600 extra insertions. amanatar V6's looser division gates scored 0.901 public.",
+   "evidence": "research/wf_ideas_v4/bigger_levers/prep_div_combos.json (status, decision_table, notes); research/wf_ideas_v4/bigger_levers/prep_corwin_secondary.json; research/wf_ideas_v4/bigger_levers/prep_coord_refiner.notes.md; research/wf_ideas_v4/round17/report.json new_facts (1); research/KNOWLEDGE/ideas.json I-363, I-323, I-324",
+   "suggested_action": "Before any 28 Sep submit, log the decision table and one pre-score line per rung in CONTEXT. Present the row choice to the user with the V6 = 0.901 and ins_cap6 facts. Record the rungs in the R17-A1 deviation record.",
+   "urgency": "today"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "The slot-collision default (R17-A4) needs the user's one-line OK. Under it, an E10 v3 trigger takes the last 27 Sep slot ahead of exp70q/r, and 2 slots/day are kept for E10 v3 from 28 Sep. exp70n (thr 0.3 alone) has a dummy running but no slot in the 27 Sep mapping.",
+   "evidence": "research/wf_ideas_v4/round17/report.json R17-A4 (covered_by_existing_approval false); CONTEXT.md l.2946-2951; research/KNOWLEDGE/ideas.json I-366, I-360",
+   "suggested_action": "Ask R17-A4 in the post-43/44-read user line. State whether exp70n gets a 28 Sep slot or stays unsubmitted.",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "The last RESUME POINT (26 Sep 22:46Z) is stale, and MEMORY.md points to it. It names deleted timers and superseded rules, and it has none of: E10 v3, the (b) letter, exp71, the FREEZE lift, aggressive mode. The ROUND 14-17 RECORDs are not in CONTEXT. fb_ins35.py is only in a session scratchpad.",
+   "evidence": "research/wf_ideas_v4/round17/report.json R17-A7, R17-A8, plan_issues (12); research/KNOWLEDGE/ideas.json I-257, I-073",
+   "suggested_action": "After the 43/44 read (by ~15:00Z), write R17-A7: a RESUME POINT regenerated from CONTEXT plus a restore card keyed by action/UTC. Fix MEMORY.md. Make the R17-A8 hygiene commit (round records, v6 NOTES item 4, 1101Z snapshot, fb_ins35 copy).",
+   "urgency": "today"
+  },
+  {
+   "kind": "contradiction",
+   "what": "The folder name exp70n is reused. I-333 (R13DP-3) called 'exp70n' K2 + SAFE_DIV_DIVERGE 2.5, but experiments/exp70n_k2_thr03 is K2 + DIVINS_THRESH 0.3. Round and ledger texts that say 'exp70n' before 27 Sep 11:14Z mean the divergence rung.",
+   "evidence": "experiments/exp70n_k2_thr03/probe.json; research/KNOWLEDGE/ideas.json I-333, I-360; CONTEXT.md l.2940-2945",
+   "suggested_action": "Always cite exp70n with its knob ('thr 0.3') in CONTEXT and submit messages.",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 17 is an incremental update over curation 16 (HEAD 9cdc047 plus untracked round17/, bigger_levers/, e10v3/ and exp73/exp74 folders; CONTEXT l.2880-2951). The ledger grew from 359 to 372 ideas in 74 change records: 13 new (I-360..I-372) and 61 updated. Status counts: in-plan 62 -> 73, refuted 184 -> 186; the other kinds are unchanged. The user's 11:08-11:16Z messages drove most of the changes. E10 v3 is new (I-364); E10 v2 (I-286) is superseded; SI (I-287) and the {X, #37} pair (I-298) are revived. Class C (b) was pre-registered at 11:09:39Z (I-344). Q1/Q2 are yes and exp71 was pushed (I-119). The FREEZE was lifted (I-345 closed). Probe 45 exp70g was submitted over its failed lab gate (I-326). New rungs: exp70n, exp70q and exp70r (I-360..I-362), plus a pre-built 20-rung exp73 ladder (I-363). exp74 (Corwin's secondary, I-323) and exp75 (coord-inject, I-324) moved from deferred to in-plan. Round 17 added the pre-score card (I-365), a slot-collision default that needs a user OK (I-366), the override-budget lesson (I-367) and a LOEO division bed (I-368), and it rejected four drafts (I-369..I-372). Rechecks RC-A/B/C were recorded on the node-addition, dorado and two-tail rows. As of the 11:41:21Z poll, 43/44/45 are PENDING. The most urgent item is the corrected 12:00Z line (R17-A1) plus the last-slot pre-score line before the first 43/44 terminal header."
+}

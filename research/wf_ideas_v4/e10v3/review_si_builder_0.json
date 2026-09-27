@@ -1,0 +1,26 @@
+{
+  "review": "review_si_builder_0 (correctness lens)",
+  "date_utc": "2026-09-27T12:05Z",
+  "ok": true,
+  "verified": {
+    "pytest": "479 passed, 1 skipped (full suite on the current files); tests/test_si_builder.py 27 passed",
+    "byte_identity": "10/10 notebooks and kernel-metadata.json identical to committed, rebuilt twice (before and after the concurrent edits): exp58 1f1ddb6d, exp58t a77bcd6b, exp58n 55038fd6, exp70a 132438a9, exp70b b8e7ece1, exp70d e0b8fc0c, exp70e c0f3380c, exp70g 52c182a3, exp70j 61a8d3c1, exp70k adef8bcb",
+    "real_successors": "HF v3 (9ab32885) and amanatar v6 (e6c3f729) K2 SI: 37 checks OK; only code cells 0/4/5 change, plus the same 2 new cells as x138 K2; notebook metadata and serialisation unchanged; kernel-metadata diff = id_no dropped, id, title, code_file, is_private true, + biohub-ft-weights",
+    "no_submit_no_push": "the builder's only push is `if a.push:`, which --base succ refuses before building; nothing was submitted, pushed or committed"
+  },
+  "problems": [
+    "The delivered knob audit let these through: aliased environ writes, `from os import environ`, os.environ.__setitem__, a Python re-binding of REPAIR_DEADLINE_S, and a drift check naming the key in another cell. The concurrent review_si_builder_1 fixed these by 11:48 UTC (one binding, no other quoted mention, and KERNEL_START_TS guarded).",
+    "Still open (narrow; no real successor has it): a computed or f-string env key fed by a dict with the BARE name ({'REPAIR_DEADLINE_S': ...} -> os.environ['BIOHUB_' + k] = v), a tuple re-binding and a globals() write all pass. A blanket computed-key check is wrong because x138 cell 10 (the validator re-apply of the selected PP config) has os.environ['BIOHUB_' + key] = str(value). Suggested safe fix: also count the quoted bare name `[\"'](BIOHUB_)?NAME[\"']` in the 'other mention' check. x138 / HF v3 / amanatar v6 have no such mention; only amanatar v10 has 'KERNEL_START_TS' in cell 10 (already refused; its test expects exactly 1 FAIL, so that test would need updating). Not applied because review_si_builder_1 was editing the same function.",
+    "In test_builder_argument_refusals, a regressed --push refusal would have run a real `kaggle kernels push` with the user's credentials. Fixed (see fixes_applied).",
+    "The 'no stage after the insertion' check covers only the post cell (linefit -> FINAL print). Cells 9/10 re-write submission.csv when the validator is ON (x138 design), so a validator-ON base re-runs filter_output_graph with swept overrides. This is only an INFO line; the E10 gate or procedure must keep refusing validator-ON bases for submits.",
+    "One full-suite run failed tests/test_trainlab.py::test_end_to_end_replay_parity (StopIteration). This was a race on the shared experiments/zz_trainlab_test folder with a concurrent pytest; it passed on the rerun."
+  ],
+  "fixes_applied": [
+    "tests/test_si_builder.py: _build() now runs with _nokaggle_env(), which puts a shadow `kaggle` package (python -m kaggle -> SystemExit) first on PYTHONPATH under the module's cleaned-up _pytest_si_builder dir and drops KAGGLE_* env vars. New test test_builder_subprocesses_cannot_reach_kaggle.",
+    "tools/build_probe_kernel.py: no net change. A blanket computed-key env-write check was added and reverted within a minute because it refused x138 itself; the file is the concurrent reviewer's version."
+  ],
+  "files": [
+    "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/tests/test_si_builder.py",
+    "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/wf_ideas_v4/e10v3/review_si_builder_0.notes.md"
+  ]
+}

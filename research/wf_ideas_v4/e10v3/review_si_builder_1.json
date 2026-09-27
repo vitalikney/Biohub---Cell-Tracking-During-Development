@@ -1,0 +1,25 @@
+{
+ "ok": true,
+ "reviewer": "review_si_builder_1",
+ "lens": "SAFETY AND RULE FIT",
+ "time_utc": "2026-09-27T12:10Z",
+ "rule_fit": "(A) verbatim is not a builder path (succ refuses without divinsert), (B) SI only after the pristine-cell audit and _rep1 asserts, finals code paths unchanged, P4b(a) metadata, no push/dataset.",
+ "problems": [
+  "Knob audit missed Python re-binding of REPAIR_DEADLINE_S and env writes through a variable key (FIXED)",
+  "KERNEL_START_TS (the insertion deadline gate's clock) was only checked for presence, not for a later reset (FIXED)",
+  "Non-lab SI could be built divinsert-only: no deadline gate and no fail-soft, against R11-A3 (b) (FIXED: safetail required unless --lab)",
+  "Non-lab SI with DIVINS_ENABLE off = successor + dead code labelled SI (FIXED: refused unless --lab)",
+  "--out-dir could overwrite an existing final's folder (FIXED: refused if the folder holds another kernel id)",
+  "OPEN: exp73 token collides with exp73a..v K2 variants; R11-A3 proposed exp67",
+  "OPEN: no runtime_ledger rule for the SI token",
+  "OPEN: listability, latest-version score, validator, mechanism scope and runtime <= 7.5 h are left to the E10 gate and procedure",
+  "OPEN: parallel pytest runs collide on experiments/_pytest_si_builder",
+  "OPEN: no SI dummy run on Kaggle yet"
+ ],
+ "files_changed": [
+  "tools/build_probe_kernel.py",
+  "tests/test_si_builder.py"
+ ],
+ "tests": "full suite 469 passed, 1 skipped (coordinject weights env); test_si_builder 27 passed; finals/ladder byte-identical via test_secswap + test_si_builder",
+ "submitted_pushed_committed": false
+}

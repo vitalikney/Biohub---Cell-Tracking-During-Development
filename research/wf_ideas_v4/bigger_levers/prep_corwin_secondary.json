@@ -1,0 +1,33 @@
+{
+  "logged_utc": "2026-09-27T11:29Z",
+  "candidate": "exp74_k2_secw_corwin = K2 (x138+safetail+lowrefine+divinsert #35 config) + --patch secswap to Corwin's CC0 secondary corwin1979/biocel-secw-3f1c84ad",
+  "source_dataset": {
+    "slug": "corwin1979/biocel-secw-3f1c84ad",
+    "license": "CC0-1.0",
+    "files": {"MANIFEST_SHA256.json": 809, "config.json": 165, "edge_predictor_best.pth": 8356270},
+    "weight_sha256": "1168050414f7286d1b66692a2b57cc6a9e1d6068451627bfd6313ec459dde27d"
+  },
+  "layout_matches_x138_finder": false,
+  "missing_vs_x138": [
+    "ARTIFACT_MANIFEST.json (Corwin ships MANIFEST_SHA256.json)",
+    "manifest key model.weight_sha256",
+    "weights/ dir or weights.zip containing unet_transformer/split_0/{edge_predictor_best.pth, config.json} (Corwin's files are flat at the root)"
+  ],
+  "fix": {
+    "repack_dir": "experiments/ds_secw_corwin_v1",
+    "dataset": "vitaliineibauer/biohub-secw-corwin-v1",
+    "uploaded": false,
+    "upload_command": "PYTHONIOENCODING=utf-8 python -m kaggle datasets create -p experiments/ds_secw_corwin_v1 --dir-mode zip",
+    "local_finder_simulation": "dir and zip modes OK, sha match"
+  },
+  "build_command": "export MSYS_NO_PATHCONV=1; K=\"--set DIVINS_ENABLE=1 --set DIVINS_STEAL=1 --set DIVINS_CAP=4 --set DIVINS_FRAME_CAP=1 --set DIVINS_ALPHA=1 --set DIVINS_THRESH=0.4 --set DIVINS_DUMP=0\"; python tools/build_probe_kernel.py exp74_k2_secw_corwin --base x138 --patch divinsert --patch safetail --patch lowrefine --patch secswap $K --set REPAIR_DEADLINE_S=34200 --set DIVINS_DEADLINE_S=28800 --set LOWREFINE_ENABLE=1 --set SECONDARY_EXPECTED_SHA256=1168050414f7286d1b66692a2b57cc6a9e1d6068451627bfd6313ec459dde27d --set SECONDARY_ARTIFACT_MANIFEST=/kaggle/input/datasets/vitaliineibauer/biohub-secw-corwin-v1/ARTIFACT_MANIFEST.json --dataset vitaliineibauer/biohub-secw-corwin-v1 --note \"exp74: K2 + secswap to Corwin's CC0 secondary (corwin1979/biocel-secw-3f1c84ad repacked as vitaliineibauer/biohub-secw-corwin-v1)\"",
+  "built": "experiments/exp74_k2_secw_corwin/exp74-k2-secw-corwin.ipynb",
+  "kernel_id": "vitaliineibauer/biohub-exp74-k2-secw-corwin",
+  "ipynb_sha256": "17835c019b550e28707fc69f3c5c19973a93c072ab8f79f6fb91cd5775106d9a",
+  "diff_vs_k2": "cell 0: preset comment + BIOHUB_SECONDARY_EXPECTED_SHA256 + BIOHUB_SECONDARY_ARTIFACT_MANIFEST; cell 3: one sha line -> env knob",
+  "k2_exp58_sha256": "1f1ddb6d63b47f540ad614232e821ad215f27fce0d901cdbb9f67a8beeb67855 (unchanged)",
+  "tests": "416 passed (a first run hit 6 collection errors while another session was editing tools/build_probe_kernel.py)",
+  "dummy_status": "NOT PUSHED: 2 GPU sessions busy at 11:28Z (exp71 RUNNING, exp70n QUEUED) and the repack dataset is not uploaded yet",
+  "expected_public": "0.948-0.956, centre ~0.952 (K2 = 0.954; Corwin's own note: pilkwang's secondary beat this detector by +0.006 public on placement in Corwin's pipeline; the secondary only enters via 0.15 edge weight and 0.80 detection mix, so the swing is bounded)",
+  "go": true
+}

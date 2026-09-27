@@ -1,0 +1,30 @@
+{
+ "review": "gate_verbatim (tools/e10_port_gate.py --mode verbatim / si)",
+ "lens": "safety and rule fit",
+ "utc": "2026-09-27T11:55Z",
+ "ok": true,
+ "verdict": "Fits the user rule: verbatim = byte identity + metadata P4b(a) + crash/deadline log FAILs, source checks INFO; SI = pulled + exactly our x138 patch diff. Read-only; default prefixes cannot reach a finals id; default mode unchanged.",
+ "fixes_applied": [
+  "SI port id now follows the builder's slug rule biohub-exp73[x]-si-<author>[-suffix] (SI_ID_RX); before, the builder's exp73a_si_<author> names falsely FAILED the gate",
+  "reference base that is not the pinned x138 v1 now FAILS (was INFO)",
+  "new INFO 'reference build = K2 final exp58 recipe / K1 exp58t recipe / not a pinned final recipe'",
+  "docstring + si header updated; +9 tests in tests/test_e10_port_gate_modes.py"
+ ],
+ "concurrent_edit": "another agent added a per-hunk code-cell position check to the same file during this review (covers my finding that SI hunk matching ignored position); I kept it and did not duplicate it",
+ "problems_open": [
+  "position check emits INFO 'skipped' when pulled and base code-cell counts differ; does not block the R12-A4 protocol; suggest SKIP/FAIL",
+  "hunk matching ignores context lines inside a cell; builder anchor audit is the primary guard",
+  "optional HF v3 real-builder test skips (not fails) if the builder refuses",
+  "--id-prefix bypasses the SI regex (operator escape hatch)",
+  "exp73 token shared with the exp73a..v ladder (ledger / message tokens)"
+ ],
+ "evidence": {
+  "tests_modes_file": "50 passed (41 + 9 new)",
+  "full_suite": "479 passed, 1 skipped (python -m pytest -q tests)",
+  "pyflakes": "clean",
+  "real_si_hfv3_k1": "--mode si CLI PASS rc 0: 8 hunks, 1 slid, same code cells, reference = K1 exp58t recipe",
+  "finals_files": "exp58 1f1ddb6d, exp58t a77bcd6b unchanged on disk; builder not touched by this review"
+ },
+ "sha256_after": {"tools/e10_port_gate.py": "6ddef450691f", "tests/test_e10_port_gate_modes.py": "4a2d19f08f91"},
+ "no_commit_push_submit": true
+}
