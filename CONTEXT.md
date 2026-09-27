@@ -2930,6 +2930,10 @@ Mention it to the user in one line (R9-A8 item 6).
   is allowed as a final under option (b): if V*_C exists (R15-A1 (4) conditions: COMPLETE, L_hi <= 9.0 h, display >= 0.955,
   the other rung >= 0.954 or ERROR/unscored; 43=44 tie -> 44), the pair becomes {V*_C, #37 56563521} and #38 leaves; the (b)
   partner is #37 (the user did not name exp70b). No V*_C -> pair unchanged {#37, #38}. The user re-ticks after the read.
+- 2026-09-27 11:11:40 UTC, USER YES TO THE RETRAIN LINE (chat: "запускай", answering 'если хочешь попробовать, напиши «да, exp71 и
+  exp72» — запущу сразу'). Parsed (echoed to the user): Q1 = YES (push exp71, distilled secondary fine-tune, ~4.5 GPU-h), Q2 =
+  YES (submit exp72 = K2 + that secondary via --patch secswap after its dummy gates; R8 lifted for this item); Q3 (exp72 as a
+  final) NOT answered -> exp72 is public-only until the user says otherwise. Expected score ~22:30-23:30 UTC 27 Sep.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
