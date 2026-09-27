@@ -2937,6 +2937,18 @@ Mention it to the user in one line (R9-A8 item 6).
 - 2026-09-27 11:12 UTC, exp71 PUSHED 11:11:50Z (vitaliineibauer/biohub-exp71-secft-all v1, private, GPU T4, internet on, docker 37c64f7d),
   status RUNNING at 11:12Z; expected done ~15:15-15:45Z (4.0 h training budget + overheads). Next: T3 private dataset
   vitaliineibauer/biohub-secft-all-v1 from its output, T5 exp72 build (--patch secswap), dummy + T6 gates, submit (Q2 yes).
+- 2026-09-27 11:14 UTC, USER DIRECTIVE (chat: "всё ещё много команд с метрикой выше нас. я думал мы за ночь поднимемся до 100 позиции ...
+  я не доволен. чтобы к вечеру мы поднялись в таблице"): the round-15 FREEZE is LIFTED by the user; goal = rise on the public
+  table by this evening. Plan: today's 2 slots go to division-side public rungs submitted now so they score by ~19:30 UTC:
+  exp70g (K2 + DIVINS_CAP 6; dummy already COMPLETE 22:03Z 26 Sep) now, and exp70n (K2 + DIVINS_THRESH 0.3) after its dummy;
+  exp72 (retrained secondary) moves to 00:05 UTC 28 Sep. Finals: class-C letter (b) stands for 43/44; any new rung reaching
+  >= 0.955 is proposed to the user as the public-aimed final with #37; no finals change without the user's re-tick.
+- 2026-09-27 11:16 UTC, USER (chat: "сейчас не время осторожничать. надо рисковать, а не двигаться по одной ручке и перепроверке
+  правил!!"): aggressive mode. SUBMIT probe 45 = exp70g (K2 + insertion cap 6) at ~11:15Z (dummy COMPLETE, 121,252 nodes /
+  81 forks, 0 errors). Built combos for the last slot today: exp70q = K2 + cap 6 + DIVINS_THRESH 0.3 + forkmid 4.5 ('max
+  divisions', no DC change) and exp70r = exp70q + DC 0.20; exp70n (thr 0.3 alone) dummy running since 11:15Z. The last slot
+  today goes to exp70r if probe 43 (DC 0.20) reads >= 0.955 by ~13:00Z, else exp70q; score ~19:30-20:30Z. Evidence for 'more
+  divisions': dc0.30 (fewer safe forks) -0.005 public; insertion +0.001 twice.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
