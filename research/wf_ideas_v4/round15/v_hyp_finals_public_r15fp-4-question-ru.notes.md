@@ -1,0 +1,12 @@
+# v_hyp_finals_public_r15fp-4-question-ru notes
+- 2026-09-27T05:47:17Z started; no prior JSON. Source finding in research/wf_ideas_v4/round15/scan_hyp_finals_public.json (R15FP-4).
+- 2026-09-27T05:49:10Z read CONTEXT l.2388-2834 (20:33Z user 'один под паблик другой под прайват'; L9 20:49Z 'C = anything else (never a final)'; R12-A3 21:31Z insertion hedge; D1 04:58Z; 04:59Z exp70j/k class C 'unless the user explicitly allows ... (asked in the morning brief)'; 05:28Z submits 56598763/56598765).
+- poll.log header 05:40:15Z: 42/43/44 still PENDING. So at the 07:30Z brief probe 42 may or may not be scored (expected ~07:30-08:30Z).
+- DEFECT 1: question option (а) says 'ничего не менять: #37 + #38'; if 42 becomes an L9 V*, the default pair is {exp70b 56592350, #38} (scan's own context_entry says so). (б)/(в) also undefined in that world ((б) would drop exp70b or #37?).
+- DEFECT 2: omits the only non-public evidence for dc0.20: exp60 lab 44b6 0.0000, 6bba -0.0008 (+6 FP forks, TP unchanged) (CONTEXT 04:59Z). (б) sold as 'самый высокий ожидаемый приват' rests on an assumed 'transfer' world mu +0.0006 from scratch finals_arith.py; with the lab <= 0 and the whole-history transfer ~1/6 (R12-A9 (e)), E[d_private] ~0 or < 0; the E[max] edge of (б) is option value from variance only.
+- DEFECT 3: '8 расчётов из 12' = MC world counts of the kind refuted as false precision (IDEAS I-092). Should not be shown to the user as evidence.
+- DEFECT 4 (minor): plateau clause in the question omits 'or ERROR/unscored' that the context_entry has; one wording must win.
+- VALUE: the ask itself is needed (04:59Z promised it; class C can only be a final with a user OK; user asked for 'one for public'). The default (а) is the recommended option, so asking has small upside; P(43 or 44 >= 0.955 with plateau) ~0.15-0.25 (04:59Z prior 0.2-0.3 each, correlated).
+- FEASIBILITY: 0 runtime, no build, no submit; answer by 12:00Z before scores (~12:40-13:10Z; K2 latency 7.36-7.54 h from 05:28Z). Pre-registration only if logged before the first poll.log header with 43/44 terminal. OK.
+- VERDICT: refuted as written (exact text must not go out unchanged); corrected text in JSON fix.
+- 2026-09-27T05:49:29Z JSON written (research/wf_ideas_v4/round15/v_hyp_finals_public_r15fp-4-question-ru.json).

@@ -1,0 +1,5 @@
+- 2026-09-27T06:15:11Z index curator 15 start: no index.json in _curation/15 -> incremental over INDEX c14 (f24ff72). HEAD da9766e.
+- 2026-09-27T06:15:43Z read INDEX c14, CHANGES tail, IDEAS header/changes/orphans, CONTEXT l.2750-2813, anchors in FACTS/DECISIONS/WATCHLIST; calls.jsonl 06:11:39Z 42/43/44 PENDING
+- 2026-09-27T06:17:08Z INDEX.md written (c15)
+- 2026-09-27T06:17:33Z CHANGES.md section 15 appended
+- 2026-09-27T06:18:08Z index.json written; done

@@ -1,0 +1,67 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/ideas.json",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/IDEAS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/15/ideas.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/15/ideas.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "what": "The single round-15 pre-score entry R15-A1 is NOT in CONTEXT.md; the last entry is SUBMIT 43/44 at 05:28 UTC, l.2809-2813. R15-A1 holds the deviation record, the FREEZE (I-345), the class-C finals table (I-344), the honest priors, the NARROW/BROAD reading note (I-346), the L6/L7 + DC-DOSE addendum (I-283) and the 'watcher paused' correction. If it is not committed and pushed before the first poll.log header with 56598763 or 56598765 terminal, every 43/44 read and every class-C letter becomes post-hoc.",
+   "evidence": "research/wf_ideas_v4/round15/report.json R15-A1 (deadline: now; hard 11:45Z; earliest terminal header ~12:15-12:20Z); CONTEXT.md l.2809-2813 is the last entry at da9766e; research/KNOWLEDGE/ideas.json I-344, I-345, I-283",
+   "suggested_action": "Paste the R15-A1 text with a date -u stamp before the 07:30Z brief. Save round15/REPORT.md from report_md_ru (R15-A0). Commit as the user with no trailer, push, and log the pushed hash.",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "07:30Z push and brief: send the R15-A2 texts (P-A, or P-B only if 42 already shows >= 0.955 with L_hi <= 9.0 h), not the R14-A4 variants, which predate 43/44 and hide the class-C question. Before it, read API SELECTED once and log it as 'after probes 39-44'. No SELECTED read has been done since 20:04:35Z, although three submits followed.",
+   "evidence": "research/wf_ideas_v4/round15/report.json R15-A2, R15-A3; research/wf_ideas_v4/round15/scan_plancheck.json PC15-03, PC15-07; research/KNOWLEDGE/ideas.json I-315, I-258",
+   "suggested_action": "At 07:30Z (timer 65b1b746): SELECTED read -> push P-A/P-B -> R15-A2 brief. Log 'push sent' and each user answer with date -u.",
+   "urgency": "now"
+  },
+  {
+   "kind": "forgotten",
+   "what": "The E10 insertion-hedge pair rows (I-299: {PORT, #38} for an insertion-family port, {V*, PORT} for V* plus a no-insertion port) are not among the R15-A2 brief's questions. The brief asks about class C, E10 v2, Q1-Q3 and the submit deadline. The rows would lapse silently with E10 v2 at 12:00Z.",
+   "evidence": "research/wf_ideas_v4/round15/report.json R15-A2 (sections 4-5); CONTEXT.md l.2502-2529 (b); research/KNOWLEDGE/ideas.json I-299",
+   "suggested_action": "Add one line to the 07:30Z brief, or log 'E10 pair rows not asked; P6 stands' with the 12:00Z E10 v2 lapse line (R15-A7).",
+   "urgency": "today"
+  },
+  {
+   "kind": "contradiction",
+   "what": "Probes 43/44 (exp70j DC 0.20, exp70k DC 0.225) were submitted against the pre-registered R13-A1 (1) (no threshold neighbours, no class C), R13-A1 (5)(a) (the ladder ends after 42 without a POS base; D1 found BASE none), the 5-submit ladder cap (39-44 = 6) and L9's no-neighbours line. The user gave no OK. The 04:59 and 05:28 entries do not name the breach.",
+   "evidence": "CONTEXT.md l.2664-2721 (1), (5); CONTEXT.md l.2789-2813; research/wf_ideas_v4/round15/scan_plancheck.json PC15-01 (confirmed); research/KNOWLEDGE/ideas.json I-341, I-342, I-345, I-310",
+   "suggested_action": "Log the deviation record + FREEZE (R15-A1 (1)/(2)) and disclose it in the brief (section 2). After the scores, build no further DC rung and no DC combo, whatever 43/44 show (I-343, I-349).",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "D2 read of probe 42 (exp70b, fm45): at the first poll.log header with 56592350 terminal (~07:27-08:30Z; 9.0 h clock 09:05:50Z). Combos are impossible (BASE none). exp70b is V* only if COMPLETE, it displays >= 0.955 and L_hi <= 9.0 h; the re-priced P(>= 0.955) is ~0.1-0.15. If exp70b is V*, the re-tick timing follows the R15-A1 (4) sequencing. An ERROR at < 10 h allows one unchanged resubmit.",
+   "evidence": "research/wf_ideas_v4/round15/report.json R15-A4, R15-A6 (9); experiments/lb_poll/ledger.md 06:00:21Z (56592350 PENDING, L > 5.90 h); experiments/lb_poll/ladder_watch/calls.jsonl 06:11:39Z (still PENDING); research/KNOWLEDGE/ideas.json I-306, I-296, I-229",
+   "suggested_action": "Apply READ SHEET v1 D2 mechanically. Log one CONTEXT line with the ledger's insertion-gate text. Send P-B only if exp70b is V*.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "CONTEXT.md never got the R14-A6 ROUND 14 RECORD, so the I-063 reason fix, the insertion prior and the retrain wording live only in round-14 JSON. The R15-A6 ROUND 15 RECORD is also queued. research/wf_ideas_v4/round15/, experiments/e10_watch/20260927T0531Z.txt and experiments/ext_optimized-biohub-max-score/v6_2026-09-27/ are untracked. experiments/RESULTS.md has no rows for probes 39-44: it ends at probe 38, while 39/40/41 = 0.949/0.954/0.949 are known.",
+   "evidence": "No 'ROUND 14 RECORD' line in CONTEXT.md at da9766e; research/wf_ideas_v4/round14/report.json R14-A6; research/wf_ideas_v4/round15/report.json R15-A6; git status 06:12Z; experiments/RESULTS.md l.66-71; CONTEXT.md l.2789-2799; research/KNOWLEDGE/ideas.json I-257, I-232",
+   "suggested_action": "Append R15-A6 (and a one-line pointer to R14-A6) after R15-A1. Add RESULTS rows for probes 39-41 now and for 42-44 when they score. Commit the untracked round, snapshot and ext files with the next commit.",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "At 12:00Z, R8 closes new mechanisms. Unless the user has answered, E10 v2 lapses, the E10 pair rows lapse, and Q2 (exp72 scored on 27 Sep) needs a yes by ~09:00Z. Round 15 found nothing that reaches R8.",
+   "evidence": "research/wf_ideas_v4/round15/report.json R15-A7, R15-A6 (10), R15-A2; research/KNOWLEDGE/ideas.json I-286, I-119, I-299",
+   "suggested_action": "At 12:00Z, log 'E10 v2 lapsed; R8 passed; no new mechanism' (or the user's answers with date -u). Close I-323/I-324 by name in the same line.",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "This is a public DC-threshold chase on one embryo (29% of the test), and the exp60 lab got the sign wrong for this knob (dc0.30 lab +0.001 vs public -0.005). A 43/44 display of >= 0.955 invites a class-C final whose transfer to private is unknown. The only out-of-public evidence (6bba dc0.20 -0.0008, 0 TP / +6 FP) leans against it. Cosmetic: the exp70j/exp70k probe.json carry the builder text 'above exp56 adopt', which contradicts class C.",
+   "evidence": "CONTEXT.md l.2789-2808; research/wf_ideas_v4/round15/report.json R15-A1 (4)-(6), R15-A6 (3), (5); experiments/exp70j_k2_dc020/probe.json 'rule'; research/KNOWLEDGE/ideas.json I-344, I-346, I-347, I-348",
+   "suggested_action": "Keep the class-C default (a) unless the user sends a letter logged before the scores. Read 43/44 mechanically (R15-A5). Put the per-embryo DC question on the post-deadline list (I-348).",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 15 (2026-09-27 ~06:15 UTC, HEAD da9766e = origin/main, plus the untracked round15/, amanatar V6 snapshot and 05:31Z E10 snapshot). The update was incremental: IDs are stable and 55 records changed; the per-ID log is in ideas.json meta.curations[n=15]. There are now 353 ideas in 13 clusters: lb-tested 46, lab-tested 21, refuted 182, deferred 41, in-plan 61, open-untested 2.\n\nNEW (I-341..I-353):\n- LADDER: I-341 exp70j (probe 43, DC 0.20), I-342 exp70k (probe 44, DC 0.225) and I-345 deviation record + FREEZE, all in-plan and pending.\n- FINALS: I-344 class-C finals table (at-risk until R15-A1 is logged).\n- Rejected: I-343 exp70m (DC 0.175), I-349 further DC variants, I-350 'twin + DC 0.20', I-351 exp70d as the private-aimed final.\n- DIV: I-346 NARROW/BROAD reading note, I-347 event-unit scale (one public division TP ~0.0015-0.0023), I-348 per-embryo DC sensitivity (post-deadline), I-353 amanatar V6 divergence lookahead (post-deadline).\n- INFER: I-352 amanatar V6 max-consensus blend (post-deadline).\n\nSTATUS CHANGES from the D1 read (CONTEXT.md l.2789-2799):\n- Now lb-tested: I-303 (probe 40 = 0.954), I-304 (probe 41 = 0.949), I-305 (probe 39 = 0.949), I-312 (closed by exposure) and I-074 (the 6bba-chosen dc0.30 is -0.005 on public, the opposite of the lab's sign).\n- Closed as refuted: I-307 (no combo, BASE none) and I-328 (the A-only extension did not fire).\n- I-327: the watcher ran, so it is no longer at risk.\n- Other updates: E10 and amanatar V6 (I-025, I-026, I-282, I-286), finals notes (I-092, I-229, I-296..I-298), and the private-read addendum L6/L7 (I-283).\n\nOrphans: 1 strict (I-233). At risk: I-119, I-229, I-252, I-286, I-299, I-315, I-336, I-344, I-345.\n\nMain risks:\n- R15-A1 is not yet in CONTEXT (hard 11:45Z).\n- The E10 pair rows are missing from the brief.\n- The R14-A6 record was never logged, and RESULTS.md lacks probes 39-44."
+}

@@ -1,0 +1,6 @@
+- 2026-09-27 start round 15: no prior facts.json in _curation/15; incremental from round 14
+- 06:05Z sources read: CONTEXT l.2750-2813 (02:28 pre-score notes + READ SHEET v1, 02:29 timers, 04:58 D1, 04:59 post-D1 rungs, 05:28 submit 43/44); round15 report.json 06:00Z (R15-A0..A8, 11 new_facts, 12 plan_issues); watch.log (3 events, UP FAIL); ledger 06:00:21Z (244 polls; 39-41 ADMIT, 42-44 PENDING); e10 0531Z (#256, count 43); ext v6 NOTES; exp70j/k probe.json; origin reflog (8155321 pushed 02:29:01Z, 862869f 04:58:14Z, da9766e 05:28:47Z). RESULTS.md still ends at P38.
+- plan: python helper appends [c15] to rows; new F-TRN-45/46, F-MOD-31, F-RUN-28, C-111..C-119; DECISIONS header, P39-P42 [c15], new P43/P44, s2 c15 snapshot, s2h rows, s3 appends, closing.
+- 06:15Z FACTS.md edited via scratchpad c15_facts.py (header, 20 row appends, F-RUN-28, F-MOD-31, F-TRN-45/46, C-111..C-120). Next: DECISIONS.md
+- 06:10Z DECISIONS.md edited via c15_dec.py (header; P39-P42 [c15]; new P43/P44; s2 [c15] para + snapshot replaces c14 table; s2f E10 [c15]; s2h 9 appends + 3 new rows; s3 16 appends + 1 new row; closing). Tables check OK, CRLF kept. WATCHLIST.md diff is not mine (other curator). Next: facts.json
+- 06:10Z facts.json written (9 alerts). Done.

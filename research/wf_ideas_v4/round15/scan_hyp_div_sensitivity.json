@@ -1,0 +1,95 @@
+{
+  "task": "round 15 scan_hyp_div_sensitivity: public division sensitivity (dc0.30 = -0.005), pre-registration of probes 43/44, next rungs, insertion knobs",
+  "written_utc": "2026-09-27T06:20Z",
+  "summary": "The public drop from DeepCenter safe-div 0.25 to 0.30 (0.954 -> 0.949) comes to about 2-3 annotated division TPs lost (90% range 1-4), with about 2 FPs removed. Micro-averaged public div J ~0.35 with D=TP+FP+FN ~44 (90% range 19-72). On public, one division TP is worth about +0.0023 and one FP about -0.0007. The public division term therefore moves in steps of ~0.002 per event, and the lab (6bba D=105, 0-6 TP per 0.05 band) cannot predict it. The leading hypothesis is SHIFT(-0.05): the 44b6-trained center prior scores public daughters ~0.05 lower than 6bba daughters. It explains all three public DC facts: dc0.30 on public behaves like the lab's 0.35 cliff, and the older sjlee-stack forks tie at 0.20 vs 0.25 (0.947/0.947) and lose slightly at 0.15 (0.946). Under SHIFT, probes 44 (0.225) and 43 (0.20) add mostly FPs and display 0.953-0.954. Blended priors: 44 <=0.953 0.40 / 0.954 0.40 / >=0.955 0.20; 43 <=0.953 0.50 / 0.954 0.28 / >=0.955 0.22. The reading table R1-R5 below is pre-registered. Only R1 (43 > 44 >= 0.955) opens exactly ONE more rung: exp70m, DeepCenter 0.175. Never 0.15 or lower, no threshold neighbours, no insertion rungs, no lp30 combos. The insertion knobs stay at 0.4/4. Nothing reaches R8 as a new mechanism.",
+  "findings": [
+    {
+      "id": "R15DS-1",
+      "kind": "new-fact",
+      "what": "dc0.30 public cost = about 2-3 division TPs. Public score step: ~+0.0023 per TP and ~-0.0007 per FP.",
+      "evidence": "The metric is micro-averaged: tools/official/src/tracking_cellmot/metrics.py l.474-531, score = adj_edge + 0.1*TP/(TP+FP+FN). A band removal that loses k TP and f FP gives dJ = (TP-k)/(D-f) - TP/D. It hurts iff k/f > J, i.e. band precision > J/(1+J) ~0.26. Displays 0.954 -> 0.949 put the drop in (-0.006,-0.004). Solving, k = 0.05(D-f) + J f. MC conditioned on both displays (scratchpad dcmc3.py; priors G U(10,45), J U(0.28,0.38) per F-MET-08, recall U(0.35,0.6), evaluable forks in [0.25,0.30) Poisson(U(2,10))) gives D 5/50/95% = 19/44/72, TP value 0.0014/0.0023/0.0052, FP value 0.0004/0.0007/0.0018, k0 1/3/4 (P(1)=.09, P(2)=.33, P(3)=.37, P(4)=.17), f0 0/2/6, removed-band evaluable precision 0.33/0.60/1.0. Edge side: each lost TP fork also loses one TP edge worth ~4e-5, which is negligible. Node change -12 on the dummies, also negligible.",
+      "action": "Record in CONTEXT with the 43/44 pre-registration. From now on, read every division knob on public in units of events (~0.002 each), not as lab means.",
+      "urgency": "now"
+    },
+    {
+      "id": "R15DS-2",
+      "kind": "new-fact",
+      "what": "The DC knob is a nucleus-centre prior checked at the candidate SECOND DAUGHTER, not a division probability. K2's threshold sits in the bulk of the fork distribution, so any embryo-level calibration shift moves many forks.",
+      "evidence": "experiments/exp70j_k2_dc020/exp70j-k2-dc020.ipynb joined-source l.4087-4210 (add_safe_divisions_postlink -> deepcenter_accept_repair_point on node_point(candidate) at t+1; score < threshold -> reject). DeepCenter = biohub-deepcenter-unet3d-center-prior-v1 full_frame_center, 8-view TTA (cell 0 BIOHUB_DEEPCENTER_TTA=1), trained on 44b6 only (F-DAT-12). The same model also runs the gap veto at 0.25. Dummy fork bands: [0.25,0.30) 20 of 75 forks (27%), [0.225,0.25) 13, [0.20,0.225) 8 (CONTEXT 21:38Z, 05:28Z). Lab TP cluster: dc0.35 loses 6 TP (6bba 15->10, 44b6 1->0), dc0.30 loses 0, dc0.20/0.15 add 0 TP / +6 / +13 FP on 6bba (experiments/exp60_trainlab/results.md l.49-72). Safe divisions run BEFORE the DaughterNet insertion (l.4607 vs l.4693), and the insertion never breaks a fork, so a DC change also shifts which orphans the cap-4 insertion takes (second order).",
+      "action": "State in the pre-registration that DC is an embryo-calibration lottery: 6bba favours 0.30, public favours 0.25. K2's 0.25 is the robust middle for the private embryos.",
+      "urgency": "today"
+    },
+    {
+      "id": "R15DS-3",
+      "kind": "new-hypothesis",
+      "what": "SHIFT(-0.05), the leading hypothesis (weight ~0.5): public TP daughters score ~0.05 lower on DeepCenter than 6bba daughters. The public TP cluster then sits in [0.25,0.35) and nothing useful lies below 0.25. Competitors: BROAD/FLAT (TP density continues below 0.25; weight ~0.2), DECAY (precision halves per band; ~0.15), LAB-like/NOISE (the 0.30 loss was 1-2 unlucky events and the lower bands are FP-only; ~0.15).",
+      "evidence": "SHIFT maps each public fact onto the lab. (a) public dc0.30 = -0.005 matches the lab dc0.35 cliff (6bba -0.0036, 44b6 -0.0074). (b) The sjlee-stack public forks (same DeepCenter checkpoint and TTA, same sister-14 safe-div lineage) tie at 0.20 vs 0.25 (0.947/0.947); lab 0.25 vs 0.30 is +0.001 (6bba) / -0.0006 (44b6). (c) The sjlee fork at 0.15 = 0.946 vs 0.20 = 0.947 matches lab 0.20 vs 0.25 at -0.0008. Sources: CONTEXT 11 Sep 14:20 MSK l.698-710; IDEAS I-017/I-018. research/wf_ideas_v4/reach0955/r_ladder.json L2 had already written 'on a shifted embryo 0.30 could act like 0.35 (-0.004..-0.007)'. The lab's zero TP in [0.25,0.30) is 0 of ~7 safe-div TPs (95% upper share ~35%), so on its own it is weak evidence.",
+      "action": "Use the hypothesis weights in the 43/44 read (R15DS-4). A DC variant can beat K2 on private only if R1/R2 refute SHIFT.",
+      "urgency": "now"
+    },
+    {
+      "id": "R15DS-4",
+      "kind": "plan-issue",
+      "what": "PRE-REGISTRATION of probes 43 (exp70j dc0.20, ref 56598763) and 44 (exp70k dc0.225, ref 56598765), to be logged BEFORE they score (expected ~12:50-13:05Z = 05:28Z + 7.36-7.6 h). Read displays only; the watcher (hard cap 11:30Z) is not needed. Base = K2 #37 display 0.954. Rows, first match wins. R1 MONOTONE GAIN: 43 > 44 >= 0.955 -> BROAD (TPs continue below 0.25); SHIFT refuted; one rung exp70m (R15DS-5). R2 PEAK/SATURATED: 44 >= 0.955 and 43 <= 44 -> [0.225,0.25) holds >= 1 net TP event and [0.20,0.225) is net <= 0; DC ladder ends; class-C V* candidate exp70k. R5 NON-MONOTONE: 43 >= 0.955 and 44 <= 0.954 -> one TP event in [0.20,0.225), Poisson noise; ladder ends; no finals ask. R3 FLAT: 43 = 44 = 0.954 -> bands net ~0 (replicates the sjlee tie; SHIFT with few evaluable forks); DC closed, K2 stays. R4 FP-DOMINATED: any <= 0.953 and none >= 0.955 -> K2's 0.25 is the public local optimum; the public TP cluster is confined to [0.25,0.30) (SHIFT or LAB); DC closed. ERROR on either: no resubmit (class C exploration, not finals-relevant). Magnitudes: 0.955-0.957 = about 1 net TP event; >= 0.958 = >= 2 events (then flag winner's curse: three DC probes on one embryo). Blended priors: 44 <=0.953 0.40 / 0.954 0.40 / >=0.955 0.20; 43 <=0.953 0.50 / 0.954 0.28 / >=0.955 0.22; P(R1) ~0.10, P(R2) ~0.12, P(R5) ~0.08, P(R3) ~0.20, P(R4) ~0.50.",
+      "evidence": "MC bins (<=952/953/954/955/>=956): H-FLAT 44 .11/.08/.12/.09/.61, 43 .11/.05/.07/.06/.71; H-DECAY 44 .27/.16/.17/.12/.28, 43 .39/.14/.13/.10/.24; H-LAB 44 .60/.22/.13/.03/.03, 43 .76/.13/.06/.02/.02; SHIFT (FP-only) 44 0.954 .46, 0.953 .32, <=0.952 .21; 43 0.954 .23, 0.953 .29, <=0.952 .40 (scratchpad dcmc.py, dcmc2.py, dcmc3.py). Blend weights 0.5/0.2/0.15/0.15, shaded toward 0.954 for the sjlee tie. Main-session prior (CONTEXT 04:59Z): P(>=0.955) 0.2-0.3, P(<=0.953) ~0.3 per rung.",
+      "action": "Main session: paste R1-R5 + priors into CONTEXT as 'PROBES 43/44 PRE-SCORE READ' before ~12:30Z and commit. Read at the first poll.log header with both refs terminal.",
+      "urgency": "now"
+    },
+    {
+      "id": "R15DS-5",
+      "kind": "plan-issue",
+      "what": "Next rung: at most ONE more DC rung, and only in R1. exp70m = K2 + DEEPCENTER_SAFE_DIV_THRESHOLD 0.175. Build from the repo root: K='--set DIVINS_ENABLE=1 --set DIVINS_STEAL=1 --set DIVINS_CAP=4 --set DIVINS_FRAME_CAP=1 --set DIVINS_ALPHA=1 --set DIVINS_THRESH=0.4 --set DIVINS_DUMP=0 --set REPAIR_DEADLINE_S=34200 --set DIVINS_DEADLINE_S=28800 --set LOWREFINE_ENABLE=1'; python tools/build_probe_kernel.py exp70m_k2_dc0175 --base x138 --patch divinsert --patch safetail --patch lowrefine $K --set DEEPCENTER_SAFE_DIV_THRESHOLD=0.175 --note \"post-43/44 R1 rung: K2 + DeepCenter safe-div 0.175 (class C unless the user allows)\". Dummy gate: the only diff vs exp70j is the name line and the threshold line; validate_csv ok; forks > 96 (expect ~100-105); nodes within +-0.2% of 121,265; 0 Traceback/FAILED/DEADLINE:/FALLING BACK; 'DC 0.175' printed; run <= 1,920 s; W6 poll header < 15 min and not 429. Slot: 1 of the 2 remaining 27 Sep slots, submitted ~14:00Z (score ~21:30Z); the other slot stays with E10. Fallback: 28 Sep 00:05Z (score ~07:30Z, before F1 12:00Z). STOP RULE: the DC ladder ends after the 43/44 read in R2-R5, and after exp70m's read in R1 whatever it shows. Never dc <= 0.15 (sjlee public 0.946 < 0.947 already prices [0.15,0.20) negative). No between-threshold neighbours (0.2125, 0.2375, 0.275; I-310). No DeepCenter gap-threshold or TTA-off rungs. No insertion-knob rungs (R15DS-7). No lp30/fm45 combos on a class-C DC base: lp30 is NEU, and L5v2 never combines NEU knobs. Last ladder submit 29 Sep 02:00Z.",
+      "evidence": "Build template = the exp70d command in research/wf_ideas_v4/reach0955/r_ladder.json L2 (same patches as experiments/exp70j_k2_dc020/probe.json and exp70k: divinsert+lowrefine+safetail). Dummy runtimes exp70j ~1,500 s, exp70k ~1,449 s vs K2 ~1,512 s (CONTEXT 05:28Z): DC rungs are runtime-neutral, so the ~100-clip hidden run changes by < 0.1 h. P(exp70m display > best of 43/44 | R1) ~0.25-0.3, because the sjlee 0.15 read points to a net-negative [0.15,0.20).",
+      "action": "Pre-build exp70m only when R1 fires (about 10 min of build + a ~25 min dummy). Otherwise do nothing and log 'DC ladder closed (R2/R3/R4/R5)'.",
+      "urgency": "today"
+    },
+    {
+      "id": "R15DS-6",
+      "kind": "plan-issue",
+      "what": "Finals: DC variants stay class C (never a final) unless the user explicitly allows. Proposed condition for asking the user: R1 or R2 AND display >= 0.955. V* is then the higher display; ties go to exp70k (a smaller departure from the lab-OK 0.25, fewer extra forks on 6bba-like private embryos). The pair becomes {V*, #38} and #37 leaves, as in L9/R12-A3 (the insertion hedge). R5 (non-monotone) and R3/R4 never trigger an ask; the pair stays {#37 56563521, #38 56563534}. Private arithmetic to quote to the user: lowering the threshold adds TP (+1/D) on 'shifted' embryos and FP (-J/D, ~1/3 of a TP) on 6bba-like ones. EV is positive iff P(private embryo public-like) > ~0.25. With 1 of 2 out-of-sample embryos shifted, P ~0.4-0.5, so private EV ~+0.0002..+0.0005 after a ~50% winner's-curse shrink, with P(<0) ~0.45. Downside if 6bba-like ~ -0.0005..-0.0008. Medals depend only on the private score, so this is a coin flip with a slight positive skew. It is NOT evidence-backed like the insertion (+0.001 public twice).",
+      "evidence": "CONTEXT 26 Sep 20:49Z L9 classes and V* rule; 21:31Z R12-A3 pairing table; 27 Sep 04:59Z class-C note for exp70j/k; lab dc0.20 6bba -0.0008 (+6 FP, 0 TP), 44b6 0.0000 (results.md l.55-60); private D ~2.4x public D, so per-event private effects are ~0.4x the public ones at the same density.",
+      "action": "If R1/R2 fire, put ONE yes/no to the user with these numbers. Without an explicit yes the pair stays {#37, #38}. The user must re-tick by 29 Sep 20:00Z.",
+      "urgency": "today"
+    },
+    {
+      "id": "R15DS-7",
+      "kind": "recheck-old",
+      "what": "The insertion knobs DIVINS_THRESH 0.4 and CAP 4 re-read under public sensitivity: KEEP both, no rung. The public insertion effect (K2 0.954 vs twin 0.953) is an unrounded (0, +0.002), i.e. about 1 TP with 1-2 FPs, so the top-4-per-clip insertions have public evaluable precision ~0.35-0.5. More insertions come from lower DaughterNet ranks. The lab cap-6 arm's 85 extra insertions were 0 TP / 4 FP / 81 unannotated (pooled -0.00057). On public, ~+50 extra insertions with ~1-3 evaluable, at q ~0, give EV -0.001..-0.002 and P(+1 TP) < 0.15. THRESH 0.4 -> 0.3 is nearly inert because cap 4 binds almost everywhere (I-220). A tighter insertion (0.6/cap 2) is I-308 (refuted): it would give up the ~1 public TP the insertion already earns.",
+      "evidence": "CONTEXT 26 Sep 21:56Z CAP-6 LAB ARM; IDEAS I-220, I-308, I-326, I-310; FACTS F-LB-01 (#37 0.954 / #38 0.953); insertion gate in exp70j notebook (score = p_par*p_dau*p_dau^alpha; cap_video 4, cap_frame 1, steal <= floor(0.5*cap)).",
+      "action": "None. Do not build an insertion rung on top of any DC variant.",
+      "urgency": "info"
+    },
+    {
+      "id": "R15DS-8",
+      "kind": "plan-issue",
+      "what": "Private-read addendum (calibration only, never a finals input): add L6 = exp70j - #37 and L7 = exp70k - #37 next to L2 = exp70d - #37 (dc0.30). The three private contrasts give the private DC response curve at 0.20/0.225/0.30. Read: L2 < 0 with L6/L7 >= 0 means the private embryos are public-like (shifted); L2 > 0 with L6/L7 < 0 means 6bba-like; mixed means per-embryo heterogeneity. Priors P(<0)/P(=0)/P(>0): L6 0.35/0.40/0.25, L7 0.30/0.45/0.25. Sign-keeping only, as in R13-A1 (6).",
+      "evidence": "CONTEXT 27 Sep 01:31Z R13-A1 (6) PRIVATE-READ v2 ADDENDUM (L1-L5 defined; probes 43/44 not yet in the read list). The division term on ~70 private clips has D ~100, so a 1-event difference (~0.001) is visible at 3 dp.",
+      "action": "Append one line to the private-read list before 29 Sep: read refs 56598763 and 56598765 on 30 Sep.",
+      "urgency": "later"
+    },
+    {
+      "id": "R15DS-9",
+      "kind": "new-fact",
+      "what": "Probe 42 (exp70b, fm45; pending ~07:30Z) re-priced with the same arithmetic. Forkmid removed 1 of 75 dummy forks (74 vs 75), so ~7 public forks and ~0.4 evaluable. P(display change) ~0.25. If it changes, an FP removal is likelier (lab 0 TP / 1 FP of 40 removed): P(0.955) ~0.1-0.15, P(<=0.953) ~0.08. L5v2 already covers the read.",
+      "evidence": "CONTEXT 27 Sep 00:06Z (74 forks, sha ed7101bf); experiments/exp60_trainlab/results.md forkmid audit (40 removed, 0 TP, 1 FP); R15DS-1 per-event values.",
+      "action": "Info for the D2 read; no rule change.",
+      "urgency": "info"
+    },
+    {
+      "id": "R15DS-10",
+      "kind": "recheck-old",
+      "what": "Lesson (post-deadline list): lab-to-public transfer for DIVISION knobs is governed by Poisson event counts. The exp60 6bba bed has D=105 and 0-6 TPs per 0.05 DC band, and public has D ~44. A lab mean of +0.001 (dc0.30) had no predictive power for the sign: one or two events on one embryo flip it. Division knobs need either >= ~20 TP events in the moved band, or a public read as the primary evidence.",
+      "evidence": "experiments/exp60_trainlab/results.md dc rows; R15DS-1; CONTEXT 27 Sep 04:58Z D1 FACT line ('the lab sign was wrong for this knob').",
+      "action": "Add to the lessons item I-252 after 29 Sep; no action now.",
+      "urgency": "later"
+    },
+    {
+      "id": "R15DS-11",
+      "kind": "plan-issue",
+      "what": "Nothing reaches R8 (27 Sep 12:00Z) as a NEW mechanism in this focus. Every item above is a reading rule or an existing-knob public rung under the 20:33Z lift (class C). Rejected in this scan, with reasons: dc 0.15 or DC veto off (I-178). Both are priced negative by the public sjlee read (0.15 = 0.946 < 0.947). DeepCenter gap-threshold 0.25 -> 0.20 as a 'shift' test. A new knob with no lab; it moves gap-fill edges worth ~4e-5 each, so +-0.0005 at most, and adds nodes (node-term cost). DeepCenter TTA off. It changes every DC decision (gap + safe-div) at once, has no lab, and TTA-group changes were closed after probes 16/19 (I-153). dc 0.275 / 0.2125 / 0.2375 neighbours (I-310): pure public fitting. Best-DC + lp30 or + cap6: NEU / lab-negative knobs.",
+      "evidence": "IDEAS I-018, I-153, I-178, I-310, I-326; CONTEXT R8 text; exp70j cell 0 (BIOHUB_DEEPCENTER_GAP_THRESHOLD 0.25, BIOHUB_DEEPCENTER_TTA 1).",
+      "action": "Log 'round 15 div-sensitivity: no R8 item' in the round record.",
+      "urgency": "info"
+    }
+  ]
+}

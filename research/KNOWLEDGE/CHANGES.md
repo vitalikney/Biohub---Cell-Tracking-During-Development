@@ -794,3 +794,34 @@ Curator logs: `research/KNOWLEDGE/_curation/4/`.
 - **Carried over:** watcher launch by 04:10Z (now: restart loop, S0 = 0147Z, cap 11:30Z); 07:30Z push (E10 v2, Q1-Q3, R8 cap); re-tick; exp70g NEVER_SUBMIT; W57 / LESSONS l.7; I-233; stale MEMORY line (C-75).
 - **New:** R14-A2 pre-score notes committed and pushed by 04:25Z (+ REPORT.md, round14/, 0147Z snapshot); round-15 browser scan would call the API in the quiet window (W150); liveness checks without an owner (W145); READ SHEET v1 at D1; SELECTED read moved to ~07:30Z; corrected brief lines (in-sample +0.006, 0/4); ROUND 14 RECORD before 07:30Z; HINDSIGHT GUARD before 29 Sep 23:00Z; I-063 / I-106 status corrections; timers session-only.
 - **Curator disagreements settled here:** SELECTED read: c13 'at D1' vs c14 'after 06:45Z' -> after 06:45Z (R14 plan_issues (4)). I-063/I-106: facts curator 'queued, info' vs ideas curator 'applied' -> applied in `IDEAS.md`, CONTEXT wording via R14-A6/A7. W150 raised only by the watch curator -> kept as [now].
+
+## 15 - 2026-09-27 ~06:15 UTC (curation 15; git HEAD da9766e = origin/main + untracked `research/wf_ideas_v4/round15/`, `experiments/e10_watch/20260927T0531Z.txt`, `experiments/ext_optimized-biohub-max-score/v6_2026-09-27/`)
+
+**Operations:**
+- **Commits since curation 14** (`git log --oneline f24ff72..da9766e`): 8155321 R14 pre-score notes + READ SHEET v1 + `run_ladder_watch.sh` + round14/REPORT.md (pushed 02:29:01Z, before any score); a129e5f watch timers; 862869f LADDER READ D1; 477a3bb exp70j/exp70k built; da9766e probes 43/44 submitted.
+- **CONTEXT.md:** six new entries l.2750-2813 (R14 PRE-SCORE NOTES, READ SHEET v1, WATCH TIMERS, LADDER READ D1 04:58, POST-D1 RUNGS 04:59, SUBMIT 43/44 05:28); `## 9. Literature` now l.2814. `experiments/RESULTS.md` unchanged (last row P38, l.71).
+- **LB:** P39 exp70e 0.949, P40 exp70a 0.954 (no UP), P41 exp70d 0.949; P42 exp70b, P43 exp70j (DC 0.20, 56598763), P44 exp70k (DC 0.225, 56598765) PENDING at 06:11:39Z (`experiments/lb_poll/ladder_watch/calls.jsonl`). Rank #256 of 3,938 at 05:32Z; 239 teams >= 0.955 (`experiments/e10_watch/20260927T0531Z.txt`). Finals unchanged (TICKED #37 + #38; D1 row D1-3, `CONTEXT.md` l.2789-2799).
+- **Watcher** ran from 03:35Z (PID 10088), 3 fresh events, UP test FAIL at all three (`CONTEXT.md` l.2791-2793).
+- **Round 15** judged at 06:00Z (`research/wf_ideas_v4/round15/report.json` R15-A0..A8); none of its actions is done yet.
+
+**Ideas** (`IDEAS.md` CHANGES (15) l.68; `ideas.json` meta.curations[n=15], 55 records; `_curation/15/ideas.json`):
+- **New (I-341..I-353):** I-341 exp70j / I-342 exp70k (in-plan, submitted); I-344 class-C finals table and I-345 deviation record + FREEZE (in-plan, at risk); I-346 NARROW/BROAD note, I-347 event-unit scale, I-348 per-embryo DC study (post-deadline); I-352 / I-353 amanatar V6 blend and lookahead (post-deadline); rejected I-343 exp70m, I-349 further DC variants, I-350 twin + DC 0.20, I-351 exp70d as private-aimed final.
+- **Status changes:** lb-tested I-303 (P40), I-304 (P41), I-305 (P39), I-312 (closed by exposure), I-074 (dc0.30 = -0.005 public); refuted I-307 (BASE none) and I-328 (A-only did not fire); I-327 no longer at risk.
+- **Counts c14 -> c15:** 340 -> 353; lb-tested 41 -> 46, refuted 177 -> 182, deferred 38 -> 41; lab-tested 21, in-plan 61, open 2 unchanged. Orphans: strict I-233; at risk I-119, I-229, I-252, I-286, I-299, I-315, I-336, I-344, I-345 (I-327 dropped off).
+
+**Facts and decisions** (`FACTS.md`, `DECISIONS.md`, rows marked [c15]; `_curation/15/facts.json`):
+- **New facts:** F-TRN-45 (DC 0.25 -> 0.30 = -0.005 public vs lab +0.0013; lab sign wrong); F-TRN-46 (lp30 on K2 = 0.954, no UP); F-MOD-31 (DeepCenter threshold semantics); F-RUN-28 (43/44 dummy re-verification). [c15] notes on ~20 rows (F-LB, F-RUN-26/27, F-RUL-12/18, F-MOD-28, F-TRN-43, C-75, C-101).
+- **Contradictions:** new C-111..C-120 (`FACTS.md` l.438-447): 43/44 breach R13-A1/L9 (C-111); 'watcher paused' false (C-112); 04:59 prior inflated (C-113); V6 R8 reason wrong (C-114); probe.json 'above exp56 adopt' (C-115); exp70d COMPLETE time (C-116); dc0.30 sign-flip mechanism (C-117); RESULTS.md stale (C-118); 'division knobs invisible on public' (C-119); class-C pair shape (C-120). Resolved: C-104, C-106, C-108.
+- **DECISIONS.md:** §1 P39-P42 [c15] + new P43/P44 (l.139-140); §2 [c15] paragraph l.412 + snapshot l.421; §2f E10 05:31Z l.665; §2h post-D1 rows (l.728); §3 R1-R10/L9 [c15] notes + one rule row.
+
+**Watchlist** (`WATCHLIST.md`; `_curation/15/watch.json`):
+- **Done:** W134 (watcher launched), W143/W144 (pre-score notes + REPORT.md, 8155321), W137 absorbed into W153; W141 D1 half done.
+- **New:** W151-W157 (R15-A1 entry, R15-A0 REPORT.md, SELECTED read, class-C letter, ROUND 15 RECORD, 43/44 read, 12:00Z lapse line); reminders T68-T74; insights I149-I159.
+- **Still overdue:** W126 RESULTS rows 39-41; W142 NEVER_SUBMIT (now exp70g/j/k); W146 ROUND 14 RECORD; W57 family; W98 LESSONS l.7; W150 round prompt l.37/l.38.
+
+**Alerts** (`INDEX.md` TOP ALERTS, 9 after dedup):
+- **Resolved since curation 14:** watcher launch (03:35Z); R14-A2 pre-score notes pushed before any score (8155321); timers logged (a129e5f); D1 read applied mechanically (862869f); SELECTED timing settled at 07:30Z; liveness timers set (no result logged yet).
+- **Materialised:** the W150 quiet-window API call (round-15 browser E10 snapshot 05:31Z; no 429, no harm).
+- **Carried over:** 07:30Z push (now the R15-A2 form); exp70g NEVER_SUBMIT (extended to j/k); ROUND 14 RECORD; round prompt l.37; re-tick; hindsight guard; W57 / LESSONS l.7; I-233; stale MEMORY line (C-75).
+- **New:** R15-A1 pre-score entry for 43/44 (hard 11:45Z); breach disclosure + FREEZE; E10 pair rows missing from the brief (I-299); D2 read of P42; RESULTS rows 39-44; 12:00Z lapse line with I-323/I-324 closures; public DC chase risk; I149/I150 for the L9 read; session timers 5b23a3ed/54a8f20d still listed.
+- **Curator disagreements settled here:** 43/44 breach: [now] (facts, watch) vs [today] (ideas) -> [now], because the disclosure goes into the 07:30Z brief. Risk of the public DC chase: [info] (ideas) vs [today] (facts) -> [info] as a standing caution, with the read itself under alert 4/R15-A5 timing. R15-A1: [now] by all three.

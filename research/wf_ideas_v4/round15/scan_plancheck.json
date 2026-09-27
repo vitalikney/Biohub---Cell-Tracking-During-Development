@@ -1,0 +1,101 @@
+{
+ "summary": "Round 15 plan check (files only, no Kaggle API calls, 05:31-05:50Z 27 Sep). The D1 read is CORRECT: it matches watch.log (3 fresh events, count 40->43, UP test FAIL each time, exp70a NEU and exp70d/exp70e NEG), the ledger (all three have L_hi <= 7.42 h, insertion gate did NOT fire) and the read sheet row D1-3. The pair stays {#37, #38}, BASE is none and there is no combo. Probes 43/44 (exp70j DC 0.20, exp70k DC 0.225): the dummies re-verify exactly from _dl/ (shas, nodes, forks 96/88, 0 error lines, insertion unchanged at 12, runtimes 1,477/1,427 s). W6 holds (header 8.0 min old, no 429). The notebook diff vs K2 is one env line. 'Class C' is the right label under L9. BUT the two submits break three pre-registered clauses that the 04:59 entry never names: R13-A1 (1) 'no threshold neighbours, no class C', R13-A1 (5a) 'the ladder ends after 42 with no POS base', and the cap 'at most 5 ladder submits' (now 6). The P(>=0.955) prior of 0.2-0.3 ignores I-018 (sjlee DC 0.20 and 0.25 tied on public) and the negative 6bba lab; a fair figure is ~0.08-0.15. Both submits (05:28Z) and an E10 snapshot (05:31:16Z) fell inside the 04:10-06:45Z quiet window. No 429 resulted, and the claim 'watcher paused' has no PAUSE line in the watcher log. Needed before ~12:30Z: a deviation record plus a freeze on further DC or ladder rungs; a pre-registered class-C read rule (plateau, tie order, L_hi clocks, pair, re-tick budget); an updated 07:30Z push and brief with a Q4 on class C; the API SELECTED read and log. E10 P1 at 05:31Z was NOT met.",
+ "findings": [
+  {
+   "id": "PC15-01",
+   "kind": "plan-issue",
+   "what": "Probes 43/44 break pre-registered clauses that the 04:59/05:28 UTC entries do not name. (a) R13-A1 (1): 'No other rung: no threshold neighbours (I-310), no class C'. (b) R13-A1 (5)(a): the ladder ends after 42 when there is no POS base, and D1 found BASE none. (c) R13-A1 (5): 'At most 5 ladder submits in total'; 39-44 makes 6. (d) L9 and r_ladder (d): 'no threshold neighbours ... pure public fitting with no lab support'. The user's 20:33Z lift covers public probes, but R13-A1 was the session's own later self-restriction (01:31Z, pushed 3d48d35). Labelling the rungs 'post-hoc, class C' is honest but incomplete. With no freeze, the 13:00Z scores invite a dc 0.175/0.15 chase or dc+fm45 combos, which would be an open-ended public knob ladder.",
+   "evidence": "CONTEXT.md l.2665-2678 (R13-A1 (1)), l.2704-2711 (R13-A1 (5)), l.2407-2424 (L9), l.2800-2813 (04:59/05:28 entries); research/wf_ideas_v4/reach0955/r_ladder.json L5 (d); poll.log 05:30:14Z header lists 56598763/56598765 PENDING",
+   "action": "Append one dated CONTEXT entry before any 43/44 score: 'R13-A1 DEVIATION RECORD: probes 43/44 were submitted against R13-A1 (1), (5)(a) and the 5-submit cap and against L9's no-threshold-neighbours line; reason = the dc0.30 public -0.005 read; no user OK. FREEZE: whatever 43/44 show, no further DC-threshold rung, no combo with dc0.20/0.225/fm45 and no other ladder submit, unless the user asks for one in chat. Remaining 27-28 Sep slots follow the R13-A1 (5) priority: E10 port > ERROR resubmit > exp72 (only with a yes) > empty.' Say the same in the 07:30Z brief.",
+   "urgency": "now"
+  },
+  {
+   "id": "PC15-02",
+   "kind": "plan-issue",
+   "what": "No pre-registered read rule exists for the class-C probes, yet the entries say 'class C unless the user allows'. If the user says yes, the choice between exp70j and exp70k (submitted 9 s apart, so they will almost surely complete together) and the eligibility bar would be picked after the scores. L9's tie order (class A, fewer knobs, earlier submit) would pick exp70j (0.20, the larger change) by 9 s.",
+   "evidence": "CONTEXT.md l.2805-2813; submit times 05:28:13Z/05:28:22Z (poll.log l.11671+); ledger.md rows 20-21 family safetail; dummy forks j 96 / k 88 vs K2 75",
+   "action": "Before ~12:00Z (ahead of the ~12:35-13:00Z scores), write 'CLASS-C READ RULE (applies only if the user explicitly allows class C as the public-aimed final)'. A class-C file is eligible iff: (1) COMPLETE without error; (2) its runtime_ledger row gives L_hi <= 9.0 h (first COMPLETE header by 14:28:13Z for j and 14:28:22Z for k; the 8.0 h insertion marks are 13:28:13Z/13:28:22Z, so quote the ledger text); (3) display >= 0.955; (4) PLATEAU: the other DC neighbour displays >= 0.954 (the analogue of L9's single-knob >= 0.954 and ADDENDUM L1's plateau). Ranking: higher display wins. At equal display, class B (exp70b) beats class C, and exp70k (0.225, the smaller change) beats exp70j. Pair = {V*, #38} (R12-A3 table, since V* carries the insertion). No user answer means class C is never a final and {#37, #38} stays.",
+   "urgency": "today"
+  },
+  {
+   "id": "PC15-03",
+   "kind": "plan-issue",
+   "what": "The 07:30Z push variants (R14-A4 P-A/P-B/P-C) predate probes 43/44, and none carries the class-C question. P-A is the live row (D1-3), and its text would hide that two more files are pending and that a user decision (Q4) is needed before ~13:00Z.",
+   "evidence": "research/wf_ideas_v4/round14/report.json actionable R14-A4 (P-A text); CONTEXT.md l.2806-2808 ('asked in the morning brief')",
+   "action": "Send P-A' (RU, < 200 chars): 'Biohub 07:30Z: 39-41 = 0.949/0.954/0.949, 42 = {B}. Финалы #37+#38 без изменений. Пробы 43/44 (DC 0.20/0.225) ~13:00Z. В чате до 09:00Z: E10 v2, exp71/72, R8, класс C.' The brief needs a Q4 with its facts. 'May a DeepCenter-threshold neighbour (class C) become the public-aimed final under the PC15-02 rule? Default: no (L9). Facts: public dc0.30 = -0.005 while the 6bba lab said +0.0013; lab dc0.20 is 6bba -0.0008 (+6 FP forks, 0 TP) and 44b6 0 (in-sample); on sjlee's public stack DC 0.20 and 0.25 tied at 0.947 (I-018); the DC effect is embryo-specific, so a public DC gain transfers to private more weakly than any other knob.' The brief should also disclose the PC15-01 deviation.",
+   "urgency": "now"
+  },
+  {
+   "id": "PC15-04",
+   "kind": "recheck-old",
+   "what": "The 04:59 entry's prior 'P(display >= 0.955) ~0.2-0.3 per rung' leaves out existing public evidence. I-018: sjlee's single-knob forks on the 0.947 stack gave DC 0.25 = 0.947 against 0.20 = 0.947, and 0.15 = 0.946. So the 0.20-0.25 band was flat on public on a sibling stack, and r_ladder.json cites this. The lab is negative for dc0.20 on 6bba. The -0.005 read shows that the 0.25-0.30 band is high-precision on the public embryo; it says nothing about the band below 0.25.",
+   "evidence": "experiments/RESULTS.md 'public variant scan' row (sjlee dctta025 0.947, dctta-v015 0.946, base v020 0.947); research/KNOWLEDGE/IDEAS.md I-018; reach0955/r_ladder.json ('sjlee's DC 0.15/0.20/0.25 forks all tied'); CONTEXT l.2804-2805 (lab dc0.20)",
+   "action": "In the ROUND 15 RECORD, restate the honest prior as P(>=0.955) ~0.08-0.15 per rung and P(<=0.953) ~0.25-0.35, citing I-018. Put the same numbers in the Q4 brief so the user's answer does not rest on an inflated prior.",
+   "urgency": "today"
+  },
+  {
+   "id": "PC15-05",
+   "kind": "plan-issue",
+   "what": "Re-tick budget conflict. READ SHEET v1 and R14-A2 (4)(6) allow at most one user re-tick after D2. If exp70b (D2, ~07:30-08:30Z) displays >= 0.955, the pair becomes {exp70b, #38} (re-tick 1). If class C is allowed and exp70j/k then display higher at ~13:00Z, a second re-tick would be needed. No rule orders these two cases.",
+   "evidence": "CONTEXT.md l.2767-2768 (R14-A2 (4)(6)), l.2776-2786 (READ SHEET v1: 'One user re-tick after D2 at most'); L_hi clocks b 08:05:50Z/09:05:50Z",
+   "action": "Add to the PC15-02 entry: 'If exp70b is V* at D2 AND the user has allowed class C, the push advises ONE re-tick after 43/44 score (~13:30Z), comparing exp70b with the class-C winner under PC15-02 (class B wins ties). If class C is not allowed, re-tick right after D2 as the sheet says.' {#37, #38} stays until the user acts.",
+   "urgency": "today"
+  },
+  {
+   "id": "PC15-06",
+   "kind": "plan-issue",
+   "what": "Quiet-window (04:10-06:45Z) hygiene. (a) The main session fetched the dummy outputs (~05:27Z) and submitted 43/44 (05:28:13Z/05:28:22Z) inside the window. (b) The E10 snapshot 20260927T0531Z was taken at 05:31:16Z (8 CLI calls), also inside the window and 11 s before the watcher's 05:31:27Z ListSubmissions. No 429 appeared (calls.jsonl rc 0), so there was no harm. (c) The 05:28 entry says 'watcher paused during the submits', but ladder_watch.stdout.log has no PAUSE line; the calls at 05:26:25Z and 05:31:27Z simply bracket the submits at the normal 300 s cadence.",
+   "evidence": "experiments/lb_poll/ladder_watch/calls.jsonl (05:26:25Z, 05:31:27Z); experiments/lb_poll/ladder_watch.stdout.log (grep -i pause = 0); experiments/e10_watch/20260927T0531Z.txt header + leaderboard file stamp 2026-09-27T05:31:16; _dl/biohub-exp70j-k2-dc020 and -exp70k mtimes 08:27-08:28 local = 05:27-05:28Z",
+   "action": "Correct the 05:28 entry: 'watcher not paused (no PAUSE file); its calls bracket the submits; no overlap, no 429'. Log who ran the 05:31Z snapshot (timer 2e87e414 was supposed to defer). Because 0531Z is fresh, the round-15 browser agent should NOT run tools/e10_snapshot.py right at 06:45Z. Run one P1 after exp70b's event (>= ~08:35Z), or let timer 2e87e414 at 08:04Z do it; either way, avoid its 8 CLI calls during exp70b's completion window (07:27-08:30Z).",
+   "urgency": "today"
+  },
+  {
+   "id": "PC15-07",
+   "kind": "plan-issue",
+   "what": "The API SELECTED read is still owed. R14-A2 (6) moved it to the first main-session API touch after 06:45Z, and R12-A3 (d) requires it after every submit. Probes 42, 43 and 44 were submitted without a post-submit SELECTED read; the quiet window deferred it.",
+   "evidence": "CONTEXT.md l.2519-2521 (R12-A3 (d)), l.2771-2772 (R14-A2 (6)), l.2809-2813 (no SELECTED line)",
+   "action": "At the 07:30Z push, read it once and log: 'API SELECTED 2/2 [56563521, 56563534] at hh:mmZ (after probes 39-44)'. Any other value is a stop-and-notify event.",
+   "urgency": "today"
+  },
+  {
+   "id": "PC15-08",
+   "kind": "new-fact",
+   "what": "Probe 43/44 dummy claims re-verified from local files. They are all exact, and the builds are clean.",
+   "evidence": "_dl/biohub-exp70j-k2-dc020, _dl/biohub-exp70k-k2-dc0225 vs _dl/biohub-exp58-x138-safe-lowref (K2) and exp70d. CSV sha256: K2 b6de85c1, d ab8a7ec5, j 464da57e, k b7b4d9ce. Nodes: 121,252 / 121,240 / 121,265 / 121,265. Forks per clip (0113/0b24/05b6/05db): K2 39/6/9/21 = 75; d 35/0/9/11 = 55; j 41/17/9/29 = 96; k 41/13/9/25 = 88. Log greps: Traceback, FAILED, DEADLINE: and FALLING BACK all 0; LOWREFINE 8; DIVINS ENABLED 1. run_stats: safe_divisions_added 63/43/84/76, divins_added 12 in all four (the insertion is unaffected), max kernel_elapsed 1512/1300/1477/1427 s. Notebook cell diff vs exp58: the name line plus os.environ BIOHUB_DEEPCENTER_SAFE_DIV_THRESHOLD 0.20/0.225; kernel-metadata identical apart from id/title/code_file; no NEVER_SUBMIT.md. Ledger rows 20-21: family safetail (runtime_ledger.py l.76).",
+   "action": "None beyond quoting these numbers in the ROUND 15 RECORD. Expected latency is similar to K2 (7.2-7.5 h), so scores ~12:35-13:00Z. Cosmetic: every exp70* probe.json still carries the builder boilerplate rule 'above exp56 adopt', which contradicts class C. Note it; do not rebuild.",
+   "urgency": "info"
+  },
+  {
+   "id": "PC15-09",
+   "kind": "recheck-old",
+   "what": "D1 audit: the read is correct and mechanical. The events match the CONTEXT entry: exp70a first (04:13:06Z, NEU), exp70e second (04:31:08Z, NEG), exp70d third (04:56:17Z, NEG). Each event was fresh on the first download (count 41/42/43 as expected), the UP test failed, and 0 TeamIds were passed. Nothing is BLOCKED because d itself is NEG. BASE is none, so the ladder ends after 42 under (5)(a). D1-3 gives {#37, #38}. The A-only extension is dead (no UP). exp70b can only become V* by displaying >= 0.955. W6 held for 43/44: header 05:20:12Z is 8.0/8.2 min old and not a 429.",
+   "evidence": "experiments/lb_poll/ladder_watch/watch.log lines EVENT 1-3; state.json verdicts; ledger.md rows for 56589025/56589065/56589423 ('did NOT fire'); poll.log l.11610 (05:20:12Z)",
+   "action": "None. One wording fix: the D1 line 'the lab sign was wrong for this knob' is better stated as 'the knob is embryo-specific: public div J ~0.36 vs lab 0.129, so fork removal costs more on the public embryo (F-MET-12); private break-even 0.11-0.20'. This explains the -0.005 without calling the lab broken, and it is why a public DC gain transfers weakly.",
+   "urgency": "info"
+  },
+  {
+   "id": "PC15-10",
+   "kind": "plan-issue",
+   "what": "The private-read v2 addendum (R13-A1 (6)) lists only exp70e/a/d/b plus the combo. Probes 43/44 are outside the table, and their priors are not written before their public scores. This loses the one clean dose read of the DC family: dc 0.20/0.225/0.25/0.30 on private.",
+   "evidence": "CONTEXT.md l.2712-2724 (R13-A1 (6))",
+   "action": "Before ~12:30Z add, as calibration only and never a finals input: L6 = exp70j - #37 and L7 = exp70k - #37, priors P(<0)/P(=0)/P(>0) 0.25/0.50/0.25 each. Add a DC-DOSE read: record the signs of L2, L7 and L6 together, and call it monotone only if all non-zero values have signs consistent with one direction. Label it post-hoc (submitted after the 20:33Z scope).",
+   "urgency": "today"
+  },
+  {
+   "id": "PC15-11",
+   "kind": "new-fact",
+   "what": "E10 P1 at 05:31Z: NOT met. There is no change in competition kernels (dateRun and scoreDescending tops unchanged, HF v3 first), x138 (anvithpothula/biohub-0-953-lb-original) is still v1 COMPLETE, amanatar went RUNNING -> COMPLETE, and the largest P2 group is 2 (< 5). LB: 3,938 teams, 239 at >= 0.955 (was 226). We are #256 at 0.954, 17th of 102 in the 0.954 block (ranks 240-341), SubmissionCount 43.",
+   "evidence": "experiments/e10_watch/20260927T0531Z.txt (DIFF vs 0147Z, CHANGES 16, histogram section)",
+   "action": "Log it in the ROUND 15 RECORD. The next P1 should come after exp70b's event (see PC15-06). E10 v2 lapses at 12:00Z without a user answer.",
+   "urgency": "info"
+  },
+  {
+   "id": "PC15-12",
+   "kind": "plan-issue",
+   "what": "The watcher stops mattering after D1, and it exits on its own. ladder_watch.py tracks every ref > 56563534 (so 43/44 count toward freshness), but it stops once the 4 WATCHED refs are terminal, i.e. after exp70b; the 'until' loop in run_ladder_watch.sh then ends on rc 0. Probes 43/44 (co-completion almost certain, 9 s apart) get no LB-attribution record. That is harmless: L9 and PC15-02 eligibility need only the per-submission display from ListSubmissions.",
+   "evidence": "experiments/lb_poll/ladder_watch.py l.61-62 (WATCHED, FAST_REFS), l.210-212 (tracked), docstring l.15; experiments/lb_poll/run_ladder_watch.sh",
+   "action": "No new watcher code (PC14-09). State in CONTEXT that poll.log is the only record for 43/44 and that no UP attribution will be claimed for them. If both display the same value, report it as a tie, not an attributable move.",
+   "urgency": "info"
+  }
+ ]
+}

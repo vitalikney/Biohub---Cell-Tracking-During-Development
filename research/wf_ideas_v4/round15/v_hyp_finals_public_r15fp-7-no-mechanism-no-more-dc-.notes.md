@@ -1,0 +1,9 @@
+- 2026-09-27T05:48:23Z start: verify R15FP-7 (no mechanism, no more DC rungs). No prior JSON.
+- 05:49Z read CONTEXT l.2599-2834 (RESUME 22:46Z, R13-A1 (1)/(5), R14 sheet, D1 04:58Z, post-D1 rungs 04:59Z, submits 05:28Z), scan_hyp_finals_public.json + notes, IDEAS I-310 (threshold neighbours refuted as rungs), I-230 (in-block rank info only), I-092 (MC calculator refuted: false precision).
+- poll.log header 05:40:15Z: 42/43/44 PENDING. 5/day per team (CONTEXT l.343); 27 Sep: 42 (00:05Z) + 43/44 (05:28Z) -> 2 left today; 28 Sep has 5 fresh.
+- CHECK slot claim: 'burns one of the 2 remaining slots' binds only on 27 Sep; a 0.175 rung informed by 43/44 (~13:00Z) could go on 28 Sep. The binding objection is the pre-registered R13-A1 (1)/(5): 'No other rung: no threshold neighbours (I-310), no class C' and 'At most 5 ladder submits in total' -> 39-42 + 43/44 = 6 already (43/44 were labelled post-hoc at 04:59Z). A 0.175 rung = 7th, a further post-hoc public ladder step.
+- CHECK DC0.20+fm45: L5v2 combos need a POS BASE; D1 04:58Z says BASE none -> no combo whatever 42 shows; and a class-C knob inside -> class C. Excluded twice.
+- CHECK twin+DC0.20: hedges i not d; d has public sd ~0.005 per 0.05 step (D1) vs P(i<0) 0.10-0.20 -> (b) {V*,#37} better in most worlds, but 'dominates' rests on the scan's illustrative arithmetic (I-092 caveat) - wording should be 'is worse in most illustrated worlds'. Needs ~7.5 h + dummy; not a new mechanism so R8 does not formally apply, but class C twice.
+- CHECK (3) in-block rank: I-230 curations 7/9/12/13 keep it info only; watcher cap 11:30Z does not cover 43/44 anyway -> no attributable in-block read possible.
+- VERDICT: not refuted (value/feasibility trivially OK: no build, no submit, gain 0). Minor corrections above.
+- 05:49Z JSON written.

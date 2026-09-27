@@ -1,0 +1,16 @@
+# round15 scan_plancheck notes (started 05:31Z 27 Sep)
+
+## 05:31-05:50Z 27 Sep, files only (no Kaggle API/CLI called by this agent)
+- scan_plancheck.json did not exist -> fresh run.
+- D1 audit vs watch.log (experiments/lb_poll/ladder_watch/watch.log): EVENT1 04:13:06Z exp70a COMPLETE 0.954, count 40->41, fresh, UP FAIL -> NEU; EVENT2 04:31:08Z exp70e 0.949 -> NEG; EVENT3 04:56:17Z exp70d 0.949 -> NEG. Ranks 242->253->255. Matches CONTEXT 04:58 entry. D1-3 row {#37,#38} correct; no BLOCKED (d itself NEG); BASE none -> no combo (R13-A1 (5a)).
+- ledger.md (05:30:15Z): exp70a (6.87,7.04] h, exp70e (7.24,7.42], exp70d (7.19,7.36], all 'insertion gate 8.0 h did NOT fire'. 43/44 rows mapped to family safetail (tools/runtime_ledger.py l.76 r"exp70[a-z]*").
+- W6 for 43/44: poll header 05:20:12Z, submits 05:28:13Z/05:28:22Z -> 8.0/8.2 min, no 429 (poll.log l.11610). OK.
+- Dummies re-verified from _dl/: sha K2 b6de85c1, exp70d ab8a7ec5, exp70j 464da57e, exp70k b7b4d9ce; nodes 121252/121240/121265/121265; forks 75/55/96/88; per clip forks K2 39/6/9/21, j 41/17/9/29, k 41/13/9/25, d 35/0/9/11. Log: Traceback/FAILED/DEADLINE:/FALLING BACK 0, LOWREFINE 8 matches, DIVINS ENABLED 1. run_stats: safe_divisions_added 63/43/84/76 (K2/d/j/k), divins_added 12 in all; max kernel_elapsed 1512/1300/1477/1427 s.
+- Notebook diff vs exp58 K2: only name line + os.environ BIOHUB_DEEPCENTER_SAFE_DIV_THRESHOLD (0.20 / 0.225); kernel-metadata identical except id/title/code_file. No NEVER_SUBMIT.md.
+- probe.json "rule" field is builder boilerplate "above exp56 adopt" in all exp70* (cosmetic; contradicts class C).
+- RULE CONFLICTS of probes 43/44: R13-A1 (1) "No other rung: no threshold neighbours (I-310), no class C"; R13-A1 (5) ladder ends after 42 with no POS base; "At most 5 ladder submits in total" -> now 6 (39-44); L9 "no threshold neighbours"; r_ladder (d) "no threshold neighbours ... pure public fitting". CONTEXT 04:59 entry labels post-hoc/class C but does not name these clauses as overridden.
+- Prior check: CONTEXT 04:59 gives P(>=0.955) 0.2-0.3 per rung; public evidence I-018 (experiments/RESULTS.md 'public variant scan': sjlee DC 0.20/0.25 forks tie at 0.947, 0.15 = 0.946) and r_ladder.json cites it; lab dc0.20 6bba -0.0008 (+6 FP, 0 TP). Suggests ~0.08-0.15.
+- Quiet window (04:10-06:45Z): main session submitted at 05:28Z (plus dummy fetches ~05:25-05:28Z local mtimes 08:27-08:28 of _dl files); an E10 snapshot experiments/e10_watch/20260927T0531Z.txt was taken 05:31:16Z (8 CLI calls) -> both inside the window; watcher ListSubmissions 05:31:27Z rc 0 (calls.jsonl), no 429. 'watcher paused during the submits' has no PAUSE line in ladder_watch.stdout.log (cadence 05:26:25 -> 05:31:27 normal).
+- E10 0531Z snapshot: no competition-kernel change, scoreDescending top unchanged, x138 v1 COMPLETE, amanatar RUNNING->COMPLETE, P2 largest group 2 (<5) -> P1 NOT met. LB: 3,938 teams, >=0.955 239, we #256, 17th of 102 in 0.954 block (240-341), count 43.
+- Watcher code: tracked() includes refs > 56563534, so 43/44 are counted in freshness; it exits after the 4 WATCHED refs are terminal (exp70b) -> run_ladder_watch.sh 'until' loop ends on rc 0. Informational only now (BASE none, A-only dead).
+- 05:40Z final JSON written (12 findings PC15-01..12)

@@ -1,0 +1,13 @@
+# v_hyp_finals_public R15FP-3 plateau + tie clause (skeptic, value + feasibility)
+- 2026-09-27T05:48Z start; no prior JSON for this task. date -u 05:47:56Z; poll.log: 43/44 still PENDING (scores ~12:40-13:10Z), so a pre-score log is still possible.
+- Sources: round15/scan_hyp_finals_public.json (R15FP-1..8); CONTEXT.md l.2407-2425 (L9: ties -> class A, fewer knobs, EARLIER submit), l.2502-2525 (R12-A3), l.2789-2813 (D1 04:58Z dc0.30 -0.005; 04:59Z rungs class C; 05:28Z submits 43 56598763 at 05:28:13Z, 44 56598765 at 05:28:22Z; forks 96/88 vs K2 75).
+- research/wf_ideas_v4/reach0955/r_ladder.json: public history sjlee DC 0.15/0.20/0.25 all tied 0.946-0.947 (I-018) -> prior favours a flat public curve below 0.25; lab plateau rule already existed (FINAL_REPORT_v4 App. A L1 'pass_noncontrol_plateau'); K3b DC t* closed.
+- Code: experiments/ext_corwin-biocel-aux/cell06_ker11_keep.py l.1296-1318: DC threshold is a VETO on safe-div candidates, then greedy with caps -> fork sets ~nested (dc0.20 = dc0.225 + band [0.20,0.225), up to greedy slot swaps). So 43 is not an independent replicate of 44: '44 >= 0.955 and 43 <= 0.953' only says band [0.20,0.225) hurt, which is a band 44 does not contain.
+- Asymmetry: 44's upper neighbour is K2 dc0.25 = 0.954 (already a >= 0.954 neighbour); 43's lower neighbour (0.175) is unscored. Clause as written tests only 43<->44.
+- 3dp quantisation: K2 0.954 display; neighbour 0.953 vs 0.954 can be a 1e-5..1e-4 difference; the clause flips on a rounding boundary.
+- Winner's curse not fixed: plateau still picks the max display; the two files share ~88 of 96 forks, so a plateau is not two confirmations; P(transfer) 0.4 vs 0.6 is a guess (I-092 false precision).
+- Conditional value: binds only if (user letter b/c before scores) x (one of 43/44 >= 0.955) x (other <= 0.953). Rough: 0.3-0.5 x 0.3-0.4 x ~0.3 -> ~0.03-0.06; times +1e-4..3e-4 -> E ~ +3e-6..2e-5. Default (a) makes it moot.
+- Tie -> 44 contradicts L9's written tie order (earlier submit -> 43, 9 s earlier); both one knob. Fine if written as class-C-specific, but it is a new tiebreak, not L9.
+- Feasibility: rule only, runtime 0, byte-identical trivially, fits R8 (not a mechanism), must be logged before 12:40Z. No blocker.
+- Verdict: refuted on value (mechanism argument broken by nesting + asymmetry + rounding; gain ~0). Harmless as a conservative extra filter.
+- 05:55Z JSON written (refuted=true).

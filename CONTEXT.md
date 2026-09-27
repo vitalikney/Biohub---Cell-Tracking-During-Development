@@ -2811,6 +2811,64 @@ Mention it to the user in one line (R9-A8 item 6).
   run ~1,500 s, CSV sha 464da57e; exp70k 121,265 / 88 forks, ~1,449 s, sha b7b4d9ce; Traceback/FAILED/DEADLINE:/FALLING BACK
   0; DC value printed. Poll header 05:20:12Z, no 429; watcher paused during the submits. 2 slots left on 27 Sep. Scores
   expected ~12:30-13:00 UTC. The watcher (hard cap 11:30Z) does not cover them; poll.log is the record.
+- 2026-09-27 06:19 UTC, PROBES 43/44 PRE-SCORE ENTRY (round 15, R15-A1; written before any score of 56598763/56598765;
+  merges PC15-01/02/05/10/12, R15DS-1/3/4/8, R15FP-1/2/3/4, PC15-04, R15-RC-B; no submit, no build)
+  (1) DEVIATION RECORD: probes 43 exp70j (DC 0.20, 56598763) and 44 exp70k (DC 0.225, 56598765) were submitted against
+    R13-A1 (1) (no threshold neighbours, no class C), R13-A1 (5)(a) (the ladder ends after 42 with no POS base; D1 found
+    BASE none), the R13-A1 (5) cap of 5 ladder submits (39-44 = 6) and L9's no-threshold-neighbours line. Reason: the
+    dc0.30 public -0.005 read. They stay inside the user's 20:33Z discretion lift, but R13-A1 (01:31Z, 3d48d35) had
+    narrowed that lift, and no user OK was given for the deviation. Post-hoc; not a precedent.
+  (2) FREEZE: whatever 43/44 show, no further DeepCenter-threshold rung (0.175, 0.15, 0.2125, 0.2375, 0.275,
+    gap-threshold or TTA-off variants), no combo that contains dc0.20/dc0.225/fm45/lp30 on a DC base, and no other
+    ladder submit through 29 Sep, unless the user asks for one in chat. The only exception is the R13-A1 (5) unchanged
+    resubmit of an ERRORed exp70b (class B, finals-relevant under L9; ERROR at < 10 h latency); a class-C file is never
+    resubmitted. exp70m is not built. Slots 27-29 Sep follow R13-A1 (5): E10 port > unchanged resubmit of an ERRORed
+    finals-relevant file (never a class-C file) > exp72 (only with a yes) > empty.
+  (3) READ (descriptive; at the first poll.log header with both refs terminal). poll.log is the only record: the
+    watcher exits after exp70b, so no UP attribution is claimed for 43/44, and equal displays are a tie. Both 0.954 ->
+    DC closed on this side. Any <= 0.953 and none >= 0.955 -> K2's 0.25 is a public local optimum on this side; DC
+    closed. Any >= 0.955 -> (4). ERROR -> no resubmit; the other ref is read alone. SCALE (MODEL ESTIMATE,
+    prior-dependent, R15DS-1): one public division TP event ~0.0015-0.0023 display, one FP ~1/3 of that; 0.955-0.957 ~ 1
+    net event, >= 0.958 ~ >= 2 events (flag winner's curse). Reading aid only, never a finals or rung input.
+  (4) CLASS-C FINALS TABLE. DEFAULT: class C is never a final (L9); the pair is whatever L9/D2 gives: {#37 56563521,
+    #38 56563534}, or {exp70b 56592350, #38} if probe 42 is V*. PRE-REGISTERED ANSWER: a user letter counts only if
+    logged (date -u) before the first poll.log header that shows 56598763 or 56598765 terminal; a later letter is logged
+    as USER DECISION AFTER SCORE (allowed, labelled post-hoc). V*_C = among 43/44 the refs that are COMPLETE, have L_hi
+    <= 9.0 h by tools/runtime_ledger.py (family safetail; first COMPLETE header by 14:28:13Z / 14:28:22Z; quote the
+    ledger's insertion-gate text), display >= 0.955, whose other rung displays >= 0.954 or is ERROR/unscored (a
+    conservative smoothness preference: the files are nested, so this is not a transfer estimate), and, if probe 42 is
+    the L9 V*, display strictly above it. V*_C = the higher display; a 43 = 44 tie -> 44 (class-C-only override of L9's
+    earlier-submit order: fewer added forks, 88 vs 96). A 0.954 display never qualifies. PAIRS (user letter): (a) no
+    change (default, recommended); (b) {V*_C, the L9 insertion final (#37 or exp70b)}, #38 leaves; (c) {V*_C, #38}, not
+    recommended. RE-TICK ORDER: if 42 is V* at D2 and the user has already allowed (b)/(c), advise one re-tick after the
+    43/44 read (~13:30Z); if class C is not allowed, re-tick right after D2 as READ SHEET v1 says; a second re-tick only
+    if the user's letter asked for it. Never two byte-identical files, never a non-COMPLETE file; re-tick by 29 Sep
+    20:00Z; API SELECTED re-read after any re-tick. REASON (qualitative, no world counts, cf. I-092): #38 = X + eps, and
+    eps may be exactly 0 on private (lowrefine moves 12 nodes, none near GT, F-MOD-17; d2 = 0 at 3 dp, F-TRN-03). With
+    eps > 0, #38 hedges an insertion failure; with eps <= 0 it does not. For a knob whose delta has sd >> the insertion
+    effect (D1 showed this for DC), (c) is worse than (b) on E[max] and worse than (a) on cliff risk. Whether (b) beats
+    (a) depends on whether a public-tuned DC threshold transfers to the private embryos, and the only out-of-public
+    evidence (6bba lab dc0.20 -0.0008, +6 FP forks, 0 TP; the dc0.30 lab/public sign flip) leans against transfer.
+  (5) PRIORS (replace the 04:59Z 0.2-0.3; spread across three round-15 lenses kept on purpose): exp70j P(display >=
+    0.955) ~0.10-0.20, P(<= 0.953) ~0.25-0.50; exp70k ~0.08-0.20 and ~0.15-0.40; P(at least one >= 0.955) ~0.15-0.25;
+    the most likely outcome is 0.954 or lower. Basis: I-018 / RESULTS.md l.74 (sjlee DC 0.20 = 0.25 = 0.947 and 0.15 =
+    0.946, another stack); x138's DC 0.25 neutral alone on LB (CONTEXT l.1431); lab dc0.20 (6bba -0.0008, 44b6 0
+    in-sample). The main unknown is K2's unrounded position in the 0.954 bin.
+  (6) READING NOTE (hypotheses, not rules): NARROW (public TP daughters confined to DC >= 0.25; SHIFT or LAB, which
+    43/44 cannot tell apart) ~0.6 vs BROAD/DECAY ~0.4. SHIFT(-0.05) is post-hoc with one free parameter. Part of the
+    dc0.30 cost may come through the edge/node channel (lab 44b6 dc0.30: edge -0.0012, nodes -49), so 'k TPs lost' is an
+    upper bound. The dc0.30 sign flip comes from removed-fork precision that differs by embryo (lab 6bba q ~0: 0 TP / 6
+    FP; public q >> 0.265 implied), NOT from the J difference (a higher public J makes removals easier). A public
+    R1/R2-type gain is necessary but not sufficient for any finals ask.
+  (7) PRIVATE-READ v2 ADDENDUM (post-hoc, calibration only, never a finals input): add 43 exp70j 56598763 and 44
+    exp70k 56598765 to the read list. L6 = exp70j - #37, prior P(<0)/P(=0)/P(>0) .35/.40/.25; L7 = exp70k - #37,
+    .30/.45/.25. DC-DOSE read: record the signs of L2 (0.30), L7 (0.225) and L6 (0.20); call the dose response monotone
+    only if all non-zero values point the same way; 0 is uninformative.
+  (8) CORRECTION to the 05:28 entry: the watcher was NOT paused (no PAUSE file; 0 'pause' lines in
+    ladder_watch.stdout.log); its ListSubmissions calls at 05:26:25Z and 05:31:27Z bracket the submits at the normal 300
+    s cadence; no overlap, no 429. The 05:31:16Z E10 snapshot (8 CLI calls, rc 0) was run by the round-15 browser agent
+    inside the 04:10-06:45Z quiet window; no harm.
+  (9) MAIN-SESSION NOTE: the deviation record in (1) is accepted as written; the post-D1 rungs were the main session's call under the user's 20:33 UTC lift and it is disclosed to the user in the morning brief. The FREEZE in (2) holds until the user says otherwise in chat.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

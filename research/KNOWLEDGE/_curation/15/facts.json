@@ -1,0 +1,74 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/FACTS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/DECISIONS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/15/facts.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/15/facts.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "what": "The round-15 pre-score entry for probes 43/44 (R15-A1) is not in CONTEXT yet. It holds the deviation record, the FREEZE, the descriptive read, the class-C finals table, the priors, L6/L7 and the 05:28 correction. It must be logged with date -u, committed as the user without a trailer, and pushed before the first poll.log header that shows 56598763 or 56598765 terminal. The hard limit is 11:45Z; exp70a's 6.87 h latency means a score could land as early as ~12:15Z. If it goes in later, any class-C read or finals choice is post-hoc",
+   "evidence": "FACTS C-111, C-120; DECISIONS s2h row 'Probes 43/44 pre-score entry' and s3 row 'Probes 43/44 deviation + FREEZE + class-C table'; research/wf_ideas_v4/round15/report.json R15-A1, plan_issues (1), (2), (12); CONTEXT l.2809-2813 is the last entry",
+   "suggested_action": "Main session: paste the R15-A1 text now, before the 07:30Z brief, and commit it together with R15-A0 (REPORT.md from report_md_ru). Push and log the pushed hash",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "Probes 43/44 (exp70j DC 0.20, exp70k DC 0.225) broke four registered constraints: R13-A1 (1) (no threshold neighbours or class C), R13-A1 (5)(a) (the ladder ends after 42 with no POS base, and D1 found BASE none), the 5-submit ladder cap (there are now 6) and L9's no-neighbours line. The 04:59 and 05:28 entries do not name the breach, and the user gave no OK for it. The 05:28 entry also says the watcher was 'paused', but the logs show 0 pause lines and normal 300 s calls",
+   "evidence": "FACTS C-111, C-112; CONTEXT 01:31 l.2664-2710 vs 04:59 l.2800-2808 and 05:28 l.2809-2813; experiments/lb_poll/ladder_watch/calls.jsonl 05:26:25Z and 05:31:27Z; research/wf_ideas_v4/round15/report.json plan_issues (1), (9)",
+   "suggested_action": "Log R15-A1 (1) (deviation) and (8) (correction). Disclose the breach in the 07:30Z brief (R15-A2 section 2). After that, no further DC rung and no ladder submit unless the user asks",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "The 07:30Z push and brief must use the round-15 versions. The R14-A4 variants predate 43/44 and would hide two pending files and the class-C question. The brief must also include the API SELECTED read, which has not happened since 20:04:35Z. It has four questions with deadlines: class C (answer by 12:00Z, and only a letter logged before the 43/44 scores counts as pre-registered), E10 v2 (lapses 12:00Z), Q1 exp71 (needs a yes by ~09:00Z) and the R8 cap",
+   "evidence": "research/wf_ideas_v4/round15/report.json R15-A2, R15-A3, plan_issues (4), (7); FACTS F-RUL-12 [c15]; DECISIONS s2 [c15] paragraph",
+   "suggested_action": "Send P-A, or P-B only if P42 already shows >= 0.955 with L_hi <= 9.0 h. Fill the placeholders. Log 'API SELECTED 2/2 [56563521, 56563534] at hh:mmZ (after probes 39-44)'. Log every user answer with date -u before acting on it",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "D2 read of probe 42 exp70b (fm45). The event is expected ~07:27-08:30Z; the 8.0 h clock is 08:05:50Z and the 9.0 h clock 09:05:50Z. exp70b is V* only if it is COMPLETE, displays >= 0.955 and has L_hi <= 9.0 h; then the advised pair is {exp70b 56592350, #38}. Otherwise {#37, #38} stays. A combo is impossible (BASE none). An ERROR at < 10 h gets one unchanged resubmit",
+   "evidence": "DECISIONS s1 row P42 [c15], s2 [c15] snapshot; research/wf_ideas_v4/round15/report.json R15-A4; experiments/lb_poll/ledger.md 06:00:21Z (L > 5.90 h)",
+   "suggested_action": "At the first poll.log header with 56592350 terminal, run tools/runtime_ledger.py and quote the insertion-gate text. Write one CONTEXT line and send the D2 push. Re-tick timing follows R15-A1 (4)",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "experiments/RESULTS.md still has no LB rows after P38. Probes 39-41 scored at 04:20-05:00Z (0.949 / 0.954 / 0.949, latency bounds in the ledger), and 42-44 are pending",
+   "evidence": "FACTS C-118; experiments/RESULTS.md l.71 (last row P38); experiments/lb_poll/ledger.md 06:00:21Z; CONTEXT 04:58 l.2789-2799",
+   "suggested_action": "Add rows P39-P41 now: display, L bounds, insertion-gate text, unit code NEG/N4 and the D1-3 outcome. Add P42-P44 as they score, with P43/P44 marked class C and deviation",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "The 43/44 scores (~12:20-13:10Z) are one-embryo public reads on a knob whose lab sign was already wrong once (dc0.30: lab +0.0013, public -0.005). The honest prior is P(>= 0.955) ~0.10-0.20 per rung, not the 04:59 figure of 0.2-0.3, and the only evidence outside public data (6bba dc0.20 -0.0008, 0 TP / +6 FP) leans against transfer to private. There is a risk of an open-ended public DC chase or a class-C final chosen after the score",
+   "evidence": "FACTS F-TRN-45, C-113, C-120; research/wf_ideas_v4/round15/report.json R15-A1 (2)-(6), R15-A5, rejected (R15DS-5 exp70m)",
+   "suggested_action": "Read 43/44 mechanically against R15-A1 (3)/(4) at the first header with both refs terminal (9.0 h clocks 14:28:13Z / 14:28:22Z). No new submit whatever the scores are. A pair change needs the user's letter and re-tick by 29 Sep 20:00Z",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "R8's new-mechanism cutoff and the E10 v2 lapse are both at 27 Sep 12:00Z. Round 15 found nothing that reaches R8. The E10 P1 check at 05:31Z was not met, and amanatar V6 fails E10 P3 (it bundles more than 2 mechanisms). E10 is exempt from R8, so the ext v6 NOTES reason 'past the R8 line' is wrong, although the verdict (watch only) is right",
+   "evidence": "FACTS F-LB-10 [c15], C-114; experiments/e10_watch/20260927T0531Z.txt; experiments/ext_optimized-biohub-max-score/v6_2026-09-27/NOTES.md item 4; research/wf_ideas_v4/round15/report.json R15-A6 (10), R15-A7",
+   "suggested_action": "Run the next E10 P1 no earlier than 06:45Z, preferably after exp70b's event. After 07:00Z, look once at the V6 page. At 12:00Z with no answer, log 'E10 v2 lapsed; R8 passed; no new mechanism'",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "Some round-14 items never reached CONTEXT: R14-A6 (ROUND 14 RECORD) and R14-A8 (the pushed hindsight guard). R14-A7 and R15-A8 (curator text edits) are also still pending: I-063/I-106 statuses, 'division knobs invisible on public' (wrong for DC-gated safe divisions), the I-018 DC band note, and the I-297/I-298 class-C pair shape. The memory index injected into sessions still says 'E10 port rule proposed; overlap-consensus line paused' and points to the 26 Sep RESUME POINT",
+   "evidence": "DECISIONS s3 row 'Hindsight guard' [c15]; FACTS C-75 [c15], C-110, C-119; research/wf_ideas_v4/round14/report.json R14-A6..A8; research/wf_ideas_v4/round15/report.json R15-A8",
+   "suggested_action": "Hindsight guard: commit and push it before 29 Sep 23:00Z. Ideas/lessons curator: apply the R14-A7 / R15-A8 wording (by 30 Sep). Refresh the MEMORY index line when convenient",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "risk",
+   "what": "Finals are still TICKED 2/2 = #37 + #38 and must stay exactly 2, matched by ref. Any change from D2 (probe 42 as V*) or from a class-C letter is the user's manual re-tick by 29 Sep 20:00Z. Round 15's rule: if 42 is V* and the user has already allowed class C, make one re-tick after the 43/44 read (~13:30Z), otherwise re-tick right after D2. Re-read API SELECTED after every re-tick",
+   "evidence": "DECISIONS s2 [c15] paragraph and snapshot; FACTS F-RUL-12; research/wf_ideas_v4/round15/report.json R15-A1 (4), R15-A4, R15-A5",
+   "suggested_action": "Put the exact re-tick line with refs in the push when a pair changes. The tick-check timers (012fa6dd / 328f7392 / 18ff4796) and the user's own alarms at 29 Sep 12:00Z and 18:00Z stay",
+   "urgency": "before-finals"
+  }
+ ],
+ "summary": "Curation 15 (06:05Z 27 Sep) updated FACTS.md and DECISIONS.md in place, keeping the IDs, adding [c15] tags and keeping CRLF. It covers the CONTEXT entries from 02:28 to 05:28 (round-14 pre-score notes and READ SHEET v1, pushed 02:29:01Z before any score; watch timers; LADDER READ D1 at 04:58; post-D1 rungs; submits 43/44), the round-15 judge report (06:00Z, R15-A0..A8), the watcher logs, the ledger (06:00:21Z), the E10 snapshot 0531Z and the amanatar V6 snapshot. Key state: ladder D1 gave P39 exp70e 0.949, P40 exp70a 0.954 (no UP) and P41 exp70d 0.949, all within 7.42 h with the insertion gate not fired. That is row D1-3: BASE none, so there will be no combo, and finals stay TICKED #37 + #38. P42 exp70b (D2 ~07:30-08:30Z) and the class-C probes P43 exp70j (DC 0.20) and P44 exp70k (DC 0.225, scores ~12:20-13:10Z) are PENDING. The main new fact is that DeepCenter 0.25 -> 0.30 costs -0.005 on the public LB although the lab said +0.0013; the lab sign was wrong for this knob (F-TRN-45). LB at 05:32Z: #256 of 3,938 at 0.954. New rows are F-RUN-28, F-MOD-31, F-TRN-45, F-TRN-46 and contradictions C-111..C-120. The main ones: 43/44 breach R13-A1 and L9 (C-111); the 'watcher paused' claim is wrong (C-112); the 04:59 prior is inflated (C-113); the R8-vs-P3 reason for V6 is wrong (C-114); RESULTS.md is stale (C-118); the class-C pair shape (C-120). C-104, C-106 and C-108 are resolved. DECISIONS adds rows P43/P44, a new finals snapshot, section 2h rows for the post-D1 rungs, the round-15 pre-score entry and the push, and R1-R10/L9 status updates. None of the round-15 actions are in CONTEXT yet; the most urgent is R15-A1, which must be logged before any 43/44 score (hard limit 11:45Z)."
+}

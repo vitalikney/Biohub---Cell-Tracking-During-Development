@@ -1,0 +1,11 @@
+# PC15-04 plancheck notes (2026-09-27T05:47:15Z)
+- 05:50Z: no prior answer file. Sources checked:
+  - CONTEXT.md l.2800-2807 (04:59Z entry): prior P(>=0.955) ~0.2-0.3, P(<=0.953) ~0.3 per rung; cites only lab dc0.20 (44b6 0.0000, 6bba -0.0008, +6 FP forks). No I-018 citation. CONFIRMED omission.
+  - experiments/RESULTS.md l.74: sjlee single-knob forks, public: dctta020-sectta1 0.947 vs dctta025-sectta1 0.947 (clean DC 0.20 vs 0.25 pair, same sectta1); dctta-v015 0.946 vs base v020 0.947.
+  - IDEAS.md l.193 I-018 (lb-tested, ties 0.946-0.947); l.168 I-304 and reach0955/r_ladder.json L2-exp70d already cite I-018 for dc0.30 (prior then 0.15-0.25; outcome -0.005).
+  - ext_x138/DIFF.md l.66: x138 DC 0.25 vs our exp48 0.20; CONTEXT l.1431: x138's DC 0.25 'neutral alone on LB' (another 0.20~0.25 flat signal).
+  - Reproducibility: ~330 exact x138 copies at 0.953 -> x138 family near-deterministic at display res; sjlee verbatim reproduced 0.947 (probe 14). takaito's 0.004 run gap is a different stack.
+  - Caveats: (a) prior depends on K2 unrounded position in the 0.954 bin (unknown; team 12th of 95 in-block at 16:20Z 26 Sep hints upper half -> needed delta maybe +0.0003..0.0008); (b) K2 differs from sjlee stack (flow relink, gapfill, insertion with steal) so transfer of flatness is approximate; (c) '-0.005 says nothing about <0.25' overstated: it says the public TP density at DC 0.25-0.30 is high, sjlee says 0.20-0.25 is ~break-even; (d) exp70k (0.225) is a half-band -> smaller |delta| both ways; rungs nested -> correlated.
+  - Rough calc: delta ~ N(-0.0003, 0.0008-0.001), need +0.0003..+0.0008 -> P(>=0.955) ~0.08-0.27; central ~0.12-0.18. P(<=0.953) ~0.25-0.4 (exp70j), lower for exp70k.
+  - Time 05:49Z: Q4 brief goes in the 07:30Z push -> timely. Doc-only change; no rule/feasibility issue.
+- 05:55Z: final JSON written (refuted=false, amended numbers).

@@ -1,0 +1,10 @@
+- 2026-09-27T05:47:12Z start PC15-03 check; no prior json
+- 05:50Z read CONTEXT l.2600-2834: 04:59 entry says class C 'asked in the morning brief'; 05:28 submits 43/44 (56598763/56598765), scores ~12:30-13:00Z.
+- round14/report.json R14-A4: P-A/P-B/P-C push texts, none mention 43/44 or class C (written 02:28Z, before 04:59 rungs). Confirmed gap.
+- Facts check: dc0.30 public -0.005 (CONTEXT 04:58); 6bba lab +0.00131 (round13 record (5)); dc0.20 lab 6bba -0.0008 +6 FP forks TP unchanged, 44b6 0.0000 (04:59) - all match.
+- I-018: experiments/RESULTS.md l.74: sjlee dctta020-sectta1 0.947 vs dctta025-sectta1 0.947 (single-knob DC tie), dctta-v015 0.946. Different stack (Harmonic Fusion sjlee, not x138) -> say so.
+- 'carries over more weakly than any other knob' = unsupported superlative; soften.
+- P-A' length: 167 raw, 176 with 'ждём ~08:30Z', 169 with a score -> < 200 OK.
+- No 'push sent' in CONTEXT yet (07:30Z timer 65b1b746 pending) -> actionable in time.
+- Verdict: not refuted; minor wording fixes + include PC15-04 prior + answer-needed-before-scores.
+- 2026-09-27T05:48:25Z wrote v_plancheck_pc15-03.json (refuted=false)

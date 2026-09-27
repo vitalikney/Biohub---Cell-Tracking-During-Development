@@ -1,0 +1,16 @@
+# scan_hyp_finals_public notes (round 15)
+- 2026-09-27T05:31:03Z started; round15 folder created; no prior JSON.
+- 05:35Z read CONTEXT l.2407-2834 (L9 20:49Z, R12-A3 21:31Z, R13-A1/A3, R14 sheet, D1 04:58Z: 39 e 0.949 NEG, 40 a 0.954 NEU no UP, 41 d 0.949 NEG; pair stays {#37,#38}); probes 43 exp70j DC0.20 56598763 / 44 exp70k DC0.225 56598765 submitted 05:28Z, class C unless user allows; scores ~12:30-13:00Z.
+- ledger.md 05:30:14Z: probe 42 exp70b 56592350 still PENDING (L > 5.40 h).
+- dummy forks: K2 75, dc0.30 55 (-> public -0.005), dc0.225 88, dc0.20 96 (CONTEXT 05:28Z entry).
+- round14 report.json R14-A4 = push variants P-A/P-B/P-C; brief template round14/scan_hyp_d1_sheet.json R14D1-6.
+- IDEAS FINALS section: I-296 L9, I-297 insertion hedge, I-298 {V*,#37} REFUTED by round-12 judge, I-092 MC calculator refuted (false precision), I-310 threshold neighbours refuted as rungs.
+- 05:45Z poll.log last header 05:30:14Z: 39 0.949, 40 0.954, 41 0.949 COMPLETE; 42/43/44 PENDING. watch.log events 04:13/04:31/04:56Z, UP test FAIL, rank 242->253->255.
+- e10_watch/20260927T0531Z.txt: 3,938 teams; we #256 at 0.954, 17th of 102 in 0.954 block (240-341); 0.955 block 72 (168-239); 0.956 44 (124-167); >=0.955 239 (+13 since 01:47Z); 0.953 block 382 (342-723); P2 largest group 2 -> E10 not met; amanatar RUNNING->COMPLETE (no page change known).
+- FACTS F-MOD-17: lowrefine effect ~1e-5 (12 same-frame pairs, none near GT); F-TRN-03 lowrefine+safetail invisible at 3dp (d1=d2=0). => #38 = X + eps, eps tiny, sign ~coin flip -> #38 hedges the insertion only in the eps>0 half.
+- scratch finals_arith.py (illustrative, NOT a rule; cf. I-092): O3 {#37,#38} lowest cliff prob in all 12 worlds (0.06-0.11); O1 {V*,#38} cliff 0.074-0.209 and worst E[max] in adverse worlds; O2 {V*,#37} highest E[max] in 11/12 worlds (+0.2..+0.8e-3 vs O3), cliff 0.06-0.20 (worse than O3 when rho(i,d)=0.5 or pneg 0.2). O1 dominated by O2 in 9/12 worlds.
+- 05:40Z push P-A draft 158 chars (with {B} placeholder); P-B (42 = V*) 163 chars.
+- L_hi clocks 43/44: 8.0 h -> first COMPLETE header by 13:28:13Z / 13:28:22Z; 9.0 h -> 14:28:13Z / 14:28:22Z. Expected score ~12:40-13:10Z (K2 latency 7.36-7.54 h).
+- Rejected this round: more DC rungs (0.175; dc0.20+fm45), 'twin + dc0.20' to restore the hedge (hedges i not d; class C twice; ~7.5 h), in-block rank as a class-C criterion (I-230: info only).
+- 05:50Z CORRECTION of the 05:45Z line: O3 cliff lowest or within 0.01 of lowest in 12/12 (world pneg0.2/transfer/rho0: O1 0.099 < O3 0.108); O1 cliff above O3 in 10/12; O1 dominated on BOTH metrics in 8/12 (by O2 in 6, by O3 in the 4 adverse worlds), never best on both; O2 top E[max] 11/12.
+- 05:52Z JSON written: research/wf_ideas_v4/round15/scan_hyp_finals_public.json (8 findings; brief + question + context entry inside).

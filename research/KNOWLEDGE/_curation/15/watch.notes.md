@@ -1,0 +1,4 @@
+- 2026-09-27T06:01:58Z start round 15 watch; no prior watch.json in 15
+- 2026-09-27T06:03:51Z read CONTEXT l.2750-2813 (R14 prescore 02:28, READ SHEET v1, WATCH TIMERS 02:29, D1 04:58, post-D1 04:59, submits 43/44 05:28); round15/report.json complete 06:00Z (R15-A0..A8); origin/main=da9766e (all pushed); RESULTS no rows 39-41; probe.json no scores; round prompt js unchanged 13a27a1 -> round15 browser ran E10 snapshot 05:31Z inside quiet window (W150 materialised, no harm); CronList still lists 5b23a3ed/54a8f20d (due 04:21/05:21Z)
+- 2026-09-27T06:04:34Z statuses decided; writing WATCHLIST (new W151-W157, T68-T75, I149-I159)
+- 2026-09-27T06:07:47Z WATCHLIST.md (line cites fixed) and watch.json written (complete). No other file touched.

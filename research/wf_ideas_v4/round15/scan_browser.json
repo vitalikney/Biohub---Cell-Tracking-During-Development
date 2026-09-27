@@ -1,0 +1,53 @@
+{
+ "summary": "Round-15 delta scan, 05:31-05:45 UTC 27 Sep, compared with round 14 (01:47 UTC). E10 P1 snapshot experiments/e10_watch/20260927T0531Z.txt has CHANGES=16. The only kernel change is amanatar/optimized-biohub-max-score going RUNNING->COMPLETE. The P2 look-check's largest identical-score group is 2, under the >=5 signal, so there is NO P2 signal and tools/e10_port_gate.py was not run. x138 (anvithpothula/biohub-0-953-lb-original) is still COMPLETE and unchanged. Public LB at 05:32:02Z: 3,941 CSV rows (API 3,938). We are #256 (r14 #242; the watcher saw #255 at 04:56Z) at 0.954, SubmissionCount 43, 17th of 102 in the 0.954 block (240-341). 14 teams passed us: Timass jumped 0.951->0.960, Sam Barnett and Arunava Nag reached 0.957, and the rest reached 0.955-0.956. Counts (r14 in brackets): 0.953 = 382 (380), 0.954 = 102 (97), 0.955 = 72 (68), 0.956 = 44 (41), 0.957 = 22 (20), 0.958 = 15 (14), 0.959 = 15 (14), >=0.960 = 71 (69), >=0.970 = 7, >=0.953 = 723 (703). Top-20 movers: umizora 0.956->0.966 (#157->#18) and 'que la cuenten como quieran' 0.964->0.965; yu4u still leads at 0.978. amanatar's notebook is now 'Version 6 of 6', a 16m41s successful run. It is an x138 fork labelled 'grandmaster_v4_iterative_flow' with a '0.965+' claim, but no V6 public score is shown (best is still 0.953 V4). It carries new code: a calibrated max-consensus secondary blend and a 3-frame lookahead that nearly switches off the safe-division divergence gate. It was pulled to experiments/ext_optimized-biohub-max-score/v6_2026-09-27/ as watch-only; it is not portable under R8. No new discussion topic and no host announcement. New comments are OmerZalman 'im stuck at 0.957 do you have any tips?' plus two spam comments. Overview, timeline, rules, metric and data are unchanged. Submissions are at 88,528 (+333, ~90/h). Nothing public scores above 0.953. The finals (#37 + #38) are unaffected.",
+ "findings": [
+  {
+   "id": "r15-e10-p1-snapshot",
+   "kind": "new-fact",
+   "what": "E10 P1 snapshot at 05:31Z against 01:47Z: CHANGES=16. Kernels: amanatar/optimized-biohub-max-score STATUS RUNNING->COMPLETE. amanatar also has a new non-Biohub kernel (rsna-knee), which is irrelevant. There is no change in the comp dateRun/scoreDescending top 20, the anvithpothula and thtennant lists, or the x138 status. LB: >=0.955 226->239, >=0.960 69->71, OURS 242->256. P2 look-check (teams now >=0.956 that were <=0.953): 0.960: 1, 0.957: 2, 0.956: 2, so the largest group is 2, under the >=5 signal. E10 is NOT triggered and the port gate was not run.",
+   "evidence": "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/experiments/e10_watch/20260927T0531Z.txt",
+   "action": "None. The next P1 should read whether amanatar V6 gets a public score (see r15-amanatar-v6).",
+   "urgency": "info"
+  },
+  {
+   "id": "r15-amanatar-v6",
+   "kind": "new-fact",
+   "what": "https://www.kaggle.com/code/amanatar/optimized-biohub-max-score now shows 'Version 6 of 6', 16m 41s on GPU T4 x2, '1001.0 second run - successful'. Its inputs are now x138's four datasets (DeepCenter prior, TemporalUNet3D seed314159, Tracking Support Pack, anvithpothula/biohub-v1284-head-s075). Best Score is '0.953 V4'. No V6 public score is visible, so we cannot tell whether V6 was submitted. The code is an x138 fork with the preset 'grandmaster_v4_iterative_flow' and the label '0.965+ grandmaster multi-horizon flow + quantile-consensus ensembling'; the 0.965+ is an author label with no evidence.\nKnob changes vs x138:\n- DET_THRESHOLD 0.965->0.960\n- GAP_CLOSE_UM 5.0->5.8\n- SAFE_DIV_MAX 9->10.5, SISTER_MAX 14->15, DIVERGE 2.25->1.50\n- FRAME/GLOBAL caps 0.0076/0.00375 -> 0.012/0.006\n- short-track rescue len 4->3 and prob 0.88->0.85\n- dual-seed retention 0.90->0.75\nNew code:\n- The secondary detection logits are z-score calibrated to the primary, then blended_det = max(primary, linear blend).\n- The safe-division divergence gate is replaced by a 3-frame lookahead. It accepts if sister_dist >= 4.0 um or any step_dist >= 2.80 um, which makes the gate nearly off, so there are many more safe divisions.\nThe validator and PP-sweep cells are unchanged from x138.",
+   "evidence": "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/experiments/ext_optimized-biohub-max-score/v6_2026-09-27/ (NOTES.md, diff_x138.txt, notebook sha256 e6c3f729...); CLI kernels status = COMPLETE",
+   "action": "Watch only. Do not port: it is a public knob bundle plus new code with no lab gate, and the R8 12:00Z line (lab + dummy + new user OK) is not reachable, so it goes on the post-deadline list. If V6 ever displays a public score, log it as a confounded public read on the 'more safe divisions' direction that probes 43/44 (DC 0.20/0.225) are testing. A score >= 0.956 from it would still need E10 P3/P4b/P4c before counting.",
+   "urgency": "info"
+  },
+  {
+   "id": "r15-lb-delta-0532",
+   "kind": "new-fact",
+   "what": "Public LB at 05:32:02Z: 3,941 CSV rows. We are #256 (r14 #242), 0.954, SubmissionCount 43, LastSubmissionDate 26 Sep 21:38:33 (exp70d), 17th of 102 in the 0.954 block (240-341). Probes 43/44 (submitted 05:28Z) are not scored yet, as expected.\nBlocks: 0.957 = 102-123 (22), 0.956 = 124-167 (44), 0.955 = 168-239 (72), 0.953 = 342-723 (382). The public silver line is 197.05, so we are 59 ranks below it (info only). 44 teams changed score and 181 have new subs.\nThe 14 teams that passed us:\n- Timass 0.951->0.960 (#725->#66)\n- Sam Barnett 0.953->0.957\n- Arunava Nag 0.947->0.957\n- oreomori 0.953->0.956\n- Revanth Tambisetty 0.949->0.956\n- ikevayansky, Gronk and Suncrest 0.953->0.955\n- dddkk0 0.949->0.955\n- shingo257 0.946->0.955\n- Sailor Ren and TK BTW 0.954->0.955\n- Jackson Bom and KHitomi 0.953->0.954 (above us inside the block)\nTheir subs were at 19:33-23:05Z on 26 Sep. A new x138-copy window of about 20 teams sits at the 0.953 tail (#701-723), with subs at 19:28-22:34Z. No mover has a public source.",
+   "evidence": "Scratchpad lb/r15/biohub-cell-tracking-during-development-publicleaderboard-2026-09-27T05_32_02.csv compared with lb/r14/...T01_48_20.csv (cmp10.py, r15/pass.py); C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/wf_ideas_v4/round15/scan_browser.notes.md",
+   "action": "Update the CONTEXT intel line to #256/3,938, 17th of 102 in the 0.954 block. This is info only; the finals stay #37 + #38.",
+   "urgency": "info"
+  },
+  {
+   "id": "r15-top-movers",
+   "kind": "new-fact",
+   "what": "Top 20 (05:32Z): umizora 0.956->0.966 (#157->#18, sub 26 Sep 18:52:52Z; it was 0.952 two rounds ago) and 'que la cuenten como quieran' 0.964->0.965 (#33->#29, sub 27 Sep 00:01Z). The rest are unchanged: yu4u 0.978, Sergio Alvarez 0.975, Gabriel 0.975, a 0.971 group of 4, The Boys 0.969. The latest subs in the CSV: PiD 0.943 05:01Z, jwboost 04:23Z, Majid Aleissa 0.953 03:55Z, Any Things 0.954 03:41Z.",
+   "evidence": "cmp10.py output, r14 01:48:20 vs r15 05:32:02 LB CSVs",
+   "action": "None.",
+   "urgency": "info"
+  },
+  {
+   "id": "r15-discussion",
+   "kind": "new-fact",
+   "what": "No new discussion topic since r14 (under sort=published the top non-pinned topic is still 'Question for host'). New comments:\n- 'A few question for top 100 people?' (https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/742169): topic author OmerZalman (#119), ~01:30Z: 'im stuck at 0.957 do you have any tips?'. No answers. Also spam by MOHAMMED RASHID M.\n- The pinned host topic 'Cell Tracking In-Person Workshop' (https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/738833): spam comment 'Hi hello hi' by Nithish Nithish. The host post is unchanged (workshop in Redwood City, 30 Nov-3 Dec 2026, for eligible prize winners).\nThere is no host announcement and no host reply on 'Question for host'.",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion?sort=recent-comments ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion?sort=published",
+   "action": "None.",
+   "urgency": "info"
+  },
+  {
+   "id": "r15-code-overview-data-unchanged",
+   "kind": "new-fact",
+   "what": "Code tab by Public Score tops out at 0.953: Harmonic Fusion V3 (162 votes), optimized-biohub-max-score (61, 'Updated 4h ago'), Biohub Cell Tracking (224), x138 'Biohub 0.953 LB | ORIGINAL' (207 votes, 3 comments). Next is Geometric Fusion 0.948. Nothing scores above 0.953.\nCLI:\n- dateCreated: newest is still tobimichigan, 24 Sep.\n- dateRun: amanatar 01:39Z; the rest are old.\n- Datasets: only dariushafshar's generic leaderboard-intelligence dataset updated (02:06Z; seen before). Otherwise the newest is still qwyi123, 26 Sep.\nOverview: '3 DAYS TO GO'; the timeline ('September 29, 2026 - Final Submission Deadline', 11:59 PM UTC), the 12 h CPU/GPU limits and the metric text are unchanged. Counts: 13,475 entrants, 4,508 participants (+2), 3,939 teams, 88,528 submissions (+333 since 01:55Z, ~90/h). The Rules page has no update notice. Data files still have creationDate 2026-06-26.",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/code?sortBy=scoreDescending ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/overview ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/rules ; CLI kernels list, datasets list, competitions files",
+   "action": "None. The only pull is the amanatar V6 snapshot (a new idea, watch-only).",
+   "urgency": "info"
+  }
+ ]
+}
