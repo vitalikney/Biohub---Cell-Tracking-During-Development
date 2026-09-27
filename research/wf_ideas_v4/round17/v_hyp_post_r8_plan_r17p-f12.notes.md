@@ -1,0 +1,6 @@
+- 2026-09-27T11:13:38Z start R17P-F12 skeptic (value+feasibility)
+- No prior JSON. Sources: CONTEXT.md l.2917-2937 (11:08Z E10 v3 instruction lifts R8 for copy/port line; 11:09:39Z class-C letter (b); 11:11:40Z Q1+Q2 yes; 11:12Z exp71 pushed 11:11:50Z, ETA 15:15-15:45Z); git log 61e0737 14:08:26+03, 659cef3 14:09:39+03, 5bce47f 14:11:40+03, d1ccc85 14:12:41+03.
+- scan_hyp_post_r8_plan.json mtime 14:09:33+03 = 11:09:33Z -> written from a pre-11:08Z view; F12 says "only an E10 v1 port or a named exp72 yes can add a file" -> stale: E10 v3 supersedes v1; Q2 (exp72 submit) is already a named yes.
+- round16/report.json next_focus already says: research closed after round 18, monitoring+hygiene only, no new mechanism, no DC rung, no model table -> F12 core is a repeat. IDEAS.md l.82 same ('Research closes after round 18').
+- F12 ordering omits the time-critical items: 43/44 read (R16-A1 (3), trigger first both-terminal header or 14:28:22Z) + option-(b) re-tick text; exp71->T3->T5->dummy->exp72 submit; Q3 ask; E10 v3 tooling (research/wf_ideas_v4/e10v3/ build_* notes only) and cadence ('as fast as possible' vs 3 h P1).
+- Value on private: 0 (process note). Verdict: refuted (stale + repeat), with a corrected ordering as fix.

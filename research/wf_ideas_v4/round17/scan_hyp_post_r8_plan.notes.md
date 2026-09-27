@@ -1,0 +1,17 @@
+# scan_hyp_post_r8_plan notes (round 17)
+- 2026-09-27T11:01:08Z start; folder created, no prior json.
+- 2026-09-27T11:01:29Z read CONTEXT l.2599-2937, round14-16 REPORT.md
+- 11:05Z sources read: CONTEXT l.2138-2160 (E10 PORT RULE P1-P8), l.2257-2300 (P4c, P1 check times, private-read predictions), l.2360-2366 (timers 2bd08ad3 hh:04 every 3 h acting 27 Sep 11:30 - 29 Sep 00:30 UTC; tick checks 012fa6dd 28 Sep 17:57Z, 328f7392 29 Sep 11:57Z, 18ff4796 29 Sep 17:57Z; cron in local UTC+3), l.2398-2408 (dry run trigger-to-submit-ready ~45 min, ~60 min with 429), l.2570-2598 (PRIVATE-READ v2), l.2599-2916 (RESUME 22:46Z .. R16-A2).
+- round16/report.json: R16-A3 (12:00Z lapse line text), R16-A4 read, R16-A5/A6 (RESUME POINT by ~15:00Z), R16-A7 (P1 after read, 3-hourly), R16-A8 cards, R16-A9 (e) N954/N955 at tick checks; next_focus: research closed after round 18.
+- round16 v_hyp_answers_prep_r16ap-4: exp72 last yes w/ ERROR room ~28 Sep 08:00Z, last yes ~28 Sep 18:30Z; P(eligible final) 0.01-0.03. r16ap-7: expiry clock verified.
+- NEW FACT e10_watch/20260927T1101Z.txt: kernels no change (5 lists + 2 statuses); >=0.955 254 (+7 vs 08:31Z), >=0.960 82, teams 3,945; we #260 (1+better = 255), 6th of 115 in 0.954 block (255-369); 0.953 block 370-762 (393). -> teams >=0.954 = 369 (360 at 08:32Z -> ~3.6/h). E10 P1 NOT met.
+- NEW FACT poll.log header 2026-09-27T11:01:09Z: 56598763 / 56598765 still PENDING (letter window open); 42 exp70b COMPLETE 0.954.
+- IDEAS.md grep: no timer/poller RESTORE card (grep recreate/restore 0); no tools/private_read.py; experiments/private_read/ does not exist yet; I-336 hindsight guard not committed (curation 16).
+- latency est 43/44: submitted 05:28:13/22Z; K2 7.36-7.54 h, twin 6.69-6.87, exp70a 6.87-7.04, exp70b 7.41-7.58; dummies 1,500/1,449 s (< exp70b 1,740 s) -> expect ~12:20-13:00Z; earliest ~12:10Z.
+- E10 last-trigger arithmetic: last P1 29 Sep 00:04Z; trigger->submit-ready 45-60 min -> submit ~01:05Z < 02:00Z cap; score ~+7.5 h -> ~08:35-09:30Z << 19:00Z L9 read / 20:00Z tick.
+- 11:12Z kaggle CLI check: kaggle_api_extended.py competition_leaderboard_download -> download_file does os.makedirs(dirname) (l.5752-5754), so experiments/private_read/ need not pre-exist; zip name is fixed (<comp>.zip) -> rename after each download (v2 (d) already says so).
+- Considered and rejected: spare-slot 'calibration-only' submits on 28/29 Sep (never finals) to learn private transfer: violates the 06:19Z FREEZE without a chat request; per-file P(non-zero 3-dp contrast) ~0.2-0.5 (L priors), one draw, confounded; read list already 11 files (C1-C5, L1-L7). Not proposed.
+- Nothing reaches R8 (12:00Z, <1 h away): no lab gate + dummy + new OK can complete; every candidate in IDEAS is closed/frozen/post-deadline.
+- Writing final JSON 11:20Z.
+- 2026-09-27T11:09:24Z final JSON written (13 findings): research/wf_ideas_v4/round17/scan_hyp_post_r8_plan.json
+- correction: the earlier '11:20Z' note times were estimates; actual write 11:09-11:10Z (date -u).

@@ -1,0 +1,7 @@
+- 2026-09-27T11:12:28Z start R17P-F7 review
+- 11:13Z read CONTEXT l.2340-2400 (timers 012fa6dd/328f7392/18ff4796 set 26 Sep 17:50Z, session-only), l.2560-2640 (v2 (c): result = max over pair SELECTED at 29 Sep 20:00Z; v2 (d): F = API SELECTED after 20:00Z, first hourly competition_submissions read 30 Sep 00:15Z; RESUME 22:46Z: poller runs until 29 Sep 20:00Z).
+- CONTEXT l.2034-2038 (01:20Z 26 Sep): "Ticks are reversible until the deadline" and "<2 ticked -> Kaggle auto-selects from best public scores". So 20:00Z is a TEAM buffer, not a Kaggle freeze; the Kaggle selection closes at 23:59Z.
+- IDEAS.md I-229 / I-258 (in-plan): API SELECTED == pair, re-check 28 Sep evening, 29 Sep 12:00/18:00Z; IDEAS l.577 already has "read L9 at 19:00Z; user re-ticks by 20:00Z; verify API SELECTED". CONTEXT l.2762: L9 re-read on every new score up to the 29 Sep 19:00Z read. -> only new element = the 20:05Z read.
+- Round16 REPORT l.72: N954 thresholds rejected; R16-A9 = N954/N955 as numbers for the PRIVATE read (by 30.09), not for tick checks.
+- Verdict: duplicate of I-229/I-258 except the 20:05Z read; that read is mislabelled 'FINALS FROZEN' (selection still editable to 23:59Z) and its mismatch branch ('user fixes by 20:00Z') is impossible at 20:05Z. Poll.log freshness check is a pre-submit rule (W6), irrelevant for a tick check, and the poller stops at 20:00Z. Refuted as stated; small fix kept.
+- 11:14:19Z wrote final JSON (refuted=true)

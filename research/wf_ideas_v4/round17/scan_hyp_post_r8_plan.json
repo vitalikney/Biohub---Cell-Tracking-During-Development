@@ -1,0 +1,112 @@
+{
+ "task": "scan_hyp_post_r8_plan (round 17)",
+ "written_utc": "2026-09-27T11:09Z",
+ "complete": true,
+ "summary": "Round 17 scan: the post-R8 operating plan for 27 Sep 12:00Z to 30 Sep.\n\nHonest answer: NOTHING REACHES R8. No mechanism can pass a lab gate, a dummy and a new user OK before 12:00Z, and every IDEAS family is closed, frozen or post-deadline.\n\nNew facts:\n- E10 P1 at 11:01Z is NOT met: 0 kernel changes; >= 0.955 = 254; we are #260, 6th of 115 in the 0.954 block.\n- The 11:01:09Z poll header still shows 43/44 PENDING; expected terminal ~12:20-13:00Z.\n\nDeliverables:\n- F3: a dated master schedule. It runs from the 12:00Z lapse line and the 43/44 read, through the RESUME POINT (by ~15:00Z), E10 P1 at hh:04 every 3 h (last 29 Sep 00:04Z) and the last port submit (02:00Z). Then the tick checks (28 Sep 17:57Z; 29 Sep 11:57Z / 17:57Z), a 19:00Z L9 read, a 20:05Z FINALS FROZEN read, the 23:27Z snapshot, and the private read from 30 Sep 00:15Z.\n- F4: the 43/44 outcome tree and a re-tick matrix by ref.\n- F5: slot plan. Slots are insurance for an E10 port only; expected use ~0.\n- F6: E10 port runbook with time arithmetic; worth ~+0.001-0.006 P(bronze).\n- F7: tick-check card.\n- F8: the open user decisions with deadlines and defaults. The default needs no user action.\n\nTwo new ops items:\n- F9: a timer and poller restore card, because every timer is session-only.\n- F10: a pre-registered tools/private_read.py, pushed with the I-336 hindsight guard before 29 Sep 23:00Z.\n\nF11: the public board is not final at the 23:27Z snapshot, so the public LB is also saved hourly on 30 Sep.\n\nEvery score gain is 0 except the E10 watch. Calibration-only submits in spare slots were considered and rejected (FREEZE, low information).",
+ "findings": [
+  {
+   "id": "R17P-F1",
+   "kind": "new-fact",
+   "what": "E10 P1 at 11:01Z NOT met. The 5 kernel lists and 2 statuses are unchanged vs 08:31Z: x138 is still v1, amanatar V6 is unscored, and HF v3 leads scoreDescending. LB 11:01Z: 3,945 teams; >= 0.955 = 254 (+7 in 2.5 h); >= 0.960 = 82. We are CSV rank #260 (1 + strictly better = 255), 6th of 115 in the 0.954 block (ranks 255-369). The 0.953 block holds ranks 370-762 (393 teams). Teams >= 0.954 = 369 (360 at 08:32Z, ~3.6/h), so ~590 by the deadline at that rate, inside the logged 520-690 projection. Plain numbers only (I-094/R16-A9 (e)); no decision mapping.",
+   "evidence": "experiments/e10_watch/20260927T1101Z.txt (histogram + DIFF vs 20260927T0831Z.txt: 16 HIST changes, 0 kernel changes)",
+   "action": "Log in the ROUND 17 RECORD. The next P1 follows R16-A7: after the 43/44 read.",
+   "urgency": "info"
+  },
+  {
+   "id": "R17P-F2",
+   "kind": "new-fact",
+   "what": "The poll.log header at 2026-09-27T11:01:09Z shows 56598763 (exp70j) and 56598765 (exp70k) PENDING. The R16-A1 (4) class-C letter window is therefore still open, and no letter is logged in CONTEXT (last entry 09:15Z). Latency estimate for the read: both were submitted at 05:28:13/22Z. Comparable latencies: K2 7.36-7.54 h, twin 6.69-6.87 h, exp70a 6.87-7.04 h, exp70b 7.41-7.58 h. Their dummies ran 1,500 / 1,449 s, below exp70b's 1,740 s. Expected terminal ~12:20-13:00Z, earliest ~12:10Z. Hard trigger: the first header >= 14:28:22Z; fallback ListSubmissions at 14:40Z.",
+   "evidence": "experiments/lb_poll/poll.log l.13684ff; CONTEXT l.2809-2813 (dummy runtimes), l.2789-2799 / 2872-2879 (ledger L ranges), l.2898-2905 (R16-A1 (3)/(4))",
+   "action": "Nothing new to do; the read runs per R16-A4.",
+   "urgency": "now"
+  },
+  {
+   "id": "R17P-F3",
+   "kind": "new-hypothesis",
+   "what": "POST-R8 MASTER SCHEDULE, 27 Sep 11:30Z -> 30 Sep (all times UTC). Every default holds without any user action.\n27 Sep:\n- ~11:45: practical edge for a pre-registered class-C letter. It counts only if logged while the last header shows both 43/44 PENDING.\n- 12:00:00: R16-A3 line (R8 passed; E10 v2 LAPSED unless an OK was logged) + commit/push.\n- 12:04: E10 timer 2e87e414. See F13: log it as deferred; the first full P1 comes after the read.\n- ~12:10-13:00: 43/44 terminal -> R16-A4 read: CONTEXT line, L6/L7 into the private-read list, commit/push, ONE user line. Re-tick text only if a logged letter requires it, written from API SELECTED. Hard edge: 14:28:22 header, 14:40 ListSubmissions fallback.\n- ~13:00-15:00: round 18 (audit of the read). After it, research is CLOSED: monitoring and hygiene only.\n- by ~15:00: R16-A5 (ROUND 16 RECORD + R15-A6 + v6 NOTES item 4 + git add of round16/, round17/, e10_watch, ext v6). R16-A6 RESUME POINT (+ the F9 restore card) + MEMORY.md pointer.\n- E10 P1 at 15:04, 18:04, 21:04.\n28 Sep:\n- 00:00: quota reset (5 slots).\n- E10 P1 at 00:04, 03:04, 06:04, 09:04, 12:04, 15:04, 18:04, 21:04.\n- ~08:00: last exp72 yes with room for an ERROR resubmit. ~18:30: last exp72 yes at all. Default: no push.\n- daytime: I-336 hindsight-guard commit (+ the optional F10 script), PUSHED.\n- 17:57: tick check 012fa6dd: API SELECTED == expected pair; N954/N955/team count as plain numbers; poller header < 15 min.\n29 Sep:\n- 00:04: LAST E10 P1 (last useful trigger).\n- 02:00: last port submit and the default last-submit cap.\n- ~09:30: latest port score.\n- 11:00: cap only for an unchanged ERROR resubmit or exp72 (I-300). No ERROR candidate exists now.\n- 11:57: tick check 328f7392 + push.\n- 12:00: G2 edge (moot unless Q3 is yes).\n- 17:57: tick check 18ff4796 + push. ~18:00 is the practical edge for exp70b and post-score class-C letters.\n- 19:00: final L9 read (any new score since the last read).\n- 20:00: tick deadline (user); the poller stops.\n- ~20:05: one API SELECTED read -> CONTEXT 'FINALS FROZEN [refs] hh:mmZ'.\n- before 23:00: I-336 pushed (check).\n- 23:27: final public LB snapshot bb224de9 (3 retries, 60-120 s) -> experiments/private_read/<ts>/.\n- 23:59: deadline.\n30 Sep:\n- from 00:15, hourly: PRIVATE-READ v2 (d) + addenda (R13-A1 (6) L1-L5, R15-A1 (7) L6/L7).\n- Read list: #34, #35, P36, #37, #38, 39-44 (+ any port).\n- Outputs: outcome table (b), first match; transfer table (e); X's private rank (R16-A9 (d)). Report at first publication and after cleanup.\n- Then: curator edits (R14-A7, R15-A8, R16-A9) and LESSONS.",
+   "evidence": "CONTEXT l.2360-2366 (timer ids/times, hh:04 cadence, acting to 29 Sep 00:30), l.2398-2408 (trigger-to-submit 45-60 min), l.2570-2598 (v2), l.2722-2746 (exp72/G2), l.2880-2913 (R16-A1); research/wf_ideas_v4/round16/report.json R16-A3..A9, next_focus; round16/v_hyp_answers_prep_r16ap-4 and -7 (exp72 edges, expiry clock)",
+   "action": "Paste as a 'SCHEDULE' block into the R16-A6 RESUME POINT (after the 43/44 read, by ~15:00Z). Gate: round-18 plan-check against CONTEXT; no LB, 0 GPU, 0 slots. Score gain 0. It prevents a missed event (letter window, tick check, snapshot).",
+   "urgency": "today"
+  },
+  {
+   "id": "R17P-F4",
+   "kind": "new-hypothesis",
+   "what": "43/44 READ OUTCOME TREE + RE-TICK MATRIX. This is a mechanical compilation of R15-A1 (3)/(4) + R16-A1; it adds no rule.\nOutcomes:\n- (O1) Max display <= 0.954 (prior ~0.75-0.85): descriptive read; DC closed on this side; no V*_C. Pair {#37 56563521, #38 56563534}; the FREEZE holds.\n- (O2) A V*_C exists. Conditions: display >= 0.955, COMPLETE, L_hi <= 9.0 h with the ledger insertion-gate text quoted, and the other rung >= 0.954 or ERROR/unscored; a 43 = 44 tie goes to 44. With a pre-registered letter, apply it. Without one, the pair stays; a later letter is a USER DECISION AFTER SCORE (allowed, post-hoc) until 29 Sep 20:00Z (practically 18:00Z).\n- (O3) ERROR: no resubmit (class C is never resubmitted); the other ref is read alone.\n- (O4) Not terminal at the 14:28:22Z header: UNSCORED; a later score is info only.\nRE-TICK MATRIX, valid only while API SELECTED = {56563521, 56563534}:\n- exp70b letter only -> untick 56563521, tick 56592350.\n- V*_C + (b) -> untick 56563534, tick V*_C.\n- V*_C + (b) naming exp70b -> untick both, tick V*_C and 56592350.\n- V*_C + (c) -> untick 56563521, tick V*_C.\n- A no-insertion E10 port adopted by P6 -> untick 56563534, tick PORT.\n- Any collision (port + class C, exp72 + V*_C, (c) + exp70b) -> push the facts; the user chooses in one message.\nRe-read API SELECTED after every re-tick.",
+   "evidence": "CONTEXT l.2827-2851 (R15-A1 (3)/(4)), l.2880-2913 (R16-A1 (1)-(5)); round16/report.json R16-A8 (i)/(ii)",
+   "action": "Use as the R16-A4 checklist; the matrix goes into the RESUME POINT. Gate: none (mechanical); round 18 audits the read.",
+   "urgency": "now"
+  },
+  {
+   "id": "R17P-F5",
+   "kind": "new-hypothesis",
+   "what": "SLOT PLAN 27-29 Sep.\n- Slots left: 27 Sep 2, 28 Sep 5, 29 Sep 5. Cap 29 Sep 02:00Z; 11:00Z only for an unchanged ERROR resubmit or exp72.\n- Priority (R13-A1 (5), R15-A1 (2)): E10 v1 port > unchanged resubmit of an ERRORed finals-relevant file > exp72 (named Q2 yes only) > empty.\n- No ERROR-resubmit candidate exists: every finals-relevant file (#37, #38, exp70b) is COMPLETE, and class C is never resubmitted.\n- Expected slot use ~0.02-0.05: P(v1 trigger) ~1-3% plus a small P(named exp72 yes). Unused slots are not a loss.\n- Considered and rejected: calibration-only submits in spare slots to learn private transfer. They break the 06:19Z FREEZE without a chat request. Each file adds P(non-zero 3-dp contrast) ~0.2-0.5 as one confounded draw, and the read list already has 11 files.",
+   "evidence": "CONTEXT l.2704-2710, l.2821-2826, R16-A3 text (round16/report.json); L priors l.2713-2716, l.2863-2866",
+   "action": "State in the RESUME POINT: 'slots = insurance for an E10 v1 port only; default use 0'. No OK needed.",
+   "urgency": "today"
+  },
+  {
+   "id": "R17P-F6",
+   "kind": "new-hypothesis",
+   "what": "E10 v1 WATCH + PORT RUNBOOK with time arithmetic.\nCadence: timer 2e87e414 at hh:04 every 3 h, acting to 29 Sep 00:30 -> 13 checks, the last at 29 Sep 00:04Z.\nOn a P2 signal:\n1. Chrome connected? If not, notify and wait (P4c (7)).\n2. Page score >= 0.956 on version k == M.\n3. pull -m; P4b(a) metadata; sources listable; kernel_sources == [].\n4. tools/e10_port_gate.py static (--version M): rc 0.\n5. Pause other API agents; push the private dummy (~33 min incl. queue).\n6. Full gate: rc 0 AND 0 [FAIL]/[SKIP] AND one 'author version: M' line. On 429: 60 s backoff for up to 20 min.\n7. W6: header < 15 min and not a 429. Submit guard: no 'dryrun', no NEVER_SUBMIT.md. Send a PushNotification.\n8. P6 read (COMPLETE, L_hi <= 7.5 h, display >= 0.956) -> the user re-ticks {PORT, INS}. This holds for a no-insertion port only; otherwise ask.\nTime: trigger-to-submit-ready is 45-60 min, so a 00:04Z trigger submits ~01:05Z (< 02:00Z). With +7.5 h it scores ~08:35-09:30Z, well before the 19:00Z read.\nValue: P(v1 trigger by 29 Sep 00:00) ~1-3%. The v2 prior was 5-15% for >= 0.954; nothing new has appeared in 6 days; the x138 author's team shows 0.956 but his notebook is still v1. Given an adopted port: +0.1 to +0.2 P(bronze). Net ~+0.001-0.006 P(bronze).\nCost: 8 CLI calls per P1. On a trigger: 1 slot + the author's <= 7.5 h hidden run.",
+   "evidence": "CONTEXT l.2138-2147 (P1-P8), l.2217, l.2257-2275 (P4b/P4c/check times), l.2355-2361 (v2 SCALE), l.2398-2408 (dry run 33 min, 45-60 min), l.2560-2566 (R12-A4 hardening); experiments/e10_watch/20260927T1101Z.txt",
+   "action": "Keep as is. Copy the 8 steps and the '00:04Z last check / 02:00Z last submit' arithmetic into the RESUME POINT. No new OK (v1 in force since 26 Sep 09:10Z).",
+   "urgency": "today"
+  },
+  {
+   "id": "R17P-F7",
+   "kind": "new-hypothesis",
+   "what": "TICK-CHECK CARD.\nTimed checks: 28 Sep 17:57Z (012fa6dd); 29 Sep 11:57Z (328f7392 + push); 29 Sep 17:57Z (18ff4796 + push). Two cheap reads that no timer covers: the 19:00Z final L9 read and a ~20:05Z API SELECTED read.\nEach check:\n- competition_submissions(group=SELECTED) == the expected pair by ref (now {56563521, 56563534});\n- both files COMPLETE and not byte-identical;\n- the last poll.log header < 15 min old and not a 429;\n- N954, N955 and the team count as plain numbers.\nOn a mismatch: push at once; the user fixes it by 20:00Z.\nThe 20:05Z read logs 'FINALS FROZEN [refs] hh:mmZ', the input to v2 (c) (F = SELECTED after 20:00Z).\nValue: P(a SELECTED defect the user can still fix) is small (<~1%; SELECTED changes only on a user re-tick), but such a defect would cost the whole finals pair. Cost: 1 API call per check.",
+   "evidence": "CONTEXT l.2362-2366, l.2596 (v2 (d) F = API SELECTED after 20:00Z), l.2896-2897 (re-read after every re-tick); IDEAS I-229, I-258; round16 R16-A9 (e)",
+   "action": "Add the 20:05Z FINALS FROZEN read to the RESUME POINT schedule. No timer is needed if the session is alive; otherwise it is the first action of a resumed session.",
+   "urgency": "today"
+  },
+  {
+   "id": "R17P-F8",
+   "kind": "new-hypothesis",
+   "what": "USER DECISIONS STILL OPEN, each with deadline and default. The default needs NO user action: the finals are already SELECTED 2/2.\n1. E10 v2 yes/no: lapses 27 Sep 12:00:00Z. A later yes is a forward-only USER OVERRIDE.\n2. Class C (only if a V*_C exists): pre-registered only before the first 43/44 terminal header (~12:10-13:00Z). After that it is a USER DECISION AFTER SCORE, open until 29 Sep 20:00Z (practically 18:00Z). Default (a): no change.\n3. exp70b as a final ({exp70b, #38}): open until 29 Sep 20:00Z (practically 18:00Z). Default: no. Facts: attributable UP over #37; E ~+1e-4 on private; P(worse) ~0.1-0.2; not dominance.\n4. Q1/Q2/Q3 exp71/exp72, each named separately: last yes with room for an ERROR resubmit ~28 Sep 08:00Z; last yes at all ~28 Sep 18:30Z. Q3 needs G2 by 29 Sep 12:00Z. Default and recommendation: no.\n5. Last-submit cap: default 29 Sep 02:00Z.\n6. Laptop and session alive to 29 Sep 20:00Z (ideally 30 Sep ~00:30Z, for the snapshot), plus the user's own alarms at 29 Sep 12:00Z and 18:00Z.\nSend the list once, in the post-read line; no nagging (R16-A1 (5)).",
+   "evidence": "CONTEXT l.2603-2606, l.2722-2746, l.2833-2851, l.2880-2913; round16/report.json R16-A3, R16-A8 (i)-(iv); IDEAS I-354, I-344, I-286, I-119, I-300, I-229",
+   "action": "Put the table in the RESUME POINT. In the one-line 43/44 read message, restate it only as 'nothing is required from you; open questions: ... (deadlines)'.",
+   "urgency": "today"
+  },
+  {
+   "id": "R17P-F9",
+   "kind": "new-hypothesis",
+   "what": "TIMER AND POLLER RESTORE CARD (new: grep 'recreate/restore' in CONTEXT and IDEAS = 0).\nProblem: every timer is session-only (2e87e414 E10 P1; 012fa6dd / 328f7392 / 18ff4796 tick checks; bb224de9 final snapshot), and lb_poll.py is a local process. A laptop sleep, a reboot or a chat restart silently removes the 29 Sep tick checks and the 23:27Z snapshot, which feeds the v2 (c) tie read.\nCard: one table in the RESUME POINT with id, UTC time, local cron time (UTC+3) and action text. Add the poller restart (Start-Process -WorkingDirectory <repo root>, python experiments/lb_poll/lb_poll.py, 600 s) and a liveness test (last poll.log header < 15 min old). A resumed session runs CronList first and re-creates whatever is missing from the card.\nGain: 0 on score; it guards events with a hard deadline. Cost: ~10 min of text. Gate: at the 28 Sep 17:57Z check, CronList shows every id on the card.",
+   "evidence": "CONTEXT l.2362-2366 (timers session-only; cron in local UTC+3), l.2618-2622 (TIMERS, POLLER), l.2566 (poller restart with -WorkingDirectory); grep -i 'recreate|re-create|restore the timers' CONTEXT.md IDEAS.md -> 0",
+   "action": "Include in R16-A6 (RESUME POINT) today; the user's own alarms (answer pending) stay the backup.",
+   "urgency": "today"
+  },
+  {
+   "id": "R17P-F10",
+   "kind": "new-hypothesis",
+   "what": "PRE-REGISTERED PRIVATE-READ SCRIPT (new: no tools/private_read.py exists).\nWhat: a read-only tools/private_read.py. It takes the ListSubmissions CSV (privateScore) and the private LB CSV and prints mechanically:\n- C1-C5 and the v2 (b) outcome row (first match);\n- L1-L7 and the DC-dose sign read;\n- the whole-history transfer table (e), with and without P34->P35;\n- X's private rank, with the 3-dp bin ambiguity stated;\n- 'NOT YET' while privateScore is blank.\nCommit and push it with the I-336 hindsight guard before 29 Sep 23:00Z, so the 30 Sep read cannot be reshaped after the numbers are seen.\nGain: 0 on score. It removes post-hoc freedom from the calibration read, a lesson this project keeps relearning (e.g. the edge filter, the dc0.30 sign flip).\nCost: ~1-2 agent-hours of CPU; 0 GPU, 0 slots, 0 hidden runtime.\nGate: pytest with synthetic worlds that each hit one of rows (i)-(vii) and each transfer-table branch, plus a dry run on today's CSV -> 'NOT YET', exit 0.\nOptional: if it is not done by 29 Sep 20:00Z, drop it; the v2 text is the fallback.",
+   "evidence": "CONTEXT l.2570-2598 (v2 (a)-(f)), l.2711-2721 (L1-L5), l.2863-2866 (L6/L7); IDEAS I-283, I-316, I-336 (not committed at curation 16); tools/ listing (no private_read.py)",
+   "action": "Owner: a light research round on 28 Sep (files only; commit as the user, no trailer). No user OK needed (research tooling, no submit).",
+   "urgency": "later"
+  },
+  {
+   "id": "R17P-F11",
+   "kind": "recheck-old",
+   "what": "The v2 (d) snapshot (29 Sep ~23:00-23:45Z) is taken before the public board is final. Files submitted up to 23:59Z finish ~7 h later (hidden run), so late x138-copy windows appear on the public board only on 30 Sep ~00:00-07:30Z. The v2 (c) tie read and the unrounded-order read compare us with 'identifiable late x138-copy windows', so they need those late rows.\nFix: keep the 23:27Z snapshot, and also save the public LB with each hourly read on 30 Sep until the private board appears. Same CLI; the zip name is fixed, so use one timestamped folder per call. The CLI creates the folder itself (kaggle_api_extended.py download_file -> os.makedirs). If Kaggle shows the private board at once, this costs nothing.",
+   "evidence": "CONTEXT l.2587-2595 (v2 (c)/(d)); kaggle_api_extended.py l.2310-2332 and l.5752-5754; latency 6.7-7.6 h (ledger)",
+   "action": "Add one line to the private-read procedure (calibration only, never a finals input; no OK needed).",
+   "urgency": "later"
+  },
+  {
+   "id": "R17P-F12",
+   "kind": "new-hypothesis",
+   "what": "LIGHT RESEARCH CADENCE AFTER R8. The honest answer: NOTHING REACHES R8. At 11:10Z no mechanism can get an honest lab gate, a dummy and a new user OK by 12:00Z, and every family in IDEAS is closed, frozen (DC FREEZE, ladder) or post-deadline. After 12:00Z only an E10 v1 port or a named exp72 yes can add a file.\nStill worth doing, in order:\n1. Monitoring: E10 P1 every 3 h, tick checks, poller (F6/F7/F9).\n2. Hygiene today: R16-A3..A6, ROUND 16/17 RECORD.\n3. 28 Sep: the I-336 hindsight guard + F10, pushed before 29 Sep 23:00Z.\n4. By 30 Sep: LESSONS and curator edits (R14-A7, R15-A8, R16-A9).\n5. Post-deadline agenda: on 30 Sep, check whether late submissions exist (I-317 unverified). Then rank at most 3 late-sub items from the candidates already logged: I-319 G0 paired retrain gate, I-063 DaughterNet v2, I-359 removal-gate curve on the shipped stack.\nNo idea-generation rounds after round 18 (round 16 next_focus); no DC rung, no model table for the user.",
+   "evidence": "research/wf_ideas_v4/round16/report.json next_focus; CONTEXT l.2658-2662 (round 13 (6)), l.2821-2826 (FREEZE); IDEAS header ('after round 18 the research is closed'), I-317, I-319, I-063, I-359",
+   "action": "Record in the R16-A3 12:00Z line: 'nothing reached R8'. Rounds after 18: monitoring and hygiene only.",
+   "urgency": "today"
+  },
+  {
+   "id": "R17P-F13",
+   "kind": "plan-issue",
+   "what": "The 12:04Z E10 timer fires inside the 43/44 read window. It does not strain the API budget: e10_snapshot makes 8 CLI calls and none is ListSubmissions, which the poller and the 14:40Z fallback use. But R16-A7 asks for the first full P1 after the read, and the 11:01Z snapshot is already fresh, so a 12:04Z run only adds noise.",
+   "evidence": "CONTEXT l.2748-2749 (2e87e414 schedule), l.2269-2275 (snapshot contents); round16/report.json R16-A7; experiments/e10_watch/20260927T1101Z.txt",
+   "action": "Have the 12:04Z tick log 'deferred: snapshot 11:01Z fresh, read pending'. Run the next full P1 after the 43/44 read, then return to the hh:04 grid.",
+   "urgency": "now"
+  }
+ ]
+}

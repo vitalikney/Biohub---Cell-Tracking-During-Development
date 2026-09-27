@@ -1,0 +1,72 @@
+{
+  "task": "Round 17 plan check (team D: Discipline), 27 Sep ~11:00Z; files only, no Kaggle API calls, no e10_snapshot run",
+  "written_utc": "2026-09-27T11:07Z",
+  "complete": true,
+  "summary": "Round 17 plan check, 11:00-11:07Z 27 Sep. Files only: no API calls and no snapshot. The round-16 records LANDED CLEANLY. R16-A0 REPORT.md, R16-A1 (the 09:15Z entry, which quotes header 09:10:50Z with both 43/44 refs PENDING) and the R16-A2 message line are in 289bd52 and 06f1a02, and main == origin/main, so both are pushed. 56598763 and 56598765 are still PENDING at the 11:01:09Z header (L > 5.54 h), so R16-A1 stayed pre-score. There is no user letter in CONTEXT after the 07:45Z brief. No rule violation found. Still open: (a) R16-A2 did not log whether the push was sent. (b) R16-A5 is not done: grep 'ROUND 15 RECORD' / 'ROUND 16 RECORD' = 0, the v6 folder is untracked and its NOTES item 4 is still wrong. (c) R16-A6 (new RESUME POINT) is due after the read. (d) The forkblob repro script exists only in this session's scratchpad. Two pre-score gaps are worth one short dated addendum before the first 43/44 terminal header. It is practically due by ~12:15Z, because K2-family latencies of 6.87-7.58 h put the first terminal header at ~12:21-13:05Z, not ~12:10Z. Gap 1: the letter window is judged by the header BEFORE the letter, which leaves a blind gap of up to 10 min. Gap 2: a blanket yes does not say whether to re-tick now or once after the read, and the (b) default partner #37 would silently drop exp70b right after the user said yes to it. The E10 P1 is NOT met at 08:31Z. The snapshot calls do not touch ListSubmissions, so a round-17 snapshot does not interfere with the 43/44 read. Nothing new reaches R8, and no mechanism is proposed.",
+  "findings": [
+    {
+      "id": "PC17-01",
+      "kind": "recheck-old",
+      "what": "AUDIT: the round-16 records landed and are consistent. R16-A0: REPORT.md is committed. R16-A1: the 09:15Z entry quotes the 09:10:50Z header with both refs PENDING, was committed at 09:15:35Z (289bd52) and pushed (06f1a02 == origin/main). R16-A2: the message line is logged at 09:15Z. The refs were still PENDING at the 11:01:09Z header, so the addendum is genuinely pre-score. There is no user letter after the 07:45Z brief. Open items: (i) the R16-A2 line says 'chat + push requested' but not whether the push was sent; the R16-A2 action asked for 'sent / not-sent', and R12-A4 (6) wants not-sent pushes logged. (ii) R16-A3 is due at 12:00:00Z. (iii) R16-A5 is not done: CONTEXT has 0 hits for 'ROUND 15 RECORD' and 0 for 'ROUND 16 RECORD'; experiments/ext_optimized-biohub-max-score/v6_2026-09-27/ is untracked; its NOTES.md item 4 still reads 'past the R8 line in practice (lab + dummy + new user OK by 27 Sep 12:00Z not feasible)'. (iv) R16-A6 is pending.",
+      "evidence": "git log: 289bd52 (12:15:35+03:00) and 06f1a02 (12:15:58+03:00); git status -sb shows main...origin/main with no ahead count. CONTEXT.md l.2880-2916. experiments/lb_poll/poll.log header 11:01:09Z (l.13684): 56598763/56598765 PENDING. ledger.md 11:01:11Z: L > 5.54 h, 'insertion gate 8.0 h: open'. experiments/ext_optimized-biohub-max-score/v6_2026-09-27/NOTES.md l.5.",
+      "action": "In the 12:00Z commit, alongside the R16-A3 line: (1) add one clause to the R16-A3 line: 'R16-A2 push: sent / not-sent (from the PushNotification result); no user letter received as of 12:00Z (last header <hh:mm:ss>Z, 56598763/56598765 PENDING or not)'. (2) Do R16-A5 in the same commit: ROUND 15 RECORD verbatim from round15/report.json R15-A6; ROUND 16 RECORD from round16/report.json R16-A5; the v6 NOTES item 4 replacement text from R16-A5 (iii); then git add the v6 folder together with ledger.md and poll.log. Commit as the user, no trailer.",
+      "urgency": "today"
+    },
+    {
+      "id": "PC17-02",
+      "kind": "plan-issue",
+      "what": "LETTER-WINDOW BLIND GAP (R16-A1 (4)). A class-C letter counts as pre-registered if 'the last poll.log header' at logging shows both refs PENDING. The poller writes a header every ~600 s. A score can therefore land in the up-to-10-min gap after that header while the user can already see it on Kaggle's My Submissions page, and the letter would still count as pre-registered. The same gap applies to the R16-A1 (5) rule 'variant not back by the first 43/44 terminal header'. The mechanical stakes are only the label (a late letter is still allowed as USER DECISION AFTER SCORE), but this is the integrity clause the whole class-C table rests on. The fix tightens the rule and is still pre-score.",
+      "evidence": "CONTEXT l.2903-2905 (R16-A1 (4)). poll.log header cadence 10:51:07Z -> 11:01:09Z (600 s). R15-A1 (4) l.2834-2836.",
+      "action": "Append one dated line before the first 43/44 terminal header (practically by ~12:15Z; quote the current header): 'R16-A1 (4) clarification (tightening, pre-score): a letter counts as pre-registered only if the last header BEFORE its logged time AND the first header AFTER it both show 56598763 and 56598765 PENDING. Otherwise it is USER DECISION AFTER SCORE. Alternatively, take one ListSubmissions read right after logging the letter and require both PENDING in that read; log the read.' No other change.",
+      "urgency": "now"
+    },
+    {
+      "id": "PC17-03",
+      "kind": "plan-issue",
+      "what": "BLANKET-YES RE-TICK AMBIGUITY (R16-A1 (2) x (5)). R16-A1 (5) reads a blanket yes as 'E10 v2 yes, exp70b yes, class C allowed with the variant pending'. R16-A1 (2) has two branches: 'exp70b letter AND (b)/(c) letter before the read -> one re-tick after the read', and 'only the exp70b letter -> re-tick right after it'. A blanket yes is neither, because the variant is pending. If the session takes the second branch, it re-ticks at once (untick 56563521, tick 56592350), and a (b) answer then needs a second re-tick. Worse, R16-A1 (1) makes the (b) partner #37 unless the letter names exp70b explicitly. So a blanket yes followed by '(b)' yields {V*_C, #37} and silently drops exp70b one message after the user said yes to it. The checklist does ask for the (b) partner, but no default is set for the case where the user answers only '(b)'.",
+      "evidence": "CONTEXT l.2884-2887 (composition), l.2893-2897 (re-tick), l.2906-2913 (parsing). round16/report.json R16-A8 (i) says 'if a class-C (b)/(c) letter is pending or allowed, one re-tick after the 43/44 read'. R16-A8 (i) therefore already hints at the fix, but it is not in CONTEXT.",
+      "action": "Add to the same pre-score line as PC17-02: 'A blanket yes (or any letter that allows class C with the variant pending) counts as a pending (b)/(c) letter for R16-A1 (2): exactly one re-tick, after the 43/44 read. If no V*_C exists, that re-tick is {exp70b, #38}. If V*_C exists and the user said yes to exp70b but named no (b) partner, the checklist asks \"(b) partner: #37 or exp70b?\" and nothing is re-ticked until the answer comes (by 29 Sep 18:00Z; no answer -> {exp70b, #38}, i.e. (a) with the user's exp70b yes).' This is procedural: no new eligibility, no file change.",
+      "urgency": "now"
+    },
+    {
+      "id": "PC17-04",
+      "kind": "new-fact",
+      "what": "43/44 TIMING: the earliest terminal header is later than the round-16 '~12:10Z'. That figure used #38's no-insertion latency (6.69 h). Probes 43/44 are K2 + DC knob, i.e. insertion-family, and the K2-family ledger latencies are 6.87-7.58 h, which gives a first terminal header ~12:21-13:05Z (headers at xx:x1). ERROR can come at any time. The 9.0 h clocks are 14:28:13Z / 14:28:22Z; the fallback read trigger is the 14:31Z header; the 14:40Z ListSubmissions fallback stands. The PC17-02/03 line must land before the first terminal header, practically by ~12:15Z, and can share the 12:00Z commit.",
+      "evidence": "experiments/lb_poll/ledger.md: exp70a (6.87, 7.04], exp70d (7.19, 7.36], exp70e (7.24, 7.42], exp70b (7.41, 7.58], #37 7.36-7.54 h. Submits 05:28:13Z / 05:28:22Z. Dummy runtimes 1,477 / 1,427 s (exp70b 1,740 s, a slower dummy yet 7.41-7.58 h).",
+      "action": "Info. Put the PC17-02/03 pre-score line in (or before) the 12:00Z commit. Keep the R16-A4 read at the first header with both refs terminal.",
+      "urgency": "now"
+    },
+    {
+      "id": "PC17-05",
+      "kind": "plan-issue",
+      "what": "SESSION-ONLY ARTEFACT AT RISK. R16-A9 (b) cites 'scratchpad r16rcb/fb_ins35.py' as the forkblob ins35 reproduction. It exists only in this session's scratchpad and has not been copied to experiments/exp60_trainlab/ (only results_forkblob.* are there). If the session or chat restarts before 30 Sep, the curator note will cite a file that is gone.",
+      "evidence": "C:/Users/vital/AppData/Local/Temp/claude/c--Users-vital-Documents-kAGGLE-Biohub---Cell-Tracking-During-Development/acabaea6-42c1-4115-a146-2ddc5bb7e8c8/scratchpad/r16rcb/fb_ins35.py exists. experiments/exp60_trainlab/ has results_forkblob.json/.md and no fb_ins35.py.",
+      "action": "Copy fb_ins35.py (and out.json, if it is the result file) into experiments/exp60_trainlab/fb_ins35.py and commit with the R16-A5 hygiene. This is record hygiene only: it reopens nothing and forkblob stays closed.",
+      "urgency": "today"
+    },
+    {
+      "id": "PC17-06",
+      "kind": "plan-issue",
+      "what": "RESUME/MEMORY STALENESS beyond PC16-06. Two MEMORY.md index lines are wrong. The LB-probe-approval line says 'E10 port rule proposed; overlap-consensus line paused', but E10 v1 has been in force since 26 Sep 09:10Z and overlap-consensus is STOPPED by its own gate (26 Sep 10:52Z). The resume pointer says '(26 Sep post-score)', but the last block is 26 Sep 22:46Z. The live timers (2e87e414 E10 P1; 18ff4796/012fa6dd/328f7392 tick checks; bb224de9 final LB snapshot) are session-only. A new chat that reads only the RESUME POINT does not know it must re-create them.",
+      "evidence": "The MEMORY.md system-reminder lines. CONTEXT l.2599-2622 (22:46Z RESUME POINT). R16-A6 in round16/report.json.",
+      "action": "When writing R16-A6 after the read: (1) list every timer with ABSOLUTE UTC times and a 're-create if missing (CronList)' instruction: E10 P1 every 3 h to 29 Sep 00:00Z (skip if the newest experiments/e10_watch/*.txt is < 2 h old); tick checks 28 Sep 17:57Z, 29 Sep 11:57Z and 17:57Z; final LB snapshot 29 Sep ~23:27Z; private read from 30 Sep 00:15Z. (2) Update the two MEMORY.md lines: the LB-probe line should say 'E10 v1 in force (v2 lapsed 27 Sep 12:00Z unless OK'd); overlap-consensus STOPPED (G-A FAIL)', and the resume line should name the new block's timestamp.",
+      "urgency": "today"
+    },
+    {
+      "id": "PC17-07",
+      "kind": "recheck-old",
+      "what": "E10 P1 STATUS AND CADENCE. The newest snapshot is still experiments/e10_watch/20260927T0831Z.txt (NOT met, CHANGES=19). x138 anvithpothula/biohub-0-953-lb-original is v1, amanatar V6 is unscored, and the largest P2 group is 1. The round-17 focus asks for a P1 now, while R16-A7 said 'after the 43/44 read (~12:30-13:30Z)'. The two do not conflict. tools/e10_snapshot.py makes 8 read-only calls (kernels list x5, kernels status x2, one LB download) and never calls ListSubmissions, so it cannot disturb poll.log or the read trigger. A snapshot before 12:00Z is also the only valid E10 v2 baseline if the user says yes before the lapse; the Chrome check of notebook displays is still needed, because the kernel API has no score field. Risk: timer 2e87e414, if still armed at the 3 h cadence from 08:31Z, would fire at ~11:31Z and duplicate the browser agent's run.",
+      "evidence": "tools/e10_snapshot.py l.49-52 (P2_MIN 0.956, group 5) and the header of 20260927T0831Z.txt ('Read-only: kernels list, kernels status, competitions leaderboard --download'). R16-A7.",
+      "action": "Main session: CronList. If 2e87e414 fires within 1 h of the browser agent's round-17 snapshot, skip that run (log 'skipped, snapshot <file> < 2 h old'). Take the next P1 after the 43/44 read (~13:30-14:30Z), then every 3 h to 29 Sep 00:00Z. If v2 lapses at 12:00Z, record the newest snapshot file name in the R16-A3 line as the v1 baseline (info).",
+      "urgency": "today"
+    },
+    {
+      "id": "PC17-08",
+      "kind": "recheck-old",
+      "what": "RULE-CONSISTENCY SWEEP, no violation found. Slots: 27 Sep used 3 (42 at 00:05Z, 43, 44), 2 left, which matches R16-A3. The FREEZE (R15-A1 (2)) holds: no submit after 05:28Z. The E10 v1 trigger window (to 29 Sep 00:00Z) and the last port submit (29 Sep 02:00Z) are consistent: a port that scores in ~7.5 h lands before the 20:00Z tick. V*_C's L_hi <= 9.0 h (R15-A1 (4)) sits below the safetail family deadline of 9.5 h and allows the 8.0 h insertion gate to have fired on late clips (L9 (4) prices that at < ~1e-4). The class-C files are never resubmitted. API SELECTED was last read at 07:41Z (2/2) and no submit or re-tick has happened since, so no read is owed until a re-tick or the 28 Sep 17:57Z check. No closed item (forkmid, K3b, forkblob, ANTIPAR, DNVETO, K4, OC, etc.) was re-proposed in CONTEXT after 09:15Z.",
+      "evidence": "CONTEXT l.2809-2826, 2872-2879, 2880-2913. ledger.md (safetail 9.5 h; insertion gate 8.0 h). poll.log 11:01:09Z.",
+      "action": "None. Keep R16-A3 at 12:00:00Z (date -u) and R16-A4 at the first header with both refs terminal (fallback 14:31Z header / 14:40Z ListSubmissions).",
+      "urgency": "info"
+    }
+  ]
+}

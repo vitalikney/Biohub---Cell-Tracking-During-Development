@@ -1,0 +1,8 @@
+- 2026-09-27T11:14:19Z start R17LF-3 verification (no prior json)
+- Sources read: scan_hyp_lessons_final.json (R17LF-1 caveat 1, s4 item 8; R17LF-3), round14/REPORT.md s2 (OOF +0.0019, 4/15), round9/LESSONS_draft.md l.26/49/77 (1/6 rule, (e) table), CONTEXT.md l.1296-1307, 1362-1366, 1446-1451, 1538.
+- CONTEXT l.1305-1307 (24 Sep 00:40Z): the OOF +0.0019 is ONE CONFIRMATION run (135 videos) of v1 single-fold, cap 4, thr 0.5, steal, selected on SELECTION (+0.0058 there); 90% CI [-0.0007, +0.0050]; precision 4/15. l.1305 also: v1 orphan SELECTION +0.0044 -> CONFIRMATION +0.0010. l.1303: 5-fold ensemble p less extreme than single-fold p, thresholds must be re-calibrated -> submitted config (ensemble, thr 0.4) != OOF-measured config.
+- CONTEXT l.1366 / l.1538: 'lab +0.0019 -> LB +0.001' already recorded 24 Sep -> the OOF-vs-public reading is not new (recheck-old of our own text).
+- Ratio vs OOF: denominator CI crosses 0 -> ratio unbounded at 90%; the '(0, ~1)' interval ignores denominator noise. Two of three +0.001 displays are on near-identical x138 bases (P34/P35, #38/#37) -> ~2 effective reads, one embryo.
+- Counter-evidence for a 2-3x OOF bar: dc0.30 (6bba +0.0013, the least-leaky bed) -> public -0.005 (sign flip, 4x lab magnitude); float output (no trained params, lab +0.0018..0.0025) -> 2 ties. Single-embryo fork-content noise ~+-0.005 swamps a 2-3x bar. Survivorship: insertion is the one item of ~10 that transferred.
+- Feasibility: text only, no submit/kernel, no R8 issue; (e) is 'calibration only', adding a report-only OOF row before the private LB is fine if dated and decision-free.
+- Verdict: refuted (the actionable '2-3x bar' inference); arithmetic already in R17LF-1, no finals effect.

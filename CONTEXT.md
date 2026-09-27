@@ -2952,6 +2952,34 @@ Mention it to the user in one line (R9-A8 item 6).
 - 2026-09-27 12:01 UTC, 12:00 UTC LINE (R16-A3): R8 cutoff reached. E10 v2 was never answered as such; the user replaced it at ~11:10 UTC with
   E10 v3 (copy any better public notebook; verbatim + with our insertion or adapted K2), which is in force. New public rungs
   continue under the user's 11:13-11:17 UTC directives (aggressive mode); R8 no longer binds them (user decision).
+- 2026-09-27 12:12 UTC, R8 CUTOFF PASSED - FULL RECORD (round 17, R17-A1; supplements the 12:01 UTC line)
+  No research-originated mechanism reached R8 (I-320, I-345). E10 v2 did not lapse: it is SUPERSEDED by the USER
+  INSTRUCTION E10 v3 (11:08Z; trigger = a public notebook whose own public score is >= 0.955; (A) verbatim copy / (B)
+  copy + SI / (C) port into K2; R8 lifted for this item). R8 is also lifted by the user for exp72 (Q2 yes 11:11:40Z;
+  Q3 not answered -> public-only) and, by the 11:14Z/11:16Z directives, for public division-side rungs (FREEZE lifted;
+  aggressive mode). User messages since 07:45Z: 11:08Z, 11:09:39Z, 11:11:40Z, 11:14Z, 11:16Z. BRACKET CHECK for the
+  class-C letter (11:09:39Z): the header after it, 2026-09-27T11:11:11Z (and 11:21:13Z), also shows 56598763 and
+  56598765 PENDING, so the letter is pre-registered under either reading of R16-A1 (4). R16-A2 (09:15Z): chat sent,
+  push requested. Newest E10 snapshot 20260927T1101Z.txt: P1 NOT met, 0 kernel/status changes vs 0831Z, largest P2
+  group 1; it is the E10 v3 'already seen' baseline. SLOTS 27 Sep: 4 used (42 exp70b 00:05:50Z; 43/44 05:28Z; 45
+  exp70g 56606948 11:15:12Z), 1 left (exp70q or exp70r per the 11:16Z plan). Last poll header 12:01:34Z: 43/44
+  PENDING, 45 PENDING. DEVIATION RECORD: exp71 (retraining) and the post-FREEZE public rungs 45/exp70q/exp70r run
+  against the team pre-registration ('no retraining before 29 Sep', 'no public knob ladders', I-310 'no threshold
+  neighbours', R13-A1 (5) slot order) under explicit user chat instructions (11:11:40Z, 11:14Z, 11:16Z); not a
+  precedent; finals change only on the user's re-tick. E10 cadence: the hourly E10 v3 watch
+  (experiments/lb_poll/e10_watch_loop.py) replaces R16-A7's 3-hour grid once it is live; timer 2e87e414 stays as
+  backup (its 12:04Z tick is a no-op by the 2.5 h staleness rule).
+- 2026-09-27 12:12 UTC, LAST 27 SEP SLOT - PRE-SCORE LINE (R17-A3; written before any 43/44 score)
+  Mapping as logged at 11:16Z: exp70r (exp70q + DC 0.20) if probe 43 displays >= 0.955, else exp70q (K2 + insertion
+  cap 6 + DIVINS_THRESH 0.3 + forkmid 4.5); if 43 is not terminal when the exp70q dummy is ready, exp70q. Facts:
+  amanatar V6 now shows public 0.901 (-0.052 vs x138; x138 with loosened division/detection gates and a near-off
+  divergence gate) - a public read that 'more divisions via looser gates' can crash; cap 6 lab -0.00057 (85 extra
+  insertions: 0 TP / 4 FP / 81 unannotated); DIVINS_THRESH 0.3 has no lab support; exp70q stacks on probe 45 (cap 6),
+  unread until ~18:10-18:50Z. Trade-off: submitting at ~13:00-14:00Z scores by ~20:00-21:30Z (the user's 'by
+  evening'); holding until 45 reads would score ~01:30-02:30Z 28 Sep. Default = the user's 11:16Z plan (submit as soon
+  as the dummy passes). GPU queue note: the exp70n dummy has been QUEUED since 11:15Z (Kaggle GPU queue; exp71
+  training holds the other session), so the exp70q dummy starts only after it; E10 v3 collision default (R17-A4): a
+  verbatim copy that passes its gates takes the slot first.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

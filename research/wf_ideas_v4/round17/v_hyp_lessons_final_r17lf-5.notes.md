@@ -1,0 +1,10 @@
+- 2026-09-27T11:14:25Z start R17LF-5 skeptic (numbers lint)
+- Ran the proposed lint myself on R17LF-1 text (extracted from round17/scan_hyp_lessons_final.json, 291 lines, scratchpad lf1.md):
+  - refs: 11 distinct refs in s0/s5 (56545267 ... 56598765) vs experiments/lb_poll/ledger.md (11:11:12Z): 0 mismatches (label, exp, display).
+  - latencies: x138 <=6.46, #35 (6.72,7.73], K2 (7.36,7.54], twin (6.69,6.87], 70a (6.87,7.04], 70d (7.19,7.36], 70e (7.24,7.42], 70b (7.41,7.58]; 0.85 h = 7.54-6.69: 0 mismatches.
+  - CONTEXT l.N: l.1446-1525, 2072-2082, 2118-2140, 2570-2598, 2626-2721, 2789-2916 all still point at the cited entries (CONTEXT 2960 lines; new entries 11:08-11:12Z at l.2917-2940 are appended after 2916, no shift). 0 mismatches.
+  - F5 arithmetic: #255 = 8th in block 248-360 (113) consistent. s1 public numbers P27/28/29/30/31/32/33 match ledger.
+- Historical error classes: round10/REPORT.md l.82 r10h-6 = rules, OC, '+28', STALE numbers, J~0.36 from exp29, incomplete s4 (semantic/staleness); round14/report.json R14-A7 = rank range 12th-15th -> 12th-16th. None are ref/latency/l.N mismatches -> the proposed scope would not have caught them.
+- The real error class NOW is staleness: draft sources end ~11:01Z; after that CONTEXT logs E10 v3 (11:08Z), class-C letter (b) (11:09:39Z), Q1/Q2 yes (11:11:40Z), exp71 pushed (11:12Z, commit d1ccc85). Draft lines stale: R17LF-0 'no user letter since ~07:45Z'; s3 l.128 'What R9 removed was ... exp71'; s4 l.166 counterfactual 'late sub of exp72'; [F3] 'E10 v2'; [F4] E10 successor watch (now E10 v3); s5 lacks exp72 / E10 v3 ports rows; R17LF-7 'E10 v1 stays the only mechanical path after 12:00Z'.
+- Hindsight guard allows dated s7 post-private notes -> a frozen wrong number can be errata'd; stake overstated.
+- Value to private LB: none (text only). Feasibility: trivial, read-only; no R1-R10 conflict.

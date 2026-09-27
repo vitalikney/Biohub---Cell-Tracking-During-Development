@@ -1,0 +1,13 @@
+# round17 scan_plancheck notes (started 2026-09-27T11:01:10Z)
+- 11:01Z date -u. Last poll.log header 11:01:09Z: 56598763/56598765 PENDING (L > 5.54 h), 56592350 COMPLETE 0.954. Ledger regenerated 11:01:11Z (uncommitted).
+- git: main == origin/main at 06f1a02 (R16-A1 289bd52 + R16-A2 06f1a02 pushed). Uncommitted: ledger.md, poll.log; untracked v6_2026-09-27 folder + round17.
+- CONTEXT: R16-A1 at 09:15Z quotes header 09:10:50Z with both PENDING -> pre-score OK. R16-A2 logged as 'chat + push requested' (no sent/not-sent result).
+- NOT in CONTEXT yet: ROUND 15 RECORD, ROUND 16 RECORD (R16-A5), new RESUME POINT (R16-A6), no user letter after 07:45Z brief.
+- e10_watch newest = 20260927T0831Z.txt (NOT met, CHANGES=19; x138 anvithpothula/biohub-0-953-lb-original v1; amanatar V6 unscored). No round-17 snapshot yet. tools/e10_snapshot.py makes 8 read-only calls (kernels list x5, status x2, LB download); no ListSubmissions, so no conflict with poll.log / 43-44 read.
+- v6_2026-09-27/NOTES.md item 4 still says 'past the R8 line in practice' (R16-A5 (iii) not applied); folder untracked.
+- fb_ins35.py (forkblob ins35 repro, R16-A9 (b)) exists ONLY in session scratchpad .../acabaea6-.../scratchpad/r16rcb/; not in experiments/exp60_trainlab/.
+- K2-family latencies (ledger): exp70a (6.87,7.04], exp70e (7.24,7.42], exp70d (7.19,7.36], exp70b (7.41,7.58], #37 7.36-7.54 -> 43/44 terminal ETA ~12:21-13:05Z (the '~12:10Z' used #38's no-insertion 6.69 h).
+- R16-A1 (4) letter window uses the header BEFORE the letter: up to ~10 min blind gap (poll every 600 s) in which a score may already be visible on Kaggle's My Submissions page.
+- R16-A1 (2)+(5): a blanket yes = exp70b yes + class C allowed (variant pending) -> ambiguous whether to re-tick now (exp70b-only branch) or once after the read; and (b) default partner #37 would drop exp70b right after the user said yes to it.
+- MEMORY.md lines stale: 'E10 port rule proposed; overlap-consensus line paused' (v1 in force since 26 Sep 09:10Z; OC STOPPED 26 Sep 10:52Z); resume pointer label '(26 Sep post-score)'.
+- 11:06Z wrote scan_plancheck.json (8 findings PC17-01..08); JSON valid

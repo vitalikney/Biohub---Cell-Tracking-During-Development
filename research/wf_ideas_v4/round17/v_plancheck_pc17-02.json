@@ -1,0 +1,9 @@
+{
+  "task": "v_plancheck PC17-02 (letter-window blind gap), skeptic VALUE + FEASIBILITY",
+  "written_utc": "2026-09-27T11:13Z",
+  "complete": true,
+  "refuted": true,
+  "reason": "The gap is real in principle: R16-A1 (4) (CONTEXT l.2903-2905) judges a letter against the last header BEFORE it, and headers come every 600 s. But events have overtaken the finding. The only class-C letter ('я бы за вариант б) топил') was logged at 11:09:39Z (commit 659cef3) and quotes header 11:01:09Z, where both refs are PENDING. The next header, 11:11:11Z (poll.log l.13745-13750), also shows 56598763 and 56598765 PENDING. So the letter already passes the proposed stricter bracket rule. The R16-A1 (5) variant clause is also moot, because the variant (b) came in the same letter and the partner defaults to #37. What is left has no score value: only a label, with no effect on the private LB, the finals or any file. It matters only if the user sends an amended letter before the terminal header. Bringing in a new rule after the letter is itself a small post-letter rule change. A factual note does the job and changes no rule.",
+  "fix": "Do not add a new rule. At the next commit, add one factual line to the 11:09:39Z letter entry: 'Bracket check: the next header 2026-09-27T11:11:11Z also shows 56598763 and 56598765 PENDING, so the letter is pre-registered under either reading of R16-A1 (4).' If the user amends the letter before the first 43/44 terminal header (e.g. to (c), or names exp70b as the (b) partner), then apply the bracket test to that amendment: the header before it and the header after it must both show both refs PENDING, or take one ListSubmissions read right after logging it. Otherwise label the amendment USER DECISION AFTER SCORE.",
+  "realistic_gain": "0 on private and public LB (the label only). Integrity: the one-line note settles the only live letter; no process risk, ~2 minutes."
+}

@@ -1,0 +1,15 @@
+{
+  "task": "R17P-F5 skeptic (value+feasibility): SLOT PLAN 27-29 Sep",
+  "refuted": true,
+  "reason": "The finding is out of date: two user decisions were logged just before or after it was written (scan notes 11:09-11:10Z). (1) At 11:11:40Z the user said YES to Q1 and Q2 (CONTEXT l.2933-2937, git 5bce47f): push exp71 and submit exp72 once it passes its dummy gates. Expected score ~22:30-23:30Z 27 Sep. Q3 (exp72 as a final) is still unanswered. So 'exp72 (named Q2 yes only)' with a 'small P(named exp72 yes)' is false. exp72 will use one slot, probably on 27 Sep, unless exp71 or its gates fail. Expected slot use is ~0.7-0.9 from exp72 alone, not 0.02-0.05, and 'default use 0' is wrong. (2) At 11:08Z the E10 v3 instruction (CONTEXT l.2917-2926, git 61e0737) replaced the E10 v1/v2 thresholds. Its trigger is any public notebook scoring >= 0.955, with no lab gate. Its actions are autonomous: (A) a verbatim copy AND (B) the copy + our insertion or (C) a port into K2. That is 2 submits per trigger, not one 'E10 v1 port', so 'P(v1 trigger) ~1-3%' prices the wrong rule. The R13-A1 (5) rule 'keep 1 slot/day free for a port' is too small for v3. With exp72 on 27 Sep, only 1 slot is left today. A written RESUME POINT saying 'slots = insurance for an E10 v1 port only; default use 0' would contradict both user decisions. It could lead a later session to hold back the approved exp72 or under-reserve slots for v3. Correct parts: no ERROR-resubmit candidate exists (#37, #38 and exp70b are COMPLETE, and 43/44 are class C and never resubmitted). Rejecting calibration-only submits is also right (06:19Z FREEZE).",
+  "fix": "Rewrite the RESUME POINT slot line from the 11:08Z and 11:11Z entries. Priority: E10 v3 (A) verbatim > E10 v3 (B)/(C) > unchanged resubmit of an ERRORed finals-relevant file > exp72 (Q2 = YES, public-only while Q3 is unanswered) > empty; no calibration-only submits (FREEZE). 27 Sep (2 left): exp72 when its dummy gates pass; keep the other slot for a v3 (A). 28 and 29 Sep (5 each): keep 2 per day free for one v3 trigger (A+B/C); one unchanged exp72 resubmit only if it ERRORs at < 10 h latency and still scores before 19:00Z 29 Sep. Last v3 submit: early enough that the score lands before the 29 Sep 19:00Z read and 20:00Z tick at the latency the ledger measures for that notebook. Expected use: ~1 (exp72) + 2 x P(v3 trigger). Drop 'v1' and 'default use 0'.",
+  "realistic_gain": "No score gain. The value is bookkeeping: the stale line would contradict the user's Q2 yes and the E10 v3 instruction and could cost a v3 slot or delay exp72. The corrected plan protects slots worth at most a public copy of a >= 0.955 notebook (a 29% public read, unknown private transfer).",
+  "sources": [
+    "CONTEXT.md l.2704-2711, l.2815-2827, l.2917-2937",
+    "research/wf_ideas_v4/round17/scan_hyp_post_r8_plan.notes.md",
+    "experiments/e10_watch/20260927T1101Z.txt",
+    "experiments/ext_optimized-biohub-max-score/v6_2026-09-27/NOTES.md",
+    "experiments/lb_poll/poll.log (43/44 PENDING at last header)"
+  ],
+  "written_utc": "2026-09-27T11:14Z"
+}

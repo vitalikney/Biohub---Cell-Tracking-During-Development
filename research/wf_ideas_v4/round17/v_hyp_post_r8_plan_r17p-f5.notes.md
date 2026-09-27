@@ -1,0 +1,9 @@
+## 2026-09-27T11:12:26Z start R17P-F5 skeptic (slot plan)
+- 11:13Z (date -u) sources: CONTEXT l.2704-2711 (R13-A1 (5) slots), l.2815-2827 (R15-A1 (2) FREEZE), l.2917-2926 (11:08Z USER INSTRUCTION E10 v3), l.2927-2932 (11:09:39Z class-C letter (b)), l.2933-2937 (11:11:40Z USER YES Q1+Q2: exp71 push, exp72 submit; Q3 unanswered; exp72 score expected ~22:30-23:30Z 27 Sep); git 61e0737 / 659cef3 / 5bce47f.
+- scan_hyp_post_r8_plan.notes.md: finding written 11:09-11:10Z, i.e. BEFORE the 11:11:40Z Q2 yes, and it cites only E10 v1 (it never mentions v3 at 11:08Z).
+- STALE #1: 'exp72 (named Q2 yes only)' / 'small P(named exp72 yes)' -> Q2 IS yes. exp72 will consume 1 slot (likely 27 Sep, ~15:00-16:00Z) unless exp71 or the dummy gates fail. Expected slot use is ~0.7-0.9 from exp72 alone, not 0.02-0.05. 'default use 0' is false.
+- STALE #2: 'E10 v1 port', 'P(v1 trigger) ~1-3%' -> v3 (11:08Z) supersedes v1/v2 thresholds; trigger = any public notebook with public score >= 0.955; actions (A) verbatim copy + (B) copy+insertion or (C) port into K2 = 2 submits per trigger, autonomous. Lower bar than v1 -> P(trigger) not 1-3% (not estimated precisely; lower bar, no lab gate).
+- SLOT ARITHMETIC: 27 Sep 2 left (4 - probes 43/44) correct. With exp72 on 27 Sep only 1 left for a v3 (A) today; the R13-A1 (5) 'keep 1 slot per day free for a port' is too small for v3 (needs 2/trigger). The plan must reserve 2/day for v3 on 28-29 Sep.
+- Correct parts: no ERROR-resubmit candidate (#37/#38/exp70b COMPLETE; 43/44 class C never resubmitted); rejection of calibration-only submits (FREEZE 06:19Z) is right.
+- poll.log last header: 43/44 still PENDING. e10_watch 11:01Z: no kernel change; public amanatar v6 no score visible (ext NOTES.md) -> no v3 trigger yet.
+- VERDICT: refuted (stale vs two user decisions logged 11:08Z and 11:11Z; writing 'default use 0 / v1 only' into the RESUME POINT would contradict the user's Q2 yes and E10 v3).

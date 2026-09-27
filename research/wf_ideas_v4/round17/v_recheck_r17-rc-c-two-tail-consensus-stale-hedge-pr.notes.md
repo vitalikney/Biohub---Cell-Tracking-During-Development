@@ -1,0 +1,6 @@
+- 2026-09-27T11:14:47Z start: recheck R17-RC-C two-tail consensus stale hedge premise
+- 11:15Z sources read: v3 two-tail _value/_schedule.json (old refutation; hedge premise = "F2 = exp51/exp52" in both + s_merge.json l.534); IDEAS.md I-171 row has NO hedge clause (only "collapses to flow-off; doubles repair time").
+- R15-RC-C (round15/scan_recheck.json): 0.94 vs 0.89 is {#37,#38} vs {#37, exp70d} specifically; driver = exp70d carries the SAME insertion. Same entry: E[score] favours diverse F2 whenever sigma_D large. So "diverse F2 loses" is a narrow result, not general.
+- CONTEXT 11:09:39Z user letter class C (b): if 43/44 >= 0.955 -> finals {V*_C, #37}, #38 LEAVES. 11:14Z freeze lifted; new rungs >=0.955 proposed as public-aimed final with #37. => "F2 = #38" is conditional, may be stale today.
+- v3 schedule repaired variant = relink-only vote inside one tail (2 extra Hungarian passes, "a few % of repair time") -> the time objection does NOT bind that variant; blockers are value (flow-off knob, link family 0/3 R9-RC-B) + R8 (12:00Z, now 11:15Z, no lab bed / dummy / user OK).
+- 11:16Z final JSON written (refuted=true: verdict upheld but curator text/premises inaccurate)

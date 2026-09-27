@@ -1,0 +1,5 @@
+- 2026-09-27T11:14:03Z start R17P-F13 verify (12:04Z E10 tick defer)
+- 11:15Z CONTEXT l.2530-2531: timer 2f0d1fa1 (-> 2e87e414 'same schedule', l.2748) acts ONLY if newest e10_watch snapshot > 2 h 30 min old. Newest = experiments/e10_watch/20260927T1101Z.txt -> at 12:04Z age 63 min -> timer no-ops by itself. F13's 'log deferred' is already the default behaviour; at 15:04Z age 4h03 -> acts, i.e. after the 43/44 read edge (14:28:22 header / 14:40 fallback). So R16-A7 is already realised mechanically.
+- CONTEXT l.2917-2926 (11:08Z): USER INSTRUCTION E10 v3 -> trigger any public nb >= 0.955, act 'as fast as possible'; research/wf_ideas_v4/e10v3/build_watch.notes.md: HOURLY v3 watch being built from 11:12Z. F13's 'return to hh:04 3-h grid' contradicts v3 (see also round17 v_..._r17p-f3.json point (3), r17p-f6.json cadence).
+- e10_snapshot: 8 read-only CLI calls, no ListSubmissions (snapshot header 'fetch: 8 OK'), so a run inside the read window cannot disturb poll.log / read trigger; 'noise' = one extra diff file, harmless.
+- Verdict: refuted (redundant with built-in staleness gate; cadence part superseded by E10 v3). Score gain 0.

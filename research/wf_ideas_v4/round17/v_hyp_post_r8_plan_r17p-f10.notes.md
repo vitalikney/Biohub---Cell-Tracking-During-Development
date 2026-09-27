@@ -1,0 +1,11 @@
+# R17P-F10 verify notes (2026-09-27T11:13:18Z)
+- No prior JSON for this task; created notes.
+- tools/: no private_read.py (confirmed via ls tools | grep priv = empty).
+- Pre-registration v2 text (CONTEXT l.2570-2598) is in bf07763 (2026-09-27T01:46+03:00) and `git branch -r --contains bf07763` = origin/main; HEAD d1ccc85 == origin/main, so L1-L7 addenda (l.2711-2721, l.2863-2866) are also pushed. Text-level hindsight guard for the read ALREADY exists.
+- I-336 (the real guard: LESSONS s3 item 11 + P1 prediction, pushed) is still NOT committed (IDEAS.md l.542, c16 note). That is the missing guard, 10-min text job.
+- Ambiguities a script author would have to resolve (new pre-registration choices, not arithmetic): (e) S in thousandths vs D = lab sum (units; per-pair lab values for P38->P37 'borrowed', P34->P35 in-sample upper bound) (round12/v_hyp_post_deadline_r12p-3.json); 'C1-C5 and I' - I undefined in l.2591; X run: R16-A9 (d) defines X = private of our exact-x138 submission, rank = count(private > X).
+- LB CSV columns: Rank,TeamId,TeamName,LastSubmissionDate,Score(3dp),SubmissionCount,TeamMemberUserNames (experiments/lb_poll/ladder_watch/20260927T073705Z/...csv). No per-submission time -> tie read (c) 'above/between/below the copy run' cannot be computed mechanically beyond Rank ordering; 3dp bin ambiguity is inherent.
+- Gate (pytest on synthetic worlds) is circular: it checks the author's encoding of the text against the same author's reading; it cannot validate interpretation.
+- Value: 0 score by design; the cited lessons (edge filter, dc0.30 flip) were lab->LB transfer failures, not read reshaping - a script would not have prevented them.
+- Verdict leaning: refuted (value), keep the cheap kernel: dated text clarification of the ambiguous definitions + commit I-336 before 29 Sep 23:00Z; any script can be written after 29 Sep 20:00Z from frozen text.
+- 2026-09-27T11:15:41Z final JSON written (refuted=true).

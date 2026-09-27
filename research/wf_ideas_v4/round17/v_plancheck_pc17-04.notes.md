@@ -1,0 +1,11 @@
+# v_plancheck_pc17-04 notes (skeptic, value + feasibility)
+- 2026-09-27 11:12Z: the JSON did not exist yet, so this is a fresh run. Sources: experiments/lb_poll/ledger.md (11:11:12Z), poll.log headers (11:01:09Z, 11:11:11Z; cadence ~602 s), CONTEXT.md l.2830-2916 (R15-A1 (4), R16-A1 (3)/(4)), round17/scan_plancheck.json, round16/report.json.
+- 43/44 are PENDING at the 11:11:11Z header (L > 5.71 h).
+- Clock math (submits 05:28:13Z / 05:28:22Z): L 6.69 -> 12:09:4x; 6.72 -> 12:11:3x; 6.87 -> 12:20:3x; 7.54 -> 13:00:4x; 7.58 -> 13:03:10; 9.0 -> 14:28:13 / 14:28:22.
+- Projected headers (+602 s): 12:01:21, 12:11:23, 12:21:25, ..., 13:01:33, 13:11:35, ..., 14:21:49, 14:31:51.
+- At L 6.87 the first header showing terminal is 12:21:25Z, so the lower end of the claim is correct. At L 7.58 completion is 13:03:10Z and the first header after it is ~13:11:35Z, so the claim's '13:05' upper end is off by one header and should be ~13:11Z.
+- The 6.87-7.58 h range is an empirical span over n = 5 insertion-family runs, not a bound. exp57b (ungated insertion) has L in (6.72, 7.73]. A 12:11Z terminal header needs L <= 6.72 h: possible but unlikely. A 12:01Z terminal needs L <= 6.55 h: very unlikely for the insertion family (#37 is 7.36+). ERROR can come at any time.
+- Round 16 already wrote '~12:10-13:10Z expected' (report.json R16-A4 deadline) and 'earliest ~12:10Z'. The new part is the correction to the earliest time, and it is minor.
+- Risk: the scan_plancheck PC17-02 text says 'practically by ~12:15Z'. That would miss the 12:11Z header if L <= 6.72. The finding's own action ('in the 12:00Z commit or before it') is the safe one.
+- No mechanism, no submit and no rule change, so R1-R10 are fine. There is no private/LB value; it is scheduling only.
+- 11:14Z wrote v_plancheck_pc17-04.json (refuted=false; the upper edge is corrected to ~13:11Z; keep 12:11Z as the conservative earliest)

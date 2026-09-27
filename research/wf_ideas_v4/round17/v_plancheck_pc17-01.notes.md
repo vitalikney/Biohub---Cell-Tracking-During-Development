@@ -1,0 +1,11 @@
+# v_plancheck PC17-01 notes (skeptic, value + feasibility)
+- 2026-09-27 11:12Z: no prior v_plancheck_pc17-01.json; started fresh.
+- git: HEAD d1ccc85 (11:12:41Z "exp71 training pushed"); main...origin/main, no ahead count. After 06f1a02 (09:15:58Z) there are 3 USER commits: 61e0737 11:08:26Z E10 v3 instruction, 659cef3 11:09:39Z class-C letter (option b), 5bce47f 11:11:40Z user yes exp71 push + exp72 submit.
+- CONTEXT.md l.2917-2939: USER INSTRUCTION E10 v3 (11:08Z; supersedes E10 v1/v2 thresholds and P6, lifts R8 for this item; trigger = public notebook with own public score >= 0.955), USER LETTER class C (b) 11:09:39Z (pre-score, header 11:01:09Z both PENDING), USER YES exp71/exp72 11:11:40Z (R8 lifted for exp72; Q3 unanswered), exp71 PUSHED 11:11:50Z.
+- => finding's "No user letter since 07:45Z" is FALSE now; its proposed 12:00Z text "no user letter as of 12:00Z" would log a falsehood.
+- round16/report.json R16-A3 template ("E10 v2 LAPSED; E10 v1 (>=0.956, P1-P8...) stays in force"; "exp71/exp72 only on an explicit named yes"; "Slots: 27 Sep 2 left") is superseded by E10 v3 and the 11:11Z yes. Its own clause "if the user did answer, log the answer verbatim instead" applies.
+- R16-A5 (iii) prescribed v6 NOTES item-4 text "V6 fails E10 P3 ... post-deadline list only" is also stale under E10 v3 (P3 superseded; V6 would trigger E10 v3 (A) if it ever shows a public score >= 0.955). R16-A5 record items (2) and (6) need the same qualifier.
+- poll.log: headers 11:01:09Z (l.13684) and 11:11:11Z (l.13745): 56598763 / 56598765 both PENDING.
+- ROUND 15/16 RECORD grep in CONTEXT = 0 (confirmed). v6 folder untracked (confirmed); also experiments/e10_watch/20260927T1101Z.txt untracked; research/wf_ideas_v4/e10v3/ untracked.
+- Value: zero score impact (log hygiene); feasibility: trivial, no Kaggle action.
+- 11:15Z: final JSON written (refuted=true, amended fix).
