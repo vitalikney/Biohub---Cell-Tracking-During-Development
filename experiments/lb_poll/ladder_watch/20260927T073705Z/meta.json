@@ -1,0 +1,38 @@
+{
+ "utc": "2026-09-27T07:37:05Z",
+ "rc": 0,
+ "stdout": "Downloading biohub-cell-tracking-during-development.zip to experiments/lb_poll/ladder_watch/20260927T073705Z",
+ "stderr": "0%| | 0.00/124k [00:00<?, ?B/s] 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 124k/124k [00:00<00:00, 886kB/s] 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 124k/124k [00:00<00:00, 876kB/s]",
+ "note": "",
+ "teams": 3942,
+ "ours": {
+  "rank": 255,
+  "id": "16810638",
+  "name": "D: Discipline",
+  "last": "2026-09-27 00:05:50",
+  "score": "0.954",
+  "count": 44
+ },
+ "fresh": true,
+ "freshness": {
+  "fresh": true,
+  "C": 4,
+  "E": 0,
+  "expected": [
+   44
+  ],
+  "err_counted": "n.a.",
+  "count": 44
+ },
+ "read_utc": "2026-09-27T07:37:04Z",
+ "statuses": {
+  "56598765": "PENDING",
+  "56598763": "PENDING",
+  "56592350": "COMPLETE",
+  "56589423": "COMPLETE",
+  "56589065": "COMPLETE",
+  "56589025": "COMPLETE"
+ },
+ "last_expected": "2026-09-27 00:05:50",
+ "last_ok": true
+}

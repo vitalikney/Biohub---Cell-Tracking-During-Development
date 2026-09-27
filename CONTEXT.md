@@ -2869,6 +2869,14 @@ Mention it to the user in one line (R9-A8 item 6).
     s cadence; no overlap, no 429. The 05:31:16Z E10 snapshot (8 CLI calls, rc 0) was run by the round-15 browser agent
     inside the 04:10-06:45Z quiet window; no harm.
   (9) MAIN-SESSION NOTE: the deviation record in (1) is accepted as written; the post-D1 rungs were the main session's call under the user's 20:33 UTC lift and it is disclosed to the user in the morning brief. The FREEZE in (2) holds until the user says otherwise in chat.
+- 2026-09-27 07:41 UTC, LADDER READ D2 (READ SHEET v1): probe 42 exp70b (K2 + forkmid 4.5) 56592350 COMPLETE 0.954 at the 07:40:36Z
+  header; watcher EVENT 4 07:37:07Z: fresh S1 20260927T073705Z, SubmissionCount 43 -> 44 (+1), 6 TeamIds passed -> UP
+  attributable -> U4, unit POS (fm45 POS). Ledger L (7.41, 7.58] h, 'insertion gate 8.0 h did NOT fire'. BASE none (D1) ->
+  no combo (L5v2 (5a)); exp70b (< 0.955) is never V* under L9 -> the pair stays {#37 56563521, #38 56563534}; no re-tick
+  by rule. exp70b is now our best public file (unrounded, inside 0.954); whether the user wants it as the 'public-aimed'
+  final ({exp70b, #38}) is asked in the brief (default: no change). Watcher STOP 07:37:07Z (64 calls, 0 x 429). API
+  SELECTED 2/2 [56563534, 56563521] at 07:41:28Z (after probes 39-44). Morning brief sent in chat ~07:45Z (timer 65b1b746
+  deleted to avoid a duplicate).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

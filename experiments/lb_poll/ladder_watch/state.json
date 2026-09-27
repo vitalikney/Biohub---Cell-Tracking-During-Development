@@ -3,15 +3,17 @@
  "last_statuses": {
   "56598765": "PENDING",
   "56598763": "PENDING",
-  "56592350": "PENDING",
+  "56592350": "COMPLETE",
   "56589423": "COMPLETE",
   "56589065": "COMPLETE",
   "56589025": "COMPLETE"
  },
  "s0": {
-  "folder": "20260927T045616Z",
+  "folder": "20260927T073705Z",
   "statuses": {
-   "56592350": "PENDING",
+   "56598765": "PENDING",
+   "56598763": "PENDING",
+   "56592350": "COMPLETE",
    "56589423": "COMPLETE",
    "56589065": "COMPLETE",
    "56589025": "COMPLETE"
@@ -20,13 +22,13 @@
    "rank": 255,
    "id": "16810638",
    "name": "D: Discipline",
-   "last": "2026-09-26 21:38:33",
+   "last": "2026-09-27 00:05:50",
    "score": "0.954",
-   "count": 43
+   "count": 44
   }
  },
  "error_mode": null,
- "events": 3,
+ "events": 4,
  "verdicts": {
   "56589065": {
    "verdict": "NEU",
@@ -42,6 +44,11 @@
    "verdict": "NEG",
    "unit": "NEG",
    "event": 3
+  },
+  "56592350": {
+   "verdict": "UP",
+   "unit": "POS",
+   "event": 4
   }
  },
  "ambiguous": [],
@@ -197,6 +204,64 @@
    "passed_ids": [],
    "up": "FAIL",
    "attribution": "no UP",
+   "delta": 1
+  },
+  {
+   "n": 4,
+   "utc": "2026-09-27T07:37:07Z",
+   "refs": [
+    {
+     "ref": "56592350",
+     "name": "exp70b",
+     "status": "COMPLETE",
+     "display": "0.954",
+     "verdict": "UP",
+     "unit": "POS",
+     "carried": false
+    }
+   ],
+   "s0": "20260927T045616Z",
+   "s1": "20260927T073705Z",
+   "fresh": true,
+   "tries": 1,
+   "fr": {
+    "fresh": true,
+    "C": 4,
+    "E": 0,
+    "expected": [
+     44
+    ],
+    "err_counted": "n.a.",
+    "count": 44
+   },
+   "last_ok": true,
+   "ours0": {
+    "rank": 255,
+    "id": "16810638",
+    "name": "D: Discipline",
+    "last": "2026-09-26 21:38:33",
+    "score": "0.954",
+    "count": 43
+   },
+   "ours1": {
+    "rank": 255,
+    "id": "16810638",
+    "name": "D: Discipline",
+    "last": "2026-09-27 00:05:50",
+    "score": "0.954",
+    "count": 44
+   },
+   "passed": 6,
+   "passed_ids": [
+    "16749192",
+    "16820124",
+    "16483723",
+    "16454847",
+    "16555768",
+    "16460127"
+   ],
+   "up": "PASS",
+   "attribution": "single completion (count +1 per COMPLETE): the UP is attributable",
    "delta": 1
   }
  ]
