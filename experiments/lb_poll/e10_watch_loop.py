@@ -334,9 +334,12 @@ class WatchLoop:
         line = msg if raw else f"{stamp(self.clock.now())} {msg}"
         self.echo(line)
         if log:
-            self.out_dir.mkdir(parents=True, exist_ok=True)
-            with self.log_path.open("a", encoding="utf-8") as f:
-                f.write(line + "\n")
+            try:
+                self.out_dir.mkdir(parents=True, exist_ok=True)
+                with self.log_path.open("a", encoding="utf-8") as f:
+                    f.write(line + "\n")
+            except OSError as exc:  # review_watch_0: the line is already printed; a log error must not crash the loop
+                self.echo(f"{stamp(self.clock.now())} WARN watch_loop.log write failed ({type(exc).__name__}: {exc})")
 
     def save_state(self):
         tmp = self.state_path.with_suffix(".tmp")
@@ -368,17 +371,12 @@ class WatchLoop:
                                 attempts=1 if self.dry is not None else es.ATTEMPTS, dry=self.dry)
         cur = snap["state"]
         events = compare(self.state["good"], cur, self.top_ref)
-        for bucket in ("kernels", "status"):
-            for k, v in cur[bucket].items():
-                if v is not None:
-                    self.state["good"][bucket][k] = v
-                    self.state["good_from"][k] = snap["path"].name
         self.state["runs"] += 1
         self.state["last_run_utc"] = stamp(started)
         self.state["streak_429"] = self.state.get("streak_429", 0) + 1 if gr.aborted and gr.n429 else 0
         sig = signal_lines(events, f"{snap['path'].name}, {stamp(started)}")
-        self.state["signals"] += len(sig)
-        self.save_state()
+        # The good lists advance (and the state is saved) only AFTER the signals are written: a crash / kill / disk
+        # error in between repeats a signal on the next run instead of losing it (review_watch_1).
         ok = sum(1 for f in snap["fetches"] + [snap["lb"]] if f["state"] == "OK")
         n = len(snap["fetches"]) + 1
         self.say(f"RUN {self.state['runs']} snapshot {snap['path'].name} CHANGES={snap['changes']} fetch OK {ok}/{n}"
@@ -395,6 +393,13 @@ class WatchLoop:
                         f.write(json.dumps(dict(e, utc=stamp(started), snapshot=snap["path"].name)) + "\n")
         for line in sig:
             self.say(line, log=True, raw=True)
+        for bucket in ("kernels", "status"):
+            for k, v in cur[bucket].items():
+                if v is not None:
+                    self.state["good"][bucket][k] = v
+                    self.state["good_from"][k] = snap["path"].name
+        self.state["signals"] += len(sig)
+        self.save_state()
         return sig
 
     def run(self, once=False):
@@ -415,8 +420,14 @@ class WatchLoop:
                     self.run_once()
                 except Exception as exc:  # disk / parse trouble: log it, keep the hourly schedule
                     self.state["last_run_utc"] = stamp(now)
-                    self.save_state()
-                    self.say(f"RUN FAILED {type(exc).__name__}: {exc}; next run {stamp(self.next_due())}", log=True)
+                    why = f"{type(exc).__name__}: {exc}"
+                    try:
+                        self.save_state()
+                    except Exception as exc2:  # review_watch_0: never crash here; a crash lets the restart wrapper
+                        # re-run at once (8 calls every ~3 min while the state cannot be saved); the in-memory
+                        # schedule keeps the hourly pace while this process lives
+                        why += f"; state save failed too ({type(exc2).__name__}: {exc2})"
+                    self.say(f"RUN FAILED {why}; next run {stamp(self.next_due())}", log=True)
                 if once:
                     return 0
                 continue

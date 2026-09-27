@@ -2949,6 +2949,9 @@ Mention it to the user in one line (R9-A8 item 6).
   divisions', no DC change) and exp70r = exp70q + DC 0.20; exp70n (thr 0.3 alone) dummy running since 11:15Z. The last slot
   today goes to exp70r if probe 43 (DC 0.20) reads >= 0.955 by ~13:00Z, else exp70q; score ~19:30-20:30Z. Evidence for 'more
   divisions': dc0.30 (fewer safe forks) -0.005 public; insertion +0.001 twice.
+- 2026-09-27 12:01 UTC, 12:00 UTC LINE (R16-A3): R8 cutoff reached. E10 v2 was never answered as such; the user replaced it at ~11:10 UTC with
+  E10 v3 (copy any better public notebook; verbatim + with our insertion or adapted K2), which is in force. New public rungs
+  continue under the user's 11:13-11:17 UTC directives (aggressive mode); R8 no longer binds them (user decision).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
