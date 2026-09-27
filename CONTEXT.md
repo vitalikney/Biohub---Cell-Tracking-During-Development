@@ -2797,6 +2797,15 @@ Mention it to the user in one line (R9-A8 item 6).
   -0.005 on the public display (forks 75 -> 55 on the 4 dummy clips), while the exp60 lab said +0.0013 on 6bba and ~0 on
   44b6: the lab sign was wrong for this knob; the public division term is far more sensitive than the lab suggested.
   Leaf prune 0.3 on K2 = 0.954 without beating our best (P36 already carries lp30 at 0.954).
+- 2026-09-27 04:59 UTC, POST-D1 EXPLORATION RUNGS (post-hoc, written after the D1 read; the user lifted the public-ladder ban at 20:33 UTC
+  and asked for 'one final for public'): the only strong public signal so far is DeepCenter safe-div 0.25 -> 0.30 = -0.005
+  (the lab said +0.001), i.e. the public embryo's true divisions sit in DeepCenter bands the lab does not predict. Two
+  rungs in the OTHER direction (more safe divisions): exp70j = K2 + DEEPCENTER_SAFE_DIV_THRESHOLD 0.20 (sha 61a8d3c1),
+  exp70k = K2 + 0.225 (sha adef8bcb); the only diff vs K2 is the cell-0 override. Lab (x138 control, exp60): dc0.20 44b6
+  0.0000, 6bba -0.0008 (+6 FP forks, TP unchanged) - not predictive for this knob. Honest prior per rung: P(display >= 0.955)
+  ~0.2-0.3, P(<= 0.953) ~0.3. CLASS: both are threshold neighbours = class C under L9 (never a final) UNLESS the user
+  explicitly allows a class-C file as the public-aimed final (asked in the morning brief); the pair rule otherwise stays.
+  Slots 27 Sep: 4 left -> these 2, keep 2 in reserve (E10 port, resubmits).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

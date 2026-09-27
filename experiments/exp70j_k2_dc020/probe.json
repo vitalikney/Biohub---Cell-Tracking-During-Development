@@ -1,0 +1,20 @@
+{
+ "base": "x138 verbatim = exp56 (anvithpothula/biohub-x138, author public 0.953; x138 datasets, docker pin and machine shape); built by tools/build_probe_kernel.py --base x138",
+ "change": {
+  "DIVINS_ENABLE": "1",
+  "DIVINS_STEAL": "1",
+  "DIVINS_CAP": "4",
+  "DIVINS_FRAME_CAP": "1",
+  "DIVINS_ALPHA": "1",
+  "DIVINS_THRESH": "0.4",
+  "DIVINS_DUMP": "0",
+  "REPAIR_DEADLINE_S": "34200",
+  "DIVINS_DEADLINE_S": "28800",
+  "LOWREFINE_ENABLE": "1",
+  "DEEPCENTER_SAFE_DIV_THRESHOLD": "0.20",
+  "DEGRADE_KEEP_DIV": "1",
+  "PATCHES": "divinsert+lowrefine+safetail"
+ },
+ "note": "post-D1 exploration: K2 + DeepCenter safe-div 0.20 (class C unless the user allows)",
+ "rule": "compare with exp56 (x138 verbatim on our account); above exp56 adopt, ties recorded"
+}
