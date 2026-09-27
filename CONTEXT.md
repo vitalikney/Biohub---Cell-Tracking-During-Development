@@ -2924,6 +2924,12 @@ Mention it to the user in one line (R9-A8 item 6).
   cannot apply. Safety kept: byte-identity for (A), public/listable sources, runtime evidence (<= 12 h), dummy before submit,
   never touch the finals without the user's re-tick. Open for the user: finals composition in that case (proposal in chat).
   Tooling for (B)/(C) is being built now (workflow), before any trigger.
+- 2026-09-27 11:09:39 UTC, USER LETTER ON CLASS C (verbatim: "я бы за вариант б) топил", reply to the question 'Если 43 или 44 покажет
+  >= 0.955: (а) ничего не менять; (б) поставить её вместо #38, то есть {она, #37}; (в) {она, #38}'). PRE-REGISTERED: logged
+  while the last poll.log header 2026-09-27T11:01:09Z shows BOTH 56598763 and 56598765 PENDING (R16-A1 (4)). Reading: class C
+  is allowed as a final under option (b): if V*_C exists (R15-A1 (4) conditions: COMPLETE, L_hi <= 9.0 h, display >= 0.955,
+  the other rung >= 0.954 or ERROR/unscored; 43=44 tie -> 44), the pair becomes {V*_C, #37 56563521} and #38 leaves; the (b)
+  partner is #37 (the user did not name exp70b). No V*_C -> pair unchanged {#37, #38}. The user re-ticks after the read.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
