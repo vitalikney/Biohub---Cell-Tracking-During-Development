@@ -3298,6 +3298,12 @@ Mention it to the user in one line (R9-A8 item 6).
   56611472 now prints family safetail. exp78b DUMMY PASS logged (121,252 nodes / 95 forks / 117,092 edges, ~1,368 s, 0 errors).
   exp79d DUMMY PASS (121,061 nodes / 86 forks, Secondary ed8c616b, ~1,305 s, 0 errors). exp80a = K2 + cap 24 + FRAME_CAP 2
   built (sha da984964; W2-only), dummy after exp79a starts / a lane frees.
+- 2026-09-27 21:26 UTC, N2 DONE + GATES: exp77 COMPLETE 21:24Z; both recipes ran a full epoch (18,707 iters at ~0.39 s/it); n2a (epoch 2 of
+  exp71) sha 7029fe69, detection proxy student/teacher 0.998/1.010 (still a small change); per the N2 pre-registration only n2a is
+  used. Private dataset vitaliineibauer/biohub-secft-n2a-v1 created; exp81 = exp70g + n2a secondary (sha 6a62e321) dummy pushed.
+  exp79a DUMMY PASS (exp70g + CI: 121,252 nodes / 81 forks / 117,083 edges = exp70g; COORDINJECT 4/4, 91.5% moved; ~1,712 s; 0
+  errors). exp80a (cap 24 + fc2) dummy pushed. W1 per R20-A2: ~00:05Z exp78b (cap 12 + fc2), ~00:06Z exp79a (CI on cap 6),
+  00:50Z exp78a (cap 8).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
