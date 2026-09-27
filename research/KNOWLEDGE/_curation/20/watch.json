@@ -1,0 +1,125 @@
+{
+ "task": "Curation 20 watch: maintain WATCHLIST, detect forgotten items (Biohub, team D: Discipline)",
+ "complete": true,
+ "written_utc": "2026-09-27T20:55Z",
+ "files_written": [
+  "research/KNOWLEDGE/WATCHLIST.md",
+  "research/KNOWLEDGE/_curation/20/watch.notes.md",
+  "research/KNOWLEDGE/_curation/20/watch.json"
+ ],
+ "alerts": [
+  {
+   "kind": "forgotten",
+   "what": "W208 = R20-A1: the exp79a CI dummy (exp70g + coordinject, sha 5f9b265d) was never pushed; CI kernels queue 2-3.3 h and the CI slot closes at 03:00Z",
+   "evidence": "research/wf_ideas_v4/round20/report.notes.md 20:33Z (kaggle kernels status exp79a 404); CONTEXT.md l.3208 says it follows in the lane; round20/report.json R20-A1",
+   "suggested_action": "Push vitaliineibauer/biohub-exp79a-k2cap6-coordinject now; never re-push once QUEUED; gate vs the exp70g dummy (81 forks, 121,252 nodes)",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "W209 = R20-A2: READ TABLE v3 codes + W1/W2 v3 must be logged in CONTEXT before probe 46 (56611472) is terminal",
+   "evidence": "round20/report.json R20-A2 (deadline <= 21:45Z); experiments/lb_poll/poll.log l.17222 header 20:45:13Z shows 46 PENDING; CONTEXT.md last entry l.3217 (20:30Z)",
+   "suggested_action": "Append the R20-A2 line with date -u and the last PENDING header; it supersedes the 20:30Z default order",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "The logged 20:30Z autonomous W1 plan (exp78a, exp78b, exp76e; 2 slots ~08:00Z) conflicts with round 20's W1 (00:05Z exp78b, CI exp79a on PASS <= 03:00Z, 00:50Z exp78a; exp76e dropped; W2b held for E10 until 12:00Z)",
+   "evidence": "CONTEXT.md l.3217-3221 vs research/wf_ideas_v4/round20/report.json R20-A2 (2)-(4) and the rejected list",
+   "suggested_action": "Resolve by logging R20-A2 before 46 is terminal; a resumed session otherwise follows the 20:30Z order",
+   "urgency": "now"
+  },
+  {
+   "kind": "stale",
+   "what": "W185 = R20-A3: RESUME POINT (last 26 Sep 22:46Z), R8 coverage line (coordinject never named by the user), 18:56Z correction (S0 gives 127 passed, not 113; exp70g is class C) and MEMORY rewrite, deferred for the 5th round",
+   "evidence": "CONTEXT.md l.2599 last RESUME POINT; CONTEXT.md l.3196-3197; memory/project-lb-probe-approval.md (modified 25 Sep, 'E10 v1 in force'); round20/scan_plancheck.notes.md",
+   "suggested_action": "Paste R20-A3 (A)-(C) as the next CONTEXT write and rewrite the memory file",
+   "urgency": "now"
+  },
+  {
+   "kind": "forgotten",
+   "what": "W206 = R20-A6: N2 pre-registration (only the GPU0 epoch-2 secondary on exp70g, the ONE SEC file of 28 Sep, exp79d fallback) is not logged while exp77 is RUNNING",
+   "evidence": "round20/report.json R20-A6; round20/report.notes.md 20:33Z exp77 RUNNING; CONTEXT.md l.3070-3074 targets the stale exp70b base; CONTEXT.md l.3170 bans N1/N2 in W3/W4",
+   "suggested_action": "Append the R20-A6 line before exp77 completes (~22:00Z); upload N2 outputs to NEW datasets only",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "W213: probe 46 read ~22:00-22:40Z (8.0 h mark 22:36:59Z) with v3 own-base codes; S0 = count 47, S1 = first manual download with count 48",
+   "evidence": "experiments/lb_poll/ledger.md row 56611472 (L > 6.13 h at 20:45:15Z); round20/report.json R20-A8",
+   "suggested_action": "Manual kaggle competitions leaderboard -d within ~10 min of the terminal header; log S0/S1, k, TeamIds, L",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "W212 = R20-A7: GPU quota unread since 07:55/30 h (26 Sep); estimate 19-25 h used with exp79a, the N2 dummy, exp80a and a CI stack still to run in the same quota week (reset 3 Oct)",
+   "evidence": "round20/report.json R20-A7; round20/scan_plancheck.notes.md; CONTEXT.md l.2542",
+   "suggested_action": "Read the Kaggle Settings quota before pushing exp80a; apply the priority exp79a > N2 > exp80a > stack",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "W188 = R20-A4: tools/runtime_ledger.py has no family for exp72-80 (4th round); every 28 Sep ref prints 'family unknown', so no admission, 'v' suffix or L_hi finals clause",
+   "evidence": "tools/runtime_ledger.py l.76 (EXP_RULES ends at exp70[a-z]*); round20/report.json R20-A4",
+   "suggested_action": "Add the safetail_ci family and exp75/76/78/79/80 rules plus tests before 00:05Z 28 Sep",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "I229 (derived): a CI file submitted at the 03:00Z fallback completes ~12:40-13:30Z (CI L ~9.7-10.5 h), after the 12:00Z W2b decision; only a CI submit before ~01:30Z reads in time",
+   "evidence": "round20/report.json R20-A2 (2), (4), (7); CONTEXT.md l.3139",
+   "suggested_action": "Push exp79a now so it PASSES by ~00:30Z; otherwise plan W2b with CI = '?'",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "W204 = R20-A14: round20/REPORT.md was never written (the judge's write was blocked); round20/ is untracked",
+   "evidence": "research/wf_ideas_v4/round20/report.json note_report_md; git status (?? research/wf_ideas_v4/round20/)",
+   "suggested_action": "Write REPORT.md from report_md_ru, then commit named paths as the user without a Co-Authored-By trailer",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "I217 / W174: the E10 runbook SI (B) command uses DIVINS_CAP=4 while our best is cap 6, and the loop LOOK text still says >= 0.955 (the trigger is now >= 0.957)",
+   "evidence": "round20/scan_plancheck.notes.md; round20/report.notes.md (e10_watch_loop.py l.28/l.78, runbook l.206)",
+   "suggested_action": "Log the R20-A10 (5) text line; if an E10 signal fires, build (B) with cap 6",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "W126: RESULTS.md has no rows for probes 39-45; probe 45 (0.956, team best) is missing",
+   "evidence": "experiments/RESULTS.md l.71 last row probe 38; last commit b2be382 (26 Sep)",
+   "suggested_action": "Add rows 39-45 (and 46 after its read) before the finals read",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "I218/I219: the only robust lab result is 'keep FRAME_CAP <= 2' (no frame cap costs adj edge -0.00055; fc3 worse than fc2); all lab gain for cap >= 8 comes from 2 6bba clips (44b6 -0.00079 for every cap >= 6)",
+   "evidence": "research/wf_ideas_v4/round20/scan_hyp_insertion_direction.notes.md; round20/report.json R20-A10 (1)",
+   "suggested_action": "Put fc <= 2 into the W4 DIV-step rule and never quote the lab as private support in the finals message",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "deadline",
+   "what": "Morning: W199 = R20-A12 message ~08:00-09:30Z 28 Sep with the only question 'lift the 29 Sep 02:00Z cap?' (answer needed by ~23:00Z 28 Sep); W2a 08:45-10:00Z; W2b 12:00Z; T46 consolidation 12:00Z",
+   "evidence": "round20/report.json R20-A12, R20-A2 (3)-(4); CONTEXT.md l.1671",
+   "suggested_action": "Schedule round 22 and the message after the first W1 reads",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "deadline",
+   "what": "Finals: the user picks on 29 Sep; proposal {V_pub, #37} at the 12:00Z/18:00Z checks; ticks by the 20:00Z buffer; deadline 23:59Z (a submit must finish)",
+   "evidence": "CONTEXT.md l.3211-3213; round20/report.json R20-A9, R20-A3 (a); https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/743765",
+   "suggested_action": "Log the R20-A9 finals card lines tonight; never re-tick",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "stale",
+   "what": "W182 / W176 / W177 / W202(a): no NEVER_SUBMIT.md in exp70j/exp70k; no ROUND RECORD; LESSONS H1 untouched; the amanatar V6 misattribution at CONTEXT l.2976-2977 is still uncorrected",
+   "evidence": "ls experiments/exp70j_k2_dc020 experiments/exp70k_k2_dc0225; grep 'ROUND 1[4-9] RECORD' CONTEXT.md = 0; research/wf_ideas_v4/round9/LESSONS_draft.md (bf07763); round19/scan_recheck.notes.md",
+   "suggested_action": "Low priority; batch with the next CONTEXT write",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 20 (20:50Z 27 Sep) updates the 18:40Z watchlist. Probe 45 exp70g (cap 6) = 0.956, #162, new best; finals #37+#38 stay ticked and the user picks on 29 Sep; 46 PENDING (read ~22:00-22:40Z); the user is asleep (autonomous night). Done since 18:40Z: pre-score amendment and read table v2 (18:50Z), the 45 read, exp76a/78a/76e dummies clean, exp77 N2 pushed, the 46 waiter, round19 committed. Round 20 (complete 20:45Z, R20-A1..A14) is not in CONTEXT. Most urgent: push the never-pushed exp79a CI dummy; log codes v3 + W1/W2 v3 before 46 is terminal (it conflicts with the 20:30Z plan); the RESUME POINT/R8/correction/MEMORY block (5th round overdue); N2 pre-registration before exp77 finishes; the GPU quota read; ledger families (4th round); write round20/REPORT.md. New IDs W208-W215, T116-T121, I214-I230."
+}

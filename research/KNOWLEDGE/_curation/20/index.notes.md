@@ -1,0 +1,5 @@
+- 2026-09-27T21:00:42Z index curator c20 started; no index.json present
+- 21:01Z sources read: 3 curator results, INDEX c19, CHANGES c19, CONTEXT l.3075-3221 (## 9 at l.3222), poll.log 20:55:15Z (46 PENDING, 45 0.956), e10 2043Z l.981 (#163), KB section anchors. Writing INDEX.md
+- 21:03Z INDEX.md written (78 lines). Next: CHANGES.md section 20
+- 21:03Z CHANGES.md section 20 appended. Next: index.json
+- 21:04Z index.json written. DONE

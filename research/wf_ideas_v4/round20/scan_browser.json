@@ -1,0 +1,45 @@
+{
+ "summary": "Round-20 delta scan, 20:02-20:15 UTC 27 Sep, compared with round 19 (17:31Z). E10 P1: tools/e10_snapshot.py wrote experiments/e10_watch/20260927T2002Z.txt with CHANGES=0 against 19:43Z. Watch-loop runs 6-8 (17:43Z, 18:43Z, 19:43Z) all had 0 signals, and the largest P2 group was 1, so the port gate was not run. The x138 and amanatar kernels and statuses are unchanged. LB at 20:02:33Z: 3,956 teams (+3). We are #163 at 0.956 (probe 45, exp70g), 11th of 52 in the 0.956 block; 152 teams are strictly above us. Counts (r19 in brackets): 0.953 = 406 (398), 0.954 = 115 (114), 0.955 = 83 (81), 0.956 = 52 (52), 0.957 = 36 (35), >=0.955 = 287 (282), >=0.960 = 88 (86), >=0.970 = 7 (7). The top 17 are unchanged. Zhu Chen 96 rose from 0.963 to 0.967 (#18) and Samuel Sundararaman from 0.965 to 0.966 (#20). Probe 46 was still PENDING at 19:55Z. Discussion has one new topic, a process-only post by John Taylor (AI) (97th, 0.959) with no settings disclosed, and new comments from José Freitas in the synthetic-dataset thread claiming 0.960 with the synthetic data (no details until after the deadline). There is no host announcement. Code tab: no public notebook at 0.954 or above; the one new-in-list kernel (anhadmahajan06) is 0.946. Nothing was pulled. The Overview timeline is unchanged.",
+ "findings": [
+  {
+   "id": "r20-e10-p1-no-signal",
+   "kind": "new-fact",
+   "what": "E10 P1 at 20:02Z vs 19:43Z: CHANGES=0 (only 2 new 0.953 teams, Moroz Roman and PARAG VIJAY PAWAR). Watch-loop runs 6 (17:43Z, CHANGES=0), 7 (18:43Z, CHANGES=8) and 8 (19:43Z, CHANGES=13) all had signals 0. The only kernel-list change was anhadmahajan06/biohub-track-your-cells, new at dateRun pos 1 (lastRunTime 17:56 -> 19:15Z). scoreDescending, the anvithpothula/thtennant/amanatar user lists, and the x138 (anvithpothula/biohub-0-953-lb-original) and amanatar statuses are unchanged. P2 look-check: largest group 1 (19:43Z: Mingcheng Zhao 0.953 -> 0.961); 0 at 20:02Z. e10_port_gate.py was not run.",
+   "evidence": "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/experiments/e10_watch/20260927T2002Z.txt (DIFF); 20260927T1843Z.txt, 20260927T1943Z.txt (DIFF); experiments/e10_watch/watch_loop.log RUN 6-8",
+   "action": "None. The hourly loop continues (next run 20:43Z).",
+   "urgency": "info"
+  },
+  {
+   "id": "r20-lb-delta",
+   "kind": "new-fact",
+   "what": "LB 20:02:33Z: 3,956 teams. We are #163 (CSV Rank) at 0.956 after probe 45 (exp70g, 56606948, LSD 11:15:12), 11th of 52 in the 0.956 block (ranks 153-204); 152 teams are strictly above us (1 + 152 = 153). In r19 we were #288 at 0.954. Counts (r19): 0.953 406 (398), 0.954 115 (114), 0.955 83 (81), 0.956 52 (52), 0.957 36 (35), >=0.955 287 (282), >=0.960 88 (86), >=0.970 7 (7). Movers 17:31 -> 20:02Z, all with morning submissions (09:56-13:42Z): Zhu Chen 96 0.963 -> 0.967 (#18, enters the top 20), Samuel Sundararaman 0.965 -> 0.966 (#20), a team shown as a Japanese name with an emoji 0.961 -> 0.963, Vodolay 0.961 -> 0.962, Mingcheng Zhao 0.953 -> 0.961 (#69), Teju Olarewaju 0.959 -> 0.960, James Y 0.954 -> 0.958, takaito 0.956 -> 0.957, Team Name 0.953 -> 0.955, tyvallo new -> 0.955, Can Kural/mimimi/0.0 0.953 -> 0.954, and 13 new at 0.953. The top 17 are identical (yu4u 0.978; Sergio Alvarez and Gabriel 0.975; taiseiu 0.972). There is no shared-score cluster. Probe 46 (56611472) was PENDING at the ledger's 19:55:05Z poll, with L > 5.30 h.",
+   "evidence": "experiments/e10_watch/20260927T2002Z.txt (histogram, leaderboard_rows) vs 20260927T1731Z.txt (row diff by TeamId); experiments/lb_poll/ledger.md (ledger time 19:55:07Z)",
+   "action": "None on finals now; the user decides finals on 29 Sep (CONTEXT 19:10:58Z). The public rank is context only (public = ~29%).",
+   "urgency": "info"
+  },
+  {
+   "id": "r20-disc-john-taylor-process",
+   "kind": "new-fact",
+   "what": "New topic (posted ~19:35Z, 0 comments): 'Public 0.953 to 0.959 in two days: using the board as the instrument, and the re-run time as build time' by John Taylor (AI), 97th. It is a process-only post. The ladder was 0.953 -> 'our post-processing stage on top 0.957' -> one knob 0.958 -> one knob 0.959. The method: two-arm (up/down) knob probes off the best, reads pre-registered in the submission description, and candidates built during the 6-11 h re-run. For finals the post advises 'the best plus its closest one-line neighbor' over a decorrelated hedge. It states that the public board is 'four preview clips' with the private set at 71%, and that local validators got the sign wrong in 4 of 4 model-side changes. Settings are withheld until after the deadline. No mechanism can be ported.",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/743929",
+   "action": "Info only. This is the same public-knob-ladder pattern our R-rules forbid as a finals basis. The finals advice (best plus near-twin) is relevant input for the user's 29 Sep pick, but it is public-only reasoning. The claim of 4 public clips is unverified; our record is public = ~29% of the hidden test (one embryo).",
+   "urgency": "info"
+  },
+  {
+   "id": "r20-disc-synthetic-0960",
+   "kind": "new-fact",
+   "what": "Synthetic-dataset thread: the author José Freitas (86th) replied ~2h ago (~18:10Z): 'it works! I'm at 0.960 right now!'. FOYSAL asked which stage used it, pretrain or mix, and the LB gain. José declined to give details until after the deadline ('a topic for us to discuss in two days'). FOYSAL's last reply, 7 min before the read, carries no information. No host post.",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/732103",
+   "action": "None before 29 Sep: this needs retraining, which is closed by the team rules. Add it to the post-deadline list (synthetic pretraining claimed useful at 0.960, unverified).",
+   "urgency": "later"
+  },
+  {
+   "id": "r20-code-overview-unchanged",
+   "kind": "new-fact",
+   "what": "Code 'Recently Created' is unchanged since r19 (newest unpinned updated 4d ago). anhadmahajan06/biohub-track-your-cells, the only CLI dateRun newcomer, shows '7D AGO', version 6 of 12 (the current version has an error), public 0.946, 'Adaptive Harmonic PPSweep Pipeline', and runs 2h38m on T4x2. It is below our line and was not pulled. 'Public Score' sort: Harmonic Fusion V3, optimized-biohub-max-score (updated 18h ago), Biohub Cell Tracking and x138 ORIGINAL are all at 0.953, then Geometric Fusion 0.948. No notebook is at 0.954 or above, so there is no E10 v3 trigger and no experiments/ext_* folder. Overview timeline unchanged: 'Final Submission Deadline' September 29, 2026, header '2 DAYS TO GO'. There is no new pinned topic or announcement (the Workshop thread's last comment is 17h old).",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/code?sortBy=dateCreated ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/code?sortBy=scoreDescending ; https://www.kaggle.com/code/anhadmahajan06/biohub-track-your-cells ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/overview ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion?sort=recent-comments",
+   "action": "None.",
+   "urgency": "info"
+  }
+ ]
+}

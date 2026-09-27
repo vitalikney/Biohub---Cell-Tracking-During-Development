@@ -1,0 +1,9 @@
+# v_hyp_insertion_direction_r20id-3 notes
+- 2026-09-27T20:27:39Z started; no prior json
+- 20:3xZ read CONTEXT l.2935-3216 (aggressive mode 11:14/11:16Z lifts R8 for public division rungs; probe 45 exp70g cap6 = 0.956 #162; finals picked by user 29 Sep), scan_hyp_insertion_direction.json/notes, sibling note r20id-1 (unc_fc2 +0.00129 < cap24_fc2 +0.00188 -> lab peak, not monotone; 44b6 d_cap6 = 0 for every arm).
+- an3.json cap24_fc2: ALL d_cap6 +0.001883, d_cap4 +0.001311; 44b6 d_cap6 0.0, d_cap4 -0.000793; 6bba +0.002037; 606 ins (TP14/FP22/ign570), 226 steals; extras vs cap6 320 (5TP/12FP/303ign, med score 0.50, 136 steals).
+- Ran scratchpad/r20ins/boot_v.py (clip bootstrap, 400 draws, LOO): cap24_fc2 vs cap6 d +0.00188, P(boot>0) 0.90, CI90 [-0.00045, +0.00491]; MINUS TOP-2 CLIPS (6bba_9a41d029, 6bba_337b1b3a): -0.00028. vs cap4 (K2): +0.00131, P 0.71, CI90 [-0.00164, +0.00495], minus top2 -0.00089. cap12_fc2 vs cap6 minus top2 -0.00027; unc_fc2 vs cap6 minus top2 -0.00069. -> lab signal = ~2 6bba clips, in-sample DaughterNet.
+- mc2.py critique: conditions on cap6 display 0.9555-0.9565 from x0 U(0.9535,0.9545) -> selects draws with high shift/vTP/mvol, then scales linearly with volume -> E grows with volume by construction; no winner's-curse term (cap6 was the only UP among probes 39-46), lab logistic fitted on in-sample DaughterNet labels.
+- Lab band precision (in-sample) 0.4-0.45 0.08, 0.45-0.5 0.17 < public break-even 0.22-0.27; extras median score 0.50.
+- Feasibility: knob-only (div_insert.py l.247-298 cap/frame/steal_cap applied after scoring; build_probe_kernel.py l.283-289 env knobs); steal_cap = floor(0.5*24) = 12; no exp80 folder yet; exp78b probe.json = K2 + cap12 + fc2. Byte-identical-off n/a (same code path as K2), fail-soft via safetail. Runtime ~0 extra (ledger exp70g (7.49,7.67] h vs K2 (7.36,7.54] h).
+- 2026-09-27T20:29:56Z final JSON written (refuted=true on value; feasibility ok)

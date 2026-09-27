@@ -3219,6 +3219,70 @@ Mention it to the user in one line (R9-A8 item 6).
   (order per round 20 and the 46 read: default exp78a cap 8, exp78b cap 12 + fc2, then exp76e cap6 + forkmid or a 46-informed
   rung), keeping 2 slots for ~08:00Z after the first reads (N2 / CI / SEC stacks on the best base); research rounds every
   ~2.5 h (21 at 22:30Z); E10 v3 watch hourly; no finals change (the user picks on 29 Sep).
+- 2026-09-27 21:05 UTC UTC, READ TABLE v3 CODES + W1/W2 v3 (round 20, R20-A2; post-45, pre-46). This merges PC20-01/02/03/09 and R20ID-3/4/5 as corrected by their skeptics, and the 20:30Z autonomous plan. Written while the last poll.log header 2026-09-27T20:55:15Z shows 56611472 (46) PENDING.
+  SUPERSEDES: v2 (1) rows; v2 (2)'s codes relative to B; v2 (4)'s W1 order; R19-A1 (2)/(3); the 19:05Z list; the
+    20:30Z default order.
+  MANDATE: knob rungs in W1/W2 run under the user's 26 Sep 20:33Z lift, the 27 Sep 11:14Z/11:16Z aggressive mode and
+    the 20:30Z autonomous night. Not a precedent. v2 (6)'s W3/W4 ban stays, except as amended in (8).
+  (1) CODES v3. Each ref is coded against ITS OWN BASE display:
+  - exp70g 0.956 for exp70q, exp78a, exp78b, exp80a, exp79a, exp79d and the N2 file;
+  - exp70b 0.954 for exp76a/76d/76e;
+  - K2 #37 0.954 for exp75/exp72.
+  Base-0.954 files:
+  - >= 0.955 -> '+';
+  - 0.954 -> '?' (UP-blind: our row already shows 0.956);
+  - <= 0.953 -> '-'.
+  Cap-6-base files:
+  - >= 0.957 -> '+';
+  - 0.956 with an UP -> '+';
+  - 0.956 with 0 passed -> '0', ONLY IF exp70g still holds our unrounded best at S0 (no earlier 0.956+UP and no >=
+    0.957 of ours); otherwise '?';
+  - <= 0.955 -> '-' for THAT file's increment only.
+  Rules for reading the codes:
+  - 46 = 0.955 means 'thr 0.3 + forkmid on cap 6 = -'. DIV/cap 6 stays '+' from 45. It never triggers row D or 'Either
+    NEG'.
+  - MASKED = '?'. It applies to a +2 count step with equal displays, and to the card (1) case (another of our files
+    showed an UP in the same window).
+  - UP test = the count rule of R19-A1 (1). Log k (teams above us inside our block at S0; k = 10 in the 0.956 block at
+    20:02Z). k = 0 -> BLIND '?'.
+  - For CI and SEC, only a '0' under the exp70g-holder condition closes the lever.
+  - The 'v' suffix is unchanged: safetail L_hi > 8.0 h; CI L_hi > 10.2 h.
+  (2) W1 (28 Sep). Each file needs a COMPLETE, PASSING dummy logged in CONTEXT.
+  - 00:05Z exp78b = K2 + cap 12 + FRAME_CAP 2 (steal cap 6). Dummy: 121,252 nodes / 95 forks, ~1,368 s. It reads as
+    'cap + frame cap + steals': over cap 6 the dummy gains 14 insertions, 5 of them steals.
+  - CI slot: exp79a (exp70g + CI) as soon as its dummy PASSES, at any time up to 03:00Z. If it has not passed by
+    03:00Z, submit exp76a (exp70b + CI) at 03:00Z and read it against 0.954. exp75 goes only if both fail.
+  - 00:50Z exp78a = K2 + cap 8. Dummy: 121,252 nodes / 86 forks. K2-like files go >= 40 min apart.
+  - exp76e is dropped; it is filler only if a slot would otherwise stay empty.
+  - No thr-0.3 or thr-0.2 rung (exp73m/73s/80b) in any row. 46's read changes W1 in no row.
+  (3) W2a (28 Sep, after both DIV reads; target 08:45-10:00Z).
+  - exp80a (K2 + cap 24 + FRAME_CAP 2), if ALL hold: exp78b codes '+'; exp78b's display >= exp78a's; 46 is not '-';
+    exp80a's dummy PASSED.
+  - Otherwise the ONE SEC file on the exp70g base: the N2 file if its dummy passed (R20-A6), else exp79d.
+  (4) W2b (12:00Z; held for E10 v3 until then). An E10 copy always takes it first. Otherwise, in order:
+  - if CI is '+': the best base + CI (exp79a when the base is exp70g; the pre-built exp78b + CI stack when the base is
+    exp78b and its dummy passed);
+  - else the SEC file, if W2a did not take it;
+  - else exp80a, if its condition holds and W2a did not take it;
+  - else the best base + CI (this tests a '?' lever).
+  (5) BASE for stacks = the strictly highest display among COMPLETE cap-family files. Ties go to the file with the
+    attributable UP; otherwise to the smaller dose / fewer knobs, in the order exp70g > exp78a > exp78b > exp80a >
+    exp70q.
+  (6) DIV STOP RULES.
+  - exp78a and exp78b both '-' or '0' -> DIV volume is closed; base exp70g; no exp80a.
+  - exp78a '+' and exp78b not -> stop at cap 8 (no cap 10/16 interpolation).
+  - exp78b '+' but exp80a displays lower -> stop at cap 12.
+  (7) READS.
+  - A waiter per ref, plus one manual `kaggle competitions leaderboard -d` into a new folder within ~10 min of each
+    terminal header. Never use the hourly E10 snapshot as S1.
+  - Expected L: cap rungs ~7.4-7.7 h (the knobs add ~0 runtime); CI ~9.7-10.5 h.
+  - L_hi > 8.0 h on a cap rung means a Kaggle-side slowdown -> 'v'.
+  (8) W4 AMEND (29 Sep 00:05-01:45Z, <= 5 files, E10 first). Allowed:
+  - the full stack of '+' levers on the best base (a '+' N2 secondary may be inside it);
+  - stacks that test a '?' lever;
+  - at most ONE DIV step in the winning direction. cap 48 fc2 is allowed only after two strict steps (exp70g < exp78b
+    < exp80a in display).
+  Not allowed: a threshold change, N1, or N2 as a new single rung.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

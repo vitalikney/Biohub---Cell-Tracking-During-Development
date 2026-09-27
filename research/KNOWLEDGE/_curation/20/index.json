@@ -1,0 +1,81 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/INDEX.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/CHANGES.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/20/index.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/20/index.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "what": "R20-A2 (READ TABLE v3 own-base codes + W1/W2 v3) is not in CONTEXT. It must be logged before 56611472 (P46) is terminal, and it must also supersede the 20:30Z default W1 order (exp78a, exp78b, exp76e).",
+   "evidence": "research/wf_ideas_v4/round20/report.json R20-A2; experiments/lb_poll/poll.log l.17283-17287 (20:55:15Z, 46 PENDING); CONTEXT.md l.3217-3221; FACTS.md C-161, C-162",
+   "suggested_action": "Append R20-A2 now, quoting the last poll header that shows 46 PENDING; commit by named paths",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "The exp79a CI dummy (exp70g + coordinject) was never pushed (404 at 20:33Z). CI kernels queue 2-3.3 h, the slot needs a PASS by 03:00Z, and a CI submit after ~01:30Z cannot be read before the 12:00Z W2b decision.",
+   "evidence": "research/wf_ideas_v4/round20/report.notes.md l.4; report.json R20-A1; FACTS.md C-166, F-RUN-34; WATCHLIST.md W208, I229",
+   "suggested_action": "Push exp79a now and never re-push it; gate it at 121,252 nodes / 81 forks / COORDINJECT 4/4 and log PASS/FAIL",
+   "urgency": "now"
+  },
+  {
+   "kind": "forgotten",
+   "what": "There is no RESUME POINT since 26 Sep 22:46Z (5th round in a row), MEMORY still says 'E10 v1 in force', and the R8 coverage line is missing. The 18:56Z P45 read needs a correction line: 127 passed, not 113, and exp70g is class C, so the rule path is (b) {exp70g, #37}.",
+   "evidence": "CONTEXT.md l.2599, l.3196-3200; FACTS.md C-26, C-159, C-160; report.json R20-A3; WATCHLIST.md W185",
+   "suggested_action": "Write R20-A3 (A)-(C) as the next CONTEXT write and rewrite the MEMORY file",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "The N2 pre-registration (R20-A6) is not logged while exp77 is RUNNING (it completes ~22:00Z). It covers ONE SEC file (exp70g + the GPU0 epoch-2 student) in W2a, with exp79d as the fallback. The exp79d gate is also unlogged.",
+   "evidence": "report.json R20-A6, R20-A5 (b); CONTEXT.md l.3070-3074, l.3206-3210; WATCHLIST.md W206",
+   "suggested_action": "Append R20-A6 before exp77 completes; put the outputs in NEW private datasets with an SHA line; log the exp79d gate",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "P46 exp70q read at ~22:00-22:40Z (8.0 h mark 22:36:59Z) with the v3 codes: S0 = count 47, S1 = count 48.",
+   "evidence": "report.json R20-A8; experiments/lb_poll/ledger.md row 56611472; WATCHLIST.md W213",
+   "suggested_action": "Do one manual leaderboard download within ~10 min of the terminal header; log S0/S1, k, TeamIds passed and L",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "The GPU quota has not been read since 07:55/30 h on 26 Sep; the estimate is 19-25 h used, with the reset on 3 Oct.",
+   "evidence": "report.json R20-A7; FACTS.md F-RUL-05; WATCHLIST.md W212",
+   "suggested_action": "Read the quota before exp80a; apply the priority exp79a > N2 dummy > exp80a > stack, with cut-offs at 24/26/28 h",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "tools/runtime_ledger.py has no family for exp72-80 (4th flag), so every 28 Sep ref prints 'family unknown'.",
+   "evidence": "tools/runtime_ledger.py l.76; report.json R20-A4; DECISIONS.md §3 l.984; WATCHLIST.md W188",
+   "suggested_action": "Land R20-A4 with a test before 00:05Z 28 Sep; until then pass --family",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "The E10 v3 texts still say >= 0.955, but the trigger is now >= 0.957; the runbook's SI (B) uses DIVINS_CAP=4 while our best uses cap 6.",
+   "evidence": "experiments/lb_poll/e10_watch_loop.py l.28, l.78; CONTEXT.md l.2920; FACTS.md C-163; WATCHLIST.md W174",
+   "suggested_action": "Log the R20-A10 (5) text line; no code change is needed",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "The R20-A9 finals card lines are not logged: V_pub among cap-family files, the winner's-curse tie rule, partner always #37, the DIV caveat. The R20-A12 morning message with the 02:00Z-cap question is also pending. The user picks on 29 Sep; ticks are due by 20:00Z.",
+   "evidence": "report.json R20-A9, R20-A12; CONTEXT.md l.3211-3213; FACTS.md C-164, C-165; WATCHLIST.md W214, W199",
+   "suggested_action": "Log R20-A9 before the first W1 terminal header (~07:30Z 28 Sep); send the morning message at 08:00-09:30Z",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "Records are stale:\n- RESULTS.md ends at P38.\n- probe.json 'compare with exp56' is boilerplate.\n- round20/REPORT.md is missing and round20/ is untracked.\n- The R20-A10/A13 info lines are unlogged. The lab insight 'fc <= 2 is the only robust result; cap >= 8 gain comes from 2 clips of 6bba' is at risk.",
+   "evidence": "experiments/RESULTS.md l.71; report.json R20-A10, R20-A13, R20-A14; FACTS.md C-118, F-TRN-51; WATCHLIST.md W126, W204",
+   "suggested_action": "At the next hygiene commit, add P39-P46 rows, write REPORT.md from report_md_ru, and commit named paths as the user with no trailer",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 20 index (state ~21:00Z 27 Sep; HEAD 771a608). INDEX.md was rewritten (78 lines).\n\n- State: P45 exp70g = 0.956, the new team best (#163 at 20:43Z). P46 is PENDING. Finals stay #37 + #38; the user picks on 29 Sep. The user is asleep and the session runs autonomously. exp77 N2 is RUNNING; exp79a is unpushed.\n- Contents: a map of the KB with c20 line anchors, 8 top open ideas (I-403, I-401, I-398/397, N2, exp80a/quota, I-383, finals card, RESUME POINT), and 10 deduplicated alerts with resolved items and settled curator disagreements.\n\nCHANGES.md gained a '## 20' section covering:\n- the sources;\n- ideas: 396 -> 412, with 72 change records;\n- facts: F-MOD-39, F-TRN-51/52 and C-159..C-166, plus the DECISIONS anchors;\n- watchlist: W208-W215 new, 6 items done, 3 superseded;\n- resolved and new alerts.\n\nThe top priority is logging R20-A2 before 46 is terminal (~22:00Z) and pushing exp79a."
+}

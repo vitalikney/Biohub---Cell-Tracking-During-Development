@@ -1,0 +1,93 @@
+{
+ "summary": "Round 20 plan check, 20:02-20:30Z. Files and code only: no Kaggle calls, no e10_snapshot run. State: probe 45 exp70g = 0.956, 56606948, L (7.49, 7.67], insertion gate did not fire. Our row: rank 163, 11th of 52 in the 0.956 block, count 47 (E10 20260927T2002Z.txt, CHANGES 0). Probe 46 PENDING at the 19:55:05Z header (L > 5.3 h). Finals #37 + #38 stay ticked; the user picks on 29 Sep. No Kaggle rule is broken. The notebook diffs of exp78a/78b/76e/79d vs exp70g hold only the intended env lines/cells, and the metadata is private, internet off, T4. Main problems: (1) Read table v2 codes files against the team best, which is 0.956 since probe 45. A 0.955 on probe 46 would code MASKED instead of NEG, and files on the exp70b base can never read '+'. Fix: code each file against its own base before 46 reads. (2) The post-0.956 W1 re-rank has no amendment line. It uses all 5 slots (v2 holds one for E10), adds knob rungs that v2 bans, and the per-mechanism fallbacks still name exp70b-base files. Proposed W1 v3 order: 79a, 78a, 79d, 78b, with the E10/W2 slot held and exp76e as filler. (3) The exp79a CI dummy is last in the lane, but CI kernels wait 2-3.3 h in the Kaggle queue; push it first. (4) For the 3rd round running, the ledger families for exp72-79, the RESUME POINT/MEMORY and the R8 coverage line are undone. (5) The E10 thresholds/texts are stale (live trigger is now >= 0.957), and the SI (B) build still uses cap 4. (6) N2 has no slot and a stale base; pre-register a single-recipe N2 file gated on SEC reading +. (7) Corrections to the 18:56Z entry: 127 teams passed, not 113, with the pre-registered S0; exp70g is class C under L9, so letter (b) -> {exp70g, #37}. (8) Winner's-curse tie-break for the finals card and the 02:00Z cap question. (9) A GPU quota check (~19-25 h of 30 h estimated used).",
+ "findings": [
+  {
+   "id": "PC20-01",
+   "kind": "plan-issue",
+   "urgency": "now",
+   "what": "The 28 Sep read table v2 codes every file against the TEAM best B, and that breaks now that probe 45 made B = 0.956. The CONTEXT 18:50Z (2) rule '0.954 <= display < B -> MASKED' has two effects. (a) If probe 46 (exp70q = cap 6 + thr 0.3 + forkmid) reads 0.955 at ~22:10-22:40Z, it is coded MASKED '?'. It should be NEG: thr 0.3 + forkmid cost -0.001 against its own cap-6 base. (b) Files on the exp70b base (exp76a, exp76d, fallbacks exp75/exp72) can never read '+'. Our LB row moves only at >= 0.956, so their UP test is blind. The only honest read for them is display vs 0.954.",
+   "evidence": "CONTEXT.md l.3123-3131 (v2 (2) codes); l.3196-3200 (45 = 0.956, P6); experiments/e10_watch/20260927T2002Z.txt: our row rank 163, 0.956, count 47, 11th of 52 in the 0.956 block (k = 10 above us, so the UP test works only for 0.956 displays).",
+   "action": "Before 46 turns terminal, log a pre-score 'READ TABLE v3 codes' line. Code each ref against ITS OWN BASE display: exp70g = 0.956 for exp70q/78a/78b/76e/79a/79d, exp70b = 0.954 for 76a/76d, K2 = 0.954 for 75/72. For a cap-6-base file: >= 0.957 -> P; 0.956 + UP (count rule, k = 10) -> U; 0.956 with 0 passed -> N; <= 0.955 -> NEG (lever -). For an exp70b/K2-base file: >= 0.955 -> +; 0.954 -> '?' (UP blind: our row sits at 0.956); <= 0.953 -> NEG. MASKED stays only for a +2 count step with equal displays."
+  },
+  {
+   "id": "PC20-02",
+   "kind": "plan-issue",
+   "urgency": "now",
+   "what": "The post-0.956 re-rank of the 28 Sep files (CONTEXT 19:01Z/19:05Z) replaced the pre-registered W1 without an amendment line. Old row B: exp76e, exp76a, exp76d. New list: exp78a cap 8, exp78b cap 12 + frame cap 2, exp76e, exp79d, exp79a. It also conflicts with v2 in three ways. (1) v2 (4) holds 1 of the 5 slots for E10 until 12:00Z, and five files use all of them. (2) v2 (6) bans knob rungs in W3/W4; cap 8/12 are knob rungs. The user's aggressive-mode directive covers this, but it is not written down. (3) The per-mechanism fallbacks R19-A1 (3) still name exp70b-base files (exp76c->76a->75, exp76g->76d->72); exp76c and exp76g were never built. exp76e is the lowest-value file. exp70q (probe 46) = exp76e + thr 0.3, so after 46 reads, exp76e only isolates forkmid (~+5-9e-5 public).",
+   "evidence": "CONTEXT.md l.3141-3148 (v2 (4) W1 order + E10 hold), l.3163-3170 (v2 (6)), l.3097-3104 (R19-A1 (3)), l.3201-3210 (re-rank), l.3214-3216 (78a/76e dummies clean 20:02Z); experiments/ has exp76a/76d/76e/78a/78b/79a/79d and no exp76c/76g.",
+   "action": "Log 'W1 v3 (post-45, pre-46)' before 00:05Z. Proposed order: 00:05Z exp79a (CI on the cap-6 base; longest L ~9.7-10.5 h), fallback exp76a read vs 0.954 only. ~00:15Z exp78a (cap 8; single knob; lab cap 8 +0.00003 vs cap 4). ~01:00Z exp79d (SEC on cap 6), fallback exp76d. ~01:45Z exp78b, noted as a two-knob rung (cap 12 + frame cap 2, steal cap 6) whose read cannot say which knob moved. Slot 5 is held for E10 until the earlier of 12:00Z or the last W1 read; then it takes the W2 max stack of + levers on the best cap. exp76e becomes W2/W3 filler. If 46 reads P (>= 0.957), exp70q becomes the base of the W2 stack. Write the line in the user's aggressive-mode terms (11:14Z/11:16Z) as 'not a precedent'."
+  },
+  {
+   "id": "PC20-03",
+   "kind": "plan-issue",
+   "urgency": "now",
+   "what": "The exp79a (cap 6 + coordinject) dummy is last in the GPU lane (78b -> 79d -> 79a), but CI kernels wait 2-3.3 h in the Kaggle queue (exp75 pushed 13:18Z, started ~16:40Z; exp76a pushed 16:33Z, started ~18:33Z). Pushed after 79d (~21:00Z), 79a would likely start ~23:00-00:20Z and PASS after the 23:45Z cutoff. The CI slot would then fall back to exp76a, which has the wrong base (see PC20-01).",
+   "evidence": "CONTEXT.md l.3106-3110 (R19-A1 (4) queue facts), l.3207-3210 (lane order), l.3139 (v2 (3) queue note).",
+   "action": "Push the exp79a dummy now, ahead of exp79d. SEC kernels start at once, so 79d loses nothing. Do not re-push 79a once it is queued, because a new version restarts the queue. Gate: validate_csv ok; nodes 121,252; edge rows == the exp70g dummy (81 forks); COORDINJECT SUMMARY videos=4/4 with replaced ~0.915; 0 FAILED/SKIPPED; >= 99.9% of node rows equal to exp76a's moved rows."
+  },
+  {
+   "id": "PC20-04",
+   "kind": "plan-issue",
+   "urgency": "today",
+   "what": "tools/runtime_ledger.py still has no family for exp72-exp79. This is the 3rd round it is flagged: R18-A5, PC19-09, R19-A6. EXP_RULES stops at exp70[a-z]* (l.76), so every 28 Sep ref (exp76*, exp78*, exp79*) will print 'n/a: family unknown': no R5(a) admission, no insertion-gate column. The card's 'v' suffix (L_hi > 8.0 h) and the finals clause L_hi <= 9.0 h (non-CI) / <= 10.75 h (CI) therefore cannot be read from the ledger at the 07:40-10:40Z reads.",
+   "evidence": "tools/runtime_ledger.py l.52-78 (FAMILIES has no safetail_ci; EXP_RULES ends with exp70/exp5[12]); experiments/lb_poll/ledger.md 19:55Z rows.",
+   "action": "Before 00:05Z, add FAMILIES['safetail_ci'] = dict(deadline_h=10.75, divins_h=None, ungated=False, label='safetail + CI: 10.75 h; insertion gate read on L_hi - 2.2 h (v2 (3)): did NOT fire iff L_hi <= 10.2 h'). Insert above the exp70 rule: (r'exp75[a-z]*','safetail_ci'), (r'exp76[acfhi]','safetail_ci'), (r'exp79a[a-z]*','safetail_ci'), (r'exp7[2-9][a-z]*','safetail'), (r'exp8\\d[a-z]*','safetail'). Add one test that exp78a -> safetail and exp79a -> safetail_ci. Re-run the ledger."
+  },
+  {
+   "id": "PC20-05",
+   "kind": "plan-issue",
+   "urgency": "now",
+   "what": "The crash-recovery state is 3 rounds stale (R18-A2, R19-A5/PC19-10, PC19-11 all undone). The last RESUME POINT is 26 Sep 22:46Z (CONTEXT l.2599). It predates E10 v3, the class-C letter, the Q1/Q2 yes, aggressive mode, probes 43-46, the 0.956 and the N2 yes. MEMORY project-lb-probe-approval.md (modified 25 Sep) still says 'E10 v1 in force'. The 'R8 coverage' line for coordinject/secFT is missing. A new chat would restart from the wrong state 27 h before the deadline.",
+   "evidence": "grep 'RESUME POINT' CONTEXT.md -> last l.2599; MEMORY.md index line 'finals #37 + #38 decided 26 Sep ... E10 port rule proposed'; no 'R8 coverage' match in CONTEXT.md.",
+   "action": "Append a RESUME POINT now covering these items. Finals: #37 56563521 + #38 56563534 stay ticked, and the user picks on 29 Sep after all variants (19:10:58Z). Best public: exp70g 56606948 = 0.956, #163, L (7.49, 7.67]. Pending: 46 56611472 and exp77 N2. Dummies clean: 78a, 76e, 76a, 76d, 75, 72. Also: the W1 v3 / codes v3 lines; E10 v3 in force until 29 Sep 12:00Z with trigger >= 0.957; open questions Q3, the 02:00Z cap lift and the finals pair; timers (round 21 22:30Z; 29 Sep 12:00/18:00Z). Update the MEMORY index + project-lb-probe-approval.md. Add the R8 coverage line: coordinject (75/76a/79a) and secFT (72/76d/79d) under the 11:16Z aggressive directive, public-only, not a precedent."
+  },
+  {
+   "id": "PC20-06",
+   "kind": "plan-issue",
+   "urgency": "today",
+   "what": "The E10 v3 thresholds and the SI config are stale after the 0.956. (1) The runbook computes OUR from poll.log, so its live trigger is already SC > 0.956, i.e. >= 0.957. But the text in e10_watch_loop.py l.28/l.78, the runbook comment l.66, CONTEXT 11:08Z ('> 0.954, i.e. >= 0.955') and the round focus ('>= 0.956') all disagree. A verbatim 0.955/0.956 copy cannot raise our row and would waste a slot. (2) The runbook's finals section (l.307/311) still uses 'display >= 0.955' and does not list exp70g as a collision candidate. (3) The SI (B) build uses DIVINS_CAP=4 (runbook l.206), but our public-best insertion is cap 6 (+~0.002 public vs cap 4).",
+   "evidence": "research/wf_ideas_v4/e10v3/runbook.notes.md l.57-66, l.206, l.307-311; experiments/lb_poll/e10_watch_loop.py l.28, l.78; CONTEXT.md l.2917-2926.",
+   "action": "Log one line: 'E10 v3 trigger = own public score strictly above our best display (now 0.956 -> >= 0.957); (A) verbatim; (B) SI uses DIVINS_CAP=6 (exp70g config; lab cap 6 -0.00057 disclosed); finals proposal threshold = above our best display; exp70g is a named collision candidate'. The watch loop needs no code change (read-only); fix its LOOK string at the next restart only."
+  },
+  {
+   "id": "PC20-07",
+   "kind": "plan-issue",
+   "urgency": "today",
+   "what": "N2 (exp77, user yes 18:19:11Z) has no slot and a stale base. Read table v2 was written 18:50Z, after the yes. It bans N1/N2 in W3/W4 ((6) l.3170), and W1/W2 have no N2 row. The 18:19Z entry plans 'exp70b + secswap rungs', but the base is now exp70g (cap 6). exp77 trains two recipes (epoch-2 continuation and fresh lr 3e-5). Submitting both would be a dose/recipe ladder on the public with no held-out gate, and SEC is public-only while Q3 is open.",
+   "evidence": "CONTEXT.md l.3070-3074 (N2 yes), l.3163-3170 (v2 (6)), l.3176 (v2 (8)), l.3207 (exp77 pushed 19:04Z, ~2.5-3 h).",
+   "action": "Pre-register before exp77 finishes (~22:00Z). The N2 file = exp70g + ONE N2 secondary (GPU0 epoch-2 continuation, the same lineage as exp71), with a dummy that checks the SHA256 line, nodes within -2%/+1% of 121,252 and 0 errors. It gets a slot only if the SEC lever reads + on its own base (exp79d P or U, or exp76d >= 0.955). It replaces exp71's secondary in the W2/W4 stack instead of adding a file. It stays public-only while Q3 is unanswered. SEC N or NEG -> N2 moves to the post-deadline list. Never submit both recipes."
+  },
+  {
+   "id": "PC20-08",
+   "kind": "recheck-old",
+   "urgency": "today",
+   "what": "The probe-45 read entry (CONTEXT 18:56Z) has two inconsistencies. (1) It took S0 = ladder_watch 20260927T131353Z (#268) and logged '113 TeamIds passed'. The pre-registered S0 (R19-A1 (1)) is e10_watch/20260927T1743Z.txt (rank 288, count 46), and it gives 127 passed (rank 288 -> 163). The P6 code does not change. (2) It calls exp70g 'class B', but under L9, class B = K2 + a subset of {lp30, dc0.30, fm45} and cap is not in that list, so exp70g is class C. The user's class-C letter (b) therefore applies: {exp70g, #37}. That matches v2 (9) ('partner always #37') and the 19:01Z recommendation A. It does not match the older L9 / 21:31Z insertion-hedge row ({V*, #38}).",
+   "evidence": "Recount with snapshot rows (TeamId 16810638): 1743Z (288, 0.954, 46) vs 1943Z/2002Z (163, 0.956, 47) -> 127 passed. CONTEXT.md l.3079-3081, l.3196-3200, l.2418-2424, l.2510-2513, l.2927-2932.",
+   "action": "Append one correction line: 'S0 per R19-A1 (1) = 20260927T1743Z: 127 passed; exp70g is class C under L9, so letter (b) gives the rule path {exp70g, #37}; rank now #163 (2002Z)'. In the 29 Sep finals card, show both partners with their hedge meaning. #37 hedges only the cap delta (lab cap 6 -0.00057 vs cap 4, boot90 -0.00125..-0.00011). #38 hedges the whole insertion (lab cap 4 vs none +0.0065 in-sample upper bound; public +0.001; P(insertion < 0 on private) ~0.10-0.15)."
+  },
+  {
+   "id": "PC20-09",
+   "kind": "plan-issue",
+   "urgency": "today",
+   "what": "No finals-card rule yet guards against winner's curse from a same-mechanism public ladder. Up to 6 insertion-dose files will display 0.956-0.957 (45, 46, 78a, 78b, 76e, 79x), and v2 (9) picks V_pub by display, then last UP. Picking the maximum of several one-embryo reads adds upward bias, and every step of cap direction takes the pick further from the lab (cap > 4: 0 TP / 4 FP / 81 unannotated). The last useful submit is still 01:45Z 29 Sep unless the user lifts the 02:00Z cap. That question (R19-A7) has not been answered, and the user wants to 'try all variants' first.",
+   "evidence": "CONTEXT.md l.3171-3194 (v2 (7)/(9)), l.2545-2549 (cap 5/6/8 lab), l.3211-3213 (user 19:10:58Z).",
+   "action": "Add to the 29 Sep card, pre-score: among insertion-dose files at an equal display with no attributable UP, prefer the smaller cap / single-knob file (exp70g over 78a over 78b). A higher-cap file becomes V_pub only if it displays STRICTLY higher. Report exp78b as a two-knob read. In the next user message, ask one yes/no: 'lift the 02:00Z 29 Sep cap to T_last ~10:30Z (CI ~08:00Z)?'. Without a yes, W4 = 00:05-01:45Z."
+  },
+  {
+   "id": "PC20-10",
+   "kind": "plan-issue",
+   "urgency": "today",
+   "what": "The GPU quota is not checked. The last reading was 7:55 of 30 h at ~21:56Z 26 Sep. Since then: exp71 (~2.1 h training), exp77 N2 (~2.5-3 h, T4 x2) and ~13 dummies at ~0.4-0.55 h each, an estimated ~19-25 h used. The weekly reset is Saturday 00:00Z, so the next one is 3 Oct and 28/29 Sep fall in this week. Still to come: W2/W4 stack dummies and a possible N2 rung dummy (~3-4 h).",
+   "evidence": "CONTEXT.md l.2542 (07:55 / 30 h), l.1545 (reset 26 Sep 00:00Z), l.2937, l.3001-3003, l.3207.",
+   "action": "Have the browser agent read the Settings page once (read-only) and log the number. If more than ~26 h are used: stop speculative dummies (exp76e, extra stacks) and keep the quota for exp79a/79d, the N2 file (only if SEC +) and the W2/W4 max stacks."
+  },
+  {
+   "id": "PC20-11",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "Where we sit inside the score blocks suggests where our unrounded public scores fall. exp70g is 11th of 52 in the 0.956 block. K2/exp70b-era files were ~6th of ~115 in the 0.954 block. Both are likely high in their 0.001 bins, so cap 4 -> 6 is roughly +0.0015-0.002 public, and the next +0.0003-0.0005 could show 0.957. This is a hypothesis: it assumes spread-out unrounded scores, not clusters of identical copies. Separately, the E10 hourly snapshots come only once an hour (:43). If W1 reads rely on them instead of manual downloads at each terminal header, K2-like files 40 min apart will often show +2 count steps, which code as MASKED.",
+   "evidence": "experiments/e10_watch/20260927T2002Z.txt l.976 (11 of 52, ranks 153-204); round19 REPORT section 2 (6th of ~115 at 0.954); watch_loop.log cadence 60 min.",
+   "action": "Use it only for priors (P(exp78a >= 0.957) is not negligible), never as a rule input. Keep the v2 (4) rule of one manual LB download within ~10 min of each terminal header. If the reads have to use the hourly snapshots, space K2-like submits >= 65 min apart."
+  }
+ ]
+}

@@ -1,0 +1,77 @@
+{
+ "task": "round 20 scan: insertion direction after cap 6 = +0.002 public; next rungs and pre-registered 28 Sep / 29 Sep order by probe-46 outcome",
+ "written_utc": "2026-09-27T20:30Z",
+ "complete": true,
+ "summary": "Probe 45 (K2 + insertion cap 6) = 0.956, while the in-sample exp60 lab had said -0.00057. This scan widens that lab sweep to 29 arms (scratchpad/r20ins, tools/ untouched, cap-4 parity exact). The lab dip at cap 6 is 4 FP events. From cap 8 on, the lab rises steadily up to cap 24 + frame cap 2: +0.0019 vs cap 6 and +0.0013 vs K2 pooled, with 44b6 flat and 6bba +0.002. So from cap 12 upward the lab and the public read now agree in sign (lab in-sample, small n). Frame cap 3 is worse than 2; no frame cap costs -0.00055 of adjusted edge J (519 steals). Steal off is -0.002, and a clip-size-scaled cap is dominated by a plain cap. Runtime cost is ~0 by construction: DaughterNet scores every candidate triple before cap, threshold or frame cap are applied, and probe 45's hidden latency (7.49, 7.67] h is inside K2's noise. A Monte Carlo conditioned on K2 0.954 -> cap6 0.956 is a model estimate driven by one read. It gives P(display >= 0.957) of 0.40 for cap 8, 0.60 for cap 12 + fc2 (exp78b) and 0.645 for cap 24 + fc2. P(<= 0.955) is ~0.27-0.29 for every thr-0.4 rung with frame cap <= 2, and 0.34-0.41 for thr 0.3/0.2 rungs. Recommendation: in W1, geometrically bracket insertion volume with exp78b (cap 12 fc2, ~2x the cap 4->6 volume step) and a NEW exp80a (K2 + cap 24 + fc2, ~3.8x). Demote cap 8 to a W2 fallback and drop exp76e (E ~+7e-5). The probe-46 rows below switch to thr-0.3 stacks only if 46 >= 0.957. Nothing here is a new research mechanism: all rungs are existing-knob public rungs under the user's aggressive-mode lift (11:14/11:16Z), so as R8 items the honest answer is none.",
+ "files": {
+  "notes": "research/wf_ideas_v4/round20/scan_hyp_insertion_direction.notes.md",
+  "lab_sweep_scripts": "C:/Users/vital/AppData/Local/Temp/claude/c--Users-vital-Documents-kAGGLE-Biohub---Cell-Tracking-During-Development/acabaea6-42c1-4115-a146-2ddc5bb7e8c8/scratchpad/r20ins/{sweep2.py,sweep3.py,an2.py,an3.py,mc2.py}",
+  "lab_outputs": "same folder: sweep2_raw.json, sweep3_raw.json, an2.json, an3.json, mc2.json, mc2.log"
+ },
+ "findings": [
+  {
+   "id": "R20ID-1",
+   "kind": "new-fact",
+   "what": "In the extended exp60 lab (in-sample DaughterNet), the insertion cap curve is non-monotone. cap 6 is a local dip (4 FP events). From cap 8 the curve rises steadily to cap 24 + frame cap 2, so for cap >= 12 with frame cap 2 the lab now agrees in sign with the public +0.002 of cap 6. Frame cap 3 and no frame cap lose; steal off loses.",
+   "evidence": "scratchpad/r20ins/an2.json, an3.json (29 arms x 56 clips; cap-4 row = 0.939878, div 25/31/74, identical to ins_cap6.json). Pooled delta vs cap6 (ALL | 44b6 | 6bba): cap8 +0.00061 | 0 | +0.00070; cap12 +0.00126; cap12_fc2 +0.00123 | 0 | +0.00135 (div 28/42/71); cap16_fc2 +0.00133; cap24_fc2 +0.00188 | 0 | +0.00204 (div 30/47/69, 606 insertions, adj edge -8e-6); cap24_fc2_t03 +0.00282; cap12_fc3 +0.00107; cap40_fc3 +0.00088 (FP 29); unc_fcU (no frame cap) -0.00022 with adj edge -0.00055 (1,097 insertions, 519 steals, up to 133 in one clip); cap6_nosteal -0.00202 (44b6 -0.0050); cap6 steal_frac 1.0 -0.00009; cap6_t05 -0.00013. vs K2 (cap4): cap12_fc2 +0.00066, cap24_fc2 +0.00131. 44b6 stays -0.00079 vs K2 for every cap >= 6, from one FP fork in 44b6_e29f0176. Lab evaluable precision by DaughterNet score: 0.6-0.8 0.46, 0.5-0.6 0.35, 0.45-0.5 0.17, 0.4-0.45 0.08; logistic q(0.3) ~0.12. Only 3.8-7% of insertions are evaluable.",
+   "action": "Log in CONTEXT as a lab fact with the caveat 'in-sample, <= 36 evaluable events, lab sign was wrong for cap6 and dc0.30'. Use it only to choose the volume axis (cap with fc <= 2, thr 0.4, steal on), not as a gain estimate.",
+   "urgency": "now"
+  },
+  {
+   "id": "R20ID-2",
+   "kind": "new-fact",
+   "what": "Runtime cost of more insertions on the ~100-130-clip hidden run is ~0 by construction. cap, frame cap and threshold only select among triples that DaughterNet has already scored. Only DIVINS_STEAL changes the candidate set, and it stays on. The dummy spread (1,279-1,874 s) is Kaggle noise, not insertion work.",
+   "evidence": "tools/build_probe_kernel.py l.355-362 (DIVINS_CALL: candidate_triples -> score_nodes on every triple node, then insert_divisions); tools/div_insert.py l.234-325 (cap/frame/threshold/steal_cap applied after scoring, O(eligible) greedy). Ledger: exp70g (7.49, 7.67] h vs K2 (7.36, 7.54] h vs 43/44 (7.56, 7.74] h (no insertion change); 'insertion gate 8.0 h did NOT fire'. Dummies with identical insertion work: exp76e 1,279 s, exp78a 1,486 s, K2 1,512 s, exp70b ~1,740 s, exp70q 1,874 s.",
+   "action": "No runtime gate beyond the usual dummy <= 1,920 s and ledger L_hi <= 9.0 h. Do not describe exp70q's 1,874 s as an insertion cost.",
+   "urgency": "info"
+  },
+  {
+   "id": "R20ID-3",
+   "kind": "new-hypothesis",
+   "what": "exp80a = K2 + DIVINS_CAP 24 + DIVINS_FRAME_CAP 2 (thr 0.4, steal 1, alpha 1; steal cap becomes 12). This is the top of a geometric volume bracket with exp78b. In lab it adds 320 insertions over cap 6 (5.7 per clip), 3.8x the cap 4->6 step that gave +0.002 public, and at fc2 it is effectively uncapped for 50/56 clips. Cap 48 fc2 (~uncapped fc2, 691 insertions) is the next step only if exp80a reads as the top of a monotone curve.",
+   "evidence": "Lab (R20ID-1): +0.00188 vs cap6, both embryos >= 0, adj edge -8e-6. MC (scratchpad/r20ins/mc2.py; MODEL ESTIMATE conditioned on K2 0.954 -> cap6 0.956; one read drives it): E[delta vs exp70g] +0.0036, P(display >= 0.957) 0.645, P(<= 0.955) 0.27, P(<= 0.954) 0.21. Compare exp78b (cap12 fc2): +0.0021 / 0.60 / 0.28 / 0.17; cap 8: +0.0007 / 0.40 / 0.28 / 0.09. Among cap12fc2, cap16fc2 and cap24fc2 the ordering is within model noise; the right tail drives it. Runtime +0 (R20ID-2). Arithmetic check: public ~29-38 clips x 5.7 extra insertions/clip x ~4% evaluable = ~7-9 evaluable events. At TP +0.0023 / FP -0.0007 the band is positive iff precision > ~0.23. The lab band 0.4-0.5 is ~0.1-0.2, while cap 4->6 on public implied >= ~0.35.",
+   "action": "Build now with exactly the exp78b command and DIVINS_CAP=24 (the only diff vs exp78b is cell 0: name + cap value). Push its dummy right after exp78b in the GPU lane, BEFORE exp79d/exp79a (CI kernels queue for hours). DUMMY GATE: nodes == 121,252; forks in (86, 81 + 4x18] with expected ~104 (95-115), where a value <= 86 means a no-op or wrong env; validate_csv ok; 0 Traceback/FAILED/DEADLINE:/FALLING BACK; 'DIVINS ENABLED ... cap_video: 24, cap_frame: 2' in the log; runtime <= 1,920 s. Also check exp78b's dummy forks against the prediction ~94 (88-100).",
+   "urgency": "now"
+  },
+  {
+   "id": "R20ID-4",
+   "kind": "plan-issue",
+   "what": "Pre-registered 28 Sep DIV order by probe-46 outcome (46 = exp70q = cap6 + thr0.3 + fm45, 56611472). It replaces the DIV slot of read table v2 row B (exp76e) and the 19:05Z list 'exp78a, exp78b, exp76e'. It must be logged before 46's terminal header. W1 carries 2 DIV files + 1 non-DIV lever file; one slot is held for E10 v3 to 12:00Z; W2 gets <= 2.",
+   "evidence": "MC P(46 display): 0.955 0.19, 0.956 0.57, 0.957 0.08, >= 0.958 0.11, <= 0.954 0.05. Only 46 >= 0.957 or <= 0.955 moves the thr-0.3 read: the thr-0.3 extras are 0.5/clip in lab, all 28 unannotated, so ~15 public insertions and ~0.6 evaluable events. Conditional MC for cap12_fc2 P(>= 0.957) | 46: 0.955 -> 0.52; 0.956 -> 0.59; 0.957 -> ~0.70; <= 0.954 -> ~0.52 but P(<= 0.955) 0.35. I3 (cap12 fc2 thr0.3): | 46 = 0.955 -> P(<= 0.955) 0.50; | 46 >= 0.957 -> P(>= 0.957) 0.75-0.86.",
+   "action": "ROWS (DIV files only; the third W1 slot stays with the main session's CI/SEC choice, exp79a or exp79d). 46 = 0.956 or 0.955 (or ERR, or still PENDING at the last header before 23:50Z): 00:05Z exp78b (cap12 fc2); 00:50Z exp80a (cap24 fc2) if its dummy PASSED by 00:30Z, else exp78a (cap 8). 46 >= 0.957: base becomes exp70q. 00:05Z exp73m (= exp70q knobs with cap 12 + fc2: I3 + fm, already built; needs its dummy) and 00:50Z exp80b (= exp70q + cap 24 + fc2; new build, dummy). If either dummy is missing, fall back to the thr-0.4 file of the same volume (exp78b / exp80a). 46 <= 0.954: no thr < 0.4 file ever; 00:05Z exp78b; 00:50Z exp78a (cap 8), no cap 24. DROP in every row: exp76e (E +7e-5 over exp70g; P(0.957) ~0.07 from bin position only), exp73s/I4 (thr 0.2; MC P(<= 0.954) 0.35; lab 44b6 -0.0015), steal-off and frame cap >= 3.",
+   "urgency": "now"
+  },
+  {
+   "id": "R20ID-5",
+   "kind": "plan-issue",
+   "what": "W2 (28 Sep, after the W1 DIV reads ~07:30-09:00Z) and W4 (29 Sep 00:05Z to T_last) DIV rules, written before any W1 read. a = display of the cap-12 file, b = display of the cap-24 file, B = best display at S0 (0.956, or 46's).",
+   "evidence": "Lab shape: cap24fc2 > cap16fc2 ~= cap12fc2 > cap8, and cap40fc3 < cap24fc2 (the fc3 FP rise). Per-clip lab insertions at uncapped fc2 run to at most 49, so cap 48 fc2 == uncapped fc2 (691 in lab). UP test per R19-A1 (1).",
+   "action": "(i) b > B and b >= a (monotone): W2 = exp80c (cap 48 fc2, thr as in its row), plus the best-DIV + CI stack if CI is '+'. (ii) a > B and a > b (peak near 12): W2 = the a-file + CI/SEC stack only; no cap 16 interpolation (a sub-event step, unreadable). (iii) a <= B and b <= B, both N or NEG: the cap direction overshot; W2 = exp78a (cap 8) as the last DIV probe; if exp78a <= B, DIV is closed and base = exp70g. (iv) a = b = B with UPs: flat. No more DIV; stacks go on the file with the later attributable UP. W4 (29 Sep): only the full stack of '+' levers on the best DIV file, plus at most one DIV step in the winning direction; never a thr change after 28 Sep; T_last per R19 read table v2 (7).",
+   "urgency": "today"
+  },
+  {
+   "id": "R20ID-6",
+   "kind": "recheck-old",
+   "what": "Closed for this direction; do not build. (a) Clip-size-scaled budgets (cap_i = 6 or 8 x n_nodes/median): at equal volume they are dominated by a plain cap and need a builder change. (b) Frame cap >= 3 or none: lab FP rise and steal edge damage. (c) DIVINS_STEAL 0: -0.002 lab. (d) steal_frac 1.0: -0.0001 at cap 6. (e) thr 0.2 at any cap: MC downside 0.35-0.41. (f) DIVINS_ALPHA changes: a re-ranking knob with no lab and no public read. (g) cap 8 as a W1 file: the weakest volume rung, and its only use is locating a peak that W2 can still test.",
+   "evidence": "scaled6_4_12: 320 insertions, extras vs cap6 68 (0 TP / 1 FP), 34 cap-6 insertions removed, MC E +0.0003, P(>= 0.957) 0.37 vs cap8 0.40 / cap10 0.51 at similar or larger volume. I-220 (density-gated insertion) was closed for the same reason. unc_fcU adj edge -0.00055; cap40_fc3 FP 29 vs 22 at cap24_fc2; cap6_nosteal -0.00202 (44b6 -0.0050), consistent with I-068; cap16_fc2_t02 lab 44b6 -0.00152.",
+   "action": "Add to IDEAS as refuted/closed rows under I-363/I-220, with this scan as the source.",
+   "urgency": "info"
+  },
+  {
+   "id": "R20ID-7",
+   "kind": "plan-issue",
+   "what": "Finals note for the 29 Sep proposal. The public-aimed candidate will most likely be a DIV volume file. Its private-side evidence is only the in-sample lab: pooled +0.0007 (cap12 fc2) to +0.0013 (cap24 fc2) vs K2, with 44b6 at -0.0008 from one FP fork. Division knobs transfer as Poisson events (R15DS-10), so the partner stays #37 56563521 as the insertion anchor with cap 4. Never pair two DIV volume files.",
+   "evidence": "an3.json per embryo; R19 read table v2 (9) (partner always #37); R15DS-10 lesson; the dc0.30 and cap6 lab/public sign flips.",
+   "action": "Add the DIV caveat line to the V_pub message: 'cap/frame-cap volume picked on the public embryo; lab (in-sample) cap >= 12 fc2 >= K2 pooled, 44b6 -0.0008; +N insertions per clip, 0 runtime'.",
+   "urgency": "later"
+  },
+  {
+   "id": "R20ID-8",
+   "kind": "new-fact",
+   "what": "Honest R8 statement: nothing in this focus is a new mechanism. Every rung here is an existing DIVINS_* knob value on the same code path, and it runs under the user's aggressive-mode lift for division-side public rungs (11:14Z/11:16Z 27 Sep), with a dummy each. The MC gains are model estimates conditioned on a single public read, and P(<= 0.955) stays ~0.27-0.30 for every recommended rung.",
+   "evidence": "CONTEXT 27 Sep 11:14Z/11:16Z/12:12Z entries; R17-A1 'No research-originated mechanism reached R8'.",
+   "action": "Record 'round 20 insertion direction: no R8 item; knob rungs only'.",
+   "urgency": "info"
+  }
+ ]
+}

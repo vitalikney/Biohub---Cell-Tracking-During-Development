@@ -1,0 +1,10 @@
+# v_hyp_private_view r20pv-2 skeptic notes
+- 2026-09-27T20:27:45Z start; no prior json; read scan_hyp_private_view.notes.md/json
+- 20:3xZ read CONTEXT tail: READ TABLE v2 (9) (CONTEXT l.3180-3195) ALREADY says: V_pub >= 0.955 non-CI -> propose {V_pub, #37 56563521}, #38 leaves; "The partner is always #37." 19:01Z entry: finals question already sent to user (A {exp70g,#37} recommended). User 19:10:58Z: picks finals 29 Sep after all variants. => finding's core recommendation is a restatement of a pre-registered rule, value = the ranges only.
+- exp70b = K2 + forkmid 4.5 (CONTEXT l.2410, l.2623). forkmid is on the CLOSED list. {exp70g, exp70b} is NOT nested (exp70g = K2+cap6 lacks fm45) and contradicts (9) "partner always #37" and the user's (b) letter (partner #37, 11:09Z).
+- MC script read: scratchpad r20/mc.py (153 lines). PAIRS: A=max(I+e,e); P1=max(I+e+C,I+e); P3=max(I+e+C,I+e+F) with F~N(0.05e-3, 0.3|0.6e-3). P3's 'equal/better' is Jensen option value of a zero-mean noisy partner (E max(C,F) >= max-with-0 floor for convex g) -> variance-as-value artefact, not evidence for forkmid.
+- P1 vs A is near-pathwise: P1 < A only when I<0 AND I+C<0 AND X(+eps) is inside the medal zone. X rank med 540 (field model), and exact x138 copies are tied at D=0; MC puts a tied #38 in the MIDDLE of the copy block (uniform .35-.65) although #38 was submitted 26 Sep, i.e. near the BOTTOM (ties -> earlier submission) -> A is if anything optimistic -> direction robust.
+- 'two cap files dominated' is wrong on silver: base P7 .57/.42 vs P1 .67/.38 (silver +0.04 for P7). It is a bronze-for-silver trade driven by variance, not domination.
+- Feasibility: no build, no submit, user ticks. exp70g COMPLETE, ledger L (7.49,7.67] h, insertion gate did NOT fire (row 56606948) -> private rows produced in the same run. Consistent with R8 (no new mechanism).
+- Verdict: NOT refuted on the core ({best cap file, #37} > {#37,#38}); amend: drop exp70b alternative, fix 'dominated' wording, label all numbers as model output (judgmental q-mixture weight 0.45, field growth r U(0.6,1.1)).
+- 2026-09-27T20:30:29Z final JSON written (refuted=false, amended)

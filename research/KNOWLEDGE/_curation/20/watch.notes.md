@@ -1,0 +1,5 @@
+- 2026-09-27T20:48Z start watch task round 20; updating curation-19 build (18:40Z). New: CONTEXT l.3075-3221, git a2e0696..771a608, round20/ (in progress?)
+- 20:55Z read CONTEXT to l.3221 (20:30Z autonomous), round20 report.json complete 20:45:36Z (R20-A1..A14, no REPORT.md), scans; poll 20:45:13Z 46 PENDING; E10 RUN 9 0 signals
+- 21:00Z statuses mapped: W195/W196/W198/W202b/W205(push)/W207 done; W197/W200/W201 superseded; new W208-W215 (R20-A1..A14), T116-T121, I214-I230; writing WATCHLIST
+- 20:53Z (real date -u; earlier stamps 20:55/21:00 were estimates) WATCHLIST.md written + line cites verified; writing watch.json
+- 20:56Z watch.json written (complete, 16 alerts)

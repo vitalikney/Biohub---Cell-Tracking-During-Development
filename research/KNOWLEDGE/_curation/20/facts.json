@@ -1,0 +1,81 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/FACTS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/DECISIONS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/20/facts.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/20/facts.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "what": "Round 20's own-base read codes v3 and the W1/W2 v3 plan (R20-A2) are not in CONTEXT. P46 (56611472) can turn terminal from ~22:00Z (8.0 h mark 22:36:59Z). The only logged codes (v2, 18:50) are relative to B = 0.956, so a 46 = 0.955 would code MASKED '?', and base-0.954 files could never read '+'. Any v3 line written after 46 is terminal is post-hoc.",
+   "evidence": "FACTS C-162, F-RUN-31 [c20]; DECISIONS P46 row [c20], §2h 'Codes v3 + W1/W2 v3'; experiments/lb_poll/poll.log header 20:55:15Z (46 PENDING); CONTEXT ends at 20:30 l.3217-3221; research/wf_ideas_v4/round20/report.json R20-A2, PC20-01",
+   "suggested_action": "Append R20-A2 to CONTEXT now, quoting the latest poll.log header that still shows 56611472 PENDING, and commit it (named paths) before 46 is terminal",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "exp79a (exp70g + coordinject, the only CI file on the cap-6 base) was built at 19:05Z, but its dummy was never pushed (kernel 404 at 20:33Z). CI kernels wait 2-3.3 h in the Kaggle queue, and round 20 needs a PASS by 03:00Z 28 Sep. Otherwise the CI slot falls back to the exp70b-base exp76a.",
+   "evidence": "FACTS F-RUN-34 [c20], C-166; DECISIONS §1 [c20] table row exp79a; research/wf_ideas_v4/round20/report.notes.md 20:33Z; CONTEXT 19:05 l.3208-3209",
+   "suggested_action": "Push the exp79a dummy now and never re-push it once QUEUED. Log the PASS/FAIL gate (nodes 121,252, edges/forks == the exp70g dummy with 81 forks, COORDINJECT 4/4)",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "The logged probe-45 read (CONTEXT 18:56) did not use the pre-registered S0 from R19-A1: it used ladder 131353Z (#268, 113 passed) instead of e10 1743Z (#288, 127 passed). It also calls exp70g 'class B', while L9 lists cap in no class-B subset, so exp70g is class C -> letter (b) {exp70g, #37}. Code P6 is unaffected.",
+   "evidence": "FACTS C-159, C-160; CONTEXT l.3079-3081 vs l.3196-3200, l.2418-2419; experiments/lb_poll/ladder_watch/20260927T185549Z CSV l.163; research/wf_ideas_v4/round20/report.json PC20-08, R20-A3 (B)",
+   "suggested_action": "Log the R20-A3 (B) correction line, then treat {exp70g, #37} as the rule-path proposal for the user's 29 Sep pick",
+   "urgency": "today"
+  },
+  {
+   "kind": "contradiction",
+   "what": "Three W1 plans for 28 Sep 00:05Z disagree. v2, logged 18:50 and pre-score, uses base exp70b and CI/SEC/DIV at 00:05/00:10/00:50Z. The session's 19:05/20:30 default is exp78a, exp78b, then exp76e. Round 20 proposes exp78b 00:05Z, CI exp79a on its PASS, exp78a 00:50Z, with exp76e dropped. No CONTEXT line amends v2.",
+   "evidence": "FACTS C-161, C-154, C-152; DECISIONS §1 [c20] paragraph; CONTEXT l.3113-3122, l.3140-3143, l.3208-3210, l.3218-3220; research/wf_ideas_v4/round20/report.json R20-A2 (2)",
+   "suggested_action": "Pick one W1 list and log it in the same pre-46 line as the v3 codes. Round 20's list is the only one with an explicit CI slot and >= 40 min spacing",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "The last RESUME POINT is still 26 Sep 22:46Z, and memory project-lb-probe-approval.md still says 'E10 v1 in force'. They miss the 0.956, the user's finals-on-29-Sep decision, the autonomous night, N2, the aggressive mode and the E10 v3 trigger. This is the 5th round flagging it.",
+   "evidence": "FACTS C-26 [c20]; CONTEXT l.2599; research/wf_ideas_v4/round20/report.notes.md 20:36Z; research/wf_ideas_v4/round20/report.json R20-A3, PC20-05",
+   "suggested_action": "Write the R20-A3 RESUME POINT block and the MEMORY rewrite as the next CONTEXT write",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "The runtime ledger has no family rule for exp72-exp80. Every 28 Sep ref will print 'family unknown', which leaves no R5(a) admission, no 'v' suffix and no L_hi <= 9.0 h finals clause for the V_pub rule.",
+   "evidence": "DECISIONS §3 'Ledger families (R19-A6)' [c20] and 'Ledger families (R20-A4)'; research/wf_ideas_v4/round20/report.notes.md (EXP_RULES ends at exp70[a-z]*); research/wf_ideas_v4/round20/report.json R20-A4",
+   "suggested_action": "Implement R20-A4 (safetail_ci for exp75*/exp76[acfhi]/exp79a*; safetail for exp7[2-9]*/exp8x), with tests, before 00:05Z",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "The E10 v3 trigger text is stale. CONTEXT 11:08 and the watch loop's LOOK text say '>= 0.955', but 'better than ours' now means >= 0.957. The SI build in the runbook still uses DIVINS_CAP=4 while our best uses cap 6. A 0.955-0.956 public notebook could be misread as a trigger.",
+   "evidence": "FACTS C-163, F-LB-10 [c20]; CONTEXT l.2920; experiments/lb_poll/e10_watch_loop.py l.28, l.78; research/wf_ideas_v4/e10v3/runbook.notes.md l.206; research/wf_ideas_v4/round20/report.json PC20-06, R20-A10 (5)",
+   "suggested_action": "Add the R20-A10 (5) text line to CONTEXT: trigger = own public score > our best display (now >= 0.957), SI with our best-display insertion settings",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "The GPU quota has been unread since 07:55/30 h (~21:56Z 26 Sep). Round 20 estimates 19-25 h used after exp71, exp77 and ~13-15 dummies, and 28/29 Sep fall in the same quota week (reset 3 Oct).",
+   "evidence": "FACTS F-RUL-05 [c20]; research/wf_ideas_v4/round20/report.json new_facts (8), R20-A7",
+   "suggested_action": "Read the quota once before pushing exp80a. Follow the R20-A7 dummy priority: exp79a > N2 dummy > exp80a > the exp78b+CI stack",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "The finals are open until the user's 29 Sep pick. Letter (b) / v2 (9) point to {exp70g, #37}. The 02:00Z 29 Sep last-submit cap is unanswered while the user wants 'all variants' tried first.",
+   "evidence": "FACTS C-164, C-165, F-RUL-12 [c20], F-TRN-52; DECISIONS §2 [c20] snapshot; CONTEXT l.3171-3175, l.3211-3213; research/wf_ideas_v4/round20/report.json R20-A9, R20-A12",
+   "suggested_action": "Log the R20-A9 finals card lines before the first W1 read. Send the R20-A12 morning message with the single cap question ~08:00-09:30Z 28 Sep",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "stale",
+   "what": "experiments/RESULTS.md still ends at P38 (P39-P45 scored, P45 = 0.956). Also, every new probe.json (exp76e, exp78a/b, exp79a/d) still says 'compare with exp56 ... above exp56 adopt', which is not the decision rule in force.",
+   "evidence": "FACTS C-118 [c20], F-MOD-39; experiments/RESULTS.md l.71; experiments/exp78b_k2_cap12_fc2/probe.json",
+   "suggested_action": "Add the P39-P46 rows to RESULTS.md at the next hygiene commit. Treat the probe.json 'rule' fields as boilerplate",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 20 (state 20:50 UTC 27 Sep; HEAD 771a608). New since curation 19: R19-A1 and READ TABLE v2 were logged at 18:50, before the terminal header. P45 exp70g (K2 + insertion cap 6) = 0.956, code P6, #288 -> #162 (now #163 of 3,956), L (7.49, 7.67] h = new team best. P46 exp70q is still PENDING at 20:55:15Z. The session built the cap direction (exp78a cap 8, exp78b cap 12 + fc2) and cap-6 stacks (exp79a CI, never pushed; exp79d SEC). Clean dummies: exp76a, exp78a, exp76e, plus exp78b by the judge. exp77 N2 is RUNNING. The user will pick the finals on 29 Sep; #37 + #38 stay ticked. Autonomous night since 20:30Z. E10: 9 runs, 0 signals. FACTS.md: header plus 16 [c20] fact appends and 11 contradiction appends, new F-MOD-39, F-TRN-51 and F-TRN-52, and new contradictions C-159..C-166 (P45 S0 deviation, exp70g class B vs C, W1 plan conflict, B-relative codes, E10 trigger level, finals timing, 02:00Z cap, exp79a status). DECISIONS.md: P45/P46 rows, the §1 [c20] build table, the §2 [c20] finals snapshot (exp70g = current V_pub; proposal {exp70g, #37} for the user's 29 Sep pick), §2f E10, 10 §2h rows, §3 status for R8/R9/L9/letter (b)/E10 v3/R19-A1/v2/ledger/tau plus 4 R20 rows, and a closing paragraph. None of round 20's R20-A1..A14 is in CONTEXT yet; R20-A2 must land before 46 is terminal."
+}

@@ -1,0 +1,9 @@
+# v_plancheck_pc20-01 notes
+- 2026-09-27 20:28Z start. No prior json. CONTEXT last entry 20:02Z; no v3 codes line yet. exp70b = K2 + fm4.5 (probe 42, 0.954, l.2623); exp70q = K2+cap6+thr0.3+fm4.5 (l.2948); exp76e = exp70b+cap6 = exp70g+fm.
+- 20:30Z verified: v2 (2) codes l.3123-3131 relative to B; 45 = 0.956 P6 (l.3196). E10 20260927T2002Z.txt l.303: D: Discipline rank 163, 0.956, count 47; 0.956 block starts rank 153 -> k = 10. Block order is by unrounded score (dates mixed), so UP test is valid for 0.956 files.
+- poll.log l.17103: 56611472 (46 exp70q, submitted 14:36:59Z) still PENDING; read expected ~22:00-22:40Z. No v3 codes line in CONTEXT yet (last entry 20:02Z).
+- Problem (a) real: 46 at 0.955 -> v2 MASKED '?'. Problem (b) real: exp70b-base files at 0.955/0.956 cannot read '+' via N/U codes (0.955 -> MASKED; 0.956 needs an UP over exp70g).
+- FLAW 1 in the proposed action: v2 rows (l.3120-3121) and card (4) 'Either NEG -> drop every exp73* and exp76c/e/g/h/i' key on '46 NEG'. Recoding 46 = 0.955 as NEG without rewriting the rows sends W1 to row D and drops the cap-6/DIV line that 45 just proved (P6). NEG must be scoped to the thr 0.3 + fm increment only.
+- FLAW 2: narrowing MASKED to '+2 count step with equal displays' removes the card (1) MASKED case (another of our files showed an UP in the same window). With 4-5 W1 cap-6 files completing 07:30-11:00Z 28 Sep, once one reads 0.956+UP (or 46 reads >= 0.957) the team best is above exp70g; a later cap-6 file at 0.956 with 0 passed could still beat exp70g -> must be '?', not N. For CI/SEC, N closes the lever (v2 (2)), so a false N wrongly kills a lever.
+- Magnitude: '-0.001' is overstated; 0.955 vs 0.956 displays means strictly lower unrounded public score, gap anywhere in (0, ~0.002). One embryo, public only.
+- Verdict: problem real, action needs two corrections; not refuted. No mechanism, no submit, R8 not touched.

@@ -1,0 +1,8 @@
+- 2026-09-27T20:27Z start PC20-03 skeptic; json absent -> fresh
+- 20:28Z read-only `kaggle kernels status`: exp78b COMPLETE; exp79d RUNNING; exp77 RUNNING; exp79a -> 'kernels.get denied' = never pushed. So "ahead of exp79d" is overtaken; the remaining action is: push 79a now, do not wait for 79d to finish.
+- Metadata diff (experiments/exp7{2,5,6a,6d,6e,8a,8b,9a}/kernel-metadata.json): all identical (T4, private, internet off, docker 37c64f7d) except the dataset yuki0731/biohub-coord-inject on CI kernels -> the queue is kernel-specific, not the concurrency cap: exp72 (pushed 13:27Z) and exp76d (~16:10Z) ran at once while exp75 was queued 13:18->~16:40Z; exp76a queued 16:33->~18:33Z (clean 19:05Z, 1,896 s) while at most 1 other GPU kernel ran.
+- Timing model: queue 2.0-3.3 h + run ~32 min. Push 20:35Z -> PASS ~23:05-00:20Z (P(by 23:45Z) ~0.5); push after 79d (~20:55-21:00Z) -> ~23:30-00:45Z (P ~0.2-0.3). The gain is modest, not a guarantee.
+- The gate numbers check out: exp70g dummy 121,252 nodes / 81 forks (CONTEXT l.2947-2948); CI moves coordinates only, so nodes and edges must equal exp70g's; exp75/76a replaced 91.5%.
+- Extra fix: the 23:45Z cutoff is soft for CI (a code-competition submit only needs a COMPLETE notebook version). Pre-register now: 00:05Z = the SEC file (79d); the CI slot takes 79a as soon as its dummy passes, up to ~03:00Z (L ~9.7-10.5 h -> ~13:30Z read); exp76a only if 79a is not PASS by then.
+- Value caveat: CI itself is weak for private (in-sample 4-clip lab pooled +0.0022; Eric sub-voxel +0.0078 lab -> -0.002 LB). This is scheduling hygiene for an already-approved lever, not new value.
+- 20:29Z final JSON written

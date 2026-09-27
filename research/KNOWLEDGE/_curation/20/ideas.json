@@ -1,0 +1,88 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/ideas.json",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/IDEAS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/20/ideas.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/20/ideas.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "what": "READ TABLE v3 (R20-A2) is not in CONTEXT yet. It gives own-base codes, W1 = exp78b 00:05Z / CI exp79a / exp78a 00:50Z, W2a/W2b, stop rules and the W4 amendment. It must be logged before 56611472 (46) is terminal, or every later code is post-hoc. 46 was still PENDING at the 20:55:15Z poll header; the earliest terminal is ~22:00Z.",
+   "evidence": "research/wf_ideas_v4/round20/report.json R20-A2, R20-A8; experiments/lb_poll/poll.log (20:55:15Z header); CONTEXT.md ends at l.3221 (20:30Z entry); research/KNOWLEDGE/ideas.json I-403, I-361, I-392",
+   "suggested_action": "Append R20-A2 now (target <= 21:45Z), quoting the last PENDING poll header. Then read 46 by the v3 codes with one manual LB download.",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "The on-base CI file exp79a (exp70g + coordinject) had never been pushed by 20:33Z (kernels status 404). CI kernels wait 2-3.3 h in the Kaggle queue, and the W1 CI slot needs its PASS by 03:00Z 28 Sep. Otherwise the slot falls back to the wrong-base exp76a.",
+   "evidence": "research/wf_ideas_v4/round20/report.json R20-A1, R20-A2 (2); research/wf_ideas_v4/round20/report.notes.md (20:33Z judge check); research/wf_ideas_v4/round20/v_plancheck_pc20-03.json; research/KNOWLEDGE/ideas.json I-401, I-382",
+   "suggested_action": "Push the exp79a dummy now and never re-push it. Gate it per R20-A1 (nodes 121,252, 81 forks, COORDINJECT 4/4 ~91.5% moved, 0 error markers) and log PASS/FAIL.",
+   "urgency": "now"
+  },
+  {
+   "kind": "forgotten",
+   "what": "There is still no RESUME POINT since 26 Sep 22:46Z (5th round in a row). MEMORY project-lb-probe-approval.md still says 'E10 v1 in force', and the R8 COVERAGE line for coordinject/secFT files is missing. The user has been asleep since 20:30Z (autonomous night), so a crashed session would restart from a state that is ~27 h stale.",
+   "evidence": "CONTEXT.md l.2599 (last RESUME POINT), l.3217-3221; research/wf_ideas_v4/round20/report.json R20-A3; research/wf_ideas_v4/round20/v_plancheck_pc20-05.json; research/KNOWLEDGE/ideas.json I-257, I-324",
+   "suggested_action": "Write R20-A3 (A) block + (B) correction line as the next CONTEXT write; rewrite the MEMORY file and its index line.",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "The 18:56Z probe-45 read used a non-pre-registered S0 (ladder_watch 131353Z, '113 passed'); with the pre-registered S0 (e10_watch 20260927T1743Z.txt) the count is 127 (the P6 code does not change). The same entry calls exp70g 'class B', but under L9 it is class C, so the rule path is letter (b) -> {exp70g, #37}. The 19:01Z message still offered option B {exp70g, #38} as an equal choice.",
+   "evidence": "CONTEXT.md l.3196-3205; research/wf_ideas_v4/round20/scan_plancheck.json PC20-08; research/wf_ideas_v4/round20/v_plancheck_pc20-08.json; research/wf_ideas_v4/round20/report.json R20-A3 (B), R20-A9 (b); research/KNOWLEDGE/ideas.json I-326, I-327, I-296",
+   "suggested_action": "Log the R20-A3 (B) correction line. In the 29 Sep proposal, present {exp70g, #37} as the rule path and {cap file, #38} only as a user choice.",
+   "urgency": "today"
+  },
+  {
+   "kind": "contradiction",
+   "what": "The newest CONTEXT plan (20:30Z autonomous night) says W1 00:05Z = exp78a, exp78b, exp76e (or a 46-informed rung) with 2 slots kept for ~08:00Z. That uses the E10-held slot of v2 (4) and spends a W1 slot on exp76e (forkmid isolate, ~5-9e-5). Round 20 replaces it with exp78b 00:05Z, CI exp79a <= 03:00Z, exp78a 00:50Z; exp76e is filler only.",
+   "evidence": "CONTEXT.md l.3206-3210, l.3217-3221, l.3112-3195 (4); research/wf_ideas_v4/round20/scan_plancheck.json PC20-02; research/wf_ideas_v4/round20/report.json R20-A2 (2), R20-A11, rejected; research/KNOWLEDGE/ideas.json I-381, I-377, I-403",
+   "suggested_action": "Make R20-A2 the explicit amendment that supersedes the 19:05Z list and the 20:30Z default order before any 00:05Z submit.",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "N2 (exp77, running since 19:04Z) has no logged slot. The 18:19Z plan (exp70b + secswap, two recipes) is stale. R20-A6 pre-registers ONE file: exp70g + the GPU0 epoch-2 secondary, submitted in W2a; exp79d is the fallback and GPU1 is never submitted. It must be logged before exp77 completes (~22:00Z). exp79d's dummy is COMPLETE, but its gate is not logged.",
+   "evidence": "CONTEXT.md l.3070-3074, l.3206-3210; research/wf_ideas_v4/round20/report.json R20-A6, R20-A5 (b); research/wf_ideas_v4/round20/scan_plancheck.json PC20-07; research/KNOWLEDGE/ideas.json I-385, I-396, I-402",
+   "suggested_action": "Append R20-A6 before exp77 finishes. Then gate exp79d per R20-A5 (b), and put n2a in a private dataset with an SHA line.",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "tools/runtime_ledger.py still has no family for exp72-80 (4th flag). Every 28 Sep ref prints 'family unknown', so the ledger gives no R5(a) admission, no 'v' suffix and no L_hi finals clause.",
+   "evidence": "research/wf_ideas_v4/round20/scan_plancheck.json PC20-04; research/wf_ideas_v4/round20/report.json R20-A4; research/KNOWLEDGE/ideas.json I-383",
+   "suggested_action": "Land R20-A4 (safetail_ci family plus rules for exp75/76[acfhi]/79a, and exp7[2-9]*/exp8x -> safetail) with its test before 00:05Z 28 Sep; until then pass --family on every 28 Sep ref.",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "The GPU quota has not been read since 26 Sep (07:55/30 h). The estimate is ~19-25 h used after exp71, exp77 and ~13-15 dummies, and the quota resets only on 3 Oct. exp80a and the exp78b + CI stack depend on the remaining hours.",
+   "evidence": "research/wf_ideas_v4/round20/report.json R20-A7, new_facts; research/wf_ideas_v4/round20/scan_plancheck.json PC20-10; research/KNOWLEDGE/ideas.json I-405, I-399, I-404",
+   "suggested_action": "Read the quota once before pushing exp80a and log it. Apply the priority exp79a > N2 dummy > exp80a > exp78b + CI stack, with cut-offs at 24/26/28 h.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "E10 v3 texts are stale after the 0.956: the loop LOOK text and runbook l.66 say '>= 0.955' while the live trigger is >= 0.957; the SI (B) build uses DIVINS_CAP=4 while our best-display insertion is cap 6; exp70g is not listed as a finals collision candidate.",
+   "evidence": "research/wf_ideas_v4/round20/scan_plancheck.json PC20-06; research/wf_ideas_v4/round20/report.json R20-A10 (5); research/wf_ideas_v4/round20/report.notes.md; research/KNOWLEDGE/ideas.json I-364",
+   "suggested_action": "Log the R20-A10 (5) text line. No loop code change is needed.",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "The 29 SEP FINALS CARD LINES (R20-A9) are not logged. They define V_pub among cap-family files, the winner's-curse tie rule (smaller dose wins on equal display), partner always #37, the model ranges and the DIV caveat. The user picks on 29 Sep after all variants (19:10:58Z), and the pick must not become the max of 5 related one-embryo reads.",
+   "evidence": "research/wf_ideas_v4/round20/report.json R20-A9; research/wf_ideas_v4/round20/scan_plancheck.json PC20-09; CONTEXT.md l.3211-3213; research/KNOWLEDGE/ideas.json I-406, I-393, I-229",
+   "suggested_action": "Append R20-A9 before the first W1 terminal header (~07:30Z 28 Sep), ideally together with R20-A2.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "The R20-A10 info lines are not in CONTEXT: R20ID-1 is a lab NULL, not a sign agreement; probe 45 falsifies the volume closure on public only; the lab is blind, not mis-signed. The R20ID-1 evidence (scratchpad/r20ins/an2.json, an3.json) is scratchpad-only. The same applies to the R20-A13 private-read addendum (C, C_fm, C8, C_thr priors). Round 20 is untracked and has no REPORT.md (the harness blocked the judge's write).",
+   "evidence": "research/wf_ideas_v4/round20/report.json R20-A10, R20-A13, R20-A14, note_report_md; research/KNOWLEDGE/ideas.json I-408, I-407, I-066, I-067",
+   "suggested_action": "At the next CONTEXT write add the R20-A10 lines; write round20/REPORT.md from report_md_ru and commit round 20 per R20-A14 (named paths, no _dl/ or Corwin weights).",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 20 is an incremental update over curation 19 (22840c5). Git HEAD is now 771a608, plus the untracked research/wf_ideas_v4/round20/ (report.json R20-A1..A14, complete 20:45:36Z). CONTEXT.md gained 8 entries at l.3075-3221: the R19-A1 amendment and READ TABLE v2 (18:50Z), PROBE 45 exp70g = 0.956 (18:56Z, new team best, #162), the cap-direction rungs exp78a/exp78b and the finals question (19:01Z), exp76a clean with exp77 N2 pushed and exp79a/d built (19:05Z), the USER's decision to pick the finals on 29 Sep after all variants (19:10:58Z), exp78a/exp76e dummies clean (20:02Z), and the USER autonomous night (20:30Z). The ledger grows 396 -> 412 ideas with 72 change records. New ideas I-397..I-412: exp78a cap 8, exp78b cap 12 fc2, exp80a cap 24 fc2 (W2-conditional), cap 48 (W4 only, refuted as a W2 step), exp79a cap6+CI, exp79d cap6+SEC, READ TABLE v3, the exp78b+CI pre-build, the GPU quota reading, the 29 Sep finals card lines, the private-read addendum, the extended cap lab (lab NULL), frame cap >= 3 and steal_frac/ALPHA (closed), the thr-0.3 base switch (rejected) and the John Taylor port (rejected). Status changes: I-326, I-066 and I-067 -> lb-tested (P45 = 0.956; public only, the lab was blind); I-363/I-373/I-376/I-390/I-391/I-394/I-375/I-395 -> refuted (superseded or moot after the 0.956 and v3); I-388 -> in-plan (~2.5 h round cadence adopted); I-365/I-392 logged. Totals: lb-tested 51->54, lab 21->22, in-plan 83->86, refuted 193->204, deferred 44, open 4->2. Probe 46 was still PENDING at 20:55:15Z. The biggest gaps: R20-A2 (v3), R20-A3 (RESUME POINT) and R20-A6 (N2) are unlogged; exp79a is unpushed; the ledger families are missing."
+}

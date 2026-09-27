@@ -1118,3 +1118,65 @@ Curator logs: `research/KNOWLEDGE/_curation/4/`.
   - N2 contradiction: [now] (ideas, watch) vs [today] (facts) -> [now], because it must precede any N2 dummy and the exp76d read.
   - GPU quota: [now] (watch) vs [today] (ideas, facts) -> [now], because the exp77 push is imminent.
   - runtime_ledger: [today] (ideas) vs [before-finals] (facts) -> [today], because it is due before 00:05Z 28 Sep.
+
+## 20 - 2026-09-27 ~21:00 UTC (curation 20; git HEAD 771a608 = origin/main + untracked `research/wf_ideas_v4/round20/`, `experiments/e10_watch/20260927T2043Z.txt`, `experiments/ds_secw_corwin_v1/weights/`)
+
+**Sources since curation 19:**
+- `CONTEXT.md` l.3075-3221, 8 entries: R19-A1 amendment 18:50; READ TABLE v2 18:50; PROBE 45 READ 0.956 18:56; cap rungs 19:01; exp76a clean + exp77 pushed + exp79a/d built 19:05; USER finals-on-29-Sep 19:10:58; exp78a/exp76e clean 20:02; USER autonomous night 20:30. `## 9. Literature` moved to l.3222.
+- Commits a2e0696, ca663c1, 7cd6a0e, bd7d7a4, cdeeb2d, 32eeedd, 771a608 (`git log`).
+- Round 20: `research/wf_ideas_v4/round20/report.json` R20-A1..A14 (complete 20:45:36Z; no REPORT.md), `scan_plancheck.json`, `scan_hyp_insertion_direction.json`, `scan_hyp_private_view.json`, `scan_recheck.json`, `v_*.json`.
+- Polls and LB: `experiments/lb_poll/poll.log` 20:55:15Z (P45 COMPLETE 0.956, P46 PENDING); `experiments/e10_watch/watch_loop.log` RUN 7-9 (0 signals); `experiments/e10_watch/20260927T2043Z.txt` l.981 (#163, count 47).
+
+**Ideas** (`IDEAS.md` CHANGES (20) l.103-113; `ideas.json` meta.curations[n=20], 72 records; `_curation/20/ideas.json`):
+- **New:** I-397 exp78a cap 8; I-398 exp78b cap 12 + fc2; I-399 exp80a cap 24 + fc2 (W2-conditional); I-400 cap 48 (refuted as a W2 step); I-401 exp79a cap 6 + CI; I-402 exp79d cap 6 + SEC; I-403 READ TABLE v3 + W1/W2 v3; I-404 exp78b + CI stack; I-405 GPU quota reading; I-406 29 Sep finals card lines; I-407 private-read addendum; I-408 extended cap lab (NULL); I-409 frame cap >= 3 and I-410 steal_frac/ALPHA (closed); I-411 thr-0.3 base switch and I-412 John Taylor port (rejected).
+- **Status changes:** I-326, I-066, I-067 -> lb-tested (P45 = 0.956, public only; the lab was blind). I-363, I-373, I-376, I-390, I-391, I-394, I-375, I-395 -> refuted (superseded after the 0.956 and v3). I-388 -> in-plan (~2.5 h round cadence). I-365 and I-392 are now logged.
+- **Counts c19 -> c20:** 396 -> 412. lb-tested 51 -> 54, lab-tested 21 -> 22, in-plan 83 -> 86, refuted 193 -> 204, deferred 44, open 4 -> 2. The strict orphan is still I-233.
+
+**Facts and decisions** (`FACTS.md`, `DECISIONS.md`, rows marked [c20]; `_curation/20/facts.json`):
+- **New facts:** F-MOD-39, the 28 Sep cap-direction and cap-6 builds (l.336); F-TRN-51, the extended cap lab, where all gain at cap >= 8 comes from 6bba (l.392); F-TRN-52, private-view models for the cap line (l.393).
+- **[c20] appends:** 16 facts (F-LB-01/02/03/10/12, F-RUN-31/34, F-RUL-05/10/12, F-MOD-33/36/37, F-TRN-42/48) and 11 contradictions.
+- **New contradictions C-159..C-166** (l.557-564):
+  - the P45 S0 deviation (127, not 113);
+  - exp70g class B vs C;
+  - the W1 plan conflict;
+  - B-relative codes;
+  - the E10 trigger level;
+  - finals timing;
+  - the 02:00Z cap;
+  - exp79a status.
+- **DECISIONS.md:**
+  - P45/P46 rows (l.178-179) and the §1 [c20] table (l.358);
+  - the §2 [c20] snapshot (l.584; exp70g = current V_pub; proposal {exp70g, #37});
+  - §2f E10 (l.852);
+  - §2h rows (l.934-943);
+  - §3 R20 rows (l.981-984).
+
+**Watchlist** (`WATCHLIST.md`; `_curation/20/watch.json`):
+- **New:** W208-W215, T116-T121, I214-I230.
+- **Done:** W195, W196, W198, W202 (b), W205 (push), W207 (46 waiter, `CONTEXT.md` l.3216).
+- **Superseded:** W197, W200, W201.
+- **Still overdue:** W185 RESUME POINT (5th round), W188 ledger families (4th), W126 RESULTS rows, W176, W177, W182.
+
+**Alerts** (`INDEX.md` TOP ALERTS, 10 after dedup):
+- **Resolved since curation 19:**
+  - R19-A1 and READ TABLE v2 were logged pre-score (a2e0696 18:50:11Z vs the 18:54:54Z header).
+  - 45 was read.
+  - exp76a, exp78a, exp76e and exp78b dummies are clean.
+  - exp77 was pushed.
+  - The 46 waiter is set.
+  - round 19 was committed.
+  - The N2-vs-closures conflict is handled by the proposed R20-A6.
+  - The GPU-quota and ledger alerts carry over, re-keyed to R20-A7 and R20-A4.
+- **New:**
+  - exp79a is unpushed (404) and the CI-latency arithmetic applies to it (W208, I229).
+  - R20-A2 v3 codes + W1 v3 must land before 46 is terminal; they conflict with the 20:30Z CONTEXT plan.
+  - The R20-A3 (B) correction of the 18:56Z read.
+  - R20-A6 one-file N2 + the exp79d gate.
+  - The 46 read with count 47/48.
+  - E10 v3 texts are stale (>= 0.957, SI cap 6).
+  - R20-A9 finals card lines + the R20-A12 morning message.
+  - round20/REPORT.md is missing and round20/ is untracked.
+- **Curator disagreements settled here:**
+  - RESUME POINT [now] vs [today] -> [now].
+  - N2 [today] vs [now] -> [now].
+  - The W1 plan conflict is merged into the R20-A2 alert.
