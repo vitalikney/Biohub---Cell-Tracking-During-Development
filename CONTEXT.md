@@ -3211,6 +3211,9 @@ Mention it to the user in one line (R9-A8 item 6).
 - 2026-09-27 19:10:58 UTC, USER (chat: "пока без разницы, что отмечать на финал. отмечу 29 уже после того, как все варианты испробуем"): no
   re-tick now; the user picks the finals on 29 Sep after all variants are scored. Until then #37 + #38 stay ticked. The session
   prepares a finals proposal (public-aimed best display + private anchor) for the 29 Sep 12:00/18:00 UTC checks.
+- 2026-09-27 20:02 UTC, DUMMIES CLEAN: exp78a (K2 + cap 8: 121,252 nodes / 86 forks, ~1,486 s) and exp76e (exp70b + cap 6: 121,252 / 80 forks,
+  ~1,279 s); 0 Traceback/FAILED/DEADLINE:/FALLING BACK. Running: exp78b dummy, exp77 N2 training. Round 20 launched 20:02Z; round 21
+  timer 22:30Z; probe 46 read waiter set.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
