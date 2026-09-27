@@ -1,0 +1,45 @@
+{
+ "summary": "Round-16 delta scan, 08:31-08:42 UTC 27 Sep, compared with round 15 (05:31-05:45Z). E10 P1 snapshot experiments/e10_watch/20260927T0831Z.txt has CHANGES=19. One new public kernel appeared (mtoshidesu/testbiohub-lf-dctta020-sectta1). It is a copy of the sjlee stack with DeepCenter safe-div 0.20, scores 0.947 V2, and is not pulled. The P2 look-check's largest identical-score group is 1, under the >=5 signal, so there is NO P2 signal and tools/e10_port_gate.py was not run. x138 and amanatar are unchanged: amanatar V6 still shows no public score, best 0.953 V4. Public LB at 08:32:04Z: 3,946 CSV rows. We are #255 (r15 #256) at 0.954, SubmissionCount 44, LastSubmissionDate 27 Sep 00:05:50 (= exp70b). We are now 8th of 113 in the 0.954 block (248-360); in r15 we were 17th of 102. That fits exp70b being our best unrounded score, which is the D2 U4 read. Only 5 teams passed us: José Freitas 0.946->0.960, Raikou's fanclub 0.953->0.956, Julie Pedeches 0.954->0.956, 田口雄大 0.954->0.955, Kaggle Agent 0.950->0.955. Counts (r15 in brackets): 0.953 = 383 (382), 0.954 = 113 (102), 0.955 = 73 (72), 0.956 = 43 (44), 0.957 = 26 (22), >=0.960 = 78 (71), >=0.970 = 7, >=0.953 = 743 (723). Top-20 movers: taiseiu 0.971->0.972 (#4), Syed Asad Ali 0.966->0.969 (#8), SoichiOzaki 0.964->0.968 (#14); yu4u still leads at 0.978. There is no new discussion topic or comment and no host announcement. Code tab by score is unchanged (nothing above 0.953). Overview, timeline, rules and data are unchanged. Submissions are at 89,096 (+568, ~190/h). Probes 43/44 are not scored yet (expected ~12:30-13:00Z). The finals (#37 + #38) are unaffected.",
+ "findings": [
+  {
+   "id": "r16-e10-p1-snapshot",
+   "kind": "new-fact",
+   "what": "E10 P1 snapshot at 08:31Z against 05:31Z: CHANGES=19.\nKernels: comp dateRun has one NEW entry, mtoshidesu/testbiohub-lf-dctta020-sectta1 (lastRun 06:13:56Z), and y3uanm dropped out of the top 20. There is no change in the scoreDescending top 20, the anvithpothula/thtennant/amanatar lists, or the x138 and amanatar status.\nLB: >=0.955 239->247, >=0.960 71->78, teams 3938->3943, OURS 256->255.\nP2 look-check (teams now >=0.956 that were <=0.953): 0.960: 1, 0.956: 1, so the largest group is 1, under the >=5 signal. E10 is NOT triggered and the port gate was not run. Most of the 60 new >=0.953 scores have LastSubmissionDate ~23:40Z-00:47Z, i.e. the daily midnight burst scoring after ~7-8 h.",
+   "evidence": "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/experiments/e10_watch/20260927T0831Z.txt",
+   "action": "None. The next P1 run should be after the ~12:30-13:00Z scoring of probes 43/44.",
+   "urgency": "info"
+  },
+  {
+   "id": "r16-lb-delta-0832",
+   "kind": "new-fact",
+   "what": "Public LB at 08:32:04Z: 3,946 CSV rows (+5).\nOur row: #255 (r15 #256), 0.954, SubmissionCount 44 (was 43), LastSubmissionDate 27 Sep 00:05:50 (= probe 42 exp70b; r15 showed 26 Sep 21:38:33). We are 8th of 113 in the 0.954 block (248-360); in r15 we were 17th of 102.\nThe jump inside the block (17th -> 8th) happened while 11 teams joined the block. It fits exp70b's unrounded score being above #37's, which independently corroborates the D2 'U4 / attributable UP' read. SubmissionCount 44 means probes 43/44 are still unscored.\nBlocks: 0.957 = 106-131 (26), 0.956 = 132-174 (43), 0.955 = 175-247 (73), 0.953 = 361-743 (383).\nCounts vs r15: 0.953 383 (+1), 0.954 113 (+11), 0.955 73 (+1), 0.956 43 (-1), 0.957 26 (+4), 0.958 12 (-3), 0.959 15 (0), >=0.960 78 (+7), >=0.970 7, >=0.953 743 (+20). 73 teams changed score and 239 have new subs.\nThe 5 teams that passed us:\n- José Freitas 0.946->0.960 (#1349->#77, sub 00:05Z)\n- Raikou's fanclub 0.953->0.956\n- Julie Pedeches 0.954->0.956\n- 田口雄大 0.954->0.955\n- 'Kaggle Agent' 0.950->0.955\nNone of them has a public source.",
+   "evidence": "C:/Users/vital/AppData/Local/Temp/claude/c--Users-vital-Documents-kAGGLE-Biohub---Cell-Tracking-During-Development/acabaea6-42c1-4115-a146-2ddc5bb7e8c8/scratchpad/lb/r16/biohub-cell-tracking-during-development-publicleaderboard-2026-09-27T08_32_04.csv compared with C:/Users/vital/AppData/Local/Temp/claude/c--Users-vital-Documents-kAGGLE-Biohub---Cell-Tracking-During-Development/acabaea6-42c1-4115-a146-2ddc5bb7e8c8/scratchpad/lb/r15/...T05_32_02.csv (lb/r16/cmp2.py, uses the CSV Rank column); C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/wf_ideas_v4/round16/scan_browser.notes.md",
+   "action": "Update the CONTEXT intel line to #255/3,943, 8th of 113 in the 0.954 block, and log that the LB order corroborates exp70b > #37 unrounded. This is info only. The pair stays #37 + #38 by rule; whether exp70b becomes a final is the user's call from the morning brief.",
+   "urgency": "info"
+  },
+  {
+   "id": "r16-top-movers",
+   "kind": "new-fact",
+   "what": "Top 20 (08:32Z):\n- taiseiu 0.971->0.972 (#6->#4, sub 00:11Z)\n- Syed Asad Ali 0.966->0.969 (#16->#8)\n- SoichiOzaki 0.964->0.968 (#34->#14)\nyu4u 0.978, Gabriel and Sergio Alvarez 0.975 are unchanged, and >=0.970 is still 7 teams. Other >=0.960 movers: Knight of Favonius and Brothers 0.960->0.963, Rasheed Khoshnaw 0.959->0.962, 牛・狐・鳥 and Guest21222 0.958->0.961, めめっち 0.956->0.960. Latest subs in the CSV: eigeness9 0.947 07:48Z, Ayush Shukla 07:34Z, Miz 0.957 07:09Z, manase0 0.953 06:41Z.",
+   "evidence": "lb/r16/cmp2.py output (r15 05:32:02 vs r16 08:32:04 CSVs)",
+   "action": "None.",
+   "urgency": "info"
+  },
+  {
+   "id": "r16-new-kernel-mtoshidesu",
+   "kind": "new-fact",
+   "what": "New public kernel: https://www.kaggle.com/code/mtoshidesu/testbiohub-lf-dctta020-sectta1, 'Version 6 of 6', 2h 13m 10s on GPU T4 x2, 48 votes, 'Copied from Seung Jae Lee (+1597,-112)', Best Score '0.947 V2'. Its inputs are pilkwang DeepCenter prior, TemporalUNet3D seed314159 and the Tracking Support Pack, with no v1284 head, so it is not x138 lineage. Code (CLI pull to the scratchpad): the documented sjlee 'Adaptive Temporal Accord' stack with BIOHUB_DEEPCENTER_SAFE_DIV_THRESHOLD=0.20, DEEPCENTER_TTA=1, DET 0.965, and SAFE_DIV_MAX 9.0 / SISTER 14.0. This is the known sjlee DC 0.20 = 0.947 line (I-018). It is not >=0.954 and has no new idea, so it was NOT pulled into experiments/ext_*.",
+   "evidence": "C:/Users/vital/AppData/Local/Temp/claude/c--Users-vital-Documents-kAGGLE-Biohub---Cell-Tracking-During-Development/acabaea6-42c1-4115-a146-2ddc5bb7e8c8/scratchpad/mtoshi/testbiohub-lf-dctta020-sectta1.ipynb ; kernels status COMPLETE",
+   "action": "None. It is not a data point for probes 43/44 (another stack, already known at 0.947).",
+   "urgency": "info"
+  },
+  {
+   "id": "r16-code-discussion-overview-unchanged",
+   "kind": "new-fact",
+   "what": "Code tab by Public Score is identical to r15: HF V3 0.953 (172 votes), optimized-biohub-max-score 0.953 ('Updated 7h ago', 63; the page still shows 'Version 6 of 6', Best Score '0.953 V4', so V6 has no public score), Biohub Cell Tracking 0.953 (227), x138 0.953 (209 votes, 3 comments), Geometric Fusion 0.948. Nothing scores above 0.953. CLI dateCreated: newest is still tobimichigan, 24 Sep. No dataset has been updated since r15.\nDiscussion (sort=recent-comments): no new topic and no new comment. The latest comments are 6h old (the spam seen in r15), and 'Question for host' still has only Satwik's comment (9h ago). There is no host announcement.\nOverview: '3 DAYS TO GO'; the timeline (September 29, 2026 Final Submission Deadline, 11:59 PM UTC), the metric text and the 12 h CPU/GPU limits are unchanged. Counts: 13,475 entrants, 4,512 participants (+4), 3,943 teams, 89,096 submissions (+568 since ~05:44Z, ~190/h). The Rules page has no update notice. Data files still have creationDate 2026-06-26.",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/code?sortBy=scoreDescending ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion?sort=recent-comments ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/overview ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/rules ; https://www.kaggle.com/code/amanatar/optimized-biohub-max-score",
+   "action": "None.",
+   "urgency": "info"
+  }
+ ]
+}

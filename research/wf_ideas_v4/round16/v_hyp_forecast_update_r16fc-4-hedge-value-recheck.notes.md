@@ -1,0 +1,12 @@
+# r16fc-4 hedge value recheck notes (2026-09-27T08:44:30Z)
+- No cached JSON existed. Read: round16/scan_hyp_forecast_update.json + notes (r16fc-1..7; model fields all have beta >= 0: overfit 0-.10, mid .10-.25, central .2-.35),
+  IDEAS.md I-092/I-297/I-298/I-344, CONTEXT.md l.2324-2334 (16:54Z forecast; prior C2 P(I=0)~0.3), round15/v_recheck_r15-rc-c (premise 'bronze ~#394 inside the 0.953 block #342-723' used PUBLIC ranks at 05:31Z, ignored growth).
+- Structure of the hedge arithmetic is right: #38 = X+eps pays only if I<0 AND eps>0 AND rank(X+)<=bronze; eps cancels when I>=0. Tie at eps=0 goes to earlier copies. Round-15 premise error is real: 358 teams >=0.954 now, 520-690 projected, so 'above block ~ medal' needs part of the crowd to fall below X on private.
+- Independent check (scratchpad r16fc4_check.py, 1000 draws/cell): P(rank(X+) <= bronze) as a function of beta (mean share of public margin kept on private), rho (corr of a team's two finals), r (growth 0.6/1.0), g (genuine share 0.1/0.3):
+  beta -0.30: 0.66-1.00 ; beta -0.15: 0.00-1.00 (mostly 0.9-1.0 at r=0.6) ; beta 0.0: 0.00-0.87 ; beta >= +0.15: 0.00.
+  => P(iii) is a step function of beta; the finding's 0-0.35 holds only under beta >= 0 (every field in its MC). Negative beta (public-tuned knobs overfit the one public embryo: DC dc0.30 lab +0.0013 vs public -0.005; edge filter +0.016 local, 0 LB) is not excluded; the Mamarin base rate (public-best wins private ~3/4, discussion 743006) argues for beta > 0 but is not decisive.
+  => upper bound of twin value: 0.33 x 0.5 x ~1.0 ~ 0.16, not 0.06; with a symmetric beta prior central ~0.23 x 0.4 x ~0.45 ~ 0.04.
+- Correlation ignored: the worlds where #38 still matters (beta < 0) are the same worlds where public-tuned upside u (DC/fm45) is likely negative on private, so 'independent upside u worth +0.02..+0.15 in 77% of worlds' overstates the swap value exactly where it matters. (#37 floor means u costs nothing by itself; the cost is the lost twin.)
+- I-092: MC numbers were rejected as decision inputs twice; the one-sentence user message carries a model number as if it were a bound.
+- Feasibility: trivial (info only, no build/submit/re-tick). Verdict: refuted=true on the stated magnitude and the user sentence; the premise correction (round-15 'bronze inside the block' used public ranks and ignored growth) survives and should be recorded.
+- 2026-09-27T08:47:27Z final JSON written (refuted=true).

@@ -1,0 +1,5 @@
+- 2026-09-27T09:11:13Z start: no index.json; reading INDEX.md, CHANGES.md tail, curator jsons
+- 2026-09-27T09:11:55Z sources read (INDEX c15, CHANGES 15, CONTEXT l.2814-2879, poll 09:10:50Z 43/44 PENDING, WATCHLIST NEXT/LATER, IDEAS l.71-84); writing INDEX.md
+- 2026-09-27T09:13:44Z INDEX.md written (66 lines); appending CHANGES section 16
+- 2026-09-27T09:13:44Z CHANGES.md section 16 appended; writing index.json
+- 2026-09-27T09:14:17Z index.json written; done

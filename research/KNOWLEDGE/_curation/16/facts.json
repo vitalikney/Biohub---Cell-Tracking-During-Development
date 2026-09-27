@@ -1,0 +1,74 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/FACTS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/DECISIONS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/16/facts.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/16/facts.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "what": "The round-16 read addendum R16-A1 is not in CONTEXT yet. It covers composition (INS = #37 unless the user allows exp70b; the (b) partner is #37 unless the user names exp70b), re-tick order, a read-trigger timeout (14:28:22Z, with a 14:40Z fallback), the letter window and answer parsing. It must be logged with date -u and must quote a poll.log header that shows both 56598763 and 56598765 PENDING. It must be committed and pushed before the first header that shows either ref terminal. An ERROR can come at any time; the earliest COMPLETE is ~12:10Z, so the practical edge is 11:45Z",
+   "evidence": "FACTS C-121, C-122, C-123, F-RUN-29; DECISIONS §2h row '43/44 read addendum (round 16)', §3 row R16-A1; research/wf_ideas_v4/round16/report.json R16-A1, plan_issues PC16-02/PC16-04/R16AP-1/R16AP-8; CONTEXT ends at 07:41 l.2872-2879; experiments/lb_poll/poll.log 09:00:49Z (both PENDING)",
+   "suggested_action": "Main session: paste R16-A1 now and commit it with R16-A0 (REPORT.md from report_md_ru) and the round16 folder, as the user with no trailer. Push, then log the pushed hash",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "No user letter has been logged since the ~07:45Z brief. A class-C letter counts as pre-registered only while both 43/44 refs are PENDING at the last header. E10 v2 lapses at 12:00:00Z. Round 16 has one merged message ready (R16-A2) that restates the defaults and the five questions, and it should go out once, no later than 11:00Z",
+   "evidence": "FACTS F-RUL-12 [c16]; DECISIONS §2 [c16] paragraph, §2h 'One merged user message'; research/wf_ideas_v4/round16/report.json R16-A2, R16-A8; CONTEXT 07:41 l.2878-2879",
+   "suggested_action": "After R16-A1 is pushed, send R16-A2 once (chat + push) and log that it was sent. Log any answer verbatim with date -u and parse it under R16-A1 (5). A blanket yes never authorises the exp71 push",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "The R8 new-mechanism cutoff and the E10 v2 lapse are both at 27 Sep 12:00:00Z. Nothing reaches R8. If no E10 v2 OK is logged before then, the R16-A3 line is due: E10 v1 stays in force, and a later yes becomes a forward-only USER OVERRIDE",
+   "evidence": "DECISIONS §3 rows R8 [c16] and '12:00Z R8 cutoff / E10 v2 lapse line'; FACTS F-LB-10 [c16]; research/wf_ideas_v4/round16/report.json R16-A3",
+   "suggested_action": "At or after 12:00:00Z (date -u), append the R16-A3 line, or the logged answer instead, and commit and push it with the next commit",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "The 43/44 read (P43 exp70j DC 0.20, P44 exp70k DC 0.225) is expected ~12:10-13:10Z, with the 9.0 h clocks at 14:28:13Z / 14:28:22Z. The read is descriptive under CONTEXT 06:19 (3). V*_C applies only with a pre-registered letter, following (4). The FREEZE holds: no new DC rung, and a class-C file is never resubmitted",
+   "evidence": "FACTS F-RUN-29, C-131; DECISIONS §1 rows P43/P44 [c16], §2 [c16] snapshot; CONTEXT 06:19 l.2814-2871; research/wf_ideas_v4/round16/report.json R16-A4",
+   "suggested_action": "At the trigger header, quote the ledger insertion-gate text and write one CONTEXT line (displays, L ranges, V*_C yes/no, letter timing, resulting pair). Send the user one line. Give re-tick text only under an existing letter, built from the current API SELECTED",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "The newest RESUME POINT is 26 Sep 22:46Z. It predates D1, D2, the 43/44 deviation record and the FREEZE, and it still lists informed combos, E10 v2 pending and 5 slots on 27 Sep. MEMORY.md routes a new chat to that block",
+   "evidence": "FACTS C-26 [c16]; CONTEXT l.2599; research/wf_ideas_v4/round16/report.json R16-A6, plan_issues PC16-06",
+   "suggested_action": "Write the R16-A6 RESUME POINT after the 43/44 read (by ~15:00Z) and point the MEMORY resume line at it",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "Record hygiene is still open. The ROUND 15 RECORD (R15-A6) is not in CONTEXT (grep 0). The push status of the ~07:45Z brief is not logged. v6 NOTES.md item 4 still says 'past the R8 line in practice'; the real blocker is E10 P3. experiments/e10_watch/20260927T0831Z.txt, the v6 folder, ledger.md and poll.log are untracked or uncommitted",
+   "evidence": "FACTS C-114 [c16]; DECISIONS closing [c16]; research/wf_ideas_v4/round16/report.json R16-A5 (i)-(iv), plan_issues PC16-07; experiments/ext_optimized-biohub-max-score/v6_2026-09-27/NOTES.md l.5; git status 09:00Z",
+   "suggested_action": "Do the R16-A5 commit (ROUND 16 RECORD + ROUND 15 RECORD verbatim + push-status line + NOTES item 4 fix + add the files), ideally together with the 12:00Z line",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "experiments/RESULTS.md has no LB rows after P38. P39-P42 have all scored (0.949 / 0.954 / 0.949 / 0.954, with ledger L bounds), and P43/P44 are pending",
+   "evidence": "FACTS C-118 [c16]; experiments/RESULTS.md (last changed b2be382, 26 Sep); experiments/lb_poll/ledger.md 08:50:49Z",
+   "suggested_action": "Add rows P39-P42 with display, L bounds, insertion-gate text, unit (NEG/N4/NEG/U4 POS) and the D1/D2 outcome. Add P43/P44 marked class C and deviation once they score",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "risk",
+   "what": "exp70b (0.954, attributable UP, above #37 unrounded) may tempt a swap for #37. The evidence is one-embryo public data only. Round 16 rejected 'weakly dominates, recommend yes' (P(delta<0) 0.08-0.15). Any yes is a USER DECISION AFTER SCORE, and a re-tick must keep exactly two distinct COMPLETE refs",
+   "evidence": "FACTS F-TRN-47, C-129; DECISIONS §2 [c16] snapshot row exp70b; research/wf_ideas_v4/round16/report.json R16-A8 (i), rejected (R16-RC-A)",
+   "suggested_action": "Present neutral facts only (R16-A8 (i)). On a yes, untick 56563521, tick 56592350, keep 56563534 (or wait one re-tick if a class-C letter is pending), then re-read API SELECTED",
+   "urgency": "info"
+  },
+  {
+   "kind": "contradiction",
+   "what": "Three earlier readings are corrected by round 16. (1) exp70a's NEU does not show that lp30 is neutral on public: B0 = P36 already had lp30 (C-125). (2) The #38-hedge and bronze reasoning used public block ranks for the x138 copy's private rank (C-124, C-127). (3) The 'Q1 by ~09:00Z' exp72 edge was manufactured (C-128)",
+   "evidence": "FACTS F-TRN-46 [c16], F-LB-11 [c16], C-124, C-125, C-127, C-128; research/wf_ideas_v4/round16/report.json R16-A5 (4)-(5), R16-A9, rejected",
+   "suggested_action": "Curator text edits by 30 Sep (R16-A9 (a)-(e)) in IDEAS/LESSONS. Do not re-use the old numbers in any user message",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 16 (09:05 UTC 27 Sep; HEAD 0bd1408, on origin). New CONTEXT since curation 15: the 06:19 PROBES 43/44 PRE-SCORE ENTRY (l.2814-2871: deviation record, FREEZE, descriptive read, CLASS-C FINALS TABLE, priors, L6/L7, watcher correction; commit 4161226, before any 43/44 score) and the 07:41 LADDER READ D2 (l.2872-2879). D2: P42 exp70b = 0.954 with an attributable UP (U4, POS), L (7.41, 7.58] h. It is not V* and BASE is none, so the finals stay TICKED 2/2 = #37 56563521 + #38 56563534 (API SELECTED read 07:41:28Z). P43/P44 are PENDING at 09:00:49Z. LB 08:32Z: #255 of 3,943, 8th of 113 at 0.954. E10 P1 at 08:31Z was not met. FACTS.md: new header, [c16] appends to F-LB-01/02/03/04/10/11/15, F-RUN-03/27, F-RUL-12, F-MOD-27 and F-TRN-12/46; new F-RUN-29 (43/44 read timing) and F-TRN-47 (fm45 attributable UP); C-106/111/112/113 marked resolved in CONTEXT, C-26/114/118/120 updated, new contradictions C-121..C-131. DECISIONS.md: new header; P42 scored and P43/P44 updated in §1; §2 [c16] paragraph plus a new candidates snapshot (replacing c15); §2f E10 08:31Z; §2h D2 applied, pre-score entry in CONTEXT, 3 new round-16 rows; §3 R1-R10, §f, L9, ladder, private-read, exp71/72 and 43/44 rows updated, plus 2 new proposed rows (R16-A1, R16-A3); closing paragraph. None of the round-16 actions R16-A0..A9 is in CONTEXT at 09:05Z. Tables were checked for column counts, and CRLF line endings are kept."
+}

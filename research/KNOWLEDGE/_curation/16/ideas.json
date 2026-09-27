@@ -1,0 +1,67 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/ideas.json",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/IDEAS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/16/ideas.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/16/ideas.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "what": "The round-16 addendum R16-A1 is NOT in CONTEXT.md (last entry: D2 at 07:41 UTC, l.2872-2879). It sets the composition (INS = #37 unless the letter names exp70b; (b) = {V*_C, #37}; an insertion-family E10 port is never paired mechanically), the re-tick order for combined letters, the 43/44 read timeout (first header at or after 14:28:22Z, fallback 14:40Z), the letter window (both refs PENDING at the last header) and answer parsing (I-355). Without it, a letter that arrives now is read under the ambiguous R15-A1 (4)(b) text '(#37 or exp70b)'. An ERROR can close the window before 12:00Z.",
+   "evidence": "research/wf_ideas_v4/round16/report.json R16-A1 (deadline: now; practical edge 11:45Z); CONTEXT.md l.2814-2871 (4), l.2872-2879; experiments/lb_poll/poll.log 08:50:47Z header (56598763/56598765 PENDING); research/KNOWLEDGE/ideas.json I-344, I-355, I-299, I-229, I-341",
+   "suggested_action": "Append the R16-A1 text with date -u, quoting a poll.log header that still shows both refs PENDING. Save round16/REPORT.md (R16-A0). Commit as the user with no trailer, and push. Then send the R16-A2 message once, no later than 11:00Z.",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "At 12:00:00Z R8 closes and E10 v2 lapses. No user answer to the ~07:45Z brief (E10 v2, exp70b, class C, Q1-Q3, cap) was logged by 08:57Z. Without the R16-A3 line, a late E10 v2 yes has no defined scope.",
+   "evidence": "research/wf_ideas_v4/round16/report.json R16-A3, R16-A8 (iii); research/wf_ideas_v4/round16/report.notes.md ('CONTEXT has no entry after 07:41Z D2 (no user letter logged)'); research/KNOWLEDGE/ideas.json I-286, I-259",
+   "suggested_action": "At 12:00:00Z (date -u), log the R16-A3 'R8 CUTOFF PASSED; E10 v2 LAPSED' line, or log the user's answer verbatim if one came, and commit it.",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "The last RESUME POINT (26 Sep 22:46Z, CONTEXT.md l.2599) is stale, and MEMORY.md points to it. It still names informed combos, E10 v2 as pending and 5 slots on 27 Sep, and it has no D1/D2, 43/44, deviation record or FREEZE. The ROUND 15 RECORD (R15-A6) and the ROUND 14 RECORD (R14-A6) were never logged ('ROUND 1[45] RECORD' grep = 0). A new chat would start from the wrong state.",
+   "evidence": "research/wf_ideas_v4/round16/scan_plancheck.json PC16-06, PC16-07; research/wf_ideas_v4/round16/report.json R16-A5, R16-A6; CONTEXT.md l.2599-2622; research/KNOWLEDGE/ideas.json I-257",
+   "suggested_action": "Today: R16-A5 (ROUND 16 RECORD + R15-A6 verbatim + push-status line + v6 NOTES fix) in one commit. After the 43/44 read (by ~15:00Z): R16-A6, a new RESUME POINT, then update the MEMORY.md resume pointer.",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "The only reproduction of the forkblob measurement on the ins35 bed (+0.00019, closure upheld) lives in a session scratchpad (r16rcb/fb_ins35.py). No copy exists in experiments/exp60_trainlab/, so the number becomes unreproducible when that session ends.",
+   "evidence": "research/wf_ideas_v4/round16/report.json R16-A9 (b); research/wf_ideas_v4/round16/scan_recheck.json R16-RC-B; research/KNOWLEDGE/ideas.json I-073, I-359",
+   "suggested_action": "If the post-deadline removal-gate study (I-359) is wanted, copy the script into experiments/exp60_trainlab/ and commit it with R16-A5. Otherwise, log that the number is unreproducible.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "stale",
+   "what": "experiments/RESULTS.md, which is supposed to hold every LB probe with its score, stops at probe 38. Probes 39-42 (0.949 / 0.954 / 0.949 / 0.954) exist only in ledger.md and poll.log. Also untracked: the v6 folder (its NOTES.md item 4 still gives the wrong R8 reason), experiments/e10_watch/20260927T0831Z.txt and research/wf_ideas_v4/round16/.",
+   "evidence": "experiments/RESULTS.md (last commit b2be382, 26 Sep); experiments/lb_poll/ledger.md; git status at 09:00Z; research/wf_ideas_v4/round16/report.json R16-A5 (iii); research/KNOWLEDGE/ideas.json I-025, I-282, I-306",
+   "suggested_action": "Add RESULTS.md rows for probes 39-42 now, and for 43/44 after the read. Stage the untracked files with the R16-A5 commit.",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "exp70b as a final (I-354, {exp70b, #38}) is the one live finals question that no pre-registered rule decides. It needs the user's letter by 29 Sep 20:00Z, in practice 18:00Z. Its neutral facts reach the user only through R16-A2 point 1, and the brief's wording is not in CONTEXT.",
+   "evidence": "CONTEXT.md l.2872-2879; research/wf_ideas_v4/round16/report.json R16-A2, R16-A8 (i), rejected (RC-A); research/KNOWLEDGE/ideas.json I-354",
+   "suggested_action": "Send R16-A2 once. Log any exp70b answer verbatim as USER DECISION AFTER SCORE and re-tick per R16-A1 (2), then re-read API SELECTED.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "I-336 HINDSIGHT GUARD (LESSONS s3 item 11 plus a falsifiable private prediction in a pushed commit) is still not in CONTEXT ('HINDSIGHT' / 's3 item 11' grep = 0), and round 16 did not mention it. It must be pushed before the first private score.",
+   "evidence": "research/KNOWLEDGE/ideas.json I-336; research/wf_ideas_v4/round14/report.json R14-A8; CONTEXT.md (grep 0 at 0bd1408)",
+   "suggested_action": "Make one text-only commit as the user and push it before 29 Sep 23:00Z. Record the pushed hash.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "I-233 (the poller logs error_description) is still the only strict orphan. Round 16 did not mention it either.",
+   "evidence": "research/KNOWLEDGE/ideas.json I-233; research/wf_ideas_v4/round4/report.json R4-A9",
+   "suggested_action": "Close it with one CONTEXT line: 'covered by the C2 error_description one-liner'.",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 16 is an incremental update over curation 15, at HEAD 0bd1408 plus the untracked round16/ and the 08:31Z snapshot. The ledger went from 353 to 359 ideas: 49 change records, 6 of them new rows (I-354 to I-359). Status counts moved: lb-tested 46 -> 48, in-plan 61 -> 62, refuted 182 -> 184, deferred 41 -> 42.\n\nWhat changed in the sources:\n- The R15-A1 pre-score entry was logged at 06:19Z (CONTEXT.md l.2814-2871, commit 4161226), so the FREEZE (I-345) and the class-C table (I-344) are now recorded.\n- Ladder D2 (CONTEXT.md l.2872-2879): probe 42 exp70b = 0.954 with an attributable UP (fm45 POS). It is not V*, so the pair stays {#37, #38}. API SELECTED read 2/2 at 07:41:28Z.\n- I-306 and I-071 (forkmid) are now lb-tested.\n\nNew rows:\n- I-354: exp70b as a final, which only the user's letter can decide.\n- I-355: answer-parsing rule.\n- I-356: unified slot table (refuted).\n- I-357: N954 deadline observable (refuted).\n- I-358: mtoshidesu kernel (refuted).\n- I-359: post-deadline removal-gate method (deferred).\n\nRound 16 findings folded into existing rows: forkblob measured on the ins35 bed (I-073), exp70a's D1 result was structural (I-303), the corrected forecast premise (I-094, I-297), the R16-A1 addendum (I-344, I-299, I-229, I-341), and the E10 cadence and v2 lapse (I-026, I-286).\n\nIDEAS.md was regenerated with a table generator that reproduces the curation-15 tables exactly. The orphans, pending-decisions and closed-only-in-round-files sections were rewritten. 43/44 were still PENDING at 08:50:47Z."
+}

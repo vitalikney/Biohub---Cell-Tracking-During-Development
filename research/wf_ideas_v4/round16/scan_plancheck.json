@@ -1,0 +1,80 @@
+{
+  "task": "round16 scan_plancheck (08:30Z 27 Sep): verify D2 read + brief vs rules; E10 P1 via files; plan check next 3-6 h",
+  "written_utc": "2026-09-27T08:50Z",
+  "complete": true,
+  "summary": "Round 16 plan check. It used files only: no Kaggle API calls and no e10_snapshot run. The D2 READ IS CORRECT. I recomputed it from the watcher CSVs 20260927T045616Z and 20260927T073705Z. The 6 passed TeamIds were all 0.954 at ranks 248-254 in S0 and 256-263 in S1. Their SubmissionCount and LastSubmissionDate did not change, so their best did not move and ours rose. Our count went 43 -> 44 (+1), 43/44 were still PENDING and the download was fresh. The UP is therefore attributable to exp70b (U4, fm45 POS). The ledger gives (7.41, 7.58] h and 'insertion gate 8.0 h did NOT fire'. BASE was none since D1, so no combo. exp70b < 0.955 means it is not the L9 V*, so the pair stays {#37 56563521, #38 56563534}. SELECTED was logged at 07:41:28Z. R15-A1 was committed and pushed at 06:19Z, before any 43/44 terminal header, and main == origin/main at 0bd1408. We are now 8th of 111 in the 0.954 block (#255); we were 17th before exp70b. E10 P1: the newest snapshot is still 20260927T0531Z, NOT met. The next P1 belongs to this round's browser agent. GAPS before ~12:15Z (the first plausible 43/44 terminal header): (1) The brief added the question 'exp70b as the public-aimed final', but nothing says how that answer combines with the class-C table. In R15-A1 (4), 'the L9 insertion final (#37 or exp70b)' covers exp70b only as the L9 V*, so a yes on exp70b plus (a)/(b)/(c) is ambiguous. Pre-register the composition now. (2) The R15-A1 (3) read waits for 'both refs terminal' with no timeout. (3) At 12:00Z log the R8 cutoff and the E10 v2 lapse, and say how a late user yes is labelled. Q1 (exp71) is a head-only detector FT, the category of the user's refusal (7) of 25 Sep. The Q2 '~09:00Z' window for exp72 to score on 27 Sep is closing. Hygiene: the 22:46Z RESUME POINT is stale; the ROUND 15 RECORD (R15-A6) and the 'push sent' line are not logged; the amanatar V6 snapshot folder is untracked. Substance for the user: by their own words at 20:33Z, 'the best public-scoring variant' is now exp70b. L9's >= 0.955 bar was the session's addition. Lab (+0.00013) and public (an attributable UP) agree in sign on fm45, and it moved only 1 fork on the dummies. So {exp70b, #38} is a small, low-variance, weakly positive swap. It is the user's call; the default stays until a letter arrives. Nothing new is proposed: no mechanism, no DC rung, no ladder submit.",
+  "findings": [
+    {
+      "id": "PC16-01",
+      "kind": "recheck-old",
+      "what": "The D2 read (CONTEXT 07:41Z) is correct and mechanical under READ SHEET v1 / R13-A1 (2) / L9. EVENT 4 at 07:37:07Z: S0 = 20260927T045616Z (count 43), S1 = 20260927T073705Z (count 44, fresh on the first download: C=4, E=0, expected 44; 43/44 PENDING in the same ListSubmissions read). The count rose by exactly 1, so the UP is attributable to exp70b -> U4, unit POS, fm45 POS. The UP test is sound: all 6 passed teams stayed at 0.954 with unchanged SubmissionCount and LastSubmissionDate (their public best did not change), were above us in S0 (ranks 248-254) and are below us in S1 (256-263), and none left the LB. exp70b is not V* (display < 0.955); BASE has been none since D1, so there is no combo. The pair stays {#37, #38} with no re-tick. Ledger: exp70b (7.41, 7.58] h, ADMIT (a), 'insertion gate 8.0 h did NOT fire'. The 07:37:07Z watcher time is only info; poll.log's 07:40:36Z header is the record. The pre-score entry R15-A1 (4161226) was pushed at 06:19Z, before any 43/44 terminal header (both still PENDING at 08:30:44Z).",
+      "evidence": "experiments/lb_poll/ladder_watch/watch.log EVENT 4; experiments/lb_poll/ladder_watch/20260927T073705Z/meta.json (fresh true, statuses 56598763/56598765 PENDING); recomputed from both CSVs: TeamIds 16749192, 16820124, 16483723, 16454847, 16555768, 16460127 at 0.954 in S0 248-254 and S1 256-263, counts unchanged; experiments/lb_poll/ledger.md (08:30:46Z) row 56592350; git main == origin/main at 0bd1408.",
+      "action": "None. Optional: add one line to the ROUND 16 RECORD, 'D2 audit PASS (passed teams' best unchanged, so the UP is proven)'.",
+      "urgency": "info"
+    },
+    {
+      "id": "PC16-02",
+      "kind": "plan-issue",
+      "what": "No rule says how two possible user answers combine. The brief asks (a) whether exp70b may be the public-aimed final (a D2 question outside L9) and (b) the class-C letter (a)/(b)/(c) from R15-A1 (4). In R15-A1 (4)(b), 'the L9 insertion final (#37 or exp70b)' covers exp70b only when it is the L9 V*, and it is not. If the user says yes to exp70b AND picks (b), the partner of V*_C is ambiguous: {V*_C, #37} or {V*_C, exp70b}. If the user says yes to exp70b and picks (a), the pair {exp70b, #38} is not written anywhere. If the answers come near ~12:15-13:10Z, the choice would be made after the 43/44 scores, which the table was written to prevent.",
+      "evidence": "CONTEXT 06:19Z entry (4) ('the L9 insertion final (#37 or exp70b)', 'if probe 42 is the L9 V*'); CONTEXT 07:41Z D2 ('whether the user wants it as the public-aimed final ({exp70b, #38}) is asked in the brief'); round15/report.json R15-A2, brief section 4 (b) '#37 или 42'.",
+      "action": "Before the first poll.log header that shows 56598763 or 56598765 terminal (earliest ~12:15Z), append one dated line. 'COMPOSITION (R15-A1 (4) addendum, pre-score for 43/44, no new rule): let INS = exp70b 56592350 if the user's letter allows exp70b as a final, else #37 56563521. The pair is then (a) {INS, #38}; (b) {V*_C, INS}, #38 leaves; (c) {V*_C, #38}. V*_C must still display >= 0.955 (so it is strictly above exp70b's 0.954). An exp70b yes is always a USER DECISION AFTER SCORE (42 has scored), and that label is fine. Re-tick at most once, after the 43/44 read, if both letters arrive before it; otherwise right after the letter.' Commit and push as the user.",
+      "urgency": "now"
+    },
+    {
+      "id": "PC16-03",
+      "kind": "new-fact",
+      "what": "exp70b now meets the user's own 20:33Z definition of the public-aimed final, 'the best public-scoring variant': its attributable UP proves it beats every earlier file of ours on the public score. L9's 'display >= 0.955' bar was the session's own gloss (20:49Z), just as R12-A3 called 'default #37' the session's gloss. {exp70b, #38} differs from the current pair only in fm45. On the 4 dummy clips fm45 removes 1 fork (75 -> 74; nodes identical, 121,252). Its lab sign (+0.00013, div_J +0.0010) and its public sign (UP) agree, and it keeps the DaughterNet insertion plus the #38 no-insertion hedge (the R12-A3 insertion-hedge shape). So the swap is small, low-variance and weakly positive in expectation. It is not a new mechanism and needs no submit. The forkmid closure concerned its use as a lab-gated rider (K3); this is a finals choice between two scored files. With no letter the default stays {#37, #38}, which does NOT follow the user's literal 20:33Z instruction.",
+      "evidence": "CONTEXT l.2388-2394 (20:33Z user decision text), l.2418-2425 (L9), l.2510-2518 (R12-A3 'the session's own gloss'); 00:06Z entry (exp70b dummy 121,252 nodes, 74 forks); l.2136 (forkmid lab +0.00013, div_J +0.0010); watch.log EVENT 4.",
+      "action": "Send no new push just for this. If the user replies, or in the next scheduled push (after the 43/44 read), state it plainly in Russian: 'По твоим словам 20:33 финал «под паблик» — лучший по паблику; это теперь exp70b (56592350, доказанный подъём внутри 0.954). Порог 0.955 в L9 — наша добавка. Замена #37 -> exp70b: одна ручка fm45, 1 форк на дамми, знак лабы и паблика совпадает; эффект на привате мал. Пара {exp70b, #38} — слабый плюс; без ответа остаётся #37 + #38.' Log any answer with date -u as USER DECISION AFTER SCORE. On a yes, the user unticks #37, ticks 56592350, keeps #38 56563534; then re-read API SELECTED.",
+      "urgency": "today"
+    },
+    {
+      "id": "PC16-04",
+      "kind": "plan-issue",
+      "what": "The 43/44 read in R15-A1 (3)/R15-A5 fires at 'the first poll.log header with both refs terminal' and has no timeout. They were submitted 9 s apart, but one run can hang or queue. If one ref stays PENDING past its 9.0 h clock (14:28:13Z / 14:28:22Z), the read, the push and any re-tick advice wait with no end. The table itself already treats an unscored other rung as acceptable ('>= 0.954 or ERROR/unscored'), so only the trigger is missing.",
+      "evidence": "CONTEXT 06:19Z entry (3) and (4); round15/report.json R15-A5; ledger.md (43/44 PENDING at 08:30:44Z, > 3.03 h).",
+      "action": "Add to the PC16-02 line: 'READ TRIGGER: the first header with both refs terminal, or the 14:30Z header, whichever comes first. A ref not terminal at 14:30Z is unscored for R15-A1 (4) (it fails its own L_hi <= 9.0 h anyway). A later score is logged as info only.'",
+      "urgency": "now"
+    },
+    {
+      "id": "PC16-05",
+      "kind": "plan-issue",
+      "what": "12:00Z cutoffs. No user answer yet. At 12:00Z, E10 v2 lapses and R8 closes new mechanisms. The plan says to log 'E10 v2 lapsed; R8 passed; no new mechanism' (R15-A7). It does not say how a LATE user yes is treated. (i) A late E10 v2 yes: v2's own text requires the OK before 12:00Z. (ii) Q1-Q3 (exp71/exp72). Q1 is a head-only FT of the secondary detector (lr 1e-5, head only). That is the category of the user's own refusal (7) of 25 Sep 13:37Z ('no detector/edge/head retraining before 29.09', R9) and of the closed item 'head retrain'. The brief template names neither R9 nor refusal (7). Q2 is an R8 override by definition. The brief's '~09:00Z for a score on 27 Sep' window is closing (08:50Z, no answer); after ~09:00Z exp72 can score only on 28 Sep.",
+      "evidence": "CONTEXT l.1582 (refusal 7), l.1671-1673 (R8/R9), l.2352 (E10 v2 'logged ... before 27 Sep 12:00 UTC'), 01:31Z R13-A3 (Q1-Q3, exp71 trains on all 199 incl. the dummy videos); round15/report.json R15-A2 section 5 and R15-A7.",
+      "action": "At 12:00Z (date -u) log: 'R8 CUTOFF PASSED: no new mechanism was submitted or approved. E10 v2 LAPSED unanswered; E10 v1 (>= 0.956, P1-P8, P4b, P4c) stays. A later user yes to v2 is logged as a USER OVERRIDE (post-lapse) and applies only to successors first seen after it. exp71/exp72: possible only on an explicit user yes. The log line names it an override of R8 (Q2) and, for Q1, of the user's own 25 Sep refusal (7) on detector/head retraining. exp72 stays class C unless Q3 = yes. Consolidation S12/S13 (28 Sep 12:00Z): empty by the FREEZE and BASE none.' If the user answers Q1, restate the R9 point in one line before acting.",
+      "urgency": "today"
+    },
+    {
+      "id": "PC16-06",
+      "kind": "plan-issue",
+      "what": "The RESUME POINT is stale. A new chat reads the LAST RESUME POINT first (MEMORY.md; CONTEXT l.2599, 26 Sep 22:46Z). That block still names: informed combos at ~08:00Z; 'stop after two rungs' (superseded by R13-A1 + FREEZE); E10 v2 as pending; timers 2f0d1fa1/c7cd2e6b (replaced by 2e87e414/65b1b746, the latter deleted); the 11:00Z cap; 5 slots on 27 Sep. It has no D1/D2 results, no 43/44, no deviation record and no FREEZE. MEMORY.md still points to the '26 Sep post-score' block.",
+      "evidence": "CONTEXT l.2599-2627 vs the entries at 04:58Z, 05:28Z, 06:19Z and 07:41Z; memory/MEMORY.md 'Resume point' line.",
+      "action": "After the 43/44 read (~13:00-13:30Z), or at the 12:00Z line if the read comes later, write '2026-09-27 hh:mm UTC ===== RESUME POINT (supersedes 26 Sep 22:46Z) ====='. It carries: finals ticked {#37, #38}, SELECTED 07:41:28Z; ladder 39-44 results; FREEZE (06:19Z (2)); pending letters (class C, exp70b final, E10 v2 lapsed, Q1-Q3, cap, laptop); slots (27 Sep 2 left, E10 only; 28-29 Sep: E10 port, or exp72 on a yes); live timers; poller until 29 Sep 20:00Z; tick checks 28 Sep evening and 29 Sep 12:00/18:00Z. Then update MEMORY.md's resume pointer.",
+      "urgency": "today"
+    },
+    {
+      "id": "PC16-07",
+      "kind": "plan-issue",
+      "what": "Round-15 hygiene is still open. (a) The ROUND 15 RECORD (R15-A6) is not in CONTEXT. (b) The 07:30Z push has no 'push sent' / not-sent line (R15-A2 asks for one); the D2 entry logs only the chat brief. (c) experiments/ext_optimized-biohub-max-score/v6_2026-09-27/ is untracked (git status '??'). (d) Its NOTES.md item 4 still gives 'past the R8 line' as the reason, which R15-A7 corrected (E10 is not bound by R8; P3 blocks the port). (e) The ERROR-resubmit slot reserve is now moot: exp70b is COMPLETE and class C is never resubmitted. So the 2 slots of 27 Sep are for E10 only.",
+      "evidence": "grep 'ROUND 15 RECORD' / 'push sent' in CONTEXT.md: 0 hits; git status; experiments/ext_optimized-biohub-max-score/v6_2026-09-27/NOTES.md item 4; CONTEXT 06:19Z (2).",
+      "action": "In the next commit: append the R15-A6 text (round15/report.json) as ROUND 15 RECORD, plus one line for the push status of 07:30Z ('push sent hh:mmZ' or 'not sent; brief in chat 07:45Z'). Add the v6 folder, with a NOTES.md item 4 correction: 'not bound by R8; fails E10 P3 (knob bundle + 2 new mechanisms)'. Add a slot line: '27 Sep: 2 left, E10 port only'.",
+      "urgency": "today"
+    },
+    {
+      "id": "PC16-08",
+      "kind": "new-fact",
+      "what": "LB at 07:37Z, read from the watcher's CSV (no extra API call): 3,942 teams. Teams >= 0.955: 247 (238 at 04:56Z); >= 0.956: 174. The 0.954 block has 111 teams at ranks 248-358; we are #255, 8th of 111 (17th of 101 before exp70b). The 0.953 block has 381 teams at ranks 359-739, so the bronze line (~10% ~ #394) lies inside it. Being 8th of 111 in the bin says exp70b sits in the upper part of the teams' 0.954 values. It gives no unrounded estimate, and K2 (the base of 43/44) sits lower in the bin than exp70b.",
+      "evidence": "experiments/lb_poll/ladder_watch/20260927T045616Z/*.csv and 20260927T073705Z/*.csv (recomputed).",
+      "action": "Put these numbers in the ROUND 16 RECORD as info. No decision input.",
+      "urgency": "info"
+    },
+    {
+      "id": "PC16-09",
+      "kind": "recheck-old",
+      "what": "E10 P1 (files only): the newest snapshot is still experiments/e10_watch/20260927T0531Z.txt, NOT met. HF v3 tops scoreDescending; x138 anvithpothula/biohub-0-953-lb-original is v1; the largest P2 group is 2 (< 5); amanatar V6 is COMPLETE with no V6 score (best 0.953 V4). V6 fails E10 P3 at any score (knob bundle + 2 new code paths: z-scored secondary blend, 3-frame division lookahead). e10_port_gate.py has no score constant (the score is read on the page); e10_snapshot.py's P2_MIN 0.956 is a look signal only. The last P1 was ~3.3 h ago, so a P1 is due: this round's browser agent runs it (not this scan). Under E10 v1 the only live trigger is a public x138-family successor >= 0.956 that passes P3/P4b/P4c.",
+      "evidence": "experiments/e10_watch/20260927T0531Z.txt (CHANGES 16; histogram; P2 info line); experiments/ext_optimized-biohub-max-score/v6_2026-09-27/NOTES.md; tools/e10_snapshot.py l.51-52.",
+      "action": "The browser agent logs its P1 result in the ROUND 16 RECORD. Keep the post-R8 P1 check times (12:00/18:00Z 27 Sep, then every 6 h, or every 3 h if timer 2e87e414 stays) through 29 Sep 00:00Z. A V6 score is only a confounded read of 'more safe divisions', which 43/44 test directly.",
+      "urgency": "info"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+ "task": "round16 skeptic (value+feasibility) of R16AP-3-e10v2-card",
+ "written_utc": "2026-09-27T08:46Z",
+ "complete": true,
+ "refuted": false,
+ "reason": "The card is a timing and procedure card, not a mechanism. It matches CONTEXT l.2352-2360 (V1-V8) and R15-A7, and CONTEXT holds no user answer after the 07:45Z brief. The scope facts check out: amanatar V6 (lastRun 01:39:05Z) is already in e10_watch/20260927T0531Z.txt, and mtoshidesu/testbiohub-lf-dctta020-sectta1 first appears in 0831Z. The gate tool and the dry run exist, and R8 does not bind E10 (round15 REPORT l.63). Four fixable inaccuracies. (1) The prior's basis is false: 'no new x138-family kernel since 24 Sep' is wrong, because amanatar V6 is an x138 fork run on 27 Sep 01:39Z (ext_optimized-biohub-max-score/v6_2026-09-27/NOTES.md). The ~5% still holds, since V6 has ~9 knob changes plus 2 new code blocks and fails P3's '1-2 explainable mechanisms' whatever it scores. (2) The scope is per ref + VERSION, so a later amanatar V7+ first seen after the OK IS covered by v2. The card reads as if amanatar is out of v2 entirely, and a V7 is the likeliest v2 candidate, though it would inherit V6's P3 failure. (3) The 'already seen' baseline is hardcoded to 0831Z; timer 2e87e414 may write an 11:04Z snapshot before a late OK. (4) R16AP-3 and R16AP-7 each send the user a message; they should be one. The card also omits the V4 'never drop #37' vs exp70b-yes conflict from R16AP-6. The value is small: v2 adds only successors that display 0.954-0.955, because >= 0.956 is already covered by v1.",
+ "fix": "Edit the card. (a) Replace the prior basis with: 'amanatar V6 (27 Sep 01:39Z) is an x138 fork but fails P3 (~9 knobs + max-consensus blend + safe-div lookahead); no other x138-family run since 24 Sep; >= 0.956 is already covered by v1, so v2 adds only 0.954-0.955 displays; prior ~2-5%.' (b) Scope line: 'V6 and the mtoshidesu kernel (not x138-family, notify-only anyway) stay under v1; a NEW amanatar version first seen after the OK is covered by v2 but must still pass P3/P4b/P4c; one built on V6 would fail P3.' (c) 'Already seen' baseline = the newest e10_watch snapshot before the OK timestamp, not a fixed 0831Z. At the OK, confirm that snapshot has no public x138-family notebook displaying >= 0.954. (d) Send ONE message at ~11:00Z that merges R16AP-3 and R16AP-7: 'no answer = pair #37+#38; E10 v2 lapses 12:00Z; v2 would not cover V6/mtoshidesu'. (e) On yes, note that '#37' in V4 means the insertion final currently ticked (R16AP-6). No answer: at 12:00:00Z log 'E10 v2 lapsed; R8 passed; no new mechanism'; v1 (>= 0.956) stays.",
+ "realistic_gain": "About +0.002 to +0.005 P(bronze) unconditional (P ~2-5% that a clean x138-family successor displaying 0.954-0.955 passes P3 between 12:00Z 27 Sep and 00:00Z 29 Sep, times ~+0.1 P(bronze) from an early port). Expected LB change 0. In the ~95% no-trigger world it changes nothing; the lapse log line is hygiene only.",
+ "sources": [
+  "CONTEXT.md l.2138-2160, l.2352-2360, l.2599-2881",
+  "research/wf_ideas_v4/round15/REPORT.md l.63, l.76 (R15-A7)",
+  "research/wf_ideas_v4/round16/scan_hyp_answers_prep.json R16AP-3/-6/-7",
+  "experiments/e10_watch/20260927T0531Z.txt, 20260927T0831Z.txt",
+  "experiments/ext_optimized-biohub-max-score/v6_2026-09-27/NOTES.md",
+  "https://www.kaggle.com/code/amanatar/optimized-biohub-max-score"
+ ]
+}

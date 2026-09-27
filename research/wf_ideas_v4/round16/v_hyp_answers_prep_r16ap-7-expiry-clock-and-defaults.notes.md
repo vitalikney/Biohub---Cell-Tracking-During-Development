@@ -1,0 +1,10 @@
+- 2026-09-27T08:44:31Z start verify R16AP-7 expiry clock
+- 08:45Z checked each clock line against CONTEXT.md:
+  - E10 v2 lapse: 17:49 UTC 26 Sep entry (OK must be logged before 27 Sep 12:00 UTC and before any trigger). Correct.
+  - R8 27 Sep 12:00: R12-A3/R13 text. Correct.
+  - Class-C letter: R15-A1 (4), 06:19 entry. The cutoff is an EVENT (first poll.log header with 56598763/56598765 terminal), not 12:15. Submits were at 05:28:13/22Z. Observed latencies: #38 6.69-6.87 h, exp70a 6.87-7.04, K2 7.36-7.54, exp70b 7.41-7.58. So the earliest is ~12:10Z (6.69 h) and the likely time ~12:50-13:00Z (K2-like). "~12:15" is fine as an approximation; 12:00 is the practical edge (the scan says so too).
+  - exp72: CONTEXT l.2543 'yes by ~09:00 -> submit ~15:00 -> score ~22:30 27 Sep'. 28 Sep 18:30 last yes (4.2 h train + build/dummy -> submit before the 29 Sep 02:00 cap). G2 due 29 Sep 12:00 (R13-A3). Consistent. The 09:00 line is moot now (08:44Z, no yes, exp71 push blocked by the classifier).
+  - Cap 02:00: R12-A3 (c). Last E10 P1 29 Sep 00:00: V3 / P7. Final read 19:00: R14-A2 (4)(1). Tick 20:00. All correct.
+  - Defaults: pair {#37 56563521, #38 56563534} (D1-3 and D2 at 07:41Z; SELECTED 2/2 at 07:41:28Z); exp70b public-final default no change; class-C default (a); exp71 not pushed. Correct.
+- VALUE: process item only, no mechanism, not a closed line. The 07:45Z brief already asked every question, so a second ping at ~11:00Z is small but positive (it guards against missing a hard lapse). FEASIBILITY: no submit, no build, fits R1-R10.
+- Refinements: (1) in the one-liner, name the class-C cutoff as an event (the first 43/44 terminal header, earliest ~12:10Z), not 12:15; (2) make the line also say class C = not a final and exp70b = no change by default, so that the one line covers every lapse; (3) send it by PushNotification at a fixed 11:00Z (the round-17 slot), and log it with date -u.

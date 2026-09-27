@@ -1,0 +1,13 @@
+# round16 plancheck notes (started 2026-09-27T08:31:27Z)
+- 08:31Z: round16 folder created; no prior scan_plancheck.json. Read CONTEXT l.2599-2878 (RESUME 22:46Z .. D2 07:41Z), round15 REPORT.md + scan_plancheck.json + report.json actionable.
+- D2 audit: watch.log EVENT 4 07:37:07Z S0 20260927T045616Z (count 43) -> S1 20260927T073705Z (count 44, fresh, C=4 E=0, 43/44 PENDING). Recomputed from CSVs: 6 passed TeamIds (16749192, 16820124, 16483723, 16454847, 16555768, 16460127) all 0.954 in S0 ranks 248-254 and S1 256-263, LastSubmissionDate/SubmissionCount unchanged -> their best did not change, so ours rose. UP attributable (count +1). D2 read CORRECT.
+- LB from watcher CSV 07:37Z (no API call): 3,942 teams; >=0.955 247; >=0.956 174; 0.954 block 111 (ranks 248-358), we #255 = 8th of 111 (was 17th of 101 at 04:56Z); 0.953 block 381 (359-739).
+- ledger.md 08:30:46Z: exp70b (7.41,7.58] h ADMIT(a), 'insertion gate 8.0 h did NOT fire'; 43/44 PENDING >3.03 h.
+- CONTEXT: no ROUND 15 RECORD (R15-A6) yet; no 'push sent' log line (R15-A2); experiments/ext_optimized-biohub-max-score/v6_2026-09-27/ untracked (git status ??). NOTES.md there still says 'past the R8 line' (R15 corrected: E10 exempt from R8).
+- 08:45Z: git main == origin/main at 0bd1408 (R15-A1 pre-score entry 4161226 pushed 06:19Z, before any 43/44 terminal header; no co-author trailer). API SELECTED logged 07:41:28Z.
+- Brief template = round15/report.json R15-A2 (sent ~07:45Z per D2 entry; chat text itself not on disk). Q1 option (b) partner = 'L9 insertion final (#37 or 42)'; the extra D2 question 'exp70b as public-aimed final' has no composition rule with the class-C table -> gap (PC16-02).
+- User 20:33Z words (CONTEXT l.2388): 'one final aimed at PUBLIC (the best public-scoring variant)'; L9's display >= 0.955 bar is the session's own (20:49Z). exp70b is now provably the best public file (UP).
+- exp71 = head-only FT of the secondary detector (R15-A2 facts: lr 1e-5, only head); pre-reg v3 user refusal (7) l.1582 'no detector/edge/head retraining before 29.09'; brief template does not name R9/refusal (7).
+- R15-A1 (3) READ trigger 'first header with both refs terminal' has no timeout if one ref stays PENDING (9.0 h clocks 14:28:13Z/14:28:22Z).
+- tools: e10_port_gate.py has no score threshold (score is read on the page); e10_snapshot.py P2_MIN 0.956 (look signal only). secswap patch exists (ea5637e, tests/test_secswap.py). runtime_ledger maps exp70j/k to family safetail (9.5 h).
+- 08:38Z: final JSON written (9 findings PC16-01..09).

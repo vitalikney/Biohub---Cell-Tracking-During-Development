@@ -1,0 +1,8 @@
+- 2026-09-27T08:44:28Z start PC16-01 verification; watch.log EVENT 4 present (count 43->44, passed 6, UP PASS)
+- 2026-09-27 recomputed from experiments/lb_poll/ladder_watch/20260927T045616Z/*04_56_18.csv vs 20260927T073705Z/*07_37_08.csv: ours rank 255->255, count 43->44, last 21:38:33->00:05:50 (exp70b submit). Teams above us at S0 and below at S1 = exactly 6: 16749192 248->256, 16820124 249->257, 16483723 251->260, 16454847 252->261, 16555768 253->262, 16460127 254->263; all Score 0.954, SubmissionCount and LastSubmissionDate unchanged; 0 teams from above left the LB. 6 new teams above us (all scored 0.955-0.960 or new subs) explain the flat rank.
+- Our LastSubmissionDate got LATER, so tie-break by earlier submission would work against us: passing 6 tied 0.954 teams needs a strictly higher unrounded score -> exp70b unrounded > previous best (#37). Count 44 = 40 + 4 COMPLETE (39-42); 43/44 PENDING per meta.json statuses -> UP attributable to 56592350 alone.
+- meta.json: fresh true, C=4, E=0, expected [44]. watch.log EVENT 4 07:37:07Z UP test PASS, STOP 07:37:07Z, 64 calls.
+- ledger.md row 56592350: (7.41, 7.58] h, 'insertion gate 8.0 h did NOT fire'.
+- git: HEAD 0bd1408 == origin/main; 4161226 (Round 15 / R15-A1) committed 09:19:26+03:00 = 06:19:26Z, before 07:37Z (43/44 still PENDING then).
+- CONTEXT 07:41 UTC D2 entry matches READ SHEET v1 (02:28 UTC): U4 < 0.955 never V*; BASE none (D1) -> no combo -> pair {#37 56563521, #38 56563534}; no re-tick. Verdict: finding CONFIRMED (not refuted). Info only; no mechanism, no submit.
+- 2026-09-27T08:45:23Z wrote v_plancheck_pc16-01.json (refuted=false)

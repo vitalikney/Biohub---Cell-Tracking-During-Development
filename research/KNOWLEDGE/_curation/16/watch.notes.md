@@ -1,0 +1,7 @@
+- 2026-09-27T08:59:26Z start round 16 watch; no watch.json existed; reading WATCHLIST.md + round15 notes
+- 2026-09-27T08:59:45Z read CONTEXT l.2805-2879: new entries 06:19 (R15-A1 pre-score, W151 done) and 07:41 D2 (exp70b 0.954, UP attrib, no re-tick, SELECTED 2/2 07:41:28Z, brief sent ~07:45Z)
+- 2026-09-27T09:00:09Z round16/report.json complete 08:57Z (R16-A0..A9); CONTEXT has no entry after 07:41 D2 -> R16-A1/A2 not done yet
+- 2026-09-27T09:00:38Z checked: RESULTS last probe row l.71 (38); no NEVER_SUBMIT in exp70*; W57 greps 0; LESSONS l.7 unchanged; js 13a27a1; v6 NOTES item4 wrong (l.5); MEMORY resume -> 26 Sep 22:46; CronList: 65b1b746 gone, stale 5b23a3ed/54a8f20d/cdd738f1 still listed
+- 2026-09-27T09:01:13Z statuses decided; W151/W152/W153/W141-D2/W136(chat) done; new W158-W167, T77-T85, I161-I170; writing
+- 2026-09-27T09:03:27Z WATCHLIST.md written; CONTEXT line cites fixed (2834/2837/2842/2846/2852)
+- 2026-09-27T09:03:59Z watch.json written (complete). No other file touched.

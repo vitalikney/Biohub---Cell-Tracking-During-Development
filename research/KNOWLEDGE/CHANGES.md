@@ -825,3 +825,62 @@ Curator logs: `research/KNOWLEDGE/_curation/4/`.
 - **Carried over:** 07:30Z push (now the R15-A2 form); exp70g NEVER_SUBMIT (extended to j/k); ROUND 14 RECORD; round prompt l.37; re-tick; hindsight guard; W57 / LESSONS l.7; I-233; stale MEMORY line (C-75).
 - **New:** R15-A1 pre-score entry for 43/44 (hard 11:45Z); breach disclosure + FREEZE; E10 pair rows missing from the brief (I-299); D2 read of P42; RESULTS rows 39-44; 12:00Z lapse line with I-323/I-324 closures; public DC chase risk; I149/I150 for the L9 read; session timers 5b23a3ed/54a8f20d still listed.
 - **Curator disagreements settled here:** 43/44 breach: [now] (facts, watch) vs [today] (ideas) -> [now], because the disclosure goes into the 07:30Z brief. Risk of the public DC chase: [info] (ideas) vs [today] (facts) -> [info] as a standing caution, with the read itself under alert 4/R15-A5 timing. R15-A1: [now] by all three.
+
+## 16 - 2026-09-27 ~09:15 UTC (curation 16; git HEAD 0bd1408 = origin/main + untracked `research/wf_ideas_v4/round16/`, `experiments/e10_watch/20260927T0831Z.txt`, `experiments/ext_optimized-biohub-max-score/v6_2026-09-27/`)
+
+**Operations:**
+- **Commits since curation 15** (`git log --oneline da9766e..0bd1408`): 4161226 probes 43/44 PRE-SCORE ENTRY + `round15/REPORT.md` (06:19Z, before any 43/44 score); 0bd1408 LADDER READ D2 (07:41Z).
+- **CONTEXT.md:** two new entries, l.2814-2871 (deviation record, FREEZE, descriptive read, CLASS-C FINALS TABLE, priors, NARROW/BROAD note, L6/L7 + DC-DOSE, watcher correction, main-session note) and l.2872-2879 (D2); `## 9. Literature` is now at l.2880. `experiments/RESULTS.md` is unchanged (last row P38, l.71).
+- **LB:** P42 exp70b (K2 + forkmid 4.5) = 0.954 with an attributable UP (U4, fm45 POS; L (7.41, 7.58] h). It is not V*, so the pair {#37 56563521, #38 56563534} stays and API SELECTED was 2/2 at 07:41:28Z (`CONTEXT.md` l.2872-2879). P43/P44 were PENDING at the 09:10:50Z header (`experiments/lb_poll/poll.log` l.13013). Rank #255 of 3,943, 8th of 113 in the 0.954 block (`experiments/e10_watch/20260927T0831Z.txt` l.911).
+- **Watcher** stopped at 07:37:07Z (64 calls, 0 x 429). The morning brief went out in chat at ~07:45Z; its push status is not logged (`CONTEXT.md` l.2876-2879).
+- **Round 16** judged at 08:57Z (`research/wf_ideas_v4/round16/report.json` R16-A0..A9). None of its actions was done by ~09:15Z.
+
+**Ideas** (`IDEAS.md` CHANGES (16) l.71; `ideas.json` meta.curations[n=16], 49 records; `_curation/16/ideas.json`):
+- **New (I-354..I-359):** I-354 exp70b as the public-aimed final (in-plan, user letter only); I-355 answer-parsing rule (in-plan, part of R16-A1); I-356 unified slot table, I-357 N954 deadline observable and I-358 the mtoshidesu DC 0.20 kernel (all refuted); I-359 post-deadline removal-gate method (deferred).
+- **Status changes:**
+  - lb-tested: I-306 (P42 0.954) and I-071 forkmid (refuted -> lb-tested; its lab closure for private stands).
+  - Now logged in CONTEXT: I-345 FREEZE / deviation record and I-344 class-C table.
+  - Folded into existing rows: I-303 (exp70a NEU was structural), I-073 (forkblob on the ins35 bed +0.00019, closure upheld), I-094/I-297 (forecast premise corrected), I-026/I-286 (E10 cadence, v2 lapse).
+- **Counts c15 -> c16:** 353 -> 359. lb-tested 46 -> 48, refuted 182 -> 184, deferred 41 -> 42, in-plan 61 -> 62; lab-tested 21 and open 2 unchanged. The strict orphan is still I-233; I-336 is still not in CONTEXT.
+
+**Facts and decisions** (`FACTS.md`, `DECISIONS.md`, rows marked [c16]; `_curation/16/facts.json`):
+- **New facts:**
+  - F-RUN-29: 43/44 read timing, with 9.0 h clocks at 14:28:13Z / 14:28:22Z.
+  - F-TRN-47: fm45 on K2 = 0.954 with an attributable UP.
+  - [c16] notes on F-LB-01/02/03/04/10/11/15, F-RUN-03/27, F-RUL-12, F-MOD-27 and F-TRN-12/46.
+- **Contradictions:**
+  - New C-121..C-131 (`FACTS.md` l.464-474), including: the class-C (b) partner and exp70b composition (C-121); public block ranks used for private rank (C-124, C-127); exp70a NEU structural (C-125); the manufactured 09:00Z exp72 edge (C-128); exp70b vs #37 (C-129); 43/44 timing (C-131).
+  - Resolved in CONTEXT: C-106, C-111, C-112, C-113.
+  - Updated: C-26 (stale RESUME POINT), C-114, C-118, C-120.
+- **DECISIONS.md:**
+  - §1: P42 scored; P43/P44 updated (l.152-154).
+  - §2: [c16] paragraph l.435 and a new snapshot at l.445 (replaces c15).
+  - §2f: E10 08:31Z at l.695.
+  - §2h: D2 applied, plus three round-16 rows (l.761-763).
+  - §3: R1-R10 rows updated, plus proposed rows R16-A1 and R16-A3.
+
+**Watchlist** (`WATCHLIST.md`; `_curation/16/watch.json`):
+- **Done:** W151 (R15-A1, 4161226), W152 (round15/REPORT.md), W141 D2, W153 (SELECTED 07:41:28Z), W136 (brief in chat; push status still open), W145 (watcher stopped). W149 E10 P1 at 08:31Z was not met and continues as W164. W157 became W161.
+- **New:** W158-W167 (= R16-A0..A9 plus hygiene), reminders T77-T86, insights I161-I171.
+- **Still overdue:** W126 (RESULTS rows 39-42), W142 (NEVER_SUBMIT for exp70g/j/k), W146/W155 (ROUND 14/15 RECORDs), W57 family, W98 (LESSONS l.7), W150 (round prompt l.35-38).
+
+**Alerts** (`INDEX.md` TOP ALERTS, 8 after dedup):
+- **Resolved since curation 15:**
+  - R15-A1 pre-score entry logged and pushed before any 43/44 score.
+  - Breach disclosed (CONTEXT (9) and the brief).
+  - D2 read applied mechanically.
+  - 07:30Z SELECTED read (done at 07:41Z).
+  - Round-16 prompt risk moot (the watcher had stopped).
+- **Moot:** the 09:00Z exp71/exp72 yes edge (C-128).
+- **Carried over:** ROUND 14/15 RECORDs, RESULTS rows, NEVER_SUBMIT markers, the 12:00Z lapse line (now R16-A3), the round prompt, the HINDSIGHT GUARD, I-233, and the stale RESUME POINT / MEMORY line (C-26).
+- **New:**
+  - R16-A1 addendum (practical edge 11:45Z).
+  - R16-A2 single message by 11:00Z, carrying the exp70b and refusal-(7) facts.
+  - 43/44 read triggers (14:28:22Z / 14:40Z).
+  - exp70b-as-final letter (I-354).
+  - fb_ins35.py only exists in a scratchpad.
+  - Corrected readings C-124/C-125/C-127/C-128.
+- **Curator disagreements settled here:**
+  - exp70b risk: [info] (facts) vs [before-finals] (ideas) -> [before-finals], because the letter has a practical expiry of 29 Sep ~18:00Z.
+  - RESULTS rows: [before-finals] (facts) vs [today] (ideas, watch) -> [today], folded into the R16-A5 commit.
+  - R16-A2: [now] (facts, watch); ideas nested it inside its R16-A1 alert -> a separate [now] alert.

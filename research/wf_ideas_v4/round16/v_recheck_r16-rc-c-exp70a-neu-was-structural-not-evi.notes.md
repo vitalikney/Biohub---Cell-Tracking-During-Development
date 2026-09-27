@@ -1,0 +1,8 @@
+- 2026-09-27T08:45:58Z start recheck skeptic R16-RC-C
+- Sources read: CONTEXT.md l.1800-1812 (#35 L35 (6.72,7.73] h; P36 = x138 + lp0.3 + ungated ins), l.2006-2014 (P36 L36 (7.24,7.42] h, 0.954), l.2033 (P36 > #35 unrounded, info only), l.2286-2300 (C4 = P36 - #35), l.2405-2420 (20:49Z: skeptic prior for exp70a 'P36 evidence already in team best'), l.2665-2720 (R13-A1 L5v2, B0 = max(P36,#35,K2), L1 = exp70a - #37 already pre-registered in (6)), l.2789-2799 (D1 read incl. parenthetical 'P36 already carries lp30'), l.2873-2880 (D2 exp70b U4).
+- round13/REPORT.md l.96: R13NC-3 already said 'P36 already contained lp30' before the ladder -> structural nature was known ex ante; no recorded place where 'lp30 NEU' was cited as evidence AGAINST lp30.
+- round12/REPORT.md l.82: match share 44b6 0.79%, 6bba 5.20% (confirms density claim).
+- Check of core claim: exp70a - P36 = (safetail + lowrefine) + (lp30 x stack interaction); lp30 main effect cancels -> NEU is independent of lp30's sign. TRUE. 'near-certain' is an overstatement (P(UP) was set by the lowrefine/safetail sign, not by lp30), wording only.
+- Missed contrast: P36 >= K2 (K2 did not lift the team row; 6th/73 -> 12th/87). P36 - K2 = lp30(x138) - (lowrefine + safetail); neither run near a guard (L36 < 7.5 h, K2 safetail gate did not fire). Non-strict (tie -> earlier P36 kept), rank-inferred -> weak one-sided, NOT a sign read. So 'public lp30 evidence is null' holds for sign; add this as a footnote.
+- Verdict: not refuted; decision impact zero (outcome upheld, FREEZE, class B needs >= 0.955); value = record hygiene only.
+- 2026-09-27T08:47:54Z wrote final JSON (refuted=false, info only)

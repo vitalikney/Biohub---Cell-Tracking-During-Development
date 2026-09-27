@@ -1,0 +1,6 @@
+- 2026-09-27T08:44:29Z start PC16-02 skeptic
+- 08:45Z sources: CONTEXT.md l.2833-2848 (R15-A1 (4): '(b) {V*_C, the L9 insertion final (#37 or exp70b)}', exp70b only 'if probe 42 is the L9 V*'); l.2872-2878 (D2 07:41Z: exp70b 0.954 U4, not V*, '{exp70b, #38}' asked in brief, default no change); round15/report.json R15-A2 brief s.4 (b) '#37 или 42'.
+- poll.log: 56598763/56598765 still PENDING at last headers (l.12833/12835); no user letter logged after 07:41Z; git HEAD 0bd1408.
+- Gap confirmed: exp70b-yes x (a)/(b) has no written pair; (c) unaffected. Extra gap: E10 P6/V4 say '{PORT, #37}', 'never drop #37' (l.2144, l.2356) -> same INS ambiguity if exp70b is allowed.
+- Missing 'else' in the re-tick clause: if only the exp70b letter arrives (class C default (a)), re-tick right after the letter.
+- Value: decision-integrity only; exp70b vs #37 = 1 fork on dummies, private delta ~0. Feasible: one log line, no code/submit, R8-neutral.

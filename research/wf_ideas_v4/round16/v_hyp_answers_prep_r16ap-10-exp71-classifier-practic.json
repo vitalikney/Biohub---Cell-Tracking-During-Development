@@ -1,0 +1,16 @@
+{
+  "task": "verify R16AP-10-exp71-classifier-practicality (round 16, skeptic: value + feasibility)",
+  "written_utc": "2026-09-27T08:48Z",
+  "complete": true,
+  "refuted": true,
+  "reason": "The policy in this finding is correct, but it adds nothing new, and its urgency and framing are out of date. (1) DUPLICATE. Step (2) of R16AP-4 already says: if the classifier blocks the push again, do not work around it; ask the user to approve the prompt or to run the exact command. That has been standing policy since CONTEXT 26 Sep 21:54Z ('Not worked around') and R13-A3 at 01:31Z ('the classifier block stands'). (2) STALE EDGE. The '~09:00Z edge' only marks the last yes that still gets a score on 27 Sep. At 08:46Z, 14 minutes before it, no user answer is logged: there is no CONTEXT entry or commit after the 07:41Z D2 entry. Nothing depends on that edge. The binding edges are ~28 Sep 08:00Z (the last yes that leaves room for one ERROR resubmit) and ~28 Sep 18:30Z (the last yes at all), so user presence at 09:00Z is not critical and 'urgency today' overstates it. (3) VALUE ~0 ON PRIVATE. Making the push easier cannot change private. exp72 is class C unless the user answers yes to Q3 (R13-A3), which makes it public-only. Our LB record for model swaps is 0/5. The exp23 secondary swap lost 0.007 on the LB. P(exp72 becomes an eligible final) is ~0.03-0.05, and the G2 gate needs a SECFT_PREFIX cell that is not built (WATCHLIST I130). Q1 without Q2 spends ~4.5 GPU-h for knowledge that only helps after the deadline. (4) FEASIBILITY is fine but trivial. The kernel id vitaliineibauer/biohub-exp71-secft-all and the push command match experiments/exp71_secft_all/kernel-metadata.json. A prompt the user approves counts as consent under the permission system. A chat yes must still pass the R16AP-8 parsing rule (a bare 'da' is not a Q1+Q2 yes).",
+  "fix": "Do not keep R16AP-10 as a separate finding. Fold one clause into R16AP-4 step (2): 'push once in the foreground. If the prompt is denied or the user is away, send the exact command `PYTHONIOENCODING=utf-8 python -m kaggle kernels push -p experiments/exp71_secft_all` in chat at once and log it. Never retry through another tool or wrapper.' Remove the '09:00Z edge depends on user presence' framing. At 09:00Z log 'no Q1 answer; the same-day-score edge passed; the binding edges are 28 Sep 08:00Z and 18:30Z'. Only a Q1 + Q2 yes triggers the push; with Q1 alone, ask whether the user really wants a post-deadline-only run.",
+  "realistic_gain": "0 on private and public. It is process hygiene only, and R16AP-4 plus CONTEXT 21:54Z and R13-A3 already cover it. At best it saves minutes of latency on a class-C probe whose expected score change is ~0 (P(>= 0.956) ~0.05-0.10).",
+  "sources": [
+    "CONTEXT.md l.2539-2544 (26 Sep 21:54Z RETRAIN LINE PAUSED)",
+    "CONTEXT.md l.2722-2746 (27 Sep 01:31Z R13-A3 governance, Q1-Q3)",
+    "CONTEXT.md l.2872-2880 (07:41Z D2; brief ~07:45Z; no later entry)",
+    "research/wf_ideas_v4/round16/scan_hyp_answers_prep.json R16AP-4 (step 2, TIMES), R16AP-7, R16AP-8",
+    "experiments/exp71_secft_all/kernel-metadata.json, NEVER_SUBMIT.md"
+  ]
+}

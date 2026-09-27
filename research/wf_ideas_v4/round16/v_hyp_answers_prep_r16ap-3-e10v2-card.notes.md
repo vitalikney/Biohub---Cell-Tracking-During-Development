@@ -1,0 +1,14 @@
+# v_hyp_answers_prep R16AP-3 (E10 v2 card) skeptic notes
+- 2026-09-27 08:44Z start (date -u). No prior JSON for this task.
+- Read: CONTEXT.md l.2138-2160 (E10 v1 P1-P8), l.2352-2360 (E10 v2 V1-V8), l.2599-2881 (RESUME 26 Sep 22:46Z .. D2 07:41Z); round15/REPORT.md (R15-A7: log E10 v2 lapse at 12:00Z); round16/scan_hyp_answers_prep.json (R16AP-3, -6, -7).
+- CONTEXT has no user answer on E10 v2 after the 07:45Z brief (grep 'E10 v2': only l.2340/2350/2352/2358/2604/2748).
+- Scope check: amanatar/optimized-biohub-max-score lastRun 01:39:05Z (V6) is in experiments/e10_watch/20260927T0531Z.txt l.16; mtoshidesu/testbiohub-lf-dctta020-sectta1 (lastRun 06:13:56Z, 48 votes) is absent from 0531Z and present in 0831Z -> 'first seen' claims correct.
+- FACT ERROR in card prior basis: 'no new x138-family kernel since 24 Sep' is false. experiments/ext_optimized-biohub-max-score/v6_2026-09-27/NOTES.md: V6 is an x138 fork (x138's 4 datasets), run 27 Sep 01:39Z. Prior still low because V6 carries ~9 knob changes + 2 new code blocks (max-consensus blend, 3-frame safe-div lookahead) -> fails v1 P3 '1-2 explainable mechanisms vs exp56' whatever its score.
+- Scope nuance missing: v2 scope is ref + VERSION. A later amanatar version (V7+) first seen after the OK IS covered by v2; the card reads as if amanatar is out of v2 altogether. But any V7 built on V6 inherits the P3 failure -> effectively notify-only.
+- mtoshidesu kernel = sjlee lf-dctta family, not x138 -> notify-only under v1 and v2; scope exclusion is moot for it.
+- Baseline wording: card hardcodes 20260927T0831Z as 'already seen' baseline; timer 2e87e414 (hh:04 every 3 h) may write an 11:04Z snapshot before a late OK -> baseline = newest snapshot before the OK timestamp.
+- Duplicate user pings: R16AP-3 action (scope reminder before 12:00Z) and R16AP-7 action (~11:00Z 'no answer' line) -> merge into one message.
+- Conflict carried from R16AP-6: v2 V4 'never drop #37' vs a possible exp70b yes; card does not mention it.
+- Value: v2 only adds successors displaying 0.954-0.955 (>= 0.956 already covered by v1). P(clean x138-family successor 0.954-0.955 passing P3 in 12:00Z 27 Sep - 00:00Z 29 Sep) ~2-5%; conditional +0.1 P(bronze) -> ~+0.002-0.005 P(bronze) unconditional; 0 expected LB.
+- Feasibility: pure rule/timing card, no new code; gate tools/e10_port_gate.py + dry run exist (20:48Z 26 Sep); R8 does not bind E10 (round15 REPORT l.63). Not refuted; fixes are wording.
+- 2026-09-27 08:46Z JSON written (refuted=false; fixes a-e).

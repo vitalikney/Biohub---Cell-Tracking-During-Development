@@ -1,0 +1,6 @@
+- 2026-09-27 start round 16 facts curation; no prior 16/facts.json
+- 09:05Z sources read: CONTEXT 06:19 PRE-SCORE ENTRY l.2814-2871 (commit 4161226 06:19:26Z) + 07:41 D2 l.2872-2879 (0bd1408 07:41:52Z, on origin); '## 9' l.2880. round16 report.json 08:57:27Z (R16-A0..A9, 10 new_facts, 10 plan_issues). watch.log EVENT 4 + STOP 07:37:07Z. ledger 08:50:49Z (261 polls); poll.log 09:00:49Z 43/44 PENDING. e10 0831Z (rank 255, 8/113 in 0.954). v6 NOTES item 4 unchanged. RESULTS.md unchanged since b2be382 (26 Sep).
+- plan: helper c16_facts.py: header; [c16] appends F-LB-01/02/03/04/10/11/15, F-RUN-03/27, F-RUL-12, F-MOD-27, F-TRN-12/46, C-26/106/111/112/113/114/118/120; new F-RUN-29, F-TRN-47, C-121..C-131. Then DECISIONS: header, P42-P44 [c16], s2 [c16] snapshot, s2h/s3 rows.
+- 09:15Z FACTS.md edited via scratchpad c16_facts.py (header, 20 appends, F-RUN-29, F-TRN-47, C-121..C-131). Next: DECISIONS.md
+- 09:22Z DECISIONS.md edited via c16_dec.py (header; P42-P44 [c16]; s2 para + c16 snapshot replaces c15; s2f; s2h 4 appends + 3 rows; s3 16 appends + 2 rows; closing). CRLF kept.
+- 09:12Z facts.json written (9 alerts). Done.

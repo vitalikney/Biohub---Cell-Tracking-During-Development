@@ -2877,6 +2877,40 @@ Mention it to the user in one line (R9-A8 item 6).
   final ({exp70b, #38}) is asked in the brief (default: no change). Watcher STOP 07:37:07Z (64 calls, 0 x 429). API
   SELECTED 2/2 [56563534, 56563521] at 07:41:28Z (after probes 39-44). Morning brief sent in chat ~07:45Z (timer 65b1b746
   deleted to avoid a duplicate).
+- 2026-09-27 09:15 UTC, PROBES 43/44 READ ADDENDUM (round 16, R16-A1; pre-score: written while 56598763 and 56598765
+  are PENDING at the last poll.log header 09:10:50Z; no new rule, no submit, no build; closes PC16-02, PC16-04, R16AP-1
+  fixes, R16AP-8, R16AP-6 clause A)
+  (1) COMPOSITION (addendum to R15-A1 (4) and E10 v1 P6/V4). INS = #37 56563521 by default; INS = exp70b 56592350 only
+    if the user's letter allows exp70b as a final (logged as USER DECISION AFTER SCORE, because 42 scored at 07:40Z).
+    Class-C letter: (a), no letter, or no V*_C -> {INS, #38}. (b) with a V*_C -> {V*_C, #37}, #38 leaves; the (b)
+    partner is exp70b only if the user's letter names exp70b as the (b) partner explicitly. (c) with a V*_C -> {V*_C,
+    #38} (not recommended). V*_C keeps every R15-A1 (4) condition (display >= 0.955, hence strictly above exp70b's
+    0.954). E10: wherever P6/V4 say #37, read INS, but only for a no-insertion port (<= 62 forks on the 4 dummy clips,
+    no division-add stage); an insertion-family port is never paired mechanically (R12-A7 open row: notify the user and
+    ask). Collisions (a PORT read passes while a class-C (b)/(c) re-tick is pending or done; an eligible exp72 meets a
+    V*_C): no mechanical rule; push the facts (displays, fork counts, which file carries the insertion) and let the user
+    choose in one message. R13-A3 {exp72, #38} and R15-A1 (4) 'no V*_C -> pair unchanged' stay verbatim.
+  (2) RE-TICK. If an exp70b letter and a (b)/(c) letter both arrive before the 43/44 read: one re-tick after the read.
+    If only the exp70b letter arrives: re-tick right after it (untick 56563521, tick 56592350, keep 56563534); a later
+    class-C letter may cause one more. Every re-tick instruction is written from the refs the API reports as SELECTED at
+    that moment (name what to untick and what to tick so that exactly two distinct COMPLETE refs remain). Never two
+    byte-identical files, never a non-COMPLETE file; ticks by 29 Sep 20:00Z; API SELECTED re-read after every re-tick.
+  (3) READ TRIGGER (R15-A1 (3)/(4)): the first poll.log header with both refs terminal, or the first header at or
+    after 14:28:22Z, whichever comes first. If poll.log has no header by 14:40Z (date -u), run one ListSubmissions read,
+    log it and use it as the header. A ref not COMPLETE/ERROR at that header is UNSCORED for R15-A1 (4): it fails its
+    own L_hi <= 9.0 h and satisfies the other rung's 'ERROR/unscored' clause. A later score of it is info only (DC-dose
+    / private-read v2) and never reopens V*_C or the pair.
+  (4) LETTER WINDOW: a class-C letter counts as pre-registered only if, when it is logged (verbatim, date -u, at
+    arrival, before any clarifying reply), the last poll.log header shows BOTH 56598763 and 56598765 PENDING; quote that
+    header. ERROR is terminal at any latency, so the window can close before 12:00Z.
+  (5) ANSWER PARSING (procedure): an answer counts only for the question it names. A bare 'da'/'ok' only acknowledges:
+    reply once with a numbered checklist (each question's default and deadline), no second nag. Q1 (exp71 push), Q2
+    (exp72 submit) and Q3 (exp72 final) count only if named; a blanket 'yes to all' does NOT authorise the exp71 push
+    (R13-A3 three separate answers; the user's 25 Sep refusal (7)). A blanket yes reads as: E10 v2 yes, exp70b yes,
+    class C allowed with the variant pending; the checklist then asks (b) or (c) and the (b) partner (#37 or exp70b). If
+    the variant is not back by the first 43/44 terminal header, only 'class C allowed' counts as pre-registered and the
+    variant is USER DECISION AFTER SCORE. Echo the parsed answer in one line before any irreversible step (exp71 push,
+    re-tick instruction, submit).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
