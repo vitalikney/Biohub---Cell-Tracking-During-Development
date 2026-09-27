@@ -2998,6 +2998,12 @@ Mention it to the user in one line (R9-A8 item 6).
   on this side; no V*_C -> the user's class-C letter (b) does not fire; the pair stays {#37 56563521, #38 56563534}; no
   re-tick. Private-read L6/L7 recorded as 0.954/0.954. Last 27 Sep slot: not exp70r (43 < 0.955); exp75 if its dummy passes by
   ~14:30Z, else exp70q.
+- 2026-09-27 13:27 UTC, exp71 DONE + exp72 BUILT: exp71 COMPLETE 13:25Z (full epoch 18,707 iters at 0.40 s/it, 2.1 h; only the last decoder
+  block / unet.head / detect_head changed, rel L2 ~0.3-2.7%; in-sample detection proxy student/teacher 0.995-1.007 -> a small
+  change). Weights sha ed8c616b...; private dataset vitaliineibauer/biohub-secft-all-v1 created (ready). exp72 = K2 +
+  --patch secswap (sha f3d23bcd), dummy pushed; gates per R13-A3 (Secondary artifact/SHA256 lines, nodes within -2%/+1% of
+  121,252, 0 errors, runtime). Submit at 00:05Z 28 Sep (today's last slot goes to exp75/exp70q). Public-only unless the user
+  answers Q3.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
