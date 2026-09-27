@@ -3208,6 +3208,9 @@ Mention it to the user in one line (R9-A8 item 6).
   exp79d = exp70g + our secondary (5e0fdeac); their dummies follow exp78b in the lane (79d first, then 79a). 28 Sep plan
   (re-ranked after the 0.956): cap direction (exp78a cap 8, exp78b cap 12 + fc2), cap6 + forkmid (exp76e), cap6 + SEC (exp79d),
   cap6 + CI (exp79a); probe 46 (cap 6 + thr 0.3 + forkmid, ~22:00Z) refines the order.
+- 2026-09-27 19:10:58 UTC, USER (chat: "пока без разницы, что отмечать на финал. отмечу 29 уже после того, как все варианты испробуем"): no
+  re-tick now; the user picks the finals on 29 Sep after all variants are scored. Until then #37 + #38 stay ticked. The session
+  prepares a finals proposal (public-aimed best display + private anchor) for the 29 Sep 12:00/18:00 UTC checks.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
