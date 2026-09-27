@@ -3193,6 +3193,11 @@ Mention it to the user in one line (R9-A8 item 6).
   - The partner is always #37. The session never re-ticks. Ticks by 29 Sep 20:00Z; re-read API SELECTED after any
     re-tick. FINALS READ ~19:00Z 29 Sep.
   (10) Private-read list: add every 28/29 Sep ref (calibration only).
+- 2026-09-27 18:56 UTC, PROBE 45 READ: exp70g (K2 + DaughterNet insertion cap 6) 56606948 COMPLETE **0.956** at the 18:54:54Z header.
+  UP test (R19-A1 (1)): S0 = ladder_watch/20260927T131353Z (count 46, #268, 0.954) -> S1 = the 18:55Z download (count 47, LSD
+  11:15:12 = probe 45) -> **#162**, 113 TeamIds passed -> code P6 (>= 0.956). New team best. Row for W1 (R19-A2): 45 = P6; 46 still
+  PENDING -> 45's row = B (exp76e, exp76a, exp76d) unless 46 reads first. FINALS: exp70g is a K2 knob variant (class B) with
+  display >= 0.955 -> eligible V*; pair options go to the user (L9 {exp70g, #38} vs the user's (b)-style {exp70g, #37}).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
