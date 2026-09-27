@@ -3067,6 +3067,11 @@ Mention it to the user in one line (R9-A8 item 6).
   um); CI stage 443 s on 2 T4s for 4 videos (78-238 s per video, scales with detections). Hidden-set estimate: ~100 videos /
   2 GPUs x ~150 s = ~2.1 h on top of K2's ~7.5 h -> L ~9.6-9.8 h (< 12 h; the 10.5 h COORDINJECT deadline keeps K2 rows for any
   video not reached). Also exp72 dummy complete earlier. For 00:05Z: exp76a (exp70b + CI) if its dummy passes, else exp75.
+- 2026-09-27 18:19:11 UTC, USER YES TO N2 (chat: "да, N2", answering the question about a second, stronger fine-tune ~3 GPU-h tonight): build
+  and push exp77 = one T4x2 training session with two recipes: GPU0 continues exp71 (ed8c616b) for epoch 2 (same recipe, new loader
+  seed), GPU1 trains fresh from the pilkwang parent (9bac2fa0) for 1 epoch at lr 3e-5; same distillation loss, frozen BN, no extra
+  modules unfrozen. Outputs -> private datasets -> exp70b + secswap rungs for 28 Sep; submission of those rungs follows the
+  aggressive-mode directives; finals change only on the user re-tick.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
