@@ -1,12 +1,19 @@
 {
  "version": 1,
- "last_run_utc": "2026-09-27T16:43:42Z",
- "runs": 5,
+ "last_run_utc": "2026-09-27T18:43:42Z",
+ "runs": 7,
  "signals": 0,
  "streak_429": 0,
  "good": {
   "kernels": {
    "comp_dateRun": [
+    {
+     "ref": "anhadmahajan06/biohub-track-your-cells",
+     "title": "Biohub - Track Your Cells",
+     "author": "Anhad Mahajan",
+     "lastRunTime": "2026-09-27 17:56:27.773000",
+     "totalVotes": "13"
+    },
     {
      "ref": "mtoshidesu/testbiohub-lf-dctta020-sectta1",
      "title": "Testbiohub-lf-dctta020-sectta1",
@@ -19,7 +26,7 @@
      "title": "optimized-biohub-max-score",
      "author": "Aman Atar",
      "lastRunTime": "2026-09-27 01:39:05.377000",
-     "totalVotes": "66"
+     "totalVotes": "67"
     },
     {
      "ref": "sarveshchhetri/robust-3d-cell-tracking",
@@ -33,7 +40,7 @@
      "title": "Biohub: Harmonic Fusion V3",
      "author": "Raunak Dey",
      "lastRunTime": "2026-09-25 09:09:04.280000",
-     "totalVotes": "187"
+     "totalVotes": "190"
     },
     {
      "ref": "denpugovkin/biohub-exp003-two-embryos",
@@ -139,13 +146,6 @@
      "author": "\u0e2d\u0e18\u0e34\u0e04\u0e21 \u0e2b\u0e27\u0e31\u0e07\u0e40\u0e08\u0e23\u0e34\u0e0d\u0e27\u0e07\u0e28\u0e4c",
      "lastRunTime": "2026-09-22 10:08:09.433000",
      "totalVotes": "35"
-    },
-    {
-     "ref": "beraterolelk/0-947-lb-biohub-deepcenter-ilp-tracker",
-     "title": "\ud83d\udd2c [0.947 LB] BioHub DeepCenter + ILP Tracker",
-     "author": "Berat Erol \u00c7EL\u0130K",
-     "lastRunTime": "2026-09-22 07:41:01.787000",
-     "totalVotes": "43"
     }
    ],
    "comp_scoreDescending": [
@@ -154,14 +154,14 @@
      "title": "Biohub: Harmonic Fusion V3",
      "author": "Raunak Dey",
      "lastRunTime": "2026-09-25 09:09:04.280000",
-     "totalVotes": "187"
+     "totalVotes": "190"
     },
     {
      "ref": "amanatar/optimized-biohub-max-score",
      "title": "optimized-biohub-max-score",
      "author": "Aman Atar",
      "lastRunTime": "2026-09-27 01:39:05.377000",
-     "totalVotes": "66"
+     "totalVotes": "67"
     },
     {
      "ref": "kunaldesale2408/biohub-cell-tracking",
@@ -175,7 +175,7 @@
      "title": "Biohub 0.953 LB | ORIGINAL \u2b50\ufe0f\u2b50\ufe0f\u2b50\ufe0f\u2b50\ufe0f\u2b50\ufe0f",
      "author": "Anvith Pothula",
      "lastRunTime": "2026-09-21 09:47:58.620000",
-     "totalVotes": "218"
+     "totalVotes": "217"
     },
     {
      "ref": "amanatar/biohub-geometric-fusion",
@@ -303,7 +303,7 @@
      "title": "Biohub 0.953 LB | ORIGINAL \u2b50\ufe0f\u2b50\ufe0f\u2b50\ufe0f\u2b50\ufe0f\u2b50\ufe0f",
      "author": "Anvith Pothula",
      "lastRunTime": "2026-09-21 09:47:58.620000",
-     "totalVotes": "218"
+     "totalVotes": "217"
     },
     {
      "ref": "anvithpothula/divqc-ground-truth-free-division-qc",
@@ -447,7 +447,7 @@
      "title": "optimized-biohub-max-score",
      "author": "Aman Atar",
      "lastRunTime": "2026-09-27 01:39:05.377000",
-     "totalVotes": "66"
+     "totalVotes": "67"
     },
     {
      "ref": "amanatar/s6e9-realmlp-exact-value-neural-network-gpu",
@@ -513,12 +513,12 @@
   }
  },
  "good_from": {
-  "comp_dateRun": "20260927T1643Z.txt",
-  "comp_scoreDescending": "20260927T1643Z.txt",
-  "user_anvithpothula": "20260927T1643Z.txt",
-  "user_thtennant": "20260927T1643Z.txt",
-  "user_amanatar": "20260927T1643Z.txt",
-  "status_amanatar__optimized-biohub-max-score": "20260927T1643Z.txt",
-  "status_anvithpothula__biohub-0-953-lb-original": "20260927T1643Z.txt"
+  "comp_dateRun": "20260927T1843Z.txt",
+  "comp_scoreDescending": "20260927T1843Z.txt",
+  "user_anvithpothula": "20260927T1843Z.txt",
+  "user_thtennant": "20260927T1843Z.txt",
+  "user_amanatar": "20260927T1843Z.txt",
+  "status_amanatar__optimized-biohub-max-score": "20260927T1843Z.txt",
+  "status_anvithpothula__biohub-0-953-lb-original": "20260927T1843Z.txt"
  }
 }

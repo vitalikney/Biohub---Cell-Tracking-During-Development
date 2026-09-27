@@ -1,0 +1,74 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/INDEX.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/CHANGES.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/19/index.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/19/index.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "what": "The R19-A1 pre-score amendment is not in CONTEXT yet. It covers the UP test by SubmissionCount, the 46-PENDING row, the per-mechanism fallbacks and the R18-A4 withdrawal. P45 was still PENDING at 18:44:52Z, and its 8.0 h mark is 19:15:12Z.",
+   "evidence": "research/wf_ideas_v4/round19/report.json R19-A1; experiments/lb_poll/poll.log header 18:44:52Z (l.16490-16496); CONTEXT.md ends at l.3074; research/KNOWLEDGE/FACTS.md C-156; research/KNOWLEDGE/WATCHLIST.md W195",
+   "suggested_action": "Append R19-A1 now, with the <> fields taken from the latest poll header. Then read 45 by the count rule with S0 = experiments/e10_watch/20260927T1743Z.txt (count 46). The 18:43Z snapshot still shows count 46.",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "The user said yes to N2 (exp77) at 18:19:11Z. Three written rules still close it: card (6) 'no N1/N2 build', round 19's closed list, and R19-A2 (6). No slot rule places the N2 rungs.",
+   "evidence": "CONTEXT.md l.3052, l.3070-3074; research/wf_ideas_v4/round19/report.json rejected, R19-A2 (6); research/KNOWLEDGE/FACTS.md C-150; research/KNOWLEDGE/IDEAS.md I-385, I-396",
+   "suggested_action": "Log one amendment, for N2 only, naming it 'N2-FT (exp77)'. N1 stays out, and R9's ban on a hidden-test N2 size probe stands. An N2 rung takes the SEC slot only if its dummy PASSES by 23:45Z, otherwise it goes to W2. It stays public-only while Q3 is open.",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "The secondary loader hard-fails on a sha mismatch or a missing file. Re-versioning biohub-secft-all-v1 for the N2 outputs would make exp72, exp76d and exp76g ERROR, including the 00:10Z SEC submit.",
+   "evidence": "research/wf_ideas_v4/round19/scan_plancheck.notes.md; CONTEXT.md l.3073; research/KNOWLEDGE/_curation/19/watch.json",
+   "suggested_action": "Export the N2 weights only to NEW private datasets.",
+   "urgency": "now"
+  },
+  {
+   "kind": "forgotten",
+   "what": "There is no RESUME POINT since 26 Sep 22:46Z, and MEMORY.md is stale. There is no waiter for probe 46 (8.0 h mark 22:36:59Z), and the 00:05Z waiter (PID 18920) echoes a stale 'exp72, exp75'.",
+   "evidence": "CONTEXT.md l.2599; research/wf_ideas_v4/round19/report.json R19-A5; research/KNOWLEDGE/WATCHLIST.md W185, W207, I187",
+   "suggested_action": "Run R19-A5 now. Add the 46 waiter, fix the 00:05Z echo, and record the exp77 push/output state in the RESUME POINT and in MEMORY.md.",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "exp76c, exp76e and exp76g are not built, and exp73m has no dummy. CI kernels queue for ~3.3 h (exp76a was still QUEUED at 18:19Z).",
+   "evidence": "research/wf_ideas_v4/round19/report.json R19-A3, R19-A4; research/KNOWLEDGE/FACTS.md F-RUN-34; research/KNOWLEDGE/DECISIONS.md §1 [c19] table l.339",
+   "suggested_action": "Build now and push the exp76c dummy first, by ~19:30Z. Then push exp76g and exp73m, and exp76e only after a P5/U4 45 read. Never re-push exp76a, and gate it with R19-A4 against exp70b.",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "The GPU quota has not been re-read since 26 Sep. Tonight needs ~8-9 GPU-h: N2 ~3, R19-A3 ~2-2.5, the R19-A9 W2 dummies (which need >= 6 h left) and the tau rung ~0.5.",
+   "evidence": "experiments/exp77_secft_n2/cells/md_00_intro.py; research/wf_ideas_v4/round19/report.json R19-A3, R19-A9; research/wf_ideas_v4/round19/v_plancheck_pc19-03.notes.md",
+   "suggested_action": "Read the Kaggle Settings quota before pushing exp77. Push the CI dummies first and exp77 in the next free lane, and log the order and the budget.",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "Name clash: exp77 is now the N2 trainer, but R19-A8 names the tau rung exp77a and R19-A6 maps exp77[a-z]* to safetail. tools/runtime_ledger.py still has no rules for exp72-77.",
+   "evidence": "experiments/exp77_secft_n2/; research/wf_ideas_v4/round19/report.json R19-A6, R19-A8; research/KNOWLEDGE/FACTS.md C-153, F-RUN-32",
+   "suggested_action": "Give the tau rung a free name (e.g. exp78a). Land R19-A6 (safetail_ci 10.75 h, divins 10.2 h, one test) before 00:05Z 28 Sep, and pass --family until then.",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "The R19-A7 user message is due right after the 45 read (~19:00-19:30Z). It carries three yes/no questions: tau (due 23:30Z), the 02:00Z cap (due 29 Sep 00:00Z) and Q3 (due 29 Sep 19:00Z). It also covers N2 rung placement and discloses that coordinject runs on the general directive.",
+   "evidence": "research/wf_ideas_v4/round19/report.json R19-A7, R19-A8; research/KNOWLEDGE/IDEAS.md I-395, I-300, I-330; research/KNOWLEDGE/FACTS.md C-151, C-155",
+   "suggested_action": "Send it once 45 is coded. Quote +0.00215 (in-sample) and L ~9.8-10.45 h. Each question defaults to NO.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "Records and corrections are pending: R19-A10 (a)-(d) (V6 is not a division read, the exp72 gate values, N1 staging), RESULTS rows P39-P46, probe.json 'compare with exp56' text, ROUND 14-19 RECORDs, LESSONS H1, NEVER_SUBMIT for exp70j/k, and the R19-A12 commit. The N1 weights are staged locally.",
+   "evidence": "research/wf_ideas_v4/round19/report.json R19-A10, R19-A12; experiments/RESULTS.md (ends at P38); research/KNOWLEDGE/FACTS.md C-118, F-MOD-38; research/KNOWLEDGE/WATCHLIST.md OVERDUE l.55",
+   "suggested_action": "Log R19-A10 with R19-A2 before 00:05Z, and do the record batch after the 46 read. Commit named paths with no trailer. Do not upload _dl/secft_x2_ds or _dl/secft_x3_ds.",
+   "urgency": "before-finals"
+  }
+ ],
+ "summary": "Curation 19 index at ~18:50Z 27 Sep (HEAD 22840c5). research/KNOWLEDGE/INDEX.md was rewritten incrementally from c18 and is now 77 lines. It has the state in 10 lines, the file map with current line anchors, the 8 top open idea groups and 9 deduplicated alerts. State: finals are still #37 + #38; the LB is #289 at 0.954 with SubmissionCount 46 (18:43Z); P45 and P46 were still PENDING at 18:44:52Z; E10 v3 has run 7 times with 0 signals. CHANGES.md gains section 19: 5 CONTEXT entries (l.3011-3074), ideas 388 -> 396 (I-389..I-396; I-385 N2 deferred -> in-plan), new facts F-RUN-34, F-MOD-36/37/38 and F-TRN-50, contradictions C-150..C-158, W195-W207, the resolved items and how curator disagreements were settled. Top item: log R19-A1 before 45 is terminal, and add an N2-only amendment for the user's 18:19Z yes."
+}

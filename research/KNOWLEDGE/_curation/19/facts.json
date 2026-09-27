@@ -1,0 +1,74 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/FACTS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/DECISIONS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/19/facts.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/19/facts.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "what": "The round-19 pre-score amendment (R19-A1) is not in CONTEXT, and P45 can turn terminal at any poll now: L > 7.33 h at 18:34:50Z, 8.0 h mark 19:15:12Z. If it is logged after 45 scores, the UP-by-SubmissionCount S0/S1 rule, the 46-PENDING row and the per-mechanism fallbacks are not pre-registered. The literal 16:08 card ('vs the previous snapshot') could then code a false N4 if the 18:43Z hourly snapshot already shows count 47.",
+   "evidence": "FACTS C-156, F-RUN-31 [c19]; DECISIONS §2h row 'Round-19 pre-score amendment (R19-A1)'; research/wf_ideas_v4/round19/report.json R19-A1, plan_issues (1)-(3); experiments/lb_poll/poll.log header 18:34:50Z (45/46 PENDING); CONTEXT last entry 18:19:11 l.3070-3074",
+   "suggested_action": "Append R19-A1 to CONTEXT now, quoting the last poll.log header with both refs PENDING. Commit and push it (named paths only), then read 45 with S0 = experiments/e10_watch/20260927T1743Z.txt (count 46)",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "The user said yes to N2 at 18:19:11Z (exp77, a second distilled fine-tune). Round 19, written at 18:28Z, still lists N2 among the closed families, and the logged 16:08 card (6) says 'no N1/N2 build before the deadline'. The word 'N2' also still means the banned hidden-test size probe in R9, and R6's 'N1' is parrepair.",
+   "evidence": "FACTS C-150, F-MOD-37; DECISIONS §3 R9 [c19], §2h row 'User yes to N2'; CONTEXT l.3052, l.3070-3074, l.1673-1676; research/wf_ideas_v4/round19/report.json rejected",
+   "suggested_action": "Treat the user's yes as governing. In the next CONTEXT entry, name the fine-tune 'N2-FT (exp77)' and state that the card (6) N2 clause is overridden for it, while R9's hidden-test N2 ban stands",
+   "urgency": "today"
+  },
+  {
+   "kind": "contradiction",
+   "what": "Name clash: experiments/exp77_secft_n2/ is the N2 training kernel, but R19-A8 plans the tau 0.75 rung as 'exp77a_k2fm_tau075 (exp77 is unused)', and R19-A6 maps exp77[a-z]* to safetail.",
+   "evidence": "FACTS C-153; experiments/exp77_secft_n2/kernel-metadata.json; research/wf_ideas_v4/round19/report.json R19-A6, R19-A8",
+   "suggested_action": "If the tau rung is built, give it another number (e.g. exp78a) and adjust the R19-A6 rule list. Keep exp77x for N2-based secswap rungs",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "No RESUME POINT after 26 Sep 22:46Z (R18-A2 is ~3 h overdue). MEMORY.md is stale. The waiters are unlogged Bash PIDs, the 00:05Z waiter echoes the stale 'exp72, exp75', and nothing waits for P46 (8.0 h mark 22:36:59Z).",
+   "evidence": "FACTS C-26 [c19]; DECISIONS P46 row [c19]; research/wf_ideas_v4/round19/report.json R19-A5, plan_issues (7); CONTEXT l.2599",
+   "suggested_action": "Do R19-A5 now: write the RESUME POINT (letters, open questions Q3 / 02:00Z cap / tau, pending refs, card and amendments by reference, W1 times, every waiter with kind and UTC), add a 46 waiter, fix the 00:05Z echo, and update MEMORY.md",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "CI kernels queue for hours (exp75 ~3.3 h; exp76a still QUEUED at 18:19:29Z, pushed 16:33Z). exp76c/e/g are not built, and exp73m has no dummy. A late exp76c push misses the 23:45Z dummy cutoff, and the rows collapse silently to fallbacks. If CI scoring reruns queue the same way, the CI reads land late on 28 Sep.",
+   "evidence": "FACTS F-RUN-34, F-RUN-30 [c19]; DECISIONS §1 [c19] table; research/wf_ideas_v4/round19/report.json R19-A3, plan_issues (4)-(5), (14)-(15)",
+   "suggested_action": "R19-A3: build exp76c/e/g now, push exp76c first (by ~19:30Z), then exp76g/exp73m, and exp76e only after a P5/U4 45 read. Never re-push exp76a. Gate exp76a with its own R19-A4 gate, not exp75's",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "GPU contention tonight: the user-approved N2 run (exp77, one T4 x2 session, ~3 GPU-h), the exp76c/e/g + exp73m dummies (~2-2.5 GPU-h), the exp76a dummy still queued, and the W2 stack dummies after the 46 read (only if >= 6 GPU-h remain) all compete for 2 concurrent sessions and ~16 GPU-h.",
+   "evidence": "FACTS F-RUL-05 [c19], F-MOD-37; CONTEXT 18:19:11 l.3070-3074; research/wf_ideas_v4/round19/report.json R19-A3, R19-A9",
+   "suggested_action": "Order the pushes explicitly: CI dummies (exp76c) first, and exp77 in the next free lane. Check the quota after the 46 read before any W2 stack dummy, and log the order in CONTEXT",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "tools/runtime_ledger.py still has no family for exp72-77 (verified 18:19Z). Every 28 Sep ref would read 'unknown', with no R5(a) or insertion-gate text. For CI files, the upper-bound subtraction in card (3) would make the insertion gate unreadable.",
+   "evidence": "FACTS F-RUN-32 [c19], C-146 [c19]; DECISIONS §3 'Ledger families (R19-A6)'; research/wf_ideas_v4/round19/report.json R19-A6, R19-A2 (3)",
+   "suggested_action": "Before 00:05Z, land R19-A6: safetail_ci 10.75 h with divins 10.2 h, the exp72-77 rules and one test. Until then pass --family on every 28 Sep ref",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "stale",
+   "what": "experiments/RESULTS.md still ends at P38 (last commit 26 Sep 07:35Z). P39-P44 are scored and P45/P46 are PENDING. The exp76a/exp76d probe.json files carry the stale 'compare with exp56' rule; the real comparator is exp70b.",
+   "evidence": "FACTS C-118 [c19], C-149 [c19]; experiments/exp76a_k2fm_coordinject/probe.json; experiments/exp76d_k2fm_secft/probe.json",
+   "suggested_action": "At the next hygiene commit (after the 46 read), add RESULTS rows P39-P46 and fix the probe.json rule text to 'compare with exp70b (P42)'",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "contradiction",
+   "what": "Coordinject numbers disagree between files. CONTEXT 12:49 gives lab pooled +0.0032 (older prep path), while the kernel-path recheck gives +0.00215. CONTEXT 17:21 estimates the hidden CI stage at ~2.1 h (L ~9.6-9.8 h), while round 19 estimates 2.2-2.85 h (L ~9.8-10.45 h).",
+   "evidence": "FACTS C-151, C-155, F-MET-10 [c19], F-RUN-32 [c19]; research/wf_ideas_v4/bigger_levers/check_coord_refiner.json; CONTEXT l.2984-2987, l.3065-3069",
+   "suggested_action": "Quote +0.00215 (in-sample) and L ~9.8-10.45 h in the R19-A7 user message and the R19-A10 correction line",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 19 covers the state at 18:35 UTC 27 Sep (HEAD 22840c5 = origin/main). P45 and P46 were still PENDING at 18:24:48Z and 18:34:50Z (L > 7.15 h / > 3.79 h), and the finals are still #37 + #38. FACTS.md: new header; [c19] notes on 11 facts (F-MET-10, F-LB-01/02/10, F-RUN-30/31/32, F-RUL-05/10, F-MOD-34, F-TRN-48). Five new facts: F-RUN-34 (CI-dataset kernels queue for hours), F-MOD-36 (dummy gate values for exp72/exp76d/exp70b/K2/exp75), F-MOD-37 (the exp77 N2 training kernel: n2a/n2b recipes), F-MOD-38 (N1 x2/x3/x1.5 weights, local only) and F-TRN-50 (division lab on the exp70b bed: tau 0.75 is a coin flip by embryo, div 2.5 has sign <= 0, and the DC band [0.25, 0.30) has 0 lab TP although it is TP-rich on public). Eight contradiction updates, and new C-150..C-158: the N2/N1 terminology and the user's N2 yes vs the closures, CI runtime, W1 fallbacks, the exp77 name clash, W1 times, coordinject lab numbers, the UP-test S0, the R18-A4 withdrawal, and the ladder-watcher restart. DECISIONS.md: P45/P46 rows updated; the round-18 pre-score card and the REBASE are marked LOGGED at 16:08 (pre-score, both refs PENDING at 15:53:09Z/16:03:10Z). New §1 [c19] built/planned table: exp76a QUEUED, exp76d clean, exp72/exp75 fallbacks clean, exp76c/e/g not built, exp73m has no dummy, W2 stacks, exp77 N2, the tau rung, N1, exp74, E10. The §2 finals snapshot is replaced; §2f has an E10 note (6 runs, 0 signals); §2h gets 3 appends and 6 new rows (rebase, the N2 yes, R19-A1, READ TABLE v2, the R19-A7 message, the tau rung); §3 gets R1-R10 and other rule statuses (R9 overridden again by the N2 yes; R8 02:00Z cap still binding) plus 4 new proposed rows (R19-A1, A2, A6, A8). Most urgent: log R19-A1 before 45 turns terminal (8.0 h mark 19:15Z), write the RESUME POINT and a 46 waiter, and push exp76c by ~19:30Z."
+}

@@ -1043,3 +1043,78 @@ Curator logs: `research/KNOWLEDGE/_curation/4/`.
   - Pre-score card: [now] (ideas, facts) vs [today] (watch) -> [now], because the 17:50Z deadline is <2 h away.
   - RESUME POINT/timers: [now] (ideas, watch) vs [today] (facts) -> [now], because the 45 read timer must exist before ~17:56Z.
   - The cadence answer was marked stale/contradiction/risk by the three curators -> one [now] alert that carries the plan corrections.
+
+## 19 - 2026-09-27 ~18:50 UTC (curation 19; git HEAD 22840c5 = origin/main + untracked `research/wf_ideas_v4/round19/`, `experiments/exp77_secft_n2/`, `experiments/e10_watch/20260927T1731Z.txt`, `20260927T1743Z.txt`, `experiments/ds_secw_corwin_v1/weights/`)
+
+**Sources since curation 18:**
+- `CONTEXT.md` l.3011-3074, 5 entries: round-18 PRE-SCORE CARD 16:08; REBASE onto exp70b 16:08; exp76d dummy clean 16:33; exp75 dummy complete 17:21; USER YES TO N2 18:19:11. `## 9. Literature` moved to l.3075.
+- Commits 12d9271, 77e7810, ffe74d6, 22840c5 (`git log`).
+- Round 19: `research/wf_ideas_v4/round19/REPORT.md`, `report.json` R19-A1..A12 (report complete 18:28:35Z), `scan_plancheck.json`, `scan_recheck.json`, `scan_hyp_reads_table.json`, `scan_hyp_n1_prep.json`.
+- Polls and LB: `experiments/lb_poll/poll.log` 18:44:52Z (P45/P46 still PENDING); `experiments/e10_watch/watch_loop.log` (RUN 5-7, 0 signals); `experiments/e10_watch/20260927T1843Z.txt` (#289, SubmissionCount 46).
+
+**Ideas** (`IDEAS.md` CHANGES (19) l.94-104; `ideas.json` meta.curations[n=19], 48 records; `_curation/19/ideas.json`):
+- **New:** I-389 (LSD S1 proof, refuted); I-390 (46-PENDING row); I-391 (per-mechanism fallbacks); I-392 (28 SEP READ TABLE v2); I-393 (V_pub finals rule, I-354 folded in); I-394 (W2 stacks exp76j/k); I-395 (tau 0.75 coin rung, needs a user yes); I-396 (N2 output rungs, user-approved, no slot yet).
+- **Status changes:** I-385 N2 deferred -> in-plan (user yes 18:19:11Z, `CONTEXT.md` l.3070-3074); I-365 stays in-plan (card logged; R19-A1 amendment due).
+- **Updated rows:** I-327 (count-rule UP test), I-381 (W1 00:05/00:10/00:50Z), I-382 (CI queue, exp76a gate), I-383 (ledger rules, CI latency 9.8-10.45 h), I-375 / I-324 (exp76d and exp75 dummies clean). The R19-A10 curator items were applied to I-051/I-334, I-333, I-025/I-053/I-352, I-304 and I-384.
+- **Counts c18 -> c19:** 388 -> 396. in-plan 76 -> 83, refuted 192 -> 193, deferred 45 -> 44, open 3 -> 4; lb-tested 51 and lab-tested 21 are unchanged. The strict orphan is still I-233.
+
+**Facts and decisions** (`FACTS.md`, `DECISIONS.md`, rows marked [c19]; `_curation/19/facts.json`):
+- **New facts:**
+  - F-RUN-34: CI kernels queue for hours on Kaggle (l.268).
+  - F-MOD-36: dummy gate values for exp72, exp76d, exp70b, K2 and exp75 (l.332).
+  - F-MOD-37: the exp77 N2 trainer, with recipes n2a and n2b (l.333).
+  - F-MOD-38: N1 x2/x3/x1.5 weights, kept local only (l.334).
+  - F-TRN-50: division lab on the exp70b bed (l.389). Tau 0.75 is a coin flip by embryo, divergence 2.5 has sign <= 0, and the DC band [0.25, 0.30) has 0 lab TP.
+- **[c19] notes** on 11 facts (F-MET-10, F-LB-01/02/10, F-RUN-30/31/32, F-RUL-05/10, F-MOD-34, F-TRN-48).
+- **Contradictions:** new C-150..C-158 (l.544-552). They cover:
+  - N2/N1 terminology and the user's yes vs the closures;
+  - CI runtime;
+  - W1 fallbacks;
+  - the exp77 name clash;
+  - W1 times;
+  - coordinject lab numbers;
+  - the UP-test S0;
+  - the R18-A4 withdrawal;
+  - the ladder watcher.
+
+  8 contradictions were updated.
+- **DECISIONS.md:**
+  - §1: P45/P46 rows updated; new [c19] built/planned table (l.339).
+  - §2: snapshot replaced (l.544).
+  - §2f: E10 note (l.815).
+  - §2h: rows for the rebase, the N2 yes, R19-A1, READ TABLE v2, the R19-A7 message and the tau rung (l.891-896).
+  - §3: R9 overridden again by the N2 yes; the R8 02:00Z cap still binds; R19-A1/A2/A6/A8 proposed (l.930-932).
+
+**Watchlist** (`WATCHLIST.md`; `_curation/19/watch.json`):
+- **New:** W195-W207, T109-T115, I198-I213.
+- **Superseded:** W187 (CI drop/re-push withdrawn), W191 (ladder watcher -> manual LB download per terminal header), W190 -> W203, W189 -> W199 + W196.
+- **Still overdue:** W185 RESUME POINT, W207 (no 46 waiter), W202 (b) (exp72 gates), W126 (RESULTS rows P39-P46), W176 (ROUND RECORDs), W182 (NEVER_SUBMIT for exp70j/k), H1.
+
+**Alerts** (`INDEX.md` TOP ALERTS, 9 after dedup):
+- **Resolved since curation 18:**
+  - Pre-score card R18-A1 logged at 16:08, before any 45/46 score (l.3011-3056; 12d9271).
+  - exp76a/exp76d built and rebased onto exp70b (l.3057-3062).
+  - exp76d dummy clean (l.3063-3064).
+  - exp75 queue stall over, dummy clean (l.3065-3069). R18-A4 is withdrawn.
+  - Round 18 committed (12d9271).
+- **Carried over, re-keyed to round 19:**
+  - Pre-score amendment: R18-A1 -> R19-A1.
+  - RESUME POINT/MEMORY: R18-A2 -> R19-A5.
+  - Ledger families: R18-A5 -> R19-A6.
+  - The 02:00Z cap question: R18-A6 -> R19-A7.
+  - Records (RESULTS rows, ROUND RECORDs, NEVER_SUBMIT, H1, probe.json 'compare with exp56').
+- **New:**
+  - The N2 yes vs the three written closures, plus the N2 rung placement.
+  - N2 weights must go only to NEW datasets (sha hard-fail).
+  - No 46 waiter; stale 00:05Z waiter echo.
+  - exp76c must be pushed by ~19:30Z.
+  - GPU quota not re-read (~8-9 GPU-h planned).
+  - exp77 name clash with the tau rung / R19-A6 rule.
+  - S0 must be chosen by SubmissionCount.
+  - R19-A7 message with 3 yes/no questions.
+  - R19-A10 corrections (V6, exp72 gates, CI latency 9.8-10.45 h, +0.00215).
+  - Do not upload N1 weights.
+- **Curator disagreements settled here:**
+  - N2 contradiction: [now] (ideas, watch) vs [today] (facts) -> [now], because it must precede any N2 dummy and the exp76d read.
+  - GPU quota: [now] (watch) vs [today] (ideas, facts) -> [now], because the exp77 push is imminent.
+  - runtime_ledger: [today] (ideas) vs [before-finals] (facts) -> [today], because it is due before 00:05Z 28 Sep.

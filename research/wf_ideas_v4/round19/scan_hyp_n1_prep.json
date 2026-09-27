@@ -1,0 +1,158 @@
+{
+ "task": "round19 scan_hyp_n1_prep: N1 PREP (exp71x2/x3 weights, staged datasets, exp76 build commands, pre-registered read table) + new hypotheses",
+ "written_utc": "2026-09-27T17:46Z",
+ "complete": true,
+ "summary": "N1 PREP done locally: no Kaggle push, no dataset upload, no commit. The parent pilkwang seed314159 (9bac2fa0) is at experiments/exp02_pub941_holdout12/results/secondary_seed_weights/unet_transformer/split_0/edge_predictor_best.pth. The exp71 FT (ed8c616b) differs from it in exactly 10 keys, and the BN running stats are equal. theta0 + k*(theta_ft - theta0) was built on those 10 keys in float64, all finite, with every other key byte-equal to the FT. torch.save is deterministic. k=2 weight sha256 = 30f7eec37ac4c17495d4536eb1120ef857755ad612d86bd5e93cb41598c4ab01; k=3 = a852ed110ba84a717c0cfe4b5c2aa7639a69eaf04f4c245a3c2f740b629257a9. They are staged in x138's secondary layout as _dl/secft_x2_ds and _dl/secft_x3_ds (private CC0 ids vitaliineibauer/biohub-secft-x2-v1 and -x3-v1). Scratch builds with builder d46a8b2d reproduce exp76d byte for byte (ipynb 89d71960, meta 57c0f560). exp76x2_k2fm_secx2 (ipynb 24910592) and exp76x3_k2fm_secx3 (ipynb 9bb96570) differ from exp76d only in the two SECONDARY_* override lines and the dataset source. CPU pre-dummy check with x138's own load_model on exp71's 8 in-sample train windows: every file strict-loads; the logits move exactly linearly (ratio 2.0/3.0, cos >= 0.999); peaks at p >= 0.965 go x1.007 / x1.021 / x1.029 for k = 1/2/3; GT hits stay 86/88 for k <= 2 but fall to 85/88 at k=3, even in-sample. Governance: N1 is still I-384 deferred-after-deadline, and pre-score card (6) forbids an N1 build before the deadline. Submitting x2 therefore needs a NEW explicit user OK and a card amendment logged BEFORE the exp76d score. Honest value: P(x2 lifts our best public display) ~0.04-0.06, worth ~80 public places when it hits (0.955 -> 0.956); private value ~0 or negative. x3 is dominated: it loses a GT centre in-sample and needs a two-step monotone read. Nothing new reaches R8.",
+ "artifacts": {
+  "script": "C:/Users/vital/AppData/Local/Temp/claude/c--Users-vital-Documents-kAGGLE-Biohub---Cell-Tracking-During-Development/acabaea6-42c1-4115-a146-2ddc5bb7e8c8/scratchpad/make_exp71xk.py (usage: python make_exp71xk.py <repo_root> 2 3)",
+  "proxy_script": "C:/Users/vital/AppData/Local/Temp/claude/c--Users-vital-Documents-kAGGLE-Biohub---Cell-Tracking-During-Development/acabaea6-42c1-4115-a146-2ddc5bb7e8c8/scratchpad/proxy_xk.py (output proxy_xk.out)",
+  "scratch_builder": "C:/Users/vital/AppData/Local/Temp/claude/c--Users-vital-Documents-kAGGLE-Biohub---Cell-Tracking-During-Development/acabaea6-42c1-4115-a146-2ddc5bb7e8c8/scratchpad/scratch_build.py (builder with ROOT monkeypatched to a scratch folder; refuses --push)",
+  "parent": {
+   "path": "experiments/exp02_pub941_holdout12/results/secondary_seed_weights/unet_transformer/split_0/edge_predictor_best.pth",
+   "sha256": "9bac2fa0dadc4a6fc1899e0caf187f4b553e0a7cd90ba1261a68b35ffe9e305f"
+  },
+  "ft": {
+   "path": "_dl/exp71_secft_all/secft/weights/unet_transformer/split_0/edge_predictor_best.pth (== _dl/secft_all_ds copy)",
+   "sha256": "ed8c616bcc5990d3cccfe728d0e00469feb40ca8a0590137045f7ef225903f2e"
+  },
+  "changed_keys": [
+   "unet.decoder_blocks.1.0.weight",
+   "unet.decoder_blocks.1.1.weight",
+   "unet.decoder_blocks.1.1.bias",
+   "unet.decoder_blocks.1.3.weight",
+   "unet.decoder_blocks.1.4.weight",
+   "unet.decoder_blocks.1.4.bias",
+   "unet.head.weight",
+   "unet.head.bias",
+   "detect_head.weight",
+   "detect_head.bias"
+  ],
+  "x2": {
+   "dir": "_dl/secft_x2_ds",
+   "dataset_id": "vitaliineibauer/biohub-secft-x2-v1",
+   "weight_sha256": "30f7eec37ac4c17495d4536eb1120ef857755ad612d86bd5e93cb41598c4ab01",
+   "weight_bytes": 8355927,
+   "manifest_sha256": "244e914a8c1cd15f73fc1d040acb9c842c1595569435695ed0b329e9a40dcdba",
+   "config_sha256": "e9b4e396c58081bca08adf8275bd0bd1c2d3fd6eb091a1912a5116cb6de7b50a",
+   "relL2_vs_parent": "0.6-8.8% per key; detect_head.bias 99.7%"
+  },
+  "x3": {
+   "dir": "_dl/secft_x3_ds",
+   "dataset_id": "vitaliineibauer/biohub-secft-x3-v1",
+   "weight_sha256": "a852ed110ba84a717c0cfe4b5c2aa7639a69eaf04f4c245a3c2f740b629257a9",
+   "weight_bytes": 8355927,
+   "manifest_sha256": "63e1d82de09a39ed403232fe7231d4a1ea771bd79e74ce4798b83c2dfd7b7c60",
+   "config_sha256": "e9b4e396c58081bca08adf8275bd0bd1c2d3fd6eb091a1912a5116cb6de7b50a",
+   "relL2_vs_parent": "1.0-13.3% per key; detect_head.bias 149%"
+  },
+  "x1p5_not_staged": {
+   "note": "the I-384 curated narrow form k=1.5; scratchpad only (x1p5/edge_predictor_best.pth)",
+   "weight_sha256": "e02f41b6612bf7637bad1171f54c608800aa807e699203eb3186716bd63f4f80"
+  },
+  "builds_scratch": {
+   "exp76d_k2fm_secft (repro check)": {
+    "ipynb": "89d71960c79a93b67f39177a48835e6e43990772ef1893b5a192c19fbbb4f943",
+    "meta": "57c0f5601d75c6b071d04bbb6074df769e10d030fbc47724af7114bf174c14e7"
+   },
+   "exp76x2_k2fm_secx2": {
+    "ipynb": "24910592b3e2f57bc9f3c7932e8284d3e2f59d7c8094f71a9d8372f7cf256b9c",
+    "meta": "793b4871d7c69902556d7ec5a82e4b22c567494fde2435d6e7961fe98d757e0d",
+    "kernel_id": "vitaliineibauer/biohub-exp76x2-k2fm-secx2"
+   },
+   "exp76x3_k2fm_secx3": {
+    "ipynb": "9bb965702d99eb7d656767dd6ea6b4944fb8041c5bdd74f36e9a04c21681b7c6",
+    "meta": "c26f28dcf53240575cfd92a8dd88288f8ce65d4906ae0539850b97f54e9e7f06",
+    "kernel_id": "vitaliineibauer/biohub-exp76x3-k2fm-secx3"
+   }
+  }
+ },
+ "commands_after_user_ok_git_bash": [
+  "# 0 verify the staged bytes",
+  "sha256sum _dl/secft_x2_ds/weights/unet_transformer/split_0/edge_predictor_best.pth   # 30f7eec3...ab01",
+  "# 1 upload (private by default; x138 copy_or_extract_tree reads weights.zip)",
+  "PYTHONIOENCODING=utf-8 python -m kaggle datasets create -p _dl/secft_x2_ds --dir-mode zip",
+  "python -m kaggle datasets status vitaliineibauer/biohub-secft-x2-v1   # wait for ready, then 'kaggle datasets files' must list ARTIFACT_MANIFEST.json and weights.zip",
+  "# 2 build in the repo; rebuild and compare the sha right before the push (the builder keeps changing)",
+  "export MSYS_NO_PATHCONV=1; B=\"--base x138 --patch divinsert --patch safetail --patch lowrefine\"; K=\"--set DIVINS_ENABLE=1 --set DIVINS_STEAL=1 --set DIVINS_CAP=4 --set DIVINS_FRAME_CAP=1 --set DIVINS_ALPHA=1 --set DIVINS_THRESH=0.4 --set DIVINS_DUMP=0 --set REPAIR_DEADLINE_S=34200 --set DIVINS_DEADLINE_S=28800 --set LOWREFINE_ENABLE=1\"; FM=\"--patch forkmid --set FORKMID_ENABLE=1\"; SW2=\"--patch secswap --set SECONDARY_EXPECTED_SHA256=30f7eec37ac4c17495d4536eb1120ef857755ad612d86bd5e93cb41598c4ab01 --set SECONDARY_ARTIFACT_MANIFEST=/kaggle/input/datasets/vitaliineibauer/biohub-secft-x2-v1/ARTIFACT_MANIFEST.json --dataset vitaliineibauer/biohub-secft-x2-v1\"",
+  "python tools/build_probe_kernel.py exp76x2_k2fm_secx2 $B $K $FM $SW2 --note \"r19 N1: exp70b + secFT extrapolated k=2 (public-only)\"   # expect ipynb 24910592..., meta 793b4871...",
+  "# 3 dummy (public 4-clip run)",
+  "python -m kaggle kernels push -p experiments/exp76x2_k2fm_secx2",
+  "# x3 only under the x3 row of the read table",
+  "PYTHONIOENCODING=utf-8 python -m kaggle datasets create -p _dl/secft_x3_ds --dir-mode zip",
+  "export MSYS_NO_PATHCONV=1; B=\"--base x138 --patch divinsert --patch safetail --patch lowrefine\"; K=\"--set DIVINS_ENABLE=1 --set DIVINS_STEAL=1 --set DIVINS_CAP=4 --set DIVINS_FRAME_CAP=1 --set DIVINS_ALPHA=1 --set DIVINS_THRESH=0.4 --set DIVINS_DUMP=0 --set REPAIR_DEADLINE_S=34200 --set DIVINS_DEADLINE_S=28800 --set LOWREFINE_ENABLE=1\"; FM=\"--patch forkmid --set FORKMID_ENABLE=1\"; SW3=\"--patch secswap --set SECONDARY_EXPECTED_SHA256=a852ed110ba84a717c0cfe4b5c2aa7639a69eaf04f4c245a3c2f740b629257a9 --set SECONDARY_ARTIFACT_MANIFEST=/kaggle/input/datasets/vitaliineibauer/biohub-secft-x3-v1/ARTIFACT_MANIFEST.json --dataset vitaliineibauer/biohub-secft-x3-v1\"",
+  "python tools/build_probe_kernel.py exp76x3_k2fm_secx3 $B $K $FM $SW3 --note \"r19 N1: exp70b + secFT extrapolated k=3 (public-only)\"   # expect ipynb 9bb96570..., meta c26f28dc..."
+ ],
+ "dummy_gates_x2_x3": "The log has 'Secondary artifact: /kaggle/input/datasets/vitaliineibauer/biohub-secft-x{2,3}-v1' and 'Secondary SHA256: <30f7eec3... | a852ed11...>'. 0 Traceback / FAILED / 'DEADLINE:' / 'FALLING BACK'. DIVINS ENABLED, FORKMID on, LOWREFINE 8 as in exp76d. Runtime <= 1,920 s (exp76d ~1,402 s). Nodes within [-2%, +1%] of exp70b's 121,252. LINEARITY band on the node delta (exp76d = -191): x2 in [120,488, 121,252] (expected ~120,870); x3 in [120,106, 121,252] (expected ~120,679). Outside the band or a sign flip = STOP. Forks reported (exp70b 74, exp76d 79; x2 expected ~84).",
+ "read_table_preregistered_proposal": [
+  "PRECONDITION: a NEW explicit user OK naming N1/x2 (Q2 covered exp72 only; a blanket 'yes' only acknowledges, per R16-A1 (5)), plus an amendment of pre-score card (6) ('no N1/N2 build before the deadline'). Both are logged in CONTEXT with date -u BEFORE the first poll header where exp76d is terminal. Without both, x2/x3 stay on the post-deadline list (I-384) whatever exp76d shows.",
+  "Upload and dummy run BEFORE the exp76d read (~07:30-08:15Z 28 Sep): push the x2 dummy on an idle lane after the W1 submits (after 00:45Z). The Kaggle queue once held exp75 for ~4 h. If the x2 dummy is not COMPLETE and clean when its row fires, x2 waits; no submit on a partial dummy.",
+  "exp76d code per card (1), read at its first terminal header plus one LB download:",
+  "  P5 (>= 0.955) -> submit x2 in the next free 28 Sep slot, >= 20 min from any other submit (masking), public-only. Target display >= 0.956.",
+  "  U4 (0.954 and >= 1 TeamId passed that nothing else explains) -> submit x2 (the best chance to cross the 0.9545 edge if the effect is real and linear).",
+  "  N4 (0.954, 0 passed) -> FT line closed (card (6)); no x2, no x3.",
+  "  NEG (<= 0.953) or ERR -> closed; x2/x3 never (NEG signs k > 1 as harmful; an ERR may come from the secondary itself).",
+  "  MASKED -> use exp72 only if exp72 was scored in a clean window (P5/U4 -> as above); otherwise hold, no x2.",
+  "  Priority: an E10 v3 verbatim copy that passes its gates takes the slot first; x2 goes in the next slot.",
+  "x2 read -> x3 only if ALL hold: x2 P5 with display > exp76d's display (two-step monotone dose), x3 dummy clean, and a slot BEFORE the 29 Sep 02:00Z ladder cap (or the user lifted it). Default recommendation: DROP x3, because it loses a GT centre in-sample. Any other x2 read -> x3 never. x2 <= exp76d display - 0.001 -> close N1.",
+  "FINALS: x2/x3 are never finals: public-only, Q3 open, and extrapolating away from the pretrained end on unseen embryos has negative private expectation (WiSE-FT). Finals stay {#37, #38} unless the class-C letter (b) fires or the user re-ticks.",
+  "Timeline: x2 submitted ~08:30Z 28 Sep -> scored ~16:00-16:45Z (hidden run ~7.4-7.8 h, the same compute as exp76d). x3 at ~16:50Z -> scored ~00:30Z 29 Sep."
+ ],
+ "findings": [
+  {
+   "id": "R19N1-1",
+   "kind": "new-fact",
+   "what": "N1 weights built and staged, local only. k=2 sha 30f7eec3...ab01; k=3 sha a852ed11...57a9. Only the 10 keys the FT changed are extrapolated; BN running stats unchanged; all finite; the re-save is deterministic. The datasets are staged in x138's secondary layout under _dl/ (manifest model.weight_sha256 set, parent 9bac2fa0, ft ed8c616b). The extrapolation parent is the local exp02 copy of pilkwang seed314159 (sha verified).",
+   "evidence": "_dl/secft_x2_ds, _dl/secft_x3_ds; manifests 244e914a / 63e1d82d; config e9b4e396 (= FT); parent experiments/exp02_pub941_holdout12/results/secondary_seed_weights/unet_transformer/split_0/edge_predictor_best.pth sha 9bac2fa0; scratchpad make_exp71xk.py; research/wf_ideas_v4/round19/scan_hyp_n1_prep.notes.md",
+   "action": "None until a user OK. Do not git-add _dl/. If x2 is approved, verify the sha, then upload with 'kaggle datasets create -p _dl/secft_x2_ds --dir-mode zip'.",
+   "urgency": "info"
+  },
+  {
+   "id": "R19N1-2",
+   "kind": "new-fact",
+   "what": "CPU pre-dummy check with x138's own predict_unet_transformer.load_model (strict) on exp71's 8 in-sample train windows. All 4 files load. The logits move exactly linearly in k (ratio 2.00/3.00, cos >= 0.999, the same after per-frame standardisation). Peaks at p >= 0.965 are x1.0073 / x1.0211 / x1.0293 vs the parent for k = 1/2/3, so k=2's count shift is 2.9x k=1's (superlinear through the peak finder). GT hits are 86/88 for k <= 2 and 85/88 for k=3 (44b6_8cc6506c 8 -> 7): k=3 already loses a centre IN-SAMPLE.",
+   "evidence": "scratchpad proxy_xk.py / proxy_xk.out; k0 reproduces the detection_proxy in _dl/exp71_secft_all/exp71_train_log.json exactly (5087/86, 4404/86; k1 5061/4436)",
+   "action": "Treat x3 as dominated and drop it by default. For x2, use the dummy node linearity band (120,488-121,252) as the stop rule. This is not a value gate: every window is a train clip.",
+   "urgency": "today"
+  },
+  {
+   "id": "R19N1-3",
+   "kind": "plan-issue",
+   "what": "The prep conflicts with standing governance. Pre-score card (6) (CONTEXT 27 Sep 16:08Z) says P5/U4 -> 'no N1/N2 build before the deadline'. Round 18 refuted N1 (P ~0.03-0.05). IDEAS I-384 keeps only a narrow post-deadline form (k=1.5, only if exp76d/exp72 DISPLAYS >= 0.955, explicit user OK). The sibling round-19 scans (reads_table, plancheck) say the same. The staged x2/x3 must NOT be uploaded, dummied or submitted on this round's instruction alone.",
+   "evidence": "CONTEXT.md l.3052; research/wf_ideas_v4/round18/report.json rejected (R18NL-1); research/KNOWLEDGE/IDEAS.md I-384; research/wf_ideas_v4/round19/scan_hyp_reads_table.json, scan_plancheck.json",
+   "action": "To keep the option live, send the user ONE question tonight: 'N1: exp70b + exp71 secondary extrapolated k=2, public-only, submitted only if exp76d reads P5/U4 - yes/no?'. On a yes that names it, log the amended card (6) and the read table in CONTEXT BEFORE exp76d's first terminal header. Record the deviation from I-384 (k=2 vs k=1.5; the k=1.5 sha e02f41b6 is also ready in the scratchpad).",
+   "urgency": "today"
+  },
+  {
+   "id": "R19N1-4",
+   "kind": "plan-issue",
+   "what": "Timing. exp76d scores ~07:30-08:15Z 28 Sep. If the x2 upload and dummy wait until then, x2 slips by the dummy time plus the queue. The Kaggle queue held exp75 ~4 h on 27 Sep. That would push the x2 score toward 29 Sep morning and x3 past the 02:00Z ladder cap.",
+   "evidence": "CONTEXT 27 Sep 17:21Z (exp75 dummy 4 h queue); exp76d dummy ~1,402 s; hidden runs 7.36-7.74 h (ledger)",
+   "action": "Only after the user says yes: upload and push the x2 dummy right after the W1 submits (after 00:45Z 28 Sep), so it is clean before the exp76d read. Never push before the OK.",
+   "urgency": "today"
+  },
+  {
+   "id": "R19N1-5",
+   "kind": "new-fact",
+   "what": "Build commands verified in a scratch ROOT (builder d46a8b2d; exp76d reproduces byte for byte: ipynb 89d71960, meta 57c0f560). exp76x2_k2fm_secx2 = ipynb 24910592b3e2f57b..., meta 793b4871...; exp76x3_k2fm_secx3 = ipynb 9bb96570..., meta c26f28dc.... The diff vs exp76d is the header comment and the two BIOHUB_SECONDARY_* override lines, and the dataset source becomes secft-x2/x3-v1. The secswap guards pass (64 hex, != parent, manifest inside --dataset).",
+   "evidence": "scratchpad buildroot/experiments/exp76x2_k2fm_secx2, exp76x3_k2fm_secx3; commands_after_user_ok_git_bash in this JSON",
+   "action": "Rebuild in the repo with the listed command and compare the sha right before any push.",
+   "urgency": "info"
+  },
+  {
+   "id": "R19N1-6",
+   "kind": "new-hypothesis",
+   "what": "Pre-registered read table (proposal) for x2/x3, conditioned on exp76d (exp72 only if exp76d is MASKED). P5/U4 -> x2 (public-only, >= 20 min apart, after any E10 v3 copy). N4/NEG/ERR -> closed. x3 only if x2 is P5 above exp76d's display, its dummy is clean and there is a slot before 29 Sep 02:00Z; default drop. Never a final. ARITHMETIC: P(exp76d in {P5, U4}) ~0.3. For x2 to show 0.956 from exp70b's ~0.95445 it needs 2*e1 >= ~0.00105, i.e. e1 >= ~5e-4, while one division event is ~0.0015-0.0023. So P(x2 >= 0.956 | P5) ~0.15-0.25 and P(x2 crosses 0.9545 | U4) ~0.3. Unconditional P(x2 lifts our best display) ~0.04-0.06. A hit is worth ~80 public places (79 teams at exactly 0.955 at 15:17Z), or ~110 places via U4 (0.954 -> 0.955); E[rank] ~+4-5 places; private ~0. RUNTIME: same architecture and compute as exp76d: dummy ~1,400-1,900 s, hidden ~7.4-7.8 h (< 9.0 h). GATE: the dummy with the linearity band; the LB read is the only value gate (no honest lab: the train clips are in-sample for exp71).",
+   "evidence": "read_table_preregistered_proposal in this JSON; card (1) codes CONTEXT 27 Sep 16:08Z; LB block sizes in research/wf_ideas_v4/round18/REPORT.md",
+   "action": "Main session: adopt it verbatim only with the user OK (R19N1-3); otherwise file it under I-384 as the post-deadline form.",
+   "urgency": "today"
+  },
+  {
+   "id": "R19N1-7",
+   "kind": "new-hypothesis",
+   "what": "Honest ceiling: nothing new reaches R8. N1 has no lab gate, because every local window is in-sample for exp71. WiSE-FT argues against extrapolating past the FT end on unseen embryos. The in-sample proxy shows the peak counts move superlinearly, and k=3 already drops a GT centre. No other inference-only or post-processing idea came up this round outside a closed family (secondary swap/fusion I-126/I-335, knob rungs, float output, speed levers).",
+   "evidence": "research/KNOWLEDGE/IDEAS.md I-384..I-387, I-126, I-335; research/wf_ideas_v4/round18/v_hyp_new_levers_r18nl-1.json",
+   "action": "Keep the 28 Sep plan on the round-18 branch table (exp76a/exp76d first). N1 x2 is at most a conditional filler for slot 4/5 on 28 Sep.",
+   "urgency": "info"
+  }
+ ]
+}

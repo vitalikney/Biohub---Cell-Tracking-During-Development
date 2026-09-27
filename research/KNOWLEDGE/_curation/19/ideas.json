@@ -1,0 +1,81 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/ideas.json",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/IDEAS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/19/ideas.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/19/ideas.json"
+ ],
+ "alerts": [
+  {
+   "kind": "contradiction",
+   "what": "The user said yes to N2 at 18:19:11Z, and the exp77 two-recipe trainer is built in experiments/exp77_secft_n2/ (untracked). Round 19 was written 9 minutes later and still lists N2 as closed. Its READ TABLE v2 (6) bans N1/N2 from W3/W4, and the 16:08Z card (6) says 'no N1/N2 build before the deadline'. So far no slot rule places the N2 rungs.",
+   "evidence": "CONTEXT.md l.3070-3074; CONTEXT.md l.3011-3056 (6); research/wf_ideas_v4/round19/report.json rejected (last bullet), R19-A2 (6); research/wf_ideas_v4/round19/REPORT.md section 5; experiments/exp77_secft_n2/cells/md_00_intro.py; research/KNOWLEDGE/ideas.json I-385, I-396, I-392",
+   "suggested_action": "Before pasting R19-A2, log one deviation line. It should amend card (6) and R19-A2 (6)/(8) for N2 only (N1 stays out). It should also say which read gates the n2a/n2b rungs (e.g. exp76d's code), which W2/W3 slot they take, and that they are public-only while Q3 is open.",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "The R19-A1 pre-score amendment is not in CONTEXT yet. It holds the count-rule UP test (S0 = 20260927T1743Z.txt count 46), the 46-PENDING row, the per-mechanism fallbacks and the withdrawal of R18-A4. Probe 45 was still PENDING at 18:34:50Z, and its 8.0 h mark is 19:15:12Z.",
+   "evidence": "research/wf_ideas_v4/round19/report.json R19-A1; experiments/lb_poll/poll.log header 18:34:50Z; CONTEXT.md ends at l.3074 (18:19:11Z entry); research/KNOWLEDGE/ideas.json I-365, I-390, I-391, I-327",
+   "suggested_action": "Append R19-A1 now, with the <> fields taken from the latest poll header. Then read 45 by the count rule.",
+   "urgency": "now"
+  },
+  {
+   "kind": "forgotten",
+   "what": "There is still no RESUME POINT since 26 Sep 22:46Z, and MEMORY is stale. No waiter exists for probe 46 (8.0 h mark 22:36:59Z), and the text of the 00:05Z waiter (PID 18920) is stale ('exp72, exp75'). The new N2/exp77 state is not in any recovery card.",
+   "evidence": "research/wf_ideas_v4/round19/report.json R19-A5; research/wf_ideas_v4/round19/scan_plancheck.json PC19-10; CONTEXT.md l.2599; research/KNOWLEDGE/ideas.json I-257, I-229, I-361",
+   "suggested_action": "Run R19-A5 now. Add the 46 waiter and the exp77 push/output state to the RESUME POINT.",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "exp76c (exp70q + CI) is not built. CI kernels sit in the Kaggle queue for ~3.3 h (exp76a had been QUEUED since 16:33Z), so exp76c has to be pushed by ~19:30Z or row A falls back to other files without anyone noticing. exp76e/g are also unbuilt, and exp73m has no dummy.",
+   "evidence": "research/wf_ideas_v4/round19/report.json R19-A3, new_facts (4); research/wf_ideas_v4/round19/scan_plancheck.json PC19-03; research/KNOWLEDGE/ideas.json I-376, I-377, I-363",
+   "suggested_action": "Build exp76c/e/g now and push the exp76c dummy first. Then push exp76g and exp73m, and exp76e after the 45 read only if 45 is P5/U4. Never re-push exp76a.",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "GPU contention. exp77 runs one T4x2 session of up to 5.75 h. At the same time R19-A3 needs ~2-2.5 GPU-h for dummies and R19-A9 needs >= 6 GPU-h left for the W2 stack dummies, and the user was quoted '~3 GPU-h' for N2.",
+   "evidence": "experiments/exp77_secft_n2/cells/md_00_intro.py (time caps); CONTEXT.md l.3070-3074; research/wf_ideas_v4/round19/report.json R19-A3, R19-A9",
+   "suggested_action": "Check the remaining GPU quota before the exp77 push and before the R19-A9 builds. Log the budget next to the push line.",
+   "urgency": "today"
+  },
+  {
+   "kind": "contradiction",
+   "what": "R19-A8 names the tau 0.75 rung 'exp77a' on the grounds that 'exp77 is unused', and R19-A6 adds a ledger rule exp77[a-z]* -> safetail. exp77 is now the N2 training kernel, so the names clash.",
+   "evidence": "research/wf_ideas_v4/round19/report.json R19-A8, R19-A6, R19-A2 (1); experiments/exp77_secft_n2/; research/KNOWLEDGE/ideas.json I-395, I-383",
+   "suggested_action": "If the user says yes to tau, build it under a free name (e.g. exp78a). Fix the R19-A2/R19-A6 texts, and add ledger rules for the N2 rung names.",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "tools/runtime_ledger.py still has no rules for exp72-77. The CI latency was re-estimated at 9.8-10.45 h, so the insertion gate of a CI file must be read on L_hi - 2.2 h ('v' for 10.2-10.75 h).",
+   "evidence": "research/wf_ideas_v4/round19/scan_plancheck.json PC19-05, PC19-09; research/wf_ideas_v4/round19/report.json R19-A6, R19-A2 (3); research/KNOWLEDGE/ideas.json I-383",
+   "suggested_action": "Land R19-A6 with its test before 00:05Z 28 Sep. Until then pass --family on every 28 Sep ref.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "The 12:12Z R17-A3 line cites amanatar V6 0.901 as evidence against division rungs. Round 19 shows that V6 is confounded by detection changes. The exp72 gate values are also still not logged.",
+   "evidence": "research/wf_ideas_v4/round19/scan_recheck.json R19-RC-C; research/wf_ideas_v4/round19/report.json R19-A10 (a), (b); research/KNOWLEDGE/ideas.json I-025, I-053, I-352, I-119",
+   "suggested_action": "Log the R19-A10 (a)-(d) correction lines together with the R19-A2 entry.",
+   "urgency": "today"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "The tau 0.75 coin-flip rung (I-395), the 02:00Z cap lift (I-300) and Q3 (I-330) need the user's answers. The plan is to put them in one R19-A7 message right after the 45 read. Each defaults to NO, and the rung is never a final.",
+   "evidence": "research/wf_ideas_v4/round19/report.json R19-A7, R19-A8; research/KNOWLEDGE/ideas.json I-395, I-300, I-330",
+   "suggested_action": "Send the R19-A7 message (~19:00-19:30Z) with the three yes/no questions and their deadlines, and disclose that coordinject runs on the general directive.",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "The N1 weights x2/x3/x1.5 are staged locally in _dl/secft_x2_ds and _dl/secft_x3_ds. Round 19 refuted N1 again, and the N2 yes does not cover N1.",
+   "evidence": "research/wf_ideas_v4/round19/scan_hyp_n1_prep.json R19N1-1; research/wf_ideas_v4/round19/report.json new_facts (8), rejected, R19-A10 (d); research/KNOWLEDGE/ideas.json I-384",
+   "suggested_action": "Do not upload them. Log the R19-A10 (d) staging line so they are not mistaken for N2 outputs.",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 19 was an incremental update over curation 18. Git HEAD is now 22840c5, plus the untracked research/wf_ideas_v4/round19/ (report complete 18:28:35Z) and experiments/exp77_secft_n2/. CONTEXT.md has 5 new entries at l.3011-3074: the round 18 pre-score card, the exp70b rebase, exp76d dummy clean, exp75 dummy clean, and the USER YES TO N2 at 18:19:11Z. The ledger grows from 388 to 396 ideas, with 48 change records. New ideas I-389..I-396: LSD S1 proof (refuted); 46-PENDING row; per-mechanism fallbacks; 28 SEP READ TABLE v2; V_pub finals rule; exp76j/k W2 stacks; tau 0.75 coin-flip rung (needs a user yes; clashes with the exp77 name); N2 output rungs (user-approved, no slot yet). Status changes: I-385 N2 goes from deferred to in-plan and I-365 stays in-plan (card logged, R19-A1 amendment due). Updated rows: count-rule UP test (I-327), W1 order 00:05/00:10/00:50Z (I-381), CI queue and exp76a gate (I-382), ledger rules and CI latency (I-383). Curator items from R19-A10 are applied to I-051/I-334, I-333, I-025/I-053/I-352, I-304 and I-384. Totals: in-plan 76->83, refuted 192->193, deferred 45->44, open 3->4; lb-tested stays 51. Probes 45 and 46 were PENDING at 18:34:50Z. The main gap is that the round-19 texts contradict the user's N2 yes."
+}

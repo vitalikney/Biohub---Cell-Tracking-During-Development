@@ -1,0 +1,6 @@
+- 2026-09-27T18:45:17Z curation 19 index: started; no index.json in _curation/19; INDEX.md is c18 (76 lines); CHANGES last section 18 at l.977
+- 2026-09-27T18:46:50Z anchors gathered: CONTEXT l.3011-3074 (## 9 at l.3075); poll 18:44:52Z 45/46 PENDING; E10 RUN 7 18:45:58Z 0 signals, 1843Z snapshot count 46 rank 289; IDEAS/FACTS/DECISIONS/WATCHLIST line anchors noted
+- 2026-09-27T18:47:53Z INDEX.md written (c19)
+- 2026-09-27T18:48:23Z INDEX.md compressed to 77 lines
+- 2026-09-27T18:48:50Z CHANGES.md section 19 appended
+- 2026-09-27T18:49:20Z index.json written; done

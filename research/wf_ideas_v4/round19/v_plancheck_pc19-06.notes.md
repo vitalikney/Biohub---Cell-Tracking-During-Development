@@ -1,0 +1,9 @@
+- 18:13Z start v_plancheck_pc19-06; no prior json
+- 18:14Z (UTC; file mtimes are local UTC+3) `kaggle kernels status vitaliineibauer/biohub-exp76a-k2fm-coordinject` -> QUEUED (pushed 16:33Z; exp75 sat ~4 h in the queue). 23:45Z fallback (exp76a -> exp72 -> exp75, CONTEXT 16:08Z (4)) still reachable.
+- Re-verified with pandas (_dl): K2 exp58 b6de85c1 121,252/117,077/75; exp70b ed7101bf 121,252/117,076/74; exp75 d6d9d808 121,252/117,077/75. nodes K2 == exp70b (.equals True, incl. id col); edges K2 == exp75 True; exp75 id/dataset/node_id/t == K2 True. Predicted exp76a = exp75 nodes + exp70b edges = 238,328 data rows.
+- Stage order (exp76a nb): cell 7 = pipeline incl. FORKMID + to_csv; cell 8 = coordinject post-CSV rewrite of z/y/x only (streaming, line-count check, fail-soft -> 'COORDINJECT FAILED', CSV unchanged). So edges cannot differ from exp70b; the sha != ed7101bf check catches silent fail-soft.
+- Keyword counts: exp75 log Traceback/FAILED/SKIPPED/DEADLINE:/FALLING BACK = 0, LOWREFINE 8 raw (4 distinct x2), DIVINS ENABLED 1, FORKMID 0 (off); exp70b log same zeros, FORKMID 1 ('FORKMID: enable=1 min_um=4.5 force_fail=0'). Gate keywords do not false-fire on clean logs.
+- exp75 SUMMARY: videos=4/4 nodes=121252 replaced=110899 (0.915) moved_cells=78320 workers 443s; COORDINJECT line: 2 workers on 2 GPUs, kernel elapsed 1809s (KERNEL_START_TS defined -> 10.5 h deadline anchored at kernel start).
+- Gaps: 'COORDINJECT_WORKER SKIP (deadline)' does not match 'SKIPPED' (covered by videos=4/4); no check worker device=cuda; no runtime item; 99.9% rule should say which columns (id/dataset/node_id/t must be 100%).
+- R8: coordinject built 12:49Z after the 12:00Z line; CONTEXT 12:01Z/12:12Z: R8 no longer binds the aggressive-mode public rungs (user decision); coordinject files are PUBLIC-ONLY per 16:08Z (2). Not this finding's issue.
+- 18:15Z final JSON written (refuted=false, gate adopted with sharpened items)

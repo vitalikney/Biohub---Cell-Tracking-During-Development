@@ -1,0 +1,14 @@
+# scan_hyp_reads_table notes (round 19)
+- 2026-09-27 17:31Z start. JSON did not exist; round19 folder created.
+- Read CONTEXT l.2700-3090 (last entry 17:21Z exp75 dummy complete), round18 REPORT.md + report.json (R18-A1 card, A6 budget, A7 W1 stagger).
+- poll.log tail: probes 45 (56606948) / 46 (56611472) not yet scored at 17:31Z.
+- 17:40Z facts gathered:
+  - ledger.md 17:23:31Z: 45 exp70g 56606948 PENDING L > 6.13 h; 46 exp70q 56611472 PENDING L > 2.77 h. K2-family L history: 6.87-7.04 (exp70a), 7.19-7.42 (d/e), 7.36-7.54 (K2), 7.41-7.58 (exp70b), 7.56-7.74 (43/44) -> drifting up.
+  - Latency order inversion: exp70e submitted 21:15:23 completed 04:40:05; exp70a submitted 21:17:47 completed 04:20:02 (20 min earlier). 43/44 submitted 9 s apart completed in the same header 13:12:33Z.
+  - experiments/e10_watch/20260927T1731Z.txt: our rank 288, 0.954, position 6 of 114 in the 0.954 block (ranks 283-396) -> k = 5 teams above us in-block; >= 0.955: 282 teams; LastSubmissionDate on our row = 2026-09-27 05:28:22 = exp70k submit time while 45/46 pending -> LastSubmissionDate = submit time of our latest SCORED file (usable to prove S1 contains a ref).
+  - Folders: experiments/exp75_k2_coordinject, exp76a_k2fm_coordinject, exp76d_k2fm_secft (probe.json checked). Built-in-scratch shas for 76c/e/f/g/h/i in round18/scan_hyp_slots_28sep.json 'builds'; exp76j (exp70b+cap6+secFT) and exp76k (exp70b+cap6+secFT+CI) do NOT exist anywhere.
+  - CI lab (bigger_levers/check_coord_refiner.json lab_recheck_kernel_path): a0.5 3um per clip -0.0029/+0.0125/0/+0.0029, pooled +0.00215, division_tp_change 0; exp75 dummy CI stage 443 s / 4 videos on 2 T4.
+  - R18-A1 (6): secFT P5/U4 -> line open but NO N1/N2 build before the deadline; R18-A9: N1 k=1.5 post-deadline narrow form only. R18-A1 (5): CI UP -> ONE stack 'best division file + CI'.
+  - ideas.json: 388 ideas; closed list checked (I-378 exp76b refuted, I-380 five-wave plan refuted, I-384/385/386 deferred, I-300 'last ladder submit 29 Sep 11:00' refuted in its L8/L9 form -> T_last only with the user's lift of the 02:00Z cap).
+- U4 window arithmetic: 5 teams sit between exp70b (~0.95445) and the 0.9545 edge (~5e-5) -> U4 needs a delta in ~(1e-5, 5e-5). For CI prior N(+0.0004, 0.002): P(U4) ~1%, P(P5) ~0.4-0.55 before no-op risk, P(NEG: delta < -0.00095) ~0.25, P(N4) ~0.2. So for CI/SEC the read is effectively P5/N4/NEG; U4 matters only for small division levers.
+- 17:40Z (date -u) wrote scan_hyp_reads_table.json (8 findings; R19RT-1 = paste-ready 28 SEP READ TABLE v1). Script: scratchpad r19rt_write.py.

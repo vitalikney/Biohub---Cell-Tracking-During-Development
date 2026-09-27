@@ -1,0 +1,7 @@
+- 2026-09-27T18:12:57Z start PC19-07 check
+- 18:15Z LB SubmissionCount for TeamId 16810638 counts SCORED submissions only (rises at completion, not at submit): 20260927T0147Z=40 (39-41 pending) -> 0531Z=43; 0831Z=44 (42 done 07:40Z); 1243Z=44 (43/44 pending) -> 1343Z=46 (43/44 done ~13:1xZ); 1443Z..1743Z=46 while 45 (sub 11:15:12Z) and 46 (sub 14:36:59Z) PENDING (poll.log 18:04:40Z). LastSubmissionDate also updates on any scored file (0531Z shows 21:38:33 = probe 41, a 0.949 NEG) -> secondary freshness check.
+- E10 loop runs hourly at xx:43Z (watch_loop.log RUN 6 17:45Z, next 18:43Z) until 29 Sep 12:00Z. 45's 8.0 h mark 19:15Z -> it can complete before 18:43Z or 19:43Z; 'newest snapshot' as S0 would then already hold count 47 -> false N4. Finding real.
+- Card (CONTEXT 16:08Z (1)) says only 'TeamIds passed vs the previous snapshot'; the count-based FRESHNESS rule exists only for the old ladder watcher (CONTEXT l.2678-2683, base 40, hardcoded). Not yet adopted for 45/46 (grep).
+- Current S0 for 45: experiments/e10_watch/20260927T1743Z.txt l.428 (rank 288, 0.954, count 46, last 05:28:22). Gap in the finding: no rule for 46->48 jump (co-completion) nor for an ERROR that does not move the count.
+- Value: bookkeeping only; affects U4/N4 codes -> W1 branch table rows, not finals (finals need display >= 0.955, no UP test). No mechanism, no R8 issue, no Kaggle action.
+- 2026-09-27T18:14:43Z verdict: NOT refuted; JSON written

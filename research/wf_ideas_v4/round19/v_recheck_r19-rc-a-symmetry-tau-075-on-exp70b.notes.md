@@ -1,0 +1,13 @@
+# v_recheck R19-RC-A symmetry tau 0.75 on exp70b — notes
+- 2026-09-27T18:12:59Z start; no prior json existed.
+- 18:13Z poll.log: 45 (56606948) and 46 (56611472) still PENDING; 43/44 (DC 0.20/0.225 ADD rungs) = 0.954 N4, 0 TeamIds passed (CONTEXT 13:14Z).
+- Verified x138 cell 5 l.1585-1607: DC veto first, then symmetry; proposals then ranked + frame/global caps. TAU in cell 0 = "0.6"; cell 9 lists it only in PP sweep keys. Builder --set is generic (tools/build_probe_kernel.py l.2575). No tau build folder exists (exp70k now = dc0.225).
+- Verified scratch r19_agg.json: 6bba exp70b-like (ctl/fm -> tau0.75/fm) +0.00434, div TP/FP 23/22 -> 29/27, added 6 TP / 5 FP / 92 ign; 44b6-71 (exp64) -0.00127, added 0 TP / 4 FP / 291 ign; 44b6-17 0. Clip W/L on 6bba 6/13, ALL 6/16, 44b6-71 1/17.
+- AGAINST premise (b): lab tau-added TPs by DC: <0.30 = 1 TP / 1 FP; >=0.30 = 5 TP / 3 FP (6bba). The gain is NOT in the probe-41 band [0.25,0.30); the band argument is narrative. 44b6-71 FP 1 (<0.30) / 3 (>=0.30).
+- AGAINST premise (a) use: if dc0.30 shows lab signs do not predict public for division knobs, the 6bba +0.004 is equally non-predictive; the finding keeps the positive lab arm and discards the negative one.
+- Direct public ADD reads of geometric safe forks (43/44, DC loosening) = null (N4). Insertion +0.001 is a learned-classifier ADD, a different precision profile.
+- R13DP-4 mechanism: annotation density (6bba 5.2% vs 44b6 0.79% of predicted nodes matched); bootstrap 6bba P(<0) 0.004, 44b6-71 leak-group P(<0) 0.99 -> the embryo split is robust; public/private density unknown.
+- FEASIBILITY BUG: tau 0.75 changes num_pred_nodes (+62 nodes on 6bba 39 clips, 12 clips; +21 on 44b6-17; +92 on 44b6-71, 15 clips) via the output short-track filter; small node-bonus cost (sum of per-clip adj deltas on no-event clips -0.0003 6bba, -0.0003 44b6-71). The action's dummy gate 'nodes 121,252' will likely fail; needs 'nodes >= 121,252, <= +0.05%'.
+- Old 11 Sep sweep (CONTEXT l.654-680, 14 GT div, old base): tau 0.8 < 0.6 under official metric; weak, not decisive.
+- J_pub ~0.36 (CONTEXT l.1308/1320): add precision bar ~0.265; 6bba adds 0.55 pass, 44b6 0/4 fail.
+- 2026-09-27T18:17:08Z final JSON written (refuted=true: value revision unsupported; feasible as a coin-flip public rung with a node-gate fix).

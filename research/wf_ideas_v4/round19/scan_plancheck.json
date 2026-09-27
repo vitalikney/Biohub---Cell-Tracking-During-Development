@@ -1,0 +1,103 @@
+{
+ "task": "round 19 plan check (17:30Z 27 Sep, aggressive mode)",
+ "written_utc": "2026-09-27T17:55Z",
+ "summary": "Round 19 plan check, 17:31-17:55Z, files only (no Kaggle calls). The finals are still #37 + #38. Probes 45 and 46 are PENDING at the 17:23:29Z header (45 L > 6.13 h, 8.0 h mark 19:15:12Z; 46 L > 2.77 h, 8.0 h mark 22:36:59Z). E10 RUN 5 at 16:44Z found 0 signals; we are CSV rank 287, SubmissionCount 46. No rule was broken in the 16:08-17:21Z entries. Six things need attention before 00:05Z. (1) The round focus says 'round 18 said only N1 is cheap', but round 18 REFUTED N1 (R18NL-1), and the main session's own card R18-A1 (6) says 'no N1/N2 build before the deadline'. Building N1 tonight breaks a pre-registered line and needs a new user OK. (2) The branch table has no row for '46 still PENDING at the W1 cutoff'. 46's dummy ran 24% slower, so its 9.0 h mark (23:36:59Z) is right at 23:45Z. (3) The W1 files exp76c, exp76e and exp76g are not built, and exp73m has no dummy. The GPU queue held exp75 for 4 h, so these dummies must go out speculatively now, not after the reads. (4) The fallback in the 17:21Z entry (exp76a -> exp75) contradicts the card (exp76a -> exp72 -> exp75). The card's chain can put two secFT files (exp76d + exp72) in W1. (5) The CI runtime is underestimated. The dummy mean is 158 s/video, so the hidden run needs 2.2-2.85 h and L(exp76a) is ~9.8-10.45 h, not 9.6-9.8 h. The card's rule for the CI insertion gate subtracts the upper CI bound, which is anti-conservative. (6) Round-18 actions R18-A2 (RESUME POINT, MEMORY) and R18-A5 (ledger families) are still undone, and ladder_watch.py cannot be 'restarted with new args' (R18-A8) because its refs and base count are hardcoded. Also verified: the exp76a/exp76d notebook shas match CONTEXT, their diffs vs exp70b hold only the intended lines, and exp75's CI moved 64.6% of nodes with 0 duplicate positions. The UP test for 45/46 can use the hourly E10 snapshots, which already hold TeamId and SubmissionCount, but S0 must be picked by SubmissionCount, not by time.",
+ "findings": [
+  {
+   "id": "PC19-01",
+   "kind": "plan-issue",
+   "what": "N1 (ExPO-style extrapolation of exp71) is NOT a round-18 green light. The round focus misreads round 18. round18/REPORT.md section 5 and v_hyp_new_levers_r18nl-1.json REFUTED N1 for tonight and moved it to the post-deadline list: no validated direction, dummy clips in-sample for exp71, P(raises our best display) ~0.03-0.05. The main session's own pre-score card R18-A1 (6) (CONTEXT 16:08Z) says 'P5 or U4 -> the line stays open, but no N1/N2 build before the deadline'. N1 is a new post-R8 mechanism, and none of the user's R8 lifts covers it (Q2 named exp72; 11:14/11:16Z covered division-side rungs). The notation 'k=2/3' is also ambiguous: k = 0.667 would be WiSE-FT interpolation, not ExPO extrapolation (alpha > 1).",
+   "evidence": "research/wf_ideas_v4/round18/REPORT.md section 5 ('N1, экстраполяция k=2 на эту ночь ... уходит в список «после дедлайна»'); round18/v_hyp_new_levers_r18nl-1.json (refuted: true; fix: k=1.5, only if exp72 DISPLAYS >= 0.955); CONTEXT.md 16:08Z card (6); exp71 facts: rel L2 0.3-2.7%, proxy 0.995-1.007 (CONTEXT 13:27Z); BN frozen (experiments/exp71_secft_all/cells/c09_exp71_export.py l.43, md_00_intro.py l.7).",
+   "action": "Do not build N1 tonight. If the user explicitly asks for it anyway (a new chat OK naming N1), log a deviation record first and use the R18NL-1 narrow form. Trigger: exp76d or exp72 DISPLAYS >= 0.955 (earliest ~07:50Z 28 Sep). k = 1.5. CPU build asserts: exactly the trainable keys of decoder_blocks[-1]/unet.head/detect_head differ; BN running_mean/var and num_batches_tracked unchanged, with num_batches_tracked kept int64; all values finite. Upload to a NEW private dataset (e.g. biohub-secft-x15-v1), never a new version of biohub-secft-all-v1. New SECONDARY_EXPECTED_SHA256. Dummy with the exp72 gates, plus node/fork deltas of the same sign as exp72 and <= 2x. Public-only, class C.",
+   "urgency": "now"
+  },
+  {
+   "id": "PC19-02",
+   "kind": "plan-issue",
+   "what": "The W1 branch table (R18-A1 (4)) has no row for 'probe 46 not terminal at the W1 cutoff'. 46 (exp70q) was submitted at 14:36:59Z. Its dummy took 1,874 s vs K2's ~1,512 s (+24%). K2-family L has drifted up (7.36-7.54 h -> 7.56-7.74 h). 46's 8.0 h mark is 22:36:59Z and its 9.0 h mark 23:36:59Z. A +10-20% hidden runtime puts completion at ~23:00-23:45Z, right at the 23:45Z dummy/fallback cutoff.",
+   "evidence": "poll.log header 17:23:29Z (56611472 PENDING, L > 2.77 h); experiments/lb_poll/ledger.md rows 56598763/65 (7.56-7.74 h); CONTEXT 14:37Z (dummy ~1,874 s) and 16:08Z card (4).",
+   "action": "Before 45 turns terminal, append one pre-score line. If 46 is not COMPLETE/ERROR at the last poll header before 23:50Z, W1 uses 45's code alone. 45 in {P5, U4} -> exp76e, exp76a, exp76d; otherwise exp76a, exp76d, with slot 3 held. exp76c/exp76g/exp73m move to W2, decided at 46's read. A later 46 score never reorders W1 files already submitted.",
+   "urgency": "now"
+  },
+  {
+   "id": "PC19-03",
+   "kind": "plan-issue",
+   "what": "Every W1 row other than the default one needs files that do not exist yet. experiments/ has only exp76a_k2fm_coordinject and exp76d_k2fm_secft; exp76c (exp70q+CI), exp76e (exp70b+cap6) and exp76g (exp70q+secFT) are not built, and exp73m has no dummy. Queue risk: the exp75 dummy waited ~4 h (13:19Z -> 17:20Z). The reads land at ~19:00Z (45) and ~22:30-23:40Z (46). A dummy pushed after a read therefore has little chance of passing by 23:45Z, and those rows silently collapse to the fallbacks.",
+   "evidence": "ls experiments/exp7[2-6]* (17:35Z); CONTEXT 17:21Z (exp75 'after ~4 h in the Kaggle queue'); round18 scan_hyp_slots_28sep.json 'builds' (exp76c/e/g commands; draft shas 1bb648a4 / d5c5ff5e / 17bf5872 were built under the draft names, so a rebuild under the final folder names will hash differently).",
+   "action": "Build exp76e, exp76c and exp76g now with the round-18 commands (B/K/KQ/FM/CI/SW strings). Verify each by a notebook diff against its base (exp70b for 76e; exp70q for 76c/76g): only the override lines plus the CI cell or secondary line may differ, which is how 76a/76d were verified here. Push the dummies speculatively as lanes free up: exp76e first (45 reads ~19:00Z), then exp76c and exp76g. The GPU cost is ~0.5 h each; an unused dummy costs nothing else.",
+   "urgency": "now"
+  },
+  {
+   "id": "PC19-04",
+   "kind": "plan-issue",
+   "what": "CONTEXT's fallback rules contradict each other. The 17:21Z entry says 'For 00:05Z: exp76a if its dummy passes, else exp75'. The 16:08Z card (4) says 'Fallback ...: exp76a -> exp72 (as built) -> exp75'. Under the card's chain, a failed exp76a dummy puts exp72 next to exp76d. Both are the secFT mechanism, differing only by forkmid, so W1 would carry two near-duplicate files and no coordinject file, and the secFT read would be confounded.",
+   "evidence": "CONTEXT.md 16:08Z card (4) 'Fallback when a W1 file has no COMPLETE passing dummy by 23:45Z: exp76a -> exp72 (as built, dummy clean) -> exp75'; CONTEXT.md 17:21Z '... else exp75'.",
+   "action": "Log a pre-score amendment before 45 turns terminal, making fallbacks per mechanism. CI slot: exp76a -> exp75 (dummy clean 17:20Z). secFT slot: exp76d -> exp72 (dummy clean). Division slot (exp76e/c): -> held for W2. Never two files of one mechanism in W1.",
+   "urgency": "now"
+  },
+  {
+   "id": "PC19-05",
+   "kind": "new-fact",
+   "what": "The CI runtime is underestimated, and the card's CI insertion-gate reading is anti-conservative. The exp75 dummy log gives per-video CI times of 120.9 / 77.5 / 195.4 / 238.0 s (mean 158 s; roughly linear in detections: 9k -> 78 s, 81k -> 238 s). For 100-130 hidden videos, that is 50-65 videos per worker x 158 s = 2.2-2.85 h, not '~100 videos / 2 GPUs x ~150 s = ~2.1 h'. So L(exp76a) is ~7.58 + (2.2..2.85) = ~9.8-10.45 h, not 9.6-9.8 h. exp76a submitted at 00:05Z scores ~09:50-10:35Z. Card (3) reads the insertion gate on 'L_hi minus the CI stage (... up to 65 videos per worker)'. Subtracting the upper CI bound (2.85 h) makes 'did NOT fire' look proven up to L_hi 10.85 h, beyond the 10.75 h admission ceiling, so the gate can never read open. For exp76c (exp70q base, +24% K2 part), the CI budget is 10.5 h minus the K2 part. If 46's L_hi > 9.0 h, CI covers only ~60% or less of the videos.",
+   "evidence": "_dl/biohub-exp75-k2-coordinject/biohub-exp75-k2-coordinject.log: 'COORDINJECT_WORKER 44b6_0113de3b ... 120.9s', '6bba_05b6850b ... 77.5s', '44b6_0b24845f ... 195.4s', '6bba_05db0fb1 ... 238.0s'; CI start at kernel elapsed 1809 s; tools/coordinject_patch.py (deadline = KERNEL_START_TS + 37800 s; kill + 900 s; KERNEL_START_TS is bound in cell 7 of exp76a, so the clock is right); CONTEXT l.14 (hidden ~100-130 videos); CONTEXT 17:21Z and 16:08Z card (3).",
+   "action": "Correct the L estimate in the next CONTEXT line to 9.8-10.45 h (L_hi admission stays 10.75 h). Amend card (3): for CI files, subtract CI_lo = 2.2 h (50 videos x 158 s). 'Insertion gate did NOT fire' counts as proven iff L_hi <= 10.2 h; for 10.2 < L_hi <= 10.75 h code the ref with 'v'. Drop exp76c from W1 if 46's L_hi > 9.0 h.",
+   "urgency": "today"
+  },
+  {
+   "id": "PC19-06",
+   "kind": "plan-issue",
+   "what": "The exp76a dummy needs its own sharp gate. Copying exp75's gate ('nodes/forks/edges identical to K2 121,252 / 75 / 117,077') would FALSE-FAIL exp76a, because exp70b has 74 forks and 117,076 edges. There is a stronger check, verified here: K2's and exp70b's dummy node rows are byte-identical (forkmid removes edges only). So exp76a's node rows must equal exp75's node rows (up to rare GPU-nondeterminism rounding flips), and its edge rows must equal exp70b's exactly. exp75 itself passes a collapse check: 0 duplicate (dataset,t,z,y,x) rows; pairs within 2 um rose from 13 to 62 out of 121,252 nodes; 64.6% of nodes moved; 12.4% changed z; max shift 2.19 um. Minor: every dummy log prints each LOWREFINE line twice (K2 shows 8 raw), so R13-A3's '4 LOWREFINE lines' means 4 distinct.",
+   "evidence": "_dl/biohub-exp58-x138-safe-lowref vs _dl/biohub-exp70b-k2-fm45 submission.csv: node rows equal (pandas .equals True); exp70b ed7101bf 121,252 nodes / 117,076 edges / 74 forks; K2 b6de85c1 117,077 edges / 75 forks; exp75 vs K2 check run 17:45Z (0 duplicates, close pairs 13 -> 62).",
+   "action": "exp76a GO iff: validate_csv ok; CSV sha != ed7101bf; nodes 121,252; edge rows == exp70b dummy edge rows (117,076, forks 74); node rows vs exp75 node rows >= 99.9% identical; 0 duplicate (dataset,t,z,y,x); 'COORDINJECT SUMMARY: videos=4/4' with replaced ~0.915; 0 'COORDINJECT FAILED'/'SKIPPED'/'WORKER FAILED'; 0 Traceback/FAILED/DEADLINE:/FALLING BACK; FORKMID line present; 4 distinct LOWREFINE lines; DIVINS ENABLED. Log it as one PASS/FAIL line.",
+   "urgency": "now"
+  },
+  {
+   "id": "PC19-07",
+   "kind": "plan-issue",
+   "what": "The UP-test S0 for the 45 and 46 reads must be chosen by SubmissionCount, not by time. No extra CLI call is needed: the hourly E10 snapshots (:43-:44) already store the leaderboard rows >= 0.953 with TeamId and SubmissionCount (our row at 16:44Z: rank 287, count 46). Failure mode: if 45 completes at e.g. 18:40Z and the main session takes the newest snapshot (18:44Z) as S0, S0 already contains any UP. The test then shows 0 passed TeamIds, and 45 is wrongly coded N4.",
+   "evidence": "experiments/e10_watch/20260927T1643Z.txt l.138-140 (header 'Rank,TeamId,...,SubmissionCount'), l.427 ('287,16810638,D: Discipline,2026-09-27 05:28:22,0.954,46'); watch_loop.log RUN 5; CONTEXT 13:14Z read method.",
+   "action": "In the 45 read: S0 = the newest E10 snapshot or download whose our-row SubmissionCount == 46; S1 = the first fresh download with count 47. In the 46 read: S0 with 47, S1 with 48. If 45 ERRORs, record whether the count moved (still unknown, R13-A1 (2)). Quote both file names and counts in the read line.",
+   "urgency": "now"
+  },
+  {
+   "id": "PC19-08",
+   "kind": "plan-issue",
+   "what": "R18-A8 ('restart the watcher with new args at 06:30Z') cannot be done as written. experiments/lb_poll/ladder_watch.py hardcodes WATCHED = the 39-42 refs (l.61), FAST_REFS (l.62), BASE_COUNT = 40 (l.58) and caps of 27 Sep (l.65-66), and has no argument for refs. The run script also pins S0 20260927T0147Z and hard cap 27 Sep 11:30Z. Hourly E10 snapshots separate completions only >= ~70 min apart. exp76d (L ~7.4 h) and a third K2-latency file (e.g. exp76e, L ~7.5 h) submitted 20 min apart would co-complete, giving MASKED or non-attributable reads.",
+   "evidence": "experiments/lb_poll/ladder_watch.py l.58-66, l.882-889; experiments/lb_poll/run_ladder_watch.sh; ladder_watch/watch.log STOP 07:37:07Z; CONTEXT 16:08Z card (1) MASKED.",
+   "action": "Cheapest fix, no code: stagger the W1 submits by predicted L. Submit exp76d at 00:05Z and exp76a (L ~10 h) at 00:25Z. A third K2-latency file goes in at >= 01:20Z, so its completion falls >= 75 min after exp76d's. Alternative: add '--watch REF=NAME' (repeatable) and '--base-count N' to ladder_watch.py, with a --dry-run test, before 06:30Z.",
+   "urgency": "today"
+  },
+  {
+   "id": "PC19-09",
+   "kind": "plan-issue",
+   "what": "R18-A5 (due before 00:05Z) is not done. tools/runtime_ledger.py EXP_RULES has no rule for exp72-76, so exp72, exp73*, exp74, exp75 and exp76* fall to 'unknown' and the ledger prints n/a instead of R5(a) and the insertion-gate text that the card and R13-A3 need. Card (3) lists the CI letters as exp75 and exp76a/b/c/f/h/i; exp76d/e/g are plain safetail.",
+   "evidence": "tools/runtime_ledger.py l.69-78 (last rule exp70* -> safetail); FAMILIES l.55-67; the last commit touching it is 34fdf40; CONTEXT 16:08Z card (3).",
+   "action": "Insert above the exp70 rule: (r\"exp75[a-z]*\", \"safetail_ci\"), (r\"exp76[abcfhi]\", \"safetail_ci\"), (r\"exp76[deg]\", \"safetail\"), (r\"exp7[24][a-z]*\", \"safetail\"), (r\"exp73[w-z][a-z]*\", \"unknown\") (reserved for E10 SI copies), (r\"exp73[a-v]\", \"safetail\"). Add FAMILIES['safetail_ci'] = dict(deadline_h=10.75, divins_h=10.2, ungated=False, label='K2 tail + coordinject post-step (CI deadline 10.5 h + 0.25 h kill); insertion gate read as L_hi <= 8.0 h + CI_lo 2.2 h'). Add one test (exp76a -> safetail_ci, exp76d -> safetail, exp73w_si_x -> unknown). Until then, pass --family on every 28 Sep ref.",
+   "urgency": "today"
+  },
+  {
+   "id": "PC19-10",
+   "kind": "plan-issue",
+   "what": "The recovery card is still missing. R18-A2 was due 'now' (~15:50Z) and is undone ~2 h later: the last RESUME POINT is 26 Sep 22:46Z (CONTEXT l.2599), before E10 v3, the class-C letter, Q1/Q2 yes, the FREEZE lift, aggressive mode, probes 43-46 and the 28 Sep plan. MEMORY.md still says 'E10 port rule proposed; overlap-consensus line paused' and '(26 Sep post-score)'. The 00:05Z batch (03:05 local) depends on session-only timers whose ids are not logged anywhere after 02:29Z.",
+   "evidence": "grep 'RESUME POINT' CONTEXT.md: last hit l.2599; MEMORY.md lines 'LB probe approval' and 'Resume point'; CONTEXT timer entries end at 02:29Z (R14-A5).",
+   "action": "Before the 45 read, append a RESUME POINT. Contents: finals #37 56563521 + #38 56563534; the class-C letter (b); open questions Q3 and exp70b-as-final; pending 45/46 refs and marks; the card + PC19-02/04 amendments; the W1 table and fallbacks; the E10 v3 loop (ends 29 Sep 12:00Z); cron ids with UTC and local (UTC+3) times for the 45 read, the 46 read, the 23:45Z W1 decision and the 00:03Z submit. Fix the two MEMORY.md lines.",
+   "urgency": "now"
+  },
+  {
+   "id": "PC19-11",
+   "kind": "plan-issue",
+   "what": "The R8 coverage of the 28 Sep mechanisms is not recorded. The R17-A1 deviation record (12:12Z) names exp71 and the post-FREEZE rungs 45/exp70q/exp70r only. Coordinject (exp75/exp76a/c) is a new post-R8 mechanism from a third-party CC0 dataset. exp76d/exp76g are secFT files that Q2 did not name (Q2 = 'submit exp72'). The user's broad 11:16Z 'aggressive mode' line plausibly covers them, but R8 asks for a NEW user OK per mechanism. Two finals questions have also been open since the 07:45Z brief: Q3 (secFT as a final) and exp70b as the public-aimed final ({exp70b, #38} forecast ~0.59 vs default 0.55, round 16).",
+   "evidence": "CONTEXT 12:12Z R17-A1 DEVIATION RECORD; 11:11:40Z Q1/Q2 text; 12:49Z bigger-levers entry; 16:08Z card (2); CONTEXT 09:15Z R16-A2 forecast.",
+   "action": "Append one line: 'R8 coverage: coordinject (exp75/76a/c) and secFT on exp70b (76d/g) are submitted under the user's 11:16Z aggressive-mode directive, public-only; not a precedent'. In the evening brief after the 45 read, put one yes/no to the user: 'submit exp76a (+coordinject, CC0 yuki0731) and exp76d at 00:05Z?' (default yes under aggressive mode). Re-ask Q3 and exp70b-as-final once, each with its default and the 29 Sep 19:00Z deadline.",
+   "urgency": "today"
+  },
+  {
+   "id": "PC19-12",
+   "kind": "new-fact",
+   "what": "Verification of the ready files and the E10 line. exp76a/exp76d notebook shas are 98a9e647 / 89d71960, matching CONTEXT 16:08Z. The round-18 draft shas differ only because of the draft folder names. The diff vs exp70b is exactly 2 env lines + the CI cell (exp76a) and 2 env lines + the secondary-sha line (exp76d). Metadata adds only yuki0731/biohub-coord-inject or vitaliineibauer/biohub-secft-all-v1; docker 37c64f7d; internet off. The exp76d/exp72 secondary loader HARD-fails on a sha mismatch (RuntimeError, not fail-soft). That is acceptable for public-only files, but biohub-secft-all-v1 must never be re-versioned. exp72 gate values (PC18-07) are still unlogged: 121,061 nodes (-0.158%), 116,931 edges, 80 forks, sha d78093ac, 0 Traceback/FAILED/DEADLINE:/FALLING BACK, Secondary SHA256 ed8c616b, DIVINS ENABLED, 4 distinct LOWREFINE lines. exp76d: bee0afe9, 121,061 / 116,930 / 79. E10: RUN 5 16:44Z, 8/8 OK, 0 signals, no kernel change; >= 0.955 = 281 teams; we are CSV rank 287 (282 by strict-better count), 6th of 113 in 0.954; largest P2 group 2.",
+   "evidence": "sha256sum experiments/exp76a_k2fm_coordinject/*.ipynb, exp76d_k2fm_secft/*.ipynb; round18/scan_hyp_slots_28sep.json builds; exp76d notebook l.1006-1079; _dl/biohub-exp72-k2-secft, _dl/biohub-exp76d-k2fm-secft (logs + CSVs); experiments/e10_watch/20260927T1643Z.txt, watch_loop.log.",
+   "action": "Info. Log the exp72 gate line in case exp72 becomes the secFT fallback. Check that watch_loop.log shows RUN 6 at ~17:44Z (liveness) before the 45 read.",
+   "urgency": "info"
+  }
+ ]
+}

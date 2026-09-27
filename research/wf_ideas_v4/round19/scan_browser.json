@@ -1,0 +1,29 @@
+{
+ "summary": "Round-19 delta scan, 17:31-17:45 UTC 27 Sep, compared with round 18 (15:17Z). E10 P1: tools/e10_snapshot.py wrote experiments/e10_watch/20260927T1731Z.txt with CHANGES=5 against 16:43Z, all on the leaderboard. The watch-loop runs 4 (15:43Z) and 5 (16:43Z) had 0 signals. All 5 kernel lists and both statuses (x138 anvithpothula/biohub-0-953-lb-original, amanatar/optimized-biohub-max-score) are unchanged. The largest P2 group is 0, so the port gate was not run. LB at 17:31:48Z: 3,953 teams (+1). We are #288 (r18 #282) at 0.954, 6th of 114 in the 0.954 block (ranks 283-396). Counts (r18 in brackets): 0.953 = 398 (397), 0.954 = 114 (113), 0.955 = 81 (79), 0.956 = 52 (53), 0.957 = 35 (33), >=0.955 = 282 (276), >=0.960 = 86 (85), >=0.970 = 7 (7). Six teams passed us in 2.2 h (~2.8 per hour, slower than r18's ~5 per hour). All movers submitted between 06:44 and 10:40Z and are spread over 0.955-0.965, with no cluster. The top 20 is unchanged. Probes 45 and 46 were still PENDING at the 17:23:29Z poll header. Discussion: one new comment, a bare question from FOYSAL in the synthetic-dataset thread; no new topic and no host announcement. Code tab: the newest notebook is 4 days old and the best public score is still 0.953; nothing pulled. Overview timeline unchanged. Finals #37 + #38 are unaffected.",
+ "findings": [
+  {
+   "id": "r19-e10-p1-no-signal",
+   "kind": "new-fact",
+   "what": "E10 P1 at 17:31Z vs 16:43Z: CHANGES=5, all on the leaderboard (0.965 9->10, 0.964 6->5, 0.959 18->19, >=0.955 281->282, our rank 287->288). The comp dateRun and scoreDescending lists, the anvithpothula/thtennant/amanatar user lists and the x138 and amanatar statuses show no change. The same held in watch-loop runs 4 (15:43Z, CHANGES=5) and 5 (16:43Z, CHANGES=9), both with signals 0. P2 look-check: largest group 0 at 17:31Z, and no group of 5 or more at 15:43Z or 16:43Z. e10_port_gate.py was not run.",
+   "evidence": "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/experiments/e10_watch/20260927T1731Z.txt (DIFF section); experiments/e10_watch/20260927T1543Z.txt, 20260927T1643Z.txt; experiments/e10_watch/watch_loop.log (RUN 4, RUN 5 signals 0)",
+   "action": "None. The hourly loop continues (next run 17:43Z).",
+   "urgency": "info"
+  },
+  {
+   "id": "r19-lb-delta",
+   "kind": "new-fact",
+   "what": "LB 17:31:48Z: 3,953 teams. We are #288 (r18 #282) at 0.954, position 6 of 114 in the block (ranks 283-396); 283 = 1 + teams strictly above. Six teams passed us in 2.2 h since 15:17Z (~2.8 places per hour). Movers since 15:17Z, all with morning submissions 06:44-10:40Z: Alfonso Sanchez 0.958->0.961 (#70), Samuel Sundararaman 0.964->0.965 (#27), T-Hans7 0.956->0.959, Lime1123 new->0.959, Mark Cooper new->0.959, tedo and tofu1002 0.956->0.957, Vivek Sanker 0.953->0.956, youill0317 0.955->0.956, maco-macoo 0.954->0.955, QYQ1693 new->0.955, Mycelis 0.953->0.955, HumbleHumbert and Latif 0.953->0.954 (placed behind us: ranks 368/371, since our 0.954 is older), and 5 new teams at 0.953. There is no shared-score cluster. Top 20 identical to 15:17Z (yu4u 0.978; Sergio Alvarez and Gabriel 0.975; taiseiu 0.972). Our probes 45 (56606948) and 46 (56611472) were PENDING at the poll header 17:23:29Z, and the LB LastSubmissionDate for us is still 05:28:22.",
+   "evidence": "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/experiments/e10_watch/20260927T1731Z.txt (histogram, leaderboard_rows) vs 20260927T1517Z.txt (row diff by TeamId); experiments/lb_poll/poll.log header 2026-09-27T17:23:29Z",
+   "action": "None on finals. The public rank is context only (public = 29%). At a constant 0.954, expect ~#300-320 by 28 Sep morning after the overnight burst.",
+   "urgency": "info"
+  },
+  {
+   "id": "r19-site-unchanged",
+   "kind": "new-fact",
+   "what": "Discussion (Recent Comments): the only activity since r18 is one comment by FOYSAL (283rd) '2 hours ago' in the synthetic-dataset thread, asking 'Will this dataset work for this competition?'. It carries no information, and synthetic pretraining is closed for us. The next-newest activity is 15h ago (workshop, 'A few question for top 100 people?'). No new topic (newest posted 2d ago) and no host announcement. Code tab 'Recently Created': newest unpinned 'Robust Cell Tracking During Development via Chan.', updated 4d ago, Score 0.1. 'Public Score' sort: Harmonic Fusion V3, optimized-biohub-max-score (best V4; V6 0.901 already known), Biohub Cell Tracking and x138 'Biohub 0.953 LB | ORIGINAL' are all at 'Score: 0.953'. No public notebook is at 0.954 or above, so there is no E10 v3 trigger and nothing was pulled into experiments/ext_*. Overview timeline unchanged: 'Final Submission Deadline: September 29, 2026', header '2 DAYS TO GO'.",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion?sort=recent-comments ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/732103#3529186 ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/code?sortBy=dateCreated ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/code?sortBy=scoreDescending ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/overview",
+   "action": "None.",
+   "urgency": "info"
+  }
+ ]
+}

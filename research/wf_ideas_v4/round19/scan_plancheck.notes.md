@@ -1,0 +1,21 @@
+# scan_plancheck notes, round 19 (2026-09-27T17:31Z)
+- 17:31Z read CONTEXT l.2600-3090 (last entry 17:21Z exp75 dummy), round17/18 REPORT.md, round18 scan_plancheck.json, v_hyp_new_levers_r18nl-1.json.
+- poll.log last header 17:23:29Z: 45 (56606948) and 46 (56611472) PENDING; ledger L_lo 45 > 6.13 h, 46 > 2.77 h. 8.0 h marks 19:15:12Z / 22:36:59Z.
+- E10: watch_loop.log RUN 5 16:44Z signals 0, 8/8 OK; snapshot 20260927T1643Z.txt: our CSV rank 287 (282 by strict-better), SubmissionCount 46, >=0.955 = 281; no kernel change.
+- E10 snapshots keep leaderboard_rows >= 0.953 WITH TeamId + SubmissionCount (l.140/427) -> usable as S0/S1 for the 45/46 UP test; pick by SubmissionCount (46 -> 47), not by time.
+- No RESUME POINT after 26 Sep 22:46Z (grep: l.2599 last) although R18-A2 said 'now' (~15:50Z). MEMORY.md still says 'E10 port rule proposed' / '26 Sep post-score'.
+- tools/runtime_ledger.py EXP_RULES (l.69-78): no exp72/73/74/75/76 -> 'unknown'; R18-A5 not done (last commit touching it 34fdf40).
+- tools/dummy_gates.py: no coordinject/secswap mode (grep 0).
+- exp76a vs exp70b notebook diff: only the 2 CI env lines + CI cell (258 diff lines); exp76d vs exp70b: 2 env lines + secondary sha line (11 diff lines). Metadata: exp76a adds yuki0731/biohub-coord-inject; exp76d adds vitaliineibauer/biohub-secft-all-v1; docker 37c64f7d, T4, internet off.
+- exp76d/exp72 secondary loader is HARD-fail on sha mismatch (RuntimeError, not fail-soft): a dataset re-version (e.g. for N1) cannot silently change exp76d, but a missing file -> ERROR.
+- exp75 dummy log (_dl/biohub-exp75-k2-coordinject): per video 120.9/77.5/195.4/238.0 s (dets 27k/9k/58k/81k), mean 158 s; CI start at kernel elapsed 1809 s. Hidden 100-130 videos -> 50-65 per worker x 158 s = 2.2-2.85 h, not 2.1 h. L(exp76a) ~ 7.58 + (2.2..2.85) = 9.8-10.45 h.
+- exp75 vs K2 dummy CSV (b6de85c1): nodes/edges identical, 0 duplicate (dataset,t,z,y,x) rows in both, pairs within 2 um 13 -> 62 (of 121,252), 64.6 % nodes moved, z moved 12.4 %, max shift 2.19 um. No collapse.
+- exp71 BN frozen (c09 export 'batchnorm frozen'; md_00_intro) -> N1 buffers delta 0; num_batches_tracked is int64 (keep dtype).
+- R18NL-1 verdict: N1 REFUTED for tonight (no validated direction, dummy clips in-sample, P ~0.03-0.05); card R18-A1 (6) CONTEXT l.3052: 'no N1/N2 build before the deadline'.
+- Local sha256: exp76a 98a9e647, exp76d 89d71960 (= CONTEXT 16:08Z); R18 draft shas 1bc05bc9/87d257ba were built as exp76a_k2_fm_ci / exp76d_k2_fm_secft (name header differs), so no drift.
+- Dummy CSV refs (_dl): exp70b ed7101bf nodes 121,252 edges 117,076 forks 74; K2 b6de85c1 edges 117,077 forks 75; exp76d bee0afe9 121,061/116,930/79; exp72 d78093ac 121,061/116,931/80. K2 and exp70b node rows are IDENTICAL -> exp76a node rows should equal exp75's node rows, its edges exp70b's.
+- LOWREFINE lines are doubled in every dummy log (K2 exp58 also 8 raw = 4 distinct), so R13-A3 '4 LOWREFINE lines' = 4 distinct.
+- experiments/lb_poll/ladder_watch.py hardcodes WATCHED (39-42, l.61), BASE_COUNT = 40 (l.58), caps 27 Sep (l.65-66); CLI has no refs arg -> R18-A8 'restart with new args' impossible without a code change.
+- W1 files exp76c/e/g: no experiments/ folders yet; exp73m folder exists, no dummy logged.
+- R17-A1 deviation record (12:12Z) names exp71 + rungs 45/exp70q/exp70r, not coordinject (exp75/76a) nor exp76d.
+- 17:42Z final JSON written (12 findings PC19-01..12).

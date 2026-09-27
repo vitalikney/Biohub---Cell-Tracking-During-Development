@@ -1,0 +1,17 @@
+# round19 scan_hyp_n1_prep notes (2026-09-27T17:31:21Z)
+- 17:34Z Parent 9bac2fa0dadc4a6f... found locally: experiments/exp02_pub941_holdout12/results/secondary_seed_weights/unet_transformer/split_0/edge_predictor_best.pth (sha256 verified). FT = _dl/exp71_secft_all/secft/weights/unet_transformer/split_0/edge_predictor_best.pth ed8c616b (== _dl/secft_all_ds copy). Template layout: _dl/secft_all_ds (manifest sha c5bd4eeb, config.json e9b4e396).
+- Prior: round18 R18NL-1 refuted N1 for tonight; IDEAS I-384 deferred-after-deadline, narrow form = only if exp76d/exp72 DISPLAYS >= 0.955, k=1.5, public-only, explicit user OK. Pre-score card CONTEXT l.3052: 'P5 or U4 -> line stays open, but no N1/N2 build before the deadline'. This round = PREP only (local, no push).
+- 17:39Z Diff parent vs FT: exactly 10 keys changed (decoder_blocks.1.{0,1,3,4} weight/bias, unet.head w/b, detect_head w/b); BN running stats/num_batches_tracked equal. rel L2 FT: 0.3-4.4% except detect_head.bias 49.8% (abs 6.5e-3).
+- Script: scratchpad/make_exp71xk.py (float64 math, cast to fp32; asserts parent/FT sha, key order, exactly-10 changed, BN stats equal, finite, delta ratio == k, unchanged keys byte-equal FT, reload equal). torch.save deterministic (re-save sha identical). Staged:
+  _dl/secft_x2_ds  weight sha256 30f7eec37ac4c17495d4536eb1120ef857755ad612d86bd5e93cb41598c4ab01 (8,355,927 B), manifest 244e914a..., config e9b4e396 (= FT)
+  _dl/secft_x3_ds  weight sha256 a852ed110ba84a717c0cfe4b5c2aa7639a69eaf04f4c245a3c2f740b629257a9 (8,355,927 B), manifest 63e1d82d...
+  dataset-metadata ids vitaliineibauer/biohub-secft-x2-v1 / -x3-v1, CC0 (private on create by default of kaggle datasets create unless -p/--public).
+- Scratch builds (scratchpad/scratch_build.py = builder with ROOT monkeypatched; builder sha d46a8b2d): exp76d_k2fm_secft reproduces ipynb 89d71960 + meta 57c0f560 byte-identically. exp76x2_k2fm_secx2 ipynb 24910592b3e2f57b..., meta 793b4871; exp76x3_k2fm_secx3 ipynb 9bb96570..., meta c26f28dc. Diff vs exp76d = header comment + the two SECONDARY_* override lines only; dataset_sources swap secft-all-v1 -> secft-x2/x3-v1.
+- 17:42Z CPU pre-dummy check (scratchpad/proxy_xk.py; x138's own predict_unet_transformer.load_model strict-loads all 4 files; exp71's 8 in-sample TRAIN windows, trainer peak finder; k0 reproduces the exp71 log exactly 5087/86, 4404/86; k1 5061/4436):
+  logit space linear: ||f_k-f_0||/||f_1-f_0|| = 1.99-2.01 (k2), 2.98-3.03 (k3); cos with k1 direction >= 0.999; per-frame standardised ratio 1.98-2.01 / 2.94-3.04.
+  peaks p>=0.965: k1 x1.0073, k2 x1.0211, k3 x1.0293 vs parent (k2 = 2.9x the k1 shift: superlinear in counts). p>=0.5: 0.9949 / 0.9969 / 0.9986 (non-monotone).
+  GT hits p0.965: 86/88 k0,k1,k2; 85/88 k3 (44b6_8cc6506c 8 -> 7) -> k3 drops a GT centre even IN-SAMPLE.
+- k=1.5 (I-384 curated narrow form) weights sha e02f41b6612bf7637bad1171f54c608800aa807e699203eb3186716bd63f4f80 (scratchpad only, not staged).
+- Poll 17:33:31Z: 45 (56606948) and 46 (56611472) PENDING. exp70b dummy 121,252 nodes / 74 forks (CONTEXT l.2624); exp76d dummy 121,061 / 79 forks, ~1,402 s (l.3060).
+- Governance: pre-score card (6) (CONTEXT l.3052) says P5/U4 -> 'no N1/N2 build before the deadline'; R18 report rejected N1 (P ~0.03-0.05); IDEAS I-384 narrow form k=1.5 + explicit user OK. This prep changes none of that: submit needs a NEW user OK and an amendment logged BEFORE the exp76d score.
+- 17:46Z Final JSON written: research/wf_ideas_v4/round19/scan_hyp_n1_prep.json (7 findings).

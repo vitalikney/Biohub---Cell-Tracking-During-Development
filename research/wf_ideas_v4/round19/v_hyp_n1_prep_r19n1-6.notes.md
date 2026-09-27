@@ -1,0 +1,12 @@
+# v_hyp_n1_prep_r19n1-6 skeptic notes (value + feasibility)
+- 2026-09-27T18:13Z start; no prior v_hyp_n1_prep_r19n1-6.json existed.
+- Source: research/wf_ideas_v4/round19/scan_hyp_n1_prep.json read_table_preregistered_proposal + R19N1-6; the scan's own summary and R19N1-3 say card (6) forbids an N1 build before the deadline.
+- CONTEXT.md 16:08Z card (6): "P5 or U4 -> the line stays open, but no N1/N2 build before the deadline".
+- IDEAS I-384 (l.433): deferred-after-deadline; narrow form ONLY if exp76d/exp72 DISPLAYS >= 0.955, k = 1.5.
+- round18/v_hyp_new_levers_r18nl-1.json fix: "drop the '0.954 attributable' branch. Use k = 1.5, not 2". The R19N1-6 table puts back the U4 branch, k=2 and an x3 rung -> it loosens a pre-registered narrow form after the fact (the same pattern the task forbids for overlap consensus).
+- round19 siblings: scan_hyp_reads_table.json (7) "x2/x3 stay refuted (R18NL-1)"; scan_plancheck.json PC: "Do not build N1 tonight".
+- R8 hard line 27 Sep 12:00Z has passed (now 18:13Z); no honest lab (all windows in-sample for exp71); x1 -> x2 -> x3 read on public = public dose/knob ladder (team rule).
+- Value: public-only, never a final -> 0 effect on the final (private) standing; the E[rank] +4-5 is public display, which is not scored. The in-sample proxy is superlinear (peaks x1.007/1.021/1.029) -> the doubling arithmetic is not reliable; k=3 loses a GT centre in-sample.
+- The U4 branch: reads_table scan says the U window holds ~1-3% of SEC mass -> in practice P(U4) ~0.01-0.03, so P(P5 or U4) ~0.3 is really P(P5).
+- Slots: x2 ~08:30Z 28 Sep competes with the W2 MAX STACK (file 1 by ~11:30Z) and its GPU dummy queue (exp75 waited ~4 h).
+- 18:20Z final JSON written (refuted=true).

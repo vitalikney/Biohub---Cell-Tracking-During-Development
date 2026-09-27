@@ -3072,6 +3072,127 @@ Mention it to the user in one line (R9-A8 item 6).
   seed), GPU1 trains fresh from the pilkwang parent (9bac2fa0) for 1 epoch at lr 3e-5; same distillation loss, frozen BN, no extra
   modules unfrozen. Outputs -> private datasets -> exp70b + secswap rungs for 28 Sep; submission of those rungs follows the
   aggressive-mode directives; finals change only on the user re-tick.
+- 2026-09-27 18:50 UTC UTC, PRE-SCORE AMENDMENT FOR 45/46 AND W1 (round 19, R19-A1; merges PC19-02, PC19-04, PC19-07 and the R19RT-2 fix). Written while the last poll.log header 2026-09-27T18:44:52Z shows 56606948 (45) and 56611472 (46) PENDING.
+  (1) UP TEST BY COUNT (replaces 'the newest/previous snapshot' as S0 in the 16:08Z card (1)). Our row's
+    SubmissionCount counts SCORED files only, and it rises when a file completes. LastSubmissionDate (LSD) is the max
+    submit time over our scored files, so it is a cross-check only.
+  - 45: S0 = experiments/e10_watch/20260927T1743Z.txt (l.428: rank 288, 0.954, count 46, LSD 2026-09-27 05:28:22), or
+    any later download still showing 46. S1 = the first download after 45's terminal header with count 47 (cross-check:
+    LSD 2026-09-27 11:15:12).
+  - 46: S0 = the newest download with count 47. S1 = the first download with count 48 (cross-check: LSD 2026-09-27
+    14:36:59).
+  - Take S1 as one manual `kaggle competitions leaderboard -d` into a new folder at the terminal header. If the count
+    has not moved yet, re-download up to 3 times at 2 min; after that the read is AMBIGUOUS, never N4.
+  - A +2 step (46 -> 48): the higher display takes the UP; equal displays -> both MASKED, never N4.
+  - ERROR: record whether the count moved, then re-base the other ref's expected count.
+  - UP = at least one TeamId above us in S0 is below us in S1.
+  - Log S0/S1 file names, counts, LSD, k (teams above us inside our display block at S0) and the TeamIds passed. k = 0
+    -> BLIND, which is coded '?', not N4.
+  (2) 46-PENDING ROW (adds to card (4)). If 56611472 is neither COMPLETE nor ERROR at the last poll.log header before
+    23:50Z, W1 follows 45's code alone:
+  - 45 in {P5, U4} -> exp76e, exp76a, exp76d;
+  - 45 in {N4, MASKED, NEG, ERR} -> exp76a, exp76d, slot 3 held.
+  exp76c, exp76g and exp73m move to W2, where 46's later read decides them on the existing rows. A later 46 score
+    never reopens W1.
+  (3) FALLBACKS PER MECHANISM (supersedes the card (4) 'Fallback' line and the 17:21Z 'else exp75' line). Each slot
+    goes to the first file with a COMPLETE, PASSING dummy by 23:45Z.
+  - CI slot: exp76c (row A only; dropped if 46's L_hi > 9.0 h) -> exp76a -> exp75 (dummy clean 17:20Z; read against
+    #37, since exp75 = K2 + CI).
+  - SEC slot: exp76g (row A only) -> exp76d -> exp72 (dummy clean: d78093ac, 121,061 nodes / 116,931 edges / 80 forks,
+    Secondary ed8c616b).
+  - DIV slot (exp73m / exp76e): no substitute; the slot is held for W2.
+  - W1 never holds two files of one mechanism. The 'Either NEG' row takes precedence over row A's 'else exp76a'
+    clause.
+  (4) R18-A4's clause 'if exp76a stays QUEUED, re-push it; drop CI from W1 at 19:00Z' is WITHDRAWN. CI kernels queue
+    ~3.3 h on Kaggle: exp75 was pushed 13:18Z and started ~16:40Z; exp76a was pushed 16:33Z and was still QUEUED at
+    18:19:29Z. The only metadata difference from the secFT kernels, which run at once, is dataset
+    yuki0731/biohub-coord-inject. exp75's clean dummy covers the CI slot through (3). exp76a is NOT re-pushed, because a
+    new version would restart its queue.
+  (5) At the 45 read, log 45's ledger L next to K2's (7.36, 7.54] h and 43/44's (7.56, 7.74] h.
+- 2026-09-27 18:50 UTC UTC, 28 SEP READ TABLE v2 (round 19). This is R19RT-1 as corrected by its skeptic, with PC19-02/04/05/07/08 folded in. Pre-registered before any 28 Sep submit, while the last poll.log header 2026-09-27T18:44:52Z shows 45 and 46 PENDING. It amends the 16:08Z card only where marked AMEND, and it adds no new mechanism.
+  (1) LEVERS AND ROWS.
+  - CI = exp76a (exp70b + coordinject a0.5, 3 um); exp76c (exp70q + CI) in row A.
+  - SEC = exp76d (exp70b + exp71 secondary ed8c616b); exp76g (exp70q + SEC) in row A.
+  - DIV = exp73m in row A, if 45 is not NEG; exp76e (exp70b + cap 6) in row B. In row C: exp77a (exp70b + symmetry tau
+    0.75) only if the user said yes to it AND its dummy passed, else none. Row D: none.
+  - Fallbacks are read under the same lever on base K2: exp75 = CI, exp72 = SEC.
+  - BASE = exp70b (0.954); exp70q in row A.
+  - Rows: A = 46 in {P5, U4}. B = 46 in {N4, MASKED} and 45 in {P5, U4}. C = 46 N4 and 45 in {N4, MASKED}. D = 45 or
+    46 NEG. ERR -> use the other ref's row. 46 still PENDING at the last header before 23:50Z -> 45's row alone (R19-A1
+    (2)).
+  (2) CODES. The card (1) codes and 'v' stand.
+  - UP test = the count rule of R19-A1 (1). S1 = the first LB download after the ref's terminal header whose
+    SubmissionCount = S0 count + 1. A +2 step: the higher display takes the UP; equal displays -> both MASKED. LSD is a
+    cross-check only.
+  - Relative to our best B (display at S0): above B -> P5 (0.955) or P6 (>= 0.956); = B with an UP -> U<B>; = B with 0
+    passed -> N<B>; 0.954 <= display < B -> MASKED; <= 0.953 -> NEG.
+  - BLIND: k = 0 at S0 -> '?', never an N-code.
+  - Lever state: + = P or U; 0 = N with k >= 1, not MASKED, no 'v'; ? = MASKED, BLIND, 'v' or ERR; - = NEG.
+  - For CI and SEC, N4 closes the lever: the U window holds only ~1-3% of their mass.
+  - Log at every read: S0/S1 file names, counts, LSD, k, TeamIds passed.
+  (3) CI LEDGER (AMEND card (3)).
+  - Family safetail_ci admits L_hi <= 10.75 h.
+  - The insertion gate of a CI file is read on L_hi minus the LOWER CI bound, CI_lo = 2.2 h (a model: >= 100 hidden
+    videos x the 158 s dummy mean / 2 workers; dummy 77.5-238 s per video). 'did NOT fire' iff L_hi <= 10.2 h; 10.2 h <
+    L_hi <= 10.75 h -> 'v'.
+  - Drop exp76c if 46's L_hi > 9.0 h: CI coverage would fall below ~60% before the 10.5 h guard.
+  - CI dummies queued ~3.3 h on Kaggle. If a CI ref is not terminal by 12:00Z 28 Sep, W2 goes on with CI = '?'.
+  (4) W1 ORDER (AMEND R18-A7).
+  - 00:05Z the CI file; 00:10Z the SEC file; 00:50Z the DIV file. K2-like files go >= 40 min apart: same-batch
+    latencies swap by ~20 min, and 43/44, submitted 9 s apart, co-completed.
+  - Expected completions: SEC ~07:30-08:15Z, DIV ~08:35-09:15Z, CI ~09:40-11:00Z.
+  - Reads: one manual 'kaggle competitions leaderboard -d' into a new folder at each terminal header. The old ladder
+    watcher hardcodes the 27 Sep refs and is not restarted.
+  - Pre-submit checks per R18-A7: no duplicate; poll header < 15 min old and not a 429; dummy PASS logged in CONTEXT;
+    CI dataset check (yuki0731/biohub-coord-inject = 10 files dated 2026-08-25).
+  - One slot is held for E10 v3 until 12:00Z.
+  (5) W2 (28 Sep, <= 2 files, each with a PASSED dummy).
+  File 1 goes after all W1 reads or at 12:00Z, whichever comes first. It is the MAX STACK of the + levers on the row's
+    base:
+  - CI+ SEC+ -> exp76f (exp70b + SEC + CI, 68e3919e);
+  - CI+ DIV+ -> row B exp76i (exp70b + cap6 + CI, e1dd9646); row A none;
+  - SEC+ DIV+ -> row B exp76j (exp76e + SEC, new build); row A none;
+  - all three + -> row B exp76k (exp76j + CI, new build); row A exp76h (exp70q + SEC + CI, 3819c1b0);
+  - one lever + or none -> no stack; the rest of 28 Sep is E10 only.
+  File 2 goes only if all three levers are +: it is the stack without CI (row B exp76j). Otherwise there is no file 2,
+    because a two-lever stack minus CI is a W1 file already scored.
+  - A MASKED or BLIND lever counts as + only for the stack with the lever that masked it.
+  - An ERRORed stack is never resubmitted. An ERRORed single gets one unchanged resubmit, only if its ERROR latency is
+    < 10 h and a W2 slot would otherwise stay empty.
+  - AMEND card (5): with CI+, the one CI stack may go on 28 Sep (W2).
+  (6) W3 and W4. W3 = 28 Sep, if a slot is left, submitted <= 23:30Z. W4 = 29 Sep 00:05-01:45Z, <= 5 files.
+  - A stack is + if its display is above its best component's display, or equal to it with an UP. A + stack becomes
+    base B*.
+  - W3/W4 add only the + levers that B* lacks: one file per missing lever, the full stack last.
+  - A stack that reads 0 or - while its components were + is NON-ADDITIVE: stop that pair.
+  - W4 may contain only: the full stack of + levers not yet scored; a stack that tests a still-? lever; an E10 v3 copy
+    (always first).
+  - Never in W3/W4: knob rungs, DC, leaf prune, threshold neighbours, tau follow-ups, N1/N2.
+  (7) LAST USEFUL SUBMIT.
+  - The last submit is 01:45Z 29 Sep, unless the user lifts the 02:00Z cap.
+  - With the lift: T_last = 18:30Z - (L_ref + 0.25 h), where L_ref = the largest L_hi of our 3 newest COMPLETE K2-like
+    refs. That gives ~10:30Z today and is never later than 11:00Z. CI files: T_last - 2.4 h.
+  - A file submitted after its T_last is never a finals candidate.
+  (8) N1 stays post-deadline (I-384): k = 1.5, only after exp76d or exp72 DISPLAYS >= 0.955, only on a user message
+    naming N1, public-only. The staged x2/x3 datasets stay local.
+  (9) FINALS. The card (2) class rules stand.
+  - V_pub = the highest display among COMPLETE 26-29 Sep refs with L_hi <= 9.0 h (non-CI) or <= 10.75 h (CI). exp77a,
+    and any stack containing tau, is excluded: it is never a final.
+  - Ties: the last attributable UP at that display, then non-CI, then fewer stacked levers, then the earlier submit.
+  - V_pub >= 0.955 and non-CI -> one Russian message proposing {V_pub, #37 56563521}; #38 56563534 leaves (letter
+    (b)). If V_pub carries SEC, the same message asks Q3 first; the file stays public-only until a yes.
+  - V_pub a CI file -> info with the CI caveat. It becomes a finals option only if the user re-ticks after reading it.
+  - Caveats per lever:
+  - CI: 'post-CSV integer coordinate shift; refiner lab in-sample on 4 clips (-0.0029/+0.0125/0/+0.0029, pooled
+    +0.0022); nearest transfer record: Eric sub-voxel lab +0.0078 -> LB -0.002'.
+  - SEC: 'retrained secondary; weight swaps were 0/5 on our LB; no held-out gate'.
+  - DIV: 'cap/threshold picked on the public embryo; lab cap > 4 = 0 TP / 4 FP / 81 unannotated; dc0.30 lab/public
+    sign flip'.
+  - fm: 'forkmid public +~5-9e-5, private sign unknown'.
+  - V_pub = 0.954 -> info only; the pair stays {#37, #38}; add one option line {V_pub, #37}.
+  - The partner is always #37. The session never re-ticks. Ticks by 29 Sep 20:00Z; re-read API SELECTED after any
+    re-tick. FINALS READ ~19:00Z 29 Sep.
+  (10) Private-read list: add every 28/29 Sep ref (calibration only).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
