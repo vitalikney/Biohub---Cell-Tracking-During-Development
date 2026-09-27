@@ -1,0 +1,5 @@
+- 2026-09-27T01:42:14Z start index curator 13; no prior index.json; HEAD 5e57346; read INDEX c12 + 3 curator notes
+- 01:42Z read CONTEXT l.2475-2749, poll 01:39:32Z (39-42 PENDING), no ladder_watch yet, round13 committed (3d48d35), timers 65b1b746/2e87e414 (5e57346)
+- 01:44Z INDEX.md written; next CHANGES section 13
+- 01:45Z CHANGES section 13 appended; INDEX 76 lines
+- 01:46Z index.json written (10 alerts). DONE

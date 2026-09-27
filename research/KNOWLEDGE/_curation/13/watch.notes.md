@@ -1,0 +1,5 @@
+- 2026-09-27T01:30:07Z start round 13 watch; no prior watch.json in 13
+- 01:30Z read CONTEXT l.2437-2626 (new since c12: intel 21:11, probes 39-42, reach0955 decisions 21:21, ROUND 12 RECORD, RULE RECONCILIATION, TIMERS REPLACED, RETRAIN PAUSED, CAP-6, E10 HARDENING, PRIV-READ v2, RESUME POINT 22:46, probe 42 00:06); round13/report.json (R13-A0..A9, 01:27:59Z)
+- 01:31Z verified: R12-A1/A2/A3/A4/A6/A8(MEMORY 22:46:44Z)/A9 done; W124 done (probes 39-41), W125 done (cap6 -> exp70b probe 42 00:05:50Z), W127 done (34fdf40, ledger l.76). Open: R13-A0..A9 all not started at 01:3xZ (no ladder_watch dir, no LADDER PRE-SCORE entry); CronList c7cd2e6b still R12-A7 label; workflow l.38/l.40 stale; CONTEXT l.22 + W57 grep 0; LESSONS l.7; RESULTS rows 39-42 absent (pending).
+- 01:32Z CronList read-only: 6 timers alive (012fa6dd, 328f7392, 18ff4796, 2f0d1fa1, c7cd2e6b labelled R12-A7 = not recreated, bb224de9). exp70g has no NEVER_SUBMIT.md (exp71 has one). Writing WATCHLIST (W132-W142, T51-T60, I125-I134).
+- 01:35Z WATCHLIST.md and watch.json written (complete). No other file touched.

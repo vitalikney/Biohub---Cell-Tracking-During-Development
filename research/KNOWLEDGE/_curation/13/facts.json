@@ -1,0 +1,70 @@
+{
+ "task": "curation 13 (facts): maintain research/KNOWLEDGE/FACTS.md and DECISIONS.md",
+ "state_utc": "2026-09-27T01:40Z",
+ "complete": true,
+ "files_written": [
+  "research/KNOWLEDGE/FACTS.md",
+  "research/KNOWLEDGE/DECISIONS.md",
+  "research/KNOWLEDGE/_curation/13/facts.notes.md",
+  "research/KNOWLEDGE/_curation/13/facts.json"
+ ],
+ "alerts": [
+  {
+   "kind": "risk",
+   "what": "The ladder attribution depends on a read-only LB watcher (R13-A2), and at 01:32Z it was still 'being written'. If it is not running by 04:10Z, the A-only 0.954-UP extension is DROPPED. A 0.954 display then cannot count as POS, which also blocks every L5v2 combo. Probes 39 and 40 (144 s apart) will probably complete in the same 10-min poll, so their UP can only be attributed by higher display (equal displays -> both NEU)",
+   "evidence": "CONTEXT 01:31 LADDER PRE-SCORE REGISTRATION (2)-(3) l.2676-2699, 01:32 l.2747-2749; research/wf_ideas_v4/round13/report.json plan_issues (1); DECISIONS.md §2h rows 'Attribution protocol', 'A-only 0.954-UP extension'; FACTS F-LB-15, C-100",
+   "suggested_action": "Main session: start the watcher and take a fresh S0 download before 04:10Z (or rely on the timer's 03:04Z snapshot if it passes the freshness key SubmissionCount == 40). Log S0/S1 names and verdicts per event in CONTEXT",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "Several items lapse this morning. The 07:30Z push (timer 65b1b746) must carry E10 v2 (lapses 27 Sep 12:00Z), the R8 cap for the last ladder submit (default 29 Sep 02:00Z), and exp71/exp72 Q1-Q3. Q1 needs a yes by ~09:00Z for exp72 to score ~22:30Z. R8 closes new mechanisms at 12:00Z, and round 13 found none that qualify",
+   "evidence": "CONTEXT 22:46 RESUME POINT l.2604-2606; 21:54 l.2539-2544; 01:31 EXP71/EXP72 GOVERNANCE l.2722-2731; 01:31 ROUND 13 RECORD (6) l.2658-2662; FACTS F-RUL-09, C-93, C-98",
+   "suggested_action": "Check that the 65b1b746 prompt lists all three topics with yes/no wording, and log any user answer with date -u before acting",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "API SELECTED has not been re-read since 20:04:35Z, yet four submissions (P39-P42) went in since then. R12-A3(d) required a re-read after each submit",
+   "evidence": "research/wf_ideas_v4/round13/report.json new_facts (11), plan_issues (10); CONTEXT 01:31 ROUND 13 RECORD (4) l.2646-2648; FACTS F-RUL-12",
+   "suggested_action": "Log 'API SELECTED 2/2 [56563521, 56563534] at hh:mmZ (after probes 39-42)' at the first probe read (~05:00Z), outside the 04:10-06:45Z quiet window for other agents",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "experiments/RESULTS.md has no rows for probes 39-42 (the last row is P38). The ladder scores (~04:37-08:30Z) must go there along with their L9/L5v2 verdicts, and the private-read list now includes these refs",
+   "evidence": "experiments/RESULTS.md l.71 (P38 is the last LB row); CONTEXT 01:31 (6) l.2711-2721; DECISIONS.md §1 rows P39-P42",
+   "suggested_action": "Add the RESULTS rows as each probe scores (display, latency bounds from the ledger, UP/NEU verdict)",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "A pair change needs the user's own re-tick. Any finals move from the ladder ({V*, #38} or {exp70a, #38}) is only a recommendation until the user re-ticks by 29 Sep 20:00Z. Without that, {#37, #38} stays",
+   "evidence": "CONTEXT 21:31 (b) l.2509-2521, 01:31 (3) l.2693-2699; DECISIONS.md §2 [c13] snapshot",
+   "suggested_action": "If L9 or the A-only extension fires, put the exact re-tick instruction (refs) into the next push and have timers 012fa6dd / 328f7392 / 18ff4796 verify SELECTED",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "risk",
+   "what": "exp72 path: a dummy node gate cannot catch an exp23-type loss. The exp23 swap was only +0.62% nodes vs its own base and still lost 0.007 on the LB, and our model-swap record is 0/5. The finals route needs Q3 plus G2 (a 44b6-only FT) landing by 29 Sep 12:00Z",
+   "evidence": "CONTEXT 01:31 EXP71/EXP72 GOVERNANCE l.2726-2738; FACTS F-TRN-41 [c13], C-102",
+   "suggested_action": "Frame Q3 to the user with these numbers. Keep exp72 class C unless all eligibility items hold",
+   "urgency": "info"
+  },
+  {
+   "kind": "contradiction",
+   "what": "The memory index injected into subagent sessions is stale ('E10 port rule proposed; overlap-consensus line paused', 'LAST RESUME POINT (26 Sep post-score)'). Round 13 found MEMORY rewritten at 22:46:44Z",
+   "evidence": "FACTS C-75 [c13]; research/wf_ideas_v4/round13/report.json new_facts (11)",
+   "suggested_action": "Subagents should read the 22:46 RESUME POINT (CONTEXT l.2599-2622) and every entry after it. Optionally refresh the frontmatter date",
+   "urgency": "info"
+  },
+  {
+   "kind": "contradiction",
+   "what": "The probe-39/40 CONTEXT entries printed wrong node counts (K2 dummy 122,252; exp70e 121,707; exp70a 121,719). They were corrected at 21:38 to 121,252 / 120,707 / 120,719. The exp72 node gate uses 121,252",
+   "evidence": "CONTEXT l.2446, l.2451 vs l.2537-2538, l.2742; FACTS C-96, F-RUN-26",
+   "suggested_action": "Cite only the corrected numbers in reads and in the exp72 gate",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 13 (state 27 Sep 01:40Z, HEAD 5e57346). Finals are still ticked 2/2 = #37 K2 0.954 + #38 twin 0.953 (API last read 20:04:35Z). Four K2 ladder probes were submitted under the user's 20:33 lift and rule L9: P39 exp70e, P40 exp70a, P41 exp70d, P42 exp70b (exp70g dropped after the cap-6 lab arm read -0.00057). All four are PENDING at 01:39Z, with first scores expected ~04:37Z. FACTS.md: [c13] notes appended to 31 rows. New rows: F-LB-15 (the LB row counts only scored submissions, which is the attribution freshness key), F-RUN-26 (ladder dummies, corrected node counts, W6 audit), F-MOD-30 (gated fusion is already in x138), F-TRN-42 (cap-6 arm), F-TRN-43 (round-13 division/node lab: nothing reaches R8). New contradictions C-96..C-103. C-84/85/86/95 are resolved by CONTEXT 21:31/21:56 and C-93 is superseded by R13-A3. DECISIONS.md: rows P39-P42, the §1 [c13] update and a combo table (L5v2 exp70c/h/f), §1b G41-G43, a new §2 finals snapshot with the insertion-hedge pair rule, the A-only 0.954-UP extension and exp72 as class C unless Q3, a §2f E10 note (P1 22:46Z not met), §2h status updates plus L5v2/attribution/extension/stop-slots/quiet-window rows, and §3 statuses for R4/R5/R7/R8/R9/§f/L9 plus three new rule rows."
+}

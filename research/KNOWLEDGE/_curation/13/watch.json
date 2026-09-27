@@ -1,0 +1,129 @@
+{
+ "files_written": [
+  "research/KNOWLEDGE/WATCHLIST.md",
+  "research/KNOWLEDGE/_curation/13/watch.notes.md",
+  "research/KNOWLEDGE/_curation/13/watch.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "what": "W133 (R13-A1) LADDER PRE-SCORE REGISTRATION not logged: L5v2, attribution protocol, A-only 0.954-UP extension, stop/slot priority, L1-L5",
+   "evidence": "round13/report.json R13-A1 (deadline 27 Sep 04:25Z); grep 'PRE-SCORE' CONTEXT.md = 0 at 01:32Z",
+   "suggested_action": "Paste the R13-A1 text as one dated CONTEXT entry now, then commit (W139) before 04:25Z",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "W139 (R13-A7) + W132 (R13-A0): commit round13/ (with REPORT.md), e10_watch 2246Z, poll.log, ledger, CONTEXT as the user, no trailer",
+   "evidence": "git status: research/wf_ideas_v4/round13/ and experiments/e10_watch/20260926T2246Z.txt untracked; round13/report.json R13-A7",
+   "suggested_action": "Commit right after W133, before 04:25Z; claude grep 0 before push",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "W134 (R13-A2) read-only ladder watcher not written; needed for the in-block UP read of probes 39-41",
+   "evidence": "experiments/lb_poll/ holds only lb_poll.py, ledger.md, poll.log; round13/report.json R13-A2 (running by 04:10Z)",
+   "suggested_action": "Write experiments/lb_poll/ladder_watch.py, dry-run parser on 22:46Z CSV, start by 04:10Z; without it the A-only extension is DROPPED",
+   "urgency": "now"
+  },
+  {
+   "kind": "stale",
+   "what": "W71/W118/W140: round prompt still stale (l.38 'finals decided... E10 >= 0.956', l.40 '~4 h headroom'), no API quiet window line for rounds 14/15",
+   "evidence": "experiments/workflows/biohub-research-round.js l.38, l.40; last edit 13a27a1; round13/report.json R13-A8",
+   "suggested_action": "Put the quiet-window rule (04:10-06:45Z, no agent API calls) into the round-14/15 focus before 04:10Z",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "Timer 2f0d1fa1 at 06:04Z will run e10_snapshot inside the API quiet window; its prompt predates R13-A8",
+   "evidence": "CronList 01:31Z (label R11-A4/R12-A6); round13/report.json R13-A8",
+   "suggested_action": "Main session defers the 06:04Z P1 to ~06:50Z if the watcher is active",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "W136 (R13-A4): morning push timer c7cd2e6b still labelled R12-A7; may lack ladder read and Q1-Q3",
+   "evidence": "CronList 01:31Z 'MORNING MESSAGE ~07:30 UTC 27 Sep, CONTEXT R12-A7'; round13/report.json R13-A4",
+   "suggested_action": "Check the prompt; recreate for 07:30Z with E10 v2, ladder verdicts/L9 read, combo caveat, Q1-Q3, R8 cap, laptop",
+   "urgency": "today"
+  },
+  {
+   "kind": "contradiction",
+   "what": "W135 (R13-A3): 'R8 lifted for exp71/exp72' (l.2469) and R12-A3(a) retrain exception are session glosses; exp72 is class C under L9 but a finals competitor under R12-A3(b)",
+   "evidence": "CONTEXT.md l.2466-2472, l.2507-2514, l.2539-2544; round13/report.json R13-A3, plan_issues (4)",
+   "suggested_action": "Log the suspension now; ask Q1-Q3 in the 07:30Z push; pre-register the exp72 finals row only if Q3 = yes",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "W137 (R13-A5) ROUND 13 RECORD incl. dc0.30 44b6 in-sample label (before D1 ~05:15Z) and the first API SELECTED read since 20:04Z",
+   "evidence": "round13/report.json R13-A5, plan_issues (10); FACTS F-DAT-12",
+   "suggested_action": "Log item (5) before the D1 read; SELECTED read at the first probe read ~05:00Z",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "W141 (R13-A9) D1/D2: classify probes 39-42 under L5v2; combo only if POS base AND fm45 POS; combo submit preferably by 09:30Z, hard 28 Sep 02:00Z",
+   "evidence": "round13/report.json R13-A9; probes 39-42 PENDING at poll 01:29:31Z",
+   "suggested_action": "D1 ~05:15-06:45Z, D2 after probe 42 COMPLETE; else log 'ladder ends (L5v2 (5a))'",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "W142: exp70g (cap 6, dropped by its lab rule) has no NEVER_SUBMIT.md while exp71 does; the R12-A3(d) folder guard would not stop it",
+   "evidence": "ls experiments/exp70g_k2_cap6 (no NEVER_SUBMIT.md); CONTEXT.md l.2545-2549",
+   "suggested_action": "Add NEVER_SUBMIT.md to exp70g or log 'never submit exp70g'",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "W57 family: CONTEXT l.22 error and out_valid/efpost/33.1% records still missing",
+   "evidence": "CONTEXT.md l.22; grep -c = 0 for out_valid, efpost, 33.1%",
+   "suggested_action": "Curator pass into CONTEXT (overdue since 26 Sep 12:00)",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "forgotten",
+   "what": "W98: LESSONS_draft l.7 still states 'public LB (one embryo, ~29%)' as fact",
+   "evidence": "research/wf_ideas_v4/round9/LESSONS_draft.md l.7",
+   "suggested_action": "Reword as participants' estimate with R8 lessons",
+   "urgency": "today"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "G2 for exp72 finals eligibility needs a second training run: exp71 trains on all 199 videos and has no SECFT_PREFIX",
+   "evidence": "round13/v_plancheck_pc13-05.json; round13/report.json R13-A3",
+   "suggested_action": "If Q3 = yes, schedule the G2 notebook edit and run so it lands by 29 Sep 12:00Z",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "User answers needed: E10 v2 (lapses 27 Sep 12:00Z), exp71 yes (by ~09:00Z for a 27 Sep score), R8 cap for last ladder submit, laptop/session until 29 Sep 20:00Z",
+   "evidence": "CONTEXT.md l.2604-2606; l.2543",
+   "suggested_action": "Carry in the 07:30Z push; log every reply with date -u",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "R8 new-mechanism cutoff 27 Sep 12:00Z; F1 consolidation 28 Sep 12:00Z; last ladder/E10 submit 29 Sep 02:00Z; finals tick 29 Sep 20:00Z (reminder timer 328f7392 at 11:57Z); final LB snapshot 23:27Z; deadline 23:59Z",
+   "evidence": "CONTEXT.md l.1671-1672, l.2521-2524, l.2600-2602, l.2618; CronList",
+   "suggested_action": "Keep the session and timers alive; stop the poller at 20:00Z 29 Sep",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "risk",
+   "what": "Insight at risk: LB row SubmissionCount/LastSubmissionDate count only SCORED submissions (the attribution freshness key); whether an ERROR increments the count is unknown",
+   "evidence": "round13/report.json new_facts (2), R13-A1 (2)",
+   "suggested_action": "Record it in W133/W137 and log the ERROR behaviour at the first event",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "Insight at risk: 0.953-block order is not by submission time (22 Sep subs below 26 Sep subs) - qualifies the tie-order reasoning used in the private rank read",
+   "evidence": "round13/scan_browser.json r13-top-movers-and-copies",
+   "suggested_action": "Add a caveat to the v2 (c) tie read / LESSONS",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 13 (27 Sep 01:35Z), incremental over curation 12. Sources: CONTEXT.md at fc2536c (l.2437-2625 new), round13/report.json (R13-A0..A9, 01:27:59Z), poll.log 01:29:31Z, ledger, CronList. Done since 21:10Z: W113-W117, W119, W121, W122, W124 (probes 39-41), W125 (exp70b probe 42 at 00:05:50Z), W127 (ledger exp70 rule), W129. All four ladder probes PENDING; scores ~04:37-05:11Z and ~07:27-08:30Z. Critical now: R13-A1 pre-score registration + R13-A7 commit before 04:25Z, the read-only watcher by 04:10Z, API quiet window 04:10-06:45Z (round prompt still stale, timer 2f0d1fa1 at 06:04Z predates it), morning push timer c7cd2e6b still R12-A7 text, exp71/exp72 governance (push blocked, Q1-Q3). New: W132-W142, T51-T60, I125-I135. Overdue: W57 family (CONTEXT l.22), W71/W118 round prompt, W98 LESSONS l.7, exp70g lacks NEVER_SUBMIT.md."
+}

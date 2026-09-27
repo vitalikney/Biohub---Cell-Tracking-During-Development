@@ -1,0 +1,67 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/ideas.json",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/IDEAS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/13/ideas.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/13/ideas.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "what": "The read-only ladder watcher (R13-A2, I-327) does not exist yet and must be running by 04:10Z. Probes 39/40 can first show COMPLETE at ~04:37Z. Without the watcher, the attribution protocol has no fresh S0/S1 downloads, and the pre-registered A-only 0.954-UP extension (I-328) is DROPPED by its own clause",
+   "evidence": "CONTEXT.md l.2747-2749 ('Ladder watcher ... being written; start by 04:10 UTC'); CONTEXT.md l.2664-2721 (2), (3); experiments/lb_poll/ holds only lb_poll.py, ledger.md, poll.log at 01:40Z; research/wf_ideas_v4/round13/report.json R13-A2",
+   "suggested_action": "Write experiments/lb_poll/ladder_watch.py (read-only, 60 s spacing from lb_poll, 429 backoff). Dry-run its parser on the 22:46Z CSV (#229, SubmissionCount 40, 00:02:18) and start it from the repo root before 04:10Z. Take S0 at the 03:04Z timer snapshot or at ~04:10Z",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "The 07:30Z push (timer 65b1b746) is the only channel for decisions that lapse today: E10 v2 (lapses 12:00Z), exp71/exp72 Q1-Q3 (a yes by ~09:00Z is needed to score on 27 Sep), the R8 cap for the last ladder submit, the E10 pair rows (I-299), laptop/session, and any re-tick if L9 or the A-only extension fires",
+   "evidence": "CONTEXT.md l.2747-2749; CONTEXT.md l.2722-2746; CONTEXT.md l.2599-2622 'Pending user answers'; research/wf_ideas_v4/round13/report.json R13-A4; research/KNOWLEDGE/ideas.json I-286, I-119, I-299, I-300, I-315, I-328",
+   "suggested_action": "After D1 (~05:15Z), fill in the ladder verdicts. Send at 07:30Z and log 'sent' or the PushNotification not-sent result. Log each answer with date -u. Without an E10 v2 yes by 12:00Z, record 'E10 v2 not in force'",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "Two one-line reads are due with the first probe read (~04:40-05:00Z). First, close I-312 with the pre-written R13-A6 wording, which depends on probe 40's display. Second, read and log API SELECTED once: the last read was at 20:04:35Z, and none followed probes 39-42 despite R12-A3 (d)",
+   "evidence": "research/wf_ideas_v4/round13/report.json R13-A5 (4), R13-A6, plan_issues (10); CONTEXT.md l.2626-2663 (4); research/KNOWLEDGE/ideas.json I-312, I-258",
+   "suggested_action": "At D1, log 'API SELECTED 2/2 [56563521, 56563534] at hh:mmZ (after probes 39-42)' and the I-312 closure line, both with date -u",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "Some lines in the 22:46Z RESUME POINT are now superseded. 'Informed combos ~08:00 UTC from POSITIVE singles only; stop after two rungs without a better display' was replaced by L5v2 (at most ONE combo; blind rungs never count). 'Retrain exp72 competes with V* for the insertion slot' was replaced by class C unless the user says yes to Q3. Its timer ids (2f0d1fa1, c7cd2e6b) have also been replaced. A resume after compaction that stops at the block would apply the old rules",
+   "evidence": "CONTEXT.md l.2599-2622 vs l.2664-2721 (1), (5), l.2722-2746, l.2747-2749",
+   "suggested_action": "Write a new RESUME POINT after D1 (or now) that cites L5v2, the A-only extension, the exp71/exp72 governance, the watcher and timers 65b1b746 / 2e87e414",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "If the user answers Q3 = yes, exp72 can become a final only if G2 (a 44b6-only FT with the same recipe plus a SECFT_PREFIX cell, then the K2 tail on the 39 held-out 6bba clips) lands by 29 Sep 12:00Z with a pooled result >= -0.0005. No G2 notebook or cell exists yet. It costs roughly one more ~4.5 GPU-h run on top of exp71 (quota 07:55 / 30 h used)",
+   "evidence": "CONTEXT.md l.2722-2746; CONTEXT.md l.2539-2544; research/wf_ideas_v4/round13/scan_recheck.json R13-RC-A; research/KNOWLEDGE/ideas.json I-330",
+   "suggested_action": "Prepare the G2 notebook locally only (no push) so it can start right after a Q1+Q3 yes. Do not push anything before the explicit answers",
+   "urgency": "today"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "I-323 (Corwin's independent secondary) and I-324 (yuki0731 coord-inject) are not closed by name. Round 13 did not take them, and only the general sentence 'after 12:00Z the only paths to a new mechanism are an E10 port and exp72' covers them. The ledger moved both to deferred-after-deadline on that basis",
+   "evidence": "CONTEXT.md l.2626-2663 (6); research/wf_ideas_v4/round13/report.json next_focus (5); research/KNOWLEDGE/ideas.json I-323, I-324",
+   "suggested_action": "At R8 (27 Sep 12:00Z), add one CONTEXT line closing both by name as post-deadline (I-113 D program / I-261 coordhead-v2)",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "stale",
+   "what": "FACTS F-TRN-41 still attributes the exp23 secondary loss to '+3.9% nodes'. Round 13 showed that the swap alone was +0.62% nodes vs its base exp30. The '+3.9%' includes the exp03B primary's +3.2%, and node count explains only ~1/10 of the -0.007 loss. This wording is what made a node gate look like a quality gate for exp72",
+   "evidence": "research/KNOWLEDGE/FACTS.md F-TRN-41; research/wf_ideas_v4/round13/scan_recheck.json R13-RC-A; research/wf_ideas_v4/round13/v_recheck_r13-rc-a-b19-node-count-attribution-vs-exp.json; research/wf_ideas_v4/round13/report.json R13-A6",
+   "suggested_action": "The facts curator applies the R13-A6 wording to F-TRN-41 (the ledger already carries it in I-105/I-108/I-119)",
+   "urgency": "info"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "I-233 (the poller logs error_description) is still the only strict orphan. Round 13 does not mention it, and the new watcher reads statuses, not the error class",
+   "evidence": "research/KNOWLEDGE/ideas.json I-233; research/wf_ideas_v4/round13/report.json R13-A0..A9",
+   "suggested_action": "Close it with one CONTEXT line ('covered by the C2 error_description one-liner on demand') at the next round record",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 13 ran at 2026-09-27 ~01:50 UTC. HEAD moved from 9beb9f0 to 5e57346 during the run: 0bc0da4, ea5637e, d3a2c0d, ed0c638, 9014772, 86e96f2, bf07763, fc2536c, 3d48d35 (round 13), then 5e57346 (timers). CONTEXT.md l.2475-2749 and research/wf_ideas_v4/round13/ were read: report.json R13-A0..A9, 7 scans, 22 skeptic files. Probes 39-42 were still PENDING at the 01:39:32Z poll.\n\nThe ledger grew from 326 to 335 ideas. There are 65 change records in ideas.json meta.curations[n=13], and the new IDs are I-327..I-335, contiguous. Counts c12 -> c13:\n- in-plan 56 -> 59\n- refuted 172 -> 176\n- deferred-after-deadline 31 -> 37\n- open-untested 5 -> 1\n- lb-tested 41 and lab-tested 21 unchanged\n\nLADDER:\n- Probe 41 exp70d (I-304) and probe 42 exp70b (I-306) were submitted, and I-306 is no longer at-risk.\n- I-326 exp70g is refuted: the cap-6 arm read -0.00057.\n- The dummy node counts were corrected: K2 121,252, exp70e 120,707, exp70a 120,719.\n- I-307 was rewritten as L5v2: at most one combo, and only if fm45 reads POS.\n- I-302 now carries the stop rule and slot priority.\n- New: I-327, the attribution protocol plus the read-only watcher. It is at-risk because it is not written yet and is due by 04:10Z.\n- New: I-333, the divergence-2.5 rung. It is deferred post-deadline.\n- I-311 is closed for the window. I-312 is measured, in-plan, and closes on the probe-40 read.\n\nFINALS:\n- New: I-328, the A-only 0.954-UP extension {exp70a, #38}.\n- New: I-329, PC13-06's ineligibility rule, refuted because the insertion gate is per clip.\n- I-297 and I-301 were logged at 21:31Z and are no longer at-risk.\n- I-257 (RESUME POINT and MEMORY) and I-283 (private-read v2 plus the L1-L5 addendum) are applied.\n- I-315 is now timer 65b1b746.\n\nMODEL:\n- I-119: exp71 is ready, but its push was blocked by the permission classifier. The 'R8 lifted' reading is suspended, and exp72 is class C unless the user says yes to Q3.\n- New: I-330, the G2 held-out finals veto.\n- I-105/I-108: the node-count attribution was corrected (+0.62% nodes, -0.007 on the LB).\n- I-323 and I-324 moved to deferred-after-deadline.\n\nRound-13 lenses:\n- Node count: I-130, I-147 and I-129 updated. New I-331 (start-leaf prune) and I-332 (component prune), both post-deadline.\n- Divisions: I-051 now carries the first x138 safe-division sweep, with tau embryo-specific. New I-334, a density-aware tau gate, post-deadline.\n- Gated fusion: I-126 is refuted because it is already in x138. New I-335, a band gate, post-deadline. I-222 marks the max-union guard GF-4 refuted, and I-309 notes the edge-gate knobs are no-ops.\n- Rechecks: I-202/I-231 get an info note, I-075's conditional veto is rejected, and I-074/I-071 note that the 44b6 lab reads are in-sample.\n\nOps:\n- Updated: I-026 (P1 at 22:46Z not met; the x138 author's team shows 0.956), I-314, I-282, I-262, I-313 (API quiet window) and I-322 (the stray folder is gone).\n- I-232 is applied: REPORT.md is saved for rounds 12 and 13.\n\nThe curation-12 alerts on reconciliation, round-12 landing, RESUME POINT, timers and the K2 node count are resolved.\n\nOrphans: I-233 is the only strict one. At risk: I-119, I-229, I-252, I-286, I-299, I-315 and I-327."
+}

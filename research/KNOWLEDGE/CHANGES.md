@@ -693,3 +693,74 @@ Curator logs: `research/KNOWLEDGE/_curation/4/`.
 - **Carried over:** E10 v2 OK before 27 Sep 12:00 (now in the 07:30Z message); hygiene commit (now round 12 + `_pytest_oc_k2`); stale RESUME POINT / MEMORY; LESSONS + curator records; I-233.
 - **New:** R12-A3 reconciliation before exp70d (probes 39/40 already out); retrain consent; exp72 pair row; S4 exp70g vs exp70b and L9 class; API budget / one poller / x138 config guard; K2 dummy node reference 122,252 vs 121,252; private-read pre-reg v2; I-311/I-312/I-323/I-324 owners; y3uanm not evidence; UTC+3 labelled Z.
 - **Curator disagreements settled here:** reconciliation [deadline, now] (ideas, watch) vs [contradiction, now] (facts) -> one [now] alert; retrain [risk, now] (ideas) vs [risk, today] (facts, watch) -> [now], since prep is already running; S4 [now] (ideas) vs [today] (watch) -> [now], due 00:05Z; hygiene [today] (ideas, facts) vs [now] (watch) -> [today], after the reconciliation.
+
+## 13 - 2026-09-27 ~01:45 UTC (curation 13; git HEAD 5e57346; round 13 committed in 3d48d35)
+
+**Operations:**
+- **Commits since curation 12** (`git log --oneline 9beb9f0..5e57346`):
+  - 0bc0da4: ROUND 12 RECORD + RULE RECONCILIATION (insertion hedge, R8 02:00Z cap) (`CONTEXT.md` l.2475-2529).
+  - ea5637e: builder `--patch secswap` (finals + ladder rebuild byte-identical).
+  - d3a2c0d: timers 2f0d1fa1 / c7cd2e6b / bb224de9 (l.2530).
+  - ed0c638: **probe 41 = exp70d** (56589423, 21:38:33Z) + node-count correction to K2 121,252 (l.2534-2538).
+  - 9014772: exp71 READY, push BLOCKED pending the user's yes (l.2539-2544).
+  - 86e96f2: CAP-6 lab arm -0.00057, exp70g dropped (l.2545-2549).
+  - bf07763: E10 hardening, PRIVATE-READ v2, RESUME POINT 22:46Z (l.2550-2622).
+  - fc2536c: **probe 42 = exp70b** (56592350, 00:05:50Z) (l.2623-2625).
+  - 3d48d35: ROUND 13 RECORD, LADDER PRE-SCORE REGISTRATION (L5v2, attribution, A-only extension), EXP71/EXP72 GOVERNANCE (l.2626-2746), plus `research/wf_ideas_v4/round13/` incl. REPORT.md and `experiments/e10_watch/20260926T2246Z.txt`.
+  - 5e57346: TIMERS 65b1b746 (07:30Z push) and 2e87e414 (E10 P1, defers in the 04:10-06:45Z quiet window) (l.2747-2749).
+- **LB:** 4 ladder probes out, all PENDING at 01:39:32Z (`experiments/lb_poll/poll.log`); finals unchanged, SELECTED last read 20:04:35Z. E10 P1 at 22:46Z not met. We are #229 of 3,935 (`CONTEXT.md` l.2626-2641).
+- **Round 13** ran ~22:45Z-01:28Z (node count, division PP, gated fusion, ladder next, recheck, plancheck, browser). Nothing reaches R8 (`CONTEXT.md` l.2652-2660).
+
+**Ideas** (`IDEAS.md` l.13-47; `ideas.json` meta.curations[n=13], 65 records; `_curation/13/ideas.json`):
+- **New (I-327..I-335):**
+  - In-plan: I-327 attribution protocol + read-only watcher (not written); I-328 A-only 0.954-UP extension {exp70a, #38}; I-330 G2 held-out finals veto for exp72.
+  - Refuted: I-329 PC13-06 insertion-hole rule (the gate is per clip).
+  - Deferred-after-deadline: I-331 start-leaf prune; I-332 component prune; I-333 divergence-2.5 rung; I-334 density-aware tau; I-335 detection band gate.
+- **Status changes:**
+  - Ladder: I-304 exp70d and I-306 exp70b submitted; I-326 exp70g refuted (-0.00057); I-307 rewritten as L5v2; I-302 gets the stop rule and slot priority.
+  - Closed or refuted: I-311 Justin PP-only closed for the window; I-126 refuted (already in x138); I-222 max-union guard refuted; I-309 edge-gate knobs are no-ops.
+  - I-312 measured; it closes when probe 40 reads.
+  - Recorded: I-297 / I-301 / I-300 at 21:31Z; I-314, I-283, I-316, I-317, I-257, I-282, I-232.
+  - I-119: exp71 push blocked, "R8 lifted" suspended, exp72 class C unless Q3 = yes.
+  - Other updates: I-105/I-108 node-attribution fix; I-051 x138 division knobs; I-304/I-074 44b6 reads in-sample.
+  - I-323 / I-324 moved to deferred via the general R8 sentence, not closed by name.
+- **Counts c12 -> c13:** 326 -> 335:
+  - refuted 172 -> 176
+  - deferred 31 -> 37
+  - in-plan 56 -> 59
+  - open 5 -> 1
+  - lb-tested 41 and lab-tested 21 unchanged
+- **Orphans:** strict orphan I-233. At risk: I-119, I-229, I-252, I-286, I-299, I-315, I-327. Dropped off the at-risk list: I-232, I-257, I-282, I-283, I-297, I-301, I-306, I-314, I-326; I-323/I-324 moved to deferred.
+
+**Facts and decisions** (`FACTS.md`, `DECISIONS.md`, rows marked [c13]; `_curation/13/facts.json`):
+- **New facts:**
+  - F-LB-15: the LB row counts only scored submissions (the freshness key).
+  - F-RUN-26: ladder dummies, corrected node counts, W6 audit.
+  - F-MOD-30: gated fusion is already in x138.
+  - F-TRN-42: cap-6 lab arm.
+  - F-TRN-43: round-13 node/division lab.
+  - [c13] notes on 31 rows. F-TRN-41 now carries the +0.62% correction (the '+3.9%' included the primary's +3.2%; the ideas-curator alert on it is resolved).
+- **Contradictions:** new C-96..C-103 (dummy node counts, display needed to move finals, exp72 node gate, when 39-42 score, ...). Resolved: C-84, C-85, C-86, C-95 (by 21:31/21:56 entries). C-93 superseded by R13-A3.
+- **DECISIONS.md:**
+  - §1: rows P39-P42 + planned combo table (exp70c/h/f).
+  - §1b: gates G41-G43.
+  - §2: [c13] finals snapshot (l.374).
+  - §2f: P1 22:46Z not met.
+  - §2h: L5v2, attribution, A-only extension, stop/slot, quiet-window rows.
+  - §3: R4/R5/R7/R8/R9/§f/L9 statuses + 3 rule rows.
+
+**Watchlist** (`WATCHLIST.md`; `_curation/13/watch.json`):
+- **Done:** W113-W117, W119, W121, W122, W124, W125, W127, W129. After the watch pass also: W132/W133/W135/W136/W139 (3d48d35, 5e57346). W128 is now blocked.
+- **New:** W132-W142 (R13-A0..A9, W142 exp70g NEVER_SUBMIT); reminders T51-T61; insights I125-I135.
+- **Still overdue:** W57 family (CONTEXT l.22, out_valid, efpost, 33.1%); W71/W118/W140 round prompt l.38/l.40 + quiet window; W98 LESSONS l.7.
+
+**Alerts** (`INDEX.md` TOP ALERTS, 10 after dedup):
+- **Resolved since curation 12:** rule reconciliation logged (21:31Z); round-12 record + REPORT.md; RESUME POINT + MEMORY (22:46Z); timers replaced; K2 dummy node count corrected (121,252); S4 decided (exp70b; exp70g dropped); private-read v2; retrain consent (push blocked, governance logged); exp72 pair row (class C unless Q3); pre-score registration and round-13 commit (3d48d35); morning timer and quiet-window deferral (5e57346).
+- **Carried over:** E10 v2 OK before 12:00Z (07:30Z push); I-233; W57 / LESSONS l.7 hygiene; stale round prompt; stale MEMORY index line.
+- **New:** ladder watcher by 04:10Z; API quiet window; SELECTED re-read + I-312 closure at D1; RESULTS rows 39-42; RESUME POINT partly stale; exp70g NEVER_SUBMIT; G2 cost if Q3 = yes; re-tick; closures of I-323/I-324 by name at R8; 0.953-block order caveat.
+- **Curator disagreements settled here:**
+  - Watcher: [now] by all three.
+  - Pre-score registration and commit: [now] (watch) -> resolved by 3d48d35 before this index.
+  - exp72 / G2: [today] (ideas, watch) vs [info] (facts) -> [today], since a yes is needed by ~09:00Z.
+  - Timer 2f0d1fa1 in the quiet window: [today] (watch) -> resolved by 2e87e414.
+  - SELECTED re-read: [today] (ideas, facts) -> [today], at D1.
