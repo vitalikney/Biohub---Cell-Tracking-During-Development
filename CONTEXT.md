@@ -2744,6 +2744,9 @@ Mention it to the user in one line (R9-A8 item 6).
   0 Traceback / FAILED / DEADLINE: / FALLING BACK lines; 4 LOWREFINE lines; DIVINS ENABLED;
   runtime <= 1,920 s;
   the last poll.log header is < 15 min old and not a 429.
+- 2026-09-27 01:32 UTC, TIMERS UPDATED (R13-A4/A8): morning push c7cd2e6b -> 65b1b746 (07:30 UTC 27 Sep; ladder reads, L9/A-only
+  outcome, exp71/exp72 Q1-Q3, E10 v2, R8, laptop); E10 P1 2f0d1fa1 -> 2e87e414 (same schedule; defers inside the 04:10-06:45 UTC
+  API quiet window). Ladder watcher (R13-A2, read-only) being written; start by 04:10 UTC.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
