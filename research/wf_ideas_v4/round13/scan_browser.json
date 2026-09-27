@@ -1,0 +1,45 @@
+{
+ "summary": "Round-13 delta scan, 22:46-22:50 UTC 26 Sep, compared with round 12 (20:01 UTC). E10 P1 snapshot experiments/e10_watch/20260926T2246Z.txt has CHANGES=13, and all of them are leaderboard changes. No kernel changed: comp_dateRun, comp_scoreDescending, the three user lists and the x138/amanatar statuses are all the same. The P2 look-check's largest group is 1 (0.957: 1, 0.956: 1), under the >=5 signal, so E10 is NOT triggered and tools/e10_port_gate.py was not run. Public LB at 22:46:47: 3,938 teams. We are #229 at 0.954 (was #217), 15th of 100 in the 0.954 block (215-314). 12 teams passed us. Ten of them reached 0.955-0.957: John Taylor (AI) 0.952->0.957, tofu1002 0.953->0.956, To-i 0.954->0.956, and to 0.955 eiactorx, insuperabilehart, kk.sky.9k, bighead514188, 4eta, MustafaA and new team Anurag Bihani. Two passed us inside the 0.954 block by unrounded order: TheMightiestMan (0.953->0.954, now #217) and Taisei. Five of the new 0.955 teams came from <=0.953 in one window. The P2 rule counts only >=0.956, so this is info only, and no public notebook scores above 0.953. Counts (r12 in brackets): 0.953 = 372 (369), 0.954 = 100 (99), 0.955 = 63 (56), 0.956 = 38 (36), 0.957 = 19 (18), 0.958 = 12, 0.959 = 14, >=0.960 = 68, >=0.970 = 7, >=0.953 = 686 (672). A 13th x138-copy window (~11 teams, #661-671, subs 13:53-16:23 UTC) holds the ~7 h scoring lag. In the top 20 only Syed Asad Ali moved (0.965->0.966, #23->#16), and yu4u is still #1 at 0.978. Discussion has 1 new topic, 'Question for host' (OmerZalman, 0 replies, no host answer), asking whether subs still running at the deadline count and whether an unselected best sub is auto-chosen. There are 3 content-free new comments. There is no host announcement. Overview, timeline, 12 h limits, metric text and data files are unchanged. Submissions are at 87,976 (+228, ~83/h). No new public notebook or dataset. x138 is v1, 204 votes, 285 copies. Nothing was pulled. The finals (#37 + #38) are unaffected.",
+ "findings": [
+  {
+   "id": "r13-e10-p1-snapshot",
+   "kind": "new-fact",
+   "what": "E10 P1 snapshot at 22:46 UTC against 20:01Z has CHANGES=13, all in the leaderboard section. comp_dateRun, comp_scoreDescending, the user lists (anvithpothula, thtennant, amanatar) and the statuses of x138 and amanatar/optimized-biohub-max-score have no change. Histogram changes: 0.966 5->7, 0.965 8->7, 0.964 6->5, 0.963 7->9, 0.962 6->7, 0.961 14->13, 0.960 7->5, 0.957 18->19, 0.956 36->38, 0.955 56->63, >=0.955 204->214, teams 3932->3935, OURS 217->229. The P2 look-check finds 0.957: 1 (John Taylor (AI)) and 0.956: 1 (tofu1002), so the largest group is 1, under the >=5 signal. E10 is NOT triggered and the port gate was not run.",
+   "evidence": "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/experiments/e10_watch/20260926T2246Z.txt",
+   "action": "None. The timer 2f0d1fa1 takes the next P1 (every 3 h at hh:04). The overnight burst (~23:30-02:00 UTC) shows on the LB at ~07-09 UTC 27 Sep.",
+   "urgency": "info"
+  },
+  {
+   "id": "r13-lb-delta-2246",
+   "kind": "new-fact",
+   "what": "Public LB at 22:46:47 UTC: 3,938 teams. We are #229 (was #217), 0.954, 40 subs, last sub 00:02:18, 15th of 100 in the 0.954 block (215-314). Blocks: 0.957 = 95-113 (19), 0.956 = 114-151 (38), 0.955 = 152-214 (63), 0.953 = 315-686 (372). 36 teams changed score and 159 have new subs. Public silver line = 5% x 3,938 = 196.9, so we are ~32 ranks below it (info only). The 12 teams that passed us: John Taylor (AI) 0.952->0.957 (#684->#110), tofu1002 0.953->0.956 (#505->#123), To-i 0.954->0.956 (#218->#139), eiactorx 0.953->0.955 (#317->#160), insuperabilehart 0.954->0.955 (#302->#164), kk.sky.9k 0.954->0.955 (#250->#171), Anurag Bihani NEW at 0.955 with 1 sub (#177), bighead514188 0.953->0.955 (#315->#188), 4eta 0.953->0.955 with 3 subs (#540->#204), MustafaA 0.953->0.955 (#605->#205), TheMightiestMan 0.953->0.954 (#534->#217, above us by unrounded order), and Taisei, who stayed at 0.954 but moved #220->#227 after a 14:19:50 sub. Their subs are 13:45-16:26 UTC. Five teams reached 0.955 from <=0.953 or as new (eiactorx, bighead514188, 4eta, MustafaA, Anurag Bihani), and a 1-sub newcomer at 0.955 means a finished recipe exists somewhere. But E10 P2 is defined at >=0.956, and no public kernel changed or scores above 0.953, so this is not a port signal. New 0.954 entrants below us: npan 0.951->0.954 (#252), Sankalp Wanjari (#273), Samuels Winstons (#294).",
+   "evidence": "Scratchpad lb/r13/biohub-cell-tracking-during-development-publicleaderboard-2026-09-26T22_46_47.csv compared with lb/r12/...T20_01_58.csv using lb/r10/cmp10.py; research/wf_ideas_v4/round13/scan_browser.notes.md",
+   "action": "Update the CONTEXT intel line to #229/3,938, 15th of 100 in the 0.954 block (215-314). This is info only: rank drift at a fixed 0.954 is not a signal. Finals stay #37 + #38. If the 0.955 cluster from <=0.953 grows to >=5 again in the morning window, a later round could look for a shared public source (dataset or model) and must not relax P2.",
+   "urgency": "info"
+  },
+  {
+   "id": "r13-top-movers-and-copies",
+   "kind": "new-fact",
+   "what": "In the top 20 only Syed Asad Ali moved (0.965->0.966, #23->#16, sub 16:26). yu4u 0.978, Sergio Alvarez 0.975 and Gabriel 0.975 lead unchanged. Below the top 20: Vibes & Edges Trade-Off 0.964->0.966 (#21), Zhu Chen 96 0.960->0.963, BorisV 0.961->0.963, rode1234 0.960->0.962. A 13th x138-copy window has ~11 teams jumping to exactly 0.953 at #661-671: chocolate disco, Yusuraume, Hide on bush, Rafael, kihiro, niulai (0.000->0.953), Peter KK, renta.k, Ernie, AlejandroAlvarez and new team Abderrahim Kabil, with subs 13:53-16:23 UTC. The newest scored sub is ~16:26 UTC, which fits the ~7 h latency. Inside the 0.953 block the order is not by submission time: teams with 22 Sep subs (Sirui Zeng #676, Mark #2 #685) sit below 26 Sep subs, so the displayed 0.953 hides unrounded differences. This matches the known in-block unrounded ordering. No mover has a public source.",
+   "evidence": "cmp10.py changed list, r12 20:01:58 vs r13 22:46:47 LB CSVs",
+   "action": "None.",
+   "urgency": "info"
+  },
+  {
+   "id": "r13-discussion-question-for-host",
+   "kind": "new-fact",
+   "what": "One new topic, 'Question for host' by OmerZalman (#109), posted ~1h before 22:48Z, 0 comments and no host answer. It asks whether a submission that is still being scored after the deadline counts, and whether it is auto-chosen if it scores best and was not selected. Snippet: 'will it be counted or not?' Three content-free new comments elsewhere: in 'errors in annotated ground truth', Alexandre Moritz (#262, 2h) says he built an AI labeling tool and Peter Green (#3925, 1h) asks 'Which training example is this?'; in 'Stuck at 0.947 after ten board tests...', nusrati (#1138, 3h) asks for a guide. The pinned host topics are unchanged and there is no announcement.",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/743765 ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/742942 ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/742266 ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion?sort=recent-comments",
+   "action": "None for the finals: #37 and #38 are both scored, and R12-A3(c) already puts the last ladder submit at 29 Sep 02:00Z. A later round may recheck the topic for a host answer on late-scored or auto-selected subs, which would matter only if the user re-ticks late.",
+   "urgency": "info"
+  },
+  {
+   "id": "r13-code-overview-data-unchanged",
+   "kind": "new-fact",
+   "what": "Public code: no competition kernel has been created since 24 Sep (CLI dateCreated), and the newest dateRun is still anhadmahajan06/biohub-track-your-cells at 19:10:53 (seen in r12). The Code tab sorted by Public Score (browser) tops out at 0.953: Harmonic Fusion V3, optimized-biohub-max-score (updated 10h ago), Biohub Cell Tracking, x138. Nothing is above 0.953 and nothing was pulled. x138 https://www.kaggle.com/code/anvithpothula/biohub-0-953-lb-original reads 'Version 1 of 1', 0.953, 204 votes (+2), 285 copies (+2), Comments (3). Overview: '3 DAYS TO GO', timeline unchanged ('September 29, 2026 - Final Submission Deadline', 11:59 PM UTC), 'CPU Notebook <= 12 hours run-time', metric text unchanged. Counts: 13,475 entrants, 4,504 participants (+4), 3,935 teams, 87,976 submissions (+228 in ~2.75 h, ~83/h). No new datasets since r11 (top by updated: qwyi123 16:54). Data files still have creationDate 2026-06-26.",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/code?sortBy=scoreDescending ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/overview ; https://www.kaggle.com/code/anvithpothula/biohub-0-953-lb-original ; CLI kernels list --sort-by dateCreated|dateRun, datasets list --search biohub --sort-by updated, competitions files",
+   "action": "None. Nothing was pulled to experiments/.",
+   "urgency": "info"
+  }
+ ]
+}

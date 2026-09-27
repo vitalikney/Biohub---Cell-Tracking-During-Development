@@ -1,0 +1,10 @@
+# r13l-3 v954 extension skeptic notes
+- 2026-09-27T01:14:50Z start; no prior answer file.
+- 01:20Z ledger.md (experiments/lb_poll/ledger.md): exp70a 56589065 PENDING (> 3.86 h), row says 'insertion gate 8.0 h: open'. The 'did NOT fire' text in the finding is #37's row, not exp70a's. No ladder score yet -> decision is still pre-score (first possible ~04:37Z).
+- lp30 per embryo (round4/v_recheck_r4-rc-c-leaf-prune-on-x138-after-p36.json): pooled +0.00083, 44b6 +0.00165, 6bba +0.00075, 51/56 clips, 95% of pruned nodes readmitted. Positive in BOTH embryos. The finding's worst case (-0.00058 on 44b6) is R12-RC-B 'drop ALL readmitted leaves', a different arm; it is not lp30's own number.
+- Earlier public evidence of the same kind: round4 report (CONTEXT l.2033 (2)): P36 (x138+lp30+ins) unrounded > #35 in-block (164->155). Round 4 rejected in-block rank as a criterion under R7; R12-A3(a) (CONTEXT 21:31Z) lifted R7's near-copy clause and R4 +0.002 for the PUBLIC slot only, replacing them with L9's display >= 0.955. v_ladder corr (3b) explicitly offered the 0.954+UP option if pre-registered before any score. So it is not a closed line in disguise, provided it is logged before 04:37Z.
+- K2 did not pass anyone after P36 (R13L-2 evidence) -> B0 is likely P36; UP => exp70a > P36 >= ... and exp70a > K2 on public (B0 >= K2).
+- Unmeasured: lp30 x lowrefine interaction on the readmit pool (v_ladder corr 1). The exp60 lab arm had no lowrefine and no insertion. A public UP measures K2+lp30 vs K2 directly, on one embryo only.
+- Attribution: exp70e (lp30+dc) and exp70a were submitted 2.4 min apart, so co-completion is likely -> NEU -> the extension does not fire. P(fires) ~0.15-0.3. The extension depends on the R13L-2 protocol being logged and run; without it there is no attribution, so it must be DROPPED.
+- Verdict: not refuted, with corrections (exp70a's own ledger 8.0 h check; the worst case re-cited; conditional on R13L-2; default without a re-tick stays {#37,#38}).
+- 2026-09-27T01:18:01Z final JSON written (refuted=false).

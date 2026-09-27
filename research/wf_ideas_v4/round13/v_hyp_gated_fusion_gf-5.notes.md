@@ -1,0 +1,9 @@
+# GF-5 skeptic notes (2026-09-27T01:16:49Z)
+- no prior v_hyp_gated_fusion_gf-5.json; fresh run.
+- VERIFIED experiments/exp56_x138_verbatim/exp56-x138-verbatim.ipynb cell 3: l.653 BIOHUB_SECONDARY_EDGE_WEIGHT "0.15", l.660 SECONDARY_LINK_MODE "low_margin_consensus", l.662 SECONDARY_LOW_MARGIN_MAX "0.35" -> builder --set (cell 0) overwritten = silent no-op (IDEAS.md I-309 l.127).
+- same_parent veto: not an env knob at all; it is inside cell-4 patch 3 source (scan_hyp_gated_fusion.notes.md l.10). "Drop the veto" = code change, not a literal.
+- CEILING CHECK combo_oracle/m_joint_oracle.json: L_remove_attach_noswap +0.00106 (44b6 +0.00165, 6bba +0.00104) = the +0.0011 cited. BUT full no-node relink O_LINK +0.00734 (incl. 136/129 swaps, +0.0062). An edge-logit change CAN move a link from w->v to u->v (swap-type) and can create/remove forks, so +0.0011 is not a strict ceiling for an edge gate. Swap share judged non-actionable (v_joint_oracle_0/1: GT identity jump / missing-offset detection at t+1; 127/129 neighbours unannotated). Honest ceiling: +0.0011 actionable, +0.0073 no-node incl. swaps, fork-side unbounded by these oracles.
+- v_joint_oracle_1 point 3: applying 1/6 transfer to an oracle is a category error -> GF-5's '<= ~+0.0002 public' should not be quoted as a bound.
+- Feasibility: edge_cache edge arrays empty (scan summary) -> no CPU lab; GPU arm ~2 x 1.95 h; R8 12:00Z 27 Sep; ladder 4 slots 27 Sep, informed combos from POSITIVE singles only (CONTEXT 22:46Z RESUME + 00:06Z). An untested-sign knob rung with no lab = public knob-picking on 29% one-embryo LB. imissher paired LB: x138 neighbour knobs (det 0.960/0.970, sec wt 0.65) all lower -> knobs near local optimum.
+- VERDICT: conclusion (close, not a rung) holds; wording of the bound needs correction.
+- 2026-09-27T01:18:53Z final JSON written (refuted=false, corrections)

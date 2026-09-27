@@ -1,0 +1,12 @@
+# v_hyp_ladder_next R13L-5 notes (2026-09-27T01:14:47Z)
+- 01:15Z no prior JSON for this task. Read CONTEXT l.2288-2300 (C1-C4, 16:04Z), l.2570-2598 (v2), resume point 22:46Z, 00:06Z probe-42 entry; round13/scan_hyp_ladder_next.json (source of R13L-5).
+- NAME COLLISION: v2 (d) already says "then C1-C5 and I"; C5 = #37 - #35 is defined in round12 scan_hyp_private_read.json R12P-1/R12P-4 and v_hyp_private_read_r12p-4.json. R13L-5 redefines C5 = exp70a - #37 -> must rename (e.g. L1-L5).
+- SCOPE CONFLICT: v2 (b) SCOPE: "Every file submitted after 26 Sep 20:33Z (the ladder, new finals) is outside the table and post-hoc." The new paragraph must explicitly amend that line for the listed ladder refs, dated before 04:37Z.
+- API: private/public score = 3-decimal string, no unrounded field (I-283 curation 12; poll.log shows 0.954 etc.).
+- Rounding is monotone: a non-zero displayed difference proves the sign of the true difference; 0 is uninformative. Under uniform bin phase P(display diff != 0) ~ |delta|/0.001 for |delta| < 0.001.
+- Implied transfer from priors: C5 P(!=0)=0.35 -> |delta|~3.5e-4 = ~0.4 x lab lp30 (+0.00083); under 1/6 transfer expect ~0.14. fm45 lab 44b6 0.0000 / 6bba +0.0002 (exp60 results.md l.19-24) -> 1/6 transfer ~3e-5 -> P(!=0) ~0.03, prior says 0.20. Priors are loose/inconsistent with the rule they claim to test.
+- C7 = (e-a) - (d-#37): each bracket in {-1,0,+1} for |true diff|<0.001; |C7|=2 with both brackets non-zero and opposite sign = PROOF of sign interaction; |C7|=2 via (+-2,0) is not proof; |C7|=1 is rounding noise.
+- C5 (lp30 on K2) near-replicates C4 (leaf prune P36-#35 on x138+ins): correlated, not independent evidence.
+- Refs: exp70e 56589025, exp70a 56589065, exp70d 56589423, exp70b 56592350; #37 56563521.
+- Verdict: not refuted (zero cost, text only, no R1-R10 conflict, gate 04:37Z reachable at 01:15Z) but value small (calibration, never finals) and needs the fixes above.
+- 2026-09-27T01:16:34Z final JSON written (refuted=false, with fixes: rename L1-L5, amend v2 SCOPE, C7 rule, C9 prior, drop ratio claim).

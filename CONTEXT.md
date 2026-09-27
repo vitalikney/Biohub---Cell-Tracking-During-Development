@@ -2623,6 +2623,127 @@ Mention it to the user in one line (R9-A8 item 6).
 - 2026-09-27 00:06 UTC, SUBMIT probe 42 = exp70b (K2 + forkmid 4.5; ladder L4, class B), ref 56592350 at 00:05:50Z 27 Sep (kernel
   vitaliineibauer/biohub-exp70b-k2-fm45 v1; dummy clean: 121,252 nodes, 74 forks, sha ed7101bf; run ~1,740 s). Poll header
   23:59:11Z, no 429. 4 slots left on 27 Sep; informed combos after probes 39-42 score (~05:00-07:45 UTC).
+- 2026-09-27 01:31 UTC, ROUND 13 RECORD (research/wf_ideas_v4/round13/; info and hygiene, no decision):
+  (1) E10 P1 at 22:46Z NOT met (experiments/e10_watch/20260926T2246Z.txt, CHANGES=13, all histogram): no kernel change
+    vs 20:01Z; scoreDescending top HF v3 0.953; x138 v1 COMPLETE; amanatar v10 ERROR; largest P2 group 1 (John Taylor
+    (AI) 0.957, tofu1002 0.956). The x138 author's team displays 0.956 (#126) while his public notebook is still v1, so
+    he is the likeliest source of a trigger.
+  (2) INTEL at 22:46Z: 3,935 teams (3,938 CSV rows). We are #229 at 0.954, 15th of 100 in the 0.954 block (215-314).
+    Teams >= 0.955: 214. Blocks: 0.955 152-214 (63), 0.956 114-151, 0.957 95-113, 0.953 315-686. 12 teams passed us, 5
+    of them from <= 0.953 to 0.955 in one window; this is not a P2 signal. 13th x138-copy window (~11 teams, #661-671)
+    at the block end; latency ~7 h. Our LB row counts only SCORED submissions: SubmissionCount 40, LastSubmissionDate
+    00:02:18 = #38 while 39-41 were PENDING. New topic 'Question for host' (743765; late-scoring and auto-selection; no
+    host answer). No new kernel since 24 Sep. Overview and data unchanged. 87,976 submissions.
+  (3) LADDER COMPLIANCE AUDIT (PC13-09):
+  Probes 39-42 passed W6: headers were 6.9 / 9.3 / 10.0 / 6.7 min old, none of them a 429.
+  They passed the dummies and are family safetail in the ledger. L9 was pre-registered at 20:49Z, before the first
+    submit at 21:15Z.
+  The R12-A5 poller stretch did not trigger (one 429 poll at 20:36:50Z, not two in a row), so the poller stays at 600
+    s to keep the W6 margin.
+  The K2-sha comparison is explicit only for probe 41. For probes 39, 40 and 42 it follows from the node/fork counts
+    and the logged sha ed7101bf.
+  The 39/40 overlap comes from L8's unspaced window, not from the order of submits.
+  (4) API SELECTED: read once at the next main-session API touch (when probes 39-41 are read, ~05:00Z) and log it:
+    'API SELECTED 2/2 [56563521, 56563534] at hh:mmZ (after probes 39-42)'. Then read it once after each later submit.
+    Optional, cosmetic: set the frontmatter 'modified' of memory/project-lb-probe-approval.md to 2026-09-26T22:46Z.
+  (5) dc0.30 LAB (calibration only, no weight in combo choice or finals):
+  K2-like ins bed: 6bba-39 +0.00131 (FP 23 -> 17, 0 TP forks lost); 44b6-17 +0.00004 (control bed -0.00058); 44b6-71
+    (exp64, lowrefine) +0.00336 (9 FP forks, 1 per clip).
+  The 44b6 clips are DeepCenter's training clips (FACTS F-DAT-12), so those reads are IN-SAMPLE. The honest dc bed is
+    6bba only (checkpoint selection used 6bba).
+  The r_ladder L2 private-risk note stays 'medium'. The insertion is not adverse with dc0.30 (in-sample DaughterNet).
+  The private risk of dc0.30 is hedged by #38 in the L9 pair.
+  exp64 44b6 other knobs vs ins35: lp30 +0.0005 (CI crosses 0; lowrefine costs TP -4), fm45 +0.0004 (1 fork). The sums
+    are exact because the edits have disjoint supports; that is not an interaction test.
+  (6) NOTHING REACHES R8 (27 Sep 12:00Z) in round 13:
+  node count: best in-lab pruning +0.0015 lab, ~+0.00025 public;
+  division PP: best both-embryo combo dc0.30 + div2.5 +0.0018..0.0034 lab, ~15-25% of the bar; tau is embryo-specific;
+  gated fusion: already in x138 (edge columns); the detection variant has no CPU lab.
+  After 12:00Z the only paths to a new mechanism are an E10 port and exp72 (explicit yes needed).
+  (7) The DaughterNet insertion gate (8.0 h) is per clip (tools/build_probe_kernel.py l.1415-1422).
+- 2026-09-27 01:31 UTC, LADDER PRE-SCORE REGISTRATION (round 13, R13-A1; written before any ladder score; the user's 20:33Z lift covers the ladder; no new mechanism)
+  (1) L5v2 (replaces L5 (a)/(c) for 27-28 Sep). UNIT status of each scored probe in {e 56589025, a 56589065, d
+    56589423, b 56592350}: POS = display >= 0.955, or display 0.954 with an attributable UP under (2); NEG = display <=
+    0.953; NEU = anything else, including a non-attributable UP and any 'no move'. KNOB status: lp30 from a, dc0.30 from
+    d, fm45 from b. A knob is NEG iff its single is NEG. If e is NEG while neither a nor d is NEG, lp30 and dc0.30 are
+    BLOCKED for combos. BASE = the best POS unit among a, d and e that holds no NEG or BLOCKED knob (order: higher
+    display; then the later attributable UP; then class A; then fewer knobs; a co-completion tie goes to fewer knobs).
+    COMBO = BASE + fm45, and only if fm45 is POS: BASE a -> exp70c (sha256 a7271d4e9a758607...), d -> exp70h
+    (7ed29dd35a32774f...), e -> exp70f (b009bedd4ce4b2f6...). No POS base -> no combo. No other rung: no threshold
+    neighbours (I-310), no class C, no cap6, and NEU knobs are never combined. NOTE: 39-41 score ~04:37-05:11Z and 42
+    ~07:27-07:38Z (up to ~08:30Z if its run is 1.15x K2). So in every world with a POS base, a POS fm45 means exp70b
+    beat that base (fm45 effect > base knob effect), not just fm45 > 0. P(combo submitted) ~0.01-0.03.
+  (2) ATTRIBUTION (closes PC13-03). CALL: `python -m kaggle competitions leaderboard
+    biohub-cell-tracking-during-development -d -p experiments/lb_poll/ladder_watch/<YYYYMMDDTHHMMSSZ>/`, one new folder
+    per call (the zip name is fixed). S0 = any fresh download taken after our last score change and before the event:
+    the 03:04Z timer snapshot if taken, else one at ~04:10Z. After that, each S1 becomes the next S0. FRESHNESS: S1 is
+    valid iff our row (TeamId 16810638) shows SubmissionCount == 40 + the number of ladder refs COMPLETE in
+    ListSubmissions at download time. LastSubmissionDate (latest SCORED submit time) is a secondary check. If S1 is
+    stale, re-download every 2 min up to 3 times; after that the event is AMBIGUOUS (= NEU). At the first event, record
+    whether an ERROR increments the count. UP TEST: some TeamId ranked above us in S0 ranks below us in S1. Public bests
+    never decrease, so this proves our best rose, whatever other teams do. 'No move' is never NEG. ATTRIBUTION: an UP is
+    attributable to a ref only if SubmissionCount rose by exactly 1 between the two fresh downloads (LastSubmissionDate
+    then names that ref). A rise of >= 2 is co-completion: the ref with the higher display takes the UP; with equal
+    displays the UP is non-attributable and both refs are NEU (no common-knob credit). An ERROR needs no S1, and a
+    COMPLETE next to an ERROR stays attributable. ORDER: after an UP, later probes must beat the NEW best, so their 'no
+    move' is NEU; this includes exp70b. The team best B0 = max(P36, #35, K2); K2 is probably not the max (6th/73 ->
+    12th/87 after K2 scored), so an UP means the probe beat P36-level. Per event, log in CONTEXT: S0/S1 file names,
+    SubmissionCount, refs that changed status, passed TeamIds (info), verdict UP/NEU/AMBIGUOUS. lb_poll.py stays
+    untouched, and poll.log stays the official L9 record.
+  (3) A-ONLY 0.954-UP EXTENSION: ADOPTED, conditional on (2) actually running (if the watcher does not run, it is
+    DROPPED). If exp70a (56589065) is COMPLETE without error, displays 0.954 with an attributable UP under (2), and its
+    OWN ledger row shows 'insertion gate 8.0 h did NOT fire' (L_hi <= 8.0 h by tools/runtime_ledger.py, family
+    safetail), the recommended pair becomes {exp70a, #38} and #37 leaves. A V* displaying >= 0.955 overrides it (L9
+    (3)). Without the user's re-tick by 29 Sep 20:00Z, {#37, #38} stays. Class B variants still need a real display >=
+    0.955. Worst case: the lowrefine x lp30 interaction on the private embryos is unmeasured; lp30 itself is
+    lab-positive on both embryos (44b6 +0.00165, 6bba +0.00075).
+  (4) L9 INFO (PC13-06 checked): the insertion gate is per clip (build_probe_kernel.py safetail_divins_allowed), and L
+    includes queue and poll gap. A V* displaying >= 0.955 with 8.0 < L_hi <= 9.0 h therefore stays eligible: at most the
+    last ~9% of clips may lack the insertion, priced <~1e-4 by V4 row 5. The pair stays {V*, #38}, and the morning or
+    read push quotes V*'s ledger insertion-gate text.
+  (5) STOP AND SLOTS (closes PC13-04/PC13-07). The blind rungs 39-42 never count toward 'two rungs without
+    improvement'. The ladder ends (a) after 42 with no POS base or with fm45 not POS, (b) after the one combo's read, or
+    (c) after two informed rungs with neither a higher display nor an attributable UP. At most 5 ladder submits in
+    total. SLOT PRIORITY 27-28 Sep: E10 port > unchanged resubmit of an ERRORed finals-relevant file (ERROR at < 10 h
+    latency: one resubmit; ERROR at >= 10 h: runtime-unsafe, never a final) > the L5v2 combo > exp72 (only with the
+    user's explicit yes) > empty. Keep 1 slot per day free for a port until 29 Sep 00:00Z. F1 consolidation by 28 Sep
+    12:00Z; last ladder submit 29 Sep 02:00Z.
+  (6) PRIVATE-READ v2 ADDENDUM (ladder; calibration only, never a finals input; amends v2 (b) SCOPE). Read-list
+    additions: exp70e 56589025, exp70a 56589065, exp70d 56589423, exp70b 56592350, plus the L5v2 combo if submitted.
+    Contrasts in displayed thousandths, named L1-L5 (C5 stays #37 - #35). Priors are P(<0)/P(=0)/P(>0). L1 = exp70a -
+    #37 (lp30): 0.15/0.65/0.20. L2 = exp70d - #37 (dc0.30): 0.25/0.50/0.25. L3 = exp70e - exp70a - exp70d + #37: a sign
+    interaction is proven only if (exp70e - exp70a) and (exp70d - #37) are both non-zero with opposite signs; any other
+    value is uninformative. L4 = exp70b - #37 (fm45): 0.10/0.80/0.10. L5 = combo - its L5v2 base, prior as L4. READ
+    RULES: a non-zero L is a clean sign read (rounding is monotone); 0 is uninformative; no ratio is estimated. TRANSFER
+    READ: under 1/6 transfer, the expected number of non-zero values among L1, L2 and L4 is ~0.3; >= 2 non-zero favours
+    transfer > 1/6 (one draw, correlated through #37, no rule). SIGN-KEEPING (I-316): for each knob with an attributable
+    public UP, record whether its private L is > 0, = 0 or < 0. L1 and C4 are the same knob family, not independent
+    evidence.
+- 2026-09-27 01:31 UTC, EXP71/EXP72 GOVERNANCE (round 13, R13-A3; logged before any exp72 number; supersedes the retrain parts of the 21:21 and 21:31 UTC entries):
+  The 21:21Z reading 'R8 is lifted for this item' and R12-A3(a)'s 'except the one retrain item' are SUSPENDED until
+    the user answers. exp71 is not pushed (the classifier block stands; do not work around it). Any exp72 is class C
+    under L9 (public-only, never a final) unless Q3 is yes.
+  A dummy node gate is a necessary check only. It is not a quality gate: the exp23 secondary swap was +0.62% nodes vs
+    its base exp30 and lost 0.007 on the LB; node count predicts about -0.0006.
+  MORNING QUESTIONS (in the R13-A4 push, three separate yes/no):
+  Q1: push exp71 (~4.5 GPU-h; ~22 h quota left)?
+  Q2: submit exp72 after the R8 cutoff (earliest ~15:00Z 27 Sep; hard edge 29 Sep 02:00Z)?
+  Q3: may exp72 become a final?
+  IF Q3 = YES, pre-register before the exp72 submit. exp72 is ELIGIBLE iff all of these hold:
+  COMPLETE;
+  L_hi <= 8.0 h (runtime_ledger family safetail);
+  display >= 0.956 and strictly above any V* (ties go to V*);
+  G2 has landed by 29 Sep 12:00Z with a pooled result >= -0.0005. G2 = a 44b6-only FT with the same recipe plus a
+    SECFT_PREFIX cell, then the K2 tail on the 39 held-out 6bba exp60 clips.
+  If eligible, the pair is {exp72, #38} and the user re-ticks. G2 NEVER blocks the public probe.
+  exp72 DUMMY GATE:
+  the log shows 'Secondary SHA256: <expected sha>' and 'Secondary artifact: .../vitaliineibauer/biohub-secft-all-v1';
+  validate_csv ok; CSV sha != K2 b6de85c1;
+  TOTAL nodes within [-2%, +1%] of 121,252 (necessary only, and in-sample because exp71 trained on the dummy videos);
+    forks reported;
+  0 Traceback / FAILED / DEADLINE: / FALLING BACK lines; 4 LOWREFINE lines; DIVINS ENABLED;
+  runtime <= 1,920 s;
+  the last poll.log header is < 15 min old and not a 429.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

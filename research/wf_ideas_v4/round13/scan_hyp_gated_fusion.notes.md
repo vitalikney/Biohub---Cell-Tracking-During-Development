@@ -1,0 +1,22 @@
+# scan_hyp_gated_fusion notes (round 13, 2026-09-27)
+
+## 2026-09-26 ~22:50 UTC (date -u 22:46)
+- round13 folder had no scan_hyp_gated_fusion.json -> fresh work.
+- IDEAS.md: I-126 (conditional two-model fusion, hikaggler) = deferred-after-deadline, "Round 13: one-line comparison with I-222; no build before R8 unless an existing knob expresses it". I-222 retention guard: deferred; bound ~+0.005 pooled, likely sign <= 0. I-102 sec det weight 0.8->0.5 probe 5 = -0.002; imissher 0.80->0.65 -0.002 (0.947 stack). I-155/I-156 detector-blend family 4/4 negative on LB. I-309 --set on SECONDARY_* is a silent no-op (cell 3 hard-sets).
+- x138 code (experiments/ext_x138/biohub-x138.ipynb, code cells split to scratchpad x138_c*.py):
+  * cell 3 L659-663 hard-sets: SECONDARY_DETECTION_WEIGHT 0.80, SECONDARY_LINK_MODE low_margin_consensus, MIX_TEMPERATURE 1, LOW_MARGIN_MAX 0.35, DUAL_SEED_EDGE_THRESHOLD 0.48; L653 SECONDARY_EDGE_WEIGHT 0.15.
+  * cell 4 `_ensemble_replacements` patch 2: DETECTION blend is GLOBAL per frame: secondary det logits (8-view TTA) z-aligned to primary (mean/std, ratio clamp 0.5-2), det = 0.2*primary + 0.8*secondary_aligned. No per-voxel gate.
+  * cell 4 retention guard (after _ensemble loop): per frame count _detect_cells_pooled on primary vs blended at cfg.det_threshold; if blended/primary < 0.90 -> primary only.
+  * cell 4 patch 3: EDGE fusion mode low_margin_consensus = ALREADY an uncertainty-gated fusion: per target, primary softmax top-2 margin m; weight = 0.15*clamp((0.35-m)/0.35,0,1), and 0 unless primary and secondary agree on top parent. i.e. secondary edge logits used ONLY where the primary is uncertain (margin<0.35) and consistent. This is hikaggler's 'second model only where primary uncertain' on the LINK side, already in x138.
+- Dumps: _dl/exp60_a/{trainlab,edge_cache,divins_dump}. trainlab npz = graphs (presafe/preshort/final) + dc scores. edge_cache npz = coords (N,4 float32), low_coords/low_score (sub-threshold candidates), edge_src/tgt/prob (empty here), admitted. NO primary or secondary heatmaps, NO per-model candidate scores -> a CPU lab of a detection gate is impossible from exp60 dumps; needs a GPU lab run.
+
+## ~23:05 UTC
+- hikaggler quote (research/wf_ideas_v4/reach0955/discussions_2026-09-26.json, topic https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/741749): second model used 'only on COLUMNS where the primary is uncertain'. x138 low_margin_consensus computes softmax over dim=0 (sources) per target COLUMN, top-2 margin per column, blend_weight.view(1,1,-1) = per-column weight -> hikaggler's lever is literally x138's edge fusion (pilkwang 'calibrated dual-seed' patch). Already in #37 and #38.
+- mige551 (discussion 730924): two-seed 50/50 logit blend cut emitted nodes ~1.7% and raised score; FOYSAL: extra view only where models disagree. x138 = two-seed blend (0.8) + frame-level disagreement guard (retention < 0.90 -> primary).
+- Retention guard logs exp60 a+b (5,600 frames): 44b6 fallback 563/1700 frames; non-fallback blended/primary candidates 329,646/335,525 = 0.982; fallback frames 136,124/174,321 = 0.781. 6bba fallback 152/3900; non-fallback 0.995; fallback 0.851. Blend has MORE candidates than primary in 377 (44b6) / 1,706 (6bba) frames.
+- exp60_a kernel wall 6,988 s (log last line) for 28 clips -> GPU lab of any detection change = 2 kernels x ~1.95 h (+ queue 10-30 min, download with 429 risk, scoring) ~ 4 GPU-h, ~4.5-5 h wall.
+- detector_threshold 0.96875 (guard report configuration). secondary_detection_weight label 0.475 in the report is stale (real 0.80, I-222).
+- Metric: J_adj = J*(1-0.1*(N_pred-N_est)/N_est) (round13 node_count notes) -> +1% nodes ~ -0.1% relative J (~-0.0009 at J 0.94) unless offset by TP edges.
+- Pools: missing GT nodes 668 / FN edge-ends 1,211 on 56 clips -> recall ceiling +0.029 lab (round 11); 6bba misses: only 31% have a raw local max within 5 um (peakless/merged) -> out of reach for any fusion of two same-architecture peak detectors; raw-maxima recall arm realistic ~-0.03. Linking ceilings measured +0.0011 (combo oracle) -> edge-gate knob variants worth <= +0.0002 public.
+- VERDICT: nothing reaches R8. Edge half already in base; voxel/candidate detection gate = new code, GPU-only lab, prior 0.000 +- 0.001 public, in the closed detector-blend / secondary-weight family (I-102, I-155, I-156).
+- 23:10Z final JSON written (6 findings).

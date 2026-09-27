@@ -1,0 +1,11 @@
+# round13 scan_plancheck notes (started 2026-09-26 22:46 UTC)
+- 22:50Z verified: R12-A4 (CONTEXT l.2550), R12-A9 (l.2570), RESUME POINT 22:46Z (l.2604) landed in commit bf07763; newest snapshot experiments/e10_watch/20260926T2246Z.txt (CHANGES 13, P2 largest group 1, scoreDescending top HF v3 0.953 unchanged, ours #229 15/100 in 0.954 block); poll.log last header 22:38:46Z, probes 39-41 PENDING
+- 22:55Z CronList (read-only): 012fa6dd, 328f7392, 18ff4796, 2f0d1fa1 (recurring 3 h), c7cd2e6b (07:30Z morning), bb224de9 (29 Sep 23:27Z) all present. No timer covers the ladder score window ~04:45-05:15Z (2f0d1fa1 fires 03:04Z/06:04Z UTC).
+- MEMORY: project-lb-probe-approval.md modified 2026-09-25; index line still 'E10 port rule proposed; overlap-consensus line paused' -> R12-A8 memory part NOT done.
+- LESSONS_draft (round9) has s5 pre-reg v2 (l.77) but no R12-A10 (1)/(2) edits (no G0-FT/G0-SCR, seed null, AUC 0.94/0.995) -> due 30 Sep.
+- poll.log headers 20:48-22:48Z every ~10 min, only one 429 header (20:36:50Z); lb_poll.py sleeps fixed 600 s (R12-A5 15-min stretch not implemented); CLI default page 20 rows.
+- exp60 results.md: dc0.30 fork delta -98 (44b6, 17 clips) and -131 (6bba, 39 clips) = ~4.1 forks/clip; exp70d dummy -20 forks on 4 clips = 5/clip -> consistent, no shifted-score signal.
+- L9 classes (r_ladder.json L9 steps (1)): exp72 = class C -> never a final; R12-A3(b) says exp72 competes with V* -> conflict, no eligibility threshold pre-registered.
+- r_ladder.json L5: POSITIVE = display >= 0.955 or 0.954 + in-block move, read 'from the LB snapshot at the first poll that shows the variant COMPLETE'; no tool/owner for that snapshot (ladder_wait.py not in repo).
+- Snapshot 2246Z: Anvith Pothula team (x138 author) displays 0.956 (#126, last sub 26 Sep 01:08); public x138 still v1.
+- 23:02Z final JSON written (9 findings)

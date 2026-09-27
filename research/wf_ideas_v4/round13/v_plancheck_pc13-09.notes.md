@@ -1,0 +1,11 @@
+# v_plancheck_pc13-09 notes
+- 2026-09-27T01:14:50Z start; no prior json. Reading scan_plancheck.json, poll.log, CONTEXT tail, lb_poll.py.
+- Verified poll.log headers: 21:08:29Z (l.8621), 21:28:33Z (l.8743), 23:59:11Z (l.9658); only 429 = 20:36:50Z (l.8497, one poll, 3 failed attempts); next header 20:48:26Z. ledger.md: 215 polls, gaps>15 min 0.
+- Submits (poll.log l.10088-10094): 39 exp70e 21:15:23 (hdr 6.9 min), 40 exp70a 21:17:47 (9.3 min), 41 exp70d 21:38:33 (10.0 min; next hdr 21:38:34), 42 exp70b 00:05:50 (6.7 min). All W6 OK.
+- ledger.md rows 20-23: all four family safetail (9.5 h), insertion gate open.
+- CONTEXT l.2535-2538: probe 41 dummy sha ab8a7ec5 != K2 b6de85c1; node correction K2 dummy 121,252. l.2548/2624 exp70b 121,252 nodes, 74 forks, sha ed7101bf (explicit != K2 not written, implied).
+- exp60_trainlab/results.md l.63/66: dc0.30 fork delta -98 (44b6) + -131 (6bba) = -229 over 56 clips (~4.1/clip); dummy exp70d 55 vs 75 forks = -20 on 4 clips. Consistent.
+- R12-A5 (round12/report.json): stretch to 15 min ONLY "if the poller gets a 429 on 2 consecutive polls" -> trigger never met (single 429 poll). So not a deviation at all; finding's framing "not implemented" slightly off.
+- L8 (reach0955/r_ladder.json L8-schedule): submit a, e, d "between 22:15Z and 23:30Z" with no spacing -> the 39/40 near-simultaneity (PC13-03) is NOT caused by the e/a order swap; any order in that window would overlap. Also: submits happened 21:15-21:38Z, before the L8 window (harmless: dummies checked, hard cap 23:50Z).
+- Last API SELECTED log 20:04Z (CONTEXT l.2600); none after probes 39-42 -> duplicate of PC13-01.
+- Verdict: audit correct in substance; info-only, zero score value; two small framing corrections.

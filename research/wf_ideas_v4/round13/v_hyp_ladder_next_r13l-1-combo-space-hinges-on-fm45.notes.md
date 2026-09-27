@@ -1,0 +1,11 @@
+# v_hyp_ladder_next R13L-1 notes
+- 2026-09-27T01:14:52Z start; no prior JSON.
+- 2026-09-27T01:17:39Z read CONTEXT tail (L9 20:49Z, R12-A3 21:31Z, cap6 21:56Z, probe 42 00:06Z), scan_hyp_ladder_next.json/notes, r_ladder.json L1-L3, v_ladder.json corrections (1)-(9), exp60 results.md l.1-45, 76-150.
+- Combo space: subsets of {lp,dc,fm} = a,d,b singles; e = lp+dc; unscored c (lp+fm), h (dc+fm), f (all). All contain fm45: CONFIRMED.
+- Dry builds (scratchpad r13v1, builder imported with ROOT monkeypatched; nothing written under experiments/, git status unchanged): exp70c a7271d4e9a758607, exp70h 7ed29dd35a32774f, exp70f b009bedd4ce4b2f6, exp70b rebuild b8e7ece1a33cd2a1 == repo. CONFIRMED.
+- Built exp70c cell 7 order: prune_weak_leaf_nodes l.2230 -> divinsert l.2235 -> forkmid_final_graph l.2279 -> FINAL print. forkmid fail-soft ('FORKMID FAILED', keeps input edges). Nodes untouched (lab nodes_unchanged true over 56 clips; exp70b dummy 121,252 = K2).
+- fm45 lab: forkmid45 44b6 +0.0000 / 6bba +0.0002 (x138 control); ins35_forkmid45 vs ins35: 44b6 0 / 6bba +0.0003 (in-sample DaughterNet); T9 gate FALSE, L3 addendum FALSE, lowrefine-sensitivity bound: 4 TP of 20 counted adverse (a worst-case accounting, not a measured loss). Dummy touches 1 fork (75 -> 74).
+- KEY CORRECTION: probes 39-41 score ~04:37-05:11Z, 42 ~07:27-07:38Z. Any POS base (UP or 0.955) raises the team best BEFORE 42 scores, so in every POS-base world fm45 can only read POS if exp70b (K2+fm45) beats the base unit itself, i.e. fm45's public effect > the base knob's (lp30 lab +0.00083 over hundreds of nodes vs fm45 ~1 fork per 4 clips). P(fm45 POS | POS base) ~0.03-0.08 -> P(combo submitted) ~0.01-0.03 (finding says 0.03-0.06).
+- Consistency: L5v2 is stricter than L9 (NEU never combined), matches (vi)-(ix) with L9 clause (2); tie on 0.955 -> fewer knobs means a combo becomes V* only by displaying strictly higher than its base. R8 ok (combo not new code, submit <= ~08:45Z < 12:00Z; user lift 20:33Z covers ladder combos per r_ladder L0). Slots 4 left on 27 Sep.
+- Value: public EV ~ +5e-6; private ~0 (fm45 lab ~0, gate failed); main value = procedural (pre-registered 'no combo' in ~97% of worlds, frees slots, prevents post-hoc combos). Not refuted.
+- 2026-09-27T01:18:01Z final JSON written (refuted=false, with corrections A-D).
