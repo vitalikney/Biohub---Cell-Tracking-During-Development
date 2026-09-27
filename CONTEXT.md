@@ -2914,6 +2914,16 @@ Mention it to the user in one line (R9-A8 item 6).
 - 2026-09-27 09:15 UTC, R16-A2 message sent (chat + push requested). Updated forecast (round 16, files only): default {#37,#38} P(bronze+)
   ~0.55 (0.3-0.85), P(silver+) ~0.15-0.2; {exp70b,#38} ~0.59/0.23; if 43/44 >= 0.955: {V*_C,#37} ~0.72/0.41, {V*_C,#38} ~0.54/0.34
   (model estimates; research/wf_ideas_v4/round16/scan_hyp_forecast_update.json). The #38 twin is a narrow hedge, not a floor.
+- 2026-09-27 11:08 UTC, USER INSTRUCTION = E10 v3 (chat: "я не понимаю. появляется ноутбук лучше нашей метрики - ты его копируешь.
+  отправляешь полную копию, и ещё отправляешь с нашей доработкой, либо доработку нашего ноутбука под то, что сделали в
+  публичном ноуте"). Supersedes E10 v1/v2 thresholds and P6's 'no successor + insertion' ban, and lifts R8 for this item:
+  TRIGGER = a public notebook whose own public score is better than ours (> 0.954, i.e. >= 0.955). ACTIONS (autonomous,
+  push notification at trigger and at each submit): (A) submit a verbatim copy (byte-identical to the scored version,
+  private, internet off, sources public) as fast as possible; (B) submit the copy + our DaughterNet insertion (SI) when the
+  successor is x138-family and the patch anchors apply; or (C) port the public notebook's change into our K2 when (B)
+  cannot apply. Safety kept: byte-identity for (A), public/listable sources, runtime evidence (<= 12 h), dummy before submit,
+  never touch the finals without the user's re-tick. Open for the user: finals composition in that case (proposal in chat).
+  Tooling for (B)/(C) is being built now (workflow), before any trigger.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
