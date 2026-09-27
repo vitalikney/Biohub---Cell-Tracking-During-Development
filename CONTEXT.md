@@ -2786,6 +2786,17 @@ Mention it to the user in one line (R9-A8 item 6).
 - 2026-09-27 02:29 UTC, WATCH TIMERS (R14-A5, session-only): liveness + D1 checks 5b23a3ed (04:21Z), 54a8f20d (05:21Z), cdd738f1 (06:31Z),
   file-only inside the 04:10-06:45Z quiet window. Detached watcher launch at 03:35Z (background task b8v8e31bj). Round 15 at
   05:30Z (files only, audits the D1 read). Morning push 65b1b746 at 07:30Z (R14-A4 variants P-A/P-B/P-C).
+- 2026-09-27 04:58 UTC, LADDER READ D1 (L5v2/L9, R14 read sheet v1): 39 exp70e 0.949 [NEG], 40 exp70a 0.954 [NEU: no UP],
+  41 exp70d 0.949 [NEG]; watcher ran (PID 10088 since 03:35Z; S0 S0-20260927T0147Z; events 04:13:06Z / 04:31:08Z / 04:56:17Z;
+  S1 folders 20260927T041304Z / 20260927T043106Z / 20260927T045616Z; all fresh on the first download; SubmissionCount 40 -> 43;
+  UP test FAIL at all three events; our rank 242 -> 253 -> 255 at 0.954). Units e NEG, a NEU, d NEG; knobs lp30 NEU,
+  dc0.30 NEG; BLOCKED n/a (d itself NEG); BASE none -> no combo whatever probe 42 shows (L5v2 (5a)); row D1-3: the pair
+  stays {#37 56563521, #38 56563534}; no re-tick. Ledger: exp70a L (6.87, 7.04] h, exp70e (7.24, 7.42] h, both 'insertion
+  gate 8.0 h did NOT fire'; exp70d COMPLETE per the watcher at 04:56Z (poll.log to follow). Probe 42 exp70b (fm45) can
+  still become V* only by displaying >= 0.955 (D2). FACT (public, one embryo): DeepCenter safe-div 0.25 -> 0.30 costs
+  -0.005 on the public display (forks 75 -> 55 on the 4 dummy clips), while the exp60 lab said +0.0013 on 6bba and ~0 on
+  44b6: the lab sign was wrong for this knob; the public division term is far more sensitive than the lab suggested.
+  Leaf prune 0.3 on K2 = 0.954 without beating our best (P36 already carries lp30 at 0.954).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

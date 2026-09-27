@@ -10570,3 +10570,918 @@ ref,fileName,date,description,status,publicScore,privateScore
 
 56160334,submission.csv,2026-09-11 06:35:23.993000,"probe 15: exp33 = exp29 realised config (sjlee 0.947 stack + relink tight 5.5) + PRIMARY := exp03B, validator off (deconfounds probe 11)",SubmissionStatus.COMPLETE,0.944,
 
+=== 2026-09-27T02:29:42Z
+ref,fileName,date,description,status,publicScore,privateScore
+
+56592350,submission.csv,2026-09-27 00:05:50.347000,"probe 42: exp70b = K2 + forkmid 4.5 (ladder L4, class B)",SubmissionStatus.PENDING,,
+
+56589423,submission.csv,2026-09-26 21:38:33.837000,"probe 41: exp70d = K2 + DeepCenter safe-div 0.30 (ladder L2, class B)",SubmissionStatus.PENDING,,
+
+56589065,submission.csv,2026-09-26 21:17:47.170000,"probe 40: exp70a = K2 + leaf prune 0.3 (ladder L1, class A)",SubmissionStatus.PENDING,,
+
+56589025,submission.csv,2026-09-26 21:15:23.887000,"probe 39: exp70e = K2 + leaf prune 0.3 + DeepCenter safe-div 0.30 (ladder L3, R7 lifted by user 26 Sep 20:33Z)",SubmissionStatus.PENDING,,
+
+56563534,submission.csv,2026-09-26 00:02:18.207000,probe 38: exp58n = K2 twin without the insertion (x138 + safetail + lowrefine); AMENDMENT f2 F2 candidate; twin gates pass,SubmissionStatus.COMPLETE,0.953,
+
+56563521,submission.csv,2026-09-26 00:02:12.737000,probe 37: exp58 = K2 (x138 + safetail C01 + lowrefine + DaughterNet insertion #35 config); dummy gates 18/18,SubmissionStatus.COMPLETE,0.954,
+
+56555189,submission.csv,2026-09-25 16:18:09.270000,"P36 exp57 v1 DIAGNOSTIC (x138+leafprune0.3+divinsert ungated), never a final",SubmissionStatus.COMPLETE,0.954,
+
+56545786,submission.csv,2026-09-25 08:33:25.043000,"probe 35: exp57b = x138 verbatim (exp56) + DaughterNet v1 division insertion with steal (exp48 knobs); +12 forks, nodes identical",SubmissionStatus.COMPLETE,0.954,
+
+56545267,submission.csv,2026-09-25 08:09:00.723000,probe 34: exp56 = anvithpothula/biohub-x138 verbatim on our account (author public 0.953); same docker pin + machine shape,SubmissionStatus.COMPLETE,0.953,
+
+56534401,submission.csv,2026-09-25 00:02:10.437000,probe 33: exp53 = exp48 (0.948) + float output coords (safe encoding); compare with exp48,SubmissionStatus.COMPLETE,0.948,
+
+56534391,submission.csv,2026-09-25 00:02:05.877000,probe 32: exp52 = exp51 (exp48 + x138 head) + float output coords (safe encoding: floor(w)=round(v)); lab +0.0025 on 6bba selection,SubmissionStatus.COMPLETE,0.950,
+
+56527239,submission.csv,2026-09-24 17:09:12.710000,"probe 31: exp51 = exp48 (0.948) + x138 V1284 coordinate-refinement head (float coords, trilinear gather; verbatim); DeepCenter stays 0.20",SubmissionStatus.COMPLETE,0.950,
+
+56518039,submission.csv,2026-09-24 09:41:28.753000,probe 30: exp50 = exp39 + edge filter drop-only ef_a0 (drop every unscored relink edge); lab selection +0.0095,SubmissionStatus.COMPLETE,0.946,
+
+56518035,submission.csv,2026-09-24 09:41:23.477000,"probe 29: exp49 = exp39 + edge filter ef_a3_rl_pr (drop unscored relink edges where the ILP linked elsewhere, re-link to ILP alternative, prune isolated); lab confirmation +0.0162",SubmissionStatus.COMPLETE,0.947,
+
+56510845,submission.csv,2026-09-24 03:45:50.670000,"probe 28: exp48 = exp47 + DaughterNet v1 division insertion with steal (cap 4, alpha 1, ens thr 0.4); kernel parity fork-for-fork PASS",SubmissionStatus.COMPLETE,0.948,
+
+56510844,submission.csv,2026-09-24 03:45:46.783000,"probe 27: exp47 = exp39 + weak-leaf pruning 0.3 (035 verbatim); laptop confirmation +0.0006, no video worse",SubmissionStatus.COMPLETE,0.947,
+
+56502326,submission.csv,2026-09-23 19:25:05.213000,probe 26 (diagnostic): exp45 = exp29 with safe divisions OFF (0 forks); exp29 - exp45 = 0.1 x our LB division Jaccard,SubmissionStatus.COMPLETE,0.911,
+
+56473748,submission.csv,2026-09-22 20:41:45.973000,"probe 25: exp44 v2 = takaito verbatim + BUNDLE: axis-flip TTA (detector) + division hygiene (sister floor 5 um, already-divided filter)",SubmissionStatus.COMPLETE,0.946,
+
+56473747,submission.csv,2026-09-22 20:41:42.273000,probe 24: exp43 = takaito/biohub-a951-gshift verbatim (public notebook as is),SubmissionStatus.COMPLETE,0.944,
+
+56464419,submission.csv,2026-09-22 12:28:28.233000,"probe 23: exp42 = exp29 realised config + per-frame global-shift correction in motion relink (takaito gshift, MNN 12 um), one change",SubmissionStatus.COMPLETE,0.945,
+
+56459139,submission.csv,2026-09-22 08:41:13.727000,"probe 22: exp41 = exp29 realised config + MOTION_RELINK_LEARNED_BONUS 1.0 -> 2.5, one change",SubmissionStatus.COMPLETE,0.945,
+
+56459135,submission.csv,2026-09-22 08:41:09.277000,"probe 21: exp40 = exp29 realised config + motion relink OFF (B29; friend B 12 videos +0.0053), one change",SubmissionStatus.COMPLETE,0.945,
+
+56440312,submission.csv,2026-09-21 17:50:00.293000,"probe 20: exp39 = exp29 realised config + DivNet parent veto p>=0.5 on safe-division candidates (tools/divnet_infer.py, manifest recipe), one change",SubmissionStatus.COMPLETE,0.947,
+
+56256938,submission.csv,2026-09-15 14:42:42.703000,"probe 19: exp37 = exp29 realised config + TTA group := 8 axis flips instead of rot90/transpose (friend B surgery), one change",SubmissionStatus.COMPLETE,0.946,
+
+56252506,submission.csv,2026-09-15 10:50:18.897000,"probe 18: exp36 = exp29 realised config + division FP hygiene (already-divided fork filter + sister floor 5um), one change",SubmissionStatus.COMPLETE,0.946,
+
+56252420,submission.csv,2026-09-15 10:44:25.143000,"probe 18: exp36 = exp29 realised config + division FP hygiene (already-divided fork filter + sister floor 5um), one change",SubmissionStatus.COMPLETE,0.946,
+
+56161138,submission.csv,2026-09-11 07:26:56.210000,probe 17: exp35 = exp29 realised config (sjlee 0.947 stack + relink tight 5.5) + PRIMARY := soup03B_50 (0.5 pilkwang + 0.5 exp03B weight soup),SubmissionStatus.COMPLETE,0.943,
+
+56160878,submission.csv,2026-09-11 07:08:57.360000,"probe 16: exp34 = exp29 realised config (sjlee 0.947 stack + relink tight 5.5, pilkwang primary) + Z-flip TTA views (12 views) -- clean re-test of exp31",SubmissionStatus.COMPLETE,0.938,
+
+56160334,submission.csv,2026-09-11 06:35:23.993000,"probe 15: exp33 = exp29 realised config (sjlee 0.947 stack + relink tight 5.5) + PRIMARY := exp03B, validator off (deconfounds probe 11)",SubmissionStatus.COMPLETE,0.944,
+
+=== 2026-09-27T02:39:44Z
+ref,fileName,date,description,status,publicScore,privateScore
+
+56592350,submission.csv,2026-09-27 00:05:50.347000,"probe 42: exp70b = K2 + forkmid 4.5 (ladder L4, class B)",SubmissionStatus.PENDING,,
+
+56589423,submission.csv,2026-09-26 21:38:33.837000,"probe 41: exp70d = K2 + DeepCenter safe-div 0.30 (ladder L2, class B)",SubmissionStatus.PENDING,,
+
+56589065,submission.csv,2026-09-26 21:17:47.170000,"probe 40: exp70a = K2 + leaf prune 0.3 (ladder L1, class A)",SubmissionStatus.PENDING,,
+
+56589025,submission.csv,2026-09-26 21:15:23.887000,"probe 39: exp70e = K2 + leaf prune 0.3 + DeepCenter safe-div 0.30 (ladder L3, R7 lifted by user 26 Sep 20:33Z)",SubmissionStatus.PENDING,,
+
+56563534,submission.csv,2026-09-26 00:02:18.207000,probe 38: exp58n = K2 twin without the insertion (x138 + safetail + lowrefine); AMENDMENT f2 F2 candidate; twin gates pass,SubmissionStatus.COMPLETE,0.953,
+
+56563521,submission.csv,2026-09-26 00:02:12.737000,probe 37: exp58 = K2 (x138 + safetail C01 + lowrefine + DaughterNet insertion #35 config); dummy gates 18/18,SubmissionStatus.COMPLETE,0.954,
+
+56555189,submission.csv,2026-09-25 16:18:09.270000,"P36 exp57 v1 DIAGNOSTIC (x138+leafprune0.3+divinsert ungated), never a final",SubmissionStatus.COMPLETE,0.954,
+
+56545786,submission.csv,2026-09-25 08:33:25.043000,"probe 35: exp57b = x138 verbatim (exp56) + DaughterNet v1 division insertion with steal (exp48 knobs); +12 forks, nodes identical",SubmissionStatus.COMPLETE,0.954,
+
+56545267,submission.csv,2026-09-25 08:09:00.723000,probe 34: exp56 = anvithpothula/biohub-x138 verbatim on our account (author public 0.953); same docker pin + machine shape,SubmissionStatus.COMPLETE,0.953,
+
+56534401,submission.csv,2026-09-25 00:02:10.437000,probe 33: exp53 = exp48 (0.948) + float output coords (safe encoding); compare with exp48,SubmissionStatus.COMPLETE,0.948,
+
+56534391,submission.csv,2026-09-25 00:02:05.877000,probe 32: exp52 = exp51 (exp48 + x138 head) + float output coords (safe encoding: floor(w)=round(v)); lab +0.0025 on 6bba selection,SubmissionStatus.COMPLETE,0.950,
+
+56527239,submission.csv,2026-09-24 17:09:12.710000,"probe 31: exp51 = exp48 (0.948) + x138 V1284 coordinate-refinement head (float coords, trilinear gather; verbatim); DeepCenter stays 0.20",SubmissionStatus.COMPLETE,0.950,
+
+56518039,submission.csv,2026-09-24 09:41:28.753000,probe 30: exp50 = exp39 + edge filter drop-only ef_a0 (drop every unscored relink edge); lab selection +0.0095,SubmissionStatus.COMPLETE,0.946,
+
+56518035,submission.csv,2026-09-24 09:41:23.477000,"probe 29: exp49 = exp39 + edge filter ef_a3_rl_pr (drop unscored relink edges where the ILP linked elsewhere, re-link to ILP alternative, prune isolated); lab confirmation +0.0162",SubmissionStatus.COMPLETE,0.947,
+
+56510845,submission.csv,2026-09-24 03:45:50.670000,"probe 28: exp48 = exp47 + DaughterNet v1 division insertion with steal (cap 4, alpha 1, ens thr 0.4); kernel parity fork-for-fork PASS",SubmissionStatus.COMPLETE,0.948,
+
+56510844,submission.csv,2026-09-24 03:45:46.783000,"probe 27: exp47 = exp39 + weak-leaf pruning 0.3 (035 verbatim); laptop confirmation +0.0006, no video worse",SubmissionStatus.COMPLETE,0.947,
+
+56502326,submission.csv,2026-09-23 19:25:05.213000,probe 26 (diagnostic): exp45 = exp29 with safe divisions OFF (0 forks); exp29 - exp45 = 0.1 x our LB division Jaccard,SubmissionStatus.COMPLETE,0.911,
+
+56473748,submission.csv,2026-09-22 20:41:45.973000,"probe 25: exp44 v2 = takaito verbatim + BUNDLE: axis-flip TTA (detector) + division hygiene (sister floor 5 um, already-divided filter)",SubmissionStatus.COMPLETE,0.946,
+
+56473747,submission.csv,2026-09-22 20:41:42.273000,probe 24: exp43 = takaito/biohub-a951-gshift verbatim (public notebook as is),SubmissionStatus.COMPLETE,0.944,
+
+56464419,submission.csv,2026-09-22 12:28:28.233000,"probe 23: exp42 = exp29 realised config + per-frame global-shift correction in motion relink (takaito gshift, MNN 12 um), one change",SubmissionStatus.COMPLETE,0.945,
+
+56459139,submission.csv,2026-09-22 08:41:13.727000,"probe 22: exp41 = exp29 realised config + MOTION_RELINK_LEARNED_BONUS 1.0 -> 2.5, one change",SubmissionStatus.COMPLETE,0.945,
+
+56459135,submission.csv,2026-09-22 08:41:09.277000,"probe 21: exp40 = exp29 realised config + motion relink OFF (B29; friend B 12 videos +0.0053), one change",SubmissionStatus.COMPLETE,0.945,
+
+56440312,submission.csv,2026-09-21 17:50:00.293000,"probe 20: exp39 = exp29 realised config + DivNet parent veto p>=0.5 on safe-division candidates (tools/divnet_infer.py, manifest recipe), one change",SubmissionStatus.COMPLETE,0.947,
+
+56256938,submission.csv,2026-09-15 14:42:42.703000,"probe 19: exp37 = exp29 realised config + TTA group := 8 axis flips instead of rot90/transpose (friend B surgery), one change",SubmissionStatus.COMPLETE,0.946,
+
+56252506,submission.csv,2026-09-15 10:50:18.897000,"probe 18: exp36 = exp29 realised config + division FP hygiene (already-divided fork filter + sister floor 5um), one change",SubmissionStatus.COMPLETE,0.946,
+
+56252420,submission.csv,2026-09-15 10:44:25.143000,"probe 18: exp36 = exp29 realised config + division FP hygiene (already-divided fork filter + sister floor 5um), one change",SubmissionStatus.COMPLETE,0.946,
+
+56161138,submission.csv,2026-09-11 07:26:56.210000,probe 17: exp35 = exp29 realised config (sjlee 0.947 stack + relink tight 5.5) + PRIMARY := soup03B_50 (0.5 pilkwang + 0.5 exp03B weight soup),SubmissionStatus.COMPLETE,0.943,
+
+56160878,submission.csv,2026-09-11 07:08:57.360000,"probe 16: exp34 = exp29 realised config (sjlee 0.947 stack + relink tight 5.5, pilkwang primary) + Z-flip TTA views (12 views) -- clean re-test of exp31",SubmissionStatus.COMPLETE,0.938,
+
+56160334,submission.csv,2026-09-11 06:35:23.993000,"probe 15: exp33 = exp29 realised config (sjlee 0.947 stack + relink tight 5.5) + PRIMARY := exp03B, validator off (deconfounds probe 11)",SubmissionStatus.COMPLETE,0.944,
+
+=== 2026-09-27T02:49:46Z
+ref,fileName,date,description,status,publicScore,privateScore
+
+56592350,submission.csv,2026-09-27 00:05:50.347000,"probe 42: exp70b = K2 + forkmid 4.5 (ladder L4, class B)",SubmissionStatus.PENDING,,
+
+56589423,submission.csv,2026-09-26 21:38:33.837000,"probe 41: exp70d = K2 + DeepCenter safe-div 0.30 (ladder L2, class B)",SubmissionStatus.PENDING,,
+
+56589065,submission.csv,2026-09-26 21:17:47.170000,"probe 40: exp70a = K2 + leaf prune 0.3 (ladder L1, class A)",SubmissionStatus.PENDING,,
+
+56589025,submission.csv,2026-09-26 21:15:23.887000,"probe 39: exp70e = K2 + leaf prune 0.3 + DeepCenter safe-div 0.30 (ladder L3, R7 lifted by user 26 Sep 20:33Z)",SubmissionStatus.PENDING,,
+
+56563534,submission.csv,2026-09-26 00:02:18.207000,probe 38: exp58n = K2 twin without the insertion (x138 + safetail + lowrefine); AMENDMENT f2 F2 candidate; twin gates pass,SubmissionStatus.COMPLETE,0.953,
+
+56563521,submission.csv,2026-09-26 00:02:12.737000,probe 37: exp58 = K2 (x138 + safetail C01 + lowrefine + DaughterNet insertion #35 config); dummy gates 18/18,SubmissionStatus.COMPLETE,0.954,
+
+56555189,submission.csv,2026-09-25 16:18:09.270000,"P36 exp57 v1 DIAGNOSTIC (x138+leafprune0.3+divinsert ungated), never a final",SubmissionStatus.COMPLETE,0.954,
+
+56545786,submission.csv,2026-09-25 08:33:25.043000,"probe 35: exp57b = x138 verbatim (exp56) + DaughterNet v1 division insertion with steal (exp48 knobs); +12 forks, nodes identical",SubmissionStatus.COMPLETE,0.954,
+
+56545267,submission.csv,2026-09-25 08:09:00.723000,probe 34: exp56 = anvithpothula/biohub-x138 verbatim on our account (author public 0.953); same docker pin + machine shape,SubmissionStatus.COMPLETE,0.953,
+
+56534401,submission.csv,2026-09-25 00:02:10.437000,probe 33: exp53 = exp48 (0.948) + float output coords (safe encoding); compare with exp48,SubmissionStatus.COMPLETE,0.948,
+
+56534391,submission.csv,2026-09-25 00:02:05.877000,probe 32: exp52 = exp51 (exp48 + x138 head) + float output coords (safe encoding: floor(w)=round(v)); lab +0.0025 on 6bba selection,SubmissionStatus.COMPLETE,0.950,
+
+56527239,submission.csv,2026-09-24 17:09:12.710000,"probe 31: exp51 = exp48 (0.948) + x138 V1284 coordinate-refinement head (float coords, trilinear gather; verbatim); DeepCenter stays 0.20",SubmissionStatus.COMPLETE,0.950,
+
+56518039,submission.csv,2026-09-24 09:41:28.753000,probe 30: exp50 = exp39 + edge filter drop-only ef_a0 (drop every unscored relink edge); lab selection +0.0095,SubmissionStatus.COMPLETE,0.946,
+
+56518035,submission.csv,2026-09-24 09:41:23.477000,"probe 29: exp49 = exp39 + edge filter ef_a3_rl_pr (drop unscored relink edges where the ILP linked elsewhere, re-link to ILP alternative, prune isolated); lab confirmation +0.0162",SubmissionStatus.COMPLETE,0.947,
+
+56510845,submission.csv,2026-09-24 03:45:50.670000,"probe 28: exp48 = exp47 + DaughterNet v1 division insertion with steal (cap 4, alpha 1, ens thr 0.4); kernel parity fork-for-fork PASS",SubmissionStatus.COMPLETE,0.948,
+
+56510844,submission.csv,2026-09-24 03:45:46.783000,"probe 27: exp47 = exp39 + weak-leaf pruning 0.3 (035 verbatim); laptop confirmation +0.0006, no video worse",SubmissionStatus.COMPLETE,0.947,
+
+56502326,submission.csv,2026-09-23 19:25:05.213000,probe 26 (diagnostic): exp45 = exp29 with safe divisions OFF (0 forks); exp29 - exp45 = 0.1 x our LB division Jaccard,SubmissionStatus.COMPLETE,0.911,
+
+56473748,submission.csv,2026-09-22 20:41:45.973000,"probe 25: exp44 v2 = takaito verbatim + BUNDLE: axis-flip TTA (detector) + division hygiene (sister floor 5 um, already-divided filter)",SubmissionStatus.COMPLETE,0.946,
+
+56473747,submission.csv,2026-09-22 20:41:42.273000,probe 24: exp43 = takaito/biohub-a951-gshift verbatim (public notebook as is),SubmissionStatus.COMPLETE,0.944,
+
+56464419,submission.csv,2026-09-22 12:28:28.233000,"probe 23: exp42 = exp29 realised config + per-frame global-shift correction in motion relink (takaito gshift, MNN 12 um), one change",SubmissionStatus.COMPLETE,0.945,
+
+56459139,submission.csv,2026-09-22 08:41:13.727000,"probe 22: exp41 = exp29 realised config + MOTION_RELINK_LEARNED_BONUS 1.0 -> 2.5, one change",SubmissionStatus.COMPLETE,0.945,
+
+56459135,submission.csv,2026-09-22 08:41:09.277000,"probe 21: exp40 = exp29 realised config + motion relink OFF (B29; friend B 12 videos +0.0053), one change",SubmissionStatus.COMPLETE,0.945,
+
+56440312,submission.csv,2026-09-21 17:50:00.293000,"probe 20: exp39 = exp29 realised config + DivNet parent veto p>=0.5 on safe-division candidates (tools/divnet_infer.py, manifest recipe), one change",SubmissionStatus.COMPLETE,0.947,
+
+56256938,submission.csv,2026-09-15 14:42:42.703000,"probe 19: exp37 = exp29 realised config + TTA group := 8 axis flips instead of rot90/transpose (friend B surgery), one change",SubmissionStatus.COMPLETE,0.946,
+
+56252506,submission.csv,2026-09-15 10:50:18.897000,"probe 18: exp36 = exp29 realised config + division FP hygiene (already-divided fork filter + sister floor 5um), one change",SubmissionStatus.COMPLETE,0.946,
+
+56252420,submission.csv,2026-09-15 10:44:25.143000,"probe 18: exp36 = exp29 realised config + division FP hygiene (already-divided fork filter + sister floor 5um), one change",SubmissionStatus.COMPLETE,0.946,
+
+56161138,submission.csv,2026-09-11 07:26:56.210000,probe 17: exp35 = exp29 realised config (sjlee 0.947 stack + relink tight 5.5) + PRIMARY := soup03B_50 (0.5 pilkwang + 0.5 exp03B weight soup),SubmissionStatus.COMPLETE,0.943,
+
+56160878,submission.csv,2026-09-11 07:08:57.360000,"probe 16: exp34 = exp29 realised config (sjlee 0.947 stack + relink tight 5.5, pilkwang primary) + Z-flip TTA views (12 views) -- clean re-test of exp31",SubmissionStatus.COMPLETE,0.938,
+
+56160334,submission.csv,2026-09-11 06:35:23.993000,"probe 15: exp33 = exp29 realised config (sjlee 0.947 stack + relink tight 5.5) + PRIMARY := exp03B, validator off (deconfounds probe 11)",SubmissionStatus.COMPLETE,0.944,
+
+=== 2026-09-27T02:59:47Z
+ref,fileName,date,description,status,publicScore,privateScore
+
+56592350,submission.csv,2026-09-27 00:05:50.347000,"probe 42: exp70b = K2 + forkmid 4.5 (ladder L4, class B)",SubmissionStatus.PENDING,,
+
+56589423,submission.csv,2026-09-26 21:38:33.837000,"probe 41: exp70d = K2 + DeepCenter safe-div 0.30 (ladder L2, class B)",SubmissionStatus.PENDING,,
+
+56589065,submission.csv,2026-09-26 21:17:47.170000,"probe 40: exp70a = K2 + leaf prune 0.3 (ladder L1, class A)",SubmissionStatus.PENDING,,
+
+56589025,submission.csv,2026-09-26 21:15:23.887000,"probe 39: exp70e = K2 + leaf prune 0.3 + DeepCenter safe-div 0.30 (ladder L3, R7 lifted by user 26 Sep 20:33Z)",SubmissionStatus.PENDING,,
+
+56563534,submission.csv,2026-09-26 00:02:18.207000,probe 38: exp58n = K2 twin without the insertion (x138 + safetail + lowrefine); AMENDMENT f2 F2 candidate; twin gates pass,SubmissionStatus.COMPLETE,0.953,
+
+56563521,submission.csv,2026-09-26 00:02:12.737000,probe 37: exp58 = K2 (x138 + safetail C01 + lowrefine + DaughterNet insertion #35 config); dummy gates 18/18,SubmissionStatus.COMPLETE,0.954,
+
+56555189,submission.csv,2026-09-25 16:18:09.270000,"P36 exp57 v1 DIAGNOSTIC (x138+leafprune0.3+divinsert ungated), never a final",SubmissionStatus.COMPLETE,0.954,
+
+56545786,submission.csv,2026-09-25 08:33:25.043000,"probe 35: exp57b = x138 verbatim (exp56) + DaughterNet v1 division insertion with steal (exp48 knobs); +12 forks, nodes identical",SubmissionStatus.COMPLETE,0.954,
+
+56545267,submission.csv,2026-09-25 08:09:00.723000,probe 34: exp56 = anvithpothula/biohub-x138 verbatim on our account (author public 0.953); same docker pin + machine shape,SubmissionStatus.COMPLETE,0.953,
+
+56534401,submission.csv,2026-09-25 00:02:10.437000,probe 33: exp53 = exp48 (0.948) + float output coords (safe encoding); compare with exp48,SubmissionStatus.COMPLETE,0.948,
+
+56534391,submission.csv,2026-09-25 00:02:05.877000,probe 32: exp52 = exp51 (exp48 + x138 head) + float output coords (safe encoding: floor(w)=round(v)); lab +0.0025 on 6bba selection,SubmissionStatus.COMPLETE,0.950,
+
+56527239,submission.csv,2026-09-24 17:09:12.710000,"probe 31: exp51 = exp48 (0.948) + x138 V1284 coordinate-refinement head (float coords, trilinear gather; verbatim); DeepCenter stays 0.20",SubmissionStatus.COMPLETE,0.950,
+
+56518039,submission.csv,2026-09-24 09:41:28.753000,probe 30: exp50 = exp39 + edge filter drop-only ef_a0 (drop every unscored relink edge); lab selection +0.0095,SubmissionStatus.COMPLETE,0.946,
+
+56518035,submission.csv,2026-09-24 09:41:23.477000,"probe 29: exp49 = exp39 + edge filter ef_a3_rl_pr (drop unscored relink edges where the ILP linked elsewhere, re-link to ILP alternative, prune isolated); lab confirmation +0.0162",SubmissionStatus.COMPLETE,0.947,
+
+56510845,submission.csv,2026-09-24 03:45:50.670000,"probe 28: exp48 = exp47 + DaughterNet v1 division insertion with steal (cap 4, alpha 1, ens thr 0.4); kernel parity fork-for-fork PASS",SubmissionStatus.COMPLETE,0.948,
+
+56510844,submission.csv,2026-09-24 03:45:46.783000,"probe 27: exp47 = exp39 + weak-leaf pruning 0.3 (035 verbatim); laptop confirmation +0.0006, no video worse",SubmissionStatus.COMPLETE,0.947,
+
+56502326,submission.csv,2026-09-23 19:25:05.213000,probe 26 (diagnostic): exp45 = exp29 with safe divisions OFF (0 forks); exp29 - exp45 = 0.1 x our LB division Jaccard,SubmissionStatus.COMPLETE,0.911,
+
+56473748,submission.csv,2026-09-22 20:41:45.973000,"probe 25: exp44 v2 = takaito verbatim + BUNDLE: axis-flip TTA (detector) + division hygiene (sister floor 5 um, already-divided filter)",SubmissionStatus.COMPLETE,0.946,
+
+56473747,submission.csv,2026-09-22 20:41:42.273000,probe 24: exp43 = takaito/biohub-a951-gshift verbatim (public notebook as is),SubmissionStatus.COMPLETE,0.944,
+
+56464419,submission.csv,2026-09-22 12:28:28.233000,"probe 23: exp42 = exp29 realised config + per-frame global-shift correction in motion relink (takaito gshift, MNN 12 um), one change",SubmissionStatus.COMPLETE,0.945,
+
+56459139,submission.csv,2026-09-22 08:41:13.727000,"probe 22: exp41 = exp29 realised config + MOTION_RELINK_LEARNED_BONUS 1.0 -> 2.5, one change",SubmissionStatus.COMPLETE,0.945,
+
+56459135,submission.csv,2026-09-22 08:41:09.277000,"probe 21: exp40 = exp29 realised config + motion relink OFF (B29; friend B 12 videos +0.0053), one change",SubmissionStatus.COMPLETE,0.945,
+
+56440312,submission.csv,2026-09-21 17:50:00.293000,"probe 20: exp39 = exp29 realised config + DivNet parent veto p>=0.5 on safe-division candidates (tools/divnet_infer.py, manifest recipe), one change",SubmissionStatus.COMPLETE,0.947,
+
+56256938,submission.csv,2026-09-15 14:42:42.703000,"probe 19: exp37 = exp29 realised config + TTA group := 8 axis flips instead of rot90/transpose (friend B surgery), one change",SubmissionStatus.COMPLETE,0.946,
+
+56252506,submission.csv,2026-09-15 10:50:18.897000,"probe 18: exp36 = exp29 realised config + division FP hygiene (already-divided fork filter + sister floor 5um), one change",SubmissionStatus.COMPLETE,0.946,
+
+56252420,submission.csv,2026-09-15 10:44:25.143000,"probe 18: exp36 = exp29 realised config + division FP hygiene (already-divided fork filter + sister floor 5um), one change",SubmissionStatus.COMPLETE,0.946,
+
+56161138,submission.csv,2026-09-11 07:26:56.210000,probe 17: exp35 = exp29 realised config (sjlee 0.947 stack + relink tight 5.5) + PRIMARY := soup03B_50 (0.5 pilkwang + 0.5 exp03B weight soup),SubmissionStatus.COMPLETE,0.943,
+
+56160878,submission.csv,2026-09-11 07:08:57.360000,"probe 16: exp34 = exp29 realised config (sjlee 0.947 stack + relink tight 5.5, pilkwang primary) + Z-flip TTA views (12 views) -- clean re-test of exp31",SubmissionStatus.COMPLETE,0.938,
+
+56160334,submission.csv,2026-09-11 06:35:23.993000,"probe 15: exp33 = exp29 realised config (sjlee 0.947 stack + relink tight 5.5) + PRIMARY := exp03B, validator off (deconfounds probe 11)",SubmissionStatus.COMPLETE,0.944,
+
+=== 2026-09-27T03:09:49Z
+ref,fileName,date,description,status,publicScore,privateScore
+
+56592350,submission.csv,2026-09-27 00:05:50.347000,"probe 42: exp70b = K2 + forkmid 4.5 (ladder L4, class B)",SubmissionStatus.PENDING,,
+
+56589423,submission.csv,2026-09-26 21:38:33.837000,"probe 41: exp70d = K2 + DeepCenter safe-div 0.30 (ladder L2, class B)",SubmissionStatus.PENDING,,
+
+56589065,submission.csv,2026-09-26 21:17:47.170000,"probe 40: exp70a = K2 + leaf prune 0.3 (ladder L1, class A)",SubmissionStatus.PENDING,,
+
+56589025,submission.csv,2026-09-26 21:15:23.887000,"probe 39: exp70e = K2 + leaf prune 0.3 + DeepCenter safe-div 0.30 (ladder L3, R7 lifted by user 26 Sep 20:33Z)",SubmissionStatus.PENDING,,
+
+56563534,submission.csv,2026-09-26 00:02:18.207000,probe 38: exp58n = K2 twin without the insertion (x138 + safetail + lowrefine); AMENDMENT f2 F2 candidate; twin gates pass,SubmissionStatus.COMPLETE,0.953,
+
+56563521,submission.csv,2026-09-26 00:02:12.737000,probe 37: exp58 = K2 (x138 + safetail C01 + lowrefine + DaughterNet insertion #35 config); dummy gates 18/18,SubmissionStatus.COMPLETE,0.954,
+
+56555189,submission.csv,2026-09-25 16:18:09.270000,"P36 exp57 v1 DIAGNOSTIC (x138+leafprune0.3+divinsert ungated), never a final",SubmissionStatus.COMPLETE,0.954,
+
+56545786,submission.csv,2026-09-25 08:33:25.043000,"probe 35: exp57b = x138 verbatim (exp56) + DaughterNet v1 division insertion with steal (exp48 knobs); +12 forks, nodes identical",SubmissionStatus.COMPLETE,0.954,
+
+56545267,submission.csv,2026-09-25 08:09:00.723000,probe 34: exp56 = anvithpothula/biohub-x138 verbatim on our account (author public 0.953); same docker pin + machine shape,SubmissionStatus.COMPLETE,0.953,
+
+56534401,submission.csv,2026-09-25 00:02:10.437000,probe 33: exp53 = exp48 (0.948) + float output coords (safe encoding); compare with exp48,SubmissionStatus.COMPLETE,0.948,
+
+56534391,submission.csv,2026-09-25 00:02:05.877000,probe 32: exp52 = exp51 (exp48 + x138 head) + float output coords (safe encoding: floor(w)=round(v)); lab +0.0025 on 6bba selection,SubmissionStatus.COMPLETE,0.950,
+
+56527239,submission.csv,2026-09-24 17:09:12.710000,"probe 31: exp51 = exp48 (0.948) + x138 V1284 coordinate-refinement head (float coords, trilinear gather; verbatim); DeepCenter stays 0.20",SubmissionStatus.COMPLETE,0.950,
+
+56518039,submission.csv,2026-09-24 09:41:28.753000,probe 30: exp50 = exp39 + edge filter drop-only ef_a0 (drop every unscored relink edge); lab selection +0.0095,SubmissionStatus.COMPLETE,0.946,
+
+56518035,submission.csv,2026-09-24 09:41:23.477000,"probe 29: exp49 = exp39 + edge filter ef_a3_rl_pr (drop unscored relink edges where the ILP linked elsewhere, re-link to ILP alternative, prune isolated); lab confirmation +0.0162",SubmissionStatus.COMPLETE,0.947,
+
+56510845,submission.csv,2026-09-24 03:45:50.670000,"probe 28: exp48 = exp47 + DaughterNet v1 division insertion with steal (cap 4, alpha 1, ens thr 0.4); kernel parity fork-for-fork PASS",SubmissionStatus.COMPLETE,0.948,
+
+56510844,submission.csv,2026-09-24 03:45:46.783000,"probe 27: exp47 = exp39 + weak-leaf pruning 0.3 (035 verbatim); laptop confirmation +0.0006, no video worse",SubmissionStatus.COMPLETE,0.947,
+
+56502326,submission.csv,2026-09-23 19:25:05.213000,probe 26 (diagnostic): exp45 = exp29 with safe divisions OFF (0 forks); exp29 - exp45 = 0.1 x our LB division Jaccard,SubmissionStatus.COMPLETE,0.911,
+
+56473748,submission.csv,2026-09-22 20:41:45.973000,"probe 25: exp44 v2 = takaito verbatim + BUNDLE: axis-flip TTA (detector) + division hygiene (sister floor 5 um, already-divided filter)",SubmissionStatus.COMPLETE,0.946,
+
+56473747,submission.csv,2026-09-22 20:41:42.273000,probe 24: exp43 = takaito/biohub-a951-gshift verbatim (public notebook as is),SubmissionStatus.COMPLETE,0.944,
+
+56464419,submission.csv,2026-09-22 12:28:28.233000,"probe 23: exp42 = exp29 realised config + per-frame global-shift correction in motion relink (takaito gshift, MNN 12 um), one change",SubmissionStatus.COMPLETE,0.945,
+
+56459139,submission.csv,2026-09-22 08:41:13.727000,"probe 22: exp41 = exp29 realised config + MOTION_RELINK_LEARNED_BONUS 1.0 -> 2.5, one change",SubmissionStatus.COMPLETE,0.945,
+
+56459135,submission.csv,2026-09-22 08:41:09.277000,"probe 21: exp40 = exp29 realised config + motion relink OFF (B29; friend B 12 videos +0.0053), one change",SubmissionStatus.COMPLETE,0.945,
+
+56440312,submission.csv,2026-09-21 17:50:00.293000,"probe 20: exp39 = exp29 realised config + DivNet parent veto p>=0.5 on safe-division candidates (tools/divnet_infer.py, manifest recipe), one change",SubmissionStatus.COMPLETE,0.947,
+
+56256938,submission.csv,2026-09-15 14:42:42.703000,"probe 19: exp37 = exp29 realised config + TTA group := 8 axis flips instead of rot90/transpose (friend B surgery), one change",SubmissionStatus.COMPLETE,0.946,
+
+56252506,submission.csv,2026-09-15 10:50:18.897000,"probe 18: exp36 = exp29 realised config + division FP hygiene (already-divided fork filter + sister floor 5um), one change",SubmissionStatus.COMPLETE,0.946,
+
+56252420,submission.csv,2026-09-15 10:44:25.143000,"probe 18: exp36 = exp29 realised config + division FP hygiene (already-divided fork filter + sister floor 5um), one change",SubmissionStatus.COMPLETE,0.946,
+
+56161138,submission.csv,2026-09-11 07:26:56.210000,probe 17: exp35 = exp29 realised config (sjlee 0.947 stack + relink tight 5.5) + PRIMARY := soup03B_50 (0.5 pilkwang + 0.5 exp03B weight soup),SubmissionStatus.COMPLETE,0.943,
+
+56160878,submission.csv,2026-09-11 07:08:57.360000,"probe 16: exp34 = exp29 realised config (sjlee 0.947 stack + relink tight 5.5, pilkwang primary) + Z-flip TTA views (12 views) -- clean re-test of exp31",SubmissionStatus.COMPLETE,0.938,
+
+56160334,submission.csv,2026-09-11 06:35:23.993000,"probe 15: exp33 = exp29 realised config (sjlee 0.947 stack + relink tight 5.5) + PRIMARY := exp03B, validator off (deconfounds probe 11)",SubmissionStatus.COMPLETE,0.944,
+
+=== 2026-09-27T03:19:51Z
+ref,fileName,date,description,status,publicScore,privateScore
+
+56592350,submission.csv,2026-09-27 00:05:50.347000,"probe 42: exp70b = K2 + forkmid 4.5 (ladder L4, class B)",SubmissionStatus.PENDING,,
+
+56589423,submission.csv,2026-09-26 21:38:33.837000,"probe 41: exp70d = K2 + DeepCenter safe-div 0.30 (ladder L2, class B)",SubmissionStatus.PENDING,,
+
+56589065,submission.csv,2026-09-26 21:17:47.170000,"probe 40: exp70a = K2 + leaf prune 0.3 (ladder L1, class A)",SubmissionStatus.PENDING,,
+
+56589025,submission.csv,2026-09-26 21:15:23.887000,"probe 39: exp70e = K2 + leaf prune 0.3 + DeepCenter safe-div 0.30 (ladder L3, R7 lifted by user 26 Sep 20:33Z)",SubmissionStatus.PENDING,,
+
+56563534,submission.csv,2026-09-26 00:02:18.207000,probe 38: exp58n = K2 twin without the insertion (x138 + safetail + lowrefine); AMENDMENT f2 F2 candidate; twin gates pass,SubmissionStatus.COMPLETE,0.953,
+
+56563521,submission.csv,2026-09-26 00:02:12.737000,probe 37: exp58 = K2 (x138 + safetail C01 + lowrefine + DaughterNet insertion #35 config); dummy gates 18/18,SubmissionStatus.COMPLETE,0.954,
+
+56555189,submission.csv,2026-09-25 16:18:09.270000,"P36 exp57 v1 DIAGNOSTIC (x138+leafprune0.3+divinsert ungated), never a final",SubmissionStatus.COMPLETE,0.954,
+
+56545786,submission.csv,2026-09-25 08:33:25.043000,"probe 35: exp57b = x138 verbatim (exp56) + DaughterNet v1 division insertion with steal (exp48 knobs); +12 forks, nodes identical",SubmissionStatus.COMPLETE,0.954,
+
+56545267,submission.csv,2026-09-25 08:09:00.723000,probe 34: exp56 = anvithpothula/biohub-x138 verbatim on our account (author public 0.953); same docker pin + machine shape,SubmissionStatus.COMPLETE,0.953,
+
+56534401,submission.csv,2026-09-25 00:02:10.437000,probe 33: exp53 = exp48 (0.948) + float output coords (safe encoding); compare with exp48,SubmissionStatus.COMPLETE,0.948,
+
+56534391,submission.csv,2026-09-25 00:02:05.877000,probe 32: exp52 = exp51 (exp48 + x138 head) + float output coords (safe encoding: floor(w)=round(v)); lab +0.0025 on 6bba selection,SubmissionStatus.COMPLETE,0.950,
+
+56527239,submission.csv,2026-09-24 17:09:12.710000,"probe 31: exp51 = exp48 (0.948) + x138 V1284 coordinate-refinement head (float coords, trilinear gather; verbatim); DeepCenter stays 0.20",SubmissionStatus.COMPLETE,0.950,
+
+56518039,submission.csv,2026-09-24 09:41:28.753000,probe 30: exp50 = exp39 + edge filter drop-only ef_a0 (drop every unscored relink edge); lab selection +0.0095,SubmissionStatus.COMPLETE,0.946,
+
+56518035,submission.csv,2026-09-24 09:41:23.477000,"probe 29: exp49 = exp39 + edge filter ef_a3_rl_pr (drop unscored relink edges where the ILP linked elsewhere, re-link to ILP alternative, prune isolated); lab confirmation +0.0162",SubmissionStatus.COMPLETE,0.947,
+
+56510845,submission.csv,2026-09-24 03:45:50.670000,"probe 28: exp48 = exp47 + DaughterNet v1 division insertion with steal (cap 4, alpha 1, ens thr 0.4); kernel parity fork-for-fork PASS",SubmissionStatus.COMPLETE,0.948,
+
+56510844,submission.csv,2026-09-24 03:45:46.783000,"probe 27: exp47 = exp39 + weak-leaf pruning 0.3 (035 verbatim); laptop confirmation +0.0006, no video worse",SubmissionStatus.COMPLETE,0.947,
+
+56502326,submission.csv,2026-09-23 19:25:05.213000,probe 26 (diagnostic): exp45 = exp29 with safe divisions OFF (0 forks); exp29 - exp45 = 0.1 x our LB division Jaccard,SubmissionStatus.COMPLETE,0.911,
+
+56473748,submission.csv,2026-09-22 20:41:45.973000,"probe 25: exp44 v2 = takaito verbatim + BUNDLE: axis-flip TTA (detector) + division hygiene (sister floor 5 um, already-divided filter)",SubmissionStatus.COMPLETE,0.946,
+
+56473747,submission.csv,2026-09-22 20:41:42.273000,probe 24: exp43 = takaito/biohub-a951-gshift verbatim (public notebook as is),SubmissionStatus.COMPLETE,0.944,
+
+56464419,submission.csv,2026-09-22 12:28:28.233000,"probe 23: exp42 = exp29 realised config + per-frame global-shift correction in motion relink (takaito gshift, MNN 12 um), one change",SubmissionStatus.COMPLETE,0.945,
+
+56459139,submission.csv,2026-09-22 08:41:13.727000,"probe 22: exp41 = exp29 realised config + MOTION_RELINK_LEARNED_BONUS 1.0 -> 2.5, one change",SubmissionStatus.COMPLETE,0.945,
+
+56459135,submission.csv,2026-09-22 08:41:09.277000,"probe 21: exp40 = exp29 realised config + motion relink OFF (B29; friend B 12 videos +0.0053), one change",SubmissionStatus.COMPLETE,0.945,
+
+56440312,submission.csv,2026-09-21 17:50:00.293000,"probe 20: exp39 = exp29 realised config + DivNet parent veto p>=0.5 on safe-division candidates (tools/divnet_infer.py, manifest recipe), one change",SubmissionStatus.COMPLETE,0.947,
+
+56256938,submission.csv,2026-09-15 14:42:42.703000,"probe 19: exp37 = exp29 realised config + TTA group := 8 axis flips instead of rot90/transpose (friend B surgery), one change",SubmissionStatus.COMPLETE,0.946,
+
+56252506,submission.csv,2026-09-15 10:50:18.897000,"probe 18: exp36 = exp29 realised config + division FP hygiene (already-divided fork filter + sister floor 5um), one change",SubmissionStatus.COMPLETE,0.946,
+
+56252420,submission.csv,2026-09-15 10:44:25.143000,"probe 18: exp36 = exp29 realised config + division FP hygiene (already-divided fork filter + sister floor 5um), one change",SubmissionStatus.COMPLETE,0.946,
+
+56161138,submission.csv,2026-09-11 07:26:56.210000,probe 17: exp35 = exp29 realised config (sjlee 0.947 stack + relink tight 5.5) + PRIMARY := soup03B_50 (0.5 pilkwang + 0.5 exp03B weight soup),SubmissionStatus.COMPLETE,0.943,
+
+56160878,submission.csv,2026-09-11 07:08:57.360000,"probe 16: exp34 = exp29 realised config (sjlee 0.947 stack + relink tight 5.5, pilkwang primary) + Z-flip TTA views (12 views) -- clean re-test of exp31",SubmissionStatus.COMPLETE,0.938,
+
+56160334,submission.csv,2026-09-11 06:35:23.993000,"probe 15: exp33 = exp29 realised config (sjlee 0.947 stack + relink tight 5.5) + PRIMARY := exp03B, validator off (deconfounds probe 11)",SubmissionStatus.COMPLETE,0.944,
+
+=== 2026-09-27T03:29:53Z
+ref,fileName,date,description,status,publicScore,privateScore
+
+56592350,submission.csv,2026-09-27 00:05:50.347000,"probe 42: exp70b = K2 + forkmid 4.5 (ladder L4, class B)",SubmissionStatus.PENDING,,
+
+56589423,submission.csv,2026-09-26 21:38:33.837000,"probe 41: exp70d = K2 + DeepCenter safe-div 0.30 (ladder L2, class B)",SubmissionStatus.PENDING,,
+
+56589065,submission.csv,2026-09-26 21:17:47.170000,"probe 40: exp70a = K2 + leaf prune 0.3 (ladder L1, class A)",SubmissionStatus.PENDING,,
+
+56589025,submission.csv,2026-09-26 21:15:23.887000,"probe 39: exp70e = K2 + leaf prune 0.3 + DeepCenter safe-div 0.30 (ladder L3, R7 lifted by user 26 Sep 20:33Z)",SubmissionStatus.PENDING,,
+
+56563534,submission.csv,2026-09-26 00:02:18.207000,probe 38: exp58n = K2 twin without the insertion (x138 + safetail + lowrefine); AMENDMENT f2 F2 candidate; twin gates pass,SubmissionStatus.COMPLETE,0.953,
+
+56563521,submission.csv,2026-09-26 00:02:12.737000,probe 37: exp58 = K2 (x138 + safetail C01 + lowrefine + DaughterNet insertion #35 config); dummy gates 18/18,SubmissionStatus.COMPLETE,0.954,
+
+56555189,submission.csv,2026-09-25 16:18:09.270000,"P36 exp57 v1 DIAGNOSTIC (x138+leafprune0.3+divinsert ungated), never a final",SubmissionStatus.COMPLETE,0.954,
+
+56545786,submission.csv,2026-09-25 08:33:25.043000,"probe 35: exp57b = x138 verbatim (exp56) + DaughterNet v1 division insertion with steal (exp48 knobs); +12 forks, nodes identical",SubmissionStatus.COMPLETE,0.954,
+
+56545267,submission.csv,2026-09-25 08:09:00.723000,probe 34: exp56 = anvithpothula/biohub-x138 verbatim on our account (author public 0.953); same docker pin + machine shape,SubmissionStatus.COMPLETE,0.953,
+
+56534401,submission.csv,2026-09-25 00:02:10.437000,probe 33: exp53 = exp48 (0.948) + float output coords (safe encoding); compare with exp48,SubmissionStatus.COMPLETE,0.948,
+
+56534391,submission.csv,2026-09-25 00:02:05.877000,probe 32: exp52 = exp51 (exp48 + x138 head) + float output coords (safe encoding: floor(w)=round(v)); lab +0.0025 on 6bba selection,SubmissionStatus.COMPLETE,0.950,
+
+56527239,submission.csv,2026-09-24 17:09:12.710000,"probe 31: exp51 = exp48 (0.948) + x138 V1284 coordinate-refinement head (float coords, trilinear gather; verbatim); DeepCenter stays 0.20",SubmissionStatus.COMPLETE,0.950,
+
+56518039,submission.csv,2026-09-24 09:41:28.753000,probe 30: exp50 = exp39 + edge filter drop-only ef_a0 (drop every unscored relink edge); lab selection +0.0095,SubmissionStatus.COMPLETE,0.946,
+
+56518035,submission.csv,2026-09-24 09:41:23.477000,"probe 29: exp49 = exp39 + edge filter ef_a3_rl_pr (drop unscored relink edges where the ILP linked elsewhere, re-link to ILP alternative, prune isolated); lab confirmation +0.0162",SubmissionStatus.COMPLETE,0.947,
+
+56510845,submission.csv,2026-09-24 03:45:50.670000,"probe 28: exp48 = exp47 + DaughterNet v1 division insertion with steal (cap 4, alpha 1, ens thr 0.4); kernel parity fork-for-fork PASS",SubmissionStatus.COMPLETE,0.948,
+
+56510844,submission.csv,2026-09-24 03:45:46.783000,"probe 27: exp47 = exp39 + weak-leaf pruning 0.3 (035 verbatim); laptop confirmation +0.0006, no video worse",SubmissionStatus.COMPLETE,0.947,
+
+56502326,submission.csv,2026-09-23 19:25:05.213000,probe 26 (diagnostic): exp45 = exp29 with safe divisions OFF (0 forks); exp29 - exp45 = 0.1 x our LB division Jaccard,SubmissionStatus.COMPLETE,0.911,
+
+56473748,submission.csv,2026-09-22 20:41:45.973000,"probe 25: exp44 v2 = takaito verbatim + BUNDLE: axis-flip TTA (detector) + division hygiene (sister floor 5 um, already-divided filter)",SubmissionStatus.COMPLETE,0.946,
+
+56473747,submission.csv,2026-09-22 20:41:42.273000,probe 24: exp43 = takaito/biohub-a951-gshift verbatim (public notebook as is),SubmissionStatus.COMPLETE,0.944,
+
+56464419,submission.csv,2026-09-22 12:28:28.233000,"probe 23: exp42 = exp29 realised config + per-frame global-shift correction in motion relink (takaito gshift, MNN 12 um), one change",SubmissionStatus.COMPLETE,0.945,
+
+56459139,submission.csv,2026-09-22 08:41:13.727000,"probe 22: exp41 = exp29 realised config + MOTION_RELINK_LEARNED_BONUS 1.0 -> 2.5, one change",SubmissionStatus.COMPLETE,0.945,
+
+56459135,submission.csv,2026-09-22 08:41:09.277000,"probe 21: exp40 = exp29 realised config + motion relink OFF (B29; friend B 12 videos +0.0053), one change",SubmissionStatus.COMPLETE,0.945,
+
+56440312,submission.csv,2026-09-21 17:50:00.293000,"probe 20: exp39 = exp29 realised config + DivNet parent veto p>=0.5 on safe-division candidates (tools/divnet_infer.py, manifest recipe), one change",SubmissionStatus.COMPLETE,0.947,
+
+56256938,submission.csv,2026-09-15 14:42:42.703000,"probe 19: exp37 = exp29 realised config + TTA group := 8 axis flips instead of rot90/transpose (friend B surgery), one change",SubmissionStatus.COMPLETE,0.946,
+
+56252506,submission.csv,2026-09-15 10:50:18.897000,"probe 18: exp36 = exp29 realised config + division FP hygiene (already-divided fork filter + sister floor 5um), one change",SubmissionStatus.COMPLETE,0.946,
+
+56252420,submission.csv,2026-09-15 10:44:25.143000,"probe 18: exp36 = exp29 realised config + division FP hygiene (already-divided fork filter + sister floor 5um), one change",SubmissionStatus.COMPLETE,0.946,
+
+56161138,submission.csv,2026-09-11 07:26:56.210000,probe 17: exp35 = exp29 realised config (sjlee 0.947 stack + relink tight 5.5) + PRIMARY := soup03B_50 (0.5 pilkwang + 0.5 exp03B weight soup),SubmissionStatus.COMPLETE,0.943,
+
+56160878,submission.csv,2026-09-11 07:08:57.360000,"probe 16: exp34 = exp29 realised config (sjlee 0.947 stack + relink tight 5.5, pilkwang primary) + Z-flip TTA views (12 views) -- clean re-test of exp31",SubmissionStatus.COMPLETE,0.938,
+
+56160334,submission.csv,2026-09-11 06:35:23.993000,"probe 15: exp33 = exp29 realised config (sjlee 0.947 stack + relink tight 5.5) + PRIMARY := exp03B, validator off (deconfounds probe 11)",SubmissionStatus.COMPLETE,0.944,
+
+=== 2026-09-27T03:39:55Z
+ref,fileName,date,description,status,publicScore,privateScore
+
+56592350,submission.csv,2026-09-27 00:05:50.347000,"probe 42: exp70b = K2 + forkmid 4.5 (ladder L4, class B)",SubmissionStatus.PENDING,,
+
+56589423,submission.csv,2026-09-26 21:38:33.837000,"probe 41: exp70d = K2 + DeepCenter safe-div 0.30 (ladder L2, class B)",SubmissionStatus.PENDING,,
+
+56589065,submission.csv,2026-09-26 21:17:47.170000,"probe 40: exp70a = K2 + leaf prune 0.3 (ladder L1, class A)",SubmissionStatus.PENDING,,
+
+56589025,submission.csv,2026-09-26 21:15:23.887000,"probe 39: exp70e = K2 + leaf prune 0.3 + DeepCenter safe-div 0.30 (ladder L3, R7 lifted by user 26 Sep 20:33Z)",SubmissionStatus.PENDING,,
+
+56563534,submission.csv,2026-09-26 00:02:18.207000,probe 38: exp58n = K2 twin without the insertion (x138 + safetail + lowrefine); AMENDMENT f2 F2 candidate; twin gates pass,SubmissionStatus.COMPLETE,0.953,
+
+56563521,submission.csv,2026-09-26 00:02:12.737000,probe 37: exp58 = K2 (x138 + safetail C01 + lowrefine + DaughterNet insertion #35 config); dummy gates 18/18,SubmissionStatus.COMPLETE,0.954,
+
+56555189,submission.csv,2026-09-25 16:18:09.270000,"P36 exp57 v1 DIAGNOSTIC (x138+leafprune0.3+divinsert ungated), never a final",SubmissionStatus.COMPLETE,0.954,
+
+56545786,submission.csv,2026-09-25 08:33:25.043000,"probe 35: exp57b = x138 verbatim (exp56) + DaughterNet v1 division insertion with steal (exp48 knobs); +12 forks, nodes identical",SubmissionStatus.COMPLETE,0.954,
+
+56545267,submission.csv,2026-09-25 08:09:00.723000,probe 34: exp56 = anvithpothula/biohub-x138 verbatim on our account (author public 0.953); same docker pin + machine shape,SubmissionStatus.COMPLETE,0.953,
+
+56534401,submission.csv,2026-09-25 00:02:10.437000,probe 33: exp53 = exp48 (0.948) + float output coords (safe encoding); compare with exp48,SubmissionStatus.COMPLETE,0.948,
+
+56534391,submission.csv,2026-09-25 00:02:05.877000,probe 32: exp52 = exp51 (exp48 + x138 head) + float output coords (safe encoding: floor(w)=round(v)); lab +0.0025 on 6bba selection,SubmissionStatus.COMPLETE,0.950,
+
+56527239,submission.csv,2026-09-24 17:09:12.710000,"probe 31: exp51 = exp48 (0.948) + x138 V1284 coordinate-refinement head (float coords, trilinear gather; verbatim); DeepCenter stays 0.20",SubmissionStatus.COMPLETE,0.950,
+
+56518039,submission.csv,2026-09-24 09:41:28.753000,probe 30: exp50 = exp39 + edge filter drop-only ef_a0 (drop every unscored relink edge); lab selection +0.0095,SubmissionStatus.COMPLETE,0.946,
+
+56518035,submission.csv,2026-09-24 09:41:23.477000,"probe 29: exp49 = exp39 + edge filter ef_a3_rl_pr (drop unscored relink edges where the ILP linked elsewhere, re-link to ILP alternative, prune isolated); lab confirmation +0.0162",SubmissionStatus.COMPLETE,0.947,
+
+56510845,submission.csv,2026-09-24 03:45:50.670000,"probe 28: exp48 = exp47 + DaughterNet v1 division insertion with steal (cap 4, alpha 1, ens thr 0.4); kernel parity fork-for-fork PASS",SubmissionStatus.COMPLETE,0.948,
+
+56510844,submission.csv,2026-09-24 03:45:46.783000,"probe 27: exp47 = exp39 + weak-leaf pruning 0.3 (035 verbatim); laptop confirmation +0.0006, no video worse",SubmissionStatus.COMPLETE,0.947,
+
+56502326,submission.csv,2026-09-23 19:25:05.213000,probe 26 (diagnostic): exp45 = exp29 with safe divisions OFF (0 forks); exp29 - exp45 = 0.1 x our LB division Jaccard,SubmissionStatus.COMPLETE,0.911,
+
+56473748,submission.csv,2026-09-22 20:41:45.973000,"probe 25: exp44 v2 = takaito verbatim + BUNDLE: axis-flip TTA (detector) + division hygiene (sister floor 5 um, already-divided filter)",SubmissionStatus.COMPLETE,0.946,
+
+56473747,submission.csv,2026-09-22 20:41:42.273000,probe 24: exp43 = takaito/biohub-a951-gshift verbatim (public notebook as is),SubmissionStatus.COMPLETE,0.944,
+
+56464419,submission.csv,2026-09-22 12:28:28.233000,"probe 23: exp42 = exp29 realised config + per-frame global-shift correction in motion relink (takaito gshift, MNN 12 um), one change",SubmissionStatus.COMPLETE,0.945,
+
+56459139,submission.csv,2026-09-22 08:41:13.727000,"probe 22: exp41 = exp29 realised config + MOTION_RELINK_LEARNED_BONUS 1.0 -> 2.5, one change",SubmissionStatus.COMPLETE,0.945,
+
+56459135,submission.csv,2026-09-22 08:41:09.277000,"probe 21: exp40 = exp29 realised config + motion relink OFF (B29; friend B 12 videos +0.0053), one change",SubmissionStatus.COMPLETE,0.945,
+
+56440312,submission.csv,2026-09-21 17:50:00.293000,"probe 20: exp39 = exp29 realised config + DivNet parent veto p>=0.5 on safe-division candidates (tools/divnet_infer.py, manifest recipe), one change",SubmissionStatus.COMPLETE,0.947,
+
+56256938,submission.csv,2026-09-15 14:42:42.703000,"probe 19: exp37 = exp29 realised config + TTA group := 8 axis flips instead of rot90/transpose (friend B surgery), one change",SubmissionStatus.COMPLETE,0.946,
+
+56252506,submission.csv,2026-09-15 10:50:18.897000,"probe 18: exp36 = exp29 realised config + division FP hygiene (already-divided fork filter + sister floor 5um), one change",SubmissionStatus.COMPLETE,0.946,
+
+56252420,submission.csv,2026-09-15 10:44:25.143000,"probe 18: exp36 = exp29 realised config + division FP hygiene (already-divided fork filter + sister floor 5um), one change",SubmissionStatus.COMPLETE,0.946,
+
+56161138,submission.csv,2026-09-11 07:26:56.210000,probe 17: exp35 = exp29 realised config (sjlee 0.947 stack + relink tight 5.5) + PRIMARY := soup03B_50 (0.5 pilkwang + 0.5 exp03B weight soup),SubmissionStatus.COMPLETE,0.943,
+
+56160878,submission.csv,2026-09-11 07:08:57.360000,"probe 16: exp34 = exp29 realised config (sjlee 0.947 stack + relink tight 5.5, pilkwang primary) + Z-flip TTA views (12 views) -- clean re-test of exp31",SubmissionStatus.COMPLETE,0.938,
+
+56160334,submission.csv,2026-09-11 06:35:23.993000,"probe 15: exp33 = exp29 realised config (sjlee 0.947 stack + relink tight 5.5) + PRIMARY := exp03B, validator off (deconfounds probe 11)",SubmissionStatus.COMPLETE,0.944,
+
+=== 2026-09-27T03:49:57Z
+ref,fileName,date,description,status,publicScore,privateScore
+
+56592350,submission.csv,2026-09-27 00:05:50.347000,"probe 42: exp70b = K2 + forkmid 4.5 (ladder L4, class B)",SubmissionStatus.PENDING,,
+
+56589423,submission.csv,2026-09-26 21:38:33.837000,"probe 41: exp70d = K2 + DeepCenter safe-div 0.30 (ladder L2, class B)",SubmissionStatus.PENDING,,
+
+56589065,submission.csv,2026-09-26 21:17:47.170000,"probe 40: exp70a = K2 + leaf prune 0.3 (ladder L1, class A)",SubmissionStatus.PENDING,,
+
+56589025,submission.csv,2026-09-26 21:15:23.887000,"probe 39: exp70e = K2 + leaf prune 0.3 + DeepCenter safe-div 0.30 (ladder L3, R7 lifted by user 26 Sep 20:33Z)",SubmissionStatus.PENDING,,
+
+56563534,submission.csv,2026-09-26 00:02:18.207000,probe 38: exp58n = K2 twin without the insertion (x138 + safetail + lowrefine); AMENDMENT f2 F2 candidate; twin gates pass,SubmissionStatus.COMPLETE,0.953,
+
+56563521,submission.csv,2026-09-26 00:02:12.737000,probe 37: exp58 = K2 (x138 + safetail C01 + lowrefine + DaughterNet insertion #35 config); dummy gates 18/18,SubmissionStatus.COMPLETE,0.954,
+
+56555189,submission.csv,2026-09-25 16:18:09.270000,"P36 exp57 v1 DIAGNOSTIC (x138+leafprune0.3+divinsert ungated), never a final",SubmissionStatus.COMPLETE,0.954,
+
+56545786,submission.csv,2026-09-25 08:33:25.043000,"probe 35: exp57b = x138 verbatim (exp56) + DaughterNet v1 division insertion with steal (exp48 knobs); +12 forks, nodes identical",SubmissionStatus.COMPLETE,0.954,
+
+56545267,submission.csv,2026-09-25 08:09:00.723000,probe 34: exp56 = anvithpothula/biohub-x138 verbatim on our account (author public 0.953); same docker pin + machine shape,SubmissionStatus.COMPLETE,0.953,
+
+56534401,submission.csv,2026-09-25 00:02:10.437000,probe 33: exp53 = exp48 (0.948) + float output coords (safe encoding); compare with exp48,SubmissionStatus.COMPLETE,0.948,
+
+56534391,submission.csv,2026-09-25 00:02:05.877000,probe 32: exp52 = exp51 (exp48 + x138 head) + float output coords (safe encoding: floor(w)=round(v)); lab +0.0025 on 6bba selection,SubmissionStatus.COMPLETE,0.950,
+
+56527239,submission.csv,2026-09-24 17:09:12.710000,"probe 31: exp51 = exp48 (0.948) + x138 V1284 coordinate-refinement head (float coords, trilinear gather; verbatim); DeepCenter stays 0.20",SubmissionStatus.COMPLETE,0.950,
+
+56518039,submission.csv,2026-09-24 09:41:28.753000,probe 30: exp50 = exp39 + edge filter drop-only ef_a0 (drop every unscored relink edge); lab selection +0.0095,SubmissionStatus.COMPLETE,0.946,
+
+56518035,submission.csv,2026-09-24 09:41:23.477000,"probe 29: exp49 = exp39 + edge filter ef_a3_rl_pr (drop unscored relink edges where the ILP linked elsewhere, re-link to ILP alternative, prune isolated); lab confirmation +0.0162",SubmissionStatus.COMPLETE,0.947,
+
+56510845,submission.csv,2026-09-24 03:45:50.670000,"probe 28: exp48 = exp47 + DaughterNet v1 division insertion with steal (cap 4, alpha 1, ens thr 0.4); kernel parity fork-for-fork PASS",SubmissionStatus.COMPLETE,0.948,
+
+56510844,submission.csv,2026-09-24 03:45:46.783000,"probe 27: exp47 = exp39 + weak-leaf pruning 0.3 (035 verbatim); laptop confirmation +0.0006, no video worse",SubmissionStatus.COMPLETE,0.947,
+
+56502326,submission.csv,2026-09-23 19:25:05.213000,probe 26 (diagnostic): exp45 = exp29 with safe divisions OFF (0 forks); exp29 - exp45 = 0.1 x our LB division Jaccard,SubmissionStatus.COMPLETE,0.911,
+
+56473748,submission.csv,2026-09-22 20:41:45.973000,"probe 25: exp44 v2 = takaito verbatim + BUNDLE: axis-flip TTA (detector) + division hygiene (sister floor 5 um, already-divided filter)",SubmissionStatus.COMPLETE,0.946,
+
+56473747,submission.csv,2026-09-22 20:41:42.273000,probe 24: exp43 = takaito/biohub-a951-gshift verbatim (public notebook as is),SubmissionStatus.COMPLETE,0.944,
+
+56464419,submission.csv,2026-09-22 12:28:28.233000,"probe 23: exp42 = exp29 realised config + per-frame global-shift correction in motion relink (takaito gshift, MNN 12 um), one change",SubmissionStatus.COMPLETE,0.945,
+
+56459139,submission.csv,2026-09-22 08:41:13.727000,"probe 22: exp41 = exp29 realised config + MOTION_RELINK_LEARNED_BONUS 1.0 -> 2.5, one change",SubmissionStatus.COMPLETE,0.945,
+
+56459135,submission.csv,2026-09-22 08:41:09.277000,"probe 21: exp40 = exp29 realised config + motion relink OFF (B29; friend B 12 videos +0.0053), one change",SubmissionStatus.COMPLETE,0.945,
+
+56440312,submission.csv,2026-09-21 17:50:00.293000,"probe 20: exp39 = exp29 realised config + DivNet parent veto p>=0.5 on safe-division candidates (tools/divnet_infer.py, manifest recipe), one change",SubmissionStatus.COMPLETE,0.947,
+
+56256938,submission.csv,2026-09-15 14:42:42.703000,"probe 19: exp37 = exp29 realised config + TTA group := 8 axis flips instead of rot90/transpose (friend B surgery), one change",SubmissionStatus.COMPLETE,0.946,
+
+56252506,submission.csv,2026-09-15 10:50:18.897000,"probe 18: exp36 = exp29 realised config + division FP hygiene (already-divided fork filter + sister floor 5um), one change",SubmissionStatus.COMPLETE,0.946,
+
+56252420,submission.csv,2026-09-15 10:44:25.143000,"probe 18: exp36 = exp29 realised config + division FP hygiene (already-divided fork filter + sister floor 5um), one change",SubmissionStatus.COMPLETE,0.946,
+
+56161138,submission.csv,2026-09-11 07:26:56.210000,probe 17: exp35 = exp29 realised config (sjlee 0.947 stack + relink tight 5.5) + PRIMARY := soup03B_50 (0.5 pilkwang + 0.5 exp03B weight soup),SubmissionStatus.COMPLETE,0.943,
+
+56160878,submission.csv,2026-09-11 07:08:57.360000,"probe 16: exp34 = exp29 realised config (sjlee 0.947 stack + relink tight 5.5, pilkwang primary) + Z-flip TTA views (12 views) -- clean re-test of exp31",SubmissionStatus.COMPLETE,0.938,
+
+56160334,submission.csv,2026-09-11 06:35:23.993000,"probe 15: exp33 = exp29 realised config (sjlee 0.947 stack + relink tight 5.5) + PRIMARY := exp03B, validator off (deconfounds probe 11)",SubmissionStatus.COMPLETE,0.944,
+
+=== 2026-09-27T03:59:59Z
+ref,fileName,date,description,status,publicScore,privateScore
+
+56592350,submission.csv,2026-09-27 00:05:50.347000,"probe 42: exp70b = K2 + forkmid 4.5 (ladder L4, class B)",SubmissionStatus.PENDING,,
+
+56589423,submission.csv,2026-09-26 21:38:33.837000,"probe 41: exp70d = K2 + DeepCenter safe-div 0.30 (ladder L2, class B)",SubmissionStatus.PENDING,,
+
+56589065,submission.csv,2026-09-26 21:17:47.170000,"probe 40: exp70a = K2 + leaf prune 0.3 (ladder L1, class A)",SubmissionStatus.PENDING,,
+
+56589025,submission.csv,2026-09-26 21:15:23.887000,"probe 39: exp70e = K2 + leaf prune 0.3 + DeepCenter safe-div 0.30 (ladder L3, R7 lifted by user 26 Sep 20:33Z)",SubmissionStatus.PENDING,,
+
+56563534,submission.csv,2026-09-26 00:02:18.207000,probe 38: exp58n = K2 twin without the insertion (x138 + safetail + lowrefine); AMENDMENT f2 F2 candidate; twin gates pass,SubmissionStatus.COMPLETE,0.953,
+
+56563521,submission.csv,2026-09-26 00:02:12.737000,probe 37: exp58 = K2 (x138 + safetail C01 + lowrefine + DaughterNet insertion #35 config); dummy gates 18/18,SubmissionStatus.COMPLETE,0.954,
+
+56555189,submission.csv,2026-09-25 16:18:09.270000,"P36 exp57 v1 DIAGNOSTIC (x138+leafprune0.3+divinsert ungated), never a final",SubmissionStatus.COMPLETE,0.954,
+
+56545786,submission.csv,2026-09-25 08:33:25.043000,"probe 35: exp57b = x138 verbatim (exp56) + DaughterNet v1 division insertion with steal (exp48 knobs); +12 forks, nodes identical",SubmissionStatus.COMPLETE,0.954,
+
+56545267,submission.csv,2026-09-25 08:09:00.723000,probe 34: exp56 = anvithpothula/biohub-x138 verbatim on our account (author public 0.953); same docker pin + machine shape,SubmissionStatus.COMPLETE,0.953,
+
+56534401,submission.csv,2026-09-25 00:02:10.437000,probe 33: exp53 = exp48 (0.948) + float output coords (safe encoding); compare with exp48,SubmissionStatus.COMPLETE,0.948,
+
+56534391,submission.csv,2026-09-25 00:02:05.877000,probe 32: exp52 = exp51 (exp48 + x138 head) + float output coords (safe encoding: floor(w)=round(v)); lab +0.0025 on 6bba selection,SubmissionStatus.COMPLETE,0.950,
+
+56527239,submission.csv,2026-09-24 17:09:12.710000,"probe 31: exp51 = exp48 (0.948) + x138 V1284 coordinate-refinement head (float coords, trilinear gather; verbatim); DeepCenter stays 0.20",SubmissionStatus.COMPLETE,0.950,
+
+56518039,submission.csv,2026-09-24 09:41:28.753000,probe 30: exp50 = exp39 + edge filter drop-only ef_a0 (drop every unscored relink edge); lab selection +0.0095,SubmissionStatus.COMPLETE,0.946,
+
+56518035,submission.csv,2026-09-24 09:41:23.477000,"probe 29: exp49 = exp39 + edge filter ef_a3_rl_pr (drop unscored relink edges where the ILP linked elsewhere, re-link to ILP alternative, prune isolated); lab confirmation +0.0162",SubmissionStatus.COMPLETE,0.947,
+
+56510845,submission.csv,2026-09-24 03:45:50.670000,"probe 28: exp48 = exp47 + DaughterNet v1 division insertion with steal (cap 4, alpha 1, ens thr 0.4); kernel parity fork-for-fork PASS",SubmissionStatus.COMPLETE,0.948,
+
+56510844,submission.csv,2026-09-24 03:45:46.783000,"probe 27: exp47 = exp39 + weak-leaf pruning 0.3 (035 verbatim); laptop confirmation +0.0006, no video worse",SubmissionStatus.COMPLETE,0.947,
+
+56502326,submission.csv,2026-09-23 19:25:05.213000,probe 26 (diagnostic): exp45 = exp29 with safe divisions OFF (0 forks); exp29 - exp45 = 0.1 x our LB division Jaccard,SubmissionStatus.COMPLETE,0.911,
+
+56473748,submission.csv,2026-09-22 20:41:45.973000,"probe 25: exp44 v2 = takaito verbatim + BUNDLE: axis-flip TTA (detector) + division hygiene (sister floor 5 um, already-divided filter)",SubmissionStatus.COMPLETE,0.946,
+
+56473747,submission.csv,2026-09-22 20:41:42.273000,probe 24: exp43 = takaito/biohub-a951-gshift verbatim (public notebook as is),SubmissionStatus.COMPLETE,0.944,
+
+56464419,submission.csv,2026-09-22 12:28:28.233000,"probe 23: exp42 = exp29 realised config + per-frame global-shift correction in motion relink (takaito gshift, MNN 12 um), one change",SubmissionStatus.COMPLETE,0.945,
+
+56459139,submission.csv,2026-09-22 08:41:13.727000,"probe 22: exp41 = exp29 realised config + MOTION_RELINK_LEARNED_BONUS 1.0 -> 2.5, one change",SubmissionStatus.COMPLETE,0.945,
+
+56459135,submission.csv,2026-09-22 08:41:09.277000,"probe 21: exp40 = exp29 realised config + motion relink OFF (B29; friend B 12 videos +0.0053), one change",SubmissionStatus.COMPLETE,0.945,
+
+56440312,submission.csv,2026-09-21 17:50:00.293000,"probe 20: exp39 = exp29 realised config + DivNet parent veto p>=0.5 on safe-division candidates (tools/divnet_infer.py, manifest recipe), one change",SubmissionStatus.COMPLETE,0.947,
+
+56256938,submission.csv,2026-09-15 14:42:42.703000,"probe 19: exp37 = exp29 realised config + TTA group := 8 axis flips instead of rot90/transpose (friend B surgery), one change",SubmissionStatus.COMPLETE,0.946,
+
+56252506,submission.csv,2026-09-15 10:50:18.897000,"probe 18: exp36 = exp29 realised config + division FP hygiene (already-divided fork filter + sister floor 5um), one change",SubmissionStatus.COMPLETE,0.946,
+
+56252420,submission.csv,2026-09-15 10:44:25.143000,"probe 18: exp36 = exp29 realised config + division FP hygiene (already-divided fork filter + sister floor 5um), one change",SubmissionStatus.COMPLETE,0.946,
+
+56161138,submission.csv,2026-09-11 07:26:56.210000,probe 17: exp35 = exp29 realised config (sjlee 0.947 stack + relink tight 5.5) + PRIMARY := soup03B_50 (0.5 pilkwang + 0.5 exp03B weight soup),SubmissionStatus.COMPLETE,0.943,
+
+56160878,submission.csv,2026-09-11 07:08:57.360000,"probe 16: exp34 = exp29 realised config (sjlee 0.947 stack + relink tight 5.5, pilkwang primary) + Z-flip TTA views (12 views) -- clean re-test of exp31",SubmissionStatus.COMPLETE,0.938,
+
+56160334,submission.csv,2026-09-11 06:35:23.993000,"probe 15: exp33 = exp29 realised config (sjlee 0.947 stack + relink tight 5.5) + PRIMARY := exp03B, validator off (deconfounds probe 11)",SubmissionStatus.COMPLETE,0.944,
+
+=== 2026-09-27T04:10:01Z
+ref,fileName,date,description,status,publicScore,privateScore
+
+56592350,submission.csv,2026-09-27 00:05:50.347000,"probe 42: exp70b = K2 + forkmid 4.5 (ladder L4, class B)",SubmissionStatus.PENDING,,
+
+56589423,submission.csv,2026-09-26 21:38:33.837000,"probe 41: exp70d = K2 + DeepCenter safe-div 0.30 (ladder L2, class B)",SubmissionStatus.PENDING,,
+
+56589065,submission.csv,2026-09-26 21:17:47.170000,"probe 40: exp70a = K2 + leaf prune 0.3 (ladder L1, class A)",SubmissionStatus.PENDING,,
+
+56589025,submission.csv,2026-09-26 21:15:23.887000,"probe 39: exp70e = K2 + leaf prune 0.3 + DeepCenter safe-div 0.30 (ladder L3, R7 lifted by user 26 Sep 20:33Z)",SubmissionStatus.PENDING,,
+
+56563534,submission.csv,2026-09-26 00:02:18.207000,probe 38: exp58n = K2 twin without the insertion (x138 + safetail + lowrefine); AMENDMENT f2 F2 candidate; twin gates pass,SubmissionStatus.COMPLETE,0.953,
+
+56563521,submission.csv,2026-09-26 00:02:12.737000,probe 37: exp58 = K2 (x138 + safetail C01 + lowrefine + DaughterNet insertion #35 config); dummy gates 18/18,SubmissionStatus.COMPLETE,0.954,
+
+56555189,submission.csv,2026-09-25 16:18:09.270000,"P36 exp57 v1 DIAGNOSTIC (x138+leafprune0.3+divinsert ungated), never a final",SubmissionStatus.COMPLETE,0.954,
+
+56545786,submission.csv,2026-09-25 08:33:25.043000,"probe 35: exp57b = x138 verbatim (exp56) + DaughterNet v1 division insertion with steal (exp48 knobs); +12 forks, nodes identical",SubmissionStatus.COMPLETE,0.954,
+
+56545267,submission.csv,2026-09-25 08:09:00.723000,probe 34: exp56 = anvithpothula/biohub-x138 verbatim on our account (author public 0.953); same docker pin + machine shape,SubmissionStatus.COMPLETE,0.953,
+
+56534401,submission.csv,2026-09-25 00:02:10.437000,probe 33: exp53 = exp48 (0.948) + float output coords (safe encoding); compare with exp48,SubmissionStatus.COMPLETE,0.948,
+
+56534391,submission.csv,2026-09-25 00:02:05.877000,probe 32: exp52 = exp51 (exp48 + x138 head) + float output coords (safe encoding: floor(w)=round(v)); lab +0.0025 on 6bba selection,SubmissionStatus.COMPLETE,0.950,
+
+56527239,submission.csv,2026-09-24 17:09:12.710000,"probe 31: exp51 = exp48 (0.948) + x138 V1284 coordinate-refinement head (float coords, trilinear gather; verbatim); DeepCenter stays 0.20",SubmissionStatus.COMPLETE,0.950,
+
+56518039,submission.csv,2026-09-24 09:41:28.753000,probe 30: exp50 = exp39 + edge filter drop-only ef_a0 (drop every unscored relink edge); lab selection +0.0095,SubmissionStatus.COMPLETE,0.946,
+
+56518035,submission.csv,2026-09-24 09:41:23.477000,"probe 29: exp49 = exp39 + edge filter ef_a3_rl_pr (drop unscored relink edges where the ILP linked elsewhere, re-link to ILP alternative, prune isolated); lab confirmation +0.0162",SubmissionStatus.COMPLETE,0.947,
+
+56510845,submission.csv,2026-09-24 03:45:50.670000,"probe 28: exp48 = exp47 + DaughterNet v1 division insertion with steal (cap 4, alpha 1, ens thr 0.4); kernel parity fork-for-fork PASS",SubmissionStatus.COMPLETE,0.948,
+
+56510844,submission.csv,2026-09-24 03:45:46.783000,"probe 27: exp47 = exp39 + weak-leaf pruning 0.3 (035 verbatim); laptop confirmation +0.0006, no video worse",SubmissionStatus.COMPLETE,0.947,
+
+56502326,submission.csv,2026-09-23 19:25:05.213000,probe 26 (diagnostic): exp45 = exp29 with safe divisions OFF (0 forks); exp29 - exp45 = 0.1 x our LB division Jaccard,SubmissionStatus.COMPLETE,0.911,
+
+56473748,submission.csv,2026-09-22 20:41:45.973000,"probe 25: exp44 v2 = takaito verbatim + BUNDLE: axis-flip TTA (detector) + division hygiene (sister floor 5 um, already-divided filter)",SubmissionStatus.COMPLETE,0.946,
+
+56473747,submission.csv,2026-09-22 20:41:42.273000,probe 24: exp43 = takaito/biohub-a951-gshift verbatim (public notebook as is),SubmissionStatus.COMPLETE,0.944,
+
+56464419,submission.csv,2026-09-22 12:28:28.233000,"probe 23: exp42 = exp29 realised config + per-frame global-shift correction in motion relink (takaito gshift, MNN 12 um), one change",SubmissionStatus.COMPLETE,0.945,
+
+56459139,submission.csv,2026-09-22 08:41:13.727000,"probe 22: exp41 = exp29 realised config + MOTION_RELINK_LEARNED_BONUS 1.0 -> 2.5, one change",SubmissionStatus.COMPLETE,0.945,
+
+56459135,submission.csv,2026-09-22 08:41:09.277000,"probe 21: exp40 = exp29 realised config + motion relink OFF (B29; friend B 12 videos +0.0053), one change",SubmissionStatus.COMPLETE,0.945,
+
+56440312,submission.csv,2026-09-21 17:50:00.293000,"probe 20: exp39 = exp29 realised config + DivNet parent veto p>=0.5 on safe-division candidates (tools/divnet_infer.py, manifest recipe), one change",SubmissionStatus.COMPLETE,0.947,
+
+56256938,submission.csv,2026-09-15 14:42:42.703000,"probe 19: exp37 = exp29 realised config + TTA group := 8 axis flips instead of rot90/transpose (friend B surgery), one change",SubmissionStatus.COMPLETE,0.946,
+
+56252506,submission.csv,2026-09-15 10:50:18.897000,"probe 18: exp36 = exp29 realised config + division FP hygiene (already-divided fork filter + sister floor 5um), one change",SubmissionStatus.COMPLETE,0.946,
+
+56252420,submission.csv,2026-09-15 10:44:25.143000,"probe 18: exp36 = exp29 realised config + division FP hygiene (already-divided fork filter + sister floor 5um), one change",SubmissionStatus.COMPLETE,0.946,
+
+56161138,submission.csv,2026-09-11 07:26:56.210000,probe 17: exp35 = exp29 realised config (sjlee 0.947 stack + relink tight 5.5) + PRIMARY := soup03B_50 (0.5 pilkwang + 0.5 exp03B weight soup),SubmissionStatus.COMPLETE,0.943,
+
+56160878,submission.csv,2026-09-11 07:08:57.360000,"probe 16: exp34 = exp29 realised config (sjlee 0.947 stack + relink tight 5.5, pilkwang primary) + Z-flip TTA views (12 views) -- clean re-test of exp31",SubmissionStatus.COMPLETE,0.938,
+
+56160334,submission.csv,2026-09-11 06:35:23.993000,"probe 15: exp33 = exp29 realised config (sjlee 0.947 stack + relink tight 5.5) + PRIMARY := exp03B, validator off (deconfounds probe 11)",SubmissionStatus.COMPLETE,0.944,
+
+=== 2026-09-27T04:20:02Z
+ref,fileName,date,description,status,publicScore,privateScore
+
+56592350,submission.csv,2026-09-27 00:05:50.347000,"probe 42: exp70b = K2 + forkmid 4.5 (ladder L4, class B)",SubmissionStatus.PENDING,,
+
+56589423,submission.csv,2026-09-26 21:38:33.837000,"probe 41: exp70d = K2 + DeepCenter safe-div 0.30 (ladder L2, class B)",SubmissionStatus.PENDING,,
+
+56589065,submission.csv,2026-09-26 21:17:47.170000,"probe 40: exp70a = K2 + leaf prune 0.3 (ladder L1, class A)",SubmissionStatus.COMPLETE,0.954,
+
+56589025,submission.csv,2026-09-26 21:15:23.887000,"probe 39: exp70e = K2 + leaf prune 0.3 + DeepCenter safe-div 0.30 (ladder L3, R7 lifted by user 26 Sep 20:33Z)",SubmissionStatus.PENDING,,
+
+56563534,submission.csv,2026-09-26 00:02:18.207000,probe 38: exp58n = K2 twin without the insertion (x138 + safetail + lowrefine); AMENDMENT f2 F2 candidate; twin gates pass,SubmissionStatus.COMPLETE,0.953,
+
+56563521,submission.csv,2026-09-26 00:02:12.737000,probe 37: exp58 = K2 (x138 + safetail C01 + lowrefine + DaughterNet insertion #35 config); dummy gates 18/18,SubmissionStatus.COMPLETE,0.954,
+
+56555189,submission.csv,2026-09-25 16:18:09.270000,"P36 exp57 v1 DIAGNOSTIC (x138+leafprune0.3+divinsert ungated), never a final",SubmissionStatus.COMPLETE,0.954,
+
+56545786,submission.csv,2026-09-25 08:33:25.043000,"probe 35: exp57b = x138 verbatim (exp56) + DaughterNet v1 division insertion with steal (exp48 knobs); +12 forks, nodes identical",SubmissionStatus.COMPLETE,0.954,
+
+56545267,submission.csv,2026-09-25 08:09:00.723000,probe 34: exp56 = anvithpothula/biohub-x138 verbatim on our account (author public 0.953); same docker pin + machine shape,SubmissionStatus.COMPLETE,0.953,
+
+56534401,submission.csv,2026-09-25 00:02:10.437000,probe 33: exp53 = exp48 (0.948) + float output coords (safe encoding); compare with exp48,SubmissionStatus.COMPLETE,0.948,
+
+56534391,submission.csv,2026-09-25 00:02:05.877000,probe 32: exp52 = exp51 (exp48 + x138 head) + float output coords (safe encoding: floor(w)=round(v)); lab +0.0025 on 6bba selection,SubmissionStatus.COMPLETE,0.950,
+
+56527239,submission.csv,2026-09-24 17:09:12.710000,"probe 31: exp51 = exp48 (0.948) + x138 V1284 coordinate-refinement head (float coords, trilinear gather; verbatim); DeepCenter stays 0.20",SubmissionStatus.COMPLETE,0.950,
+
+56518039,submission.csv,2026-09-24 09:41:28.753000,probe 30: exp50 = exp39 + edge filter drop-only ef_a0 (drop every unscored relink edge); lab selection +0.0095,SubmissionStatus.COMPLETE,0.946,
+
+56518035,submission.csv,2026-09-24 09:41:23.477000,"probe 29: exp49 = exp39 + edge filter ef_a3_rl_pr (drop unscored relink edges where the ILP linked elsewhere, re-link to ILP alternative, prune isolated); lab confirmation +0.0162",SubmissionStatus.COMPLETE,0.947,
+
+56510845,submission.csv,2026-09-24 03:45:50.670000,"probe 28: exp48 = exp47 + DaughterNet v1 division insertion with steal (cap 4, alpha 1, ens thr 0.4); kernel parity fork-for-fork PASS",SubmissionStatus.COMPLETE,0.948,
+
+56510844,submission.csv,2026-09-24 03:45:46.783000,"probe 27: exp47 = exp39 + weak-leaf pruning 0.3 (035 verbatim); laptop confirmation +0.0006, no video worse",SubmissionStatus.COMPLETE,0.947,
+
+56502326,submission.csv,2026-09-23 19:25:05.213000,probe 26 (diagnostic): exp45 = exp29 with safe divisions OFF (0 forks); exp29 - exp45 = 0.1 x our LB division Jaccard,SubmissionStatus.COMPLETE,0.911,
+
+56473748,submission.csv,2026-09-22 20:41:45.973000,"probe 25: exp44 v2 = takaito verbatim + BUNDLE: axis-flip TTA (detector) + division hygiene (sister floor 5 um, already-divided filter)",SubmissionStatus.COMPLETE,0.946,
+
+56473747,submission.csv,2026-09-22 20:41:42.273000,probe 24: exp43 = takaito/biohub-a951-gshift verbatim (public notebook as is),SubmissionStatus.COMPLETE,0.944,
+
+56464419,submission.csv,2026-09-22 12:28:28.233000,"probe 23: exp42 = exp29 realised config + per-frame global-shift correction in motion relink (takaito gshift, MNN 12 um), one change",SubmissionStatus.COMPLETE,0.945,
+
+56459139,submission.csv,2026-09-22 08:41:13.727000,"probe 22: exp41 = exp29 realised config + MOTION_RELINK_LEARNED_BONUS 1.0 -> 2.5, one change",SubmissionStatus.COMPLETE,0.945,
+
+56459135,submission.csv,2026-09-22 08:41:09.277000,"probe 21: exp40 = exp29 realised config + motion relink OFF (B29; friend B 12 videos +0.0053), one change",SubmissionStatus.COMPLETE,0.945,
+
+56440312,submission.csv,2026-09-21 17:50:00.293000,"probe 20: exp39 = exp29 realised config + DivNet parent veto p>=0.5 on safe-division candidates (tools/divnet_infer.py, manifest recipe), one change",SubmissionStatus.COMPLETE,0.947,
+
+56256938,submission.csv,2026-09-15 14:42:42.703000,"probe 19: exp37 = exp29 realised config + TTA group := 8 axis flips instead of rot90/transpose (friend B surgery), one change",SubmissionStatus.COMPLETE,0.946,
+
+56252506,submission.csv,2026-09-15 10:50:18.897000,"probe 18: exp36 = exp29 realised config + division FP hygiene (already-divided fork filter + sister floor 5um), one change",SubmissionStatus.COMPLETE,0.946,
+
+56252420,submission.csv,2026-09-15 10:44:25.143000,"probe 18: exp36 = exp29 realised config + division FP hygiene (already-divided fork filter + sister floor 5um), one change",SubmissionStatus.COMPLETE,0.946,
+
+56161138,submission.csv,2026-09-11 07:26:56.210000,probe 17: exp35 = exp29 realised config (sjlee 0.947 stack + relink tight 5.5) + PRIMARY := soup03B_50 (0.5 pilkwang + 0.5 exp03B weight soup),SubmissionStatus.COMPLETE,0.943,
+
+56160878,submission.csv,2026-09-11 07:08:57.360000,"probe 16: exp34 = exp29 realised config (sjlee 0.947 stack + relink tight 5.5, pilkwang primary) + Z-flip TTA views (12 views) -- clean re-test of exp31",SubmissionStatus.COMPLETE,0.938,
+
+56160334,submission.csv,2026-09-11 06:35:23.993000,"probe 15: exp33 = exp29 realised config (sjlee 0.947 stack + relink tight 5.5) + PRIMARY := exp03B, validator off (deconfounds probe 11)",SubmissionStatus.COMPLETE,0.944,
+
+=== 2026-09-27T04:30:04Z
+ref,fileName,date,description,status,publicScore,privateScore
+
+56592350,submission.csv,2026-09-27 00:05:50.347000,"probe 42: exp70b = K2 + forkmid 4.5 (ladder L4, class B)",SubmissionStatus.PENDING,,
+
+56589423,submission.csv,2026-09-26 21:38:33.837000,"probe 41: exp70d = K2 + DeepCenter safe-div 0.30 (ladder L2, class B)",SubmissionStatus.PENDING,,
+
+56589065,submission.csv,2026-09-26 21:17:47.170000,"probe 40: exp70a = K2 + leaf prune 0.3 (ladder L1, class A)",SubmissionStatus.COMPLETE,0.954,
+
+56589025,submission.csv,2026-09-26 21:15:23.887000,"probe 39: exp70e = K2 + leaf prune 0.3 + DeepCenter safe-div 0.30 (ladder L3, R7 lifted by user 26 Sep 20:33Z)",SubmissionStatus.PENDING,,
+
+56563534,submission.csv,2026-09-26 00:02:18.207000,probe 38: exp58n = K2 twin without the insertion (x138 + safetail + lowrefine); AMENDMENT f2 F2 candidate; twin gates pass,SubmissionStatus.COMPLETE,0.953,
+
+56563521,submission.csv,2026-09-26 00:02:12.737000,probe 37: exp58 = K2 (x138 + safetail C01 + lowrefine + DaughterNet insertion #35 config); dummy gates 18/18,SubmissionStatus.COMPLETE,0.954,
+
+56555189,submission.csv,2026-09-25 16:18:09.270000,"P36 exp57 v1 DIAGNOSTIC (x138+leafprune0.3+divinsert ungated), never a final",SubmissionStatus.COMPLETE,0.954,
+
+56545786,submission.csv,2026-09-25 08:33:25.043000,"probe 35: exp57b = x138 verbatim (exp56) + DaughterNet v1 division insertion with steal (exp48 knobs); +12 forks, nodes identical",SubmissionStatus.COMPLETE,0.954,
+
+56545267,submission.csv,2026-09-25 08:09:00.723000,probe 34: exp56 = anvithpothula/biohub-x138 verbatim on our account (author public 0.953); same docker pin + machine shape,SubmissionStatus.COMPLETE,0.953,
+
+56534401,submission.csv,2026-09-25 00:02:10.437000,probe 33: exp53 = exp48 (0.948) + float output coords (safe encoding); compare with exp48,SubmissionStatus.COMPLETE,0.948,
+
+56534391,submission.csv,2026-09-25 00:02:05.877000,probe 32: exp52 = exp51 (exp48 + x138 head) + float output coords (safe encoding: floor(w)=round(v)); lab +0.0025 on 6bba selection,SubmissionStatus.COMPLETE,0.950,
+
+56527239,submission.csv,2026-09-24 17:09:12.710000,"probe 31: exp51 = exp48 (0.948) + x138 V1284 coordinate-refinement head (float coords, trilinear gather; verbatim); DeepCenter stays 0.20",SubmissionStatus.COMPLETE,0.950,
+
+56518039,submission.csv,2026-09-24 09:41:28.753000,probe 30: exp50 = exp39 + edge filter drop-only ef_a0 (drop every unscored relink edge); lab selection +0.0095,SubmissionStatus.COMPLETE,0.946,
+
+56518035,submission.csv,2026-09-24 09:41:23.477000,"probe 29: exp49 = exp39 + edge filter ef_a3_rl_pr (drop unscored relink edges where the ILP linked elsewhere, re-link to ILP alternative, prune isolated); lab confirmation +0.0162",SubmissionStatus.COMPLETE,0.947,
+
+56510845,submission.csv,2026-09-24 03:45:50.670000,"probe 28: exp48 = exp47 + DaughterNet v1 division insertion with steal (cap 4, alpha 1, ens thr 0.4); kernel parity fork-for-fork PASS",SubmissionStatus.COMPLETE,0.948,
+
+56510844,submission.csv,2026-09-24 03:45:46.783000,"probe 27: exp47 = exp39 + weak-leaf pruning 0.3 (035 verbatim); laptop confirmation +0.0006, no video worse",SubmissionStatus.COMPLETE,0.947,
+
+56502326,submission.csv,2026-09-23 19:25:05.213000,probe 26 (diagnostic): exp45 = exp29 with safe divisions OFF (0 forks); exp29 - exp45 = 0.1 x our LB division Jaccard,SubmissionStatus.COMPLETE,0.911,
+
+56473748,submission.csv,2026-09-22 20:41:45.973000,"probe 25: exp44 v2 = takaito verbatim + BUNDLE: axis-flip TTA (detector) + division hygiene (sister floor 5 um, already-divided filter)",SubmissionStatus.COMPLETE,0.946,
+
+56473747,submission.csv,2026-09-22 20:41:42.273000,probe 24: exp43 = takaito/biohub-a951-gshift verbatim (public notebook as is),SubmissionStatus.COMPLETE,0.944,
+
+56464419,submission.csv,2026-09-22 12:28:28.233000,"probe 23: exp42 = exp29 realised config + per-frame global-shift correction in motion relink (takaito gshift, MNN 12 um), one change",SubmissionStatus.COMPLETE,0.945,
+
+56459139,submission.csv,2026-09-22 08:41:13.727000,"probe 22: exp41 = exp29 realised config + MOTION_RELINK_LEARNED_BONUS 1.0 -> 2.5, one change",SubmissionStatus.COMPLETE,0.945,
+
+56459135,submission.csv,2026-09-22 08:41:09.277000,"probe 21: exp40 = exp29 realised config + motion relink OFF (B29; friend B 12 videos +0.0053), one change",SubmissionStatus.COMPLETE,0.945,
+
+56440312,submission.csv,2026-09-21 17:50:00.293000,"probe 20: exp39 = exp29 realised config + DivNet parent veto p>=0.5 on safe-division candidates (tools/divnet_infer.py, manifest recipe), one change",SubmissionStatus.COMPLETE,0.947,
+
+56256938,submission.csv,2026-09-15 14:42:42.703000,"probe 19: exp37 = exp29 realised config + TTA group := 8 axis flips instead of rot90/transpose (friend B surgery), one change",SubmissionStatus.COMPLETE,0.946,
+
+56252506,submission.csv,2026-09-15 10:50:18.897000,"probe 18: exp36 = exp29 realised config + division FP hygiene (already-divided fork filter + sister floor 5um), one change",SubmissionStatus.COMPLETE,0.946,
+
+56252420,submission.csv,2026-09-15 10:44:25.143000,"probe 18: exp36 = exp29 realised config + division FP hygiene (already-divided fork filter + sister floor 5um), one change",SubmissionStatus.COMPLETE,0.946,
+
+56161138,submission.csv,2026-09-11 07:26:56.210000,probe 17: exp35 = exp29 realised config (sjlee 0.947 stack + relink tight 5.5) + PRIMARY := soup03B_50 (0.5 pilkwang + 0.5 exp03B weight soup),SubmissionStatus.COMPLETE,0.943,
+
+56160878,submission.csv,2026-09-11 07:08:57.360000,"probe 16: exp34 = exp29 realised config (sjlee 0.947 stack + relink tight 5.5, pilkwang primary) + Z-flip TTA views (12 views) -- clean re-test of exp31",SubmissionStatus.COMPLETE,0.938,
+
+56160334,submission.csv,2026-09-11 06:35:23.993000,"probe 15: exp33 = exp29 realised config (sjlee 0.947 stack + relink tight 5.5) + PRIMARY := exp03B, validator off (deconfounds probe 11)",SubmissionStatus.COMPLETE,0.944,
+
+=== 2026-09-27T04:40:05Z
+ref,fileName,date,description,status,publicScore,privateScore
+
+56592350,submission.csv,2026-09-27 00:05:50.347000,"probe 42: exp70b = K2 + forkmid 4.5 (ladder L4, class B)",SubmissionStatus.PENDING,,
+
+56589423,submission.csv,2026-09-26 21:38:33.837000,"probe 41: exp70d = K2 + DeepCenter safe-div 0.30 (ladder L2, class B)",SubmissionStatus.PENDING,,
+
+56589065,submission.csv,2026-09-26 21:17:47.170000,"probe 40: exp70a = K2 + leaf prune 0.3 (ladder L1, class A)",SubmissionStatus.COMPLETE,0.954,
+
+56589025,submission.csv,2026-09-26 21:15:23.887000,"probe 39: exp70e = K2 + leaf prune 0.3 + DeepCenter safe-div 0.30 (ladder L3, R7 lifted by user 26 Sep 20:33Z)",SubmissionStatus.COMPLETE,0.949,
+
+56563534,submission.csv,2026-09-26 00:02:18.207000,probe 38: exp58n = K2 twin without the insertion (x138 + safetail + lowrefine); AMENDMENT f2 F2 candidate; twin gates pass,SubmissionStatus.COMPLETE,0.953,
+
+56563521,submission.csv,2026-09-26 00:02:12.737000,probe 37: exp58 = K2 (x138 + safetail C01 + lowrefine + DaughterNet insertion #35 config); dummy gates 18/18,SubmissionStatus.COMPLETE,0.954,
+
+56555189,submission.csv,2026-09-25 16:18:09.270000,"P36 exp57 v1 DIAGNOSTIC (x138+leafprune0.3+divinsert ungated), never a final",SubmissionStatus.COMPLETE,0.954,
+
+56545786,submission.csv,2026-09-25 08:33:25.043000,"probe 35: exp57b = x138 verbatim (exp56) + DaughterNet v1 division insertion with steal (exp48 knobs); +12 forks, nodes identical",SubmissionStatus.COMPLETE,0.954,
+
+56545267,submission.csv,2026-09-25 08:09:00.723000,probe 34: exp56 = anvithpothula/biohub-x138 verbatim on our account (author public 0.953); same docker pin + machine shape,SubmissionStatus.COMPLETE,0.953,
+
+56534401,submission.csv,2026-09-25 00:02:10.437000,probe 33: exp53 = exp48 (0.948) + float output coords (safe encoding); compare with exp48,SubmissionStatus.COMPLETE,0.948,
+
+56534391,submission.csv,2026-09-25 00:02:05.877000,probe 32: exp52 = exp51 (exp48 + x138 head) + float output coords (safe encoding: floor(w)=round(v)); lab +0.0025 on 6bba selection,SubmissionStatus.COMPLETE,0.950,
+
+56527239,submission.csv,2026-09-24 17:09:12.710000,"probe 31: exp51 = exp48 (0.948) + x138 V1284 coordinate-refinement head (float coords, trilinear gather; verbatim); DeepCenter stays 0.20",SubmissionStatus.COMPLETE,0.950,
+
+56518039,submission.csv,2026-09-24 09:41:28.753000,probe 30: exp50 = exp39 + edge filter drop-only ef_a0 (drop every unscored relink edge); lab selection +0.0095,SubmissionStatus.COMPLETE,0.946,
+
+56518035,submission.csv,2026-09-24 09:41:23.477000,"probe 29: exp49 = exp39 + edge filter ef_a3_rl_pr (drop unscored relink edges where the ILP linked elsewhere, re-link to ILP alternative, prune isolated); lab confirmation +0.0162",SubmissionStatus.COMPLETE,0.947,
+
+56510845,submission.csv,2026-09-24 03:45:50.670000,"probe 28: exp48 = exp47 + DaughterNet v1 division insertion with steal (cap 4, alpha 1, ens thr 0.4); kernel parity fork-for-fork PASS",SubmissionStatus.COMPLETE,0.948,
+
+56510844,submission.csv,2026-09-24 03:45:46.783000,"probe 27: exp47 = exp39 + weak-leaf pruning 0.3 (035 verbatim); laptop confirmation +0.0006, no video worse",SubmissionStatus.COMPLETE,0.947,
+
+56502326,submission.csv,2026-09-23 19:25:05.213000,probe 26 (diagnostic): exp45 = exp29 with safe divisions OFF (0 forks); exp29 - exp45 = 0.1 x our LB division Jaccard,SubmissionStatus.COMPLETE,0.911,
+
+56473748,submission.csv,2026-09-22 20:41:45.973000,"probe 25: exp44 v2 = takaito verbatim + BUNDLE: axis-flip TTA (detector) + division hygiene (sister floor 5 um, already-divided filter)",SubmissionStatus.COMPLETE,0.946,
+
+56473747,submission.csv,2026-09-22 20:41:42.273000,probe 24: exp43 = takaito/biohub-a951-gshift verbatim (public notebook as is),SubmissionStatus.COMPLETE,0.944,
+
+56464419,submission.csv,2026-09-22 12:28:28.233000,"probe 23: exp42 = exp29 realised config + per-frame global-shift correction in motion relink (takaito gshift, MNN 12 um), one change",SubmissionStatus.COMPLETE,0.945,
+
+56459139,submission.csv,2026-09-22 08:41:13.727000,"probe 22: exp41 = exp29 realised config + MOTION_RELINK_LEARNED_BONUS 1.0 -> 2.5, one change",SubmissionStatus.COMPLETE,0.945,
+
+56459135,submission.csv,2026-09-22 08:41:09.277000,"probe 21: exp40 = exp29 realised config + motion relink OFF (B29; friend B 12 videos +0.0053), one change",SubmissionStatus.COMPLETE,0.945,
+
+56440312,submission.csv,2026-09-21 17:50:00.293000,"probe 20: exp39 = exp29 realised config + DivNet parent veto p>=0.5 on safe-division candidates (tools/divnet_infer.py, manifest recipe), one change",SubmissionStatus.COMPLETE,0.947,
+
+56256938,submission.csv,2026-09-15 14:42:42.703000,"probe 19: exp37 = exp29 realised config + TTA group := 8 axis flips instead of rot90/transpose (friend B surgery), one change",SubmissionStatus.COMPLETE,0.946,
+
+56252506,submission.csv,2026-09-15 10:50:18.897000,"probe 18: exp36 = exp29 realised config + division FP hygiene (already-divided fork filter + sister floor 5um), one change",SubmissionStatus.COMPLETE,0.946,
+
+56252420,submission.csv,2026-09-15 10:44:25.143000,"probe 18: exp36 = exp29 realised config + division FP hygiene (already-divided fork filter + sister floor 5um), one change",SubmissionStatus.COMPLETE,0.946,
+
+56161138,submission.csv,2026-09-11 07:26:56.210000,probe 17: exp35 = exp29 realised config (sjlee 0.947 stack + relink tight 5.5) + PRIMARY := soup03B_50 (0.5 pilkwang + 0.5 exp03B weight soup),SubmissionStatus.COMPLETE,0.943,
+
+56160878,submission.csv,2026-09-11 07:08:57.360000,"probe 16: exp34 = exp29 realised config (sjlee 0.947 stack + relink tight 5.5, pilkwang primary) + Z-flip TTA views (12 views) -- clean re-test of exp31",SubmissionStatus.COMPLETE,0.938,
+
+56160334,submission.csv,2026-09-11 06:35:23.993000,"probe 15: exp33 = exp29 realised config (sjlee 0.947 stack + relink tight 5.5) + PRIMARY := exp03B, validator off (deconfounds probe 11)",SubmissionStatus.COMPLETE,0.944,
+
+=== 2026-09-27T04:50:07Z
+ref,fileName,date,description,status,publicScore,privateScore
+
+56592350,submission.csv,2026-09-27 00:05:50.347000,"probe 42: exp70b = K2 + forkmid 4.5 (ladder L4, class B)",SubmissionStatus.PENDING,,
+
+56589423,submission.csv,2026-09-26 21:38:33.837000,"probe 41: exp70d = K2 + DeepCenter safe-div 0.30 (ladder L2, class B)",SubmissionStatus.PENDING,,
+
+56589065,submission.csv,2026-09-26 21:17:47.170000,"probe 40: exp70a = K2 + leaf prune 0.3 (ladder L1, class A)",SubmissionStatus.COMPLETE,0.954,
+
+56589025,submission.csv,2026-09-26 21:15:23.887000,"probe 39: exp70e = K2 + leaf prune 0.3 + DeepCenter safe-div 0.30 (ladder L3, R7 lifted by user 26 Sep 20:33Z)",SubmissionStatus.COMPLETE,0.949,
+
+56563534,submission.csv,2026-09-26 00:02:18.207000,probe 38: exp58n = K2 twin without the insertion (x138 + safetail + lowrefine); AMENDMENT f2 F2 candidate; twin gates pass,SubmissionStatus.COMPLETE,0.953,
+
+56563521,submission.csv,2026-09-26 00:02:12.737000,probe 37: exp58 = K2 (x138 + safetail C01 + lowrefine + DaughterNet insertion #35 config); dummy gates 18/18,SubmissionStatus.COMPLETE,0.954,
+
+56555189,submission.csv,2026-09-25 16:18:09.270000,"P36 exp57 v1 DIAGNOSTIC (x138+leafprune0.3+divinsert ungated), never a final",SubmissionStatus.COMPLETE,0.954,
+
+56545786,submission.csv,2026-09-25 08:33:25.043000,"probe 35: exp57b = x138 verbatim (exp56) + DaughterNet v1 division insertion with steal (exp48 knobs); +12 forks, nodes identical",SubmissionStatus.COMPLETE,0.954,
+
+56545267,submission.csv,2026-09-25 08:09:00.723000,probe 34: exp56 = anvithpothula/biohub-x138 verbatim on our account (author public 0.953); same docker pin + machine shape,SubmissionStatus.COMPLETE,0.953,
+
+56534401,submission.csv,2026-09-25 00:02:10.437000,probe 33: exp53 = exp48 (0.948) + float output coords (safe encoding); compare with exp48,SubmissionStatus.COMPLETE,0.948,
+
+56534391,submission.csv,2026-09-25 00:02:05.877000,probe 32: exp52 = exp51 (exp48 + x138 head) + float output coords (safe encoding: floor(w)=round(v)); lab +0.0025 on 6bba selection,SubmissionStatus.COMPLETE,0.950,
+
+56527239,submission.csv,2026-09-24 17:09:12.710000,"probe 31: exp51 = exp48 (0.948) + x138 V1284 coordinate-refinement head (float coords, trilinear gather; verbatim); DeepCenter stays 0.20",SubmissionStatus.COMPLETE,0.950,
+
+56518039,submission.csv,2026-09-24 09:41:28.753000,probe 30: exp50 = exp39 + edge filter drop-only ef_a0 (drop every unscored relink edge); lab selection +0.0095,SubmissionStatus.COMPLETE,0.946,
+
+56518035,submission.csv,2026-09-24 09:41:23.477000,"probe 29: exp49 = exp39 + edge filter ef_a3_rl_pr (drop unscored relink edges where the ILP linked elsewhere, re-link to ILP alternative, prune isolated); lab confirmation +0.0162",SubmissionStatus.COMPLETE,0.947,
+
+56510845,submission.csv,2026-09-24 03:45:50.670000,"probe 28: exp48 = exp47 + DaughterNet v1 division insertion with steal (cap 4, alpha 1, ens thr 0.4); kernel parity fork-for-fork PASS",SubmissionStatus.COMPLETE,0.948,
+
+56510844,submission.csv,2026-09-24 03:45:46.783000,"probe 27: exp47 = exp39 + weak-leaf pruning 0.3 (035 verbatim); laptop confirmation +0.0006, no video worse",SubmissionStatus.COMPLETE,0.947,
+
+56502326,submission.csv,2026-09-23 19:25:05.213000,probe 26 (diagnostic): exp45 = exp29 with safe divisions OFF (0 forks); exp29 - exp45 = 0.1 x our LB division Jaccard,SubmissionStatus.COMPLETE,0.911,
+
+56473748,submission.csv,2026-09-22 20:41:45.973000,"probe 25: exp44 v2 = takaito verbatim + BUNDLE: axis-flip TTA (detector) + division hygiene (sister floor 5 um, already-divided filter)",SubmissionStatus.COMPLETE,0.946,
+
+56473747,submission.csv,2026-09-22 20:41:42.273000,probe 24: exp43 = takaito/biohub-a951-gshift verbatim (public notebook as is),SubmissionStatus.COMPLETE,0.944,
+
+56464419,submission.csv,2026-09-22 12:28:28.233000,"probe 23: exp42 = exp29 realised config + per-frame global-shift correction in motion relink (takaito gshift, MNN 12 um), one change",SubmissionStatus.COMPLETE,0.945,
+
+56459139,submission.csv,2026-09-22 08:41:13.727000,"probe 22: exp41 = exp29 realised config + MOTION_RELINK_LEARNED_BONUS 1.0 -> 2.5, one change",SubmissionStatus.COMPLETE,0.945,
+
+56459135,submission.csv,2026-09-22 08:41:09.277000,"probe 21: exp40 = exp29 realised config + motion relink OFF (B29; friend B 12 videos +0.0053), one change",SubmissionStatus.COMPLETE,0.945,
+
+56440312,submission.csv,2026-09-21 17:50:00.293000,"probe 20: exp39 = exp29 realised config + DivNet parent veto p>=0.5 on safe-division candidates (tools/divnet_infer.py, manifest recipe), one change",SubmissionStatus.COMPLETE,0.947,
+
+56256938,submission.csv,2026-09-15 14:42:42.703000,"probe 19: exp37 = exp29 realised config + TTA group := 8 axis flips instead of rot90/transpose (friend B surgery), one change",SubmissionStatus.COMPLETE,0.946,
+
+56252506,submission.csv,2026-09-15 10:50:18.897000,"probe 18: exp36 = exp29 realised config + division FP hygiene (already-divided fork filter + sister floor 5um), one change",SubmissionStatus.COMPLETE,0.946,
+
+56252420,submission.csv,2026-09-15 10:44:25.143000,"probe 18: exp36 = exp29 realised config + division FP hygiene (already-divided fork filter + sister floor 5um), one change",SubmissionStatus.COMPLETE,0.946,
+
+56161138,submission.csv,2026-09-11 07:26:56.210000,probe 17: exp35 = exp29 realised config (sjlee 0.947 stack + relink tight 5.5) + PRIMARY := soup03B_50 (0.5 pilkwang + 0.5 exp03B weight soup),SubmissionStatus.COMPLETE,0.943,
+
+56160878,submission.csv,2026-09-11 07:08:57.360000,"probe 16: exp34 = exp29 realised config (sjlee 0.947 stack + relink tight 5.5, pilkwang primary) + Z-flip TTA views (12 views) -- clean re-test of exp31",SubmissionStatus.COMPLETE,0.938,
+
+56160334,submission.csv,2026-09-11 06:35:23.993000,"probe 15: exp33 = exp29 realised config (sjlee 0.947 stack + relink tight 5.5) + PRIMARY := exp03B, validator off (deconfounds probe 11)",SubmissionStatus.COMPLETE,0.944,
+

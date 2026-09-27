@@ -1,0 +1,21 @@
+{
+ "utc": "2026-09-27T03:35:09Z",
+ "source": "experiments\\e10_watch\\20260927T0147Z.txt",
+ "teams": 703,
+ "ours": {
+  "rank": 242,
+  "id": "16810638",
+  "name": "D: Discipline",
+  "last": "2026-09-26 00:02:18",
+  "score": "0.954",
+  "count": 40
+ },
+ "fresh": true,
+ "statuses": {
+  "56589025": "PENDING",
+  "56589065": "PENDING",
+  "56589423": "PENDING",
+  "56592350": "PENDING"
+ },
+ "note": "imported with --s0"
+}

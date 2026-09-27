@@ -1,0 +1,201 @@
+{
+ "version": 1,
+ "last_statuses": {
+  "56592350": "PENDING",
+  "56589423": "COMPLETE",
+  "56589065": "COMPLETE",
+  "56589025": "COMPLETE"
+ },
+ "s0": {
+  "folder": "20260927T045616Z",
+  "statuses": {
+   "56592350": "PENDING",
+   "56589423": "COMPLETE",
+   "56589065": "COMPLETE",
+   "56589025": "COMPLETE"
+  },
+  "ours": {
+   "rank": 255,
+   "id": "16810638",
+   "name": "D: Discipline",
+   "last": "2026-09-26 21:38:33",
+   "score": "0.954",
+   "count": 43
+  }
+ },
+ "error_mode": null,
+ "events": 3,
+ "verdicts": {
+  "56589065": {
+   "verdict": "NEU",
+   "unit": "NEU",
+   "event": 1
+  },
+  "56589025": {
+   "verdict": "NEG",
+   "unit": "NEG",
+   "event": 2
+  },
+  "56589423": {
+   "verdict": "NEG",
+   "unit": "NEG",
+   "event": 3
+  }
+ },
+ "ambiguous": [],
+ "history": [
+  {
+   "n": 1,
+   "utc": "2026-09-27T04:13:06Z",
+   "refs": [
+    {
+     "ref": "56589065",
+     "name": "exp70a",
+     "status": "COMPLETE",
+     "display": "0.954",
+     "verdict": "NEU",
+     "unit": "NEU",
+     "carried": false
+    }
+   ],
+   "s0": "S0-20260927T0147Z",
+   "s1": "20260927T041304Z",
+   "fresh": true,
+   "tries": 1,
+   "fr": {
+    "fresh": true,
+    "C": 1,
+    "E": 0,
+    "expected": [
+     41
+    ],
+    "err_counted": "n.a.",
+    "count": 41
+   },
+   "last_ok": true,
+   "ours0": {
+    "rank": 242,
+    "id": "16810638",
+    "name": "D: Discipline",
+    "last": "2026-09-26 00:02:18",
+    "score": "0.954",
+    "count": 40
+   },
+   "ours1": {
+    "rank": 253,
+    "id": "16810638",
+    "name": "D: Discipline",
+    "last": "2026-09-26 21:17:47",
+    "score": "0.954",
+    "count": 41
+   },
+   "passed": 0,
+   "passed_ids": [],
+   "up": "FAIL",
+   "attribution": "no UP",
+   "delta": 1
+  },
+  {
+   "n": 2,
+   "utc": "2026-09-27T04:31:08Z",
+   "refs": [
+    {
+     "ref": "56589025",
+     "name": "exp70e",
+     "status": "COMPLETE",
+     "display": "0.949",
+     "verdict": "NEG",
+     "unit": "NEG",
+     "carried": false
+    }
+   ],
+   "s0": "20260927T041304Z",
+   "s1": "20260927T043106Z",
+   "fresh": true,
+   "tries": 1,
+   "fr": {
+    "fresh": true,
+    "C": 2,
+    "E": 0,
+    "expected": [
+     42
+    ],
+    "err_counted": "n.a.",
+    "count": 42
+   },
+   "last_ok": true,
+   "ours0": {
+    "rank": 253,
+    "id": "16810638",
+    "name": "D: Discipline",
+    "last": "2026-09-26 21:17:47",
+    "score": "0.954",
+    "count": 41
+   },
+   "ours1": {
+    "rank": 255,
+    "id": "16810638",
+    "name": "D: Discipline",
+    "last": "2026-09-26 21:17:47",
+    "score": "0.954",
+    "count": 42
+   },
+   "passed": 0,
+   "passed_ids": [],
+   "up": "FAIL",
+   "attribution": "no UP",
+   "delta": 1
+  },
+  {
+   "n": 3,
+   "utc": "2026-09-27T04:56:17Z",
+   "refs": [
+    {
+     "ref": "56589423",
+     "name": "exp70d",
+     "status": "COMPLETE",
+     "display": "0.949",
+     "verdict": "NEG",
+     "unit": "NEG",
+     "carried": false
+    }
+   ],
+   "s0": "20260927T043106Z",
+   "s1": "20260927T045616Z",
+   "fresh": true,
+   "tries": 1,
+   "fr": {
+    "fresh": true,
+    "C": 3,
+    "E": 0,
+    "expected": [
+     43
+    ],
+    "err_counted": "n.a.",
+    "count": 43
+   },
+   "last_ok": true,
+   "ours0": {
+    "rank": 255,
+    "id": "16810638",
+    "name": "D: Discipline",
+    "last": "2026-09-26 21:17:47",
+    "score": "0.954",
+    "count": 42
+   },
+   "ours1": {
+    "rank": 255,
+    "id": "16810638",
+    "name": "D: Discipline",
+    "last": "2026-09-26 21:38:33",
+    "score": "0.954",
+    "count": 43
+   },
+   "passed": 0,
+   "passed_ids": [],
+   "up": "FAIL",
+   "attribution": "no UP",
+   "delta": 1
+  }
+ ]
+}

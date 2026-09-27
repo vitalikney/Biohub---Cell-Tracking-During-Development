@@ -1,0 +1,42 @@
+2026-09-27T03:35:09Z START ladder watch (read-only; new state); refs 56589025 exp70e, 56589065 exp70a, 56589423 exp70d, 56592350 exp70b; baseline count 40; 120/300 s; soft cap 2026-09-27T06:45:00Z, hard cap 2026-09-27T11:30:00Z; ERROR counted: unknown
+2026-09-27T03:35:09Z S0 S0-20260927T0147Z (from --s0 experiments\e10_watch\20260927T0147Z.txt): rank 242 score 0.954 count 40 last 2026-09-26 00:02:18 (241 TeamIds above us)
+2026-09-27T03:35:10Z ListSubmissions: exp70e PENDING, exp70a PENDING, exp70d PENDING, exp70b PENDING
+2026-09-27T03:37:12Z ListSubmissions: exp70e PENDING, exp70a PENDING, exp70d PENDING, exp70b PENDING
+2026-09-27T03:39:12Z skip: within 43 s of lb_poll's expected poll 03:39:55Z (period 602 s); next call in 104 s
+2026-09-27T03:40:57Z ListSubmissions: exp70e PENDING, exp70a PENDING, exp70d PENDING, exp70b PENDING
+2026-09-27T03:42:59Z ListSubmissions: exp70e PENDING, exp70a PENDING, exp70d PENDING, exp70b PENDING
+2026-09-27T03:45:00Z ListSubmissions: exp70e PENDING, exp70a PENDING, exp70d PENDING, exp70b PENDING
+2026-09-27T03:47:02Z ListSubmissions: exp70e PENDING, exp70a PENDING, exp70d PENDING, exp70b PENDING
+2026-09-27T03:49:02Z skip: within 55 s of lb_poll's expected poll 03:49:57Z (period 602 s); next call in 116 s
+2026-09-27T03:50:59Z ListSubmissions: exp70e PENDING, exp70a PENDING, exp70d PENDING, exp70b PENDING
+2026-09-27T03:53:01Z ListSubmissions: exp70e PENDING, exp70a PENDING, exp70d PENDING, exp70b PENDING
+2026-09-27T03:55:02Z ListSubmissions: exp70e PENDING, exp70a PENDING, exp70d PENDING, exp70b PENDING
+2026-09-27T03:57:04Z ListSubmissions: exp70e PENDING, exp70a PENDING, exp70d PENDING, exp70b PENDING
+2026-09-27T03:59:04Z skip: within 55 s of lb_poll's expected poll 03:59:59Z (period 602 s); next call in 116 s
+2026-09-27T04:01:01Z ListSubmissions: exp70e PENDING, exp70a PENDING, exp70d PENDING, exp70b PENDING
+2026-09-27T04:03:02Z ListSubmissions: exp70e PENDING, exp70a PENDING, exp70d PENDING, exp70b PENDING
+2026-09-27T04:05:04Z ListSubmissions: exp70e PENDING, exp70a PENDING, exp70d PENDING, exp70b PENDING
+2026-09-27T04:07:05Z ListSubmissions: exp70e PENDING, exp70a PENDING, exp70d PENDING, exp70b PENDING
+2026-09-27T04:09:05Z skip: within 55 s of lb_poll's expected poll 04:10:01Z (period 602 s); next call in 116 s
+2026-09-27T04:11:03Z ListSubmissions: exp70e PENDING, exp70a PENDING, exp70d PENDING, exp70b PENDING
+2026-09-27T04:13:04Z status change: 56589065 exp70a COMPLETE 0.954
+2026-09-27T04:13:06Z LB download 20260927T041304Z: rank 253 score 0.954 count 41 last 2026-09-26 21:17:47; fresh (expected count 41, ERROR counted: n.a.)
+2026-09-27T04:13:06Z EVENT 1 | changed: 56589065 exp70a COMPLETE 0.954 | S0 S0-20260927T0147Z -> S1 20260927T041304Z (fresh after 1 download(s); count 41 vs expected 41 (40 + 1 COMPLETE); ERROR counted: n.a.; LastSubmissionDate ok) | ours rank 242->253 score 0.954->0.954 count 40->41 (+1) last 2026-09-26 00:02:18->2026-09-26 21:17:47 | passed TeamIds 0 | UP test FAIL; no UP | 56589065 exp70a: NEU unit NEU
+2026-09-27T04:15:08Z ListSubmissions: exp70e PENDING, exp70a COMPLETE, exp70d PENDING, exp70b PENDING
+2026-09-27T04:17:09Z ListSubmissions: exp70e PENDING, exp70a COMPLETE, exp70d PENDING, exp70b PENDING
+2026-09-27T04:19:09Z skip: within 53 s of lb_poll's expected poll 04:20:03Z (period 602 s); next call in 114 s
+2026-09-27T04:21:05Z ListSubmissions: exp70e PENDING, exp70a COMPLETE, exp70d PENDING, exp70b PENDING
+2026-09-27T04:23:07Z ListSubmissions: exp70e PENDING, exp70a COMPLETE, exp70d PENDING, exp70b PENDING
+2026-09-27T04:25:08Z ListSubmissions: exp70e PENDING, exp70a COMPLETE, exp70d PENDING, exp70b PENDING
+2026-09-27T04:27:10Z ListSubmissions: exp70e PENDING, exp70a COMPLETE, exp70d PENDING, exp70b PENDING
+2026-09-27T04:29:10Z skip: within 54 s of lb_poll's expected poll 04:30:04Z (period 602 s); next call in 115 s
+2026-09-27T04:31:06Z status change: 56589025 exp70e COMPLETE 0.949
+2026-09-27T04:31:08Z LB download 20260927T043106Z: rank 255 score 0.954 count 42 last 2026-09-26 21:17:47; fresh (expected count 42, ERROR counted: n.a.)
+2026-09-27T04:31:08Z EVENT 2 | changed: 56589025 exp70e COMPLETE 0.949 | S0 20260927T041304Z -> S1 20260927T043106Z (fresh after 1 download(s); count 42 vs expected 42 (40 + 2 COMPLETE); ERROR counted: n.a.; LastSubmissionDate ok) | ours rank 253->255 score 0.954->0.954 count 41->42 (+1) last 2026-09-26 21:17:47->2026-09-26 21:17:47 | passed TeamIds 0 | UP test FAIL; no UP | 56589025 exp70e: NEG unit NEG
+2026-09-27T04:36:10Z ListSubmissions: exp70e COMPLETE, exp70a COMPLETE, exp70d PENDING, exp70b PENDING
+2026-09-27T04:41:11Z ListSubmissions: exp70e COMPLETE, exp70a COMPLETE, exp70d PENDING, exp70b PENDING
+2026-09-27T04:46:13Z ListSubmissions: exp70e COMPLETE, exp70a COMPLETE, exp70d PENDING, exp70b PENDING
+2026-09-27T04:51:14Z ListSubmissions: exp70e COMPLETE, exp70a COMPLETE, exp70d PENDING, exp70b PENDING
+2026-09-27T04:56:16Z status change: 56589423 exp70d COMPLETE 0.949
+2026-09-27T04:56:17Z LB download 20260927T045616Z: rank 255 score 0.954 count 43 last 2026-09-26 21:38:33; fresh (expected count 43, ERROR counted: n.a.)
+2026-09-27T04:56:17Z EVENT 3 | changed: 56589423 exp70d COMPLETE 0.949 | S0 20260927T043106Z -> S1 20260927T045616Z (fresh after 1 download(s); count 43 vs expected 43 (40 + 3 COMPLETE); ERROR counted: n.a.; LastSubmissionDate ok) | ours rank 255->255 score 0.954->0.954 count 42->43 (+1) last 2026-09-26 21:17:47->2026-09-26 21:38:33 | passed TeamIds 0 | UP test FAIL; no UP | 56589423 exp70d: NEG unit NEG
