@@ -3060,6 +3060,8 @@ Mention it to the user in one line (R9-A8 item 6).
   stay as fallbacks. Security-warning audit (round-18 report agent): kernels list --mine and the submissions list show
   nothing unexpected (last kernel exp72 13:27Z, last submit probe 46 14:36:59Z); no exp76 kernel existed before the
   main session pushed exp76d.
+- 2026-09-27 16:33 UTC, exp76d DUMMY CLEAN (121,061 nodes, 79 forks, Secondary SHA256 ed8c616b, FORKMID on, 0 errors, ~1,402 s) -> ready for
+  00:05Z 28 Sep. exp76a dummy pushed 16:33Z; exp75 still QUEUED since 13:19Z.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
