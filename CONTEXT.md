@@ -3214,6 +3214,11 @@ Mention it to the user in one line (R9-A8 item 6).
 - 2026-09-27 20:02 UTC, DUMMIES CLEAN: exp78a (K2 + cap 8: 121,252 nodes / 86 forks, ~1,486 s) and exp76e (exp70b + cap 6: 121,252 / 80 forks,
   ~1,279 s); 0 Traceback/FAILED/DEADLINE:/FALLING BACK. Running: exp78b dummy, exp77 N2 training. Round 20 launched 20:02Z; round 21
   timer 22:30Z; probe 46 read waiter set.
+- 2026-09-27 20:30 UTC, USER (chat: "так. я спать - работай в автономном режиме."): autonomous night. Plan: probe 46 read (~22:00-22:30Z);
+  N2 outputs -> private datasets -> cap6-base builds + dummies; 28 Sep W1 at 00:05Z = 3 submits from the clean cap-family dummies
+  (order per round 20 and the 46 read: default exp78a cap 8, exp78b cap 12 + fc2, then exp76e cap6 + forkmid or a 46-informed
+  rung), keeping 2 slots for ~08:00Z after the first reads (N2 / CI / SEC stacks on the best base); research rounds every
+  ~2.5 h (21 at 22:30Z); E10 v3 watch hourly; no finals change (the user picks on 29 Sep).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
