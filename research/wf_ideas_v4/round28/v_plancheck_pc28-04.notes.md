@@ -1,0 +1,6 @@
+- 2026-09-28T19:50:31Z start PC28-04 check
+- 2026-09-28T19:52Z card round27/finals_card_v4_ru.md mtime 18:55 MSK = 15:55Z (before CONTEXT 16:26Z entry l.4029-4032 which claims 'with the R27-A8 edits').
+- Verified defects vs round27/report.json R27-A8 (1)-(7): (1) l.31 opener 'Модель ... выше по бронзе у П1. Выбираете вы.' unconditional; (2) l.40 'серебро ~0.51' (no 0.39-0.63 range); (3) l.101/102/103/105 token_refs keyed on 'probe 52:'..'probe 56:' prefixes, no E10-copy token; (4) l.81 lever list lacks exp83c (exp83c is listed as SEC at l.82 only); (5) l.113 pool 'CI L_hi <= 10.2 h', no UNPROVEN-ins; (6) l.84 PENDING windows: DIS line present ('DIS 2.25 время не меняет') - effectively covered; (7) l.58 DIS footnote partial (bonus +0.0007 present, probes 6/9 note absent; optional). Q3 line l.28 present.
+- REPORT.md missing for rounds 24,25,26,27 (all have report.json only) -> systemic, not a round-27 omission; low value.
+- Extra hazard for (3): 'exp89q = ' substring matches both the 00:05Z night slot (if probe 51 not +/0u) and a morning M1/M2 exp89q -> disambiguate by submission date/time, not substring alone.
+- Verdict: not refuted (doc/plan fix, 0 GPU, 0 slots, 0 API; lowers misfill risk at 12:03Z fill). No LB value by itself.

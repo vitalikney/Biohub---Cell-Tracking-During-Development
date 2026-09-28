@@ -4101,6 +4101,36 @@ Mention it to the user in one line (R9-A8 item 6).
   check 11:10; finals proposal 12:03 and 18:37; reminders 19:43 and 21:05. The crons remain as the first path; every
   submit step lists submissions first (dedupe by file token), so a double trigger cannot double-submit. The Chrome
   browser (claude-in-chrome) is connected and used by the round's scan agent for notebook pages / discussions.
+- 2026-09-28 20:18 UTC, RULE v2.1 + exp89l DUMMY GATE + NO-FREEZE FALLBACK (pre-score; R27-A3 (2), R26-A3 (3), R27-A4 (7)(a)) (newest poll header 20:13:02Z shows 56640366 PENDING)
+  (a) RULE v2.1: 'compute = last log time - time of the "V1284 head patched ... mode = candidate" line. That is the
+  anchor on which the CI reference exp89r 1,473 s was measured (round27 PC27-03); if the GPU shard 0 line is used
+  instead, re-measure the reference on it first. PASS if whole-kernel <= 2,100 s OR compute <= 1.10 x 1,473 = 1,620 s.
+  Re-run once only if both fail; the re-run passes by the same two clauses. Above 2,500 s whole-kernel, FAIL only if
+  compute also fails. Log setup, compute and the GPU model separately. Non-CI files: reference = the topology parent.
+  This replaces the runtime clause of the R26-A3 (3) exp89l gate.' (b) exp89l GATE: 'exp89l_k2cap6_k_sec_ci is built
+  ONLY in branch A (51 = + / 0u, incl. UNPROVEN-ins); build STOP unless sha8 cad1d47f. PASS vs the exp89p dummy (CSV
+  629fc20b4815) iff: validate ok; 0 Traceback / FAILED / DEADLINE: / FALLING BACK; DIVINS ENABLED; "Secondary SHA256:
+  7029fe69"; topology identical 122,110 nodes / 117,957 edges / 88 forks; COORDINJECT SUMMARY 4/4 with replaced
+  0.90-0.93; integer-coordinate change 0.60-0.69; all z/y/x integer (744093); RULE v2.1 (flag a thin margin above
+  2,000 s whole-kernel). Before the push: the PRE-PUSH dataset check (ft-weights 2026-09-23 23:54:03, n2a 2026-09-27
+  21:25:35) and the R8 coverage line (secFT n2a 7029fe69 + coordinject ALPHA 0.5 MAX_UM 3.0; V_pub only, Q3). exp89l
+  is a MORNING file: its dummy must PASS before its A-M1 decision header (latest 08:40Z = 11:40 MSK), not by 23:30Z.
+  The AMEND 3/4 23:30Z dummy-PASS deadline covers the night files only (the same holds for B-M1 10:30Z and M2 11:00Z).
+  If 51 is not + / 0u, exp89l is not built and the gate lapses.' (c) NO-FREEZE FALLBACK, written WITHOUT the freeze
+  literal: 'If the 23:30Z freeze line was not logged when a night step runs, STACK = exp89r only if a successful poll
+  header stamped before the stack's submit shows 56640366 COMPLETE with display >= 0.959, or 0.958 with an
+  attributable UP (SubmissionCount 53), coded under R25-A1 (4) + GAP RULE v2 (a late + / 0u = UNPROVEN-ins; a late 0 /
+  - = ?; a first COMPLETE header later than 22:59:57Z + 210 s per failed attempt = ?). Otherwise, or with no
+  successful header, STACK = exp89q. A read after the stack is submitted never changes it.' (d) G4 hardening, same
+  entry: the freeze check becomes grep -cE '^- 2026-09-2[89] [0-9:]+ UTC, W4 FREEZE: NIGHT 29 Sep' CONTEXT.md, so that
+  no other line satisfies it.
+- 2026-09-28 20:18 UTC, SESSION CRONS NEVER FIRE -> WAITERS (R28-A1)
+  Round 28 re-counted: 0 of 31 CronCreate jobs since 26 Sep 17:50Z produced a prompt in this session (the 12:47Z round
+  cron was missed while idle, awake and on AC). The background timers logged at 20:13Z (scratchpad timer.sh, one
+  run_in_background Bash per due time, local clock only) are therefore the PRIMARY trigger path; added at 20:18Z:
+  backup checks 00:20 and 00:50 UTC and the post-deadline 00:07 UTC 30 Sep. The 5ece5d24 freeze cron prompt (W4 AMEND
+  3) is stale: the freeze follows R27-A4 + R28-A4. Residual risk: a VS Code / extension restart kills the session's
+  waiters silently (the detached lb_poll / e10 / feed loops survive); the user can say 'продолжи'.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

@@ -1,0 +1,122 @@
+{
+ "files_written": [
+  "research/KNOWLEDGE/WATCHLIST.md",
+  "research/KNOWLEDGE/_curation/28/watch.notes.md",
+  "research/KNOWLEDGE/_curation/28/watch.json"
+ ],
+ "alerts": [
+  {
+   "kind": "risk",
+   "what": "W281 (R28-A1): session crons have never fired (0 of 31 CronCreate since 26 Sep 17:50Z). The freeze 23:30Z, batch 00:04Z, backups 00:20/00:50/01:30Z, post-wake 06:07Z, morning prep 07:23Z, finals 12:03Z/18:37Z, tick reminder 19:43Z, last call 21:05Z and post-deadline 00:07Z 30 Sep all sit on crons. No WAITER_-tagged process was alive at ~20:08Z",
+   "evidence": "research/wf_ideas_v4/round28/report.json R28-A1, plan_issues 1, new_facts 5; research/wf_ideas_v4/round28/scan_plancheck.notes.md 19:45Z/19:55Z; local Win32_Process read ~20:08Z",
+   "suggested_action": "Arm one tagged run_in_background until-loop per due time now (the freeze waiter points to R27-A4 + R28-A4, not W4 AMEND 3), log the CONTEXT OPS line, send the one Russian correction message",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "W288: the 20:07Z AUTONOMOUS entry schedules the 22:47Z pre-night round and hourly rounds 01:13-18:13Z on 'session cron', which by R28-A1's evidence never fire",
+   "evidence": "CONTEXT.md l.4084-4087 vs research/wf_ideas_v4/round28/scan_plancheck.notes.md 19:45Z",
+   "suggested_action": "Create research-round waiters (22:47Z, hourly hh:13Z) or launch rounds from notifications; amend the CONTEXT line",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "The last chat message told the user the 20:47 MSK round 28 was lost to the battery. Kernel-Power shows AC and awake then; the cause is the cron defect",
+   "evidence": "research/wf_ideas_v4/round28/report.json new_facts 5, plan_issues 8; research/wf_ideas_v4/round28/REPORT.md",
+   "suggested_action": "Send the R28-A1 (3) correction message (MSK first); the user is asleep (CONTEXT.md l.4081), so it is read in the morning",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "W282 (R28-A2): the pre-score entry for RULE v2.1 (one compute anchor: 'mode = candidate'), the exp89l dummy gate (vs exp89p CSV 629fc20b4815, PASS by the 08:40Z header) and the no-freeze fallback is not logged. RULE v2.1 appears only as a name at l.4057",
+   "evidence": "research/wf_ideas_v4/round28/report.json R28-A2, plan_issues 2-3; CONTEXT.md l.4057; grep '1,620' CONTEXT.md = 0",
+   "suggested_action": "Log one CONTEXT entry quoting a PENDING poll header (20:03:00Z or later) before 51's first COMPLETE header",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "T165/W283: probe 51 exp87a (56640366) is still PENDING at 20:03:00Z. Expected ~21:31-21:42Z; 10.2 h = 22:26:57Z; admit edge 10.75 h = 22:59:57Z; tail ~23:09Z. Branch A -> build exp89l (cad1d47f) + dummy",
+   "evidence": "experiments/lb_poll/poll.log l.25152-25155; research/wf_ideas_v4/round28/report.json new_facts 1, R28-A3",
+   "suggested_action": "Code under R25-A1 (4) + GAP RULE v2 (CONTEXT.md l.4009-4020) with the UP test; no poller restart 21:00-22:30Z unless the header is > 15 min old; launch round 29 by hand",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "W284 (R28-A4): the 23:30Z W4 FREEZE line must add the admit edge, the item (5) override, a guarded T54 (the stored text raises IndexError in branch A), and nb_try exit 3 on daily-limit errors (the stored regex matches 'limit' and falls back to exp83c)",
+   "evidence": "research/wf_ideas_v4/round28/report.json R28-A4, plan_issues 4; research/wf_ideas_v4/round28/report.notes.md 19:58Z",
+   "suggested_action": "Prepare the full freeze + batch checklist text in round 29; log it at 23:30Z via the FREEZE waiter",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "W285 (R28-A5): CONTEXT l.4029-4032 says finals card v4 was stored with the R27-A8 edits, but the card lacks (1)-(5): the opener, П3 silver 0.39-0.63, file-name tokens, exp83c = 3, the GAP RULE v2 pool",
+   "evidence": "research/wf_ideas_v4/round27/finals_card_v4_ru.md (0 hits for 'exp83c = 3' and '0.39' at ~20:08Z); research/wf_ideas_v4/round28/report.json R28-A5",
+   "suggested_action": "Apply the edits tonight after the freeze; log a CONTEXT correction",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "stale",
+   "what": "W286 (R28-A6): the E10 runbook trigger text is stale ('OUR = 0.957 ... SC >= 0.958'); the floatout/744093 KB line and the round-29 KEY FACTS are not logged",
+   "evidence": "research/wf_ideas_v4/e10v3/runbook.notes.md l.66; research/wf_ideas_v4/round28/report.json R28-A6",
+   "suggested_action": "Fix l.66 to OUR 0.958 / SC >= 0.959; log the softened 744093 line before 23:30Z",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "W126: RESULTS.md has no rows for probes 47-50 (and later 51 and the night probes)",
+   "evidence": "experiments/RESULTS.md l.79 (probe rows end at probe 46)",
+   "suggested_action": "Add the rows before the 12:03Z finals card",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "risk",
+   "what": "I329/T174: a VS Code / Claude Code restart or auto-update kills all background waiters silently (the 06:04Z 2.1.282->2.1.283 restart wiped ~13 crons). The user travels 05:10-06:00Z with the laptop asleep",
+   "evidence": "research/wf_ideas_v4/round28/report.json new_facts 5; CONTEXT.md l.4066-4072",
+   "suggested_action": "The post-wake 06:07Z waiter re-arms any dead waiter; every round checks the WAITER_ tag count",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "I330: Modern Standby still happens on AC (Idle Timeout 16:51-17:40Z); a battery excursion 18:07-18:21Z came after the 16:30Z 'ON AC' line",
+   "evidence": "research/wf_ideas_v4/round28/report.json new_facts 5; research/wf_ideas_v4/round28/scan_plancheck.notes.md (Power)",
+   "suggested_action": "Keep the watchdog; check BatteryStatus 2 in freeze item (8) and before the batch",
+   "urgency": "today"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "I334/I335/I336: the dummy lab has the wrong sign for CI (-0.0055 vs LB +0.001; the refiners saw 171/199 train stems); SEC n2a is -0.0008..-0.0020 on 5/5 pairs, all from one clip; the truncation emulation (-0.0050) voids the float anchor",
+   "evidence": "research/wf_ideas_v4/round28/scan_recheck.notes.md 20:05Z-20:15Z",
+   "suggested_action": "Carry the SEC/CI info lines in the freeze (R28-A4 (vi)); never read the dummy lab as a sign for coordinate changes",
+   "urgency": "info"
+  },
+  {
+   "kind": "risk",
+   "what": "I337: in autonomous mode with GPU not binding, the tempting spends IB29-02 (FLOW_Z_WEIGHT 0.6) and MD-1 (LEARNED_BONUS 0.75) are pre-refuted (EV ~0, sign <= 0)",
+   "evidence": "research/wf_ideas_v4/ideas_29sep/rank.json; CONTEXT.md l.4073-4080, l.4087-4089",
+   "suggested_action": "Build nothing new unless E10 fires (>= 0.959) or a disclosed knob appears",
+   "urgency": "info"
+  },
+  {
+   "kind": "deadline",
+   "what": "Night batch 29 Sep: slot reset 00:00Z; 00:05Z exp89r/exp89q, 00:06Z exp75, 00:46Z exp89p (both branches, by default), backups 00:20/00:50/01:30Z; 28 Sep is 5/5 used",
+   "evidence": "CONTEXT.md l.3899-3907, l.4051-4058; research/wf_ideas_v4/round28/report.json new_facts 8",
+   "suggested_action": "Drive the batch with W281 waiters; send every submit through the fixed nb_try",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "Morning 29 Sep: prep 07:23Z; A-M1 decide by the 08:40Z header, submit by 08:45Z; B-M1 by the 10:30Z header, submit by 10:50Z; M2 by 11:00Z, submit by 11:30Z; W279 (1) DET_THRESHOLD-closed line before 07:23Z; after 02:00Z an E10 copy needs the user's yes",
+   "evidence": "CONTEXT.md l.3931-3955, l.4089-4091; research/wf_ideas_v4/round27/report.json R27-A9 (1)",
+   "suggested_action": "MORNING TABLE v1.1 is unchanged; UNUSED is the default; teammates push if our GPU quota runs out (never use their tokens)",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "deadline",
+   "what": "Finals: card 12:03Z, final proposal 18:37Z, reminder + V_pub re-check 19:43Z, the USER ticks by 20:00Z (23:00 MSK), last call 21:05Z, deadline 23:59Z; the session never ticks",
+   "evidence": "CONTEXT.md l.3851-3855, l.4091-4092; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/743765",
+   "suggested_action": "Run all of these via W281 waiters; the card needs W285 first",
+   "urgency": "before-finals"
+  }
+ ],
+ "summary": "Curation 28 (~20:15Z 28 Sep). Most R27 items are done: the standby correction, GAP RULE v2, the DIS fact fix, the card stored, the round-27 facts, the laptop on AC (78%), and the hedge pair agreed. The user is asleep, in autonomous mode (CONTEXT l.4081). NEW CRITICAL: session crons have never fired (0/31, round28), and no replacement waiter is alive. The freeze 23:30Z, the batch 00:04Z, the morning prep, the finals proposals and the new hourly rounds (l.4086) all depend on W281/W288. Probe 51 is still PENDING at 20:03Z (expected ~21:31-21:42Z; admit edge 22:59:57Z). Before it scores, W282 is overdue: the pre-score RULE v2.1 + exp89l gate + no-freeze fallback. W284 is still to do: the freeze amendments (T54 IndexError, nb_try 'limit'). The finals card still lacks the R27-A8 edits, contrary to CONTEXT l.4029 (W285). RESULTS.md rows 47-50 are still missing. The earlier chat claim that the battery caused the lost 20:47 MSK round is wrong. New insights: I327-I337."
+}

@@ -1,0 +1,8 @@
+# notes 2026-09-28T19:50:34Z
+- Safe encoding checked, tools/build_probe_kernel.py l.1294-1311: w = max(0, r + min(max(round(v-r,3),0),0.499)), r=round(v) -> floor(w)=trunc(w)=round(w)=r (ceil would differ; implausible). CONTEXT l.1484-1488: kernels asserted floor(w)==base int on 100% nodes. So under an int-casting scorer probes 32/33 (exp52/53, 0.950/0.948 ties, CONTEXT l.1497) were no-ops.
+- 744093 (https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/744093, Hammad Farooq 16:29Z): same 0.954 graph, round(v,3) -> 0.946; mechanism = poster's GUESS, unconfirmed, n=1.
+- Scratch r28_trunc.py verified: official_eval (tools/trainlab.py l.448) applies int(round()) itself, so arm 'round' = writer ints, 'floor_*' = floor(v) = emulated truncation. Recomputed via TL.summarise_rows on r28_trunc_out.json (56 clips): ALL floor_zyx -0.00498, floor_z -0.00386, floor_yx -0.00066; 44b6 (17) -0.0131; 6bba (39) -0.00425. Numbers reproduce.
+- Caveats: per-embryo spread 3x (-0.004..-0.013), so 'reproduces in magnitude' = 'consistent with', one external point on a large deterministic geometric transform, says nothing about transfer of SMALL gains. Pooled ALL -0.005 understates LB -0.008 by 1.6x.
+- s_merge.json l.93 other anchors untouched: Eric (742064) sub-voxel refinement +0.0078 local -> -0.002 LB twice (in-sample reason; unknown whether he wrote floats -> could itself be a truncation artefact, research/discussions_summary.md l.357); Canh constant offset -0.0031. 'closed in practice' still holds.
+- Verdict: NOT refuted as an info/recheck item. No build, no slot, 0 LB value; just CONTEXT hygiene with softened wording.
+- 2026-09-28T19:52:59Z final JSON written (refuted=false)

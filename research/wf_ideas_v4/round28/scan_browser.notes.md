@@ -1,0 +1,6 @@
+- 19:36Z round28 scan started
+- 19:40Z e10 snapshot 20260928T1936Z CHANGES=10, no kernel change; ours #139 0.958 lastsub 05:02:30; probe51 56640366 PENDING at 19:32:44Z (L>7.29h); LB 1542->1936: 0.953 415->410, 0.954 138, 0.955 102->106, 0.956 78->97, 0.957 43->45, 0.958 21->23, 0.959 20, >=0.960 104->105; 76 score changes, lastsub up to 14:50Z; P2 per window max 4 (1741Z); digests 1556/1727/1857: only new topic 744093 (float centroids, already in CONTEXT f22bcae), E10 FLAG none
+- 19:45Z Chrome (own tab, closed): discussion?sort=recent-comments: no new comment since r27; newest topic 744093 'Posted 3h ago' 5 votes, 743929 last comment 6h ago by Cyrus; nothing else newer than 7h. https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion
+- 19:46Z Code tab Recently Run: same list as CLI (Lineage Forge 0.947 7h ago, kunaldesale 0.953 9h ago, Track Your Cells 0.946 1d); no new notebook; best public 0.953. Nothing pulled.
+- 19:47Z Overview unchanged ('A DAY TO GO', int centroids in Submission File text); 4,557 participants (+12), 3,973 teams, 93,300 submissions (+486 vs 92,814 at r27). No host announcement.
+- scoring lag: 76 score changes 1542->1936, LastSubmissionDate 08:xx-12:46Z (+1 at 14:50Z); ours 12:14:57 still PENDING -> CI family L 9.27-9.45h (exp79a) -> read ~21:30-21:45Z; 10.2h gate 22:27Z.

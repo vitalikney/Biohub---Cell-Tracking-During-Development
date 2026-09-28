@@ -1,0 +1,4 @@
+- 2026-09-28T20:06Z start round 28 FACTS/DECISIONS curation; no 28/facts.json -> incremental over c27 (16:29Z)
+- 20:14Z sources: CONTEXT l.3999-4093 (16:26..20:07Z; Lit now l.4094), git 756c513..d150eec (HEAD 20:07:06Z), ledger 20:03:02Z (462 polls, 3 gaps, P51 PENDING L>7.80h), round28 report.json 20:05Z R28-A1..A6 (none logged), ideas_29sep rank.json (16 refuted)
+- 20:15Z plan FACTS: header; [c28] appends F-LB-01/02/10, F-MET-10, F-RUN-39/42/43/44, F-RUL-05/20/22, F-MOD-50, F-TRN-58; new F-LB-28, F-RUN-45 (crons never fire), F-RUL-24 (autonomous mode), F-TRN-60; C-219/220/221/226 resolved, C-118/209/214/218/222/223/224/225/227/228 updated; new C-229..C-236
+- 20:16Z FACTS.md patched via c28_facts.py (header; 14 [c28] appends; F-LB-28, F-RUN-45, F-RUL-24, F-TRN-60; C-219/220/221/226 resolved; 10 C updates; C-229..C-236). Next DECISIONS

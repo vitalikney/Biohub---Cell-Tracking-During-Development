@@ -1,0 +1,8 @@
+# v_plancheck PC28-02 notes (started 19:50Z)
+- 19:50Z: no prior answer file. CONTEXT.md 4093 lines. grep 'v2.1' -> only l.4057 (16:38Z KEY FACTS refresh mention). 16:26Z line l.4021-4028 = R27-A3 (1) fact correction only. CONFIRMED: RULE v2.1 text never logged in CONTEXT.
+- grep exp89l in CONTEXT: l.3757/3841 (old exclusion), l.3929 (R8 coverage deferred to build line), l.3944 (MORNING v1.1 A-M1 names cad1d47f), l.3962 ('built only at probe 51's read'). NO gate in CONTEXT. A gate exists only in round26/report.json R26-A3 (3) (topology identical vs exp89p 122,110/117,957/88, CSV 629fc20b4815; Secondary 7029fe69; COORDINJECT 4/4 replaced >= 0.90; change 0.60-0.69; rule v2 + thin-margin flag > 2,000 s) -> never logged pre-score in CONTEXT. CONFIRMED.
+- experiments/exp89l* does not exist -> not built, no output yet -> still pre-score. poll.log tail: 56640366 PENDING per round28 scan (header 19:32:44Z).
+- CI reference values: replaced 0.913 (l.3661), 0.917 (l.3663), 0.916 (exp89r l.3919), 91.5% (exp76a/79a/78b) -> 0.90-0.93 band OK. Change 0.645/0.646 -> 0.60-0.69 OK. exp89p dummy 122,110/117,957/88 (12:40Z line) OK.
+- Compute refs (round27 v_plancheck_pc27-03.json): CI trio exp79a 1,477 / exp87a 1,569 / exp89r 1,473 s, measured from 'mode = candidate'; RULE v2.1 text anchors on the 'GPU shard 0' line -> anchor mismatch; exp75 compute 1,645 s (slower GPU) would FAIL 1,620 s. Caveat, not refutation (whole-kernel <= 2,100 s is the primary path; re-run once if both fail).
+- Verdict: not refuted. Process/honesty item, 0 direct LB value, cheap (one CONTEXT line, no API calls besides the 2-call dataset check already planned).
+- 19:52Z: final JSON written (refuted=false).

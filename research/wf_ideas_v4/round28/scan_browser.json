@@ -1,0 +1,45 @@
+{
+ "summary": "Round-28 delta scan, 19:36-19:48 UTC 28 Sep (22:36-22:48 MSK), against round 27 (15:42Z). Nothing actionable. No public notebook scores above 0.953, no knob or technique was disclosed, and the host announced nothing. Ours: 0.958 at #139 of 3,973 (was #138), 126 = 1 + teams strictly above, 14th of 23 in the 0.958 block. Probe 51 exp87a (ref 56640366) is still PENDING at the 19:32:44Z poll (L > 7.29 h). The CI sibling exp79a took 9.27-9.45 h, so the read is expected at ~21:30-21:45Z (00:30-00:45 MSK), and the 10.2 h gap-rule mark is 22:27Z. E10 P1: 20260928T1936Z CHANGES=10, all leaderboard lines, no kernel change. P2: the largest group in any hourly window since r27 is 4 (1641->1741Z), so there is no signal. LB counts 1542Z->1936Z: 0.953 415->410, 0.954 138->138, 0.955 102->106, 0.956 78->97, 0.957 43->45, 0.958 21->23, 0.959 20->20, >=0.960 104->105. Discussion: the only new topic is 744093 (float centroids, 0.954->0.946), which is already in CONTEXT (16:39Z) and does not affect us because we write integer coordinates; it has no new comments. Overview is unchanged; submissions are 93,300 (+486). Nothing pulled.",
+ "findings": [
+  {
+   "id": "r28-probe51-pending",
+   "kind": "new-fact",
+   "urgency": "today",
+   "what": "Probe 51 exp87a (ref 56640366, submitted 12:14:57Z) was still PENDING at the 19:32:44Z poll, so L > 7.29 h. The LB row still shows LastSubmissionDate 05:02:30 and 0.958. Other teams' submissions from 12:01-12:46Z did get scored in this window, but the CI family runs longer: exp79a took (9.27, 9.45] h. That puts the expected read at ~21:30-21:45Z (00:30-00:45 MSK). If it is not COMPLETE by 22:27Z (10.2 h), GAP RULE v2 applies.",
+   "evidence": "experiments/lb_poll/ledger.md (ledger time 19:32:46Z, row 56640366 PENDING, insertion gate 10.2 h open); experiments/e10_watch/20260928T1936Z.txt row 139 'D: Discipline,2026-09-28 05:02:30,0.958'",
+   "action": "No action before ~21:30Z. Read probe 51 from the poller when it lands, then pick the 00:05Z slot (exp89r if '+'/'0u', else exp89q)."
+  },
+  {
+   "id": "r28-e10-p1-null",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "E10 P1 at 19:36Z: CHANGES=10 vs 1841Z, all histogram/leaderboard lines. comp_dateRun, comp_scoreDescending, anvithpothula (x138 live slug biohub-0-953-lb-original), thtennant, amanatar and both statuses show 'no change'. The 1641Z/1741Z/1841Z snapshots also show no kernel change (only one amanatar list change at 1641Z, the non-biohub notebook noted in r27). The Chrome Code tab (Recently Run) matches: Lineage Forge 0.947 (7h ago), kunaldesale 'Biohub Cell Tracking' 0.953 (9h ago), Track Your Cells 0.946 (1d), with no new notebook. The best public score is 0.953, and E10 FLAG is none in the 1556Z, 1727Z and 1857Z digests.",
+   "evidence": "experiments/e10_watch/20260928T1936Z.txt DIFF; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/code?sortBy=dateRun",
+   "action": "None. E10 not met. Nothing to gate with tools/e10_port_gate.py."
+  },
+  {
+   "id": "r28-lb-delta",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "LB 19:36Z vs r27 15:42Z: 3,973 teams (+5). Ours is #139 (was #138), 14th of 23 in the 0.958 block (ranks 126-148). Counts: 0.953 415->410, 0.954 138->138, 0.955 102->106, 0.956 78->97 (+19), 0.957 43->45, 0.958 21->23, 0.959 20->20, >=0.960 104->105, >=0.970 10->10. #1-#10 are unchanged (yu4u 0.978, Sergio Alvarez 0.976, Gabriel 0.975, taiseiu 0.974, 0.971 x3, 0.970 x3). Top-40 movers: mige551 0.966->0.969 (#12), SoichiOzaki 0.968->0.969 (#16), Rasheed Khoshnaw 0.964->0.966 (#33). There were 76 score changes, with LastSubmissionDate 08-12Z (plus one at 14:50Z, r3takahashi 0.960->0.961), so the scoring lag is ~7 h for most submissions. P2 look-check across the whole window: 10 teams moved <=0.953 -> 0.956 and 1 moved -> 0.957. Per hourly window the largest group was 3/4/2/1 (1641/1741/1841/1936Z), all below the >=5 threshold. This matches the r27 reading: x138 plus the public 743929 knobs, which exp85a already holds.",
+   "evidence": "experiments/e10_watch/20260928T1542Z.txt vs 20260928T1936Z.txt (leaderboard_rows diff); per-window P2 lines in 20260928T1641Z/1741Z/1841Z/1936Z.txt",
+   "action": "None. The 0.956 block is filling up with late-scored x138+knob teams, which is expected and does not change the night plan."
+  },
+  {
+   "id": "r28-discussion-delta",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "Discussion since r27: 1 new topic, 0 new comments. The topic is 744093 by Hammad Farooq, 16:29Z, now 5 votes: 'Don't write float centroids - same graph, 0.954 → 0.946 on the public LB'. Its disclosed value is coordinates written as round(v, 3) instead of int(round(v)), which cost 0.008; the author's advice is to 'keep int(round(…)) on the final write'. CONTEXT already has this (16:39Z entry), our files use integers, and 'float output' stays closed, so AGGRESSIVE MODE has nothing new to build (it is a do-not-do, and we already comply). Chrome Recent Comments list: 743929 last comment 6h ago by Cyrus (already logged), then the beginner split thread 7h ago by g john rao (logged earlier). John Taylor has not replied, and nothing else is newer than 19h.",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/744093 ; experiments/discussions/digest_20260928T1727Z.md; digest_20260928T1556Z.md and digest_20260928T1857Z.md (0 new); https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion?sort=recent-comments",
+   "action": "None. Optional: before the finals tick, confirm that the V_pub and #37/exp75 outputs are integer-coordinate files (already stated in CONTEXT 16:39Z)."
+  },
+  {
+   "id": "r28-overview-unchanged",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "The Overview is unchanged: banner 'A DAY TO GO', timeline 'September 29, 2026 - Final Submission Deadline' 11:59 PM UTC, Submission File still specifies 'integer centroid coordinates in voxels', and code requirements are <=12 h CPU/GPU with internet off. Counts: 13,475 entrants, 4,557 participants (+12), 3,973 teams, 93,300 submissions (+486 vs 92,814 at r27). There is no host announcement, and the pinned topics are the same.",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/overview",
+   "action": "None."
+  }
+ ]
+}

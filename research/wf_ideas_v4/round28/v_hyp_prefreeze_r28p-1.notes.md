@@ -1,0 +1,11 @@
+# R28P-1 skeptic notes (2026-09-28 ~19:52 UTC)
+- No prior v_hyp_prefreeze_r28p-1.json existed.
+- CONTEXT.md (4,093 lines): grep 'RULE v2.1' -> only l.4057 (16:38Z line: 'KEY FACTS refreshed (... RULE v2.1 ...)'), name only; '1,620' / 'whole-kernel' / 'compute <= 1.10' = 0 hits. l.4021-4028 logs only R27-A3 (1) (DIS runtime = sibling).
+- research/KNOWLEDGE/DECISIONS.md l.497 (exp89l gate RULE v2.1, PROPOSED, 'log before the dummy push') and l.1313 (PROPOSED). IDEAS.md I-501 on the at-risk list (l.189).
+- round27/report.json actionable[2] R27-A3 (2): exact text of RULE v2.1 matches the finding.
+- round26/report.json R26-A3 (3): exp89l gate vs exp89p dummy 122,110/117,957/88, CSV 629fc20b4815, Secondary 7029fe69, COORDINJECT 4/4 >= 0.90, change 0.60-0.69, 'rule v2 (thin-margin flag above 2,000 s)'.
+- Rule v2 (CONTEXT l.3585-3588, R24-A3 (3)): <= 2,100 PASS; 2,100-2,500 re-run once (PASS if <= 2,100 or ratio vs parent <= 1.15); > 2,500 FAIL.
+- Why it matters: exp89r whole 1,959 s at compute 1,473 s (CONTEXT l.3920); setup (rglob) 203-788 s any config -> exp89l whole could be ~1,700-2,400 s -> rule v2 re-run risk purely from I/O noise, with ~3 h GPU and a 23:30Z dummy deadline.
+- Probe 51 (56640366) still PENDING at poll header 2026-09-28T19:42:46Z -> still pre-score for 51; exp89l not built.
+- Overlap: round28 scan_plancheck PC28-02 flags the same gap (RULE v2.1 + exp89l gate never logged).
+- Caveats: compute band 1.10 x 1,473 = 1,620 is tight vs exp87a 1,569 / exp75 1,645 (slower GPU); log GPU model. Re-run pass criterion under v2.1 should be stated (same two clauses). Rule is only a dummy gate; CI hidden L (9.3-9.5 h, tail 10.9 h) is governed by safetail 10.75 h, unchanged.

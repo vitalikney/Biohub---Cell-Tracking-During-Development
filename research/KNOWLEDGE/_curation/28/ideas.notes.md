@@ -1,0 +1,5 @@
+- 20:06:30Z 2026-09-28 start: no _curation/28/ideas.json -> incremental run over curation 27 (509 ideas, HEAD 756c513). Now HEAD 9bcd86f (7 commits) + untracked round28/.
+- 20:09Z gen.py/gen2.py reproduce c27 byte-exact (rows 509/509, body+ranking equal). New HEAD d150eec (8 commits since 756c513). Sources: CONTEXT l.4035-4093 (7 entries 16:30..20:07Z), ideas_29sep/ sweep (16 refuted), round28/ untracked report.json 20:04Z R28-A1..A6, poll header 20:03Z (51 PENDING).
+- 20:14Z read round28 report.json (R28-A1..A6, rejected, new_facts), 4 scans + 8 verdicts, ideas_29sep (16 cands MD-1..3/IB29-01..10/MM-1..3 all refuted; mapped IB29->I-029/454/183/333/331/384/440/175/222/441, MD-3->I-334, MM-3->I-484). Plan: ~45 updates + new I-510..I-521.
+- 20:27Z patch28.py OK -> scratch ideas_c28.json: 521 ideas (I-510..I-521), 62 change records; refuted 245->255, lab-tested 26->28; at-risk 17 (+I-510, I-511, I-516, I-495). Next: gen_md28.
+- 20:17Z NEW commit f05e678 (background timers) landed; CONTEXT 4124 lines -> fold in before writing. (earlier note '20:27Z' was a mis-typed clock, real ~20:15Z)
