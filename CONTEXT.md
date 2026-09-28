@@ -4150,6 +4150,21 @@ Mention it to the user in one line (R9-A8 item 6).
   governs new builds (exp89s/t) only. (7) SESSION HYGIENE (R29-A5): no workflow round from 23:25Z until exp89p is
   listed (~00:50Z); the 22:47Z round is skipped or kept to a short in-session step; the 01:13Z round runs only if all
   3 night files are listed; each round 01:13-06:17Z starts with checklist section 5 (one list call).
+- 2026-09-28 21:45 UTC, READ: PROBE 51 exp87a (exp70g + K + CI) = 0.959 -> '+' vs exp85a (UP 12 teams); NEW BEST 0.959; BRANCH A (STACK = exp89r)
+  Header 21:43:19Z: 56640366 COMPLETE public 0.959 (PENDING at 21:33:18Z). UP test: S0 = _lb/S1_1214Z (rank 134,
+  0.958, count 52) vs S1 = _lb/S1_51 (rank 128, 0.959, count 53 = exactly one completion = 51) -> 12 TeamIds passed =
+  UP, attributable. Ledger: safetail_ci, L in (9.30, 9.48] h, ADMIT (a), insertion gate 10.2 h did NOT fire; L_lo <
+  9.6 h -> no ins-tail? footnote; not UNPROVEN-ins. CODE per R25-A1 (4) with REF = exp85a 0.958: display 0.959 >=
+  0.959 -> '+'. BEST_CI = exp87a. Branch A -> the 00:05Z STACK = exp89r (K + SEC + DIS 2.25 + CI). Rank 128 of 3,979,
+  110 strictly above, 18th of 20 in the 0.959 block. V_pub = exp87a 56640366 (a CI file; CI caveat on the card). E10
+  trigger now >= 0.960 (kaggle_feed default 0.959; watch-loop LOOK text updated for its next restart).
+- 2026-09-28 21:45 UTC, exp89l BUILT + DUMMY PUSHED (branch A; R29-A3 / 20:18Z (b) gate) + R8 COVERAGE
+  exp89l_k2cap6_k_sec_ci = C6 + JT + N2 + CI (ipynb cad1d47f = the round-25/26 dry-run; ledger safetail_ci). Pre-push
+  dataset check: ft-weights 80,069,686 / 2026-09-23 23:54:03, n2a 7,724,030 / 2026-09-27 21:25:35 = baseline. Dummy
+  pushed 21:44:59Z (v1). R8 COVERAGE: exp89l = secFT n2a 7029fe69 + coordinject ALPHA 0.5 MAX_UM 3.0 (dataset as
+  exp79a); Q3: a final only as V_pub. Gate = the 20:18Z (b) text (vs the exp89p dummy CSV 629fc20b4815: topology
+  122,110 / 117,957 / 88; Secondary 7029fe69; COORDINJECT 4/4 replaced 0.90-0.93; change 0.60-0.69; integer z/y/x;
+  RULE v2.1). It is a MORNING file (A-M1, CI, decision at exp89p's terminal header, latest 08:40Z).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
