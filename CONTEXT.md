@@ -3976,6 +3976,15 @@ Mention it to the user in one line (R9-A8 item 6).
   2.25); secondary = the x138 default (Secondary SHA256 9bac2fa0.., no n2a line); nodes 121,389 (in 120,860-121,839;
   -0.77% vs exp85a); edges 117,246; forks 84 (85 +-5); LOWREFINE 148,020 (+0.00%); 1,566 s (rule v2); CSV 8956f46c6824
   -> PASS. Ready for MORNING TABLE v1.1 (A-M2 / B-M1 on DIS '+').
+- 2026-09-28 15:43 UTC, OPS: NETWORK OUTAGE ~15:05-15:35 UTC; loops restarted; round 27 launched; user defaults applied
+  api.kaggle.com DNS failed (poll.log header 15:15:31Z: NameResolutionError); the feed loop (last run 14:39Z) and the
+  E10 watch loop (run 27 due 15:22Z) hung; the 15:17 UTC research-round cron did not produce a round. Power settings
+  checked read-only: sleep and hibernate on AC = never, no wake events -> a network outage, not a sleep. At 15:41Z all
+  three detached loops were killed and restarted (first fresh poll header 15:41:53Z, feed run 15:42Z OK); probe 51
+  still PENDING. Round 27 launched 15:44Z (night-batch dry run + finals card v4). The user wrote 'продолжи' without
+  answering the three R26-A6 questions -> DEFAULTS: no exp89t, no exp89u; the depth-cap reading for {K, SEC, DIS 2.25,
+  CI} stands (not objected). RISK NOTE: the night batch (00:04 UTC) and morning prep depend on this session and the
+  network being up; a network failure branch is being written by round 27.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

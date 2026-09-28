@@ -40,3 +40,7 @@ E10 SIGNAL: anvithpothula/biohub-v1284-head-s075-sample-notebook (c) watched use
 2026-09-28T12:24:47Z RUN 24 snapshot 20260928T1222Z.txt CHANGES=7 fetch OK 8/8 | calls 8 429s 0 | signals 0 | next run 2026-09-28T13:22:30Z
 2026-09-28T13:22:51Z RUN 25 snapshot 20260928T1322Z.txt CHANGES=0 fetch OK 8/8 | calls 8 429s 0 | signals 0 | next run 2026-09-28T14:22:30Z
 2026-09-28T14:22:43Z RUN 26 snapshot 20260928T1422Z.txt CHANGES=10 fetch OK 8/8 | calls 8 429s 0 | signals 0 | next run 2026-09-28T15:22:30Z
+2026-09-28T15:41:53Z START E10 v3 watch loop (read-only; resumed from watch_loop_state.json (last run 2026-09-28T14:22:30Z)); every 60 min until 2026-09-29T12:00:00Z; top ref raunakdey07/biohub-harmonic-fusion-v3; mode LIVE
+2026-09-28T15:41:57Z skip: within 4 s of lb_poll's last poll 15:41:53Z (period 602 s); next call in 57 s
+2026-09-28T15:43:14Z RUN 27 snapshot 20260928T1541Z.txt CHANGES=16 fetch OK 8/8 | calls 8 429s 0 | signals 0 | next run 2026-09-28T16:41:53Z
+2026-09-28T15:43:14Z INFO (c) amanatar/notebookd71800bfae: watched user amanatar, not Biohub-related: new lastRunTime 2026-09-28 15:42:50 (new in the amanatar top-10); lastRunTime 2026-09-28 15:42:50 "notebookd71800bfae" by Aman Atar
