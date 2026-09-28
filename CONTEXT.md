@@ -3882,6 +3882,20 @@ Mention it to the user in one line (R9-A8 item 6).
   {exp85a, exp86c '+', exp89p '+'} (i.e. exp87a if both arms read <= 0.958 - already scored as probe 51 -> then exp89h
   only if exp86c read '+'); M2 (non-CI, by 11:30 UTC) = the next READMIT step (exp89k RA90) if exp86c read strictly
   above exp85a, else exp89f (K + TAU 0.7). Depth cap 'cap + 2 levers' stays: K + SEC + CI is not a file.
+- 2026-09-28 12:23 UTC, RISK STACK (user idea: several knobs in one probe, 'but not public fitting'); built + dummies; night composition PROPOSED to the user
+  Only levers whose VALUES were not picked on the public board: K (disclosed by JT, confirmed by probe 50), SEC n2a
+  (trained on train embryos), ILP_DISAPPEARANCE_WEIGHT 2.25 (direction chosen from the metric formula, not a read:
+  adjusted edge J = J * (1 - 0.1 * (T_pred - T_true) / T_true), so -0.73% nodes is a mechanical bonus of ~+0.0007; on
+  the K base it roughly cancels READMIT's +0.84%, matching JT's 'node-neutral re-wiring' finding). EXCLUDED: READMIT
+  0.92 (extrapolating a threshold along a public-read direction = the closest thing to public fitting),
+  SISTER_SYMMETRY_TAU 0.7 (+5 forks; cap 8 = +5 insertions read -0.001, evidence against more forks). BUILT:
+  exp89q_k2cap6_k_sec_dis225 (exp89p + DIS 2.25; b80dae26; non-CI; dummy pushed 12:22:59Z) and
+  exp89r_k2cap6_k_sec_dis225_ci (exp89q + CI; 5894ea50; family safetail_ci via exp89[..r]; dummy at the next free
+  lane). The CI variant is chosen at the 23:30 UTC freeze by probe 51's read (exp87a: '+' / '0u' -> exp89r, else
+  exp89q). PROPOSED NIGHT (pending the user's OK): 00:05 UTC RISK STACK (exp89q or exp89r), 00:06 UTC exp75 (private
+  hedge), 00:46 UTC exp89p (K + SEC, the attribution half: stack vs exp89p isolates DIS 2.25). exp86c (READMIT 0.92)
+  leaves the night. Gates: exp89q vs exp85a (validate, 0 errors, Secondary 7029fe69, nodes within +-1.5%, rule v2);
+  exp89r vs exp89q (topology identical, COORDINJECT 4/4, change 0.60-0.69, rule v2).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
