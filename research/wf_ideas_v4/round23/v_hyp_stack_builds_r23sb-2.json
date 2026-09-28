@@ -1,0 +1,8 @@
+{
+ "task": "round 23 skeptic check of r23sb-2 (finals + ladder rebuild byte-identical from current builder)",
+ "complete": true,
+ "refuted": false,
+ "reason": "Confirmed independently. tools/ differs between c86fd5a and HEAD e46b7ea only in tools/runtime_ledger.py (ledger rules, not the builder), so the scratch copy at c86fd5a is the current builder. The repo notebooks are git-clean and unchanged since 25 Sep, and their sha256 prefixes match the finding and CONTEXT (l.2222, 2246, 2349, 2485, 2983). My own rebuild from git archive HEAD (tools + exp56 + exp39), using the CONTEXT l.1773/1780 commands with MSYS_NO_PATHCONV=1, gave exp58 1f1ddb6d63b47f54 and exp58n 55038fd6ac009ad9. Both the notebook and kernel-metadata.json are cmp-identical to the repo. The finding claims no value and asks for no action, so R1-R10 and R8 do not apply. One caveat, which does not refute it: a byte-identical notebook does not pin Kaggle dataset versions. That does not matter for #37/#38, which are already scored.",
+ "fix": "None. Keep it informational. If a pre-submit line for any ladder stack is written later, quote the sha from the table and rerun the two exp58/exp58n rebuild commands as a cheap drift guard.",
+ "realistic_gain": "0 LB. Only operational assurance: the finals #37/#38 and the ladder notebooks are reproducible from HEAD, and the builder has not drifted."
+}

@@ -1,0 +1,29 @@
+{
+ "summary": "Round-23 delta scan, 04:00-04:07 UTC 28 Sep, against round 22 (01:03Z). E10 P1: tools/e10_snapshot.py wrote experiments/e10_watch/20260928T0400Z.txt with CHANGES=0 against 03:43Z. The hourly windows since r22 (01:43Z 8, 02:43Z 17, 03:43Z 10 changes) had P2 look-check groups of at most 1, far below the >=5 signal, so e10_port_gate.py was not run. The only kernel-list change was the anvithpothula V1284 sample notebook, already checked at 02:46Z and not a trigger. x138 (anvithpothula/biohub-0-953-lb-original) is unchanged and COMPLETE. LB at 04:01:06Z: 3,961 teams (+0). We are #172 at 0.956, still 10th of 59 in the 0.956 block, with 162 teams strictly above us (158 at r22). Counts, with r22 in brackets: 0.953 = 420 (416), 0.954 = 130 (124), 0.955 = 87 (83), 0.956 = 59 (59), 0.957 = 36 (38), >=0.955 = 308 (300), >=0.960 = 95 (91), >=0.970 = 9 (8). Top-20 movers: The Boys 0.969->0.970 (#10->#8) and Corwin 0.965->0.968 (#30->#16). Four teams moved above us: Ojaswy <0.953->0.963, Agnes 0.954->0.959, Dragibus 0.956->0.959, Thomas Greissler 0.954->0.958. Every new score comes from a submission made 17:27-23:56Z on 27 Sep, which fits the ~7 h latency. There is no shared-score cluster. Discussion, Code, Overview and Data have no new content: no new topic, no new comment, no host post, no new notebook, nothing at 0.954 or above to pull. The Overview submission count is 91,079 (+293).",
+ "findings": [
+  {
+   "id": "r23-e10-p1-no-signal",
+   "kind": "new-fact",
+   "what": "E10 P1 at 04:00Z vs 03:43Z: CHANGES=0. The five kernel lists and the statuses of x138 and amanatar/optimized-biohub-max-score are unchanged. Hourly windows since the r22 baseline: 01:43Z CHANGES=8, P2 group 0; 02:43Z CHANGES=17, P2 group 0, plus the NEW anvithpothula/biohub-v1284-head-s075-sample-notebook, already checked at 02:46Z (a dataset sample notebook, not a trigger); 03:43Z CHANGES=10, P2 groups 0.963:1 (Ojaswy) and 0.956:1 (Antoniu Gugu), largest 1. No window reaches >=5, so e10_port_gate.py was not run.",
+   "evidence": "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/experiments/e10_watch/20260928T0400Z.txt (DIFF section); 20260928T0143Z.txt, 20260928T0243Z.txt, 20260928T0343Z.txt (DIFF sections); CONTEXT.md 2026-09-28 02:46 UTC entry",
+   "action": "None. The hourly watch continues. The 23:30-02:00Z burst lands about 7 h later (~07-09Z), and so do our probes 47/49.",
+   "urgency": "info"
+  },
+  {
+   "id": "r23-lb-delta",
+   "kind": "new-fact",
+   "what": "LB 04:01:06Z vs 01:03Z: 3,961 teams (unchanged). We are #172 (CSV Rank; was #168) at 0.956, 10th of 59 in the 0.956 block (ranks 163-221), with 162 teams strictly above. Counts: 0.953 416->420, 0.954 124->130, 0.955 83->87, 0.956 59->59, 0.957 38->36, >=0.955 300->308, >=0.960 91->95, >=0.970 8->9. Top 20: The Boys 0.969->0.970 (#10->#8, sub 23:56Z) and Corwin 0.965->0.968 (#30->#16, sub 20:22Z). The top 7 are unchanged (yu4u 0.978, Sergio Alvarez 0.975, Gabriel 0.975, taiseiu 0.974, ymg_aq/tatsutaka/Tang 0.971). Four teams moved above us: Ojaswy <0.953->0.963 (#54), Agnes 0.954->0.959, Dragibus 0.956->0.959, Thomas Greissler 0.954->0.958. One team joined the 0.956 block: Antoniu Gugu (0.953, ahead of us by the earlier-submission tie-break). All new scores come from submissions made 17:27-23:56Z on 27 Sep. Rows at >=0.953 with a submission after 01:03Z are still pending: Burhan Ul Tayyab 0.969 (03:22Z), Luon may Man 0.956 (02:52Z), npan/add_oils/cf696666 0.954, Kento Okumura/jwboost 0.953. Our CSV row: LastSubmissionDate 2026-09-27 14:36:59, SubmissionCount 48.",
+   "evidence": "experiments/e10_watch/20260928T0400Z.txt (leaderboard_rows, histogram) row-diffed by TeamId against 20260928T0103Z.txt (scratch r23_lbdiff.py in the session scratchpad)",
+   "action": "None on finals. Rank drift inside the 0.956 block is display only (public = ~29%).",
+   "urgency": "info"
+  },
+  {
+   "id": "r23-disc-code-overview",
+   "kind": "new-fact",
+   "what": "Discussion: nothing new since r22. In recent-comments, the newest activity is still 742169 ('Last comment 4h ago by Chris Deotte') and 743929 ('Last comment 4h ago by John Taylor (AI)'), both read in r22. The synthetic-dataset topic 732103 shows 'Last comment 8h ago by FOYSAL', the same comment r22 saw. Sorted by published date, the newest topic is still 743929. No host announcement. Code 'Recently Run' is unchanged: Biohub - Track Your Cells 0.946 'Updated 6h ago' (same 22:04Z run), Testbiohub 0.947, optimized-biohub-max-score 0.953. The CLI scoreDescending top 20 is unchanged, so nothing is at >= 0.954 and nothing was pulled. Overview: timeline unchanged (Final Submission Deadline September 29, 2026), header '2 DAYS TO GO'; stats 13,475 entrants, 4,539 participants, 3,961 teams, 91,079 submissions (+293 since r22). Data is unchanged (24886 files, 87.61 GB).",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion?sort=recent-comments ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion?sort=published ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/code?sortBy=dateRun ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/overview ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/data",
+   "action": "None.",
+   "urgency": "info"
+  }
+ ]
+}

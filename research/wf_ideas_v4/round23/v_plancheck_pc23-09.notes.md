@@ -1,0 +1,10 @@
+# v_plancheck_pc23-09 notes (skeptic, value + feasibility), 2026-09-28 ~04:30Z
+
+- No prior answer file existed; started fresh.
+- round22/report.json: R22-A9 = CONTEXT info line (a)-(h) + IDEAS curation, "after A1-A4 (no time pressure)", 0 score effect. R22-A11 = named-path commit, no trailer; text says "Leave ... ds_secw_corwin_v1/weights/ (8 MB), ext_corwin-biocel-aux/_booster/ and the e10_watch snapshots untracked unless the user asks".
+- CONTEXT.md (3437 lines): grep 'I-410|R22XL|R22-A9|R22-A11|info line' -> 0 hits. Confirmed: the CONTEXT info line has NOT landed. Also 'FINALS CARD|R22-A4|S7:' -> 0 hits (A4 and S7 still pending too).
+- BUT the IDEAS curation half of A9 HAS landed: research/KNOWLEDGE/IDEAS.md l.35, l.124 (Round 22 closures: I-410 ALPHA, I-422 fc2@cap6, I-423 fold subset, I-424 theft-aware ranker, I-082 rewrite, I-046 wording, JT knobs log-only I-412), l.136 (Curation 22), l.716; CHANGES.md l.1225. Committed in 9ac10c6 (git status clean for research/KNOWLEDGE). IDEAS.md l.708 itself records "the R22-A9 info line [is] still not in CONTEXT". So the finding's "info line + IDEAS curation has not landed" overstates: only the CONTEXT line is missing.
+- git ls-files experiments/e10_watch = 32 (28 snapshots + 4 loop files) -> finding says "all 30 snapshots" - actually 28 tracked snapshots + 2 untracked (0343Z, 0400Z). Minor count slip.
+- 9ac10c6 (the round-22 commit itself, 04:49 +0300 = 01:49Z) added 0043Z/0103Z/0143Z snapshots; e46b7ea added 0243Z; d36a4b2, 9d0820c, 771a608, 32eeedd, a2e0696, ffe74d6 also added snapshots. So A11's "leave snapshots untracked" contradicts every commit since 26 Sep. Keep tracking: 2.1 MB total, ~74 KB each; they are S0 evidence for R22-A7 reads (PC23-08) -> audit value.
+- A11's other exclusions (weights/ 8 MB, _booster/) remain right.
+- Value: 0 score effect (bookkeeping); no slot, no finals, no mechanism, no R8 issue. Feasibility trivial. Ordering after A4 (hard stop 06:45Z) and S7 (before ~07:40Z) is correct; A9 must not delay either.

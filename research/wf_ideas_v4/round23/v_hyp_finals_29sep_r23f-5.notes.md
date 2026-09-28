@@ -1,0 +1,11 @@
+# R23F-5 skeptic notes (2026-09-28T04:14:22Z)
+- No prior v_hyp_finals_29sep_r23f-5.json existed; started fresh. Source finding: scan_hyp_finals_29sep.json R23F-5.
+- Model code: scratchpad acabaea6.../r21/mc20.py (rivals(), our_terms()), r21/mc21.py, r23/mc23.py, r23/mc23_out.txt.
+- Numbers reproduce: base P1 {exp70g,#37} .663/.377, P2 {exp70g,#38} .513/.347 -> -0.15 / -0.03. P2 bronze == single exp70g bronze in every scenario (#38 adds exactly 0 bronze in the model).
+- MECHANISM CHECK: in mc20 #38 = eps (lowrefine) ~ {-1e-5, 0, +1e-5} p .375/.25/.375 -> #38 is NOT tied with the copies in 75% of draws; tie placement in the model is mid-block (uniform .35-.65), not "late". Real world: #38 is not byte-identical to x138 (lowrefine refines 26,532/33,336/7,370/76,396 lowdet peaks per clip; CONTEXT l.1750-1752, 1819-1822), so an exact private tie is unlikely.
+- scratchpad r23f5/diag.py: even at eps=+1e-5 (above EVERY exact copy) rivals strictly above: overfit median 488 (p1 416, min 400), mid 548 (min 448), central 599 (min 510) vs bronze cut ~400 -> the zero comes from the field model, not from the tie/late-submit.
+- scratchpad r23f5/sens.py: copy share c fixed 0.2 -> still 0.000; c=0.95 -> 0.023 (overfit). So c is NOT what drives the zero. be=0 / s x0.3-0.5 -> 0-0.023.
+- The zero is driven by mc20's floor be >= 0 (public-above rivals never lose expected edge vs x138 on private) plus max-of-two picks. With negative retained edge (public-tuned knobs costing private; cf. our edge-filter +0.016 local / 0 LB): single #38 bronze be=-0.3: .35/.23/.08 (overfit/mid/central); be=-0.6: .41/.37/.30; be=-1: .46/.40/.33.
+- scratchpad r23f5/pairs_neg.py (full mix): be=-0.3: P1 .83/.50, P2 .70/.42, single#38 .24/0; be=-0.6: P1 .84/.53, P2 .76/.44, single#38 .36. With inspes: P1-P2 bronze +0.08/+0.04, silver +0.06. => direction P1 >= P2 survives, but "#38 bronze = 0 in every scenario, structural" is false; gap is -0.04..-0.15 bronze and -0.03..-0.09 silver depending on field retention (judgmental).
+- Verdict: refuted as stated (mechanism + 'structural, not tuned' claim wrong); the alternative line may stay with corrected wording and wider gap ranges.
+- 2026-09-28T04:17:31Z final JSON written.

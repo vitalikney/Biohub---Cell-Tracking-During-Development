@@ -1,0 +1,14 @@
+# round23 scan_browser notes (started 2026-09-28T04:00:49Z)
+- 04:00Z `python tools/e10_snapshot.py` -> experiments/e10_watch/20260928T0400Z.txt, CHANGES=0 vs 03:43Z; P2 largest group 0. Kernel lists / x138 (anvithpothula/biohub-0-953-lb-original COMPLETE) / amanatar status unchanged.
+- Hourly since r22 (01:03Z): 01:43Z CHANGES=8 (P2 group 0); 02:43Z CHANGES=17 (anvithpothula NEW biohub-v1284-head-s075-sample-notebook = already checked, CONTEXT 02:46Z 'not a trigger'; P2 group 0); 03:43Z CHANGES=10 (P2 groups 0.963:1 Ojaswy, 0.956:1 Antoniu Gugu; largest 1). No window >=5 -> e10_port_gate.py not run.
+- LB 01:03Z -> 04:01:06Z (scratch r23_lbdiff.py): teams 3961 -> 3961; 0.953 416->420, 0.954 124->130, 0.955 83->87, 0.956 59->59, 0.957 38->36, >=0.955 300->308, >=0.96 91->95, >=0.97 8->9. Ours #172 (was 168) 0.956, 10th of 59 in block 163-221; 162 strictly above (158 at r22).
+- Top-20 movers: The Boys 0.969->0.970 (#10->#8), Corwin 0.965->0.968 (#30->#16). Others same.
+- Moved above us: Ojaswy <0.953->0.963 (#54), Agnes 0.954->0.959, Dragibus 0.956->0.959, Thomas Greissler 0.954->0.958. Joined 0.956: Antoniu Gugu (0.953). All scores from subs 17:27-23:56Z 27 Sep (~7h latency).
+- Rows >=0.953 with last sub after 01:03Z: Burhan Ul Tayyab 0.969 (03:22Z), Luon may Man 0.956 (02:52Z), npan/add_oils/cf696666 0.954, Kento Okumura/jwboost 0.953 - scores unchanged (pending).
+- ~04:05Z Discussion recent-comments (https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion?sort=recent-comments): newest activity = 742169 'Last comment 4h ago by Chris Deotte' and 743929 'Last comment 4h ago by John Taylor (AI)' = the same items read in r22; 732103 synthetic dataset 'Last comment 8h ago by FOYSAL' (= r22 '5 hours ago'). Nothing new.
+- sort=published: newest topic still 743929; no new topic, no host post.
+- Code Recently Run (https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/code?sortBy=dateRun): Biohub - Track Your Cells 0.946 'Updated 6h ago' (same 22:04Z run), Testbiohub 0.947 1d, optimized-biohub-max-score 0.953 1d -> unchanged. CLI scoreDescending top-20 unchanged (snapshot). No pull.
+- Overview: timeline unchanged (Start Jun 29, Entry/Merger Sep 22, Final Sep 29 2026), '2 DAYS TO GO'; stats 13,475 entrants / 4,539 participants / 3,961 teams / 91,079 submissions (+293 vs 90,786 at r22).
+- Data: 24886 files, 87.61 GB, 'json, csv + 1 other' -> unchanged.
+- Browser tab closed ~04:07Z.
+- 2026-09-28T04:05:53Z final JSON written: research/wf_ideas_v4/round23/scan_browser.json

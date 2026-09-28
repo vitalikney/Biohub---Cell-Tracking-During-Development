@@ -1,0 +1,95 @@
+{
+ "task": "round 23 scan: FINALS PROPOSAL DRAFT for the user's 29 Sep pick (Russian, short, placeholders for the W1-W3 reads) + new finals-strategy hypotheses",
+ "written_utc": "2026-09-28T04:35Z",
+ "complete": true,
+ "summary": "Nothing reaches R8. R8 passed on 27 Sep at 12:00Z, and every item below is a message or an ops line with runtime 0. The deliverable is a Russian finals-proposal draft for 29 Sep 12:00Z (refresh 18:00Z), with placeholders and tick steps by ref. It is finding R23F-3; the text is in the draft_ru field. The draft refines R21-A9 (iv) and R22-A4 (A). That finals card is STILL not in CONTEXT at 04:15Z (3rd deferral) and must land before the first W1 terminal (~06:45Z). I re-ran the round-20/21 MC (mc20/mc21 code unchanged) on the 04:01Z LB with 44 h to go (scratchpad r23/mc23.py, mc23b.py). It is a judgmental model, not a measurement. The recommended pair {V_pub = exp70g 56606948, #37 56563521} has P(bronze) ~0.50-0.76 (central 0.66) and P(silver) ~0.22-0.47 (central 0.37-0.38). The ticked pair {#37, #38} has 0.34-0.66 (0.51) and 0.035-0.23 (0.11). The alternative {exp70g, #38} has 0.34-0.59 (0.51) and 0.19-0.42 (0.35): it keeps most of the silver gain but loses ~0.15 bronze. The reason is that #38's bronze value is 0 in the model (0.953 copy tie block, late submit). {exp70g, exp70b} beats the recommended pair by +0.01 to +0.02 only through forkmid's variance and a judgmental +5e-5 mean. At a mean of -1e-4 the edge flips to -0.008, so it stays not recommended (I-406 (b), letter (b), forkmid closed). With #37 as partner, cap-rung V_pubs (exp78a/78b) sit within -0.02 to +0.05 of exp70g's pair. One new ops idea: an optional absence-insurance line in the morning brief, saying the user may pre-tick exp70g in place of #38 now (reversible). It is worth ~+0.005 to +0.015 bronze and needs no new rule.",
+ "draft_ru": "Финалы — предложение на {HHMM}Z 29.09. Отмечаешь ты, до 20:00Z (лучше до 19:00Z, чтобы я успел сверить). Сейчас отмечены #37 + #38.\n\nРекомендую: {V_PUB} ({V_PUB_REF}, {V_PUB_DISP}, {V_PUB_SOSTAV}) + #37 (56563521, K2 = x138 + safetail + lowrefine + вставка cap 4, 0.954).\n- Первый файл — лучший на паблике из семейства cap: без CI и новой вторички, время <= 9 ч, файл с бОльшим cap заменяет exp70g только при строго большем дисплее. Сейчас это exp70g 56606948, 0.956, cap 6, #{RANK}.\n- Второй файл страхует private: в нём нет ничего, что подбиралось по паблику после 26.09.\n- #38 (56563534, без вставки, 0.953) уходит. Если вставка на private провалится, он окажется в блоке копий x138: это ~420 команд на 0.953, и при равенстве выше стоят более ранние сабмиты. По модели это вне бронзы.\n- Модель (это не измерение; диапазон по сценариям):\n  - {V_pub, #37}: бронза ~0.5-0.75, серебро ~0.2-0.45 (центр 0.66 / 0.37);\n  - сейчас отмеченные #37 + #38: ~0.35-0.65 / ~0.03-0.23 (центр 0.51 / 0.11).\n\nАльтернатива — если хочешь страховку от самой вставки: {V_pub, #38}. Бронза ~0.35-0.6 (центр 0.51), серебро ~0.2-0.4 (0.35): серебро почти то же, бронза ниже на ~0.15.\n\nНе рекомендую:\n- {V_pub, exp70b 56592350} (K2 + forkmid, 0.954). По модели разница с рекомендованной парой ±0.02, это в пределах ошибки. Но forkmid подобран по паблику, так что это не страховка private.\n- Лучший файл вместе с его же cap-родителем: бронза ниже на ~0.1.\n{CI_SEC_LINE}\n\nИтог по чтениям 28-29.09: 47 exp78b {C47}; 49 exp78a {C49}; 48 exp79a (CI) {C48}; W2/W3/W4: {W234_RU}. Лучший дисплей в целом: {INFO_FILE} {INFO_DISP}.\n\nКак отметить:\n1. Открой страницу Submissions этого соревнования.\n2. Сними отметку финала у 56563534: #38, 26.09 00:02:18Z, 0.953, описание «probe 38: exp58n ...». Сначала сними, потом ставь — больше двух отметок быть не может.\n3. Поставь отметку у {V_PUB_REF}: {V_PUB_DATE}, {V_PUB_DISP}, описание «{V_PUB_DESC}».\n4. #37 56563521 не трогай: 26.09 00:02:12Z, 0.954, описание «probe 37: exp58 = K2 ...».\n5. Проверь, что отмечено ровно 2 из 2, и напиши «отметил». Я сверю через API: SELECTED должно быть [{V_PUB_REF}, 56563521].\nЕсли ничего не менять, останутся #37 + #38. Решаешь ты.",
+ "draft_ci_sec_line": "CI/SEC line, only if the INFO best-display file carries CI or the new secondary: 'Лучший по дисплею {INFO_FILE} {INFO_DISP} содержит {CI: сдвиг координат после трекинга | SEC: новую вторичку}. Оговорка: {R22-A4 (A) CI text | SEC: вторичка переобучена, замены весов на нашем паблике 0 из 5, отложенной проверки нет}. По модели пара {он, #37}: бронза ~0.57-0.69 (при отрицательном среднем CI -5e-4: 0.64), то есть не лучше рекомендованной. Модель даёт CI/SEC бонус за разброс. Ставить его — только твоим решением после этой оговорки.' Otherwise drop the line.",
+ "draft_fill_rules": "FILL RULES. V_PUB follows I-406/R21-A9 (i)-(ii): among COMPLETE cap-family files (exp70g, exp78a, exp78b, exp80a, exp84a if run); non-CI; SEC only after a Q3 yes; L_hi <= 9.0 h; insertion gate 'did NOT fire'; submitted before its T_last; no tau. A higher dose replaces exp70g only on a strictly higher display, or an equal display with an attributable UP. Ties: UP > non-CI > fewer levers > earlier submit. {C47}/{C48}/{C49} = the v3 codes ('+', '0', '?', '-') with the display, in Russian (e.g. '0.957, +'). INFO = the best display overall, including CI/SEC files. If V_PUB is not exp70g, replace the two ranges with the r23 table: {exp78a, #37} ~0.5-0.75 / 0.2-0.5; {exp78b, #37} ~0.45-0.8 / 0.2-0.55; centres 0.66-0.69 / 0.41-0.42. If the rules leave no V_PUB (every cap file ERROR/v), the message offers 'оставить #37 + #38 или {exp70g, #37}' with the same ranges. Timing: send at 12:00Z; refresh at 18:00Z only if V_PUB or a code changed; FINALS READ ~19:00Z. After the user's 'отметил': run round7/report.json tick_check_cmd and log 'FINALS TICKED 2/2 [refs]' in CONTEXT.",
+ "model_table_r23": {
+  "source": "scratchpad r23/mc23.py + mc23b.py (import r21/mc21.py and r21/mc20.py unchanged); field = experiments/e10_watch/20260928T0400Z.txt (3,961 teams; 0.956 block 59 incl. us; 0.955 87; 0.954 130; 0.953 420; >=0.960 95); HOURS 44; seeds 7/11/23 within +-0.01; scenarios base, qpub0, qpub_hi, overfit, central, inspes, qpub0_pes",
+  "P1 {exp70g,#37} (recommended)": "bronze .66 (range .50-.76), silver .37-.38 (.22-.47)",
+  "A {#37,#38} (ticked now)": "bronze .51 (.34-.66), silver .11 (.035-.23)",
+  "P2 {exp70g,#38} (alternative)": "bronze .51 (.34-.59), silver .35 (.19-.42)",
+  "P3 {exp70g,exp70b}": "bronze .67-.68 (.53-.78), silver .39-.40; P3 - P1 = +0.024 / +0.012 / -0.008 at forkmid mean +5e-5 / 0 / -1e-4",
+  "P15 {exp70b,#37}": "bronze .59, silver .18",
+  "B {exp70b,#38}": "bronze .53, silver .16",
+  "P6 {exp78a,#37}": "bronze .66-.67 (.48-.76), silver .41 (.22-.50)",
+  "P8 {exp78b,#37}": "bronze .69 (.47-.79), silver .42 (.19-.54)",
+  "P7 {exp78a,exp70g} own parent": "bronze .57 (-0.10 vs P6; qpub0 -0.16)",
+  "P13 {exp79a CI,#37}": "bronze .69 / .64 at CI mean +2e-4 / -5e-4; qpub0 .57-.62",
+  "single #38": "bronze 0.000 in every scenario (model structure: the e = 0 tie sits mid-copy block, ranks ~439-858 vs a bronze cut at ~#396)"
+ },
+ "findings": [
+  {
+   "id": "R23F-1",
+   "kind": "plan-issue",
+   "what": "The finals card is still not in CONTEXT.md at 04:15Z (3rd deferral). The card is R21-A9 (= R20-A9 + (i)-(v)) plus the R22-A4 (A) CI text and the (B) E10 NOW line. It must be logged before the first W1 terminal header, while 47/48/49 are still PENDING, so that V_pub selection (winner's-curse rule, ties, partner #37) stays pre-registered. The draft below (R23F-3) is the refreshed (iv) text for that card.",
+   "evidence": "grep 'FINALS CARD' CONTEXT.md = 0 hits (04:15Z). poll.log: 56623073/56623105/56624341 PENDING. round22/report.json R22-A4 deadline: 'before the first W1 terminal header; hard stop 06:45Z'. round22/REPORT.md section 3 (R21-A9 2nd deferral).",
+   "action": "Main session, now (<= 06:45Z): append R22-A4 as written, quoting a poll header that shows all three W1 refs PENDING, and point (iv) to research/wf_ideas_v4/round23/scan_hyp_finals_29sep.json draft_ru (numbers per R23F-2). Runtime 0; covered by existing approval (logging only).",
+   "urgency": "now"
+  },
+  {
+   "id": "R23F-2",
+   "kind": "new-fact",
+   "what": "Re-basing the round-20/21 forecast on the 28 Sep 04:01Z LB (44 h left) barely moves the R21-A9 (iii) numbers. {exp70g, #37}: bronze .66 (.50-.76), silver .37 (.22-.47). The ticked {#37, #38}: .51 (.34-.66) / .11 (.035-.23). Moving from the ticked pair to {V_pub, #37} is worth ~+0.15 bronze and ~+0.26 silver at the centre, and it is never worse in any scenario. The only change from r21: the lower bronze bound for {V_pub, #37} drops from 0.55 to 0.50, in the compound qpub0 + pessimistic-insertion scenario. Among cap-family V_pub files paired with #37, the spread is -0.02..+0.05, inside model error, so the display rule decides.",
+   "evidence": "scratchpad r23/mc23.py, mc23b.py, mc23_out.txt. Field: experiments/e10_watch/20260928T0400Z.txt (our row #172 CSV / 163 strict, 10th of 59 at 0.956). Method: round21/scan_hyp_w2_w4_plan.notes.md (mc21), round20 mc20.py. I-092 (the MC never decides; ranges are info only).",
+   "action": "Use these ranges in draft_ru ('бронза ~0.5-0.75, серебро ~0.2-0.45' for {V_pub, #37}; '~0.35-0.65 / ~0.03-0.23' for the ticked pair). Keep the 'модель, не измерение' clause. No re-run on 29 Sep (I-357 refuted).",
+   "urgency": "today"
+  },
+  {
+   "id": "R23F-3",
+   "kind": "new-hypothesis",
+   "what": "FINALS PROPOSAL DRAFT (Russian; text in draft_ru) for the 29 Sep 12:00Z check. Refresh at 18:00Z only if V_PUB or a code changed. Mechanism: one message gives the recommended pair, one alternative and two non-recommended options with model ranges, then click-level tick steps by ref. Recommended: {V_PUB (now exp70g 56606948), #37 56563521}; #38 56563534 leaves. Alternative: {V_PUB, #38}, as insurance against the insertion itself. Not recommended: {V_PUB, exp70b 56592350}, and V_PUB with its own cap parent. Candidates for V_PUB: exp70g now; exp78a/78b/80a/exp84a if one displays strictly higher, or equal with an attributable UP. CI/SEC files appear only in the INFO line with their caveat. Expected gain: +0.15 bronze / +0.26 silver at the centre vs leaving the ticks (model), realised only if the user re-ticks. Runtime 0.",
+   "evidence": "Base texts: round21/report.json R21-A9 (iv); round22/report.json R22-A4 (A) balanced CI caveat, R22-A8 brief block 3. Rules: CONTEXT l.2388-2394 (user 26 Sep 20:33Z 'один под паблик другой под прайват'), l.2927-2932 (letter (b) = {V*, #37}), l.3211-3213 (user picks on 29 Sep), READ TABLE v2 (9). Refs and descriptions from experiments/lb_poll/poll.log. Tick check: round7/report.json tick_check_cmd.",
+   "action": "Store draft_ru + draft_fill_rules as the (iv) text of the finals card (R23F-1). At 29 Sep 12:00Z, fill the placeholders per draft_fill_rules from the ledger and the v3 codes, and send ONE message. After 'отметил', run tick_check_cmd and log 'FINALS TICKED 2/2'. The session never re-ticks. Gate: none (message only); the READ TABLE v2 (9) / I-406 eligibility rules decide V_PUB.",
+   "urgency": "later"
+  },
+  {
+   "id": "R23F-4",
+   "kind": "recheck-old",
+   "what": "exp70b as partner ({V_pub, exp70b} instead of {V_pub, #37}). The model gives it +0.024 bronze over the recommended pair, but only because mc20 carries forkmid as N(+5e-5, 0.3-0.6e-3). At mean 0 the edge is +0.012 (pure variance option value under max()); at mean -1e-4 it is -0.008. All of this is inside model error. The public evidence for forkmid is weak: exp70b 0.954 with an in-block UP, and 46 (cap 6 + thr 0.3 + forkmid) code 0. It remains a public-picked knob, while the user defined the second final as the private-aimed robust pick (default #37).",
+   "evidence": "scratchpad r23/mc23b.py (FMU +5e-5 / 0 / -1e-4). I-406 (b) 'never {V_pub, exp70b}'. CONTEXT l.2927-2932 (letter (b) names #37, not exp70b). Probe 46 code 0 (CONTEXT 27 Sep 22:27Z). forkmid line closed (task list).",
+   "action": "No change. The draft lists {V_pub, exp70b} as 'не рекомендую, разница в пределах ошибки'. Do not reopen forkmid.",
+   "urgency": "info"
+  },
+  {
+   "id": "R23F-5",
+   "kind": "recheck-old",
+   "what": "#38 as partner ({V_pub, #38}): bronze .51 (.34-.59), silver .35 (.19-.42), i.e. -0.15 bronze and -0.03 silver vs {V_pub, #37}. #38's bronze value is exactly 0 in every scenario. Its private score ties the x138 copy block (~420 teams at 0.953 now), where the earlier submission ranks higher, so #38 pays only in worlds where the insertion fails on private and we are outside the medals anyway. This rests on one structural assumption (exact-copy share c ~ U(0.5, 0.8)), not on a tuned number, so the direction is robust. It is shown to the user as the one honest alternative.",
+   "evidence": "scratchpad r23/mc23_out.txt ('single #38' bronze 0.000 in all 8 runs). mc20.rivals(): the 0.953 block copies sit at D = 0 and ties are placed mid-block. poll.log: #38 submitted 26 Sep 00:02:18Z (late vs the x138 copies). I-297 (insertion hedge table); I-406 (d) '#37 hedges the cap delta, #38 the whole insertion'.",
+   "action": "Keep it in the draft as 'Альтернатива' with its numbers and the note that the silver is nearly the same.",
+   "urgency": "info"
+  },
+  {
+   "id": "R23F-6",
+   "kind": "new-hypothesis",
+   "what": "ABSENCE INSURANCE (a variant of I-227 'provisional tick'). The user said the finals do not matter until 29 Sep (19:10:58Z), so the ticks stay {#37, #38} if the user misses the 29 Sep 12:00-20:00Z window. Proposal: one optional sentence in the 28 Sep morning brief (R22-A8, block 3): 'Если удобно, можешь уже сейчас переставить #38 -> exp70g 56606948 (обратимо); 29.09 я всё равно пришлю итог, и отметку можно будет поменять'. Default: no change; the user ticks, the session never re-ticks. Gain: P(user absent in the 29 Sep window) ~0.03-0.10 x (P1 - A = 0.15 bronze / 0.26 silver) = ~+0.005-0.015 bronze and ~+0.01-0.026 silver. If V_pub changes later (a W1-W4 cap rung reads strictly higher), the pre-tick still holds the second-best cap file, within ~0.03 of the new pair.",
+   "evidence": "CONTEXT l.3211-3213 (user 19:10:58Z). I-227 (provisional tick, applied 26 Sep). I-253 refuted only 'tick before score' (files unscored). exp70g is COMPLETE and eligible (ledger: L (7.49, 7.67] h, gate did NOT fire). r23 model table, P1 vs A.",
+   "action": "If the main session sends the morning brief (R22-A8), add this as a non-question sentence in block 3, default no change, never phrased as a request to act now. Runtime 0; no gate; no new user OK needed for the message (R20-A12/R21-A10 cover the brief).",
+   "urgency": "today"
+  },
+  {
+   "id": "R23F-7",
+   "kind": "plan-issue",
+   "what": "Tick-procedure hazards for 29 Sep (folded into the draft). (a) Kaggle allows at most 2 selected, so #38 must be unticked BEFORE V_PUB is ticked. (b) If the user unticks #38 and never ticks the new file, only 1/2 is selected and the partner is lost; the message therefore asks for exactly 2/2 and an 'отметил'. (c) The FINALS READ is at ~19:00Z; a re-tick after ~19:30Z leaves no time for the API cross-check before 20:00Z, so the message says 'лучше до 19:00Z'. (d) Every candidate is COMPLETE, so none carries a private-run failure risk (I-241).",
+   "evidence": "I-229 (tick checklist); I-258 (API SELECTED check, first positive 09:10:07Z 26 Sep); round7/report.json tick_check_cmd; CONTEXT RESUME POINT 01:48Z (f) timers.",
+   "action": "Keep steps 2-5 of draft_ru as written (already includes 'лучше до 19:00Z'). Log every SELECTED read in CONTEXT.",
+   "urgency": "later"
+  },
+  {
+   "id": "R23F-8",
+   "kind": "new-fact",
+   "what": "Honest R8 statement: no new inference-only or post-processing mechanism on x138 can reach R8. The deadline was 27 Sep 12:00Z, and the remaining 28-29 Sep slots are fully pre-registered (W2 v4, W4 AMEND 2, E10 v3). This round proposes no new mechanism and does not re-propose overlap-consensus or any closed family. Every finals-strategy item above is a message or ops line with runtime 0 on the ~100-clip hidden run.",
+   "evidence": "Task R8 text; round22/REPORT.md section 1 point 1; IDEAS.md I-092/I-357 (a model never decides the pick).",
+   "action": "None beyond R23F-1/3/6.",
+   "urgency": "info"
+  }
+ ],
+ "rejected_in_scan": [
+  "Re-running the MC on 29 Sep to decide the pair: I-357/I-092 refuted, ranges are info only.",
+  "Recommending {exp70g, exp70b} on its +0.01..+0.02 model edge: variance option value plus a judgmental forkmid mean; I-406 (b); letter (b).",
+  "Any cap-family pair with its own parent (e.g. {exp78a, exp70g}): -0.10 bronze (qpub0 -0.16).",
+  "A CI or SEC file as the recommended F1: model ~= P1 (+-0.05) at an optimistic CI mean; mixed transfer record; needs the user's re-tick after the caveat (v2 (9))."
+ ]
+}

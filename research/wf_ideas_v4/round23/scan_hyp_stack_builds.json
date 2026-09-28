@@ -1,0 +1,183 @@
+{
+ "task": "round 23 scan_hyp_stack_builds: pre-build exp82a-c/83c-g/84a per round21 plan, verify shas, confirm finals/ladder rebuild byte-identical, ideas vs IDEAS.md",
+ "written_utc": "2026-09-28T04:15Z",
+ "complete": true,
+ "build_table": [
+  {
+   "name": "exp82a_k2cap8_secn2a",
+   "nb_sha256_16": "ffc00631194affcc",
+   "meta_sha256_12": "75fc66150aa8",
+   "what": "exp78a + n2a",
+   "ledger_family": "safetail",
+   "ready": "built, sha = plan; dummy NOT yet run"
+  },
+  {
+   "name": "exp82b_k2cap12fc2_secn2a",
+   "nb_sha256_16": "7cd1e3ed4a706cbb",
+   "meta_sha256_12": "33916a8f2b80",
+   "what": "exp78b + n2a",
+   "ledger_family": "safetail",
+   "ready": "built, sha = plan; dummy NOT yet run"
+  },
+  {
+   "name": "exp82c_k2cap24fc2_secn2a",
+   "nb_sha256_16": "ee4312442a4f3ab8",
+   "meta_sha256_12": "f2a2d25efe37",
+   "what": "exp80a + n2a",
+   "ledger_family": "safetail",
+   "ready": "built, sha = plan; dummy NOT yet run"
+  },
+  {
+   "name": "exp83c_k2cap6_secn2a_ci",
+   "nb_sha256_16": "e8f5a8a621222f77",
+   "meta_sha256_12": "9637a4dc6328",
+   "what": "exp81 + CI (= exp79a + n2a)",
+   "ledger_family": "safetail_ci",
+   "ready": "built, sha = plan; dummy NOT yet run"
+  },
+  {
+   "name": "exp83d_k2cap12fc2_secn2a_ci",
+   "nb_sha256_16": "22ccc1dd89c948e3",
+   "meta_sha256_12": "30f712c516fa",
+   "what": "exp78b + n2a + CI",
+   "ledger_family": "safetail_ci",
+   "ready": "built, sha = plan; dummy NOT yet run"
+  },
+  {
+   "name": "exp83e_k2cap8_secn2a_ci",
+   "nb_sha256_16": "a016cf0f733e53bc",
+   "meta_sha256_12": "95d6e40a1ee6",
+   "what": "exp78a + n2a + CI",
+   "ledger_family": "safetail_ci",
+   "ready": "built, sha = plan; dummy NOT yet run"
+  },
+  {
+   "name": "exp83f_k2cap24fc2_ci",
+   "nb_sha256_16": "c8a2fccba8d60596",
+   "meta_sha256_12": "7ea9ee39bf49",
+   "what": "exp80a + CI",
+   "ledger_family": "safetail_ci",
+   "ready": "built, sha = plan; dummy NOT yet run"
+  },
+  {
+   "name": "exp83g_k2cap24fc2_secn2a_ci",
+   "nb_sha256_16": "00f8cb366726663c",
+   "meta_sha256_12": "c68a8314d250",
+   "what": "exp80a + n2a + CI",
+   "ledger_family": "safetail_ci",
+   "ready": "built, sha = plan; dummy NOT yet run"
+  },
+  {
+   "name": "exp84a_k2_cap48_fc2",
+   "nb_sha256_16": "4cb1e47bbd7840e5",
+   "meta_sha256_12": "ce426ae8f7fa",
+   "what": "K2 + cap 48 fc2 (S3 only)",
+   "ledger_family": "safetail",
+   "ready": "built, sha = plan; dummy NOT yet run"
+  }
+ ],
+ "ref_rebuilds": [
+  {
+   "name": "exp58_x138_safe_lowref (K2, final #37)",
+   "nb_sha256_16": "1f1ddb6d63b47f54",
+   "byte_identical": true
+  },
+  {
+   "name": "exp58n_x138_safe_lowref (twin, final #38)",
+   "nb_sha256_16": "55038fd6ac009ad9",
+   "byte_identical": true
+  },
+  {
+   "name": "exp70g_k2_cap6",
+   "nb_sha256_16": "52c182a36a40faf9",
+   "byte_identical": true
+  },
+  {
+   "name": "exp78a_k2_cap8",
+   "nb_sha256_16": "8d8d9c2823a2bcd4",
+   "byte_identical": true
+  },
+  {
+   "name": "exp78b_k2_cap12_fc2",
+   "nb_sha256_16": "d54d810c87be62dd",
+   "byte_identical": true
+  },
+  {
+   "name": "exp79a_k2cap6_coordinject",
+   "nb_sha256_16": "5f9b265d53a988f3",
+   "byte_identical": true
+  },
+  {
+   "name": "exp80a_k2_cap24_fc2",
+   "nb_sha256_16": "da984964054ab3f7",
+   "byte_identical": true
+  },
+  {
+   "name": "exp81_k2cap6_secn2a",
+   "nb_sha256_16": "6a62e321c303f71b",
+   "byte_identical": true
+  },
+  {
+   "name": "exp83a_k2cap12fc2_ci",
+   "nb_sha256_16": "80a0856fcae31bae",
+   "byte_identical": true
+  },
+  {
+   "name": "exp83b_k2cap8_ci",
+   "nb_sha256_16": "d9b0834d43f64d98",
+   "byte_identical": true
+  }
+ ],
+ "summary": "Round 23 stack builds (R22-A6): DONE, files only; no push, no submit, no commit. The 9 remaining stack notebooks are built in experiments/ with the round-21 env block, and every sha256 prefix matches the plan: exp82a ffc00631, exp82b 7cd1e3ed, exp82c ee431244, exp83c e8f5a8a6, exp83d 22ccc1dd, exp83e a016cf0f, exp83f c8a2fccb, exp83g 00f8cb36, exp84a 4cb1e47b. Each repo build equals an independent scratch build byte for byte. The finals and the ladder rebuild byte-identically from the same builder: K2 exp58 1f1ddb6d, twin exp58n 55038fd6, and exp70g/78a/78b/79a/80a/81/83a/83b. The ledger families are right: exp82/84a -> safetail, exp83c-g -> safetail_ci. The CI and n2a datasets are unchanged. Two plan issues. (1) There is no pre-registered dummy gate for the SEC and SEC+CI stacks; a mechanical line is proposed that reuses R22-A1 with the SEC-only sibling as the topology reference. (2) Both GPU lanes have been idle since ~01:35Z and quota expires unused on 3 Oct, so the main session should push the exp82a/exp82b dummies now, then exp83c, and push the rest only after the W1 reads. 47/48/49 were still PENDING at 03:56Z. Honest answer: no new idea reaches R8, and none is proposed.",
+ "findings": [
+  {
+   "id": "r23sb-1",
+   "kind": "new-fact",
+   "what": "All 9 remaining W2/W3/W4 stack notebooks are built under experiments/<name>/ with the exact build_env_git_bash block (MSYS_NO_PATHCONV=1). Every notebook sha256 prefix matches scan_hyp_w2_w4_plan.json 'builds'. The repo build equals an independent scratch build byte for byte (notebook and kernel-metadata). Nothing was pushed, submitted or committed. TABLE:\nname -> nb sha256[:16] -> ready\nexp82a_k2cap8_secn2a -> ffc00631194affcc -> built, sha = plan; dummy NOT yet run [exp78a + n2a; ledger safetail; meta 75fc66150aa8]\nexp82b_k2cap12fc2_secn2a -> 7cd1e3ed4a706cbb -> built, sha = plan; dummy NOT yet run [exp78b + n2a; ledger safetail; meta 33916a8f2b80]\nexp82c_k2cap24fc2_secn2a -> ee4312442a4f3ab8 -> built, sha = plan; dummy NOT yet run [exp80a + n2a; ledger safetail; meta f2a2d25efe37]\nexp83c_k2cap6_secn2a_ci -> e8f5a8a621222f77 -> built, sha = plan; dummy NOT yet run [exp81 + CI (= exp79a + n2a); ledger safetail_ci; meta 9637a4dc6328]\nexp83d_k2cap12fc2_secn2a_ci -> 22ccc1dd89c948e3 -> built, sha = plan; dummy NOT yet run [exp78b + n2a + CI; ledger safetail_ci; meta 30f712c516fa]\nexp83e_k2cap8_secn2a_ci -> a016cf0f733e53bc -> built, sha = plan; dummy NOT yet run [exp78a + n2a + CI; ledger safetail_ci; meta 95d6e40a1ee6]\nexp83f_k2cap24fc2_ci -> c8a2fccba8d60596 -> built, sha = plan; dummy NOT yet run [exp80a + CI; ledger safetail_ci; meta 7ea9ee39bf49]\nexp83g_k2cap24fc2_secn2a_ci -> 00f8cb366726663c -> built, sha = plan; dummy NOT yet run [exp80a + n2a + CI; ledger safetail_ci; meta c68a8314d250]\nexp84a_k2_cap48_fc2 -> 4cb1e47bbd7840e5 -> built, sha = plan; dummy NOT yet run [K2 + cap 48 fc2 (S3 only); ledger safetail; meta ce426ae8f7fa]",
+   "evidence": "experiments/exp82a_k2cap8_secn2a ... experiments/exp84a_k2_cap48_fc2 (9 new untracked folders, each with the notebook, kernel-metadata.json and probe.json). Scratch root: session scratchpad/r23/ (copy of tools/ at c86fd5a, clean, plus exp56 and exp39). The diffs against siblings are only the header plus the intended lines: exp82a vs exp81 changes DIVINS_CAP 6->8; exp84a vs exp80a changes CAP 24->48; exp83c vs exp79a and exp83d vs exp83a add the 2 SECONDARY env lines and the secondary sha line. Metadata: private, T4, GPU on, internet off, docker pin unchanged. SEC files add vitaliineibauer/biohub-secft-n2a-v1; CI files add yuki0731/biohub-coord-inject. tools/runtime_ledger.py EXP_RULES maps exp82a-c and exp84a to safetail, and exp83c-g to safetail_ci.",
+   "action": "R22-A6 is done. Commit only the 9 named folders, with no trailer, when the session next commits (R22-A11). Before any submit, copy the sha from this table into the pre-submit line.",
+   "urgency": "today"
+  },
+  {
+   "id": "r23sb-2",
+   "kind": "recheck-old",
+   "what": "The finals and the existing ladder rebuild byte-identically from the current builder: K2 exp58 1f1ddb6d (final #37) and the twin exp58n 55038fd6 (final #38). The same holds for exp70g, exp78a, exp78b, exp79a, exp80a, exp81, exp83a and exp83b (notebook and kernel-metadata identical; probe.json 'change' identical, and only the note can differ). So the builder has not drifted since the finals were built, and the new stacks sit on exactly the scored code.",
+   "evidence": "Refs: exp58_x138_safe_lowref (K2, final #37) 1f1ddb6d63b47f54 identical; exp58n_x138_safe_lowref (twin, final #38) 55038fd6ac009ad9 identical; exp70g_k2_cap6 52c182a36a40faf9 identical; exp78a_k2_cap8 8d8d9c2823a2bcd4 identical; exp78b_k2_cap12_fc2 d54d810c87be62dd identical; exp79a_k2cap6_coordinject 5f9b265d53a988f3 identical; exp80a_k2_cap24_fc2 da984964054ab3f7 identical; exp81_k2cap6_secn2a 6a62e321c303f71b identical; exp83a_k2cap12fc2_ci 80a0856fcae31bae identical; exp83b_k2cap8_ci d9b0834d43f64d98 identical. The rebuild used the original CONTEXT.md l.1773/1780 commands for exp58/exp58n and the round-21 env block for the rest.",
+   "action": "None. Cite this line if anyone asks whether the stack files share the finals' code.",
+   "urgency": "info"
+  },
+  {
+   "id": "r23sb-3",
+   "kind": "plan-issue",
+   "what": "No dummy gate is pre-registered for the SEC stacks (exp82a-c) or the SEC+CI stacks (exp83c-g). R22-A1 covers only exp83a/b, yet W2 v4 (4) and W4 AMEND 2 (1) need a 'PASSED dummy' before any of these files goes in. Proposed mechanical line, to be written before any output is read. (a) SEC stack exp82x PASS iff: validate ok; 0 Traceback/FAILED/DEADLINE:/FALLING BACK; the log shows Secondary SHA256 7029fe69 loaded from /kaggle/input/datasets/vitaliineibauer/biohub-secft-n2a-v1; the node count is within -0.5%..+0.2% of its non-SEC sibling dummy (exp78a/78b/80a = 121,252; reference exp81 vs exp70g = 121,085 vs 121,252 = -0.14%); the CSV is NOT byte-identical to the sibling (so SEC ran); runtime <= 1,920 s (the N2 gate). (b) SEC+CI stack PASS iff it meets R22-A1 (1)-(3), (5) and (6) with its topology sibling = the SEC-only dummy CSV: exp81 for exp83c, exp82b for exp83d, exp82a for exp83e, exp82c for exp83g, and the exp80a dummy (non-SEC) for exp83f. The rule: columns id,dataset,row_type,node_id,t,source_id,target_id identical, and the integer-coordinate change fraction in 0.60-0.69. Consequence: exp83d/e/g can only be gated after their SEC-only sibling's dummy exists; exp83c (vs exp81) and exp83f (vs exp80a) can be gated today.",
+   "evidence": "CONTEXT.md 01:48Z (R22-A1 gate, exp83a/b only) and 01:50Z (PASS: topology identical and 0.646 changed, for both). tools/coordinject_patch.py docstring: CI is a post-step on submission.csv, and nodes/ids/edges are unchanged. CONTEXT 00:00Z R21-A3 (a): exp81 121,085 / 116,961 / 87 forks, 1,250 s; exp80a 121,252 / 117,105 / 116, 1,388 s. There is no gate line for exp82/exp83c-g (grep of CONTEXT.md: exp82 appears only in the R8 COVERAGE and lookup lines).",
+   "action": "The main session appends the gate line (as written above, or tightened) to CONTEXT.md before pushing any of these dummies. No new mechanism and no slot are involved.",
+   "urgency": "now"
+  },
+  {
+   "id": "r23sb-4",
+   "kind": "plan-issue",
+   "what": "Both GPU lanes have been idle since ~01:35Z. The r21w-3 fix planned the exp83c/exp82b/exp82a dummies for ~00:55-02:05Z, but they could not be pushed because the folders did not exist until now. Quota left unused expires on 3 Oct, so it has no value after that. Recommended order (dummies only, never a submit): NOW push exp82a + exp82b (non-CI, start at once, ~0.35-0.45 GPU-h each; the SEC-on-BASE files for either DIV outcome), then exp83c (CI; its gate sibling is the existing exp81 dummy). After the 47/49 reads (~07-09Z), push only the reachable members of lookup (4): BASE exp78b -> exp83d; BASE exp78a -> exp83e; S3 (exp80a) -> exp82c, then exp83f/exp83g; exp84a only if S3's second strict step is live. A dummy QUEUED for more than 45 min is not re-pushed (r21w-3 fix (4)). Total ~1.2-1.5 GPU-h now, and at most ~1.5 GPU-h more after the reads.",
+   "evidence": "kaggle kernels list --mine at 04:06Z: newest lastRunTime exp83b 01:01:59Z and exp83a 01:01:48Z; both were done by 01:50Z (CONTEXT). round21 v_hyp_w2_w4_plan_r21w-3 fix (1)-(4). Quota estimate ~20.6-26.5 h of 30 used (round 22). Dummy runtimes: 1,250-1,882 s.",
+   "action": "The main session pushes the exp82a/exp82b dummies now, then exp83c (python -m kaggle kernels push -p experiments/<name>). The push is a kernel run, not a submission. It is left to the main session, because this task forbids pushes.",
+   "urgency": "now"
+  },
+  {
+   "id": "r23sb-5",
+   "kind": "new-fact",
+   "what": "The external inputs of the stacks are intact. yuki0731/biohub-coord-inject is still the 25 Aug version: lastUpdated 2026-08-25 09:41:33Z, all 10 files dated 25 Aug, so the CI sha256 pins in coordinject_patch.py still hold. vitaliineibauer/biohub-secft-n2a-v1 still holds ARTIFACT_MANIFEST.json plus the weights (created 2026-09-27 21:25:39Z). The ERROR-rule risk (a deleted or re-versioned dataset) has not happened.",
+   "evidence": "kaggle datasets list -s biohub-coord-inject and kaggle datasets files for both datasets, read-only, at 04:06Z.",
+   "action": "None. Re-check both datasets once before W3/W4 submits (a one-line pre-submit check).",
+   "urgency": "info"
+  },
+  {
+   "id": "r23sb-6",
+   "kind": "new-hypothesis",
+   "what": "HONEST ANSWER: nothing new reaches R8, so no new idea is proposed. The hard line (27 Sep 12:00Z) is past. Every lever that can still be staked on 28-29 Sep (cap rungs, N2/SEC, CI, the W2 v4/W4 stacks, E10 v3) is already registered, and these builds only make them submittable. Checked against research/KNOWLEDGE/IDEAS.md curation 22: 425 ideas, 207 refuted, 46 post-deadline, 2 open-untested. Every candidate considered is already there. Closed or refuted: fc2 on cap 6 (I-422), ALPHA (I-410), the DaughterNet fold subset (I-423), John Taylor's two x138 knobs (a knob ladder), overlap-consensus, forkmid, edge filter. Post-deadline: the theft-aware ranker (I-424) and MITO3 (I-082). A re-labelled version of any of them would break the team rules. For finals, the user picks on 29 Sep; the {V_pub, #37} proposal stands. Stack files change private only through levers already read on public, and SEC/CI are public-only without a Q3/CI re-tick. So no extra private premium can be claimed for them beyond the registered estimates.",
+   "evidence": "research/KNOWLEDGE/IDEAS.md header (curation 22 totals and changes); research/wf_ideas_v4/round22/REPORT.md section 1 item 1 ('no new mechanisms; nothing reaches R8') and section 5 (rejected); CONTEXT R8 COVERAGE 00:00Z.",
+   "action": "Do not open a new mechanism line. Spend the remaining effort on read hygiene (R22-A7) and the gates in r23sb-3/4.",
+   "urgency": "info"
+  }
+ ],
+ "notes_file": "research/wf_ideas_v4/round23/scan_hyp_stack_builds.notes.md"
+}

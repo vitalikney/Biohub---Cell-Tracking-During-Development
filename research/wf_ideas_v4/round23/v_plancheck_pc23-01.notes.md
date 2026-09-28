@@ -1,0 +1,11 @@
+# v_plancheck_pc23-01 notes
+- 2026-09-28T04:14:19Z start; no prior json
+- 04:14Z CONTEXT.md unchanged since commit e46b7ea (02:46:33Z); grep 'FINALS CARD'/'V_pub card'/'BASE's DIVINS' -> only RESUME POINT l.3404 cites SI-with-BASE rule; E10 v3 itself IS defined (l.2917, 27 Sep 11:08Z user instruction) -> finding overstates 'no dated entry defines it'; what is undefined is the >=0.957 threshold and SI=BASE DIVINS.
+- poll.log headers 03:56:32Z and 04:06:33Z: 56623073/56623105/56624341 all PENDING -> pre-score still valid.
+- R22-A4 text in round22/report.json actionable[...] 'R22-A4-finals-card-and-e10-now-line'; R21-A9 and R20-A9 texts intact (Cyrillic UTF-8 ok).
+- e10_watch_loop.py (experiments/lb_poll/) l.28/l.78 LOOK '>= 0.955' only a message string, no gate.
+- runbook.notes.md sec 9 l.206-209: K has DIVINS_CAP=4 and REF=exp58_x138_safe_lowref -> contradicts SI=BASE rule (PC23-02 confirmed).
+- gate re-run: see below.
+- Nit: R22-A4(B) '0.958 if 47/49 displays 0.957' omits 48 (CI exp79a); user wording = better than our score -> threshold should be our best display over ALL refs incl. 48.
+- 2026-09-28T04:16:18Z gate rerun confirmed PC23-02 (PASS w/ exp70g ref, FAIL w/ exp58 ref); verdict not refuted; json written
+- 2026-09-28T04:16:30Z gate rerun confirmed PC23-02 (PASS w/ exp70g ref, FAIL w/ exp58 ref); verdict not refuted; json written+validated

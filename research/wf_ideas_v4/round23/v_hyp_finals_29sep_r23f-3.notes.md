@@ -1,0 +1,9 @@
+# v_hyp_finals_29sep R23F-3 skeptic notes
+- 2026-09-28T04:14Z started; no prior json. Source scan: research/wf_ideas_v4/round23/scan_hyp_finals_29sep.json (draft_ru, fill rules, MC table).
+- 04:15Z checked: CONTEXT l.~3178-3195 READ TABLE v2 (9) FINALS (V_pub = highest display among ALL COMPLETE 26-29 Sep refs, L_hi <= 9.0 h non-CI; partner always #37; caveats per lever incl. DIV 'cap/threshold picked on the public embryo; lab cap > 4 = 0 TP / 4 FP / 81 unannotated'). Letter (b) 11:09:39Z = {V*, #37}; user 19:10:58Z picks on 29 Sep. E10 v3 (11:08Z): 'finals composition in that case (proposal in chat)'.
+- Refs verified in experiments/lb_poll/ledger.md: #37 56563521 00:02:12Z 0.954 L(7.36,7.54]; #38 56563534 00:02:18Z 0.953; exp70g 56606948 11:15:12Z 0.956 L(7.49,7.67] gate not fired. tick_check_cmd present in round7/report.json (SUBMISSION_GROUP_SELECTED).
+- LB 20260928T0400Z snapshot: 3,961 teams; our row #172 at 0.956 (LSD 14:36:59 = probe 46). Bronze cut ~#396, silver ~#198.
+- Prior skeptic round21/v_hyp_w2_w4_plan_r21w-8-finals-proposal-29sep.json (not refuted; fixes a-g). r23 draft absorbs a, c, e, f, g; ranges now .50-.76 (honest).
+- Gaps found: (1) draft omits the v2 (9) DIV caveat for V_PUB itself (exp70g is a DIV-lever file; lab cap>4 = 0 TP/4 FP). (2) 'V_PUB с его же cap-родителем' is ambiguous: exp70g's lineage parent IS #37 (K2 cap 4), contradicting the recommendation; must name {exp78a, exp70g}-type pairs. (3) fill rules restrict V_PUB to the cap family; v2 (9) and E10 v3 cover every COMPLETE ref incl. an E10 copy -> add an E10 clause. (4) first bullet 'без CI и новой вторички' conflicts with fill rule 'SEC after Q3 yes'.
+- Verdict: not refuted (message only, runtime 0, pre-registered in v2 (9)/letter (b); #38 medal floor ~0 is structural). Fixes above.
+- 04:21Z final JSON written (refuted=false, 4 fixes).

@@ -1,0 +1,7 @@
+- 2026-09-28T04:14:50Z start r23sb-4 skeptic; no prior json
+- 04:15Z kaggle kernels list --mine (read-only): newest exp83b 01:01:59Z / exp83a 01:01:48Z -> lanes idle confirmed. Folders exp82a-c/83c-g/84a exist untracked (built 04:0xZ per scan notes).
+- Lookup W2 v4 (4): exp82a = exp78a+SEC, exp82b = exp78b+SEC, exp83c = exp70g+SEC+CI -> one per BASE, mutually exclusive: at most 1 of the 3 'now' dummies can ever be used, >= 2 are certain waste.
+- W2 v4 (2): 'Never stack an unread lever in W2'; round21 REPORT l.92 rejected exp83c in W2b. SEC is read only via exp81 (W2a 08:45-10:00Z or W2b 12:00Z) -> read ~16:15-19:45Z. So SEC stacks first usable in W3 (<=23:30Z) / W4. r21w-3's 00:55-02:05Z timing was built for the W2a critical path (its json: 'exp82b ~07:50Z and exp82a ~08:40Z sit on the W2a path'), a premise W2 v4 removed at 01:02Z.
+- Quota: r21w-3 ~9-10.5 h left (6 h if 2x); PC22-08 20.6-26.5 h used -> 3.5-9.4 h left (exp83a/b ~1 h may or may not be in it). No quota endpoint in API. Worst case ~2.5-3.5 h left vs reachable members (<= 4 under S3, ~1.8 h) + E10 reserve >= 1 h -> 1.2 h of wasted dummies can bind.
+- Pushing at the BASE decision (~08:45-09:00Z) instead of 04:15Z still leaves >= 7 h margin before the earliest need (~16:15Z) even with a 3.3 h queue (worst seen, exp75 27 Sep).
+- Verdict: refuted (urgency/set wrong; direction 'dummies only, BASE-matched' survives).
