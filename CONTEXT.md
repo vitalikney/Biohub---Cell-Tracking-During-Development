@@ -3622,6 +3622,20 @@ Mention it to the user in one line (R9-A8 item 6).
   exp80a. W2b TABLE v5: Row 1 and Row 2 moot -> Row 3: at 50's terminal header (latest 14:00Z) R+ -> exp86c, else ->
   exp81. R24-A6 T1: nothing to push (no S3). Rank 182 (3,967 teams), 171 strictly above 0.956, 11th of 65 in the 0.956
   block.
+- 2026-09-28 09:07 UTC, KNOB ARMS (743929 process; workflow research/wf_ideas_v4/knobarms_28sep, 18 agents; written while 48/50 PENDING at header 09:03:05Z)
+  Inventory: 93 env knobs in exp70g, 73 live (cell-3 hard-sets and dead knobs excluded); 13 untested candidates
+  proposed as two-direction arms; skeptics refuted 10 (dead / negligible / closed under another name); 3 knobs
+  survive: ILP_DISAPPEARANCE_WEIGHT (sibling of JT's ILP_DIVISION_WEIGHT in the same objective; SCIP replay: 2.25 ->
+  -0.76% nodes / 1.45% edge churn; 1.75 -> +0.85% nodes / 1.96%), SAFE_DIV_SISTER_SYMMETRY_TAU (0.7 -> ~+8 safe forks,
+  the size of the cap 4 -> 6 step; 0.5 -> ~-9, likely loses), MOTION_RELINK_FLOW_Z_WEIGHT (0.6 only, smallest change).
+  BUILT (exp70g + one knob; cell 0 knob line + the cell-1 drift-guard value synced by the builder; nothing else
+  differs): exp88a_k2cap6_dis225 (ipynb 710a23b9), exp88b_k2cap6_tau07 (5bcbe5db), exp88c_k2cap6_dis175 (7b0591ac).
+  Dummies 88a/88b pushed 09:07Z, 88c follows at the first free lane. Spares not built: exp88d (TAU 0.5), exp88e (Z
+  weight 0.6). SLOT RULE (pre-score): these are '?' tests on BASE; they never displace E10, the FULL/K-lever file or
+  exp81. 29 Sep: 00:05-01:45Z third slot = exp88a (or exp88c first if probe 50 reads R+: 'more nodes near track ends
+  pays'); after 02:00Z (user lift, 2 non-CI files) = the remaining arms of {exp88b, exp88c/exp88a} unless exp81 still
+  needs its first read. If probe 50 reads R+, the arms are re-cut as one-line changes of the new BASE (exp85a/exp86c)
+  before 00:05Z (JT: arms off the current best).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

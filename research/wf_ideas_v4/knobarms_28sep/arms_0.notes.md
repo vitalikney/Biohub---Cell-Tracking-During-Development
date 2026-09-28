@@ -1,0 +1,12 @@
+# arms_0 notes (28 Sep)
+- started: no prior arms_0.json; reading code
+- 11:2x: code read (c7 relink l.542-765; c4 ILP patch; c2 defaults). LAP with big=gate*1000 => max-cardinality matching inside each gate. Running relink replay proxy on scratchpad/e2e/trainlab presafe nodes (2 x 6bba clips) to size edge churn per knob arm.
+- lab presafe dumps (scratchpad/e2e/trainlab, 2 x 6bba crops) are too sparse (~10 nodes/frame, NN 27 um): every relink arm ~0 churn -> useless for sizing.
+- replay of motion_relink_edges (lab nb namespace, x138 env) on the 4 visible-test OUTPUT node sets (scratchpad/geff_exp58-x138-safe-lowref; 62-698 nodes/frame, NN med 7.5-10.6 um); probs proxy 0.9 on output edges. Relaxed pass carries only 2-5 edges/clip. Edge churn (symdiff/2E) vs base:
+  ftight8 0.03/0.31/0.00/0.71%  ftight6 0.00-0.05%  relax12 +3..+32 edges (0.006-0.09%)  relax85 ~0  seed45/65 ~0
+  zw07 0.05-0.21%  zw14 0.01-0.02%  k8/k16 <=0.03%  rad30/50 0  bonus05/15 ~0 (proxy can't see alternatives)  rawcost01 ~0  vel025 0
+  Caveat: replay on final nodes is biased toward the base being a fixed point (pre-relink nodes incl. readmits are more ambiguous) -> read as lower bounds. Relink ~20 s on the 698-node/frame clip: no runtime concern.
+- wider steps (2 dense visible clips, 6bba_05db0fb1 698 n/f | 44b6_0113de3b 257 n/f): ftight5.5 0.05|0.03%, ftight5 0.06|0.03%, ftight9 6.76|2.25% (+511|+63 edges: max-cardinality LAP kicks in once the gate nears NN spacing p10 ~6 um) -> 9 too big, 8 is the step; zw0.5 1.30|0.14% (+186 edges), zw2 0.03|0.04%, relax14 +58|+12 edges 0.04|0.02%.
+- Structural read of the ILP (c4 patch: edge_weight=-1*edge_prob, A 0, D 2, div 1.2): an isolated ILP track survives iff sum(edge_prob) > A+D = 2; a second daughter is attached by the ILP iff p2 > div - A (1.2 -> never; JT's 0.4 -> p2>0.4). Relink (1:1) replaces ILP edges, so ILP knobs act via (i) the node set handed to relink and (ii) which pairs get the -LEARNED_BONUS*prob relink bonus. Not CPU-replayable (needs the GPU candidate graph) -> size must be read on the dummy run (node count gate).
+- Picks: FLOW_TIGHT_UM 8.0/6.0, FLOW_Z_WEIGHT 0.6/1.5, ILP_DISAPPEARANCE 1.5/2.5, ILP_APPEARANCE 0.4/-0.2, RELAXED_UM 12/8.5. Excluded: LEARNED_BONUS (LB-tested P22), seed gate TIGHT_UM (inert 0-0.004%), FLOW_K/RADIUS/RAW_COST/VELOCITY (<=0.03%, inert), ILP_EDGE_WEIGHT (= rescale of A/D/div, confounded with pending exp85a), MAX_FRAME_NODES/ILP_TIMEOUT (safety).
+- final arms_0.json written

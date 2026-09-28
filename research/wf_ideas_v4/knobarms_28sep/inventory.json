@@ -1,0 +1,935 @@
+{
+ "knobs": [
+  {
+   "name": "DET_THRESHOLD",
+   "default": "0.965",
+   "cell": "c0 l.13; c1 guard; c2 l.43; c4 predict_cmd --det-threshold",
+   "stage": "detection",
+   "what": "Candidate-node threshold on the fused (dual-seed, TTA) detection map inside the predict subprocess: `arr = _detect_cells_pooled(det_logits[f_idx][0], t, cfg.det_threshold, pool_k)`; also the threshold of the retention guard counts. In the cell-1 drift guard (builder patches the guard for --set keys). Lower = more nodes into ILP/relink (runtime up, node-count risk).",
+   "tested_by_us": "P04 exp19 0.95 -> 0.940 vs 0.941 (old public-0.941 pipeline, neutral). None on x138/K2. I-309/R13NC-4: not a profitable rung.",
+   "disclosed": "imissher 743222 on the 0.947 stack: 0.960 -> 0.946, 0.970 -> 0.945 (unmodified 0.946/0.948; 'both directions lose, 0.965 at optimum'). amanatar V6 0.960 inside a 9-knob bundle (V6 public 0.901). indarkarhana retention-guard v1 0.96875 (July 0.913 fork). Every other public fork 0.965.",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "ILP_DIVISION_WEIGHT",
+   "default": "1.2",
+   "cell": "c0 l.42; c2 l.49; c4 predict_cmd --ilp-division-weight (NOT in the cell-1 guard)",
+   "stage": "linking ILP",
+   "what": "tracksdata ILPSolver division cost: `division_weight=cfg.ilp_division_weight` (c4 ILP patch). Lower = forks cheaper in the ILP. ILP forks never reach the output directly (motion relink is 1:1 and replaces ILP edges), so the effect is second-order: which nodes the ILP keeps (dummy: ~330 node swaps, +49 net) and orphan daughters feeding safe divisions (+3 safe forks 63 -> 66 on dummies).",
+   "tested_by_us": "P03 exp18 0.9 -> 0.941 (old pipeline, neutral; later judged 'test invalid'). P50 exp85a = exp70g + 0.4 + READMIT 0.94 PENDING (submitted 05:02Z 28 Sep). Builds: exp85b (0.4 alone, dummy +0.04% nodes, 84 forks), exp86a/b/c, exp87a/b/i.",
+   "disclosed": "John Taylor 743929 on his x138 fork: 1.2 -> 0.4 = +0.001 (0.957 -> 0.958), node change < 1%, 'local validators wrong 4/4'. indarkarhana v1 1.0 (July). 740573: ultrack zebrafish configs use division 0.001 / 0.1 (small, balanced); public lineage 1.2.",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "ILP_DISAPPEARANCE_WEIGHT",
+   "default": "2",
+   "cell": "c0 l.16; c1 guard; c2 l.48; c4 --ilp-disappearance-weight",
+   "stage": "linking ILP",
+   "what": "ILP track-end cost: `disappearance_weight=cfg.ilp_disappearance_weight`. Higher keeps more nodes/longer tracks through the ILP (nodes not selected by the ILP are dropped before post-processing; readmit can bring some back).",
+   "tested_by_us": "none",
+   "disclosed": "indarkarhana v1 1.5 (July 0.913 fork, also in its markdown); 740573 notes 'public lineage runs division 1.2 and disappearance 1.5' (older family). All x138 forks 2.",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "ILP_APPEARANCE_WEIGHT",
+   "default": "0.0",
+   "cell": "c0 l.15; c1 guard; c2 l.47; c4 --ilp-appearance-weight",
+   "stage": "linking ILP",
+   "what": "ILP track-start cost: `appearance_weight=cfg.ilp_appearance_weight`; 0 = starts are free (asymmetric with disappearance 2).",
+   "tested_by_us": "none",
+   "disclosed": "All public forks 0.0. 740573: ultrack configs appear 0.002 / 0.1 (balanced).",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "ILP_EDGE_WEIGHT",
+   "default": "-1.0 (c2 default, not set in c0, not guarded)",
+   "cell": "c2 l.46; c4 --ilp-edge-weight",
+   "stage": "linking ILP",
+   "what": "`edge_weight=cfg.ilp_edge_weight * td.EdgeAttr(\"edge_prob\")`: the reward per selected edge; scaling it is equivalent to inversely scaling all three event costs at once.",
+   "tested_by_us": "none",
+   "disclosed": "none",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "USE_ILP",
+   "default": "1 (c2 default)",
+   "cell": "c2 l.45; c4 `if USE_ILP: predict_cmd.append(\"--use-ilp\")`",
+   "stage": "linking ILP",
+   "what": "Switch between the ILP and the repo's greedy linker. Structural, not a tuning knob.",
+   "tested_by_us": "none",
+   "disclosed": "newwang12 v1-grouped derives it from an inference contract (same value).",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "ILP_TIMEOUT_S",
+   "default": "1200",
+   "cell": "c0 l.73; c4 ILP patch",
+   "stage": "linking ILP (runtime)",
+   "what": "`timeout=_ilp_timeout if _ilp_timeout > 0 else None` per dataset; SCIP returns its incumbent at the limit. Changes output only on clips that hit the limit; a safety knob, not a lever.",
+   "tested_by_us": "none",
+   "disclosed": "amanatar 1200.0 (same).",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "UNET_BATCH_SIZE",
+   "default": "4 (c2 default)",
+   "cell": "c2 l.44; c4 --unet-batch-size",
+   "stage": "detection (runtime)",
+   "what": "UNet inference batch; runtime/memory only (output identical up to GPU nondeterminism).",
+   "tested_by_us": "none",
+   "disclosed": "haideptry 0.951-sota fork: 8.",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "BIDIRECTIONAL_EDGE_WEIGHT",
+   "default": "0.15",
+   "cell": "c0 l.58; c1 guard; c4 guard `if not isclose(_bidirectional_weight_guard, 0.15): raise ValueError`; c4 harmonic patch",
+   "stage": "linking (edge scores)",
+   "what": "Reverse-time edge logits fused by a weighted harmonic mean of probabilities before candidate threshold/ILP. LOCKED: besides the cell-1 guard (which the builder patches) cell 4 raises ValueError unless it equals 0.15 -> a --set kernel errors.",
+   "tested_by_us": "none",
+   "disclosed": "All public forks 0.15 (x138's own cell-1 print says 'Reverse-time association weight: 0.200', stale text; 0.15 is what runs).",
+   "hardset_or_dead": true
+  },
+  {
+   "name": "BIDIRECTIONAL_FUSION_MODE",
+   "default": "harmonic_probability",
+   "cell": "c0 l.59; c1 guard; c13 print",
+   "stage": "other",
+   "what": "Only read by the cell-1 guard and a cell-13 print; the harmonic code path in cell 4 does not branch on it. Dead (and a change trips the guard).",
+   "tested_by_us": "none",
+   "disclosed": "none",
+   "hardset_or_dead": true
+  },
+  {
+   "name": "DUAL_SEED_MIN_CANDIDATE_RETENTION",
+   "default": "0.90",
+   "cell": "c0 l.60; c1 guard; HARD-SET c4 l.85",
+   "stage": "detection",
+   "what": "Frame retention guard: falls back to primary-only detection in a frame when the blended map keeps < 90% of the primary's candidates. Cell 4 re-sets it to '0.90' after cell 0 -> --set is a silent no-op.",
+   "tested_by_us": "none",
+   "disclosed": "amanatar V6 0.75 (made settable in its own cell 4).",
+   "hardset_or_dead": true
+  },
+  {
+   "name": "DUAL_SEED_EDGE_THRESHOLD",
+   "default": "0.48 (hard-set)",
+   "cell": "HARD-SET c3 l.663; read in c4 predict patch",
+   "stage": "linking (candidate graph)",
+   "what": "Candidate-edge probability threshold for the ILP graph (`os.environ.get(\"BIOHUB_DUAL_SEED_EDGE_THRESHOLD\", str(cfg.threshold))`). Hard-set in cell 3 after cell 0 -> --set no-op.",
+   "tested_by_us": "none",
+   "disclosed": "imissher 743222: 0.48 -> 0.30 = 0.000 on LB (local +0.009). All forks 0.48.",
+   "hardset_or_dead": true
+  },
+  {
+   "name": "SECONDARY_DETECTION_WEIGHT",
+   "default": "0.80 (hard-set)",
+   "cell": "HARD-SET c3 l.659",
+   "stage": "detection",
+   "what": "Blend weight of the seed314159 secondary detector logits. Hard-set -> --set no-op.",
+   "tested_by_us": "P05 exp20 0.5 -> 0.943 vs 0.945 (old exp06 base, -0.002).",
+   "disclosed": "imissher 0.65 -> 0.945 (vs 0.946/0.948); indarkarhana v1 0.475.",
+   "hardset_or_dead": true
+  },
+  {
+   "name": "SECONDARY_EDGE_WEIGHT",
+   "default": "0.15 (hard-set)",
+   "cell": "HARD-SET c3 l.653",
+   "stage": "linking (edge scores)",
+   "what": "Secondary-model edge-logit mixing weight. Hard-set -> no-op.",
+   "tested_by_us": "Secondary swaps P07/P10/P13 (weights, not this knob) all negative.",
+   "disclosed": "All forks 0.15.",
+   "hardset_or_dead": true
+  },
+  {
+   "name": "SECONDARY_LINK_MODE / SECONDARY_MIX_TEMPERATURE / SECONDARY_LOW_MARGIN_MAX",
+   "default": "low_margin_consensus / 1 / 0.35 (hard-set)",
+   "cell": "HARD-SET c3 l.660-662",
+   "stage": "linking (edge scores)",
+   "what": "How secondary edge logits are mixed (only on low-margin primary rows). Hard-set -> no-op.",
+   "tested_by_us": "none",
+   "disclosed": "anhadmahajan track-your-cells: LINK_MODE adaptive; everyone else low_margin_consensus / 1 / 0.35.",
+   "hardset_or_dead": true
+  },
+  {
+   "name": "EDGE_FEATURE_TTA / SECONDARY_EDGE_FEATURE_TTA / SECONDARY_EDGE_FEATURE_TTA_WEIGHT",
+   "default": "1 / 1 / 0.75 (hard-set)",
+   "cell": "HARD-SET c4 l.287, l.306-307",
+   "stage": "linking (edge scores)",
+   "what": "Edge-feature flip TTA for primary and secondary encoders. Hard-set after cell 0 -> no-op.",
+   "tested_by_us": "P12/P16 Z-flip views (code change) negative.",
+   "disclosed": "sjlee/mtoshidesu dctta020-sectta1: TTA weight 1.0 -> 0.947 (tie on the 0.947 stack).",
+   "hardset_or_dead": true
+  },
+  {
+   "name": "SECONDARY_WEIGHTS / SECONDARY_ARTIFACT_MANIFEST",
+   "default": "resolved path (hard-set)",
+   "cell": "c3 l.574, l.652; c4 load",
+   "stage": "detection+linking (model)",
+   "what": "Which secondary checkpoint is loaded (sha-checked in cell 3). Only changeable with our secswap patch, not --set.",
+   "tested_by_us": "exp79d/exp81 secft/n2a secondaries built (N2 files); P07/P10/P13 secondary swaps negative on old stacks.",
+   "disclosed": "none",
+   "hardset_or_dead": true
+  },
+  {
+   "name": "LOWDET_THRESHOLD",
+   "default": "0.3",
+   "cell": "c0 l.106; c4 lowdet patch",
+   "stage": "detection (sub-threshold dump)",
+   "what": "`_low = _detect_cells_pooled(det_logits[f_idx][0], t, _LOWDET_THRESHOLD, pool_k)` dumps sub-threshold peaks to CACHE_DIR for gapfill/readmit. The post-proc pool then drops `score < GAPFILL_MIN_SCORE` (0.5), so any value in [0, 0.5] is output-inert (only dump size); > 0.5 shrinks the gapfill pool.",
+   "tested_by_us": "none",
+   "disclosed": "Every x138-family fork 0.3.",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "LOWREFINE_ENABLE",
+   "default": "1 (our patch; x138 default 0)",
+   "cell": "c0 l.120; c4 lowdet patch",
+   "stage": "detection (coordinates)",
+   "what": "Runs the V1284 coordinate head on lowdet peaks with score >= READMIT_MIN_SCORE (`_lhi = _lsc >= _LOWREFINE_MIN_SCORE`) so readmitted/gapfilled nodes get refined, float coordinates.",
+   "tested_by_us": "Part of K2: P38 exp58n (x138 + safetail + lowrefine) 0.953 = x138 0.953 (tie); in every K2 probe since.",
+   "disclosed": "Ours only.",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "CACHE_DIR",
+   "default": "/kaggle/working/edge_cache",
+   "cell": "c0 l.104; c4 dump patch; c7 l.1216",
+   "stage": "other (infra)",
+   "what": "Where the lowdet dump is written/read. Unset -> `load_low_detections` returns None -> gapfill AND readmit idle. Infra, not a lever.",
+   "tested_by_us": "none",
+   "disclosed": "All x138 forks same.",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "CACHE_EDGE_THRESHOLD",
+   "default": "1.0",
+   "cell": "c0 l.105; c4 predict_video patch",
+   "stage": "other",
+   "what": "`if _CACHE_THRESHOLD > 0: _ci, _cj = np.nonzero(probs > _CACHE_THRESHOLD)`; probabilities never exceed 1.0 -> nothing cached; no post-proc reader. Dead.",
+   "tested_by_us": "none",
+   "disclosed": "none",
+   "hardset_or_dead": true
+  },
+  {
+   "name": "DIAGNOSTIC_ARM",
+   "default": "harmonic_association_production",
+   "cell": "c0 l.61; c4 coordinate-manifest patch",
+   "stage": "other",
+   "what": "Only names a pre-ILP coordinate-manifest jsonl (diagnostic). Dead for output.",
+   "tested_by_us": "none",
+   "disclosed": "none",
+   "hardset_or_dead": true
+  },
+  {
+   "name": "DEEPCENTER_TTA",
+   "default": "1",
+   "cell": "c0 l.67; c7 l.457",
+   "stage": "detection (DeepCenter veto maps)",
+   "what": "`if os.environ.get(\"BIOHUB_DEEPCENTER_TTA\", \"0\") != \"0\":` flip-TTA averaging of the DeepCenter heatmap used by the gap veto and the safe-division veto (raises if TTA is a no-op). 0 = single view: shifts DC scores for both vetoes; saves some runtime.",
+   "tested_by_us": "Inherited from sjlee dctta (P14 exp29 0.947); never varied alone.",
+   "disclosed": "sjlee dctta family: on.",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "OUTPUT_MOTION_RELINK",
+   "default": "1 (c2 default)",
+   "cell": "c2 l.65; c7 l.1954",
+   "stage": "relink",
+   "what": "`if OUTPUT_MOTION_RELINK:` replace all ILP edges by the two-pass LAP motion relink (1:1). Off = keep ILP edges (incl. ILP forks). Also switched off by the deadline degrade.",
+   "tested_by_us": "P21 exp40 relink OFF 0.945 vs exp29 0.947 (friend-B local +0.0053 did not transfer).",
+   "disclosed": "imissher: relink off 0.946 vs 0.946/0.948 (local +0.017, LB -0.002).",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "MOTION_RELINK_TIGHT_UM",
+   "default": "5.5",
+   "cell": "c0 l.76; c2 l.66; c7 l.695, l.734",
+   "stage": "relink",
+   "what": "With FLOW_MODE=seed and FLOW_SEED_GATE_UM=0 it is the SEED-pass gate that builds the flow field (`seed_gate_um = ... else MOTION_RELINK_TIGHT_UM`) and the tight gate only in frames without a flow field; the tight gate in flow frames is FLOW_TIGHT_UM 7.0.",
+   "tested_by_us": "In P14 exp29 (validator picked tight55; 0.947). No single-knob LB probe on x138.",
+   "disclosed": "Hammad 741242: the x138-family validator picks tight55 on every rerun; x138 PP_CANDIDATES has tight55.",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "MOTION_RELINK_RELAXED_UM",
+   "default": "10.0 (c2 default; FLOW_RELAXED_UM 0 falls back to it)",
+   "cell": "c2 l.67; c7 l.697, l.734",
+   "stage": "relink",
+   "what": "Second (relaxed) LAP pass gate for sources/targets left unmatched by the tight pass, in flow and non-flow frames alike (`flow_relaxed_um = ... else MOTION_RELINK_RELAXED_UM`).",
+   "tested_by_us": "none",
+   "disclosed": "x138 PP_CANDIDATES 'relaxed9' (9.0), never selected (validator off).",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "MOTION_RELINK_LEARNED_BONUS",
+   "default": "1.0",
+   "cell": "c0 l.14; c2 l.92; c7 l.674",
+   "stage": "relink",
+   "what": "`cost[i, j] = motion + MOTION_RELINK_FLOW_RAW_COST * raw - MOTION_RELINK_LEARNED_BONUS * prob`; prob = the ILP edge's learned probability (0 for non-ILP pairs). The only channel by which ILP edges steer the final edges.",
+   "tested_by_us": "P22 exp41 2.5 -> 0.945 vs exp29 0.947 (-0.002).",
+   "disclosed": "anhadmahajan track-your-cells 1.25; x138 PP_CANDIDATES 'bonus125'.",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "MOTION_RELINK_VELOCITY_WEIGHT",
+   "default": "0.5 (c2 default)",
+   "cell": "c2 l.68; c7 l.638",
+   "stage": "relink",
+   "what": "`predicted_arr[i] = source_pos + MOTION_RELINK_VELOCITY_WEIGHT * (source_pos - prev_pos)` - only for sources with no flow sample (flow field covers most sources in seed mode).",
+   "tested_by_us": "none",
+   "disclosed": "seyitkaangunes 035 deconfounded stack 0.25.",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "MOTION_RELINK_MAX_FRAME_NODES",
+   "default": "2600 (c2 default)",
+   "cell": "c2 l.93; c7 l.571",
+   "stage": "relink",
+   "what": "`if frame_sizes and max(frame_sizes) > MOTION_RELINK_MAX_FRAME_NODES: return []` -> the whole clip keeps raw ILP edges. 0 skips in lab and in the exp70g public run_stats; a hidden-set safety valve.",
+   "tested_by_us": "none",
+   "disclosed": "none",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "MOTION_RELINK_FLOW_MODE",
+   "default": "seed",
+   "cell": "c0 l.78; c2 l.69; c7 l.708-760",
+   "stage": "relink",
+   "what": "Neighbourhood-flow prior: 'seed' = tight seed matches define a per-frame displacement field, then tight/relaxed passes run against the predicted positions; 'prev' = previous frame's field; 'off' = constant-velocity prior.",
+   "tested_by_us": "none",
+   "disclosed": "All x138 forks seed (thtennant frontier943_flow).",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "MOTION_RELINK_FLOW_TIGHT_UM",
+   "default": "7.0",
+   "cell": "c0 l.90; c7 l.696",
+   "stage": "relink",
+   "what": "Tight-pass gate in frames that have a flow field (`flow_tight_um = MOTION_RELINK_FLOW_TIGHT_UM if > 0 else MOTION_RELINK_TIGHT_UM`) - the de-facto main linking radius of x138.",
+   "tested_by_us": "none",
+   "disclosed": "All x138 forks 7.0.",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "MOTION_RELINK_FLOW_RELAXED_UM",
+   "default": "0 (-> RELAXED_UM 10.0)",
+   "cell": "c0 l.91; c7 l.697",
+   "stage": "relink",
+   "what": "Relaxed-pass gate in flow frames; 0 falls back to MOTION_RELINK_RELAXED_UM.",
+   "tested_by_us": "none",
+   "disclosed": "none",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "MOTION_RELINK_FLOW_K",
+   "default": "12",
+   "cell": "c0 l.79; c7 l.591, l.598",
+   "stage": "relink",
+   "what": "Number of nearest seed matches averaged for a source's flow vector.",
+   "tested_by_us": "none",
+   "disclosed": "amanatar V6 16.",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "MOTION_RELINK_FLOW_RADIUS_UM",
+   "default": "40.0",
+   "cell": "c0 l.80; c7 l.594",
+   "stage": "relink",
+   "what": "`tree.query(source_pos, k=k_query, distance_upper_bound=MOTION_RELINK_FLOW_RADIUS_UM)`: neighbourhood radius for flow samples.",
+   "tested_by_us": "none",
+   "disclosed": "amanatar V6 48.0.",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "MOTION_RELINK_FLOW_EXCLUDE_UM",
+   "default": "1.5",
+   "cell": "c0 l.81; c7 l.716, l.729",
+   "stage": "relink",
+   "what": "Excludes a source's own seed match (within 1.5 um) from its flow sample so a wrong seed cannot vote for itself.",
+   "tested_by_us": "none",
+   "disclosed": "none",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "MOTION_RELINK_FLOW_MIN_SAMPLES",
+   "default": "4",
+   "cell": "c0 l.82; c7 l.586",
+   "stage": "relink",
+   "what": "`if len(flow_src) < MOTION_RELINK_FLOW_MIN_SAMPLES:` no field for the frame -> falls back to TIGHT_UM/velocity prior.",
+   "tested_by_us": "none",
+   "disclosed": "none",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "MOTION_RELINK_FLOW_GATE",
+   "default": "1",
+   "cell": "c0 l.83; c7 l.648",
+   "stage": "relink",
+   "what": "Also admits pairs whose target is within the gate of the flow-PREDICTED position (not only of the raw source position).",
+   "tested_by_us": "none",
+   "disclosed": "none",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "MOTION_RELINK_FLOW_ITER",
+   "default": "1",
+   "cell": "c0 l.85; c7 l.719",
+   "stage": "relink",
+   "what": "Refinement rounds re-deriving the field from the previous round's matches; >1 multiplies relink runtime.",
+   "tested_by_us": "none",
+   "disclosed": "none",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "MOTION_RELINK_FLOW_SEED_GATE_UM",
+   "default": "0 (-> TIGHT_UM 5.5)",
+   "cell": "c0 l.86; c7 l.695",
+   "stage": "relink",
+   "what": "Seed-pass gate; 0 = use MOTION_RELINK_TIGHT_UM.",
+   "tested_by_us": "none",
+   "disclosed": "none",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "MOTION_RELINK_FLOW_RAW_ADMIT",
+   "default": "1",
+   "cell": "c0 l.87; c7 l.659",
+   "stage": "relink",
+   "what": "`raw_admits = MOTION_RELINK_FLOW_RAW_ADMIT or not (flow_gated and flow_hit[i])`: 1 keeps the raw-distance admission as well as the predicted one.",
+   "tested_by_us": "none",
+   "disclosed": "none",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "MOTION_RELINK_FLOW_Z_WEIGHT",
+   "default": "1.0",
+   "cell": "c0 l.88; c7 l.606, l.650",
+   "stage": "relink",
+   "what": "`flow_weight = [Z_WEIGHT, 1, 1]`: anisotropic motion distance (down-weights z error when < 1).",
+   "tested_by_us": "none",
+   "disclosed": "amanatar V6 0.40.",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "MOTION_RELINK_FLOW_RAW_COST",
+   "default": "0 (c2 default 0.05)",
+   "cell": "c0 l.89; c7 l.674",
+   "stage": "relink",
+   "what": "Adds RAW_COST * raw distance to the flow-predicted motion cost; 0 = pure predicted-position cost.",
+   "tested_by_us": "none",
+   "disclosed": "none",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "OUTPUT_EDGE_MAX_UM",
+   "default": "14.0 (c2 default)",
+   "cell": "c2 l.60; c7 l.1949",
+   "stage": "relink (pre-filter)",
+   "what": "`if OUTPUT_EDGE_MAX_UM > 0 and distance_um > OUTPUT_EDGE_MAX_UM:` drops long ILP edges before relink; relink replaces ILP edges anyway, so it only matters via the learned-prob lookup / relink fallback.",
+   "tested_by_us": "none",
+   "disclosed": "none",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "OUTPUT_ENFORCE_NEXT_FRAME / OUTPUT_SINGLE_PARENT_REPAIR / OUTPUT_SINGLE_CHILD_REPAIR",
+   "default": "1 / 1 / 0 (c2 defaults)",
+   "cell": "c2 l.61-63; c7 l.1944, l.1979, l.1990",
+   "stage": "relink (structural)",
+   "what": "Validity repairs (t+1 edges only, one parent per node, optional one child). The 1:1 relink already satisfies them; structural, not levers.",
+   "tested_by_us": "none",
+   "disclosed": "none",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "READMIT_MIN_SCORE",
+   "default": "0.965",
+   "cell": "c0 l.94; c2 l.83; c7 l.1313; ALSO c4 `_LOWREFINE_MIN_SCORE = float(os.environ.get('BIOHUB_READMIT_MIN_SCORE', '0.965'))`",
+   "stage": "readmit",
+   "what": "`keep = (d <= READMIT_RADIUS_UM) & (peaks[\"score\"] >= READMIT_MIN_SCORE)`: discarded detector peaks near an open track end/start come back before the second relink. Coupled: the same value is the LOWREFINE threshold (0.94 -> +3.05% refined peaks on dummies).",
+   "tested_by_us": "P50 exp85a (with ILP_DIVISION_WEIGHT 0.4) PENDING. exp85c (0.94 alone) dummy +0.84% nodes, 82 forks; exp86c 0.92 +1.21% nodes. Lab F-TRN-55: band [0.94,0.965) readmits +0.60% nodes, 0 within 4 um of GT (lab cannot sign it).",
+   "disclosed": "John Taylor 743929: 0.965 -> 0.94 = +0.001 (0.958 -> 0.959), node change < 1%, 0 of 2,212 annotated edges changed locally. All other forks 0.965.",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "READMIT_RADIUS_UM",
+   "default": "4",
+   "cell": "c0 l.93; c2 l.82; c7 l.1288, l.1313, l.1968",
+   "stage": "readmit",
+   "what": "Max distance from an open end/start (t-1 end or t+1 start) for a readmitted peak; 0 disables readmit and the second relink. OUR CLOSED LIST (I-183).",
+   "tested_by_us": "Lab only (radius bands (4,5] +0.27%, (5,6] +0.34% nodes); closed.",
+   "disclosed": "Every public notebook 4.",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "OUTPUT_GAP_CLOSE",
+   "default": "1 (c2 default)",
+   "cell": "c2 l.99; c7 l.776",
+   "stage": "gap",
+   "what": "Master switch of single-frame gap closing (synthetic middle node, DeepCenter-confirmed). Off on deadline degrade.",
+   "tested_by_us": "Lab per-stage: +gap +0.013 (exp29, 12 videos).",
+   "disclosed": "none",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "GAP_CLOSE_MAX_GAP",
+   "default": "2 (effective 1)",
+   "cell": "c0 l.17; c2 l.100; c7 l.854",
+   "stage": "gap",
+   "what": "`effective_gap_max = min(GAP_CLOSE_MAX_GAP, 1)` -> 2 behaves as 1; only 0 changes anything (disables). Dead as a lever above 1.",
+   "tested_by_us": "none",
+   "disclosed": "none",
+   "hardset_or_dead": true
+  },
+  {
+   "name": "GAP_CLOSE_UM",
+   "default": "5.0",
+   "cell": "c0 l.18; c1 guard; c2 l.101; c7 l.864",
+   "stage": "gap",
+   "what": "`threshold_um = GAP_CLOSE_UM * (gap + 1)` = 10 um end-to-start span for a 1-frame gap (then density-adjusted).",
+   "tested_by_us": "P08 exp24 6.5 -> 0.944 vs 0.945 (old exp06 base, noise).",
+   "disclosed": "amanatar V6, anhadmahajan, indarkarhana: 5.8. x138 PP_CANDIDATES 'gap45' (4.5).",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "GAP_DENSITY_ADAPTIVE / GAP_DENSITY_REFERENCE_UM / GAP_DENSITY_GAIN / GAP_DENSITY_MAX_STEP_DELTA_UM / GAP_DENSITY_NEIGHBORS",
+   "default": "1 / 6.5 / 0.040 / 0.125 / 3",
+   "cell": "c0 l.19-23; c7 l.819-897",
+   "stage": "gap",
+   "what": "Per-pair gap threshold shifted by clip(GAIN*(local NN spacing - 6.5), +-0.125) um per step: at most +-0.25 um on a 10 um gate -> tiny effect.",
+   "tested_by_us": "none",
+   "disclosed": "indarkarhana markdown: r = 2(5.8 + clip(0.04(s-6.5), +-0.125)).",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "GAP_CLOSE_REUSE_EXISTING / GAP_CLOSE_REUSE_UM",
+   "default": "1 / 3.2 (c2 defaults)",
+   "cell": "c2 l.107-108; c7 l.949-954",
+   "stage": "gap",
+   "what": "Use an existing isolated node within 3.2 um of the interpolated midpoint instead of a synthetic one.",
+   "tested_by_us": "none",
+   "disclosed": "x138 PP_CANDIDATES 'reuse28' (2.8).",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "GAP_CLOSE_MAX_ADDED_FRAC / GAP_CLOSE_MAX_ADDED_ABS",
+   "default": "0.05 / 2000 (c2 defaults)",
+   "cell": "c2 l.109-110; c7 l.797-799",
+   "stage": "gap",
+   "what": "Budget of synthetic gap nodes per clip: min(2000, 5% of nodes).",
+   "tested_by_us": "none",
+   "disclosed": "none",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "GAP_REFINE_SYNTHETIC / GAP_REFINE_WIN_Z / GAP_REFINE_WIN_YX / GAP_REFINE_MAX_SHIFT_UM",
+   "default": "1 / 1 / 3 / 3.2 (c2 defaults)",
+   "cell": "c2 l.111-114; c7 l.173-202",
+   "stage": "gap (coordinates)",
+   "what": "Snap a synthetic middle node to the local image maximum in a (±1, ±3, ±3) voxel window if the shift is <= 3.2 um.",
+   "tested_by_us": "none",
+   "disclosed": "none",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "DEEPCENTER_GAP_VETO / DEEPCENTER_GAP_THRESHOLD / DEEPCENTER_GAP_CONFIRM_MIN_SPAN_UM",
+   "default": "1 / 0.25 / 8.5",
+   "cell": "c0 l.52, l.54-55; c7 l.978-996",
+   "stage": "gap",
+   "what": "A synthetic middle node on a gap spanning >= 8.5 um must have DeepCenter score >= 0.25 (`requires_center_confirmation = DEEPCENTER_GAP_VETO and marginal_gap and synthetic_middle`), else the gap edge and node are dropped.",
+   "tested_by_us": "None on LB (F-MOD-26 lists DEEPCENTER_GAP_THRESHOLD as a valid --set knob, never probed).",
+   "disclosed": "x138 PP_CANDIDATES 'dcgap035' (0.35). All forks 0.25 / 8.5.",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "OUTPUT_GAP2_RECOVERY",
+   "default": "1",
+   "cell": "c0 l.26; c2 l.131; c7 l.1056",
+   "stage": "gap",
+   "what": "Strict 2-frame gap recovery (end at t -> start at t+3 with two interpolated nodes) with direction-context check and caps.",
+   "tested_by_us": "none",
+   "disclosed": "indarkarhana v1 0 (off).",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "GAP2_MAX_TOTAL_UM",
+   "default": "10.2 (c2 default)",
+   "cell": "c2 l.132; c7 l.1089",
+   "stage": "gap",
+   "what": "`if dist > GAP2_MAX_TOTAL_UM or dist / 3.0 > GAP2_MAX_STEP_UM: continue` - total end-to-start span gate (the binding one).",
+   "tested_by_us": "none",
+   "disclosed": "none",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "GAP2_MAX_STEP_UM",
+   "default": "4.4 (c2 default)",
+   "cell": "c2 l.133; c7 l.1089",
+   "stage": "gap",
+   "what": "Per-step gate, but with TOTAL 10.2 every admitted pair has step <= 3.4 um, so any value >= 3.4 is inert (x138's 'gap2step40' candidate 4.0 changes nothing).",
+   "tested_by_us": "none",
+   "disclosed": "x138 PP_CANDIDATES 'gap2step40' (4.0).",
+   "hardset_or_dead": true
+  },
+  {
+   "name": "GAP2_MAX_LINKS_FRAC / GAP2_MAX_LINKS_ABS / GAP2_REQUIRE_CONTEXT / GAP2_FRAME_FRAC_CAP",
+   "default": "0.0045 / 180 / 1 / 0.006 (c2 defaults)",
+   "cell": "c2 l.134-137; c7 l.1073, l.1093, l.1139",
+   "stage": "gap",
+   "what": "gap2 budget min(180, 0.45% of edges), per-frame cap 0.6% of ends, and the direction-continuity requirement.",
+   "tested_by_us": "none",
+   "disclosed": "none",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "GAPFILL_MAX_GAP",
+   "default": "3",
+   "cell": "c0 l.96; c2 l.84; c7 l.1217, l.1425",
+   "stage": "gap (sub-threshold filler)",
+   "what": "Max gap length the low-detection filler bridges with real sub-threshold peaks. ALSO gates readmit: `if GAPFILL_MAX_GAP < 1 or not cache_dir: return None` in load_low_detections -> 0 disables readmit too.",
+   "tested_by_us": "Lab closure only (I-186/I-141 gap-length variants).",
+   "disclosed": "All x138 forks 3.",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "GAPFILL_MIN_SCORE",
+   "default": "0.5",
+   "cell": "c0 l.97; c2 l.85; c7 l.1243",
+   "stage": "gap (sub-threshold filler) + readmit pool",
+   "what": "`keep = score >= GAPFILL_MIN_SCORE` on the lowdet pool used by BOTH the gap filler and readmit (readmit then needs >= READMIT_MIN_SCORE anyway, so it binds on the filler only).",
+   "tested_by_us": "none",
+   "disclosed": "All forks 0.5.",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "GAPFILL_STEP_UM / GAPFILL_PEAK_RADIUS_UM / GAPFILL_ALLOW_SYNTHETIC / GAPFILL_CONTEXT",
+   "default": "5.0 / 3.5 / 0 / 1",
+   "cell": "c0 l.98-99, l.101-102; c7 l.1338-1426",
+   "stage": "gap (sub-threshold filler)",
+   "what": "Bridge gate `gate = GAPFILL_STEP_UM * (g + 1)`; each interpolated frame needs a free peak within 3.5 um (0 synthetic allowed); direction-context check.",
+   "tested_by_us": "none",
+   "disclosed": "All x138 forks same.",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "GAPFILL_EXCLUDE_UM",
+   "default": "2.0",
+   "cell": "c0 l.100; c7 l.1259",
+   "stage": "gap filler + readmit pool",
+   "what": "`free = d > GAPFILL_EXCLUDE_UM`: peaks within 2 um of an existing node are removed from the pool (also for readmit).",
+   "tested_by_us": "none",
+   "disclosed": "none",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "GAPFILL_MAX_ADDED_FRAC",
+   "default": "0.03",
+   "cell": "c0 l.103; c7 l.1371",
+   "stage": "gap (sub-threshold filler)",
+   "what": "`budget = int(round(len(nodes_by_id) * GAPFILL_MAX_ADDED_FRAC))`; lab: budget not binding.",
+   "tested_by_us": "none",
+   "disclosed": "none",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "OUTPUT_SAFE_DIVISIONS",
+   "default": "1 (c2 default)",
+   "cell": "c2 l.139; c7 l.1507",
+   "stage": "division (safe div)",
+   "what": "Master switch of the post-link geometric division repair (the only source of forks besides DIVINS).",
+   "tested_by_us": "P26 exp45 OFF -> 0.911 vs 0.947 (J_pub ~0.36).",
+   "disclosed": "none",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "SAFE_DIV_MAX_UM",
+   "default": "9.0",
+   "cell": "c0 l.27; c2 l.140; c7 l.1574",
+   "stage": "division (safe div)",
+   "what": "`if parent_dist > SAFE_DIV_MAX_UM: continue` - parent to orphan-candidate distance for a new second daughter.",
+   "tested_by_us": "Lab R13DP-1: parent 8.0/10.0 not >= 0 on both embryos.",
+   "disclosed": "amanatar V6 10.5 (bundle; V6 public 0.901); indarkarhana v1 4.66.",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "SAFE_DIV_SISTER_MAX_UM",
+   "default": "14.0",
+   "cell": "c0 l.30; c7 l.1577",
+   "stage": "division (safe div)",
+   "what": "`if sister_dist > SAFE_DIV_SISTER_MAX_UM: continue` (existing child to candidate).",
+   "tested_by_us": "none",
+   "disclosed": "amanatar V6 15.0; sjlee 'sister16' fork 16 -> 0.947 (tie, 0.947 stack); indarkarhana 8.5.",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "SAFE_DIV_SISTER_SYMMETRY_TAU",
+   "default": "0.6",
+   "cell": "c0 l.34; c7 l.1628-1630",
+   "stage": "division (safe div)",
+   "what": "`if abs(child_dist - parent_dist) / _sym_denom > SAFE_DIV_SISTER_SYMMETRY_TAU:` reject asymmetric daughter pairs.",
+   "tested_by_us": "Lab: embryo-specific (6bba +0.005, 44b6 -0.001..-0.002); tau 0.75 rung I-395 refuted/never submitted.",
+   "disclosed": "All forks 0.6.",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "SAFE_DIV_DIVERGE_UM",
+   "default": "2.25",
+   "cell": "c0 l.35; c7 l.1605",
+   "stage": "division (safe div)",
+   "what": "`if grandchild_dist - sister_dist < SAFE_DIV_DIVERGE_UM:` daughters must separate by >= 2.25 um from t+1 to t+2.",
+   "tested_by_us": "Lab: 2.5-2.75 >= 0 on both embryos (I-333), never submitted.",
+   "disclosed": "amanatar V6 1.50 (looser); anhadmahajan 4.0 (stricter).",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "SAFE_DIV_EXISTING_CHILD_MAX_UM",
+   "default": "10.0",
+   "cell": "c0 l.38; c7 l.1557",
+   "stage": "division (safe div)",
+   "what": "Parent-to-existing-child distance gate.",
+   "tested_by_us": "Lab: 9/11 exactly 0 (never binds).",
+   "disclosed": "indarkarhana 7.65.",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "SAFE_DIV_FRAME_FRAC_CAP / SAFE_DIV_GLOBAL_FRAC_CAP",
+   "default": "0.0076 / 0.00375",
+   "cell": "c0 l.39-40; c7 l.1523, l.1547",
+   "stage": "division (safe div)",
+   "what": "Caps: per frame max(1, round(0.76% of one-child sources)); per clip max(1, round(0.375% of edges)).",
+   "tested_by_us": "Lab: GLOBAL 0.0025/0.005 exactly 0 (caps never bind); frame cap 6bba-only.",
+   "disclosed": "amanatar V6 0.012 / 0.006.",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "SAFE_DIV_REQUIRE_DIVERGENCE / SAFE_DIV_REQUIRE_MUTUAL_NN",
+   "default": "1 / 1 (c2 defaults)",
+   "cell": "c2 l.149-150; c7 l.1543, l.1581, l.1589",
+   "stage": "division (safe div)",
+   "what": "Candidate must be the existing child's nearest orphan (mutual NN) and pass the t+2 divergence test.",
+   "tested_by_us": "Lab: open gates I-053 refuted.",
+   "disclosed": "none",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "DEEPCENTER_SAFE_DIV_VETO / DEEPCENTER_SAFE_DIV_THRESHOLD",
+   "default": "1 / 0.25",
+   "cell": "c0 l.56, l.66; c7 l.1610-1619",
+   "stage": "division (safe div)",
+   "what": "New daughter must have DeepCenter score >= 0.25 (`deepcenter_accept_repair_point(..., DEEPCENTER_SAFE_DIV_THRESHOLD)`). OUR CLOSED LIST (DC).",
+   "tested_by_us": "P41 0.30 -> 0.949; P39 (+leaf prune) 0.949; P43 0.20 -> 0.954; P44 0.225 -> 0.954 (K2 0.954). Closed.",
+   "disclosed": "lineage-forge + mtoshidesu/sjlee dctta020: 0.20; sjlee forks 0.25 0.947 tie, 0.15 0.946 (0.947 stack).",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "USE_DEEPCENTER_VETO / REQUIRE_DEEPCENTER_VETO / DEEPCENTER_EXPECTED_EPOCH / DEEPCENTER_CHECKPOINT / DEEPCENTER_SCORE_WIN_Z / _YX / _CACHE_MAX_FRAMES",
+   "default": "1 / 1 / 2 / path / 1 / 2 / 8",
+   "cell": "c0 l.49-53; c2 l.153-172; c3 l.561 (checkpoint re-set to the materialized path); c7 l.371-519",
+   "stage": "gap + division (DeepCenter)",
+   "what": "DeepCenter model loading/sanity (epoch check, required) and the scoring window (max over ±1 z, ±2 yx voxels). Infra/sanity; WIN_* would change both vetoes' scores but nobody tunes them.",
+   "tested_by_us": "none",
+   "disclosed": "indarkarhana v1 EXPECTED_EPOCH 500 (other checkpoint).",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "OUTPUT_DIVISION_GEOMETRY_FILTER / DIV_PARENT_MAX_UM / DIV_SISTER_MAX_UM / DIV_DROP_TO_SINGLE_IF_BAD",
+   "default": "0 / 10.5 / 8.0 / 1 (c2 defaults)",
+   "cell": "c2 l.95-98; c7 l.2039-2066",
+   "stage": "division (filter)",
+   "what": "Optional post-hoc fork geometry filter; OFF, so the three parameters are dead unless the switch is set.",
+   "tested_by_us": "none",
+   "disclosed": "none",
+   "hardset_or_dead": true
+  },
+  {
+   "name": "DIVINS_ENABLE / DIVINS_STEAL",
+   "default": "1 / 1 (our patch)",
+   "cell": "c0 l.111-112; c6 l.579-586; c7 l.2087",
+   "stage": "division (DaughterNet insertion)",
+   "what": "Post-tail DaughterNet insertion of (u, c1, v) forks; steal = may take v from a weak parent w (edge_prob < 0.3, margin 0.2, at most floor(0.5*cap) steals).",
+   "tested_by_us": "P35 0.954, P37 K2 0.954 vs P38 no-insertion 0.953.",
+   "disclosed": "Ours only.",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "DIVINS_CAP / DIVINS_FRAME_CAP",
+   "default": "6 / 1",
+   "cell": "c0 l.113-114; c6 l.587-588",
+   "stage": "division (DaughterNet insertion)",
+   "what": "Max insertions per video / per parent frame. OUR CLOSED LIST (cap/frame-cap).",
+   "tested_by_us": "cap4 (K2) 0.954; cap6 0.956 (P45, best); cap8 0.955 (P49); cap12+fc2 0.955 (P47). Closed at 6.",
+   "disclosed": "Ours only.",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "DIVINS_THRESH",
+   "default": "0.4",
+   "cell": "c0 l.116; c6 l.590",
+   "stage": "division (DaughterNet insertion)",
+   "what": "`score = p_par(u) * p_dau(v) * p_dau(c1) ** alpha; only score >= threshold is eligible`. OUR CLOSED LIST.",
+   "tested_by_us": "cap6 + 0.3 + forkmid 4.5 -> 0.956 (P46, no UP).",
+   "disclosed": "Ours only.",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "DIVINS_ALPHA",
+   "default": "1",
+   "cell": "c0 l.115; c6 l.589, l.402",
+   "stage": "division (DaughterNet insertion)",
+   "what": "Exponent on the first daughter's p_dau in the insertion score; lower alpha = more eligible triples (score rises), like a lower threshold.",
+   "tested_by_us": "Never varied on LB (always 1).",
+   "disclosed": "Ours only.",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "DIVINS_DEADLINE_S",
+   "default": "28800",
+   "cell": "c0 l.119; c7 l.53, l.62",
+   "stage": "division (runtime)",
+   "what": "`if _deadline_degraded or elapsed >= SAFETAIL_DIVINS_DEADLINE_S:` skip insertion for remaining clips (8 h). Safety.",
+   "tested_by_us": "All safetail probes (no skip fired on LB, L <= 7.8 h).",
+   "disclosed": "none",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "DIVINS_DUMP / DIVINS_DUMP_DIR / DIVINS_BATCH / DIVINS_WEIGHTS / DIVINS_FORCE_FAIL",
+   "default": "0 / path / 256 / glob / 0",
+   "cell": "c0 l.117; c6 l.580-583; c7 l.2090",
+   "stage": "division (infra)",
+   "what": "Parity dump, scoring batch, weight glob, dummy-test fail switch. No output effect in normal runs.",
+   "tested_by_us": "none",
+   "disclosed": "none",
+   "hardset_or_dead": true
+  },
+  {
+   "name": "OUTPUT_PRUNE_ISOLATED",
+   "default": "1 (c2 default)",
+   "cell": "c2 l.64; c7 l.2073",
+   "stage": "track filter",
+   "what": "Drops nodes with no incident edge after safe divisions (readmitted nodes the relink left unattached die here).",
+   "tested_by_us": "none",
+   "disclosed": "none",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "OUTPUT_FILTER_SHORT_TRACKS / OUTPUT_KEEP_DIVISION_COMPONENTS",
+   "default": "1 / 1",
+   "cell": "c0 l.12, l.25; c7 l.1674, l.1714",
+   "stage": "track filter",
+   "what": "Component-length filter on/off; components with a fork are always kept.",
+   "tested_by_us": "Lab: KEEP_DIVISION_COMPONENTS exactly 0.",
+   "disclosed": "none",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "OUTPUT_MIN_TRACK_LEN",
+   "default": "6",
+   "cell": "c0 l.24; c1 guard; c7 l.1674, l.1714",
+   "stage": "track filter",
+   "what": "`if len(members) >= OUTPUT_MIN_TRACK_LEN or (OUTPUT_KEEP_DIVISION_COMPONENTS and has_division):` keep component. Moves node count directly (2.19% of lab nodes removed at 6).",
+   "tested_by_us": "P06 4 -> 0.943, P09 8 -> 0.944 vs 0.945 (old exp06 base): both directions lose -> closed at 6. R13NC-4: 7/9 not profitable (lab).",
+   "disclosed": "All forks 6.",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "ADAPTIVE_SHORT_TRACK_RESCUE + SHORT_TRACK_RESCUE_MIN_LEN / _MIN_MEAN_EDGE_PROB / _MAX_MEAN_EDGE_DIST_UM / _MAX_NODES_FRAC / _MAX_NODES_ABS",
+   "default": "1 + 4 / 0.88 / 3.0 / 0.012 / 120",
+   "cell": "c0 l.43-48; c7 l.1725-1762",
+   "stage": "track filter",
+   "what": "Keeps 4-5 node components with mean edge p >= 0.88 and mean step <= 3 um, but ONLY when the length filter removed >= 10% of a clip's nodes; never fired (0/56 lab, 0/4 dummy) -> all rescue params inert on this base.",
+   "tested_by_us": "Lab R10-RC-A: dormant.",
+   "disclosed": "amanatar V6 MIN_LEN 3 / PROB 0.85 (inert without the trigger); indarkarhana ADAPTIVE 0.",
+   "hardset_or_dead": true
+  },
+  {
+   "name": "SHORT_TRACK_RESCUE_TRIGGER_REMOVED_FRAC",
+   "default": "0.10 (c2 default)",
+   "cell": "c2 l.120; c7 l.1727",
+   "stage": "track filter",
+   "what": "`if removed_frac >= SHORT_TRACK_RESCUE_TRIGGER_REMOVED_FRAC:` - the only knob that can wake the rescue (e.g. 0.0 = always on, budget <= 1.2% nodes).",
+   "tested_by_us": "Lab: forcing the trigger measured in R10 (I-146 refuted).",
+   "disclosed": "none",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "OUTPUT_LINEFIT_SMOOTH / OUTPUT_LINEFIT_WEIGHT / OUTPUT_LINEFIT_WINDOW",
+   "default": "1 / 0.8 / 2 (c2 defaults)",
+   "cell": "c2 l.127-129; c7 l.1799-1837",
+   "stage": "track filter (coordinates)",
+   "what": "Per-track line-fit coordinate smoothing (weight 0.8, ±2 frames). Coordinates only; topology unchanged.",
+   "tested_by_us": "Lab B28 (12 videos): public w0.8/win2 is the unimodal optimum (off -0.0145). No LB probe.",
+   "disclosed": "none",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "REPAIR_DEADLINE_S",
+   "default": "34200 (x138 27000; our safetail override)",
+   "cell": "c0 l.74 + l.118; c7 l.20, l.43",
+   "stage": "other (runtime safety)",
+   "what": "After 9.5 h the remaining clips skip relink/gap/gap2 (and safe div + linefit unless DEGRADE_KEEP_DIV). Only matters on overrun.",
+   "tested_by_us": "All safetail probes (never fired, L <= 7.8 h).",
+   "disclosed": "x138 and forks 27000; amanatar governor 30600/27600.",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "DEGRADE_KEEP_DIV",
+   "default": "1 (our safetail)",
+   "cell": "c0 l.121; c7 l.37",
+   "stage": "other (runtime safety)",
+   "what": "`_keep_div = os.environ.get(\"BIOHUB_DEGRADE_KEEP_DIV\", \"0\") != \"0\"` keeps safe divisions + linefit after the deadline.",
+   "tested_by_us": "K2 family.",
+   "disclosed": "Ours only.",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "KERNEL_START_TS / FRAME_CACHE_MAX_FRAMES",
+   "default": "time.time() / 48",
+   "cell": "c0 l.71, l.75; c7 l.19-26",
+   "stage": "other (runtime)",
+   "what": "Timer origin for the deadlines; frame cache size for repair image reads (memory/speed only).",
+   "tested_by_us": "none",
+   "disclosed": "x138 forks same.",
+   "hardset_or_dead": false
+  },
+  {
+   "name": "VALIDATOR_ENABLE + VALIDATOR_N_PER_TYPE / _MATCH_RADIUS_UM / _NODE_COUNT_PENALTY_A / _DIVISION_WEIGHT + PPSWEEP_SELECT_MARGIN / PPSWEEP_MAX_ADJ_LOSS",
+   "default": "0 + 4 / 7.0 / 0.1 / 0.1 + 0.001 / 0.0005",
+   "cell": "c0 l.62-64, l.72; c9 l.11-15; c12 l.13-14, l.108",
+   "stage": "other (in-sample validator + PP sweep)",
+   "what": "Validator OFF -> all dead. Turning it on re-enables x138's in-sample PP sweep that may rewrite submission.csv with a different config on the hidden rerun and set os.environ['BIOHUB_'+key] (imissher trap); ~11 min GPU.",
+   "tested_by_us": "Validator/sweep on in P14 exp29 only.",
+   "disclosed": "amanatar V10 turns it on (errored / unscored).",
+   "hardset_or_dead": true
+  },
+  {
+   "name": "RUN_OUTPUT_DIAGNOSTICS",
+   "default": "0",
+   "cell": "c0 l.57; c2 l.57",
+   "stage": "other",
+   "what": "Read into a variable that no cell uses. Dead.",
+   "tested_by_us": "none",
+   "disclosed": "none",
+   "hardset_or_dead": true
+  },
+  {
+   "name": "PRESET / SCORE_AXIS",
+   "default": "harmonic_v3_division_wide / text",
+   "cell": "c0 l.8-9 (Python variables BIOHUB_PRESET/BIOHUB_SCORE_AXIS, not env)",
+   "stage": "other",
+   "what": "Printed labels only. Dead.",
+   "tested_by_us": "none",
+   "disclosed": "amanatar V6 relabels to grandmaster_v4_iterative_flow.",
+   "hardset_or_dead": true
+  },
+  {
+   "name": "TARGET_ARTIFACT_SLUG / PRIMARY_ARTIFACT_MANIFEST / ALLOW_ARTIFACT_FALLBACK / MODEL_ARTIFACTS / ALLOW_PIP_INSTALL / DEEPCENTER_*_DEFAULT / DEEPCENTER_RELATIVE / DIVNET_CHECKPOINT / GPU_SHARD",
+   "default": "c2 defaults",
+   "cell": "c2 l.36-56, l.155-163; c3; c4 l.555; c5 l.76",
+   "stage": "other (infra)",
+   "what": "Artifact paths, install policy, GPU shard id (set per subprocess). DIVNET_CHECKPOINT is from the unused DivNet helper defs (never loaded). Not levers.",
+   "tested_by_us": "none",
+   "disclosed": "none",
+   "hardset_or_dead": true
+  }
+ ],
+ "notes": "Source: experiments/exp70g_k2_cap6/exp70g-k2-cap6.ipynb (14 code cells, x138 + divinsert/lowrefine/safetail patches; override block c0 l.111-121). Read path: cell 0 sets env -> cell 1 drift guard (DET_THRESHOLD, ILP_APPEARANCE, ILP_DISAPPEARANCE, GAP_CLOSE_UM, OUTPUT_MIN_TRACK_LEN, BIDIRECTIONAL_EDGE_WEIGHT/FUSION_MODE, DUAL_SEED_RETENTION; the builder patches it for --set keys; ILP_DIVISION_WEIGHT and READMIT_MIN_SCORE are NOT guarded) -> cell 2 module globals (post-proc) and CLI args for the predict subprocess (DET, ILP_*). HARD-SET after cell 0 (--set is a silent no-op): cell 3 SECONDARY_EDGE_WEIGHT 0.15, SECONDARY_DETECTION_WEIGHT 0.80, SECONDARY_LINK_MODE, SECONDARY_MIX_TEMPERATURE 1, SECONDARY_LOW_MARGIN_MAX 0.35, DUAL_SEED_EDGE_THRESHOLD 0.48, SECONDARY_WEIGHTS, DEEPCENTER_CHECKPOINT; cell 4 DUAL_SEED_MIN_CANDIDATE_RETENTION 0.90, EDGE_FEATURE_TTA 1, SECONDARY_EDGE_FEATURE_TTA 1 / _WEIGHT 0.75 (plus V1284_MODE/V1284_HEAD, non-BIOHUB). LOCKED: BIDIRECTIONAL_EDGE_WEIGHT has a second guard in cell 4 (ValueError unless 0.15) that the builder does not patch -> --set errors the kernel. DEAD/INERT: CACHE_EDGE_THRESHOLD 1.0 (probs > 1.0 never), GAP_CLOSE_MAX_GAP (min(.,1)), GAP2_MAX_STEP_UM >= 3.4 (TOTAL 10.2 binds), LOWDET_THRESHOLD in [0,0.5] (pool filtered at GAPFILL_MIN_SCORE 0.5), short-track rescue params (trigger >= 10% never met), division geometry filter params (switch off), validator/PPSWEEP (VALIDATOR_ENABLE 0), RUN_OUTPUT_DIAGNOSTICS, DIAGNOSTIC_ARM, FUSION_MODE. COUPLINGS: READMIT_MIN_SCORE is also the LOWREFINE threshold (c4 `_LOWREFINE_MIN_SCORE`); readmit reads its pool through load_low_detections, so GAPFILL_MAX_GAP=0, GAPFILL_EXCLUDE_UM and CACHE_DIR also move/disable readmit. Relink geometry: in flow frames the tight gate is FLOW_TIGHT_UM 7.0 and the relaxed gate RELAXED_UM 10.0 (unset); MOTION_RELINK_TIGHT_UM 5.5 is the seed gate; LEARNED_BONUS is the only channel from ILP edges to final edges (relink is 1:1 and replaces ILP edges), so ILP knobs act only via node selection, learned probs and orphan daughters for safe divisions. Not env knobs in exp70g (need a --patch): LEAF_PRUNE, FORKMID, COORDINJECT, edge filter, stitch, swapfix. Live, never LB-probed on x138/K2 and not on our closed list (candidates for two-arm reads): ILP_DISAPPEARANCE_WEIGHT (2; public 1.5 in an older fork), ILP_APPEARANCE_WEIGHT, ILP_EDGE_WEIGHT, MOTION_RELINK_FLOW_TIGHT_UM 7.0, MOTION_RELINK_RELAXED_UM 10 (x138 candidate 9), MOTION_RELINK_TIGHT_UM 5.5, FLOW_K/RADIUS/Z_WEIGHT (V6 16/48/0.40), VELOCITY_WEIGHT (035: 0.25), DEEPCENTER_GAP_THRESHOLD 0.25 (x138 candidate 0.35), GAP_CLOSE_REUSE_UM (candidate 2.8), GAP2_MAX_TOTAL_UM 10.2, GAPFILL_* , SAFE_DIV_MAX/SISTER/DIVERGE/TAU (V6 10.5/15/1.50 bundle crashed to 0.901 publicly, confounded), DIVINS_ALPHA, OUTPUT_LINEFIT_*, DEEPCENTER_TTA. Probed on older families only (both-direction or one-direction losses): DET_THRESHOLD (imissher: both directions lose), OUTPUT_MIN_TRACK_LEN (4 and 8 lose), GAP_CLOSE_UM 6.5 (-0.001), LEARNED_BONUS 2.5 (-0.002), relink off (-0.002). Pending: P50 exp85a ILP_DIVISION_WEIGHT 0.4 + READMIT_MIN_SCORE 0.94 (JT 743929: +0.001 each on his x138 fork; our dummies: READMIT 0.94 +0.84% nodes / +3.05% refined peaks, ILP 0.4 +0.04% nodes / +3 safe forks). Runtime risk: DET lower, FLOW_ITER > 1, DEEPCENTER_TTA, ILP_TIMEOUT_S raise, GAPFILL_MAX_GAP raise add time; K2 family runs 7.0-7.8 h."
+}

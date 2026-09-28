@@ -1,0 +1,45 @@
+{
+ "ranked": [
+  {
+   "folder": "exp88a_k2cap6_dis225",
+   "knob": "ILP_DISAPPEARANCE_WEIGHT",
+   "direction": "UP 2 -> 2.25 (+12.5%)",
+   "set_flags": "python tools/build_probe_kernel.py exp88a_k2cap6_dis225 --base x138 --patch divinsert --patch lowrefine --patch safetail --set DIVINS_ENABLE=1 --set DIVINS_STEAL=1 --set DIVINS_ALPHA=1 --set DIVINS_THRESH=0.4 --set DIVINS_DUMP=0 --set REPAIR_DEADLINE_S=34200 --set DIVINS_DEADLINE_S=28800 --set LOWREFINE_ENABLE=1 --set DIVINS_CAP=6 --set DIVINS_FRAME_CAP=1 --set DEGRADE_KEEP_DIV=1 --set ILP_DISAPPEARANCE_WEIGHT=2.25",
+   "why": "This is the sibling of JT's disclosed winner, ILP_DIVISION_WEIGHT, in the same ILP objective, and it changes the output at JT's scale. v_2 re-solved the ILP with SCIP (exact parity at D=2) and replayed the tail: -0.76% nodes and 1.45% edge churn. The raised direction also collects the under-prediction bonus (fewer nodes), and it continues the lineage's own move from 1.5 to 2. No runtime risk (ILP time within +-10%). Dummy gate: |dnodes| vs exp70g <= 1.5% in total, runtime within the exp70g dummy +5%, fallback/skip = 0. Most of the change sits on 44b6_0b24, so the public read is noisy.",
+   "prior": "medium"
+  },
+  {
+   "folder": "exp88b_k2cap6_tau07",
+   "knob": "SAFE_DIV_SISTER_SYMMETRY_TAU",
+   "direction": "UP 0.6 -> 0.7",
+   "set_flags": "python tools/build_probe_kernel.py exp88b_k2cap6_tau07 --base x138 --patch divinsert --patch lowrefine --patch safetail --set DIVINS_ENABLE=1 --set DIVINS_STEAL=1 --set DIVINS_ALPHA=1 --set DIVINS_THRESH=0.4 --set DIVINS_DUMP=0 --set REPAIR_DEADLINE_S=34200 --set DIVINS_DEADLINE_S=28800 --set LOWREFINE_ENABLE=1 --set DIVINS_CAP=6 --set DIVINS_FRAME_CAP=1 --set DEGRADE_KEEP_DIV=1 --set SAFE_DIV_SISTER_SYMMETRY_TAU=0.7",
+   "why": "This is the only division knob that can be sized exactly (exact replay, after the DeepCenter veto): about +8 safe forks on public, which is the same size as the cap 4->6 step that read +0.002. Nodes move about 0.01%, and the runtime cost is one comparison. Nothing downstream undoes the fork, and the DIVINS cap of 6 passes the delta through 1:1. It is independent of the ILP axis, so it is a second, separate chance at a +0.001. Tempering: the public DC 0.20/0.225 reads (which added marginal safe forks) tied, so a tie is the most likely outcome. Dummy gate: forks +3..+15 vs exp70g, nodes within +-0.1%.",
+   "prior": "medium"
+  },
+  {
+   "folder": "exp88c_k2cap6_dis175",
+   "knob": "ILP_DISAPPEARANCE_WEIGHT",
+   "direction": "DOWN 2 -> 1.75 (-12.5%)",
+   "set_flags": "python tools/build_probe_kernel.py exp88c_k2cap6_dis175 --base x138 --patch divinsert --patch lowrefine --patch safetail --set DIVINS_ENABLE=1 --set DIVINS_STEAL=1 --set DIVINS_ALPHA=1 --set DIVINS_THRESH=0.4 --set DIVINS_DUMP=0 --set REPAIR_DEADLINE_S=34200 --set DIVINS_DEADLINE_S=28800 --set LOWREFINE_ENABLE=1 --set DIVINS_CAP=6 --set DIVINS_FRAME_CAP=1 --set DEGRADE_KEEP_DIV=1 --set ILP_DISAPPEARANCE_WEIGHT=1.75",
+   "why": "This is the other half of the D pair, the JT two-direction read. It keeps more 2-3-edge fragments for the relink (+0.85% nodes, 1.96% edge churn; 44b6 clip +2.29%). This is the same kind and size of change as READMIT 0.94 (+0.84% nodes), which JT reported as +0.001. Move it above exp88a if probe 50 (exp85a) reads R+, because that would show that more nodes near track ends pays on this family. If probe 50 reads '-' or a tie, keep it third. Dummy gate: |dnodes| <= 1.5% in total, runtime within +5%.",
+   "prior": "medium-low"
+  },
+  {
+   "folder": "exp88d_k2cap6_tau05",
+   "knob": "SAFE_DIV_SISTER_SYMMETRY_TAU",
+   "direction": "DOWN 0.6 -> 0.5",
+   "set_flags": "python tools/build_probe_kernel.py exp88d_k2cap6_tau05 --base x138 --patch divinsert --patch lowrefine --patch safetail --set DIVINS_ENABLE=1 --set DIVINS_STEAL=1 --set DIVINS_ALPHA=1 --set DIVINS_THRESH=0.4 --set DIVINS_DUMP=0 --set REPAIR_DEADLINE_S=34200 --set DIVINS_DEADLINE_S=28800 --set LOWREFINE_ENABLE=1 --set DIVINS_CAP=6 --set DIVINS_FRAME_CAP=1 --set DEGRADE_KEEP_DIV=1 --set SAFE_DIV_SISTER_SYMMETRY_TAU=0.5",
+   "why": "This completes the TAU pair: about -9 of the most asymmetric safe forks, nodes about 0.01%. By analogy, removing safe forks on public (DC 0.30) cost 0.005, so this is the arm most likely to lose. It is worth a slot only if exp88b reads '+' and a check on the other side is wanted, or as a dummy-only build so it is ready. Dummy gate: forks -3..-15, nodes within +-0.1%.",
+   "prior": "low"
+  },
+  {
+   "folder": "exp88e_k2cap6_zw06",
+   "knob": "MOTION_RELINK_FLOW_Z_WEIGHT",
+   "direction": "DOWN 1.0 -> 0.6 (single arm; UP is inert)",
+   "set_flags": "python tools/build_probe_kernel.py exp88e_k2cap6_zw06 --base x138 --patch divinsert --patch lowrefine --patch safetail --set DIVINS_ENABLE=1 --set DIVINS_STEAL=1 --set DIVINS_ALPHA=1 --set DIVINS_THRESH=0.4 --set DIVINS_DUMP=0 --set REPAIR_DEADLINE_S=34200 --set DIVINS_DEADLINE_S=28800 --set LOWREFINE_ENABLE=1 --set DIVINS_CAP=6 --set DIVINS_FRAME_CAP=1 --set DEGRADE_KEEP_DIV=1 --set MOTION_RELINK_FLOW_Z_WEIGHT=0.6",
+   "why": "This is a plausible anisotropy mechanism: z voxels are 4x coarser, so down-weighting z in the relink flow residual acts like a Mahalanobis metric. It sets the submitted edges directly, but the change is the smallest of the survivors (about 0.1-0.6% edge churn, interpolated, and nodes < 0.1%). No positive public disclosure exists; the only external use sits inside a bundle that did not gain. Runtime is +~10 min at most. Dummy gate: nodes +-0.5%, edges changed 0.05-1.5%, motion_relink_flow_predicted > 0, fallback_raw/skipped_large_frame = 0, runtime within +5%.",
+   "prior": "low-medium"
+  }
+ ],
+ "recommendation": "Build and dummy 3 now: exp88a (D 2.25), exp88b (TAU 0.7) and exp88c (D 1.75). Quota covers about 20 K2 dummies at about 25 min each, and building costs no slot. Also build exp88d/exp88e only if a lane is idle, as spares; do not plan slots for them. Slot competition on 29 Sep (5 slots): 00:05-01:45Z allows up to 3, in the order E10 (if it triggers), then FULL = the K-lever branch (exp86c if probe 50 reads R+, else exp87a/exp81 per W2b v5), then ONE '?' test. That '?' slot should go to exp88a: it reads by about 07:30Z, in time to count as a final-neighbour candidate. After 02:00Z up to 2 non-CI files: exp81 (SEC) takes one only if it was not already scored in the 28 Sep 12:00Z W2b slot. Otherwise both go to exp88b and exp88c (or exp88c first if probe 50 = R+). The realistic outcome is 1-2 knob arms submitted, 3 if E10 does not fire. None of these outranks the K-lever FULL file or a triggered E10. They are worth only the '?' slots, and each carries an honest prior of about 50/50 with a likely tie on the 3-decimal display. If probe 50 reads R+ and BASE moves to exp85a/exp86c, re-cut the top two arms as one-line changes of the new BASE before 00:05Z (JT: arms off the current best). An arm on exp70g that reads '+' could then not become a final without an unscored stack. If no '?' slot is free after E10, FULL and exp81, submit none of them: nothing here is strong enough to displace those."
+}
