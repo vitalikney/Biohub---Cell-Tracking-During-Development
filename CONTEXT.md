@@ -3831,6 +3831,14 @@ Mention it to the user in one line (R9-A8 item 6).
   test_round25_exp89_families (27 ledger tests pass). R8 COVERAGE extended to exp89a/b/h/o and exp90a (coordinject
   dataset as exp79a). tools/uptest.py = the UP-test script (save / compare). Round prompt KEY FACTS refreshed (R25-A8
   (a)).
+- 2026-09-28 11:26 UTC, USER: Q3 = YES (chat 'да.', answering the session's recommendation) + NIGHT-LIST CONSEQUENCE (pre-score: 50 PENDING)
+  Q3 ANSWER: a file with our retrained secondary (SEC, n2a sha 7029fe69) MAY be a final, but only in the V_pub slot
+  (the highest public display among COMPLETE files), never as the private hedge (the hedge stays #37 / exp75 / exp70g,
+  files with nothing we trained). NIGHT LIST (amends W4 AMEND 4): exp83c (exp70g + n2a SEC + CI; dummy PASS 10:16Z,
+  CSV 3d1d738176cd, 2,055 s) enters the night in BOTH branches and takes the last-listed arm's slot: R0/R-/R? ->
+  exp83c replaces exp88b (as AMEND 4 already foresaw on a Q3 yes); R+ -> exp83c replaces exp89e. As a CI file it goes
+  by 01:45 UTC (slot ~00:46 UTC, >= 40 min from the other non-CI K2 file). Read: exp83c vs exp79a (0.957): '+' =
+  display >= 0.958; '0' = 0.957; '-' <= 0.956. K + SEC + CI (exp89l) stays excluded by the 'cap + 2 levers' depth cap.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
