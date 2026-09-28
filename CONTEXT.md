@@ -3439,6 +3439,12 @@ Mention it to the user in one line (R9-A8 item 6).
   aggressive mode): W2a (08:45-10:00Z) = exp85a (the two public-proven knobs on our best base) if its dummy passes, replacing
   exp80a/exp81; W2b (12:00Z) = E10 copy first, else exp85b or exp85c (the one-knob split) unless a W1 read makes a CI/DIV stack
   better per W2 v4; exp80a/exp81 move to W3/W4.
+- 2026-09-28 04:39 UTC, PROCESS MISS + FIX (the user asked why 743929 was not read): it WAS read - round 20 (20:08Z) found the topic, round 22
+  (01:10Z) quoted both knobs (ILP_DIVISION_WEIGHT 1.2 -> 0.4, READMIT_MIN_SCORE 0.965 -> 0.94) - but the round-22 judge filed it as
+  'a public knob ladder on another base; log only' (an outdated R7-style rule the user had lifted), and the main session read only the
+  actionable list. ~3 h lost. FIX: the round prompt now makes any disclosed x138-family knob/technique ACTIONABLE (build + dummy + slot
+  proposal), and the main session reads new_facts in full. exp85a (both knobs on exp70g) is submitted as soon as its dummy passes
+  (~05:15Z) instead of 08:45Z; the 12:00Z slot stays per W2 v4 + the 04:5x amendment.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
