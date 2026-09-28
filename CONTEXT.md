@@ -4038,6 +4038,16 @@ Mention it to the user in one line (R9-A8 item 6).
   request) and gave the user the commands and the Control Panel path to run themselves. The lid-close setting is not
   visible via powercfg /q in this plan (hidden); keep the lid open. New watchdog (local reads only): notifies if the
   laptop goes back on battery or the newest poll header is > 25 min old.
+- 2026-09-28 16:32 UTC, 743929 'OVERFITTING' COMMENT + USER AGREES WITH THE HEDGE PAIR
+  743929 thread (read via the API, 2 calls): the only new comment is Cyrus 13:43Z (6 votes) 'this is overfitting
+  brother. shake up is coming' (no data); John Taylor has not answered Justin CH123's 04:13Z questions. Session view
+  given to the user: JT's values were selected on the public embryo (his two-arm process), ~50 teams jumped to
+  0.957-0.959 with them, so a correlated private drop is plausible; for us K was tested once (no own search), the
+  dummy-clip GT lab on train clips (other embryos, in-sample, ~2-3 edges) has exp85a 0.92184 > exp70g 0.92052 (sanity
+  only, not a sign read), READMIT is a generic gap mechanism, but +0.84% nodes costs ~-0.0008 on any embryo. Defence =
+  the finals hedge: the partner (#37, or exp75 if it reads >= 0.955 clean) carries neither K nor cap 6; the JT-style
+  {best + closest neighbour} pair is NOT recommended. The user wrote 'согласен' (agrees): the finals plan stays
+  {V_pub, #37 / exp75}.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
