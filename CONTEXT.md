@@ -3701,6 +3701,11 @@ Mention it to the user in one line (R9-A8 item 6).
   23:54:03 (80,069,686 bytes; vitalii_daughternet/fold_0..3.pt 5,627,853 each); biohub-secft-n2a-v1 lastUpdated
   2026-09-27 21:25:35. PRE-PUSH RULE from now: before any push, 'kaggle datasets list --mine' must show both
   lastUpdated values unchanged; a change -> stop, diff the file list, tell the user.
+- 2026-09-28 10:47 UTC, USER: MORNING CI FILES = YES ('отправляй с CI')
+  The 29 Sep morning files (2 of the 5 slots, after the night reads) may be CI files. Timing: CI files (L ~9.3-9.5 h)
+  are submitted by 09:30 UTC (12:30 MSK) so they read before the 20:00 UTC (23:00 MSK) tick; non-CI files by 11:30 UTC
+  (14:30 MSK). This supersedes the 'non-CI only after 02:00Z' part of the 07:47Z lift; the count stays 3 night
+  (00:05-01:45Z) + 2 morning.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
