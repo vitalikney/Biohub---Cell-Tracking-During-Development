@@ -4171,6 +4171,86 @@ Mention it to the user in one line (R9-A8 item 6).
   (in 0.90-0.93); integer-coordinate change 0.646 (in 0.60-0.69); all z/y/x integer; RULE v2.1: whole-kernel 1,786 s
   <= 2,100 s (compute from the anchor 1,550 s <= 1,620 s); CSV 2c1868375972 -> PASS. A-M1 candidate: submitted at
   exp89p's terminal header iff P = '+' / '0u' (latest 08:40Z header, by 08:45Z).
+- 2026-09-28 23:34 UTC, W4 FREEZE: NIGHT 29 Sep (pre-score for every night file; last poll header 2026-09-28T23:23:37Z 10 min, no error note)
+  (1) PROBE 51 CODE. 56640366 exp87a (submitted 12:14:57Z): COMPLETE 0.959; ledger L in (9.30, 9.48] h
+  (python tools/runtime_ledger.py --print | grep 56640366); first COMPLETE header 2026-09-28T21:43:19Z with
+  0 failed attempts (+210 s each); L_hi tightened by the e10_watch LB snapshots (first snapshot with
+  our SubmissionCount 52 -> 53): none (not needed: L_hi 9.48 h < 10.2 h). UP test (display 0.958 only): python tools/uptest.py
+  save S1_51 ; python tools/uptest.py compare S1_1214Z S1_51 -> k = 12, our SubmissionCount 53 (must be 53;
+  otherwise MASKED). CODE (R25-A1 (4) + GAP RULE v2 of 16:26Z + admit edge 10.75 h, R28-A4 (i)):
+    '+'  = display >= 0.959;  '0u' = 0.958 with k >= 1 and count 53;  '0' = 0.958 with k = 0 / MASKED / BLIND
+    (LB download failed);  '-' = display <= 0.957.
+    L_hi <= 10.2 h (<= 22:26:57Z): the code stands as read.
+    10.2 h < L_hi <= 10.75 h (22:26:57Z .. 22:59:57Z): '+' / '0u' stand with the flag UNPROVEN-ins (a normal read for
+    the stack choice and BEST_CI; footnote ins-tail? if L_lo > 9.6 h); '0' / '-' become '?' (no C51 '-', no CI-risk
+    flag; exp75 partner rule v2 (a) treats 51 as not '-').
+    L_hi > 10.75 h, ERROR, or not terminal in any successful poll header before this line: '?' -> STACK exp89q
+    regardless of display.
+    [R29] L_hi is the ledger's value: first COMPLETE header time PLUS 210 s per failed attempt in that header, minus
+    the submit time (tools/runtime_ledger.py l.210). So the admit test is 'header time + 210 s x failed attempts <=
+    22:59:57Z', not 'header <= 22:59:57Z + 210 s' as written in R28-A4 (i) and in the 20:18Z (c) text.
+    RESULT: CODE = '+' none.
+  (2) STACK = exp89r if CODE is '+' or '0u' (incl. UNPROVEN-ins); otherwise exp89q. RESULT: STACK = exp89r
+  (branch A; MORNING TABLE v1.1 KEY = the stack actually submitted, so a branch-A exp89r hard failure replaced
+  by exp89q makes the morning branch B). If no poll has succeeded since 23:15Z, retry the manual poll until 23:59Z;
+  the first successful header decides with L_hi as in (1); with none, CODE = '?' and STACK = exp89q. A read after the
+  stack is submitted never changes it. The no-freeze fallback of 20:18Z (c) governs any night step that runs without
+  this line.
+  (3) E10: none (no public notebook above 0.953; feed 23:27Z E10 FLAG none). A PASSED E10 v3 copy takes the first night slot as probe
+  52; the list shifts down by one and exp89p drops out (5/day). [R29] Consequence stated pre-score: without exp89p,
+  MORNING TABLE v1.1 P = '?' (A-M1 UNUSED) and branch-B Q = '?' (B-M1 UNUSED); the E10 copy's own read goes to the
+  card only.
+  (4) FROZEN LIST (all kernels COMPLETE at v1 = the gated dummy, checked 15:43Z; ids match kernel-metadata.json,
+  re-checked locally 20:20Z; ipynb sha8 89r 5894ea50, 89q b80dae26, 75 ab621c13, 89p 2b9bc585, 83c e8f5a8a6):
+    ~00:05Z probe 52 STACK: exp89r (vitaliineibauer/biohub-exp89r-k2cap6-k-sec-dis225-ci; dummy PASS 13:14Z,
+      CSV 61601d0222b4; CI).
+    ~00:06Z probe 53 exp75 (vitaliineibauer/biohub-exp75-k2-coordinject; v1, never re-push; R25-A4 line 11:17Z +
+      grandfather; dummy CSV d6d9d808303f; CI). Under C51 '-', exp75 is still submitted at 00:06Z: it is the only way
+      to keep pair B selectable, and partner rule v2 (a) applies unchanged.
+    T54 probe 54 exp89p (vitaliineibauer/biohub-exp89p-k2cap6-k-sec; PASS 12:40Z, CSV 629fc20b4815; non-CI) at T54 =
+      00:46:00Z if no exp89q row exists, else max(00:46:00Z, exp89q's ACTUAL submit + 40 min), in BOTH branches
+      (R27-A6 (ii) unanswered -> default 00:46Z; CONTEXT 16:38Z). Read window 07:38-08:35Z.
+    FALLBACK exp83c (vitaliineibauer/biohub-exp83c-k2cap6-secn2a-ci; PASS 10:16Z, CSV 3d1d738176cd; CI) takes
+      exp89p's slot only on a file-specific hard failure of exp89p: [R29] (a) found at the 00:04Z G5 check (kernel not
+      COMPLETE, id mismatch, NEVER_SUBMIT) -> exp83c at 00:07Z, as the user's 12:25Z text says; (b) found at T54 (nb_try
+      exit 2: not found / forbidden on that kernel) -> exp83c in that slot at once (CI, no spacing). A network error,
+      a daily-limit error (nb_try exit 3) or an unknown answer never triggers it.
+  (5) R26-A4 (a)-(e) apply except: GAP RULE v2 overrides the 10.2 h clauses of (a) and (d); (d)'s 19:30Z job = the
+  19:43Z timer (was cron 64b9bb56, now a background timer); (b) masking applies verbatim and amends the MORNING TABLE
+  v1.1 ARM CODES. MORNING = TABLE v1.1 with KEY = the stack actually submitted.
+  (6) COVERAGE: R8 00:00Z line (exp75, exp83*), 14:12Z line (exp89p/q/r). Q3: exp89p/q/r may be a final only as V_pub.
+  Q3 CONDITIONAL (R27-A8, R27C-2): if V_nonCI carries SEC and is not V_pub, pair P1 uses the best SEC-free non-CI file
+  (exp85a 56629533 or exp89s), unless the user says yes separately. MORNING TIMING (R27-A7 (2)): morning files are
+  submitted at their decision header (the MORNING TABLE v1.1 row resolves and the dummy has PASSED), not at the cutoff;
+  the cutoffs (A-M1 08:45Z, B-M1 10:50Z, M2 11:30Z) stay as latest times; the 40-min non-CI spacing and 5/day hold.
+  (7) NETWORK + LATE (R27N-2 (7) + R27-A4 (7)): every Kaggle call is wrapped in timeout; every submit goes through
+  nb_try (research/wf_ideas_v4/round29/night_checklist.md, section P; network branch = section N): list first, never retry blind; backoff
+  30/60/120/240/300/300/150 s (20 min); exit 0 = sent or already there; exit 1 = 20 min without success -> push the
+  user, then a background loop re-runs nb_try every 10 min until the file's LATE cutoff; exit 2 = hard failure
+  (exp89p -> exp83c; exp89r -> exp89q; exp89q -> nothing, since exp89r needs 51 '+'/'0u'; exp75 -> nothing); exit 3 =
+  DAILY LIMIT -> STOP the batch, push the user, no fallback. A night file still unsent at 01:45Z becomes LATE: it takes
+  the first free 29 Sep slot ahead of the morning files, in list order (stack > exp75 > exp89p), with cutoffs CI by
+  08:30Z and non-CI by 11:30Z; LATE non-CI files keep >= 40 min from the previous non-CI file's actual submit; a CI
+  file may go 1 min after a non-CI one; LATE files never delay a morning row whose input read is present; when LATE
+  fires, push the user (MSK) and log 'LATE: <file> sent <UTC> (reason)'. Morning rows whose input read is missing at
+  their decision header resolve to UNUSED (v1.1 (4)). Total <= 5 submits on 29 Sep. (The no-freeze fallback is the
+  logged 20:18Z (c) text; R27-A4 (7)(a) is superseded by it.)
+  (8) OPS STATE: poller header age 10 min (limit 15); e10 watch_loop.log last line 52 min (limit 75);
+  feed_loop.log 6 min (limit 100 after the 15:57Z cut); BatteryStatus 2 (AC, 78%) (must be 2 = AC); GPU left
+  ~2.7 (estimate: 9,988.9 s of 21,600 s used at 15:44Z + exp89l 1,786 s; quota API not called) h (get_accelerator_quota_statistics); timers alive yes (93 bash processes of timer.sh; due 00:04, 00:20, 00:44, 00:50, 01:30, 06:07, 07:23 all armed) (Win32_Process count of timer.sh processes, not WAITER_ tags; must include
+  00:04Z, 00:20Z, 00:44Z, 00:50Z, 01:30Z, 06:07Z, 07:23Z); G5 re-run once: OK x5 (exp89r, exp89q, exp75, exp89p, exp83c COMPLETE at 23:33Z); dataset baseline
+  (ref, size, lastUpdated): OK OK.
+  (9) INFO (R27-A3 (1), R28-A4 (vi)). DIS 2.25 runtime = sibling: exp89q L = exp85a L (7.0-7.2 h), exp89r L = exp87a
+  L. SEC: 'SEC n2a dummy-lab (4 train clips, in-sample): -0.0008..-0.0020 on 5/5 pairs, all from 6bba_05db0fb1 (TP -1,
+  FP +4..+6, nodes ~+250). The same bed signed the last secondary swap correctly (probe 10: dummy -0.007, LB -0.025,
+  same FP-up mode). It is wrong for CI, a coordinate lever. Weak negative prior for SEC, not a sign. First LB read of
+  SEC = exp89p vs exp85a; 0 or - removes SEC from every morning file; on an equal display with code 0 (k = 0 / MASKED / BLIND) V_pub stays exp85a (fewer levers); with 0u the tie order (1) applies -> exp89p.' CI: 'CI:
+  LB reads = probe 48 +0.001 (UP 33) + probe 51 '+' vs exp85a. Matched 3D error is lower on 7/8 in-sample train
+  clips. Edge-J in-sample is noise-level and mixed. The private prior is driven by the LB read(s); the lab does not move
+  it. EXP75 PARTNER RULE v2 unchanged.'
+  (10) STORED TEXT: the 00:04Z batch, the 00:20/00:44/00:50/01:30Z timers and the 06:07Z post-wake step all follow
+  research/wf_ideas_v4/round29/night_checklist.md (sha256[:8] 2b442e87); the stale cron prompts (5ece5d24 W4
+  AMEND 3, 2ab38c73) and the timer message texts are not a source (pointers only; checklist sections 4/5 govern T54 and the backups).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
