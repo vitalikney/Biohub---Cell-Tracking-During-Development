@@ -3339,6 +3339,8 @@ Mention it to the user in one line (R9-A8 item 6).
   ref 56623105 at 00:06:33Z. Checks: kernels COMPLETE (v1 = the dummy), poll header 23:55:50Z (no 429), no duplicate, R8 COVERAGE line
   present, CI dataset 10 files dated 2026-08-25. exp78a (cap 8) at 00:50Z. 3 slots left today. Expected: 47 ~07:30-08:00Z,
   48 ~09:40-10:40Z (CI).
+- 2026-09-28 00:50 UTC, W1 SUBMIT: probe 49 = exp78a (K2 + insertion cap 8) at ~00:50Z (dummy PASS 121,252 / 86 forks). 2 slots left today
+  (W2a ~08:45-10:00Z, W2b 12:00Z held for E10 v3).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
