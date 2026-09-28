@@ -342,3 +342,9 @@ def test_round21_exp83_ci_stacks():
         assert rl.family_of("1", e, {}) == "safetail", e
     assert rl.family_of("1", "exp79a", {}) == "safetail_ci"
 
+
+def test_round24_exp87_families():
+    for e in ("exp87a", "exp87b", "exp87c", "exp87e"):
+        assert rl.family_of("1", e, {}) == "safetail_ci", e
+    for e in ("exp87d", "exp87i", "exp87j", "exp87m", "exp86a", "exp86c", "exp85a"):
+        assert rl.family_of("1", e, {}) == "safetail", e

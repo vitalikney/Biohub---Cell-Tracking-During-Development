@@ -1,0 +1,10 @@
+- 2026-09-28T07:05:04Z start R24S-10 verification
+- 07:05Z poll.log header 2026-09-28T07:02:42Z: 47 56623073 / 48 56623105 / 49 56624341 / 50 56629533 all PENDING. 4 of 5 submits used on 28 Sep, so W2b is the last slot of the day (W3 = the same slot).
+- CONTEXT l.3349-3365 (W2 v4, 01:02Z): (2)(i) CI '+' and BASE=exp78b -> exp83a comes BEFORE (iii) exp80a. Under S3, BASE=exp78b (v3 (5): exp78b strictly above exp78a), so C+ makes (i) fire and exp80a never gets W2b. Confirmed.
+- 04:38Z amendment: W2a = exp85a (sent 05:02Z as probe 50); 'exp80a/exp81 move to W3/W4'. W3 is not a separate slot (1 left today).
+- W4 path for exp80a: v3 (8) allows ONE DIV step in W4, so exp80a could go at 00:05Z on 29 Sep and read ~07:30-07:50Z. exp84a needs exp80a strictly > exp78b (S3; v3 (8): 'two strict steps'), and S6 bans a DIV-only file after 01:45Z. So under the old order exp84a is undecidable. Only exception: W4 AMEND 2 (5) 'one DIV step under S3' after 02:00Z with the user's yes, which contradicts S6 (same 01:02Z entry) -> 'never' is overstated but true under the registered S6.
+- Cost of the swap: the exp83a/exp83f CI read moves to W4 00:06Z. The logged CI band is 9.4-10.9 h (CONTEXT l.3337) -> read by ~09:30-11:00Z, not '~10:45Z' strictly, but still before the 29 Sep 12:00Z card. CI files are info-only for the finals (04:31Z FINALS CARD (1)), so a later CI read costs no finals candidate. exp80a is finals-eligible (non-CI).
+- In W4 under C+ the moved CI stack IS the W4 AMEND 2 (1)-1 FULL (BASE + '+' levers), so it takes no extra planned slot.
+- Value caveats: P(S3 and C+) is small (both 47 and 48 must be '+': >= 0.957 or 0.956+UP), about 0.05-0.1. exp84a lab prior: cap48fc2 vs cap24fc2 = 0 TP / +4 FP (R22 (6)), but the lab has been wrong in sign on division knobs. Main gain: one more finals-eligible DIV read on 28 Sep and the exp84a option kept alive.
+- Needs to be logged pre-score, before the 47 read (47 terminal from ~06:58Z; not yet at 07:02Z).
+- 2026-09-28T07:06:41Z wrote v_hyp_slots_r24s-10.json (refuted=false)

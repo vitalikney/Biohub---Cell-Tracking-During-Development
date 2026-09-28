@@ -1,0 +1,9 @@
+# v_hyp_slots R24S-3 notes (2026-09-28T07:04:18Z)
+- 07:05Z sources: CONTEXT.md l.3222-3521 (READ TABLE v3, W2 v4 + S1-S6, W4 AMEND 2 (1)-(5), R22 CI-? SCOPE, R23 S7, 04:38Z 743929, 05:03Z probe 50, 06:26Z 85b/85c decomposition, 06:37Z exp86a/b/c); scan_hyp_slots.json R24S-1..11; ledger.md 07:02:42Z header: 47/48/49/50 PENDING.
+- Folders present: exp79a, exp80a, exp81, exp82a-c, exp83a-g, exp84a, exp85a-c, exp86a-c. exp87a-j NOT built (depends on R24S-4).
+- Timing: 29 Sep K2 slots 00:05/00:45/01:25 + L 7.4-7.8 h -> done by ~09:15Z; CI 00:06/00:46 + 9.7-10.5 h -> by ~11:20Z; all before the 12:00Z card. 4 planned + 1 E10 = 5/day OK.
+- Concurrency: hidden runs show no parallel slowdown (exp70j/k same minute 7.74 h; exp70a/d/e 3 concurrent 7.04-7.42 h), so the +24% dummy effect does not carry to hidden runs.
+- GAPS found: (1) R? with Cx is in NO row ((c) is R+, (f) is R0/R- only) -> not mechanical in a plausible cell (50 = 0.956 after 47/49 showed an UP or 0.957 -> '?'; CI Cx is the modal CI outcome). (2) R = ERROR / 'v' / not terminal by 23:30Z is unmapped. (3) (c)'s 'SEC(b) if exp81 read +' is unreachable: under R+ W2b never takes exp81 (W2b Row 3 R+ -> exp86c/exp86a). (4) (e) lacks (d)'s 'JT(b) if R? and b != exp70g' clause. (5) 'no 0.92+CI' and 'no RA98+CI' contradict W4 AMEND 2 (1)-1 FULL = BASE + every '+' lever; either say so explicitly (deliberate cap on stack depth) or allow the build when both reads are in by ~21:50Z. (6) dummy deadline 23:30Z vs AMEND 2 (1) 00:00Z: stricter, fine.
+- Value: pure slot logistics, no score by itself; READMIT arms are disclosed-knob (743929) and actionable under aggressive mode; not a closed line. Selection-on-noise caveat: many 3-decimal public reads on one embryo; W4 winners enter finals pool only as public reads (user picks).
+- Verdict: not refuted; log with the fixes.
+- 07:06Z final JSON written (refuted=false, 6 defects + fixes).

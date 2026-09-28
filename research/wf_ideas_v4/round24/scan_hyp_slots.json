@@ -1,0 +1,93 @@
+{
+ "findings": [
+  {
+   "id": "R24S-1",
+   "kind": "plan-issue",
+   "what": "Probe 50 (exp85a, the READMIT read) will be scored AFTER the W2b slot. It was submitted at 05:02:30Z, and K2-family latency is 7.4-7.8 h, so it lands ~12:27-12:50Z (13:02Z+ if 'v'). As written, W2b at 12:00Z has to choose blind to R. Fix: split W2b by kind. A CI file goes at 12:00Z, because CI latency is 9.7-10.5 h and it must finish by ~22:30Z, before the W4 lock. A non-CI file goes at the first poll header that shows 56629533 terminal, and no later than 14:00Z; it still finishes by ~21:50Z, before the 23:30Z W4 lock. An E10 copy goes as soon as it triggers. This costs no information for W4 and lets W2b branch on 50.",
+   "evidence": "ledger.md 06:32Z: 56629533 PENDING, submitted 05:02:30Z, family safetail. K2-family L: exp70g (7.49,7.67] h, exp70q (7.64,7.81] h. CONTEXT 05:03Z line: 'expected score ~12:30-13:00Z'. W2 v4 (2) and the 04:38Z amendment both fix W2b at 12:00Z.",
+   "action": "Log a pre-score line before 47/49 are terminal: 'W2b TIMING (R24): CI files 12:00Z; non-CI files at the first header with 56629533 terminal, latest 14:00Z; E10 at trigger.'",
+   "urgency": "now"
+  },
+  {
+   "id": "R24S-2",
+   "kind": "plan-issue",
+   "what": "The W2b DECISION TABLE (28 Sep, 1 slot). Take the first row that matches. The codes follow READ TABLE v3 (+ / 0 / - / ?). D12 means S3 holds (47 '+', disp78b >= disp78a, 46 not '-', exp80a dummy PASS). D8 means BASE = exp78a (49 '+' and 47 not '+', or S7). D0 means BASE = exp70g (S1, or any '?' DIV read, per S4). C+ means 48 '+' with CI-RAN dL >= 1.2 h and L_hi <= 10.2 h. R is the code of 50 = exp85a vs 0.956 (50 is effectively the READMIT read, because ILP 0.4 alone moves +49 nodes / +3 forks).\nRow 0: an E10 trigger (a public notebook scoring >= 0.957) -> the verbatim copy, at the trigger.\nRow 1: D12 -> exp80a (cap 24 fc2) at 12:00Z, whatever C and R are. Only a W2b read of exp80a can decide exp84a in W4, and S6 bans a DIV-only file after 01:45Z.\nRow 2: D8 and C+ -> exp83b (exp78a + CI) at 12:00Z.\nRow 3: wait for 50 (latest 14:00Z). R+ -> D0: exp86c (ILP 0.4 + READMIT 0.92, one step further down); D8: exp86a (cap 8 + both knobs, the two-'+' stack, a finals-proposable non-CI FULL). R- -> the raised arm READMIT 0.98 on BASE (D0: exp87f; D8: exp87g). This is the 743929 'other direction' read. R0, R? or 50 not terminal by 14:00Z -> exp81 (SEC, W2 v4 (2)(ii)).\nRow 4: the chosen file has no PASSED dummy -> the next row. After that, the slot is unused (W3 does not exist once W2b is spent).\nD0 with C+ adds nothing at W2b, because exp79a already is BASE+CI; it falls through to Row 3.",
+   "evidence": "CONTEXT: W2 v4 (2), S1-S7, 04:38Z W2 AMENDMENT, 06:26Z (exp85b near-inert: 121,301 nodes, +3 forks; exp85c +0.84% nodes), 06:37Z exp86a/b/c. Folders: experiments/exp80a_k2_cap24_fc2, exp83b_k2cap8_ci, exp86a_k2cap8_div04_ra094, exp86c_k2cap6_div04_ra092, exp81_k2cap6_secn2a. The exp87f/exp87g folders are NEW (R24S-4).",
+   "action": "Log this table as 'W2b TABLE v5 (R24)', pre-score, quoting the last PENDING header. It replaces W2 v4 (2) and the 04:38Z W2b text.",
+   "urgency": "now"
+  },
+  {
+   "id": "R24S-3",
+   "kind": "plan-issue",
+   "what": "The W4 DECISION TABLE (29 Sep, 00:05-01:45Z; at most 4 planned files, the 5th held for E10; each file needs a dummy PASSED by 23:30Z). BASE b is the strictly highest display among the cap-family files (v3 (5), S7). If exp80a reads strictly above exp78b, b = exp80a.\nLOOKUP by b = exp70g / exp78a / exp78b / exp80a:\n- JT(b) = exp85a* / exp86a / exp86b / exp87d;\n- CI(b) = exp79a* / exp83b / exp83a / exp83f;\n- JT+CI(b) = exp87a / exp87b / exp87c / exp87e;\n- RA92(b) = exp86c / exp87i / exp87j / none;\n- RA98(b) = exp87f / exp87g / exp87h / none;\n- SEC(b) = exp81 / exp82a / exp82b / exp82c.\n(* = already scored.) Drop any file already scored, including the W2b file. Slots: K2-like files at 00:05 / 00:45 / 01:25Z; CI files at 00:06 / 00:46Z.\n(a) R+ and C+: 00:06 JT+CI(b); 00:05 JT(b), the non-CI twin and the finals-proposable one; 00:45 RA92(b); 01:25 exp84a if S3-up, else the second CI slot is left empty.\n(b) R+ and C?: 00:05 JT(b); 00:06 JT+CI(b), which tests the '?' CI lever; 00:45 RA92(b); 01:25 exp84a if S3-up.\n(c) R+ and Cx (CI 0/-/NO-OP/v/ERROR): 00:05 JT(b); 00:45 RA92(b); 01:25 exp84a if S3-up; a 4th file SEC(b) only if exp81 read '+' (public-only while Q3 is open).\n(d) R0/R?/R- and C+: 00:06 CI(b); 00:05 RA98(b); 00:45 JT(b) only if R? and b != exp70g; 01:25 exp84a if S3-up.\n(e) R0/R?/R- and C?: 00:06 CI(b); 00:05 RA98(b); 01:25 exp84a if S3-up.\n(f) R0/R- and Cx: 00:05 RA98(b); 00:45 exp84a if S3-up; 01:25 SEC(b) if exp81 read '+'; otherwise hold for E10.\nSTOP RULES:\n- READMIT stops at 0.92 on the low side and 0.98 on the high side, never 0.90. If the W2b file exp86c reads above exp85a, the W4 JT files keep 0.94; there is no 0.92+CI build.\n- A '-' at 0.94 plus a '-' at 0.98 closes READMIT (743929 'both directions worse').\n- A stack that reads '0'/'-' while its parts read '+' is non-additive (AMEND 2 (3)): in W4 swap JT(b) for the better single-lever parent.\n- A W2b RA98 that reads '+' becomes the READMIT value of the W4 files, and JT(b) is then replaced by RA98(b). Only the non-CI RA98 file exists; there is no RA98+CI build (C+ then keeps CI(b) separate).",
+   "evidence": "W4 AMEND 2 (1)-(5); v3 (5)/(8); S3-S7; R23-A6 (dummy only the BASE members); built folders exp79a/83a/83b/83f/82a-c/84a/85a/86a/86b/86c; NEW exp87a-j (R24S-4).",
+   "action": "Log this table as 'W4 AMEND 3 (R24)', pre-score, together with R24S-5 (the knob-rung exception). At 23:30Z freeze the list by mechanically evaluating (a)-(f).",
+   "urgency": "now"
+  },
+  {
+   "id": "R24S-4",
+   "kind": "new-fact",
+   "what": "BUILDS NEEDED NOW. These folders do not exist; building costs only CPU and takes no slot. Build all ten, but push a dummy only for the member of the realized BASE (R24S-6).\nEnv: the r21w-1 block (B, KB, C6/C8/C12/C24, CI) plus JT='--set ILP_DIVISION_WEIGHT=0.4 --set READMIT_MIN_SCORE=0.94', RA98='--set READMIT_MIN_SCORE=0.98', RA92='--set ILP_DIVISION_WEIGHT=0.4 --set READMIT_MIN_SCORE=0.92'.\nBuilds:\n- exp87a_k2cap6_div04_ra094_ci = $B $KB $C6 $JT $CI (exp85a + CI; parents exp85a / exp79a);\n- exp87b_k2cap8_div04_ra094_ci = $C8 $JT $CI (exp86a + CI);\n- exp87c_k2cap12fc2_div04_ra094_ci = $C12 $JT $CI (exp86b + CI);\n- exp87d_k2cap24fc2_div04_ra094 = $C24 $JT (exp80a + JT);\n- exp87e_k2cap24fc2_div04_ra094_ci = $C24 $JT $CI;\n- exp87f_k2cap6_ra098 = $C6 $RA98 (exp70g + READMIT 0.98, ILP default 1.2: a one-line edit of BASE);\n- exp87g_k2cap8_ra098 = $C8 $RA98;\n- exp87h_k2cap12fc2_ra098 = $C12 $RA98;\n- exp87i_k2cap8_div04_ra092 = $C8 $RA92;\n- exp87j_k2cap12fc2_div04_ra092 = $C12 $RA92.\nLedger rules: exp87[abce] -> safetail_ci; exp87[dfghij] -> safetail. The current rule exp8x -> safetail would misfile the CI stacks, the same trap R21-A5 fixed for exp83*.\nDiff-check each file against both parents: only the knob lines in cell 0 may differ, plus the coordinject patch cell for the _ci files. Also add the R8 COVERAGE line for the _ci files.",
+   "evidence": "No exp87* in experiments/ (listing 06:4xZ). The env block is in research/wf_ideas_v4/round21/scan_hyp_w2_w4_plan.json 'build_env_git_bash'. The knob keys and their order come from experiments/exp85a_k2cap6_div04_ra094/probe.json (ILP_DIVISION_WEIGHT, READMIT_MIN_SCORE after DIVINS_FRAME_CAP). The CI keys come from experiments/exp83a_k2cap12fc2_ci/probe.json. R21-A5 ledger fix: CONTEXT 01:02Z.",
+   "action": "Main session: run the 10 builds (git bash, MSYS_NO_PATHCONV=1), then the tools/runtime_ledger.py rule + test, then log the sha8 values. Do this before the 47/49 reads (~07:30-08:45Z) so that the T1 push goes out at once.",
+   "urgency": "now"
+  },
+  {
+   "id": "R24S-5",
+   "kind": "plan-issue",
+   "what": "W4 AMEND 2 (4) says 'Never: knob/thr/N1/fresh-N2/tau/DC rungs' (written 01:02Z, before 743929). Taken literally, it forbids the READMIT arms exp86c / exp87f-j in W4 and in the after-02:00Z window. The 04:38-04:39Z amendment and the aggressive-mode rule make disclosed x138-family knobs actionable, but no line yet carves them out of (4). Without that line, the W4 table above breaks a standing rule.",
+   "evidence": "CONTEXT 01:02Z W4 AMEND 2 (4); 04:38Z W2 AMENDMENT (W2 only); 04:39Z PROCESS FIX (round prompt only); round prompt: disclosed knob values are ACTIONABLE.",
+   "action": "Add to W4 AMEND 3: '(4) exception: disclosed-knob arms from discussion 743929 on BASE: READMIT_MIN_SCORE 0.92 / 0.94 / 0.98 and ILP_DIVISION_WEIGHT 0.4, only as listed in the W4 table; no other value; the thr / DC / tau / N1 bans stand.'",
+   "urgency": "now"
+  },
+  {
+   "id": "R24S-6",
+   "kind": "plan-issue",
+   "what": "DUMMY PUSH SCHEDULE AND GATES. GPU left is ~7 h (20:29/30 h at 04:55Z, minus ~2.5 h for 85b/85c/86a/86b/86c), about 14 K2 dummies. The branch-only pushes below need <= ~10.\nPush points:\n- T1, when 47+49 are terminal (~08:45Z): RA98(BASE) (exp87f/g/h), which must PASS by 12:45Z for W2b Row 3 R-. Under S3 also exp84a.\n- T2, when 48 is read (~10:40Z): if C+ or a testable C?, JT+CI(BASE) (exp87a/b/c).\n- T3, when 50 is read (~12:50Z): if R+, RA92(BASE) (exp87i/j; exp86c is already pushed).\n- T4, when exp80a is read (~19:45Z): if S3-up, exp87d (if R+) and exp87e (if R+ and C+).\n- T5: SEC(b) only after exp81 reads '+'.\nGates:\n- JT+CI: R22-A1, with JT(b) as the topology reference (identical 7 columns) and the integer-coordinate change inside 0.60-0.69.\n- RA98: validate ok and 0 errors; nodes BELOW BASE (readmits at 0.965 are 1,365 = 1.13%, so dn is expected in -0.1..-1.1%; flag |dn| > 1.5%); per-clip 'readmitted' counts <= BASE's; LOWREFINE refined < BASE (143,634 at cap 6); forks within +-5 of BASE.\n- RA92: nodes above JT(b) (~+0.5-1%), LOWREFINE above JT(b).\nRUNTIME TRAP: dummies that run in parallel are +24% slower (85b/85c 1,721-1,736 s vs 1,388-1,409 s solo). CI stacks are 1,712-1,882 s solo, so a parallel CI dummy would spuriously FAIL R22-A1 (6) (<= 2,100 s). Amend (6): <= 2,100 s solo or <= 2,500 s with a logged concurrent lane; above that, re-run solo.",
+   "evidence": "GPU: CONTEXT 05:03Z (20:29/30 h). Runtimes: CONTEXT 05:03Z, 06:26Z, 01:50Z (exp83a 1,798 s, exp83b 1,882 s solo). Readmit counts: _dl/biohub-exp70g-k2-cap6 log 96/677/84/508; _dl/biohub-exp85c-k2cap6-ra094 167/1148/105/804.",
+   "action": "Log the push points and the three gate lines before the first push. Push nothing that is not on the realized branch.",
+   "urgency": "now"
+  },
+  {
+   "id": "R24S-7",
+   "kind": "new-hypothesis",
+   "what": "IDEA: the raised READMIT arm, BASE + READMIT_MIN_SCORE 0.98 (exp87f/g/h). This is the missing half of the 743929 two-arm read, not a new family (it is the high side of I-431 / I-139). Mechanism: on x138 the lowdet pool holds all pooled peaks >= 0.3, and readmit restores pool peaks >= READMIT_MIN_SCORE within 4 um of an open end. At 0.965 (= DET_THRESHOLD) these are ILP-discarded above-threshold peaks. At 0.98 the [0.965, 0.98) readmits drop out, and lowrefine (keyed to the same variable) stops refining that band, which touches only a few gapfill rows (gapfill adds +111 nodes in total). Expected effect: nodes -0.1..-1.1% (1,365 readmits = 1.13%), which is worth +0.0001..+0.0011 on the linear node term at 0.001 per 1%, minus the edges those readmits closed. The lab says readmits rarely sit near GT (73/13,284), while the board said lower was better on JT's base. EV ~0 +- 0.001 public; P('+') ~0.2-0.3 after a '-' at 0.94, ~0.15 after a '0'. Runtime cost on the ~100-clip hidden run: ~0 (READMIT arms ran 1,388 s vs 1,409 s for exp70g). Cheapest honest gate: the RA98 dummy gate (R24S-6) and then the LB rule (the v3 codes against the base display). No lab arm: the lab was wrong in sign 4/4 on this family.",
+   "evidence": "tools/build_probe_kernel.py l.1643-1668 (the lowrefine threshold = BIOHUB_READMIT_MIN_SCORE); exp70g notebook cell 0: DET_THRESHOLD 0.965, READMIT_RADIUS_UM 4, READMIT_MIN_SCORE 0.965, GAPFILL_MIN_SCORE 0.5, LOWDET_THRESHOLD 0.3; .claude/worktrees/.../v_linking-on-x138_refined-lowdet-pool_schedule.notes.md; IDEAS I-277 (73/13,284); experiments/discussions/743929.md.",
+   "action": "Build exp87f/g/h (R24S-4). Use it at W2b only under R-, and in W4 under R0/R?/R- (R24S-3 (d)-(f)).",
+   "urgency": "today"
+  },
+  {
+   "id": "R24S-8",
+   "kind": "new-hypothesis",
+   "what": "IDEA: JT+CI stacks exp87a/b/c. Stack the two public-read levers (READMIT from 50, CI from 48) on BASE, and keep the non-CI twin JT(b) next to it for the finals. CI is a post-CSV coordinate shift of node rows (topology unchanged), so it also moves the readmitted rows. The two levers act on different score terms (edges/nodes vs coordinates-only), so an additive prior is plausible. Expected gain: if R+ and C+ are each +0.001, the stack is +0.001..+0.002 display, visible only if the unrounded sum crosses the next grid step. P(R+ and C+) is the product of two currently unknown reads (~0.1-0.2). Runtime cost: CI adds ~+300-500 s per dummy and ~+2-3 h hidden (L 9.7-10.5 h vs 12 h), so CI stacks must be submitted by 00:46Z. Gate: the R22-A1 gate with JT(b) as the topology reference. The LB rule: a '0'/'-' reading is non-additive -> stop.",
+   "evidence": "CONTEXT 01:50Z (exp83a/b CI gates: 0.646 changed, 1,798-1,882 s); R21-A3 CI-RAN; W4 AMEND 2 (1)-4 (non-CI twin).",
+   "action": "Build them now. Push only after the 48 read shows C+ or a testable C? (T2).",
+   "urgency": "today"
+  },
+  {
+   "id": "R24S-9",
+   "kind": "new-hypothesis",
+   "what": "FINALS (743929 point 5): 'best + its closest one-line neighbour'. #37 (K2, cap 4) is exactly one line from exp70g (DIVINS_CAP 6 -> 4), so today's recommended pair {V_pub = exp70g, #37} already follows that advice. If V_pub moves to a 2-3-lever stack (e.g. exp86a or exp87b), #37 is 3-4 lines away and 0.003-0.004 behind on public. The closest public-read neighbour is then the stack's single-lever parent (exp78a / exp85a / exp83b). JT argues that a decorrelated partner several thousandths behind loses EV to a near-twin. Round 23's MC (mc23) compared only pairs with #37/#38/exp70b as partners. Expected change: model-only, 0 runtime, 0 slots.",
+   "evidence": "experiments/discussions/743929.md point 5; round23 scan_hyp_finals_29sep.json R23F-2..5; CONTEXT 04:31Z FINALS CARD (1).",
+   "action": "At the 29 Sep 12:00Z card, if V_pub has >= 2 levers over K2, re-run mc23 with 'V_pub's highest-display one-lever parent' as the partner and print it as the alternative line next to {V_pub, #37}. The user still picks; the session never re-ticks.",
+   "urgency": "later"
+  },
+  {
+   "id": "R24S-10",
+   "kind": "plan-issue",
+   "what": "W2 v4 ordering leaves exp80a unread when S3 and C+ both hold. W2a (which was reserved for exp80a under S3) went to exp85a at 04:38Z. W2 v4 (2)(i) sends the CI stack before (iii) exp80a. Under S3 and C+, exp83a would take W2b, exp80a would never be read on 28 Sep, and exp84a (which needs 'exp80a strictly above exp78b') could never be decided. S6 also bans a DIV-only file after 01:45Z. The W2b table (R24S-2 Row 1) gives exp80a priority and moves exp83a to W4 at 00:06Z, which still finishes by ~10:45Z, before the 12:00Z finals card.",
+   "evidence": "CONTEXT 01:02Z W2 v4 (1)/(2)(i)/(iii) + S3/S6; 04:38Z W2 AMENDMENT (W2a = exp85a).",
+   "action": "Part of the W2b TABLE v5 line.",
+   "urgency": "now"
+  },
+  {
+   "id": "R24S-11",
+   "kind": "recheck-old",
+   "what": "Closed or low-value arms that must NOT get a slot. Each is covered by an existing closure, with no post-hoc relaxation.\n- ILP_DIVISION_WEIGHT arms other than 0.4 (0.2 / 0.6 / raised): exp85b moved only +49 nodes / +3 forks, and the x138 relink replaces the ILP edges (I-049, R23-RC-B).\n- exp85b and exp85c as single rungs: near-duplicates of exp70g and exp85a (CONTEXT 06:26Z).\n- READMIT 0.90 or lower: the stop rule in R24S-3. The lab band [0.94, 0.965) already had 6,696 candidates and 0 near GT.\n- READMIT_RADIUS or gapfill knobs: not disclosed by anyone (743929 names only two knobs; Justin's 04:13Z question is unanswered).\n- cap 10/16, fc2 on cap 8, and thr/DC/tau/N1 rungs.\n- overlap-consensus and every closed family in the prompt.\nHonest R8 statement: no new mechanism reaches R8. Everything in this scan is slot logistics for the already actionable 743929 knob line and the pre-registered CI/DIV/SEC levers. Its value is making every branch submittable by 23:30Z.",
+   "evidence": "IDEAS I-049, I-139, I-431, I-412; CONTEXT 06:26Z, 06:35Z; round23 REPORT §2 (lab band [0.94, 0.965): 6,696 candidates, 0 near GT).",
+   "action": "None beyond logging.",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Round 24 slot plan by branch (743929 process). Four reads are pending at 06:32Z: 47 exp78b, 48 exp79a (CI), 49 exp78a and 50 exp85a (READMIT). Key timing issue: 50 lands ~12:27-12:50Z, AFTER the 12:00Z W2b slot. Non-CI W2b files should therefore wait for 50 (latest 14:00Z); CI files keep 12:00Z (R24S-1). W2b TABLE v5 (R24S-2): E10 -> S3 exp80a -> D8+C+ exp83b -> after 50: R+ exp86c (D0) / exp86a (D8); R- READMIT 0.98 raised arm exp87f/exp87g; R0/R?/late exp81. W4 AMEND 3 (R24S-3) is a lookup by BASE (exp70g/78a/78b/80a) x (R, C) with six rows (a)-(f), plus stop rules (READMIT only 0.92/0.94/0.98; non-additive -> stop). It needs an explicit exception to W4 AMEND 2 (4)'s knob-rung ban (R24S-5). Ten new builds are needed now (exp87a-j: JT+CI stacks on cap 6/8/12/24, JT on cap 24, READMIT 0.98 on cap 6/8/12, READMIT 0.92 on cap 8/12), plus a ledger rule exp87[abce] -> safetail_ci. Dummies go out only at branch triggers T1-T5 (~10 at most against ~7 GPU-h left). The CI dummy runtime gate needs a parallel-lane allowance (+24% measured). Ideas: the READMIT raised arm (EV ~0 +- 0.001, runtime ~0), JT+CI stacks (+0.001..0.002 only if both R+ and C+), and the finals neighbour check (model-only). Honest answer: no new mechanism reaches R8. This is logistics for already-actionable levers."
+}

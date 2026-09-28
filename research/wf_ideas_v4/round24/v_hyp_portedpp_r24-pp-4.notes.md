@@ -1,0 +1,6 @@
+# v_hyp_portedpp R24-PP-4 notes (2026-09-28T07:02:50Z)
+- Source: experiments/ext_optimized-biohub-max-score/optimized-biohub-max-score.ipynb (https://www.kaggle.com/code/amanatar/optimized-biohub-max-score). repair_second_daughter (code l.4072-4197 of extracted scratch am.py): candidates must be childless-incoming (cand in incoming -> skip) = orphan track starts at t+1, parent<=REPAIR_PARENT_MAX_UM, sister<=SAFE_DIV_SISTER_MAX_UM, symmetry tau 0.85, DC floor 0.12, global cap SAFE_DIV_GLOBAL_FRAC_CAP. Default REPAIR_PARENT_MAX_UM=0.0 (OFF) at env l.112; only sweep presets repd010/repd015 (11-12 um) switch it on, selected in-sample on train stems.
+- amanatar best public = 0.953 at V4 (before sweep versions); sweep versions errored / no score (NOTES.md, v10 NOTES, v6 NOTES). So no public read shows the repair helping.
+- Same mechanism as I-047 (parent to orphan start at t+1, sisters <=12 um): honest validator 1 TP / 31 FP (CONTEXT.md l.161, l.574). Wider gate I-080 refuted (reach audit 1/151).
+- Probes 43/44 (K2 + DC 0.20 / 0.225) = 0.954 / 0.954 (CONTEXT.md l.2996-2997) -> relaxing DC on the division-add path is flat on public; indirect pricing only (safe-div veto, not the orphan-link repair), but I-047 prices the orphan-link path directly.
+- Verdict: finding stands (not refuted). No build.

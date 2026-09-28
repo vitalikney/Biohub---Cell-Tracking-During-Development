@@ -1,0 +1,12 @@
+# v_plancheck_pc24-06 notes (skeptic: value + feasibility)
+- 2026-09-28 07:04Z: no prior JSON for this task; started.
+- CONTEXT.md is 3542 lines; the last dated entry is 06:37Z (exp86a/b/c built). No user message after 04:39Z. The morning message is not yet sent.
+- Poll header 2026-09-28T07:02:42Z (experiments/lb_poll/poll.log l.20577-20586): 47 (56623073), 48 (56623105), 49 (56624341) and 50 (56629533) are all PENDING, so a W4 amendment written now is still pre-score.
+- The cap question is ALREADY scheduled: round20 REPORT R20-A12 and round21 REPORT R21-A10 put it in the 'morning message ~08:00-09:30Z'; RESUME (f) says 'morning brief after 47+49 (latest 09:30Z)'. PC24-06 only moves it ~1.5-2.5 h earlier and adds the missing K-lever file to the W4 (5) whitelist.
+- The user works in MSK (CONTEXT l.322 and others): 04:32Z = 07:32 MSK. Now it is ~10:04 MSK, so the user is probably awake. The answer is needed only by 29 Sep 02:00Z (05:00 MSK), and the user sleeps before that. The whole 28 Sep MSK day is the answer window, so asking now instead of at 09:30Z adds only a little answer probability.
+- Where the cap comes from: R8 (CONTEXT l.2522, l.1671) says the last submit is 29 Sep 02:00Z, with an emergency repeat up to a 10:00Z hard edge. The key facts say R8 is lifted, but 'after 29 Sep 02:00 UTC only with a user OK' still stands, so asking is required. Neither the session nor the round may assume a yes.
+- Timing check: v2 (7) non-CI T_last = 18:30Z - (L_ref + 0.25 h) ~ 10:25Z. A K2-family L of 7.4-7.8 h puts the read at ~17:50-18:15Z, before the ~19:00Z FINALS READ and the 20:00Z tick. A 'v' slowdown (L up to 9.5 h, the safetail deadline) would read at ~19:55Z, which is tight. The finals card requires L_hi <= 9.0 h anyway.
+- After 02:00Z no CI file is allowed (round 22 clarification (4), l.3394), so the post-lift FULL must be non-CI.
+- W4 AMEND 2 (5) (l.3374-3377) whitelist = non-CI twin of a + FULL, one DIV step under S3, an E10 copy. It has no K file, a real gap that overlaps PC24-02.
+- Value: 1-2 informed public reads on 29 Sep help only the public-display finals choice (winner's curse, 29% public). Private value is indirect but real, because the user said they will pick the finals 'after all variants are tried' (27 Sep 19:10:58Z). Asking costs almost nothing.
+- Verdict: not refuted. The urgency is overstated ('now' vs the scheduled 08:00-09:30Z brief). The conditional W4 split can and should be pre-registered now without the user; only the permission needs the user.

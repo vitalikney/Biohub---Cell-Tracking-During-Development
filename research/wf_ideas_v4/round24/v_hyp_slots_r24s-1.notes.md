@@ -1,0 +1,12 @@
+# v_hyp_slots R24S-1 skeptic notes (2026-09-28 ~07:05Z)
+- 07:02:45Z: ledger header 07:02:42Z: 47 56623073 / 48 56623105 / 49 56624341 / 50 56629533 all PENDING. Poller alive (detached, 600 s sleep, lb_poll.py l.35).
+- 50 submitted 05:02:30Z; K2-family L observed (6.69..7.81] h (ledger rows 37-46); exp85a dummy 1,388 s vs exp70g 1,409 s (CONTEXT 05:03Z) -> no runtime shift. Terminal ~12:27-12:51Z, first header showing it up to +10 min -> ~12:37-13:01Z. W2b fixed at 12:00Z (CONTEXT l.3262, l.3351, 04:38Z amendment, 05:03Z line). Claim confirmed: W2b is blind to 50 as written.
+- 28 Sep submits used: 00:06:09, 00:06:33, 00:50:37, 05:02:30 = 4 -> exactly 1 slot left (W2b and W3 are the SAME slot; W2 v4 (2)(v) already lets it move to W3 <= 23:30Z). So delaying costs no slot.
+- Decision really depends on 50: exp86a/b/c built 06:37Z explicitly as 50-branch candidates ('branch 49 + and 50 +'); 06:26Z line says exp85b/c near-duplicates. Blind 12:00Z choice cannot use them.
+- Independent corroboration: round24/scan_plancheck.json PC24-01 (same issue; T = earlier of 50 terminal and 13:30Z).
+- CI latency: '9.7-10.5 h' is the CONTEXT l.3278 expectation, not a measurement (48 still pending, > 6.93 h). Logged band 9.4-10.9 h (l.3337). 12:00Z + 10.9 h = 22:54Z, still before W4 00:05Z. OK.
+- 'W4 lock 23:30Z' is not a registered term: W3 submit <= 23:30Z; W4 AMEND 2 (1) needs dummies PASSED by 00:00Z. Cosmetic.
+- 'costs no information for W4' slightly overstated: a non-CI W2b read moves from ~19:30-19:50Z to ~20:10-21:50Z, leaving ~1.7-3.8 h to build/dummy W4 files that depend on it. Mitigation: dummies for all branch files pushed before the read (GPU ~9.5 h left per 05:03Z quota read, ~25 min per dummy).
+- Residual tension: a CI '+' at 12:00Z still spends the only slot blind to 50 (then exp86 can only go in W4). Acceptable: it keeps the CI read before W4, which the 12:00Z CI rule exists for.
+- Ops risk: the non-CI branch needs an awake session at ~12:40-14:00Z (sessions ended at 05:07Z before). Fallback needed: if nobody acts by 14:00Z, W2 v4 (2) default still goes by W3 23:30Z.
+- Legality side-issue (PC24-02): exp86a/b/c knob files have no registered slot row; the timing line alone does not legalise them - needs R24S-2/PC24-02 line. Not a refutation of the timing fix.

@@ -1,0 +1,37 @@
+{
+ "summary": "Round-24 delta scan, 06:38-06:50 UTC 28 Sep, against round 23 (04:00-04:07Z). E10 P1: tools/e10_snapshot.py wrote experiments/e10_watch/20260928T0639Z.txt, CHANGES=10 vs 06:22Z. The P2 look-check group is 0, so e10_port_gate.py was not run. The only kernel change is a lastRunTime bump on kunaldesale2408/biohub-cell-tracking (still V10 of 10, 0.953, a verbatim x138 re-upload pulled on 25 Sep). x138 is unchanged and COMPLETE. Digest E10 FLAG: none; no public notebook is above 0.953. LB at 06:23Z (3,962 teams, +1) diffed against 04:00Z: we are #179 (was #172) at 0.956, 9th of 56 in the 0.956 block (ranks 171-226), with 170 teams strictly above (162 at r23). Counts, r23 in brackets: 0.953 = 423 (420), 0.954 = 134 (130), 0.955 = 89 (87), 0.956 = 56 (59), 0.957 = 41 (36), 0.958 = 14 (12), 0.959 = 18 (19), >=0.955 = 315 (308), >=0.960 = 97 (95), >=0.970 = 9 (9). Top 20: Sergio Alvarez 0.975->0.976 (#2); slime and The Boys swapped #8/#9; nothing else changed. Notable movers: x138's author Anvith Pothula 0.956->0.957 (submitted 28 Sep 00:03Z, no new public notebook), José Freitas 0.960->0.962 (author of the synthetic dataset), T1 0.958->0.960, menphim 0.954->0.958, Antoniu Gugu 0.956->0.958. The move is spread over 42 changed rows, with no shared-score cluster. Discussion: no new topic. Two new comments after 04:07Z: Justin CH123 at 04:13Z asks follow-up questions on 743929 with no answer yet (no new values disclosed), and Georgy Mamarin at 05:16Z on 743006 notes the embryo prefixes. No newly disclosed knob, so nothing new is actionable under AGGRESSIVE MODE; the 743929 knobs are already built as exp85a/b/c. Overview: timeline unchanged, 91,434 submissions (+355). Data unchanged. No host post. Nothing was pulled.",
+ "findings": [
+  {
+   "id": "r24-e10-p1-no-signal",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "E10 P1 at 06:39Z vs 06:22Z: CHANGES=10, P2 look-check largest group 0 (no teams moved from <=0.953 to >=0.956 at one score). The only kernel-list change: kunaldesale2408/biohub-cell-tracking lastRunTime 2026-09-24 06:13 -> 2026-09-28 06:37:41 (dateRun pos 7->1). Its page still shows 'Version 10 of 10', Public/Best Score 0.953 V10, 23m 34s GPU T4 x2, identical to the 25 Sep pull (experiments/ext_biohub-cell-tracking/NOTES.md: verbatim x138 re-upload). It is a re-run with no new version, not a signal. x138 anvithpothula/biohub-0-953-lb-original and amanatar/optimized-biohub-max-score are unchanged and COMPLETE. Feed digests 0630Z/0632Z/0634Z: E10 FLAG none, best_public_score top = 0.953.",
+   "evidence": "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/experiments/e10_watch/20260928T0639Z.txt (DIFF section); https://www.kaggle.com/code/kunaldesale2408/biohub-cell-tracking ; experiments/discussions/digest_20260928T0634Z.md",
+   "action": "None. The hourly watch continues. A new public notebook from anvithpothula (whose team is now at 0.957) would be the E10 v3 trigger to check first."
+  },
+  {
+   "id": "r24-lb-delta",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "LB 06:23Z vs 04:00Z: 3,962 teams (+1). Ours: #179 (was #172), 0.956, 9th of 56 in the 0.956 block (ranks 171-226; 3 teams left the block upward), 170 strictly above (was 162); CSV LastSubmissionDate still 2026-09-27 14:36:59, SubmissionCount 48, so probes 47/48/49/exp85a are not scored yet. Counts: 0.953 420->423, 0.954 130->134, 0.955 87->89, 0.956 59->56, 0.957 36->41, 0.958 12->14, 0.959 19->18, >=0.955 308->315, >=0.960 95->97, >=0.970 9->9. Top 20: Sergio Alvarez 0.975->0.976 (#2, sub 27 Sep 21:46Z); slime 0.970 now #8, The Boys #9; top 7 otherwise unchanged (yu4u 0.978). Movers above us: que la cuenten como quieran 0.965->0.966, José Freitas 0.960->0.962, Anurag Bihani 0.960->0.961, T1 0.958->0.960, Médéric Hurier 0.959->0.960, hikaggler 0.957->0.958, Antoniu Gugu 0.956->0.958, menphim 0.954->0.958, Ryo Takaki 0.955->0.957, Maaax/Anvith Pothula/Vyas/Thomas 0.956->0.957, Fanch 0.955->0.957. The submissions behind these scores were made 27 Sep 19:10Z to 28 Sep 02:37Z. That fits the ~7 h latency, so our 27-28 Sep probes should land during the next hours.",
+   "evidence": "experiments/e10_watch/20260928T0639Z.txt vs experiments/e10_watch/20260928T0400Z.txt (leaderboard_rows), row-diffed by TeamId with the scratch script lbdiff.py in the session scratchpad",
+   "action": "None on finals. Rank drift inside the 0.956 block is display only (public = ~29%). The x138 author reaching 0.957 is worth watching in case he publishes a new notebook before the deadline."
+  },
+  {
+   "id": "r24-disc-no-new-disclosure",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "No new topic (feed: 44 topics checked). New since r23: (a) 743929, Justin CH123 at 2026-09-28 04:13:27Z asks: 'Did you try ILP_DIVISION_WEIGHT on the other side of 0.4 (e.g. 0.2 or 0.6)? Which way lost?', and which knobs closed. No answer from John Taylor (AI) yet. His only later post, 'I hope that helps someone.' (00:10Z), was already seen. Justin CH123's team is at 0.957 (sub 00:02Z). (b) 743006, Georgy Mamarin at 05:16Z: the prefix is the embryo; train has 44b6 (71 movies) and 6bba (128). That is already known. The previously seen disclosures stand: 743929 'ILP_DIVISION_WEIGHT 1.2 → 0.4' and 'READMIT_MIN_SCORE 0.965 → 0.94' (both built as exp85a/b/c); 732103 José Freitas 'it works! I'm at 0.960 right now!' with the synthetic dataset (he is now 0.962; he declined to give details until after the deadline).",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/743929 ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/743006 ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/732103 ; experiments/discussions/digest_20260928T0630Z.md ; digest_20260928T0632Z.md / 0634Z (0 new)",
+   "action": "No new build. If John Taylor answers the 0.2 vs 0.6 question, turn the answer into a one-knob arm on exp70g (ILP_DIVISION_WEIGHT at the winning side) under AGGRESSIVE MODE. The feed loop will catch it."
+  },
+  {
+   "id": "r24-overview-data",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "Overview: timeline unchanged (Start June 29, Entry Deadline September 22, Final Submission Deadline September 29, 2026), header '2 DAYS TO GO'; 13,475 entrants, 4,540 participants, 3,962 teams, 91,434 submissions (+355 since r23). Data unchanged (24886 files, 87.61 GB). No host announcement. The pinned topics are unchanged.",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/overview ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/data ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion?sort=recent-comments",
+   "action": "None."
+  }
+ ]
+}

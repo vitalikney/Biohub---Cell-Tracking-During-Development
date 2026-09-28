@@ -1,0 +1,11 @@
+- 2026-09-28T07:04:46Z start: verifying R24S-5 (W4 AMEND 2 (4) carve-out for 743929 knobs)
+- CONTEXT.md l.3366-3380 (01:02Z W4 AMEND 2): (4) 'Never: knob/thr/N1/fresh-N2/tau/DC rungs; cap 10/16; fc2 on cap 8.' (5) after 02:00Z is a WHITELIST (non-CI twin of '+' FULL, one DIV step under S3, E10 copy) -> a carve-out of (4) does NOT open (5); the finding's 'after-02:00Z' claim is true but the fix correctly leaves (5) alone.
+- l.3280 v3 (8): 'Not allowed: a threshold change, N1, or N2 as a new single rung' -> 'rung' = new single-lever file. JT(b) stacks (exp86a/86b/87d) are FULL stacks under (1)-1 once 50 reads '+', so they do not need the exception; only RA92 (exp86c, exp87i/j) and RA98 (exp87f/g/h) single-knob rungs do.
+- l.2503 (26 Sep 21:31Z): user LIFTED the R9 'public knob ladders' clause for public-aimed slots -> (4) is a session-authored rule (round 21), so the session may amend it pre-score. Procedurally legit.
+- l.3433-3445 (04:38Z W2 AMENDMENT covers W2 only; 04:39Z PROCESS FIX covers the round prompt only) -> confirmed: no line carves 743929 knobs out of W4 (4).
+- Wording defect: 743929 disclosed ONLY READMIT 0.94 and ILP 0.4 (plus the two-arm PROCESS). 0.92 and 0.98 are our extrapolations, not 'disclosed values'. Label them '743929-process arms'.
+- ILP 0.4 single rung (exp85b) is near-inert (+49 nodes, CONTEXT 06:26Z) and closed as a slot by R24S-11; the carve-out should allow ILP 0.4 only inside the JT pair.
+- ledger.md header 07:02:42Z: 47/48/49/50 still PENDING; 50 expected ~12:30Z -> the line can still be logged pre-score (must quote the last PENDING header).
+- Value: readmit arms move nodes +-1%; lab band [0.94,0.965) 0 near GT (round23); public = one embryo, 3-decimal display -> a +0.001 read is weak evidence for private. The rule line itself costs 0 runtime / 0 slots; realistic value = enabling 1-2 W4 knob reads EV ~0+-0.001 public.
+- Verdict: not refuted (real rule conflict, cheap fix) with amended wording.
+- 2026-09-28T07:06:30Z wrote v_hyp_slots_r24s-5.json (refuted=false, amended wording)

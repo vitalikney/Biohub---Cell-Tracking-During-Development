@@ -1,0 +1,11 @@
+# v_plancheck_pc24-01 notes (2026-09-28T07:02:43Z)
+- 07:03Z poll header 2026-09-28T07:02:42Z: 47 (56623073), 48 (56623105, CI), 49 (56624341), 50 (56629533 exp85a) all PENDING (ledger.md l.20-23). Poller alive, 10-min cadence.
+- Remaining 28 Sep slots: 1 (CONTEXT 05:03Z 'Kaggle: 1 submissions remaining today'). W2b (12:00Z) and W3 (<=23:30Z) are the SAME slot (W2 v4 (2)(v) 'slot moves to W3').
+- Latency: exp70g L (7.49,7.67] h; exp85a dummy runtime 1388 s vs exp70g 1409 s -> same family. 05:02:30Z + 7.49-7.67 h = 12:32-12:43Z, + <=10 min poll -> terminal header ~12:32-12:53Z. Finding's 12:27-12:51Z is right.
+- Reads known before 12:00Z: 47 (~07:30-08:00Z), 49 (~08:15-08:45Z), 48 CI (~09:40-10:40Z). So 50 is the ONLY unknown at 12:00Z -> waiting ~45 min resolves all W1+50 reads.
+- Cost of waiting: non-CI file at 13:30Z reads <=21:20Z (before W4 00:05Z). CI file at 12:50Z reads <=23:40Z (L_hi 10.9 h); W4 dummies can be pre-built for both branches, so the choice at 00:05Z is still informed. Tie-break by earlier submission irrelevant (0.957 not a block).
+- Inconsistency confirmed: 04:38Z 'exp80a/exp81 move to W3/W4' vs 06:26Z 'W2b falls back to W2 v4 (2) (E10, then W1-favoured stack / exp81 SEC)'.
+- Weak points: branch (3) points to an exp85a lookup row that does not exist (exp83h/exp82d unbuilt, PC24-02/03) -> in practice (3) must either build+dummy by ~23:00Z (slot as W3) or fall to (4). exp86a/b dummies pushed 06:36Z, gate not yet logged. Operational: previous session died 05:07Z; the rule needs a live main session at ~12:30-13:30Z (13:30Z fallback covers a late read, not an absent session).
+- Value: K lever = +0.001 per knob on one public embryo from another team (743929), lab sign wrong 4/4; private value unknown. The timing rule does not add a lever; it only lets the existing W2 choice see 50. Weakly dominant.
+- Not a repeat: round21-23 REPORTs discuss W2b contents, not the 12:00Z-vs-probe-50 timing.
+- 2026-09-28T07:04:20Z final JSON written (refuted=false)

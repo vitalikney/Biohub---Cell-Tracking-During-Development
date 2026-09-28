@@ -1,0 +1,10 @@
+# v_hyp_slots R24S-7 notes (2026-09-28)
+- 2026-09-28 ~07:10Z: no prior json. Ledger 07:02:42Z header: 47/48/49/50 all PENDING (no R read yet).
+- tools/build_probe_kernel.py l.1643-1668: lowrefine refines lowdet pool rows with score >= BIOHUB_READMIT_MIN_SCORE (same var) -> at 0.98 the [0.965,0.98) pool rows keep integer grid coords (readmits in that band are dropped anyway; gapfill rows in band lose refinement). Mechanism claim OK.
+- 743929 (experiments/discussions/743929.md, https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/743929): JT disclosed ONLY the lowered value 0.965->0.94 (+0.001). No raised value disclosed; his 'two arms' is generic process. 0.98 = our own extrapolation, not a disclosed value.
+- CLOSED-IN-DISGUISE: leaf prune on x138 removes readmits (479/513 leaves were readmits, CONTEXT l.1515; 95% of lp30 removals readmits, IDEAS I-277) and read PUBLIC 0: P36 - #35 = 0 (CONTEXT l.2295, lab +0.0008); probe 27 exp47 leaf prune = 0 too. I-277 (DC readmit veto) refuted as 'leaf prune in disguise'. RA98 = score-keyed readmit drop, same node-term-only channel (readmits match GT 73/13,284 = 0.5%). 'leaf prune on x138' is on the prompt's closed list.
+- Other LB anchor: 'readmit -0.001' (frontier947 vs frontier947-readmit, FINAL_REPORT_v4 l.156) favours fewer readmits, JT favours more -> anchors contradict: noise-level lever.
+- Band mechanics differ: [0.94,0.965) = sub-threshold peaks (JT arm), [0.965,0.98) = above-threshold detections ILP discarded -> a '-' at 0.94 does not license symmetry.
+- exp70g dummy readmits 96/677/84/508 = 1,365; exp85c (0.94) 167/1148/105/804 = 2,224 (+859). Band [0.965,0.98) count unknown (no histogram); finding's -0.1..-1.1% is a wide guess.
+- Own EV ~0 +- 0.001; P(+) 0.15-0.3; W4 AMEND 2 (4) bans knob rungs; R24S-5 exception is written by the same scan (circular).
+- Feasibility is fine (one-line cell-0 env edit, byte-identical off, ~0 runtime, dummy ~23 min, GPU ~7 h left). Value is the failing lens.

@@ -1,0 +1,10 @@
+# v_hyp_synthetic R24SY-4 skeptic notes (28 Sep 2026)
+
+- No prior v_hyp_synthetic_r24sy-4.json, so starting fresh.
+- experiments/discussions/732103.md was refreshed 28 Sep 09:33 local. It has 25 comments; the last is FOYSAL at 2026-09-27 19:57Z. Freitas at 18:57Z: details only after the deadline. No newer post, so "no new evidence" holds. https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/732103
+- Juan Neira (id 3524124, 14 Sep): the synthetic division gate had AP 0.98 on synthetic, but public LB went 0.910 -> 0.906. Confirmed (l.120-128).
+- ideas.json I-120 (l.5480-5508): deferred-after-deadline. Curations 18/20/21 are consistent with it.
+- CORRECTION: Freitas's 0.960 is on the LB, not just a claim. ladder_watch CSVs: 0.946 (last sub 2026-09-26 04:05Z, 84 subs, rank ~1347) -> 0.960 (sub 2026-09-27 00:05Z, 91 subs) -> 0.962 (round24/scan_browser.json l.2, l.16). The attribution to synthetic data is still unverified. He was stuck at 0.946 through 84 submissions over ~2 months while he held his own dataset (released 1 Aug; he suggested synthetic pretrain + real fine-tune on 9 Aug). The +0.014 came in 7 submissions on 26-27 Sep, after the public x138 0.953 family appeared. That fits "adopted x138 + tweaks" better than "synthetic data". In any case >= 0.960 is not unusual: 97 teams are at >= 0.960 (scan_browser r24).
+- Rationale drift: curation 20/21 said "retraining is closed before 29 Sep". Retraining is now ALLOWED (user, 27 Sep). The deferral must therefore rest on the evidence (0/4 external, lab wrong-sign on division knobs) plus budget (~9.5 GPU-h left at 04:55Z; secondary epoch 2.1 h), not on the rule.
+- Overlap: R24SY-3 (the SYN-DN DaughterNet flier with the G1 zero-shot kill gate) is the only synthetic route in reach. R24SY-4 should cross-reference it so that "I-120 deferred" means detector/secondary pretraining only, and does not silently veto the gated flier.
+- Verdict: not refuted. The action is correct; the wording needs the fixes above.

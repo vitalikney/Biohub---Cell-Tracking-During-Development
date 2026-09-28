@@ -3536,6 +3536,74 @@ Mention it to the user in one line (R9-A8 item 6).
   fire; S5 a '-' step ends the direction -> no exp80a, no exp84a, and every cap-12/24/48 stack is dead (exp86b,
   exp82b/c, exp83a/d/f/g). The cap direction now rests on probe 49 (exp78a, cap 8, FRAME_CAP 1): '+' -> BASE exp78a
   (S2: stop at cap 8), else BASE stays exp70g. Rank note: 171 teams strictly above 0.956 at 07:29Z (3,966 teams).
+- 2026-09-28 07:43 UTC, ROUND 24 PRE-SCORE (1/3): W2b TIMING + K LEVER + W2b TABLE v5 (R24-A1; supersedes W2 v4 (2), the W2b sentence and the 'exp80a/exp81 move to W3/W4' sentence of 04:38Z, and the 06:26Z W2b sentence)
+  (written after 47 was terminal: 56623073 COMPLETE 0.955 at header 07:32:48Z; 48/49/50 PENDING at that header, so
+  this is pre-score for 48, 49 and 50. 47 = '-' makes Row 1 (D12/S3) and every cap-12/24 lookup entry moot; Row 1's
+  reorder does not stand.) (T) TIMING. A CI file goes at 12:00Z (logged L band 9.4-10.9 h, so it reads by ~22:55Z). A
+  non-CI file goes at the first poll header that shows 56629533 terminal, and no later than 14:00Z; if 50 is still not
+  terminal then, decide without it. An E10 copy with a PASSED dummy goes at its trigger. If no session acts by 14:00Z,
+  the same choice goes as W3 by 23:30Z (W2 v4 (2)(v)). (K) K LEVER. K = ILP_DIVISION_WEIGHT 0.4 + READMIT_MIN_SCORE
+  0.94 (743929). It is ONE bundled lever, read by probe 50 against exp70g with the v3 (1) codes: R+ = display >= 0.957
+  or an attributable sub-rounding UP; 0.956 = R0 (R? if MASKED or BLIND); <= 0.955 = R-; ERROR, 'v', or not terminal
+  by 23:30Z = R?. K is a lever on the cap-family BASE, and the v3 (5) BASE order is unchanged. Lookup for b = exp70g /
+  exp78a / exp78b / exp80a: JT(b) = exp85a* / exp86a / exp86b / exp87d; JT+CI(b) = exp87a / exp87b / exp87c / exp87e;
+  RA92(b) = exp86c / exp87i / exp87j / none (* = scored). The two knobs are not split. ILP 0.4 never becomes a file of
+  its own after R0/R-; it stands or falls with 50. (TABLE, first matching row). Row 0: an E10 copy. Row 1: D12 (S3: 47
+  '+', disp78b >= disp78a, 46 not '-', exp80a dummy PASS) -> exp80a at 12:00Z, whatever C and R are. Row 2: D8 (BASE
+  exp78a) and C+ (48 '+' with CI-RAN dL >= 1.2 h and L_hi <= 10.2 h) -> exp83b at 12:00Z. Row 3 (wait for 50): R+ ->
+  D0 exp86c, D8 exp86a; R0, R-, R?, or 50 not terminal by 14:00Z -> exp81. Row 4: if the chosen file has no PASSED
+  dummy at submit time -> the first PASSED file of exp81, exp85b. Never leave the slot unused. D0 with C+ falls
+  through to Row 3, because exp79a already is BASE+CI. If 47 is already terminal when this line lands, write '(written
+  after 47 was terminal)'. Row 1's reorder (exp80a before exp83a) then stands only if the line is timestamped before
+  47's terminal header.
+- 2026-09-28 07:43 UTC, ROUND 24 PRE-SCORE (2/3): W4 AMEND 3 + (4) EXCEPTION (R24-A2; amends W4 AMEND 2)
+  It amends W4 AMEND 2. W4 = 29 Sep 00:05-01:45Z, at most 4 planned files, with the 5th held for E10. Each file needs
+  a dummy PASSED by 23:30Z (this supersedes 00:00Z). At 23:30Z, log the evaluated row, b, R, C, the codes of
+  exp80a/exp81/exp86c and the frozen file list with slot times, before any 29 Sep submit. b = the v3 (5) BASE, or
+  exp80a if it reads strictly above exp78b. Drop any file already scored, including the W2b file. Rows: (a) R+ and C+
+  -> 00:06 JT+CI(b); 00:05 JT(b); 00:45 RA92(b), or RA90(b) if RA92(b) was scored and read strictly above JT(b); 01:25
+  exp84a only if S3-up. (b) R+ and a testable C? (MASKED, BLIND, or 0.5 < dL < 1.2 h with L_hi <= 10.2 h) -> the same
+  as (a). (c) R+ and Cx (0, -, NO-OP, v, ERROR) -> 00:05 JT(b); 00:45 RA92(b)/RA90(b); 01:25 exp84a only if S3-up. (d)
+  R0/R?/R- and (C+ or a testable C?) -> 00:06 CI(b) (exp79a/83b/83a/83f); 00:45 JT(b) only if R? and b != exp70g;
+  01:25 exp84a only if S3-up; SEC(b) (exp81/82a/82b/82c) only if exp81 was scored and read '+'. (e) R0/R?/R- and Cx ->
+  00:05 exp84a only if S3-up; 00:45 JT(b) only if R? and b != exp70g; 01:25 SEC(b) only if exp81 read '+'; everything
+  else is held for E10. AMENDS (1)-1: the stack depth is capped at cap + 2 levers. A READMIT 0.92/0.90 '+' never gets
+  a +CI build, and CI(b) stays a separate file. The non-additive stop (AMEND 2 (3)) stands. READMIT above 0.965 (RA98)
+  is not a file. (4) EXCEPTION, for 743929's process 'step further in the better direction'. These are our own
+  extrapolated values, not disclosed ones. READMIT 0.92 (ILP 0.4 kept) only under R+. READMIT 0.90 (RA90(b), built
+  only on that branch) only if the RA92 file reads strictly above JT(b). Nothing below 0.90, and at most 2 READMIT
+  files in W4. The thr/DC/tau/N1/fresh-N2/radius bans, cap 10/16 and fc2 on cap 8 stand. The only knob-bundle filler
+  is R24-A11. After 02:00Z nothing goes without the user's yes (AMEND 2 (5)). On the finals card, a knob file's
+  display is a public-only, single-embryo read.
+- 2026-09-28 07:43 UTC, ROUND 24 PRE-SCORE (3/3): corrections + read/gate rules (R24-A3)
+  (1) Correction to 06:26Z: ILP_DIVISION_WEIGHT 0.4 is not output-inert. It adds +3 geometric safe divisions (63->66;
+  36/7/5/18) through orphan daughters left by the 1:1 relink, with ~330 node swaps (355 new / 307 lost, +49 net).
+  Dummy forks are metric-ignored (M5), so this has no sign; the sign comes from public reads only. Probe 50's 4 extra
+  forks = 3 safe divisions (ILP) + 1 insertion (READMIT). exp86a/b also show safe 66. (2) Amend 04:53Z 'exp85a changes
+  TWO things' to: 'lowrefine part benign and coherent: band readmits get head coordinates; +4,386 refined peaks, 0
+  failed frames; no decoupling build; read 50/exp85c as readmit-band reads.' (3) R22-A1 (6) v2 runtime rule for every
+  dummy logged from now on: PASS if <= 2,100 s. Between 2,100 and 2,500 s, re-run once, and PASS if the re-run is <=
+  2,100 s or runtime/parent-dummy <= 1.15. Above 2,500 s, FAIL. Concurrency is logged but is not a criterion (83a/b,
+  85a/b and 86a/b ran in parallel at 1,357-1,882 s; exp75 took 2,288 s). (4) GAP RULE (PC24-08): if L_hi > 8.0 h comes
+  only from a poll gap > 15 min (L_lo < 8.0 h), code it UNPROVEN, not 'v'. A cap-family display >= 0.956 reads as
+  insertion-ran. (5) S0 for the first W1 completion = e10_watch/20260928T0639Z.txt (count 48, #179, 9th of 56, k = 8),
+  or a newer count-48 download. (S0 actually used for 47: the 06:22Z snapshot + the 07:29Z download, logged at 07:32Z;
+  S0 for 49/48/50 = the 07:29Z download experiments/lb_poll/_lb/S0_0729Z, count 49.)
+- 2026-09-28 07:43 UTC, W4 LIFT SPLIT (R24-A7; pre-score)
+  IF the user lifts the cap, <= 3 files at 00:05-01:45Z (E10 first, then FULL, then one ? test) and <= 2 non-CI files
+  at 02:00Z-T_last (~10:25Z, recomputed from L_ref), drawn only from: an unscored FULL (K included), its non-CI twin,
+  a test of a still-? lever, one DIV step under S3, or an E10 copy; the knob files of W4 AMEND 3 are included. IF
+  there is no lift, W4 AMEND 3 stands unchanged. The question goes to the user now (the user is online), with Q3 and
+  the E10-after-02:00Z confirmation.
+- 2026-09-28 07:44 UTC, R24-A5 BUILDS (live bases only) + LEDGER + R8 COVERAGE
+  47 = '-' kills the cap-12/24 bases, so of R24-A5 only the exp70g / exp78a members are built (CPU, no push):
+  exp87a_k2cap6_div04_ra094_ci (C6 + JT + CI; ipynb 2e40c57f), exp87b_k2cap8_div04_ra094_ci (C8 + JT + CI; ec9c2860),
+  exp87i_k2cap8_div04_ra092 (C8 + ILP 0.4 + READMIT 0.92; 4042f00f) - all three shas equal the round-24 skeptic
+  dry-run; cell diffs: 87a vs exp79a and 87b vs exp83b differ only by the two K lines in cell 0; 87i vs exp86a only by
+  READMIT 0.94 -> 0.92. Not built (dead bases): exp87c/d/e/j. Ledger: (r'exp87[abce][a-z]*', 'safetail_ci') inserted
+  above exp8\d, test_round24_exp87_families (32 ledger+feed tests pass). R8 COVERAGE extended to exp87a/b (CI files;
+  coordinject dataset as for exp79a/exp83b). Pushes follow R24-A6 (only the realised branch member; T3 at the 50 read
+  for JT+CI(b), RA92(b) = exp87i only if 49 '+' and 50 '+').
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

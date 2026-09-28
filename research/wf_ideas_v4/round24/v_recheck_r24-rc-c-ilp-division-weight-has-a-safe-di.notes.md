@@ -1,0 +1,8 @@
+# R24-RC-C skeptic notes (2026-09-28T07:05:19Z)
+- 07:06Z: verified _dl run_stats: safe_divisions_added 70g 35/6/5/17=63 -> 85b 36/7/5/18=66; 85c 63 -> 85a 66; divins 18/18/19/19; nodes 121252->121301 (+49); raw_nodes +84; motion_relink_replaced_raw_edges 114922->115754 (+832 raw edges differ). exp86a/86b dummies ALREADY in _dl: safe 66 vs parents exp78a/78b 63 -> action (4) already measurable (+3 each, same 36/7/5/18).
+- poll header 07:02:42Z: 47/48/49/50 all PENDING. 28 Sep: 4 submits used, 1 left (W2b 12:00Z).
+- 07:10Z: own diff of _dl submission.csv exp70g vs exp85b: forks 81->84, 3 new fork parents (44b6_0113de3b t8, 44b6_0b24845f t62, 6bba_05db0fb1 t72), 0 lost; node coords 355 new / 307 lost (net +48/49). Mechanism (channel via orphan safe-div supply) CONFIRMED; old 'no channel' wording falsified.
+- But: CONTEXT l.1948 M5 = the 4 dummy clips hold GT divisions 0/0/0/3 and every dummy fork is metric-ignored -> +3 forks carry no sign evidence. Not a 'clean' fork lever: ~660 node-row churn (edge term) vs 3 forks.
+- Scale: exp70d (DeepCenter safe-div 0.30) forks 75->55 on dummies = -0.005 public (CONTEXT l.2797) -> ~0.00025/avg fork; +3 marginal forks <= ~+0.0008 even at average precision; public display resolution 0.001 -> exp85b vs exp70g read is most likely '0' (both 0.956) and cannot split probe 50.
+- Timing: W2b 12:00Z precedes probe-50 read (~12:30-13:00Z), last 28 Sep slot. exp86a/86b dummies already show safe 66 vs parents 63 (action 4 already met).
+- Verdict: mechanism note yes (CONTEXT + curator); exp85b slot promotion and post-hoc 'keep ILP 0.4 eligible after 50 reads -/0' rescue: refuted.

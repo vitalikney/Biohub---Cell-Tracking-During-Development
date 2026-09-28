@@ -1,0 +1,12 @@
+# v_hyp_synthetic R24SY-3 notes
+- 2026-09-28 07:03Z start skeptic review of SYN-DN recipe
+- 07:08Z read scan_hyp_synthetic.{json,notes.md}; CONTEXT l.1275-1330 (v1/v2 DaughterNet), l.3440-3530 (latest).
+- VALUE facts: v2 pool AUC 0.875 vs v1 0.825 was WORSE for insertion (SELECTION +0.0010 vs +0.0044; steal +0.0032 vs +0.0058) (CONTEXT ~l.1322) -> G2's 'OOF beats v1 by >=0.03' is a metric already shown not to predict value.
+- v1 CONFIRMATION (135 videos) already used for v1 orphan (+0.0010, fail), v1 steal (+0.0019, precision 4/15=27%, fail) -> reused hold-out; v1 itself misses the 0.31 precision floor, so G2 'net TP >= v1+3 AND precision >= 0.31' needs a big jump on 1-4 event deltas (inside noise per CONTEXT '1-4 division events, inside noise').
+- CONTEXT l.2798 / task text: lab sign wrong for division knobs; judge by public reads -> G2 lab gate not trustworthy.
+- Pool ceiling: 62/151 GT parents exist as exact-frame candidates -> ranker can only reorder within that pool.
+- Pre-reg in the finding: 'never a final' -> private contribution = 0 by construction; a public-only probe at 3-decimal granularity on one embryo (~1 TP) is not informative enough to move finals, and would take a W4 slot from the cap ladder / exp86 / E10 / SEC stacks.
+- External synthetic evidence 0/4 (1st place none, Juan Neira 0.910->0.906, imissher -0.006..-0.009, hikaggler hold-out only); Freitas 0.960 unverified; no public notebook > 0.956 (feed 06:35Z).
+- Generator: calibrated on 10 videos of ONE embryo; stride pooling vs our mean pooling; no mitotic appearance -> geometric cue only, the same cue confounded by broken continuations on real data.
+- FEASIBILITY: GPU quota ~9.5 h at 04:55Z minus exp85b/c + exp86a/b/c dummies; SYN-DN = 2-2.5 GPU-h (~25-30% of the remainder) + 3-4 h dev on the last full day; glob hazard (default /kaggle/input/**/vitalii_daughternet/*.pt + meta_divinsert auto-attaches biohub-ft-weights, tools/build_probe_kernel.py l.263, l.279, l.448-451) is real and the finding's pin handles it. Off = BASE byte-identical (weight swap only). Hidden runtime +0 OK.
+- 07:12Z verdict: refuted=true (no private value by design, gates not honest predictors, crowds out slots/GPU).

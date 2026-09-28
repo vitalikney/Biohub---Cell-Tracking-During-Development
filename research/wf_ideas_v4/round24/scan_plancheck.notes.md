@@ -1,0 +1,15 @@
+# round24 scan_plancheck notes
+- 2026-09-28T06:39Z start; no scan_plancheck.json existed. Read CONTEXT.md l.3100-3542 (newest entry 06:37Z BRANCH CANDIDATES), round23/REPORT.md.
+- 06:45Z state: poll.log header 2026-09-28T06:32:32Z = 47 56623073 / 48 56623105 / 49 56624341 / 50 56629533 all PENDING; ledger L > 6.43/5.69/1.50 h. LB snapshot e10_watch/20260928T0639Z.txt: our row #179, 0.956, count 48, 9th of 56 in 0.956 block (k=8). Anvith Pothula (x138 author) 0.956->0.957 (sub 00:03Z 28 Sep). kunaldesale2408/biohub-cell-tracking re-run 06:37:41Z (best_public_score 0.953 so far) -> watch.
+- Feed digest 20260928T0634Z: 0 new topics/comments; E10 FLAG none; feed loop got a 429 on GetTopic at 06:34Z (2nd run within 2 min). run_feed_loop.sh passes no --our-best (default 0.956 in tools/kaggle_feed.py:172); e10_watch_loop.py:78 hardcodes 'our best 0.956 -> >= 0.957'.
+- Builds exp86a 8dc6114b / exp86b b3b85429 / exp86c 9436e809: cell 0 lines 119-122 = CAP/FRAME_CAP/ILP 0.4/READMIT 0.94 (0.92 for 86c) after x138 defaults (l.42 1.2, l.94 0.965); correct.
+- RULE CONFLICT: exp86c (READMIT 0.92) is a knob rung; CONTEXT v2 (6) l.3170 'Never in W3/W4: knob rungs' and W4 AMEND 2 (4) l.3373 'Never: knob/thr/... rungs'. No pre-score line gives exp86c (or 86a/86b) a slot or a lever code; the W2 v4 (4) lookup (l.3359) has no knob lever.
+- tools/runtime_ledger.py EXP_RULES l.77-82: only exp75*/76[acfhi]/79a*/83* are safetail_ci; any new CI stack exp84-89 -> safetail (9.5 h / gate 8.0 h) = wrong family.
+- tools/build_probe_kernel.py l.2322 SUCC_KNOBS excludes ILP_DIVISION_WEIGHT/READMIT_MIN_SCORE (--base succ refuses them, l.2639-2641); runbook e10v3 l.210 filters K to DIVINS_* (so no refusal) but REF=$BASE_DIR (l.213).
+- READ-ONLY RUN 06:47Z: e10_port_gate.py --mode si --pulled exp56 --port exp70g_k2_cap6 --si-ref exp85a_k2cap6_div04_ra094 -> notebook-bytes FAIL '8 hunk(s) vs 8 (1 extra, 1 missing)', override block +14 vs +16 lines. => if BASE becomes a knob file (exp85a/86a/86b) the runbook SI (DIVINS_* only, REF=BASE) fails its own gate.
+- gate85.py lives only in session scratchpad (acabaea6.../scratchpad/gate85.py): PASS = csv ok, 0 errs, runtime <= 1900 s, |dn| <= 1.5% vs parent. Does not check node rows = exp85a (cap/fc knobs never change node rows: R23 'exp70g = exp78b').
+- TIMING: probe 50 submitted 05:02:30Z; K2-family L 7.4-7.8 h -> terminal ~12:27-12:51Z, i.e. AFTER the 12:00Z W2b decision (the last 28 Sep slot). W2 v4 (2)(v) already lets the slot move to W3 (<= 23:30Z).
+- Inconsistency: 04:38Z amendment 'exp80a/exp81 move to W3/W4' vs 06:26Z 'W2b falls back to W2 v4 (2) (... exp81 SEC)'.
+- BASE rule v3 (5) order list (exp70g > exp78a > exp78b > exp80a > exp70q) has no exp85a/86a/86b; lookup W2 v4 (4) has no knob lever row; no exp85a+CI / exp85a+SEC builds exist.
+- User active 04:32-04:39Z (CONTEXT l.3431-3447) -> open questions (02:00Z cap lift, Q3) can be asked now, not only in the post-47/49 brief.
+- 06:55Z writing scan_plancheck.json.

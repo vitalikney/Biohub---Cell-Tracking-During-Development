@@ -1,0 +1,12 @@
+# scan_hyp_slots notes (round 24)
+- 2026-09-28T06:39:12Z start; no prior scan_hyp_slots.json
+- 06:45Z read CONTEXT l.3240-3542 (READ TABLE v3, W2 v4 + S1-S6, W4 AMEND 2, S7, 743929 amendment, exp85b/c gates, exp86a/b/c builds 06:37Z); round23 REPORT.md; IDEAS I-431/I-139/I-049.
+- poll.log / ledger 06:32Z: 47 exp78b 56623073, 48 exp79a 56623105, 49 exp78a 56624341, 50 exp85a 56629533 all PENDING. 50 submitted 05:02:30Z -> K2-family L 7.4-7.8 h -> terminal ~12:27-12:50Z = AFTER the W2b 12:00Z slot (plan-issue).
+- 743929 (experiments/discussions/743929.md): JT two arms per knob (raised AND lowered); 'readmit-lo' 0.965->0.94 +0.001; ILP 1.2->0.4 +0.001; both <1% nodes; build during re-run; finals = best + closest one-line neighbour. Justin 04:13Z asks which way lost - unanswered.
+- Dummy logs _dl/: readmits per clip exp70g (RA 0.965) 96/677/84/508 = 1,365 (1.13% of 121,252 nodes); exp85c (RA 0.94) 167/1148/105/804 = 2,224 (+859); exp85b (ILP 0.4) = exp70g readmits (96...), so ILP near-inert. LOWREFINE refined 143,634 -> 148,020.
+- Mechanism (tools/build_probe_kernel.py l.1652; v3 notes): lowdet pool = all pooled peaks >= 0.3; readmit keeps pool peaks >= READMIT_MIN_SCORE within 4 um of open end; at 0.965 (= DET_THRESHOLD) readmits are ILP-discarded above-threshold peaks; lowrefine refines pool rows >= READMIT_MIN_SCORE -> the coupling makes new sub-threshold readmits head-refined (benign). A raised arm 0.98 drops readmits in [0.965,0.98) and de-refines gapfill rows in that band (gapfill adds only +111 nodes total).
+- W4 AMEND 2 (4) 'Never: knob/thr ... rungs' still blocks READMIT arms in W4 (written 01:02Z, before 743929) -> needs AMEND 3.
+- Parallel dummies run +24% slower (85b/c 1,721-1,736 s vs solo 1,388-1,409 s): CI stacks solo 1,712-1,882 s -> parallel ~2,120-2,330 s would FAIL R22-A1 (6) <= 2,100 s spuriously.
+- GPU: 20:29/30 h at 04:55Z; since then 85b+85c (~1 h), 86a+86b (~1 h), 86c (~0.5 h) -> ~7 h left (estimate) -> ~14 dummies max; branch-only pushes need <= ~10.
+- No exp87* folder exists; builder env block from research/wf_ideas_v4/round21/scan_hyp_w2_w4_plan.json build_env_git_bash.
+- 2026-09-28T06:50:21Z wrote scan_hyp_slots.json (11 findings R24S-1..11); poll header still shows 47-50 PENDING at 06:32Z

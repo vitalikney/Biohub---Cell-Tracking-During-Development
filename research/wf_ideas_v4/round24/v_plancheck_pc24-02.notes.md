@@ -1,0 +1,13 @@
+# v_plancheck PC24-02 notes (2026-09-28T07:02:48Z)
+- 07:03Z: the JSON answer did not exist, so this is a fresh run. At the time of this run, CONTEXT has 3542 lines. The last dated entry is 06:37Z (exp86a/b/c built). There is no 'K LEVER' line (grep found 0 hits).
+- l.3268-3270: v3 (5) BASE order is exp70g > exp78a > exp78b > exp80a > exp70q, with no exp85a. Confirmed.
+- l.3359-3360: the W2 v4 (4) lookup has only CI/SEC/both rows for exp70g/78a/78b/80a, with no K row. Confirmed.
+- l.3367-3373: W4 AMEND 2 (1) FULL uses the R21-A7 (4) lookup, and (4) says 'Never: knob/thr/... rungs'. Confirmed.
+- l.3170: v2 (6) says 'Never in W3/W4: knob rungs'. Confirmed. The v3 MANDATE (l.3225-3226) allows knob rungs only in W1/W2, and W2 v4 (2) does not list exp86c.
+- l.2133: x138 readmitted nodes match GT at ~1% (73/13,284). Confirmed.
+- round23/REPORT.md l.56-59: the [0.94, 0.965) band has 6,696 candidates (+0.60% nodes) and 0 near GT; READMIT equals the lowrefine threshold on K2. Confirmed.
+- memory metric insights: fewer nodes than estimated is a bonus, and the node term is ~0.1 x dN/N, so +0.84% nodes is about -0.0008. The finding's number is consistent.
+- Notebooks (sha8 of .ipynb): exp86a 8dc6114b, 86b b3b85429, 86c 9436e809. Cell 0 l.119-122 set CAP/FC/ILP 0.4/READMIT (0.94, or 0.92 in 86c) after the defaults at l.42 (1.2) and l.94 (0.965). Confirmed.
+- 0.92 is not a disclosed value: 743929 disclosed 0.94 and a 'two arms' process, not 0.92 (CONTEXT 06:35Z entry). So aggressive mode does not make it actionable.
+- Wording nit: 'tie -> else the stack of both + levers' cannot be a BASE, because BASE must be a COMPLETE scored file (v3 (5)). Fix: put exp85a into the v3 (5) fewer-knobs order after exp78b (exp70g > exp78a > exp78b > exp85a > exp80a > exp70q). The stack of both + levers is then FULL per W4 AMEND 2 (1), which exp86a/b already are.
+- Verdict: CONFIRMED (not refuted), with that wording fix. This is a zero-cost logging action. It is feasible well before 50 turns terminal (~12:26-12:50Z).
