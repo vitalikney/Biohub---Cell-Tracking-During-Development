@@ -75,7 +75,7 @@ POLL_LOG = ROOT / "experiments" / "lb_poll" / "poll.log"
 PAUSE_PATHS = (OUT_DIR / "PAUSE", ROOT / "experiments" / "lb_poll" / "ladder_watch" / "PAUSE")
 RE_429 = re.compile(r"\b429\b|Too Many Requests", re.I)            # stderr, or stdout of a failed call
 RE_429_OUT = re.compile(r"429 Client Error|Too Many Requests", re.I)  # stdout of rc 0 (a CSV may hold 429 votes)
-LOOK = "look: its public score (notebook page / LB); E10 v3 trigger = own public score >= 0.955"
+LOOK = "look: its public score (notebook page / LB); E10 v3 trigger = own public score > our best (0.956 on 28 Sep, so >= 0.957)"
 
 
 def stamp(t):

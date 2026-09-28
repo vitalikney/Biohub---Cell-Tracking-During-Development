@@ -3445,6 +3445,23 @@ Mention it to the user in one line (R9-A8 item 6).
   actionable list. ~3 h lost. FIX: the round prompt now makes any disclosed x138-family knob/technique ACTIONABLE (build + dummy + slot
   proposal), and the main session reads new_facts in full. exp85a (both knobs on exp70g) is submitted as soon as its dummy passes
   (~05:15Z) instead of 08:45Z; the 12:00Z slot stays per W2 v4 + the 04:5x amendment.
+- 2026-09-28 04:53 UTC, CURATION 23 ACTED ON + exp85a PRE-SUBMIT LINE (written before any exp85a/47/48/49 score)
+  (1) exp85a changes TWO things, not one (curator alert, round-23 R23-RC-A): READMIT_MIN_SCORE 0.94 also sets K2's
+  lowrefine threshold (_LOWREFINE_MIN_SCORE reads BIOHUB_READMIT_MIN_SCORE), and ILP_DIVISION_WEIGHT 0.4 may be
+  near-inert on our base because the x138 relink replaces ILP edges (R23-RC-B). Decision: exp85a still goes as probe
+  50 at dummy PASS (user's aggressive mode; the discussion-743929 author reported +0.001 per knob on an x138 fork).
+  The dummy gate adds: node change vs exp70g (flag |dn| > 1.5%; lab band ~+0.6%) and the LOWREFINE refined-count
+  change vs exp70g (143,634 on the exp70g dummy). Winner's-curse caveat: a 0.957 display from a two-change file enters
+  the finals pool as a public read only. The clean one-knob reads are exp85b (div 0.4) and exp85c (readmit 0.94) for
+  the 12:00Z slot. (2) R23-A4 done: the E10 runbook section 9 now builds the SI from the BASE's probe.json (BASE_DIR =
+  experiments/exp70g_k2_cap6, DIVINS_CAP 6, REF = BASE); the K1 fallback stays cap 4 (no cap-6 K1 reference) and says
+  so; the trigger reads SC >= 0.957; the watch-loop LOOK text is updated (takes effect at the loop's next restart).
+  (3) R23-A11 done: the research-round key facts are refreshed (best 0.956 exp70g, W1 probes, exp85a/b/c, retraining
+  allowed, R8/no-retrain lifted by the user, the user picks the finals). (4) R23-A7 / R22-A6 BUILDS: nine stack
+  notebooks committed (exp82a ffc00631, exp82b 7cd1e3ed, exp82c ee431244, exp83c e8f5a8a6, exp83d 22ccc1dd, exp83e
+  a016cf0f, exp83f c8a2fccb, exp83g 00f8cb36, exp84a 4cb1e47b; sha8 of the .ipynb); no dummy pushed; dummies are
+  pushed by the current BASE only (R23-A6). (5) Still open: GPU quota read (no API; needs the Settings page),
+  RESULTS.md rows for 39-46, the finals draft edits (R23-A10).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

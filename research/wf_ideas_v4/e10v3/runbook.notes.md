@@ -63,7 +63,7 @@ EOF
 ); echo "our best displayed public = $OUR"        # 0.954 on 27 Sep 12:32Z; a ladder rung may raise it
 A=<author>; S=<slug>; M=<M>; SC=<score>
 python -m kaggle kernels status "$A/$S"          # must be COMPLETE (RUNNING/QUEUED/ERROR = newer session -> wait, restart at step 2)
-# TRIGGER iff SC > OUR (today: SC >= 0.955) AND k == M AND status COMPLETE. Else: one CONTEXT line, no action.
+# TRIGGER iff SC > OUR (28 Sep: OUR = 0.956, so SC >= 0.957) AND k == M AND status COMPLETE. Else: one CONTEXT line, no action.
 # A newer unscored version (k < M): no port now; the watch will show its run; re-check when it scores.
 # PushNotification: "E10 v3 ТРИГГЕР: <A>/<S> v<M>, public <SC> (наш <OUR>). Делаю (A) полную копию, затем (B) копию+вставку или (C). Финалы не трогаю."
 # Log the trigger in CONTEXT.md (date -u): ref, M, SC, OUR, signal line.
@@ -203,18 +203,24 @@ PROBE=$((PROBE+1))
 ====================================================================================================================
 # Preconditions (all): notebook kernel; static gate INFO shows validator OFF (a validator-ON base re-writes submission.csv
 #   after our insertion -> no SI, go to (C)); the builder audit passes (it IS the 'anchors apply' test).
-K="--set DIVINS_ENABLE=1 --set DIVINS_STEAL=1 --set DIVINS_CAP=4 --set DIVINS_FRAME_CAP=1 --set DIVINS_ALPHA=1 --set DIVINS_THRESH=0.4 --set DIVINS_DUMP=0"
+# R23-A4 (28 Sep ~05:00Z): SI = the current BASE's probe.json keys (in --set order) with REF = experiments/<BASE>.
+#   BASE today = exp70g_k2_cap6 (public 0.956, 81 forks on its dummy). If a later probe beats it, swap BASE_DIR and re-read K
+#   from its probe.json (fork counts on dummies: exp70g 81, exp78a 86, exp78b 95). Never the old cap-4 exp58 recipe.
+BASE_DIR=experiments/exp70g_k2_cap6
+K=$(python -c "import json;c=json.load(open('$BASE_DIR/probe.json'))['change'];print(' '.join('--set %s=%s'%(k,v) for k,v in c.items() if k.startswith('DIVINS_')))")
+echo "$K"   # expect DIVINS_CAP=6 for exp70g
 TL="--set REPAIR_DEADLINE_S=34200 --set DIVINS_DEADLINE_S=28800"
-N=exp73_si_$(echo "$AL" | tr '-' '_'); B=experiments/$N; REF=experiments/exp58_x138_safe_lowref    # K2 recipe (= #37)
+N=exp73_si_$(echo "$AL" | tr '-' '_'); B=experiments/$N; REF=$BASE_DIR    # the BASE recipe (was exp58 = #37 cap 4 until 28 Sep)
 python tools/build_probe_kernel.py $N --base succ --base-ipynb "$NB" --base-meta "$D/kernel-metadata.json" --base-sha256 $S1 \
   --patch divinsert --patch safetail --patch lowrefine $K $TL --set LOWREFINE_ENABLE=1
 #   expect '--base succ: 37 anchor checks OK on <A>/<S> (sha256 ...)'. Any 'FAIL [...]' = anchors do not apply -> (C).
 #   If it prints INFO 'DET_THRESHOLD ... != 0.965' (lowrefine premise shifts, e.g. amanatar v6 0.960): rebuild with the K1 recipe
-#   (--set LOWREFINE_ENABLE=0) and REF=experiments/exp58t_x138_safe.
+#   (--set LOWREFINE_ENABLE=0) and REF=experiments/exp58t_x138_safe. NOTE (R23-A4): exp58t is cap 4, so the K1 fallback SI ships
+#   cap 4 and the gate compares against a cap-4 reference; accept that (no cap-6 K1 reference exists) and say so in the finals line.
 python tools/e10_port_gate.py --mode si --pulled "$D" --port "$B" --si-ref $REF --version $M > "$B/gate_static.txt"; echo "rc=$?"
 grep -c '^\[FAIL\]' "$B/gate_static.txt"; grep '^\[SKIP\]' "$B/gate_static.txt"; grep -E 'reference build =|hunk|division' "$B/gate_static.txt"
-#   expect rc=0, 0 FAIL, 4 SKIP, 'SI vs pulled = our patch diff only: N hunk(s) ... identical', 'reference build = K2 final exp58 recipe'.
-#   Rehearsed on HF v3 27 Sep 12:35Z: 8 hunks, +976/-4, PASS. An INFO line on the successor's own division/fork changes
+#   expect rc=0, 0 FAIL, 4 SKIP, 'SI vs pulled = our patch diff only: N hunk(s) ... identical', 'reference build = ...' naming the BASE folder.
+#   Round-23 rehearsal: FAIL with REF exp58, PASS with REF exp70g. Rehearsed on HF v3 27 Sep 12:35Z: 8 hunks, +976/-4, PASS. An INFO line on the successor's own division/fork changes
 #   does not block, but goes into the finals proposal.
 python -m kaggle kernels push -p "$B"; IDB=vitaliineibauer/$(python -c "import json;print(json.load(open('$B/kernel-metadata.json'))['id'].split('/')[1])"); VB=1
 #   Monitor until COMPLETE. Optional DFF (fail-soft proof, NOT blocking; only if a GPU session is free): the same build command with

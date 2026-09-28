@@ -1,0 +1,7 @@
+- 04:33Z 2026-09-28 start curation 23 facts; no 23/facts.json -> incremental over c22 (state 01:35Z, HEAD acbea01)
+- 04:35Z sources read: CONTEXT l.3378-3432 (01:48 R22-A1/A3/RESUME/CORRECTION, 01:50 gate PASS, 02:46 E10 signal, 04:31 R23-A1..A3 card, 04:32 user reset); git 9ac10c6..46c18a2; poll header 04:26:37Z all PENDING; ledger 04:26:38Z; e10 0400Z #172 k=9; round23 report.json R23-A1..A12
+- 04:37Z verified runbook l.206/208/213/233/235 still cap4/exp58; loop l.28/78 '>= 0.955'; E10 RUN 14-16. Writing c23 FACTS script next.
+- 04:39Z FACTS.md edited via scratch c23_facts.py (header; 16 F appends; F-LB-19, F-RUN-37, F-MOD-42, F-TRN-55; 17 C appends; C-182..C-189). Next DECISIONS
+- 04:39Z FACTS.md edited via scratch c23_facts.py (header; 16 F appends; F-LB-19, F-RUN-37, F-MOD-42, F-TRN-55; 17 C appends; C-182..C-189). Next DECISIONS
+- 04:42Z DECISIONS.md edited via scratch c23_dec.py (header; P47-P49 appends; §1 [c23] para + 11-row build table; §2 [c23] para + snapshot; §2f para; §2h 13 appends + 16 rows; §3 16 appends + 7 rows; closing). Columns verified. Next facts.json
+- 04:44Z facts.json written (8 alerts). Done.

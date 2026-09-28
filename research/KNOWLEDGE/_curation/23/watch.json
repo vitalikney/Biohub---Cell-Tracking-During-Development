@@ -1,0 +1,115 @@
+{
+ "files_written": [
+  "research/KNOWLEDGE/WATCHLIST.md",
+  "research/KNOWLEDGE/_curation/23/watch.notes.md",
+  "research/KNOWLEDGE/_curation/23/watch.json"
+ ],
+ "alerts": [
+  {
+   "kind": "forgotten",
+   "what": "W228/R23-A11: workflow template key facts still stale (consolidation 28 Sep 12:00, R8 cutoff listed as live)",
+   "evidence": "research/wf_ideas_v4/round23/report.json R23-A11, plan_issues 10; round23/scan_plancheck.notes.md; curation-23 task text",
+   "suggested_action": "Replace the template key-facts paragraph with the R22-A10/R23-A11 text before round 24 launches",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "W232/R23-A4: E10 runbook SI still CAP=4 / REF=exp58, so a cap-6 SI would FAIL its own gate",
+   "evidence": "research/wf_ideas_v4/e10v3/runbook.notes.md l.206/l.208/l.213; round23/scan_plancheck.notes.md 04:15Z",
+   "suggested_action": "Edit runbook section 9 per R23-A4 (BASE probe.json keys, REF=experiments/<BASE>, BASE-dependent fork delta) and rehearse e10_port_gate --mode si",
+   "urgency": "now"
+  },
+  {
+   "kind": "forgotten",
+   "what": "W229/R23-A7: nine stack builds not logged in CONTEXT and not committed",
+   "evidence": "git status 04:33Z (exp82a-c, exp83c-g, exp84a untracked); grep 'R22-A6 BUILDS' CONTEXT.md = 0",
+   "suggested_action": "Log the builds line, then one commit of named paths as the user with no Co-Authored-By trailer; never git add -A",
+   "urgency": "now"
+  },
+  {
+   "kind": "stale",
+   "what": "W212/R23-A5: GPU quota unread (4th deferral)",
+   "evidence": "CONTEXT.md l.2542 (last 07:55/30 h, 26 Sep); round23/report.json R23-A5",
+   "suggested_action": "Read https://www.kaggle.com/settings once and log it before the first 28 Sep dummy push (~08:45Z); assume 3-5 h left until then",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "W230: card CI caveat is not the balanced R22-A4 (A) text; v2 (9) Eric-only line still stands; Russian draft (iv) not attached",
+   "evidence": "CONTEXT.md l.3187, l.3420-3421; round22/report.json R22-A4 (A); round23/report.json R23-A1 (3)-(5)",
+   "suggested_action": "Append the balanced CI caveat before 48's terminal header (~09:40Z); attach the fixed draft by 29 Sep 12:00Z",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "W231: logged SEC-STACK GATE omits the exp81/exp80a sibling CSV download + sha match, the exp84a gate and the SEC+CI Secondary check",
+   "evidence": "CONTEXT.md l.3426-3428 vs round23/report.json R23-A3 (c)/(d); new_facts 'exp81/exp80a dummy CSVs are NOT in _dl'",
+   "suggested_action": "Add the missing R23-A3 (a)(5), (b), (c), (d) clauses before any exp82*/83c-g/84a dummy is gated",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "W233/R23-A6: push-by-BASE dummy order not in CONTEXT; idle lanes invite pushing mutually exclusive SEC dummies",
+   "evidence": "round23/report.json R23-A6, plan_issues 11, rejected r23sb-4",
+   "suggested_action": "Push nothing before the 47/49 reads; then only the BASE's SEC member",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "W1 reads: 47 from ~06:58Z, 49 ~07:40-08:45Z, 48 ~09:40-10:40Z; S0 = e10_watch/20260928T0400Z.txt (count 48)",
+   "evidence": "CONTEXT.md l.3406-3408; round23/report.json R23-A12; poll.log l.20028 (04:26:37Z all PENDING)",
+   "suggested_action": "Manual leaderboard -d within 10 min of each terminal header; CI-RAN gate for 48; S7 at the W2a decision",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "Morning brief (R23-A9) at the first header with 47+49 terminal, latest 09:30Z; Q1 cap-lift answer needed by ~23:00Z",
+   "evidence": "round23/report.json R23-A9; round22/report.json R22-A8",
+   "suggested_action": "Send one Russian message with the R23 edits; log MORNING BRIEF SENT",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "W2a 08:45-10:00Z (exp80a vs exp81, S7), W2b 12:00Z, W3 <=23:30Z, last W4 dummy push ~21:00Z",
+   "evidence": "CONTEXT.md l.3349-3356, l.3390-3392, l.3425-3426",
+   "suggested_action": "Follow TABLE v4 + S1-S7 + CI-? SCOPE",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "W126: RESULTS.md has no rows for probes 39-46 (incl. both 0.956 files)",
+   "evidence": "git log -1 -- experiments/RESULTS.md = b2be382 (26 Sep)",
+   "suggested_action": "Add rows 39-49 before the 29 Sep finals read",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "forgotten",
+   "what": "W234/R23-A10: finals draft_ru defects (DIV caveat, cap-parent line, pool, #38 rationale, exp70b wording, 11:57Z push content)",
+   "evidence": "round23/report.json R23-A10, plan_issues 9; round23/scan_hyp_finals_29sep.json",
+   "suggested_action": "Fix the draft before the 29 Sep 11:57Z push / 12:00Z proposal",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "stale",
+   "what": "W202/R23-A8: R22-A9 info line + READMIT/ILP_DIVISION_WEIGHT curator rows + softened lab caveat not in CONTEXT",
+   "evidence": "grep 'R22-A9 INFO' CONTEXT.md = 0; round23/report.json R23-A8",
+   "suggested_action": "Append after the W1-critical items",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "stale",
+   "what": "E10 loop LOOK text still '>= 0.955' while the trigger is now > our best (>= 0.957)",
+   "evidence": "experiments/lb_poll/e10_watch_loop.py l.28/l.78; experiments/e10_watch/watch_loop.log RUN 15",
+   "suggested_action": "Change at the loop's next planned edit; do not restart for text; judge signals against CONTEXT l.3423-3425",
+   "urgency": "info"
+  },
+  {
+   "kind": "deadline",
+   "what": "29 Sep: W4 00:05-01:45Z, no CI after 02:00Z, E10 until ~10:00Z, finals proposal 12:00Z (refresh 18:00Z), FINALS READ ~19:00Z, tick buffer 20:00Z, deadline 23:59Z",
+   "evidence": "CONTEXT.md l.3366-3377, l.3417-3422; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/743765",
+   "suggested_action": "Keep the schedule; verify the 11:57Z/17:57Z timers still exist",
+   "urgency": "before-finals"
+  }
+ ],
+ "summary": "Curation 23 (04:45Z 28 Sep). Landed since curation 22: R22-A1 gate + exp83a/b PASS, R22-A2 resume point/correction/memory, R22-A3 pre-score clarifications, R22-A4 via R23-A1/A2/A3 (finals card, E10 v3 NOW, S7, SEC-stack gate at 04:31Z, pre-score). Still open: R23-A11 template (overdue, before round 24 at 07:00Z), R23-A4 runbook SI fix, R23-A7 builds log + commit, R23-A5 quota (4th deferral), residues of A1 (balanced CI caveat, Russian draft) and A3 (sibling CSV sha pre-check, exp84a gate), R23-A6 push order, R23-A8 info line, R23-A10 draft fixes, W126 RESULTS rows. New insights I262-I273. W1 47/48/49 PENDING at 04:26:37Z; reads start ~06:58Z."
+}

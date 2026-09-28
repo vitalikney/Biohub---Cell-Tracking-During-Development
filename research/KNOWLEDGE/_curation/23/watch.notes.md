@@ -1,0 +1,8 @@
+- 2026-09-28T04:27Z start round 23 watch; no prior watch.json in 23/
+- 04:30Z CONTEXT now 3437 l (new l.3378-3416): R22-A1 gate 01:48 + read 01:50 PASS, R22-A3 01:48, RESUME POINT 01:48, CORRECTION 01:48, E10 signal checked 02:46; commits 9ac10c6/dc6198b/e46b7ea
+- 04:29Z read round23 report.json (R23-A1..A12, written 04:25Z local-mtime 07:25). 04:26:37Z header 47/48/49 PENDING. Not landed yet: A1-A12.
+- 04:33Z resumed after crash; read WATCHLIST (curation 22 01:42Z); now reading CONTEXT tail, round23, git
+- 04:38Z landed: R22-A1 gate l.3378 + read l.3411 PASS; R22-A2 RP l.3398 + CORRECTION l.3409 + memory index/project-lb-probe-approval updated (mtime 01:49Z); R22-A3 l.3387; R22-A4 via R23-A1 04:31Z block (l.~3418-3430, header 04:26:37Z PENDING) incl S7 (R23-A2) + SEC gate (R23-A3, partial: no (c) sha pre-check, no (d) exp84a, no SEC+CI Secondary check). Round 23 REPORT.md committed db8ba02. User reset limits 04:32Z (46c18a2): round 24 at 07:00Z.
+- 04:38Z NOT landed: R23-A4 runbook (l.206 CAP=4, l.208 REF exp58); R23-A5 quota; R23-A7 builds line + commit (9 folders untracked); R23-A8 info line; R23-A9 brief (not due); R23-A10 draft fixes; R23-A11 template (this task text still lists "consolidation 28 Sep 12:00"); W126 RESULTS rows (last b2be382); CI caveat in card is short, v2 (9) l.3187 Eric-only line stands.
+- 04:37Z WATCHLIST.md written (curation 23); line refs verified/fixed
+- 04:37Z watch.json written (15 alerts); done

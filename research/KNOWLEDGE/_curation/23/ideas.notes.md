@@ -1,0 +1,6 @@
+- 04:27:57Z 2026-09-28 start: no _curation/23/ideas.json -> incremental run over curation 22 (HEAD e46b7ea). New sources: CONTEXT l.3399-3437, round23/, new exp folders, ext_succskip.
+- 04:33:14Z 2026-09-28 resume after limit crash: ideas.json still curation-22 state (425 ideas). HEAD 46c18a2. New: CONTEXT l.3399-3453, round23/ (report.json 04:25Z + scans + v_*), exp82a-c/83c-g/84a folders, RESULTS diff.
+- 04:38:11Z patch23.py run OK -> scratch ideas_c23.json (new I-426..I-430).
+- 04:39:21Z CONTEXT grew to l.3441 (04:38Z exp85a/b/c JT knobs + W2 AMENDMENT, HEAD d14e9a3); added I-431 + updates; 431 ideas. Next: mk_gen23 -> IDEAS.md.
+- 04:42:07Z CONTEXT grew to l.3447 (04:39Z PROCESS FIX, HEAD 08ceca1): folded into I-431/I-412/I-259. ideas.json (431 ideas, 44 change records; in-plan 91->95, refuted 207->209) + IDEAS.md (6 new, 38 updated c23 markers) WRITTEN. Next: _curation/23/ideas.json.
+- 04:43:00Z: _curation/23/ideas.json written (9 alerts). DONE.

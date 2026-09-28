@@ -1243,3 +1243,36 @@ Curator logs: `research/KNOWLEDGE/_curation/4/`.
 - **New:** R22-A1 CI-STACK DUMMY GATE before the exp83a/b outputs are read; R22-A3 CI-? SCOPE contradiction + W2a/consolidation gaps; W1 read window starts ~06:58Z (hard stop 06:45Z for pre-score lines); 9 missing stack builds (R22-A6/A11); stale task template (R22-A10); round-22 closures only in research files (R22-A9); weak cap-48 lab prior for exp84a.
 - **Carried over:** RESUME POINT (R21-A4 -> R22-A2), finals card + E10 NOW line (R21-A9 -> R22-A4), GPU quota (R21-A11 -> R22-A5, estimate raised to ~20.6-22 h / 25-26.5 h at 2x), morning message (R21-A10 -> R22-A8), RESULTS rows.
 - **Curator disagreements settled here:** R22-A3 [now]/[today] -> [now]; R22-A4 [now]/[today] -> [now]; task template [today]/[now] -> [now]; RESULTS rows [info]/[before-finals] -> [info] with the FINALS READ as deadline.
+
+## 23 - 2026-09-28 ~04:50 UTC (curation 23, re-run after the round-23 curator agents failed on the weekly limit; git HEAD 08ceca1 = origin/main + untracked `experiments/exp82a-c`, `exp83c-g`, `exp84a`, `experiments/e10_watch/20260928T0443Z.txt`, `experiments/ext_succskip/`, `experiments/ext_corwin-biocel-aux/_booster/`, `experiments/ds_secw_corwin_v1/weights/`)
+
+**Sources since curation 22:**
+- `CONTEXT.md` l.3378-3447, 10 entries: CI-STACK DUMMY GATE 01:48 (l.3378); PRE-SCORE CLARIFICATIONS 01:48 (l.3387); RESUME POINT 01:48 (l.3398); P45 CORRECTION (l.3409); CI-STACK GATE READ PASS 01:50 (l.3411); E10 SIGNAL CHECKED 02:46 (l.3414); FINALS CARD + E10 v3 NOW + S7 + SEC-STACK GATE 04:31 (l.3417-3430); USER limit reset 04:32 (l.3431); DISCUSSION 743929 knobs + exp85a/b/c + W2 AMENDMENT 04:38 (l.3433-3441); PROCESS FIX 04:39 (l.3442-3447). `## 9. Literature` moved to l.3448.
+- Commits dc6198b, e46b7ea, d251648, 95276ad, db8ba02 (round 23 report), 46c18a2, d14e9a3 (exp85a/b/c), 08ceca1 (`git log`).
+- Round 23: `research/wf_ideas_v4/round23/report.json` + `REPORT.md` R23-A1..A12, 5 `scan_*.json`, 16 `v_*.json`. New probe.json files: `experiments/exp85a_k2cap6_div04_ra094/`, `exp85b_k2cap6_div04/`, `exp85c_k2cap6_ra094/`; nine untracked stack folders `experiments/exp82a_k2cap8_secn2a/` ... `exp84a_k2_cap48_fc2/`.
+- Polls and LB: `experiments/lb_poll/poll.log` to 04:36:39Z (l.20089; P47/P48/P49 PENDING, no new score); `experiments/e10_watch/watch_loop.log` RUN 15-17 (one non-trigger signal at RUN 15); `experiments/e10_watch/20260928T0443Z.txt` l.313, l.1035 (#173, 10th of 58 in the 0.956 block).
+
+**Ideas** (`IDEAS.md` CHANGES (23) l.128-137; `ideas.json` meta.curations[n=23], 44 records; `_curation/23/ideas.json`):
+- **New:** I-426 29 Sep finals proposal message (in-plan, at risk); I-427 absence-insurance pre-tick (refuted); I-428 SEC-STACK DUMMY GATE (in-plan, logged); I-429 'push the SEC dummies now' (refuted); I-430 'low-score premise is an in-sample artifact' (refuted); I-431 exp85a/b/c = John Taylor's knobs on exp70g, exp85a = W2a at dummy PASS (in-plan).
+- **Status changes:** I-412 refuted -> in-plan (via I-431). Logged, no longer at risk: I-406 finals card, I-257 RESUME POINT, I-421 clarifications, I-420 CI gate (+ PASS: I-404, I-398, I-397). Updated: I-364/I-287 (E10 NOW; SI runbook defect), I-414/I-399/I-396 (S7; exp80a/exp81 -> W3/W4), I-416 (nine stacks built), I-405 (quota 4th deferral), I-139/I-049 (READMIT re-refuted on the lowrefine coupling, then overridden by the 04:39 fix; ILP 0.4 has no direct output channel).
+- **Counts c22 -> c23:** 425 -> 431. lb-tested 55, lab-tested 24, in-plan 91 -> 95, refuted 207 -> 209, deferred 46, open 2. Strict orphan I-233; at risk I-252, I-259, I-330, I-336, I-405, I-407, I-425, I-426.
+
+**Facts and decisions** (`FACTS.md`, `DECISIONS.md` rows marked [c23]; `_curation/23/facts.json`; state as of 04:40Z, before the 04:38/04:39 entries):
+- **New facts:** F-LB-19 competitor intel (l.237); F-RUN-37 research-round availability (l.279); F-MOD-42 stack builds, SEC gate, SI rehearsal (l.349); F-TRN-55 round-23 lab rechecks + mc23 model (l.409).
+- **[c23] appends:** F-LB-01/02/10/15/17, F-RUN-33/36, F-RUL-01/05/10/12, F-MOD-40/41.
+- **Resolved contradictions:** C-26, C-159, C-164, C-170, C-175..C-178, C-181. **Updated:** C-118/163/165/172/173/180.
+- **New contradictions C-182..C-189** (l.596-603): S3 vs W2 v4 (resolved by S7); runbook SI recipe; condensed card; snapshot tracking; limit note vs reset; report timestamp; #38 rationale; stale template.
+- **DECISIONS.md:** P47-P49 status appends (l.183-185); §1 [c23] build table (l.409-424); §2 [c23] card paragraph + snapshot (l.690-692; V_pub = exp70g, proposal {V_pub, #37}); §2f E10 (l.967); §2h rows (l.1076-1091); §3 R23 rows (l.1144-1150).
+- **Gap:** exp85a/b/c are not yet in FACTS/DECISIONS/WATCHLIST (`grep -c exp85` = 0); only `IDEAS.md` I-431 covers them.
+
+**Watchlist** (`WATCHLIST.md`; `_curation/23/watch.json`):
+- **New:** W230-W234, T135-T138, I262-I273.
+- **Done/resolved:** T122 (exp83a/b PASS, l.3411), I258 (CI-? SCOPE), I216 (P45 correction), I249 (CI gate used), I261, I239/I223 (card logged).
+- **Re-mapped:** W212 -> R23-A5; W226/W229 -> R23-A7; W202 -> R23-A8; W199 + W222 -> R23-A9; W228 -> R23-A11; W227 -> R23-A12.
+- **Still overdue:** W228 template, W232 runbook SI, W212 quota, W229 builds commit, W126 RESULTS rows, W202 info line, E10 loop '>= 0.955' text.
+
+**Alerts** (`INDEX.md` TOP ALERTS, 10 after dedup):
+- **Resolved since curation 22:** R22-A1 CI gate + PASS (l.3378, l.3411); R22-A2 RESUME POINT + P45 correction + MEMORY (l.3398, l.3409); R22-A3 clarifications (l.3387); R22-A4 card + E10 NOW pre-score (l.3417-3425, condensed); R22-A6 stacks rebuilt (F-MOD-42); round 23 committed with REPORT.md (db8ba02); limit outage ended (l.3431).
+- **New:** exp85a READMIT/lowrefine coupling + ILP 0.4 no-output-channel, record node growth before submit (R23-RC-A/B); E10 runbook SI cap 4 / REF exp58 (R23-A4); SEC gate lacks sibling CSVs and clauses (R23-A3, A6); W2 plan churn + unlogged '04:5x amendment'; finals draft R23-A10 defects; R23-A8/R20-A13 CONTEXT lines.
+- **Carried over:** task template (R22-A10 -> R23-A11), GPU quota (R22-A5 -> R23-A5, 4th), morning brief (R22-A8 -> R23-A9), W1 read procedure (R22-A7 -> R23-A12), stack log/commit (R22-A11 -> R23-A7), RESULTS rows, E10 loop text.
+- **Curator disagreements settled here:** template [today]/[now] -> [now]; stack log/commit [now]/[today] -> [today]; finals draft [before-finals] (all); RESULTS rows [info], due before the FINALS READ.

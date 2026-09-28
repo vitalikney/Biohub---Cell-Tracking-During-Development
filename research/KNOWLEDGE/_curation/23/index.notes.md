@@ -1,0 +1,4 @@
+- 04:44Z index: started; no index.json present -> fresh run
+- 04:45Z index: anchors gathered (CONTEXT l.3378-3447, 9. Literature l.3448; poll 04:36:39Z all PENDING; E10 RUN 17 04:43Z #173; exp85 only in IDEAS)
+- 04:47Z index: INDEX.md rewritten (124 lines); CHANGES.md section 23 appended
+- 04:48Z index: INDEX.md trimmed to 89 lines; index.json written; done

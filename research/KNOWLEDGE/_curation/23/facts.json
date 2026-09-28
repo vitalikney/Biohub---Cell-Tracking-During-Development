@@ -1,0 +1,67 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/FACTS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/DECISIONS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/23/facts.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/23/facts.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "what": "The first W1 read (P47 exp78b) can come from ~06:58Z, then 49 at ~07:40-08:45Z and 48 at ~09:40-10:40Z. All pre-score lines are in (01:48 and 04:31). The read procedure itself (R22-A7 = R23-A12) is still only PROPOSED: S0 = e10 20260928T0400Z (#172, count 48, k = 9) or a fresher count-48 download, a manual S1 within ~10 min, and k logged. S7 applies at W2a.",
+   "evidence": "FACTS F-LB-15 [c23], F-LB-17 [c23], F-RUN-36 [c23]; CONTEXT 01:48 RESUME POINT (f) l.3406-3408, 04:31 (3) l.3425-3426; experiments/lb_poll/poll.log header 04:26:37Z; research/wf_ideas_v4/round23/report.json R23-A12",
+   "suggested_action": "Set one waiter per ref (56623073, 56624341, 56623105). Before the first terminal header, save the S0 path; at each terminal header take a manual leaderboard download as S1. Code with v3 (1). Apply S7 and PRE-SCORE CLARIFICATIONS (2) at the W2a decision (08:45-10:00Z).",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "The E10 SI recipe in the runbook still builds cap 4 with REF exp58, while the logged E10 v3 NOW line says SI = the BASE's probe.json keys (exp70g CAP 6) with REF = experiments/<BASE>. If E10 triggers and the SI is built from the runbook, it either ships cap 4 or FAILs its own gate (round-23 rehearsal: FAIL with exp58, PASS with exp70g). The loop LOOK text still says '>= 0.955'.",
+   "evidence": "FACTS C-183, C-163 [c23]; research/wf_ideas_v4/e10v3/runbook.notes.md l.206, l.208, l.213, l.235; experiments/lb_poll/e10_watch_loop.py l.28, l.78; CONTEXT 04:31 (2) l.3423-3425; research/wf_ideas_v4/round23/report.json R23-A4",
+   "suggested_action": "Apply the R23-A4 text edit to runbook section 9 before any E10 build: K from the BASE probe.json in --set order, one build call, REF = experiments/<BASE>, and a BASE-relative fork band. Re-point REF if W1 moves BASE. Leave the loop text until its next planned edit.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "The GPU quota is still unread (4th deferral; last reading 07:55/30 h on 26 Sep). The round-23 estimate text is internally inconsistent: '20.6-26.5 h used, so 2.5-5 h left' (it would be 3.5-9.4 h left). The first 28 Sep dummy push (the BASE's SEC member) comes at ~08:45Z.",
+   "evidence": "FACTS F-RUL-05 [c23], C-172 [c23]; research/wf_ideas_v4/round23/report.json R23-A5",
+   "suggested_action": "Read kaggle.com/settings once before the first dummy push and log 'GPU quota <used>/30 h at <time>'. Apply the 5 h / 3 h thresholds; if unread, use the 3-5 h case.",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "The SEC-stack gate (LOGGED 04:31 (4)) compares against the exp81 and exp80a dummy CSVs, but neither is in _dl/. A gate run without those siblings (sha12 8132ef2811d0 / a109ad024ace) cannot pass cleanly and could cost a W3/W4 slot. The nine stack folders are also still untracked and not logged in CONTEXT.",
+   "evidence": "FACTS F-MOD-40 [c23], F-MOD-42, C-170 [c23]; CONTEXT 04:31 (4) l.3426-3429; research/wf_ideas_v4/round23/report.json R23-A3 (c), R23-A6, R23-A7",
+   "suggested_action": "Download the exp81/exp80a dummy outputs read-only and match the sha12. Push only the BASE's SEC member after 47/49 (R23-A6). Log 'R22-A6 BUILDS' and commit the nine named folders as the user, with no Co-Authored-By trailer.",
+   "urgency": "today"
+  },
+  {
+   "kind": "contradiction",
+   "what": "The finals card logged at 04:31 is shorter than R23-A1 asked. It has no R20-A9 (a)-(g) text, no balanced CI caveat (Eric -0.002 vs probe 31 +0.002) and no Russian draft. The draft in scan_hyp_finals_29sep.json still has the defects listed in R23-A10: a missing DIV caveat for cap > 4, an 'own cap parent' line that contradicts #37, a narrowed pool, unconditional SEC wording and a wrong #38 rationale.",
+   "evidence": "FACTS C-184, C-180 [c23], C-188; CONTEXT 04:31 (1) l.3418-3422; research/wf_ideas_v4/round23/report.json R23-A1, R23-A10, rejected",
+   "suggested_action": "Apply the R23-A10 fixes to the draft before the 29 Sep 12:00Z send. The logged card stays the operative rule. Optionally add the balanced CI caveat as an info line before 48's terminal header (~09:40Z).",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "deadline",
+   "what": "The morning brief (R22-A8 with the R23-A9 edits) goes at the first header with 47 AND 49 terminal, latest 09:30Z. It must not wait for 48. Q1 (lift the 02:00Z 29 Sep cap, default no) needs the user's answer by ~23:00Z 28 Sep to change W4. The Q2 threshold is now 0.957 (best display + 0.001 over all COMPLETE refs).",
+   "evidence": "FACTS C-165 [c23], C-173 [c23]; research/wf_ideas_v4/round23/report.json R23-A9",
+   "suggested_action": "Send the brief with the R23-A9 edits: cite the 04:31 card, add the quota line, no absence-insurance line, no READMIT 0.94 offer, and the S7 wording if it applies. Then log 'MORNING BRIEF SENT hh:mmZ'.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "The orchestrator task template still carries stale key facts (best 0.954, finals by READ TABLE row 3, E10 >= 0.956, R8 with a new OK), which leads agents into false 'violations'. Research rounds resume after the user's 04:32 limit reset, with round 24 at ~07:00Z.",
+   "evidence": "FACTS C-189, F-RUN-37; CONTEXT 04:32 l.3431-3432; research/wf_ideas_v4/round23/report.json R23-A11, plan_issues (10)",
+   "suggested_action": "Replace the template's key-facts paragraph with the R23-A11 text before round 24 launches. Point agents to the 28 Sep 01:48 RESUME POINT and the 04:31 card.",
+   "urgency": "now"
+  },
+  {
+   "kind": "stale",
+   "what": "experiments/RESULTS.md still ends at P38. P39-P46 are scored and P47-P49 are pending.",
+   "evidence": "FACTS C-118 [c23]; experiments/lb_poll/ledger.md 04:26:38Z",
+   "suggested_action": "Add P39-P49 at the next hygiene commit, after the W1 reads, as the user with no Co-Authored-By trailer.",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 23 (state 04:40 UTC 28 Sep; HEAD 46c18a2 = origin/main). Since curation 22 (01:35Z), CONTEXT gained l.3378-3432. At 01:48, R22-A1 CI-STACK DUMMY GATE, R22-A3 PRE-SCORE CLARIFICATIONS (1)-(6), a new RESUME POINT and the P45 correction were logged, and MEMORY was rewritten to 'E10 v3'. At 01:50 exp83a/exp83b dummies PASSED (CSV c85e1c8c8a53 / bde71fe839e0). At 02:46 an E10 signal was checked and found not to be a trigger (an author's dataset sample notebook). At 04:31 the 29 SEP FINALS CARD, E10 v3 NOW (trigger >= 0.957; SI = BASE probe.json keys), S7 and the SEC/SEC+CI STACK DUMMY GATE were logged before any W1 score (header 04:26:37Z), together with an ops note on the weekly usage limit. At 04:32 the user reset the limits and research rounds resume. There was no submission and no score: P47 exp78b, P48 exp79a and P49 exp78a are all PENDING at 04:26:37Z (L > 4.34 / 4.33 / 3.59 h). Best display is 0.956 (exp70g = V_pub); LB 04:01Z is #172 of 3,961. Finals are still ticked #37 + #38, and the logged card recommends {V_pub, #37} for the user's 29 Sep pick. Nine stacks (exp82a-c, exp83c-g, exp84a) are built with matching shas but are untracked and have no dummies. Round 23 A4-A12 are PROPOSED. FACTS.md: new header; [c23] notes on F-LB-01/02/10/15/17, F-RUN-33/36, F-RUL-01/05/10/12 and F-MOD-40/41; new rows F-LB-19 (competitor intel), F-RUN-37 (research-round availability), F-MOD-42 (stack builds, SEC gate, node-row determinism, SI rehearsal) and F-TRN-55 (round-23 lab rechecks + mc23 model). Contradictions C-26, C-159, C-164, C-170, C-175..C-178 and C-181 are resolved; C-118/163/165/172/173/180 are updated; new C-182..C-189 (S3 vs W2 v4, resolved by S7; runbook SI recipe; condensed card; snapshot tracking; limit note vs reset; report timestamp; #38 rationale; stale template). DECISIONS.md: new header; P47-P49 status appends; §1 [c23] update + build table; §2 [c23] card paragraph + candidates snapshot at 04:40Z; §2f E10 paragraph; §2h (13 status appends, 16 new rows); §3 (16 status appends, 7 new R23 rows); closing paragraph."
+}

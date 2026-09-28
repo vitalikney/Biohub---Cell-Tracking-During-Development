@@ -1,0 +1,74 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/ideas.json",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/IDEAS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/23/ideas.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/23/ideas.json"
+ ],
+ "alerts": [
+  {
+   "kind": "contradiction",
+   "what": "exp85a is the next submit (~05:15Z, at dummy PASS). It sets READMIT_MIN_SCORE 0.94 on exp70g, which also lowers lowrefine's threshold on K2, so the file changes two things, not one. Round 23 refuted offering this knob about 30 minutes earlier for exactly this reason. Neither the 04:38Z entry nor the 04:39Z entry mentions the coupling. ILP_DIVISION_WEIGHT 0.4 may do almost nothing on our base, because the x138 relink replaces every ILP edge (R23-RC-B).",
+   "evidence": "CONTEXT.md l.3433-3447; experiments/exp85c_k2cap6_ra094/exp85c-k2cap6-ra094.ipynb (_LOWREFINE_MIN_SCORE = float(os.environ.get('BIOHUB_READMIT_MIN_SCORE', '0.965'))); experiments/exp85a_k2cap6_div04_ra094/probe.json; research/wf_ideas_v4/round23/v_recheck_r23-rc-a-readmit-min-score-094-lab-blind.json; research/wf_ideas_v4/round23/v_recheck_r23-rc-b-ilp-division-weight-04-no-output-.json; research/KNOWLEDGE/ideas.json I-431, I-139, I-049",
+   "suggested_action": "Before submitting exp85a: from its dummy log, record the LOWREFINE refined-count change against exp70g and the node growth (the lab band predicts about +0.60%; flag anything above +1.5%). Put the lowrefine coupling and the winner's-curse caveat in the pre-submit line: a lucky 0.957 would enter the V_pub pool. If the user wants a clean one-knob read, the 12:00Z split (exp85b or exp85c) gives it.",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "The E10 runbook section 9 still builds the SI with DIVINS_CAP=4 and REF=exp58. The rule logged at 04:31Z says SI = the BASE's probe.json keys and REF = BASE. So at a trigger, the SI either ships K2's cap 4 or fails its own gate. The same defect is in the K1 fallback. R23-A4 is not done yet.",
+   "evidence": "research/wf_ideas_v4/e10v3/runbook.notes.md l.206-212; CONTEXT.md l.3417-3430 (2); research/wf_ideas_v4/round23/scan_plancheck.json PC23-02; research/wf_ideas_v4/round23/v_plancheck_pc23-02.json; research/KNOWLEDGE/ideas.json I-287, I-364",
+   "suggested_action": "Edit runbook section 9 per R23-A4: use the BASE's keys in --set order and --si-ref = experiments/<BASE>, and add a fork-count line (exp70g 81, exp78a 86, exp78b 95). Do it before any E10 trigger. The Burhan 0.969 submit burst lands around 07-09Z.",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "The GPU quota has not been read for the 4th time running. The last reading was 07:55 of 30 h on 26 Sep, with about 20 GPU runs since, so 2.5-5 h may be left. The exp85a/exp85b dummies went out at 04:37Z with no quota reading logged. W3/W4 dummies and an E10 dummy all still have to fit.",
+   "evidence": "research/wf_ideas_v4/round23/report.json R23-A5, plan_issues 6; research/wf_ideas_v4/round23/scan_plancheck.json PC23-03; CONTEXT.md l.3433-3441; research/KNOWLEDGE/ideas.json I-405",
+   "suggested_action": "Read the quota on Kaggle Settings before the next dummy push, apply the R22-A5 thresholds, and log one line.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "The W2 plan changed three times in 4 hours: S7 at 04:31Z, the W2 AMENDMENT at 04:38Z (W2a = exp85a; exp80a/exp81 moved to W3/W4), and at 04:39Z exp85a moved to about 05:15Z. The morning brief template (R22-A8/R23-A9) and the W2a case table still describe exp80a vs exp81 in W2a. The 04:39Z entry also refers to a '04:5x amendment' for the 12:00Z slot that is not in CONTEXT yet.",
+   "evidence": "CONTEXT.md l.3417-3430 (3), l.3433-3441, l.3442-3447; research/wf_ideas_v4/round22/scan_hyp_morning_brief.json r22mb-1; research/KNOWLEDGE/ideas.json I-414, I-425, I-399, I-396",
+   "suggested_action": "Log the '04:5x amendment' (the 12:00Z slot and what happens to exp80a/exp81/S3/S7 in W3/W4), then rewrite the brief's W2a lines so they say exp85a is already submitted.",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "Nine stack notebooks are built and their shas match (exp82a-c, exp83c-g, exp84a), but they are untracked and have no CONTEXT line. The SEC-STACK GATE needs the exp81 and exp80a dummy CSVs as references, and neither CSV is in _dl.",
+   "evidence": "git status (untracked experiments/exp82a_k2cap8_secn2a/ ... exp84a_k2_cap48_fc2/); research/wf_ideas_v4/round23/scan_hyp_stack_builds.json r23sb-1; research/wf_ideas_v4/round23/report.json R23-A3, R23-A7, new_facts; CONTEXT.md l.3417-3430 (4); research/KNOWLEDGE/ideas.json I-416, I-428",
+   "suggested_action": "R23-A7: log a 'R22-A6 BUILDS' line and commit the nine folders under the user's name with no trailer. Download the exp81 and exp80a dummy CSVs and check their sha12 before the first SEC-stack dummy. Push only the current BASE's member (R23-A6).",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "The morning brief (R23-A9) is still unsent. It must go out when 47 AND 49 are terminal, and no later than 09:30Z. Q1, lifting the 02:00Z cap, needs the user's answer by ~23:00Z 28 Sep.",
+   "evidence": "research/wf_ideas_v4/round23/report.json R23-A9; research/wf_ideas_v4/round22/report.json R22-A8; research/KNOWLEDGE/ideas.json I-425, I-300",
+   "suggested_action": "Send it at the first header with both 47 and 49 terminal. Set the Q2 threshold to best display + 0.001, and leave out the absence-insurance line (I-427). Add one line on exp85a (JT knobs, already submitted).",
+   "urgency": "today"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "The 29 Sep finals proposal message (R23F-3 draft_ru, new I-426) exists only as a draft in a scan file. The R23-A10 edits are not applied yet: DIV caveat, the v2 (9) + E10 pool, a conditional SEC line, neutral exp70b wording, and the corrected #38 rationale.",
+   "evidence": "research/wf_ideas_v4/round23/scan_hyp_finals_29sep.json R23F-3 draft_ru; research/wf_ideas_v4/round23/report.json R23-A10, plan_issues 9; research/KNOWLEDGE/ideas.json I-426",
+   "suggested_action": "Save the edited draft next to the card before 29 Sep 12:00Z. Fill it after the W3/W4 reads, and put the 5 tick steps in the 11:57Z push.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "stale",
+   "what": "The workflow task template is still stale (R22-A10 -> R23-A11). It still says 'finals by READ TABLE row 3', 'best 0.954', 'E10 >= 0.956' and 'R8 with a NEW user OK'. The 04:39Z fix edited the round prompt for disclosed knobs, but nothing says the key-facts paragraph was refreshed. This curation task text repeats the stale facts too.",
+   "evidence": "CONTEXT.md l.3442-3447; experiments/workflows/biohub-research-round.js; research/wf_ideas_v4/round23/scan_plancheck.json PC23-06; research/wf_ideas_v4/round23/report.json R23-A11; research/KNOWLEDGE/ideas.json I-259",
+   "suggested_action": "Before round 24 (07:00Z), refresh the key facts: best exp70g 0.956; W1 47/48/49 refs; exp85a submitted; W2 v4 + S7 + the 04:38/04:5x amendments; E10 NOW (> our best display); the user picks the finals on 29 Sep; disclosed knobs are ACTIONABLE.",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "Several CONTEXT lines are still missing: the R22-A9 info line, the R23-A8 curator text (READMIT coupling, ILP-division reason, softened lab caveat), R20-A10, R20-A13 (due before 29 Sep 23:59Z), LESSONS H1 and the R21-A12 DC-blind lesson.",
+   "evidence": "research/wf_ideas_v4/round23/report.json R23-A8, plan_issues 8; research/wf_ideas_v4/round23/v_plancheck_pc23-09.json; research/KNOWLEDGE/IDEAS.md 'Not orphans but easy to lose'; research/KNOWLEDGE/ideas.json I-407, I-252, I-430",
+   "suggested_action": "Write one combined info line after the W1 reads. R20-A13 (the private-read addendum) has to land before the first private score.",
+   "urgency": "before-finals"
+  }
+ ],
+ "summary": "Curation 23 (2026-09-28 ~04:55 UTC) re-runs the curation that failed on the weekly limit. It updates curation 22 incrementally at HEAD 08ceca1.\n\nSources:\n- CONTEXT.md l.3378-3447: 10 new entries. These are the CI-stack gate and its PASS, the pre-score clarifications, the RESUME POINT, the probe-45 correction, the E10 signal check, the 04:31Z finals card + E10 NOW + S7 + SEC-stack gate, the 04:32Z user limit reset, the 04:38Z discussion-743929 knobs (exp85a/b/c) + W2 amendment, and the 04:39Z process fix.\n- research/wf_ideas_v4/round23/: report.json R23-A1..A12, 5 scans and 16 verdicts.\n- The untracked exp82a-c/83c-g/84a stacks and the committed exp85a-c folders.\n- poll.log to 04:36Z, and E10 runs 15-16.\n\nThe ledger goes from 425 to 431 ideas, with 44 change records.\n- in-plan 91 -> 95, refuted 207 -> 209; the other status counts are unchanged.\n- There are no new LB scores: W1 47/48/49 were still PENDING at 04:36:39Z.\n\nNew ideas:\n- I-426: the 29 Sep finals proposal message (in-plan, at-risk).\n- I-427: absence-insurance pre-tick (refuted).\n- I-428: the SEC-STACK DUMMY GATE (in-plan, logged).\n- I-429: 'push the SEC dummies now' (refuted).\n- I-430: 'the low-score premise is an in-sample artifact' (refuted).\n- I-431: exp85a/b/c, John Taylor's knobs on exp70g, which is W2a and goes as soon as its dummy passes (in-plan).\n\nKey updates:\n- The finals card (I-406), RESUME POINT (I-257), pre-score clarifications (I-421) and CI gate (I-420) are now logged, so they are no longer at-risk.\n- I-412 moves from refuted to in-plan.\n- The E10 NOW line and the SI runbook defect (I-364, I-287).\n- S7 and the W2 amendment (I-414, I-399, I-396).\n- The nine stacks are built (I-416).\n- The GPU quota is unread for the 4th time (I-405).\n\nTop alert: exp85a's READMIT 0.94 also moves lowrefine's threshold on K2. Round 23 refuted the knob on this ground, and the 04:38/04:39Z entries do not mention it.\n\nOrphans:\n- 1 strict: I-233.\n- 8 at-risk: I-252, I-259, I-330, I-336, I-405, I-407, I-425, I-426."
+}

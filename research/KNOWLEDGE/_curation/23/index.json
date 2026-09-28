@@ -1,0 +1,12 @@
+{
+  "task": "curation 23 index: INDEX.md (<= 90 lines) + CHANGES.md section 23",
+  "complete": true,
+  "written_utc": "2026-09-28T04:5xZ",
+  "files_written": [
+    "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/INDEX.md",
+    "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/CHANGES.md",
+    "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/23/index.notes.md",
+    "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/23/index.json"
+  ],
+  "alerts_source": "INDEX.md TOP ALERTS 1-10 (deduplicated from _curation/23/{ideas,facts,watch}.json)"
+}
