@@ -1,12 +1,19 @@
 {
  "version": 1,
- "last_run_utc": "2026-09-28T12:22:30Z",
- "runs": 24,
+ "last_run_utc": "2026-09-28T13:22:30Z",
+ "runs": 25,
  "signals": 1,
  "streak_429": 0,
  "good": {
   "kernels": {
    "comp_dateRun": [
+    {
+     "ref": "flexonafft/biohub-lineage-forge-precision-tracking",
+     "title": "Biohub Lineage Forge \u2014 Precision Tracking",
+     "author": "Igor Zharov",
+     "lastRunTime": "2026-09-28 13:02:36.060000",
+     "totalVotes": "110"
+    },
     {
      "ref": "kunaldesale2408/biohub-cell-tracking",
      "title": "Biohub Cell Tracking",
@@ -33,7 +40,7 @@
      "title": "optimized-biohub-max-score",
      "author": "Aman Atar",
      "lastRunTime": "2026-09-27 01:39:05.377000",
-     "totalVotes": "76"
+     "totalVotes": "77"
     },
     {
      "ref": "sarveshchhetri/robust-3d-cell-tracking",
@@ -47,7 +54,7 @@
      "title": "Biohub: Harmonic Fusion V3",
      "author": "Raunak Dey",
      "lastRunTime": "2026-09-25 09:09:04.280000",
-     "totalVotes": "209"
+     "totalVotes": "211"
     },
     {
      "ref": "denpugovkin/biohub-exp003-two-embryos",
@@ -120,13 +127,6 @@
      "totalVotes": "2"
     },
     {
-     "ref": "flexonafft/biohub-lineage-forge-precision-tracking",
-     "title": "Biohub Lineage Forge \u2014 Precision Tracking",
-     "author": "Igor Zharov",
-     "lastRunTime": "2026-09-22 14:03:58.943000",
-     "totalVotes": "110"
-    },
-    {
      "ref": "asymortenson/biohub-v5c-final",
      "title": "biohub-v5c-final",
      "author": "Asy Mortenson",
@@ -154,14 +154,14 @@
      "title": "Biohub: Harmonic Fusion V3",
      "author": "Raunak Dey",
      "lastRunTime": "2026-09-25 09:09:04.280000",
-     "totalVotes": "209"
+     "totalVotes": "211"
     },
     {
      "ref": "amanatar/optimized-biohub-max-score",
      "title": "optimized-biohub-max-score",
      "author": "Aman Atar",
      "lastRunTime": "2026-09-27 01:39:05.377000",
-     "totalVotes": "76"
+     "totalVotes": "77"
     },
     {
      "ref": "kunaldesale2408/biohub-cell-tracking",
@@ -175,7 +175,7 @@
      "title": "Biohub 0.953 LB | ORIGINAL \u2b50\ufe0f\u2b50\ufe0f\u2b50\ufe0f\u2b50\ufe0f\u2b50\ufe0f",
      "author": "Anvith Pothula",
      "lastRunTime": "2026-09-21 09:47:58.620000",
-     "totalVotes": "223"
+     "totalVotes": "224"
     },
     {
      "ref": "amanatar/biohub-geometric-fusion",
@@ -196,7 +196,7 @@
      "title": "Biohub Harmonic Fusion",
      "author": "Igor Zharov",
      "lastRunTime": "2026-09-10 16:39:37.593000",
-     "totalVotes": "287"
+     "totalVotes": "288"
     },
     {
      "ref": "reyhanksatria/biohub-cell-tracking-0-947-lb",
@@ -209,7 +209,7 @@
      "ref": "flexonafft/biohub-lineage-forge-precision-tracking",
      "title": "Biohub Lineage Forge \u2014 Precision Tracking",
      "author": "Igor Zharov",
-     "lastRunTime": "2026-09-22 14:03:58.943000",
+     "lastRunTime": "2026-09-28 13:02:36.060000",
      "totalVotes": "110"
     },
     {
@@ -303,7 +303,7 @@
      "title": "Biohub 0.953 LB | ORIGINAL \u2b50\ufe0f\u2b50\ufe0f\u2b50\ufe0f\u2b50\ufe0f\u2b50\ufe0f",
      "author": "Anvith Pothula",
      "lastRunTime": "2026-09-21 09:47:58.620000",
-     "totalVotes": "223"
+     "totalVotes": "224"
     },
     {
      "ref": "anvithpothula/divqc-ground-truth-free-division-qc",
@@ -447,7 +447,7 @@
      "title": "optimized-biohub-max-score",
      "author": "Aman Atar",
      "lastRunTime": "2026-09-27 01:39:05.377000",
-     "totalVotes": "76"
+     "totalVotes": "77"
     },
     {
      "ref": "amanatar/s6e9-realmlp-exact-value-neural-network-gpu",
@@ -513,12 +513,12 @@
   }
  },
  "good_from": {
-  "comp_dateRun": "20260928T1222Z.txt",
-  "comp_scoreDescending": "20260928T1222Z.txt",
-  "user_anvithpothula": "20260928T1222Z.txt",
-  "user_thtennant": "20260928T1222Z.txt",
-  "user_amanatar": "20260928T1222Z.txt",
-  "status_amanatar__optimized-biohub-max-score": "20260928T1222Z.txt",
-  "status_anvithpothula__biohub-0-953-lb-original": "20260928T1222Z.txt"
+  "comp_dateRun": "20260928T1322Z.txt",
+  "comp_scoreDescending": "20260928T1322Z.txt",
+  "user_anvithpothula": "20260928T1322Z.txt",
+  "user_thtennant": "20260928T1322Z.txt",
+  "user_amanatar": "20260928T1322Z.txt",
+  "status_amanatar__optimized-biohub-max-score": "20260928T1322Z.txt",
+  "status_anvithpothula__biohub-0-953-lb-original": "20260928T1322Z.txt"
  }
 }

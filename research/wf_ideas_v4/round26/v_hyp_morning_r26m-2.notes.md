@@ -1,0 +1,10 @@
+# v_hyp_morning_r26m-2 notes (2026-09-28T13:37:00Z)
+- Sources read: CONTEXT.md l.3700-3923 (11:17Z R25-A1/A2 AMEND 4 depth cap; 12:17Z morning clause; 12:23Z risk stack 'not public fitting'; 12:25Z user confirm 'morning = stack of the night winners'; 13:14Z exp89q/r PASS, GPU ~2.5-3 h).
+- scan_hyp_morning.json R26M-1..7 (table under test = R26M-2; exp89s 8ed72e32, exp89t 76b898dd, exp89u 6df9c9b6, exp89l cad1d47f; 4 dummies 1.35-1.9 GPU-h).
+- CONFLICT 1 (scan_hyp_finals.json finding at l.56): exp89u as partner dominated by exp75 on bronze in all 15 mc26 runs (.797 vs .825; .690 vs .793; .829 vs .851); 'should not take a slot ahead of exp89s'. -> rows A3/B1/B3 spend a slot + ~0.4 GPU-h on a dominated option.
+- CONFLICT 2 (scan_recheck.json l.6-16): old 48-video lab sign-right on ILP axis (exp12 vs probe 50) -> DIS optimum S~1.66, DIS 2.25 ~-0.0007, dummy exp89p->exp89q safe divisions 69->67, readmits -83. Rule: DIS stays in a morning stack only if its ISOLATED read is '+'; in the exp89r branch isolation needs the double difference [exp89r-exp89p]-[exp87a-exp85a]. R26M-2 puts DIS into M1 by default (A2: P not '+', the likely case since '+' needs >= 0.959) and into A4/B2 defaults incl. 'pending' cases, with no DIS read. Also against user 12:25Z 'stack of the night winners' (DIS is not a winner at 08:45Z in branch A).
+- ISSUE 3: branch keyed on C51, not on the stack actually submitted at 00:05Z. 12:25Z: 51 not terminal at freeze -> exp89q; if 51 then reads '+' later, table goes to branch A with Rr undefined (exp89r never submitted). Key on realised stack.
+- ISSUE 4: depth cap 'cap + 2 levers' still logged (11:17Z, 11:26Z, 12:17Z 'K+SEC+CI is not a file'); R26M-2 relies on 'precedent' but does not log the supersede line (scan_plancheck PC26 depth-cap action gives the text). Without it A1 = exp89l is barred.
+- ISSUE 5: 4 dummies up to 1.9 GPU-h of ~2.5-3 h; user was told 2 morning dummies ~1.1 h. Realised-branch only = 1-2 dummies.
+- ledger: tools/runtime_ledger.py l.82 regex exp89[abcghilmnor] -> exp89t would be misfiled safetail (confirmed).
+- Verdict: REFUTED as written; fix = table v1.1 below (in JSON).

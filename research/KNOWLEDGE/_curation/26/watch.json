@@ -1,0 +1,143 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/WATCHLIST.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/26/watch.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/26/watch.json"
+ ],
+ "alerts": [
+  {
+   "kind": "forgotten",
+   "what": "W267 (R26-A6): answer the user's question 'ресерчеры активны?' with the R26-A6 message: loops alive, round 26 done 16:50 MSK, next 18:17 MSK; night unchanged; morning v1.1; questions Q-M1 (exp89t), Q-M2 (exp89u), depth-cap reading",
+   "evidence": "research/wf_ideas_v4/round26/report.json R26-A6 (covered_by_existing_approval false); experiments/e10_watch/watch_loop.log RUN 25 13:22:51Z; experiments/discussions/feed_loop.log 13:38:27Z; experiments/lb_poll/poll.log l.23017 (13:44:04Z)",
+   "suggested_action": "Send one Russian message now (MSK first), default NO on exp89t/exp89u, log the answers in CONTEXT",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "W262 (R26-A1): no R8 COVERAGE line for the night files exp89p/q/r; the 00:04Z pre-submit check 'this R8 COVERAGE line is present' fails for all three; the 00:00Z line still says 'Q3 open'",
+   "evidence": "research/wf_ideas_v4/round26/report.json R26-A1, plan_issues 1; round26/v_plancheck_pc26-04.notes.md; CONTEXT.md l.3311-3315, l.3604, l.3831-3832 (only older files); Q3 yes at l.3834",
+   "suggested_action": "Log the one-line coverage extension now (no code), mark 'Q3 open' superseded",
+   "urgency": "now"
+  },
+  {
+   "kind": "forgotten",
+   "what": "W264 (R26-A3 (1)(2)): exp89s (K + DIS 2.25, sha8 8ed72e32) not built; ledger regex lacks 't' so exp89t would be misfiled as safetail",
+   "evidence": "research/wf_ideas_v4/round26/report.json R26-A3, new_facts 5; tools/runtime_ledger.py l.82 'exp89[abcghilmnor]'; ls experiments (no exp89s)",
+   "suggested_action": "Build exp89s (STOP unless 8ed72e32), log the gate before reading output, push the dummy after the GPU + dataset checks; add 't' + test to the ledger",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "W269: GPU quota unmeasured since 04:55Z; estimates 2.2 h / 2.5-3 h / ~3.6 h disagree",
+   "evidence": "research/wf_ideas_v4/round26/report.json new_facts 11, plan_issues 10; CONTEXT.md l.3922-3923",
+   "suggested_action": "Read the Kaggle Settings page before the exp89s push; else budget with 2.2 h (exp89s + exp89l <= ~1.05 GPU-h)",
+   "urgency": "now"
+  },
+  {
+   "kind": "stale",
+   "what": "W268 (R26-A7): round task text still said best 0.957 / probe 50 pending / GPU ~4 h; this curation task text also still names the passed R8 27 Sep and consolidation 28 Sep 12:00 examples",
+   "evidence": "research/wf_ideas_v4/round26/report.json R26-A7, plan_issues 11; CONTEXT.md l.3856-3862 (0.958)",
+   "suggested_action": "Refresh KEY FACTS before round 27 at 15:17Z (18:17 MSK)",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "W263 (R26-A2): the 29 Sep morning has no valid pre-score rule; the 12:17Z MORNING clause conflicts with the user's 'not public fitting' condition",
+   "evidence": "research/wf_ideas_v4/round26/report.json R26-A2, plan_issues 2-3; CONTEXT.md l.3871-3907; grep 'MORNING TABLE' in CONTEXT.md = 0",
+   "suggested_action": "Log MORNING TABLE v1.1 pre-score (with the depth-cap supersede for {K, SEC, DIS 2.25, CI}) before probe 51 reads (~21:30Z)",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "W266 (1) (R26-A5): exp75 PARTNER RULE v2 must be logged pre-score before exp75's 00:06Z submit (V_pub became non-CI at 12:16Z)",
+   "evidence": "research/wf_ideas_v4/round26/report.json R26-A5 (1); round26/v_hyp_finals_r26f-2.notes.md; CONTEXT.md l.3744-3748 (R25 rule)",
+   "suggested_action": "Log the rule before 00:06Z 29 Sep (03:06 MSK)",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "T148: probe 51 exp87a read ~21:30-22:15Z (tail ~23:09Z) decides the 00:05Z stack (exp89r on '+'/'0u', else exp89q) and, in branch A, the exp89l build + dummy before the freeze",
+   "evidence": "CONTEXT.md l.3863-3870, l.3899-3904; research/wf_ideas_v4/round26/report.json R26-A3 (3); experiments/lb_poll/poll.log l.23017 PENDING",
+   "suggested_action": "Read with REF exp85a 0.958; in branch A build exp89l (STOP unless cad1d47f) and gate vs the exp89p dummy",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "T143 + W265 (R26-A4): the 23:30Z freeze line must carry read codes for exp89r/q/p, the MASKING relaxation, night hygiene (-m tokens, spacing from actual submit, exp75 v1), the finals PENDING clause and morning exclusions",
+   "evidence": "research/wf_ideas_v4/round26/report.json R26-A4 (a)-(e), plan_issues 4-7; CONTEXT.md l.3713",
+   "suggested_action": "Write the freeze line pre-score at 23:30Z quoting the last poll header",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "T20/T107: night batch 29 Sep 00:05 exp89r|exp89q, 00:06 exp75, 00:46 exp89p (fallback exp83c 00:07); all dummies PASSED",
+   "evidence": "CONTEXT.md l.3899-3907, l.3908-3920",
+   "suggested_action": "Run the 00:04Z checklist: R8 coverage (W262), dataset baseline (W261), no duplicate, header < 15 min",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "forgotten",
+   "what": "W126: RESULTS.md has no rows for probes 47-50 (0.955 / 0.957 / 0.955 / 0.958); the last probe row is 46",
+   "evidence": "experiments/RESULTS.md l.78-79; CONTEXT.md l.3530, l.3615, l.3639, l.3856",
+   "suggested_action": "Add rows 47-50 now, 51-54 as they read, before the 12:03Z card",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "risk",
+   "what": "W270: cron coverage gaps: the 17:57Z tick check, a post-tick SELECTED check, the 19:30Z notify job (R26-A4 (d)) and the 23:00-23:45Z final LB snapshot are not in the session cron; all jobs are session-only",
+   "evidence": "CONTEXT.md l.3709-3716, l.3849, l.3854-3855; research/wf_ideas_v4/round26/report.json R26-A4 (d)",
+   "suggested_action": "Confirm the 22:43 MSK reminder and 00:05 MSK notify job exist; add the missing jobs",
+   "urgency": "today"
+  },
+  {
+   "kind": "contradiction",
+   "what": "The logged depth cap 'cap + 2 levers' (K + SEC + CI is not a file) contradicts the user-confirmed deeper exp89r (cap + K + SEC + DIS + CI)",
+   "evidence": "CONTEXT.md l.3753 (AMEND 4 scope), l.3871-3884, l.3899-3904; research/wf_ideas_v4/round26/report.json plan_issues 3",
+   "suggested_action": "Log the supersede line limited to {K, SEC, DIS 2.25, CI} (R26-A2 (0)) and show it to the user (W267 (vi))",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "I310: the session never ticks the finals (classifier block); if the user does nothing, #37 (0.954) + #38 (0.953) stay; mc26 ticked pair bronze .48-.66 vs {exp85a, exp75} ~.83",
+   "evidence": "CONTEXT.md l.3851-3855; research/wf_ideas_v4/round26/report.json new_facts 9",
+   "suggested_action": "Every proposal (12:03Z, 18:37Z) and notify job must state that the user's own tick by 20:00 UTC (23:00 MSK) is the only path",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "I303: the 12:23Z claim 'stack vs exp89p isolates DIS 2.25' holds only for exp89q; with exp89r, exp89r - exp89p = DIS + CI (double difference, needs |dd| >= 0.002)",
+   "evidence": "research/wf_ideas_v4/round26/scan_recheck.notes.md; CONTEXT.md l.3896",
+   "suggested_action": "Put the DIS double-difference code into MORNING TABLE v1.1 and tell the user the stack is cleanly readable only in the non-CI variant",
+   "urgency": "today"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "I308: 743006 thread (Georgy Mamarin, 26 Sep): host says hidden test shares no embryos with train; base rate ~8/10 that a public-best improvement also wins on private; only in a scan note",
+   "evidence": "research/wf_ideas_v4/round26/scan_hyp_finals.notes.md (743006 line); CONTEXT.md l.3908-3914 logs only g john rao",
+   "suggested_action": "Add as an info row on finals card v4",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "risk",
+   "what": "I306: DIS 2.25 dummies run +15-20% slower; exp89r took 1,959 s vs rule v2 2,100 s; exp89l/exp89t gates may be thin",
+   "evidence": "research/wf_ideas_v4/round26/report.json new_facts 6; CONTEXT.md l.3920",
+   "suggested_action": "Log a thin-margin flag above 2,000 s in the exp89l gate",
+   "urgency": "today"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "I304: an UP code '0' (0 teams passed) is 'unresolved', never 'lower'",
+   "evidence": "research/wf_ideas_v4/round26/scan_hyp_finals.notes.md",
+   "suggested_action": "Keep '0' files in the finals pool per R26-A4 (d)",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "stale",
+   "what": "W246/W257: REPORT.md for rounds 24-26 never rendered; round 26 folder untracked",
+   "evidence": "git status 13:52Z; ls research/wf_ideas_v4/round2*/REPORT.md (rounds 20-23 only); research/wf_ideas_v4/round26/report.notes.md",
+   "suggested_action": "Commit round26/ with named paths as the user, no Co-Authored-By",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 26 (28 Sep ~14:00Z). Researchers/loops are active: LB poller 13:44:04Z, E10 watch RUN 25 13:22Z (0 signals), discussion feed 13:38Z (0 new), round 26 finished 13:50Z with R26-A1..A7; next round 15:17Z (18:17 MSK). Since curation 25 all R25 actions landed (A2 amendment, AMEND 4, exp88c gate, exp75 line, uptest, ledger); probe 50 exp85a read 0.958 R+ (rank 134, UP 21); probe 51 exp87a submitted 12:14:57Z, read ~21:30-22:15Z; the user said Q3 yes and confirmed the night (00:05 exp89r|q, 00:06 exp75, 00:46 exp89p; all dummies PASS); the fallback tick was blocked, so only the user ticks (by 20:00 UTC). None of R26-A1..A7 is in CONTEXT yet: most urgent are the R26-A6 answer to the user's question, the R8 coverage line for exp89p/q/r, the exp89s build + ledger 't', the GPU read, MORNING TABLE v1.1 and exp75 partner rule v2 before the night; RESULTS.md still lacks probes 47-50."
+}

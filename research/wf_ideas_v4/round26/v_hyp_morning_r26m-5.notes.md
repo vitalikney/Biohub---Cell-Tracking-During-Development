@@ -1,0 +1,12 @@
+# v_hyp_morning R26M-5 notes (2026-09-28)
+- 2026-09-28 ~14:0xZ: no prior answer file; started.
+- CONTEXT l.2546-2548 (26 Sep 21:56Z cap-6 lab arm): cap6 vs ins35 pooled -0.00057 (44b6 -0.00079, 6bba -0.00052), boot90 -0.00125..-0.00011; 85 extra insertions 0 TP / 4 FP / 81 unannotated (unannotated = free on the metric) -> lab verdict rests on n=4 annotated hits; magnitude <= ~0.0006.
+- Public cap ladder: cap4 #37 0.954, cap6 exp70g 0.956, cap8 0.955, cap12fc2 0.955 -> every cap>4 beats cap4 on public (same embryo, so not private proof, but not a lone spike).
+- CONTEXT 07:28Z: K node delta identical across caps (+1,076 nodes) -> exp89u display ~0.956 is predictable; the read carries ~no decision information (K sign on private is not testable on public).
+- CONTEXT 11:17Z R25-A4: exp75 dummy edges = exp79a minus 6 cap-6 insertions -> cap4 vs cap6 = ~6 edges on the dummy; D hedges a tiny lever.
+- round26/scan_hyp_finals.json R26F (b): 'exp89u as a partner is dominated by exp75 on bronze in all 15 runs (exp85a .797 vs .825; K pessimistic .690 vs .793; exp89s .829 vs .851); hedges only the cap lever and loses the K hedge; edges exp75 only on silver in 2 runs (<= .009); useful only if exp75 fails its gate; should not take a slot ahead of exp89s.' -> same-round finals model contradicts R26M-2 row B1 (exp89u ahead of exp89s in M1).
+- Timing: M2 non-CI by 11:30Z, L 7.36-7.54 h -> reads 18:52-19:03Z (21:52-22:03 MSK); user may tick from 20:00 MSK (17:00Z) -> exp89u may not even be visible at an early tick.
+- exp75 (00:06Z) reads ~09:06-09:36Z, before the M2 decision -> 'exp75 failed' is observable in time; that is the only condition where exp89u has a role.
+- No exp89u folder exists (ls experiments). GPU ~2.5-3 h at 13:14Z; exp89s+exp89t ~0.95 h, exp89l ~0.55 h, exp89u ~0.4 h.
+- VERDICT: refuted (value); feasibility OK (one-line cap diff, sha 6df9c9b6 in mirror, gates sharp). Fix: demote to a fallback dummy behind exp89s/exp89t/exp89l, used only if exp75 reads ERROR/NO-OP/<=0.954.
+- 13:39Z: JSON written.

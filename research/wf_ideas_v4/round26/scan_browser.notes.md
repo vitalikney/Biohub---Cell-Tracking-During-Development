@@ -1,0 +1,10 @@
+# round26 scan_browser notes (2026-09-28T13:18:25Z)
+- 13:18Z e10_snapshot -> experiments/e10_watch/20260928T1318Z.txt CHANGES=8 (vs 1222Z). Only kernel change: flexonafft/biohub-lineage-forge-precision-tracking lastRun 09-22 -> 09-28 13:02:36 (0.947). x138/amanatar/thtennant no change. LB: 0.955 93->97, 0.956 69->68, 0.957 41->42, 0.969 7->8; >=0.955 344->348. P2 largest group 0.
+- Intermediate diffs: 1122Z (kunaldesale re-run 10:41Z; our rank 153->155), 1222Z (OURS 0.957->0.958 rank 134 = probe 50 exp85a, already in CONTEXT 12:16Z; Hira Norm 0.953->0.958).
+- Ours 1318Z: rank 134, 0.958, 13th of 20 in 0.958 block (ranks 122-141), 121 strictly above; sub count 52.
+- Digests 1036Z..1307Z: 0 new topics; 1 new comment = 743006 g john rao 12:27Z (two embryos, first private second public) - already in CONTEXT 12:40Z. E10 FLAG none (best public nb 0.953).
+- LB diff 1017Z (r25) -> 1318Z (scratch lbd26.py): 0.953 423->420, 0.954 134->140, 0.955 90->97, 0.956 68->68, 0.957 42->42, 0.958 18->20, 0.959 19->18, >=0.960 100->103, >=0.970 9->9. Top 14 unchanged; Quantizr 0.966->0.969 (#26->#15, sub 05:49Z). >=0.957 changes: Lime1123 0.959->0.965, bot 0.963->0.964, tyffee 0.959->0.961, Thirst 0.956->0.960, Kito 0.956->0.959, ours 0.957->0.958, Hira Norm 0.953->0.958 (one step, 05:10Z), youill0317 0.956->0.957.
+- Chrome 13:2xZ: discussion list (Recently Posted) - no new topic; newest activity 743006 g john rao '1h ago' (seen); 743929 last comment 9h ago Justin CH123 (seen). https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion?sort=published
+- Chrome: flexonafft Lineage Forge page shows 'Version 10 of 12', Public Score 0.946, '6 days ago' -> 13:02Z is a run of a 0.946/0.947 notebook, below x138; not pulled. https://www.kaggle.com/code/flexonafft/biohub-lineage-forge-precision-tracking
+- CLI dateCreated: newest kernel still tobimichigan (24 Sep). scoreDescending top unchanged (x138 family 0.953).
+- Overview: banner 'A DAY TO GO' (was '2 DAYS TO GO'); timeline unchanged (Final Submission Deadline September 29, 2026, 11:59 PM UTC); 3,966 teams, 92,534 submissions (+380 vs r25 92,154). No host post.

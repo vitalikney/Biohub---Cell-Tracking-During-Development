@@ -1,0 +1,45 @@
+{
+ "summary": "Round-26 delta scan, 13:18-13:30 UTC 28 Sep (16:18-16:30 MSK), against round 25 (10:17Z). Nothing actionable: no new public notebook above 0.953, no new disclosed knob, no host change. Our position: 0.958 (probe 50 exp85a, already read in CONTEXT 12:16Z), rank #134 of 3,966, 121 strictly above, 13th of 20 in the 0.958 block. E10 P1: experiments/e10_watch/20260928T1318Z.txt CHANGES=8 vs 1222Z. The only kernel change is a run of flexonafft Lineage Forge (0.946/0.947) at 13:02Z. x138, amanatar and thtennant are unchanged, the P2 largest group is 0, and the 1122Z and 1222Z windows also had largest groups of 0 and 1. E10 FLAG none in all 6 digests (1036Z-1307Z). LB 1017Z->1318Z: 0.953 423->420, 0.954 134->140, 0.955 90->97, 0.956 68->68, 0.957 42->42, 0.958 18->20, 0.959 19->18, >=0.960 100->103, >=0.970 9->9. Top 14 unchanged; Quantizr 0.966->0.969 moved to #15. Discussion: 0 new topics; 1 new comment (743006 g john rao 12:27Z, two-embryo split), already logged in CONTEXT 12:40Z. Overview: 'A DAY TO GO', timeline unchanged, 92,534 submissions (+380). Nothing pulled.",
+ "findings": [
+  {
+   "id": "r26-e10-p1-null",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "E10 P1 at 13:18Z: CHANGES=8 vs 1222Z. The only kernel-list change is flexonafft/biohub-lineage-forge-precision-tracking lastRunTime 2026-09-22 14:03 -> 2026-09-28 13:02:36. Chrome shows its page as 'Version 10 of 12', Public Score 0.946, updated '6 days ago', so this is a 0.946/0.947-family re-run below x138 with no new idea visible, and it was not pulled. Other windows since r25: 1122Z kunaldesale2408 re-run 10:41Z (0.953, seen before); 1222Z no kernel change. x138 anvithpothula/biohub-0-953-lb-original, amanatar/optimized-biohub-max-score and thtennant show no change. By CLI dateCreated, the newest competition kernel is still tobimichigan (24 Sep). By scoreDescending the top is still the 0.953 x138 family. P2 look-check: largest group 0 (1318Z), 0 (1122Z), 1 (1222Z), so no look-signal and nothing for e10_port_gate.py.",
+   "evidence": "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/experiments/e10_watch/20260928T1318Z.txt ; experiments/e10_watch/20260928T1122Z.txt ; experiments/e10_watch/20260928T1222Z.txt ; https://www.kaggle.com/code/flexonafft/biohub-lineage-forge-precision-tracking ; experiments/discussions/digest_20260928T1307Z.md ('E10 FLAG: none', flag > 0.958)",
+   "action": "None. E10 trigger stays >= 0.959 (CONTEXT 12:16Z); the feed flag threshold (> 0.958) already matches it."
+  },
+  {
+   "id": "r26-lb-delta",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "LB 13:18Z vs 10:17Z (r25): 3,966 teams. Ours 0.958 at #134 (was #153 at 0.957), 121 strictly above, 13th of 20 in the 0.958 block (ranks 122-141), SubmissionCount 52, last 05:02:30 (probe 50). Probe 51 exp87a (12:14:57Z) is not yet counted. Counts: 0.953 423->420, 0.954 134->140, 0.955 90->97, 0.956 68->68, 0.957 42->42, 0.958 18->20, 0.959 19->18, >=0.960 100->103, >=0.970 9->9. Top 20: #1-#14 unchanged (yu4u 0.978, Sergio Alvarez 0.976, Gabriel 0.975, taiseiu 0.974, ...). Quantizr 0.966->0.969 (#26->#15, sub 05:49Z). Other changes at >= 0.957: Lime1123 0.959->0.965, the bot team 0.963->0.964, tyffee 0.959->0.961, Thirst 0.956->0.960, Kito 0.956->0.959, Hira Norm 0.953->0.958 in one step (sub 05:10Z, a single team, not a P2 group), youill0317 0.956->0.957. Every changed row was submitted 00:00-06:43Z 28 Sep, which is the ~7 h latency tail of the daily burst.",
+   "evidence": "experiments/e10_watch/20260928T1017Z.txt vs experiments/e10_watch/20260928T1318Z.txt (leaderboard_rows), row-diffed by TeamId with the scratch script lbd26.py; CSV biohub-cell-tracking-during-development-publicleaderboard-2026-09-28T13:18:56.csv",
+   "action": "None. Probe 51 (exp87a) is expected to read ~21:30-22:15Z (00:30-01:15 MSK) and decides exp89r vs exp89q at the 23:30Z freeze per CONTEXT 12:25Z."
+  },
+  {
+   "id": "r26-discussion-delta",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "Discussion since r25: 0 new topics. The one new comment is 743006 by g john rao at 12:27Z: 'there are two embryos in the hidden test set. the first one is private and the second is public'. It is already logged in CONTEXT 12:40Z and discloses no knob. In the Chrome list (Recently Posted), 743929 (John Taylor) still shows 'Last comment 9h ago by Justin CH123' (seen), and John Taylor has not answered further. Under AGGRESSIVE MODE there is no new disclosed knob, value or technique, so nothing new is actionable.",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/743006 ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion?sort=published ; experiments/discussions/digest_20260928T1237Z.md",
+   "action": "None."
+  },
+  {
+   "id": "r26-overview-unchanged",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "Overview banner now reads 'A DAY TO GO' (r25: '2 DAYS TO GO'). The timeline is unchanged: 'September 29, 2026 - Final Submission Deadline', 11:59 PM UTC. 13,475 entrants, 4,544 participants, 3,966 teams, 92,534 submissions (+380 vs r25). There is no host announcement, and the pinned topics are the same (workshop, welcome, getting started).",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/overview",
+   "action": "None."
+  },
+  {
+   "id": "r26-task-facts-stale",
+   "kind": "recheck-old",
+   "urgency": "info",
+   "what": "The task text's KEY FACTS (11:20Z) still say 'best public = 0.957 exp79a' and 'probe 50 PENDING'. Probe 50 exp85a has since read 0.958 (CONTEXT 12:16Z; rank 134), probe 51 exp87a was submitted at 12:14:57Z, and the night list was confirmed by the user at 12:25Z (exp89r/exp89q, exp75, exp89p). The E10 trigger is now >= 0.959.",
+   "evidence": "CONTEXT.md lines ~3856-3920 (entries 12:16Z, 12:17Z, 12:23Z, 12:25Z, 13:14Z)",
+   "action": "Refresh KEY FACTS in the next round's task text: best 0.958 exp85a, probe 51 pending, E10 >= 0.959."
+  }
+ ]
+}

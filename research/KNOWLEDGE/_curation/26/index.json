@@ -1,0 +1,74 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/INDEX.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/CHANGES.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/26/index.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/26/index.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "what": "User asked 'ресерчеры активны?': send the R26-A6 reply (yes; poller 14:04:10Z, E10 watch 13:22Z, feed 13:38Z, round 26 done 13:50Z, next rounds 18:17/20:47/23:17 MSK) with Q-M1 exp89t, Q-M2 exp89u (both default NO) and the depth-cap reading",
+   "evidence": "experiments/lb_poll/poll.log l.23139; experiments/e10_watch/watch_loop.log RUN 25; experiments/discussions/feed_loop.log 13:38:27Z; research/wf_ideas_v4/round26/report.json R26-A6; WATCHLIST.md W267; IDEAS.md I-488",
+   "suggested_action": "Send one short Russian message (MSK first) now and log the answers in CONTEXT",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "R8 COVERAGE line names none of the night files exp89p/q/r and still says 'Q3 open'; the 00:04Z pre-submit check fails for all three",
+   "evidence": "CONTEXT.md l.3311-3315, l.3834; FACTS.md C-213; round26/report.json R26-A1; WATCHLIST.md W262",
+   "suggested_action": "Log the R26-A1 coverage line now",
+   "urgency": "now"
+  },
+  {
+   "kind": "forgotten",
+   "what": "exp89s (K + DIS 2.25, sha8 8ed72e32) not built; GPU unmeasured since 04:55Z (2.2-3.6 h estimates); tools/runtime_ledger.py l.82 lacks 't' so exp89t would be filed safetail",
+   "evidence": "round26/report.json R26-A3, new_facts 11; tools/runtime_ledger.py l.82; FACTS.md F-MOD-45 [c26], C-206; WATCHLIST.md W264, W269",
+   "suggested_action": "Read the Settings quota + dataset baseline, build exp89s (STOP unless 8ed72e32), log the gate, push dummy; add 't' + test to the ledger",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "Logged depth cap 'cap + 2 levers' contradicts the user-confirmed 4-lever exp89r; the 12:17 MORNING clause breaks the user's 'not public fitting' condition, so the morning has no valid pre-score rule",
+   "evidence": "CONTEXT.md l.3753-3757, l.3841, l.3880-3891, l.3899-3907; FACTS.md C-211, C-212; round26/report.json R26-A2",
+   "suggested_action": "Log the supersede for {K, SEC n2a, DIS 2.25, CI} + MORNING TABLE v1.1 pre-score before ~21:30Z",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "P51 exp87a (56640366) PENDING at 14:04:10Z; its read (~21:30-22:15Z) picks exp89r vs exp89q at the 23:30Z freeze; the MASKED rule could lose an exp89r '0u' to exp75's overlap; DIS reads only as a double difference in branch A",
+   "evidence": "poll.log l.23142; CONTEXT.md l.3785-3786, l.3863-3870, l.3899-3904; FACTS.md C-214; WATCHLIST.md T148, W265, I303",
+   "suggested_action": "Pre-register R26-A4 (a)-(e) codes and the masking relaxation in the 23:30Z freeze line; default exp89q if P51 not terminal",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "exp75 PARTNER RULE v2 must be logged before the 00:06Z exp75 submit (or A2 (5) kept explicitly); verifiers disagreed on the 0.954 floor",
+   "evidence": "CONTEXT.md l.3744-3748; round26/report.json R26-A5 (1); FACTS.md C-216; WATCHLIST.md W266",
+   "suggested_action": "Decide and log before 00:06Z 29 Sep (03:06 MSK)",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "experiments/RESULTS.md lacks rows for P47-P50 (0.955/0.957/0.955/0.958); round task KEY FACTS still said best 0.957; cron lacks the 17:57Z tick check, 19:30Z notify job and final LB snapshot",
+   "evidence": "experiments/RESULTS.md l.78-79; FACTS.md C-118, C-218; round26/report.json R26-A7; WATCHLIST.md W126, W268, W270",
+   "suggested_action": "Add RESULTS rows 47-50; refresh KEY FACTS before round 27 (15:17Z); add the missing cron jobs",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "Finals card v4 (V_pub now non-CI exp85a, Q3 yes, single-embryo caveat, 743006 host note) before 07:23Z, sent 12:03Z 29 Sep; the session never ticks, only the user's tick by 20:00 UTC counts",
+   "evidence": "CONTEXT.md l.3851-3855; FACTS.md F-RUL-22, C-215; round26/report.json R26-A5; WATCHLIST.md W266, I308",
+   "suggested_action": "Store card v4 with the logged tie order and a PENDING line; every proposal states the manual tick",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "Strict orphan I-233 (poller error_description); dummy-clip GT lab I-496 only in scratch; round26/ untracked, no REPORT.md for rounds 24-26",
+   "evidence": "IDEAS.md ORPHANS l.799; WATCHLIST.md W246/W257, I305",
+   "suggested_action": "Close I-233 in one line; commit round26/ as the user after the night freeze",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Yes, the researchers are active. At about 14:10 UTC (17:10 MSK) the leaderboard poller was running (last check 14:04 UTC), the public-notebook watch had run at 13:22 UTC and found nothing, and the discussions feed had run at 13:38 UTC with nothing new. Research round 26 finished at 13:50 UTC. The next rounds are at 18:17, 20:47 and 23:17 MSK.\n\nINDEX.md was rewritten for curation 26 (73 lines). It records: probe 50 (exp85a) at 0.958 is the new best; probe 51 (exp87a) is still pending; the night list you confirmed (exp89r or exp89q, then exp75, then exp89p); and the finals, still #37 + #38, which only your own tick changes. CHANGES.md gained a section 26 covering 19 new ideas (I-478 to I-496), 7 new facts, 9 new contradictions and the resolved and new alerts.\n\nTop alerts: (1) the reply to you is due now, with two questions, both defaulting to no: may exp89t be used, and may exp89u be the fallback partner. It also asks whether you object to reading your confirmation as lifting the 2-lever limit only for these four levers. (2) The coverage rule names none of the three night files, so the 03:04 MSK pre-submit check would fail on all of them. (3) exp89s is not built yet, the GPU quota has not been read since 07:55 MSK, and the runtime ledger would misfile exp89t. (4) The written 2-lever limit contradicts exp89r, and there is no valid morning rule yet. (5) The exp75 partner rule must be written before 03:06 MSK. (6) Probe 51's score decides which night file goes first at 03:05 MSK. (7) experiments/RESULTS.md has no rows for probes 47-50. (8) The finals card has to be rebuilt as version 4.\n\nNo other file was touched, nothing was committed, and Kaggle was not used."
+}

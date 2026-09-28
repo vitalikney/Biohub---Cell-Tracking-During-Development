@@ -1,0 +1,5 @@
+- 14:08Z start c26 index: index.json absent; read INDEX (c25) + CHANGES tail
+- 14:08Z anchors collected: CONTEXT 11:17-13:14 l.3717-3923, poll 14:04:10Z P51 PENDING (l.23139); KB line anchors from grep
+- 14:10Z INDEX.md written (73 lines); fixed standing-override wording vs CONTEXT l.3904-3907. Next CHANGES.md append
+- 14:10Z CHANGES.md section 26 appended. Next index.json
+- 14:11Z index.json written (9 alerts). DONE

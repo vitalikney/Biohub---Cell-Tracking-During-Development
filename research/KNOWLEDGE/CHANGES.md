@@ -1409,3 +1409,34 @@ Curator logs: `research/KNOWLEDGE/_curation/4/`.
 - **New:** R25-A1/A2 pre-score lines unlogged before P50 terminal (~11:54Z); exp88c gate unlogged after COMPLETE; no P50/P51 wake-ups; Q2 already answered + tick-fallback not asked; CI cutoff 09:30Z vs 08:45Z; no exp89 ledger rule, uptest.py/gate_dummy.py missing, GPU ~4.5-5 h; exp75 NO-GO lift + exp86c waiver; card v3 + CI caveat (R25P-9 draft refuted); CI_lo 2.2 h model stale.
 - **Carried over:** RESULTS rows (now 47-49); round REPORT.md (24-25) + commit; finals texts (now card v3); orphan I-233; curator info lines (W202/W244).
 - **Curator disagreements settled here:** the user message [now] (watch) vs [today] -> [now]; the CI cutoff [today] vs [before-finals] -> [today] (must be in W4 AMEND 4 before 23:30Z).
+
+## 26 - 2026-09-28 ~14:10 UTC (curation 26; git HEAD 5e5fd1b = origin/main + untracked `research/wf_ideas_v4/round26/` (no REPORT.md), `research/KNOWLEDGE/_curation/26/`, `experiments/discussions/digest_20260928T1338Z.md`, `experiments/e10_watch/20260928T1318Z.txt`, `1322Z.txt`)
+
+**Trigger:** the user asked "ресерчеры активны?". Answer: yes. LB poller header 14:04:10Z (`experiments/lb_poll/poll.log` l.23139), E10 watch RUN 25 13:22Z with 0 signals (`experiments/e10_watch/watch_loop.log`), discussion feed 13:38Z with nothing new (`experiments/discussions/feed_loop.log`), round 26 done 13:50Z (`research/wf_ideas_v4/round26/report.json`); next rounds 15:17 / 17:47 / 20:17Z (18:17 / 20:47 / 23:17 MSK) (R26-A6).
+
+**Sources since curation 25:**
+- `CONTEXT.md` l.3717-3923, 15 entries: A2 + P50/P51 read rule and W4 AMEND 4 11:17 (l.3717, l.3753); exp88c gate + exp86c waiver (l.3794); exp75 line (l.3810); exp88c PASS, exp89a/e, ledger, uptest 11:19 (l.3824); Q3 YES 11:26 (l.3834); fallback tick allowed 11:27, blocked 11:28 (l.3842-3855); P50 read + P51 submit 12:16 (l.3856, l.3863); R+ night list 12:17 (l.3871); RISK STACK 12:23 (l.3885); user confirmed night + standing override 12:25 (l.3899); exp89p PASS 12:40 (l.3908); exp89q/r PASS 13:14 (l.3915). `## 9. Literature` moved to l.3924.
+- Commits 74caff9..5e5fd1b (12, a04ab40 first) (`git log`). Round 26: `research/wf_ideas_v4/round26/report.json` R26-A1..A7, 5 `scan_*.json`, 13 `v_*.json`. New kernels: `experiments/exp89a_k2cap6_ci_dis225/`, `exp89e_k2cap6_k_dis175/`, `exp89p_k2cap6_k_sec/`, `exp89q_k2cap6_k_sec_dis225/`, `exp89r_k2cap6_k_sec_dis225_ci/`; new tool `tools/uptest.py`; LB snapshot `experiments/lb_poll/_lb/S1_1214Z`.
+
+**New LB results:** P50 exp85a (exp70g + ILP_DIVISION_WEIGHT 0.4 + READMIT 0.94 = K) = **0.958 R+, UP 21 teams, rank 134 of 3,969 = NEW BEST and V_pub (non-CI)**; E10 trigger raised to >= 0.959 (`CONTEXT.md` l.3856-3862; `FACTS.md` F-LB-25). P51 exp87a (K + CI, 56640366) submitted 12:14:57Z, PENDING at 14:04:10Z (l.3863; `poll.log` l.23142). 28 Sep slots 5/5 used. `experiments/RESULTS.md` still ends at P46.
+
+**Ideas** (`IDEAS.md` CHANGES (26) l.169-179; `ideas.json` meta.curations[n=26], 71 records; `_curation/26/ideas.json`):
+- **New I-478..I-496:** risk stack exp89q/r I-478; exp89p I-479; R8 coverage extension I-480; MORNING TABLE v1.1 I-481 (v1 refuted I-482); depth-cap supersede I-483; exp89s I-484; exp89l I-485; exp89t on a user yes I-486; exp89u / pair D refuted I-487; user message R26-A6 I-488; freeze-line codes I-489; masking relaxation I-490; night hygiene I-491; finals pool + PENDING branch I-492; V_pub rule v4 refuted I-493; EXP75 PARTNER RULE v2 I-494; card v4 I-495 (supersedes I-467); dummy-clip GT lab I-496.
+- **Status changes:** I-431/I-139 in-plan -> lb-tested; I-330/I-435/I-450/I-451/I-452/I-460/I-461/I-467/I-468/I-474 in-plan -> refuted (answered, moot or superseded). Closed: ILP < 0.4 (I-049), READMIT 0.92/0.90 (I-139), TAU 0.7, DIS 1.75, exp86c on M2, 'B recommended at 0.954' (I-466).
+- **Counts c25 -> c26:** 477 -> 496; lb-tested 59 -> 61, lab-tested 25 -> 26, in-plan 117 -> 120, refuted 227 -> 240, deferred 47, open 2. Strict orphan I-233. At risk: I-330, I-426, I-451, I-460, I-463, I-464, I-465, I-468, I-473, I-474, I-477 leave; I-480, I-481, I-483, I-484, I-485, I-488..I-492, I-494 join I-252, I-336, I-407, I-448.
+
+**Facts and decisions** (`FACTS.md`, `DECISIONS.md` rows marked [c26]; `_curation/26/facts.json`; state 13:55Z):
+- **New facts:** F-LB-25 K read 0.958 (l.246); F-LB-26 LB 13:18Z (l.247); F-RUN-41 dummy runtimes, DIS 2.25 +15-20% (l.293); F-RUL-22 finals ticking is manual only (l.320); F-MOD-47 night builds + gates (l.372); F-MOD-48 round-26 dry-run builds exp89s/t/u/l (l.373); F-TRN-58 levers closed after P50 (l.436). [c26] notes on F-MET-04, F-DAT-06/13, F-LB-01/02/10/17, F-RUN-37/39/40, F-RUL-05/19/20, F-MOD-44/45, F-TRN-57.
+- **Contradictions:** resolved C-191, C-200, C-202, C-203, C-204, C-207; updated C-118, C-163, C-184, C-197, C-206, C-208, C-209; new C-210..C-218 (l.651-659): P50 latency bound; depth cap vs exp89r; void morning rule; R8 coverage gap; MASKED overlap; night list re-cut after P50; exp75 partner rule; V_pub tie order; stale KEY FACTS.
+- **DECISIONS.md:** §1 P50/P51 updated + planned P52-P54 (l.189-193), [c26] build table (l.472); §2 [c26] paragraph + snapshot (l.809-811; V_pub = exp85a, ticks still #37 + #38); §2f E10 >= 0.959 + standing override (l.1093); §2h 10 appends + 14 rows (l.1256-1269; R26-A1..A7 marked PROPOSED); §3 7 appends + 9 rule rows.
+
+**Watchlist** (`WATCHLIST.md`; `_curation/26/watch.json`; curated ~14:05Z):
+- **New:** W262-W270, T157-T164, I303-I314.
+- **Done:** W248, W249, W250 (a)(b), W251, W252 (a), W255 (a)(b)(e), W253 (c)(d)(e), W260 (08:45Z cutoff), W258 (moot), T145, T146.
+- **Superseded:** R0/R-/R? night branch, exp89e, exp86c night slot, old M1/M2 lists; W256 exp90a moot; W254 card v3 -> W266 (card v4); T154 -> T162 (notify-only); I289 -> I310.
+
+**Alerts** (`INDEX.md` TOP ALERTS, 9 after dedup):
+- **Resolved since curation 25:** R25-A1/A2 pre-score lines; exp88c gate; P50/P51 wake-ups (P50 read 12:16); R25-A6 questions (Q2 dropped, Q3 yes, tick fallback answered then blocked); CI cutoff 09:30Z vs 08:45Z (08:45Z adopted); exp89 ledger rule + uptest.py; exp75 NO-GO lift; exp86c waiver (slot then moot).
+- **New:** user reply R26-A6 [now]; R8 coverage for exp89p/q/r [now]; exp89s build + GPU read + ledger 't' [now]; depth cap vs exp89r + void morning rule [today]; P51-dependent freeze codes + masking [today]; exp75 partner rule v2 before 00:06Z [today]; missing cron jobs (17:57Z, 19:30Z, final snapshot) [today]; card v4 + single-embryo caveat + 743006 host note [before-finals].
+- **Carried over:** RESULTS rows (now 47-50); REPORT.md (rounds 24-26) + round26/ untracked; stale KEY FACTS / e10_watch_loop.py docstring (C-163, C-218); orphan I-233.
+- **Curator disagreements settled here:** depth cap [today] (ideas, watch) vs [before-finals] (facts) -> [today], since exp89l may be built at P51's read; R26-A1 coverage [today] (facts) vs [now] (watch) -> [now].

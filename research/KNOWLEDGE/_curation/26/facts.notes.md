@@ -1,0 +1,6 @@
+- 2026-09-28T13:52Z start round 26 FACTS/DECISIONS curation; no 26/facts.json -> incremental over c25 (11:07Z)
+- 13:53Z sources read: CONTEXT l.3717-3923 (11:17..13:14Z), git a04ab40..5e5fd1b, poll header 13:44:04Z P51 PENDING, round26 report.json 13:50Z R26-A1..A7 (none in CONTEXT)
+- 13:56Z plan: FACTS header + ~18 [c26] appends + F-LB-25/26, F-RUN-41, F-RUL-22, F-MOD-47/48, F-TRN-58, C-210..C-218; writing scratch c26_facts.py
+- 13:59Z FACTS.md patched (header; 17 [c26] appends; F-LB-25/26, F-RUN-41, F-RUL-22, F-MOD-47/48, F-TRN-58; C-210..C-218; resolved C-191/200/202/203/204/207). Next DECISIONS
+- 14:02Z DECISIONS.md patched via c26_dec.py (header; P50/P51 appends; planned P52-P54; [c26] build table; [c26] finals paragraph + snapshot; 2f E10; 2h 10 appends + 14 rows; §3 7 appends + 9 rows; closing). Tables validated. Next facts.json
+- 14:04Z facts.json written (11 alerts). Done.

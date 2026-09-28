@@ -1,0 +1,7 @@
+- 2026-09-28T13:37:06Z start verify R26F-1
+- 2026-09-28 ~14:20Z read CONTEXT l.3660-3944 (10:16Z hedge proposal, A2 (4)/(5) l.3736-3748, 11:17Z R25-A4 exp75 line, 11:26Z Q3 yes (SEC only in V_pub slot), 12:16Z probe 50 exp85a 0.958 R+, 12:25Z night confirm) + finals rule (9) l.3180-3190: 'V_pub >= 0.955 and non-CI -> propose {V_pub, #37 56563521}'.
+- A2 (5) (pre-registered 09:35Z): exp75 display >= 0.955 -> B {V_pub, exp75} 'as a trade, never as the default'; <= 0.954 -> B drops out. Finding's gate >= 0.954 + 'Row 1 recommended' relaxes both post-hoc.
+- round25 v_hyp_private_r25p-2.json: B's bronze edge vanished at CI sd >= .0015 WHEN V_pub held CI. Algebra now (V_pub = b+X, X=C+K non-CI): {V_pub,exp75} - {V_pub,#37} = max(X,CI) - max(X,0): + when CI > max(X,0), - when X<0 & CI<0. Structural claim of the finding is CORRECT.
+- round25 v_recheck rc-c: P(CI_priv >= 0) ~0.6-0.7, central +0.0004, lab in-sample; finals-rule CI caveat cites Eric sub-voxel lab +0.0078 -> LB -0.002.
+- My rerun (scratchpad r26/mc26.py, seed 11, base): CI_MU -0.0002 sd .002 -> A .747/.512 vs B .787/.609; CI_MU -0.0005 sd .002 -> A .747 vs B .768/.589. B wins even at a NEGATIVE CI mean: the edge is mostly option value of partner variance in a best-of-two threshold objective, i.e. driven by the judgmental CI sd, not by evidence that CI transfers. Crossover quoted (-0.0004 at sd .001) moves with sd.
+- Verdict: refuted as worded (pre-reg floor relaxed + default flipped); keep the structural insight as a neutral card row.

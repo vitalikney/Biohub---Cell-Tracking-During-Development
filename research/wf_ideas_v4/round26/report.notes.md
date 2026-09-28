@@ -1,0 +1,13 @@
+# round 26 report notes (curator)
+- 2026-09-28 13:41Z start. report.json absent -> writing fresh. Probe 51 (56640366) still PENDING in poll.log (l.22959).
+- tools/runtime_ledger.py l.82 regex exp89[abcghilmnor] confirmed (no 't'). experiments/ has exp89a/e/p/q/r, exp86c, exp75; no exp89l/s/t/u folders.
+- round24/25 wrote no REPORT.md (subagent rule forbids report .md); Russian text goes into report.json 'report_md_ru' again.
+- Reconciliation plan: R26M-2 -> table v1.1 (verifier fix); dummy order: exp89s now (both branches), exp89l at 51 read (branch A), exp89t only on user yes, exp89u last/optional (R26M-5 fix) ; DIS code in exp89r branch: '+' only if dd >= +0.002 AND exp89r > max(exp87a, exp89p) (RC-A verifier stricter than R26M-2 verifier's 0.001).
+- 13:46Z loops alive: feed_loop 13:38:27Z (0 new topics/comments, E10 FLAG none); e10 watch RUN 25 13:22:51Z CHANGES=0; poll.log mtime 13:44Z; probe 51 PENDING.
+- CONTEXT l.3181/3419 tie order = attributable UP > non-CI > fewer levers > earlier submit -> R26F-8 draft has UP sign wrong AND 2/3 order swapped.
+- CONTEXT l.3187 SEC caveat 'weight swaps were 0/5 on our LB' (R26F-4 said 7) -> use 0/5.
+- CONTEXT 11:28Z: session never ticks finals (classifier); notify-only jobs 22:43/00:05 MSK.
+- CONTEXT 10:45Z user ~5 h GPU; dummies since: exp89p 1313 + exp89q 1576 + exp89r 1959 s = 1.35 h -> ~3.6 h; 13:14Z line says 2.5-3 h; R26M-4 verifier 2.2 h (9.5 h @04:55Z - 7.3 h). Unmeasured.
+- Research cron (10:52Z line): 15:17, 17:47, 20:17, 22:47Z ... = 18:17, 20:47, 23:17, 01:47 MSK.
+- Decisions: exp75 partner v2 = middle path between R26F-1 verifier (keep >=0.955) and R26F-2 verifier (0.954 recommended): >=0.955 model-favoured, 0.954 trade (A first if probe 51 '-'). Branch-B M1 latest header relaxed to 10:30Z (non-CI deadline 11:30Z, only one non-CI morning file in B).
+- 13:50Z report.json written (7 actionable R26-A1..A7; report_md_ru inside, no REPORT.md per subagent rule).

@@ -1,0 +1,77 @@
+{
+ "summary": "Round 26 plan check, 28 Sep ~13:25Z (16:25 MSK). State: best 0.958 = exp85a (rank 134, 13th of 20 in the block, 121 teams at >= 0.959). Probe 51 (exp87a) is PENDING and reads ~21:30-22:15Z. All three night files and both stack variants PASSED. No E10 trigger: every public notebook is <= 0.953, and flexonafft's lineage-forge re-run at 13:02Z is 0.947. No new discussion posts since the 12:27Z post 743006. The night list is sound, but six gaps would bite between 00:05Z and 20:00Z. (1) The MORNING files are not defined for the confirmed night. With CI dummies at ~33 min plus a queue of up to 3-4 h, and the M1 CI cutoff at 08:45Z, the 07:23Z prep cannot build and pass anything new. In the non-CI branch it is also post-score for exp89q, which reads from ~07:05Z. (2) The logged 'cap + 2 levers' depth cap still bars exp89l (K+SEC+CI), yet the user confirmed the deeper exp89r. (3) exp89q and exp89r have no pre-registered read codes. In the exp89r branch, DIS cannot be attributed. (4) No R8 COVERAGE line lists exp89p/q/r, so the pre-submit check fails at 00:05Z. (5) The MASKED rule would void a '0u' read of exp89r if exp75 completes in the same poll window, although exp75 cannot move our LB row. (6) Finals card v3 predates R+ and the Q3 yes, and has no pair that hedges SEC.",
+ "findings": [
+  {
+   "id": "PC26-01",
+   "kind": "plan-issue",
+   "what": "The 29 Sep MORNING files are undefined for the night the user confirmed, and the timing makes 'decide at the 07:23Z prep' infeasible. Rule: only files with a PASSED dummy go. A CI dummy takes 1,870-2,055 s, and on 27 Sep CI dummies queued 3-4 h, so nothing pushed after ~05:00Z can be relied on for the 08:45Z CI cutoff. The only PASSED unscored files are exp86c (RA92, excluded as public-fitting by the 12:23Z risk-stack framing), exp83c (dominated), exp88a/b/c (dead exp70g base) and the unused twin of exp89q/exp89r. Read arrival (non-CI L 6.87-7.81 h, CI 9.0-9.5 h, tail to 10.9 h): exp89q (00:05) 07:05-07:55Z; exp89p (00:46) 07:46-08:34Z; exp89r (00:05) ~08:40-09:50Z; exp75 (00:06) ~09:00-09:50Z. In the non-CI branch the 07:23Z line can be post-score for exp89q. In the CI branch, no stack read exists before 08:45Z, and exp89p's read is borderline.",
+   "evidence": "CONTEXT 12:25Z ('MORNING: 2 files ... stack of the night winners, logged pre-score at the 07:23 UTC prep'); 10:52Z cron list (MORNING BATCH PREP 07:23); dummy runtimes exp87a 1,870 s, exp83c 2,055 s, exp89r 1,959 s; R25-A5(c) (CI dummies queued 3-4 h on 27 Sep); experiments/lb_poll/ledger.md latency bands (K family 6.87-7.81 h, exp79a 9.27-9.45 h); R25-A4 (exp75 9.0-9.5 h).",
+   "action": "Log a MORNING TABLE v2 pre-score before 00:05Z. Build the realised branch's files right after probe 51's read (~21:30-22:15Z) and push their dummies at once, so they PASS by ~03:00Z.\nCI+ branch (51 reads '+' or '0u'; night = exp89r):\n- M1 (CI; submit at exp89p's read or 08:30Z, whichever comes first; hard latest 08:45Z):\n  - exp89l = exp89p + coordinject ALPHA 0.5 (K+SEC+CI), if exp89p reads '+' or '0u' vs exp85a. Its three levers each have their own public read, and it drops DIS, the one lever without a read. By the tie order ('fewer stacked levers') it beats exp89r at an equal display.\n  - Else exp89t = exp87a + ILP_DISAPPEARANCE_WEIGHT 2.25 (K+DIS+CI, no SEC).\n  - Gates: exp89l topology identical to the exp89p dummy CSV 629fc20b4815 (122,110 / 117,957 / 88), COORDINJECT 4/4 replaced >= 0.90, integer-coordinate change 0.60-0.69, runtime <= 2,100 s. exp89t: 0 errors, validate ok, nodes within +-0.5% of the SCIP-predicted K+DIS count (exp85a 122,328 x ~0.993), plus the same CI items.\n  - Two CI dummies, ~1.1 GPU-h.\n- M2 (non-CI, by 11:30Z): exp89q (already PASSED) only if exp89r reads '+' vs exp87a. It gives the card a non-CI version of the winning stack (the tie order prefers non-CI). Otherwise leave it unused, or use it for E10 on the user's yes.\nCI- branch (51 reads '0', '-' or '?'; night = exp89q):\n- M1 becomes non-CI: exp89s = exp85a + ILP_DISAPPEARANCE_WEIGHT 2.25 (K+DIS, no SEC; non-CI). It goes if exp89q >= exp89p + 0.001 and exp89p <= 0.958 (DIS helps, SEC does not).\n- Otherwise leave the slot unused.\n- Push its dummy at 51's read (~0.4 GPU-h).\nNaming: exp89t must be added to the CI ledger regex (tools/runtime_ledger.py line 82 lists exp89[abcghilmnor]; 't' would fall to exp8\\d = safetail and misfile a ~9.4 h latency), with a test. exp89s is correctly safetail.",
+   "urgency": "today"
+  },
+  {
+   "id": "PC26-02",
+   "kind": "plan-issue",
+   "what": "The rule texts contradict each other on stack depth. The 'cap + 2 levers' depth cap is still logged: AMEND 4 excludes exp89c/g/i/l, and the 11:26Z and 12:17Z lines say 'K + SEC + CI is not a file'. Yet the user confirmed exp89r (cap + K + SEC + DIS + CI) at 12:25Z. As written, the shallower exp89l stays barred while the deeper file goes. That blocks the most defensible M1 candidate (PC26-01) for no reason.",
+   "evidence": "CONTEXT 11:17Z R25-A2 SCOPE ('cap + 2 levers' depth cap, 'exp89l ... not files'); 11:26Z Q3 line ('K + SEC + CI (exp89l) stays excluded'); 12:17Z ('Depth cap ... stays'); 12:23Z/12:25Z risk stack built and confirmed.",
+   "action": "Log one line: 'The user's 12:25Z confirmation of the risk stack supersedes the cap + 2 levers depth cap for stacks built only from {K (ILP 0.4 + READMIT 0.94), SEC n2a 7029fe69, ILP_DISAPPEARANCE_WEIGHT 2.25, coordinject ALPHA 0.5}. READMIT 0.92/0.90 and SISTER_SYMMETRY_TAU stay excluded (public-fitting, per 12:23Z; the card already bars tau stacks from finals).' Log it before any exp89l or exp89t build.",
+   "urgency": "today"
+  },
+  {
+   "id": "PC26-03",
+   "kind": "plan-issue",
+   "what": "The risk stack has gates and a slot but no read codes. The 12:23Z and 12:25Z lines define only the dummy gates and the CI choice. The 12:17Z codes cover exp86c/exp89p vs exp85a only. Attribution also differs by branch. In the exp89q branch, exp89q vs exp89p isolates DIS on K+SEC, as the 12:23Z line claims. In the exp89r branch, exp89r minus exp89p = DIS + CI, and subtracting 51's CI step (exp87a minus exp85a) leaves a DIS estimate with an error of about +-0.002 at display resolution, so it cannot be read.",
+   "evidence": "CONTEXT 12:17Z (reads exp86c/exp89p vs exp85a), 12:23Z ('stack vs exp89p isolates DIS 2.25'), 12:25Z (no codes), R25-A2 ARM CODES.",
+   "action": "Log pre-score at the 23:30Z freeze, next to the frozen list.\n(a) exp89r: REF = exp87a's display. '+' = display >= REF + 0.001. '0u' = equal display with an attributable UP. '0' = equal display with k = 0. '-' = below REF. '?' = ERROR or L_hi > 10.2 h. No DIS code in this branch; say so explicitly.\n(b) exp89q: REF = exp85a 0.958 (codes as above). DIS code = exp89q vs exp89p's display, on display only.\n(c) exp89p: vs exp85a (as logged 12:17Z). It gives the SEC code on K used by PC26-01.\n(d) These codes feed MORNING TABLE v2 only. V_pub stays on the CONTEXT line 3179-3180 rule: highest display, then the tie order.",
+   "urgency": "today"
+  },
+  {
+   "id": "PC26-04",
+   "kind": "plan-issue",
+   "what": "The R8 COVERAGE pre-submit check will fail for all three night files. The 00:00Z line says every CI and secFT file needs 'this line is present' before submit. It lists exp72/76d/79d, exp81, exp82* (SEC) and exp75/76a/79a, exp83* (CI). The extensions add exp87a/b (07:44Z) and exp89a/b/h/o and exp90a (11:19Z). exp89p and exp89q (secFT) and exp89r (secFT + CI) are in none of them. The line also still says 'never finals without a user re-tick (Q3 open for SEC)', which is stale after the 11:26Z Q3 yes. An unattended 00:05Z batch that runs its checklist literally would stall, or would submit while breaking its own check.",
+   "evidence": "CONTEXT line 3311 (R8 COVERAGE 00:00Z), line 3604 (exp87a/b), line 3831 (exp89a/b/h/o, exp90a); the 11:17Z R25-A1 pre-submit checks; the 11:26Z Q3 yes.",
+   "action": "Log now: 'R8 COVERAGE extended to exp89p, exp89q (secFT n2a 7029fe69) and exp89r (secFT + coordinject), plus exp89l/exp89t/exp89s if built (PC26-01). Q3 = yes (11:26Z): SEC files may be finals only in the V_pub slot.' The 00:04Z batch checklist then cites this line.",
+   "urgency": "now"
+  },
+  {
+   "id": "PC26-05",
+   "kind": "plan-issue",
+   "what": "The UP-test MASKED rule is stricter than the logic needs, and it threatens the exp89r read. exp89r (CI, 00:05Z, ~08:40-09:50Z) and exp75 (CI, 00:06Z, ~09:00-09:50Z) have overlapping completion windows. R25-A2 says 'when two files complete in one poll window, each is read only on its own display (MASKED for UP)'. A tie of exp89r with exp87a would then read '0' instead of '0u'. The tie order ('last attributable UP at that display') then picks the wrong V_pub. But public bests never fall, and our LB row can move only if a completing file beats our current best. exp75 (#37 + CI, expected ~0.955) cannot.",
+   "evidence": "R25-A2 ARM CODES; tools/uptest.py docstring ('public bests never fall'); tie order at CONTEXT line 3180; exp75 expected L 9.0-9.5 h (R25-A4) vs K+CI 8.6-9.8 h.",
+   "action": "Log pre-score: 'A completion whose display is strictly below our LB display before the window cannot move our LB row. It does not mask the UP test of the other file in that window.' Fallback if the session misses an S0 or S1 download: the hourly E10 snapshots (experiments/e10_watch/*.txt, section leaderboard_rows: Rank, TeamId, SubmissionCount for every Score >= 0.953) can serve as S0/S1 for tools/uptest.py compare. That needs a small loader. Otherwise take S0 at the 23:30Z freeze (after 51) and S1 at each poll-detected completion from 07:00Z.",
+   "urgency": "today"
+  },
+  {
+   "id": "PC26-06",
+   "kind": "plan-issue",
+   "what": "Finals card v3 (R25-A7) predates probe 50's R+ and the Q3 yes. Its pairs A {V_pub, #37}, B {V_pub, exp75} and C {V_pub, exp70g} assume a non-SEC V_pub, and its risk column still says 'SEC excluded while Q3 is open'. If V_pub becomes a SEC stack (exp89r, exp89q, exp89p or exp89l), no offered pair hedges SEC and DIS while keeping K's public +0.002. SEC's caveat is 'weight swaps 0/5 on our LB; no held-out gate', and the lab has over-trusted in-sample levers before (edge filter: +0.016 local, 0 LB). The Q3 text names the hedges '#37 / exp75 / exp70g'. It was written before K read '+', and the K files add nothing we trained beyond exp70g.",
+   "evidence": "R25-A7 (card v3), CONTEXT 11:26Z Q3 line, 12:16Z probe 50 read (K +0.002), SEC caveat at CONTEXT l.3186-3187, project memory 'edge filter +0.016 local but 0 on LB'.",
+   "action": "Card v4 draft (the session proposes; the user picks). Add pair D = {SEC-stack V_pub, the best non-SEC K file: exp87a if BEST_CI, else exp85a}. It is JT's 'better of two' with the partner one lever group away (SEC + DIS). Offer it only when V_pub carries SEC. Change the SEC risk from 'excluded' to 'high (in-sample only; first hidden run tonight)'. State that pairs A/B/C with a SEC V_pub hedge cap/CI but leave SEC unhedged. Send at 15:00 MSK (12:00Z); re-check after the M1/M2 reads (PC26-07).",
+   "urgency": "today"
+  },
+  {
+   "id": "PC26-07",
+   "kind": "plan-issue",
+   "what": "The M1 read can land after the 18:37Z FINAL proposal. If M1 waits for exp89p's read (07:46-08:34Z) and goes near 08:45Z, it reads at 18:03-19:39Z (CI 9.3-10.9 h). That is after the 21:37 MSK (18:37Z) FINAL proposal and possibly 20 min before the 23:00 MSK tick. The 22:43 MSK (19:43Z) reminder only checks SELECTED against the proposal.",
+   "evidence": "CONTEXT 10:52Z cron list (FINAL 18:37Z), 11:28Z (22:43 MSK reminder, notify-only), R25-A2 (08:45Z CI cutoff; 10.9 h CI tail).",
+   "action": "(a) Submit M1 at exp89p's terminal header, not at 08:45Z, and at the latest 08:45Z. (b) Give the 18:37Z FINAL proposal an explicit 'M1/M2 still pending' branch with the pre-agreed swap (e.g. 'if M1 reads >= X before 23:00 MSK, V_pub becomes M1'). Add one extra wake-up at 19:30Z (22:30 MSK) that re-reads the poll and pushes the user a one-line V_pub update if it changed. Notify only; the session never ticks.",
+   "urgency": "today"
+  },
+  {
+   "id": "PC26-08",
+   "kind": "plan-issue",
+   "what": "Night-batch hygiene details that an unattended 00:04Z run can get wrong.\n(i) R18-A7 spacing: exp89q at 00:05 and exp89p at 00:46 are 41 min apart. The 40 min must be measured from the actual submit timestamp of exp89q (in the non-CI branch), so a late start shifts exp89p.\n(ii) The ledger family comes from the FIRST exp token of -m. It must start 'probe 52/53/54: exp89r ...', 'exp89q ...', 'exp75 ...' and 'exp89p ...', never 'exp85a + ...'. Checked: the l.82 regex maps exp89r to safetail_ci and exp89p/q to safetail.\n(iii) Submit v1 (= the dummy) of each kernel; exp75 must never be re-pushed (R25-A4).\n(iv) Run 'kaggle datasets list --mine' (dataset baseline) before submitting, not only before pushes. The SEC files read biohub-secft-n2a-v1 (sha-pinned 7029fe69). biohub-ft-weights has no pin, and teammates had edit rights for a few minutes at ~10:45Z.",
+   "evidence": "CONTEXT 12:25Z night list; R25-A1 -m rule; tools/runtime_ledger.py l.82; experiments/exp89q_k2cap6_k_sec_dis225/kernel-metadata.json (dataset_sources incl. vitaliineibauer/biohub-ft-weights, vitaliineibauer/biohub-secft-n2a-v1); CONTEXT 10:45Z dataset-sharing line.",
+   "action": "Put these four checks into the 23:30Z FREEZE line as the night checklist, with the exact -m prefixes. Compute the exp89p time as max(00:46Z, actual exp89q submit + 40 min) in the non-CI branch. In the CI branch exp89r is CI, so exp89p may keep 00:46Z.",
+   "urgency": "today"
+  },
+  {
+   "id": "PC26-09",
+   "kind": "new-fact",
+   "what": "No E10 or disclosure trigger. The 13:18Z snapshot shows no P2 signal. flexonafft/biohub-lineage-forge-precision-tracking re-ran at 13:02Z, but its best_public is 0.947 (no trigger; the flag needs > 0.958). No new topics or comments since 743006 (12:27Z). We are rank 134, 13th of 20 in the 0.958 block; 121 teams are at >= 0.959. GPU estimate: the user reported ~5 h at ~10:45Z. The dummies since then (exp89p 1,313 s + exp89q 1,576 s + exp89r 1,959 s = 1.35 h) leave ~3.3-3.6 h, not measured. That covers PC26-01's realised-branch dummies (<= 1.1 h) plus ~1 h in reserve for an E10 copy.",
+   "evidence": "experiments/e10_watch/20260928T1318Z.txt (histogram + DIFF), experiments/discussions/digest_20260928T1307Z.md, CONTEXT 10:45Z (user ~5 h), 12:40Z/13:14Z (dummy runtimes).",
+   "action": "None beyond the logs. If Chrome is available, the browser agent reads the GPU quota page once before the ~22:00Z morning-dummy pushes. If it shows < 1.5 h, push only the first M1 candidate (exp89l in the CI+ branch, exp89s in the CI- branch).",
+   "urgency": "info"
+  }
+ ]
+}

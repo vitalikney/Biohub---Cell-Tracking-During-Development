@@ -1,0 +1,67 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/ideas.json",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/IDEAS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/26/ideas.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/26/ideas.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "what": "Round 26's pre-score lines are not in CONTEXT yet: R8 COVERAGE for the three night files (R26-A1), MORNING TABLE v1.1 with the depth-cap supersede (R26-A2), the freeze-line codes, masking, hygiene and PENDING clauses (R26-A4), and EXP75 PARTNER RULE v2 (R26-A5 (1)). Without the R8 line, the literal 00:04Z pre-submit check fails for exp89p, exp89q and exp89r, and the coverage text still says 'Q3 open'.",
+   "evidence": "CONTEXT.md l.3311-3315 (coverage names none of exp89p/q/r), l.3915-3923 (last entry 13:14Z); research/wf_ideas_v4/round26/report.json R26-A1, R26-A2, R26-A4, R26-A5; research/KNOWLEDGE/ideas.json I-480, I-481, I-483, I-489..I-492, I-494",
+   "suggested_action": "Log R26-A1 now. Log v1.1 before probe 51 reads (~21:30Z), and the rest by the 23:30Z (02:30 MSK) freeze, each quoting the last poll header. The partner rule must be logged before exp75 goes at 00:06Z.",
+   "urgency": "today"
+  },
+  {
+   "kind": "contradiction",
+   "what": "The logged depth cap ('cap + 2 levers'; 'K + SEC + CI is not a file') contradicts the 4-lever exp89r the user confirmed at 12:25Z. As written, the shallower exp89l is barred while the deeper exp89r goes. The 12:17Z MORNING clause (exp89h / RA90 / TAU) is still the only morning rule on record, but it breaks the user's 12:23Z 'not public fitting' condition.",
+   "evidence": "CONTEXT.md l.3753-3757, l.3841, l.3884 vs l.3885-3907; research/wf_ideas_v4/round26/scan_plancheck.json PC26-01, PC26-02; research/KNOWLEDGE/ideas.json I-483, I-481, I-461, I-462",
+   "suggested_action": "Log the supersede line for {K, SEC n2a, DIS 2.25, CI} only, and show that reading to the user in the R26-A6 message ('object if not').",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "The user asked 'ресерчеры активны?'. The R26-A6 reply is due now: loops alive, round 26 done, next rounds 18:17 / 20:47 / 23:17 MSK. It also carries two questions the plan needs answered before ~21:30Z: Q-M1 (exp89t, default NO) and Q-M2 (exp89u fallback, default NO), plus the depth-cap reading.",
+   "evidence": "research/wf_ideas_v4/round26/report.json R26-A6, new_facts 12, next_focus; research/KNOWLEDGE/ideas.json I-488, I-486, I-487, I-483",
+   "suggested_action": "Send the short Russian reply (MSK first) and log the answers in CONTEXT.",
+   "urgency": "now"
+  },
+  {
+   "kind": "forgotten",
+   "what": "exp89s (K + DIS 2.25, sha8 8ed72e32) is the one morning file both branches can use, but it exists only in scratch mirrors. GPU has not been measured since 04:55Z (estimates 2.2-3.6 h). tools/runtime_ledger.py l.82 still files exp89t as safetail, although it is a CI file.",
+   "evidence": "research/wf_ideas_v4/round26/report.json R26-A3 (1)-(2), new_facts 5, 11; tools/runtime_ledger.py l.82; experiments/ (no exp89s/l/t/u folders); research/KNOWLEDGE/ideas.json I-484, I-405, I-383",
+   "suggested_action": "Read the Settings quota and run the dataset baseline check. Then build exp89s (STOP unless 8ed72e32), log the gate before reading the output, and push the dummy. Add 't' plus a test to the ledger regex.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "experiments/RESULTS.md has no rows for probes 47-50. The new best, exp85a 0.958 (probe 50, R+, UP 21, rank 134), exists only in CONTEXT and ledger.md. The round-26 task text was stale again (best 0.957, probe 50 pending).",
+   "evidence": "experiments/RESULTS.md l.79 (last probe row 46; unchanged since 59e14e2); CONTEXT.md l.3856-3862; research/wf_ideas_v4/round26/v_browser_r26-task-facts-stale.json; research/KNOWLEDGE/ideas.json I-431, I-259",
+   "suggested_action": "Add RESULTS rows 47-50. Refresh KEY FACTS with the R26-A7 block before round 27 (15:17Z = 18:17 MSK).",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "Probe 51 (exp87a, K + CI) was still PENDING at the 14:04Z header. Its read (~21:30-22:15Z) decides between exp89r and exp89q at the 23:30Z freeze, and whether exp89l gets built and dummied. In the exp89r branch, DIS can only be read as a double difference (|dd| >= 0.002), and exp75's completion window overlaps exp89r's; the R25-A2 MASKED rule would turn a '0u' into '0'.",
+   "evidence": "experiments/lb_poll/poll.log header 2026-09-28T14:04:10Z; CONTEXT.md l.3863-3870, l.3899-3907, l.3785-3786; research/wf_ideas_v4/round26/scan_recheck.json R26-PI; scan_plancheck.json PC26-05; research/KNOWLEDGE/ideas.json I-438, I-478, I-485, I-489, I-490",
+   "suggested_action": "Pre-register the R26-A4 (a)/(b) codes and the masking relaxation before 51 reads. If 51 is not terminal by 23:30Z, default to exp89q and do not build exp89l.",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "The finals card has to be rebuilt. Card v3 predates probe 50 (V_pub is now the non-CI exp85a) and the Q3 yes. Card v4 plus the partner rule v2 goes out at the 12:03Z (15:03 MSK) cron on 29 Sep, and the FINAL proposal at 18:37Z. A CI morning file sent near 08:45Z reads 18:03-19:39Z, after the proposal. The session never ticks; the user's own tick by 23:00 MSK is the only path.",
+   "evidence": "research/wf_ideas_v4/round26/report.json R26-A4 (d), R26-A5, plan_issues 6, 8; CONTEXT.md l.3851-3855; research/KNOWLEDGE/ideas.json I-495, I-494, I-492, I-467, I-468",
+   "suggested_action": "Store card v4 before the 07:23Z prep, with the logged tie order, no default, and a PENDING line. Add a notify-only 19:30Z (22:30 MSK) V_pub re-check.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "I-233 (the poller logs error_description) is still the only strict orphan. There are 15 at-risk items: 11 round-26 proposals (I-480, I-481, I-483, I-484, I-485, I-488, I-489, I-490, I-491, I-492, I-494) and 4 older post-deadline or ops items (I-252, I-336, I-407, I-448). The dummy-clip GT lab (I-496) lives only in a round agent's scratchpad.",
+   "evidence": "research/KNOWLEDGE/IDEAS.md ORPHANS; research/wf_ideas_v4/round26/report.json new_facts 7; research/KNOWLEDGE/ideas.json I-233, I-496",
+   "suggested_action": "Close I-233 in one line. Once the night is frozen, copy dummy_lab.py into tools/ if the lab stays in use as a gate sanity check.",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 26 (2026-09-28 ~14:10 UTC, HEAD 5e5fd1b plus untracked round26/) updates curation 25 incrementally: 477 -> 496 ideas, 71 change records.\n\nSources read:\n- CONTEXT.md l.3717-3923 (15 entries, 11:17-13:14Z).\n- 12 commits.\n- ledger/poll.log to the 14:04Z header.\n- round 26 report.json R26-A1..A7, 5 scans, 13 verdicts.\n- exp89 probe.json files, tools/uptest.py, the ledger regex, the feed/E10 threshold diffs.\n\nNew LB score:\n- Probe 50 exp85a (K) = 0.958 R+, UP 21, rank 134. This is the new best and it is non-CI (I-431; I-049 and I-139 carry the joint read).\n- Probe 51 exp87a (K + CI) was PENDING at 14:04Z.\n\nLogged since curation 25:\n- Round 25 lines A2/AMEND 4/gates/exp75 (I-463, I-464, I-451, I-435, I-465).\n- User answers: Q3 = yes, V_pub-only (I-119, I-330 closed); the fallback tick was allowed, then blocked, so the session never ticks (I-468, I-229).\n- Night: RISK STACK exp89q/exp89r (new I-478) and exp89p (new I-479) under the user-confirmed night and the standing override (I-364, I-412); all night dummies PASS.\n- Moot under R+: exp88a/b/c, exp89a/e, exp86c, exp90a (I-450..I-452, I-460, I-461, I-435, I-474).\n\nRound 26 proposals (new):\n- R8 COVERAGE for exp89p/q/r (I-480).\n- MORNING TABLE v1.1 (I-481); v1 refuted (I-482).\n- Depth-cap supersede (I-483).\n- Morning builds: exp89s (I-484), exp89l (I-485), exp89t on a yes only (I-486); exp89u / pair D refuted (I-487).\n- The R26-A6 user message (I-488).\n- Freeze-line codes, masking, hygiene, PENDING branch (I-489..I-492).\n- V_pub rule v4 refuted (I-493).\n- EXP75 PARTNER RULE v2 (I-494) and card v4 (I-495; card v3 I-467 superseded).\n- Dummy-clip GT lab (I-496, lab-tested).\n\nClosures: exp13 as a DIS prior (I-175); ILP < 0.4 (I-049); byteext recheck (I-140); 'B recommended at 0.954' (I-466).\n\nCounts: lb-tested 59->61, lab 25->26, refuted 227->240, in-plan 117->120, deferred 47, open 2. Orphans: 1 strict (I-233), 15 at-risk.\n\nRelevant to the user's question: round 26 finished ~13:50Z and the loops are alive (poller, E10 watch, feed). The R26-A6 reply to 'ресерчеры активны?' is ready to send. None of R26-A1..A7 is logged in CONTEXT yet."
+}

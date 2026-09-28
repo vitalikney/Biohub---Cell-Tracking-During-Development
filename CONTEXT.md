@@ -3921,6 +3921,56 @@ Mention it to the user in one line (R9-A8 item 6).
   PASS. NIGHT READY: 00:05 UTC exp89r or exp89q (by probe 51's read at the freeze), 00:06 UTC exp75, 00:46 UTC exp89p.
   GPU used today since 04:55Z ~7.3 h of dummies (estimate); the user reported ~5 h left at ~10:00Z -> ~2.5-3 h left
   now (2 morning dummies ~1.1 h fit).
+- 2026-09-28 14:12 UTC, R8 COVERAGE EXTENDED TO THE NIGHT FILES (R26-A1)
+  R8 COVERAGE EXTENDED TO THE NIGHT FILES: exp89p (secFT n2a 7029fe69), exp89q (secFT n2a 7029fe69) and exp89r (secFT
+  n2a 7029fe69 + coordinject ALPHA 0.5 MAX_UM 3.0, dataset as exp79a), on the same aggressive-mode / Q2 / N2 basis as
+  the 00:00Z line. Q3 = YES (11:26Z): a SEC file may be a final only in the V_pub slot, never the hedge; the 00:00Z
+  line's "Q3 open" is superseded. The CI caveat is unchanged. exp83c (fallback) is covered by exp83*. Morning files
+  get coverage in the line that builds them (exp89l: secFT + coordinject, V_pub only; exp89s: none needed, it has no
+  CI and no SEC).
+- 2026-09-28 14:12 UTC, MORNING TABLE v1.1 (R26-A2; pre-score: 51/night unread; supersedes the 12:17Z MORNING clause)
+  (0) SETUP. (i) DEPTH CAP: the user's 12:25Z confirmation (risk stack exp89q/r; 'morning = stack of the night
+  winners') supersedes 'cap + 2 levers' for stacks built only from {K = ILP_DIVISION_WEIGHT 0.4 + READMIT_MIN_SCORE
+  0.94, SEC n2a 7029fe69, ILP_DISAPPEARANCE_WEIGHT 2.25, coordinject ALPHA 0.5 MAX_UM 3.0}. READMIT 0.92/0.90,
+  SISTER_SYMMETRY_TAU 0.7, DIS 1.75, ILP_DIVISION_WEIGHT < 0.4 and caps other than 6 stay out. (ii) KEY = the stack
+  actually submitted at 00:05Z (exp89r -> branch A, exp89q -> branch B), not probe 51's code.
+  (1) CODES (3-decimal displays). P = exp89p vs exp85a 0.958: '+' >= 0.959; '0u' = 0.958 with an attributable UP; '0'
+  = 0.958 with k = 0 or MASKED/BLIND; '-' <= 0.957; '?' = ERROR or not terminal. Rr = exp89r vs exp87a's display ('+'
+  >= exp87a + 0.001). DIS: branch B: Q = exp89q vs exp89p's display ('+' >= P + 0.001, '0' equal, '-' below). Branch
+  A: dd = (exp89r - exp89p) - (exp87a - exp85a); '+' only if dd >= +0.002 AND exp89r > max(exp87a, exp89p); '-' if dd
+  <= -0.002; otherwise '?' (four rounded displays carry up to 0.002 of rounding error). Only DIS '+' keeps DIS 2.25 in
+  a morning file; '0', '-' and '?' drop it (the 12:25Z condition: winners only).
+  (2) BRANCH A (exp89r submitted). M1 (CI; decide at the first poll header with exp89p terminal, latest the 08:40Z
+  header; submit by 08:45Z = 11:45 MSK): P '+' or '0u' -> exp89l_k2cap6_k_sec_ci (K + SEC + CI, sha8 cad1d47f).
+  Otherwise UNUSED (exp89t = K + DIS + CI only if the user said yes beforehand, R26-A6). M2 (non-CI; decide at
+  exp89r's terminal header, latest 11:00Z; submit by 11:30Z = 14:30 MSK): DIS '+' -> exp89s; else Rr '+' -> exp89q
+  (dummy PASSED 13:14Z; the non-CI twin of the winning stack); else UNUSED.
+  (3) BRANCH B (exp89q submitted). M1 (non-CI; decide at the first header with exp89q and exp89p both terminal, latest
+  the 10:30Z header = 13:30 MSK; submit by 10:50Z): DIS '+' -> exp89s_k2cap6_k_dis225 (K + DIS, sha8 8ed72e32).
+  Otherwise UNUSED. M2 (non-CI, >= 40 min after M1, by 11:30Z): UNUSED (exp89u only if exp75 reads <= 0.953 / ERROR /
+  NO-OP AND the user said yes AND its dummy PASSED). If C51 = '-', put a CI-risk flag on every CI file on the card.
+  (4) FALLBACKS: a chosen file whose dummy has not PASSED -> UNUSED (no substitution). Every morning read enters the
+  finals card as a single-embryo public read; exp89l may be a final only as V_pub (Q3). UNUSED is the honest default
+  when the night produces no new winner.
+  NOTE (0)(i) depth-cap reading is put to the user for objection (R26-A6 (vi)).
+- 2026-09-28 14:12 UTC, exp89s BUILT + DUMMY + PRE-REGISTERED GATE (R26-A3 (1)(2); written before its output)
+  exp89s_k2cap6_k_dis225 = exp85a + ILP_DISAPPEARANCE_WEIGHT 2.25 (non-CI; ipynb 8ed72e32 = the round-26 dry-run);
+  dataset baseline unchanged (ft-weights 2026-09-23 23:54:03, n2a 2026-09-27 21:25:35); dummy pushed 14:12:37Z. GATE
+  vs the exp85a dummy (122,328 / 118,137 / 85; LOWREFINE 148,020): validate ok; 0 Traceback / FAILED / DEADLINE: /
+  FALLING BACK; DIVINS ENABLED; drift guard at 2.25 ok; no n2a 'Secondary SHA256: 7029fe69' line; nodes
+  120,860-121,839; forks 85 +-5; LOWREFINE 148,020 +-1%; runtime rule v2 <= 2,100 s. Ledger: exp89t added to the CI
+  rule (exp89[abcghilmnort] -> safetail_ci); exp89s / exp89u -> safetail (test updated, 27 pass). exp89l (K + SEC +
+  CI, cad1d47f) is built only at probe 51's read if the 00:05Z stack will be exp89r (R26-A3 (3)); exp89t / exp89u only
+  on the user's yes.
+- 2026-09-28 14:12 UTC, EXP75 PARTNER RULE v2 (R26-A5 (1); pre-score, logged before exp75 has a read)
+  EXP75 PARTNER RULE v2 (amends R25-A1 (5); reason: V_pub became non-CI at 12:16Z, so exp75 no longer duplicates
+  V_pub's CI; logged before exp75 has a read). Clean = COMPLETE, no ERROR, CI-RAN (dL = L_hi - 7.54 h > 0.5 h), L_hi
+  <= 10.2 h (9.6-10.2 h gets the ins-tail? footnote). (a) V_pub non-CI: exp75 >= 0.955 and clean -> pair B {V_pub,
+  exp75} is shown as the model-favoured row next to A {V_pub, #37 56563521}. exp75 = 0.954, clean, and probe 51 not
+  '-' -> B and A are shown as a near-equal trade. exp75 = 0.954 with probe 51 '-' -> A first, B as a trade. (b) V_pub
+  is a CI file: the R25 rule (B only at >= 0.955, as a trade). (c) exp75 <= 0.953, ERROR or NO-OP -> partner #37, and
+  a CI-risk flag on any CI V_pub. (d) Pair C {V_pub, exp70g} becomes an info row. mc26: B beats A while the private CI
+  mean is above ~-0.0002 (sd 0.0008) to ~-0.0004 (sd 0.0015); model-conditional.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

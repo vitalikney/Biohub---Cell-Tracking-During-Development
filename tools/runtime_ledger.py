@@ -79,7 +79,7 @@ EXP_RULES = [
     (r"exp79a[a-z]*", "safetail_ci"),
     (r"exp83[a-z]*", "safetail_ci"),          # R21 CI stacks
     (r"exp87[abce][a-z]*", "safetail_ci"),    # R24-A5 K + CI stacks (exp87d/i/j/m are K2 family)
-    (r"exp89[abcghilmnor][a-z]*", "safetail_ci"),  # R25-A5 CI arms / stacks + exp89r risk stack + CI (exp89d/e/f/j/k/p/q are K2 family)
+    (r"exp89[abcghilmnort][a-z]*", "safetail_ci"),  # R25-A5 CI arms / stacks + exp89r risk stack + CI (exp89d/e/f/j/k/p/q are K2 family)
     (r"exp90a[a-z]*", "safetail_ci"),          # R25-A9 spare: exp79a + COORDINJECT_MAX_UM 2.0
     (r"exp7[2-9][a-z]*", "safetail"),         # 28 Sep public rungs (K2 family)
     (r"exp8\d[a-z]*", "safetail"),

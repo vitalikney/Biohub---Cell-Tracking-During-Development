@@ -1,0 +1,9 @@
+- 2026-09-28T13:37:48Z start: verify R26-RC-C (no ILP_DIVISION_WEIGHT < 0.4 rung)
+- 2026-09-28 skeptic checks:
+  - RESULTS.md l.28: exp12 '0.3 / 0.6 (vs 1.2)': raw 0.9204 (36/205/70) at 0.3, 0.9210 (24/104/82) at 0.6 -> 0.6->0.3 marginal = +12 TP / +101 FP = 0.106. Finding reads it right (R11-RC-B had attributed 36/205 to weight 1.2 - a misread; R26 wording is the correct one).
+  - RESULTS.md l.29: gap+direct 0.9271 (0.6) -> 0.9266 (0.3); v2 0.9249 -> 0.9248. Confirmed.
+  - Caveats: exp12 = exp03B pipeline + pre-patch WCC division metric (R11); in x138/K2 the relink replaces all ILP edges (R23-RC-B, exp70g filter_output_graph l.4550-4574), so ILP forks have no direct output channel; the fork-precision argument is a lab analogue, not the x138 mechanism. The only x138 channel is the <=1 um relink bonus + <1% node shift -> any 0.2 rung is +-0.001 noise fishing.
+  - Probe 50 bundled DIV 0.4 with READMIT 0.94 (CONTEXT l.3856): '0.4 read +' is a joint read, not a DIV-alone read.
+  - knobarms_28sep/v_3.json fixed_values said 'if 85a reads UP, step 0.8/0.2' -> that line is superseded by the 12:23Z exclusion (CONTEXT l.3890: extrapolating a threshold along a public-read direction). R26-RC-C correctly closes it.
+  - No disclosure of any DIVISION_WEIGHT < 0.4 in round2x scan_browser files -> aggressive mode not triggered.
+  - Verdict: not refuted; info-only, 0 build, 0 slot.

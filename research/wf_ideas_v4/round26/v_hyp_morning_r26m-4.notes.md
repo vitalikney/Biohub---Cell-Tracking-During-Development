@@ -1,0 +1,12 @@
+# v_hyp_morning R26M-4 skeptic notes (2026-09-28 ~13:40Z)
+- No prior json for this task. Source: scan_hyp_morning.json (R26M-1..7).
+- Gate numbers checked vs CONTEXT.md:
+  - exp85a dummy 122,328 / 118,137 / 85, LOWREFINE 148,020 (l.3468-3469). OK.
+  - DIS deltas: exp88a 120,369 vs exp70g 121,252 = -883 (l.3666); exp89q 121,276 vs exp89p 122,110 = -834 (l.3910-3917). exp89s pred ~121,470 (-0.70%) inside band 120,860-121,839. OK.
+  - exp89q LOWREFINE 147,525 = exp89p -> DIS leaves LOWREFINE unchanged; +-1% band loose but honest.
+  - exp89u: all cap bases 121,252 nodes (K2 cap4 /75 forks/117,077 edges; exp70g /81/117,083; exp78a /86/117,086; exp78b /95/117,092). K delta +1,076 nodes, +4 forks, +1,054/1,055 edges on cap 6/8/12 (l.3522-3527). Prediction 122,328 / 118,131 / 79 -> inside 'minus 0-12' and 'minus 2-10'. OK.
+  - exp89l vs exp89p 122,110/117,957/88 CSV 629fc20b4815 (l.3910). OK.
+  - runtime: exp89r (K+SEC+DIS+CI) 1,959 s vs rule v2 2,100 s -> exp89t margin ~7%.
+- Ledger: tools/runtime_ledger.py l.82 regex exp89[abcghilmnor] lacks 't' -> confirmed (pre-submit fix).
+- GPU: 9.5 h at 04:55Z minus ~7.3 h dummies = ~2.2 h (CONTEXT l.3476, l.3922); user ~5 h at 10:00Z minus exp89p/q/r ~1.35 h -> ~3.6 h. Range 2.2-3.6 h. Plan 1.35-1.9 h; lower bound leaves 0.3 h < one E10 dummy.
+- FLAW: exp89t is used only in row A2 (branch A); exp89u is used in B1 or B3 (almost surely under branch B) and A3. Claim 'exp89s+exp89t cover the most likely rows' is wrong. exp89t, like exp89l, is branch-A only, yet one is pushed now and the other waits for 51. Morning files submit 08:45Z/11:30Z 29 Sep; 51 reads ~21:30-22:15Z (tail 23:09Z) -> ample time to dummy branch-A files after the read. Pushing exp89t now wastes ~0.55 GPU-h with P(branch B) ~0.5.

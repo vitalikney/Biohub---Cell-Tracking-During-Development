@@ -1,0 +1,12 @@
+# round26 scan_plancheck notes (started 2026-09-28T13:18:38Z)
+- 13:18Z state: E10 snapshot experiments/e10_watch/20260928T1318Z.txt: rank 134, 13/20 in 0.958 block, 121 teams >= 0.959; no P2 signal; flexonafft/biohub-lineage-forge-precision-tracking re-ran 13:02Z (feed best_public 0.947, no trigger). Feed digest experiments/discussions/digest_20260928T1307Z.md: 0 new topics/comments, E10 FLAG none (flag > 0.958).
+- Ledger (experiments/lb_poll/ledger.md 13:13:58Z): 56640366 exp87a PENDING, safetail_ci. tools/runtime_ledger.py l.82 CI regex exp89[abcghilmnor]: exp89r CI ok, exp89p/q safetail ok; a new K+DIS+CI build named exp89t/s would be misfiled -> needs a regex letter.
+- R8 COVERAGE (CONTEXT l.3311 + extensions l.3604, l.3831) lists exp72/76d/79d/81/82*/83*/87a-b/89a-b-h-o/90a; NOT exp89p/q/r (secFT, exp89r also CI). Pre-submit check 'this line is present' -> gap for the 00:05Z batch. Line also says 'Q3 open' (stale after 11:26Z yes).
+- Depth cap 'cap + 2 levers' still logged (l.3757, l.3841, l.3885 12:17Z) while exp89r = cap+K+SEC+DIS+CI confirmed 12:25Z -> contradiction; exp89l (K+SEC+CI) barred although shallower.
+- No read codes for exp89q/exp89r (12:23Z/12:25Z lines define only gates + slot). DIS attribution only in the exp89q branch (89q vs 89p); in the exp89r branch 89r - 89p = DIS + CI.
+- Timing: non-CI L 6.87-7.81 h, CI 9.27-9.45 h (+tail to 10.9 h). exp89q 00:05 -> 07:05-07:55Z; exp89p 00:46 -> 07:46-08:34Z; exp89r 00:05 -> ~08:40-09:50Z; exp75 00:06 -> ~09:00-09:50Z (R25-A4 9.0-9.5 h). M1 CI cutoff 08:45Z; 07:23Z prep is post-score for exp89q in the CI- branch; CI dummy ~1,870-2,055 s + queue (3-4 h seen 27 Sep) -> morning dummies must be pushed tonight.
+- Tie order exists (CONTEXT l.3180): last attributable UP, then non-CI, then fewer levers, then earlier submit. MASKED rule (R25-A2 ARM CODES) would kill exp89r's '0u' if exp75 completes in the same window, though exp75 (~0.955) cannot move our LB row.
+- uptest fallback: E10 snapshots keep leaderboard_rows (Rank,TeamId,...,SubmissionCount) for Score >= 0.953 hourly.
+- GPU: user ~5 h at ~10:45Z; since then dummies 89p 1,313 s + 89q 1,576 s + 89r 1,959 s = 1.35 h -> ~3.3-3.6 h left (estimate, not measured).
+- Finals card v3 (R25-A7) predates R+ and Q3 yes: no pair with a non-SEC K partner for a SEC-stack V_pub.
+- 2026-09-28T13:29:01Z final JSON written (9 findings).

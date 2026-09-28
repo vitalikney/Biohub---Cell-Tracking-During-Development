@@ -351,7 +351,7 @@ def test_round24_exp87_families():
 
 
 def test_round25_exp89_families():
-    for e in ("exp89a", "exp89b", "exp89h", "exp89o", "exp89r", "exp90a"):
+    for e in ("exp89a", "exp89b", "exp89h", "exp89o", "exp89r", "exp89t", "exp90a"):
         assert rl.family_of("1", e, {}) == "safetail_ci", e
-    for e in ("exp89d", "exp89e", "exp89f", "exp89j", "exp89k", "exp89p", "exp89q"):
+    for e in ("exp89d", "exp89e", "exp89f", "exp89j", "exp89k", "exp89p", "exp89q", "exp89s", "exp89u"):
         assert rl.family_of("1", e, {}) == "safetail", e

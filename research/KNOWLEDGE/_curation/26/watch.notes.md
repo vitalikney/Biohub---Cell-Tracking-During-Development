@@ -1,0 +1,5 @@
+- 2026-09-28 13:52 UTC: start round 26 watch; no prior watch.json in 26
+- 13:56Z CONTEXT 3944 l, new l.3717-3923 (11:17 A2/AMEND4/gates/exp75 line; 11:19 exp88c PASS, exp89a/e built, ledger, uptest; 11:26 Q3 YES; 11:27/11:28 fallback tick -> notify-only; 12:16 probe50=0.958 R+, probe51 exp87a submitted; 12:17 night R+; 12:23 risk stack; 12:25 user confirmed night; 12:40 exp89p PASS; 13:14 exp89q/r PASS). round26 report.json 13:50Z R26-A1..A7
+- 13:58Z checks: RESULTS.md still ends at probe 46 (47-50 missing); tools/uptest.py present; ledger l.82 lacks 't'; kaggle_feed default 0.958; e10 LOOK 0.958; no exp89s folder; no REPORT.md rounds 24-26; poll 13:44:04Z 56640366 PENDING; loops alive (E10 RUN25 13:22Z, feed 13:38Z); R26-A1..A7 none in CONTEXT (last entry 13:14Z)
+- 14:05Z WATCHLIST.md written (curation 26); line cites corrected against CONTEXT headers
+- 14:08Z watch.json written (19 alerts); done
