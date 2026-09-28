@@ -3839,6 +3839,15 @@ Mention it to the user in one line (R9-A8 item 6).
   exp83c replaces exp88b (as AMEND 4 already foresaw on a Q3 yes); R+ -> exp83c replaces exp89e. As a CI file it goes
   by 01:45 UTC (slot ~00:46 UTC, >= 40 min from the other non-CI K2 file). Read: exp83c vs exp79a (0.957): '+' =
   display >= 0.958; '0' = 0.957; '-' <= 0.956. K + SEC + CI (exp89l) stays excluded by the 'cap + 2 levers' depth cap.
+- 2026-09-28 11:27 UTC, USER: FINALS FALLBACK TICK ALLOWED (chat 'можно')
+  Permission (explicit, this action only): if at 00:00 MSK 30 Sep (21:00 UTC 29 Sep) the SELECTED pair is still
+  exactly {#37 56563521, #38 56563534}, the session may tick the pair from its 21:37 MSK (18:37 UTC) finals proposal.
+  If the user changed the selection in any way, the session does nothing. Kaggle has no selection API (kagglesdk
+  competitions: list/get/create/download submissions only), so the fallback goes through the Kaggle submissions page
+  in Chrome; if the browser action is blocked (the permission classifier blocked the dataset-sharing page earlier) or
+  fails, the session sends the user a push notification with the exact pair (Kaggle deadline 02:59 MSK). Session cron:
+  22:43 MSK reminder (if SELECTED differs from the proposal), 00:03 MSK fallback tick. The user's own tick by 23:00
+  MSK stays the primary path.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
