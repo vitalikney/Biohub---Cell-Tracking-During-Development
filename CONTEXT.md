@@ -3656,6 +3656,27 @@ Mention it to the user in one line (R9-A8 item 6).
   exp79a, so a non-CI file can at most tie 0.957, while a stack on exp79a can reach 0.958 (JT: arms off the current
   best). Row 4 unchanged (first PASSED of exp81, exp85b). W4 AMEND 3 rows (a)-(e) stand with C = C+: (a)/(c) under R+,
   (d) under R0/R?/R-, and b = exp70g.
+- 2026-09-28 10:16 UTC, DUMMY GATES: exp87a PASS, exp83c PASS, exp88a PASS, exp88b PASS (50 PENDING)
+  exp87a (exp70g + K + CI) vs the exp85a dummy (R22-A1): validate ok, 0 Traceback/FAILED/DEADLINE:/FALLING BACK,
+  COORDINJECT SUMMARY 4/4 replaced 0.913, topology columns identical to exp85a (122,328 / 118,137 / 85),
+  integer-coordinate change 0.645 (in 0.60-0.69), 1,870 s (rule v2 <= 2,100), CSV db3faf078781. exp83c (exp70g + n2a
+  SEC + CI) vs the exp81 dummy (SEC-STACK GATE): validate ok, 0 errors, COORDINJECT 4/4 replaced 0.917, topology
+  identical to exp81 (121,085 / 116,961 / 87), change 0.647, Secondary SHA256 7029fe69.. in the log, 2,055 s (<=
+  2,100), CSV 3d1d738176cd. Both W2b amendment-A files are READY. exp88a (ILP_DISAPPEARANCE 2.25) vs exp70g: validate
+  ok, 0 errors, nodes 120,369 (-0.73%), edges 116,240, forks 81, 1,894 s, CSV 482dbda1d1a0. exp88b
+  (SISTER_SYMMETRY_TAU 0.7): nodes 121,252 (+0.00%), edges 117,088, forks 86 (+5 safe divisions, within the predicted
+  +3..+15), 1,654 s, CSV de44f6e3b534. exp88c dummy pushed 10:07Z.
+- 2026-09-28 10:16 UTC, PRIVATE HEDGE PROPOSAL + 29 SEP SCHEDULE (chat with the user 10:0xZ; pending the user's answers)
+  The user asked which file is 'for private'. Answer given: #37 today (cap 4, no CI, no knobs = the least
+  public-tuned). Proposed: exp75 = #37 + CI (built, clean dummy 27 Sep 17:20Z, never submitted) as the private-hedge
+  candidate: keeps cap 4 (the lever whose lab and public disagree: lab 0 TP / 4 FP / 81 unannotated vs public +0.002),
+  adds CI (the only lever with an out-of-sample public '+': probe 48). Rule: exp75 >= 0.955 -> finals pair {best
+  public, exp75}; <= 0.954 -> keep #37. The user proposed night 2 (1 private + 1 public) + morning 3 (or 2 + 1
+  midday); the session proposed night 3 (exp75 private hedge; the best public stack after 50/51; the strongest knob
+  arm on the best base) + morning 2 (stack of the night winners; CI files by ~09:30Z, non-CI by ~11:30Z), and a midday
+  slot only if the user ticks later than 20:00Z (re-ticks allowed until 23:59Z). OPEN QUESTIONS to the user: (1) 3
+  night + 2 morning OK? (2) may morning files be CI files (our best 0.957 is a CI file; the 07:47Z lift covered non-CI
+  only)? (3) will the user tick later than 20:00Z?
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
