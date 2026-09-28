@@ -3706,6 +3706,14 @@ Mention it to the user in one line (R9-A8 item 6).
   are submitted by 09:30 UTC (12:30 MSK) so they read before the 20:00 UTC (23:00 MSK) tick; non-CI files by 11:30 UTC
   (14:30 MSK). This supersedes the 'non-CI only after 02:00Z' part of the 07:47Z lift; the count stays 3 night
   (00:05-01:45Z) + 2 morning.
+- 2026-09-28 10:52 UTC, SCHEDULE RESTORED (session cron, local clock = MSK; the old session-only timers died with the 05:07Z session end)
+  The user asked whether research rounds run every 2.5 h: they did not strictly (rounds 24 at 06:38Z and 25 at 10:16Z;
+  manual timers; the discussion feed runs every 30 min as a detached process). New session cron jobs (times UTC):
+  research rounds 12:47, 15:17, 17:47, 20:17 (28 Sep) and 22:47, 01:17, 03:47, 06:17, 08:47, 11:17, 13:47, 16:17 (29
+  Sep); W4 FREEZE 23:33; NIGHT BATCH 00:04 (3 files, 00:05-01:45); MORNING BATCH PREP 07:23 (2 files; CI by 09:30,
+  non-CI by 11:30); FINALS PROPOSAL v1 12:03 and FINAL 18:37 (tick by 20:00 UTC = 23:00 MSK); POST-DEADLINE 00:07 30
+  Sep. They are session-only: if the session ends, a new session must re-create them from this line. The detached
+  processes (lb_poll poller, E10 watch loop, discussion feed loop) survive a session end.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
