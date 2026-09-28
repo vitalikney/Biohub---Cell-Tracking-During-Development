@@ -3912,6 +3912,15 @@ Mention it to the user in one line (R9-A8 item 6).
   participant, unverified): 'two embryos in the hidden test set; the first one is private and the second is public
   (but it could be a mix split)'. No knob/technique; supports the single-embryo reading of both boards -> the finals
   hedge matters more.
+- 2026-09-28 13:14 UTC, RISK STACK DUMMY GATES: exp89q PASS, exp89r PASS (all three night files + both stack variants ready)
+  exp89q (K + SEC + DIS 2.25) vs the exp85a dummy: validate ok, 0 errors, DIVINS ENABLED, Secondary 7029fe69, nodes
+  121,276 (-0.86%; DIS 2.25 cancels READMIT's node growth as intended: vs exp70g +0.02%), edges 117,157, forks 86,
+  LOWREFINE 147,525, 1,576 s, CSV 0b72bdc4d312 -> PASS. exp89r (+ CI) vs the exp89q dummy (R22-A1): validate ok, 0
+  errors, topology identical (121,276 / 117,157 / 86), COORDINJECT 4/4 replaced 0.916, integer-coordinate change
+  0.646, 1,959 s (rule v2 <= 2,100 s; the scratchpad script's 1,900 s flag is the old threshold), CSV 61601d0222b4 ->
+  PASS. NIGHT READY: 00:05 UTC exp89r or exp89q (by probe 51's read at the freeze), 00:06 UTC exp75, 00:46 UTC exp89p.
+  GPU used today since 04:55Z ~7.3 h of dummies (estimate); the user reported ~5 h left at ~10:00Z -> ~2.5-3 h left
+  now (2 morning dummies ~1.1 h fit).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
