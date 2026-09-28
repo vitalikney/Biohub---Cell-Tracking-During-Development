@@ -1,0 +1,523 @@
+{
+ "topics": {
+  "743929": {
+   "title": "Public 0.953 to 0.959 in two days: using the board as the instrument, and the re-run time as build time",
+   "comment_ids": [
+    3529306,
+    3529308,
+    3529371,
+    3529326
+   ],
+   "last_comment_date": "None",
+   "comment_count": 4
+  },
+  "743765": {
+   "title": "Question for host",
+   "comment_ids": [
+    3528942
+   ],
+   "last_comment_date": "None",
+   "comment_count": 1
+  },
+  "743222": {
+   "title": "Eight leaderboard experiments on the public 0.947 stack \u2014 all negative, here are the numbers",
+   "comment_ids": [],
+   "last_comment_date": "None",
+   "comment_count": 0
+  },
+  "743146": {
+   "title": "Winner deliverables when using permitted third-party pretrained weights",
+   "comment_ids": [],
+   "last_comment_date": "None",
+   "comment_count": 0
+  },
+  "743006": {
+   "title": "Beginner question: How do Public/Private splits usually work in biological datasets?",
+   "comment_ids": [
+    3529380,
+    3528586,
+    3528706,
+    3528331
+   ],
+   "last_comment_date": "None",
+   "comment_count": 4
+  },
+  "742942": {
+   "title": "errors in annotated ground truth",
+   "comment_ids": [
+    3528930,
+    3528926,
+    3528660,
+    3527689,
+    3527637,
+    3527641
+   ],
+   "last_comment_date": "None",
+   "comment_count": 6
+  },
+  "742794": {
+   "title": "New to Biohub? Fork this CPU cell-tracking baseline + validation toolkit",
+   "comment_ids": [],
+   "last_comment_date": "None",
+   "comment_count": 0
+  },
+  "742777": {
+   "title": "Luxar from biohub : 3D Gaussian Splats of Embyro Cells",
+   "comment_ids": [],
+   "last_comment_date": "None",
+   "comment_count": 0
+  },
+  "742702": {
+   "title": "whats the difference between today and the september 29 deadline",
+   "comment_ids": [
+    3527140
+   ],
+   "last_comment_date": "None",
+   "comment_count": 1
+  },
+  "742456": {
+   "title": "unable to uplift my score from 0.947 anymore",
+   "comment_ids": [],
+   "last_comment_date": "None",
+   "comment_count": 0
+  },
+  "742325": {
+   "title": "Anyone share the same opinion?",
+   "comment_ids": [],
+   "last_comment_date": "None",
+   "comment_count": 0
+  },
+  "742266": {
+   "title": "Stuck at 0.947 after ten board tests. What I measured, and one question about the relink stage ",
+   "comment_ids": [
+    3526611,
+    3526816,
+    3526577,
+    3526818,
+    3528912,
+    3527305,
+    3527035,
+    3527037,
+    3527081,
+    3527097,
+    3527099,
+    3527160,
+    3527181,
+    3527268
+   ],
+   "last_comment_date": "None",
+   "comment_count": 14
+  },
+  "742169": {
+   "title": "A few question for top 100 people?",
+   "comment_ids": [
+    3528965,
+    3529330,
+    3526181,
+    3526191,
+    3528959,
+    3526179
+   ],
+   "last_comment_date": "None",
+   "comment_count": 6
+  },
+  "742131": {
+   "title": "Any ideas or successful approaches for model blending?",
+   "comment_ids": [
+    3526062
+   ],
+   "last_comment_date": "None",
+   "comment_count": 1
+  },
+  "742064": {
+   "title": " Public 0.947-stack weights were trained on all 199 train videos \u2014 any hold-out from train is in-sample (manifest check + an LB counter-example)",
+   "comment_ids": [],
+   "last_comment_date": "None",
+   "comment_count": 0
+  },
+  "741868": {
+   "title": "Agents collaborate with Humans - Dashboards are key!",
+   "comment_ids": [
+    3526066,
+    3526070,
+    3526073,
+    3525869,
+    3525897,
+    3525558,
+    3525621
+   ],
+   "last_comment_date": "None",
+   "comment_count": 7
+  },
+  "741749": {
+   "title": "Model changes don't move the LB above the public plateau \u2014 what actually did for you?",
+   "comment_ids": [
+    3525577,
+    3525605,
+    3525406,
+    3525570,
+    3525596,
+    3525606,
+    3525615
+   ],
+   "last_comment_date": "None",
+   "comment_count": 7
+  },
+  "741651": {
+   "title": "I foresee some shakeup.",
+   "comment_ids": [
+    3526571,
+    3525197
+   ],
+   "last_comment_date": "None",
+   "comment_count": 2
+  },
+  "741446": {
+   "title": "What is your best solo model?",
+   "comment_ids": [
+    3524642
+   ],
+   "last_comment_date": "None",
+   "comment_count": 1
+  },
+  "741386": {
+   "title": "A few questions about external zebrafish data",
+   "comment_ids": [
+    3524603,
+    3526709,
+    3525439,
+    3524632
+   ],
+   "last_comment_date": "None",
+   "comment_count": 4
+  },
+  "741242": {
+   "title": "Saving ~75 min in the dual-seed + HOCT veto pipeline (same output, less HOCT deadline risk)",
+   "comment_ids": [],
+   "last_comment_date": "None",
+   "comment_count": 0
+  },
+  "740573": {
+   "title": "Division steps are not long steps: base rates from the training labels",
+   "comment_ids": [
+    3523039,
+    3523041,
+    3523059,
+    3523096,
+    3522987,
+    3522995,
+    3523010,
+    3523013
+   ],
+   "last_comment_date": "None",
+   "comment_count": 8
+  },
+  "740337": {
+   "title": "Not able to submit my notebook and scoring is failing ",
+   "comment_ids": [
+    3522538,
+    3523908
+   ],
+   "last_comment_date": "None",
+   "comment_count": 2
+  },
+  "740145": {
+   "title": "magic or overfitting?",
+   "comment_ids": [
+    3522369,
+    3522587,
+    3524676,
+    3524793,
+    3524794,
+    3524799,
+    3524840,
+    3522636,
+    3522645,
+    3522401,
+    3522275,
+    3522599
+   ],
+   "last_comment_date": "None",
+   "comment_count": 12
+  },
+  "740103": {
+   "title": "Post-Processing Plateau?",
+   "comment_ids": [],
+   "last_comment_date": "None",
+   "comment_count": 0
+  },
+  "739915": {
+   "title": "Why train Unet for more than 100 epochs? Doesn't that lead to overfitting? ",
+   "comment_ids": [],
+   "last_comment_date": "None",
+   "comment_count": 0
+  },
+  "739731": {
+   "title": "can we turn auto research to auo data generator?",
+   "comment_ids": [
+    3521427,
+    3521446,
+    3521482,
+    3522384,
+    3521416,
+    3521415,
+    3521533
+   ],
+   "last_comment_date": "None",
+   "comment_count": 7
+  },
+  "739686": {
+   "title": "Metric problem",
+   "comment_ids": [
+    3521392,
+    3521402,
+    3521611,
+    3521619
+   ],
+   "last_comment_date": "None",
+   "comment_count": 4
+  },
+  "739685": {
+   "title": "Problems with edje connection",
+   "comment_ids": [
+    3521828,
+    3522082,
+    3522206,
+    3522210,
+    3522221,
+    3522271,
+    3521324
+   ],
+   "last_comment_date": "None",
+   "comment_count": 7
+  },
+  "739570": {
+   "title": "Meta Trap, Private LB Shake-ups, and Velocity-Projected Tracking \ud83d\ude80",
+   "comment_ids": [
+    3521192,
+    3521217
+   ],
+   "last_comment_date": "None",
+   "comment_count": 2
+  },
+  "739516": {
+   "title": "I measured my own division_jaccard (0.22). What's yours?",
+   "comment_ids": [
+    3521952
+   ],
+   "last_comment_date": "None",
+   "comment_count": 1
+  },
+  "739352": {
+   "title": "How are your local CVs like? It feels like a huge gap, atleast for me.",
+   "comment_ids": [
+    3520694,
+    3520713,
+    3521195,
+    3520875,
+    3521471,
+    3521470
+   ],
+   "last_comment_date": "None",
+   "comment_count": 6
+  },
+  "739278": {
+   "title": "Are all public notebooks overfit?",
+   "comment_ids": [
+    3520804
+   ],
+   "last_comment_date": "None",
+   "comment_count": 1
+  },
+  "739221": {
+   "title": "Tried training on a 3DTemporalUnet + deterministic linking, loss starts climbing up after 10 epochs",
+   "comment_ids": [],
+   "last_comment_date": "None",
+   "comment_count": 0
+  },
+  "739220": {
+   "title": "How can i reach a 0.9 score at least?",
+   "comment_ids": [
+    3520466,
+    3520854,
+    3521082,
+    3521134,
+    3520375,
+    3520383,
+    3520398,
+    3520403,
+    3520366,
+    3521119,
+    3521386
+   ],
+   "last_comment_date": "None",
+   "comment_count": 11
+  },
+  "739018": {
+   "title": "Question about the node-count adjustment in the metric (adj_edge_jaccard can exceed 1)",
+   "comment_ids": [
+    3519929,
+    3519949
+   ],
+   "last_comment_date": "None",
+   "comment_count": 2
+  },
+  "738970": {
+   "title": "Any advice for starters?",
+   "comment_ids": [
+    3519870
+   ],
+   "last_comment_date": "None",
+   "comment_count": 1
+  },
+  "738833": {
+   "title": "Cell Tracking In-Person Workshop",
+   "comment_ids": [
+    3524977,
+    3521225,
+    3519864,
+    3528966
+   ],
+   "last_comment_date": "None",
+   "comment_count": 4
+  },
+  "738778": {
+   "title": "I think we should use GNN for higher scores",
+   "comment_ids": [
+    3519646,
+    3519833
+   ],
+   "last_comment_date": "None",
+   "comment_count": 2
+  },
+  "738773": {
+   "title": "Detector overfits past ~epoch 10 on fixed sparse-GT frames -- anyone else see this?",
+   "comment_ids": [
+    3520039,
+    3519653
+   ],
+   "last_comment_date": "None",
+   "comment_count": 2
+  },
+  "738217": {
+   "title": "focus3d : one of the best 3d cell segmentation",
+   "comment_ids": [
+    3521535,
+    3521539,
+    3521562,
+    3522918,
+    3522929,
+    3521737,
+    3521418,
+    3521430,
+    3522473,
+    3520950,
+    3520955,
+    3521023,
+    3521158,
+    3518742,
+    3519195,
+    3519199,
+    3518534,
+    3518571,
+    3518591,
+    3518488,
+    3518454,
+    3518559,
+    3518577,
+    3518592,
+    3526067,
+    3524964,
+    3524965,
+    3524617,
+    3524147,
+    3523585,
+    3523586,
+    3523587,
+    3523588,
+    3523591,
+    3523620,
+    3523020,
+    3522961,
+    3522955,
+    3522824,
+    3521575,
+    3521474,
+    3521478,
+    3520752,
+    3520759,
+    3519829,
+    3519902,
+    3519903,
+    3523665,
+    3520479,
+    3518582
+   ],
+   "last_comment_date": "None",
+   "comment_count": 50
+  },
+  "735352": {
+   "title": "Possible big leaderboard shakeup",
+   "comment_ids": [
+    3525358,
+    3513174,
+    3513176,
+    3513238,
+    3513384,
+    3514408,
+    3513149,
+    3513868,
+    3513158,
+    3513867,
+    3513915,
+    3514774
+   ],
+   "last_comment_date": "None",
+   "comment_count": 12
+  },
+  "732103": {
+   "title": "[Free Dataset] 18.5 GB of fully-labelled synthetic 3D microscopy \u2014 165k labelled divisions",
+   "comment_ids": [
+    3521851,
+    3521291,
+    3521140,
+    3521235,
+    3521070,
+    3521156,
+    3510364,
+    3510754,
+    3509286,
+    3509458,
+    3524124,
+    3524143,
+    3524144,
+    3524149,
+    3524797,
+    3529186,
+    3529229,
+    3529257,
+    3529264,
+    3529278,
+    3522908,
+    3522706,
+    3522789,
+    3522811,
+    3522813
+   ],
+   "last_comment_date": "None",
+   "comment_count": 25
+  },
+  "717109": {
+   "title": "Resource sharing for cell tracking challenge",
+   "comment_ids": [
+    3521835,
+    3487641,
+    3520467,
+    3493457
+   ],
+   "last_comment_date": "None",
+   "comment_count": 4
+  }
+ },
+ "last_run": "20260928T0634Z"
+}

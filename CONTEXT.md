@@ -3492,6 +3492,26 @@ Mention it to the user in one line (R9-A8 item 6).
   near-duplicate of exp85a, so neither buys much information; W2b falls back to W2 v4 (2) (E10 copy first, then the
   W1-favoured stack / exp81 SEC). (3) SEC-STACK GATE siblings (R23-A3): exp81 and exp80a dummy CSVs downloaded to
   _dl/, sha12 8132ef2811d0 and a109ad024ace match the logged values.
+- 2026-09-28 06:35 UTC, DISCUSSIONS + PUBLIC NOTEBOOK SCORES WITHOUT A BROWSER (new tool) + FIRST READ
+  (1) Chrome (claude-in-chrome MCP) disconnected at the session restart, and WebFetch returns only Kaggle's empty page
+  shell. NEW: tools/kaggle_feed.py (read-only; tests/test_kaggle_feed.py 6 pass incl. a no-write-call check) uses the
+  kagglesdk search API (ListEntities: TOPIC documents by date; KERNEL documents carry best_public_score, which the CLI
+  never shows) and the discussions API (GetTopic, ListComments; ListTopics by forum slug is 403 for our key). Every
+  competition topic is saved to experiments/discussions/<id>.md; each run writes
+  experiments/discussions/digest_<UTC>.md with new topics / comments (full text) and the public-notebook score list
+  with an E10 FLAG line. A detached loop (experiments/lb_poll/run_feed_loop.sh, every 30 min until 29 Sep 23:59Z) logs
+  to experiments/discussions/feed_loop.log and writes a 'FEED SIGNAL' line when something is new. The research round's
+  scan agent now reads these digests (works without Chrome). (2) FIRST READ (since 27 Sep 12:00Z, digest
+  20260928T0630Z): 743929 John Taylor - the knobs we already submitted (probe 50) plus the process: two arms per knob
+  (raised AND lowered) in one round; build the next round's candidates on the current best during the re-run so the
+  slots go in at the daily reset; finals = best + its closest one-line neighbour; their first step 0.953 -> 0.957 was
+  'a ported post-processing stage' (not disclosed; 'settings go in the notebook after the deadline'); both knobs
+  node-neutral (< 1%). Justin CH123 (04:13Z) asked which knobs closed both ways - unanswered so far. 732103
+  (hengck23's synthetic 18.5 GB dataset, 165k labelled divisions): José Freitas says 'it works! I'm at 0.960' (27 Sep
+  17:46Z), no details until after the deadline. 743006: embryo = id prefix (44b6 71 movies, 6bba 128). (3) Public
+  notebook scores (best_public_score): the top biohub notebooks are all 0.953 (amanatar optimized-biohub-max-score,
+  raunakdey07 Harmonic Fusion V3, kunaldesale2408, anvithpothula x138); none above 0.956 -> no E10 trigger. (4) GPU
+  lanes idle since 06:00Z (exp85b/c done).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
