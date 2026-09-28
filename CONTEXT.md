@@ -3344,6 +3344,38 @@ Mention it to the user in one line (R9-A8 item 6).
 - 2026-09-28 01:02 UTC, R21-A5/A6: ledger rule exp83* -> safetail_ci (+ test; 25 pass). CI stacks built (shas match round 21): exp83a = exp78b + CI
   (80a0856f), exp83b = exp78a + CI (d9b0834d); both dummies pushed now (the only W2b CI candidates). exp81 and exp80a dummies COMPLETE
   (gates per R21-A3 logged earlier).
+- 2026-09-28 01:02 UTC, s terminal header, quoting the last poll.log header that shows it PENDING:
+  '2026-09-28 01:02 UTC UTC, W2 TABLE v4 + DIV STOP RULES (round 21; last poll header 2026-09-28T00:56:01Z shows
+    56623073 PENDING; amends READ TABLE v3 (4) and consolidates v3 (6)/(8); v3 (1)-(3) and (5) stand).
+  (1) W2a (08:45-10:00Z) = v3 (3) unchanged: exp80a iff exp78b '+', disp(exp78b) >= disp(exp78a), 46 not '-' (46 = 0),
+    exp80a dummy PASS (logged); otherwise the SEC file exp81 (exp70g + n2a).
+  (2) W2b (12:00Z; an E10 copy first). exp79a is never resubmitted. In order: (i) CI '+' and BASE = exp78b -> exp83a;
+    BASE = exp78a -> exp83b (dummy PASSED by 11:45Z, else go on); (ii) exp81, if W2a did not take it; (iii) exp80a, if
+    its (1) condition holds and W2a did not take it; (iv) CI '?' and BASE in {exp78a, exp78b} -> that BASE + CI stack
+    (tests a '?' lever); (v) otherwise (incl. BASE = exp70g with CI '+') the slot moves to W3 (28 Sep, <= 23:30Z) for
+    the max stack of '+' levers on BASE not yet scored, with a PASSED dummy (lookup (4)); else exp76e filler per v3 (2)
+    or unused. Never stack an unread lever in W2; never stack SEC or DIV with a '-'/'0' CI.
+  (3) The SEC file stays exp81 on exp70g, coded against exp70g 0.956 per v3 (1) (0.956 -> '?' if exp70g no longer
+    holds our unrounded best at S0).
+  (4) Lookup BASE: +CI / +SEC / +both = exp70g: exp79a / exp81 / exp83c; exp78a: exp83b / exp82a / exp83e; exp78b:
+    exp83a / exp82b / exp83d; exp80a: exp83f / exp82c / exp83g (shas per r21w-1).
+  (5) S1 exp78a and exp78b both '-' or '0' -> DIV volume closed, BASE exp70g, no exp80a, no DIV file in W3/W4. S2
+    exp78a '+' and exp78b not '+' -> stop at cap 8 (no cap 10/16, no fc2 on cap 8). S3 exp78b '+' -> exp80a in W2a; if
+    exp80a displays strictly above exp78b -> ONE more step exp84a (cap 48 fc2) in W3/W4; otherwise stop at cap 12. S4 a
+    '?' DIV read is never a strict step. S5 a '-' step ends the direction; no step back. S6 no DIV-only file after 29
+    Sep 01:45Z; at most 4 more DIV-volume files (exp78b, exp78a, exp80a, exp84a).
+- 2026-09-28 01:02 UTC, 29 SEP W4 AMEND 2 (round 21; amends v3 (8), v2 (6)/(7); window names unchanged: W3 = 28 Sep <= 23:30Z, W4 = 29 Sep 00:05-01:45Z).
+  (1) W4 order, each with a PASSED dummy by 00:00Z: 0. E10 copy (always first). 1. FULL = BASE + every '+' lever it
+    lacks (lookup R21-A7 (4)), if not yet scored. 2. One file per '?' lever on BASE. 3. exp84a only under S3. 4. If FULL
+    contains CI: its non-CI twin (finals-proposable).
+  (2) Timing: K2-like files at 00:05/00:45/01:25Z; CI files at 00:06/00:46Z; at most 4 planned files; the 5th slot is
+    held for E10.
+  (3) A stack that reads '0'/'-' while its components were '+' is NON-ADDITIVE: stop that pair.
+  (4) Never: knob/thr/N1/fresh-N2/tau/DC rungs; cap 10/16; fc2 on cap 8.
+  (5) After 02:00Z 29 Sep: only with the user's yes to the cap lift (R20-A12): non-CI twin of a '+' FULL, one DIV step
+    under S3, an E10 copy; non-CI T_last ~10:25Z, CI T_last ~07:30Z (v2 (7)). An E10 copy after 02:00Z: E10 v3 lifted R8
+    for E10 items, so it is allowed under E10 v3 until ~10:00Z (run completes before the ~19:00Z FINALS READ); the
+    morning message confirms (R21-A10).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
