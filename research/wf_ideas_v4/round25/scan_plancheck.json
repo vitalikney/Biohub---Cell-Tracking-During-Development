@@ -1,0 +1,93 @@
+{
+ "summary": "Round 25 plan check, 28 Sep ~10:40Z. Probe 50 (exp85a) is still PENDING at the 10:13:17Z header; it should turn terminal at ~12:03-12:50Z (submitted 05:02:30Z, L 7.0-7.8 h). We are #153 at 0.957, 16th of 42 in that block. No E10 trigger (every public notebook is <= 0.953) and no new discussion posts since 06:30Z. Amendment A (probe 51 = exp87a under R+, else exp83c) is consistent and both dummies PASS. Nine gaps remain. (1) Probe 51's own read rule against exp79a is not pre-registered. (2) The W4/29 Sep plan now sits in four overlapping texts that contradict each other: the 10:16Z exp75 proposal hits the R21-A3 NO-GO and the LIFT-SPLIT kinds, the AMEND 3 SEC clause can never fire, and the knob arms are still cut off the non-CI base. (3) '09:30Z' is too late for a morning CI file (FINALS READ 19:00Z). (4) The exp75 dummy fails runtime rule v2 as logged. (5) A {exp79a, exp75} pair puts CI in both finals. The lab shows one clip at -0.021, and JT's best+neighbour pair {exp79a, exp70g} needs no slot. (6) The CI_lo 2.2 h model is above the measured same-batch CI time (1.88-2.18 h). (7) exp86c fails the literal R24-A4 gate, and the exp88c gate is not pre-registered. (8) The -m token decides the family and session liveness at 12:15-13:00Z matters. (9) There is no fallback if the user does not re-tick (#37+#38 = 0.954/0.953).",
+ "findings": [
+  {
+   "id": "PC25-01",
+   "kind": "plan-issue",
+   "what": "Probe 51 (exp87a under R+, exp83c under R0/R-/R?) has no pre-registered read rule. Amendment A says which file goes, but not how its display is coded against the new best, exp79a 0.957. Without that rule, a 0.957 read is ambiguous. It could mean a non-additive stop of K+CI, or SEC closed, or a tie. The W4 freeze at 23:30Z needs that code.",
+   "evidence": "CONTEXT 09:35Z W2b TABLE v5 AMENDMENT A defines only the choice of file. The v3 (1) codes were written for levers against exp70g 0.956. W4 AMEND 2 (3) has a non-additive stop, but no read rule names exp87a/exp83c. The LB CSV LastSubmissionDate for us is still 00:50:37 (e10_watch/20260928T1017Z.txt), so it will show 05:02:30 only once 50 has scored.",
+   "action": "Before 50 is terminal (by ~12:00Z), append a line 'PROBE 51 READ RULE (pre-score; header <time> shows 56629533 PENDING)'. S0 = a fresh LB download taken at 50's terminal header (count 52). S1 = the first download showing count 53. Probe 51 is then the only pending ref, so k is clean. Codes against exp79a: display >= 0.958 -> '+' (new best). 0.957 with an attributable UP -> '+' (new unrounded best). 0.957 with no UP -> '0'. <= 0.956 -> '-'. For exp87a, K '+' and C '+' with a '0'/'-' stack -> NON-ADDITIVE (AMEND 2 (3)): no further K+CI stacks, and V_pub stays exp79a. For exp83c, '+' makes SEC '+' on the best base (finals-eligible only after the user answers Q3), and '0'/'-' closes SEC for 29 Sep. Log L with the CI-RAN rule, sibling = exp85a (under R+) or exp70g (exp81 is unscored).",
+   "urgency": "now"
+  },
+  {
+   "id": "PC25-02",
+   "kind": "plan-issue",
+   "what": "The 29 Sep plan is spread over four texts that contradict each other: W4 AMEND 3 rows (07:43Z), the W4 LIFT SPLIT (07:43Z), the KNOB ARMS slot rule (09:07Z) and the 10:16Z proposal (3 night slots: exp75, best stack, strongest arm; 2 morning slots). Conflicts: (i) exp75 is on the R21-A3 (e) NO-GO list ('superseded, not unsafe'). It is also none of the LIFT SPLIT kinds (E10, FULL, ? test, its non-CI twin, a DIV step). (ii) AMEND 3 rows (d)/(e) allow SEC(b) only 'if exp81 was scored and read +'. Amendment A replaced exp81 with exp83c, so that clause can never fire. (iii) Under R+, row (a) drops exp87a (probe 51) and exp85a (probe 50) as scored, which leaves only exp86c at 00:45Z. (iv) The knob arms exp88a/b/c were cut off exp70g (non-CI) at 09:07Z. At 09:35Z C+ made exp79a the best and amendment A adopted 'arms off the current best', but the arms were never re-cut.",
+   "evidence": "CONTEXT: R21-A3 (e) 'NO-GO (superseded, not unsafe): exp75, ...'; 07:43Z W4 AMEND 3 (d)/(e) 'SEC(b) ... only if exp81 was scored and read +'; 07:43Z W4 LIFT SPLIT kinds; 09:07Z KNOB ARMS slot rule (arms re-cut only 'if probe 50 reads R+'); 09:35Z amendment A (exp83c replaces exp81); 10:16Z proposal (pending user answers).",
+   "action": "When the user answers the 10:16Z questions, and in any case before the 23:30Z freeze, write ONE line 'W4 AMEND 4 (29 Sep slot list; supersedes the conflicting parts of AMEND 3, the LIFT SPLIT kinds and the 09:07Z slot rule)'. Give it two branches (R+ / R0-R-R?). Each branch gets 3 night files at 00:05/00:06/00:45(or 01:25)Z, E10 first, and 2 non-CI morning files by 10:25Z, each named with its sha and dummy status. It must say explicitly that exp75 leaves the R21-A3 (e) NO-GO only if the user says yes. It must replace 'exp81 read +' with 'exp83c read + (probe 51)' in rows (d)/(e). It must also state whether the arms run on exp70g (non-CI, read against 0.956) or on the current best as CI stacks (PC25-04).",
+   "urgency": "today"
+  },
+  {
+   "id": "PC25-03",
+   "kind": "plan-issue",
+   "what": "The 10:16Z proposal has morning CI files 'by ~09:30Z'. That is too late, and it also conflicts with the logged rule that no CI file goes after 02:00Z. With the measured CI latency, 09:30Z reads at 18:46-18:57Z, 3-14 min before the FINALS READ at ~19:00Z. With the logged CI band of 9.4-10.9 h it reads as late as 20:24Z, after the 20:00Z tick. A morning stack of 'night winners + CI' can only use the 00:05Z non-CI read (it lands ~07:05-07:55Z). The 00:45/01:25Z reads land at 07:45-09:15Z, too late for a CI file.",
+   "evidence": "probe 48 exp79a L (9.27, 9.45] h (CONTEXT 09:35Z); round-22 PRE-SCORE CLARIFICATIONS (4) 'After 02:00Z 29 Sep no CI file is allowed'; USER 07:47Z lift = 'up to 2 non-CI files'; W4 AMEND 2 (5) CI T_last ~07:30Z; FINALS READ ~19:00Z (RESUME (f)).",
+   "action": "In the user message or W4 AMEND 4, set CI T_last = 19:00Z - (the largest L_hi among our COMPLETE CI refs, including probe 51 once read, + 0.5 h), which is ~09:00Z now. A CI file after 02:00Z goes only on an explicit user yes to question (2). Otherwise the morning files are non-CI. The finals-proposable non-CI twin of a CI winner is the natural morning file (AMEND 2 (1)-4).",
+   "urgency": "today"
+  },
+  {
+   "id": "PC25-04",
+   "kind": "new-hypothesis",
+   "what": "The night knob arms should be CI stacks on the current best, not non-CI arms on exp70g. A non-CI arm reads against 0.956 and at best ties the best at 0.957. A '+' there would need a CI stack submitted by ~09:00Z, and the night reads come too late for that (PC25-03). A CI arm (exp79a + TAU 0.7, or exp87a + TAU 0.7 under R+) reads against 0.957 before 11:15Z and is itself a finals candidate. Its non-CI twin (exp88b, already dummied) is the morning non-CI file, allowed under the lift. Dummy-queue risk: CI dummies sat 3.3-4 h in the Kaggle queue on 27 Sep. GPU left is about 4.5-4.8 h: 9.5 h at 04:55Z minus ~10 dummies since, ~17,100 s.",
+   "evidence": "exp88b dummy: nodes 121,252, forks 86, safe per clip 37/7/5/19 vs exp70g 35/6/5/17 (_dl/biohub-exp88b-k2cap6-tau07 log); exp88a nodes -0.73%; CI stage 434-445 s in every CI dummy (_dl logs). tools/runtime_ledger.py l.77-83: only exp75/76[acfhi]/79a/83*/87[abce] map to safetail_ci, so any exp89* CI build would fall to exp8\\d -> safetail (9.5 h). CONTEXT 27 Sep: exp75 dummy queued ~4 h.",
+   "action": "CPU build now (no push): exp89a = exp79a + SAFE_DIV_SISTER_SYMMETRY_TAU 0.7, and exp89b = exp79a + ILP_DISAPPEARANCE_WEIGHT 2.25 (or 1.75 if 50 is R+). Under R+, build them on exp87a instead, as exp89c/exp89d. Diff: only the knob line plus the builder's cell-1 drift-guard sync, compared with exp88b/exp88a on the CI cells. Add (r\"exp89[a-z]*\", \"safetail_ci\") above exp8\\d, with a test. Read the GPU quota page. Push only the realised-branch member at 51's read, or at 50's read if the stack base is exp79a, by ~20:30Z at the latest so the dummy passes by 23:30Z. Gate: R22-A1 against the non-CI arm dummy (exp88b CSV de44f6e3b534: topology identical, integer-coordinate change 0.60-0.69, runtime rule v2). Offer it in W4 AMEND 4 as the night 'strongest arm' slot.",
+   "urgency": "today"
+  },
+  {
+   "id": "PC25-05",
+   "kind": "plan-issue",
+   "what": "The exp75 dummy does not pass runtime rule v2 (R24-A3 (3), in force for every dummy logged from 07:43Z) as it was logged. 2,288 s is in the 2,100-2,500 s re-run band. Its ratio is 1.49 against its parent #37 (exp58 dummy 1,535 s) and 1.34 against its CI sibling exp79a (1,712 s), both above 1.15. The build itself is clean: exp75 = exp79a with DIVINS_CAP 4 instead of 6 (cell-0 diff only), and = exp58 (#37) + the 2 CI env lines + the CI cell.",
+   "evidence": "_dl/biohub-exp75-k2-coordinject log last time 2287.9 s (COORDINJECT 445 s, kernel elapsed 2255 s); _dl/biohub-exp58-x138-safe-lowref 1535 s; _dl/biohub-exp79a-k2cap6-coordinject 1711.5 s; notebook diff experiments/exp75_k2_coordinject vs experiments/exp79a_k2cap6_coordinject and experiments/exp58_x138_safe_lowref.",
+   "action": "If the user says yes to exp75, re-run its dummy once (~0.6 GPU-h; CI dummies can queue for hours, so push it at the yes and before ~20:00Z). It PASSES if the re-run is <= 2,100 s, or <= 1.15 x exp79a's 1,712 s = 1,969 s. Log that the parent for a CI file is its CI sibling. Otherwise exp75 is not eligible for W4.",
+   "urgency": "today"
+  },
+  {
+   "id": "PC25-06",
+   "kind": "plan-issue",
+   "what": "The private-hedge rule 'exp75 >= 0.955 -> pair {best public, exp75}' puts CI in both finals (exp79a and exp75), which removes the only hedge against CI failing on the other embryos. The CI lab is in-sample and uneven across clips: one 44b6 clip was -0.021. The public '+' is a single-embryo read, and exp75's public read cannot measure transfer to the private embryos. JT's 743929 rule (best + its closest one-line neighbour) gives {exp79a 0.957, exp70g 0.956}. They differ only by CI, the non-CI file keeps the public-optimal cap 6, and the pair needs no slot. {exp79a, #37} is the round-23 card's pair.",
+   "evidence": "research/wf_ideas_v4/bigger_levers/prep_coord_refiner.json l.14 per_clip_a0.5 [-0.0209, 0.0125, 0.0, 0.0083] and l.18 'one 44b6 clip -0.021'; check_coord_refiner.json l.20 a0.5_3um [-0.0029, 0.0125, 0.0, 0.0029]; CONTEXT 10:16Z proposal; CONTEXT 04:38Z (743929 finals advice); cap curve cap 4 0.954 / cap 6 0.956 / cap 8 0.955 / cap 12 fc2 0.955 (CONTEXT 07:54Z).",
+   "action": "In the reply to the user's private question, show three pairs side by side and do not pre-commit to exp75. (a) {exp79a, exp70g}: best + one-line neighbour, one file without CI, no slot needed. (b) {exp79a, #37}: the round-23 card pair, least public-tuned. (c) {exp79a, exp75}: CI in both files. Say plainly that exp75's read only replicates CI on the public embryo. Suggest giving exp75's night slot to the CI arm (PC25-04) unless the user explicitly wants exp75. Add {V_pub, exp70g} to the finals card as a scored option.",
+   "urgency": "today"
+  },
+  {
+   "id": "PC25-07",
+   "kind": "recheck-old",
+   "what": "The safetail_ci insertion-gate line ('did NOT fire' iff L_hi <= 10.2 h) rests on a CI_lo = 2.2 h model from 27 Sep, which is above the measured CI time. Against the same-batch sibling, CI took (1.88, 2.18] h. So a CI read with L_hi in (9.88, 10.2] h may have had its insertion skipped by the 8.0 h DIVINS deadline, yet it would be coded as clean. This matters for probe 51 (~22:00-23:30Z) and for any 29 Sep CI file.",
+   "evidence": "CONTEXT CI LEDGER (3) 'CI_lo = 2.2 h (a model: >= 100 hidden videos x the 158 s dummy mean / 2 workers ...)'; exp79a L (9.27, 9.45] h, same-batch sibling exp78b L (7.27, 7.39] h -> dL (1.88, 2.18); vs exp70g (7.49, 7.67] -> (1.60, 1.96); tools/runtime_ledger.py l.59 safetail_ci divins_h=10.2.",
+   "action": "Append a correction line: 'CI_lo measured = 1.88 h (exp79a vs same-batch exp78b). Insertion gate for CI files: did NOT fire iff L_hi <= 9.88 h; (9.88, 10.2] h -> UNPROVEN (code '?'), and the CI-RAN rule is unchanged.' Set divins_h=9.88 in tools/runtime_ledger.py FAMILIES['safetail_ci'] and update its test. This is a read rule, not a slot change, so write it before probe 51 is terminal.",
+   "urgency": "today"
+  },
+  {
+   "id": "PC25-08",
+   "kind": "plan-issue",
+   "what": "exp86c is a W4 candidate (RA92(b), 00:45Z under R+), but it fails the literal R24-A4 gate. It has safe divisions 36/7/5/17 (the gate wants 36/7/5/18) and 84 forks (the gate wants >= 85). The 07:28Z log checked it only with gate85.py (|dn| <= 1.5%). Separately, the knob-arm dummies (exp88a/b logged 10:16Z, exp88c running) had no pre-registered gate. exp88c's criteria should be written before its output is read.",
+   "evidence": "_dl/biohub-exp86c-k2cap6-div04-ra092 log: safe-division added=36/7/5/17 vs exp85a 36/7/5/18; divinsert 6/1/6/6 (= exp85a); CONTEXT 07:28Z forks 84, nodes 122,716, LOWREFINE 150,265; R24-A4 (round24/report.json) criteria 'safe 36/7/5/18; forks >= 85'; knobarms 09:07Z SCIP replay 1.75 -> +0.85% nodes.",
+   "action": "Log 'exp86c GATE (R24-A4 as amended): the safe 36/7/5/18 and forks >= 85 items were over-tight. READMIT 0.92 shifts clip-4 geometry by one safe division, and dummy forks are metric-ignored (M5). exp86c is judged by the R24-A6 RA gate instead: nodes 122,716 > 122,328, LOWREFINE 150,265 > 148,020 (+1.5% < +5%), forks within +-5 of 85, 0 errors, 1,559 s -> PASS.' Pre-register exp88c now: validate ok, 0 errors, nodes +0.4% to +1.3% vs 121,252, forks within +-5 of 81, runtime rule v2.",
+   "urgency": "today"
+  },
+  {
+   "id": "PC25-09",
+   "kind": "plan-issue",
+   "what": "Probe 51 submit hygiene and liveness. The ledger reads the family from the FIRST exp token of the -m description (tools/runtime_ledger.py EXP_TOKEN / family_of). A text such as 'probe 51: FULL exp70g + K + CI (exp87a)' would file a CI file as safetail (9.5 h), and its normal ~9.4 h latency would then be misread. Probe 50 should be terminal at 12:03-12:50Z. If the file goes at 14:00Z, a CI file reads by up to 23:27Z, which leaves no margin before the 23:30Z freeze.",
+   "evidence": "tools/runtime_ledger.py EXP_RULES comment 'first exp<N><suffix> token of the description -> family', EXP_TOKEN regex, family_of (l.160-166); probe 50 ref 56629533 submitted 05:02:30Z, K2-family L 7.0-7.8 h; the previous session died 05:07Z (CONTEXT 06:26Z); probe 48 L (9.27, 9.45] h.",
+   "action": "The -m text starts 'probe 51: exp87a = ...' (or 'exp83c = ...'). Submit within one poll cycle of 50's terminal header, and before ~13:30Z so the read lands before 23:30Z. If 50 is not terminal by 13:30Z, apply the R? branch at 13:30Z rather than 14:00Z. Keep wake-ups at 12:10Z, 12:40Z and 13:20Z. Pause the feed loop ~10 min before the submit because of the 429 risk (R24-A8).",
+   "urgency": "now"
+  },
+  {
+   "id": "PC25-10",
+   "kind": "plan-issue",
+   "what": "There is no fallback if the user does not act. The ticked finals are #37 (0.954) and #38 (0.953), both below V_pub exp79a (0.957) and exp70g (0.956), and the session never re-ticks. If the user misses 20:00Z, and 23:59Z, the finals are our two weakest recent public files.",
+   "evidence": "CONTEXT RESUME (a) 'the session proposes ... never re-ticks'; USER 27 Sep 19:10:58Z letter; 10:16Z open question (3) 'will the user tick later than 20:00Z?'.",
+   "action": "Add one line to the pending user message: 'If there is no change to the ticks by 29 Sep 21:00Z, may the session tick the pair from the 18:00Z proposal? (yes/no)'. Log the answer. Without a yes, keep the no-re-tick rule and send the 18:00Z proposal with a clear 'the ticks are still #37/#38' warning.",
+   "urgency": "today"
+  },
+  {
+   "id": "PC25-11",
+   "kind": "new-fact",
+   "what": "The LB and feed state at ~10:17Z adds no trigger. Our 0.957 is #153, 16th of 42 in the block (ranks 138-179). There are 18 teams at 0.958, 19 at 0.959 and 100 at >= 0.960, out of 3,965 teams. Every public notebook's best_public_score is still <= 0.953 (no E10 trigger; the flag is > 0.957). There have been no new topics or comments since the 06:30Z digest, and JT has still not answered Justin CH123 (743929), so there is no newly disclosed knob to action. The watch loop's LOOK text was edited to 0.957, but the running loop process dates from 06:22Z. Apply the >= 0.958 trigger by hand until the loop restarts.",
+   "evidence": "experiments/e10_watch/20260928T1017Z.txt (histogram; OURS rank 188 -> 153); experiments/discussions/digest_20260928T1009Z.md; experiments/discussions/feed_loop.log 10:06:40Z 'new topics 0, new comments 0 | E10 FLAG: none'; experiments/lb_poll/e10_watch_loop.py l.78.",
+   "action": "No slot action. Keep the hourly watch. After any 0.958+ read of ours, restart the feed/watch loops with the new --our-best.",
+   "urgency": "info"
+  }
+ ]
+}

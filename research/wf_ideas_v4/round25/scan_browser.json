@@ -1,0 +1,53 @@
+{
+ "summary": "Round-25 delta scan, 10:17-10:30 UTC 28 Sep, against round 24 (06:38-06:50Z; LB snapshot 0639Z). Our position: the LB shows 0.957 (probe 48 exp79a, already read in CONTEXT at 09:35Z). We are #153, 16th of 42 in the 0.957 block (ranks 138-179), with 137 teams strictly above (was #179 at 0.956). E10 P1: tools/e10_snapshot.py wrote experiments/e10_watch/20260928T1017Z.txt (CHANGES=7 vs 0922Z). No kernel or status changed in any snapshot between 06:39Z and 10:17Z, x138 is unchanged, and no public notebook is above 0.953 (Chrome Code tab by score, CLI and all 8 feed digests agree; E10 FLAG none). One P2 look-signal fired and is not yet in CONTEXT: the 0822Z snapshot shows a largest group of 5 teams that went from <=0.953 to exactly 0.956 in one window. Their submissions were at 00:48-02:08Z, which is the daily burst. The look found no public source, so there is nothing to pull or gate with e10_port_gate.py. LB counts, r24 in brackets: 0.953 = 423 (423), 0.954 = 134 (134), 0.955 = 90 (89), 0.956 = 68 (56), 0.957 = 42 (41), 0.958 = 18 (14), 0.959 = 19 (18), >=0.955 = 337 (315), >=0.960 = 100 (97), >=0.970 = 9 (9), 3,965 teams (+3). Top 15 unchanged; Yaroslav 0.965->0.969 enters at #16. Discussion: 0 new topics and 0 new comments since r24; the newest activity is still Georgy Mamarin 05:16Z and Justin CH123 04:13Z, both seen. John Taylor has not answered the 0.2 vs 0.6 question on 743929. No new disclosed knob, so nothing new is actionable under AGGRESSIVE MODE. Overview: timeline unchanged, '2 DAYS TO GO', 92,154 submissions (+720). Data unchanged (24,886 files, 87.61 GB). No host post. Nothing pulled. Probe 50 (exp85a) is still PENDING at 10:13Z and should read around 12:15-13:00Z.",
+ "findings": [
+  {
+   "id": "r25-e10-p1-and-p2-look",
+   "kind": "new-fact",
+   "urgency": "today",
+   "what": "E10 P1 at 10:17Z: no kernel-list or status change vs 0922Z, and none in the 0722Z/0822Z/0922Z diffs either (06:39Z -> 10:17Z). x138 anvithpothula/biohub-0-953-lb-original: 0.953, 223 votes, 3 comments, 'Updated 7d ago'. The Code tab by Public Score tops out at 0.953 (HF V3, optimized-biohub-max-score, Biohub Cell Tracking, x138); the next is Geometric Fusion 0.948. The newest competition kernel created is still tobimichigan (24 Sep); by dateRun, kunaldesale2408 06:37Z is a re-run already seen in r24. P2: the 0822Z window (07:22Z->08:22Z) has a largest group of 5 at 0.956 from <=0.953/new: len8487 (sub 00:48:22Z), 'komanda Andreya Gaydulyana' (00:58:29Z), Howon Kang (01:02:03Z), Yudai Ueno (01:45:18Z), Kai Gowers (02:08:38Z). That meets the '>= 5 in one window' look-signal. The look finds no public notebook or dataset above 0.953 and no new kernel, so e10_port_gate.py has nothing to check (it needs a pulled notebook). Other windows: 0722Z largest 1, 0922Z largest 1, 1017Z 0.",
+   "evidence": "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/experiments/e10_watch/20260928T1017Z.txt ; experiments/e10_watch/20260928T0822Z.txt (DIFF 'P2 look-check ... 0.956: 5; largest group 5') ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/code?sortBy=scoreDescending ; experiments/discussions/digest_20260928T1009Z.md (E10 FLAG: none, flag > 0.957)",
+   "action": "Log the 0822Z P2 look-signal and its null look in CONTEXT, since it is not recorded there. No port and no pull. The E10 trigger stays at >= 0.958 (CONTEXT 09:35Z)."
+  },
+  {
+   "id": "r25-lb-delta",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "LB 10:17Z vs 06:39Z: 3,965 teams (+3), 83 rows >= 0.953 changed. Ours: 0.957, #153 (was #179 at 0.956), 137 strictly above, 16th of 42 in the 0.957 block (ranks 138-179); SubmissionCount 51, LastSubmissionDate 00:50:37 (the exp78a submit time; the 0.957 comes from exp79a, submitted 00:06:33Z). Counts: 0.953 423->423, 0.954 134->134, 0.955 89->90, 0.956 56->68, 0.957 41->42, 0.958 14->18, 0.959 18->19, >=0.955 315->337, >=0.960 97->100, >=0.970 9->9. Top 20: #1-#15 unchanged (yu4u 0.978, Sergio Alvarez 0.976, Gabriel 0.975, taiseiu 0.974, ...). Yaroslav 0.965->0.969 is now #16, and Abnormal Guys 0.967 dropped out to #21. Just outside the top 20: Deniz Ozaydin 0.963->0.967 (#21) and Ryo Hasegawa 0.966->0.967. Notable movers: OTkm_tn 0.953->0.959 in one step (sub 00:19Z, 33 subs), tyffee new at 0.959, Teddy Tennant (thtennant, watched author) 0.959->0.962, Mark Cooper 0.959->0.962, Revanth Tambisetty 0.957->0.959, Matt Goldfield 0.957->0.959. Every changed row was submitted 27 Sep 22:10Z - 28 Sep 03:53Z, which matches the ~7 h latency of the midnight burst.",
+   "evidence": "experiments/e10_watch/20260928T0639Z.txt vs experiments/e10_watch/20260928T1017Z.txt (leaderboard_rows), row-diffed by TeamId with the scratch script lbdiff25.py in the session scratchpad",
+   "action": "None on finals. The 0.956 block grew by 12 (56 -> 68), so any non-CI file that reads 0.956 now sits in a larger tie block. That is display only (public = ~29%)."
+  },
+  {
+   "id": "r25-hyp-0956-crowd-source",
+   "kind": "new-hypothesis",
+   "urgency": "today",
+   "what": "The 0.956 block is growing fast (+12 net; 5 teams jumped straight from 0.953 to 0.956 and about 12 went from 0.955 to 0.956, all submitted 00:00-03:30Z 28 Sep) with no public notebook above 0.953. The likely source is the disclosures in discussion 743929 (John Taylor, 'Public 0.953 to 0.959 in two days'), which are the only x138 knob values posted publicly: 'ILP_DIVISION_WEIGHT 1.2 -> 0.4' and 'READMIT_MIN_SCORE 0.965 -> 0.94'. Teams apply them to x138 and read 0.956, the same as our exp70g. This is an inference from timing and the lack of any other public source; it is not verified.",
+   "evidence": "experiments/e10_watch/20260928T0722Z.txt and 20260928T0822Z.txt (info lines); https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/743929 ; experiments/discussions/743929.md",
+   "action": "Probe 50 exp85a (exp70g + both knobs, ref 56629533, PENDING, expected ~12:15-13:00Z) tests this on our base. Read it with the existing W2b amendment-A rules. No new build: exp85a/b/c already cover these knobs."
+  },
+  {
+   "id": "r25-disc-no-new",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "Discussion, newest first (Chrome, sort by Recent Comments, ~10:20Z): 'Beginner question: How do Public/Private splits usually work in biological datasets?', last by Georgy Mamarin 5 h ago (05:16Z, seen r24); 'Public 0.953 to 0.959 in two days...' (743929), last by Justin CH123 6 h ago (04:13Z, seen r24: 'Did you try ILP_DIVISION_WEIGHT on the other side of 0.4 (e.g. 0.2 or 0.6)?'); 'A few question for top 100 people?', last by Chris Deotte 10 h ago (seen); '[Free Dataset] 18.5 GB ... synthetic 3D microscopy', last by FOYSAL 14 h ago (seen). The feed digests 0704Z, 0735Z, 0805Z, 0835Z, 0905Z, 0936Z, 1006Z and 1009Z all report 44 topics checked, 0 new topics, 0 new comments and E10 FLAG none. No host announcement. No newly disclosed knob, value, dataset or technique.",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion?sort=recent-comments ; experiments/discussions/digest_20260928T0704Z.md ... digest_20260928T1009Z.md",
+   "action": "None. If John Taylor answers the 0.2 vs 0.6 question on 743929, turn the disclosed direction into a one-knob arm on the current best base (exp79a / CI)."
+  },
+  {
+   "id": "r25-overview-data-datasets",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "Overview: '2 DAYS TO GO'; timeline unchanged (Entry and Team Merger September 22, 2026; Final Submission Deadline September 29, 2026). Stats: 13,475 entrants, 4,543 participants, 3,965 teams, 92,154 submissions (+720 vs 91,434 at r24). Data page: 24,886 files, 87.61 GB, 'json, csv + 1 other', CC0, unchanged. CLI datasets 'biohub' by updated: the top entry is ghazarosghazaros/ks-biohub-zebrahub-frames-lite (6.8 MB, updated 27 Sep 17:54Z, 12 downloads). Its author was seen in r8 (a DAE copy and self-distillation arms on the 0.946 stack), so it is not an x138-family disclosure. The rest are as seen before. All-Kaggle 'biohub' kernels by dateRun: nothing new.",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/overview ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/data ; https://www.kaggle.com/datasets/ghazarosghazaros/ks-biohub-zebrahub-frames-lite",
+   "action": "None."
+  },
+  {
+   "id": "r25-task-facts-stale",
+   "kind": "recheck-old",
+   "urgency": "info",
+   "what": "The round task text still says 'our best public = 0.956 = exp70g' and lists probes 47/48/49 as pending. Per CONTEXT and the ledger: 47 exp78b = 0.955, 49 exp78a = 0.955, 48 exp79a (exp70g + coordinject CI) = 0.957 = the new best (CI file), and 50 exp85a is still PENDING. The E10 trigger is now >= 0.958; kaggle_feed.py already flags > 0.957.",
+   "evidence": "experiments/lb_poll/ledger.md (56623105 COMPLETE 0.957; 56629533 PENDING at 10:13:17Z); CONTEXT.md 2026-09-28 09:35 UTC entry",
+   "action": "Refresh KEY FACTS in the next round prompt: best 0.957 = exp79a (CI); E10 threshold 0.958."
+  }
+ ]
+}

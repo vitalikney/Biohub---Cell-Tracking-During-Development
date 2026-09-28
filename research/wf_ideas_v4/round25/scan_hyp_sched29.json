@@ -1,0 +1,104 @@
+{
+ "task": "round25 scan_hyp_sched29: 29 Sep schedule by branch (probe 50 R+/R0/R-, probe 51 +/0/-), exact files, builds/dummies before 23:30Z, morning stacking rule",
+ "written_utc": "2026-09-28T10:55Z",
+ "complete": true,
+ "summary": "29 SEP SCHEDULE (night 3 + morning 2). The NIGHT list depends on probe 50 only, because probe 51 can read after the 23:30Z freeze (12:45Z + 10.9 h = 23:39Z).\nNight by branch:\n- R+: 00:05 exp86c (READMIT 0.92), 00:06 exp75 (private hedge, CI), 00:25 exp89e (exp85a + DISAPPEARANCE 1.75). One new dummy.\n- R0/R-/R?: 00:05 exp88a, 00:06 exp75, 00:25 exp88b. All already PASSED; no new dummy.\nProbe 51 sets BEST_CI: exp87a if R+ and 51 is + or 0u; none if R+ and 51 is 0 or - (non-additive); under R0/R-, exp83c only on a Q3 yes, else exp79a.\nMorning:\n- M1 is a CI stack of BEST_CI plus the arms that read + (lookup exp89a/b/c, exp89g/h/i, exp89m/n). It goes <= 09:30Z, or as soon as both arm reads land (~08:15Z).\n- M2 is non-CI, <= 11:30Z: the FULL twin (exp89d / exp89j); else the next arm (exp88c if exp88a read -; exp89k RA90 if exp86c beat exp85a; exp89f); else unused, or an E10 copy with the user's yes.\nBuilds: all 14 exp89 commands were verified in a scratch mirror. Existing folders rebuild byte-identical; exp75 differs only by --set line order.\nLines to log: ledger rule exp89[abcghilmn] -> safetail_ci; the RA92+CI lift of W4 AMEND 3 (R+ only); the '0u' sub-rounding code; the exp86c forks waiver; the exp75 grandfather line.\nGPU: R0/R- ~1-2 h, R+ ~2-2.5 h; both fit within ~4.5 h including the E10 reserve.\nExpected gain: P(M1 new best) ~0.2, E ~+0.0002 display, private EV ~0. Nothing reaches R8, and there are no new disclosures this round.",
+ "findings": [
+  {
+   "id": "R25S-1",
+   "kind": "plan-issue",
+   "what": "The 29 Sep NIGHT list must depend on probe 50 (R) only, never on probe 51. Probe 51 (exp87a or exp83c, a CI file) goes in at 50's terminal header (~12:30-13:00Z). At exp79a's measured CI latency of 9.27-9.45 h it reads at 21:45-22:30Z. At the logged upper CI band of 10.9 h it reads as late as ~23:54Z, after the 23:30Z freeze (W4 AMEND 3). A night list that depends on 51 could therefore fall back to the R? defaults at the freeze. The design below uses exp75 plus two NON-CI one-knob arms on the non-CI twin of the best file, all chosen by R alone. Probe 51 decides only the CI base of the morning stack.",
+   "evidence": "CONTEXT.md 09:35Z (exp79a L (9.27, 9.45] h; W2b amendment A: 51 at 50's terminal header); 07:43Z R24-A1 (T) 'logged L band 9.4-10.9 h'; W4 AMEND 3 (dummies PASS + frozen list by 23:30Z). Arithmetic: 12:45Z + 10.9 h = 23:39Z.",
+   "action": "At the 23:30Z freeze, log R, the frozen night list and the slot times per R25S-2. Do not wait for 51.",
+   "urgency": "today"
+  },
+  {
+   "id": "R25S-2",
+   "kind": "new-hypothesis",
+   "what": "29 SEP SCHEDULE BY BRANCH (latency split; 5 slots = night 3 + morning 2).\nCODES. R = probe 50 exp85a vs exp70g: R+ = display >= 0.957; R0 = 0.956; R- = <= 0.955; R? = not terminal by 23:30Z, handled as R0. Q = probe 51: '+' = >= 0.958; '0' = 0.957; '-' = <= 0.956. '0u' = 0.957 AND our row moves up at its completion, with exactly one completion between snapshots (unrounded above exp79a); handled as '+' for the base choice only. Arm '+' = display >= parent + 0.001, or equal to the parent with an attributable UP when the parent's display equals our best display; anything else is not '+'.\nNIGHT (frozen at 23:30Z). Non-CI arms go at 00:05Z and 00:25Z, not 00:45Z: 20 min apart gives separate UP snapshots, and both read by ~08:15Z at L 7.8 h. exp75 goes at 00:06Z.\n  R+: 00:05 exp86c (K with READMIT 0.92, PASS 07:28Z; = AMEND 3 (a) RA92(b), moved from 00:45) | 00:06 exp75 (cap 4 + CI, private hedge, PASS 27 Sep) | 00:25 exp89e_k2cap6_k_dis175 (exp85a + ILP_DISAPPEARANCE_WEIGHT 1.75: the 09:07Z knob-arms rule 'exp88c direction first if R+', re-cut on the K base). New dummy: exp89e only.\n  R0/R-/R?: 00:05 exp88a (exp70g + DISAPPEARANCE 2.25, PASS) | 00:06 exp75 | 00:25 exp88b (exp70g + SISTER_SYMMETRY_TAU 0.7, PASS). No new night dummy.\n  An E10 trigger before 00:25Z replaces the 00:25Z arm (E10 v3 pre-02:00Z rule). After 02:00Z, an E10 copy the user approves replaces M2.\nBEST_CI = the CI base for the morning, decided at the 51 read:\n  R+ and Q in {+, 0u} -> exp87a.\n  R+ and Q in {0, -, ?} -> NONE (K+CI is non-additive, W4 AMEND 2 (3)).\n  R0/R- and Q in {+, 0u} -> exp83c if the user answered Q3 = yes, else exp79a.\n  R0/R- and Q in {0, -, ?} -> exp79a.\nMORNING. P = the night arms that read '+' (known 07:05-08:15Z). exp75 reads ~09:30Z and is not stacked.\n  M1 (CI; submit <= 09:30Z, or earlier once P is known; reads ~18:45-19:00Z at L 9.27-9.45 h). It goes only if BEST_CI exists, P is non-empty, and the user allowed morning CI files (open question 2). Lookup: BEST_CI exp79a: {88a} exp89a, {88b} exp89b, both exp89c. BEST_CI exp87a: {86c} exp89h, {89e} exp89g, both exp89i. BEST_CI exp83c: {88a} exp89m, {88b} exp89n, both = exp83c + D25 + T7 (built on demand). If a two-arm file's dummy has not PASSED by 09:30Z, use the single-arm file with the higher display (tie: the 00:05Z arm). In every other case M1 becomes a non-CI file taken from the M2 list.\n  M2 (non-CI; submit <= 11:30Z; reads 18:30-19:18Z).\n    R0/R-: both arms '+' -> exp89d (exp70g + D25 + T7, the non-CI FULL twin); else exp88c (DISAPPEARANCE 1.75, the other direction) only if exp88a read '-'; else exp81 only if Q in {+, 0u} and Q3 = yes; else unused (or E10 with the user's yes).\n    R+: both arms '+' -> exp89j (RA92 + D17); else exp89k (READMIT 0.90) only if exp86c read strictly above exp85a (AMEND 3 (4) RA90); else exp89f (exp85a + TAU 0.7). A second non-CI pick takes the next item.\n  If the user ticks at 21:30Z or later, M2 may move to <= 13:00Z, but only for an approved E10 copy: no other information arrives between 11:00Z and 13:00Z.\nMECHANISM. A one-knob arm on the non-CI twin reads ~2 h earlier than on a CI base (7.0-7.8 h vs 9.3-9.5 h). It is also read against a parent that is already scored, so attribution is clean. CI is a post-CSV coordinate shift, so an arm's topology change should stack with CI the way probe 48 did on exp70g.\nEXPECTED GAIN. P(arm '+') ~0.2 each (our one-lever LB record: 2 '+' of ~11 reads vs parent, exp70g +0.002 and exp79a +0.001). P(at least 1 of 2 '+') = 1 - 0.8^2 = 0.36. P(stack additive) ~0.5-0.6, so P(M1 displays BEST + 0.001) ~0.2 and E[public display] ~+0.0002. A +0.001 moves our row past the ~42-team 0.957 block. Private EV ~0 +- 0.002 (winner's curse on one embryo).\nRUNTIME. The arms change only an ILP objective weight or a gate threshold; they add no stage. Dummies ran 1,654-1,894 s under concurrency vs exp70g's 1,388-1,409 s solo. Hidden L: non-CI ~7.0-7.8 h, CI ~9.3-9.8 h (< 10.75 h admit).\nGATE. Dummy (R22-A1 / rule v2) + the public read vs its parent. Nothing reaches the R8 lab bar: R8 is lifted by the user, and these are public-read tests only.",
+   "evidence": "Latencies: CONTEXT.md 07:32Z (47 L 7.27-7.39 h), 07:54Z (49 L 7.0-7.04 h), 09:35Z (48 L 9.27-9.45 h). Dummies 10:16Z (exp88a 1,894 s, exp88b 1,654 s, exp87a 1,870 s, exp83c 2,055 s). Knob-arms 09:07Z slot rule; W4 AMEND 3 (a)/(d); session proposal 10:16Z (night 3 + morning 2, CI by ~09:30Z, non-CI by ~11:30Z); research/wf_ideas_v4/round25/scan_hyp_sched29.notes.md.",
+   "action": "Log this table as a pre-score line before probe 50 is terminal (~12:05Z at L 7.0 h). It amends the 09:07Z knob-arms SLOT RULE (the third slot and the after-02:00Z arms) and the W4 AMEND 3 (a) timing (RA92 moves from 00:45 to 00:05). Send the user one line: the night list is fixed by probe 50 alone, and the answer to question 2 (morning CI) decides whether M1 can be a CI stack.",
+   "urgency": "now"
+  },
+  {
+   "id": "R25S-3",
+   "kind": "new-fact",
+   "what": "Build commands verified in a scratch mirror (tools/ plus the exp56/exp39 bases copied to the session scratchpad; nothing written to experiments/).\nExisting folders rebuild byte-identical: exp88a 710a23b9, exp88b 5bcbe5db, exp88c 7b0591ac, exp87a 2e40c57f, exp79a 5f9b265d, exp83c e8f5a8a6, exp86c 9436e809, exp85a e6337843.\nexp75 rebuilds to ab621c13 vs repo 4653611e. The only difference is where the two DIVINS_CAP/FRAME_CAP lines sit in cell 0 (the older --set order). The file is functionally identical, so its 27 Sep dummy stands.\nNew files (arg order $B $KB $C6 [JT|RA92|RA90] [D] [T] [N2] [CI]; sha8 of the .ipynb; the folder name is part of the hash):\n  exp89a_k2cap6_ci_dis225 = $C6 $D25 $CI, ddd97ed3\n  exp89b_k2cap6_ci_tau07 = $C6 $T7 $CI, 4f2f4ee9\n  exp89c_k2cap6_ci_dis225_tau07 = $C6 $D25 $T7 $CI, 8c65ebe4\n  exp89d_k2cap6_dis225_tau07 = $C6 $D25 $T7, 49574d1d\n  exp89e_k2cap6_k_dis175 = $C6 $JT $D17, 61b59191\n  exp89f_k2cap6_k_tau07 = $C6 $JT $T7, 2092cf43\n  exp89g_k2cap6_k_ci_dis175 = $C6 $JT $D17 $CI, 6490121d\n  exp89h_k2cap6_ra092_ci = $C6 $RA92 $CI, 39c0452f\n  exp89i_k2cap6_ra092_ci_dis175 = $C6 $RA92 $D17 $CI, a2a7fc58\n  exp89j_k2cap6_ra092_dis175 = $C6 $RA92 $D17, e5dc89f4\n  exp89k_k2cap6_div04_ra090 = $C6 $RA90, 59e181b4\n  exp89l_k2cap6_k_sec_ci = $C6 $JT $N2 $CI, cad1d47f\n  exp89m_k2cap6_sec_ci_dis225 = $C6 $D25 $N2 $CI, fb6cb18f\n  exp89n_k2cap6_sec_ci_tau07 = $C6 $T7 $N2 $CI, 98da86b9\nCell diffs vs parent (79a->89a/b, 85a->89e, 87a->89g/h, 83c->89m, 83c/87a->89l): only the knob line(s) in cell 0, plus the cell-1 drift-guard value for DISAPPEARANCE (TAU has no guard entry, same as exp88b). An _ci file adds the coordinject cells, as exp79a does over exp70g.",
+   "evidence": "Env: export MSYS_NO_PATHCONV=1; <round21 scan_hyp_w2_w4_plan.json build_env_git_bash: B, KB, C6, CI, N2>; JT='--set ILP_DIVISION_WEIGHT=0.4 --set READMIT_MIN_SCORE=0.94'; RA92='--set ILP_DIVISION_WEIGHT=0.4 --set READMIT_MIN_SCORE=0.92'; RA90='--set ILP_DIVISION_WEIGHT=0.4 --set READMIT_MIN_SCORE=0.90'; D25='--set ILP_DISAPPEARANCE_WEIGHT=2.25'; D17='--set ILP_DISAPPEARANCE_WEIGHT=1.75'; T7='--set SAFE_DIV_SISTER_SYMMETRY_TAU=0.7'; python tools/build_probe_kernel.py <name> $B $KB $C6 [JT|RA92|RA90] [D] [T] [N2] [CI]. Mirror at <session scratchpad>/mirror/; notes file research/wf_ideas_v4/round25/scan_hyp_sched29.notes.md 10:40Z.",
+   "action": "Build (CPU, no push) only the realized branch, at 50's read. R+ -> exp89e, exp89f, exp89g, exp89h, exp89i, exp89j, exp89k. R0/R- -> exp89a, exp89b, exp89c, exp89d (plus exp89m/exp89n only on a Q3 yes). STOP on any sha8 mismatch. Diff each file against its parent as above before pushing a dummy.",
+   "urgency": "today"
+  },
+  {
+   "id": "R25S-4",
+   "kind": "plan-issue",
+   "what": "DUMMY PUSH TIMES and GPU tally. Budget: ~5 GPU-h left, ~0.5 h per dummy, 2 lanes, ~1 h kept for E10.\nAt 50's read (~12:05-13:00Z): R+ -> push exp89e (night file, must PASS by 23:30Z). R0/R- -> push exp89a + exp89b (the M1 single-arm stacks on exp79a; every 51 outcome uses exp79a unless Q3 = yes).\nAt 51's read (~22:15Z): R+ and Q in {+, 0u} -> push exp89g + exp89h (after the R25S-5 line). R0/R- with Q in {+, 0u}, Q3 = yes and >= 2 GPU-h left -> push exp89m + exp89n.\nOn demand at the second '+' arm read (~07:10-08:15Z): the two-arm CI file (exp89c / exp89i) and the non-CI M2 file (exp89d / exp89j / exp89k / exp89f).\nTotals: R0/R- 1.0 h, +0.5-1.0 h on demand, +1.0 h if SEC. R+ 0.5 h, +1.0 h if 51 is '+', +0.5-1.0 h on demand. Both fit under ~4.5 h with the E10 reserve.\nQueue risk: exp75's dummy waited ~4 h in the Kaggle queue on 27 Sep. So the single-arm stacks are pushed the evening before, and only the two-arm files wait for demand (P(both arms '+') ~0.04-0.1).",
+   "evidence": "CONTEXT.md 17:21Z 27 Sep (exp75 queued ~4 h); 05:03Z (GPU 20:29/30 h used); 10:16Z (exp88c pushed 10:07Z); task text (~5 h left).",
+   "action": "Follow the push times. Log each gate line before reading the output: R22-A1 criteria with the parent dummy CSV as the topology reference (exp89a/b vs exp88a/exp88b topology + CI change 0.60-0.69; exp89g/h vs exp89e/exp86c), runtime rule v2.",
+   "urgency": "today"
+  },
+  {
+   "id": "R25S-5",
+   "kind": "plan-issue",
+   "what": "W4 AMEND 3 says 'A READMIT 0.92/0.90 '+' never gets a +CI build'. Under R+ with Q '+', this line blocks exp89h/exp89i, the only way a RA92 '+' can lift a CI best to 0.959. The line was written at 07:43Z, before CI read '+' (probe 48, 09:35Z), when CI was still a '?' lever. Amendment A (09:35Z) already moved the W2b logic to 'arms off the current best', and the current best is a CI file. Lift the line for RA92 only (RA90 stays non-CI), as a pre-score line before exp86c is submitted.",
+   "evidence": "CONTEXT.md 07:43Z (W4 AMEND 3 'AMENDS (1)-1 ... never gets a +CI build'); 09:35Z (C+ and W2b amendment A).",
+   "action": "If R+: log before 23:30Z 'R25 AMEND to W4 AMEND 3: RA92(b) + CI (exp89h, and exp89i with DISAPPEARANCE 1.75) may be M1 when BEST_CI = exp87a and exp86c reads +; RA90 stays non-CI'.",
+   "urgency": "today"
+  },
+  {
+   "id": "R25S-6",
+   "kind": "plan-issue",
+   "what": "The exp89 files need a runtime-ledger family. tools/runtime_ledger.py EXP_RULES maps exp89* through r'exp8\\d[a-z]*' to safetail (9.5 h deadline). The CI members would be misfiled and judged against the non-CI deadline. The R8 COVERAGE line also names coordinject files only up to exp87a/b.",
+   "evidence": "tools/runtime_ledger.py l.77-84 (exp87[abce] -> safetail_ci above exp8\\d); CONTEXT.md 07:44Z (R8 COVERAGE extended to exp87a/b).",
+   "action": "Before any exp89 submit: insert (r\"exp89[abcghilmn][a-z]*\", \"safetail_ci\") above l.83, with a test (exp89a/exp89h -> safetail_ci; exp89e/exp89k -> safetail), and extend R8 COVERAGE to the exp89 CI members.",
+   "urgency": "today"
+  },
+  {
+   "id": "R25S-7",
+   "kind": "new-hypothesis",
+   "what": "SUB-ROUNDING TIE CODE '0u' for reads that tie our best display (0.957). Kaggle ranks on the unrounded score, and exact ties go to the earlier submission. A new 0.957 file therefore moves our row up only if its unrounded score beats exp79a's. Apply the existing UP test (one completion between snapshots) in three places:\n(i) Probe 50 at 0.957: an UP means exp85a > exp79a unrounded. That decides whether the non-CI or the CI file is BEST for the finals card.\n(ii) Probe 51 at 0.957: an UP means the stack beat exp79a, so it is not non-additive (Q = 0u, the base for M1).\n(iii) R+ night arms on exp85a that read the parent's display.\nNo UP means an honest '0'. Expected gain: it resolves ~1/3 of reads (P(display = 0.957) ~0.3-0.4 for 50/51) that would otherwise be coded non-additive. Runtime 0. Gate: the uptest.py record (S0/S1 counts differ by exactly 1).",
+   "evidence": "CONTEXT.md 07:32Z / 07:54Z / 09:35Z (UP tests with S0/S1 downloads; 0.957 block 42 teams, 16th). 09:35Z amendment A says 'R+ = display >= 0.957 only': true for a 0.956 file, but a 0.957 file can still show an UP against exp79a.",
+   "action": "Add '0u' to the 51 read line, and to the 50 read line if 50 displays exactly 0.957. Keep snapshots around each completion (poller < 10 min).",
+   "urgency": "today"
+  },
+  {
+   "id": "R25S-8",
+   "kind": "plan-issue",
+   "what": "The exp86c gate record is inconsistent. The 07:28Z PASS used the gate85 criteria. R24-A4's stricter exp86c gate (forks >= 85) was never logged, and exp86c has 84 forks (exp85a has 85). Forks are metric-ignored (M5), so the gap is cosmetic. But exp86c becomes the R+ 00:05Z file, so the record should say which gate governs.",
+   "evidence": "CONTEXT.md 07:28Z (exp86c forks 84, nodes 122,716, LOWREFINE 150,265, 1,559 s, CSV 31b1e047587a); round24 report.json R24-A4 ('forks >= 85').",
+   "action": "Under R+ only, log at the freeze: 'exp86c gate: R24-A4 criteria met except forks 84 < 85; forks criterion waived (M5 metric-ignored; READMIT 0.92 changes one insertion); PASS'.",
+   "urgency": "later"
+  },
+  {
+   "id": "R25S-9",
+   "kind": "recheck-old",
+   "what": "exp75 (the 00:06Z night file) had a 2,288 s dummy, above the rule-v2 line of 2,100 s. Rule v2 covers only dummies logged after 07:43Z 28 Sep, and exp75's dummy was logged at 17:21Z on 27 Sep. Its hidden latency is bounded by exp79a's measured L of 9.27-9.45 h: it has the same CI stage, and cap 4 inserts fewer daughters than cap 6. That is below both the 10.75 h admit and the 10.2 h insertion gate, so a re-dummy (~0.6 GPU-h) is not needed. exp75's topology equals K2 #37 (121,252 / 117,077 / 75), so its read is a clean test of CI on #37 for the private-hedge rule (>= 0.955 -> finals pair {V_pub, exp75}; <= 0.954 -> keep #37). It reads at ~09:30Z, before the tick.",
+   "evidence": "CONTEXT.md 17:21Z 27 Sep (exp75 dummy); 07:43Z R24-A3 (3) (rule v2 'from now on'); 09:35Z (exp79a L); 10:16Z (private-hedge rule).",
+   "action": "Add one grandfather line to the 23:30Z freeze log; no re-dummy.",
+   "urgency": "later"
+  },
+  {
+   "id": "R25S-10",
+   "kind": "plan-issue",
+   "what": "Morning T_last arithmetic if the user ticks at 19:00Z instead of 20:00Z. CI: T_last = 19:00 - 9.45 h = 09:33Z at the measured L, but 08:06Z at the logged 10.9 h band. Non-CI: T_last = 19:00 - 7.8 h = 11:12Z. With the arms at 00:05Z and 00:25Z, both reads land by ~08:15Z (L 7.8 h), so M1 can go at ~08:20-08:45Z if the single-arm dummies have already passed, and M2 (non-CI) by ~11:00Z. Moving N3 from 00:45Z to 00:25Z is what makes this possible.",
+   "evidence": "Latencies as in R25S-2; session proposal 10:16Z (tick ~19:00-20:00Z; open question 3).",
+   "action": "Submit M1 as soon as both arm reads are in; do not wait for 09:30Z. If the user confirms a 19:00Z tick, M2's T_last is 11:00Z.",
+   "urgency": "info"
+  },
+  {
+   "id": "R25S-11",
+   "kind": "new-fact",
+   "what": "No new disclosed knob or technique since round 24. Feed digests 0905Z/0936Z/1006Z/1009Z show 0 new topics and 0 new comments; the top public notebooks are at 0.953 and the E10 FLAG is none. The sibling round-25 browser scan agrees: 0 new comments, and the 0.956 block is growing with no public source. Aggressive mode therefore adds no new file this round.\nSEC+K+CI (exp89l) stays CPU-built only. SEC is unread on the LB (exp81/exp83c), and Q3 (a SEC file as a final) is open. It enters a slot only on a Q3 yes, and then as M1 under R+ with P empty (EV ~0; no lab sign: n2a proxy 0.998/1.010).",
+   "evidence": "experiments/discussions/digest_20260928T0905Z.md ... digest_20260928T1009Z.md; research/wf_ideas_v4/round25/scan_browser.json; CONTEXT.md 21:26Z 27 Sep (n2a proxy); 07:47Z (Q3 open).",
+   "action": "Nothing beyond R25S-2. Keep the E10 watch at >= 0.958.",
+   "urgency": "info"
+  },
+  {
+   "id": "R25S-12",
+   "kind": "new-fact",
+   "what": "Honest R8 statement: nothing in this round is a new mechanism, and nothing reaches the R8 lab bar (~+0.012 lab). The plan only sequences public-read tests of one-line knobs that are already disclosed or already built, plus stacks of public '+' levers: ILP_DISAPPEARANCE_WEIGHT 2.25/1.75, SISTER_SYMMETRY_TAU 0.7, READMIT 0.92/0.90 (our own extrapolation of John Taylor's 743929 process), CI and SEC. Closed items (forkmid, DC t*, forkblob, tempfuse, edge filter, overlap-consensus, cap 8/12+, RA98, coordinject alpha 1.0) are not re-proposed. Tau 0.7 is a public test only: its lab sign is embryo-specific (6bba +0.005 / 44b6 -0.0009 at 0.75; I-051).",
+   "evidence": "research/KNOWLEDGE/IDEAS.md header + I-051/I-437/I-439/I-440; CONTEXT.md 09:07Z knob arms.",
+   "action": "None.",
+   "urgency": "info"
+  }
+ ]
+}

@@ -1,0 +1,9 @@
+# R25S-7 verify notes (2026-09-28T10:35:06Z)
+- 10:36Z: no prior v_*.json. Probe 50 (56629533) still PENDING (last read 09:33Z header), so a pre-score 0u line is still possible (~12:05Z terminal).
+- Mechanism check: uptest.py (session scratchpad .../acabaea6-.../scratchpad/uptest.py, NOT in repo) = TeamIds ranked above us at S0 and below us at S1; public bests never fall, so any pass => our best rose. LB CSV (_lb/S1_0934Z zip) has 3-decimal Score only, ranks distinct inside a block (unrounded order, CONTEXT l.1849). => UP at an equal 0.957 display implies unrounded > exp79a. Exact tie -> earlier sub keeps -> no UP (conservative).
+- NOT NEW: U<B> code already in 28 SEP READ TABLE v2 (CONTEXT 27 Sep 18:50Z: '= B with an UP -> U<B>') and v3 cap-6 codes ('0.956 with an UP -> +'); R25S-2/R25S-? in scan_hyp_sched29.json already define '0u' (line 18, 58). This finding is a split-out log line.
+- Probe 50: W2b amendment A: R+ = display >= 0.957 already, so 0u changes no R code; only orders exp85a vs exp79a on the finals card (public-only, <0.001, one embryo; user picks finals) -> info only, not a 'decider'.
+- Probe 51: changes BEST_CI under R+ (exp87a vs NONE) -> real decision effect, logically sound (UP => exp87a > max(exp79a, exp85a) whenever exp85a displays 0.957). If exp85a displays 0.958, 0u is impossible at 0.957 (correct).
+- 'A third' check: at S1_0934Z we are 16th of 42 in the 0.957 block (15 above) -> P(uniform 0.957 lands above exp79a) ~0.37; detection needs >=1 team between (k=15, fine). Plausible, not measured.
+- Arms: night arms 00:05/00:25Z share the 7.0-7.8 h latency band -> can complete in one snapshot window -> +2 step -> MASKED; 0u then unavailable for those reads. Probe 51 alone pending 12:45Z -> ~07:00Z next day, so its one-completion condition holds naturally.
+- Private value ~0 (sub-rounding public gap on the 29% embryo); zero runtime, no file change.

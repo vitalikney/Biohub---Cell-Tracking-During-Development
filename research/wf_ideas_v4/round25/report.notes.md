@@ -1,0 +1,12 @@
+# round25 report notes
+
+- 2026-09-28 10:41Z: report.json absent; starting synthesis of round 25 (findings + skeptic verdicts).
+- 10:42Z sources: CONTEXT l.3398-3687 (last entry 10:19Z USER ANSWERS: 3+2 yes, CI-morning pending, tick by 20:00Z = 23:00 MSK); poll.log header 2026-09-28T10:33:21Z 56629533 (probe 50 exp85a) PENDING, ledger L > 5.51 h; digest_20260928T1036Z.md 0 new topics/comments, top public 0.953, E10 FLAG none; git HEAD b618f7b.
+- 10:44Z judge checks: exp75 ipynb sha256 ab621c13 (repo == R25P-1; R25S-3 'repo 4653611e' is wrong, S9 skeptic agrees -> never rebuild/re-push exp75); exp79a 5f9b265d, exp88a 710a23b9, exp88b 5bcbe5db, exp88c 7b0591ac, exp87a 2e40c57f, exp86c 9436e809, exp83c e8f5a8a6 (match R25S-3 rebuilds). _dl has exp75/83c/87a/88a/88b outputs, no exp88c.
+- 10:45Z tools/runtime_ledger.py EXP_RULES: no exp89 or exp9\d rule; exp89* -> exp8\d -> safetail; exp90* -> unknown. CI members of R25S-3 = exp89a,b,c,g,h,i,l,m,n (+ exp89o if built).
+- 10:46Z kaggle kernels status vitaliineibauer/biohub-exp88c-k2cap6-dis175 = COMPLETE (read-only) -> its gate line must be logged BEFORE its output is downloaded/read.
+- 10:47Z round24 R24-A4 exp86c gate (safe 36/7/5/18, forks >= 85) vs exp86c actual 36/7/5/17, 84 forks; R24-A6 RA-style gate (nodes/LOWREFINE above parent, forks +-5, 0 errors) passes: 122,716 > 122,328; 150,265 (+1.52%) > 148,020; 84 vs 85.
+- Judge decisions: (1) today's slot: R+ -> exp87a, R0/R-/R? (incl. 50 not terminal at 13:00Z) -> exp75 (R25P-3 upheld); (2) night R0 = exp88c 00:05 / exp89a (exp79a + DIS 2.25 + CI) 00:06 / exp88b 00:45, exp83c replaces exp88b on Q3 yes; night R+ = exp86c 00:05 / exp75 00:06 (or exp87a if exp75 already scored) / exp89e 00:45; (3) depth cap (cap + 2 levers) kills exp89c/g/i; (4) M1 CI only on user yes, cutoff 08:45Z; M2 non-CI by 11:30Z; (5) card = neutral A/B/C table; (6) RC-A = spare exp90a only; RC-B, 0956-crowd, PC25-07 boundary move rejected.
+- 10:52Z build env note (sched29 notes l.8-10): arg order $B $KB $C6 [JT|RA92|RA90] [D] [T] [N2] [CI]; exp89o (exp79a + DIS 1.75 + CI) = $B $KB $C6 $D17 $CI, not pre-built (sha unknown). Latency arithmetic: night non-CI 00:05Z -> 07:05-08:15Z; CI 00:06Z -> ~09:25-09:35Z; morning CI 08:45Z cutoff (10.9 h tail -> 19:39Z).
+- 10:53Z writing report.json (9 actions R25-A1..A9) + report_md_ru field (REPORT.md itself is blocked for subagents by the system rule; main session renders it).
+- 10:52Z report.json written (R25-A1..A9 + report_md_ru); no submit/push/commit.

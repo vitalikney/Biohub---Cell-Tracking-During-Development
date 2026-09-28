@@ -1,0 +1,9 @@
+# v_hyp_private R25P-7 notes (2026-09-28T10:35:05Z)
+- Source: experiments/discussions/743929.md (https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/743929) point 5: "best plus its closest one-line neighbor", "decorrelated hedge several thousandths behind loses EV". JT does not say which line.
+- Reproduced R25P-7 numbers from scratchpad r25/mc25_grid_mc20C.txt + mc25_cross.txt: G-F +0.111 bronze; G-H +0.049/+0.056/+0.073 (K +0.0002/0/-0.0005). Arithmetic OK.
+- mc25.py priors: cap C from mc20 (mean +0.0004, sd 0.00225, P<0 0.51); CI ~ N(+0.0005, 0.0008). The 'cap is the least-certain lever' conclusion is this sd asymmetry (2.8x), set by judgement.
+- CI's own evidence (research/wf_ideas_v4/bigger_levers/prep_coord_refiner.json): lab IN-SAMPLE for coord-inject; alpha picked in-sample among 7 settings (a1.0 -0.0057, a0.5 +0.0032); per-clip a0.5 [-0.0209, +0.0125, 0.0, +0.0083]. Public: one read +0.001 on a 0.001 grid (probe 48, UP 33). Same-round PC25-06 (scan_plancheck.json) raises the CI-in-both-finals issue.
+- Sensitivity (scratchpad r25/r7_sens.txt, mc25.py unchanged, only env): CI_SD 0.0015 mu .0005: A .717 B .720 C .648 (tie). CI_SD 0.002 mu .0005: A .724 > B .697 (bronze), silver B .536 > A .483. mu .0003: A .708 > B .666. Cap-tight (CMODE norm C 0.001/0.001) + CI sd .002: C .868 > A .809 > B .741.
+- exp87a case with CI_SD .002: H {exp87a,#37} .740/.726 > G {exp87a,exp75} .713/.684 > F. So 'partner is still exp75, +0.05-0.07 vs #37' flips sign.
+- Feasibility side notes: exp75 on R21-A3 (e) NO-GO list (PC25-02); dummy runtime 2,288 s in rule-v2 re-run band (PC25-05 vs R25P-8 exemption claim); needs a pre-02:00Z CI slot. The finding itself is a card sentence, no build.
+- VERDICT: refuted (the criterion 'toggle the least-certain lever' is right for E[max], but which lever is least certain is a prior choice; with CI's sd set to its own evidence the ranking flips). Card line should be neutral.

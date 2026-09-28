@@ -1,0 +1,11 @@
+# v_hyp_private_r25p-3 notes (skeptic, value + feasibility), 2026-09-28 ~10:35-10:50Z
+
+- 10:35Z poll.log header 2026-09-28T10:33:21Z: 56629533 (probe 50 exp85a) PENDING, submitted 05:02:30Z. exp70g-family L <= 7.67 h -> terminal ~12:25-12:50Z, NOT by 12:00Z. So the branch R+/R0/R-/R? is unknown at 12:00Z; amendment A (CONTEXT 09:35Z) fires at 50's terminal header (latest 14:00Z). Finding's '12:00Z' wording must read 'at 50's terminal header'.
+- Today's submits: 47, 48 (00:06Z), 49 (00:50Z), 50 (05:02Z) = 4 -> exactly ONE 28 Sep slot left (the W2b / probe 51 slot).
+- exp75 vs exp79a notebook diff (experiments/exp75_k2_coordinject vs exp79a_k2cap6_coordinject): cell 0 only, DIVINS_CAP 4 vs 6 (+ header comment, line order). probe.json identical otherwise (coordinject ALPHA 0.5, safetail, lowrefine). Build is fine.
+- scan_hyp_private R25P-1: exp75 kernel COMPLETE, dummy CSV validate ok, topology == #37 dummy, coords == exp79a dummy.
+- Rule issues (scan_plancheck PC25-02/05): exp75 is on R21-A3 (e) NO-GO list ('superseded, not unsafe', CONTEXT 28 Sep 00:00Z); dummy 2,288 s is in the rule-v2 re-run band (ratio 1.49) but was logged 27 Sep 17:21Z, before rule v2 (07:43Z 28 Sep) -> formally exempt; hidden L bounded by exp79a 9.27-9.45 h (same CI stage, fewer insertions). Needs a pre-score log line (NO-GO lift + grandfather).
+- Value: exp83c (exp70g + n2a SEC + CI) is public-only under Q3 open (CONTEXT 07:47Z) AND carries the CI caveat; exp75 carries only the CI caveat -> exp75 dominates in finals eligibility. Both are CI files, so today's slot (pre-02:00Z, CI allowed) is the right place for a CI file either way.
+- Counter-value (PC25-06): pair {exp79a, exp75} puts CI in both finals; lab CI per-clip -0.021/+0.0125/0/+0.0083 (CONTEXT 27 Sep 12:49Z); exp75's public read is not an independent CI read (R25P-5). So exp75's finals value is modest (mc25 judgmental +0.057 bronze vs {exp79a,#37}), not dominant. Still > exp83c's ~0 under Q3 open.
+- Freed night slot: the finding sends exp83c to the night list; that re-spends it on a zero-finals-value file unless Q3 = yes. Better: exp83c only on a Q3 yes, else the freed slot goes to a dummy-PASSED CI arm on exp79a (PC25-04 / recheck exp89a MAX_UM 2.0 / exp89b TAU 0.7) or sched29's non-CI arm.
+- Ledger: -m must start with the exp75 token (family safetail_ci), PC25-09.

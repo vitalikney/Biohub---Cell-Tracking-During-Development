@@ -1,0 +1,88 @@
+{
+ "summary": "Private strategy / finals card v3. exp75 (#37 + CI) is verified submittable: sha8 ab621c13 in commit c86fd5a. The Kaggle kernel is COMPLETE and its source matches the local notebook. The dummy CSV was downloaded read-only: validate ok, 0 errors, topology == the #37 dummy, node coordinates == the exp79a dummy, family safetail_ci, hidden L ~9.3-9.5 h via exp79a. mc23 was re-run as mc25 (field at 09:34Z, CI posterior after probe 48). {V_pub=exp79a, exp75} scores 0.76/0.51 bronze/silver vs {exp79a, #37} 0.71/0.45, {exp79a, exp70g} 0.62/0.44 and the ticked {#37, #38} 0.49/0.11. B beats A in all field scenarios iff CI's private mean is >= ~+0.0001 and loses ~0.1 bronze at -0.0005, so this is a modest edge, not dominance. Risk ranking: cap 4->6 and the K knobs are the least transferable (public-selected; the lab is negative on both train embryos for cap 6); CI is node-neutral with a clean out-of-sample '+'. JT's 'best + closest one-line neighbour' advice is met by exp75: it toggles the most suspicious lever. Proposal: exp75 in today's 12:00Z slot if probe 50 reads R0/R-/R? (replacing exp83c, whose finals value is zero while Q3 is open), else at 00:05Z 29 Sep. The exp75 display is not an independent CI read (0.954 = model tie). The Russian card draft is in R25P-9. No new mechanism reaches R8.",
+ "findings": [
+  {
+   "id": "R25P-1",
+   "kind": "new-fact",
+   "urgency": "now",
+   "what": "exp75 (#37 + CI) is SUBMITTABLE as built. (a) Build: ipynb sha256 ab621c13 (sha8), committed in c86fd5a, clean. Its only difference from exp79a is cell 0 DIVINS_CAP 4 vs 6 (plus the header comment). probe.json has no LAB/DUMMY marker. The kernel-metadata dataset set is identical to exp79a (incl. yuki0731/biohub-coord-inject), T4, docker 37c64f7d. Kaggle source (kernels pull) == local. (b) Kaggle kernel vitaliineibauer/biohub-exp75-k2-coordinject is COMPLETE. (c) The dummy CSV was missing locally (only the log in _dl/) and was downloaded read-only to the scratchpad: validate_csv ok, 121,252 nodes / 117,077 edges / 75 forks, sha12 d6d9d808303f, 0 Traceback/FAILED/DEADLINE:/FALLING BACK, DIVINS ENABLED, COORDINJECT 4/4 replaced 0.915. Topology columns are IDENTICAL to the #37 dummy (b6de85c1f3c6). Integer-coordinate change 0.646 (same as exp79a vs exp70g). Node coordinates are 100% identical to the exp79a dummy. So exp75 = the exp79a node positions + the #37 edges, deterministic. (d) Runtime family safetail_ci (ledger rule exp75[a-z]*). The hidden-L evidence is its one-line sibling exp79a, L (9.27, 9.45] h: < 10.75 h ADMIT, < 12 h, CI deadline 10.5 h is fail-soft.",
+   "evidence": "experiments/exp75_k2_coordinject/{probe.json,kernel-metadata.json,exp75-k2-coordinject.ipynb}; git log c86fd5a; kaggle kernels status/pull/output (read-only); scratchpad r25/exp75_dl/submission.csv + r25/gate75.py; _dl/biohub-exp58-x138-safe-lowref, _dl/biohub-exp79a-k2cap6-coordinject; experiments/lb_poll/ledger.md row 56623105",
+   "action": "Log one CONTEXT line: 'exp75 dummy CSV verified 28 Sep (sha12 d6d9d808303f; topology == #37 dummy; coords == exp79a dummy; 0 errors); ready for any slot'. Copy the scratchpad CSV into _dl/biohub-exp75-k2-coordinject/ if the gate tools expect it there."
+  },
+  {
+   "id": "R25P-2",
+   "kind": "new-hypothesis",
+   "urgency": "today",
+   "what": "PRIVATE HEDGE = exp75 and FINALS PAIR {V_pub, exp75}, replacing {V_pub, #37} when exp75 reads >= 0.955. MECHANISM: the pair keeps CI in both files and hedges only the cap 4->6 lever. CI is node-neutral (0 node changes). It averages over ~110k node positions, and its public read is out of sample (probe 48: +0.001, UP 33). The cap lever is the one where lab and public disagree most: public +0.002 as the best of a 4-rung ladder (0.954/0.956/0.955/0.955), against lab -0.00057 pooled on BOTH train embryos (90% CI -0.00125..-0.00011), with 85 extra insertions = 0 TP / 4 FP / 81 unannotated (F-TRN-42). ARITHMETIC (mc25, judgmental): P(bronze)/P(silver) in the base case is B {exp79a,exp75} 0.762/0.511 vs A {exp79a,#37} 0.705/0.447, i.e. +0.057/+0.064. Over 7 field/q scenarios B-A = +0.04..+0.08 bronze and +0.05..+0.09 silver at a private CI mean of +0.0005 (sd 0.0008). Crossover at a private CI mean of ~+0.0001: B-A = -0.001 bronze at +0.0001, +0.012 at +0.0002, +0.025 at +0.0003. At CI 0 it is -0.019/+0.027, at CI -0.0005 -0.096/-0.005. With my posterior (P(CI_priv >= +0.0003) ~0.55, 0..+0.0003 ~0.25, < 0 ~0.2), E[dP bronze] ~ +0.01 and E[dP silver] ~ +0.04. That is a modest edge, mostly on silver, and not dominance. RUNTIME on the ~100-clip hidden run: ~9.3-9.5 h (exp79a proven; cap 4 inserts fewer forks), vs ~7.5 h for #37. No effect on already-scored files. GATE: dummy already PASS (R25P-1). LB rule: COMPLETE, L_hi <= 10.75 h, then the display rule of R25P-5. Cost: one slot, which must be a pre-02:00Z slot unless the user allows CI files after 02:00Z.",
+   "evidence": "scratchpad r25/mc25.py, mc25_grid_mc20C.txt, mc25_sens.txt, mc25_cross.txt (mc20/mc21/mc23 structure unchanged: scratchpad r21/mc20.py, r23/mc23.py); FACTS F-TRN-42; CONTEXT 09:35Z (probe 48 UP 33), 10:16Z (private hedge proposal); LB _lb/S1_0934Z",
+   "action": "Put exp75 on the 29 Sep proposal as the private hedge. Submit it in the first free slot that can read before 12:00Z 29 Sep (see R25P-3). Propose B to the user only after exp75 is COMPLETE."
+  },
+  {
+   "id": "R25P-3",
+   "kind": "plan-issue",
+   "urgency": "now",
+   "what": "SLOT for exp75. W2b TABLE v5 amendment A (09:35Z) gives the 12:00Z slot, in the R0/R-/R? branch of probe 50, to exp83c (SEC + CI). Under Q3 (still open), a SEC file can never be a final, so exp83c's display has zero finals value unless the user later says yes to Q3. exp75 would be a finals candidate. PROPOSAL (pre-score: 56629533 PENDING at header 10:23:19Z): in the R0/R-/R? branch, 12:00Z = exp75 and exp83c moves to the night list. A CI file submitted at 12:00Z reads ~21:20-21:30Z. This frees one of the <= 3 pre-02:00Z night slots (the only window for CI files unless the user extends the lift). In the R+ branch, keep exp87a at 12:00Z and put exp75 at 00:05Z 29 Sep (reads ~09:30Z, before the 12:00Z proposal). This matches the session's 10:16Z night-3 proposal. Either way exp75 must go before 02:00Z 29 Sep.",
+   "evidence": "CONTEXT 2026-09-28 09:35Z (W2b amendment A), 07:47Z (user: lift = 2 non-CI files after 02:00Z; Q3 open), 10:16Z (open questions 1-3); poll.log header 2026-09-28T10:23:19Z (50 PENDING)",
+   "action": "Main session: log the amendment before 50's terminal header (or ask the user if they prefer to decide), then submit per branch. Never leave the 12:00Z slot unused (Row 4 unchanged)."
+  },
+  {
+   "id": "R25P-4",
+   "kind": "new-fact",
+   "urgency": "today",
+   "what": "PRIVATE TRANSFER RISK per lever (public = 1 embryo / 4 clips; private = other embryos). (1) safetail: runtime-only, 0 score effect; the hidden run is ONE run for public and private, so a scored file's runtime risk is 0. NONE. (2) lowrefine: public 0 (#38 = x138 = 0.953), lab d1 = d2 = 0. LOW (+-1e-4). (3) insertion cap 4: public +0.001 twice on the same clips, lab in-sample +0.006 (L5 upper bound). MEDIUM-LOW (prior +0.6e-3 +- 0.8e-3, P<0 ~0.1-0.2). (4) cap 4 -> 6: public +0.002 (UP 127) but chosen as the best of 4 rungs (winner's curse ~+0.0005-0.001). Lab on both train embryos negative even in-sample (-0.00079 / -0.00052; 0 TP / 4 FP / 81 unannotated). Sparse events (0.1 x div_J). HIGH: a 1-public-embryo vs 2-lab-embryo average gives a private mean ~0 +- 0.0012. (5) CI: public +0.001 out of sample (UP 33); analog probe 31 V1284 head +0.002; in-sample lab a0.5 +0.0032 with per-clip spread -0.021..+0.0125; Eric's sub-voxel lab +0.0078 -> LB -0.002 was a lab->public failure, a step CI has already passed; node-neutral (no node-bonus risk); averages over ~110k nodes. MEDIUM-LOW (private mean ~+0.0004 +- 0.0009, P<0 ~0.3). (6) K knobs (ILP 0.4 + READMIT 0.94): picked by JT on this same public embryo (local sign wrong 4/4); READMIT adds +0.9% nodes, which spends the node-count bonus (metric: ~-0.003 per +3% nodes unless the readmits are TP). HIGH even if probe 50 reads R+ (private mean ~+0.0002 +- 0.001). (7) SEC (n2a/secft): no public read, retrained on train data, Q3 open. UNKNOWN/HIGHEST; excluded.",
+   "evidence": "experiments/RESULTS.md probes 31, 34-46; CONTEXT 07:32Z/07:54Z/09:35Z reads; FACTS F-TRN-42/F-TRN-48; memory project-metric-insights (node bonus, free forks on unannotated cells); research/wf_ideas_v4/bigger_levers/prep_coord_refiner.notes.md (CI lab); CONTEXT 04:38Z (743929) and 06:26Z (exp85c +0.84% nodes)",
+   "action": "Use as the risk column of the 29 Sep card; no build."
+  },
+  {
+   "id": "R25P-5",
+   "kind": "plan-issue",
+   "urgency": "today",
+   "what": "The exp75 display is NOT an independent CI confirmation. Its node coordinates equal exp79a's and its edges equal #37's, so display(exp75) ~ unrounded(#37) + the same CI delta on the same public clips (the interaction is only through the 6 cap-6 forks). Expected display 0.955 (P ~0.6), 0.954 (~0.25), 0.956 (~0.15). Reading of the 10:16Z rule ('>= 0.955 -> {best public, exp75}; <= 0.954 -> keep #37'): 0.955+ -> B; 0.954 -> it implies a public CI delta on cap-4 edges of < ~+0.0006, which is about the mc25 crossover, a TIE (default A, or B if the user follows JT); <= 0.953 or ERROR -> A (a negative CI x cap-4 interaction; then also flag CI risk for V_pub). The UP test is blind (our row is at 0.957).",
+   "evidence": "R25P-1 (coords == exp79a, topology == #37); CONTEXT 10:16Z rule; mc25_cross.txt",
+   "action": "Keep the 10:16Z threshold but write the 0.954 = model-tie clause and 'not an independent CI read' into the card."
+  },
+  {
+   "id": "R25P-6",
+   "kind": "recheck-old",
+   "urgency": "today",
+   "what": "mc23 RE-RUN (as mc25) with the new reads. ASSUMPTIONS: field re-based on 09:34Z (3,968 teams, blocks 0.957:42 incl. us, 0.956:65, 0.955:89, 0.954:134, 0.953:424); 38.5 h to the deadline; mc20 rival model, insertion and cap terms unchanged; CI ~ N(+0.0005, 0.0008); K ~ N(+0.0002, 0.0009). BASE (bronze/silver): {#37,#38} 0.492/0.113; {V_pub=exp79a,#37} 0.705/0.447; {exp79a,exp75} 0.762/0.511; {exp79a,exp70g} 0.618/0.439; {exp70g,#37} 0.650/0.372; {exp87a,exp79a} 0.666/0.499; {exp87a,exp75} 0.777/0.544; {exp87a,#37} 0.728/0.486 (seed 23 within 0.003). The order B > A > C holds in all 7 mc20-C scenarios. I-444 ('V_pub + its one-lever parent' = {exp79a, exp70g}) stays REFUTED in mc20-C worlds (-0.09..-0.14 bronze vs A). It flips only if the cap's private posterior is tight and positive (C ~ N(+0.001, 0.001): C .858 vs A .852 vs B .851 at CI +0.0005, and C beats A by +0.04..+0.08 when CI <= 0). {#37,#38} is last in every scenario (-0.14..-0.27 bronze vs B). I-092 still holds: the model ranks under stated priors and does not decide.",
+   "evidence": "scratchpad r25/mc25.py + outputs; round23/scan_hyp_finals_29sep.notes.md (mc23 base P13 {exp79a,#37} .69/.41 at CI +2e-4, reproduced: A .683/.415 at CI +2e-4); IDEAS I-444, I-092",
+   "action": "Attach the table to the 29 Sep proposal as ranges, with the CI crossover (+0.0001) stated as the single assumption that decides B vs A."
+  },
+  {
+   "id": "R25P-7",
+   "kind": "new-hypothesis",
+   "urgency": "today",
+   "what": "JT's 743929 advice ('best + its closest one-line neighbour, not diversity') ADDRESSED. (i) It agrees with the model against diversity: {#37,#38} and any two-lever-apart pair score lower than a one-line pair that keeps the robust lever. (ii) V_pub = exp79a has two one-line neighbours: exp70g (drop CI) and exp75 (cap 6 -> 4). JT does not say which line to toggle. The honest criterion is to toggle the lever whose private sign is least certain. That is cap 6 (R25P-4), so exp75 wins; exp70g wins only in cap-tight worlds. (iii) If V_pub becomes exp87a (K + CI), JT's literal neighbour is exp79a (drop K), but mc25 prefers exp75 (drops K and cap, the two public-selected levers, and keeps CI): G-F = +0.11 bronze and G-H = +0.05..+0.07 across K means +0.0002/0/-0.0005. This departs from JT's letter (two lines, not one) and says so. Reason: JT's neighbour rule is tuned for a public-winning file whose levers are all public-selected; ours carries two such levers.",
+   "evidence": "experiments/discussions (743929 digest 20260928T0630Z); CONTEXT 04:38Z; mc25 pairs F/G/H in mc25_grid_mc20C.txt and mc25_cross.txt",
+   "action": "One sentence in the card (done in R25P-9). No build."
+  },
+  {
+   "id": "R25P-8",
+   "kind": "plan-issue",
+   "urgency": "today",
+   "what": "The exp75 dummy runtime of 2,288 s is inside the rule-v2 re-run band (2,100-2,500 s; ratio to the #37 dummy 1,535 s = 1.49 > 1.15). Rule v2 (07:43Z) covers dummies 'logged from now on', and exp75 was logged 27 Sep 17:21Z, so formally it is exempt. Cause: a slow machine before CI (DC line at 101 s vs ~50 s; pre-CI end 1,829 s vs 1,258 s for exp79a). The CI stage itself took 443 s vs 454 s for exp79a. Its one-line sibling exp79a has proven hidden L 9.27-9.45 h.",
+   "evidence": "scratchpad r25/exp75_dl log (last time 2287.9 s); _dl logs exp58 1,535 s, exp70g 1,409 s, exp79a 1,712 s; round21 v_hyp_risk_check_r21rk-8.json; CONTEXT 07:43Z (3)",
+   "action": "Log an exemption line with this reason before submitting exp75. A re-run (~30 min, ~0.5 of the ~9.5 GPU-h left) is optional. If one is done, it must COMPLETE before the submit, and the gate re-checks sha12/topology."
+  },
+  {
+   "id": "R25P-9",
+   "kind": "new-hypothesis",
+   "urgency": "today",
+   "what": "ФИНАЛЬНАЯ КАРТОЧКА v3 (черновик к 29.09 12:00Z; сессия только предлагает, галочки ставит пользователь до 20:00Z).\n1. Кандидаты. V_pub = exp79a 56623105: 0.957, K2 + cap 6 + CI, L 9.27–9.45 ч, гейт вставки не сработал. Если к 12:00Z появится файл с показом выше (exp87a или копия E10), V_pub станет он. Страхующий файл: exp75 (#37 + CI; ref появится после сабмита). Запасной страхующий: #37 56563521.\n2. Правило. Если exp75 COMPLETE и его показ >= 0.955, берём {V_pub, exp75}. При 0.954 модель даёт ничью, по умолчанию {V_pub, #37}; если вы следуете совету JT, то exp75. При показе <= 0.953 или ERROR берём {V_pub, #37}.\n3. Почему exp75. Он отличается от exp79a одной строкой (cap 6 -> 4) и страхует рычаг, по которому public и лаборатория спорят сильнее всего. У cap 6 на public +0.002, выбран как лучший из 4 ступеней. В лаборатории на обоих train-эмбрионах у cap 6 -0.0006 (44b6 -0.0008, 6bba -0.0005), а из 85 лишних вставок 0 TP, 4 FP и 81 без разметки. CI при этом остаётся: это единственный рычаг с чистым внешним '+' (проба 48: +0.001, обогнали 33 команды), и число узлов он не меняет. Так получается ровно совет JT из 743929 (лучший файл + ближайший сосед в одну строку, без погони за разнообразием), причём сосед снимает самый подозрительный рычаг.\n4. Модель (mc25: суждения, решения она не принимает; поле на 09:34Z; вероятности бронзы/серебра по сценариям):\n   {#37,#38} (отмечены сейчас): 0.32–0.65 / 0.03–0.23 (база 0.49/0.11)\n   {V_pub, #37}: 0.60–0.79 / 0.32–0.54 (база 0.71/0.45)\n   {V_pub, exp75}: 0.67–0.83 / 0.41–0.61 (база 0.76/0.51), если приватный эффект CI около +0.0005. При CI около +0.0001 будет ничья с {V_pub, #37}, при CI -0.0005 примерно на 0.1 бронзы хуже.\n   {V_pub, exp70g}: 0.49–0.69 / 0.30–0.51. Выигрывает, только если cap 6 надёжен на private.\n5. Если V_pub = exp87a (K + CI), партнёр всё равно exp75: к #37 это +0.05–0.07 бронзы, к exp79a +0.11.\n6. В финал не идут: SEC-файлы (Q3 открыт), файлы с L > 10.75 ч, #38 (проигрывает во всех сценариях). Показ K-файла отражает один эмбрион public.\n7. Шаги. Отметить два ref на странице Submissions до 20:00Z (переотметка возможна до 23:59Z). Потом сессия проверяет SELECTED через API.",
+   "evidence": "R25P-1..R25P-8; scratchpad r25/mc25*.txt; CONTEXT 09:35Z, 10:16Z; IDEAS I-406/I-426 (card lines, proposal message)",
+   "action": "Use as the draft of the 29 Sep 12:00Z proposal message (I-426). Fill the exp75 ref and display, and replace V_pub if a higher COMPLETE display exists."
+  },
+  {
+   "id": "R25P-10",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "HONEST BOTTOM LINE. No new inference-only or post-processing mechanism came out of this private-strategy round. Nothing reaches R8: the private hedge is a choice among already-built, dummy-passed files. exp75 is worth one of the 29 Sep pre-02:00Z slots (or today's 12:00Z R0/R-/R? slot) as the private hedge. Its value is ~+0.01 expected bronze and ~+0.04 expected silver probability over {V_pub, #37}, and it is negative if CI's private effect is <= 0. Not proposed, and why: a '#38 + CI' twin (would drop the insertion; its prior is positive; needs a build and a slot, and mc23 already showed that {V, #38}-type partners lose); CI alpha arms (I-440 closed); SEC as a hedge (Q3); overlap-consensus (gate-stopped).",
+   "evidence": "IDEAS.md I-440, I-444, I-092, I-297/I-298, I-208; this file",
+   "action": "None beyond R25P-2/3/5/8."
+  }
+ ],
+ "written_utc": "2026-09-28T10:33:58Z",
+ "complete": true,
+ "task": "round25 scan_hyp_private: PRIVATE STRATEGY AND FINALS CARD v3"
+}

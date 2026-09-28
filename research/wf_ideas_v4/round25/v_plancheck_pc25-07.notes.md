@@ -1,0 +1,9 @@
+# PC25-07 notes (2026-09-28T10:35:03Z)
+- Premise check: exp79a notebook cell 8 = coordinject runs AFTER cell 7 (repair loop incl. DIVINS, gate SAFETAIL_DIVINS_DEADLINE_S=28800 vs KERNEL_START_TS). So insertion elapsed <= L - CI_time; gate needs a true LOWER bound on CI time. Structure of finding correct.
+- tools/runtime_ledger.py l.59 safetail_ci divins_h=10.2 (CI_lo 2.2 model: 100 videos x 158 s / 2). tests/test_runtime_ledger.py has no safetail_ci divins assertion (l.216 is safetail_late only).
+- ledger.md 10:33Z: exp79a L (9.27,9.45]; exp78b (7.27,7.45] (ledger rounds hi to 7.45, finding says 7.39) ; exp70g (7.49,7.67]. dL same-batch (1.82..2.18) with 7.45; vs code-identical exp70g (1.60,1.96]. Same-batch swap noise ~20 min (CONTEXT (4)). => 1.88 is NOT a proven lower bound either; the defensible min is ~1.6 h (gate 9.6 h).
+- Dummy log _dl/biohub-exp79a-k2cap6-coordinject: detect ~833 s / 4 videos, repair phase 461 s (37% of main 1247 s), CI 443 s. Repair loop (where DIVINS runs) is the tail ~37% of main, per-dataset sequential.
+- Effect size: if main overran 8.0 h by d, skipped insertion on ~d/(0.37*main) of videos. L_hi 10.2, CI 1.88 -> d<=0.32 h -> <=~11% videos; insertion total worth ~+0.002-0.003 (K2 0.954 vs twin 0.953; cap6 0.956) -> <=~0.0003 score, below display step. Probe 48 (9.45) unaffected under any threshold.
+- Downside: CONTEXT l.3389 'A CI ? from v (L_hi > 10.2 h) gets no CI stack' -> widening v to 9.88 can block a 29 Sep CI stack for a sub-display confound. Expected probe-51 L ~ exp85a main (~7.5-7.8) + CI 1.6-2.2 = 9.1-10.0 -> the window is live, so the change can bite with negative value.
+- Verdict: premise right (2.2 unsupported), action low/negative value and its 9.88 is not an honest bound. refuted=true; alt = log-only footnote.
+- 2026-09-28T10:37:56Z final JSON written (refuted=true)

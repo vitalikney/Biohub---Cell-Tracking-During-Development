@@ -1,0 +1,5 @@
+- 2026-09-28T10:35:01Z start verifying r25-task-facts-stale
+- ledger experiments/lb_poll/ledger.md rows: 56623073 exp78b (probe 47) COMPLETE 0.955 @07:32:48Z; 56624341 exp78a (probe 49) COMPLETE 0.955 @07:52:52Z; 56623105 exp79a (probe 48, safetail_ci) COMPLETE 0.957 @09:33:10Z; 56629533 exp85a (probe 50) PENDING (last check 10:33:21Z).
+- CONTEXT.md 09:35 UTC entry: NEW BEST 0.957 = exp79a (CI file), rank 153/3968; E10 trigger now >= 0.958; tools/kaggle_feed.py line 172 default --our-best 0.957 (verified).
+- Additional stale items: 10:19 UTC user answers (3 night + 2 morning YES; tick deadline 20:00 UTC = 23:00 MSK; CI in morning files pending user OK; non-CI must be submitted by ~11:30Z, CI by ~09:30Z on 29 Sep); dummies exp87a/exp83c/exp88a/exp88b PASS 10:16Z.
+- Verdict: finding correct, not refuted; info-level prompt hygiene only.

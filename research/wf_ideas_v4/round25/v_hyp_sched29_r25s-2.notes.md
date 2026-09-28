@@ -1,0 +1,10 @@
+# v_hyp_sched29_r25s-2 notes (skeptic VALUE+FEASIBILITY)
+- 2026-09-28T10:37:00Z start; no prior answer JSON. Read CONTEXT 07:43Z-10:19Z, round25/scan_hyp_sched29.{json,notes.md}.
+- 10:4xZ poll.log header 10:33:21Z: 56629533 (probe 50 exp85a) PENDING, submitted 05:02:30Z -> reads 12:02-12:50Z at L 7.0-7.8 h. Poll cadence 600 s (lb_poll.py l.35).
+- Rules checked: CONTEXT 07:43Z W4 LIFT SPLIT (<=3 night: E10, FULL, ONE ? test); 07:47Z user lift (2 non-CI after 02:00Z); 09:07Z knob-arms slot rule (1 night arm + remaining after 02:00Z); 10:16Z session proposal approved 10:19Z ('3 night + 2 morning' = exp75 + best public stack + strongest knob arm); Q2 (morning CI) still OPEN; tick deadline 20:00Z, CI by ~09:30Z.
+- Conflict 1: R25S-2 night = 2 knob arms + exp75 in both branches (no 'best public stack'): justified because the stack is probe 51 (already scored), but it deviates from what the user approved -> must be said to the user, not just 'night fixed by 50'.
+- Conflict 2: 00:05/00:25 spacing (20 min) vs R18-A7 'K2-like files >= 40 min apart' (latencies swap ~20 min; 43/44 co-completed). With 10-min polls, 86c/89e (R+) can complete in one poll -> the 'equal + attributable UP' arm clause unusable; display-only reads are unaffected. 00:45 still reads by 08:33Z (<09:30Z).
+- Conflict 3: M1 CI at 09:30Z + logged CI band upper 10.9 h (R24-A1) = 20:24Z > 20:00Z tick; only 1 measured CI latency (exp79a 9.27-9.45 h); final-day queue congestion unmeasured. Cutoff ~08:45Z keeps 10.9 h tail at 19:39Z.
+- Value: knobarms_28sep/rank.notes.md: TAU 0.7 'DC 0.20/0.225 adding marginal safe forks = tie' -> P(+) for exp88b below 0.2; cap 8 (more divisions) read '-' (07:54Z). 2/11 one-lever '+' is close to a 3-decimal rounding-flip rate -> '+' is weak evidence; private EV ~0 (self-stated).
+- R0/R- with Q2 unresolved (most likely branch now): arms on exp70g can at most display 0.957 = tie exp79a; non-CI M2 exp89d needs both '+' (P~0.04) -> EV ~0 unless Q2 = yes.
+- 2026-09-28T10:38:34Z final JSON written (refuted=false, 5 fixes).

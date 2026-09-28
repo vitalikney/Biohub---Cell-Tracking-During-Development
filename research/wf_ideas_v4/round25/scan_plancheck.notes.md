@@ -1,0 +1,14 @@
+# round25 plancheck notes (2026-09-28T10:17:34Z)
+- 2026-09-28T10:24:33Z read CONTEXT tail (3300-3700), round24 report.json, e10_watch/20260928T1017Z.txt (we #153 0.957; 0.957:42, 0.958:18, 0.959:19), digest_20260928T1009Z (no new topics; top public nb 0.953). Poll header 10:13:17Z: 56629533 (probe 50) PENDING.
+- nb diffs (scratch nbdiff.py): exp75 vs exp79a = cell-0 DIVINS_CAP 4 vs 6 only; exp75 vs exp58(#37) = CI env lines + CI cell only; exp87a vs exp79a = K lines only; exp83c vs exp79a = SECONDARY lines + cell-3 env read. Builds are clean.
+- _dl logs: COORDINJECT stage 434-445 s in every CI dummy (79a 443, 83c 435, 87a 434, 75 445). Kernel totals: 70g 1409, 79a 1712, 81 1250, 83c 2055, 87a 1870, 85a 1388, 75 2288, #37 exp58 1535, 78b 1369, 88a 1894.
+- exp75 runtime rule v2 (R24-A3 (3)): 2288 s in 2100-2500 band; ratio vs #37 dummy 1535 = 1.49, vs exp79a 1712 = 1.34 -> > 1.15 -> needs one re-run before any slot.
+- exp86c safe-div per clip 36/7/5/17 (exp85a 36/7/5/18), total forks 84 -> R24-A4 literal criteria (safe 36/7/5/18, forks >= 85) FAIL; RA gate of R24-A6 passes (nodes 122,716 > 122,328; LOWREFINE 150,265 > 148,020).
+- exp88b tau 0.7: safe 37/7/5/19 (+3 vs 70g 35/6/5/17... 70g clip1 35) forks 86.
+- CI_lo: CONTEXT l.3135 model 2.2 h. Measured: L(exp79a) (9.27,9.45], same-batch sibling exp78b (7.27,7.39] -> dL (1.88,2.18); vs exp70g (7.49,7.67] -> (1.60,1.96). ledger tools/runtime_ledger.py l.59 divins_h=10.2.
+- CI lab per clip a0.5 3um (research/wf_ideas_v4/bigger_levers/prep_coord_refiner.json l.14): -0.0209/+0.0125/0/+0.0083 (44b6_c50204e0 negative); check_coord_refiner.json l.20: -0.0029/0.0125/0/0.0029. In-sample.
+- GPU budget estimate: 9.5 h left at 04:55Z minus ~10 dummies since (85b 1721, 85c 1736, 86a 1460, 86b 1357, 86c 1559, 87a 1870, 83c 2055, 88a 1894, 88b 1654, 88c ~1800 s) = ~4.75 h -> ~4.5-4.8 h left.
+- Timing: probe 50 submitted 05:02:30Z + L 7.0-7.8 h -> 12:03-12:50Z. CI at 13:00Z + 9.27-9.45 -> 22:16-22:27Z (< 23:30Z freeze); at 14:00Z -> up to 23:27Z (0 margin). Morning CI 09:30Z + 9.45 = 18:57Z (FINALS READ 19:00Z).
+- Conflicts: 10:16Z proposal exp75 vs R21-A3 (e) NO-GO (exp75) and W4 LIFT SPLIT kinds; W4 AMEND 3 row (d)/(e) SEC(b) needs exp81 '+' but amendment A replaced exp81 by exp83c; KNOB ARMS (09:07Z) cut on exp70g before C+ (09:35Z).
+- feed digest 10:09Z: 0 new topics/comments; E10 FLAG none (flag > 0.957). JT has not answered Justin CH123.
+- 2026-09-28T10:29:18Z wrote scan_plancheck.json (11 findings PC25-01..11)

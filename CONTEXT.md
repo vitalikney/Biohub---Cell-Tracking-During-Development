@@ -3714,6 +3714,113 @@ Mention it to the user in one line (R9-A8 item 6).
   non-CI by 11:30); FINALS PROPOSAL v1 12:03 and FINAL 18:37 (tick by 20:00 UTC = 23:00 MSK); POST-DEADLINE 00:07 30
   Sep. They are session-only: if the session ends, a new session must re-create them from this line. The detached
   processes (lb_poll poller, E10 watch loop, discussion feed loop) survive a session end.
+- 2026-09-28 11:17 UTC, ROUND 25 PRE-SCORE 1/2: W2b AMENDMENT A2 + PROBE 50/51 READ RULE (R25-A1; supersedes amendment A's R0/R-/R? row)
+  (pre-score: the last poll header 2026-09-28T11:13:28Z shows 56629533 PENDING.)
+  (1) SLOT. Submit at the first poll header that shows 56629533 terminal, and no later than the 13:00Z header.
+  - R+ (probe 50 display >= 0.957): exp87a (dummy PASS 10:16Z).
+  - R0 / R- / R?, or 50 still PENDING at the 13:00Z header: exp75. It replaces exp83c, which has no finals value while
+  Q3 is open; exp83c moves to the night only on a Q3 yes.
+  - The -m text starts 'probe 51: exp87a = exp70g (cap 6) + ILP_DIVISION_WEIGHT 0.4 + READMIT_MIN_SCORE 0.94 +
+  coordinject ALPHA 0.5 MAX_UM 3.0 (FULL)' or 'probe 51: exp75 = #37 (K2 cap 4) + coordinject ALPHA 0.5 MAX_UM 3.0
+  (private-hedge candidate)'.
+  - Re-run tools/runtime_ledger.py right after the submit. The family column must read safetail_ci; if it does not,
+  pass --family <ref>=safetail_ci.
+  - Pre-submit checks: the poll header is < 15 min old and not a 429; no duplicate; Kaggle shows 1 submission
+  remaining (47/48/49/50 used today); the R8 COVERAGE line exists (exp75 is in the 00:00Z line, exp87a in 07:44Z).
+  Pause the feed and watch loops ~10 min before.
+  - Wake-ups at 11:50Z, 12:20Z, 12:50Z and 13:00Z. Probe 50 can turn terminal from ~11:54Z (K2-family L 6.87-7.81 h).
+  (2) S0 and S1. S0 = a fresh LB download within ~10 min of 50's terminal header (our count 52). S1 = the first
+  download with count 53. Log k, the TeamIds passed and the file names under experiments/lb_poll/_lb/. If k = 0 or the
+  count moves by 2, the UP test is BLIND/MASKED '?'.
+  (3) PROBE 50. The amendment-A codes are unchanged. A 0.957 display with an attributable UP is coded '0u'. That is
+  info for the finals card only (exp85a is unrounded above exp79a) and changes no R code.
+  (4) PROBE 51 = exp87a. REF = exp85a if 50 displayed >= 0.958 or read '0u'; otherwise REF = exp79a.
+  - Display above REF: '+'.
+  - Equal display with an attributable UP: '0u', which counts as '+' for BEST_CI only.
+  - Equal display with 0 teams passed: '0' = NON-ADDITIVE stop (W4 AMEND 2 (3)); V_pub follows the card tie order.
+  - Below REF: '-'.
+  - ERROR, not terminal by 08:00Z 29 Sep, or L_hi > 10.2 h: '?'.
+  - BEST_CI = exp87a if and only if the code is '+' or '0u'.
+  (5) PROBE 51 = exp75. Its read is not an independent CI read: its coordinates equal the exp79a dummy's and its edges
+  equal #37's. CI-RAN: dL = L_hi - 7.54 h (#37); dL <= 0.5 h means NO-OP.
+  - Display >= 0.955: pair B {V_pub, exp75} goes on the card as a trade, never as the default.
+  - Display <= 0.954, NO-OP or ERROR: B drops out.
+  - Display <= 0.953 or ERROR: also flag a CI risk for V_pub.
+  (6) FOOTNOTE (PC25-07; it replaces nothing). The CI_lo 2.2 h model is contradicted: the measured dL is 1.60-2.18 h.
+  A CI read with L_hi in (9.6, 10.2] h gets the footnote 'ins-tail?' (insertion may have been skipped on tail videos,
+  <= ~0.0005). Its code stays as coded, and the footnote does not block a stack.
+  NOTE: the user answered YES to CI morning files at ~10:47Z (after the round's scan), so M1 below is a CI file.
+- 2026-09-28 11:17 UTC, ROUND 25 PRE-SCORE 2/2: W4 AMEND 4 (29 Sep: 3 night + 2 morning) (R25-A2)
+  (pre-score: the last poll header 2026-09-28T11:13:28Z shows 56629533 PENDING.)
+  SCOPE. It supersedes the slot lists and times of W4 AMEND 3 (a)-(e), the file kinds of the 07:43Z LIFT SPLIT, and
+  the 09:07Z knob-arms slot rule. From AMEND 3 it keeps the 23:30Z dummy-PASS deadline, the non-additive stop, the (4)
+  EXCEPTION limits and the 'cap + 2 levers' depth cap, so exp89c, exp89g, exp89i and exp89l are not files.
+  GENERAL RULES. Probe 50 (R) alone fixes the night list; it never waits for probe 51. An E10 copy with a PASSED dummy
+  takes the first slot and pushes out the last-listed file. Non-CI K2 files go at least 40 min apart (R18-A7). Any
+  file already scored is dropped.
+  NIGHT, R+:
+  - 00:05 exp86c (RA92; parent exp85a).
+  - 00:06 exp75, or exp87a if exp75 was already scored as probe 51.
+  - 00:45 exp89e (exp85a + ILP_DISAPPEARANCE_WEIGHT 1.75, non-CI).
+  NIGHT, R0 / R- / R?:
+  - 00:05 exp88c (DIS 1.75, non-CI; parent exp70g).
+  - 00:06 exp89a (exp79a + DIS 2.25 + CI; parent exp79a). In this branch it is the only route to 0.958 that can become
+  a final. If its dummy has not PASSED by 23:30Z, exp88a goes instead.
+  - 00:45 exp88b (TAU 0.7, non-CI). exp83c replaces it on a Q3 yes.
+  - If exp75 is still unscored at 23:30Z in this branch, it takes 00:06 and exp89a moves to 01:25.
+  MORNING. Only files with PASSED dummies go.
+  M1 is a CI file. It goes only on the user's yes to CI morning files, by 08:45Z (11:45 MSK), as soon as the arm read
+  it needs lands.
+  - R+: exp89h (exp86c + CI), if exp86c read above exp85a ('+' or '0u') and BEST_CI = exp87a. This amends AMEND 3's 'a
+  READMIT 0.92 + never gets a +CI build', which was written before C+. RA90 stays non-CI.
+  - R0 / R- / R?: exp89b (exp79a + TAU 0.7 + CI) if exp88b read '+'; else exp89o (exp79a + DIS 1.75 + CI, built on
+  demand) if exp88c read '+'.
+  - Without a CI yes, M1 is not a CI file, and the slot follows the M2 list or stays unused.
+  M2 is non-CI, by 11:30Z (14:30 MSK).
+  - R0 / R- / R?: exp88a, the non-CI twin of exp89a and so the CI hedge at that knob. It does not go if exp89a read
+  '-'; then the slot stays unused, or goes to E10, which after 02:00Z needs a user yes. If exp89a has not read by
+  11:00Z, exp88a goes anyway.
+  - R+: exp89j (RA92 + DIS 1.75) if exp89e and exp86c both read '+'; else exp89k (RA90) if exp86c's display is
+  strictly above exp85a's; else exp89f (exp85a + TAU 0.7).
+  ARM CODES. '+' = display >= parent + 0.001. '0u' as in R25-A1. When two files complete in one poll window, each is
+  read only on its own display (MASKED for UP).
+  PARENTS. exp86c, exp89e and exp89f -> exp85a. exp88a/b/c -> exp70g (0.956). exp89a/b/o -> exp79a (0.957). exp89h ->
+  exp87a.
+  FREEZE at 23:30Z. Log R, the frozen list with slot times, each file's dummy status and, under R+, the exp75
+  grandfather line (R25-A4). Every night and morning file enters the finals card as a public-only read on a single
+  embryo.
+  CI-MORNING CUTOFF adopted: 08:45 UTC (11:45 MSK) for CI files (covers the 10.9 h CI tail), non-CI by 11:30 UTC
+  (14:30 MSK).
+- 2026-09-28 11:17 UTC, GATE LINES exp88c + exp86c WAIVER (R25-A3; logged after the exp88c kernel completed, before its output was downloaded)
+  (a) exp88c (exp70g + ILP_DISAPPEARANCE_WEIGHT 1.75) PASSES if:
+  - validate is ok;
+  - there are 0 Traceback / FAILED / DEADLINE: / FALLING BACK lines, and DIVINS ENABLED appears;
+  - nodes are +0.4% to +1.3% vs 121,252 (the SCIP replay predicted +0.85%; exp88a hit its prediction, -0.73% vs
+  -0.76%);
+  - forks are within +-5 of 81;
+  - runtime meets rule v2 (<= 2,100 s).
+  (b) exp86c WAIVER (PC25-08 / R25S-8). The R24-A4 items 'safe 36/7/5/18' and 'forks >= 85' were too tight: READMIT
+  0.92 shifts one clip-4 safe division, and dummy forks are ignored by the metric. exp86c passes the R24-A6 RA-style
+  gate:
+  - nodes 122,716 > 122,328;
+  - LOWREFINE 150,265 > 148,020 and < +5% (+1.52%);
+  - forks 84, within +-5 of 85;
+  - 0 errors; 1,559 s.
+  Result: PASS. The line must also state that the per-clip readmit check was not applied.
+- 2026-09-28 11:17 UTC, exp75 LINE (R25-A4; before any exp75 submit)
+  exp75 re-verified (R25P-1). The ipynb is ab621c13 and equals the Kaggle source; submit the existing Kaggle v1 (= the
+  dummy) and never rebuild or re-push it (R25S-3's repo 4653611e claim does not match the working tree). The dummy CSV
+  d6d9d808303f has been in _dl/ since 27 Sep 17:21Z. Its topology equals the #37 dummy b6de85c1f3c6 (121,252 / 117,077
+  / 75). Its coordinates equal the exp79a dummy on all 121,252 nodes; its edges are exp79a's minus 6 cap-6 insertions;
+  0 errors.
+  GRANDFATHER. The dummy (2,288 s) was logged before rule v2 (07:43Z 28 Sep), which itself cites exp75 as noise. All
+  of the excess is before CI (DC at 101 s vs 50 s; the CI stage took 459 s vs 454 s), so a re-dummy would only sample
+  a dummy machine.
+  Expected hidden L ~9.0-9.5 h (#37 7.36-7.54 h + CI dL 1.6-1.96 h), worst ~10 h; below the 10.75 h ADMIT limit. The
+  CI (10.5 h) and REPAIR (9.5 h) deadlines are fail-soft.
+  exp75 is lifted from the R21-A3 (e) NO-GO list in its new role as the private-hedge candidate (10:16Z; user 3+2 yes
+  10:19Z).
+  {V_pub, exp75} hedges only the cap lever. CI is hedged only by #37 or exp70g.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

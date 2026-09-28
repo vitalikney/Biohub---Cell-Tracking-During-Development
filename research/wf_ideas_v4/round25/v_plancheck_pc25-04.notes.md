@@ -1,0 +1,12 @@
+# v_plancheck PC25-04 notes (2026-09-28T10:35:04Z)
+- 10:35Z: no prior json; probe 50 (56629533) still PENDING per CONTEXT (last entry 10:19Z).
+- tools/runtime_ledger.py EXP_RULES: exp89* would hit r"exp8\d[a-z]*" -> safetail (9.5 h). Claim confirmed; needs (r"exp89[a-z]*","safetail_ci") above it + test.
+- _dl run_stats safe_divisions_added: exp88b 37/7/5/19, exp70g 35/6/5/17 (+5 forks); nodes identical 25729/19545/6220/69758. Confirmed.
+- exp88b fork total 86 = the same as exp78a (cap 8), which read 0.955 '-' (07:54Z S1 'DIV volume closed'). Different source (geometric safe div vs DaughterNet insertion), but the prior for TAU 0.7 is tie/-; knobarms rank.json itself says 'a tie is the most likely outcome'.
+- exp88a run_stats: raw nodes 44b6_0b24845f 19,383 vs 20,206 (-4%); repair_seconds within +-10% of exp70g -> no hidden runtime risk. Effect concentrated in one public clip (noisy read).
+- Dummy runtimes: exp79a 1,712 s, exp87a 1,870 s, exp88a 1,894 s (concurrent), exp88b 1,654 s, exp70g 1,409 s. A CI stack ~1,700-2,100 s; rule v2 re-run band possible for the DIS stack (88a + ~445 s CI).
+- W4 AMEND 3 (1)-1 'stack depth capped at cap + 2 levers': exp87a = cap + K + CI, so exp87a + TAU/DIS = 3 levers -> the R+ branch (exp89c/d) breaks a pre-registered cap unless amended; also its base read (probe 51) lands ~22-23:30Z, too late to push + queue a dummy before the 23:30Z freeze.
+- '20:30Z latest push' conflicts with 3-4 h CI dummy queue seen 27 Sep and the 23:30Z W4 dummy deadline -> push at 50's read (~12:00-13:00Z).
+- 10:16Z user-agreed night plan already names 'the strongest knob arm on the best base' (best base = exp79a CI file): the CI-stack cut is consistent with it and with amendment A ('arms off the current best'). Pre-score (no arm scored) -> R1-R10 compliant as a logged amendment.
+- 'Too late for a CI stack' is only half true: a 00:05Z non-CI read lands ~07:05-07:55Z, so a CI stack by ~09:00Z is possible IF the user says yes to morning CI (pending); for 00:45/01:25Z slots it is too late. The CI-first cut removes this dependence.
+- GPU quota: cannot re-read (Chrome disconnected at 06:35Z; API has no quota). Estimate ~4.5-4.8 h left; one CI dummy ~0.5-0.6 h. Build ONE arm, not two.
