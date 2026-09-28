@@ -3604,6 +3604,14 @@ Mention it to the user in one line (R9-A8 item 6).
   above exp8\d, test_round24_exp87_families (32 ledger+feed tests pass). R8 COVERAGE extended to exp87a/b (CI files;
   coordinject dataset as for exp79a/exp83b). Pushes follow R24-A6 (only the realised branch member; T3 at the 50 read
   for JT+CI(b), RA92(b) = exp87i only if 49 '+' and 50 '+').
+- 2026-09-28 07:47 UTC, USER ANSWERS (chat, R24-A7 questions)
+  (1) CAP LIFT = YES: 'Да, до 2 файлов' - up to 2 non-CI files may go after 29 Sep 02:00Z until ~10:25Z (reads
+  ~18:00Z, before the 20:00Z tick). The W4 LIFT SPLIT (07:43Z) is now in force: <= 3 files at 00:05-01:45Z (E10 first,
+  then FULL, then one ? test) and <= 2 non-CI files at 02:00Z-T_last from the listed kinds. (2) Q3 (SEC file as a
+  final) = still OPEN ('Подумаем'): SEC files stay LB probes, excluded from the finals card until the user decides.
+  (3) E10 copies after 02:00Z = CASE BY CASE ('Решим, после просмотра ноутбука'): before 02:00Z the E10 v3 rule stands
+  (copy + submit at trigger); after 02:00Z the session builds + dummies the copy and shows the user the notebook
+  (page, score, diff) and submits only on the user's yes for that notebook.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
