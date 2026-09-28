@@ -3695,7 +3695,7 @@ Mention it to the user in one line (R9-A8 item 6).
   the poller/feed/session would act as the teammate); the session builds the folders with --owner <teammate>, gives
   the exact commands and checks results. The session's own browser attempt to share the datasets was blocked by the
   permission classifier; the USER shared vitaliineibauer/biohub-ft-weights and vitaliineibauer/biohub-secft-n2a-v1
-  with gsfatakhov and sasyami (with EDIT rights). Risk noted to the user: an accidental new version of
+  with gsfatakhov and sasyami (first with EDIT rights; the user switched both to CAN VIEW at ~10:46Z). Risk noted to the user: an accidental new version of
   biohub-ft-weights would be picked up silently by new pushes (the DaughterNet glob has no sha pin; the n2a secondary
   is sha-pinned 7029fe69). BASELINE (experiments/lb_poll/dataset_baseline/): biohub-ft-weights lastUpdated 2026-09-23
   23:54:03 (80,069,686 bytes; vitalii_daughternet/fold_0..3.pt 5,627,853 each); biohub-secft-n2a-v1 lastUpdated
