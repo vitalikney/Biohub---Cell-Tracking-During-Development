@@ -4063,6 +4063,13 @@ Mention it to the user in one line (R9-A8 item 6).
   exp89q, exp89r, exp75 checked); coordinject writes integers like the x138 writer (max(0, round(v))). Our own
   float-output probes 32/33 (22 Sep) tied their int parents at 3 decimals (a different base, 0.950/0.948). No action;
   'float output' stays closed. Saved as experiments/discussions/744093.md.
+- 2026-09-28 16:43 UTC, USER: LAPTOP ASLEEP 29 Sep 08:10-09:00 MSK (05:10-06:00 UTC, travelling)
+  Nothing is scheduled in that window: the night batch (00:05-01:45 UTC) and its backup checks (00:20/00:50/01:30 UTC)
+  are earlier; the first night reads come ~07:05 UTC (10:05 MSK, exp89q/exp89p non-CI) and ~09:00-09:35 UTC
+  (exp75/exp89r CI); the morning prep is at 07:23 UTC (10:23 MSK); the research rounds at 03:47 and 06:17 UTC are
+  outside it. Risk: after a standby the detached loops hung on network calls (15:00-15:40Z). Added a POST-WAKE CHECK
+  cron at 06:07 UTC (09:07 MSK): AC power, poll header age, E10/feed loop freshness, restart any stale loop, confirm
+  the night files, notify if still on battery. The watchdog will notify when the laptop goes on battery.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
