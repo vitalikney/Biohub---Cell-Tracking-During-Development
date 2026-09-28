@@ -3848,6 +3848,11 @@ Mention it to the user in one line (R9-A8 item 6).
   fails, the session sends the user a push notification with the exact pair (Kaggle deadline 02:59 MSK). Session cron:
   22:43 MSK reminder (if SELECTED differs from the proposal), 00:03 MSK fallback tick. The user's own tick by 23:00
   MSK stays the primary path.
+- 2026-09-28 11:28 UTC, CORRECTION to the 11:27 UTC fallback-tick line: the session will NOT tick the finals
+  Creating the 00:03 MSK fallback-tick job was BLOCKED by the Claude Code permission classifier ('External System
+  Writes'). Per the denial the session does not pursue the finals tick by any route (browser, API, later turn).
+  Replaced by a notify-only job at 00:05 MSK (read SELECTED read-only; if it is not the proposed pair, push the user
+  the exact pair; Kaggle deadline 02:59 MSK); the 22:43 MSK reminder stays. The user's own tick is the ONLY path.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
