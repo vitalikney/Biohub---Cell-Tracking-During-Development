@@ -3476,6 +3476,22 @@ Mention it to the user in one line (R9-A8 item 6).
   still RUNNING. GPU QUOTA (Kaggle Settings page, read 04:55Z): Kaggle GPU 20:29 / 30 h used this week -> ~9.5 h left
   (~20 K2-family dummies at ~25 min); TPU 0 / 20 h. Enough for W2b + W3/W4 + E10 dummies. The 5th slot of 28 Sep stays
   for the 12:00Z W2b decision (E10 copy first, else exp85b/exp85c or the W1-favoured stack).
+- 2026-09-28 06:26 UTC, exp85b/exp85c DUMMY GATES + OPS RESTART (47/48/49/50 PENDING at header 2026-09-28T06:22:29Z)
+  (1) OPS: the previous Claude session ended ~05:07Z and took its background shells with it: the lb_poll poller
+  stopped after header 05:06:44Z and the E10 watch loop after run 17 (04:43Z; run 18 due 05:43Z was missed). Restarted
+  06:22Z as detached Windows processes (Start-Process -WindowStyle Hidden: python experiments/lb_poll/lb_poll.py; bash
+  experiments/lb_poll/run_e10_watch_loop.sh), so they now survive a session end; first new header 06:22:29Z, watch
+  loop resumed from its state file. No submission or signal was missed (all four pending refs are still PENDING; the
+  loop re-reads the lists). (2) exp85b (exp70g + ILP_DIVISION_WEIGHT 0.4) dummy PASS: validate ok, 0 errors, nodes
+  121,301 (+0.04% vs exp70g), edges 117,131, forks 84 (81), LOWREFINE unchanged 143,634, 1,721 s, CSV 5249a0463b10.
+  exp85c (exp70g + READMIT_MIN_SCORE 0.94) dummy PASS: nodes 122,274 (+0.84%), edges 118,086, forks 82, LOWREFINE
+  148,020 (+3.05%), 1,736 s, CSV 63159b4e0435 (both ran in parallel, hence ~1,730 s vs 1,388-1,409 s solo).
+  DECOMPOSITION of probe 50: almost all of exp85a's change comes from READMIT 0.94 (+1,022 nodes, lowrefine +3%);
+  ILP_DIVISION_WEIGHT 0.4 alone moves +49 nodes / +3 forks (near-inert on our base, as R23-RC-B predicted: the x138
+  relink replaces most ILP edges). Consequence for the 12:00Z slot: exp85b is a near-duplicate of exp70g and exp85c a
+  near-duplicate of exp85a, so neither buys much information; W2b falls back to W2 v4 (2) (E10 copy first, then the
+  W1-favoured stack / exp81 SEC). (3) SEC-STACK GATE siblings (R23-A3): exp81 and exp80a dummy CSVs downloaded to
+  _dl/, sha12 8132ef2811d0 and a109ad024ace match the logged values.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
