@@ -3677,6 +3677,14 @@ Mention it to the user in one line (R9-A8 item 6).
   slot only if the user ticks later than 20:00Z (re-ticks allowed until 23:59Z). OPEN QUESTIONS to the user: (1) 3
   night + 2 morning OK? (2) may morning files be CI files (our best 0.957 is a CI file; the 07:47Z lift covered non-CI
   only)? (3) will the user tick later than 20:00Z?
+- 2026-09-28 10:19 UTC, USER ANSWERS on the 29 Sep schedule (chat)
+  (1) '3 night + 2 morning' = YES. (2) CI files in the morning: the user asked what CI is -> explained (coordinject
+  post-step from the public CC0 dataset yuki0731/biohub-coord-inject); answer pending. Until the user says yes,
+  morning files are non-CI (the 07:47Z lift). (3) TICK TIME: the user thinks in MOSCOW time (MSK = UTC+3) and is ready
+  to tick at 20:00 MSK and as late as 23:00 MSK = 20:00 UTC. So the FINALS TICK DEADLINE stays 20:00 UTC (23:00 MSK);
+  every file that may become a final must read by ~19:30 UTC: non-CI (L ~7.0-7.8 h) submitted by ~11:30 UTC (14:30
+  MSK), CI (L ~9.3-9.5 h) by ~09:30 UTC (12:30 MSK). No separate midday slot. From now on the session quotes times to
+  the user in MSK with UTC in brackets.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
