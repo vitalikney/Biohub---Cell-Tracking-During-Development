@@ -3512,6 +3512,13 @@ Mention it to the user in one line (R9-A8 item 6).
   notebook scores (best_public_score): the top biohub notebooks are all 0.953 (amanatar optimized-biohub-max-score,
   raunakdey07 Harmonic Fusion V3, kunaldesale2408, anvithpothula x138); none above 0.956 -> no E10 trigger. (4) GPU
   lanes idle since 06:00Z (exp85b/c done).
+- 2026-09-28 06:37 UTC, BRANCH CANDIDATES BUILT DURING THE RE-RUN (743929 process: 'build during the re-run for every branch the pending reads could take')
+  Built and diff-checked (each differs from its parent ONLY by the knob lines in cell 0): exp86a = exp78a (cap 8) +
+  ILP_DIVISION_WEIGHT 0.4 + READMIT_MIN_SCORE 0.94 (ipynb 8dc6114b; branch 49 '+' and 50 '+'); exp86b = exp78b (cap 12
+  fc2) + the same two knobs (b3b85429; branch 47 '+' and 50 '+'); exp86c = exp70g + ILP 0.4 + READMIT 0.92 (9436e809;
+  the next step down if 50 is '+'; parent exp85a). Dummies exp86a/exp86b pushed 06:36Z; exp86c follows when a lane
+  frees; gates vs their parents (exp78a / exp78b / exp85a dummies) with scratchpad gate85.py. No slot is taken by
+  building; the slot choice stays with the reads (W2b 12:00Z, W3 <= 23:30Z, W4 29 Sep 00:05Z).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
