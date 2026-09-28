@@ -3685,6 +3685,22 @@ Mention it to the user in one line (R9-A8 item 6).
   every file that may become a final must read by ~19:30 UTC: non-CI (L ~7.0-7.8 h) submitted by ~11:30 UTC (14:30
   MSK), CI (L ~9.3-9.5 h) by ~09:30 UTC (12:30 MSK). No separate midday slot. From now on the session quotes times to
   the user in MSK with UTC in brackets.
+- 2026-09-28 10:45 UTC, TEAMMATE GPU + DATASET SHARING (user, chat)
+  The user reported ~5 h of Kaggle GPU left on our account (weekly reset only after the deadline) and offered the two
+  teammates' quotas (team members gsfatakhov and sasyami, per the LB TeamMemberUserNames). Session position: our 5 h
+  cover the plan (~2.5 h of new dummies); teammates are a reserve / morning-branch runner. A file is submitted from
+  the account that ran its kernel version; the team keeps 5 submits/day in total. The session will NOT authenticate
+  with a teammate's API token (credential rule): if a teammate's kaggle.json is used on this PC, the USER runs those
+  push/submit commands in their own terminal with KAGGLE_CONFIG_DIR pointing to a separate folder (never ~/.kaggle, or
+  the poller/feed/session would act as the teammate); the session builds the folders with --owner <teammate>, gives
+  the exact commands and checks results. The session's own browser attempt to share the datasets was blocked by the
+  permission classifier; the USER shared vitaliineibauer/biohub-ft-weights and vitaliineibauer/biohub-secft-n2a-v1
+  with gsfatakhov and sasyami (with EDIT rights). Risk noted to the user: an accidental new version of
+  biohub-ft-weights would be picked up silently by new pushes (the DaughterNet glob has no sha pin; the n2a secondary
+  is sha-pinned 7029fe69). BASELINE (experiments/lb_poll/dataset_baseline/): biohub-ft-weights lastUpdated 2026-09-23
+  23:54:03 (80,069,686 bytes; vitalii_daughternet/fold_0..3.pt 5,627,853 each); biohub-secft-n2a-v1 lastUpdated
+  2026-09-27 21:25:35. PRE-PUSH RULE from now: before any push, 'kaggle datasets list --mine' must show both
+  lastUpdated values unchanged; a change -> stop, diff the file list, tell the user.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

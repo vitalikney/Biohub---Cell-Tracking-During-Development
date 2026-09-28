@@ -1,0 +1,21 @@
+name,size,creationDate
+README.md,548,2026-09-23 23:54:05.306000
+exp03B/config.json,165,2026-09-23 23:54:05.618000
+exp03B/edge_predictor_best.pth,8357783,2026-09-23 23:54:05.948000
+exp08/config.json,165,2026-09-23 23:54:05.737000
+exp08/edge_predictor_best.pth,8357783,2026-09-23 23:54:06.103000
+exp23/config.json,165,2026-09-23 23:54:05.746000
+exp23/edge_predictor_best.pth,8357783,2026-09-23 23:54:06.121000
+friend_a_exp02_loeo20/config.json,179,2026-09-23 23:54:05.758000
+friend_a_exp02_loeo20/edge_predictor_best.pth,8358621,2026-09-23 23:54:06.113000
+friend_a_full199_ep21/config.json,179,2026-09-23 23:54:05.752000
+friend_a_full199_ep21/edge_predictor_best.pth,8357783,2026-09-23 23:54:06.056000
+friend_a_full199_ep30/config.json,179,2026-09-23 23:54:05.757000
+friend_a_full199_ep30/edge_predictor_best.pth,8357783,2026-09-23 23:54:06.096000
+soup03B_50/config.json,165,2026-09-23 23:54:05.790000
+soup03B_50/edge_predictor_best.pth,8355927,2026-09-23 23:54:05.989000
+vitalii_daughternet/fold_0.pt,5627853,2026-09-23 23:54:06.135000
+vitalii_daughternet/fold_1.pt,5627853,2026-09-23 23:54:06.277000
+vitalii_daughternet/fold_2.pt,5627853,2026-09-23 23:54:06.372000
+vitalii_daughternet/fold_3.pt,5627853,2026-09-23 23:54:06.542000
+vitalii_daughternet/fold_4.pt,5627853,2026-09-23 23:54:06.604000

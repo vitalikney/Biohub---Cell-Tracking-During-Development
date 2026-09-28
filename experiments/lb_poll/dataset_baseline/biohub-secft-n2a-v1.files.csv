@@ -1,0 +1,4 @@
+name,size,creationDate
+ARTIFACT_MANIFEST.json,6764,2026-09-27 21:25:39.251000
+weights/unet_transformer/split_0/config.json,165,2026-09-27 21:25:39.382000
+weights/unet_transformer/split_0/edge_predictor_best.pth,8357783,2026-09-27 21:25:39.576000
