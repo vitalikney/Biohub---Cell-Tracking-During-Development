@@ -3868,6 +3868,20 @@ Mention it to the user in one line (R9-A8 item 6).
   (FULL)'. Family safetail_ci (rule exp87[abce]); expected read ~21:30-22:15Z (00:30-01:15 MSK). READ RULE (A2 (4)):
   50 displayed >= 0.958 -> REF = exp85a; '+' = display >= 0.959; equal 0.958 with an attributable UP = '0u' ('+' for
   BEST_CI only); equal with 0 teams passed = '0' = NON-ADDITIVE stop; below = '-'.
+- 2026-09-28 12:17 UTC, NIGHT LIST UNDER R+ (written AFTER probe 50's read; amends the 11:26 UTC Q3 line's R+ clause; reason given)
+  R+ is realised. The 11:26 UTC Q3 line put exp83c (SEC + CI on exp70g, parent exp79a 0.957) into the R+ night in
+  place of exp89e. With K now read '+', the current best non-CI base is exp85a (0.958), and the 743929/JT principle
+  already in force ('arms off the current best') puts the SEC arm on exp85a: exp83c could only reach a new best at
+  +0.002 for SEC, the K-based arm at +0.001. NEW BUILD exp89p_k2cap6_k_sec = exp85a + n2a SEC (non-CI; ipynb 2b9bc585;
+  cell diff vs exp81 = the two K lines only, vs exp85a = the secswap lines only; ledger family safetail), dummy pushed
+  12:16:53Z. Gate: validate ok, 0 errors, DIVINS ENABLED, 'Secondary SHA256: 7029fe69' in the log, nodes within +-1.5%
+  of exp85a (122,328), runtime rule v2. NIGHT (R+, Q3 yes): 00:05 UTC exp86c (RA92; parent exp85a; non-CI), 00:06 UTC
+  exp75 (#37 + CI, the private hedge; CI), 00:46 UTC exp89p (K + SEC; parent exp85a; non-CI, >= 40 min after exp86c);
+  fallback for exp89p if its dummy fails: exp83c (CI) at 00:07 UTC. Reads: exp86c/exp89p vs exp85a ('+' = display >=
+  0.959); exp75 per A2 (5). MORNING (R+): M1 (CI, by 08:45 UTC) = BASE_best + CI where BASE_best is the best of
+  {exp85a, exp86c '+', exp89p '+'} (i.e. exp87a if both arms read <= 0.958 - already scored as probe 51 -> then exp89h
+  only if exp86c read '+'); M2 (non-CI, by 11:30 UTC) = the next READMIT step (exp89k RA90) if exp86c read strictly
+  above exp85a, else exp89f (K + TAU 0.7). Depth cap 'cap + 2 levers' stays: K + SEC + CI is not a file.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
