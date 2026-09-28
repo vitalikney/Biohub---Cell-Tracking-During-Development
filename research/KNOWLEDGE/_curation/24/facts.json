@@ -1,0 +1,74 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/FACTS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/DECISIONS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/24/facts.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/24/facts.json"
+ ],
+ "alerts": [
+  {
+   "kind": "risk",
+   "what": "The round-24 pre-score lines (R24-A1 W2b TABLE v5 + K LEVER + timing, R24-A2 W4 AMEND 3 + (4) EXCEPTION, R24-A3 corrections, runtime rule v2, GAP RULE and S0) did not reach CONTEXT before probe 47 turned terminal at the 07:32:48Z header. Row 1 is now moot, because 47 read '-' so S3 cannot fire. The rest still counts as pre-registered only if it lands before 49 (~08:15-08:40Z; 8.0 h mark 08:50:37Z) and 50 (~12:27-12:51Z) are terminal.",
+   "evidence": "FACTS C-191 [c24]; CONTEXT l.3522-3538 (last entries 07:28 gates, 07:32 P47 read); research/wf_ideas_v4/round24/report.json R24-A1..A3; experiments/lb_poll/poll.log header 07:32:48Z",
+   "suggested_action": "Log R24-A1 rows 0/2/3/4 plus the timing and K-lever text, R24-A2 and R24-A3 as one block now. Quote the last PENDING header for 48/49/50 and add '(written after 47 was terminal)'. Drop Row 1 and the exp87c/d/e/j builds.",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "R24-A7 (one Russian message to the user) was due with the 47 read or at 08:00Z. It asks about lifting the 02:00Z 29 Sep cap (up to 2 non-CI files until ~10:25Z), Q3 (a SEC file as a final) and E10 copies after 02:00Z, and it discloses the K knobs and the READMIT 0.92/0.90 steps. The morning brief is not logged as sent either. Without the lift, all five 29 Sep slots go out blind at 00:05-01:45Z.",
+   "evidence": "FACTS C-165 [c24]; research/wf_ideas_v4/round24/report.json R24-A7, plan_issues (11); CONTEXT 07:32 l.3530",
+   "suggested_action": "Send the one message now, with the 47 result (0.955, cap-12 closed). Log the LIFT SPLIT pre-score line first. Do not send the old morning brief separately.",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "exp86c (exp70g + ILP 0.4 + READMIT 0.92) was gated PASS at 07:28 with 84 forks and runtime <= 1,900 s. R24-A4's proposed gate would fail it (it requires forks >= 85) and also checks per-clip readmits, failed frames and safe divisions, which the logged line omits. READMIT 0.92 is also still banned by W4 AMEND 2 (4) until the R24-A2 (4) EXCEPTION is logged.",
+   "evidence": "FACTS C-200, C-198 [c24], F-MOD-43 [c24]; CONTEXT 07:28 l.3522-3529; research/wf_ideas_v4/round24/report.json R24-A4, R24-A2 (4)",
+   "suggested_action": "Before exp86c can take the W2b Row-3 D0/R+ slot, re-check the missing R24-A4 items on its dummy CSV and decide the forks rule in writing. Log the READMIT exception before 50 is terminal, or drop exp86c.",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "The W2b text has changed three times: the 04:38 amendment, 04:39 (exp85a sent early) and 06:26 (back to W2 v4 (2)). The logged 12:00Z decision comes ~30-50 min before probe 50 (the only K read) lands at ~12:27-12:51Z. The previous session died at 05:07Z, leaving a 76-min poller gap, so the 12:00-14:00Z decision needs a live session.",
+   "evidence": "FACTS C-191, F-RUN-37 [c24]; CONTEXT 04:38 l.3438-3441, 06:26 l.3491-3493; research/wf_ideas_v4/round24/report.json R24-A1 (T), R24-A8",
+   "suggested_action": "Log which rule governs W2b (the R24-A1 (T) timing or the 06:26 W2 v4 (2) at 12:00Z) before 48 is terminal. Schedule wake-ups at ~12:15Z, 12:30Z and 13:30Z, and pause the feed loop 10 min before the submit.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "After P47 = 0.955 ('-', S5), the cap direction above 8 is closed. exp80a, exp84a, exp86b, exp82b/c, exp83a/d/f/g and the proposed exp87c/d/e/j are dead. Pushing any of their dummies would waste GPU (~7 h left) and a lane. BASE now waits on P49 (exp78a, cap 8).",
+   "evidence": "CONTEXT 07:32 l.3535-3538; FACTS F-LB-17 [c24]; DECISIONS section 1 [c24] build table",
+   "suggested_action": "Remove these files from every push list (R23-A6/R24-A6). Build only exp87a/b/i if R+ and the realized base need them.",
+   "urgency": "today"
+  },
+  {
+   "kind": "contradiction",
+   "what": "There are now three dummy-runtime criteria in use: the SEC-stack gate at <= 1,920 s (04:31), the exp86 gate at <= 1,900 s (07:28), and the proposed rule v2 (PASS <= 2,100 s, 2,100-2,500 s re-run, > 2,500 s FAIL). CONTEXT 06:26 also blamed parallel runs, while round 24 calls it noise (exp75 took 2,288 s solo).",
+   "evidence": "FACTS C-195 [c24], F-RUN-38; CONTEXT 04:31 (4) l.3427-3428, 06:26 l.3488, 07:28 l.3523-3524; research/wf_ideas_v4/round24/report.json R24-A3 (3)",
+   "suggested_action": "Pick one runtime rule in the next pre-score block, before any SEC-stack or exp87 dummy is gated.",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "The R23-A10 finals-draft fixes are still open: the DIV caveat for cap > 4, the pool including E10 copies, conditional SEC wording and the corrected #38 rationale. P50 (two knobs) and exp86a/c add a new need: the card must carry a public-only, single-embryo caveat for knob files. JT's 'best + closest one-line neighbour' advice is not our rule (C-197).",
+   "evidence": "FACTS C-184 [c24], C-197; CONTEXT 04:53 (1) l.3454-3455, (5) l.3463-3464; research/wf_ideas_v4/round24/report.json R24-A2, rejected R24S-9",
+   "suggested_action": "Apply the R23-A10 fixes plus a knob-file caveat line to the draft before the 29 Sep 12:00Z proposal. Keep {V_pub, #37}.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "contradiction",
+   "what": "CONTEXT 06:35 credits the 18.5 GB synthetic dataset (topic 732103) to hengck23. The topic author is José Freitas, and the set is his kernel output (josefreitasalvesneto/biohub-synthetic-dataset). Separately, 732103 quotes ~304 train division events vs our 149 unique (C-196).",
+   "evidence": "FACTS C-194, C-196, F-LB-21 [c24]; experiments/discussions/732103.md header, l.6-7; research/wf_ideas_v4/round24/report.json new_facts",
+   "suggested_action": "Correct the attribution in the next CONTEXT info line (R24-A10 (b)). No decision depends on it.",
+   "urgency": "info"
+  },
+  {
+   "kind": "stale",
+   "what": "experiments/RESULTS.md now has P39-P46 (59e14e2), but P47 (0.955, scored 07:32) and P48-P50 have no rows yet.",
+   "evidence": "FACTS C-118 [c24]; experiments/lb_poll/ledger.md 07:32:50Z",
+   "suggested_action": "Add the P47-P50 rows at the next hygiene commit, after the 49/48/50 reads. Commit as the user, with no Co-Authored-By trailer.",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 24 (state 07:35 UTC 28 Sep; HEAD 19c24b5 = origin/main). Since curation 23 (04:40Z), CONTEXT gained l.3433-3538.\n\nWhat happened:\n- 04:38: discussion 743929 was read (the user pointed to it) and exp85a/b/c were built on exp70g, with a W2 amendment.\n- 04:39: process fix: disclosed knobs are now actionable.\n- 04:53: curation 23 was acted on (runbook SI recipe, key facts, nine stacks committed), and the exp85a pre-submit line was logged.\n- 05:03: **P50 = exp85a (exp70g + ILP_DIVISION_WEIGHT 0.4 + READMIT_MIN_SCORE 0.94) was submitted at 05:02:30Z**. The GPU quota was read at 04:55Z: 20:29 of 30 h used.\n- 06:26: exp85b/c dummies passed. READMIT carries almost all of the change. Ops were restarted after the session ended at 05:07Z (poller gap 05:06-06:22Z).\n- 06:35: tools/kaggle_feed.py was added (discussions and public notebook scores via the API). No public notebook scores above 0.953.\n- 06:37: exp86a/b/c were built.\n- 07:28: exp86a/b/c gates PASS.\n- 07:32: **P47 exp78b (cap 12 + FRAME_CAP 2) = 0.955, code '-', no UP.** S5 closes the cap direction above 8 (no exp80a/exp84a; cap-12/24/48 stacks dead).\n\nCurrent state:\n- P48, P49 and P50 are PENDING at the 07:32:48Z header.\n- Best display is 0.956 (exp70g = V_pub). LB 07:29Z: #181 of 3,966.\n- Finals are still ticked #37 + #38, and the card recommends {V_pub, #37}.\n- Round 24 (report.json 07:18Z) proposes R24-A1..A11, but none is in CONTEXT, and A1-A3 missed the 47 deadline.\n\nFACTS.md:\n- New header.\n- [c24] notes on F-LB-01/02/04/10/15/17/18, F-RUN-33/36/37, F-RUL-01/05/12/15, F-MOD-40/42/43, F-TRN-51/55/56 and F-DAT-02.\n- New rows: F-LB-20 (LB movers), F-LB-21 (discussion intel via the API), F-RUN-38 (dummy runtimes), F-RUL-19 (disclosed-knob rule and P50 guard record), F-MOD-43 (exp85/86 builds and gates), F-TRN-56 (knob decomposition).\n- Contradictions: C-170, C-172, C-183 and C-189 resolved. C-118, C-163, C-165 and C-184 updated. New C-190..C-200: knob status, W2b text, ILP inertness, lowrefine coupling, synthetic author, runtime criterion, GT division count, finals partner advice, READMIT 0.92 ban, P47 L bound, exp86c gate.\n\nDECISIONS.md:\n- New header.\n- Section 1: P47 read and P48/P49 appends, a new P50 row, and a [c24] build table.\n- Section 2: [c24] paragraph and candidates snapshot at 07:35Z.\n- Section 2f: E10 paragraph.\n- Section 2h: 18 status appends and 18 new rows (04:38-07:32 lines, R24-A1..A11).\n- Section 3: 18 appends to R5, R8, R9, section f, E10 v3, W2 v4, W4 AMEND 2, S7, SEC gate, push order, quota and W1 read rows, plus 8 new rows.\n- Closing paragraph."
+}

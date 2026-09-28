@@ -1,0 +1,7 @@
+- 2026-09-28T07:20:58Z start round 24 curation (FACTS/DECISIONS)
+- 07:24Z no 24/facts.json -> incremental over c23 (state 04:40Z, HEAD 46c18a2). Sources: CONTEXT l.3433-3521 (04:38 743929, 04:39 process fix, 04:53 c23 acted + exp85a pre-submit, 05:03 P50 submitted + GPU quota 20:29/30h, 06:26 exp85b/c gates + ops restart, 06:35 kaggle_feed, 06:37 exp86a/b/c); git d14e9a3..af035e7 (8 commits, HEAD af035e7 06:38:23Z); poll header 07:22:46Z 47-50 PENDING; ledger 07:12:46Z (388 polls, 1 gap 05:06-06:22Z); e10 0639Z #179 k=8; watch RUN 18 06:23Z; feed digests 0630-0704Z no flag; round24 report.json 07:18Z R24-A1..A11 (none in CONTEXT yet); RESULTS.md rows 39-46 added (59e14e2).
+- 07:26Z sources read; writing scratch c24_facts.py (FACTS) then c24_dec.py (DECISIONS)
+- 07:29Z FACTS.md edited via scratch c24_facts.py (header; 18 F appends; new F-LB-20/21, F-RUN-38, F-RUL-19, F-MOD-43, F-TRN-56; 8 C updates; C-190..C-198). bad rows 0. Next DECISIONS
+- 07:33Z DECISIONS.md edited via c24_dec.py (header, P47-49 appends, P50 row, build table, snapshot, 2f, 2h 16 appends + 16 rows, 3: 14 appends + 8 rows, closing). NEW since start: f40d44b 07:28 exp86a/b/c gates PASS; 19c24b5 07:32 P47 exp78b = 0.955 '-' (header 07:32:48Z). R24-A1..A3 NOT logged before 47 terminal. Writing c24b patch.
+- 07:35Z c24b applied (P47 0.955 read, exp86 gates, C-199/C-200; tables validated 0 mismatches). Next facts.json
+- 07:36Z facts.json written (9 alerts). Done.

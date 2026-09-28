@@ -1276,3 +1276,105 @@ Curator logs: `research/KNOWLEDGE/_curation/4/`.
 - **New:** exp85a READMIT/lowrefine coupling + ILP 0.4 no-output-channel, record node growth before submit (R23-RC-A/B); E10 runbook SI cap 4 / REF exp58 (R23-A4); SEC gate lacks sibling CSVs and clauses (R23-A3, A6); W2 plan churn + unlogged '04:5x amendment'; finals draft R23-A10 defects; R23-A8/R20-A13 CONTEXT lines.
 - **Carried over:** task template (R22-A10 -> R23-A11), GPU quota (R22-A5 -> R23-A5, 4th), morning brief (R22-A8 -> R23-A9), W1 read procedure (R22-A7 -> R23-A12), stack log/commit (R22-A11 -> R23-A7), RESULTS rows, E10 loop text.
 - **Curator disagreements settled here:** template [today]/[now] -> [now]; stack log/commit [now]/[today] -> [today]; finals draft [before-finals] (all); RESULTS rows [info], due before the FINALS READ.
+
+## 24 - 2026-09-28 ~07:45 UTC (curation 24; git HEAD 19c24b5 = origin/main + untracked `research/wf_ideas_v4/round24/` (no REPORT.md), `experiments/e10_watch/20260928T0639Z.txt`, `20260928T0722Z.txt`, `experiments/discussions/digest_20260928T0704Z.md`, `0735Z.md`, new `experiments/ext_*` folders, `experiments/ds_secw_corwin_v1/weights/`)
+
+**Sources since curation 23:**
+- `CONTEXT.md` l.3448-3538, 7 entries: CURATION 23 ACTED ON + exp85a PRE-SUBMIT LINE 04:53 (l.3448); PROBE 50 SUBMITTED + GPU QUOTA READ 05:03 (l.3465); exp85b/c GATES + OPS RESTART 06:26 (l.3479); kaggle_feed + first API discussions read 06:35 (l.3495); exp86a/b/c BUILT 06:37 (l.3515); exp86a/b/c GATES PASS 07:28 (l.3522); P47 READ 07:32 (l.3530-3538). `## 9. Literature` moved to l.3539.
+- Commits d14e9a3, d015291, 59e14e2, 048c518, a240ba1, ebadfa3, af035e7, f40d44b, 19c24b5 (`git log`).
+- Round 24: `research/wf_ideas_v4/round24/report.json` R24-A1..A11 (07:18Z), 6 `scan_*.json`, 23 `v_*.json`; no REPORT.md. New kernels: `experiments/exp86a_k2cap8_div04_ra094/`, `exp86b_k2cap12fc2_div04_ra094/`, `exp86c_k2cap6_div04_ra092/`.
+- LB and feeds: `experiments/lb_poll/poll.log` to 07:32:48Z (l.20760); `ledger.md` 07:32:50Z (gap 05:06:44Z -> 06:22:29Z); `experiments/lb_poll/_lb/S0_0729Z`; `experiments/e10_watch/watch_loop.log` RUN 18-19 (0 signals); `experiments/discussions/feed_loop.log` (E10 FLAG none to 07:35:25Z).
+
+**New LB results:** P47 exp78b (cap 12 + FRAME_CAP 2) = **0.955, code '-', no UP**. S5 closes the cap direction above 8. P50 = exp85a (exp70g + ILP 0.4 + READMIT 0.94) was submitted 05:02:30Z. P48, P49 and P50 are PENDING (`CONTEXT.md` l.3465-3474, l.3530-3538). Best display is unchanged at 0.956 (exp70g = V_pub). Rank #181/3,966 at 07:29Z.
+
+**Ideas** (`IDEAS.md` CHANGES (24) l.135-144; `ideas.json` meta.curations[n=24], 64 records; `_curation/24/ideas.json`; curated at 07:31Z, before the P47 read):
+- **New I-432..I-448:**
+  - I-432 kaggle_feed.
+  - I-433 detached loops + live-session plan.
+  - I-434 GAP RULE.
+  - I-435 exp86a/b/c.
+  - I-436 TABLE v5 + K LEVER.
+  - I-437 W4 AMEND 3 + (4) EXCEPTION.
+  - I-438 exp87 builds.
+  - I-439 RA98 (refuted).
+  - I-440 coordinject ALPHA 1.0 (refuted).
+  - I-441 ILP-fork restore (refuted).
+  - I-442 exp87m V6 filler.
+  - I-443 SYN-DN (deferred).
+  - I-444 'V_pub + one-lever parent' (refuted).
+  - I-445 node-row hash gate + runtime rule v2.
+  - I-446 watch thresholds.
+  - I-447 T1-T5 push schedule.
+  - I-448 builder weight-path hardening.
+- **Status changes:**
+  - I-139 moves refuted -> in-plan: READMIT 0.94 is on the LB inside P50, and the lowrefine-coupling reason is withdrawn (R24-RC-A).
+  - I-405 (quota read) and I-259 (template refreshed) leave the at-risk list.
+  - I-287 is fixed but gets a K-base SI rule.
+- **Pending for curation 25:** I-398 (exp78b) and the cap-direction ideas still need the P47 '-' read.
+- **Counts c23 -> c24:** 431 -> 448. In-plan 95 -> 108, refuted 209 -> 212, deferred 46 -> 47, others unchanged. Strict orphan: I-233. At risk: I-252, I-330, I-336, I-407, I-425, I-426, I-434, I-436, I-437, I-448.
+
+**Facts and decisions** (`FACTS.md`, `DECISIONS.md` rows marked [c24]; `_curation/24/facts.json`; state 07:35Z, includes P47):
+- **New facts:**
+  - F-LB-20: LB movers (l.239).
+  - F-LB-21: discussion intel via the API; no public notebook above 0.953 (l.240).
+  - F-RUN-38: dummy runtimes (l.283).
+  - F-RUL-19: disclosed-knob rule + P50 guard (l.307).
+  - F-MOD-43: exp85/exp86 builds and gates (l.355).
+  - F-TRN-56: K-knob decomposition, where READMIT carries the change and ILP 0.4 adds +3 safe divisions (l.416).
+- **[c24] appends:** F-LB-01/02/04/10/15/17/18, F-RUN-33/36/37, F-RUL-01/05/12/15, F-MOD-40/42/43, F-TRN-51/55/56, F-DAT-02.
+- **Contradictions:**
+  - Resolved: C-170, C-172, C-183, C-189.
+  - Updated: C-118, C-163, C-165, C-184.
+  - New C-190..C-200 (l.611-621): knob status; W2b text; ILP inertness; lowrefine coupling; synthetic author (José Freitas, not hengck23); runtime criterion; GT division count (304 vs 149); finals partner advice; READMIT 0.92 ban; P47 L bound; exp86c gate.
+- **DECISIONS.md:**
+  - §1: P47 read and a new P50 row (l.184-187), plus the [c24] build table (l.427-429).
+  - §2: [c24] paragraph + snapshot (l.730-732). V_pub = exp70g; the proposal is still {V_pub, #37}.
+  - §2f: E10 (l.1009).
+  - §2h: [c24] rows (l.1134-1147).
+  - §3: [c24] rows (l.1211-1218).
+
+**Watchlist** (`WATCHLIST.md`; `_curation/24/watch.json`; curated at 07:25Z, before the P47 read):
+- **New:** W235-W247, T139-T144, I274-I286.
+- **Done:**
+  - W228 template.
+  - W232 runbook SI.
+  - W212 quota.
+  - W229 stacks commit.
+  - W126 part 1 (RESULTS 39-46).
+  - W174 loop text.
+  - W231 (c) sibling CSVs.
+  - W233 push-by-BASE principle.
+- **Superseded:** T117 (W2a taken by P50), and W199/W222 (morning brief -> W241).
+- **Superseded after the watch curator ran:** W238's 'exp86c has no output' and I282 (gates logged 07:28, `CONTEXT.md` l.3522); T139 (47 read, l.3530).
+
+**Alerts** (`INDEX.md` TOP ALERTS, 10 after dedup):
+- **Resolved since curation 23:**
+  - R23-A4, R23-A11, R23-A5, R23-A7.
+  - RESULTS rows 39-46.
+  - E10 loop text.
+  - Sibling CSVs.
+  - exp85a pre-submit line.
+  - The c23 'READMIT/lowrefine coupling' alert (benign, R24-RC-A).
+  - The c23 'ILP 0.4 does nothing' premise, now refuted: +3 safe divisions.
+  - exp86 gates logged.
+- **New:**
+  - R24-A1..A3 pre-score blocks missed the P47 deadline.
+  - R24-A7 user message due by 08:00Z.
+  - The exp86c stricter gate (84 forks) + the READMIT 0.92 ban.
+  - Dead cap > 8 files after P47; build only exp87a/b/i.
+  - The W2b live-session need, timers lost at 05:07Z, the 429 risk.
+  - Three runtime criteria.
+  - The exp87m V6 0.901 omission.
+  - The synthetic-author correction.
+- **Carried over:**
+  - Finals draft R23-A10 (+ knob-file caveat).
+  - W230 CI caveat.
+  - W231 residue.
+  - Missing CONTEXT lines R22-A9 / R23-A8 / R20-A13 (+ R24-A10).
+  - RESULTS rows (now P47-P50).
+  - Round REPORT.md + commit.
+  - Orphan I-233.
+- **Curator disagreements settled here:**
+  - exp86c: [now] (watch) vs [today] -> [today].
+  - User message: [now] vs [today] -> [now].
+  - Pre-score blocks: [now] in all three.

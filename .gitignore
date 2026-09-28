@@ -22,3 +22,8 @@ experiments/**/checkpoint_last.pth
 # External public data (dorado Ultrack embryo crops etc.), built by tools/dorado_crops.py
 data_external/
 /data_external/
+
+# pip wheels dropped into the repo root by agents (28 Sep: a verifier ran pip download tracksdata)
+/*.whl
+# binary sample data of pulled public notebooks
+experiments/ext_*/sample/

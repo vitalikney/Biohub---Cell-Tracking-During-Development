@@ -1,0 +1,6 @@
+- 2026-09-28T07:21Z start round 24 watch; no prior watch.json in 24/; base = curation 23 WATCHLIST (04:45Z)
+- 07:24Z CONTEXT 3542 l; new entries l.3433-3521 (04:38 743929/exp85, 04:39 process fix, 04:53 curation-23 acted, 05:03 probe 50 + quota 20:29/30h, 06:26 85b/c gates + ops restart + sibling CSVs, 06:35 kaggle_feed, 06:37 exp86a/b/c)
+- 07:27Z round24 report.json read (R24-A1..A11, 07:18Z); CONTEXT last entry 06:37Z -> none of A1-A11 landed; R23-A4/A5/A7/A11 + W126(39-46) landed (l.3448-3478, commits d015291/59e14e2)
+- 07:24Z (clock corrected: earlier '07:27Z' note was 07:22Z) poll header 07:22:46Z; exp86c no _dl output; gate85.py only in scratchpad; timers not re-created after 05:07Z session end (grep CONTEXT); writing WATCHLIST now
+- 07:25Z WATCHLIST.md written (curation 24); refs l.3187/l.2175 checked
+- 07:27Z watch.json written (16 alerts); done

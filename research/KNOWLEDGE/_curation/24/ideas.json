@@ -1,0 +1,74 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/ideas.json",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/IDEAS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/24/ideas.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/24/ideas.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "what": "None of round 24's three pre-score blocks is in CONTEXT yet: R24-A1 (TABLE v5 + K LEVER + W2b timing), R24-A2 (W4 AMEND 3 + the (4) EXCEPTION for READMIT 0.92/0.90) and R24-A3 (corrections, runtime rule v2, GAP RULE, S0 = 0639Z). They have to land before probe 47 turns terminal, and 47 was still PENDING at 07:22:46Z with an expected read around 07:30-08:00Z. If 47 lands first, Row 1's exp80a-before-exp83a reorder stops being pre-registered. Without R24-A2, exp86c and any READMIT arm are literally banned by W4 AMEND 2 (4).",
+   "evidence": "CONTEXT.md l.3522-3529 (last entry 07:28Z, exp86 gates only); experiments/lb_poll/poll.log header 2026-09-28T07:22:46Z (47/48/49/50 PENDING); research/wf_ideas_v4/round24/report.json R24-A1, R24-A2, R24-A3, plan_issues 13; research/KNOWLEDGE/ideas.json I-436, I-437, I-434, I-445",
+   "suggested_action": "Append the three blocks now and quote the 07:22:46Z header (or newer). If 47 is already terminal, write '(written after 47 was terminal)'.",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "The exp86c dummy was logged PASS at 07:28Z with the old gate85 criteria. Round 24's stricter exp86c gate (R24-A4) needs forks >= 85, and exp86c has 84. Its node-row hash, per-clip readmits and 'failed frames 0' are not logged either. exp86c is the only file for W2b Row 3 when probe 50 reads R+ on the D0 base.",
+   "evidence": "CONTEXT.md l.3522-3529 (exp86c forks 84, nodes 122,716, LOWREFINE 150,265, CSV 31b1e047587a); research/wf_ideas_v4/round24/report.json R24-A4 ('forks >= 85'); research/KNOWLEDGE/ideas.json I-435, I-445",
+   "suggested_action": "Before 12:30Z, check exp86c against R24-A4: node-row hash differs from 30e1c6e46704, per-clip readmits above 168/1144/105/806, failed frames 0. Then decide whether 84 forks means an insertion was lost (READMIT 0.92 can displace one) or the '>= 85' threshold was a typo. Log the resolution before any Row 3 use.",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "R24-A7 is the only round-24 action that needs the user. It replaces the morning brief: ONE message with the 47 read or at 08:00Z, whichever comes first, and not again at 09:30Z. It asks (a) up to 2 non-CI files after 29 Sep 02:00Z until ~10:25Z, (b) Q3, (c) E10 copies after 02:00Z. It adds one line on K and one saying READMIT 0.92/0.90 are our own steps. The LIFT SPLIT pre-score line has to go into CONTEXT first.",
+   "evidence": "research/wf_ideas_v4/round24/report.json R24-A7 (covered_by_existing_approval false), plan_issues 11; research/wf_ideas_v4/round24/v_plancheck_pc24-06.json; research/KNOWLEDGE/ideas.json I-425, I-300, I-330",
+   "suggested_action": "Log the LIFT SPLIT line, send the message by 08:00Z, then log 'MESSAGE SENT hh:mmZ'. Take no slot on a presumed yes.",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "R24-A11 pre-registers the last-rank W4 filler exp87m (the amanatar V6 safe-division values 10.5/15/1.50) as 'EV ~0; V6 has no public score'. Round 17, however, recorded a public V6 read of 0.901 (-0.052 vs x138). Round 19 attributed that drop to the detection changes, and the 27 Sep NOTES show no V6 score, so version numbering may explain part of it. The pre-registration still omits a confounded negative public read.",
+   "evidence": "research/wf_ideas_v4/round24/report.json R24-A11, new_facts; research/wf_ideas_v4/round17/report.json new_facts (1); experiments/ext_optimized-biohub-max-score/v6_2026-09-27/NOTES.md; research/KNOWLEDGE/ideas.json I-442, I-025, I-352",
+   "suggested_action": "If exp87m is ever built, its pre-registration line should cite the 0.901 read as confounded negative context and resolve which V6 it was.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "forgotten",
+   "what": "The exp87 K-lever builds (87a/b/c/d/e/i/j, dry-run sha8 listed) and the ledger rule exp87[abce] -> safetail_ci (with a test) are due before the BASE reads settle (~08:45Z). No experiments/exp87* folder exists. Without the rule, the CI stacks are filed as safetail (9.5 h deadline / 8.0 h insertion gate) and could wrongly fall out of V_pub.",
+   "evidence": "research/wf_ideas_v4/round24/report.json R24-A5, plan_issues 6; research/wf_ideas_v4/round24/v_hyp_slots_r24s-4.json; research/wf_ideas_v4/round24/report.notes.md 07:16Z; research/KNOWLEDGE/ideas.json I-438, I-383",
+   "suggested_action": "Build the seven files CPU-only and stop on any sha mismatch. Add the ledger rule and its test. Commit the named paths as the user, with no trailer. Push nothing until T3 (I-447).",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "W2b is the last 28 Sep slot, and under TABLE v5 its non-CI branch waits for probe 50's terminal header (~12:27-12:51Z, latest 14:00Z). The previous session died at 05:07Z and left a 76-min poller gap. The feed loop drew 429s at 06:34Z, and a 429 right before a submit breaks the '< 10 min header, no 429' check.",
+   "evidence": "research/wf_ideas_v4/round24/report.json R24-A8, plan_issues 13; experiments/lb_poll/ledger.md (gap 05:06:44Z -> 06:22:29Z); experiments/discussions/feed_loop.log (06:34Z 429 on GetTopic); CONTEXT.md l.3479-3494 (1); research/KNOWLEDGE/ideas.json I-433, I-313, I-248",
+   "suggested_action": "Keep a live session, or wake-ups, at 12:15/12:30/13:30Z. Check the three detached loops at 08:05Z and 12:15Z. Pause the feed loop about 10 min before each submit.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "The 04:53Z line 'exp85a changes TWO things' and the 06:26Z line 'ILP 0.4 near-inert' are both superseded by round 24's rechecks. R24-RC-A finds the lowrefine coupling benign (+4,386 refined peaks, 0 failed frames). R24-RC-C finds ILP 0.4 adds +3 safe divisions via relink orphans. The ledger therefore moves I-139 from refuted to in-plan: READMIT 0.94 is on the LB inside probe 50.",
+   "evidence": "CONTEXT.md l.3448-3464 (1), l.3479-3494 (2); research/wf_ideas_v4/round24/v_recheck_r24-rc-a-c05-lowrefine-threshold-coupling-.json; research/wf_ideas_v4/round24/v_recheck_r24-rc-c-ilp-division-weight-has-a-safe-di.json; research/wf_ideas_v4/round24/report.json R24-A3 (1)-(2); research/KNOWLEDGE/ideas.json I-139, I-049, I-036, I-431",
+   "suggested_action": "Put both corrections in the R24-A3 block, so that probe 50 is read as a readmit-band read of one bundled lever K.",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "Several items are still only in research files and not in CONTEXT. The finals-message edits (R23-A10) were still open at 04:53Z. Curator lines R23-A8 and R24-A10 (a)-(f) are missing (JT stage = own code, so stop the 0.947 scans; synthetic set facts; radius reason void; amanatar wording; mc23 pairs; builder weight-path hardening). R20-A13 is due before 29 Sep 23:59Z. Round 24's REPORT.md was not rendered, and round24/, the nine ext_* folders and the 0639Z snapshot are untracked.",
+   "evidence": "CONTEXT.md l.3448-3464 (5); research/wf_ideas_v4/round24/report.json R24-A10, next_focus; research/wf_ideas_v4/round24/report.notes.md 07:18Z; git status (untracked research/wf_ideas_v4/round24/, experiments/ext_*, experiments/e10_watch/20260928T0639Z.txt); research/KNOWLEDGE/ideas.json I-426, I-252, I-407, I-232, I-448",
+   "suggested_action": "After the 47/49 reads, write one combined curator/info line. Render round24/REPORT.md from report.json and commit it with the round folder and the snapshot. Apply the R23-A10 edits to the finals draft before 29 Sep 12:00Z.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "I-233 (lb_poll.py logs error_description, so an ERROR class is visible in poll.log) is still the only strict orphan. Four W1/W2 reads and up to 5 W4 files could come back ERROR, and R24-A1 codes ERROR as R?.",
+   "evidence": "research/KNOWLEDGE/IDEAS.md ORPHANS; research/KNOWLEDGE/ideas.json I-233; research/wf_ideas_v4/round24/report.json R24-A1 (K: ERROR = R?)",
+   "suggested_action": "Either close it in one line (read the error class on demand with the one-liner) or add it at the next detached-poller restart.",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 24 (2026-09-28 ~07:40 UTC, HEAD f40d44b) updates curation 23 incrementally. The ledger goes from 431 to 448 ideas, with 64 change records.\n\nSources:\n- CONTEXT.md l.3448-3529: six new entries. 04:53 curation 23 acted on; 05:03 probe 50 exp85a submitted and GPU quota read; 06:26 exp85b/c gates and ops restart; 06:35 kaggle_feed tool; 06:37 exp86a/b/c built; 07:28 exp86a/b/c dummies PASS.\n- experiments/RESULTS.md rows 39-46.\n- research/wf_ideas_v4/round24: report.json R24-A1..A11, 6 scans, 23 verdicts.\n- exp86 probe.json, poll.log to 07:22:46Z, the 07:04Z feed digest.\n\nThere are no new LB scores: 47/48/49/50 are PENDING.\n\nNew ideas:\n- I-432: kaggle_feed.\n- I-433: detached loops and the live-session plan.\n- I-434: GAP RULE.\n- I-435: exp86a/b/c.\n- I-436: TABLE v5 + K LEVER.\n- I-437: W4 AMEND 3 + (4) EXCEPTION.\n- I-438: exp87 builds.\n- I-439: RA98, refuted.\n- I-440: coordinject alpha 1.0, refuted.\n- I-441: ILP-fork restore, refuted.\n- I-442: exp87m V6 filler.\n- I-443: SYN-DN, deferred.\n- I-444: 'V_pub + one-lever parent', refuted.\n- I-445: node-row hash gate + runtime rule v2.\n- I-446: watch thresholds.\n- I-447: T1-T5 push schedule.\n- I-448: builder weight-path hardening.\n\nStatus moves:\n- I-139 moves from refuted to in-plan: READMIT 0.94 is on the LB in probe 50, and its lowrefine-coupling reason is withdrawn as benign.\n- I-405 (quota read) and I-259 (template refreshed) leave the at-risk list.\n- I-287 is fixed but gains a K-base SI rule.\n- Counts: in-plan 95 -> 108, refuted 209 -> 212, deferred 46 -> 47.\n\nOrphans:\n- 1 strict: I-233.\n- 10 at-risk: I-252, I-330, I-336, I-407, I-425, I-426, I-434, I-436, I-437, I-448.\n\nTop alerts:\n- Round 24's three pre-score blocks are not logged, and probe 47 is due any minute.\n- exp86c (84 forks) fails round 24's stricter '>= 85' gate, while the 07:28Z entry logged it PASS with the old criteria.\n- The R24-A7 user message is due by 08:00Z.\n- The exp87m filler's pre-registration omits a public read: round 17 recorded amanatar V6 at 0.901."
+}

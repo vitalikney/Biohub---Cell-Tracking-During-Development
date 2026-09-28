@@ -1,0 +1,4 @@
+- 2026-09-28 07:40Z index curator start; no index.json; reading INDEX/CHANGES/curator outputs
+- 07:45Z read curator outputs (ideas/facts/watch c24), CONTEXT l.3515-3538 (P47 = 0.955 at 07:32), poll.log 07:32:48Z, ledger, loops; writing INDEX.md
+- 07:50Z INDEX.md written (74 lines); appending CHANGES.md section 24
+- 07:52Z CHANGES.md section 24 appended; index.json written (complete)
