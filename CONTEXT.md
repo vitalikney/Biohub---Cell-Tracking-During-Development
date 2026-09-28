@@ -4078,6 +4078,19 @@ Mention it to the user in one line (R9-A8 item 6).
   (public fit, new code without a lab, sign <= 0, or closed). Decision: build/dummy NOTHING new tonight; MORNING TABLE
   v1.1 unchanged (branch A: M1 exp89l on P '+'/'0u' by 08:45Z, M2 exp89s on DIS '+' else exp89q on Rr '+' by 11:30Z,
   else UNUSED; branch B: M1 exp89s on DIS '+', M2 UNUSED); ~3 GPU-h stay in reserve.
+- 2026-09-28 20:07 UTC, USER GOES TO SLEEP - AUTONOMOUS MODE (chat)
+  The user: 'I'm going to sleep - work autonomously; all instructions are given. Do research, you may run it every
+  hour after the 3 AM (MSK) submits. If you see a cool public notebook or idea, you may test it on Kaggle. Do not be
+  bound by the 3 GPU-h; if the quota runs out, the user will ask the teammates to push the morning probes. Good luck.'
+  CONSEQUENCES: (1) research rounds: one pre-night round at 22:47 UTC (01:47 MSK) and HOURLY rounds 01:13-18:13 UTC
+  (04:13-21:13 MSK) on 29 Sep (session cron; the old 2.5-h crons for 29 Sep were replaced); a round is skipped while
+  the previous one runs or a submit window executes; Kaggle API calls kept minimal. (2) GPU budget is no longer a
+  constraint for testing (build + dummy) a strong public notebook or disclosed idea; if our quota runs out, the
+  morning files go via the teammates (the user arranges it; the session prepares folders with --owner and exact
+  commands, never uses their tokens). (3) SUBMITS still follow the logged rules: the night list, MORNING TABLE v1.1,
+  and E10 v3 (before 02:00 UTC an E10 copy per the rule; after 02:00 UTC an E10 copy needs the user's yes for that
+  notebook - dummy it and ask). (4) Finals: the session never ticks; proposals at 12:03/18:37 UTC, reminders 19:43 UTC
+  and 21:05 UTC.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
