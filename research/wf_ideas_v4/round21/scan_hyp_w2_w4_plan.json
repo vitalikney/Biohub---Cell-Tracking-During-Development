@@ -1,0 +1,157 @@
+{
+ "task": "round 21 scan_hyp_w2_w4_plan: pre-registered W2 (28 Sep) and W3/W4 (29 Sep) decision table given the pending W1 reads (exp78b cap12+fc2, exp79a cap6+CI, exp78a cap8); stack order, cap stop rules, finals proposal with P(bronze)/P(silver); exact build commands for unbuilt combos",
+ "written_utc": "2026-09-27T22:48Z",
+ "complete": true,
+ "build_env_git_bash": "export MSYS_NO_PATHCONV=1; B=\"--base x138 --patch divinsert --patch safetail --patch lowrefine\"; KB=\"--set DIVINS_ENABLE=1 --set DIVINS_STEAL=1 --set DIVINS_ALPHA=1 --set DIVINS_THRESH=0.4 --set DIVINS_DUMP=0 --set REPAIR_DEADLINE_S=34200 --set DIVINS_DEADLINE_S=28800 --set LOWREFINE_ENABLE=1\"; C6=\"--set DIVINS_CAP=6 --set DIVINS_FRAME_CAP=1\"; C8=\"--set DIVINS_CAP=8 --set DIVINS_FRAME_CAP=1\"; C12=\"--set DIVINS_CAP=12 --set DIVINS_FRAME_CAP=2\"; C24=\"--set DIVINS_CAP=24 --set DIVINS_FRAME_CAP=2\"; C48=\"--set DIVINS_CAP=48 --set DIVINS_FRAME_CAP=2\"; CI=\"--patch coordinject --set COORDINJECT_ENABLE=1 --set COORDINJECT_ALPHA=0.5\"; N2=\"--patch secswap --set SECONDARY_EXPECTED_SHA256=7029fe69efb2b4069609a4c621678e37dc903d3defb457795893f81c7f0cbd0e --set SECONDARY_ARTIFACT_MANIFEST=/kaggle/input/datasets/vitaliineibauer/biohub-secft-n2a-v1/ARTIFACT_MANIFEST.json --dataset vitaliineibauer/biohub-secft-n2a-v1\"",
+ "builds": {
+  "exp82a_k2cap8_secn2a": {
+   "what": "exp78a (cap 8) + n2a secondary",
+   "cmd": "python tools/build_probe_kernel.py exp82a_k2cap8_secn2a $B $KB $C8 $N2 --note \"r21: exp78a (cap 8) + n2a secondary\"",
+   "nb_sha256_prefix": "ffc00631194affcc",
+   "ledger_family": "safetail"
+  },
+  "exp82b_k2cap12fc2_secn2a": {
+   "what": "exp78b (cap 12 fc2) + n2a",
+   "cmd": "python tools/build_probe_kernel.py exp82b_k2cap12fc2_secn2a $B $KB $C12 $N2 --note \"r21: exp78b (cap 12 fc2) + n2a\"",
+   "nb_sha256_prefix": "7cd1e3ed4a706cbb",
+   "ledger_family": "safetail"
+  },
+  "exp82c_k2cap24fc2_secn2a": {
+   "what": "exp80a (cap 24 fc2) + n2a",
+   "cmd": "python tools/build_probe_kernel.py exp82c_k2cap24fc2_secn2a $B $KB $C24 $N2 --note \"r21: exp80a (cap 24 fc2) + n2a\"",
+   "nb_sha256_prefix": "ee4312442a4f3ab8",
+   "ledger_family": "safetail"
+  },
+  "exp83a_k2cap12fc2_ci": {
+   "what": "exp78b + coordinject a0.5",
+   "cmd": "python tools/build_probe_kernel.py exp83a_k2cap12fc2_ci $B $KB $C12 $CI --note \"r21: exp78b + coordinject a0.5\"",
+   "nb_sha256_prefix": "80a0856fcae31bae",
+   "ledger_family": "safetail_ci (needs the new rule)"
+  },
+  "exp83b_k2cap8_ci": {
+   "what": "exp78a + coordinject",
+   "cmd": "python tools/build_probe_kernel.py exp83b_k2cap8_ci $B $KB $C8 $CI --note \"r21: exp78a + coordinject\"",
+   "nb_sha256_prefix": "d9b0834d43f64d98",
+   "ledger_family": "safetail_ci (needs the new rule)"
+  },
+  "exp83c_k2cap6_secn2a_ci": {
+   "what": "exp81 (cap 6 + n2a) + coordinject = exp79a + n2a",
+   "cmd": "python tools/build_probe_kernel.py exp83c_k2cap6_secn2a_ci $B $KB $C6 $N2 $CI --note \"r21: exp81 (cap 6 + n2a) + coordinject = exp79a + n2a\"",
+   "nb_sha256_prefix": "e8f5a8a621222f77",
+   "ledger_family": "safetail_ci (needs the new rule)"
+  },
+  "exp83d_k2cap12fc2_secn2a_ci": {
+   "what": "exp78b + n2a + coordinject",
+   "cmd": "python tools/build_probe_kernel.py exp83d_k2cap12fc2_secn2a_ci $B $KB $C12 $N2 $CI --note \"r21: exp78b + n2a + coordinject\"",
+   "nb_sha256_prefix": "22ccc1dd89c948e3",
+   "ledger_family": "safetail_ci (needs the new rule)"
+  },
+  "exp83e_k2cap8_secn2a_ci": {
+   "what": "exp78a + n2a + coordinject",
+   "cmd": "python tools/build_probe_kernel.py exp83e_k2cap8_secn2a_ci $B $KB $C8 $N2 $CI --note \"r21: exp78a + n2a + coordinject\"",
+   "nb_sha256_prefix": "a016cf0f733e53bc",
+   "ledger_family": "safetail_ci (needs the new rule)"
+  },
+  "exp83f_k2cap24fc2_ci": {
+   "what": "exp80a + coordinject",
+   "cmd": "python tools/build_probe_kernel.py exp83f_k2cap24fc2_ci $B $KB $C24 $CI --note \"r21: exp80a + coordinject\"",
+   "nb_sha256_prefix": "c8a2fccba8d60596",
+   "ledger_family": "safetail_ci (needs the new rule)"
+  },
+  "exp83g_k2cap24fc2_secn2a_ci": {
+   "what": "exp80a + n2a + coordinject",
+   "cmd": "python tools/build_probe_kernel.py exp83g_k2cap24fc2_secn2a_ci $B $KB $C24 $N2 $CI --note \"r21: exp80a + n2a + coordinject\"",
+   "nb_sha256_prefix": "00f8cb366726663c",
+   "ledger_family": "safetail_ci (needs the new rule)"
+  },
+  "exp84a_k2_cap48_fc2": {
+   "what": "K2 + cap 48 + frame cap 2 (W3 only after two strict DIV steps)",
+   "cmd": "python tools/build_probe_kernel.py exp84a_k2_cap48_fc2 $B $KB $C48 --note \"r21: K2 + cap 48 + frame cap 2 (W3 only after two strict DIV steps)\"",
+   "nb_sha256_prefix": "4cb1e47bbd7840e5",
+   "ledger_family": "safetail"
+  }
+ },
+ "summary": "Files only: the scratch builds live in the session scratchpad; the repo, Kaggle and git are untouched.\nSTATE at 22:30Z 27 Sep. exp70g (0.956) holds our row: #165, 9th of 52 in the 0.956 block, unrounded ~0.95634. Probe 46 read 0.956 with no UP. The exp81 and exp80a dummies are COMPLETE on Kaggle; their gates are not logged yet.\nDELIVERED.\n(1) Exact, verified build commands for every stack the plan can call: exp82a-c (SEC on cap 8/12/24), exp83a-g (CI and SEC+CI stacks), exp84a (cap 48). The builder reproduces exp78a/78b/80a/79a/81 byte-identically.\n(2) A ledger trap: exp83* would get family 'safetail' instead of 'safetail_ci'. A one-line rule fixes it.\n(3) A dummy schedule. CI kernels queue 2-3.3 h, so pre-push exp83a (exp78b + CI) at ~00:55Z. SEC-on-holder dummies go lazily, and the FULL* dummy goes at ~17:45Z. The GPU quota is unread (estimate ~18-24 h used).\n(4) W2 table v4.\n- W2a = exp80a if exp78b is '+' and >= exp78a; otherwise the SEC file ON THE HOLDER (holder rule: only on the holder is the UP channel live).\n- W2b = holder + CI (exp83a/exp83b), or NEW exp83c (cap 6 + n2a + CI) when exp70g still holds and CI is '+' (v3 had a duplicate there).\n- There is no 28 Sep W3: the 5 daily slots are used.\n(5) Cap stop rules S1-S6: at most exp80a, plus exp84a only after two strict steps; no DIV file after 29 Sep 01:45Z.\n(6) 29 Sep table.\n- W3 (00:05-01:45Z), in order: E10 copy > FULL (lookup by holder) > '?' tests > one DIV step > the non-CI twin of a CI FULL.\n- W4 runs only if the user lifts the 02:00Z cap, and carries non-CI files only: the CI T_last (~07:30Z) comes before the W3 reads. The non-CI T_last is ~10:25Z.\n(7) Finals proposal: {V_pub, #37} always. MC P(bronze+)/P(silver+):\n- {#37,#38}: .51/.11 (.34-.67 / .03-.23);\n- {exp70g,#37}: .67/.38 (.55-.77 / .25-.48);\n- {exp78b,#37}: .69/.42 (.57-.79 / .21-.54);\n- {cap12+CI(+SEC),#37}: .69-.70/.44 (.58-.79 / .23-.55).\n- Pairing a stack with its own parent is dominated (-0.17..-0.34 bronze). The F1 choice moves P by <= 0.04; the partner choice moves it by 0.1-0.35.\nNothing reaches R8, and there is no new mechanism.",
+ "findings": [
+  {
+   "id": "r21w-1-verified-build-commands",
+   "kind": "new-fact",
+   "urgency": "now",
+   "what": "EXACT BUILD COMMANDS for every stack the W2/W3 table can call. Verified in a scratch copy of the repo (scratchpad/r21root = tools/ + the exp56/exp39 bases); the repo is untouched.\nVERIFICATION. With the env block below, the builder reproduces the already-built refs byte-identically (notebook and kernel-metadata): exp78a 8d8d9c28, exp78b d54d810c, exp80a da984964, exp79a 5f9b265d, exp81 6a62e321.\n- exp70g does NOT reproduce with this --set order (762c16.. vs repo 52c182..). It was built with the older K order (CAP=4, then an override). This is irrelevant because exp70g is already scored.\nDIFFS.\n- exp83a vs exp79a: only the DIVINS_CAP/FRAME_CAP lines and the header comment.\n- exp83c = exp79a + the secswap lines (cell 0 env, cell 3 sha line) = exp81 + the coordinject cell.\n- All new metadata: T4, internet off, biohub-ft-weights kept, plus the n2a and/or yuki0731/biohub-coord-inject sources.\nENV (git bash, repo root): export MSYS_NO_PATHCONV=1; B=\"--base x138 --patch divinsert --patch safetail --patch lowrefine\"; KB=\"--set DIVINS_ENABLE=1 --set DIVINS_STEAL=1 --set DIVINS_ALPHA=1 --set DIVINS_THRESH=0.4 --set DIVINS_DUMP=0 --set REPAIR_DEADLINE_S=34200 --set DIVINS_DEADLINE_S=28800 --set LOWREFINE_ENABLE=1\"; C6=\"--set DIVINS_CAP=6 --set DIVINS_FRAME_CAP=1\"; C8=\"--set DIVINS_CAP=8 --set DIVINS_FRAME_CAP=1\"; C12=\"--set DIVINS_CAP=12 --set DIVINS_FRAME_CAP=2\"; C24=\"--set DIVINS_CAP=24 --set DIVINS_FRAME_CAP=2\"; C48=\"--set DIVINS_CAP=48 --set DIVINS_FRAME_CAP=2\"; CI=\"--patch coordinject --set COORDINJECT_ENABLE=1 --set COORDINJECT_ALPHA=0.5\"; N2=\"--patch secswap --set SECONDARY_EXPECTED_SHA256=7029fe69efb2b4069609a4c621678e37dc903d3defb457795893f81c7f0cbd0e --set SECONDARY_ARTIFACT_MANIFEST=/kaggle/input/datasets/vitaliineibauer/biohub-secft-n2a-v1/ARTIFACT_MANIFEST.json --dataset vitaliineibauer/biohub-secft-n2a-v1\"\nBUILDS (notebook sha256 prefix as built at 22:45Z; rebuild and re-check right before each push, because the builder keeps changing):\n- exp82a_k2cap8_secn2a = exp78a (cap 8) + n2a secondary: python tools/build_probe_kernel.py exp82a_k2cap8_secn2a $B $KB $C8 $N2 --note \"r21: exp78a (cap 8) + n2a secondary\"  -> nb sha256 ffc00631194affcc... (ledger family safetail)\n- exp82b_k2cap12fc2_secn2a = exp78b (cap 12 fc2) + n2a: python tools/build_probe_kernel.py exp82b_k2cap12fc2_secn2a $B $KB $C12 $N2 --note \"r21: exp78b (cap 12 fc2) + n2a\"  -> nb sha256 7cd1e3ed4a706cbb... (ledger family safetail)\n- exp82c_k2cap24fc2_secn2a = exp80a (cap 24 fc2) + n2a: python tools/build_probe_kernel.py exp82c_k2cap24fc2_secn2a $B $KB $C24 $N2 --note \"r21: exp80a (cap 24 fc2) + n2a\"  -> nb sha256 ee4312442a4f3ab8... (ledger family safetail)\n- exp83a_k2cap12fc2_ci = exp78b + coordinject a0.5: python tools/build_probe_kernel.py exp83a_k2cap12fc2_ci $B $KB $C12 $CI --note \"r21: exp78b + coordinject a0.5\"  -> nb sha256 80a0856fcae31bae... (ledger family safetail_ci (needs the new rule))\n- exp83b_k2cap8_ci = exp78a + coordinject: python tools/build_probe_kernel.py exp83b_k2cap8_ci $B $KB $C8 $CI --note \"r21: exp78a + coordinject\"  -> nb sha256 d9b0834d43f64d98... (ledger family safetail_ci (needs the new rule))\n- exp83c_k2cap6_secn2a_ci = exp81 (cap 6 + n2a) + coordinject = exp79a + n2a: python tools/build_probe_kernel.py exp83c_k2cap6_secn2a_ci $B $KB $C6 $N2 $CI --note \"r21: exp81 (cap 6 + n2a) + coordinject = exp79a + n2a\"  -> nb sha256 e8f5a8a621222f77... (ledger family safetail_ci (needs the new rule))\n- exp83d_k2cap12fc2_secn2a_ci = exp78b + n2a + coordinject: python tools/build_probe_kernel.py exp83d_k2cap12fc2_secn2a_ci $B $KB $C12 $N2 $CI --note \"r21: exp78b + n2a + coordinject\"  -> nb sha256 22ccc1dd89c948e3... (ledger family safetail_ci (needs the new rule))\n- exp83e_k2cap8_secn2a_ci = exp78a + n2a + coordinject: python tools/build_probe_kernel.py exp83e_k2cap8_secn2a_ci $B $KB $C8 $N2 $CI --note \"r21: exp78a + n2a + coordinject\"  -> nb sha256 a016cf0f733e53bc... (ledger family safetail_ci (needs the new rule))\n- exp83f_k2cap24fc2_ci = exp80a + coordinject: python tools/build_probe_kernel.py exp83f_k2cap24fc2_ci $B $KB $C24 $CI --note \"r21: exp80a + coordinject\"  -> nb sha256 c8a2fccba8d60596... (ledger family safetail_ci (needs the new rule))\n- exp83g_k2cap24fc2_secn2a_ci = exp80a + n2a + coordinject: python tools/build_probe_kernel.py exp83g_k2cap24fc2_secn2a_ci $B $KB $C24 $N2 $CI --note \"r21: exp80a + n2a + coordinject\"  -> nb sha256 00f8cb366726663c... (ledger family safetail_ci (needs the new rule))\n- exp84a_k2_cap48_fc2 = K2 + cap 48 + frame cap 2 (W3 only after two strict DIV steps): python tools/build_probe_kernel.py exp84a_k2_cap48_fc2 $B $KB $C48 --note \"r21: K2 + cap 48 + frame cap 2 (W3 only after two strict DIV steps)\"  -> nb sha256 4cb1e47bbd7840e5... (ledger family safetail)\nNAME MAP BY HOLDER (used by the tables in r21w-5/7):\n- SEC on holder: exp81 (cap 6) / exp82a (cap 8) / exp82b (cap 12) / exp82c (cap 24).\n- CI on holder: exp79a / exp83b / exp83a / exp83f.\n- SEC+CI on holder: exp83c / exp83e / exp83d / exp83g.",
+   "evidence": "Scratch builds 22:40-22:50Z (research/wf_ideas_v4/round21/scan_hyp_w2_w4_plan.notes.md); experiments/exp7*/exp8*/probe.json change dicts; experiments/exp81_k2cap6_secn2a/probe.json (n2a sha 7029fe69..., dataset vitaliineibauer/biohub-secft-n2a-v1); round18/scan_hyp_slots_28sep.json build_env_git_bash (older K order).",
+   "action": "Main session: when a table row calls one of these builds, run the command from the repo root, compare the sha prefix, then push the dummy (never --push for a submit). Log 'build <name> sha <prefix> = r21 scratch' in CONTEXT."
+  },
+  {
+   "id": "r21w-2-ledger-rule-exp83",
+   "kind": "plan-issue",
+   "urgency": "now",
+   "what": "LEDGER FAMILY TRAP for the new CI stacks. tools/runtime_ledger.py EXP_RULES matches exp79a exactly and maps 'exp8\\d[a-z]*' to safetail. So any CI stack named exp83* (or exp8x in general) would print family 'safetail'.\n- It would then be admitted only under the safetail L bounds, with its insertion gate read on L_hi > 8.0 h.\n- A normal CI latency of ~9.7-10.5 h would code every CI stack 'v' or reject it.\n- The finals card could then drop an eligible file.\nFIX: add (r\"exp83[a-z]*\", \"safetail_ci\") ABOVE the exp8\\d rule, plus test lines: exp83a/exp83c/exp83d -> safetail_ci; exp82a/exp82b/exp84a -> safetail.\nAlternative until the rule lands: pass --family <ref>=safetail_ci for each CI stack (precedent: R18 card (3)).",
+   "evidence": "tools/runtime_ledger.py l.70-84 (EXP_RULES; exp79a exact at l.79, exp8\\d at l.81); CONTEXT 27 Sep 21:06Z LEDGER + BUILD (R20-A4) and READ TABLE v2 (3) (safetail_ci admits L_hi <= 10.75 h, gate on L_hi - 2.2 h).",
+   "action": "Main session: add the one-line rule and its test (tests/test_runtime_ledger.py) before the first exp83* dummy push. This is covered by the R20-A4 approval class (tooling)."
+  },
+  {
+   "id": "r21w-3-dummy-schedule-gpu",
+   "kind": "plan-issue",
+   "urgency": "now",
+   "what": "DUMMY SCHEDULE, so that every table row has a PASSED dummy in time. CI kernels queue 2-3.3 h on Kaggle (exp75 13:18Z -> ~16:40Z; exp76a 16:33Z -> ~19:00Z). secFT and DIV kernels start at once and run ~21-31 min.\n(a) W2b (12:00Z). Its CI stack must PASS by ~11:45Z, so it must be pushed by ~07:30Z at the latest. But its base is known only at ~08:40Z. So PRE-PUSH SPECULATIVELY right after the W1 submits (~00:55Z), in this order:\n- exp83a (exp78b + CI). P(this base) ~0.45-0.6 (r20 MC: P(exp78b >= 0.957) = 0.60).\n- Only if the quota allows: exp83c (cap 6 + n2a + CI), used by the W2b row 'base exp70g, CI +'.\n- Third: exp83b (exp78a + CI). P(this base) ~0.15-0.2.\n(b) SEC-on-holder files (r21w-4) are pushed LAZILY, with no speculative GPU: exp82b right after the exp78b read (~07:50Z -> PASS ~08:20Z); exp82a right after the exp78a read (~08:40Z -> PASS ~09:10Z).\n(c) W3 CI full stacks (29 Sep 00:05Z) must be pushed by ~19:00Z 28 Sep, i.e. before the W2b read. At the W2a read (~16:15-17:45Z), push the dummy of FULL* = holder + every lever not coded '-' (the superset). A non-CI subset (SEC-only stack) can be dummied as late as ~23:00Z.\n(d) exp84a (cap 48 fc2) gets a dummy only if exp80a reads strictly above exp78b (~16:15-17:45Z). No queue, ~23 min.\nGPU COST AND QUOTA.\n- Each dummy costs ~0.35-0.55 h; the worst case is ~3 h over 28 Sep (exp83a, exp83c, exp83b, exp82a/b, FULL*, exp84a).\n- The quota is unread since 26 Sep 21:56Z (7:55/30 h then). Use since then is estimated at ~11.6 h (exp71 2.1 h + exp77 ~2.3 h + ~16 dummies x ~0.45 h), so ~19.5 h used (range 18-24 h) and ~6-12 h left.\n- Priority when short: exp83a > FULL* > exp82b > exp83c > exp82a > exp83b > exp84a.\n- Above 26 h used: only exp83a and FULL*.",
+   "evidence": "CONTEXT 27 Sep 18:50Z R19-A1 (4) (CI queue ~3.3 h), 17:21Z (exp75 CI stage 443 s), 21:26Z (exp79a dummy ~1,712 s), 16:33Z (exp76d ~1,402 s), 21:06Z (exp79d ~1,305 s); round20 report.json R20-A7 (quota rule; last reading 7:55/30 h); `kaggle kernels status` at 22:40Z: exp81 COMPLETE, exp80a COMPLETE (gates not logged yet).",
+   "action": "Main session tonight: log the exp81 and exp80a dummy gates. Read the quota (browser agent) before the ~00:55Z speculative push, then push exp83a first. No submit implication."
+  },
+  {
+   "id": "r21w-4-holder-rule-sec",
+   "kind": "new-hypothesis",
+   "urgency": "today",
+   "what": "HOLDER RULE (a plan amendment, no new mechanism): put the one SEC file of W2 on the file that HOLDS our row at W2a time, not on exp70g.\nMECHANISM. Our LB row shows only the max over our files.\n- On a non-holder, a lever can read '+' only through a display step (>= the next 0.001 edge). The '0.956 with UP' channel is dead, and v3 codes that case '?'.\n- On the holder, '+' needs only an unrounded gain > ~2e-5 (the gap to the next team in a 52-team block).\nARITHMETIC.\n- Holder margin today: exp70g is 9th of 52 in the 0.956 block at 22:30Z, so its unrounded score is ~0.9565 - 8.5/52 x 1e-3 ~ 0.95634 (uniform in-block density, round-18 method). That is ~1.6e-4 below the 0.957 edge.\n- If exp78b becomes holder at 0.957, exp81 (SEC on exp70g) needs +6.6e-4 or more to show 0.957 and can never show an UP. On exp78b (exp82b), any gain > ~2e-5 shows.\n- For SEC's plausible public effect N(0, ~8e-4), this raises P(detect a real gain) from ~0.20 to ~0.45.\n- The on-holder file is also already the stacked candidate, which saves one step on 29 Sep.\nRULE.\n- W2a SEC file = exp81 if exp70g holds the row, exp82a if exp78a holds it.\n- If exp78b holds it: exp82b, which goes to W2b because W2a is exp80a in that row.\n- Code it against its own base display (v3 (1)).\n- Its dummy gates follow the N2 pre-registration: SHA256 line 7029fe69, nodes within -2%/+1% of 121,252, 0 errors, <= 1,920 s.\nPRE-REGISTRATION CONDITION. The N2 pre-registration (21:06Z) fixes exp70g as the base. This amendment is valid only if it is logged in CONTEXT before exp78b's terminal header (earliest ~07:30Z 28 Sep), quoting that header with exp78b PENDING. Otherwise v3 stands unchanged.\nCOST. ~0.4 GPU-h per lazy dummy. Hidden-run runtime cost is ~0: secswap only swaps weights (dummy 1,305-1,402 s vs ~1,300-1,500 s for K2-like files).",
+   "evidence": "experiments/e10_watch/20260927T2230Z.txt l.996 (rank 165, 9th of 52 in 0.956, ranks 157-208); CONTEXT 27 Sep 21:05Z v3 (1) (0.956 no-UP -> '0' only if exp70g holds, else '?'), 21:06Z N2 pre-registration; round18 scan_hyp_slots_28sep.json summary ('6th of 113 -> ~5e-5 below the edge' method); exp70q probe 46 0.956 with 0 passed (22:27Z).",
+   "action": "Main session: decide before ~07:00Z 28 Sep. If adopted, log one CONTEXT line quoting the last poll header with exp78b PENDING; otherwise nothing."
+  },
+  {
+   "id": "r21w-5-w2-decision-table",
+   "kind": "plan-issue",
+   "urgency": "today",
+   "what": "W2 DECISION TABLE v4 (28 Sep). It amends v3 (3)/(4) only where marked NEW.\nINPUTS.\n- D12 = code of exp78b, read ~07:30-07:55Z.\n- D8 = code of exp78a, read ~08:15-08:40Z.\n- CI = code of exp79a, read ~09:40-10:40Z; '?' if not terminal by 12:00Z.\n- HOLDER = the strictly highest display among COMPLETE cap-family files; ties go to the attributable UP, else to the smaller dose (v3 (5)).\nW2a (08:45-10:00Z). Unchanged from v3 except the SEC base (r21w-4):\n- exp80a (K2 + cap 24 fc2) if D12 is '+' AND disp(exp78b) >= disp(exp78a) AND the exp80a dummy PASS is logged.\n- Otherwise the SEC file on the holder: exp81 (holder exp70g) or exp82a (holder exp78a). Default without r21w-4: exp81.\nW2b (12:00Z). An E10 v3 copy always takes it first. Otherwise:\n- holder exp78b, CI in {+, ?} -> exp83a (exp78b + CI).\n- holder exp78b, CI '-' -> SEC on the holder, exp82b (default exp81).\n- holder exp78a, CI in {+, ?} -> exp83b (exp78a + CI) if its dummy PASSED. Otherwise exp79a is already the CI read -> filler.\n- holder exp70g, CI '+' -> NEW: exp83c (cap 6 + n2a + CI). v3's 'best base + CI' is exp79a itself (already scored, a duplicate), so this row had no file. exp83c is the one-step-ahead full stack, read ~22:00-22:45Z, before W3.\n- holder exp70g, CI in {0, -, ?} -> exp76e filler (v3 (2) allows it only when the slot would otherwise stay empty), or leave the slot empty. Do not stack an unread SEC with a failed CI.\n- Any row: if the chosen CI stack's dummy has not PASSED by 11:45Z -> the row's non-CI alternative (SEC on the holder), else empty.\nEXPECTED DISPLAYS (model, r20 MC + judgment):\n- exp80a given D12 '+': >= 0.957 with P ~0.6; strictly above exp78b with P ~0.35.\n- CI on the holder: '+' with P ~0.45-0.55 (central +1e-3 public; margin ~0-1.6e-4).\n- SEC on the holder: '+' with P ~0.35-0.45 (weight swaps 0/5 on our LB; distilled change 0.3-2.7% rel L2).\nNO W3 ON 28 SEP. W1 (3) + W2a + W2b use the 5 daily slots. v2 (6)'s 'W3 = 28 Sep leftover slot' exists only after an ERROR: one unchanged resubmit of an ERRORed single, if its latency was < 10 h.",
+   "evidence": "CONTEXT 27 Sep 21:05Z READ TABLE v3 (2)-(6); 18:50Z v2 (5)-(7); round20 scan_hyp_insertion_direction.json summary (P(>=0.957) cap8 0.40, exp78b 0.60, exp80a 0.645; P(<=0.955) ~0.27-0.29); CONTEXT 12:49Z (CI skeptic central ~+0.001 public), 13:27Z (exp71 rel L2 0.3-2.7%); expected completions from K2 L (7.36,7.54] h, exp70g (7.49,7.67] h, exp70q (7.64,7.81] h, CI ~9.6-10.5 h.",
+   "action": "Main session: log this as 'W2 TABLE v4 (round 21)' before exp78b's terminal header (~07:30Z), quoting the header. Only the NEW rows change v3."
+  },
+  {
+   "id": "r21w-6-cap-stop-rules",
+   "kind": "plan-issue",
+   "urgency": "today",
+   "what": "WHEN TO STOP THE CAP DIRECTION. This consolidates v3 (6) and (8) and loosens nothing.\nS1. exp78a and exp78b both '-' or '0' -> DIV volume is closed. The holder stays exp70g; exp80a never goes; no DIV file in W3/W4.\nS2. exp78a '+' and exp78b not '+' -> stop at cap 8. No cap 10/16 interpolation, no fc2 on cap 8.\nS3. exp78b '+' -> exp80a goes in W2a.\n- If exp80a reads strictly above exp78b (by display, or equal with an attributable UP), ONE more step is allowed in W3: exp84a (cap 48 fc2, sha 4cb1e47b). It is allowed only because it is then the second strict step (exp70g < exp78b < exp80a).\n- If exp80a <= exp78b -> stop at cap 12.\nS4. A '?' DIV read (MASKED, BLIND, 'v', ERR) is never a strict step. It can hold the base by display, but it never licenses the next dose.\nS5. Any DIV step that reads '-' ends the direction. No step back to an intermediate dose.\nS6. Hard end: no DIV-only file after W3 (29 Sep 01:45Z), and at most 4 DIV-volume files in total from now (exp78a, exp78b, exp80a, exp84a).\nWHY STOP THERE.\n- Each extra dose draws lower-scored DaughterNet candidates (median 0.505 at the cap-6 margin vs 0.587 for cap 4).\n- The lab from cap 12 upward is in-sample, and its CI90 includes 0.\n- The display is a single-embryo read of ~1-4 evaluable events. So each further step has P(<= base - 0.001) ~0.27-0.30, while its private mean falls.\n- MC (r21) for C12 - C, the cap-12 step over cap 6 on private: mean -3e-4, sd 4e-3, P(>0) ~0.39. In the lab-like world: -2.2e-3, P(>0) 0.17.",
+   "evidence": "round20 scan_hyp_private_view.json r20pv-1/6; scan_hyp_insertion_direction.json R20ID-1/5/6; CONTEXT 21:05Z v3 (6)/(8); scratchpad r21/mc21.py (notes file, 22:45Z); exp84a scratch build sha 4cb1e47b.",
+   "action": "Main session: log S1-S6 in the same line as the W2 table v4, before the first W1 terminal header."
+  },
+  {
+   "id": "r21w-7-w3-w4-table",
+   "kind": "plan-issue",
+   "urgency": "today",
+   "what": "29 SEP TABLE.\n- W3 = 29 Sep 00:05-01:45Z, always allowed.\n- W4 = 29 Sep ~07:30-10:25Z, ONLY if the user lifts the 02:00Z cap (R20-A12 asks).\n- This renames v2/v3's 'W4' (00:05-01:45Z) to W3, because the 28 Sep W3 slot does not exist (r21w-5).\nLEVER STATE at ~23:30Z 28 Sep: DIV per S1-S6. CI and SEC per their latest on-holder read: '+', '?' or '-' ('0' counts as '-').\nW3 FILES, in this order, each with a PASSED dummy by 00:00Z:\n0. An E10 v3 copy, if triggered (always first).\n1. FULL = the holder + every '+' lever it lacks. A FULL that is already scored is not resubmitted. Lookup, holder -> +CI / +SEC / +both:\n   - exp70g -> exp79a / exp81 / exp83c\n   - exp78a -> exp83b / exp82a / exp83e\n   - exp78b -> exp83a / exp82b / exp83d\n   - exp80a -> exp83f / exp82c / exp83g\n2. For each '?' lever: the holder + that lever (one file per lever), unless already scored on this holder.\n3. One DIV step, only under S3 (exp84a).\n4. If FULL contains CI: its non-CI twin (holder + SEC, or the holder alone), unless already scored. Reason: a CI file becomes a finals candidate only after the user re-ticks with the caveat, so the non-CI twin is the proposable version.\nSLOTS.\n- Cap NOT lifted: W3 takes up to 5 of the above (usually 2-4).\n- Cap lifted: W3 takes at most 3, keeping 2 for W4. W3 reads land ~07:30-08:00Z (non-CI) and ~09:45-10:45Z (CI).\nW4 (cap lifted only): non-CI files only.\n- The CI T_last = 18:30Z - (10.75 + 0.25) h ~ 07:30Z comes before any W3 read, so W4 NEVER carries CI.\n- The non-CI T_last = 18:30Z - (L_ref + 0.25 h) ~ 10:25Z (L_ref ~7.8 h).\n- Allowed: the non-CI twin of a W3 FULL that read '+'; one DIV step, only if W3's exp84a read strictly above its base; an E10 copy.\n- Never: knob rungs, thr changes, N1, a fresh N2 recipe, tau, DC.\nNON-ADDITIVITY. A stack that reads '0' or '-' while its components were '+' stops that pair (v2 (6)), and the holder stays the best single.\nEXPECTED OUTCOME (judgment from the per-lever P above): P(some file displays >= 0.957 by the 29 Sep ~19:00Z FINALS READ) ~0.65-0.8; P(>= 0.958) ~0.25-0.35.",
+   "evidence": "CONTEXT 27 Sep 18:50Z READ TABLE v2 (5)-(7) (T_last formula, 01:45Z default), 21:05Z v3 (8) (W4 allowed list); r21w-1 lookup names and shas; ledger L for 45/46: (7.49,7.67] and (7.64,7.81] h.",
+   "action": "Main session: log this with the W2 table v4. At ~17:45Z 28 Sep, push the FULL* dummy (r21w-3 (c))."
+  },
+  {
+   "id": "r21w-8-finals-proposal-29sep",
+   "kind": "new-hypothesis",
+   "urgency": "today",
+   "what": "FINALS PROPOSAL for the user's pick at the 29 Sep 12:00Z / 18:00Z checks. The session never re-ticks. FINALS READ ~19:00Z.\nF1, PUBLIC-AIMED = V_pub, the best display among COMPLETE files by ~19:00Z. Show two lines:\n- (i) the best display overall;\n- (ii) the best display that can be proposed without a new yes: cap-family, non-CI, non-SEC (card (2), v2 (9)). SEC needs a Q3 yes; CI needs a re-tick after the CI caveat.\n- If (i) and (ii) differ, the user chooses.\n- Ties: attributable UP, then non-CI, then fewer levers, then the earlier submit.\nF2, PRIVATE ANCHOR = #37 56563521 (K2, cap 4), always. Never the best insertion file's own parent (exp70g/exp78b), and never #38 with a cap file.\nMODEL RANGES, P(bronze+)/P(silver+). Source: the r21 MC = the r20 MC + cap-12, CI and SEC terms; judgmental inputs; 7 scenarios; seeds 7/11 agree within +-0.01.\n- {#37,#38} (ticked now): .51/.11, range .34-.67 / .03-.23.\n- {exp70g,#37}: .67/.38, range .55-.77 / .25-.48.\n- {exp78b,#37}: .69/.42, range .57-.79 / .21-.54.\n- {cap12+CI,#37}: .70/.44, range .58-.79 / .23-.55.\n- {cap12+SEC+CI,#37}: .69/.44, range .58-.79 / .23-.55. With CI and SEC private means at -5e-4: .66/.37.\n- {cap6+CI,#37}: .70/.42, range .59-.79 / .29-.52.\n- Dominated pairs: {cap12+CI, exp78b} .50/.41 (.24-.63 / .16-.54); {cap6+CI, exp70g} .61/.43.\nREADING. The partner choice is worth 0.1-0.35 in bronze. The F1 choice among cap-family stacks is worth <= ~0.04, which is inside model error. So the proposal is always {V_pub, #37}; which file is V_pub is a public-rank question.\nRussian text for the user (fill in the brackets): 'Предлагаю на финал два файла. Первый — [V_pub, дисплей 0.95x, что внутри]: лучший на паблике. Второй — #37 (K2, cap 4): он страхует всё, что мы добавили после 26.09 (cap, CI, вторичку), на случай если на других эмбрионах это не сработает. По модели у {V_pub, #37} бронза ~0.6-0.8 и серебро ~0.2-0.55. У пары, отмеченной сейчас (#37 + #38), ~0.35-0.65 и ~0.03-0.23. Пару «лучший файл + его же родитель с cap» не берём: в ней нет страховки против cap, и бронза падает примерно на 0.2. [Если в V_pub есть CI или вторичка:] Оговорка: [CI — сдвиг координат после CSV, рефайнер проверяли в лабе только in-sample / вторичка дообучена, а свопы весов у нас на LB были 0 из 5]. Отмечать ли его вместо чистого cap-файла [имя, дисплей], решаешь ты.'",
+   "evidence": "scratchpad r21/mc21.py runs 22:45-23:00Z (numbers in the notes file); round20 scan_hyp_private_view.json r20pv-2/3 (P1 .67/.38 and A .53/.12 reproduced within .02); CONTEXT 21:05Z v3 finals rules, 18:50Z v2 (9) caveats, 19:10:58Z user picks on 29 Sep; LB 22:30Z: 3,959 teams (bronze ~#396-400, silver ~#198-200), 0.956 block ranks 157-208.",
+   "action": "Main session: attach this to the R20-A9 finals card lines. Send the Russian message at the 29 Sep 12:00Z check (after the W3 non-CI reads) and refresh it at 18:00Z. Quote ranges, never point values."
+  },
+  {
+   "id": "r21w-9-block-position-margins",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "SUB-DISPLAY READS. Information for coding, not a new rule.\n- exp70g (the holder) is 9th of 52 in the 0.956 block at 22:30Z. Its unrounded score is therefore ~0.95634, ~1.6e-4 below the 0.957 edge. This assumes uniform in-block density; the round-18 method put exp70b ~5e-5 below its edge at 6th of 113.\n- exp70q (probe 46: cap 6 + thr 0.3 + forkmid) = 0.956 with 0 passed. So thr 0.3 + forkmid on cap 6 is in (-8.4e-4, 0] on the public embryo, which agrees with I-310 and the thr-rung ban.\n- Practical meaning: a lever on exp70g needs only >= +1.6e-4 to display 0.957, so reaching 0.957 on the exp70g base is ~a 50/50 outcome even for a small real gain. Do not read a 0.957 as '+1e-3'.\n- Drift: new teams entering the block above us change our position, not our value. Re-estimate from the S0 snapshot of each read.",
+   "evidence": "experiments/e10_watch/20260927T2230Z.txt (histogram, our row); CONTEXT 22:27Z probe 46 read; round18 scan_hyp_slots_28sep.json summary.",
+   "action": "Optional: log the margin next to each read's k. No decision depends on it alone."
+  },
+  {
+   "id": "r21w-10-nothing-reaches-r8",
+   "kind": "plan-issue",
+   "urgency": "info",
+   "what": "HONEST R8 STATEMENT. Nothing in this round is a new mechanism, and nothing reaches R8. Every file above is either an existing DIVINS_* value or a stack of already-approved levers:\n- CI: coordinject, E10-type public code;\n- SEC: n2a (user yes to N2 at 18:19:11Z);\n- DIV.\nThey run under the user's aggressive-mode directives (27 Sep 11:14Z/11:16Z) and the autonomous night (20:30Z).\nREJECTED in this focus:\n- cap 10/16 interpolation and fc2 on cap 8 (post-hoc knob ladders; S2);\n- two CI stacks in one W2 (CI queue and quota; one CI read is enough);\n- stacking an unread SEC with a failed CI (holder exp70g, CI '-');\n- the GPU1 fresh-from-parent N2 recipe (the N2 pre-registration says it is never submitted);\n- pairing the best stack with its own no-lever parent (MC: -0.17..-0.34 bronze);\n- thr/DC/tau rungs, N1, and forkmid beyond the exp76e filler.\nClosed families are not re-proposed: overlap consensus, K3b, forkblob, ANTIPAR, DNVETO, K4, gap, z-split, headroom, swapfix, stitch, leaf prune, float, edge filter, head retrain.",
+   "evidence": "research/KNOWLEDGE/IDEAS.md header (curation 20; round 20 closures); CONTEXT 27 Sep 12:12Z R8 record, 21:06Z N2 pre-registration.",
+   "action": "None."
+  }
+ ]
+}

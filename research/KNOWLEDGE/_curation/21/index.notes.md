@@ -1,0 +1,5 @@
+- 23:56Z start index curation 21; no 21/index.json; INDEX c20 read
+- 23:57Z anchors gathered (IDEAS/FACTS/DECISIONS/WATCHLIST, CONTEXT l.3222-3310, poll 23:55:50Z, e10 2343Z #167); writing INDEX.md
+- 23:58Z INDEX.md written (75 lines); folder paths verified; now CHANGES.md section 21
+- 23:59Z CHANGES.md section 21 appended; writing index.json
+- 23:59Z index.json written (10 alerts). DONE

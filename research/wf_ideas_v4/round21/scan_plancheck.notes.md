@@ -1,0 +1,17 @@
+# round21 scan_plancheck notes (started 2026-09-27 22:31Z)
+- 22:32Z date -u. scan_plancheck.json absent -> fresh run.
+- Round-20 records: R20-A2 (21:05Z line, header 20:55:15Z PENDING; 46 terminal 22:25:30Z -> pre-registered OK), R20-A4 ledger (EXP_RULES safetail_ci lines 77-81 of tools/runtime_ledger.py; 56611472 prints safetail), R20-A5/A6 (21:06/21:26 lines), R20-A8 (22:27Z line) LANDED.
+- NOT landed (grep CONTEXT.md): R20-A3 RESUME POINT (last = 26 Sep 22:46Z, l.2599), R8 COVERAGE, CORRECTION 18:56Z, MEMORY (still 'E10 port rule proposed'); R20-A7 GPU quota (last reading 07:55/30 h, l.2542); R20-A9 finals card lines; R20-A10 info lines; R20-A13 private-read addendum.
+- 46 read (22:27Z line): S0 = ladder_watch/20260927T185549Z, not 'newest count-47 download' (R20-A8 e.g. e10 2002Z/2143Z); harmless (scores only rise) but k not logged. e10_watch/20260927T2230Z.txt: rank 165, 0.956, count 48, position 9 of 52 in 0.956 block -> k = 8 (was 10 at 20:02Z). Histogram >=0.955: 294, >=0.960: 89.
+- E10: 2230Z snapshot, loop RUN 10 21:43Z 0 signals; top-4 public notebooks still 0.953; anhadmahajan06 re-running (22:04Z) INFO only.
+- Dummies in _dl: exp78b/78a/79a logs look right (SAFETAIL 34200/28800; exp79a COORDINJECT 4/4 0.915 moved max_um=3.0 alpha=0.5 deadline 37800).
+- NEW: table v3 (4) W2b rows resolve to 'exp79a when base is exp70g' (CI '+' row) and 'best base + CI' (CI '?' row) -> exp79a is already submitted in W1 at ~00:06Z -> duplicate; W2b undefined in the most likely branch (base stays exp70g).
+- NEW: ledger rule exp8\d[a-z]* -> safetail (9.5 h) catches any CI stack named exp82* (needs safetail_ci 10.75 h) -> would print UNPROVEN/REJECT + 'v' wrongly.
+- NEW: E10 loop runs to 29 Sep 12:00Z but last submit 01:45Z 29 Sep and W4 may use all 5 slots -> a trigger 02:00-12:00Z 29 Sep has no slot/permission.
+- 22:45Z exp79a metadata = exp70g + dataset yuki0731/biohub-coord-inject, same machine_shape NvidiaTeslaT4 / docker 37c64f7d. exp79a dummy: 404 at 20:33Z (round-20 judge), PASS logged 21:26Z, kernel ~1,712 s -> it did NOT sit 2-3.3 h in the queue (push time never logged).
+- R8: coordinject built 12:49Z 27 Sep (after the 12:00Z cutoff), never named by the user; exp75/76a never submitted -> exp79a at ~00:06Z is the FIRST CI submit; the R8 COVERAGE line (R20-A3 (e)) is still missing.
+- W4 (v2 (6)/v3 (8)): <= 5 files 00:05-01:45Z, but v2 (4) 'K2-like files >= 40 min apart' -> max 3 K2-like (00:05/00:45/01:25) in that window. E10 loop runs to 29 Sep 12:00Z, last submit 01:45Z -> a trigger 02:00-12:00Z has no slot.
+- N2 n2a proxy 0.998/1.010 vs pre-reg band ~0.99-1.01 (exp71 0.995-1.007): boundary, no explicit PASS word in the 21:26Z line.
+- Submit template CONTEXT l.565 uses -k <kernel> -v 1: W1 kernels must have exactly the dummy-gated version.
+- Latency drift K2-family L_hi: 7.54 (26 Sep) -> 7.58 -> 7.74 -> 7.67 -> 7.81 h (46).
+- 22:40Z final JSON written: scan_plancheck.json (10 findings PC21-01..10).

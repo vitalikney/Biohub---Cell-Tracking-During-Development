@@ -1180,3 +1180,34 @@ Curator logs: `research/KNOWLEDGE/_curation/4/`.
   - RESUME POINT [now] vs [today] -> [now].
   - N2 [today] vs [now] -> [now].
   - The W1 plan conflict is merged into the R20-A2 alert.
+
+## 21 - 2026-09-27 ~23:56 UTC (curation 21; git HEAD 4ac7126 = origin/main + untracked `research/wf_ideas_v4/round21/`, `experiments/ext_succskip/`, `experiments/e10_watch/20260927T2143Z..2343Z.txt`, `experiments/ds_secw_corwin_v1/weights/`)
+
+**Sources since curation 20:**
+- `CONTEXT.md` l.3222-3310, 5 entries: READ TABLE v3 codes + W1/W2 v3 21:05 (logged while 46 was PENDING); N2 PRE-REGISTRATION 21:06; LEDGER + BUILD 21:06; N2 DONE + GATES 21:26; PROBE 46 READ 22:27. `## 9. Literature` moved to l.3311.
+- Commits 9d0820c (round 20 + REPORT.md), 9e81f06, cc17974, 4ac7126 (`git log`).
+- Round 21: `research/wf_ideas_v4/round21/report.json` R21-A1..A13 (complete 23:43:24Z; no REPORT.md), 5 `scan_*.json`, 15 `v_*.json`. New probe.json: `experiments/exp80a_k2_cap24_fc2/`, `experiments/exp81_k2cap6_secn2a/`.
+- Polls and LB: `experiments/lb_poll/poll.log` to 23:55:50Z (P46 COMPLETE 0.956; no 28 Sep submit); `experiments/e10_watch/watch_loop.log` RUN 10-12 (0 signals); `experiments/e10_watch/20260927T2343Z.txt` l.307 (#167 of 3,960, count 48).
+
+**Ideas** (`IDEAS.md` CHANGES (21) l.109-117; `ideas.json` meta.curations[n=21], 50 records; `_curation/21/ideas.json`):
+- **New:** I-413 CI-RAN GATE; I-414 W2 TABLE v4 + DIV STOP RULES S1-S6; I-415 W4 AMEND 2 + E10 copy after 02:00Z 29 Sep; I-416 BASE-lookup stack builds (exp82*/exp83*, scratch only); I-417 holder rule for the SEC file (refuted); I-418 ERROR / dataset-freeze rules + NO-GO list; I-419 exp60 replay is DC-blind for pre-DC gate relaxations.
+- **Status changes:** I-361 (exp70q) in-plan -> lb-tested (P46 = 0.956, code 0); I-385 (N2) -> lab-tested (n2a 7029fe69, proxy 0.998/1.010); I-400 (cap 48) refuted -> in-plan (exp84a, only under S3); I-374 (exp76a) and I-402 (exp79d) -> refuted (superseded); I-084, I-190, I-051 stay closed after the round-21 rechecks. Logged since c20: I-403, I-381, I-392 (v3), I-383 (safetail_ci), I-398/I-401 (dummy PASS), I-399/I-396 (exp80a/exp81 built).
+- **Counts c20 -> c21:** 412 -> 419. lb-tested 54 -> 55, lab-tested 22 -> 24, in-plan 86 -> 88, refuted 204 -> 206, deferred 44, open 2. The strict orphan is still I-233; 16 at-risk orphans (I-324, I-413, I-414, I-415, I-406, I-383, I-257, ...).
+
+**Facts and decisions** (`FACTS.md`, `DECISIONS.md`, rows marked [c21]; `_curation/21/facts.json`):
+- **New facts:** F-LB-16 P46 read (l.232); F-RUN-35 CI hidden-run model + CI-RAN gate (l.272); F-MOD-40 dummy gate values for the W1/W2 files (l.340); F-TRN-53 round-21 rechecks (l.398).
+- **[c21] appends:** F-LB-01/02/03/10/15, F-RUN-03/11/31/34, F-RUL-05/12, F-MOD-37/39, F-TRN-52; C-26/118/159/163/164/165.
+- **Resolved contradictions:** C-161, C-162 (v3 logged pre-46), C-166 (exp79a pushed and PASSED).
+- **New contradictions C-167..C-174** (l.570-577): P46 stale S0; W2b duplicate (exp79a); CI queue premise; stack names; exp83 ledger family; GPU quota estimates; E10 after 02:00Z; N2 proxy band.
+- **DECISIONS.md:** P45/P46 rows (l.179-180); §1 [c21] 12-row build/plan table (l.375); §2 [c21] snapshot (l.620; V_pub = exp70g, exp70q not V_pub); §2f E10 (l.890); §2h rows (l.982-989); §3 R21 rows.
+
+**Watchlist** (`WATCHLIST.md`; `_curation/21/watch.json`):
+- **New:** W216-W223, T122-T128, I231-I248.
+- **Done:** W188 (ledger family), W204, W205, W206 (N2 pre-reg), W208 (exp79a push), W209 (v3), W211, W213 (46 read), T111, T112. **Moot:** T116, I229 (CI queue premise).
+- **Still overdue:** W185 RESUME POINT (6th round), W126 RESULTS rows P39-P46, W212 GPU quota.
+
+**Alerts** (`INDEX.md` TOP ALERTS, 10 after dedup):
+- **Resolved since curation 20:** R20-A2 v3 logged pre-46 (9d0820c; `CONTEXT.md` l.3222); R20-A6 N2 pre-registration logged before exp77 finished (l.3286); R20-A4 ledger family (l.3296); exp79a pushed + PASS (l.3304); 46 read (l.3307); round 20 committed with REPORT.md; round-20 alert 2 (CI queue) refuted (`FACTS.md` C-169).
+- **New:** R8 COVERAGE line before exp79a (R21-A1); W1 submit procedure (R21-A2); exp83 ledger rule + exp83a/b dummies (R21-A5/A6); R21-A3 CONTEXT write (PASS lines, CI-RAN GATE, 46 S0 addendum, ERROR rules, NO-GO); W2 TABLE v4 / W4 AMEND 2 / finals card before ~07:30Z (R21-A7..A9); E10 after 02:00Z question (R21-A10); scratch-only builds; latency-drift and sub-display reading caveats (R21-A12).
+- **Carried over:** RESUME POINT (R20-A3 -> R21-A4), GPU quota (R20-A7 -> R21-A11), E10 stale texts (R20-A10 (5) -> R21-A9 (v)), finals card (R20-A9 -> R21-A9), records (RESULTS, REPORT.md -> R21-A13).
+- **Curator disagreements settled here:** exp83 ledger rule [now] vs [today] -> [now]; finals card [today] vs [before-finals] -> [today]; RESULTS rows [info] vs [before-finals] -> [before-finals].

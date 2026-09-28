@@ -1,0 +1,85 @@
+{
+ "summary": "Round 21 plan check, 22:31-22:50Z 27 Sep; files only, no Kaggle calls, no e10_snapshot run. Landed from round 20: R20-A2 (table v3 at 21:05Z, while the 20:55:15Z header showed 46 PENDING; 46 turned terminal at 22:25:30Z, so it counts as pre-registered), R20-A4 (ledger safetail_ci), R20-A5/A6 (dummy passes, N2 pre-registration), R20-A8 (46 = 0.956, code 0, L (7.64, 7.81]) and the commits (no co-author trailer). NOT landed: R20-A3 (RESUME POINT, R8 COVERAGE, 18:56Z correction, MEMORY; 6th deferral), R20-A7 GPU quota, R20-A9 finals card, R20-A10, R20-A13. The W1 files' dummies check out in _dl (exp78b 95 forks, exp78a 86, exp79a CI 4/4 at 0.915 moved, max_um 3.0, alpha 0.5). Main problems: (1) exp79a at ~00:06Z would be the first post-R8 coordinject submit with no R8 coverage line; write it first or hold exp79a (CI slot open to 03:00Z). (2) The recovery card is still stale on an autonomous night. (3) Table v3 W2b resolves to the already-submitted exp79a in its most likely branch; amend the rows so the slot falls to W3. (4) exp8\\d maps to safetail, so CI stacks need exp82[cd] -> safetail_ci. The exp79a dummy did not queue, so reactive CI-stack dummies are plausible. (5) On 29 Sep, E10 has no slot after 01:45Z, and W4 cannot fit 5 files at 40-min spacing; hold 1 slot for E10 until 10:00Z and add the question to the morning message. E10: 0 signals; we are #165, k = 8. No closed family re-proposed; no new mechanism.",
+ "findings": [
+  {
+   "id": "PC21-01",
+   "kind": "plan-issue",
+   "what": "Rule gap before the first-ever coordinject submit. exp79a (~00:06Z) will be the FIRST CI file on the LB; exp75 and exp76a were never submitted. Coordinject was built at 12:49Z 27 Sep, after the R8 cutoff, and the user never named it. Round 20 ruled it covered by the 11:14Z/11:16Z aggressive-mode directives ON CONDITION that the R8 COVERAGE line (R20-A3 (e)) is logged first. That line is not in CONTEXT.md. Submitting exp79a without it leaves a post-R8 new mechanism on the LB with no deviation record.",
+   "evidence": "grep 'R8 COVERAGE' CONTEXT.md -> none; CONTEXT 12:49Z 'BIGGER LEVERS READY (coordinject ... yuki0731 CC0)'; 12:12Z R17-A1 deviation record names only exp71 and 45/exp70q/exp70r; round20/report.json R20-A3 (e) and R20-A11 ('CI is disclosed via the R8 coverage line').",
+   "action": "Before 00:05Z, append R20-A3 (e) verbatim: 'R8 COVERAGE: coordinject files (exp75/76a/79a and CI stacks) and secFT files (exp72/76d/79d, N2 = exp81) go under the 11:14Z/11:16Z aggressive-mode directive; SEC also has the Q2 yes, N2 the 18:19:11Z yes; the user never named coordinject; all are public-only and never finals without a user re-tick (Q3 open for SEC; CI caveat for CI); not a precedent.' Add one pre-submit check for exp79a: 'R8 coverage line present'. If it cannot be written before 00:06Z, submit exp78b and exp78a on time and hold exp79a until the line is written. The CI slot deadline is 03:00Z, so the hold costs nothing.",
+   "urgency": "now"
+  },
+  {
+   "id": "PC21-02",
+   "kind": "plan-issue",
+   "what": "The crash-recovery state is stale for the 6th round in a row (R16-A6, R17-A7, R18-A2, R19-A5, R20-A3). The user is asleep and the night is autonomous. A restarted session would read the RESUME POINT of 26 Sep 22:46Z and MEMORY ('E10 port rule proposed', 'Resume point ... 26 Sep post-score'). It would then miss E10 v3, letter (b), Q1/Q2, N2, aggressive mode, the 0.956, table v3, W1 at 00:05Z and the 46 read. The CORRECTION line for 18:56Z (S0 1743Z, 127 passed, exp70g class C) is also missing.",
+   "evidence": "CONTEXT.md RESUME POINT blocks at l.2006/2148/2205/2599 only (last 26 Sep 22:46Z); grep 'CORRECTION to the 18:56Z' -> none; MEMORY.md index lines as quoted in the session context.",
+   "action": "Write the R20-A3 (A) block now, updated to ~22:45Z. (b) BEST exp70g 0.956; 46 exp70q 0.956 code 0, L (7.64, 7.81]; our row #165, count 48, k = 8. (c) STATE: dummies PASS exp78a/78b/79a/79d/76a/76d/76e/72/75; RUNNING exp81 (N2 n2a) and exp80a. (g) W1 00:05Z exp78b, ~00:06Z exp79a (after PC21-01), 00:50Z exp78a; W2a 08:45-10:00Z; W2b 12:00Z (as amended by PC21-03). Then add the (B) correction line. Update MEMORY.md 'LB probe approval' / 'Resume point' to point at this block (main session only).",
+   "urgency": "now"
+  },
+  {
+   "id": "PC21-03",
+   "kind": "plan-issue",
+   "what": "Table v3 (4) W2b sends a duplicate or has no file in its most likely branch. Its CI rows resolve to 'exp79a when the base is exp70g' (CI '+') and 'the best base + CI' (last row, CI '?'). But exp79a is submitted in W1 at ~00:06Z, so with the base still exp70g (~50% prior: neither exp78a nor exp78b reads '+') both rows name an already scored file. The CI '?' row also applies if exp79a is not terminal by 12:00Z (v2 (3)). The 'pre-built exp78b + CI stack' in the '+' row does not exist: no experiments/exp8x CI folder, and R20-A5(e) was conditional on an unread GPU quota. The R18-A7 'no duplicate' check would block the submit, and the slot would then be undefined at 12:00Z.",
+   "evidence": "CONTEXT 21:05Z table v3 (2) CI slot = exp79a in W1; (4) W2b rows; 21:26Z entry 'W1 ... ~00:06Z exp79a'; ls experiments/ -> exp80a, exp81 only after exp79d; round20 R20-A5(e).",
+   "action": "Append before the first W1 terminal header (~07:30Z): 'W2b AMEND (round 21, PC21-03; pre-score). exp79a is scored in W1 and is never resubmitted. An E10 copy takes W2b first. Otherwise, in order: (i) CI + and BASE != exp70g: the BASE + CI stack, if its dummy PASSED; (ii) the SEC file, if W2a did not take it; (iii) exp80a, if its (3) condition holds and W2a did not take it; (iv) CI ? and BASE != exp70g: the BASE + CI stack, if its dummy PASSED; (v) else the slot moves to W3 (<= 23:30Z 28 Sep) for the best stack of + levers with a PASSED dummy (e.g. the SEC file + CI on exp70g if SEC and CI are both +), else it stays unused.' Holding it to W3 also lets the SEC read (~16:30Z) inform the stack.",
+   "urgency": "today"
+  },
+  {
+   "id": "PC21-04",
+   "kind": "plan-issue",
+   "what": "Ledger trap for the next CI stack name, plus a new fact on CI queueing. EXP_RULES maps exp8\\d[a-z]* to safetail (9.5 h). A stack such as exp78b + CI will naturally be named exp82*, so it would get the wrong family: 'UNPROVEN/REJECT' at L 9.6-10.5 h and a spurious 'v', where safetail_ci admits up to 10.75 h. New fact: the exp79a dummy did NOT wait 2-3.3 h in the queue. It was 404 at 20:33Z (round-20 judge) and PASS was logged at 21:26Z with kernel ~1,712 s. So a CI-stack dummy pushed after the exp78b read (~07:40Z) can plausibly pass before 12:00Z, but not reliably. The metadata equals exp70g's except for the dataset, with the same NvidiaTeslaT4 shape and docker 37c64f7d.",
+   "evidence": "tools/runtime_ledger.py l.77-81 (exp79a -> safetail_ci; exp8\\d[a-z]* -> safetail); experiments/exp79a_k2cap6_coordinject/kernel-metadata.json vs exp70g_k2_cap6; _dl/biohub-exp79a-k2cap6-coordinject log 'COORDINJECT SUMMARY videos=4/4 ... kernel elapsed 1691s'; CONTEXT 21:26Z (push time of exp79a never logged).",
+   "action": "(1) Now, with no Kaggle call: build exp82c = exp78b + coordinject (ALPHA 0.5, MAX_UM 3.0) and exp82d = exp78a + coordinject with the exp79a command on the exp78b/78a knobs. In the same edit, add (r\"exp82[cd][a-z]*\", \"safetail_ci\") BEFORE the exp8\\d rule, plus test cases. (2) Push the exp82c dummy as soon as a lane frees (after exp81/exp80a), only if the R20-A7 quota reading is <= ~24 h. Push exp82d only reactively, if exp78a reads '+' (~08:20Z). Gate: as exp79a, with nodes/edges/forks == the exp78b (95 forks) / exp78a (86 forks) dummy. (3) Log every CI push time, so the queue estimate stays honest.",
+   "urgency": "today"
+  },
+  {
+   "id": "PC21-05",
+   "kind": "plan-issue",
+   "what": "29 Sep window problem: E10 has no slot, and W4 cannot fit 5 spaced files. (a) The E10 v3 watch loop runs until 29 Sep 12:00Z, but the last submit is 01:45Z 29 Sep (v2 (7)) and W4 may use all 5 slots. A trigger between 02:00 and 12:00Z 29 Sep, the period when late public notebooks tend to appear, therefore has neither a slot nor a rule, even though the user's E10 v3 says 'as fast as possible'. (b) W4 allows <= 5 files in 00:05-01:45Z, but v2 (4) keeps K2-like files >= 40 min apart so the count-rule UP test stays separable. That leaves room for at most 3 K2-like files (00:05/00:45/01:25), plus CI files, which complete ~2 h later.",
+   "evidence": "CONTEXT 18:50Z v2 (4) spacing rule, (6) W4 '<= 5 files', (7) last submit 01:45Z; 21:05Z v3 (8) W4 AMEND; experiments/e10_watch/watch_loop.log START line 'every 60 min until 2026-09-29T12:00:00Z'; CONTEXT 11:08Z E10 v3.",
+   "action": "Pre-register now (no user needed for the W4 cap on our own files): 'W4 AMEND 2 (round 21): K2-like files at 00:05/00:45/01:25Z only, CI files at 00:06/00:46Z; at most 4 files; the 5th 29 Sep slot is held for an E10 (A) verbatim copy until 10:00Z 29 Sep (copy L ~7-7.8 h -> scored before ~18:00Z).' Add ONE line to the R20-A12 morning message: 'E10: if a public notebook above 0.956 appears after 02:00Z 29 Sep, should I submit its copy until 10:00Z? (default: yes, per your 11:08Z E10 instruction)'. Parse the answer per R16-A1 (5).",
+   "urgency": "today"
+  },
+  {
+   "id": "PC21-06",
+   "kind": "recheck-old",
+   "what": "The 46 read record deviates slightly from R20-A8 and is incomplete. S0 was ladder_watch/20260927T185549Z (#162), not 'the newest download with count 47' (e.g. e10_watch/20260927T2143Z). This is harmless, because other teams' best scores only rise: 0 passed stays 0, and the code '0' stands. But k was not logged, and v3 (1) requires it at every read. k is now 8: our row is #165, 9th of 52 in the 0.956 block at 22:30:57Z; it was 10 at 20:02Z. k shrinks as the block empties upward, and k = 0 would make every W1 cap-6-base read BLIND '?'.",
+   "evidence": "CONTEXT 22:27Z entry; experiments/e10_watch/20260927T2230Z.txt l.305 (165,16810638,D: Discipline,2026-09-27 14:36:59,0.956,48) and l.996 'position 9 of 52 in the 0.956 block (ranks 157-208)'.",
+   "action": "Append one info line: '46 read addendum: S0 per R20-A8 would be e10 2143Z (count 47); the 18:55Z S0 gives the same result (0 passed). k = 10 at 20:02Z, k = 8 at 22:30Z; W1 S0 = the newest count-48 download before each terminal header (log k).' At each W1 read, compute k at S0 from the download (block position - 1).",
+   "urgency": "today"
+  },
+  {
+   "id": "PC21-07",
+   "kind": "plan-issue",
+   "what": "R20-A7 (GPU quota reading) was due 'before pushing exp80a' but did not land, and exp80a and exp81 were pushed anyway. The last reading was 07:55/30 h at ~21:56Z 26 Sep. Since then: exp71 ~2.1 h, exp77 ~2.4 h (T4 x2), and ~14 dummies at ~0.4-0.55 h each. The estimate is ~19-25 h used, with the reset on 3 Oct. Every remaining dummy (exp82c/d, E10 verbatim dummy, W4 stacks) draws on the rest.",
+   "evidence": "grep 'GPU quota' CONTEXT.md -> last l.2542 (07:55 / 30 h); CONTEXT 21:26Z 'exp80a (cap 24 + fc2) dummy pushed'; round20/report.json R20-A7 thresholds.",
+   "action": "Browser agent: read the Kaggle Settings quota once (no CLI) and log 'GPU quota <used>/30 h at <time>'. Apply R20-A7: > 24 h -> no exp82c speculative dummy; > 26 h -> keep only E10 verbatim dummies + W4 full stack; always reserve >= 1 h for an E10 (A) dummy.",
+   "urgency": "today"
+  },
+  {
+   "id": "PC21-08",
+   "kind": "plan-issue",
+   "what": "Other round-20 records that did not land: R20-A9 (29 Sep finals card lines: V_pub winner's-curse tie rule, pair {V_pub, #37}, model ranges, caveats) was due before the first W1 terminal header (~07:30Z). R20-A10 (lab-null info lines, E10 v3 text >= 0.957 and SI with cap 6, curator) and R20-A13 (private-read addendum) are also missing. The E10 texts are still stale: e10_watch_loop.py l.28/l.78 says '>= 0.955', and the SI knobs in the e10v3 runbook say DIVINS_CAP=4.",
+   "evidence": "grep 'FINALS CARD LINES' / 'PRIVATE-READ addendum' / 'lab NULL' CONTEXT.md -> none; experiments/lb_poll/e10_watch_loop.py l.28, l.78; research/wf_ideas_v4/e10v3/runbook.notes.md l.206 'DIVINS_CAP=4'.",
+   "action": "Append the R20-A9 text verbatim before ~07:30Z. Add one E10 line: 'E10 v3 trigger = own public score > our best display (now >= 0.957); SI = the copy + our best-display insertion (cap 6, FRAME_CAP 1, thr 0.4)'; no loop code change. R20-A10/A13 at the next CONTEXT write.",
+   "urgency": "today"
+  },
+  {
+   "id": "PC21-09",
+   "kind": "plan-issue",
+   "what": "Readiness checks for W1 that are not written down. (a) The submit template pins '-k <kernel> -v 1'. Each W1 kernel (exp78b, exp79a, exp78a) must have exactly the dummy-gated version. exp79a was a 404 at 20:33Z and was pushed once afterwards, but its push time and version are not logged. (b) The N2 detection proxy 0.998/1.010 sits at the upper edge of the pre-registered band (~0.99-1.01; exp71 was 0.995-1.007), and the 21:26Z line gives no explicit PASS. (c) The description must start with the file's own exp token (the ledger takes the FIRST exp token). A text like 'CI on exp70g (exp79a)' would give family safetail instead of safetail_ci.",
+   "evidence": "CONTEXT l.565 submit template; CONTEXT 21:26Z N2 line; tools/runtime_ledger.py EXP_TOKEN/exp_token (first match); _dl/biohub-exp78b/78a/79a logs (SAFETAIL 34200/28800, COORDINJECT max_um=3.0 alpha=0.5 deadline 37800).",
+   "action": "At 00:03Z: `kaggle kernels status` for each W1 kernel. Submit with -v = the version whose output is in _dl (expected 1). Descriptions: 'probe 47: exp78b = K2 + insertion cap 12 + FRAME_CAP 2', 'probe 48: exp79a = exp70g + coordinject a0.5 3um', 'probe 49: exp78a = K2 + insertion cap 8'. Log 'N2 proxy gate PASS (1.010 <= 1.01, at the band edge)' before exp81 can take W2a; if the reader prefers the exp71 band (<= 1.007), exp79d is the SEC file.",
+   "urgency": "now"
+  },
+  {
+   "id": "PC21-10",
+   "kind": "new-fact",
+   "what": "E10 and LB state at 22:30:57Z: 0 signals, loop RUN 10 at 21:43Z. The top public notebooks by score are unchanged (raunakdey07 hfv3, amanatar max-score, kunaldesale, x138; none >= 0.954). anhadmahajan06/biohub-track-your-cells re-ran at 22:04Z (INFO only). LB: 3,959 teams; >= 0.955: 294, >= 0.960: 89, >= 0.970: 7; 0.956 block = 52 (ranks 157-208), 0.957 = 38. We are #165, 0.956, count 48, LSD 14:36:59. K2-family latency is drifting up: L_hi 7.54 (26 Sep) -> 7.58 -> 7.74 -> 7.67 -> 7.81 h (46). W1 cap rungs should expect ~7.6-8.0 h (S1 ~07:40-08:05Z for exp78b), and 'v' (L_hi > 8.0 h) becomes plausible without any code cause.",
+   "evidence": "experiments/e10_watch/20260927T2230Z.txt (histogram and DIFF sections), experiments/e10_watch/watch_loop.log; experiments/lb_poll/ledger.md rows 56563521..56611472.",
+   "action": "None beyond logging. Read W1 terminal headers from ~07:30Z. Do not code a cap-rung 'v' as a lever result; the card rules already cover it.",
+   "urgency": "info"
+  }
+ ]
+}

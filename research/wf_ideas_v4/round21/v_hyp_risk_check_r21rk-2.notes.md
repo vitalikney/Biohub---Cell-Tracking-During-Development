@@ -1,0 +1,20 @@
+# v_hyp_risk_check R21RK-2 notes (2026-09-27T23:27:31Z)
+- 23:28Z 27 Sep. Local clock is UTC+3 (file mtimes 00:05/00:25 = 21:05/21:25Z).
+- The notebook shas match CONTEXT and the git commits: exp81 6a62e321 (cc17974), exp80a da984964 (9e81f06), exp79d 5e0fdeac. git status shows these folders clean.
+- `kaggle kernels status` at 23:28Z: vitaliineibauer/biohub-exp81-k2cap6-secn2a COMPLETE and biohub-exp80a-k2-cap24-fc2 COMPLETE.
+- I re-parsed the pulled outputs in the shared scratchpad (biohub-exp81-k2cap6-secn2a/, biohub-exp80a-k2-cap24-fc2/):
+  - exp81: submission sha 8132ef2811d0; 121,085 nodes / 116,961 edges / 87 forks (out-degree >= 2); end at 1,249.8 s.
+    - 'Secondary artifact: /kaggle/input/datasets/vitaliineibauer/biohub-secft-n2a-v1', 'SHA256: 7029fe69...'.
+    - 0 hits for Traceback/FAILED/DEADLINE:/FALLING BACK/SKIPPED.
+    - Insertions 6/6/6/1 (cap 6).
+  - exp80a: submission sha a109ad024ace; 121,252 nodes / 117,105 edges / 116 forks; end at 1,387.5 s.
+    - The secondary is the pilkwang default (unchanged). 0 error markers.
+    - Insertions 24/21/8/0 (steals 12/3/3/0). The finding lists the same set in a different video order.
+- N2 gates (CONTEXT 21:06Z) all pass. The detection proxy 0.998/1.010 is at the upper edge of '~0.99-1.01'; exp71 itself was 0.995-1.007. This is marginal but inside the band.
+- R8/R9: the user said yes to N2 at 18:19:11Z (CONTEXT l.3070). The retraining deviation is disclosed. Q3 is still open, so SEC stays public-only.
+- `kaggle datasets files vitaliineibauer/biohub-secft-n2a-v1`: 3 files, created 21:25:39Z. `kaggle datasets status`: ready.
+- Feasibility caveat: secswap raises FileNotFoundError when no manifest matches the sha, so it is not fail-soft. An attachment failure would ERROR the file. K2 #37 already scored with an owner private dataset attached, so this risk is small.
+- Value caveats (they do not refute the logging finding):
+  - SEC weight swaps were 0/5 on the LB, and there is no held-out gate. The -0.14% node change will likely read '0'/'?'.
+  - exp80a's cap 24 is a public knob rung. The lab showed cap > 4 at 0 TP / 4 FP. It is gated by exp78b '+'.
+- 23:31Z final JSON written (refuted=false)

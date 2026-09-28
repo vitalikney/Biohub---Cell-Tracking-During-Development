@@ -1,0 +1,8 @@
+# v_hyp_risk_check R21RK-4 notes (2026-09-27T23:27:30Z)
+- 23:28Z 27 Sep: exp79a not yet submitted (W1 plan ~00:06Z). poll.log/ledger: exp70g 56606948 L (7.49,7.67]; exp70q 56611472 (7.64,7.81]; K2 #37 (7.36,7.54]; twin (6.69,6.87]. K2-like w/ insertion spread ~0.3 h.
+- experiments/exp79a_k2cap6_coordinject/exp79a-k2cap6-coordinject.ipynb cell 8 read: EARLY no-ops (~0 latency): FORCE_FAIL, knob range, SKIPPED (deadline) [only if kernel elapsed > 37,200 s -> L>10.3h -> already 'v'], SKIPPED (no GPU), dataset find/sha mismatch, fast per-video WORKER FAILED on every video -> 'no video was refined; submission.csv unchanged'.
+- LATE no-ops (full CI latency, CSV unchanged): coordinject_rewrite_csv exception (ValueError field count, assert column, MemoryError when loading ALL npz into `refined` + rows dict in main process) -> outer except 'COORDINJECT FAILED ... unchanged'; per-video failures late in each video (e.g. CUDA OOM after detector cache) -> 'no video was refined'. Latency rule cannot see these -> latency is NECESSARY not sufficient.
+- No-op CI + GPU nondeterminism could also give a spurious UP -> '+' (worse than a false '0': drives CI stacks in W2b/W4 and V_pub). Rule must gate every code, not just '0'.
+- CI lower bound check: t ~ 52 s + 0.00228 s/det (dummy); dummy dets 175k vs 121k nodes (x1.45). Hidden 3-4 M nodes, 100-130 videos -> ~2.0-2.9 h over 2 workers. Gap vs +1.2 h threshold ~0.8 h, vs noise ~0.3 h: OK.
+- Better base: same-batch sibling exp78b (submitted 00:05Z, 1 min earlier, knobs ~0 runtime) controls Kaggle-side slowdown/queue; fallback exp70g L_hi 7.67.
+- Not a mechanism (read rule) -> R8 n/a; must be logged before exp79a's first terminal header, ideally before the 00:06Z submit.

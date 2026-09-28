@@ -1,0 +1,81 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/INDEX.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/CHANGES.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/21/index.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/21/index.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "what": "R8 COVERAGE line (R21-A1) must be in CONTEXT before exp79a, the first CI file ever, is submitted at ~00:06Z 28 Sep. Coordinject postdates the R8 12:00 cutoff and the user never named it.",
+   "evidence": "research/wf_ideas_v4/round21/report.json R21-A1; research/KNOWLEDGE/DECISIONS.md §2h l.983; research/KNOWLEDGE/WATCHLIST.md W216",
+   "suggested_action": "Append the line now. If late, submit exp78b/exp78a on time and exp79a after the line, no later than 03:00Z.",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "W1 submits: 00:05Z exp78b (P47), ~00:06Z exp79a (P48), 00:50Z exp78a (P49). No 28 Sep submit is in poll.log at 23:55:50Z.",
+   "evidence": "CONTEXT.md l.3250-3257; experiments/lb_poll/poll.log l.18381; research/wf_ideas_v4/round21/report.json R21-A2",
+   "suggested_action": "Check COMPLETE and live code == local; submit -v 1 without re-push; descriptions start 'probe 47/48/49: ...'; one waiter per ref; ledger shows exp79a as safetail_ci.",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "tools/runtime_ledger.py maps exp83* (CI stacks, dummies ~00:55Z) to safetail via the exp8\\d rule, so a normal CI latency reads NO/'v'.",
+   "evidence": "tools/runtime_ledger.py l.77-81; research/KNOWLEDGE/FACTS.md C-171; research/wf_ideas_v4/round21/report.json R21-A5, R21-A6",
+   "suggested_action": "Add exp83[a-z]* -> safetail_ci above the exp8\\d rule with a test before the exp83a/exp83b dummies; until then pass --family.",
+   "urgency": "now"
+  },
+  {
+   "kind": "forgotten",
+   "what": "RESUME POINT, P45 correction (127 passed, exp70g class C) and MEMORY rewrite (R21-A4) deferred for the 6th round; the last block is 26 Sep 22:46Z.",
+   "evidence": "CONTEXT.md l.2599; research/KNOWLEDGE/FACTS.md C-26, C-159; research/wf_ideas_v4/round21/report.json R21-A4",
+   "suggested_action": "Write R21-A4 (A)-(C) at ~00:10-01:30Z, around the W1 submits.",
+   "urgency": "now"
+  },
+  {
+   "kind": "forgotten",
+   "what": "R21-A3 not in CONTEXT: exp81/exp80a dummy PASS lines, CI-RAN GATE (a fail-soft CI no-op would read as a false '0'), the P46 stale-S0 addendum, ERROR / dataset-freeze rules and the NO-GO list.",
+   "evidence": "research/wf_ideas_v4/round21/report.json R21-A3; research/KNOWLEDGE/FACTS.md F-RUN-35, C-167; CONTEXT.md l.3301-3310",
+   "suggested_action": "Make one CONTEXT write tonight; the CI-RAN GATE must land before exp79a's terminal header (~09:40Z).",
+   "urgency": "today"
+  },
+  {
+   "kind": "contradiction",
+   "what": "READ TABLE v3 W2b names the already-submitted exp79a when BASE = exp70g, and W4 cannot hold 5 K2-like files. W2 TABLE v4 + S1-S6, W4 AMEND 2 and the finals card (R21-A7..A9) are unlogged.",
+   "evidence": "CONTEXT.md l.3262-3267; research/KNOWLEDGE/FACTS.md C-168; research/wf_ideas_v4/round21/report.json R21-A7, R21-A8, R21-A9",
+   "suggested_action": "Log all three before exp78b's terminal header (~07:30Z), quoting the last poll.log header with exp78b PENDING.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "The E10 texts still say >= 0.955 and SI cap 4 (now >= 0.957, BASE cap 6), and the E10 loop runs to 29 Sep 12:00Z with no rule after 02:00Z.",
+   "evidence": "experiments/lb_poll/e10_watch_loop.py l.28, l.78; research/KNOWLEDGE/FACTS.md C-163, C-173; research/wf_ideas_v4/round21/report.json R21-A9 (v), R21-A10",
+   "suggested_action": "Log the R21-A9 (v) line; add the E10-after-02:00Z yes/no question to the 08:00-09:30Z morning message.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "GPU quota unread since 26 Sep (estimate ~19.5-21 h of 30 h); the exp82*/exp83*/exp84a builds exist only in the session scratchpad.",
+   "evidence": "research/wf_ideas_v4/round21/report.json R21-A11, R21-A6; research/KNOWLEDGE/FACTS.md C-172; research/wf_ideas_v4/round21/scan_hyp_w2_w4_plan.json r21w-1",
+   "suggested_action": "Read the quota before the ~08:40Z dummies; rebuild stacks from the r21w-1 env block and log nb + metadata sha.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "Records: round21/ is untracked with no REPORT.md; experiments/RESULTS.md ends at P38; round-20 leftovers R20-A10/A13 and LESSONS H1.",
+   "evidence": "research/wf_ideas_v4/round21/report.json R21-A13; research/KNOWLEDGE/FACTS.md C-118; research/KNOWLEDGE/WATCHLIST.md W223, W126",
+   "suggested_action": "Write REPORT.md from report_md_ru and commit by named paths as the user (no Co-Authored-By); add P39-P46 rows before the finals read.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "risk",
+   "what": "Reading caveats: K2 latency drift (L_hi 7.54 -> 7.81 h) can produce a cap-rung 'v' with no code cause; exp70g is ~0.95634, so a 0.957 needs only ~+1.6e-4; the finals MC says the partner choice dominates; the exp60 replay is DC-blind for pre-DC gate relaxations.",
+   "evidence": "research/wf_ideas_v4/round21/scan_hyp_w2_w4_plan.json r21w-9; research/wf_ideas_v4/round21/report.json R21-A12; research/KNOWLEDGE/WATCHLIST.md I239-I241; research/KNOWLEDGE/IDEAS.md I-419",
+   "suggested_action": "Do not code a latency 'v' as a lever result; log the sub-display margin with each read; headline the partner choice in the 29 Sep finals message.",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 21 index (state ~23:56Z 27 Sep; HEAD 4ac7126). INDEX.md rewritten (75 lines): STATE IN 10 LINES (finals #37+#38 ticked; best exp70g 0.956, P46 exp70q 0.956 code 0; LB #167/3,960 at 23:43Z; W1 00:05/00:06/00:50Z not yet submitted), WHERE THINGS ARE with c21 anchors, 8 TOP OPEN IDEAS (I-324/I-401, I-398/I-397, I-383/I-404/I-416, I-413, I-414, I-415, I-406, I-257/I-418), 10 deduplicated TOP ALERTS, RESOLVED and settled disagreements, HOW TO USE. CHANGES.md gained section '## 21' (sources, 7 new ideas I-413..I-419, status moves, counts 412->419, new facts F-LB-16/F-RUN-35/F-MOD-40/F-TRN-53, C-167..C-174, resolved C-161/162/166, watchlist W216-W223, resolved and new alerts). Most urgent: R8 COVERAGE line before exp79a (~00:06Z), W1 submits, exp83 ledger rule before ~00:55Z, RESUME POINT."
+}

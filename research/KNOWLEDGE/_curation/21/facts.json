@@ -1,0 +1,81 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/FACTS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/DECISIONS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/21/facts.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/21/facts.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "what": "exp79a (exp70g + coordinject) at ~00:06Z 28 Sep will be the first CI file ever on the LB, and no R8 COVERAGE line exists in CONTEXT. Coordinject was built after the 27 Sep 12:00 R8 cutoff and the user never named it. Round 20 (R20-A1/A11) made CI coverage conditional on this line.",
+   "evidence": "research/wf_ideas_v4/round21/report.json R21-A1, plan_issues (1); report.notes.md 23:37Z (grep 'R8 COVERAGE' -> none); DECISIONS §2h / §3 'R8 COVERAGE line (R21-A1)' [c21]; DECISIONS §3 R8 [c21]",
+   "suggested_action": "Append the R21-A1 line to CONTEXT before submitting exp79a. If it is not written by 00:06Z, submit exp78b and exp78a on time, write the line, then submit exp79a no later than 03:00Z",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "The W1 submits are due: ~00:05Z exp78b (P47), ~00:06Z exp79a (P48), 00:50Z exp78a (P49), each from its passed dummy as `-v 1` with no re-push. No 28 Sep submit appears at the 23:45:49Z poll.log header.",
+   "evidence": "CONTEXT 21:05 v3 (2) l.3250-3257, 21:26 l.3305-3306, 22:27 l.3310; experiments/lb_poll/poll.log header 23:45:49Z; research/wf_ideas_v4/round21/report.json R21-A2; DECISIONS §1 [c21] table",
+   "suggested_action": "Follow R21-A2: check status COMPLETE and live code == local code; descriptions start 'probe 47/48/49: ...'; after the submits, run the ledger and confirm exp79a prints family safetail_ci; set one waiter per ref",
+   "urgency": "now"
+  },
+  {
+   "kind": "forgotten",
+   "what": "The RESUME POINT is still 26 Sep 22:46Z (6th round flagging it). The P45 correction (pre-registered S0 -> 127 passed; exp70g is class C) is not logged, and MEMORY still says 'E10 v1 in force'. The session is running autonomously overnight.",
+   "evidence": "FACTS C-26 [c21], C-159 [c21]; CONTEXT l.2599; research/wf_ideas_v4/round21/report.json R21-A4; report.notes.md 23:37Z",
+   "suggested_action": "Write R21-A4 (A)(B)(C) at ~00:10-01:30Z, right after the W1 submits",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "The planned CI stacks exp83a-g match the ledger rule exp8\\d -> safetail (9.5 h), so a normal CI latency (~9.7-10.5 h) would read as not admitted or 'v'. The exp83a/exp83b dummies are planned for ~00:55Z.",
+   "evidence": "tools/runtime_ledger.py l.76-81; FACTS C-171, F-RUN-11 [c21]; research/wf_ideas_v4/round21/report.json R21-A5",
+   "suggested_action": "Add (r\"exp83[a-z]*\", \"safetail_ci\") above the exp8\\d line with tests before the first exp83 dummy; until then pass --family <ref>=safetail_ci",
+   "urgency": "today"
+  },
+  {
+   "kind": "contradiction",
+   "what": "v3 W2b (4) names exp79a as the CI stack when BASE = exp70g, but exp79a goes out in W1 and is never resubmitted. Round 21's W2 TABLE v4 moves that slot to W3 (<= 23:30Z) and adds the DIV stop rules S1-S6. It must be logged before exp78b's terminal header to count as pre-registered.",
+   "evidence": "CONTEXT 21:05 v3 (4) l.3262-3267; FACTS C-168; research/wf_ideas_v4/round21/report.json R21-A7, R21-A8, plan_issues (4)-(5)",
+   "suggested_action": "Append W2 TABLE v4 + W4 AMEND 2 to CONTEXT before ~07:30Z 28 Sep, quoting the last poll.log header that shows exp78b PENDING",
+   "urgency": "today"
+  },
+  {
+   "kind": "contradiction",
+   "what": "The probe-46 read used S0 = ladder_watch 185549Z and logged no k. The newest count-47 download was e10 2143Z (#163, k = 8). Code 0 still stands (0 passed under all four S0s), but a stale S0 can hide an UP in the W1 reads.",
+   "evidence": "CONTEXT 22:27 l.3307-3310; FACTS C-167, F-LB-16; research/wf_ideas_v4/round21/report.json R21-A3 (c), plan_issues (7)",
+   "suggested_action": "Log the R21-A3 (c) addendum. For each W1 read, use S0 = the newest download at the count just before (48, then 49...), take a fresh manual download near each completion, and log k",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "A CI run that fails soft on the hidden set leaves exp70g's CSV byte-identical, so exp79a would read as a false '0' or a noise '+'. No CI-RAN GATE is logged. The exp81 (N2) and exp80a dummy PASS lines are also not in CONTEXT, although exp81/exp80a are the W2a candidates.",
+   "evidence": "FACTS F-RUN-35, F-MOD-40; research/wf_ideas_v4/round21/report.json R21-A3 (a), (b); CONTEXT 21:26 l.3303-3305 ('dummy pushed' only)",
+   "suggested_action": "Log R21-A3 (a) (exp81/exp80a PASS) and (b) (CI-RAN GATE: dL vs exp78b <= 0.5 h NO-OP, 0.5-1.2 h '?', >= 1.2 h executed) before exp79a's first terminal header (~09:40Z)",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "The finals card lines (R20-A9, now R21-A9: V_pub + INFO lines, ties, F2 = #37, never the own cap parent, corrected ranges, Russian 12:00Z message) are still not in CONTEXT. Two user questions are open: lifting the 02:00Z 29 Sep cap, and allowing an E10 copy after 02:00Z until ~10:00Z. #37 + #38 stay ticked until the user's 29 Sep pick; the rule path is {exp70g, #37}.",
+   "evidence": "DECISIONS §2 [c21] snapshot; FACTS C-164, C-165, C-173, F-TRN-52 [c21]; research/wf_ideas_v4/round21/report.json R21-A9, R21-A10; round20/report.json R20-A12",
+   "suggested_action": "Log R21-A9 before the first W1 terminal header (~07:30Z 28 Sep). Send the morning message (~08:00-09:30Z) with both yes/no questions",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "stale",
+   "what": "The E10 v3 texts are still stale. The watch loop LOOK and CONTEXT 11:08 say '>= 0.955', but 'better than ours' is now >= 0.957. The SI build still uses DIVINS_CAP=4, while BASE is cap 6 / FRAME_CAP 1 / thr 0.4.",
+   "evidence": "FACTS C-163 [c21]; experiments/lb_poll/e10_watch_loop.py l.28, l.78; research/wf_ideas_v4/round21/report.json R21-A9 (v)",
+   "suggested_action": "Add the R21-A9 (v) E10 line to CONTEXT; fix the loop text at its next edit",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "Records and estimates that are off. RESULTS.md still ends at P38 (P39-P46 scored). The GPU quota is unread since 26 Sep (estimates: 19-25 h in r20, ~19.5-21 h in r21). The 'CI kernels queue 2-3.3 h' premise is refuted (2 lanes; exp79a started ~4 min after its push). Every new probe.json still carries the exp56 'rule' boilerplate.",
+   "evidence": "FACTS C-118 [c21], C-169, C-172, F-RUN-34 [c21], F-RUL-05 [c21], F-MOD-39 [c21]",
+   "suggested_action": "Read the quota once before the ~08:40Z stack dummies (R21-A11). Add P39-P46 to RESULTS.md at the next hygiene commit (R21-A13, as the user, no Co-Authored-By trailer)",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 21 (state 23:45 UTC 27 Sep; HEAD 4ac7126 = origin/main). New since curation 20: at 21:05 READ TABLE v3 codes + W1/W2 v3 were LOGGED before 46 turned terminal (22:25:30Z), which resolves C-161/C-162. At 21:06 the N2 pre-registration was LOGGED before exp77 finished (21:24Z), and the ledger safetail_ci family landed. exp78b, exp79d and exp79a dummies PASSED. N2 n2a is done (sha 7029fe69, proxy 0.998/1.010), and the N2 file exp81 plus exp80a (cap 24 + fc2) have clean dummies. P46 exp70q = 0.956 with code 0 (0 passed; exp70g keeps our unrounded best), L (7.64, 7.81] h. LB 23:43Z: #167 of 3,960. Finals are still ticked #37 + #38 until the user's 29 Sep pick. E10: 12 runs, 0 signals. No 28 Sep submit yet; W1 = 00:05Z exp78b, ~00:06Z exp79a (first CI), 00:50Z exp78a. FACTS.md: new header; [c21] notes on F-LB-01/02/03/10/15, F-RUN-03/11/31/34, F-RUL-05/12, F-MOD-37/39 and F-TRN-52; new F-LB-16 (P46 read), F-RUN-35 (CI hidden-run model and CI-RAN gate), F-MOD-40 (dummy gate values) and F-TRN-53 (round-21 rechecks); C-26/118/159/163/164/165 updated; C-161/162/166 resolved; new C-167..C-174 (46 S0, W2b duplicate, CI queue premise, stack names, exp83 ledger family, GPU quota estimates, E10 after 02:00Z, N2 proxy band). DECISIONS.md: new header; P45/P46 rows; a §1 [c21] update with a 12-row build/plan table; a §2 [c21] finals paragraph and a new candidates snapshot (V_pub = exp70g; exp70q not V_pub); a §2f E10 paragraph; §2h (6 status appends, 8 new rows) and §3 (22 status appends to R1-R10 and the later rules, 6 new R21 rows); a closing paragraph. None of round 21's R21-A1..A13 is in CONTEXT; the R8 COVERAGE line must land before the exp79a submit."
+}

@@ -1,0 +1,8 @@
+- 2026-09-27T23:27:29Z start verify r21w-1-verified-build-commands
+- 2026-09-28 independent re-check in my own scratch root (scratchpad/v21 = copy of tools/ + experiments/exp56, exp39; repo untouched), git bash, env block exactly as in the finding.
+  - Existing refs reproduce nb + kernel-metadata byte-identically: exp78a 8d8d9c28, exp78b d54d810c, exp80a da984964, exp79a 5f9b265d, exp81 6a62e321. probe.json differs only in the 'note' field (note is written only to probe.json, not the notebook -> nb sha is note-independent).
+  - All 11 new builds match the claimed nb prefixes: exp82a ffc00631, 82b 7cd1e3ed, 82c ee431244, 83a 80a0856f, 83b d9b0834d, 83c e8f5a8a6, 83d 22ccc1dd, 83e a016cf0f, 83f c8a2fccb, 83g 00f8cb36, 84a 4cb1e47b.
+  - Diffs confirmed: exp83a vs exp79a = header comment + DIVINS_CAP/FRAME_CAP lines only; exp83c vs exp79a = header + 2 secondary env lines + secondary sha line reading env.
+  - exp83c metadata: T4, internet off, private, datasets incl. yuki0731/biohub-coord-inject + vitaliineibauer/biohub-secft-n2a-v1, same docker pin.
+  - Caveat (already sibling finding r21w-2): tools/runtime_ledger.py EXP_RULES maps exp83* CI stacks to 'safetail' (checked: exp83a/exp83c -> safetail, exp79a -> safetail_ci). Must be fixed or --family passed before reading their L.
+  - Caveat: no SEC+CI stack dummy has passed yet (CI kernels queue 2-3.3 h) -> dummies for exp83c/d/e/g must be pushed early (r21w-3).

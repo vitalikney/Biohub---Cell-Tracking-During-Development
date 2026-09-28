@@ -1,0 +1,6 @@
+# v_recheck R21-RC-A I-084 succskip notes
+- 2026-09-27T23:27:35Z start; no prior json answer.
+- Checked scratchpad divpp/r21_ssk_exp60_agg.json + r21_ssk_kinds_exp60_agg.json + r21_ssk.py (151 l). Numbers match the finding: 44b6 ssk_all_dcacc +191 forks (235->426), 0/0/200 ign, d -0.00003, L15; dcrej (lower bound) +3 forks, 4 ign, d 0.0. 6bba q1 ('01') +155 forks, 0 TP/3 FP/156 ign, d -0.00043; c1 ('10') 0 TP/2 FP/94 ign, d -0.00032.
+- Skeptic points: (a) the evidence is thin: 4 evaluable events (0 TP / 4 FP) out of 482 added; 44b6 has no evaluable event at all. (b) -0.0005 is a DC-unfiltered UPPER bound on volume; the dcrej lower bound is 0.0, so the true delta lies between -0.0006 and 0. (c) "dominated by tau 0.75" compares a DC-unfiltered pool with a DC-exact pool. It still holds, because DC filtering cannot create TPs, so TP-empty survives. (d) The author's +0.0017 (TP 7->8) is one event on a different pipeline.
+- Feasibility: new code; the R8 hard line (27 Sep 12:00 UTC) has passed and today is 28 Sep, so there is no route. The finals #37+#38 are unaffected. Action "no build, no slot, curator reason update" is correct.
+- Verdict: NOT refuted (it is a closure-confirming recheck). Suggest wording: "measured non-positive and TP-empty" rather than "measured negative".

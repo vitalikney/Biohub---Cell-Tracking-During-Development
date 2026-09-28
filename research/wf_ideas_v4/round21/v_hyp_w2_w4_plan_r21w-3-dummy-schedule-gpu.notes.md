@@ -1,0 +1,10 @@
+# v r21w-3 dummy schedule gpu - notes (2026-09-27T23:27:33Z)
+- 23:28Z no prior json. Read CONTEXT 3196-3331 (R20-A2 table v3, N2 prereg, 21:26Z, 22:27Z), R19-A1 (4) (CI queue ~3.3 h claim), scan_hyp_w2_w4_plan.{json,notes}.
+- 23:30Z `kaggle kernels list --mine --sort-by dateRun` (read-only). lastRunTime = run START (exp75: pushed 13:18Z, lastRunTime 16:41:50Z = the "started ~16:40Z" in R19-A1 (4)).
+  exp79a (CI, same metadata/datasets as exp75/exp76a incl. yuki0731/biohub-coord-inject, T4, same docker): 404 at 20:28Z (round20 pc20-03 notes) -> lastRunTime 20:32:27Z => queue <= ~4 min.
+  exp79d start 20:10:16Z + ~1,305 s = ~20:32:01Z end -> exp79a started 26 s after exp79d ended while exp77 (T4x2, 19:04-21:24Z) held the other lane => LANE (2 concurrent GPU sessions) contention, not a CI property.
+  exp81 + exp80a both start 21:25:58/21:26:11Z right after exp77 ended ~21:24Z -> 2 concurrent lanes confirmed.
+  exp76a (CI) pushed 16:33Z, start 18:32:02Z (~2 h) and exp75 13:18->16:41Z: real queues, but non-CI kernels (exp72 13:27Z, exp76d 16:07Z) also ran in that window -> afternoon Kaggle-side queue, cause unknown; NOT reproduced by the next CI kernel. => "CI kernels queue 2-3.3 h; secFT/DIV start at once" is refuted as a systematic asymmetry.
+- Quota: 07:55/30 h at 26 Sep 21:5xZ (CONTEXT l.2542). Kernels since then (approx run times): exp70j/k 2x~0.42, exp71 ~2.23 (T4x2), exp70n ~0.4, exp70q ~0.5, exp72 ~0.42, exp76d ~0.38, exp75 ~0.53, exp76a ~0.53, exp78a ~0.41, exp77 ~2.33 (T4x2), exp76e ~0.36, exp78b ~0.38, exp79d ~0.36, exp79a ~0.48, exp81 ~0.4, exp80a ~0.4 => ~11.4 h (+~10% overhead) -> ~19.5-21 h used, ~9-10.5 h left (unless T4x2 bills 2x -> ~24 h used, ~6 h left). Weekly reset Sat 3 Oct 00:00Z = after the deadline -> leftover quota is worthless; worst-case 28 Sep dummies ~3 h fits either way.
+- Hidden reruns of submissions do not consume quota (l.1972: usage matched dummies+lab only), so W1 submits do not occupy lanes/quota.
+- 23:40Z final JSON written (refuted=true: CI-queue asymmetry refuted by exp79a; quota not binding).

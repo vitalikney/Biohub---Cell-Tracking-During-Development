@@ -1,0 +1,6 @@
+- 2026-09-27T23:45Z start watch task round 21; no watch.json in _curation/21; updating curation-20 build (20:53Z)
+- 23:45Z read CONTEXT to l.3310 (last entry 22:27Z probe 46 read), round21 report.json complete 23:43:24Z (R21-A1..A13), WATCHLIST c20
+- 23:46Z state: 46 read done 22:27Z code 0; no W1 submit yet (poll 23:45:49Z); R21-A1..A13 none in CONTEXT; exp83 rule absent; RESULTS last b2be382; memory stale
+- 23:47Z statuses mapped: done W204/W205/W206/W208/W209/W211/W213/W188/T111/T112; moot T116/I229; new W216-W223 (R21-A1/A3/A5-A8/A10/A13), T122-T128, I231-I248; writing WATCHLIST
+- 23:49Z WATCHLIST.md written; line cites fixed (v3 (2) l.3250, (3) l.3258, (7) l.3275, (8) l.3280); writing watch.json
+- 23:51Z watch.json written (complete, 16 alerts)

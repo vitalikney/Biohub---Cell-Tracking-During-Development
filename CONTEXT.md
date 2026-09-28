@@ -3308,6 +3308,33 @@ Mention it to the user in one line (R9-A8 item 6).
   22:25:30Z header; S0 ladder_watch/20260927T185549Z (count 47, #162) -> S1 22:26Z (count 48, LSD 14:36:59 = 46, #165), 0 TeamIds
   passed -> code 0 (exp70g still holds our unrounded best): thr 0.3 + forkmid add nothing visible on top of cap 6. L (7.64, 7.81] h,
   insertion gate did NOT fire. W1 unchanged (46 changes W1 in no row): exp78b, exp79a, exp78a.
+- 2026-09-28 00:00 UTC UTC, R8 COVERAGE (PC19-11 / R20-A3 (e) / PC21-01): coordinject files (exp75/76a/79a and the CI
+  stacks exp83*) and secFT files (exp72/76d/79d, the N2 file exp81 and the SEC stacks exp82*) are submitted under the 27
+  Sep 11:14Z/11:16Z aggressive-mode directive; SEC also has the Q2 yes, N2 the 18:19:11Z yes; the user never named
+  coordinject; all are public-only and never finals without a user re-tick (Q3 open for SEC; the CI caveat applies); not
+  a precedent. Pre-submit check added for every CI/secFT file: this line is present.
+- 2026-09-28 00:00 UTC, ROUND 21 GATES + READ RULES (R21-A3): (a) 'exp81 DUMMY PASS (N2 gates: Secondary SHA256 7029fe69
+  from /kaggle/input/datasets/vitaliineibauer/biohub-secft-n2a-v1; 121,085 nodes -0.14%; 116,961 edges; 87 forks; 1,250
+  s; 0 errors; CSV 8132ef2811d0; proxy 0.998/1.010 at the band edge). exp79d = fallback only.' and 'exp80a DUMMY PASS
+  (121,252 nodes; 117,105 edges; 116 forks; 1,388 s; 0 errors; CSV a109ad024ace; insertions 24/21/8/0, steals 12/3/3/0).
+  Both started 21:26Z right after exp77 ended (2 lanes, no CI queue).' (b) 'CI-RAN GATE (read rule, no mechanism;
+  R21RK-4 as amended): for every CI file (family safetail_ci), dL = L_hi(CI file) - L_hi(same-batch non-CI sibling); for
+  exp79a the sibling is exp78b (if not COMPLETE: exp70g 7.67 h). dL <= 0.5 h -> CI NO-OP: the CI lever codes '?' for ANY
+  display (a display < base still codes '-' for the file, not for the lever); 0.5 < dL < 1.2 h -> '?'; dL >= 1.2 h -> CI
+  executed and the v3 codes apply, with the caveat that a late fail-soft (rewrite exception, all workers failing late)
+  is invisible, so a CI '0' closes the lever for 28-29 Sep slot use only. The v rule (L_hi > 10.2 h -> ?) stands. A
+  latency-coded NO-OP never licenses a CI resubmit; CI then goes to the post-deadline list as untested.' (c) '46 read
+  addendum: S0 should have been the newest count-47 download = e10_watch/20260927T2143Z.txt (#163, k = 8). Re-run vs S1
+  ladder_watch/20260927T222653Z (#165, count 48, k = 8): 0 passed; also 0 from 185549Z (k = 11), 2002Z (k = 10), 2043Z
+  (k = 9). Code 0 stands. For W1: S0 = the newest download showing the count just before that file scores (48 for the
+  first W1 completion, then 49, 50 ...; each S1 becomes the next S0); take a fresh manual download near each expected
+  completion; log k; k = 0 -> BLIND ?.' (d) 'ERROR rules (R21RK-5/6): exp79a ERROR -> log the ERROR latency; ERROR at >
+  10 h = timeout/late OOM -> no resubmit and no CI stack. Do not delete, rename, re-version or change visibility of
+  biohub-secft-n2a-v1, secft-all-v1, ft-weights or coord-inject until every submission that uses them is COMPLETE
+  (secswap raises FileNotFoundError if the manifest is missing). exp81 ERROR -> no resubmit unless the log shows a
+  mount/attach failure.' (e) 'NO-GO (superseded, not unsafe): exp75, exp76a, exp72, exp76d, exp79d; exp76e filler only.
+  No dummy-runtime screen for cap rungs beyond 0 errors; the N2/exp72 gates stay <= 1,920 s; the CI dummy runtime check
+  stays (hidden L 9.4-10.9 h vs 12 h).'
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

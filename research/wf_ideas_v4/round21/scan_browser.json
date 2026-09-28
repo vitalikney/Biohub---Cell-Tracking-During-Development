@@ -1,0 +1,37 @@
+{
+ "summary": "Round-21 delta scan, 22:30-22:40 UTC 27 Sep, compared with round 20 (20:02Z). E10 P1: tools/e10_snapshot.py wrote experiments/e10_watch/20260927T2230Z.txt with CHANGES=8 against 21:43Z. The changes are histogram moves plus one dateRun re-run (anhadmahajan06, 0.946). The largest P2 group is 1, so e10_port_gate.py was not run. The x138 (anvithpothula/biohub-0-953-lb-original) and amanatar kernels and statuses are unchanged. LB at 22:30:57Z: 3,959 teams. We are #165 at 0.956 (probe 46 exp70q scored 0.956, code 0), 9th of 52 in the 0.956 block, with 156 teams strictly above us. Counts, with r20 in brackets: 0.953 = 414 (406), 0.954 = 120 (115), 0.955 = 86 (83), 0.956 = 52 (52), 0.957 = 38 (36), >=0.955 = 294 (287), >=0.960 = 89 (88), >=0.970 = 7 (7). The top 20 have the same names and order; taiseiu rose from 0.972 to 0.974 (#4). Discussion has no new topic, no new comment since r20 and no host post. Code: no public notebook at 0.954 or above and nothing new above the line, so nothing was pulled. The Overview timeline is unchanged.",
+ "findings": [
+  {
+   "id": "r21-e10-p1-no-signal",
+   "kind": "new-fact",
+   "what": "E10 P1 at 22:30Z vs 21:43Z: CHANGES=8, all non-trigger. (a) dateRun: anhadmahajan06/biohub-track-your-cells re-ran (lastRunTime 21:21 -> 22:04Z); it is 0.946 in the Code tab. (b) Histogram: 0.958 9->10, 0.957 37->38, 0.956 53->52, 0.955 85->86, >=0.955 292->294, total 3957->3959. (c) Our rank 163->165. scoreDescending, the anvithpothula/thtennant/amanatar user lists, and the x138/amanatar statuses are unchanged. P2 look-check: the largest same-score group of teams newly >= 0.956 is 1 (0.957: MaruanBOttoni). This is far below the >=5 search signal, so e10_port_gate.py was not run.",
+   "evidence": "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/experiments/e10_watch/20260927T2230Z.txt (DIFF section)",
+   "action": "None. The hourly watch continues. The usual ~23:30-02:00Z submit burst is the next window to watch.",
+   "urgency": "info"
+  },
+  {
+   "id": "r21-lb-delta",
+   "kind": "new-fact",
+   "what": "LB 22:30:57Z: 3,959 teams (+3 vs 20:02Z). We are #165 (CSV Rank) at 0.956, 9th of 52 in the 0.956 block (ranks 157-208); 156 teams are strictly above us (152 at r20). Our LastSubmissionDate is now 14:36:59, from probe 46. The four new teams strictly above us all came from our block or below: oreomori 0.956->0.960 (#84), Deep Thought 0.956->0.958 (#113), ikki1111 0.956->0.957 (#135), and MaruanBOttoni new at 0.957 (#150). Other movers: taiseiu 0.972->0.974 (#4, the only top-20 change; names and order are identical), syouya tobita 0.964->0.965, Cyrus 0.958->0.959. KR_no_1 and Luon may Man went 0.954->0.956 and zhuo wamg 0.955->0.956 (all three joined our block). wind0703 is new at 0.955; Ornate_show and Kim Jinseo went 0.953->0.955 and Train is all you need 0.954->0.955. There are 8 new 0.954 teams and 16 new 0.953 teams. Almost all of these scores come from submissions made 10:32-18:17Z. Only one row >= 0.953 has a submission after 20:00Z: add_oils 0.954 (21:26Z). No shared-score cluster.",
+   "evidence": "experiments/e10_watch/20260927T2230Z.txt (leaderboard_rows, histogram) row-diffed by TeamId against 20260927T2002Z.txt; CONTEXT.md 2026-09-27 22:27 UTC (probe 46 read)",
+   "action": "None on finals: the user picks on 29 Sep, and public = ~29%. Rank drift inside the 0.956 block is display only.",
+   "urgency": "info"
+  },
+  {
+   "id": "r21-disc-no-new",
+   "kind": "new-fact",
+   "what": "Discussion (recent comments) has no new topic and no new comment since r20. The newest topic is still John Taylor (AI)'s process post ('Posted 3h ago', 0 comments). The last reply in the synthetic-dataset thread is FOYSAL's 'ha ha! You are right' (3h ago), after José Freitas declined to give details of his 0.960 until after the deadline; both were logged in r20. The pinned Workshop thread's last comment is 20h old. No host announcement.",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion?sort=recent-comments ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/743929 ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/732103",
+   "action": "None. Synthetic pretraining stays on the post-deadline list (it needs retraining).",
+   "urgency": "info"
+  },
+  {
+   "id": "r21-code-overview-unchanged",
+   "kind": "new-fact",
+   "what": "Code 'Recently Run': the only fresh entry is 'Biohub - Track Your Cells' (anhadmahajan06), 'Updated 27m ago', 0.946, below the line. After it come Testbiohub-lf-dctta020-sectta1 0.947 (16h) and optimized-biohub-max-score 0.953 (21h); nothing else is new. 'Public Score' sort is identical to r20: Harmonic Fusion V3, optimized-biohub-max-score, Biohub Cell Tracking and 'Biohub 0.953 LB | ORIGINAL' (x138) at 0.953, then Geometric Fusion at 0.948. No notebook is at 0.954 or above, and none has a new idea, so there is no experiments/ext_* pull. Overview timeline unchanged: Entry and Team Merger deadlines September 22, 2026; 'Final Submission Deadline' September 29, 2026; header '2 DAYS TO GO'.",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/code?sortBy=dateRun ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/code?sortBy=scoreDescending ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/overview",
+   "action": "None.",
+   "urgency": "info"
+  }
+ ]
+}

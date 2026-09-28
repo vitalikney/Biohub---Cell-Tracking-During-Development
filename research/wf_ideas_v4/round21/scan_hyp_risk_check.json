@@ -1,0 +1,93 @@
+{
+ "task": "round21 scan_hyp_risk_check (RISK CHECK of W1/W2 files)",
+ "written_utc": "2026-09-27T22:55Z",
+ "complete": true,
+ "go_no_go": {
+  "exp78b": "GO W1 00:05Z",
+  "exp79a": "GO W1 CI slot (residual: untested main-process RAM at hidden scale; latency read rule R21RK-4)",
+  "exp78a": "GO W1 00:50Z (nearly nested in exp78b on low-eligible videos)",
+  "exp81": "GO W2a SEC (dummy PASS 22:4xZ)",
+  "exp80a": "GO-conditional W2a per R20-A2 (3) (dummy PASS)",
+  "exp79d": "NO-GO (fallback only; replaced by exp81)",
+  "exp76a": "NO-GO (superseded by exp79a)",
+  "exp75": "NO-GO (superseded; its 2,288 s dummy was machine variance)",
+  "exp72": "NO-GO (superseded)",
+  "exp76d": "NO-GO (superseded)",
+  "exp76e": "filler only"
+ },
+ "summary": "Risk check of the W1/W2 files at ~22:45Z, 27 Sep. All are files only; nothing was submitted, pushed or committed.\nGO:\n- W1: exp78b (00:05Z), exp79a (CI slot, ~00:06Z) and exp78a (00:50Z). All three pass their dummies with 0 error markers. Their CSVs differ from each other and from every other dummy (no byte-identical duplicate). All ran under 1,900 s. Their datasets are K2's, plus the unchanged yuki0731 CI dataset (10 files, 2026-08-25).\n- W2a: both candidates now have PASSING dummies. exp81 (N2): 1,250 s, SHA 7029fe69, 121,085 nodes (-0.14%). exp80a: 1,388 s, 121,252 nodes, 116 forks. exp81 replaces exp79d as the SEC file.\nNO-GO (superseded, not unsafe): exp75, exp76a, exp72, exp76d and exp79d. exp76e is filler only.\nRuntime:\n- Cap rungs: about 7.5-7.8 h; the knobs add about 0.\n- CI files: the model gives 9.4-10.6 h. The code caps CI at 10.75 h, and the worst case is about 10.9 h, below the 12 h limit. Coverage may drop to about 95% of videos at the top of the range.\nERROR modes:\n- CI: the only unbounded one is main-process RAM at hidden scale with two CI workers (untested, judged low). Everything else in CI fails soft.\n- SEC files: they ERROR only if the private dataset is not attached; K2 #37 proves owner-dataset attachment works. The mount-layout variance only adds about 0.1 h through the rglob fallback.\nNew read rule (zero cost): the CI stage is invisible on the hidden run, and a fail-soft CI would reproduce exp70g byte for byte. So code a CI file '?' (never '0') when L_hi <= base L_hi + 0.5 h.\nFreeze rule: do not delete or change our datasets until all submissions are COMPLETE.\nNothing new reaches R8.",
+ "findings": [
+  {
+   "id": "R21RK-1",
+   "kind": "new-fact",
+   "urgency": "now",
+   "what": "GO/NO-GO for the W1 files (all files checked at ~22:45Z, 27 Sep). exp78b (K2 + cap 12 + fc2) is GO for 00:05Z. exp79a (exp70g + CI) is GO for the CI slot. exp78a (K2 + cap 8) is GO for 00:50Z. None of the three is byte-identical to another file or to any scored dummy. Each has 0 error markers. None ran over 1,900 s.",
+   "evidence": "_dl/*/submission.csv sha256 (first 12 hex): exp78b 34a5fa19227c, exp79a 4280044276fc, exp78a 4a375a3b5f17, exp70g 62d832697d3b, exp70q ca35552ffbf6. All 18 dummy CSVs have different hashes. exp79a against exp70g: the same 238,335 row keys, and 78,320 rows have changed z/y/x, so CI survived into the final CSV. Dummy end times: 78b 1,369 s, 79a 1,712 s (CI 443 s), 78a 1,486 s. Grep of each log for Traceback / FAILED / DEADLINE: / FALLING BACK / SKIPPED returns 0 hits. Datasets: 78a/78b use only K2's five sources. 79a adds yuki0731/biohub-coord-inject, which a 22:46Z read-only check shows unchanged: 10 files, created 2026-08-25 09:41Z. enable_internet is False on every file.",
+   "action": "No change to R20-A2 W1. Submit exp78b at 00:05Z, exp79a at about 00:06Z and exp78a at 00:50Z. Log this GO line in CONTEXT."
+  },
+  {
+   "id": "R21RK-2",
+   "kind": "new-fact",
+   "urgency": "now",
+   "what": "Both W2a candidates now have a COMPLETE dummy that passes its gates. exp81 (N2: exp70g + n2a secondary) passes the N2 pre-registration gates: SHA line, nodes within -2%/+1%, 0 errors, <= 1,920 s. exp80a (K2 + cap 24 + fc2) passes 0 errors and nodes = K2. By its own pre-registration exp81 replaces exp79d as the one SEC file, so exp79d drops to a fallback only.",
+   "evidence": "kaggle kernels status 22:4xZ: exp81 and exp80a COMPLETE. Outputs were pulled to the scratchpad only. exp81: 1,250 s; 'Secondary SHA256: 7029fe69...' from /kaggle/input/datasets/vitaliineibauer/biohub-secft-n2a-v1; 121,085 nodes (-0.14% vs 121,252); 116,961 edges; 87 forks; CSV sha 8132ef2811d0. exp80a: 1,388 s; 121,252 nodes; 117,105 edges; 116 forks; per-video insertions 8/0/21/24 (steals 3/0/3/12); CSV sha a109ad024ace. The detection proxy for n2a was 0.998/1.010 (CONTEXT 21:26Z).",
+   "action": "Log 'exp81 DUMMY PASS' and 'exp80a DUMMY PASS' in CONTEXT, with the numbers above. W2a stays as in R20-A2 (3): exp80a only if its conditions hold, else exp81 (not exp79d)."
+  },
+  {
+   "id": "R21RK-3",
+   "kind": "new-fact",
+   "urgency": "today",
+   "what": "Runtime of the CI files on the hidden set is bounded well under 12 h, but the 10.5 h CI deadline may bind at the top of the range. Model: CI stage = N videos x mean s/video / 2 workers = (100-130) x (150-158 s) / 2 = 2.1-2.9 h. The K2 part takes about 7.3-7.7 h of kernel time, so CI ends at about 9.4-10.6 h. Hard bound: workers skip any video whose estimate (1.25 x the slowest video so far) would cross 37,800 s after KERNEL_START_TS, and the main process kills them at 38,700 s (10.75 h). The CSV rewrite takes about 1-2 min on 3-4 M nodes (2 s on 121 k nodes in the dummy) and cells 9-14 take minutes, so the worst case is about 10.9 h. Coverage: 100% at the median, and about 95% of videos refined in the top corner.",
+   "evidence": "exp79a cell 0 defines KERNEL_START_TS. Cell 8 contains coordinject_run: deadline_ts = kernel_start + 37800, skip-all if start > deadline - 600, kill at deadline + 900. Per-video worker times (dets): 111.3 s (27 k), 70.9 (9 k), 199.1 (58 k), 230.4 (81 k), i.e. t ~ 52 s + 0.00228 s/det. Hidden-video count of 100-130 from CONTEXT l.14. Hidden L for the base: exp70g (7.49, 7.67], exp70q (7.64, 7.81] (experiments/lb_poll/ledger.md). All videos are 100x64x256x256 uint16 (199 train + 4 test zarr.json).",
+   "action": "No change. Expected completion for exp79a submitted at about 00:06Z: roughly 09:40-10:50Z 28 Sep, still in time for the W2b 12:00Z decision. Keep the CI ledger rule (L_hi <= 10.75 h; 'v' if L_hi > 10.2 h)."
+  },
+  {
+   "id": "R21RK-4",
+   "kind": "new-hypothesis",
+   "urgency": "today",
+   "what": "Read rule that uses latency to tell whether CI ran (costs nothing). A hidden-run log is invisible to us. If the CI stage fails soft on the hidden run (dataset missing, a worker crash on every video, deadline skip), exp79a's CSV becomes byte-identical to exp70g. It would then read 0.956 with 0 teams passed and be mis-coded '0', which would close the CI lever by mistake. The ledger latency shows which case happened: a working CI stage adds 2.1-2.9 h (R21RK-3), while a no-op adds about 0. Proposed rule for exp79a and any CI stack: if L_hi(CI file) <= L_hi(base) + 0.5 h (about <= 8.2 h for exp70g), code it '?' ('CI did not run'), never '0'. If L_hi >= L_hi(base) + 1.2 h, CI ran and the v3 codes apply. Anything in between is '?'. Expected gain: it prevents a false CI closure. P(no-op) is roughly 2-5% (the dataset was checked; the per-video OOM path is fail-soft). The loss it avoids is the W2b CI stack slot.",
+   "evidence": "Fail-soft paths in exp79a cell 8: a try/except around coordinject_run leaves submission.csv unchanged ('COORDINJECT FAILED'); 'COORDINJECT SKIPPED (deadline)/(no GPU)'; per-video exceptions give 'COORDINJECT_WORKER FAILED' and continue. Dummy CI stage 412-445 s on 4 videos. Base L: exp70g (7.49, 7.67].",
+   "action": "Add one line to the read card before the exp79a read (~09:40Z): 'CI ran iff L_hi >= base L_hi + 1.2 h; <= base + 0.5 h -> ? (no-op), never 0'. Gate = the ledger at read time; no slot and no GPU needed."
+  },
+  {
+   "id": "R21RK-5",
+   "kind": "plan-issue",
+   "urgency": "today",
+   "what": "The main-process RAM on a ~100-video hidden run while two CI worker subprocesses each load a full video has never been tested. Every dummy had 4 videos, and no log records RSS. An OOM kill of the main process would ERROR the submission; an OOM inside a worker only skips that video (fail-soft). Each worker holds one 100x64x256x256 uint16 video (0.84 GB raw, about 1.7 GB as float32) plus 4 detectors and 2 refiners. Main-process state at the hidden scale is unknown but has to hold ~3 M K2 nodes. I judge this low (<~5%), and it is the only ERROR mode for exp79a I cannot bound from the files.",
+   "evidence": "grep for RSS / memory / GiB in _dl/biohub-exp79a-k2cap6-coordinject log: 0 hits. Worker env = os.environ with CUDA_VISIBLE_DEVICES = i and OMP_NUM_THREADS = 2; stems split [i::2].",
+   "action": "No pre-W1 action is possible without a new dummy (a 100-video dummy does not exist). Accept the risk under aggressive mode. If exp79a ERRORs, apply the existing rule (an ERRORed single gets one unchanged resubmit only if its ERROR latency is < 10 h and a slot would otherwise be empty; an ERROR at > 10 h means a timeout or late OOM, so no resubmit and no CI stack). Record the ERROR latency in the ledger."
+  },
+  {
+   "id": "R21RK-6",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "SEC files (exp81, exp79d, exp72, exp76d) have one hard-ERROR path and one slow path. Hard ERROR: cell 3 raises FileNotFoundError at module level (not fail-soft) if no ARTIFACT_MANIFEST.json with the expected weight_sha256 exists under /kaggle/input. That happens only if the private dataset is not attached at the rerun. Owner-dataset attachment on a hidden rerun is already proven by K2 #37 (vitaliineibauer/biohub-ft-weights), so this risk is below 1%. Slow path: Kaggle mounts datasets in two layouts, and 27 Sep dummies showed both. In the old layout (/kaggle/input/<slug>) the explicit manifest path misses and the code falls back to rglob over /kaggle/input. That cost ~210 s on the visible run; with ~100 hidden videos x 102 zarr files it is at most ~+50%. So about +0.06-0.1 h of latency, and no ERROR.",
+   "evidence": "exp81 cell 3 _find_secondary_artifact_root (candidates: explicit path, /kaggle/input/<pilkwang slug>, /kaggle/input/datasets/pilkwang/<slug>, then rglob). 'Secondary artifact: /kaggle/input/biohub-temporal-unet3d-seed314159-v1' appears in the exp70b / exp70d / exp70q dummies and the datasets/ layout in the rest. 102 files per test zarr. kaggle datasets list --mine: secft-all-v1 (13:26Z), secft-n2a-v1 (21:25Z), ft-weights (23 Sep).",
+   "action": "Do not delete, rename or change the visibility of secft-n2a-v1, secft-all-v1 or ft-weights, and do not force a new dataset version, until every submission that references them is COMPLETE (last one about 29 Sep 12:00Z). No code change."
+  },
+  {
+   "id": "R21RK-7",
+   "kind": "new-fact",
+   "urgency": "today",
+   "what": "The cap rungs are not duplicates, but on a low-eligible (44b6-like) video they are nearly the same file: the frame cap binds at 7-8 insertions. On dummy video 44b6_0113 (14 eligible), cap 6 / cap 8 / cap 12 fc2 / cap 24 fc2 add 6 / 7 / 8 / 8. On the high-eligible 6bba videos (33 and 142 eligible) they add 6/8/12/21 and 6/8/12/24. exp78a is therefore nested inside exp78b's increment: +1/0/+2/+2 over exp70g, against +2/0/+6/+6. If the public embryo looks like 44b6, all three rungs sit within about +2 insertions per video of exp70g, and '0' reads say little about private. This is already covered by R20-A2's stop rules; it adds no new slot.",
+   "evidence": "divinsert lines 'eligible=.. added=.. steal=..' in the _dl logs for exp70g / 78a / 78b and the scratchpad exp80a log. Dummy forks: 81 / 86 / 95 / 116. Nodes unchanged at 121,252. Lab for cap > 4 (CONTEXT 12:12Z): 0 TP / 4 FP / 81 unannotated.",
+   "action": "Informational. Keep W1 as pre-registered and do not swap exp78a for exp81: that would re-open a pre-registered order after 46 had read. In the W1 read, note that the per-video difference is concentrated in high-eligible videos."
+  },
+  {
+   "id": "R21RK-8",
+   "kind": "recheck-old",
+   "urgency": "info",
+   "what": "The 'dummy > 1,900 s' flag does not predict hidden runtime. The only file over 1,900 s is exp75 (2,288 s). Its excess sits entirely before CI and comes from a slow machine: the DeepCenter line appeared at 101 s against about 50 s elsewhere, and the pre-CI stage ended at 1,829 s against 1,258 s for exp79a with the same code family. The fallbacks exp75, exp76a (1,896 s), exp72 and exp76d are NO-GO because they are superseded, not because of runtime: exp79a and exp81 passed on the stronger cap-6 base. exp76e is filler only; 46 (cap 6 + thr 0.3 + forkmid) already read '0', and exp76e is nested in it.",
+   "evidence": "Stage first-mention times (DC / lowref / divins / CI / end): exp75 101/875/1286/1829/2288; exp79a 50/432/791/1258/1712. Dummy -> hidden L: exp70g 1,409 s -> (7.49, 7.67]; exp70b 1,740 s -> (7.41, 7.58]; exp70q 1,874 s -> (7.64, 7.81]. The safetail-family hidden L range over 9 files is 6.87-7.81 h, with 0 ERRORs.",
+   "action": "Drop the '> 1,900 s' criterion for cap rungs; keep the N2 gate at <= 1,920 s as pre-registered. List exp75, exp76a, exp72, exp76d and exp79d as NO-GO (superseded) in the W1/W2 table. exp76e stays filler only."
+  },
+  {
+   "id": "R21RK-9",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "No new mechanism reaches R8. Everything in this round is a risk check or a read rule on files that are already built. Nothing here is a new lever, and no closed family is re-proposed. The honest answer to 'new ideas that clear R8' is: none.",
+   "evidence": "The R8 cutoff passed on 27 Sep 12:00Z (CONTEXT 12:12Z line). IDEAS.md I-370 to I-412 was checked for overlap: R21RK-4 extends the I-382 CI gates to the hidden read; R21RK-6 extends the I-382 dataset check to the SEC datasets.",
+   "action": "None beyond R21RK-2 and R21RK-4 (CONTEXT lines)."
+  }
+ ]
+}

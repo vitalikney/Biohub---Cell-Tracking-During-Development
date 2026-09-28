@@ -1,0 +1,81 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/ideas.json",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/IDEAS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/21/ideas.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/21/ideas.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "what": "The R8 COVERAGE line (R21-A1) is still not in CONTEXT. exp79a is planned for ~00:06Z 28 Sep and would be the first coordinject file ever on the LB. Coordinject was built after the R8 cutoff and the user never named it.",
+   "evidence": "research/wf_ideas_v4/round21/report.json R21-A1; research/wf_ideas_v4/round21/scan_plancheck.json PC21-01; research/wf_ideas_v4/round21/v_plancheck_pc21-01.json (grep at 23:27Z: none); research/KNOWLEDGE/ideas.json I-324, I-401",
+   "suggested_action": "Append the R21-A1 line before the exp79a submit. If it is not written by 00:06Z, submit exp78b/exp78a on schedule and exp79a after the line, no later than 03:00Z.",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "Ledger family trap: tools/runtime_ledger.py maps exp83* (the CI stacks exp83a/exp83b whose dummies go at ~00:55Z) to 'safetail'. A normal CI latency (~9.7-10.5 h) would then read as NO/'v'. Also, the W1 descriptions must start with the file's own token, because the ledger takes the first exp token.",
+   "evidence": "research/wf_ideas_v4/round21/report.json R21-A5, R21-A2; research/wf_ideas_v4/round21/v_hyp_w2_w4_plan_r21w-2-ledger-rule-exp83.json; research/wf_ideas_v4/round21/scan_plancheck.json PC21-09; research/KNOWLEDGE/ideas.json I-383, I-404, I-381",
+   "suggested_action": "Add the exp83[a-z]* -> safetail_ci rule above the exp8\\d rule, with a test, before the exp83 dummy push. Use the descriptions 'probe 47: exp78b ...', 'probe 48: exp79a ...' and 'probe 49: exp78a ...'.",
+   "urgency": "now"
+  },
+  {
+   "kind": "forgotten",
+   "what": "The RESUME POINT is still stale for the 6th round (last one 26 Sep 22:46Z). The probe-45 correction line (127 passed, exp70g class C) and the MEMORY rewrite are also missing, on an autonomous night.",
+   "evidence": "CONTEXT.md l.2599 (last RESUME POINT); research/wf_ideas_v4/round21/report.json R21-A4; research/wf_ideas_v4/round21/v_plancheck_pc21-02.json; research/KNOWLEDGE/ideas.json I-257, I-296, I-326",
+   "suggested_action": "Write R21-A4 (A)(B)(C) at ~00:10-01:30Z, around the W1 submits and never delaying them.",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "These are pre-registrations that must land before exp78b's terminal header (~07:30Z 28 Sep): W2 TABLE v4 + DIV STOP RULES S1-S6, W4 AMEND 2 and the R21-A9 finals card lines. Without them, v3's W2b row names the already-scored exp79a when BASE stays exp70g (PC21-03), and every later W2/W4 choice becomes post-hoc.",
+   "evidence": "research/wf_ideas_v4/round21/report.json R21-A7, R21-A8, R21-A9; research/wf_ideas_v4/round21/scan_plancheck.json PC21-03, PC21-05, PC21-08; research/KNOWLEDGE/ideas.json I-414, I-415, I-406",
+   "suggested_action": "Append R21-A7 + R21-A8 + R21-A9 in one CONTEXT write tonight, quoting the last poll.log header that shows exp78b PENDING.",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "The CI-RAN GATE is not logged. A fail-soft coordinject on the hidden rerun leaves exp70g's CSV byte-identical. exp79a would then read 0.956 with 0 passed and be mis-coded '0', which closes the CI lever by mistake.",
+   "evidence": "research/wf_ideas_v4/round21/report.json R21-A3 (b); research/wf_ideas_v4/round21/scan_hyp_risk_check.json R21RK-3, R21RK-4; research/wf_ideas_v4/round21/v_hyp_risk_check_r21rk-4.json; research/KNOWLEDGE/ideas.json I-413",
+   "suggested_action": "Log R21-A3 (b) before exp79a's first terminal header (~09:40Z). Compute dL against the same-batch sibling exp78b.",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "The exp81 (N2 SEC file) and exp80a dummy PASSes are verified but not in CONTEXT. The 46-read addendum (stale S0, k not logged) and the ERROR / dataset-freeze rules are also missing. W2a (08:45-10:00Z) needs a logged PASS for whichever of exp81 or exp80a it picks.",
+   "evidence": "research/wf_ideas_v4/round21/report.json R21-A3 (a), (c), (d), (e); research/wf_ideas_v4/round21/v_hyp_risk_check_r21rk-2.json; research/wf_ideas_v4/round21/v_plancheck_pc21-06.json; CONTEXT.md l.3301-3310; research/KNOWLEDGE/ideas.json I-396, I-399, I-327, I-418",
+   "suggested_action": "Append R21-A3 (a)-(e) as one CONTEXT write tonight.",
+   "urgency": "today"
+  },
+  {
+   "kind": "contradiction",
+   "what": "The E10 texts still say trigger '>= 0.955' and SI DIVINS_CAP=4, but our best display is 0.956 on cap 6. The E10 watch also runs to 29 Sep 12:00Z while the last planned submit is 01:45Z, so there is no rule for a trigger at 02:00-12:00Z.",
+   "evidence": "research/wf_ideas_v4/round21/scan_plancheck.json PC21-05, PC21-08 (experiments/lb_poll/e10_watch_loop.py l.28, l.78; research/wf_ideas_v4/e10v3/runbook.notes.md l.206); research/wf_ideas_v4/round21/report.json R21-A8 (5), R21-A9 (v), R21-A10; research/KNOWLEDGE/ideas.json I-364, I-415",
+   "suggested_action": "Log the R21-A9 (v) E10 line (trigger >= 0.957; SI = BASE's DIVINS settings). Add the R21-A10 yes/no line to the 28 Sep morning message.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "Round-20 records still not landed: R20-A7 (GPU quota, now info-only per R21-A11), R20-A10 (lab-null info lines), R20-A13 (PRIVATE-READ addendum, due before 29 Sep 23:59Z) and LESSONS H1. Round 21 adds the DC-blind replay lesson (I-419) and the I-084/I-190/I-051 recheck lines (R21-A12).",
+   "evidence": "research/wf_ideas_v4/round21/scan_plancheck.json PC21-07, PC21-08; research/wf_ideas_v4/round21/report.json R21-A11, R21-A12; research/KNOWLEDGE/ideas.json I-405, I-408, I-407, I-252, I-419",
+   "suggested_action": "Fold them into the next CONTEXT write. The browser agent reads the quota before the ~08:40Z dummies.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "BASE-lookup stack builds (exp82a/b/c, exp83c-g, exp84a) exist only in the session scratchpad (r21root). A crashed session would lose them, although the r21w-1 env block makes them reproducible.",
+   "evidence": "research/wf_ideas_v4/round21/scan_hyp_w2_w4_plan.json r21w-1 (build_env_git_bash, builds); research/wf_ideas_v4/round21/v_hyp_w2_w4_plan_r21w-1-verified-build-commands.json; research/KNOWLEDGE/ideas.json I-416, I-404, I-400",
+   "suggested_action": "Rebuild from the r21w-1 env block right before each push. Log the nb + metadata sha in CONTEXT, and commit exp83a/exp83b with R21-A13.",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "K2-family hidden latency is drifting up (L_hi 7.54 -> 7.81 h). A cap-rung 'v' (L_hi > 8.0 h) can appear with no code cause. exp70g is ~0.95634 unrounded, so a 0.957 on the exp70g base needs only ~+1.6e-4 and must not be read as +1e-3.",
+   "evidence": "research/wf_ideas_v4/round21/scan_plancheck.json PC21-10; research/wf_ideas_v4/round21/scan_hyp_w2_w4_plan.json r21w-9; experiments/lb_poll/ledger.md; research/KNOWLEDGE/ideas.json I-398, I-403, I-326",
+   "suggested_action": "At the W1 reads, do not code a latency 'v' as a lever result. Log the sub-display margin with each read (R21-A12).",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 21 (incremental over curation 20 at 771a608; HEAD now 4ac7126 + untracked round21/, ext_succskip/, e10_watch 2143Z-2343Z). Sources: CONTEXT.md l.3222-3310 (v3 21:05, N2 prereg 21:06, ledger+build 21:06, N2 done 21:26, probe 46 read 22:27), round 21 report.json R21-A1..A13 + scans + 15 verifier files, probe.json exp80a/exp81, poll.log to 23:45:49Z, watch_loop runs 10-12. ideas.json: 412 -> 419 ideas (new I-413 CI-RAN GATE, I-414 W2 TABLE v4 + S1-S6, I-415 W4 AMEND 2 + E10 after 02:00Z, I-416 BASE-lookup stack builds, I-417 SEC holder rule (refuted), I-418 ERROR/dataset-freeze rules, I-419 DC-blind exp60 replay lesson); 50 change records. Status moves: I-361 exp70q in-plan -> lb-tested (probe 46 = 0.956, code 0); I-385 N2 -> lab-tested (n2a proxy 0.998/1.010); I-400 cap 48 refuted -> in-plan (exp84a, conditional S3); I-374 exp76a and I-402 exp79d -> refuted (superseded). Counts: lb-tested 54->55, lab-tested 22->24, in-plan 86->88, refuted 204->206, deferred 44, open-untested 2. IDEAS.md regenerated: 13 cluster tables with c21 markers, updated header/landmarks/changes, ORPHANS (1 strict I-233; 16 at-risk, incl. I-324, I-413, I-414, I-415, I-406, I-383, I-257) and a round-21 'closed only in research files' block. Most urgent: R8 COVERAGE line before exp79a (~00:06Z), exp83 ledger rule before ~00:55Z, then RESUME POINT, W2 v4/W4 AMEND 2/finals card and CI-RAN GATE before ~07:30Z."
+}
