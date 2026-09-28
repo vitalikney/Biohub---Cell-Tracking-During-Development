@@ -3519,6 +3519,14 @@ Mention it to the user in one line (R9-A8 item 6).
   the next step down if 50 is '+'; parent exp85a). Dummies exp86a/exp86b pushed 06:36Z; exp86c follows when a lane
   frees; gates vs their parents (exp78a / exp78b / exp85a dummies) with scratchpad gate85.py. No slot is taken by
   building; the slot choice stays with the reads (W2b 12:00Z, W3 <= 23:30Z, W4 29 Sep 00:05Z).
+- 2026-09-28 07:28 UTC, exp86a/b/c DUMMY GATES: all PASS (47/48/49/50 PENDING at header 07:22:46Z)
+  Gate vs each parent's dummy (validate ok, 0 Traceback/FAILED/DEADLINE:/FALLING BACK, DIVINS ENABLED, runtime <=
+  1,900 s, |dn| <= 1.5%): exp86a (exp78a + ILP 0.4 + READMIT 0.94) nodes 122,328 (+0.89%), edges 118,141, forks 90
+  (86), LOWREFINE +3.05%, 1,460 s, CSV ddbd6c026e6c; exp86b (exp78b + both knobs) nodes 122,328 (+0.89%), edges
+  118,146, forks 99 (95), 1,357 s, CSV 9e41dc0abbcb; exp86c (exp70g + ILP 0.4 + READMIT 0.92) vs exp85a: nodes 122,716
+  (+0.32%; +1.21% vs exp70g), edges 118,504, forks 84, LOWREFINE 150,265 (+1.52% vs exp85a), 1,559 s, CSV
+  31b1e047587a. The knob delta is additive and identical across cap bases (+1,076 nodes, +4 forks on each). All three
+  are ready for any slot the reads call for.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
