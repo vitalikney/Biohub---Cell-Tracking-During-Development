@@ -3335,6 +3335,10 @@ Mention it to the user in one line (R9-A8 item 6).
   mount/attach failure.' (e) 'NO-GO (superseded, not unsafe): exp75, exp76a, exp72, exp76d, exp79d; exp76e filler only.
   No dummy-runtime screen for cap rungs beyond 0 errors; the N2/exp72 gates stay <= 1,920 s; the CI dummy runtime check
   stays (hidden L 9.4-10.9 h vs 12 h).'
+- 2026-09-28 00:06 UTC, W1 SUBMITS: probe 47 = exp78b (K2 + cap 12 + FRAME_CAP 2) ref 56623073 at 00:06:09Z; probe 48 = exp79a (exp70g + coordinject)
+  ref 56623105 at 00:06:33Z. Checks: kernels COMPLETE (v1 = the dummy), poll header 23:55:50Z (no 429), no duplicate, R8 COVERAGE line
+  present, CI dataset 10 files dated 2026-08-25. exp78a (cap 8) at 00:50Z. 3 slots left today. Expected: 47 ~07:30-08:00Z,
+  48 ~09:40-10:40Z (CI).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
