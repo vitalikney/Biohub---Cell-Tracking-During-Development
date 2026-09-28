@@ -1,0 +1,1141 @@
+E10-P1 WATCH SNAPSHOT 20260928T1641Z (2026-09-28 16:41 UTC)
+A change is NOT a port trigger; it only tells the human where to look.
+What: E10 PORT RULE P1 light check (CONTEXT.md, 26 Sep 09:03 UTC entry; in force since the user's 09:10 UTC conditional yes). P1 only gathers; a P2 search signal starts a look, never a port by itself.
+Read-only: Kaggle CLI `kernels list`, `kernels status`, `competitions leaderboard --download` (temp folder, deleted after parsing). Nothing is pulled, pushed or submitted.
+The kernel API has no score field: public scores come only from the leaderboard below and the notebook pages.
+x138 = anvithpothula/biohub-0-953-lb-original (live slug). The old slug anvithpothula/biohub-x138 returns 404 since the rename; a 404 there is NOT a signal, so it is not queried.
+Sections: 5 kernel lists (raw CLI CSV), 2 statuses (raw), leaderboard (CLI message), leaderboard_rows (CSV rows with Score >= 0.953), histogram (parsed), then the DIFF vs the newest earlier snapshot.
+mode: LIVE | CLI calls took 97 s | fetch: 8 OK, 0 NOTFOUND, 0 FAILED
+
+======== comp_dateRun ========
+what: public competition kernels, top 20 by dateRun
+cmd: kaggle kernels list --competition biohub-cell-tracking-during-development --sort-by dateRun --page-size 20 -v
+fetch: OK attempts=1 rc=0 rows=20
+--- stdout ---
+ref,title,author,lastRunTime,totalVotes
+flexonafft/biohub-lineage-forge-precision-tracking,Biohub Lineage Forge — Precision Tracking,Igor Zharov,2026-09-28 12:57:08.620000,111
+kunaldesale2408/biohub-cell-tracking,Biohub Cell Tracking,Kunal Desale,2026-09-28 10:41:40.683000,242
+anhadmahajan06/biohub-track-your-cells,Biohub - Track Your Cells,Anhad Mahajan,2026-09-27 22:04:38.897000,13
+mtoshidesu/testbiohub-lf-dctta020-sectta1,Testbiohub-lf-dctta020-sectta1,m-toshi desu,2026-09-27 06:13:56.090000,50
+amanatar/optimized-biohub-max-score,optimized-biohub-max-score,Aman Atar,2026-09-27 01:39:05.377000,79
+sarveshchhetri/robust-3d-cell-tracking,Robust 3D Cell Tracking,Sarvesh Chhetri,2026-09-26 12:40:40.220000,3
+raunakdey07/biohub-harmonic-fusion-v3,Biohub: Harmonic Fusion V3,Raunak Dey,2026-09-25 09:09:04.280000,215
+denpugovkin/biohub-exp003-two-embryos,Biohub exp003 — Two Embryos,Den Pugovkin,2026-09-24 20:37:41.813000,4
+tobimichigan/robust-cell-tracking-during-development-via-chan,Robust Cell Tracking During Development via Chan.,Handsonlabs Software Academy,2026-09-24 00:21:35.650000,11
+junaid512/biohub-cell-tracking-strategic-submission,Biohub — Cell Tracking · Strategic Submission,Muhammad Junaid,2026-09-23 09:05:19.973000,1
+segamega/biohub-cell-tracking-during-development,Biohub - Cell Tracking During Development,Sega Mega,2026-09-22 23:39:12.177000,1
+zalejohn/submission-csv,submission.csv,Zale John,2026-09-22 22:45:05.837000,0
+thedivyanshpant/biohub-cell-tracking-during-developmentv1,Biohub - Cell Tracking During DevelopmentV1,DIVYANSH PANT,2026-09-22 20:55:37.953000,0
+giorgosin/notebook447aed80b2,notebook447aed80b2,Giorgos In,2026-09-22 20:47:51.327000,0
+binasalama/biohub-learned-unet-transformer-ilp-gap-recovery,Biohub Learned UNet Transformer ILP Gap Recovery,Bina Salama,2026-09-22 16:05:05.523000,2
+evgendvorkin/biohub-0-947-lb-proxy-score-0-9490,Biohub  0.947 LB PROXY_SCORE=0.9490,Дворкин Евгений Владимирович,2026-09-22 15:39:25.977000,136
+seyitkaangunes/biohub-035-deconfounded-edge-stack,Biohub 035 Deconfounded Edge Stack,Seyit kaan Gunes,2026-09-22 15:17:27.923000,2
+asymortenson/biohub-v5c-final,biohub-v5c-final,Asy Mortenson,2026-09-22 13:38:21.270000,1
+crystalbaby/biohub-geometric-fusion,Biohub Geometric Fusion,Sung Jin-woo,2026-09-22 10:41:10.177000,6
+newwang12/biohub-v1-grouped,biohub-v1-grouped,อธิคม หวังเจริญวงศ์,2026-09-22 10:08:09.433000,36
+
+======== comp_scoreDescending ========
+what: public competition kernels, top 20 by scoreDescending
+cmd: kaggle kernels list --competition biohub-cell-tracking-during-development --sort-by scoreDescending --page-size 20 -v
+fetch: OK attempts=1 rc=0 rows=20
+--- stdout ---
+ref,title,author,lastRunTime,totalVotes
+raunakdey07/biohub-harmonic-fusion-v3,Biohub: Harmonic Fusion V3,Raunak Dey,2026-09-25 09:09:04.280000,215
+amanatar/optimized-biohub-max-score,optimized-biohub-max-score,Aman Atar,2026-09-27 01:39:05.377000,79
+kunaldesale2408/biohub-cell-tracking,Biohub Cell Tracking,Kunal Desale,2026-09-28 10:41:40.683000,242
+anvithpothula/biohub-0-953-lb-original,Biohub 0.953 LB | ORIGINAL ⭐️⭐️⭐️⭐️⭐️,Anvith Pothula,2026-09-21 09:47:58.620000,225
+amanatar/biohub-geometric-fusion,Biohub Geometric Fusion,Aman Atar,2026-09-21 09:18:35.700000,170
+evgendvorkin/biohub-0-947-lb-proxy-score-0-9490,Biohub  0.947 LB PROXY_SCORE=0.9490,Дворкин Евгений Владимирович,2026-09-22 15:39:25.977000,136
+flexonafft/biohub-harmonic-fusion,Biohub Harmonic Fusion,Igor Zharov,2026-09-10 16:39:37.593000,288
+reyhanksatria/biohub-cell-tracking-0-947-lb,Biohub Cell Tracking: 0.947 LB,Reyhan Ksatria,2026-09-13 03:52:47.293000,39
+flexonafft/biohub-lineage-forge-precision-tracking,Biohub Lineage Forge — Precision Tracking,Igor Zharov,2026-09-28 12:57:08.620000,111
+sjlee101/biohub-lf-dctta,biohub-lf-dctta,Seung Jae Lee,2026-09-09 20:31:52.350000,82
+sjlee101/biohub-lf-dctta-v020,biohub-lf-dctta-v020,Seung Jae Lee,2026-09-09 20:31:56.890000,74
+sjlee101/biohub-lf-dctta020-sectta1,biohub-lf-dctta020-sectta1,Seung Jae Lee,2026-09-10 09:27:55.707000,11
+crystalbaby/biohub-lf-dctta-v020,biohub-lf-dctta-v020,Sung Jin-woo,2026-09-10 09:59:59.767000,34
+sjlee101/biohub-lf-dctta025-sectta1,biohub-lf-dctta025-sectta1,Seung Jae Lee,2026-09-10 11:12:27.937000,9
+sjlee101/biohub-lf-dctta020-sectta1-sister16,biohub-lf-dctta020-sectta1-sister16,Seung Jae Lee,2026-09-10 12:57:11.383000,6
+zhehaoliang/biohub-p26-o01-exact-public-0947,Biohub P26 O01 Exact Public 0947,zhehao liang,2026-09-10 20:57:54.190000,4
+mtoshidesu/test-biohub-lf-dctta,Test biohub-lf-dctta,m-toshi desu,2026-09-10 23:16:44.990000,2
+arnav170/biohub-harm,biohub-harm,Arnav170,2026-09-11 08:23:47.327000,2
+rogerrogerroger3r/biohub-run91,biohub-run91,rogerrogerroger3r,2026-09-11 09:28:10.373000,12
+sjlee101/biohub-lf-hoctveto-b,biohub-lf-hoctveto-b,Seung Jae Lee,2026-09-11 12:53:42.593000,4
+
+======== user_anvithpothula ========
+what: kernels of anvithpothula, top 10 by dateRun
+cmd: kaggle kernels list --user anvithpothula --sort-by dateRun --page-size 10 -v
+fetch: OK attempts=1 rc=0 rows=10
+--- stdout ---
+ref,title,author,lastRunTime,totalVotes
+anvithpothula/biohub-v1284-head-s075-sample-notebook,biohub v1284 head s075 sample notebook,Anvith Pothula,2026-09-24 03:28:30.973000,1
+anvithpothula/biohub-0-953-lb-original,Biohub 0.953 LB | ORIGINAL ⭐️⭐️⭐️⭐️⭐️,Anvith Pothula,2026-09-21 09:47:58.620000,225
+anvithpothula/divqc-ground-truth-free-division-qc,divqc ground truth free division QC,Anvith Pothula,2026-09-19 03:54:48.853000,0
+anvithpothula/biohub-x56,biohub-x56,Anvith Pothula,2026-09-04 22:42:07.213000,9
+anvithpothula/aisec-jedcd6,aisec-jedcd6,Anvith Pothula,2026-08-31 01:57:22.693000,1
+anvithpothula/aisec-jedcdprobe,aisec-jedcdprobe,Anvith Pothula,2026-08-29 00:22:31.860000,1
+anvithpothula/biohub-dual-seed-harmonic-bidirectional-fusion,Biohub Dual-Seed + Harmonic Bidirectional Fusion,Anvith Pothula,2026-08-27 02:24:23.170000,5
+anvithpothula/rsna-base,rsna-base,Anvith Pothula,2026-08-25 17:03:27.470000,109
+anvithpothula/new-benchmark-task-00052,New Benchmark Task 00052,Anvith Pothula,2026-08-11 14:10:20.607000,4
+anvithpothula/biohub-0-95,Biohub 0.95,Anvith Pothula,2026-07-21 19:12:54.273000,64
+
+======== user_thtennant ========
+what: kernels of thtennant, top 10 by dateRun
+cmd: kaggle kernels list --user thtennant --sort-by dateRun --page-size 10 -v
+fetch: OK attempts=1 rc=0 rows=10
+--- stdout ---
+ref,title,author,lastRunTime,totalVotes
+thtennant/biohub-frontier947-readmit-v1,Biohub frontier947 readmit v1,Teddy Tennant,2026-09-19 01:41:22.390000,1
+thtennant/biohub-frontier947-divprec-v1,Biohub frontier947 divprec v1,Teddy Tennant,2026-09-19 00:22:36.233000,0
+thtennant/biohub-frontier947-gapfill-v1,Biohub frontier947 gapfill v1,Teddy Tennant,2026-09-19 00:13:02.263000,0
+thtennant/biohub-frontier947-gapfill-det096-v1,Biohub frontier947 gapfill det096 v1,Teddy Tennant,2026-09-18 02:51:33.717000,12
+thtennant/biohub-frontier947-fast-det096-tight60-v1,Biohub frontier947 fast det096 tight60 v1,Teddy Tennant,2026-09-18 01:25:14.057000,0
+thtennant/biohub-frontier947-flow2-det096-v1,Biohub frontier947 flow2 det096 v1,Teddy Tennant,2026-09-18 01:24:53.413000,0
+thtennant/biohub-frontier947-flow2-v1,Biohub frontier947 flow2 v1,Teddy Tennant,2026-09-18 00:21:28.137000,1
+thtennant/biohub-frontier947-fast-tight60-v1,Biohub frontier947 fast tight60 v1,Teddy Tennant,2026-09-18 00:21:24.803000,0
+thtennant/biohub-frontier947-fast-det096-v1,Biohub frontier947 fast det096 v1,Teddy Tennant,2026-09-17 00:46:25.387000,0
+thtennant/biohub-frontier947-fast-v1,Biohub frontier947 fast v1,Teddy Tennant,2026-09-17 00:19:51.617000,0
+
+======== user_amanatar ========
+what: kernels of amanatar, top 10 by dateRun
+cmd: kaggle kernels list --user amanatar --sort-by dateRun --page-size 10 -v
+fetch: OK attempts=1 rc=0 rows=10
+--- stdout ---
+ref,title,author,lastRunTime,totalVotes
+amanatar/notebookd71800bfae,notebookd71800bfae,Aman Atar,2026-09-28 15:43:30.523000,0
+amanatar/rsna-knee-super-ensemble-0920,RSNA Knee Super Ensemble 0920,Aman Atar,2026-09-27 02:12:58.663000,14
+amanatar/optimized-biohub-max-score,optimized-biohub-max-score,Aman Atar,2026-09-27 01:39:05.377000,79
+amanatar/s6e9-realmlp-exact-value-neural-network-gpu,S6E9: RealMLP Exact-Value Neural Network GPU,Aman Atar,2026-09-23 01:37:06.037000,4
+amanatar/enveda-casmi-2026,Enveda CASMI 2026 ,Aman Atar,2026-09-21 10:23:34.017000,1
+amanatar/biohub-geometric-fusion,Biohub Geometric Fusion,Aman Atar,2026-09-21 09:18:35.700000,170
+amanatar/bend-the-knee-tta-elite-optimized,Bend the Knee TTA - Elite Optimized,Aman Atar,2026-09-20 01:43:27.503000,1
+amanatar/s6e9-sota-meta-blend,S6E9: SOTA Meta-Blend,Aman Atar,2026-09-19 14:22:05.600000,10
+amanatar/s6e9-samart-sota-meta-blend-lb-0-94656-champion,⚡ S6E9:SAmart SOTA Meta-Blend (LB 0.94656 Champion,Aman Atar,2026-09-19 02:31:11.953000,34
+amanatar/s6e9-smart-titan-meta-blend,S6E9: Smart Titan Meta-Blend,Aman Atar,2026-09-16 11:25:12.097000,4
+
+======== status_amanatar__optimized-biohub-max-score ========
+what: kernel status of amanatar/optimized-biohub-max-score
+cmd: kaggle kernels status amanatar/optimized-biohub-max-score
+fetch: OK attempts=1 rc=0 status=COMPLETE
+--- stdout ---
+amanatar/optimized-biohub-max-score has status "KernelWorkerStatus.COMPLETE"
+
+======== status_anvithpothula__biohub-0-953-lb-original ========
+what: kernel status of anvithpothula/biohub-0-953-lb-original
+cmd: kaggle kernels status anvithpothula/biohub-0-953-lb-original
+fetch: OK attempts=1 rc=0 status=COMPLETE
+--- stdout ---
+anvithpothula/biohub-0-953-lb-original has status "KernelWorkerStatus.COMPLETE"
+
+======== leaderboard ========
+what: public leaderboard, full download (rows >= 0.953 and the histogram below)
+cmd: kaggle competitions leaderboard biohub-cell-tracking-during-development --download -p <tmpdir>
+fetch: OK attempts=1 rc=0 file=biohub-cell-tracking-during-development.zip:biohub-cell-tracking-during-development-publicleaderboard-2026-09-28T16:43:29.csv csv_rows=3972
+--- stdout ---
+Downloading biohub-cell-tracking-during-development.zip to <tmpdir>
+--- stderr ---
+100%|██████████| 125k/125k [00:00<00:00, 1.07MB/s]
+
+======== leaderboard_rows ========
+CSV rows with Score >= 0.953: 926 of 3972 rows kept (the rest omitted); total teams 3969; file biohub-cell-tracking-during-development.zip:biohub-cell-tracking-during-development-publicleaderboard-2026-09-28T16:43:29.csv
+Rank,TeamId,TeamName,LastSubmissionDate,Score,SubmissionCount,TeamMemberUserNames
+1,16454395,yu4u,2026-09-28 02:21:33,0.978,120,ren4yu
+2,16454292,Sergio Alvarez,2026-09-27 21:46:19,0.976,109,sersasj
+3,16847212,Gabriel,2026-09-28 05:24:40,0.975,31,"shawsebastian,tvtdddd"
+4,16564752,taiseiu,2026-09-28 01:23:41,0.974,95,taiseiu
+5,16893781,ymg_aq,2026-09-28 00:01:46,0.971,51,ymgpalaqs
+6,16512330,tatsutaka,2026-09-27 21:44:20,0.971,114,tatsutaka
+7,16455316,Tang,2026-09-28 08:06:22,0.971,197,hirotetsu
+8,16535813,slime,2026-09-28 11:36:26,0.970,167,"eijixxx,gaopengren"
+9,16719036,The Boys,2026-09-28 12:24:23,0.970,308,"lowasitgoes,sggpls,tonylica"
+10,16893229,Kayla L.,2026-09-28 06:49:29,0.970,70,kaylal915
+11,16800114,Syed Asad Ali,2026-09-28 00:09:40,0.969,34,syed3000
+12,16685695,Adeptus Overfiticus,2026-09-28 12:07:41,0.969,309,"asimandia,ignatgotin,mikhisor,ogurtsov,zoli800"
+13,16675792,unicellular,2026-09-27 20:53:20,0.969,177,aliozanmemetoglu
+14,16907051,Burhan Ul Tayyab,2026-09-28 15:27:36,0.969,44,babychick
+15,16779186,Quantizr,2026-09-28 05:49:22,0.969,18,quantizr
+16,16494792,z7777,2026-09-28 09:32:31,0.969,138,songqizhou
+17,16943367,Yaroslav,2026-09-28 00:13:24,0.969,35,yaroslavrogoza
+18,16679305,Corwin,2026-09-28 08:13:40,0.968,105,"corwin1979,mathisbaguette"
+19,16734921,SoichiOzaki,2026-09-28 00:01:03,0.968,140,soichiozaki
+20,16531860,Soheil Ayati,2026-09-24 19:08:44,0.968,70,soheilayati
+21,16466353,Zhu Chen 96,2026-09-27 23:38:30,0.967,90,zhuchen96
+22,16557477,Takahiro Katsumata (tkatsuma),2026-09-28 04:36:29,0.967,57,alextfkd
+23,16750423,Deniz Özaydın,2026-09-28 03:17:05,0.967,82,"deniz143wow,seymenaltnel"
+24,16552030,Ryo Hasegawa,2026-09-28 08:14:36,0.967,126,ryohasegawa926
+25,16461152,Abnormal Guys,2026-09-28 08:52:24,0.967,125,"gwey1025,koushikrudra,liuyangmei,lxorbade,xinranju"
+26,16673305,Samuel Sundararaman ,2026-09-28 00:00:42,0.966,80,neopok919
+27,16454235,Vibes & Edges Trade-Off,2026-09-28 03:20:35,0.966,409,"dorainren,i2nfinit3y,tahaalshatiri,tom99763,weishanshan033"
+28,16545035,Zyy7390,2026-09-28 00:02:47,0.966,118,zyy7390
+29,16933287,umizora,2026-09-28 05:32:43,0.966,12,yoiisohira
+30,16455935,mige551,2026-09-28 03:00:46,0.966,94,mige551
+31,16712536,Yizhou,2026-09-28 08:30:59,0.966,65,yaphellee
+32,16575737,Bioinformatics is not solution,2026-09-26 02:37:29,0.966,46,"dfgtde,yuyizhu"
+33,16557044,que la cuenten como quieran,2026-09-28 02:37:28,0.966,33,germanjurado1
+34,16925869,Rio,2026-09-27 09:47:41,0.966,8,ryosukehada
+35,16738619,Shoko,2026-09-28 00:08:36,0.965,43,abreyton
+36,16453453,OzanM.,2026-09-27 21:13:14,0.965,158,analyticaobscura
+37,16600445,goh,2026-09-28 02:37:23,0.965,42,bungohatayama
+38,16671090,tomohito shimura,2026-09-28 07:58:07,0.965,61,tomohitoshimura
+39,16549666,Makoto Nagatomo,2026-09-28 05:27:55,0.965,82,makotonagatomo0926
+40,16456484,Lime1123,2026-09-28 00:01:24,0.965,198,"k3v1npark,lime1123,songhow"
+41,16943822,Noah Öksüz,2026-09-28 08:59:11,0.965,30,noahksz
+42,16555250,syouya tobita,2026-09-28 00:01:00,0.965,60,syouyatobita
+43,16839023,Ad Space available,2026-09-27 18:32:57,0.965,74,"rainchen0411,richardsilence"
+44,16508219,Biomed Foresight,2026-09-28 06:53:35,0.964,59,"tsukasamiyaji,yudaiyamauchi"
+45,16472193,LIN mimosa,2026-09-27 19:11:49,0.964,37,"achenyyc,linmimosa"
+46,16601893,Rasheed Khoshnaw,2026-09-28 00:03:44,0.964,54,rasheeed
+47,16454933,打倒🥉銅メダルくれbot,2026-09-28 06:06:21,0.964,114,"rikutokuwayama,soutasakurai,welshonionman"
+48,16461729,tc-al,2026-09-28 10:14:26,0.964,24,bobmyersthesecond
+49,16756161,Jeff Horon,2026-09-28 00:06:39,0.964,96,jeffhoron
+50,16778653,Nabil Hanif,2026-09-27 09:52:49,0.964,22,nmh12345
+51,16918262,Ascent,2026-09-28 09:28:23,0.963,21,ishaangangwani
+52,16734955,Jongwon,2026-09-28 00:04:36,0.963,152,impala9397
+53,16667756,LeeDongHyuk,2026-09-28 02:59:31,0.963,254,odyssey189
+54,16846037,cheng ren01,2026-09-28 01:40:17,0.963,35,"chengren01,zsuzifan"
+55,16458101,Knight of Favonius,2026-09-28 08:59:06,0.963,109,ladyfaye
+56,16460638,Mark Cooper,2026-09-28 08:30:04,0.963,133,markjcooper
+57,16533694,yuto083,2026-09-28 09:48:25,0.963,216,yuto0712
+58,16855245,BorisV,2026-09-28 00:01:33,0.963,58,bvoskresenskii
+59,16554628,[RU] Kirill Makhankov,2026-09-28 07:35:04,0.963,19,kagglercs
+60,16772562,Ojaswy,2026-09-28 09:07:44,0.963,14,ojaswy
+61,16459168,yarosladovkin,2026-09-27 04:48:13,0.963,18,"nickpudovkin,zabojeb"
+62,16594300,Brothers,2026-09-28 02:43:57,0.963,70,"talhabacak,tarikbacak"
+63,16459877,laughingmen,2026-09-27 10:46:10,0.963,42,laughingmen
+64,16462639,José Freitas,2026-09-28 00:09:20,0.962,96,josefreitasalvesneto
+65,16738423,Vodolay,2026-09-27 19:39:55,0.962,68,lacsirjohn
+66,16863417,rode1234,2026-09-28 08:02:45,0.962,76,rode1234
+67,16703128,Teddy Tennant,2026-09-28 07:43:53,0.962,55,thtennant
+68,16854211,Guest21222,2026-09-28 00:47:08,0.962,37,guest21222
+69,16655121,Roronoa Zoro,2026-09-28 00:02:17,0.962,41,fevziyeniyol
+70,16618295,Jiman Kwon,2026-09-28 08:49:17,0.962,158,jimankwon
+71,16823035,めめっち,2026-09-28 02:00:05,0.962,35,mechi22
+72,16737780,wally0593,2026-09-28 04:41:17,0.961,29,wally0593
+73,16805586,Jivansh,2026-09-27 19:30:41,0.961,15,jivanshc
+74,16809138,Boris Matsakov,2026-09-28 00:00:35,0.961,25,borismatsakov
+75,16718308,Artalmaz31,2026-09-28 00:15:01,0.961,159,"andronhl,artalmaz31,isy640"
+76,16454955,RicardoLópez,2026-09-25 22:06:50,0.961,97,richi2489
+77,16730252,ibyyue,2026-09-28 00:06:22,0.961,102,ibyyue
+78,16610773,Choruru,2026-09-27 18:35:42,0.961,158,choruru
+79,16803317,tyffee,2026-09-28 04:05:41,0.961,64,tyffee
+80,16596911,Michael Hernandez,2026-09-28 00:01:38,0.961,158,michaelhernandez4
+81,16509481,tobhull,2026-09-27 19:20:47,0.961,28,tobhull
+82,16799049,Mingcheng Zhao,2026-09-28 00:00:18,0.961,16,zhaonoah
+83,16932184,Anurag Bihani,2026-09-27 21:16:41,0.961,7,anuragbihani
+84,16667430,🥉銅メダルくれbot ＆ 後輩,2026-09-27 22:21:29,0.961,149,"konbu17,yuki0731"
+85,16489438,Alfonso Sánchez,2026-09-28 05:27:40,0.961,125,alfonso1799
+86,16461350,TWEAK,2026-09-27 23:33:19,0.961,373,"antonoof,l1ghtsource,markdjadchenko,tweakai,varianceofx"
+87,16943742,Reuben Ernser,2026-09-25 23:21:14,0.961,15,reubenernser
+88,16812172,Xie Zejian,2026-09-28 05:24:47,0.961,99,xiezejian
+89,16792456,Timass,2026-09-27 20:48:42,0.960,17,timmass2
+90,16798008,Dragibus,2026-09-28 07:32:25,0.960,36,alexandremoritz
+91,16715609,ji-ma,2026-09-28 01:33:45,0.960,15,nkjima
+92,16691780,r3takahashi,2026-09-28 10:54:01,0.960,133,r3takahashi
+93,16785643,CrazyML,2026-09-28 03:53:30,0.960,53,"janhvikhattri,sorcererbi,vedanshipathak"
+94,16458589,xanderr,2026-09-28 00:06:15,0.960,303,"arulprasadsp,joshnaacshas21cs,shalwinsanju"
+95,16875931,寻找队友QQ2593124087,2026-09-28 08:44:06,0.960,35,"badboiriri,xiuyang88"
+96,16885171,thisray,2026-09-28 07:04:14,0.960,33,thisray
+97,16533430,Bio-Pirates,2026-09-26 10:20:41,0.960,184,"akankshatiwari2803,ankitlade12,indarkarhana,jsaikrishna"
+98,16843878,T1,2026-09-28 01:01:31,0.960,62,weense
+99,16683029,oreomori,2026-09-27 13:40:09,0.960,10,reokambayashi
+100,16933058,mmtyeu,2026-09-27 02:44:07,0.960,25,"guaijf,mmtyeu,turtti"
+101,16588726,kusui26,2026-09-28 01:23:30,0.960,12,kusui26
+102,16937825,Teju Olarewaju,2026-09-28 00:01:38,0.960,35,tejuolarewaju
+103,16776896,Thirst,2026-09-28 06:42:57,0.960,41,wahidakram
+104,16484369,Médéric Hurier (Fmind),2026-09-28 04:47:53,0.960,157,freaxmind
+105,16928361,Agnes,2026-09-28 08:53:26,0.959,6,mqingcs
+106,16867825,Oleksandr Parfionov,2026-09-28 07:59:19,0.959,45,parfyon
+107,16892218,DrFranklinH,2026-09-28 02:52:29,0.959,71,drfranklinh
+108,16459411,Cyrus,2026-09-28 09:31:52,0.959,73,jamalsaeedi
+109,16796493,T-Hans7,2026-09-27 10:05:55,0.959,57,"asd242538a,eiffellu,sowsowa,thans7"
+110,16931222,Oikantik Basu,2026-09-27 08:31:53,0.959,20,oikantikbasu007
+111,16833965,Revanth Tambisetty,2026-09-28 03:35:05,0.959,26,revanthtambisetty
+112,16758580,MTADA,2026-09-28 05:16:00,0.959,75,"masarutada,tokitamago"
+113,16933482,D Chakraborty,2026-09-28 09:01:10,0.959,23,spoutop
+114,16541909,Ryu Sonoda,2026-09-27 00:05:43,0.959,28,ryusonoda
+115,16798282,John Taylor (AI),2026-09-28 00:44:31,0.959,45,johntaylorai
+116,16739651,OTkm_tn,2026-09-28 00:19:25,0.959,33,otkmtn
+117,16774680,rogerrogerroger3r,2026-09-28 08:02:06,0.959,83,rogerrogerroger3r
+118,16698595,Kito,2026-09-28 02:56:29,0.959,14,ovallid
+119,16454661,Matt Goldfield,2026-09-28 08:27:06,0.959,288,mgoldfield
+120,16807963,Saravanan Jaichandaran,2026-09-27 12:05:35,0.959,17,saranchandar
+121,16480462,maesaer,2026-09-28 08:39:14,0.959,106,maesaer
+122,16462662,Amin,2026-09-27 20:29:35,0.959,172,aminvafaei
+123,16486532,enddl22,2026-09-28 05:42:59,0.959,237,enddl22
+124,16482471,Pawan Rama Mali,2026-09-27 18:56:19,0.959,45,pawanmali
+125,16514796,Mositaku,2026-09-28 05:41:55,0.959,26,versavice
+126,16758945,Miz,2026-09-28 05:51:44,0.958,62,ryota040
+127,16931466,RyotaroAbe,2026-09-27 15:25:07,0.958,14,ryotaro45123
+128,16575814,Umesh Arampath,2026-09-20 15:15:59,0.958,138,uarampath
+129,16739885,James Y,2026-09-28 04:41:36,0.958,72,redoctopusk
+130,16710230,Deep Thought,2026-09-27 18:41:25,0.958,73,deepakjnath
+131,16670748,To The Moon,2026-09-27 18:09:59,0.958,220,"andrey4522,ispromashka,pavelsavchenkov,williamwu88"
+132,16604283,hikaggler,2026-09-28 03:44:55,0.958,197,"hikarukai,hono6b"
+133,16707369,辛弃疾lhx,2026-09-25 08:33:03,0.958,28,"chaohong03,hsnononolhx,jacobwu2028,yindujuxi123"
+134,16817845,Vijay Mariappan,2026-09-28 02:27:06,0.958,82,vijay75
+135,16685275,CurveCowboy,2026-09-28 06:16:55,0.958,33,curvecowboy
+136,16497717,kkunizaw,2026-09-28 00:01:24,0.958,160,kkunizaw
+137,16805786,Mthem77,2026-09-28 03:11:42,0.958,45,mthem77
+138,16492248,marchq,2026-09-28 08:27:19,0.958,41,petrovmarko
+139,16810638,D: Discipline,2026-09-28 05:02:30,0.958,52,"gsfatakhov,sasyami,vitaliineibauer"
+140,16936164,Antoniu Gugu,2026-09-27 19:32:18,0.958,30,antoniu
+141,16456126,Hira Norm,2026-09-28 05:10:50,0.958,158,hiranorm
+142,16848330,Daikon99,2026-09-27 18:58:00,0.958,36,daikon99
+143,16929638,menphim,2026-09-28 09:13:04,0.958,22,menphim
+144,16809422,Fanch,2026-09-28 02:28:49,0.958,53,fanch123
+145,16717530,Thomas Greissler,2026-09-27 19:59:36,0.958,4,thomasg22202020
+146,16578232,Sailor Ren,2026-09-28 03:00:02,0.958,64,"dongdongjiaqi,sailorren"
+147,16914590,Luon may Man,2026-09-28 08:13:23,0.957,44,luonmayman
+148,16667924,Adil Khabibullin,2026-09-27 04:04:19,0.957,59,adilkhabibullin
+149,16875605,kkkk,2026-09-28 00:02:59,0.957,70,kkkk4649
+150,16454626,Suuuiiii4,2026-09-28 08:46:59,0.957,128,bharath111l
+151,16482033,zentropy,2026-09-28 04:43:49,0.957,385,jessky
+152,16734265,Takumu Hata,2026-09-27 09:45:23,0.957,3,takumuhata
+153,16857336,koucha,2026-09-28 08:20:54,0.957,29,momotakaaoki
+154,16487273,Tagir Analyzes,2026-09-26 20:54:50,0.957,29,tagirkhairutdinov
+155,16479761,codebeforework,2026-09-28 00:05:33,0.957,130,codebeforework
+156,16518070,Anvith Pothula,2026-09-28 00:04:02,0.957,143,anvithpothula
+157,16790581,wzyxp_123,2026-09-28 03:48:09,0.957,45,cloudssdut
+158,16461589,Pai,2026-09-27 15:56:02,0.957,53,rajathrpai
+159,16459327,Ryo Takaki,2026-09-28 00:08:00,0.957,19,ryotakaki
+160,16705950,hana87hana,2026-09-27 15:37:07,0.957,44,hana87hana
+161,16455247,MAIDANG,2026-09-28 02:38:58,0.957,202,"daifanhao,dylonwilliam"
+162,16710283,Maaax,2026-09-28 00:00:37,0.957,64,maaax
+163,16810288,maco-macoo,2026-09-28 09:05:30,0.957,29,macomacoo
+164,16744536,Sam Barnett,2026-09-28 07:30:06,0.957,10,sambarnett03
+165,16460366,Arunava Nag,2026-09-28 01:45:00,0.957,29,arunavanag
+166,16837478,takaito,2026-09-28 09:20:24,0.957,40,takaito
+167,16607433,ikki1111,2026-09-28 07:50:11,0.957,51,kani23
+168,16655148,Ben Pepper,2026-09-27 23:13:30,0.957,97,bhpepper
+169,16690735,biodegradable kagglers,2026-09-28 06:21:26,0.957,159,"alexeyshmelev,ivangevorkov"
+170,16671210,nonca,2026-09-27 16:13:00,0.957,47,quoteriskmst
+171,16574913,Freeman Hui,2026-09-28 00:15:15,0.957,83,freemanhui
+172,16896272,Elooquence,2026-09-27 07:26:58,0.957,5,"elooquence,opulencee,piicturesque"
+173,16921534,tofu1002,2026-09-28 09:25:56,0.957,21,tofu1002
+174,16663746,Vyas,2026-09-27 22:46:46,0.957,29,vyask21
+175,16889354,Biooooohub,2026-09-28 08:41:06,0.957,129,"congyingma,jennieshiwang,makabaka322,zhanshuozhang67,zihanhe22"
+176,16561614,Justin CH123,2026-09-28 00:05:05,0.957,78,justinch123
+177,16459913,Rishabh Roy,2026-09-26 19:53:29,0.957,133,"rishabhr0y,themechanicalcoder"
+178,16728526,tedo,2026-09-27 07:36:11,0.957,56,takuroedo
+179,16756059,Thomas,2026-09-28 00:03:24,0.957,56,tommurakami
+180,16532880,Team Alicia,2026-09-28 02:44:02,0.957,46,"aadigupta7686,del=46a2189cba2f6d40,imamhasnat,krisdreemurr,nabidnur"
+181,16457002,Suncrest,2026-09-28 03:20:46,0.957,41,suncrest
+182,16852585,OmerZalman,2026-09-27 20:31:30,0.957,42,omerzalman
+183,16743149,zy,2026-09-27 23:28:51,0.957,69,justforwin
+184,16714204,andrei6184,2026-09-26 07:22:32,0.957,31,andrei6184
+185,16591379,MaruanBOttoni,2026-09-28 00:31:23,0.957,50,maruanbottoni
+186,16471152,Akhil Chinta,2026-09-28 01:19:12,0.957,47,akhilchinta1505
+187,16479551,Lien,2026-09-27 15:48:09,0.957,79,lien151322
+188,16829814,mrmldjr,2026-09-28 07:47:51,0.957,30,mrmldjr
+189,16720356,youill0317,2026-09-28 06:15:55,0.957,142,youill0317
+190,16481288,TakamaruEX,2026-09-28 00:02:11,0.956,145,takamaruex
+191,16454687,Vivek Sanker,2026-09-28 00:07:02,0.956,96,viveksanker
+192,16935353,Yaroslav Polyakov,2026-09-28 09:10:12,0.956,17,"izek123,y9pameow"
+193,16505038,datnt114,2026-09-27 02:36:55,0.956,23,kingkong153
+194,16940725,Danzzzl,2026-09-28 09:19:30,0.956,16,okunevda
+195,16717367,Raikou's fanclub,2026-09-27 14:29:03,0.956,12,"raikouf,songbirdie"
+196,16846667,len8487,2026-09-28 05:15:29,0.956,54,len8487
+197,16475949,Naladweppo,2026-09-27 20:30:19,0.956,15,naladwepo
+198,16780888,Arda Özcan,2026-09-26 10:07:18,0.956,20,ardozcnn
+199,16683690,Julie Pedeches,2026-09-28 08:59:01,0.956,94,juliep
+200,16844234,y3uanm,2026-09-26 14:51:24,0.956,64,"delta47x,lunpaixo,y3uanm,zhaozhangwen"
+201,16599494,Frederick Lee,2026-09-28 01:04:09,0.956,106,"frederickvlee,sjlee101"
+202,16728523,aca-ta,2026-09-27 23:50:51,0.956,27,seljydef
+203,16783539,JustinybGao,2026-09-27 23:45:54,0.956,30,justinybgao
+204,16923459,ssaakura,2026-09-26 03:27:28,0.956,5,"horizon0,mexriva,solstfice,ssaakura"
+205,16923397,kouhei mori,2026-09-28 09:08:50,0.956,8,kouheimori
+206,16563421,NorthStar,2026-09-28 03:58:15,0.956,93,"khushineha28,nehak76044,rishavutkarsh"
+207,16457479,Kim Jinseo,2026-09-27 14:56:58,0.956,42,kimjinseo1
+208,16574121,Igor V,2026-09-28 07:59:17,0.956,89,rostigor
+209,16854730,Korokke3,2026-09-28 04:55:06,0.956,17,korokke3
+210,16799729,yeming151,2026-09-25 00:59:38,0.956,8,"chenenhao,jiangxinyao1,lplooo,yeming151"
+211,16495010,winstonton,2026-09-28 05:48:15,0.956,38,winstonton
+212,16943791,KR_no_1,2026-09-27 14:38:16,0.956,73,"krno1legend,malikhammadfarooq,myab07,uradkr"
+213,16455775,Hack2Publish,2026-09-28 08:56:00,0.956,249,"esfersami50,foysalemonshanto,hosen42,rokaiyasomapti"
+214,16512476,QYQ1693,2026-09-28 03:37:37,0.956,48,qyq1693
+215,16839709,kk.sky.9k,2026-09-28 08:33:57,0.956,98,kksky9k
+216,16548035,wodedaodun,2026-09-27 21:01:52,0.956,58,"alisalmanrana,azhuang8,feifanque,selinaawuu"
+217,16934441,jianingwuu,2026-09-27 15:20:20,0.956,8,jianingwuu
+218,16927822,William Zhao,2026-09-28 08:02:05,0.956,8,willzhaoo
+219,16456961,minghao mei,2026-09-28 01:24:06,0.956,33,minghaomei
+220,16942268,tmgf,2026-09-28 08:56:25,0.956,5,tiagomgfernandes
+221,16533366,RFeng12,2026-09-28 00:13:11,0.956,64,rfeng12
+222,16820124,Euphor_M,2026-09-28 00:29:36,0.956,33,euphor
+223,16852577,niulai,2026-09-28 07:09:06,0.956,5,rngrng
+224,16459596,Fernando Couto,2026-09-27 17:32:23,0.956,68,fernandocouto
+225,16456070,mikelou1,2026-09-28 03:00:39,0.956,64,mikelou1
+226,16458140,automatylicza,2026-09-27 09:20:57,0.956,104,automatylicza
+227,16465176,taopy2,2026-09-28 09:10:43,0.956,135,taopy2
+228,16457567,Efthimios,2026-09-28 09:05:53,0.956,78,efthimiosfousekis
+229,16733967,insuperabilehart,2026-09-28 05:21:13,0.956,17,insuperabile
+230,16693040,Carl Makt,2026-09-28 03:25:24,0.956,27,carlmakt
+231,16743228,yoshino,2026-09-28 08:39:35,0.956,35,shirayukiaya
+232,16924467,Astra,2026-09-28 02:29:15,0.956,25,zzdfdfhg
+233,16818314,haonan zhengh,2026-09-27 07:47:22,0.956,42,haonanzhengh
+234,16670346,To-i,2026-09-26 13:50:34,0.956,57,"rannn12226,rikitokanda"
+235,16747091,heliosli,2026-09-27 01:29:13,0.956,74,heliosli
+236,16780761,wind0703,2026-09-28 02:48:18,0.956,69,wind0703
+237,16514415,MengYe,2026-09-28 01:33:16,0.956,17,konohayui
+238,16732066,zhanghao,2026-09-28 02:27:13,0.956,17,mendymandy
+239,16762743,Zenith Ye,2026-09-28 10:19:02,0.956,28,zenithye
+240,16474152,zhuo wamg,2026-09-28 05:18:33,0.956,131,"xsmaxpc,zhuowamg"
+241,16900521,Machine_e1,2026-09-26 13:34:03,0.956,16,"arcanee1,machinee1,mymilk"
+242,16749192,qr Z1201,2026-09-28 04:35:49,0.956,78,qrz1201
+243,16796675,Jiacheng Zhao,2026-09-28 06:11:37,0.956,41,glorysing
+244,16499610,Jimmer,2026-09-28 01:02:54,0.956,35,przemysawonr
+245,16877600,Rabotyagi,2026-09-27 19:19:28,0.956,56,"kkonst,lonansyayf,roflanvglorius,seva1232"
+246,16669581,moto,2026-09-28 06:43:52,0.956,81,"hikari30,yamashitamotokazu"
+247,16731820,Faustine,2026-09-27 14:50:31,0.956,35,faustine649
+248,16705896,yamashu,2026-09-28 04:53:05,0.956,32,yamashuuu
+249,16857776,Tracking Experts,2026-09-28 08:43:10,0.956,91,"bayesnet,gptkernel,normbox"
+250,16709193,MKhlystun,2026-09-28 00:31:37,0.956,72,mkhlystun
+251,16810028,BOB,2026-09-28 06:38:36,0.956,67,hotpotbro
+252,16878593,한밭대학교컴퓨터공학과정우민,2026-09-28 02:24:21,0.956,54,woominyo
+253,16927145,Nikitas Rafael Nikitas,2026-09-28 09:30:04,0.956,9,rafanikitas
+254,16876164,Kirill Labzin,2026-09-28 07:25:26,0.956,43,kirilllabzin
+255,16848632,田口雄大,2026-09-28 01:30:31,0.956,53,"shiiin9,ydi102143"
+256,16584145,Kai Gowers,2026-09-28 02:08:38,0.956,33,kaigow
+257,16909067,команда Андрея Гайдуляна,2026-09-28 08:31:35,0.956,20,"domager72,fylgde,kolyaflexcu"
+258,16457929,Howon Kang,2026-09-28 09:22:14,0.956,127,howonkang
+259,16904998,Yudai Ueno,2026-09-28 02:08:12,0.956,30,yudaiueno
+260,16459461,YuyaSuzuki,2026-09-28 09:09:22,0.956,123,yututapp
+261,16453734,Mathurin Ache,2026-09-28 09:38:10,0.956,68,mathurinache
+262,16603670,Habibur_Rahman,2026-09-28 07:01:47,0.956,35,habiburrahman15
+263,16879796,kta_jpn,2026-09-28 07:29:44,0.956,22,ktajpn
+264,16488061,Boiled-Sweet-Potato,2026-09-28 07:47:37,0.956,34,boiledsweetpotato
+265,16588784,Sankalp Thakur,2026-09-28 08:54:13,0.956,91,"aasthathakur,sankalpsthakur"
+266,16467119,Bedirhan Dinçer,2026-09-28 08:21:13,0.956,43,"bedirhandiner,semihbal"
+267,16460928,juliencst,2026-09-28 08:43:49,0.956,15,juliencst
+268,16680190,hjyact,2026-09-28 09:17:33,0.956,102,hjyact
+269,16614729,OpPrime,2026-09-28 09:48:17,0.956,92,farshidamira
+270,16933511,ra1nac1d,2026-09-28 09:52:06,0.956,4,ra1nac1d
+271,16802533,Volt,2026-09-28 10:07:35,0.956,22,"filipplotsmanov,oleksiikrasnoshtanov"
+272,16468866,Filip Strzałka,2026-09-27 19:27:42,0.956,157,snufkin77
+273,16896242,mexlora,2026-09-27 08:57:01,0.956,13,"mexlora,nolzixo,qizlona"
+274,16705682,Kaz,2026-09-28 04:32:23,0.956,21,kazuyago
+275,16459107,Ayodeji,2026-09-28 00:29:21,0.956,215,ayodejiibrahimlateef
+276,16618751,ocean240812,2026-09-28 08:45:15,0.956,170,ocean240812
+277,16493652,InSociEUP,2026-09-27 14:56:41,0.955,22,santanubanerjee9
+278,16514513,harmo-miu,2026-09-28 05:44:41,0.955,83,harmomiu
+279,16840258,Noir,2026-09-28 00:01:45,0.955,45,nuitnoir
+280,16470584,github/shepsci/kaggle-skill,2026-09-28 00:38:28,0.955,65,shepscientific
+281,16795364,xinwang,2026-09-28 09:02:53,0.955,60,xxxtetantion
+282,16636119,Jordi Corbilla,2026-09-28 00:53:48,0.955,40,jordicorbilla
+283,16588537,Civitasmass,2026-09-28 06:38:17,0.955,85,godhand
+284,16741774,msd0110,2026-09-27 01:29:43,0.955,50,msd0110
+285,16876492,Adam,2026-09-28 04:46:02,0.955,19,potonglantie93
+286,16459225,Jerry Park,2026-09-28 07:55:24,0.955,92,mecome
+287,16634028,Mike Kim,2026-09-28 01:22:09,0.955,46,mikeskim
+288,16695540,frank9487,2026-09-28 03:36:53,0.955,6,frank9487
+289,16536241,Harish Dhanarajan,2026-09-28 06:28:01,0.955,19,harishdhanarajan
+290,16915265,eiactorx,2026-09-26 14:37:03,0.955,70,"eiactorx,fossillla,lilyyexizhan,wlimetric"
+291,16935351,Bon Ho,2026-09-28 08:56:21,0.955,9,bon513
+292,16772401,ikevayansky,2026-09-28 04:35:49,0.955,105,ikevayansky
+293,16751042,Majid Aleissa,2026-09-28 01:27:18,0.955,128,majidaleissa
+294,16670956,안녕하세요이세입니다잘부탁드립니다,2026-09-28 04:24:44,0.955,46,municef1
+295,16917691,Aristotle.Chen,2026-09-28 04:10:16,0.955,40,aristotlechen
+296,16568564,t-enstar,2026-09-27 22:41:36,0.955,51,tstustatama
+297,16512384,Team Name,2026-09-27 11:04:29,0.955,52,amosokello451
+298,16609242,xiaoyukun1,2026-09-28 09:17:19,0.955,91,"nizhenghong,xiaoyukun1"
+299,16915168,manase0,2026-09-27 07:21:28,0.955,25,"hperia3ds,jackeyguo66,manase0,spectrah"
+300,16673568,bighead514188,2026-09-28 08:14:44,0.955,33,"bighead514188,qinlucao"
+301,16814927,zhehao liang,2026-09-28 06:36:33,0.955,64,"pengyuzhongzju,zhehaoliang"
+302,16866534,d1amp0,2026-09-27 21:21:25,0.955,27,d1amp0
+303,16818186,interplinker,2026-09-28 10:34:06,0.955,17,interplinker
+304,16773424,4kut4,2026-09-28 00:42:35,0.955,148,naokwmr
+305,16889016,Astra Team,2026-09-28 08:18:05,0.955,90,"bujiabao,elz1008,siyuwangceliya,yinghli"
+306,16479746,Apoorva Ajay,2026-09-28 09:00:03,0.955,109,"apoorvada,jazivxt"
+307,16939681,tokawa2997,2026-09-28 02:00:25,0.955,32,tokawa2997
+308,16466545,Kevin E R MILLE,2026-09-28 00:24:55,0.955,158,kevinermille
+309,16453475,MH,2026-09-27 15:42:22,0.955,13,makarrogovik
+310,16891035,Ndabenhle Ngema,2026-09-26 23:32:43,0.955,17,"ndabenhlengema,nokubongangema"
+311,16924085,isk54_34,2026-09-28 07:38:42,0.955,28,isk5434
+312,16602564,VSG,2026-09-28 00:03:16,0.955,110,"chingizkhankishiyev,dzinski,ellightened,muradnuraliyev,skyweel08"
+313,16790801,Suyash Verma,2026-09-27 18:46:24,0.955,84,suyashdiamond1
+314,16811966,BNBU Geniuses,2026-09-28 06:38:26,0.955,45,"andycooper747,austindengkaggle,BNBUDINGSHANLee21,yuxiang328"
+315,16741203,farmer,2026-09-25 09:11:51,0.955,136,trnhip
+316,16453635,Baidalin Adilzhan [dsml.kz],2026-09-28 01:29:26,0.955,47,"baidalinadilzhan,qasminumber,zelza0"
+317,16651943,xxxx0314,2026-09-28 03:46:59,0.955,151,"kirklandsan,xxxx0314,yunfeiyang223"
+318,16795710,Train is all you need,2026-09-28 07:01:33,0.955,100,"faykudbq,shenbyu,wujunye1"
+319,16458361,Komil Parmar,2026-09-27 00:03:16,0.955,107,komilparmar
+320,16845369,Satwik,2026-09-28 04:35:16,0.955,35,p4rallax
+321,16897002,atsukiwi,2026-09-28 06:46:00,0.955,39,atsuki0827
+322,16632057,Any Things,2026-09-28 03:08:10,0.955,36,anythingsj3fare767
+323,16539325,Ikeda0516,2026-09-28 07:14:40,0.955,13,ikeda0516
+324,16897440,Boris Bezmenov,2026-09-24 20:15:25,0.955,23,borisbezmenov
+325,16826101,Isabella Wang,2026-09-28 06:09:48,0.955,11,isabellacwang
+326,16592624,tomasa2,2026-09-28 09:31:47,0.955,51,tomasa2
+327,16758483,LYD,2026-09-28 03:39:12,0.955,114,"archedfox,huanghongming,letyoudown,sraphim"
+328,16551924,Jean-François DAVID,2026-09-27 21:12:01,0.955,53,"jeanfranoisdavid,voldavid"
+329,16838854,sudoyan,2026-09-28 03:03:11,0.955,37,sudoyan
+330,16488535,Mitsuhiro Iizuka,2026-09-28 00:37:29,0.955,144,mitsuhiroiizuka
+331,16454055,MOHAMMADJAFAR ZAMANI,2026-09-28 07:40:44,0.955,148,mohammadjafarzamani
+332,16590155,Yam,2026-09-28 06:02:39,0.955,48,minyam
+333,16661495,abcfd,2026-09-28 06:48:12,0.955,75,matsunagaxxx
+334,16750577,Gronk,2026-09-28 03:10:28,0.955,44,jianyicai
+335,16807846,Ornate_show,2026-09-27 15:00:20,0.955,31,ornateshow
+336,16462523,hikarimaru,2026-09-21 18:47:52,0.955,84,hikarimaru
+337,16607156,Madiyar Khamzanov,2026-09-28 09:44:36,0.955,121,mkhamzanov
+338,16463138,tf,2026-09-28 06:13:41,0.955,18,tfukuhara
+339,16768238,cesare,2026-09-28 09:51:27,0.955,64,cesaremov
+340,16777668,pycon2026,2026-09-27 21:28:26,0.955,42,"kazeneko77,tanako"
+341,16453977,Yunus Gümüşsoy,2026-09-27 23:57:48,0.955,205,yunusgmsoy
+342,16853440,Subramanya N,2026-09-28 04:11:57,0.955,63,subramanya1997
+343,16577431,mi6,2026-09-28 08:57:15,0.955,205,"aimixo,elisami6,meikintom,pauboncompte,zhongbapapapa"
+344,16506372,tizawa3,2026-09-28 05:22:47,0.955,86,tizawa
+345,16696849,fromage _,2026-09-28 00:02:03,0.955,169,fromagesea
+346,16496891,Juyong,2026-09-28 04:37:15,0.955,139,kimdoong
+347,16775607,Boopathi Raja,2026-09-28 08:40:43,0.955,50,yanggod
+348,16761532,kwon yong deuk,2026-09-28 00:45:02,0.955,65,kwonyongdeuk
+349,16887083,TK BTW,2026-09-27 18:55:59,0.955,55,"fatihkatipoglu,seyitkaangunes"
+350,16458987,dddkk0,2026-09-27 23:24:12,0.955,98,compensator
+351,16888658,hhzzjjj,2026-09-28 00:07:48,0.955,33,"hhzzjjj,qinghaowang1,wwwdjj,youyuany123,yyx466005036"
+352,16533594,Fayner Costa,2026-09-27 00:07:11,0.955,104,faynercosta
+353,16919567,Mycelis,2026-09-28 05:32:54,0.955,19,johnmoncel
+354,16455128,Go Go Go,2026-09-28 07:33:42,0.955,169,"caoyupeng,lingyu07,lixin73,pedianeko,theunforgiven7"
+355,16847129,Elyorjon Mannonov,2026-09-28 07:11:44,0.955,26,elmannonov92
+356,16454592,4eta,2026-09-28 02:13:22,0.955,11,bio4eta
+357,16611347,MustafaA,2026-09-27 21:20:50,0.955,107,mustafaa
+358,16923449,tensorlike,2026-09-28 03:53:49,0.955,10,"echoverse1,neonflux,regressiw,tensorlike"
+359,16499748,Med-AI,2026-09-28 08:25:27,0.955,76,"hanhhdungg,quchingnguyn,richarddoan,thienphannhat,thinhnguyennhu"
+360,16739029,sleter,2026-09-28 07:34:26,0.955,143,szymonjanowski
+361,16530936,HiroyukiSasaki,2026-09-27 01:31:08,0.955,72,hiroyukisasaki815
+362,16715400,ERS,2026-09-27 00:33:18,0.955,26,shingo257
+363,16596995,Jackson Bom,2026-09-28 00:50:39,0.955,55,jacksonbom
+364,16749082,mraz1006,2026-09-28 05:52:52,0.955,14,mraz1006
+365,16721184,aks05410,2026-09-28 07:26:01,0.955,78,aks05410
+366,16883059,Kaggle Agent,2026-09-27 23:27:39,0.955,59,"arc144,dott1718,jiweiliu,maxjeblick,theoviel"
+367,16570510,关注塔菲喵，关注塔菲谢谢喵,2026-09-28 07:13:43,0.955,69,"fangwangg,jiuchukuangren,ltcsmokeboi"
+368,16591754,KHitomi,2026-09-28 05:28:17,0.955,57,khitomi
+369,16455622,ChenWenSheng,2026-09-27 07:27:25,0.955,144,chenwensheng
+370,16875681,cqupt_sdq,2026-09-28 07:31:12,0.955,31,sdq2237
+371,16847238,Nut_RJ,2026-09-28 09:43:26,0.955,25,rjings
+372,16887540,Arturo Gutiérrez Aguilar,2026-09-28 00:04:21,0.955,30,jarturo
+373,16896571,latentm,2026-09-26 12:24:17,0.955,28,"latentm,quannt9,xanvior,xeloria"
+374,16933174,darkvector4,2026-09-25 14:59:10,0.955,11,"darkvector4,sha1ng,valtrix"
+375,16857172,Ivo Georgiev,2026-09-28 01:55:47,0.955,31,ivogeorg
+376,16924316,tyvallo,2026-09-27 12:29:06,0.955,2,"tyvallo,vornilo,xerlavo,zovrita"
+377,16942239,Isabe11aM00re,2026-09-28 06:37:32,0.955,23,"dan1e1c1ark,handawang,henryy0ung,isabe11am00re,s0ph1amart1n"
+378,16479491,Ernesto Santiesteban,2026-09-28 03:39:41,0.954,67,ernestosantiesteban
+379,16530280,firat yavas,2026-09-27 16:54:31,0.954,9,firatyavas
+380,16808882,TheMightiestMan,2026-09-28 00:47:33,0.954,67,themightiestman
+381,16458268,PavelLiashkov,2026-09-28 00:20:38,0.954,228,bigbag1983
+382,16862312,Kamal Kadakara,2026-09-28 01:47:37,0.954,23,kamalkadakara
+383,16610493,Will Rice,2026-09-28 07:54:48,0.954,133,willrice
+384,16739392,Can Kural,2026-09-28 08:06:13,0.954,80,kamocan
+385,16862594,linhaiy,2026-09-28 04:45:29,0.954,17,linhaiy
+386,16611515,Jun_value,2026-09-28 06:03:09,0.954,104,junvalue
+387,16483723,Homii_N,2026-09-23 19:28:50,0.954,21,homeshwarrao
+388,16454847,Lonnie,2026-09-27 18:27:52,0.954,271,lonnieqin
+389,16555768,Taisei,2026-09-26 14:19:50,0.954,32,taikiara
+390,16460127,AkiraIshikawa,2026-09-27 21:38:58,0.954,150,akiraishikawa
+391,16455939,john,2026-09-28 00:42:06,0.954,155,jaejohn
+392,16697665,lst1923,2026-09-27 17:14:13,0.954,97,lst1923
+393,16935658,barbosi,2026-09-28 05:05:05,0.954,31,"despairdr,tupperq"
+394,16848865,Sōsuke Aizen,2026-09-28 09:53:23,0.954,15,"soukeaizenz,souvikdbiswas"
+395,16467705,itsuki-data,2026-09-28 04:21:11,0.954,38,itsuki89
+396,16905988,ba1Water,2026-09-27 12:32:01,0.954,45,ba1water
+397,16817661,AlekseiProvorov,2026-09-28 09:41:09,0.954,16,leoprovorov
+398,16717141,Hai Dang,2026-09-26 07:07:47,0.954,37,haidang2405
+399,16645330,easonyanyan,2026-09-28 00:06:29,0.954,126,"easonyanyan,georgexue666,snowy615"
+400,16920556,SHALABI,2026-09-28 09:48:22,0.954,11,mohdshalabi
+401,16876917,Mathemortician,2026-09-27 23:59:43,0.954,22,mathemortician
+402,16611745,Seine A. Shintani,2026-09-28 01:31:23,0.954,15,seineashintani
+403,16760621,Akhyar Ahmad,2026-09-28 04:42:10,0.954,40,akhyar2612
+404,16698887,jjamppongmandu,2026-09-28 06:49:43,0.954,35,jjamppongmandu
+405,16674723,HongchenDai,2026-09-28 00:49:10,0.954,105,hongchendai
+406,16663122,Primes,2026-09-26 05:57:05,0.954,71,lucasprime1
+407,16470905,"Going down in 3, 2, 1…",2026-09-28 05:19:05,0.954,229,felipekitamura
+408,16532033,SBWH,2026-09-20 07:43:29,0.954,101,"adityaravi2,aikyatansinha,r1cksync,vamshikrishnaemmadi,yash9439"
+409,16833282,skomuro,2026-09-26 15:11:48,0.954,32,skomuro
+410,16593137,SAMIUL ISLAM,2026-09-28 07:03:21,0.954,11,samiulislam180041221
+411,16935723,Golubev Alexander,2026-09-28 06:43:51,0.954,21,golubevalexander
+412,16488570,honjousetuna,2026-09-27 16:22:59,0.954,52,honjousetuna
+413,16475697,Marek Nurzynski,2026-09-27 18:22:14,0.954,9,marek3000
+414,16941218,misis_big_balls,2026-09-27 15:40:33,0.954,11,"daniilsergeevda,player77"
+415,16737441,junicus,2026-09-28 04:04:13,0.954,44,junicus
+416,16806178,Surya Bhattiprol,2026-09-27 19:40:09,0.954,21,suryabhattiprol01
+417,16796396,Satoshi Nguyen,2026-09-28 00:01:14,0.954,71,satoshinguyenai
+418,16931156,lyre lin,2026-09-28 02:55:43,0.954,10,lyrelingg
+419,16913271,Hibachi Fried Rice,2026-09-28 07:13:43,0.954,23,samvalladares
+420,16493172,ISGlobal Offensive,2026-09-28 00:02:03,0.954,137,"albertalegret,davidsarrat,didaccayuela,ramonmatnav,victornc"
+421,16876143,Taeyang,2026-09-28 06:35:33,0.954,206,"lucas040,taeyangg4,yw8837"
+422,16784546,mimimi,2026-09-28 09:19:26,0.954,8,"hirokimibu,ryugohanai"
+423,16610471,The Originals,2026-09-28 03:47:13,0.954,172,"akkigupta2005,arunendratripathi03,eeshsaxena,swapiy"
+424,16671300,renmin517,2026-09-28 10:19:37,0.954,9,"jasonxusk,mingkangyan,renmin517"
+425,16484393,Samuels Winstons,2026-09-28 05:34:48,0.954,24,samuelswinstons
+426,16582210,zhuzhenghao-max,2026-09-28 04:52:38,0.954,122,zhuzhenghaomax
+427,16743260,xerkey,2026-09-27 21:58:42,0.954,29,xerkey
+428,16879611,npan,2026-09-28 05:15:21,0.954,48,niteshp9
+429,16856120,Alex Lenzi,2026-09-28 00:04:44,0.954,59,alexlenzi
+430,16936750,statma,2026-09-28 01:14:13,0.954,35,"fractalbyte,statma,valqeth"
+431,16854162,tamref,2026-09-28 03:40:05,0.954,28,tamreff3290
+432,16494800,Mikhail Karchevskiy,2026-09-28 00:06:05,0.954,66,suvalex
+433,16885762,shuinno,2026-09-26 04:39:20,0.954,11,"astralisa,hemlock1,metaforge,shuinno"
+434,16887410,あかつき,2026-09-28 06:56:34,0.954,30,akatuki25
+435,16732045,add_oils,2026-09-28 02:14:38,0.954,9,addoils
+436,16846788,Luck^2,2026-09-25 06:26:44,0.954,20,rlhjansen
+437,16724324,YunlinCity,2026-09-27 14:31:04,0.954,102,yunlincity
+438,16878531,HayatoFujihara,2026-09-27 17:59:03,0.954,27,hayatofujihara
+439,16460657,holyholy,2026-09-28 04:58:54,0.954,51,holy5contents
+440,16933351,Matt,2026-09-28 04:55:14,0.954,17,mclouter
+441,16723944,ETHAN KOH,2026-09-28 04:32:39,0.954,39,kwangsookoh
+442,16508666,xthixsl_ml,2026-09-28 07:55:23,0.954,52,xthistle999
+443,16851976,Weixuan Liu,2026-09-27 03:48:47,0.954,19,flyfish666
+444,16923902,signalior,2026-09-25 13:36:36,0.954,15,"convexla,probflun,signalior,synaptivox"
+445,16848782,kyomikyomi,2026-09-27 19:34:07,0.954,25,"kyomikyomi,ryoyaotsuki,taiseitsuneki"
+446,16454016,S.Aoki,2026-09-28 03:22:41,0.954,75,soyaoki
+447,16701603,Harshedh Vijay,2026-09-28 09:47:36,0.954,37,"harshedhvijay,naghulpranavks"
+448,16561311,Amir Ghazi,2026-09-28 02:31:14,0.954,25,amirghazi
+449,16827214,Gaiar Baimuratov,2026-09-25 13:22:26,0.954,10,baimuratov
+450,16463001,Albert | Zhiye | Hannah,2026-09-28 05:30:33,0.954,69,"diamayer,hannahhuang68,mianwang1024"
+451,16906802,BobtheBot369,2026-09-25 13:59:41,0.954,10,bobthebot369
+452,16457732,Kita Renji,2026-09-26 07:48:34,0.954,19,champpattara
+453,16667255,Dmitriy Gerasimov,2026-09-28 07:32:04,0.954,67,dmitriygerasimov
+454,16906937,Haonan Zhou,2026-09-28 03:32:59,0.954,6,hatsuseizuna
+455,16892960,Sankalp Wanjari,2026-09-27 17:04:06,0.954,18,sankalpwanjari25
+456,16544856,Ju,2026-09-28 00:01:20,0.954,20,juziddd
+457,16879312,Yusaku Muroya,2026-09-28 10:10:11,0.954,4,ymuroya47
+458,16545373,HIVE,2026-09-28 08:12:06,0.954,46,"hibbamd,minahilahsan,nusrati,shaminkhawar"
+459,16888964,MakerFly,2026-09-28 06:14:16,0.954,12,makerfly
+460,16924432,stochar,2026-09-26 14:27:49,0.954,15,"bayerfe,quantforge12,spectior,stochar"
+461,16772756,Suzuki Taichi,2026-09-28 04:51:09,0.954,74,"suzukitaichi,yuitomurano"
+462,16633299,Abdelghani Charouiti,2026-09-27 21:53:42,0.954,36,abdelghanicharouiti
+463,16556643,Ali Nawed,2026-09-28 05:56:08,0.954,25,alinawed
+464,16594092,HumbleHumbert,2026-09-28 01:25:58,0.954,247,humblehumbert
+465,16726750,programmers,2026-09-27 23:24:26,0.954,28,"mhahmad,mohib94"
+466,16483697,Dalton Omondi,2026-09-27 15:09:15,0.954,9,daltongabrielomondi
+467,16933122,dynatrixa,2026-09-26 05:30:29,0.954,13,"datacinder7,dynatrixa,veltronic"
+468,16470344,Alexander Dudin,2026-09-28 00:01:15,0.954,13,cyberecho
+469,16904031,YANGJINWU,2026-09-28 00:07:02,0.954,38,yangjinwu
+470,16747386,vinceybb,2026-09-28 02:58:04,0.954,37,vinceybb
+471,16531133,Praxel,2026-09-28 07:16:23,0.954,70,praxel
+472,16714472,AlejandroAlvarez,2026-09-28 08:54:29,0.954,10,theworm
+473,16566294,hertz,2026-09-28 08:02:57,0.954,63,nori117
+474,16470019,Madhur Shyam Maurya,2026-09-27 19:33:00,0.954,61,madhurmaurya
+475,16676329,Soham,2026-09-24 16:33:10,0.954,9,soham308
+476,16463229,SGY2512,2026-09-28 00:08:11,0.954,106,sgy2512
+477,16938519,pavan rajr,2026-09-27 19:51:34,0.954,22,pavanrajr
+478,16516057,Enrique Rodríguez,2026-09-28 08:48:47,0.954,211,enriro0
+479,16891354,Ruslan Akhmetov,2026-09-28 00:53:27,0.954,3,ecolla999
+480,16487928,Yu Wu,2026-09-28 01:28:28,0.954,76,nightsh4de
+481,16462399,Jessica Crisp,2026-09-26 06:23:29,0.954,10,jessicacrisp
+482,16458214,natsu,2026-09-27 23:29:57,0.954,29,okamotonatsuo
+483,16453816,Will,2026-09-28 07:16:29,0.954,28,wguesdon
+484,16506482,인공저능연구소( Artificial Idiocy Lab ),2026-09-28 05:58:30,0.954,73,megayak
+485,16705824,Xiyu Hao,2026-09-28 00:02:35,0.954,78,sheeyuh
+486,16884592,richuanzhongzixing,2026-09-27 13:49:43,0.954,11,richuanzhongzixing
+487,16712163,cf696666,2026-09-28 06:53:15,0.954,56,cf33333
+488,16728201,Latif,2026-09-27 08:43:17,0.954,12,abdulatifmahgoub
+489,16615288,Lior Toledano,2026-09-28 07:26:08,0.954,13,liortoledano
+490,16729173,Amaze-Rocky,2026-09-26 17:48:55,0.954,24,smallikao
+491,16606871,Leonid Kozinkin,2026-09-26 01:02:05,0.954,15,leon7archer
+492,16933072,Kuni05,2026-09-28 02:59:54,0.954,2,kuni05
+493,16627260,X.X,2026-09-27 00:21:31,0.954,30,mikeintokyo
+494,16701734,Kirderf,2026-09-27 21:02:40,0.954,106,kirderf
+495,16508349,华风夏韵，洛水天依。,2026-09-28 00:00:14,0.954,87,thedyingkai
+496,16454682,Hiểu Vy,2026-09-27 22:30:17,0.954,33,thangnm1
+497,16453539,4418,2026-09-27 20:13:31,0.954,170,"biohack44,merkiraz"
+498,16792722,NP,2026-09-27 14:16:38,0.954,31,nikolce
+499,16681989,Hirotaka Sugawara,2026-09-28 00:54:35,0.954,48,hirotakasugawara
+500,16533628,Joseph Adamski,2026-09-28 00:00:43,0.954,156,josephadamski91
+501,16664737,kevin zhou,2026-09-28 04:19:26,0.954,9,kevinzhou66
+502,16858809,Takashi Yamada,2026-09-28 06:31:37,0.954,8,ymdtxi
+503,16832772,LIH.YUN,2026-09-27 15:54:47,0.954,100,"fxlcee,guming886,remusswift"
+504,16458905,0.0,2026-09-28 03:00:53,0.954,27,sylvestervan
+505,16925739,Virexon,2026-09-27 07:29:11,0.954,7,"spectrion5,synthexia,virexon,vorinaq"
+506,16875702,Royboy,2026-09-26 01:37:29,0.954,16,royboi1
+507,16454260,Avner Gomes,2026-09-28 10:12:11,0.954,187,avnergomes
+508,16554591,Solid_Sea,2026-09-28 00:19:11,0.954,35,solidsea
+509,16877644,MaksKhan,2026-09-27 21:27:19,0.954,43,"ilyausmanov,ivanvorfolomeev,kolesnikovia,makskhan"
+510,16532323,curiousiam,2026-09-27 23:31:13,0.954,86,curiousiam
+511,16610265,Kyuhwan Cho,2026-09-28 10:14:09,0.954,5,octoarden
+512,16453746,Santiago Maniches,2026-09-27 21:04:54,0.954,262,santmani
+513,16705680,nianyu,2026-09-27 10:00:10,0.954,12,nianyuc
+514,16794876,Manish,2026-09-26 16:56:08,0.954,9,themanysh
+515,16877455,Mohamed el.harery,2026-09-28 05:05:43,0.954,33,mohamedelharery
+516,16484013,Tianrui WANG,2026-09-28 02:34:54,0.953,78,"boatlee,trwang2025"
+517,16857228,John Cisowski,2026-09-28 00:36:53,0.953,4,johncisowski
+518,16897924,Misha Shikhov,2026-09-27 18:45:31,0.953,17,mishashikhov
+519,16941276,snappi,2026-09-25 12:08:34,0.953,13,snappi
+520,16484044,NoOneAhead,2026-09-28 01:29:18,0.953,360,jerrlu
+521,16704643,Yohanes Lengkong,2026-09-27 05:57:56,0.953,42,yohanesfc
+522,16927940,Ryota Kawamura,2026-09-28 05:03:13,0.953,31,ryotakawamura94
+523,16592841,Sung Heo,2026-09-26 04:02:42,0.953,23,kmmmvs
+524,16702097,Anh-Vu Mai-Nguyen,2026-09-27 00:37:10,0.953,79,mainguyenanhvu
+525,16483635,pwxc00,2026-09-27 20:11:03,0.953,10,alert04
+526,16690818,Takauchi Suguru,2026-09-27 12:52:51,0.953,50,gurusut
+527,16461185,Carles Marín,2026-09-28 04:40:56,0.953,36,carlesmarn
+528,16600584,ちー,2026-09-27 15:01:36,0.953,33,chiiiiii7474
+529,16797084,Ryutaro Tsujii,2026-09-27 19:42:33,0.953,6,ryutarotsujii
+530,16507983,BostonKaggle,2026-09-27 23:29:22,0.953,48,"isthereanycode,lynnkim0"
+531,16730506,no_wonderr,2026-09-26 16:08:28,0.953,33,"aaazjs,huanghongmingliyan,nowonderr,wangyubo1212"
+532,16501843,Allen,2026-09-27 04:25:10,0.953,92,zhengchy
+533,16780071,Kousuke55,2026-09-27 08:05:20,0.953,11,kousuke555
+534,16925099,deeptrace12,2026-09-27 11:51:05,0.953,7,"deeptrace12,je2wak,neonmatrix6,rdwan3"
+535,16927534,Deenouement,2026-09-28 14:13:48,0.953,7,"deenouement,eelixirr,efffervescent,ellegance"
+536,16806153,hisatarosu,2026-09-26 05:51:43,0.953,16,tomako4390
+537,16833478,brave-心勇-heart,2026-09-28 09:29:34,0.953,45,braveheart
+538,16472654,Giovanni Marco Dall'Olio,2026-09-26 22:05:26,0.953,188,dalloliogm
+539,16550943,Vinayak Pathak,2026-09-27 07:56:03,0.953,87,vinayapathak
+540,16507845,yarden and yaeli,2026-09-28 08:26:36,0.953,153,yarneo
+541,16879430,yefenfei,2026-09-28 05:58:32,0.953,7,yefenfei
+542,16564970,YEEE,2026-09-28 09:26:37,0.953,36,"luckyappley,yemaoye"
+543,16571240,wennan cao,2026-09-27 16:57:11,0.953,200,wennancao
+544,16632959,xixi,2026-09-24 04:41:16,0.953,3,huangcarry26
+545,16823628,Md Boktiar Mahbub Murad,2026-09-27 06:47:14,0.953,6,mbmmurad
+546,16754467,alphago700,2026-09-25 05:56:33,0.953,18,alphago700
+547,16858988,3D Research,2026-09-24 05:51:35,0.953,92,"infocode,knnzeta,mlemin"
+548,16889402,0.948+ pls,2026-09-28 04:45:44,0.953,92,"iprofen,janetsun0810,tierneywang,xianqiyu"
+549,16606438,PHILL FEI,2026-09-27 06:14:04,0.953,30,phillfei
+550,16860095,UNETPLUS,2026-09-24 14:56:40,0.953,114,"gptconver,gradgen,indexdev,knnrun"
+551,16784713,prairieee,2026-09-28 01:57:16,0.953,20,"haideptry,prairieee"
+552,16555254,生如夏花,2026-09-24 08:07:32,0.953,21,"duoliya,linyeping,ychsun"
+553,16808392,Dr_F,2026-09-26 13:52:08,0.953,12,algebraictopology
+554,16586040,panda__MB__maximus,2026-09-24 05:47:57,0.953,7,tanishmohokar09
+555,16651051,Barathan Aslan,2026-09-25 07:51:49,0.953,34,"barathanaslan,batuhankalem,merfarukelik"
+556,16884848,draw a lottery,2026-09-24 07:53:39,0.953,59,"livessd,macroave,skycoding"
+557,16718365,Kunal Desale,2026-09-24 06:13:53,0.953,8,kunaldesale2408
+558,16832191,No Name,2026-09-28 10:33:10,0.953,57,ivanj0
+559,16635485,WeiJun Dou,2026-09-24 06:58:51,0.953,38,wayjunedou
+560,16490846,Ángel Jacinto Sánchez Ruiz,2026-09-25 17:53:42,0.953,9,sacuscreed
+561,16510459,cy zhang,2026-09-26 03:22:06,0.953,9,zcy20051117
+562,16455757,Pirhosseinlou,2026-09-26 14:27:19,0.953,35,pirhosseinlou
+563,16682037,Satkar sarvankar,2026-09-24 07:41:40,0.953,9,satkar003
+564,16715977,Etcorn7797,2026-09-28 09:26:42,0.953,38,"bruceche7797,dongyiqun,jyxxxx"
+565,16483448,Grigoryan Sergey,2026-09-26 14:45:29,0.953,58,hertryggr
+566,16887305,lizs,2026-09-26 16:09:10,0.953,7,chiila
+567,16673690,Vadim Linkov,2026-09-26 09:37:39,0.953,18,trizyx
+568,16454641,Haraguchi-T,2026-09-28 12:53:56,0.953,91,haraguchit
+569,16457338,AWN,2026-09-27 07:16:28,0.953,110,"arunodhayan,nablaoperator123,peilwang"
+570,16531069,Ishraq Tanvir,2026-09-24 10:34:02,0.953,16,ishraqtanvir
+571,16455285,MMKPC Studios,2026-09-24 10:42:10,0.953,21,matthewemitchell
+572,16492619,tanadai,2026-09-24 10:46:41,0.953,9,da0516
+573,16464035,Biel Escola Rodrigo,2026-09-24 18:04:23,0.953,58,"bielescolarodrigo,omarrgg"
+574,16766199,Xu Suyi,2026-09-25 17:13:33,0.953,25,xuyuhaosuyi
+575,16458914,Code by Nadiia,2026-09-24 11:04:53,0.953,2,codebynadiia
+576,16550699,cm391,2026-09-25 18:07:31,0.953,20,mccocoful
+577,16554977,kokinnwakashuu,2026-09-27 12:21:32,0.953,66,kokinnwakashuu
+578,16532991,Mehmet Özer,2026-09-27 06:02:17,0.953,4,ozermehmet
+579,16454360,alban,2026-09-26 20:09:18,0.953,9,albantiacoh
+580,16927832,Baimakanov,2026-09-28 00:07:43,0.953,23,baimakanov
+581,16757019,Big Cells,2026-09-28 04:18:22,0.953,103,"arsgorynich,dmitriigluzdov"
+582,16941670,Thomas Tschinkel,2026-09-24 12:04:56,0.953,2,thomastschinkel
+583,16751802,tax_free,2026-09-28 05:37:06,0.953,54,taxfreepython
+584,16460415,Дворкин Евгений Владимирович,2026-09-24 12:20:00,0.953,33,evgendvorkin
+585,16754299,Jacques Buis,2026-09-27 21:47:53,0.953,31,jacquesbuis
+586,16827167,RDavin,2026-09-26 12:51:31,0.953,13,rdavin
+587,16486522,K.THARUN KUMAR,2026-09-27 16:31:54,0.953,41,tharunkumar369
+588,16923913,Md Arafat,2026-09-26 15:56:51,0.953,16,arafat362
+589,16462012,DataLover,2026-09-24 13:43:05,0.953,5,paulknidler
+590,16545609,Chloe,2026-09-27 14:04:31,0.953,65,baytree1238
+591,16925115,corelattice,2026-09-25 04:04:42,0.953,10,"corelattice,darklumen,metashift2,tyrelon"
+592,16465261,yukiZ,2026-09-28 08:27:30,0.953,151,hideyukizushi
+593,16518078,Marcus Henriksboe,2026-09-27 22:04:32,0.953,86,marcushenriksboe
+594,16816954,Ömer Faruk Yüce,2026-09-26 09:17:37,0.953,31,merfarukyce
+595,16797950,Aamod06,2026-09-27 13:28:25,0.953,23,aamod06
+596,16475406,Shubham Sahu2003,2026-09-27 18:36:57,0.953,95,shubhamsahu2003
+597,16532701,Robson,2026-09-24 15:04:48,0.953,18,robsonsan
+598,16465231,spbforce,2026-09-24 15:10:35,0.953,89,spbforce
+599,16791172,darasty,2026-09-27 11:14:03,0.953,14,darasty
+600,16805468,KuziJA,2026-09-28 08:01:17,0.953,61,kuzija
+601,16456609,senkin13,2026-09-24 15:28:59,0.953,1,senkin13
+602,16823651,Happy New Semester,2026-09-27 09:21:31,0.953,36,"allen0427,cracker88,eugeneyeung,grace7523"
+603,16467005,Hitoshi Saito,2026-09-28 10:40:12,0.953,41,hitoshisaito
+604,16563906,C R Suthikshn Kumar,2026-09-26 16:24:57,0.953,15,crsuthikshnkumar
+605,16458756,Cell-fish Gene,2026-09-26 17:33:33,0.953,35,nihilisticneuralnet
+606,16724349,Aditya2909rb,2026-09-27 07:25:16,0.953,30,aditya2909rb
+607,16550333,Amir & Bita,2026-09-25 19:05:20,0.953,134,"amirmhm,bitabarghi"
+608,16845094,Shadow #2,2026-09-26 08:35:42,0.953,19,shadowtt
+609,16750525,ShoaibSSM,2026-09-24 16:55:29,0.953,28,"naveenlx111249971939,shoaibssm"
+610,16866615,ColorGram,2026-09-24 16:58:49,0.953,17,"colorgram,hagiwarashigechika"
+611,16460310,k.mas,2026-09-26 07:58:26,0.953,13,kgethimas
+612,16454581,LP,2026-09-26 17:23:54,0.953,6,lihu6666
+613,16675867,Cellebrities,2026-09-28 05:16:37,0.953,207,"bluepill,churkinnikita,evgenshuben,levkayumov,phoenix0501"
+614,16500077,Heysem Ismail,2026-09-24 17:56:02,0.953,10,haitham82
+615,16466176,PIB ITBA,2026-09-24 17:59:25,0.953,40,"frantassara,tobiastar,victoriaat03"
+616,16679719,Vaibhav Gupta,2026-09-27 03:14:09,0.953,47,vaihero
+617,16898822,Ivan Aleksandrov,2026-09-27 21:58:37,0.953,13,ivanblch
+618,16457193,Leander Antony,2026-09-24 18:35:40,0.953,1,leanderantony30
+619,16465317,KUO JEN WEI,2026-09-24 18:49:41,0.953,7,kuojenwei
+620,16456728,IDEA,2026-09-25 17:56:30,0.953,125,"n10705013,vedrinjeliazkov"
+621,16488595,Kamal Das,2026-09-24 18:55:29,0.953,20,kmldas
+622,16513678,MJVinay,2026-09-27 19:58:58,0.953,125,mallajayanthvinay
+623,16809402,DataRegressor,2026-09-25 15:08:10,0.953,6,azzamradman
+624,16725788,KentaTanaka,2026-09-24 20:39:17,0.953,27,kentatanaka1data
+625,16461871,xsong2020,2026-09-27 07:41:41,0.953,37,xstargate
+626,16518151,Pratham Jain,2026-09-24 20:44:09,0.953,20,kindasomethin
+627,16639070,Defend Intelligence,2026-09-25 16:00:31,0.953,24,anisayari
+628,16457066,Anh Tuan Ha,2026-09-24 21:10:08,0.953,1,schw1eg0
+629,16470577,Mathieu W,2026-09-26 19:15:22,0.953,18,mathieuw
+630,16927280,Yassine Ben Zekri,2026-09-24 21:33:27,0.953,2,yassinebenzekri
+631,16583118,Georgvm1,2026-09-26 09:17:27,0.953,105,georgvm1
+632,16553343,yoikoarmor,2026-09-24 22:29:26,0.953,53,yoikoarmor
+633,16921590,Hanh Tran,2026-09-25 11:08:36,0.953,6,honghanhhh
+634,16480227,AdamJonesJohnson,2026-09-27 16:37:29,0.953,81,adamjonesjohnson
+635,16544501,Hai Nguyen Thien,2026-09-26 22:59:03,0.953,74,"buphmquc,hainguyenthien"
+636,16894853,Shunsuke Hayashi,2026-09-26 15:56:30,0.953,5,shunsukehayashi1993
+637,16497966,Takuto Inoue,2026-09-27 11:55:23,0.953,52,takutoinoue
+638,16599326,DovyDigital,2026-09-27 10:28:18,0.953,26,dovydigital
+639,16454368,Sebastian Mateus,2026-09-28 01:32:18,0.953,74,"brenorb,sebastianmateus"
+640,16456177,JerryMouse,2026-09-27 18:49:47,0.953,33,lingxd
+641,16914798,vlavlalva,2026-09-25 09:44:47,0.953,11,cppcph
+642,16616766,beeyan,2026-09-25 01:37:04,0.953,11,beeyan0821
+643,16457477,atom1231,2026-09-25 01:40:50,0.953,21,atom1231
+644,16455050,anngle,2026-09-27 12:35:02,0.953,50,anngle
+645,16462900,Blacklions.,2026-09-26 06:49:57,0.953,17,blacklions
+646,16919629,Anton Nikonov,2026-09-25 02:41:28,0.953,3,antonnikonov
+647,16500573,Jiachen Li,2026-09-25 04:13:11,0.953,65,llccqq624
+648,16731279,Yoshihiko Suzuki,2026-09-25 03:13:51,0.953,31,yoshihikosuzuki
+649,16802335,kojingbo,2026-09-26 08:07:20,0.953,17,kojingbo
+650,16488404,Nuno Ferreira,2026-09-25 04:24:31,0.953,37,ngcferreira
+651,16458655,Aman Atar,2026-09-28 05:52:45,0.953,122,amanatar
+652,16463235,rkd,2026-09-25 06:11:35,0.953,28,ryookd
+653,16492332,GUOHAOYANG,2026-09-25 05:02:38,0.953,16,pkuszboi
+654,16794592,Ryosei Hara,2026-09-26 12:49:52,0.953,40,ryhara
+655,16645225,Cluckin-VV,2026-09-25 05:16:17,0.953,47,cluckinvv
+656,16530415,NonCaffeine,2026-09-25 05:28:50,0.953,23,noncaffeine
+657,16473769,Niranjan Nakkala,2026-09-26 02:58:53,0.953,4,niranjanmudhiraj
+658,16732835,EliKal,2026-09-28 07:25:16,0.953,11,eliork
+659,16671440,久保兼,2026-09-26 07:12:22,0.953,13,"fumiya326,kuboken"
+660,16591459,nike28,2026-09-28 07:50:03,0.953,26,koheinagai
+661,16716157,Salem Ali,2026-09-25 07:03:12,0.953,9,salemali7
+662,16573302,songling,2026-09-28 02:33:49,0.953,10,oralia
+663,16460016,neilan,2026-09-27 00:55:38,0.953,82,abhijithneilabraham
+664,16501847,T Soo,2026-09-25 07:52:42,0.953,32,ttgrcgrc
+665,16456936,Kurian George,2026-09-27 16:20:18,0.953,30,kuriangeorge
+666,16803478,Andrey Baranov,2026-09-25 08:20:39,0.953,21,baranov
+667,16485755,Johnny Hyland,2026-09-25 08:28:00,0.953,1,johnnyhyland
+668,16473761,Raunak Dey,2026-09-25 09:09:07,0.953,4,raunakdey07
+669,16944000,Mehrdad Naderi,2026-09-27 22:01:51,0.953,4,mehrdadnaderi
+670,16493736,JackGong,2026-09-25 11:08:10,0.953,10,jackgong
+671,16808942,zaki_3,2026-09-26 11:23:14,0.953,21,ojaoja
+672,16454099,Yusuke Togashi,2026-09-27 01:42:56,0.953,224,yusuketogashi
+673,16924925,math ceo,2026-09-26 18:55:09,0.953,10,"dzagcoffee,tsebaka"
+674,16928305,kminsher,2026-09-27 08:31:37,0.953,4,kminsher
+675,16618159,GURU Prasaatha S,2026-09-25 13:00:14,0.953,17,guruprasaathas111
+676,16706813,PQlete,2026-09-25 13:04:54,0.953,22,pqlete
+677,16461462,Aphrodite,2026-09-25 14:10:27,0.953,38,aphrodite874
+678,16639783,RJ Choco.py,2026-09-28 08:49:42,0.953,27,andnyu
+679,16453404,Pavel Pavlov,2026-09-25 13:14:27,0.953,23,akakii
+680,16454190,kglctf,2026-09-27 01:50:21,0.953,151,kglctf
+681,16696890,yok,2026-09-25 13:42:34,0.953,1,yokoinaba
+682,16559096,stevenleehans,2026-09-25 14:20:23,0.953,31,"hanifnoerrofiq,stevenleehans"
+683,16722734,ykhnkf,2026-09-25 14:25:13,0.953,6,ykhnkf
+684,16806893,失忆的海_,2026-09-26 07:04:20,0.953,27,shiyidehai
+685,16467342,codelion,2026-09-25 14:41:19,0.953,44,codelion
+686,16889905,kerlgd,2026-09-27 06:55:03,0.953,14,"kerlgd,kernlst92,laatentia,plasmoryx"
+687,16789982,Abu Kayyisah Basyid,2026-09-25 16:06:40,0.953,23,abukayyisahbasyid
+688,16457277,Charismatic Pizza Party🍕,2026-09-25 16:10:42,0.953,31,debugendless
+689,16497959,Siddhant Rajhans,2026-09-25 16:22:58,0.953,36,siddhantrajhans
+690,16457336,Octavi Grau,2026-09-27 16:40:47,0.953,29,octaviograu
+691,16541517,cp11122,2026-09-25 17:11:06,0.953,28,cp11122
+692,16456001,Nf4d1l,2026-09-25 18:18:43,0.953,10,nf4d1l
+693,16500413,xaxipiruli,2026-09-25 17:35:24,0.953,29,xaxipirulazo
+694,16818639,zhangjh11123,2026-09-25 17:52:44,0.953,2,zhangjh11123
+695,16608659,Peter Wang,2026-09-25 18:29:16,0.953,27,peterwang1018
+696,16604265,Bocen Li,2026-09-28 04:29:00,0.953,25,bocenli
+697,16876889,MBHUB,2026-09-25 18:43:05,0.953,3,manojmandal
+698,16743133,Eddy Despradel,2026-09-27 12:32:31,0.953,8,eddydespradel
+699,16501671,Ifeoluwa Adewumi,2026-09-25 19:30:56,0.953,12,ifeadewumi
+700,16605133,StupidXie,2026-09-25 20:16:04,0.953,25,stupidxie
+701,16912434,Nyassy,2026-09-27 20:29:02,0.953,12,ka4869
+702,16482136,Oliver Guanyang Wang,2026-09-25 21:30:18,0.953,10,oliverguanyangwang
+703,16892913,Yasuhiro Manai,2026-09-28 00:26:29,0.953,27,yasu01
+704,16453787,Marcus Vinicius,2026-09-26 00:30:05,0.953,13,marcux777
+705,16468791,Pathik Patel,2026-09-28 01:31:25,0.953,70,pathik1511
+706,16862945,Maksim Shekhunov,2026-09-28 02:11:21,0.953,4,shexunov
+707,16644705,cracker_1_war,2026-09-25 22:09:39,0.953,10,cracker1war
+708,16467015,VanKoha,2026-09-25 22:20:04,0.953,97,kohasama
+709,16587421,chocolat,2026-09-28 00:07:51,0.953,100,chocolatnya999
+710,16682919,Hirujan Rangaraj,2026-09-27 12:05:25,0.953,10,hirujanrangaraj
+711,16454827,"Seok, Jeongeum",2026-09-26 01:05:22,0.953,349,seokjeongeum
+712,16925843,Piyorin,2026-09-28 02:46:16,0.953,6,mystakhs
+713,16670468,Shadowfishes,2026-09-26 01:57:59,0.953,66,"boandme,ronitagarwal1,shauryasahdev2"
+714,16939059,_.tushhaaarrrr,2026-09-26 00:29:33,0.953,2,tushhaaarrrr
+715,16606479,Ali Alghaithi,2026-09-26 04:20:10,0.953,168,alioman
+716,16811869,R.,2026-09-26 00:57:59,0.953,3,weijiemiao
+717,16548237,Ikki Katsuyama,2026-09-26 01:03:26,0.953,6,kacchanwriting
+718,16805572,Noah Ingwers,2026-09-26 01:07:53,0.953,16,noahingwers
+719,16759974,Dread Development,2026-09-26 20:02:28,0.953,36,"dreaddevelopment,seanornberg"
+720,16924403,Matterhorn3838,2026-09-27 04:17:50,0.953,5,matterhorn3838
+721,16672667,Takahiro Saito,2026-09-27 23:10:11,0.953,144,takahiro3110
+722,16928462,lixiaoxin25,2026-09-26 01:57:18,0.953,5,lixiaoxin25
+723,16585597,Sophie555,2026-09-27 22:35:13,0.953,46,sophie555
+724,16938896,yamazaking,2026-09-26 02:55:14,0.953,2,zacky21
+725,16456120,SC,2026-09-26 03:18:50,0.953,29,ryosketchbook2007
+726,16592188,thisArmin,2026-09-28 06:52:16,0.953,46,thisarmin
+727,16453975,Congcong Bi,2026-09-27 23:09:16,0.953,22,congcongbi
+728,16888600,KTAcosmo,2026-09-27 03:28:34,0.953,10,ktacosmo2kag
+729,16926054,codezzzsleep,2026-09-28 02:50:58,0.953,11,codezzzsleep
+730,16907622,God111,2026-09-26 09:28:54,0.953,6,god111
+731,16465964,khj1222,2026-09-26 04:55:25,0.953,65,khj1222
+732,16717777,Kento Okumura,2026-09-28 02:44:12,0.953,7,kentookumura
+733,16513545,Abhi Datta,2026-09-28 09:09:40,0.953,40,abhidatta87
+734,16492986,jaysefh26,2026-09-26 05:16:18,0.953,1,jaysefh26
+735,16665175,Loren-wen,2026-09-26 05:43:40,0.953,9,wofusituerte
+736,16671430,fsodogandji,2026-09-26 16:40:31,0.953,4,fabsod
+737,16642462,Skyspace,2026-09-27 06:31:37,0.953,43,empireblue
+738,16663451,jongha24,2026-09-26 06:11:25,0.953,36,jongha24
+739,16613009,Sudhanshu Bhardwaj,2026-09-26 06:34:01,0.953,50,princecoder
+740,16460337,Patrick Chan,2026-09-26 06:38:52,0.953,24,drpatrickchan
+741,16610783,Kudo,2026-09-27 11:19:29,0.953,22,nguyenchicuong
+742,16602485,Leo Lin05,2026-09-27 10:50:44,0.953,28,leolin05
+743,16730458,Ketatama,2026-09-26 07:10:31,0.953,8,ketatama
+744,16466288,Jules,2026-09-26 07:14:49,0.953,7,julesvanligtenberg
+745,16454257,Maher el Ouahabi,2026-09-28 06:36:03,0.953,41,maherelouahabi
+746,16810314,AnyContext,2026-09-26 08:06:19,0.953,22,"kemshim,kokifunakoshi,yakizakana629"
+747,16515699,Team Flash,2026-09-26 08:19:21,0.953,44,ctfxiao
+748,16454442,Liang Wan Yiu David ,2026-09-26 08:41:38,0.953,10,liangwanyiudavid
+749,16479914,Roy Lo TW,2026-09-27 22:28:55,0.953,35,roylotw
+750,16742348,AMANI DD,2026-09-26 19:51:21,0.953,3,dkonan
+751,16911858,Lixrixy,2026-09-26 09:26:50,0.953,4,lixrixy
+752,16898213,Gurkirat Singh,2026-09-26 09:33:16,0.953,2,gurkirat201005
+753,16862129,Kydyrbek Kozykorpesh,2026-09-28 08:52:27,0.953,14,kozykappa
+754,16600822,Yang Kuang Ou,2026-09-26 10:42:47,0.953,23,yangkuangou
+755,16809458,Pang1101,2026-09-27 20:29:09,0.953,13,pang1101
+756,16460299,X.franfran.X,2026-09-27 21:19:43,0.953,79,kossifranois
+757,16927169,Soetsu Shida,2026-09-26 11:15:50,0.953,5,soetsushida
+758,16748413,Nimish Shinde,2026-09-27 07:55:42,0.953,4,nimishshinde
+759,16922356,Asy Mortenson,2026-09-26 12:41:42,0.953,11,asymortenson
+760,16922957,Aditya Goyal,2026-09-26 20:10:10,0.953,9,synthreaper
+761,16614950,Youssef Yacoup,2026-09-26 12:56:35,0.953,4,youssefyacoup
+762,16843831,tsuzuk1,2026-09-27 23:43:43,0.953,35,tsuzuk1
+763,16849777,Juan Leiva,2026-09-26 13:06:27,0.953,13,juank333
+764,16635609,Radiohead28,2026-09-28 06:29:03,0.953,12,radiohead28
+765,16637004,Apex Blue,2026-09-27 16:12:05,0.953,45,"apexblue,dharanieesh"
+766,16500778,chocolate disco,2026-09-26 13:53:59,0.953,16,"marynaborovska,yuriygreben"
+767,16668198,Yusuraume,2026-09-26 13:55:42,0.953,84,sugitatomohiko
+768,16484138,Hide on bush,2026-09-28 06:43:35,0.953,250,playwithme
+769,16477832,Rafael,2026-09-26 14:04:14,0.953,24,rafaeldsjhkas
+770,16823784,kihiro,2026-09-26 14:12:26,0.953,18,kihiro
+771,16689987,Peter KK,2026-09-28 09:10:06,0.953,85,peterty
+772,16565889,renta.k,2026-09-26 15:47:48,0.953,17,renta0426
+773,16554612,Ernie,2026-09-26 15:52:49,0.953,30,ernie55ernie
+774,16806860,Taewoong Kim,2026-09-28 08:28:07,0.953,44,aleaiest
+775,16633144,Abderrahim Kabil,2026-09-27 05:11:47,0.953,2,kabilrh
+776,16810235,王子铖,2026-09-27 08:41:09,0.953,5,aurantium
+777,16457207,Van-Phuc Huynh,2026-09-26 16:43:25,0.953,28,hvanphucs112
+778,16606079,Dhruv Bansal,2026-09-26 17:19:58,0.953,3,dhruvb2028
+779,16655019,shash,2026-09-26 17:37:28,0.953,3,zshashz
+780,16931529,Asterios Terzis,2026-09-26 17:55:51,0.953,10,asteriosterzis
+781,16454157,BlackCat,2026-09-27 17:37:45,0.953,52,b14ckc4tmr
+782,16457792,StephenNedumpally,2026-09-26 17:59:00,0.953,55,stephennedumpally
+783,16612306,Mollah Hamza,2026-09-28 05:08:48,0.953,15,mollahhamza
+784,16932415,Evgeny Bratkovsky,2026-09-27 16:54:59,0.953,5,bratkovskyevgeny
+785,16882124,Dazai_is_not_here,2026-09-26 19:17:42,0.953,7,minmattral
+786,16871969,UmutUygurr,2026-09-26 19:28:14,0.953,4,umuttuygurr
+787,16742216,melih Bektaş,2026-09-27 08:44:19,0.953,2,melihbekta
+788,16487305,Ali #2,2026-09-26 20:23:04,0.953,6,asalhi
+789,16722307,Magnus Makgasane,2026-09-27 21:15:39,0.953,31,magnusmakgasane
+790,16652448,karnezz,2026-09-28 04:19:10,0.953,4,danischaparov
+791,16697757,bichonga,2026-09-26 21:47:26,0.953,10,aataeboulette
+792,16796093,Oleg Smirnov,2026-09-28 07:18:26,0.953,11,smirnolegov
+793,16453797,Jeryos,2026-09-28 06:22:13,0.953,3,joulskaf
+794,16454574,today,2026-09-26 23:22:04,0.953,53,today55
+795,16941983,Kurokawa #2,2026-09-28 06:29:41,0.953,10,hiroshikurokawa
+796,16483787,Amil Gentili,2026-09-28 00:24:27,0.953,84,agentili
+797,16491723,Tommy Deth,2026-09-27 00:27:07,0.953,7,tommydeth
+798,16903771,liu bo,2026-09-28 06:12:01,0.953,16,liuboo45586
+799,16454048,Chikuwabu,2026-09-28 00:21:50,0.953,12,prgckwb
+800,16607253,Apoorv Saraogee,2026-09-28 03:27:41,0.953,164,apoorvsara
+801,16616837,JinchengZhang1,2026-09-27 03:35:02,0.953,12,jinchengzhang1
+802,16878510,unreal,2026-09-27 07:20:21,0.953,4,gauravgs1007
+803,16730730,Le Trong Hieu,2026-09-27 02:34:45,0.953,127,backtracking
+804,16466184,Benedek Brandschott,2026-09-27 02:37:14,0.953,11,benedekbrandschott
+805,16457265,AL Najafi,2026-09-28 07:49:18,0.953,117,"alnajafi,annicenajafi"
+806,16462331,Subin An,2026-09-28 05:08:10,0.953,146,subinium
+807,16569092,Micadee_Shafi,2026-09-27 02:58:10,0.953,17,"adegladius,shafiullahmiakhil"
+808,16454696,sectum,2026-09-28 04:44:40,0.953,30,samuelyangalang
+809,16499272,Affriza Wildan Fauzan,2026-09-27 04:15:05,0.953,17,affrizawildanfauzan
+810,16661912,sam_the_rice_cake,2026-09-27 04:26:16,0.953,39,"sylsylsylsylvia,wliilamsam"
+811,16875693,jwboost,2026-09-28 04:14:43,0.953,35,kiritocui
+812,16784241,Nav N,2026-09-28 05:36:53,0.953,55,navidata
+813,16505794,Devs01,2026-09-28 00:49:23,0.953,120,devs01
+814,16541923,Prashant Kikani,2026-09-27 05:58:58,0.953,3,prashantkikani
+815,16831070,mercury12512,2026-09-28 01:19:25,0.953,14,mercury12512
+816,16457751,GAURAV PARKHEDKAR,2026-09-27 07:32:29,0.953,25,gauravparkhedkar
+817,16927483,eigeness9,2026-09-27 07:48:28,0.953,8,"eigeness9,postrflux,reciprocityj,zenoflux77"
+818,16455826,Rishikesh Jani,2026-09-27 07:50:40,0.953,23,rishikeshjani
+819,16842795,junseo lee,2026-09-28 04:39:15,0.953,12,junnseolee
+820,16807936,Muhammad Umar Bilal,2026-09-28 05:44:47,0.953,15,muhammadumarbilal
+821,16852267,alphayuan,2026-09-27 08:10:07,0.953,13,alphayuan
+822,16464002,Tamerlan Omralinov,2026-09-27 09:38:51,0.953,40,tamerlanomralinov
+823,16724789,fishcat,2026-09-27 08:38:56,0.953,12,fishcat37
+824,16942259,Daijingping,2026-09-28 06:26:21,0.953,5,daijingping
+825,16889591,caintly,2026-09-27 10:40:10,0.953,7,eyesad
+826,16487815,Tatiana Malygina,2026-09-27 11:00:27,0.953,7,latticetower
+827,16852717,shallweiwei,2026-09-27 13:52:48,0.953,31,shallweiwei
+828,16806010,dairatom,2026-09-28 05:52:08,0.953,5,dairatom
+829,16572388,Tasniem N. Alyahya,2026-09-27 23:31:44,0.953,43,tasniemnasser
+830,16910524,Dale Zhong,2026-09-27 23:23:09,0.953,36,dalezhong
+831,16509727,Gunjan Haldar,2026-09-28 08:03:27,0.953,15,gunhcolab
+832,16472928,ne Artem Savchenko,2026-09-27 16:20:50,0.953,7,neartemsavchenko
+833,16868755,Infinity,2026-09-27 17:35:54,0.953,9,"maaz101,syedtahahassan"
+834,16562992,lihaha.36,2026-09-28 07:46:21,0.953,12,lihaha36
+835,16850627,つるげーねふ,2026-09-28 13:44:10,0.953,8,atom7666
+836,16457431,Moroz Roman,2026-09-27 13:07:08,0.953,3,crissyro
+837,16593001,PARAG VIJAY PAWAR,2026-09-28 13:15:13,0.953,10,paragpawar2008
+838,16482068,暗黑AGI,2026-09-28 00:43:08,0.953,115,boristown
+839,16466283,Sébastien henry,2026-09-27 21:03:35,0.953,17,sebmontreal
+840,16831918,The Big Hub,2026-09-28 09:51:04,0.953,28,"akamasterpiece,gianghiango,paramizodicrominique"
+841,16616700,Alejandro Rendon B.,2026-09-27 14:05:35,0.953,28,alejandrorendonblan
+842,16516062,tomo11111,2026-09-27 14:18:18,0.953,34,tomo11111
+843,16802573,YuanKing77,2026-09-27 16:16:37,0.953,18,yuanking77
+844,16458074,do-jo,2026-09-28 01:34:01,0.953,50,thedojo
+845,16848062,Yuan Weijun,2026-09-27 16:03:20,0.953,29,yuanweijun
+846,16475828,Bo Peng,2026-09-27 15:11:32,0.953,4,bopengiowa
+847,16461330,my G1,2026-09-27 15:15:09,0.953,23,sakshigoel15
+848,16468233,techies,2026-09-27 15:39:10,0.953,5,debannadas
+849,16669296,kiyomiya-k,2026-09-27 18:41:29,0.953,56,kiyomiyak
+850,16784054,Arseniy Shutko,2026-09-27 15:57:07,0.953,7,arseniyshutko
+851,16747924,Matteo Tonello,2026-09-27 16:06:49,0.953,12,mtonello
+852,16793829,Qamar usman,2026-09-27 16:41:03,0.953,74,qamarmath
+853,16488161,Ben Spectrcyde Gilbert,2026-09-27 16:43:45,0.953,3,benspectrcydegilbert
+854,16599554,Malyshev Danil,2026-09-27 16:46:09,0.953,9,malyshevdanil
+855,16455865,yuanzhe zhou,2026-09-27 17:22:59,0.953,17,yuanzhezhou
+856,16601533,Nat00,2026-09-27 17:39:16,0.953,22,"adriaft,natliablascoandreo"
+857,16831145,Aleix López,2026-09-28 08:12:37,0.953,9,aleixlopez
+858,16701015,Yahalom,2026-09-27 18:26:19,0.953,25,yahalom
+859,16709791,ysd1110,2026-09-28 07:07:53,0.953,82,ysd1110
+860,16669281,shoryakumar mishra,2026-09-27 23:02:10,0.953,22,shoryakumarmishra
+861,16458711,Cacinie,2026-09-28 08:39:44,0.953,35,cacinie
+862,16623002,kavaua ,2026-09-28 11:06:21,0.953,11,kavaua
+863,16535609,vdthcmus123,2026-09-27 20:09:25,0.953,99,envyy23120093
+864,16831426,Pedro Pino2001,2026-09-28 09:13:40,0.953,8,pedropino2001
+865,16483781,Kumar Abhijeet,2026-09-27 20:31:29,0.953,13,krabhijeet
+866,16723664,Alexander Krylov,2026-09-27 20:57:14,0.953,6,krylovalexander
+867,16453563,Arpit and Shawn,2026-09-27 21:04:56,0.953,10,arpitramani
+868,16455492,Yin Li,2026-09-27 21:15:52,0.953,28,kevin250304
+869,16934697,Abdul Hameed,2026-09-27 21:26:01,0.953,3,ahameed01
+870,16496070,Shigeru Kondou,2026-09-27 21:30:14,0.953,20,shigerukondou
+871,16457348,Maxim Ilyin,2026-09-27 21:38:16,0.953,9,fautei
+872,16566626,Jiahui Qu,2026-09-28 05:59:22,0.953,14,qujiahui
+873,16747911,NIklitaCheporev,2026-09-27 22:08:57,0.953,16,niklitacheporev
+874,16605753,Anton Kartavtsev,2026-09-28 00:59:41,0.953,27,antonkartavtsev
+875,16705972,Nozomi Suzuki,2026-09-28 00:35:22,0.953,83,nozomisuzuki
+876,16684124,Korea IOAI Representative,2026-09-28 05:13:35,0.953,19,"allie3103,goodpjw2008,jehan080125,junick0001"
+877,16680316,Corgi-Samoyed,2026-09-28 00:41:24,0.953,18,corgisamoyed
+878,16587278,Giwrgos Savvidhs,2026-09-28 00:13:55,0.953,7,gsavvidhs
+879,16462872,Jeki Wan Taufik,2026-09-28 00:24:35,0.953,31,jek1wantaufik
+880,16553046,Seungjin Kim,2026-09-28 07:04:43,0.953,145,nforestcat
+881,16699783,houlidai-jiekiulai,2026-09-28 01:29:30,0.953,3,houlidaijiekiulai
+882,16846938,David Wang,2026-09-28 01:43:25,0.953,12,renew66
+883,16576900,Saim Sultan,2026-09-28 02:27:21,0.953,127,saimsultan
+884,16455155,Xander,2026-09-28 02:36:13,0.953,62,canqiang
+885,16764952,XY0719,2026-09-28 02:58:37,0.953,13,"jianningyan,lemurolv"
+886,16455506,史永刚,2026-09-28 03:04:02,0.953,9,shizehao
+887,16463416,wasabi777,2026-09-28 03:44:09,0.953,21,wasabi777
+888,16819110,Qiushuo Geng,2026-09-28 06:39:16,0.953,63,"qiushuogeng,yongxinkwan"
+889,16839148,castle_sens,2026-09-28 04:07:10,0.953,9,castlesens
+890,16838481,Lunospital,2026-09-28 04:08:19,0.953,3,lunospital
+891,16613044,noynkmr,2026-09-28 04:35:19,0.953,4,noynkmr
+892,16462988,DataRockstar,2026-09-28 04:48:42,0.953,113,"amaropeter,jvlegend"
+893,16634729,kif,2026-09-28 05:30:35,0.953,12,echigobran
+894,16738112,Sanjeet Bakshi ,2026-09-28 05:59:30,0.953,17,sanjeetbakshi
+895,16798741,불,2026-09-28 06:34:38,0.953,65,nintendojoa
+896,16737680,Grankina,2026-09-28 06:32:53,0.953,6,"grankinaolga,tatyanagrankina"
+897,16690452,tangaii,2026-09-28 09:46:42,0.953,102,tangai1
+898,16513676,Malla,2026-09-28 07:35:58,0.953,103,mallaphalguni
+899,16634718,Eusebius,2026-09-28 08:03:27,0.953,57,protuberanzen2000
+900,16459927,Munshi-PremChand,2026-09-28 08:17:26,0.953,4,munshipremchand
+901,16842288,c_fxy,2026-09-28 08:30:09,0.953,10,cfxyai
+902,16762554,Sun,2026-09-28 12:05:35,0.953,14,defdsax
+903,16543953,🐱Kitten,2026-09-28 08:52:42,0.953,15,cicimeow
+904,16906426,Adhiraj Jagtap,2026-09-28 09:07:03,0.953,11,adhirajjagtap
+905,16774064,Apa,2026-09-28 09:48:59,0.953,113,yasso1
+906,16842809,Evan #2,2026-09-28 09:20:06,0.953,15,evansussex
+907,16752056,hang zhao666,2026-09-26 10:27:29,0.953,14,hangzhao666
+908,16556920,62326368,2026-09-28 06:04:44,0.953,59,mooniim
+909,16857821,hubhub,2026-09-28 00:04:03,0.953,38,hcngnga
+910,16896300,Bungalow0,2026-09-26 03:52:44,0.953,4,"achatoyant,bungalow0,demuure"
+911,16535220,Wang Yibin,2026-09-27 02:56:14,0.953,25,wklyb1
+912,16927432,SeEquoia,2026-09-27 07:06:48,0.953,4,"glaccier,m3onsoon,seequoia,typhooon"
+913,16705198,Bio-Warriors,2026-09-28 08:35:50,0.953,58,"yunkuns,zzzhhh666nb"
+914,16508104,sixue yang,2026-09-28 09:05:12,0.953,162,"guojie66,sixueyang,xildeg,yaoyangmeng"
+915,16652679,Raijin,2026-09-27 09:05:25,0.953,16,vencerlanz09
+916,16507620,Sirui Zeng,2026-09-22 14:52:32,0.953,43,siruizeng
+917,16548033,fheizz,2026-09-28 09:23:16,0.953,12,fheizz
+918,16696904,Makotu,2026-09-28 09:19:47,0.953,108,mhyodo
+919,16655599,Ming68,2026-09-28 07:21:52,0.953,18,ming68
+920,16469112,Erwin Erdem,2026-09-28 06:58:43,0.953,152,erwinerdem
+921,16938208,Amaan,2026-09-27 22:19:31,0.953,5,rainmaker29
+922,16469126,neurlog,2026-09-25 14:12:59,0.953,29,neurlog
+923,16533889,keitarokawada,2026-09-28 01:45:00,0.953,61,keitarokawada
+924,16932390,Mark #2,2026-09-22 02:07:15,0.953,3,markstammler
+925,16887065,Asan Ashirov,2026-09-24 04:09:39,0.953,38,"asanashirov,sardorishiguro,zakhraluna"
+926,16531182,STF,2026-09-28 00:28:38,0.953,75,"demonbill,heranlang666,shaotongyu001"
+
+======== histogram ========
+public LB biohub-cell-tracking-during-development.zip:biohub-cell-tracking-during-development-publicleaderboard-2026-09-28T16:43:29.csv: teams per 3-decimal public score >= 0.955 (ranks = CSV Rank range of the block)
+0.978: 1 (ranks 1-1)
+0.976: 1 (ranks 2-2)
+0.975: 1 (ranks 3-3)
+0.974: 1 (ranks 4-4)
+0.971: 3 (ranks 5-7)
+0.970: 3 (ranks 8-10)
+0.969: 7 (ranks 11-17)
+0.968: 3 (ranks 18-20)
+0.967: 5 (ranks 21-25)
+0.966: 9 (ranks 26-34)
+0.965: 9 (ranks 35-43)
+0.964: 7 (ranks 44-50)
+0.963: 13 (ranks 51-63)
+0.962: 8 (ranks 64-71)
+0.961: 17 (ranks 72-88)
+0.960: 16 (ranks 89-104)
+0.959: 21 (ranks 105-125)
+0.958: 21 (ranks 126-146)
+0.957: 43 (ranks 147-189)
+0.956: 87 (ranks 190-276)
+0.955: 101 (ranks 277-377)
+>= 0.955: 377
+>= 0.960: 104
+>= 0.970: 10
+total teams: 3969 (CSV rows 3972; 3 unranked host benchmark rows with Rank 0 left out)
+info, below the watch line: 0.954: 138 (ranks 378-515) | 0.953: 411 (ranks 516-926)
+our team: D: Discipline (TeamId 16810638) rank 139 (CSV Rank column), score 0.958; 1 + teams with a strictly better 3-decimal score = 126; position 14 of 21 in the 0.958 block (ranks 126-146); last submission 2026-09-28 05:02:30
+
+======== DIFF vs 20260928T1542Z.txt ========
+window: 2026-09-28 15:42Z -> 2026-09-28 16:41Z (1.0 h)
+[comp_dateRun] public competition kernels, top 20 by dateRun: no change
+[comp_scoreDescending] public competition kernels, top 20 by scoreDescending: no change
+[user_anvithpothula] kernels of anvithpothula, top 10 by dateRun: no change
+[user_thtennant] kernels of thtennant, top 10 by dateRun: no change
+[user_amanatar] kernels of amanatar, top 10 by dateRun: 1 change(s)
+  LASTRUN  amanatar/notebookd71800bfae  lastRunTime 2026-09-28 15:42:50 -> 2026-09-28 15:43:30  pos 1 -> 1
+[status_amanatar__optimized-biohub-max-score] kernel status of amanatar/optimized-biohub-max-score: no change
+[status_anvithpothula__biohub-0-953-lb-original] kernel status of anvithpothula/biohub-0-953-lb-original: no change
+[leaderboard] teams per score >= 0.955, >= lines, total teams, our rank: 8 change(s)
+  HIST     0.964: 6 -> 7 (+1)
+  HIST     0.962: 9 -> 8 (-1)
+  HIST     0.959: 20 -> 21 (+1)
+  HIST     0.956: 78 -> 87 (+9)
+  HIST     0.955: 102 -> 101 (-1)
+  GE       >= 0.955: 368 -> 377 (+9)
+  TOTAL    teams 3968 -> 3969 (+1)
+  OURS     rank 138 -> 139 (+1)
+  info: 22 team(s) with a new score >= 0.953 since the earlier snapshot
+    #48 tc-al: 0.963 -> 0.964 (last submission 2026-09-28 10:14:26)
+    #56 Mark Cooper: 0.962 -> 0.963 (last submission 2026-09-28 08:30:04)
+    #113 D Chakraborty: 0.957 -> 0.959 (last submission 2026-09-28 09:01:10)
+    #175 Biooooohub: 0.953 -> 0.957 (last submission 2026-09-28 08:41:06)
+    #205 kouhei mori: 0.954 -> 0.956 (last submission 2026-09-28 09:08:50)
+    #249 Tracking Experts: 0.953 -> 0.956 (last submission 2026-09-28 08:43:10)
+    #251 BOB: 0.953 -> 0.956 (last submission 2026-09-28 06:38:36)
+    #253 Nikitas Rafael Nikitas: 0.954 -> 0.956 (last submission 2026-09-28 09:30:04)
+    #266 Bedirhan Dinçer: 0.955 -> 0.956 (last submission 2026-09-28 08:21:13)
+    #268 hjyact: 0.955 -> 0.956 (last submission 2026-09-28 09:17:33)
+    #269 OpPrime: 0.955 -> 0.956 (last submission 2026-09-28 09:48:17)
+    #270 ra1nac1d: 0.954 -> 0.956 (last submission 2026-09-28 09:52:06)
+    #271 Volt: 0.953 -> 0.956 (last submission 2026-09-28 10:07:35)
+    #305 Astra Team: 0.953 -> 0.955 (last submission 2026-09-28 08:18:05)
+    #371 Nut_RJ: 0.953 -> 0.955 (last submission 2026-09-28 09:43:26)
+    #394 Sōsuke Aizen: 0.953 -> 0.954 (last submission 2026-09-28 09:53:23)
+    #397 AlekseiProvorov: 0.953 -> 0.954 (last submission 2026-09-28 09:41:09)
+    #424 renmin517: <0.953 or new -> 0.954 (last submission 2026-09-28 10:19:37)
+    #902 Sun: <0.953 or new -> 0.953 (last submission 2026-09-28 12:05:35)
+    #903 🐱Kitten: <0.953 or new -> 0.953 (last submission 2026-09-28 08:52:42)
+    #906 Evan #2: <0.953 or new -> 0.953 (last submission 2026-09-28 09:20:06)
+    #917 fheizz: <0.953 or new -> 0.953 (last submission 2026-09-28 09:23:16)
+  info: P2 look-check, teams now >= 0.956 that were <= 0.953 (or not in the earlier rows) per identical score: 0.957: 1, 0.956: 3; largest group 3 (P2 search signal: >= 5 in one window; it starts a look, never a port; the ~23:30-02:00Z submit bursts are the daily pattern)
+CHANGES: 9. A change is NOT a port trigger; it only tells the human where to look.

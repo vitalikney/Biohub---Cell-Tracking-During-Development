@@ -1,0 +1,95 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/FACTS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/DECISIONS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/27/facts.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/27/facts.json"
+ ],
+ "alerts": [
+  {
+   "kind": "risk",
+   "what": "The laptop that runs every scheduler (the poller, the P51 waiter, the E10 and feed loops, freeze cron 5ece5d24 and night-batch cron 2ab38c73) was still on battery at 16:08:47Z, at 57% and falling about 22%/h under load. The 15:05-15:35Z outage was Modern Standby with the lid closed. A repeat tonight would lose the P51 read, the 23:30Z freeze and the 00:04Z batch.",
+   "evidence": "FACTS F-RUN-44, C-219; research/wf_ideas_v4/round27/report.json new_facts (5), R27-A1; research/wf_ideas_v4/round27/v_plancheck_pc27-01.json; experiments/lb_poll/poll.log headers 14:54:21Z, 15:15:31Z (NameResolutionError), 15:41:53Z",
+   "suggested_action": "Send the R27-A1 Russian message now, with the R27-A6 questions, asking for the charger and an open lid until 23:00 MSK on 29 Sep. Start the notify-only 30-min battery and poll-age watchdog. Check that BatteryStatus = 2 at 23:25Z and 00:03Z.",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "CONTEXT 15:43 calls the outage 'a network outage, not a sleep'. The Windows Kernel-Power events show lid standby on battery (14:59:00Z enter, 15:39:48Z exit). The AC-only sleep settings that the 15:43 line checked do not apply on battery.",
+   "evidence": "FACTS C-219; CONTEXT 15:43 l.3979-3983; research/wf_ideas_v4/round27/report.json R27-A1 (b)",
+   "suggested_action": "Log the R27-A1 (b) correction line in CONTEXT, and refresh the round-28 KEY FACTS (R27-A9 (3)).",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "The logged A2 (4) rule codes P51 as '?' whenever L_hi > 10.2 h. That threshold is 22:26:57Z, inside P51's read window (earliest ~20:50Z, ledger 21:30-22:15Z). Today's poll gaps show a missed header is realistic, and a gap-only '?' would flip the 00:05Z stack from exp89r to exp89q. GAP RULE v2 fixes this only if it is logged pre-score.",
+   "evidence": "FACTS C-221, F-RUN-39 [c27], F-RUN-43; CONTEXT 11:17 l.3742; experiments/lb_poll/ledger.md 16:12:05Z (56640366 PENDING, > 3.95 h); research/wf_ideas_v4/round27/report.json R27-A2",
+   "suggested_action": "Log R27-A2 GAP RULE v2 in CONTEXT now, quoting the newest PENDING header, before ~20:50Z. Do not restart the poller between 21:00 and 22:30Z unless its header is more than 15 min old.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "Round-26 fact 6 (DIS 2.25 dummies run 15-20% longer) is wrong. The excess is a pre-GPU rglob setup phase of 203-788 s on any config, and compute equals the siblings. The fact still sits in the round-26 report, WATCHLIST I306 and, until this curation, F-RUN-41. The runtime gate v2 (<= 2,100 s whole-kernel) would re-run a CI dummy in ~30-40% of cases because of setup noise alone.",
+   "evidence": "FACTS F-RUN-41 [c27], F-RUN-42, C-220; research/wf_ideas_v4/round27/report.json R27-A3; research/wf_ideas_v4/round27/v_recheck_r27-rc-b-dummy-runtime-gate-overturn-reviv.json",
+   "suggested_action": "Log the R27-A3 (1) correction. Log RULE v2.1 (compute <= 1.10 x exp89r's 1,473 s = 1,620 s) pre-score before the exp89l dummy is pushed in branch A.",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "Two new user questions (R27-A6) are not covered by any existing approval. (i) A keep-awake process until 20:00Z on 29 Sep. (ii) exp89p at 00:07Z instead of the user-confirmed 00:46Z in branch A. Without answers the defaults hold: no keep-awake, and 00:46Z.",
+   "evidence": "FACTS C-222, F-RUL-20 [c27]; research/wf_ideas_v4/round27/report.json R27-A6; CONTEXT 12:25 l.3899-3903",
+   "suggested_action": "Ask both questions in the R27-A1 message (MSK first, defaults stated). Record the answers, or the defaults, in the 23:30Z freeze line.",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "Night-batch hardening is not logged yet. There is no rule for a failed or timed-out submit, so a blind retry could burn a 29 Sep slot. The proposed nb_try HARD-FAIL regex matches 'limit', so a daily-allowance error would send exp83c in exp89p's place. The R26-A4 (b) MASKED fix is still open, and no backup crons exist.",
+   "evidence": "FACTS C-225, C-214, F-MOD-50; research/wf_ideas_v4/round27/report.json R27-A4, R27-A5; research/wf_ideas_v4/round27/scan_hyp_nightdry.json R27N-2, R27N-3, R27N-4",
+   "suggested_action": "At the 23:30Z freeze, log the R27-A4 line (with GAP RULE v2 and the R26-A4 (b) MASKED fix). Install the R27-A5 batch prompt with 'limit/allowance/daily' mapped to exit 3 = STOP, plus the backup crons at 00:20Z, 00:50Z and 01:30Z.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "contradiction",
+   "what": "Q3 (11:26) allows a SEC file only as V_pub. In branch A, the card's pair П1 {V_nonCI, exp75} could put a SEC file (exp89q/exp89p) that is not V_pub into the finals. Card v4 also has 4 defects: an unconditional 'П1 выше' opener, П3 silver shown without its range, token keys on probe numbers, and exp83c missing.",
+   "evidence": "FACTS C-223, C-224; research/wf_ideas_v4/round27/finals_card_v4_ru.md l.31, l.40; research/wf_ideas_v4/round27/report.json R27-A8",
+   "suggested_action": "Log the Q3 conditional line pre-score with the freeze line (П1 then uses exp85a 56629533 or exp89s). Apply the 7 R27-A8 edits before the 12:03Z (15:03 MSK) fill.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "contradiction",
+   "what": "The API read of the GPU quota (21,600 s total, 9,988.9 s used, refresh 3 Oct) disagrees with the Settings page (30 h/week, 20:29 used at 04:55Z). The API's 'used' figure is below today's dummies alone (~7.3 h). Its 'left' figure (~3.2 h) may describe another allowance.",
+   "evidence": "FACTS C-227, F-RUL-05 [c27]; research/wf_ideas_v4/round27/scan_hyp_nightdry.notes.md l.6; CONTEXT l.3476, l.3689",
+   "suggested_action": "Before the next dummy push, plan on ~2.2-3.2 GPU-h left. Use the Settings page as the reference, and do not treat the API figure as proof of headroom.",
+   "urgency": "info"
+  },
+  {
+   "kind": "risk",
+   "what": "Submitting the morning files at their MORNING TABLE v1.1 cutoffs makes A-M2 read at 18:22-19:10Z and puts the A-M1 CI tail at 19:39Z, after the 18:37Z (21:37 MSK) finals proposal. The 22:30 MSK V_pub re-check assumed by R26-A4 (d) does not exist.",
+   "evidence": "FACTS C-228, C-226; research/wf_ideas_v4/round27/report.json R27-A7",
+   "suggested_action": "Log R27-A7 (2) (submit at the decision header) with the freeze line. Fold the notify-only V_pub re-check into cron 58b6ded3 (19:43Z on 29 Sep).",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "forgotten",
+   "what": "experiments/RESULTS.md still has no rows for P47 (0.955), P48 (0.957), P49 (0.955), P50 (0.958, the best) or P51 (pending). Its last change was 59e14e2 at 05:03:50Z.",
+   "evidence": "FACTS C-118 [c27]; experiments/lb_poll/ledger.md 16:12:05Z",
+   "suggested_action": "Add the P47-P50 rows (and P51 after its read) to RESULTS.md at the next commit.",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "research/wf_ideas_v4/round27/REPORT.md was never written, because the harness refused the subagent's write. round27/ is still untracked, and none of R27-A1..A9 is in CONTEXT at 16:20Z.",
+   "evidence": "research/wf_ideas_v4/round27/report.json plan_issues (12), next_focus; git status (?? research/wf_ideas_v4/round27/)",
+   "suggested_action": "The main session should write REPORT.md from report_md_ru, commit round27/, and log the due R27 lines (A1 now, A2 before ~20:50Z).",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "The finals are still ticked #37 + #38 (0.954 / 0.953), below V_pub exp85a (0.958). The session never ticks, so only the user's own tick by 20:00 UTC (23:00 MSK) on 29 Sep changes them.",
+   "evidence": "DECISIONS §2 [c27] snapshot; FACTS F-RUL-22; CONTEXT 11:28 l.3851-3855",
+   "suggested_action": "Keep the 12:03Z and 18:37Z card sends and the 22:43 MSK reminder. Tell the user the ticked pair sits last in mc26.",
+   "urgency": "before-finals"
+  }
+ ],
+ "summary": "Curation 27 (state 16:20 UTC 28 Sep; HEAD 608d950; poll header 16:12:02Z shows P51 exp87a PENDING at L > 3.95 h). Sources since curation 26: CONTEXT l.3924-3998 (14:12-15:57Z), commits dba59bd, eea3793, 7faa8cf and 608d950, the ledger (439 polls, 3 gaps), and round 27 (report.json at 16:16Z, R27-A1..A9, finals_card_v4_ru.md; none in CONTEXT). Logged since 13:55: R8 coverage for the night files, MORNING TABLE v1.1 (pre-score; depth-cap supersede for {K, SEC, DIS 2.25, CI}), exp89s build plus gate (PASS 14:40: 121,389 nodes, 84 forks, 1,566 s) and EXP75 PARTNER RULE v2 (pre-score). The user did not answer R26-A6, so the defaults apply (no exp89t or exp89u; the depth-cap reading stands). The feed loop was slowed after a Kaggle ban report on another account. The best score is still 0.958 (exp85a = V_pub), #138 of 3,968 at 15:43Z. The finals are still ticked #37 + #38. FACTS.md: new header. [c27] notes on F-LB-01/02/10, F-RUN-39/41 (the DIS +15-20% part retracted), F-RUL-05/19/20, F-MOD-48 and F-TRN-58. New rows: F-LB-27 (LB 15:43Z), F-RUN-42 (setup vs compute; DIS runtime = sibling; RULE v2.1 proposed), F-RUN-43 (poll gaps and loop restart), F-RUN-44 (battery lid standby), F-RUL-23 (ban report and API-load cut), F-MOD-49 (exp89s), F-MOD-50 (night readiness audit, the nb_try 'limit' hole) and F-TRN-59 (DET closed, RC-A refuted, honest null). Contradictions: C-211, C-212, C-213 and C-216 resolved; C-118, C-163, C-206, C-209, C-214 and C-218 updated; new C-219 to C-228 (outage cause, DIS runtime, CI gap rule, exp89p time, Q3 vs card П1, card v4 defects, submit-failure handling, missing late re-check, GPU quota total, morning submit timing). DECISIONS.md: new header; [c27] appends on P51-P54 and a new planned P55-P56 morning row; a [c27] build table; a [c27] finals paragraph and CURRENT candidates snapshot; a 2f E10 update; in 2h, 7 status appends and 15 new rows (6 logged or applied lines and R27-A1..A9 as PROPOSED); in section 3, 5 appends (R5, R8, finals rule, night list, round-26 proposals) and 7 new rule rows; a closing paragraph 'since 13:55'. Tables were validated for column counts."
+}

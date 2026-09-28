@@ -1,0 +1,88 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/INDEX.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/CHANGES.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/27/index.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/27/index.json"
+ ],
+ "alerts": [
+  {
+   "kind": "risk",
+   "what": "Power is only partly resolved. The laptop has been on AC since 16:29Z and the watchdog is re-armed. The lid must stay open: the lid action is hidden in powercfg, and the session declined to change OS settings. On battery, display-off idle alone enters standby. Every scheduler (poller, P51 waiter, loops, crons 5ece5d24 and 2ab38c73) depends on this.",
+   "evidence": "CONTEXT.md l.3999-4008, l.4035-4040; FACTS.md F-RUN-44; WATCHLIST.md W271, T168, I315",
+   "suggested_action": "Re-check BatteryStatus = 2 at round 28 (17:47Z), 23:25Z and 00:03Z. Push the user if the laptop is back on battery.",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "The P51 (exp87a, 56640366) read at ~20:50-22:30Z decides the 00:05Z file (exp89r vs exp89q) and whether exp89l is built. GAP RULE v2 is logged; a restart or standby near the read could still lose a clean '0'/'-'.",
+   "evidence": "CONTEXT.md l.4009-4020; experiments/lb_poll/poll.log l.23871-23874 (PENDING 16:32:08Z); WATCHLIST.md T165, I316; IDEAS.md I-438, I-500",
+   "suggested_action": "Do not restart the poller 21:00-22:30Z unless its header is > 15 min old. Tighten L_hi from the e10_watch snapshots. Code the read under R25-A1 plus GAP RULE v2.",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "RULE v2.1 (compute-based dummy gate: CI parent exp89r 1,473 s -> <= 1,620 s) is not logged. Gate v2 (<= 2,100 s whole-kernel) would fail a CI dummy ~30-40% of the time on rglob setup noise.",
+   "evidence": "CONTEXT.md l.4021-4028; FACTS.md F-RUN-42, C-220; research/wf_ideas_v4/round27/report.json R27-A3 (2); IDEAS.md I-501; WATCHLIST.md W274",
+   "suggested_action": "Log RULE v2.1 pre-score before any exp89l dummy push (branch A, at P51's read).",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "The 23:30Z freeze line and the 00:04Z night-batch checklist are not written. That covers R27N-2 with R26-A4 (a)-(e) and the LATE rule, the decision-header and Q3 П1 lines, the checklist G0-G5 with nb_try, and backup crons at 00:20Z, 00:50Z and 01:30Z. There is also no rule for a failed or timed-out submit, and a session cron that falls inside a standby is lost.",
+   "evidence": "research/wf_ideas_v4/round27/report.json R27-A4, R27-A5, R27-A7, R27-A8; research/wf_ideas_v4/round27/scan_hyp_nightdry.json R27N-2, R27N-3; FACTS.md C-225, F-MOD-50; IDEAS.md I-503, I-504, I-507, I-508; WATCHLIST.md W275, W276, I322",
+   "suggested_action": "At 23:30Z, fill and log R27N-2 mechanically. Replace the 2ab38c73 prompt with the checklist and nb_try, create the three backup crons, and list submissions before any retry.",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "nb_try's HARD-FAIL regex matches 'limit'. A daily-allowance error at 00:04Z would therefore send the exp83c fallback in exp89p's place.",
+   "evidence": "research/wf_ideas_v4/round27/report.json R27-A5, plan_issues 5; FACTS.md F-MOD-50; WATCHLIST.md I318, T169",
+   "suggested_action": "Map limit/allowance/daily output to exit 3 = STOP in nb_try before the prompt is stored.",
+   "urgency": "today"
+  },
+  {
+   "kind": "contradiction",
+   "what": "MORNING TABLE v1.1 still codes MASKED/BLIND as '0'. exp75's read window (~09:00-09:50Z) overlaps exp89r's, so a real exp89r tie could be lost.",
+   "evidence": "CONTEXT.md l.3931-3955, l.3785-3786; research/wf_ideas_v4/round26/report.json R26-A4 (b); IDEAS.md I-490",
+   "suggested_action": "Log the masking relaxation as freeze item (5), before the first night read (~07:00Z).",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "The two R27-A6 questions do not appear in CONTEXT: a keep-awake process, and exp89p at 00:07Z in branch A. The 16:26Z line asks only for the charger and an open lid.",
+   "evidence": "CONTEXT.md l.3999-4008; research/wf_ideas_v4/round27/report.json R27-A6; IDEAS.md I-498, I-499; WATCHLIST.md W272",
+   "suggested_action": "Ask both questions once, MSK first. Log the answers, or the defaults (no keep-awake, 00:46Z), in freeze item (4).",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "Several records are stale. experiments/RESULTS.md has no rows for P47-P50 (0.955 / 0.957 / 0.955 / 0.958). REPORT.md is missing for rounds 24-27. The KEY FACTS for round 28 are not refreshed. The 17:57Z tick check and the 23:00-23:45Z LB snapshot are not in the cron.",
+   "evidence": "experiments/RESULTS.md l.79; FACTS.md C-118; research/wf_ideas_v4/round27/report.json R27-A9 (3), plan_issues 12; WATCHLIST.md W126, W280, W270",
+   "suggested_action": "Refresh the round-28 task text before 17:47Z. Add RESULTS rows 47-50 and render REPORT.md from report_md_ru when there is slack.",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "Finals path items remain open. Card v4 has 4 defects (the l.31 opener, the l.40 П3 silver range, token keys on probe numbers, exp83c missing). Q3 conflicts with pair П1. The V_pub re-check is not yet folded into cron 58b6ded3 (19:43Z). The rule to submit morning files at their decision header and the DET-closed line (due before 07:23Z) are not logged. The user agreed at 16:32Z to the hedge pair {V_pub, #37 or exp75}.",
+   "evidence": "research/wf_ideas_v4/round27/finals_card_v4_ru.md; research/wf_ideas_v4/round27/report.json R27-A7, R27-A8, R27-A9 (1); FACTS.md C-223, C-224, C-226, C-228; CONTEXT.md l.4041-4050",
+   "suggested_action": "Apply the R27-A8 edits before the 12:03Z fill. Log the Q3 П1 and decision-header lines with the freeze and the DET line before 07:23Z. Edit the 58b6ded3 prompt.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "risk",
+   "what": "The GPU quota figure from the API (9,988.9 of 21,600 s used) disagrees with the Settings page. Kaggle ban risk means no new API loops should be added. The 0.956 wave of 7 teams is below the P2 trigger of 5 per window.",
+   "evidence": "FACTS.md C-227, F-RUL-23; CONTEXT.md l.3988-3997; WATCHLIST.md I317, I323",
+   "suggested_action": "Plan on 2.2-3.2 GPU-h. Keep the watchdog local-only. Watch the e10 snapshots for a wave of 5 or more.",
+   "urgency": "info"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "I-233 (the poller logs error_description) is still the only strict orphan.",
+   "evidence": "research/KNOWLEDGE/IDEAS.md ORPHANS l.824",
+   "suggested_action": "Close it in one CONTEXT line.",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 27 index step, state ~16:40Z 28 Sep, HEAD da5ce54. I rewrote research/KNOWLEDGE/INDEX.md (76 lines): state in 10 lines, a map with refreshed line anchors for IDEAS, FACTS, DECISIONS and WATCHLIST, the top 8 open ideas (I-503, I-504, I-501, I-490/491/492, I-485, I-498/499, I-507/508, I-233), 10 deduplicated alerts, a resolved list, and how to use the knowledge base. I also appended section '27' to research/KNOWLEDGE/CHANGES.md. It covers 13 new CONTEXT entries (l.3924-4050), 7 commits, ideas I-497..I-509, the I-486 move to refuted, counts 496 -> 509, new facts F-LB-27, F-RUN-42..44, F-RUL-23, F-MOD-49/50 and F-TRN-59, contradictions C-219..C-228, and the watchlist items W271-W280, T164-T170 and I315-I326. Two facts are newer than the other curators saw. The laptop has been on AC since 16:29Z (CONTEXT l.4035, commit 00e2603), so the power alert is downgraded from 'now' to 'today'. At 16:32Z the user agreed to the hedge pair {V_pub, #37 or exp75} after the 743929 'overfitting' comment (l.4041, da5ce54); DECISIONS does not have this yet. P51 was still PENDING at the 16:32:08Z header. Still open: RULE v2.1, the freeze line, the night checklist with the nb_try 'limit' fix and backup crons, the MASKED fix, the R27-A6 questions, and RESULTS rows 47-50."
+}

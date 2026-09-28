@@ -1,0 +1,7 @@
+- 2026-09-28T16:32:44Z start: no index.json; reading INDEX.md, CHANGES.md tail
+- 2026-09-28T16:33:04Z read CONTEXT l.3924-4040 (last 16:30Z laptop on AC); HEAD 00e2603
+- 2026-09-28T16:33:28Z read IDEAS CHANGES(27) l.181 + ORPHANS l.824; P51 PENDING at 16:32:08Z header
+- 2026-09-28T16:33:58Z anchors collected (IDEAS/FACTS/DECISIONS/WATCHLIST); writing INDEX.md
+- 2026-09-28T16:35:24Z INDEX.md written (76 lines); new CONTEXT entry 16:32Z l.4041 + commit da5ce54 found -> patching INDEX
+- 2026-09-28T16:35:50Z CHANGES.md section 27 appended
+- 2026-09-28T16:36:59Z index.json written; done
