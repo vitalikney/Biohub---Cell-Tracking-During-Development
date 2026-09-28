@@ -3527,6 +3527,15 @@ Mention it to the user in one line (R9-A8 item 6).
   (+0.32%; +1.21% vs exp70g), edges 118,504, forks 84, LOWREFINE 150,265 (+1.52% vs exp85a), 1,559 s, CSV
   31b1e047587a. The knob delta is additive and identical across cap bases (+1,076 nodes, +4 forks on each). All three
   are ready for any slot the reads call for.
+- 2026-09-28 07:32 UTC, W1 READ: PROBE 47 exp78b (K2 + cap 12 + FRAME_CAP 2) = 0.955 -> '-' (no UP)
+  ListSubmissions 07:3xZ: 56623073 COMPLETE public 0.955 (48/49/50 PENDING). UP test (scratchpad uptest.py): S0 = e10
+  snapshot 20260928T0622Z (rank 177, count 48) vs S1 = experiments/lb_poll/_lb/S0_0729Z (download 07:29Z: rank 181,
+  count 49 = exactly one new completion = 47, last-submission date 00:06:09) -> 0 TeamIds passed, no UP; our block
+  position 9/57 -> 10/60 (one team, 16481288, entered the 0.956 block above us). Latency L in (7.27, 7.39] h (PENDING
+  at header 07:22:46Z, counted in the 07:29Z download). CODE: exp78b '-' vs exp70g 0.956. By W2 v4 (5): S3 does not
+  fire; S5 a '-' step ends the direction -> no exp80a, no exp84a, and every cap-12/24/48 stack is dead (exp86b,
+  exp82b/c, exp83a/d/f/g). The cap direction now rests on probe 49 (exp78a, cap 8, FRAME_CAP 1): '+' -> BASE exp78a
+  (S2: stop at cap 8), else BASE stays exp70g. Rank note: 171 teams strictly above 0.956 at 07:29Z (3,966 teams).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
