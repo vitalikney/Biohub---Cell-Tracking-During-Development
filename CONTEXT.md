@@ -3905,6 +3905,13 @@ Mention it to the user in one line (R9-A8 item 6).
   07:23 UTC prep. STANDING OVERRIDE (user): a new public notebook above our best (E10: >= 0.959) or a new top idea /
   disclosed knob in the discussions changes the plan: the session builds + dummies it at once and proposes the swap
   (before 02:00 UTC E10 v3 applies directly; after 02:00 UTC an E10 copy needs the user's yes for that notebook).
+- 2026-09-28 12:40 UTC, exp89p (K + SEC) DUMMY GATE PASS + discussion note
+  exp89p vs the exp85a dummy: validate ok, 0 Traceback/FAILED/DEADLINE:/FALLING BACK, DIVINS ENABLED, 'Secondary
+  SHA256: 7029fe69' in the log, nodes 122,110 (-0.18%), edges 117,957 (118,137), forks 88 (85), LOWREFINE 147,525
+  (-0.33%), 1,313 s, CSV 629fc20b4815 -> PASS (night slot 00:46 UTC). DISCUSSION 743006 (12:27Z, g john rao, a
+  participant, unverified): 'two embryos in the hidden test set; the first one is private and the second is public
+  (but it could be a mix split)'. No knob/technique; supports the single-embryo reading of both boards -> the finals
+  hedge matters more.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
