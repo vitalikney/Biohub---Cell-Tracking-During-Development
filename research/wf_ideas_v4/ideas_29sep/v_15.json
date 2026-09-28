@@ -1,0 +1,7 @@
+{
+ "refuted": true,
+ "reason": "Not a new file: DIS 2.25 is already built, dummied and slotted. The knob is live in exp85a (cell 0 sets BIOHUB_ILP_DISAPPEARANCE_WEIGHT=2, cell 2 reads it from os.environ and passes it to the ILP, and cell 3 does not hard-set it). exp89s_k2cap6_k_dis225 (exp85a + DIS 2.25, ipynb 8ed72e32) passed its pre-registered dummy gate at 14:40Z with 121,389 nodes (-0.77%), 84 forks and 1,566 s. The night risk stack exp89q/exp89r already carries DIS 2.25. MORNING TABLE v1.1 (logged 14:12Z, pre-score) sends exp89s to A-M2 or B-M1 only on a DIS '+' read and otherwise drops DIS, as the user's 12:25Z 'winners only' rule requires. The value is not public fitting: it comes from the metric-formula direction and the two-direction knob-arms design. But its net sign on an unseen embryo is not established by mechanism. The node term is about +0.0007 by construction. The edge term comes from ~1.45% ILP edge churn and its sign is unknown: lab -0.0008 on exp70g, +0.0004 on exp89p. Taking a morning slot unconditionally would spend a slot on a lever of unknown sign and override the pre-registered table. No new action; the existing conditional plan stands.",
+ "public_fit_risk": "low",
+ "build_line": "",
+ "gate": "none - no new build; the existing exp89s (8ed72e32) dummy PASS 14:40Z (nodes 120,860-121,839, forks 85+-5, LOWREFINE 148,020+-1%, <=2,100 s) already covers the MORNING TABLE v1.1 DIS '+' branch"
+}

@@ -1,0 +1,107 @@
+{
+  "task": "mine_ideabase 29 Sep: OPEN/DEFERRED/UNTESTED ideas buildable on exp85a + CLOSED ideas whose closing reason is void after the new public reads; max 10; no public fitting",
+  "written": "2026-09-28 ~20:05 UTC (local files only, no Kaggle calls)",
+  "summary": "The idea base is close to exhausted for 29 Sep. ideas.json has 509 ideas: 245 refuted, 128 in-plan, 61 lb-tested, 47 deferred, 26 lab-tested and 2 open-untested (I-106 SEC with the pilkwang primary, superseded by n2a; I-233 is poller ops). Neither open-untested idea can be built. ONE candidate has a closing reason that is now void: I-029, a constant +0.1 voxel z shift before integer rounding, on NON-CI files only. Its main anchor, 'coordinate-only lab gains read 0 on the LB (float probes 32/33)', fails for two reasons. (1) Discussion 744093 and round 28's recheck show those float probes were no-ops by construction, because the scorer casts to integers. (2) Coordinate levers did transfer publicly: coordhead +0.002 (probe 31), CI +0.001 (probe 48), and 744093's floor -0.008 on public vs our lab's floor_zyx -0.005. Its lab is exp60 x138, 56 train clips, both embryos: edge J +0.0017 (44b6 +0.0024, 6bba +0.0015). The value comes from train, not from the public board. It needs a ~20-line writer patch plus a byte gate (topology identical, only z +1 on ~5-15% of rows). It fits one UNUSED non-CI morning slot (by 11:30Z, ~30 min dummy), and it needs the user's yes because it is outside the {K, SEC, DIS 2.25, CI} whitelist. After an existing CI step the z shift was refuted (R25-RC-B), so CI files do not get it. Two weak env-knob options exist: FLOW_Z_WEIGHT 0.6 (EV ~0, unknown sign) and READMIT_RADIUS_UM 5. The second is not recommended: it steps along probe 50's public-read direction (more low-score readmits), which the user condition excludes. Seven revival checks keep their closing reasons: DIVERGE 2.5, start-leaf prune, N1 extrapolation, CI ALPHA 1.0, ILP APPEARANCE/EDGE weights (math-redundant with DIS/DIV), the retention guard and ILP-fork restore. The new reads (K +0.002, CI +0.001, cap 6 optimum, cap 8 -0.001) strengthen the closures of every fork-volume and fork-removal idea. Honest default: UNUSED stays right unless the user approves the z-shift file.",
+  "candidates": [
+    {
+      "id": "IB29-01",
+      "idea": "Constant z shift +0.1 voxel before the writer's integer rounding, on the best NON-CI morning file (exp85a; or exp89s = K + DIS 2.25 if DIS reads '+'). Nodes, ids and edges unchanged; only z moves by +1 voxel on the rows whose fractional z is in [0.4, 0.5).",
+      "source": "I-029 (ideas.json, LOC, deferred-after-deadline); lab = scratchpad r8_zshift_fine.json (exp60 x138 train lab, 56 clips, official metric with writer rounding): pooled edge J 0.9189 -> 0.9198 (+0.05) -> 0.9206 (+0.1) -> 0.9203 (+0.2); 44b6 0.8801 -> 0.8825 (clip W/L 2/1), 6bba 0.9224 -> 0.9239 (W/L 9/2), 42 clips tie; mechanism = positive post-head residual z bias on both train embryos (44b6 +0.15 um, 6bba +0.45 um). Void anchor: round28/scan_recheck.notes.md 19:47Z + discussion 744093 (float centroids -0.008 on public = scorer int-casts) -> our float probes 32/33 tied by construction; scratchpad r28_trunc_out.json floor_zyx -0.005 lab vs -0.008 public -> public coordinate sensitivity >= lab.",
+      "how": "New builder patch 'zshift' (a variant of patch_floatout's cell-7 writer hook): z_out = max(0, min(int(round(z + float(os.environ.get('BIOHUB_OUTPUT_Z_SHIFT_VOX','0')))), hi)); at knob 0 the CSV must be byte-identical to the parent (unit test). Build: python tools/build_probe_kernel.py exp91a_k2cap6_k_z01 --base x138 --patch divinsert --patch lowrefine --patch safetail --patch zshift --set DIVINS_ENABLE=1 --set DIVINS_STEAL=1 --set DIVINS_ALPHA=1 --set DIVINS_THRESH=0.4 --set DIVINS_DUMP=0 --set REPAIR_DEADLINE_S=34200 --set DIVINS_DEADLINE_S=28800 --set LOWREFINE_ENABLE=1 --set DIVINS_CAP=6 --set DIVINS_FRAME_CAP=1 --set ILP_DIVISION_WEIGHT=0.4 --set READMIT_MIN_SCORE=0.94 --set DEGRADE_KEEP_DIV=1 --set OUTPUT_Z_SHIFT_VOX=0.1 (add --set ILP_DISAPPEARANCE_WEIGHT=2.25 for the exp89s parent). Pre-registered gate vs the parent dummy CSV (exp85a ce8164a8202f or exp89s 8956f46c6824): validate ok, 0 errors, node ids/t/y/x and all edge rows identical, z differs only by exactly +1 on 5-15% of node rows, runtime rule v2.1. Ledger rule: map exp91* -> safetail (non-CI). NON-CI only; never on CI files (R25-RC-B).",
+      "why_not_public_fit": "Sign and value come from the train-embryo lab (exp60, both train embryos, positive residual z bias on both); we have no public read of any z shift, and no one disclosed one. Caveat: 0.1 was grid-picked in-sample from {0.05, 0.1, 0.15, 0.2, 0.25} (0.1-0.25 all similar), and the head that creates the bias was trained on the same embryos.",
+      "expected_effect": "Node-count effect 0 (same nodes/edges). In-sample lab +0.0017 edge J pooled; honest transfer ~+0.0003..+0.0010 per embryo, because the bias size depends on the embryo (0.15 vs 0.45 um) and varies by clip (44b6_18ced818 mean dz -0.47 um). Display: P(+0.001 over the parent) ~0.25-0.35, P(-0.001) ~0.10. The private sign depends on the hidden embryo's residual z bias (positive on both train embryos).",
+      "feasible_by_morning": true,
+      "status_in_our_records": "I-029 deferred-after-deadline. Closed for the finals 26 Sep (CONTEXT l.2187-2197) on these reasons: float-anchor 'coord lab gains read 0 on LB' (now VOID); embryo-dependent size (still holds, sign positive on both); new code on the best file's path (holds; mitigated by the byte gate). The after-CI arm was refuted by R25-RC-B (-0.00085 on the CI bed), hence non-CI only. The round-28 scan_recheck agent is re-examining the float anchor right now. It needs a user yes (outside the 12:25Z whitelist). It fills an UNUSED non-CI slot (B-M2 by default, A-M2 unless DIS/Rr read '+') by 11:30Z; GPU ~30 min of the ~3 h left."
+    },
+    {
+      "id": "IB29-02",
+      "idea": "MOTION_RELINK_FLOW_Z_WEIGHT 1.0 -> 0.6 on exp85a: down-weight z in the relink flow residual, because z voxels are ~4x coarser than xy.",
+      "source": "I-454 (knobarms_28sep/v_1.json kept only the down arm; rank.json ranked it last); amanatar V6 disclosed 0.40, but only inside a 9-knob bundle that scored 0.901 (confounded).",
+      "how": "exp85a recipe (IB29-01 command without --patch zshift) + --set MOTION_RELINK_FLOW_Z_WEIGHT=0.6 (cell-0 env knob; builder syncs the cell-1 guard as for exp88a/b/c). Gate vs the exp85a dummy: validate ok, 0 errors, nodes within +-0.5%, forks 85 +-5, rule v2.1.",
+      "why_not_public_fit": "The direction comes from voxel anisotropy, and skeptic v_1 fixed the value (0.6) before any public read; no public read of this knob exists.",
+      "expected_effect": "CPU replay: 0.7 -> 0.05-0.21% edge churn, 0.5 -> up to 1.3% on 6bba_05db; node count ~0; the sign is unknown and there is no lab sign. Display is most likely 0 (EV ~0). Priority is below IB29-01.",
+      "feasible_by_morning": true,
+      "status_in_our_records": "Refuted as a spare (built never; absent from W4 AMEND 4); no lab or LB read. Not in the user's whitelist, so it needs a yes. Not recommended unless a non-CI slot would otherwise stay UNUSED and IB29-01 is declined."
+    },
+    {
+      "id": "IB29-03",
+      "idea": "READMIT_RADIUS_UM 4 -> 5 on exp85a (readmit low-score peaks in the (4, 5] um band as well).",
+      "source": "I-183 + R24-RC-B (round24/v_recheck_r24-rc-b-i183-readmit-radius-reason-void-s.json: the int16 reason is VOID on K2 because lowrefine gives float coords); probe 50 (READMIT 0.94 band recovery paid publicly, although labs had re-refuted it).",
+      "how": "exp85a recipe + --set READMIT_RADIUS_UM=5; gate: nodes +0.0..+0.3% vs exp85a (upper bound 3,078 band peaks), LOWREFINE count within +2%, forks 85 +-5, rule v2.1.",
+      "why_not_public_fit": "BORDERLINE / likely EXCLUDED: 5 is just the next integer, not read from the board, but it is the same mechanism (more low-score readmits) that probe 50 read positive. That is a step along a public-read direction on a sibling axis, the case the user condition excludes. Use only if the user explicitly rules it acceptable.",
+      "expected_effect": "<= +0.27% nodes (~-0.0003 node multiplier) against an unknown edge gain; near-GT rates of band peaks 0.39-0.71% -> net likely 0 or negative; the public display most likely 0.",
+      "feasible_by_morning": true,
+      "status_in_our_records": "Refuted for 28-29 Sep by R24-RC-B although its original reason is void (bands are upper bounds; every public notebook uses 4). Recommendation: NO under the user condition."
+    },
+    {
+      "id": "IB29-04",
+      "idea": "SAFE_DIV_DIVERGE_UM 2.25 -> 2.5 (drop geometric safe forks whose daughters do not separate by t+2).",
+      "source": "I-333 (round13 R13DP-3, round19 R19-RC-B, knobarms v_11).",
+      "how": "exp85a recipe + --set SAFE_DIV_DIVERGE_UM=2.5 (env knob).",
+      "why_not_public_fit": "The value comes from the exp60 train lab (>= 0 on both embryos). But it was grid-picked from ~25 arms, and the public board is the evidence against it.",
+      "expected_effect": "Removes ~4 lab FP safe forks on 6bba and 0 on 44b6 (lab +0.0006..+0.0009 6bba, 44b6 0). The public prior is negative (~-0.0005..-0.001): the public board punishes safe-fork removal (DC 0.30 = -0.005), and cap 8's -0.001 says the fork count is already at its optimum. Nodes 0.",
+      "feasible_by_morning": true,
+      "status_in_our_records": "Deferred/closed; the closing reason HOLDS and is strengthened by the cap 6 optimum / cap 8 -0.001 read. K's +3 orphan safe divisions do not change the calculation. Do not build."
+    },
+    {
+      "id": "IB29-05",
+      "idea": "Start-leaf prune (mirror of lp30 on track starts: drop an in-degree-0 node with one outgoing edge of p < 0.3, not on frame 0).",
+      "source": "I-331 (round13 R13NC-5: lab +0.00048, 0.36% of nodes).",
+      "how": "Would need a new 'startprune' patch placed AFTER the insertion hook (the only existing hook runs before it); not buildable and gated by the morning.",
+      "why_not_public_fit": "Lab-derived, but the family (leaf prune) is on the closed list: it tied on the LB twice.",
+      "expected_effect": "The 44b6 half is pure node arithmetic; the edge-p half is in-sample (the edge-net trap). Expected display 0.",
+      "feasible_by_morning": false,
+      "status_in_our_records": "Deferred-after-deadline; the closing reason holds (leaf-prune class closed; no new read touches it)."
+    },
+    {
+      "id": "IB29-06",
+      "idea": "N1 task-vector extrapolation of the SEC delta (theta0 + k*(theta_ft - theta0), k = 1.5) if exp89p (K + SEC) reads '+'.",
+      "source": "I-384 (round18/19; x1.5/x2/x3 weights built locally for exp71's delta only).",
+      "how": "Not applicable: it would need a new n2a-based extrapolated weight dataset + push + dummy.",
+      "why_not_public_fit": "EXCLUDED by the user condition: after a SEC '+' public read, stepping further along the same weight delta is exactly an extrapolation along a public-read direction.",
+      "expected_effect": "Unknown; confident-peak counts grow superlinearly in k (x2.9 at k = 2); P(gain) ~0.02-0.05 per round 19.",
+      "feasible_by_morning": false,
+      "status_in_our_records": "Refuted twice (R18, R19); its trigger (exp76d/exp72 >= 0.955) never fired. Stays closed."
+    },
+    {
+      "id": "IB29-07",
+      "idea": "coordinject at the dataset author's disclosed ALPHA 1.0 (full snap) instead of our 0.5, now that CI read +0.001 on public.",
+      "source": "I-440 (round24 R24-PP-3, round25 R25-RC-A); bigger_levers/prep_coord_refiner.notes.md dose curve.",
+      "how": "exp87a/exp89r recipe with --set COORDINJECT_ALPHA=1.0 (CI family; CI cutoff 08:45Z).",
+      "why_not_public_fit": "The value is disclosed (acceptable with care), but choosing 'more CI' right after a CI '+' read is along the public-read direction.",
+      "expected_effect": "In-sample 4-clip dose curve: a0.3 +0.0011, a0.5 +0.0032, a1.0 -0.0057. The alpha-1.0 arm is the worst point, and out of sample the best alpha shifts down, so the expected effect is negative.",
+      "feasible_by_morning": true,
+      "status_in_our_records": "Refuted; the closing reason (negative in-sample dose, not the pre-registration) HOLDS after probe 48's +0.001 at alpha 0.5. Do not build."
+    },
+    {
+      "id": "IB29-08",
+      "idea": "ILP_APPEARANCE_WEIGHT or ILP_EDGE_WEIGHT arms as 'JT-sibling' ILP knobs on the K base.",
+      "source": "I-175 + knobarms_28sep/v_3.json (+ v_3_equiv.py): under the tracksdata flow constraints the ILP depends only on S = A + Dis and the fork threshold Div - A; the edge weight rescales both.",
+      "how": "Not applicable: any value maps onto a DIS != 2.25 and/or DIV != 0.4 point.",
+      "why_not_public_fit": "Equivalent to DIS 1.75 or DIV < 0.4, both closed (the latter partly as public fitting).",
+      "expected_effect": "None beyond the DIS/DIV axes already covered (DIS 2.25 is in the night stack).",
+      "feasible_by_morning": false,
+      "status_in_our_records": "Refuted by mathematical equivalence (v_3); stays closed."
+    },
+    {
+      "id": "IB29-09",
+      "idea": "Retention-guard change (hysteresis / per-movie scope for x138's blended-vs-primary-only detection switch; 44b6 falls back in 33% of frames, 6bba 3.9%).",
+      "source": "I-222 (round3 R3S-5, round9 R9-RC-C, round12 bound ~+0.005 pooled after the judge's correction).",
+      "how": "The knobs are hard-set in cells 3/4 (a --set is a no-op), so it needs a new patch plus a GPU lab; not doable by the morning.",
+      "why_not_public_fit": "Not public-fit, but it has no lab sign and the effect is embryo-dependent (a shake-up factor on hidden embryos).",
+      "expected_effect": "Sign unknown; the change touches the node set on 44b6-like embryos.",
+      "feasible_by_morning": false,
+      "status_in_our_records": "Deferred-after-deadline (post-deadline list item 1); the reason holds."
+    },
+    {
+      "id": "IB29-10",
+      "idea": "ILP-fork restore: re-add the dropped second child of raw ILP forks (p -> {c1, c2} where only p -> c1 survived and c2 starts at t+1).",
+      "source": "I-441 (round24 R24-PP-6).",
+      "how": "New --patch ilpfork; not built.",
+      "why_not_public_fit": "Not public-fit, but it works the same niche as the DaughterNet insertion.",
+      "expected_effect": "Adds forks at break-even precision (0.149-0.19 vs 0.161). The new public reads (cap 6 optimum, cap 8 +5 insertions = -0.001) say more forks in this niche are negative on public.",
+      "feasible_by_morning": false,
+      "status_in_our_records": "Refuted 28 Sep; the closing reason is STRENGTHENED by probe 49 (cap 8 -0.001). Stays closed."
+    }
+  ]
+}

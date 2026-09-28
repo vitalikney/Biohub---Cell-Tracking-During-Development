@@ -1,0 +1,14 @@
+# mine_ideabase notes (28 Sep ~19:40 UTC)
+- No prior mine_ideabase.json -> fresh run. ideas.json: 509 ideas (refuted 245, in-plan 128, lb-tested 61, deferred 47, lab-tested 26, open-untested 2).
+- Truly open-untested: only I-106 (exp23 SEC w/ pilkwang primary; superseded by n2a) and I-233 (poller ops). So candidates must come from deferred/in-plan-unbuilt/refuted-with-void-reason.
+- Read CONTEXT l.3398-4072 (RESUME 28 Sep 01:48Z .. 16:43Z).
+- Knob inventory (knobarms_28sep/inventory.json): 93 knobs; only DIS/TAU/ZW survived skeptics; ZW 0.6 spare unbuilt (I-454), DIVERGE 2.5 lab>=0 both embryos (I-333, deferred), DEEPCENTER_TTA refuted (v_7).
+- Key lens: probe 50 = READMIT 0.94 band recovery paid on public (+0.002 incl. ILP) although labs (curation 23) re-refuted it -> check low-score node-recovery closures (I-183 radius, I-140 byteext, I-141/I-186 gapfill, I-430).
+- round28 scan_recheck (19:47Z): 744093 implies scorer int-casts floats -> our float-output ties (probes 32/33) were by construction -> 'coordinate-only lab gains read 0 on LB' anchor VOID. Public coordinate transfers exist: coordhead +0.002 (p31), CI +0.001 (p48). => I-029 z+0.1 vox (non-CI only; after-CI refuted R25-RC-B) is the main 'closing reason void' candidate.
+- Lab z-shift numbers (exp60 x138, 56 clips): +0.1 vox ALL +0.00161 (44b6 +0.00251, 6bba +0.00153); -0.5 vox ALL -0.0039.
+- Re-aggregated scratchpad r8_zshift_fine.json (exp60 x138 lab, 56 clips): edge J 0.9189 (0) -> 0.9198 (0.05) -> 0.9206 (0.1) -> 0.9203 (0.2); 44b6 0.8801->0.8825 (clip W/L 2/1), 6bba 0.9224->0.9239 (W/L 9/2). r28_trunc_out.json (round-28 agent): floor_zyx 0.9189->0.9140 (-0.005 lab) vs 744093 public -0.008 -> coordinate sensitivity transfers at >= lab size.
+- Candidate list forming: (1) z+0.1 vox on best non-CI morning file [I-029 revived], (2) FLOW_Z_WEIGHT 0.6 [I-454 spare], (3) READMIT_RADIUS 5 [I-183, borderline public-direction], plus stays-closed checks (DIVERGE 2.5, start-leaf prune, N1, retention guard, TAU 0.5, DC TTA).
+- Checked and kept closed: I-440 CI ALPHA 1.0 (in-sample dose curve a1.0 -0.0057; CI +0.001 at 0.5 does not void it), I-441 ILP-fork restore (cap 8 -0.001 strengthens), I-175/v_3 ILP APPEARANCE/EDGE weight (math-redundant with DIS/DIV), I-333 DIVERGE 2.5 (fork removal punished publicly), I-331 start-leaf prune (leaf-prune class), I-384 N1 (extrapolation along a public-read direction if SEC reads +), I-222 retention guard (patch, no lab).
+- Dummy-clip GT lab (scratchpad r26/dummy_lab.py) cannot score a z shift: dummy CSVs are already integer-rounded.
+- Morning slot fit: B-M2 UNUSED by default, A-M2 UNUSED unless DIS '+'/Rr '+' -> a z-shift non-CI file could fill one UNUSED non-CI slot by 11:30Z, needs user yes (outside {K,SEC,DIS,CI}).
+- DONE 20:0xZ: final JSON written to mine_ideabase.json.

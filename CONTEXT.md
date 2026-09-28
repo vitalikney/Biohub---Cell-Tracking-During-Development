@@ -4070,6 +4070,14 @@ Mention it to the user in one line (R9-A8 item 6).
   outside it. Risk: after a standby the detached loops hung on network calls (15:00-15:40Z). Added a POST-WAKE CHECK
   cron at 06:07 UTC (09:07 MSK): AC power, poll header age, E10/feed loop freshness, restart any stale loop, confirm
   the night files, notify if still on battery. The watchdog will notify when the laptop goes on battery.
+- 2026-09-28 20:00 UTC, IDEAS + DISCUSSIONS SWEEP (user request; workflow research/wf_ideas_v4/ideas_29sep, 20 agents, local files only, no Kaggle calls)
+  16 candidates: 3 from the saved discussions (MD-1 LEARNED_BONUS 0.75, MD-2 ILP max_neighbors, MD-3 density-adaptive
+  symmetry threshold), 10 from our idea base (IB29-01 z-shift +0.1, IB29-02 FLOW_Z_WEIGHT 0.6, IB29-03 READMIT_RADIUS
+  5, IB29-04 DIVERGE 2.5, IB29-06/07/08 N1 x1.5 / CI ALPHA 1.0 / other ILP weights, ...), 3 from metric mechanics
+  (MM-1 skip-frame fork, MM-2 third child, MM-3 DIS 2.25 = already in the plan). ALL 16 REFUTED by their skeptics
+  (public fit, new code without a lab, sign <= 0, or closed). Decision: build/dummy NOTHING new tonight; MORNING TABLE
+  v1.1 unchanged (branch A: M1 exp89l on P '+'/'0u' by 08:45Z, M2 exp89s on DIS '+' else exp89q on Rr '+' by 11:30Z,
+  else UNUSED; branch B: M1 exp89s on DIS '+', M2 UNUSED); ~3 GPU-h stay in reserve.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

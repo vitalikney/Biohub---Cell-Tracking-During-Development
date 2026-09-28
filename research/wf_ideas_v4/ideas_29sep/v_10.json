@@ -1,0 +1,7 @@
+{
+ "refuted": true,
+ "reason": "Closed in our records (I-175, knobarms_28sep/v_3.json; IDEAS.md header lists I-175 as 'closed, not to be re-proposed'). Both knobs are live env reads in exp85a (ILP_APPEARANCE_WEIGHT, ILP_EDGE_WEIGHT via os.environ), but neither is an independent axis: with tracksdata's no-merge flow constraints #appear = #nodes - #edges and #disappear = #appear + #div, so the ILP argmin depends only on S = A + Dis and the fork threshold Div - A; scaling the edge term by c is the same argmin as dividing A/Dis/Div by c. Every value therefore lands on a DIS != 2.25 and/or DIV != 0.4 point (A -0.2 == DIS 1.8; A +0.4 == DIS 2.4 + DIV 0.8; edge weight = diagonal rescale), which are closed for 29 Sep (DIS 1.75, DIV < 0.4) or already in the night risk stack (DIS 2.25). Choosing a direction after P50/P51 reads would be an extrapolation along a public-read direction (excluded by the user condition). The fork half also has no direct output channel (filter_output_graph replaces ILP edges with the 1:1 motion relink) and the fragment half bites only on 4-5 node fragments, so there is no mechanism-backed positive sign on an unseen embryo. Not worth a ~35 min dummy from ~3 GPU-h.",
+ "public_fit_risk": "high",
+ "build_line": "",
+ "gate": "none - not built (refuted; no dummy)"
+}
