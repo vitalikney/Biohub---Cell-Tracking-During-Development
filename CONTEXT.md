@@ -3341,6 +3341,9 @@ Mention it to the user in one line (R9-A8 item 6).
   48 ~09:40-10:40Z (CI).
 - 2026-09-28 00:50 UTC, W1 SUBMIT: probe 49 = exp78a (K2 + insertion cap 8) at ~00:50Z (dummy PASS 121,252 / 86 forks). 2 slots left today
   (W2a ~08:45-10:00Z, W2b 12:00Z held for E10 v3).
+- 2026-09-28 01:02 UTC, R21-A5/A6: ledger rule exp83* -> safetail_ci (+ test; 25 pass). CI stacks built (shas match round 21): exp83a = exp78b + CI
+  (80a0856f), exp83b = exp78a + CI (d9b0834d); both dummies pushed now (the only W2b CI candidates). exp81 and exp80a dummies COMPLETE
+  (gates per R21-A3 logged earlier).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

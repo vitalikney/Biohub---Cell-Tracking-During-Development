@@ -77,6 +77,7 @@ EXP_RULES = [
     (r"exp75[a-z]*", "safetail_ci"),          # coordinject stacks (CONTEXT 27 Sep round 20 R20-A4)
     (r"exp76[acfhi]", "safetail_ci"),
     (r"exp79a[a-z]*", "safetail_ci"),
+    (r"exp83[a-z]*", "safetail_ci"),          # R21 CI stacks
     (r"exp7[2-9][a-z]*", "safetail"),         # 28 Sep public rungs (K2 family)
     (r"exp8\d[a-z]*", "safetail"),
     (r"exp70[a-z]*", "safetail"),             # K2 public ladder (CONTEXT 26 Sep 20:49 UTC): K2 + knobs, REPAIR 34200 / DIVINS 28800

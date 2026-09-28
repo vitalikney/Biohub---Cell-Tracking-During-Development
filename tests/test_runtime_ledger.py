@@ -334,3 +334,11 @@ def test_round20_families():
         assert rl.family_of("1", e, {}) == "safetail_ci", e
     assert rl.FAMILIES["safetail_ci"]["deadline_h"] == 10.75
 
+
+def test_round21_exp83_ci_stacks():
+    for e in ("exp83a", "exp83c", "exp83d", "exp83g"):
+        assert rl.family_of("1", e, {}) == "safetail_ci", e
+    for e in ("exp82a", "exp82b", "exp82c", "exp84a", "exp80a", "exp81"):
+        assert rl.family_of("1", e, {}) == "safetail", e
+    assert rl.family_of("1", "exp79a", {}) == "safetail_ci"
+
