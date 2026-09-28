@@ -4056,6 +4056,13 @@ Mention it to the user in one line (R9-A8 item 6).
   folded in (notify-only; no separate 22:30 MSK job). Round-28 KEY FACTS refreshed (power/standby risk, GAP RULE v2,
   RULE v2.1, API-load cut, the user's agreement on the hedge pair). R27-A6 (ii) unanswered -> default: exp89p at 00:46
   UTC in both branches.
+- 2026-09-28 16:39 UTC, DISCUSSION 744093 (user pointer): float centroids cost 0.008 on public -> no impact on our files
+  Hammad Farooq, 16:29Z: the same 0.954 graph with node coordinates written as round(v, 3) instead of int(round(v))
+  scored 0.946 (-0.008); guess: the Kaggle scorer floors/truncates non-integers (~-0.5 voxel). Takeaway: keep integer
+  coordinates. OUR FILES: every candidate dummy CSV has int64 z/y/x with 0 non-integer values (exp85a, exp87a, exp89p,
+  exp89q, exp89r, exp75 checked); coordinject writes integers like the x138 writer (max(0, round(v))). Our own
+  float-output probes 32/33 (22 Sep) tied their int parents at 3 decimals (a different base, 0.950/0.948). No action;
+  'float output' stays closed. Saved as experiments/discussions/744093.md.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
