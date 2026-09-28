@@ -3462,6 +3462,20 @@ Mention it to the user in one line (R9-A8 item 6).
   a016cf0f, exp83f c8a2fccb, exp83g 00f8cb36, exp84a 4cb1e47b; sha8 of the .ipynb); no dummy pushed; dummies are
   pushed by the current BASE only (R23-A6). (5) Still open: GPU quota read (no API; needs the Settings page),
   RESULTS.md rows for 39-46, the finals draft edits (R23-A10).
+- 2026-09-28 05:03 UTC, PROBE 50 SUBMITTED: exp85a (ref 56629533, 05:02:30Z) + GPU QUOTA READ
+  Dummy vitaliineibauer/biohub-exp85a-k2cap6-div04-ra094 v1 COMPLETE 05:01Z; gate (scratchpad gate85.py vs the exp70g
+  dummy): validate_csv ok; 0 Traceback / FAILED / DEADLINE: / FALLING BACK; DIVINS ENABLED; runtime 1388 s (exp70g
+  1409 s); nodes 122,328 (+0.89% vs 121,252, under the 1.5% flag); edges 118,137 (117,083); forks 85 (81); LOWREFINE
+  refined 148,020 vs 143,634 (+3.05%, the READMIT coupling is live); sha12 ce8164a8202f. Knob check: cell 0 sets
+  ILP_DIVISION_WEIGHT 0.4 and READMIT_MIN_SCORE 0.94 at lines 120-121, AFTER the x138 defaults (1.2 at line 41, 0.965
+  at line 93); no later cell re-sets them (not in the x138 hard-set list), so both knobs are live. Guards: poll header
+  04:56:42Z (6 min old, no 429), 3 submits used today before this one, no NEVER_SUBMIT.md, no duplicate. Submit -m
+  'probe 50: exp85a = exp70g (cap 6) + ILP_DIVISION_WEIGHT 0.4 + READMIT_MIN_SCORE 0.94 (discussion 743929 knobs)'.
+  Kaggle: '1 submissions remaining today'. SELECTED unchanged: 56563521 (#37) + 56563534 (#38). Ledger family safetail
+  (9.5 h, rule exp8\d); expected score ~12:30-13:00Z. exp85c dummy pushed 05:01Z (lane freed by exp85a); exp85b dummy
+  still RUNNING. GPU QUOTA (Kaggle Settings page, read 04:55Z): Kaggle GPU 20:29 / 30 h used this week -> ~9.5 h left
+  (~20 K2-family dummies at ~25 min); TPU 0 / 20 h. Enough for W2b + W3/W4 + E10 dummies. The 5th slot of 28 Sep stays
+  for the 12:00Z W2b decision (E10 copy first, else exp85b/exp85c or the W1-favoured stack).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
