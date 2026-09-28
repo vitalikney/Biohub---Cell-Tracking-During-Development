@@ -3896,6 +3896,15 @@ Mention it to the user in one line (R9-A8 item 6).
   hedge), 00:46 UTC exp89p (K + SEC, the attribution half: stack vs exp89p isolates DIS 2.25). exp86c (READMIT 0.92)
   leaves the night. Gates: exp89q vs exp85a (validate, 0 errors, Secondary 7029fe69, nodes within +-1.5%, rule v2);
   exp89r vs exp89q (topology identical, COORDINJECT 4/4, change 0.60-0.69, rule v2).
+- 2026-09-28 12:25 UTC, USER CONFIRMED THE NIGHT (chat 'подтверждаю') + STANDING OVERRIDE
+  NIGHT 29 Sep (frozen at 23:30 UTC with dummy status): 00:05 UTC RISK STACK = exp89r (K + SEC + DIS 2.25 + CI) if
+  probe 51 (exp87a) reads '+' or '0u' vs exp85a, else exp89q (same without CI); 00:06 UTC exp75 (#37 + CI, private
+  hedge); 00:46 UTC exp89p (K + SEC). Fallbacks: a stack dummy that fails -> its other variant; exp89p fails -> exp83c
+  (CI) at 00:07 UTC. If 51 is not terminal by the freeze, the CI choice defaults to exp89q (non-CI) and exp89r is not
+  used. MORNING: 2 files (CI by 08:45 UTC, non-CI by 11:30 UTC), stack of the night winners, logged pre-score at the
+  07:23 UTC prep. STANDING OVERRIDE (user): a new public notebook above our best (E10: >= 0.959) or a new top idea /
+  disclosed knob in the discussions changes the plan: the session builds + dummies it at once and proposes the swap
+  (before 02:00 UTC E10 v3 applies directly; after 02:00 UTC an E10 copy needs the user's yes for that notebook).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
