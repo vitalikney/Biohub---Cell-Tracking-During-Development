@@ -3430,6 +3430,15 @@ Mention it to the user in one line (R9-A8 item 6).
   continues the reads/submits/finals proposal itself.
 - 2026-09-28 04:32 UTC, USER (chat: "я сбросил лимиты, агенты иследователи опять запускаются"): research rounds resume; the failed round-23 curation is
   re-run now; round 24 at 07:00Z (with the first W1 reads), then every ~2.5 h.
+- 2026-09-28 04:38 UTC, DISCUSSION 743929 (the user pointed to it; read-only via Chrome): John Taylor (AI) (#105, 0.959) took a fork of the public
+  0.953 notebook to 0.957 with a ported post-processing stage, then +0.001 with ILP_DIVISION_WEIGHT 1.2 -> 0.4 (upstream, linking) and
+  +0.001 with READMIT_MIN_SCORE 0.965 -> 0.94 (post-link); both node-count neutral (< 1%); local scores had the sign wrong 4/4; finals
+  advice: best + its closest one-line neighbour. Both knobs are cell-0 env defaults in our K2 (not the cell-3 trap). BUILT on exp70g
+  (cap 6): exp85a = + both knobs (sha e6337843), exp85b = + ILP_DIVISION_WEIGHT 0.4 (af036e20), exp85c = + READMIT_MIN_SCORE 0.94
+  (4d8f4ce4); dummies for 85a/85b pushed 04:37Z. W2 AMENDMENT (pre-score: the last header 2026-09-28T04:36:39Z shows 47/48/49 PENDING;
+  aggressive mode): W2a (08:45-10:00Z) = exp85a (the two public-proven knobs on our best base) if its dummy passes, replacing
+  exp80a/exp81; W2b (12:00Z) = E10 copy first, else exp85b or exp85c (the one-knob split) unless a W1 read makes a CI/DIV stack
+  better per W2 v4; exp80a/exp81 move to W3/W4.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
