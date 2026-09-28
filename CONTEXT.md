@@ -3428,6 +3428,8 @@ Mention it to the user in one line (R9-A8 item 6).
   s; exp83c-g: R22-A1 checks + topology identical to the sibling (83c-81, 83d-82b, 83e-82a, 83f-80a, 83g-82c). (5) OPS NOTE: the
   round-23 curator agents failed with 'weekly limit reached (resets Oct 2)'; research rounds may no longer run - the main session
   continues the reads/submits/finals proposal itself.
+- 2026-09-28 04:32 UTC, USER (chat: "я сбросил лимиты, агенты иследователи опять запускаются"): research rounds resume; the failed round-23 curation is
+  re-run now; round 24 at 07:00Z (with the first W1 reads), then every ~2.5 h.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
