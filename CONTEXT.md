@@ -3636,6 +3636,26 @@ Mention it to the user in one line (R9-A8 item 6).
   pays'); after 02:00Z (user lift, 2 non-CI files) = the remaining arms of {exp88b, exp88c/exp88a} unless exp81 still
   needs its first read. If probe 50 reads R+, the arms are re-cut as one-line changes of the new BASE (exp85a/exp86c)
   before 00:05Z (JT: arms off the current best).
+- 2026-09-28 09:35 UTC, W1 READ: PROBE 48 exp79a (exp70g + coordinject ALPHA 0.5) = 0.957 -> C+ (UP, 33 teams); NEW BEST 0.957
+  Header 09:33:10Z: 56623105 COMPLETE public 0.957 (50 PENDING). UP test: S0 = _lb/S1_0753Z (rank 182, 0.956, count
+  50) vs S1 = _lb/S1_0934Z (rank 153, 0.957, count 51 = exactly one completion = 48) -> 33 TeamIds passed = UP,
+  attributable to 48. Ledger: family safetail_ci, L in (9.27, 9.45] h (PENDING at 09:23:08Z), ADMIT (a) L <= 10.75 h,
+  insertion gate 10.2 h did NOT fire. CI-RAN: dL vs exp70g (L <= 7.67 h) >= 1.6 h >= 1.2 h and L_hi 9.45 <= 10.2 h ->
+  C+ (not NO-OP, not 'v'). Rank 153 of 3,968, 137 strictly above, 16th of 42 in the 0.957 block. V_pub (finals card) =
+  exp79a 56623105 (a CI file: the card's CI caveat applies; the user picks). E10: trigger now >= 0.958
+  (tools/kaggle_feed.py default --our-best 0.957; runbook and watch-loop text updated). OPS: exp87a (exp70g + K + CI,
+  the FULL candidate) dummy pushed 09:35Z; exp83c (exp70g + n2a SEC + CI) dummy follows at the next free lane (then
+  exp88c).
+- 2026-09-28 09:35 UTC, W2b TABLE v5 AMENDMENT A (pre-score for probe 50: header 09:33:10Z shows 56629533 PENDING; written with C+ known, 'arms off the current best')
+  Row 3 becomes: at 50's terminal header (latest 14:00Z): R+ (display >= 0.957; with our best at 0.957 an UP can no
+  longer be attributed to a 0.956 K file, so R+ = display >= 0.957 only) -> exp87a (FULL = exp70g + K + CI; CI file,
+  reads ~22:15Z) if its dummy passes R22-A1 with the exp85a dummy as the topology reference (122,328 nodes / 118,137
+  edges / 85 forks, integer-coordinate change 0.60-0.69, runtime rule v2), else exp86c. R0 / R- / R? -> exp83c (SEC on
+  the current best = exp79a + n2a; CI file) if its dummy passes the SEC-STACK GATE (04:31Z (4): R22-A1 + topology
+  identical to the exp81 dummy CSV 8132ef2811d0, Secondary 7029fe69), else exp81. Reason: our best is now the CI file
+  exp79a, so a non-CI file can at most tie 0.957, while a stack on exp79a can reach 0.958 (JT: arms off the current
+  best). Row 4 unchanged (first PASSED of exp81, exp85b). W4 AMEND 3 rows (a)-(e) stand with C = C+: (a)/(c) under R+,
+  (d) under R0/R?/R-, and b = exp70g.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

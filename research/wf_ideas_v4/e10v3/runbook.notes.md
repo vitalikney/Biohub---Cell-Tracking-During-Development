@@ -63,7 +63,7 @@ EOF
 ); echo "our best displayed public = $OUR"        # 0.954 on 27 Sep 12:32Z; a ladder rung may raise it
 A=<author>; S=<slug>; M=<M>; SC=<score>
 python -m kaggle kernels status "$A/$S"          # must be COMPLETE (RUNNING/QUEUED/ERROR = newer session -> wait, restart at step 2)
-# TRIGGER iff SC > OUR (28 Sep: OUR = 0.956, so SC >= 0.957) AND k == M AND status COMPLETE. Else: one CONTEXT line, no action.
+# TRIGGER iff SC > OUR (28 Sep 09:33Z: OUR = 0.957 (exp79a, CI), so SC >= 0.958) AND k == M AND status COMPLETE. Else: one CONTEXT line, no action.
 # A newer unscored version (k < M): no port now; the watch will show its run; re-check when it scores.
 # PushNotification: "E10 v3 ТРИГГЕР: <A>/<S> v<M>, public <SC> (наш <OUR>). Делаю (A) полную копию, затем (B) копию+вставку или (C). Финалы не трогаю."
 # Log the trigger in CONTEXT.md (date -u): ref, M, SC, OUR, signal line.
