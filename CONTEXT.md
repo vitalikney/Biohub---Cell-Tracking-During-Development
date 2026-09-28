@@ -3971,6 +3971,11 @@ Mention it to the user in one line (R9-A8 item 6).
   is a CI file: the R25 rule (B only at >= 0.955, as a trade). (c) exp75 <= 0.953, ERROR or NO-OP -> partner #37, and
   a CI-risk flag on any CI V_pub. (d) Pair C {V_pub, exp70g} becomes an info row. mc26: B beats A while the private CI
   mean is above ~-0.0002 (sd 0.0008) to ~-0.0004 (sd 0.0015); model-conditional.
+- 2026-09-28 14:40 UTC, exp89s (K + DIS 2.25) DUMMY GATE PASS (vs the 14:12Z pre-registered gate)
+  validate ok; 0 Traceback/FAILED/DEADLINE:/FALLING BACK; DIVINS ENABLED; 'Configuration guard: PASS' (drift guard at
+  2.25); secondary = the x138 default (Secondary SHA256 9bac2fa0.., no n2a line); nodes 121,389 (in 120,860-121,839;
+  -0.77% vs exp85a); edges 117,246; forks 84 (85 +-5); LOWREFINE 148,020 (+0.00%); 1,566 s (rule v2); CSV 8956f46c6824
+  -> PASS. Ready for MORNING TABLE v1.1 (A-M2 / B-M1 on DIS '+').
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
