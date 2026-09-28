@@ -1,0 +1,74 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/ideas.json",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/IDEAS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/25/ideas.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/25/ideas.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "what": "Round 25's two pre-score lines are not in CONTEXT yet: AMENDMENT A2 with the probe 50/51 read rule (the new '0u' code) and W4 AMEND 4. Both have to be logged before 56629533 (probe 50) turns terminal, which can happen from ~11:54Z. Probe 50 was still PENDING at the 11:03:26Z header, and the latest submit time is 13:00Z.",
+   "evidence": "CONTEXT.md l.3709-3716 (last entry 10:52Z); experiments/lb_poll/poll.log header 2026-09-28T11:03:26Z (56629533 PENDING); research/wf_ideas_v4/round25/report.json R25-A1, R25-A2; research/KNOWLEDGE/ideas.json I-463, I-464",
+   "suggested_action": "Log both lines now, quote the last PENDING header, and keep the wake-ups at 11:50, 12:20, 12:50 and 13:00Z.",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "The exp88c dummy (DIS 1.75) was COMPLETE on Kaggle at 10:46Z, but its gate line (R25-A3 (a)) is not logged. exp88c is the R0 night file at 00:05Z, so the gate has to be registered before the output is downloaded.",
+   "evidence": "research/wf_ideas_v4/round25/report.json R25-A3 (a), new_facts 2; CONTEXT.md l.3659-3668 (exp88c dummy pushed 10:07Z, no gate); research/KNOWLEDGE/ideas.json I-451",
+   "suggested_action": "Log the gate line with the note '(logged after the kernel completed, before its output was downloaded)'. Then download and check: nodes +0.4..+1.3% vs 121,252, forks 81 +-5, runtime <= 2,100 s.",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "Round 25 disagrees with CONTEXT on two points. (1) R25-A6 (c) still asks the user Q2 (CI files in the morning), but the user said YES at 10:47Z. (2) CONTEXT logs the CI morning cutoff as 09:30Z, while round 25 (PC25-03, R25-A2) sets 08:45Z: a 09:30Z CI file at the logged 10.9 h band would read ~20:24Z, after the 20:00 UTC tick.",
+   "evidence": "CONTEXT.md l.3680-3687, l.3704-3708; research/wf_ideas_v4/round25/report.json R25-A2, R25-A6 (c), plan_issues 5; research/wf_ideas_v4/round25/scan_plancheck.json PC25-03; research/KNOWLEDGE/ideas.json I-469, I-464, I-477",
+   "suggested_action": "Drop Q2 from the R25-A6 message. Put one cutoff in the AMEND 4 line: 08:45Z is the safe one, or keep 09:30Z and state the tail risk.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "experiments/RESULTS.md has no rows for probes 47 (exp78b 0.955), 48 (exp79a 0.957, the new best) and 49 (exp78a 0.955). Its last probe row is 46. The 0.957 best exists only in CONTEXT and ledger.md.",
+   "evidence": "experiments/RESULTS.md l.79 (last probe row = 46; unchanged since 59e14e2); CONTEXT.md l.3530-3538, l.3615-3624, l.3639-3648; experiments/lb_poll/ledger.md",
+   "suggested_action": "Add rows 47-49 in the RESULTS format (ref, change, dummy, score, L band, UP note), and add 50 when it reads.",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "Two tools that tonight's reads depend on are missing. tools/runtime_ledger.py has no exp89/exp90 rule, so exp89 CI files would be filed as safetail (9.5 h). tools/uptest.py (needed for the '0u' code and the night reads) still exists only in a scratchpad. Neither is done at 74caff9.",
+   "evidence": "research/wf_ideas_v4/round25/report.json R25-A5 (a), R25-A8 (b), new_facts 9; tools/ (no uptest.py, no gate_dummy.py); research/KNOWLEDGE/ideas.json I-383, I-473",
+   "suggested_action": "Add the exp89[abcghilmno] and exp90a -> safetail_ci rules plus test_round25_exp89_families before any exp89 dummy. Copy uptest.py into tools/ before the probe-50 read.",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "No fallback exists if the user misses the tick window: the finals stay #37 (0.954) + #38 (0.953), both below V_pub exp79a (0.957) and exp70g (0.956). The tick-fallback question (R25-A6 (e)) needs an explicit user yes and has not been asked.",
+   "evidence": "research/wf_ideas_v4/round25/report.json R25-A6 (e), plan_issues 11; research/wf_ideas_v4/round25/scan_plancheck.json PC25-10; CONTEXT.md l.3680-3687 (tick 20:00 UTC = 23:00 MSK); research/KNOWLEDGE/ideas.json I-468",
+   "suggested_action": "Ask it in the R25-A6 message (MSK first) and log the answer. Without a yes, the 18:00Z proposal must warn that the ticks are still #37/#38.",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "Two candidate files are waiting on unlogged lines. exp75 (#37 + CI, today's R0/R-/R? file) needs the R25-A4 line: NO-GO lift plus a grandfather clause for its 2,288 s dummy, which falls in the rule-v2 re-run band. exp86c (the R+ 00:05Z file) needs the R25-A3 (b) waiver because it fails the literal R24-A4 gate (84 forks, safe 36/7/5/17). Submitting either without its line would be post hoc.",
+   "evidence": "research/wf_ideas_v4/round25/report.json R25-A3 (b), R25-A4, new_facts 7; CONTEXT.md l.3578-3591 (rule v2), l.3522-3529 (exp86c 84 forks); research/KNOWLEDGE/ideas.json I-465, I-445, I-435",
+   "suggested_action": "Log the exp75 line before its submit: submit the existing Kaggle v1 and never re-push. Log the exp86c waiver before the 23:30Z freeze.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "The finals card logged at 04:31Z picks V_pub 'among COMPLETE non-CI cap-family files', but V_pub has been the CI file exp79a since 09:35Z. The R25P-9 draft card was refuted: it misquotes JT, sets a default inside the model noise and gives UTC-only times.",
+   "evidence": "CONTEXT.md l.3417-3430, l.3639-3648; research/wf_ideas_v4/round25/report.json R25-A7, rejected; research/wf_ideas_v4/round25/v_hyp_private_r25p-9.json; research/KNOWLEDGE/ideas.json I-406, I-467, I-466",
+   "suggested_action": "Build card v3 as a neutral A/B/C table (A {V_pub, #37}, B {V_pub, exp75} only if exp75 >= 0.955, C {V_pub, exp70g}) with the RC-C CI caveat, times in MSK first. Send 29 Sep 12:00Z (15:00 MSK).",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "I-233 (poller logs error_description) is still the only strict orphan. Fifteen at-risk items remain: the new round-25 proposals (I-451, I-460, I-463, I-464, I-465, I-468, I-473, I-474, I-477) and older ones (I-252, I-330, I-336, I-407, I-426, I-448). The 10 knob-arm refutations are written only in knobarms_28sep/v_*.json.",
+   "evidence": "research/KNOWLEDGE/IDEAS.md ORPHANS; research/wf_ideas_v4/knobarms_28sep/v_0.json..v_12.json; CONTEXT.md l.3625-3638 (survivors only); research/KNOWLEDGE/ideas.json I-233, I-455..I-458",
+   "suggested_action": "Close I-233 in one line (the error class can be read on demand). Add one CONTEXT line listing the 10 refuted knobs, so rounds do not re-propose them.",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 25 (2026-09-28 ~11:10 UTC, HEAD 74caff9 + untracked round25/) updates curation 24 incrementally: 448 -> 477 ideas, 85 change records.\n\nSources read:\n- CONTEXT.md l.3530-3716 (18 entries, 07:32-10:52Z).\n- 13 commits.\n- ledger/poll.log to 11:03:26Z.\n- knobarms_28sep (inventory, 13 arms, 13 verdicts).\n- round25 report.json R25-A1..A9, 5 scans, 18 verdicts.\n- exp87/exp88 probe.json and dataset_baseline.\n\nNew LB scores (all from CONTEXT/ledger; RESULTS.md has no rows for them):\n- Probe 47 exp78b = 0.955 and probe 49 exp78a = 0.955. S1 fired: cap 6 is the optimum and the DIV volume is closed.\n- Probe 48 exp79a (coordinject) = 0.957 C+ with UP 33. This is the new best.\n- Probe 50 (K) is still PENDING.\n\nNew ideas:\n- Knob arms: I-449 workflow; exp88a/c/b arms I-450/I-451/I-452; spares I-453/I-454 unbuilt; refuted knobs I-455..I-458; knob inventory I-459.\n- exp89 arms: R0 CI arms on exp79a I-460; R+ K-base arms I-461; deeper stacks refuted I-462.\n- Pre-score plan: AMENDMENT A2 + '0u' read rule I-463; W4 AMEND 4 I-464.\n- Finals: exp75 private hedge I-465; 'B by default' refuted I-466; card v3 I-467; tick-fallback question I-468.\n- Schedule: 3+2 schedule I-469.\n- Ops: teammate GPU I-470; dataset pre-push rule I-471; session cron I-472; uptest.py I-473.\n- CI spare: exp90a I-474.\n- Refuted: 0.956-crowd attribution I-475; '#38 + CI' / SEC hedge I-476.\n- User message: R25-A6 message I-477.\n\nStatus moves:\n- I-397/I-398/I-401/I-324 -> lb-tested.\n- I-399/I-400/I-404/I-414/I-421/I-442 -> refuted (moot or dropped).\n- I-300 refuted -> in-plan (user lift).\n- Knob-arm refutations added to I-175/I-309/I-333/I-349/I-439.\n- The z shift after CI is refuted (I-029/I-041).\n- I-425/I-434/I-436/I-437 leave the at-risk list.\n- Counts: lb-tested 55->59, lab 24->25, refuted 212->227, in-plan 108->117, deferred 47, open 2. Orphans: 1 strict, 15 at-risk.\n\nTop alerts:\n- R25-A1/A2 pre-score lines are unlogged, with probe 50 terminal from ~11:54Z.\n- The exp88c gate is unlogged.\n- Q2 was already answered, and the CI cutoff is 08:45Z vs 09:30Z.\n- RESULTS.md is missing rows 47-49.\n- The exp89 ledger rule and uptest.py are missing.\n- The tick-fallback question has not been asked."
+}

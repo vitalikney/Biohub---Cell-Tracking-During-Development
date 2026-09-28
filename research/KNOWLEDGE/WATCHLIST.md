@@ -1,159 +1,176 @@
 # WATCHLIST: overdue, next 24 h, later, insights at risk
 
-Curated 2026-09-28 ~07:30 UTC (curation 24). This updates the curation-23 build of 28 Sep 04:45Z (full text in git history of this file; predecessors `research/KNOWLEDGE/_curation/23/watch.json`, `_curation/22/watch.json`, `_curation/21/watch.json`, `_curation/20/watch.json`, `_curation/18/watch.json`). Rows not repeated here are unchanged there.
+Curated 2026-09-28 ~11:00 UTC (curation 25). This updates the curation-24 build of 28 Sep 07:25Z (full text in the git history of this file, commit a256dcb). Predecessors: `research/KNOWLEDGE/_curation/24/watch.json`, `_curation/23/watch.json`, `_curation/22/watch.json`, `_curation/21/watch.json`, `_curation/20/watch.json`, `_curation/18/watch.json`. Rows not repeated here are unchanged there. The TASK_LOCAL_SESSION, TASK_CLOUD_SESSION and v3 FINAL_REPORT rows are unchanged since `_curation/20/watch.json`.
 
 **Sources read for this update:**
-- `CONTEXT.md` (3,542 lines; `## 9. Literature` starts at l.3522). New entries since curation 23:
-  - 04:38Z DISCUSSION 743929 + exp85a/b/c builds + W2 AMENDMENT (l.3433-3441);
-  - 04:39Z PROCESS MISS + FIX (l.3442-3447);
-  - 04:53Z CURATION 23 ACTED ON + exp85a PRE-SUBMIT LINE (l.3448-3464);
-  - 05:03Z PROBE 50 SUBMITTED (exp85a 56629533) + GPU QUOTA READ (l.3465-3478);
-  - 06:26Z exp85b/c DUMMY GATES + OPS RESTART + SEC siblings (l.3479-3494);
-  - 06:35Z kaggle_feed tool + first discussions read (l.3495-3514);
-  - 06:37Z BRANCH CANDIDATES exp86a/b/c (l.3515-3521).
-- `git log`: 08ceca1, d14e9a3, d015291, 59e14e2, 048c518, a240ba1, ebadfa3, af035e7 (last, 09:38 local = 06:38Z). Git dates are local time (UTC+3). `git log -8 --format=%b | grep -ci co-author` = 0.
-- `git status` 07:22Z: untracked `research/wf_ideas_v4/round24/` (no REPORT.md), `experiments/e10_watch/20260928T0639Z.txt`, `experiments/discussions/digest_20260928T0704Z.md`, eleven `experiments/ext_*` folders, `ds_secw_corwin_v1/weights/`, `ext_corwin-biocel-aux/_booster/`.
-- `research/wf_ideas_v4/round24/report.json` (complete, written 07:18Z, actions **R24-A1..A11**), `round24/report.notes.md`, `scan_plancheck.notes.md`, `scan_hyp_slots.notes.md`, `scan_recheck.notes.md`.
-- `experiments/lb_poll/poll.log` header **07:22:46Z** (l.20699): 47/48/49/50 all PENDING; `experiments/lb_poll/ledger.md` (07:12:46Z).
-- `experiments/e10_watch/watch_loop.log` (RUN 18 06:23:45Z, 0 signals, next 07:22:29Z); `experiments/discussions/feed_loop.log` (07:05:10Z, E10 FLAG none).
-- `experiments/lb_poll/e10_watch_loop.py` l.78; `experiments/RESULTS.md` l.78-79; scratchpad listing (`gate85.py`).
+- `CONTEXT.md` has 3,737 lines, and `## 9. Literature` starts at l.3717. New entries since curation 24 (l.3522-3716):
+  - 07:28Z exp86a/b/c gates PASS; 07:32Z probe 47 read;
+  - 07:43Z ROUND 24 PRE-SCORE 1/3, 2/3 and 3/3, plus the W4 LIFT SPLIT; 07:44Z exp87a/b/i builds and the ledger rule;
+  - 07:47Z user answers; 07:54Z probe 49 read; 09:07Z knob arms exp88a/b/c;
+  - 09:35Z probe 48 read (0.957) and W2b TABLE v5 AMENDMENT A;
+  - 10:16Z exp87a/83c/88a/88b gates PASS, and the private hedge proposal;
+  - 10:19Z user answers (3+2 yes; tick by 20:00 UTC = 23:00 MSK);
+  - 10:45Z teammate GPU, dataset sharing and the pre-push rule; 10:47Z the user says yes to morning CI files; 10:52Z schedule restored (session cron).
+- `git log`: f40d44b, 19c24b5, 031e152, c91ae89, 3c66202, c16215b, 9014628, a599958, b618f7b, 1b5e912, 7f50382, ce23262, a256dcb, 74caff9. The last one is 13:52 local = 10:52Z; git dates are local time (UTC+3). `git log -12 --format=%b | grep -ci co-author` = 0.
+- `git status` 10:55Z: `experiments/lb_poll/ledger.md` and `poll.log` modified; `research/wf_ideas_v4/round25/` untracked.
+- `research/wf_ideas_v4/round25/report.json` is complete (10:52Z), with actions **R25-A1..A9** and plan_issues 1-15. Also read: `report.notes.md`, `scan_plancheck.notes.md`, `scan_recheck.notes.md`, `scan_hyp_sched29.notes.md`, `scan_hyp_private.notes.md`, `scan_browser.notes.md`, `v_plancheck_pc25-04.notes.md`, `v_hyp_sched29_r25s-7.notes.md`. **Round 25's sources stop at CONTEXT 10:19Z** (`report.notes.md` 10:42Z), so the round missed the 10:45Z, 10:47Z and 10:52Z entries.
+- `experiments/lb_poll/poll.log` header **10:53:24Z** (l.21980): probe 50 (56629533) PENDING; 47/48/49 COMPLETE.
+- `experiments/e10_watch/watch_loop.log` (RUN 22 at 10:24:33Z, 0 signals); `experiments/discussions/feed_loop.log` (10:36:55Z, E10 FLAG none); `experiments/discussions/digest_20260928T1036Z.md` (top public notebook 0.953; flag level > 0.957).
+- Code and file checks:
+  - `tools/runtime_ledger.py` l.80-83; `tools/kaggle_feed.py` l.172; `experiments/lb_poll/e10_watch_loop.py` l.78; `experiments/lb_poll/run_feed_loop.sh` l.10; `experiments/RESULTS.md` l.78-79;
+  - `ls experiments | grep exp8[6-9]` finds no exp89 folder;
+  - `ls tools | grep -E "uptest|gate_dummy"` finds neither file.
 
-All times are UTC. IDs are stable: W = action, T = time-bound reminder, I = insight. Status values: done, in progress, overdue, not started, superseded, moot, awaiting user.
+All times are UTC. The user thinks in MSK (UTC+3) (`CONTEXT.md` l.3683-3687). IDs are stable: W = action, T = time-bound reminder, I = insight. Status values: done, in progress, overdue, not started, superseded, moot, awaiting user.
 
-**State at 07:25Z, 28 Sep:**
-- **Best display 0.956** = exp70g (probe 45, 56606948), L (7.49, 7.67] h (`experiments/lb_poll/ledger.md`).
-- **Rank:** #179 (was #172), 9th of 56 in the 0.956 block, k = 8, 170 teams strictly above (`round24/report.json` new_facts; `experiments/e10_watch/20260928T0639Z.txt`).
-- **Four probes PENDING at 07:22:46Z** (`poll.log` l.20699): 47 exp78b 56623073, 48 exp79a CI 56623105, 49 exp78a 56624341, **50 exp85a 56629533** (exp70g + ILP_DIVISION_WEIGHT 0.4 + READMIT_MIN_SCORE 0.94, submitted 05:02:30Z; `CONTEXT.md` l.3465-3474). Expected reads: 47 ~07:30-08:00Z, 49 ~08:15-08:40Z, 48 ~09:40-10:55Z, 50 ~12:27-12:51Z (`round24/report.json` new_facts).
-- **28 Sep slots:** 4 used (47, 48, 49 at 00:06-00:50Z; 50 at 05:02Z); **1 left**, for W2b (`CONTEXT.md` l.3474-3478).
-- **GPU quota read:** 20:29/30 h at 04:55Z (`CONTEXT.md` l.3476-3477); ~7.2 h left after ~2.2 h of dummies (`round24/report.json` new_facts).
-- **Dummies:** exp85a/b/c PASS (l.3466-3469, l.3485-3488); exp86a/b outputs in `_dl/` but **gate not logged**; **exp86c has no output** (`round24/report.notes.md` 07:15Z).
-- **Finals unchanged:** #37 56563521 + #38 56563534 ticked; the user picks on 29 Sep (`CONTEXT.md` l.3398-3400, l.3474).
-- **Ops:** the previous session died ~05:07Z; poller and E10 loop restarted 06:22Z as detached processes (`CONTEXT.md` l.3480-3485). Session-only timers were not re-created (see W247).
+**State at 10:58Z, 28 Sep:**
+- **Best display 0.957** = exp79a (probe 48, 56623105; exp70g + coordinject ALPHA 0.5; a CI file). UP of 33 teams, code C+ (`CONTEXT.md` l.3639-3645).
+- **Rank:** #153 of ~3,966, with 137 teams above; 16th of 42 at 0.957 (l.3644; `round25/report.json` new_facts 5).
+- **Probe reads today:**
+  - 47 exp78b = 0.955, code '-' (l.3530-3538).
+  - 49 exp78a = 0.955, code '-'. S1 fires: the DIV volume is closed, **BASE = exp70g**, and cap 6 is the optimum (l.3615-3624).
+  - 48 exp79a = 0.957, code C+ (l.3639).
+- **Probe 50 exp85a (the K lever) is PENDING** at 10:53:24Z (`poll.log` l.21980). Expected terminal ~11:54-12:50Z (`round25/report.json` new_facts 1).
+- **28 Sep slots:** 4 used, **1 left** = probe 51 (W2b) (`round25/report.json` new_facts 1).
+- **Dummies PASSED and ready:**
+  - exp86a/b/c (l.3522-3529); exp86c only through the R25-A3 (b) waiver;
+  - exp87a, exp83c, exp88a, exp88b (l.3659-3668);
+  - exp75 (27 Sep dummy; `round25/report.json` new_facts 7).
+- **exp88c:** COMPLETE on Kaggle, but no gate line is logged yet (`round25/report.notes.md` 10:46Z).
+- **Finals unchanged:** #37 56563521 + #38 56563534 are ticked (l.3474). The user ticks by **20:00 UTC (23:00 MSK) on 29 Sep** (l.3683-3687).
+- **User answers today:**
+  - cap lift: yes, 2 files after 02:00Z (l.3608);
+  - Q3 (SEC file as a final): OPEN (l.3610-3611);
+  - E10 copies after 02:00Z: case by case (l.3612-3614);
+  - 3 night + 2 morning: yes (l.3681);
+  - morning CI files: yes, CI files by 09:30Z and non-CI by 11:30Z (l.3704-3708).
+- **GPU:** the user reported ~5 h left at 10:45Z (l.3689). Round 25 estimated ~4.5-4.8 h (`round25/scan_plancheck.notes.md`).
+- **Ops:** session cron re-created at 10:52Z (l.3709-3716). The detached poller, E10 loop and feed loop are running.
 
-**Changes since 04:45Z (curation 23):**
+**Changes since 07:25Z (curation 24):**
 - **Done:**
-  - W228 (R23-A11): round key facts refreshed (`CONTEXT.md` l.3459-3460).
-  - W232 (R23-A4): runbook section 9 builds the SI from the BASE's probe.json, REF = BASE (l.3456-3458). New residue: W243.
-  - W212 (R23-A5): GPU quota read, 20:29/30 h (l.3476-3477).
-  - W229 (R23-A7): nine stack notebooks logged and committed (l.3460-3463; commit d015291).
-  - W126 part 1: RESULTS.md rows 39-46 (commit 59e14e2; `experiments/RESULTS.md` l.78-79 for 45/46).
-  - W174: loop LOOK text now reads "> our best (0.956 on 28 Sep, so >= 0.957)" (`experiments/lb_poll/e10_watch_loop.py` l.78; loop restarted 06:22Z).
-  - W231 (c): exp81/exp80a sibling CSVs downloaded, sha12 match (l.3493-3494).
-  - W233 principle "dummies pushed by the current BASE only (R23-A6)" logged (l.3462-3463).
-- **Superseded:** T117 W2a 08:45-10:00Z (exp85a took the slot at 05:02Z, l.3446-3447, l.3465); W199/W222 morning brief (R23-A9) -> the R24-A7 message (W241).
-- **New:** actions **W235-W247**, reminders **T139-T144**, insights **I274-I286**.
+  - W235 (l.3539), W236 (l.3559), W237 (l.3578);
+  - W239 (l.3598; live bases only); W241 (l.3592, l.3607);
+  - reads T139 (l.3530), T140 (l.3615), T141 (l.3639);
+  - W243 (2) (l.3645-3646; `tools/kaggle_feed.py` l.172 default 0.957);
+  - W231 (b) (l.3663-3665); W247 main part (l.3709-3716); W238 gate lines (l.3522-3529).
+- **Moot:**
+  - W231 (a)/(d) and T123: exp80a, exp81-as-W2b and exp84a are dead after 47/49 (l.3619-3622).
+  - T118 and T127: answered (l.3608).
+- **Superseded:**
+  - W242 and T106 -> W248 (R25-A1);
+  - W245 (filler) -> W249/W256;
+  - W234 and W230 -> W254 (R25-A7);
+  - W240 -> W252 (R25-A5).
+- **New:** actions **W248-W261**, reminders **T145-T156**, insights **I287-I302**.
 
 ---
 
-## OVERDUE
+## OVERDUE / DUE NOW (before probe 50 turns terminal, possible from ~11:54Z)
 
 | ID | Item | Status | Deadline | Evidence |
 |---|---|---|---|---|
-| **W235** (new; = **R24-A1**) | **Pre-score block 1/3: W2b TIMING + K LEVER + W2b TABLE v5.** Quote the last PENDING header (07:22:46Z or newer). (T) CI file at 12:00Z; non-CI file at the first header with 56629533 terminal, latest 14:00Z. (K) K = ILP 0.4 + READMIT 0.94 as ONE bundled lever read by probe 50 (R+ / R0 / R- / R?); lookup JT(b), JT+CI(b), RA92(b). TABLE rows 0-4: E10 copy; D12 (S3) -> exp80a; D8 + C+ -> exp83b; wait for 50: R+ -> exp86c (D0) / exp86a (D8), else exp81; Row 4 fallback exp81, exp85b. If 47 is already terminal, write "(written after 47 was terminal)" | **overdue / imminent**: `grep "TABLE v5"` in CONTEXT = 0; last entry 06:37Z | **before probe 47 is terminal (~07:30Z)** | `round24/report.json` R24-A1, plan_issues (1)(2)(4)(13); `poll.log` l.20699 |
-| **W236** (new; = **R24-A2**) | **Pre-score block 2/3: W4 AMEND 3 + (4) EXCEPTION.** Dummies PASS by **23:30Z** (supersedes 00:00Z); the 23:30Z freeze line (row, b, R, C, codes, frozen list); rows (a)-(e); stack depth <= cap + 2 levers; READMIT 0.92 only under R+, 0.90 only if RA92 reads strictly above JT(b); no RA98 | not started (`grep "W4 AMEND 3"` = 0) | **now (same block as W235)**; at the latest before 50 is terminal (~12:25Z) | `round24/report.json` R24-A2 |
-| **W237** (new; = **R24-A3**) | **Pre-score block 3/3.** (1) Correction to 06:26Z: ILP 0.4 is not inert, +3 safe divisions (63 -> 66) via relink orphans; (2) amend 04:53Z: the lowrefine part is benign, no decoupling build; (3) runtime rule v2 (PASS <= 2,100 s; 2,100-2,500 s re-run; > 2,500 s FAIL); (4) GAP RULE: L_hi > 8.0 h only from a > 15 min poll gap = UNPROVEN, not 'v'; (5) **S0 = `e10_watch/20260928T0639Z.txt` (count 48, #179, k = 8)** | not started | now (same window as W235) | `round24/report.json` R24-A3; `CONTEXT.md` l.3489-3491 (the "near-inert" text) |
-| **W238** (new; = **R24-A4**) | **exp86a/b gate lines + gate tool + exp86c.** Log exp86a/b PASS with "(written after the outputs were listed ...)"; copy scratchpad `gate85.py` to `tools/gate_dummy.py` with a node-row hash and a test; **confirm/push the exp86c dummy** and gate it vs exp85a (node rows differ, readmits and LOWREFINE up < +5%, failed frames 0) | not started: no `tools/gate_dummy.py`; exp86c has no `_dl` output (07:15Z) | exp86c push **now**; gate lines ~08:00Z; **exp86c PASS by 12:30Z** | `round24/report.json` R24-A4; `round24/report.notes.md` 07:15Z; `ls tools/gate_dummy.py` 07:22Z = missing |
-| W230 (R23-A1 residue) | Balanced CI caveat (R22-A4 (A): a0.5 pooled +0.0022, sign flips with alpha, Eric lab +0.0078 -> LB -0.002 twice, V1284 probe 31 LB +0.002); replaces the Eric-only v2 (9) line (`CONTEXT.md` l.3187). Russian draft (iv) with R23-A10 fixes | not started (`grep "a0.5 pooled"` = 0) | **before 48's terminal header (~09:40Z)** | `round22/report.json` R22-A4 (A); `round23/report.json` R23-A1 |
-| W231 (R23-A3 residue) | (c) done (l.3493-3494). Still missing: (a)(5) CSV must differ from the non-SEC sibling and exp81; (b) SEC+CI files show Secondary 7029fe69; (d) **exp84a gate** (R21-A3 (e) cap-rung rules + node rows identical to exp70g) | in progress | before any exp82*/83c-g/84a dummy is gated (T1 ~08:45Z for exp84a under S3) | `round23/report.json` R23-A3; `CONTEXT.md` l.3426-3428 |
-| **W246** (new) | **Round 24 REPORT.md + commit.** `round24/REPORT.md` was blocked by the harness; the main session renders it from report.json (round-23 layout). Commit named paths only: round24 folder, `e10_watch/20260928T0639Z.txt` (the S0 file; snapshots stay tracked per R22-A11 amended), digests, as the user, no Co-Authored-By. Never `git add -A` (weights, `_booster/`) | not started | with the W235-W237 commit | `round24/report.json` next_focus NOTE; `round24/report.notes.md` 07:18Z; `git status` 07:22Z |
-| **W247** (new) | **Re-create the session timers.** They die with the session (I116), and the session died ~05:07Z. The 06:22Z restart covered only the poller and the E10 loop. Lost timers: 012fa6dd (tick check 28 Sep 17:57Z), 328f7392 (29 Sep 11:57Z push), 18ff4796 (29 Sep 17:57Z), bb224de9 (29 Sep ~23:27Z LB snapshot) | not started (no CONTEXT line re-creates them) | **before 12:00Z today** (W2b wake-ups 12:15/12:30/13:30Z, R24-A8) | `CONTEXT.md` l.2532, l.2601-2602, l.3480-3485; `round18/report.json` R18-A2 (2) |
-| W126 (part 2) | RESULTS.md rows for probes 47-50 after their reads (rows 39-46 done, 59e14e2) | not started (by design) | before the finals read (29 Sep ~19:00Z) | `experiments/RESULTS.md` l.78-79 |
-| W202 + **W244** (= R23-A8 + **R24-A10**) | Info/curator lines: R22-A9 (a)-(h); READMIT/ILP rows; softened lab caveat (I265); plus R24-A10 (a) I-412 JT stage own code, stop manual 0.947-family scans; (b) synthetic set is José Freitas's kernel output; (c) I-183 radius closed, post-deadline 2x2 test; (d) amanatar gap continuation = stitch class; (e) mc23 parent-partner pairs lose 0.05-0.16 bronze; (f) builder weight-path hardening | not started (`grep "R22-A9 INFO"` = 0) | today | `round23/report.json` R23-A8; `round24/report.json` R24-A10 |
-| W176 / W177 / W182 | ROUND 14-24 RECORD; LESSONS H1; no `NEVER_SUBMIT.md` in exp70j/exp70k | overdue, low | H1 now; H2 29 Sep 23:00Z | `ls experiments/exp70j_k2_dc020 experiments/exp70k_k2_dc0225` 07:22Z |
-| I208 / W57 / W66 / W31 / W72 / W150 | Old low-priority text fixes (amanatar V6 misattribution l.2976-2977) | overdue, low | passed | `_curation/20/watch.json` |
+| **W248** (new; = **R25-A1**) | **PRE-SCORE 1/2, "W2b AMENDMENT A2 + PROBE 50/51 READ RULE".** Quote the last header that shows 56629533 PENDING. The slot goes at 50's terminal header, **hard latest 13:00Z** (supersedes the 14:00Z of l.3543). R+ -> exp87a; R0/R-/R?, or 50 not terminal at 13:00Z -> **exp75** (replaces amendment A's exp83c, l.3653). Also: the -m text; ledger family safetail_ci; S0/S1 downloads; the '0u' code; the probe-51 REF rule; exp75 CI-RAN (dL = L_hi - 7.54 h); the 'ins-tail?' footnote | not started (`grep "AMENDMENT A2"` = 0) | **now, before ~11:54Z** | `round25/report.json` R25-A1, plan_issues 1, 2, 15 |
+| **W249** (new; = **R25-A2**) | **PRE-SCORE 2/2, "W4 AMEND 4".** It supersedes the AMEND 3 (a)-(e) slot lists, the LIFT SPLIT file kinds and the 09:07Z arms slot rule. The night list is keyed on probe 50 alone. **R+:** 00:05 exp86c / 00:06 exp75 (or exp87a) / 00:45 exp89e. **R0/R-/R?:** 00:05 exp88c / 00:06 exp89a / 00:45 exp88b (exp83c on a Q3 yes). **Morning:** M1 is a CI file (exp89h under R+; exp89b/exp89o under R0); M2 is non-CI by 11:30Z. Non-CI files at least 40 min apart (R18-A7); arm code '+' = parent + 0.001; the depth cap kills exp89c/g/i/l | not started (`grep "W4 AMEND 4"` = 0) | **now** (same window as W248) | `round25/report.json` R25-A2, plan_issues 3-7 |
+| **W250** (new; = **R25-A3**) | **(a) exp88c gate line**, marked "logged after the kernel completed, before its output was downloaded": nodes +0.4..+1.3% vs 121,252, forks 81 +-5, rule v2. **(b) exp86c WAIVER line:** it fails the literal R24-A4 items (safe 36/7/5/18, forks >= 85) and passes the RA-style gate; the line must say the per-clip readmit check was not applied | not started (`grep WAIVER` = 0; the last exp88c line is l.3668, "pushed 10:07Z") | (a) **now, before the output is downloaded**; (b) before 23:30Z and before any R+ use of exp86c | `round25/report.json` R25-A3; `round25/report.notes.md` 10:46Z-10:47Z |
+| **W251** (new; = **R25-A4**) | **exp75 line.** The ipynb ab621c13 equals the Kaggle source; submit the existing v1 and never rebuild or re-push it; dummy CSV d6d9d808303f. It carries the GRANDFATHER clause for the 2,288 s runtime and lifts exp75 from the R21-A3 (e) NO-GO list (`CONTEXT.md` l.3335) | not started (`grep "exp75 re-verified"` = 0) | before the exp75 submit: ~12:00-13:00Z under R0/R-/R?, else 00:06Z | `round25/report.json` R25-A4, new_facts 7 |
+| **W253** (new; = **R25-A6**, adjusted) | **ONE Russian message** (MSK first, UTC in brackets): (a) today's slot is exp87a or exp75; (b) the night list is keyed on 50; (c) Q2 is **already answered yes** (10:47Z, l.3704), so only propose the tighter CI cutoff (W260); (d) Q3 is still open; (e) **new question, tick fallback:** if the ticks are unchanged at 00:00 MSK 30 Sep (21:00Z), may the session tick the pair from the 18:00Z proposal?; (f) every file is a public-only, single-embryo read. Log the answers | not started (`grep "tick fallback"` = 0) | now, or with the probe-50 read | `round25/report.json` R25-A6 (covered_by_existing_approval **false**), plan_issues 11 |
+| **W260** (new; contradiction) | **Morning CI cutoff.** CONTEXT says CI files by **09:30Z** (12:30 MSK) (l.3685-3686, l.3705-3706). Round 25 says **08:45Z** (11:45 MSK), because the logged CI band reaches 10.9 h: 09:30Z + 10.9 h = 20:24Z, after the 20:00Z tick | open: round 25 did not see the 10:47Z entry | log with W249, before the 29 Sep 07:23Z morning-batch cron | `round25/report.json` plan_issues 5, R25-A2 M1; `round25/scan_hyp_sched29.notes.md` (latency line) |
+| **W258** (new; W247 residue) | **Wake-ups missing from the 10:52Z cron.** R25-A1 needs wake-ups at 11:50Z, 12:20Z, 12:50Z and 13:00Z; before 13:00Z the cron has only the 12:47Z research round. Also not re-created: the 28 Sep 17:57Z tick check (012fa6dd), a post-tick SELECTED check on 29 Sep (~20:00-20:30Z) and the 29 Sep ~23:27Z final LB snapshot (bb224de9) | not started | **before 11:50Z** | `CONTEXT.md` l.3709-3716 (cron list), l.2365, l.2619; `round25/report.json` R25-A1 (1) |
+| W238 (residue) | Gate lines are done (l.3522-3529). Still missing: `tools/gate_dummy.py` (gate85.py lives only in the scratchpad) | in progress | before the first exp89 gate | `round24/report.json` R24-A4; `ls tools` 10:55Z |
+| **W255 (b)** (new; = **R25-A8 (b)**) | Copy `uptest.py` from the session scratchpad to `tools/uptest.py`; keep the S0/S1 zips in `experiments/lb_poll/_lb/` | not started (`ls tools \| grep uptest` = none) | before probe 50's read (the '0u' code needs it) | `round25/report.json` R25-A8 (b); `round25/v_hyp_sched29_r25s-7.notes.md` |
+| W126 (part 2) | RESULTS.md rows for probes 47 (0.955), 48 (0.957) and 49 (0.955); later 50 and 51 | overdue for 47-49 (the last RESULTS change is 59e14e2; l.78-79 end at probe 46) | before the finals card (29 Sep 12:00Z) | `experiments/RESULTS.md` l.78-79; `CONTEXT.md` l.3530, l.3615, l.3639 |
+| W246 / **W257** (new) | **REPORT.md for rounds 24 and 25 was never rendered.** Subagents are blocked from writing it; round 25's Russian text is in the `report_md_ru` field of `report.json`. The round 25 folder is untracked. Commit named paths only, as the user, with no Co-Authored-By; never `git add -A` | round 24 folder committed (031e152) without REPORT.md; round 25 not started | with the W248/W249 commit | `round25/report.json` next_focus NOTE; `git status` 10:55Z; `ls research/wf_ideas_v4/round2*/REPORT.md` (rounds 20-23 only) |
+| W202 + W244 | Info/curator lines: R22-A9 (a)-(h); R24-A10 (a)-(f) (I-412: JT's stage is his own code; the synthetic set is José Freitas's kernel output; radius 2x2 is post-deadline; the amanatar gap is the stitch class; mc23 parent-partner; builder weight-path hardening) | not started (`grep "R22-A9 INFO"` = 0, `grep I-412` = 0) | today | `round23/report.json` R23-A8; `round24/report.json` R24-A10 |
+| W176 / W177 / W182 | ROUND 14-25 RECORD; LESSONS H1; no `NEVER_SUBMIT.md` in exp70j/exp70k | overdue, low | H1 now; H2 29 Sep 23:00Z | `_curation/24/watch.json` |
+| I208 / W57 / W66 / W31 / W72 / W150 | Old low-priority text fixes | overdue, low | passed | `_curation/20/watch.json` |
 
-## NEXT 24 H (28 Sep 07:25Z -> 29 Sep 07:25Z)
+## NEXT 24 H (28 Sep 10:58Z -> 29 Sep 10:58Z)
 
 | ID | When (UTC) | Item | Status | Evidence / rule |
 |---|---|---|---|---|
-| W235-W237 | **now, before 47 terminal (~07:30Z)** | The three pre-score blocks (see OVERDUE) | overdue | R24-A1..A3 |
-| **T139** (new) | **~07:30-08:00Z** | **Read 47** (exp78b). S1 = manual `kaggle competitions leaderboard -d` within ~10 min of the terminal header; S0 = 0639Z snapshot (W237 (5)); log k; k = 0 -> BLIND '?' | - | `round24/report.json` R24-A3 (5), new_facts; `CONTEXT.md` l.3320-3331 |
-| **W241** (new; = **R24-A7**) | **with the 47 read, or at 08:00Z** (whichever first); never re-send at 09:30Z | **ONE short Russian message**: (a) up to 2 non-CI files after 29 Sep 02:00Z until ~10:25Z? (b) Q3: may a SEC file be a final? (c) confirm E10 copies after 02:00Z; one line on K (50 reads ~12:30Z); one line that READMIT 0.92/0.90 are our own steps, only if 50 reads '+'. **Before sending**, append the "W4 LIFT SPLIT (R24)" pre-score line | not started; replaces W199/W222 (R23-A9) | `round24/report.json` R24-A7 (covered_by_existing_approval false: user answers needed) |
-| **W239** (new; = **R24-A5**) | **before ~08:45Z** | **Build exp87a/b/c/d/e/i/j** (CPU, no push); expected sha8 87a 2e40c57f, 87b ec9c2860, 87c f29dc7d9, 87d 06f120c7, 87e 53eb54c7, 87i 4042f00f, 87j 97413dfc; STOP on mismatch; diff vs the listed refs; **no RA98**. Add `exp87[abce]` -> safetail_ci above `exp8\d` in `tools/runtime_ledger.py` with a test; extend R8 COVERAGE to exp87a/b/c/e; commit as the user | not started (`ls experiments | grep exp87` = none) | `round24/report.json` R24-A5, plan_issues (6) |
-| T100 | hourly at hh:22Z until 29 Sep 12:00Z; feed loop every 30 min until 29 Sep 23:59Z | E10 v3 watch (RUN 18 06:23Z, 0 signals) + feed digests (07:05Z, E10 FLAG none). Watch: a new anvithpothula notebook (author now 0.957), a JT reply to Justin CH123 on 743929 (R24-A9 (3)). Trigger = public notebook strictly above our best display | live | `experiments/e10_watch/watch_loop.log`; `experiments/discussions/feed_loop.log`; `CONTEXT.md` l.3495-3514 |
-| **T140** (new) | **~08:15-08:40Z** | **Read 49** (exp78a cap 8); D0/D8/D12 and S1-S7 (S7 now decides BASE only; W2a is gone) | - | `round24/report.json` new_facts; `CONTEXT.md` l.3425-3426 |
-| **W240** (new; = **R24-A6**) | T1 ~08:45Z; T2 48 read; T3 ~12:30-13:00Z; T4 ~19:45Z; all PASS by 23:30Z | **Dummy push schedule**, realized branch only: T1 exp84a only under S3; T2 nothing JT-related, never a CI stack; T3 R+ and b != exp70g -> RA92(b) (exp87i/j), R+ and C+/testable C? -> JT+CI(b) (exp87a/b/c); T4 exp87d (+exp87e if C+) under S3-up and R+; T5 SEC(b) only after exp81 reads '+'; RA90(b) only if RA92 reads above JT(b) | not started (by design) | `round24/report.json` R24-A6 |
-| W231 (d) | before T1 (~08:45Z) | exp84a gate line (see OVERDUE) | in progress | R23-A3 (d) |
-| W230 | **before 48 terminal (~09:40Z)** | Balanced CI caveat (see OVERDUE) | not started | R23-A1 |
-| **T141** (new) | **~09:40-10:55Z** | **Read 48** (CI): CI-RAN gate (dL >= 1.2 h, L_hi <= 10.2 h = C+), CI-? SCOPE, GAP RULE (W237 (4)) | - | `CONTEXT.md` l.3388-3391; `round24/report.json` R24-A1 row 2, R24-A3 (4) |
-| T135 | **~09:30-10:30Z** round 25; ~12:00-13:30Z round 26; ~20:00-23:00Z round 27 | Round 25: verify W235-W237 were pre-score with the header quoted; 47/49 codes; T1 push; exp87 shas + ledger test; exp86c gate; user answers. Round 26: 48 code, W2b, T3 pushes. Round 27: W2b read, exp80a/exp81 codes, 23:30Z freeze + filler | - | `round24/report.json` next_focus |
-| **W242** (new; = **R24-A8**) | **12:00Z (CI file)**, or the first header with 50 terminal (**~12:27-12:51Z, latest 14:00Z**) for a non-CI file | **W2b by TABLE v5.** Pre-submit: dummy PASS logged; header < 10 min, no 429 (**pause the feed loop ~10 min before**); no duplicate; R8 COVERAGE for CI/SEC; "1 submission remaining today"; -m names the table row. OPS: a live session or wake-ups at ~12:15Z, 12:30Z, 13:30Z; check the detached loops at 08:05Z and 12:15Z. If no session is live at 14:00Z, the choice goes as W3 by 23:30Z | not started | `round24/report.json` R24-A8; `CONTEXT.md` l.3480-3485 (session died 05:07Z) |
-| W238 | **exp86c PASS by 12:30Z** | exp86c is the only D0/R+ W2b file | not started | R24-A4 |
-| T106 | 12:00Z | ~~W2b by TABLE v4~~ -> TABLE v5 (W235/W242) | superseded when W235 lands | `CONTEXT.md` l.3351; R24-A1 |
-| **T142** (new) | **~12:27-12:51Z** (13:0xZ if 'v') | **Read 50** (exp85a): R+ = display >= 0.957 or an attributable sub-rounding UP; 0.956 = R0; <= 0.955 = R-. A 0.957 from a two-change file is a public-only read on the finals card (winner's curse) | - | `CONTEXT.md` l.3453-3455; `round24/report.json` R24-A1 (K) |
-| W243 (new; = **R24-A9**) | (1) before any E10 trigger; (2) at the first 0.957+ read of ours | (1) Runbook + E10 v3 line: SI = copy + the DIVINS keys of the **cap-family** BASE only; ILP/READMIT never enter an SI. (2) After a 0.957+ read: restart the feed loop with `--our-best` and update the loop LOOK threshold (both hardcoded 0.956: `tools/kaggle_feed.py` l.172, `e10_watch_loop.py` l.78); apply the strict trigger by hand until then | not started | `round24/report.json` R24-A9; `round24/scan_plancheck.notes.md` 06:47Z (SI FAIL with --si-ref exp85a) |
-| W234 | draft fixes can start now; send by 29 Sep 11:57Z | Finals draft_ru defects (R23-A10) | not started (`CONTEXT.md` l.3464 "Still open") | `round23/report.json` R23-A10 |
-| T123 | ~16:15-17:45Z | The exp80a read if exp80a was submitted (now only via TABLE v5 Row 1 under S3) | - | `round24/report.json` R24-A1 row 1 |
-| T19 / W77 | 17:57Z | Tick check (timer 012fa6dd probably dead, W247): API SELECTED + a page read | at risk | `CONTEXT.md` l.2601-2602 |
-| **W245** (new; = **R24-A11**) | build by ~21:00Z; dummy ~22:00Z only if needed; decide at 23:30Z | **Filler exp87m** = b + SAFE_DIV_MAX_UM 10.5 / SISTER 15.0 / DIVERGE 1.50 (amanatar V6). Only if the frozen W4 list has < 4 planned files; last free K2 slot <= 01:25Z; pre-registered "EV ~0" | not started | `round24/report.json` R24-A11 |
-| T132 | ~21:00Z | Last sensible dummy push for any W4 stack | - | `round22/report.json` R22-A6 |
-| T118 | ~23:00Z | Latest useful user answer on the cap lift (W241 (a)) | awaiting user | R24-A7 |
-| **T143** (new) | **23:30Z** | **W4 freeze**: every W4 file has a PASSED dummy; log the evaluated row, b, R, C, codes of exp80a/exp81/exp86c, the frozen list with slot times, before any 29 Sep submit. W3 (if W2b moved) submits <= 23:30Z | - | `round24/report.json` R24-A2; `CONTEXT.md` l.3354-3356 |
+| W248-W251, W253, W258 | **now, before ~11:54Z** | Pre-score lines, exp88c gate, exp75 line, user message, wake-ups (see above) | not started | R25-A1..A4, A6 |
+| **T145** (new) | **~11:54-12:50Z** | **Read probe 50** (exp85a). R+ = display >= 0.957 (l.3650-3651); '0u' = 0.957 with an attributable UP (info only). S0 = a fresh LB download within ~10 min of the terminal header; S1 = the first download with count 53. k = 0 or a +2 move = BLIND/MASKED '?' | pending | `round25/report.json` R25-A1 (2)(3); `CONTEXT.md` l.3649-3658 |
+| **T146** (new) | **at 50's terminal header, hard latest 13:00Z** (was 14:00Z) | **Probe 51 submit:** exp87a under R+, exp75 otherwise. Pre-submit checks: header < 15 min old and not a 429; pause the feed and watch loops ~10 min before; no duplicate; "1 submission remaining"; R8 COVERAGE (exp75 in the 00:00Z line, exp87a l.3604); dataset pre-push/list check (W261). Then re-run `tools/runtime_ledger.py`; the family must read safetail_ci | pending | `round25/report.json` R25-A1 (1); `CONTEXT.md` l.3543-3544 |
+| **T147** (new) | **12:47Z** | The round 26 cron fires inside the 50-read / 51-submit window; the submit must not wait for it. Round 26 checks: W248/W249 were pre-score with the header quoted; the exp88c gate came before its output; 50's code; 51's -m text and family; exp89 builds and the ledger test; GPU quota; the user's answers | scheduled | `CONTEXT.md` l.3711-3712; `round25/report.json` next_focus |
+| **W252** (new; = **R25-A5**) | The ledger rule **before any exp89 dummy**; builds and push at 50's read; hard latest push **19:00Z**; morning dummies ~21:00-22:00Z | **(a) Ledger:** `(r"exp89[abcghilmno][a-z]*", "safetail_ci")` above `exp8\d`, plus test_round25_exp89_families; R8 COVERAGE for exp89a/b/h/o. **(b) Builds**, stop on any sha8 mismatch. R+: exp89e 61b59191 (morning: exp89h 39c0452f, exp89k 59e181b4, exp89j e5dc89f4, exp89f 2092cf43). R0/R-/R?: exp89a ddd97ed3 (morning: exp89b 4f2f4ee9, exp89o with a new sha). **(c)** Read the GPU quota first, else at most 3 dummies. **(d)** Log gates before outputs (exp89a topology = exp88a CSV 482dbda1d1a0, etc.). **Q2 is now yes (l.3704), so exp89b/o (R0) and exp89h (R+, after 51 reads '+' or '0u') are live** | not started (`tools/runtime_ledger.py` l.80-83 has no exp89 rule; no exp89 folders) | `round25/report.json` R25-A5, new_facts 8-9 |
+| T100 | hourly at hh:22Z until 29 Sep 12:00Z; feed every 30 min until 29 Sep 23:59Z | E10 v3 watch; the trigger is now **>= 0.958** (l.3645-3646). Watch for a JT reply to Justin CH123 on 743929 -> a one-knob arm on the current best (R25-A8 (e)) | live (RUN 22 10:24Z, feed 10:36Z) | `experiments/e10_watch/watch_loop.log`; `experiments/discussions/feed_loop.log` |
+| **W255** (a)(c)(d)(e) (new; = **R25-A8**) | (a) before round 26 (12:47Z); (c)(d) today; (e) standing | **(a)** Refresh the round-prompt KEY FACTS: best 0.957 exp79a; 47/49 read 0.955; 50 pending; E10 >= 0.958; the 3+2 yes; tick 20:00Z; Q3 open. **(c)** Info line: the 0822Z P2 look-signal (5 teams moved to 0.956); the crowd-source hypothesis is refuted, so do not cite it in 50's read. **(d)** Curator items. **(e)** After any read >= 0.958, restart the feed and watch loops with the new --our-best; the watch loop running since 06:22Z still holds its old LOOK text | not started | `round25/report.json` R25-A8 |
+| **W256** (new; = **R25-A9**) | build any time today; use decided at 23:30Z | Spare exp90a (exp79a + MAX_UM 2.0). Dummy only if a lane is idle and >= 2 GPU-h remain. It fills only an otherwise empty slot. Pre-registered read: >= 0.958 = candidate; 0.957 = no action; <= 0.956 closes the CI knob line | not started | `round25/report.json` R25-A9 |
+| **T148** (new) | **~21:45-22:30Z** (the CI band tail reaches ~23:54Z) | **Read probe 51:** exp87a against REF, or exp75 by R25-A1 (5). It must never block the 23:30Z freeze; the night list is keyed on 50 alone | pending | `round25/report.json` R25-A1 (4)(5), plan_issues 4 |
+| **T149** (new) | **~21:00-22:00Z** | Push the morning-file dummies (queue risk: CI dummies queued 3-4 h on 27 Sep). Under R+: exp89f at ~22:00Z; exp89h only after 51 reads '+' or '0u' | pending | `round25/report.json` R25-A5 (c) |
+| T135 | 28 Sep: 12:47, 15:17, 17:47, 20:17Z; 29 Sep: 22:47 (28th), 01:17, 03:47, 06:17, 08:47, 11:17, 13:47, 16:17Z | Research rounds (session cron; session-only) | scheduled | `CONTEXT.md` l.3711-3713 |
+| T19 / W77 | 17:57Z | Tick check: API SELECTED is still #37 + #38. Timer 012fa6dd is dead and the check is not in the 10:52Z cron | at risk (W258) | `CONTEXT.md` l.2365 |
+| T143 | **23:30Z** (cron 23:33Z) | **W4 freeze.** Log R, the frozen list with slot times, each file's dummy status (all PASS by 23:30Z), the exp75 grandfather line under R+ (W251) and the spare exp90a decision | pending | `round25/report.json` R25-A2 FREEZE; `CONTEXT.md` l.3713 |
 | T126 | 29 Sep 00:00Z | Slot reset (5 new slots) | - | `CONTEXT.md` l.3367 |
-| T20 / T107 | **29 Sep 00:05-01:45Z** | **W4** by AMEND 3 rows (a)-(e): <= 4 planned + 1 held for E10; K2-like 00:05/00:45/01:25Z, CI 00:06Z; no CI file after 02:00Z; no DIV-only file after 01:45Z (S6) | - | `round24/report.json` R24-A2; `CONTEXT.md` l.3366-3373 |
-| T127 | 29 Sep 02:00-~10:25Z | Only with the user's yes (W241 (a)): <= 2 non-CI files; E10 copies need W241 (c) | awaiting user | `CONTEXT.md` l.3374-3377; R24-A7 |
-| W19 / W73 / W102 / W93 / W165b | standing | ONE poller, header < 15 min (now detached, 07:22:46Z); never resubmit class C / ERRORed / exp79a; SEC datasets untouched; Q3 open, SEC excluded from V_pub | standing | `CONTEXT.md` l.3331-3335, l.3419-3420, l.3480-3484 |
+| T20 / T107 | **29 Sep: 00:04Z cron; slots 00:05, 00:06, 00:45Z** (spare 01:25Z) | **Night batch (3 files)** per W249 (AMEND 4). Non-CI files >= 40 min apart. Two night arms that complete in one poll window are MASKED | pending | `CONTEXT.md` l.3713; `round25/report.json` R25-A2; I297 |
+| **T150** (new) | 29 Sep **~07:05-08:15Z** (non-CI night reads); **~09:25-09:35Z** (the 00:06Z CI file) | Night reads; arm code '+' = parent + 0.001 | pending | `round25/scan_hyp_sched29.notes.md` (latency line) |
+| **T151** (new) | 29 Sep **07:23Z** cron. M1 CI by **08:45Z** (round 25) or **09:30Z** (CONTEXT); see W260. M2 non-CI by **11:30Z** (14:30 MSK) | **Morning batch (2 files).** Only PASSED dummies go. After 02:00Z, E10 copies need the user's yes per notebook (l.3612-3614) | pending | `CONTEXT.md` l.3704-3708, l.3713; `round25/report.json` R25-A2 MORNING |
+| W19 / W73 / W102 / W93 / W165b | standing | ONE poller; header < 15 min old; never resubmit class C or ERRORed files; SEC files stay probes while Q3 is open (l.3610-3611) | standing | `CONTEXT.md` l.3331-3335, l.3480-3484 |
+| **W261** (new; standing) | before every push | **Dataset pre-push rule.** `kaggle datasets list --mine` must show biohub-ft-weights lastUpdated 2026-09-23 23:54:03 and biohub-secft-n2a-v1 lastUpdated 2026-09-27 21:25:35; a change -> stop, diff the file list, tell the user. Never authenticate as a teammate; the user runs teammate pushes/submits with a separate KAGGLE_CONFIG_DIR | standing | `CONTEXT.md` l.3692-3703 |
 
-## LATER (29 Sep 07:25Z -> 23:59Z, and after)
+## LATER (29 Sep ~11:00Z -> 23:59Z, and after)
 
 | ID | When (UTC) | Item | Evidence |
 |---|---|---|---|
-| T119 | ~07:40-09:30Z | W4 reads land | `round22/report.json` R22-A8 (1) |
-| T09 / W77 / **W247** | 11:57Z / 17:57Z | Tick checks + user reminder; **the timers 328f7392 / 18ff4796 died with the 05:07Z session end** unless re-created | `CONTEXT.md` l.2601-2602, l.3480-3485 |
-| W234 | by 11:57Z | Finals draft_ru fixes (1)-(7) incl. the corrected #38 bullet (I267) and the full 5 tick steps in the push | `round23/report.json` R23-A10 |
-| T120 | **12:00Z** (refresh 18:00Z only on a change) | **Finals proposal**: {V_pub, #37} vs ticked {#37, #38}, card ranges, W230 CI caveat; a knob file's display is public-only, single embryo (R24-A2). The user ticks | `CONTEXT.md` l.3417-3422; R24-A2 |
-| T60 | 12:00Z | G2 must have landed for a SEC file to be finals-eligible | `CONTEXT.md` l.2736 |
-| T121 | 17-18Z | Log N954 (for sizing ranges only) | R20-A9 (f) |
-| T115 / T48 | **~19:00Z** | FINALS READ + L9; Q3 deadline; never a non-COMPLETE file; insertion gate "did NOT fire" | `CONTEXT.md` l.3194, l.2510-2518, l.3421 |
-| T10 | **20:00Z** | Our buffer for the ticks; re-ticks allowed until 23:59Z | R20-A3 (a) |
+| **W254** (new; = **R25-A7**; supersedes W234, W230 and the T120 content) | draft today; **send 29 Sep 12:00Z (15:00 MSK)** (cron 12:03Z); re-check 18:00Z and ~19:00Z | **FINALS CARD v3** as a neutral table. Pairs: A {V_pub, #37}; B {V_pub, exp75}, only if exp75 is COMPLETE at >= 0.955; C {V_pub, exp70g}; ticked {#37, #38} last. Contents: mc25 ranges; the deciding beliefs (CI transfer; cap 6 public vs lab); the exact JT quote; the RC-C CI caveat; a risk column; branches (exp75 pending, V_pub = E10, tick fallback); times as MSK (UTC). Delete "if JT, then exp75" and "partner still exp75" | `round25/report.json` R25-A7; `CONTEXT.md` l.3713-3714 |
+| T60 | 12:00Z | Q3 is still open -> SEC files are excluded from the card | `CONTEXT.md` l.3610-3611 |
+| T152 (new) | **18:37Z** cron | FINAL proposal. Without a tick-fallback yes, warn that the ticks are still #37/#38 | `CONTEXT.md` l.3714; `round25/report.json` R25-A7 (7) |
+| T115 / T48 | **~19:00-19:30Z** | FINALS READ. Every file that may become a final must have read by ~19:30Z; never a non-COMPLETE file | `CONTEXT.md` l.3685-3687 |
+| T10 | **20:00Z (23:00 MSK)** | **The user ticks the finals.** 20:00 UTC is our hard limit; Kaggle allows re-ticks until 23:59Z | `CONTEXT.md` l.3683-3685 |
+| **T153** (new) | ~20:00-20:30Z | Verify that API SELECTED = the user's pair. There is no cron for this (W258) | `CONTEXT.md` l.3474 (SELECTED check pattern) |
+| **T154** (new) | 21:00Z (00:00 MSK 30 Sep) | Tick-fallback moment, only if the user said yes (W253 (e)) | `round25/report.json` R25-A6 (e) |
 | W177 H2 | 23:00Z | LESSONS H2 | `_curation/20/watch.json` |
-| W178 / W215 | before 23:00Z; hourly 30 Sep | Private-read addenda (priors C/C8/C_thr) | R20-A13; `CONTEXT.md` l.3056, l.3195 |
-| T49 | 23:00-23:45Z | Final public LB snapshot (timer bb224de9 probably dead, W247) | `CONTEXT.md` l.2532 |
+| T49 | 23:00-23:45Z | Final public LB snapshot. Timer bb224de9 is dead and the snapshot is not in the cron (W258) | `CONTEXT.md` l.2619 |
 | T11 | **29 Sep 23:59Z** | Deadline; a submit must **finish** before it | https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/743765 |
-| T30 / T50 | 30 Sep from 00:15Z | Private read v2 + L1-L7 | `CONTEXT.md` l.2570-2598 |
-| T136 | 2 Oct | Weekly agent limit reset (moot while the 04:32Z user reset holds) | `CONTEXT.md` l.3428-3432 |
-| T133 | 3 Oct | GPU quota reset: after the deadline | `round22/report.json` R22-A5 |
-| W29 / curator | after 29 Sep | Post-deadline list: N1 k 1.5; DaughterNet v2 at high cap; synthetic pretraining (SYN-DN rejected for now, R24SY-3); theft-aware ranker; MITO3 after an adapter; READMIT 0.94 lab test with lowrefine decoupled (I264); **new: RADIUS {4,5} x READMIT {0.965, 0.94} 2x2 test (R24-A10 (c))** | R20-A6; R23-A8; `round24/report.json` R24-A10, rejected |
+| T155 (new) | 30 Sep 00:07Z cron | POST-DEADLINE job: private read v2 + L1-L7 (T30/T50) | `CONTEXT.md` l.3714-3715, l.2570-2598 |
+| T133 | after the deadline | GPU weekly reset (per the user, only after the deadline) | `CONTEXT.md` l.3689-3690 |
+| W29 / curator | after 29 Sep | Post-deadline list, plus: z-shift +0.1 after CI (J -0.00085); the MAX_UM 2.0 float-path note | `round25/report.json` R25-A8 (d); `_curation/24/watch.json` |
 
 **Passed or finished time-bound items:**
-- R8 new-mechanism cutoff 27 Sep 12:00Z has passed, and the user lifted R8/no-retrain for the rounds (`CONTEXT.md` l.3459-3460). The curation task template still names it (and "consolidation 28 Sep 12:00") as examples; the research-round template was fixed (W228 done).
-- The 28 Sep 12:00Z consolidation is superseded (T46; `CONTEXT.md` l.3392-3394).
-- W2a (08:45-10:00Z) is superseded: exp85a went as probe 50 at 05:02Z (`CONTEXT.md` l.3446-3447, l.3465).
-- Friend replies: none awaited; the last friend mention in CONTEXT is the 26 Sep git-reset instruction to friend A (`CONTEXT.md` l.2175-2176, `grep -n -i friend CONTEXT.md` 07:25Z).
+- The R8 new-mechanism cutoff (27 Sep 12:00Z) has passed, and the user lifted R8/no-retrain for the rounds (`CONTEXT.md` l.3459-3460).
+- The 28 Sep 12:00Z consolidation is superseded (T46; l.3392-3394). The curation task template still names both as examples.
+- W2a is gone: exp85a went as probe 50 at 05:02Z (l.3465).
+- Friend replies: none awaited (the last friend instruction is from 26 Sep, l.2175-2176).
+- Teammates gsfatakhov and sasyami are a GPU reserve only; nothing is awaited from them (l.3688-3698).
+- **T156** (new): the tick deadline is 20:00 UTC = 23:00 MSK. Never tell the user "20:00" without "UTC" (l.3683-3687).
 
 ## INSIGHTS AT RISK OF BEING FORGOTTEN
 
 | ID | Insight (quoted or close paraphrase) | Where | Why it matters / plan gap |
 |---|---|---|---|
-| **I274** (new) | "e10_port_gate.py --mode si ... --si-ref exp85a_k2cap6_div04_ra094 -> notebook-bytes FAIL ... => if BASE becomes a knob file (exp85a/86a/86b) the runbook SI (DIVINS_* only, REF=BASE) fails its own gate" | `round24/scan_plancheck.notes.md` 06:47Z | The only copy route to beat our best breaks again if a K file becomes BASE. Not in CONTEXT (W243 (1)). |
-| **I275** (new) | "gate85.py lives only in session scratchpad ... Does not check node rows = exp85a"; "gate85.py (\|dn\| <= 1.5%) would pass a dead knob, and 'DIVINS ENABLED x4' would have failed good files" | `round24/scan_plancheck.notes.md`; `round24/report.json` R24-A4 why | Every exp85/86 gate used a tool that dies with this session and cannot catch a dead knob. W238 moves it to `tools/gate_dummy.py`. |
-| **I276** (new) | "tools/runtime_ledger.py EXP_RULES: exp8\d -> safetail catches exp87 CI stacks" | `round24/report.notes.md` 07:16Z | A CI stack would get the 9.5 h / 8.0 h gate instead of 10.75 h / 10.2 h and be misread as 'v'. W239. |
-| **I277** (new) | "ILP_DIVISION_WEIGHT 0.4 is not output-inert. It adds +3 geometric safe divisions (63->66; 36/7/5/18) through orphan daughters left by the 1:1 relink" | `round24/report.json` R24-A3 (1), new_facts | Contradicts CONTEXT l.3489-3491 ("near-inert on our base"). Dummy forks are metric-ignored, so no sign either way. W237 (1). |
-| **I278** (new) | "Synthetic set = KERNEL OUTPUT josefreitasalvesneto/biohub-synthetic-dataset ... by José Freitas, not hengck23" | `round24/report.json` new_facts, R24-A10 (b) | Contradicts CONTEXT l.3509-3510 ("hengck23's synthetic 18.5 GB dataset"). W244 (b). |
-| **I279** (new) | "A 76-min poller gap (05:06-06:22Z) is logged"; "if L_hi > 8.0 h comes only from a poll gap > 15 min ... code it UNPROVEN, not 'v'" | `round24/report.json` new_facts, R24-A3 (4) | A dead session can fake a 'v' near 8.0 h and drop a good cap file. W237 (4). |
-| **I280** (new) | "feed loop got a 429 on GetTopic at 06:34Z (2nd run within 2 min)" | `round24/scan_plancheck.notes.md`; `experiments/discussions/feed_loop.log` | The submit guard needs "no 429"; pause the feed loop ~10 min before a submit (W242). |
-| **I281** (new) | "the previous Claude session ended ~05:07Z and took its background shells with it" | `CONTEXT.md` l.3480-3481 | Same mechanism kills session timers (I116). Only the poller/E10 loop were restarted; the 29 Sep tick-check timers are likely gone (W247). |
-| **I282** (new) | "exp86c: no _dl output yet (dummy status unknown)" | `round24/report.notes.md` 07:15Z | exp86c is the only D0/R+ W2b file; CONTEXT l.3519 says it "follows when a lane frees", with no confirmation (W238). |
-| **I283** (new) | "Dummy runtime spread is noise, not concurrency: 1,357-1,882 s in parallel; exp75 took 2,288 s solo" | `round24/report.json` new_facts | The 1,900-1,920 s limits in gate85.py and the SEC gate (l.3427-3428) would FAIL a normal CI dummy. Runtime rule v2 (W237 (3)). |
-| **I284** (new) | "No public notebook has best_public_score > 0.953"; "John Taylor's 0.953->0.957 stage ... most likely his own code" | `round24/report.json` new_facts, R24-A10 (a) | Stops manual 0.947-family scans; E10 stays the only copy route. W244 (a). |
-| **I285** (new) | "Movers above us ... at 0.957 Anvith Pothula (the x138 author, submitted 00:03Z)"; 0.957 count 36 -> 41; rank #172 -> #179 | `round24/report.json` new_facts | The x138 author at 0.957 may publish a notebook: an E10 candidate (R24-A9 (3)). Context for the W241 message. |
-| **I286** (new) | "user active 04:32-04:39Z ... open questions (02:00Z cap lift, Q3) can be asked now, not only in the post-47/49 brief" | `round24/scan_plancheck.notes.md` | Without the lift, all five 29 Sep slots go blind at 00:05-01:45Z (plan_issues (11)). W241. |
-| I267 | "#38's 'bronze 0' comes from the field-retention prior be >= 0, not from a copy-block tie" | `round23/report.json` new_facts | The finals draft rationale is still wrong (W234 (6); l.3464 "still open"). |
-| I273 | The 04:31Z card's CI note is shorter than the R22-A4 (A) caveat; v2 (9) still has the Eric-only line | `CONTEXT.md` l.3187, l.3420-3421 | W230, before 48 is read. |
-| I265 | "readmitted nodes are 3.5-6x depleted near GT"; lab gains from dropping readmits are optimistic | `round23/report.json` new_facts | Now directly relevant: probe 50 raises readmits (1,365 -> 2,223). The lab cannot sign READMIT; only the LB read can. Not in CONTEXT (W202). |
-| I268 | "{exp70g,exp70b} bronze: +0.024 / +0.012 / -0.008 at forkmid mean +5e-5 / 0 / -1e-4" | `round23/report.json` new_facts | Keep the neutral exp70b wording (W234 (5)). |
-| I269 | "Dummy forks: x138 62, K2 75, exp70g 81, exp78a 86, exp78b 95" (now also exp85a 85, 86a 90, 86b 99) | `round23/report.json`; `round24/report.json` new_facts | The runbook forks check must use the BASE delta; l.3456-3458 does not say it was changed. |
-| I270 | "outputs downloaded 01:49/01:50Z, after the 01:48Z gate line" | `round23/scan_plancheck.notes.md` 04:19Z | Proof the exp83a/b gate was pre-registered. |
-| I236 / I237 | exp70g ~0.95634 unrounded (a 0.957 needs ~+1.6e-4); K2 L_hi drift 7.54 -> 7.81 h | `round21/report.json`; `round21/scan_plancheck.notes.md` | A '+' may be tiny; a 'v' may have no code cause (see I279). |
-| I240 / I241 / I247 / I248 | exp60 replay DC-blind; OUTPUT_SINGLE_CHILD_REPAIR no-op; exp79a row changes; k fell to 8 | `round21/*.notes.md`; `round24/report.json` new_facts (k = 8) | k -> 0 makes every UP test BLIND '?'. |
-| I206 / I209 / I218 / I219 / I227 | No coordinject/secswap gate mode; N1 staging folders; FRAME_CAP <= 2; JT "best + closest one-line neighbour" | `round22/scan_plancheck.notes.md`; `round19/`, `round20/` notes | Unchanged; I227 now also in CONTEXT l.3435-3436, l.3507 (rejected as a finals line by R24S-9). |
-| I72 / I116 / I145 | No Co-Authored-By; cron fields local, timers die with the session; a submit must finish before the deadline | `memory/feedback-git-no-coauthor.md`; `round18/report.json` R18-A2 (2) | I116 is now live (W247). The last 8 commit bodies comply with I72. |
-| Older I-rows | Unchanged | `_curation/23/watch.json`, `_curation/21/watch.json` | - |
+| **I287** (new) | "The CI_lo 2.2 h model is contradicted: the measured dL is 1.60-2.18 h" | `round25/report.json` R25-A1 (6), new_facts 10; the model is at `CONTEXT.md` l.3135 | The old model is still in CONTEXT. A CI read with L_hi in 9.6-10.2 h needs the 'ins-tail?' footnote (W248). |
+| **I288** (new) | "Morning CI 09:30Z -> 18:46-18:57Z at 9.27-9.45 h (20:24Z at 10.9 h)" | `round25/scan_hyp_sched29.notes.md` | A CI file sent at CONTEXT's 09:30Z cutoff can read after the 20:00Z tick (W260). |
+| **I289** (new) | "If the user does nothing, the ticks stay #37 (0.954) + #38 (0.953), below exp79a and exp70g" | `round25/report.json` plan_issues 11 | No fallback is authorised; W253 (e) asks for one. |
+| **I290** (new) | "exp75 = exp79a node positions + #37 edges, deterministic"; "Its read is not an independent CI read" | `round25/scan_hyp_private.notes.md` 10:25Z; `round25/report.json` R25-A1 (5) | exp75's display must not count as a second CI confirmation on the finals card. |
+| **I291** (new) | The scan says "exp75 rebuild ab621c13 vs repo 4653611e"; the judge found that "the repo holds ab621c13" and ruled "never rebuild/re-push exp75" | `round25/scan_hyp_sched29.notes.md`; `round25/report.notes.md` 10:44Z | A rebuild would change the bytes and void the 27 Sep dummy. Submit Kaggle v1 as is (W251). |
+| **I292** (new) | "uptest.py (session scratchpad ..., NOT in repo)" | `round25/v_hyp_sched29_r25s-7.notes.md` | Same failure class as gate85.py (I275): the '0u' code needs it at night even if the session dies (W255 (b)). |
+| **I293** (new) | "exp88c ... = COMPLETE (read-only) -> its gate line must be logged BEFORE its output is downloaded/read" | `round25/report.notes.md` 10:46Z | The pre-registration of a night R0 file is at risk (W250 (a)). |
+| **I294** (new) | "CI lab per clip a0.5 3um: -0.0209/+0.0125/0/+0.0083 (44b6_c50204e0 negative)"; "the refiner is ALSO z-biased"; "part of the 6bba gain is a learned offset" | `round25/scan_plancheck.notes.md`; `round25/scan_recheck.notes.md`; `round25/report.json` new_facts 11 | CI now drives V_pub, so the finals card caveat must carry this (W254 (5)). |
+| **I295** (new) | GPU "~5 h left" (user, 10:45Z) vs "~4.5-4.8 h left" (estimate); "Chrome disconnected at 06:35Z; API has no quota" | `CONTEXT.md` l.3689; `round25/v_plancheck_pc25-04.notes.md` | Unless the Settings page is read, cap at 3 dummies before 23:30Z (W252 (c)). |
+| **I296** (new) | "0822Z (P2 largest group 5 at 0.956 ...) = P2 look-signal (not seen in CONTEXT)"; the crowd-source hypothesis was REFUTED | `round25/scan_browser.notes.md`; `round25/report.json` rejected | It must not be cited when reading probe 50 (W255 (c)). |
+| **I297** (new) | "night arms 00:05/00:25Z share the 7.0-7.8 h latency band -> can complete in one snapshot window -> MASKED" | `round25/v_hyp_sched29_r25s-7.notes.md` | Night UP tests may be unreadable, so arm codes must rest on displays (R25-A2 ARM CODES). |
+| **I298** (new) | "exp88b fork total 86 = the same as exp78a (cap 8), which read 0.955 '-'"; "a tie is the most likely outcome" | `round25/v_plancheck_pc25-04.notes.md` | The prior for TAU 0.7 is a tie or '-'; do not overrate the 00:45Z R0 arm. |
+| **I299** (new) | exp88a "raw nodes 44b6_0b24845f 19,383 vs 20,206 (-4%) ... Effect concentrated in one public clip (noisy read)" | `round25/v_plancheck_pc25-04.notes.md` | exp89a (exp79a + DIS 2.25) inherits a one-clip effect, so its read is noisy. |
+| **I300** (new) | `run_feed_loop.sh` calls `tools/kaggle_feed.py` without `--our-best` (default 0.957, l.172); the watch-loop process started at 06:22Z holds the old LOOK text | `experiments/lb_poll/run_feed_loop.sh` l.10; `round25/report.json` R25-A8 (e) | After a >= 0.958 read, bump the default or restart the loops, or E10 flags stale copies. |
+| **I301** (new) | "an accidental new version of biohub-ft-weights would be picked up silently by new pushes (the DaughterNet glob has no sha pin)"; the teammates briefly had EDIT rights | `CONTEXT.md` l.3697-3703 | Run the W261 pre-push check before every push. |
+| **I302** (new) | "A file is submitted from the account that ran its kernel version; the team keeps 5 submits/day in total" | `CONTEXT.md` l.3692-3693 | Kernels run by teammates use the same 5 daily slots. |
+| I274 | The SI gate fails if BASE becomes a K file | `round24/scan_plancheck.notes.md` 06:47Z | Live again under R+ (arms re-cut off exp85a/exp86c, l.3637-3638); W243 (1) is still open. |
+| I275 | gate85.py lives only in the scratchpad and does not check node rows | `round24/scan_plancheck.notes.md` | W238 residue. |
+| I278 | The synthetic set is José Freitas's kernel output, not hengck23's | `round24/report.json` R24-A10 (b) | CONTEXT l.3509-3510 still says hengck23 (W244 (b)). |
+| I280 | Feed loop 429 at 06:34Z on a second run within 2 min | `round24/scan_plancheck.notes.md` | Pause the loops before the probe-51 submit (T146). |
+| I265 | "readmitted nodes are 3.5-6x depleted near GT" | `round23/report.json` new_facts | Probe 50 raises readmits; only the LB read can sign READMIT. |
+| I284 | "No public notebook has best_public_score > 0.953"; JT's stage is his own code | `round24/report.json`; `digest_20260928T1036Z.md` | Still true at 10:36Z, so E10 at >= 0.958 is unlikely to fire (W244 (a)). |
+| I72 / I116 / I145 | No Co-Authored-By; timers die with the session; a submit must finish before the deadline | `memory/feedback-git-no-coauthor.md`; `CONTEXT.md` l.3715-3716 | The 10:52Z cron is session-only again. The last 12 commit bodies comply with I72. |
+| Older I-rows | Unchanged | `_curation/24/watch.json`, `_curation/23/watch.json` | - |
 
-**Resolved since 04:45Z (curation 23):**
-- I262: runbook SI rebuilt from the BASE, REF = BASE (`CONTEXT.md` l.3456-3458); continues as I274 for K bases.
-- I263: sibling CSVs downloaded, sha12 match (l.3493-3494).
-- I264: the READMIT/lowrefine coupling is logged (l.3449-3451) and measured (+3.05%, l.3469).
-- I266: push-by-BASE is logged (l.3462-3463). Note: exp86a and exp86b (mutually exclusive BASE branches) were both pushed at 06:36Z (l.3519-3520), under the 743929 "build during the re-run" process; with ~7.2 h GPU left this is a deliberate exception, not a violation to undo.
-- I272 / W174: the loop text now uses the strict trigger (`e10_watch_loop.py` l.78).
-- I250 / I251 / I256: superseded by the measured quota and the round-24 read times.
+**Resolved since 07:25Z (curation 24):**
+- I276 (the ledger misfiled exp87): the rule is in (`tools/runtime_ledger.py` l.81; `CONTEXT.md` l.3603-3604). The same problem recurs for exp89 as W252 (a).
+- I277 (ILP 0.4 is not inert): logged (l.3579-3582).
+- I279 (gap rule): logged (l.3587-3589).
+- I283 (runtime rule v2): logged (l.3584-3587).
+- I281 / W247 (dead timers): the cron was re-created (l.3709-3716); the residue is W258.
+- I282 (exp86c had no output): PASS logged (l.3526-3528); waiver in W250 (b).
+- I285 (anvithpothula at 0.957): moot; our best is now 0.957 and the trigger is 0.958.
+- I286 (ask the user now): asked and answered (l.3607-3614, l.3680-3687, l.3704-3708).
+- I267 / I268 / I273: superseded by the neutral card v3 (W254).

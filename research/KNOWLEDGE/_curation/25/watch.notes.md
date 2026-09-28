@@ -1,0 +1,4 @@
+- 2026-09-28T10:55Z start round 25 watch; no prior watch.json in 25/; base = curation 24 WATCHLIST (07:25Z)
+- 10:56Z CONTEXT 3737 l, new l.3522-3716 (07:28 86abc PASS .. 10:52 schedule restored); round25 report.json R25-A1..A9 (10:52Z) none landed (grep AMENDMENT A2 / W4 AMEND 4 / exp89 / WAIVER = 0); poll header 10:53:24Z 50 PENDING; Q2 CI-morning YES at 10:47Z (l.3704) postdates round25 sources (10:19Z)
+- 10:57Z statuses: W235-237 done (l.3539/3559/3578), W239 done l.3598, W241 done l.3592/3607, W247 done-ish l.3709 (no 11:50-13:00 wake-ups, no tick-verify, no 23:27 snapshot); RESULTS rows 47-49 missing; round24/25 REPORT.md absent; tools/uptest.py + gate_dummy.py missing; writing WATCHLIST
+- 11:02Z WATCHLIST.md written (curation 25); watch.json written (17 alerts); done

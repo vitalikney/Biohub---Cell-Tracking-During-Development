@@ -1378,3 +1378,34 @@ Curator logs: `research/KNOWLEDGE/_curation/4/`.
   - exp86c: [now] (watch) vs [today] -> [today].
   - User message: [now] vs [today] -> [now].
   - Pre-score blocks: [now] in all three.
+
+## 25 - 2026-09-28 ~11:10 UTC (curation 25; git HEAD 74caff9 = origin/main + untracked `research/wf_ideas_v4/round25/` (no REPORT.md), `research/KNOWLEDGE/_curation/25/`, `experiments/discussions/digest_20260928T1106Z.md`)
+
+**Sources since curation 24:**
+- `CONTEXT.md` l.3539-3716, 16 entries: R24 PRE-SCORE 1/3-3/3 + W4 LIFT SPLIT 07:43 (l.3539-3597); R24-A5 BUILDS + LEDGER 07:44 (l.3598); USER ANSWERS 07:47 (l.3607); P49 READ + S1 07:54 (l.3615); KNOB ARMS 09:07 (l.3625); P48 READ 09:35 (l.3639); W2b AMENDMENT A 09:35 (l.3649); DUMMY GATES 10:16 (l.3659); PRIVATE HEDGE PROPOSAL 10:16 (l.3669); USER 3+2 + TICK 20:00 UTC 10:19 (l.3680); TEAMMATE GPU + DATASETS 10:45 (l.3688); MORNING CI YES 10:47 (l.3704); SCHEDULE RESTORED 10:52 (l.3709). `## 9. Literature` moved to l.3717.
+- Commits f40d44b..74caff9 (13; incl. a599958 gates, b618f7b 3+2, 1b5e912/7f50382 datasets, ce23262 CI mornings, a256dcb logs + curation 24) (`git log`).
+- Round 25: `research/wf_ideas_v4/round25/report.json` R25-A1..A9 (10:52Z), 5 `scan_*.json`, 18 `v_*.json`, `ci_zshift_out.json`; knob arms `research/wf_ideas_v4/knobarms_28sep/` (13 arms, v_0..v_12). New kernels: `experiments/exp87a_k2cap6_div04_ra094_ci/`, `exp87b_k2cap8_div04_ra094_ci/`, `exp87i_k2cap8_div04_ra092/`, `exp88a_k2cap6_dis225/`, `exp88b_k2cap6_tau07/`, `exp88c_k2cap6_dis175/`; `experiments/lb_poll/dataset_baseline/`.
+- LB: `experiments/lb_poll/poll.log` to the 11:03:26Z header (l.22041); `ledger.md` 11:03:28Z; `experiments/lb_poll/_lb/S1_0753Z`, `S1_0934Z`.
+
+**New LB results:** P49 exp78a (cap 8) = **0.955 '-'**, S1 fires: DIV volume closed, cap 6 optimum, BASE stays exp70g (`CONTEXT.md` l.3615-3624). P48 exp79a (exp70g + coordinject ALPHA 0.5) = **0.957 C+, UP 33 teams = NEW BEST and V_pub**, rank #153/3,968, L (9.27, 9.45] h (l.3639-3648; `ledger.md`). P50 exp85a still PENDING (L > 6.01 h). `experiments/RESULTS.md` still ends at P46.
+
+**Ideas** (`IDEAS.md` CHANGES (25) l.153-163; `ideas.json` meta.curations[n=25], 85 records; `_curation/25/ideas.json`):
+- **New I-449..I-477:** knob-arm workflow I-449; exp88a/c/b I-450/I-451/I-452; spares I-453/I-454 (unbuilt); refuted knobs I-455..I-458; knob inventory I-459; exp89 R0 CI arms I-460; R+ K-base arms I-461; deeper stacks refuted I-462; AMENDMENT A2 + '0u' I-463; W4 AMEND 4 I-464; exp75 private hedge I-465; 'B by default' refuted I-466; card v3 I-467; tick fallback I-468; 3+2 schedule I-469; teammate GPU I-470; dataset pre-push rule I-471; session cron I-472; tools/uptest.py I-473; spare exp90a I-474; 0.956-crowd attribution refuted I-475; '#38 + CI' / SEC hedge refuted I-476; R25-A6 user message I-477.
+- **Status changes:** I-397/I-398/I-401/I-324 in-plan -> lb-tested; I-399/I-400/I-404/I-414/I-421/I-442 -> refuted (moot or dropped); I-300 refuted -> in-plan (user lift 07:47). Knob refutations added to I-175/I-309/I-333/I-349/I-439; z shift after CI refuted (I-029/I-041).
+- **Counts c24 -> c25:** 448 -> 477; lb-tested 55 -> 59, lab-tested 24 -> 25, in-plan 108 -> 117, refuted 212 -> 227, deferred 47, open 2. Strict orphan I-233. At risk: I-425/I-434/I-436/I-437 leave; new I-451, I-460, I-463, I-464, I-465, I-468, I-473, I-474, I-477 join I-252, I-330, I-336, I-407, I-426, I-448.
+
+**Facts and decisions** (`FACTS.md`, `DECISIONS.md` rows marked [c25]; `_curation/25/facts.json`; state 10:55Z):
+- **New facts:** F-LB-22 cap curve (l.242); F-LB-23 P48 CI read (l.243); F-LB-24 LB 10:17Z (l.244); F-RUN-39 W1 latencies, CI adds 1.60-2.18 h (l.288); F-RUN-40 29 Sep submit-by arithmetic (l.289); F-RUL-20 user answers 07:47/10:19/10:47 (l.314); F-RUL-21 teammate/credential rules + pre-push check (l.315); F-MOD-44 knob arms (l.364); F-MOD-45 exp75 + exp89 plan, no ledger rule (l.365); F-MOD-46 dataset baseline (l.366); F-TRN-57 lab vs LB for cap and CI (l.428).
+- **Contradictions:** resolved C-165, C-192, C-193, C-195, C-198; updated C-118, C-163, C-184, C-191, C-197, C-200; new C-201..C-209 (l.634-642): P49 latency bound; last-slot file exp83c vs exp75; exp75 NO-GO status; CI cutoff 09:30Z vs 08:45Z; exp83c runtime limit; GPU hours left; P50 '+' definition; private-hedge pair; LB team count.
+- **DECISIONS.md:** §1 rows 47-50 updated + planned P51 (l.185-189), [c25] build table (l.448-459); §2 [c25] paragraph + snapshot (l.769-781; V_pub = exp79a, ticks still #37 + #38); §2h 20 new rows (l.1179-1211; logged 07:43-10:52 lines + R25 proposals marked PROPOSED); §3 7 new rule rows (l.1257-1285).
+
+**Watchlist** (`WATCHLIST.md`; `_curation/25/watch.json`; curated ~11:00Z):
+- **New:** W248-W261, T145-T156, I287-I302.
+- **Done:** W235-W237 (pre-score blocks), W239 (builds), W241 (user message + answers), W238 gate lines, W243 (2) E10 trigger, W231 (b), W247 main part (cron).
+- **Superseded:** W242/T106 -> W248; W234/W230/T120 -> W254 (card v3); W231 (a)/(d), T123 dead after P47/P49.
+
+**Alerts** (`INDEX.md` TOP ALERTS, 10 after dedup):
+- **Resolved since curation 24:** R24-A1..A3 pre-score blocks; R24-A7 user message; dead cap > 8 files + exp87a/b/i builds; three runtime criteria -> rule v2; P48 CI-RAN read; E10 trigger >= 0.958; lost session timers (cron restored 10:52).
+- **New:** R25-A1/A2 pre-score lines unlogged before P50 terminal (~11:54Z); exp88c gate unlogged after COMPLETE; no P50/P51 wake-ups; Q2 already answered + tick-fallback not asked; CI cutoff 09:30Z vs 08:45Z; no exp89 ledger rule, uptest.py/gate_dummy.py missing, GPU ~4.5-5 h; exp75 NO-GO lift + exp86c waiver; card v3 + CI caveat (R25P-9 draft refuted); CI_lo 2.2 h model stale.
+- **Carried over:** RESULTS rows (now 47-49); round REPORT.md (24-25) + commit; finals texts (now card v3); orphan I-233; curator info lines (W202/W244).
+- **Curator disagreements settled here:** the user message [now] (watch) vs [today] -> [now]; the CI cutoff [today] vs [before-finals] -> [today] (must be in W4 AMEND 4 before 23:30Z).

@@ -1,0 +1,81 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/FACTS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/DECISIONS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/25/facts.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/25/facts.json"
+ ],
+ "alerts": [
+  {
+   "kind": "risk",
+   "what": "None of R25-A1..A9 is in CONTEXT. Probe 50 can turn terminal from about 11:54Z. Until then the logged W2b AMENDMENT A (09:35) governs P51: R+ -> exp87a, else exp83c, latest 14:00Z. The R25-A1 change (exp75 instead of exp83c, latest 13:00Z, the '0u' code, the REF rule for exp87a) counts as pre-score only if it is logged before 56629533's first terminal header.",
+   "evidence": "FACTS C-202, C-191 [c25]; CONTEXT 09:35 l.3649-3658; research/wf_ideas_v4/round25/report.json R25-A1; experiments/lb_poll/poll.log header 11:03:26Z (56629533 PENDING)",
+   "suggested_action": "Decide now between exp83c and exp75. If the choice is exp75, log R25-A1 together with the R25-A4 exp75 lift and grandfather line, and quote the 11:03:26Z (or a newer) PENDING header.",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "The exp88c dummy kernel was COMPLETE on Kaggle at 10:46Z and has no gate line. Reading its output first would make the gate post-hoc. exp88c is a night file in both the 09:07 SLOT RULE and R25-A2.",
+   "evidence": "FACTS F-MOD-44 [c25]; research/wf_ideas_v4/round25/report.notes.md 10:46Z; research/wf_ideas_v4/round25/report.json R25-A3 (a)",
+   "suggested_action": "Log the R25-A3 (a) gate (nodes +0.4..+1.3% vs 121,252, forks within +-5 of 81, runtime rule v2) with the note '(logged after the kernel completed, before its output was downloaded)'. Only then download the output.",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "P50 turns terminal at about 11:54-12:50Z, and P51 goes at that header. The restored cron has its first job at 12:47Z (a research round), with no probe-50 wake-ups. R25-A1 asks for wake-ups at 11:50, 12:20, 12:50 and 13:00Z.",
+   "evidence": "CONTEXT 10:52 l.3709-3716; FACTS F-RUN-37, F-RUN-39 [c25]; research/wf_ideas_v4/round25/report.json R25-A1 (1), plan_issues (15)",
+   "suggested_action": "Add session wake-ups at 11:50, 12:20, 12:50 and 13:00Z. Pause the feed and watch loops about 10 min before the submit. Run the pre-submit checks: header < 15 min old, 1 submission left, R8 COVERAGE line, ledger family safetail_ci.",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "exp75 has been on the logged NO-GO list since 00:00 (R21-A3 (e)). Its dummy (2,288 s) is in the rule-v2 re-run band. Yet since 10:16 it has been proposed in chat as the private-hedge candidate, with the default 'exp75 >= 0.955 -> pair {best public, exp75}'. Round 25 refutes that default: pair B beats pair A only if private CI >= 0, and B's edge vanishes at CI sd ~0.0015.",
+   "evidence": "FACTS C-203, C-208 [c25]; CONTEXT 00:00 (e) l.3335, 10:16 l.3669-3676; research/wf_ideas_v4/round25/report.json R25-A4, rejected (R25P-2, R25P-6, R25P-7)",
+   "suggested_action": "Before any exp75 submit, log the R25-A4 line (submit v1 as it is, ab621c13, runtime grandfather, lift from NO-GO). Tell the user that pair B hedges only the cap lever.",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "If the user does nothing, the ticks stay #37 (0.954) + #38 (0.953), both below exp79a (0.957) and exp70g (0.956). The tick-fallback question (R25-A6 (e)) has not been asked, and Q3 is still open.",
+   "evidence": "FACTS F-RUL-20 [c25]; DECISIONS section 2 [c25] snapshot; research/wf_ideas_v4/round25/report.json R25-A6, plan_issues (11)",
+   "suggested_action": "Send the R25-A6 message (MSK first, UTC in brackets) with the probe-50 read. It carries the tick-fallback yes/no question, the Q2 cutoff recommendation and Q3. Log the answers in CONTEXT.",
+   "urgency": "today"
+  },
+  {
+   "kind": "contradiction",
+   "what": "Two morning CI cutoffs are in play. The logged user line allows CI files by 09:30 UTC. Round 25 wants 08:45Z, because at the logged 10.9 h CI tail a 09:30Z file reads at ~20:24Z, after the 20:00Z tick. Observed CI L is 9.27-9.45 h.",
+   "evidence": "FACTS C-204, F-RUN-40 [c25]; CONTEXT 10:19 (3) l.3684-3687, 10:47 l.3704-3708; research/wf_ideas_v4/round25/report.json R25-A2, plan_issues (5)",
+   "suggested_action": "Settle one cutoff in W4 AMEND 4 before the 23:30Z freeze. 08:45Z is safe for L <= 10.9 h; 09:30Z is safe only for L <= 10.5 h.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "risk",
+   "what": "tools/runtime_ledger.py has no exp89 or exp9x rule. exp89* CI members would be filed as safetail (9.5 h), and a normal ~9.4 h CI latency would be misread. exp90a would be filed as 'unknown'. The GPU budget is also tight: the user reported ~5 h left, round 25 estimates ~4.5 h, and Chrome has been down since 06:35Z.",
+   "evidence": "FACTS F-MOD-45, F-RUL-05 [c25], C-206; research/wf_ideas_v4/round25/report.json R25-A5 (a), (c), new_facts (9)",
+   "suggested_action": "Insert (r'exp89[abcghilmno][a-z]*', 'safetail_ci') plus a test before any exp89 dummy is pushed. Build and push only the realised-branch member (exp89a under R0/R-/R?, exp89e under R+). Run the pre-push dataset check.",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "experiments/RESULTS.md has no rows for P47 (0.955), P48 (0.957, the new best) or P49 (0.955). Its last change was 59e14e2 at 05:03Z.",
+   "evidence": "FACTS C-118 [c25]; experiments/lb_poll/ledger.md 10:53:26Z",
+   "suggested_action": "Add rows 47-49 (and 50 when it scores) at the next commit.",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "The finals-card work is still open. The R23-A10 draft fixes are not logged. R25-A7 now proposes card v3 as a neutral A/B/C table, with a JT quote in place of 'exactly JT's advice', the RC-C CI caveat, a per-lever risk column and MSK times. V_pub is now a CI file (exp79a), so the CI caveat applies to every pair.",
+   "evidence": "FACTS C-184, C-197 [c25]; research/wf_ideas_v4/round25/report.json R25-A7",
+   "suggested_action": "Draft card v3 in CONTEXT before the 29 Sep 12:03Z FINALS PROPOSAL cron job. Show pairs A/B/C and the ticked pair; the session only proposes.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "stale",
+   "what": "The E10 watch-loop process has run since 06:22Z and, per round 25, still prints its old LOOK text. The docstring (e10_watch_loop.py l.28) still says '>= 0.955'. The file's l.78 and kaggle_feed's --our-best 0.957 are current.",
+   "evidence": "FACTS C-163 [c25]; experiments/lb_poll/e10_watch_loop.py l.28, l.78; tools/kaggle_feed.py l.172",
+   "suggested_action": "Restart the loop with the current text at the next quiet moment, and again after any >= 0.958 read of ours (R25-A8 (e)).",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 25 (state 10:55 UTC 28 Sep; HEAD 74caff9 = origin/main; poll header 11:03:26Z still shows P50 PENDING). FACTS.md: new header; [c25] notes on F-MET-10, F-LB-01/02/10/17, F-RUN-37/38, F-RUL-05/19, F-MOD-43 and F-TRN-56. New rows: F-LB-22 (public cap curve, cap 6 optimum), F-LB-23 (CI read, P48 = 0.957, UP 33, C+), F-LB-24 (LB 10:17Z and discussions), F-RUN-39 (W1 latencies, CI dL 1.60-2.18 h), F-RUN-40 (29 Sep read-by arithmetic, ticks by 20:00 UTC), F-RUL-20 (user answers 07:47/10:19/10:47), F-RUL-21 (teammates, credentials, pre-push rule), F-MOD-44 (knob arms exp88a/b/c), F-MOD-45 (exp75 facts, exp89 sha plan, ledger gap), F-MOD-46 (dataset baseline) and F-TRN-57 (lab vs LB for cap and CI). Contradictions: C-118/163/184/191/197/200 updated; C-165, C-192, C-193, C-195 and C-198 resolved; new C-201..C-209. DECISIONS.md: new header; P47-P50 rows updated (P48 = 0.957 C+, P49 = 0.955 S1, P50 PENDING > 5.84 h); new planned P51 row; [c25] build table; [c25] finals paragraph and snapshot (V_pub = exp79a 0.957; ticks still #37 + #38); 2f E10 update (trigger >= 0.958); 2h: 10 appends and 20 new rows (07:43-10:52 logged lines plus R25-A1..A9 PROPOSED); section 3: 13 appends and 7 new rule rows (LIFT SPLIT, S1, SLOT RULE, AMENDMENT A, rule v2, pre-push rule, round-25 proposals); closing 'since 07:35' paragraph. Key open items: R25-A1/A3 must be logged before P50 turns terminal (~11:54Z+) and before the exp88c output is read; exp75 is still NO-GO; RESULTS rows 47-49 are missing; the tick-fallback question has not been asked."
+}

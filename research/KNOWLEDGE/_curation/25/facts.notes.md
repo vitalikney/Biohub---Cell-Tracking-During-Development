@@ -1,0 +1,6 @@
+- 2026-09-28T10:55:01Z start round 25 curation (FACTS/DECISIONS); no 25/facts.json -> incremental over c24 (07:36Z)
+- 10:56Z sources read: CONTEXT l.3530-3716 (07:32..10:52Z), git 031e152..74caff9, poll header 10:53:24Z P50 PENDING, round25 report.json 10:52Z R25-A1..A9 (none in CONTEXT)
+- 10:59Z CONTEXT anchors mapped; writing c25_facts.py
+- 11:03Z FACTS.md patched via scratch c25_facts.py (header; 15 [c25] appends; new F-LB-22..24, F-RUN-39..40, F-RUL-20..21, F-MOD-44..46, F-TRN-57; C-201..C-209; resolved C-165/192/193/195/198). Next DECISIONS
+- 11:06Z DECISIONS.md patched via c25_dec.py (header, P47-P50 appends, P51 planned row, [c25] build table, [c25] finals paragraph + snapshot, 2f E10, 2h 10 appends + 20 rows, §3 13 appends + 7 rows, closing). Tables validated (0 column mismatches). Poll 11:03:26Z: P50 still PENDING; CONTEXT unchanged (Literature l.3717). Next facts.json
+- 11:07Z facts.json written (10 alerts). Done.

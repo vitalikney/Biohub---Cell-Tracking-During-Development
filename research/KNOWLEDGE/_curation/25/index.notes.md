@@ -1,0 +1,4 @@
+- 11:12Z start: index.json absent; reading INDEX/CHANGES/IDEAS/CONTEXT
+- 11:15Z INDEX.md written (c25)
+- 11:15Z CHANGES.md section 25 appended
+- 11:16Z index.json written; done
