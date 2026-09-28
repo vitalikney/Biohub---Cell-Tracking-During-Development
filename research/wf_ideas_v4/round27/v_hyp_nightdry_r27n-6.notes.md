@@ -1,0 +1,8 @@
+# v_hyp_nightdry R27N-6 notes (2026-09-28T16:04:12Z)
+- 16:04Z no prior answer file. Sources: tools/runtime_ledger.py (RETRY_SLACK_S 210, failed_attempts l.108-110, sort l.152), CONTEXT.md l.3737-3743 (probe 51 '?' iff ERROR / not terminal / L_hi > 10.2 h), CONTEXT 15:57Z ban report -> API LOAD CUT ('asks agents to minimise Kaggle API calls'), ledger.md.
+- Threshold: 12:14:57Z + 10.2 h = 22:26:57Z.
+- Poller phase: headers 15:41:53, 15:51:56, 16:01:59 -> period ~10:03. 38 cycles -> ~22:23:53Z, next ~22:33:56Z. Lost window at current phase = completions in (22:23:53, 22:26:57] = ~3.1 min. The tight 3-min loop has its own lost window of up to ~3.1 min (180 s sleep + call) -> no gain unless the poller is restarted before then.
+- Latency prior: exp85a (same base, no CI) L in (7.01, 7.19]; measured CI dL 1.60-2.18 h (CONTEXT PC25-07) -> exp87a L ~8.6-9.4 h (21:00-21:40Z). exp79a CI L <= 9.45. K-family L spread 6.87-7.81 h. L in the lost 3-min window (10.15-10.2 h) is a >2-sd tail: P << 1%.
+- 429 Too Many Requests on ListSubmissions already seen (ledger poll health, 2026-09-26 20:36:50Z). A 3-min loop (+~25 calls) raises 429 risk for the regular poller at the critical moment and contradicts the 15:57Z API-load cut after a 'Resource abuse' ban elsewhere.
+- A completion at L 10.03-10.2 h is itself a runtime signal: exp89r adds SEC + DIS on top of exp87a with a 10.75 h admission, 'ins-tail?' footnote zone 9.6-10.2 h -> choosing non-CI exp89q there is the safe choice, not a spurious one.
+- Verdict: refuted. Cheapest equivalent if wanted: ONE manual ListSubmissions at ~22:26:00Z only if the ~22:23:53Z poll still shows PENDING (1 call), or nothing.

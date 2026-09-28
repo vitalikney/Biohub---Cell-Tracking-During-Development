@@ -1,0 +1,8 @@
+- 2026-09-28T16:04:08Z start verifier for R27-RC-A min-track-len anchor
+- Checked RESULTS.md l.38/41: probe 6 (len 4) 0.943, probe 9 (len 8) 0.944, both on the exp06 base (public 0.941 pipeline + exp03B; no TTA, K, readmit or relink). The lab itself labelled -0.001 'noise' (probes 3, 8, 9).
+- Reran scratchpad r27_comp.py on _dl/biohub-exp85a-k2cap6-div04-ra094/submission.csv and got the same numbers: 3317/122328 = 2.71%; by clip 1.01/7.66/2.57/1.93%. The measurement holds, but it is on the K dummy, not on exp06 on the test embryo.
+- metrics.py l.412-460: J_adj = max(0, J*(1-0.1*ratio)) is linear. dummy_lab_exp89q: the ratio on 44b6_0b24 is -0.413 (not ~1.00), and edge weights are dominated by the 6bba clips.
+- Probe 6 (len 4, MORE nodes) read -0.002. That fits the bonus being real in the adding direction, so 'did not collect it' holds for len 8 only, and that is a single -0.001 read at the rounding unit.
+- Finals card v4 l.58 already reads 'DIS 2.25: ~0 ... public: <DIS_READ>'. The CONTEXT tie order (l.3181, l.3419): attributable UP > non-CI > fewer levers > earlier submit. 'Fewer levers' already puts exp89p over exp89q.
+- Action (2), 'exp87a over exp89r', is not a twin pair (it differs by SEC too; the twin is exp89l). Placing it above 'attributable UP' would change the pre-registered tie order post hoc.
+- Verdict: refuted (a restatement, no decision changes; the tie-order addition is redundant or ill-formed).

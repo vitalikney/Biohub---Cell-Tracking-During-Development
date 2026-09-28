@@ -1,0 +1,19 @@
+# round27 scan_hyp_nightdry notes (started 2026-09-28T15:42:45Z)
+- 15:43Z kaggle kernels status (read-only): exp89r/exp89q/exp75/exp89p/exp83c/exp89s/exp87a/exp85a all KernelWorkerStatus.COMPLETE.
+- 15:44Z kagglesdk get_kernel: current_version_number = 1 for exp89r, exp89q, exp75, exp89p, exp83c, exp89s -> '-v 1' = the dummy version (no re-push). All private, GPU on.
+- kernel-metadata.json ids match folders: experiments/exp89r_k2cap6_k_sec_dis225_ci -> vitaliineibauer/biohub-exp89r-k2cap6-k-sec-dis225-ci; exp89q -> biohub-exp89q-k2cap6-k-sec-dis225; exp75_k2_coordinject -> biohub-exp75-k2-coordinject; exp89p -> biohub-exp89p-k2cap6-k-sec; exp83c -> biohub-exp83c-k2cap6-secn2a-ci; exp89s -> biohub-exp89s-k2cap6-k-dis225. Dataset sources: CI files carry yuki0731/biohub-coord-inject, SEC files vitaliineibauer/biohub-secft-n2a-v1; exp89q/exp89p no coord-inject (correct).
+- list_kernel_session_output: submission.csv present in all 5 night/fallback kernels.
+- GPU quota via kagglesdk get_accelerator_quota_statistics (read-only, NEW measurement path): timeUsed 9,988.9 s, totalTimeAllowed 21,600 s, refresh 2026-10-03 -> 11,611 s = 3.2 h left at 15:45Z (if totalTimeAllowed is the live allowance).
+- Dataset baseline: 'kaggle datasets list --mine -s biohub-ft-weights --csv' and '-s secft-n2a --csv' rows equal the baseline meta.csv except downloadCount can move (teammates have view access) -> compare ref,size,lastUpdated only.
+- poll.log: 15:15:31Z header = NameResolutionError x3 (DNS outage 15:05-15:35Z, CONTEXT 15:43Z); 15:41:53Z fresh; 51 PENDING.
+- ledger: polls sorted by ts (runtime_ledger.py l.152) -> extra manual poll blocks appended in the same format merge cleanly; RETRY_SLACK_S 210 per failed attempt inflates L_hi.
+- 16:0xZ NEVER_SUBMIT.md absent and no 'never submit' / 'dryrun' flag in probe.json / kernel-metadata.json of exp89r/q, exp75, exp89p, exp83c, exp89s.
+- ledger family check (tools/runtime_ledger.py family_of on the planned -m texts): 'probe 52: exp89r' safetail_ci; 'exp89q' safetail; 'exp75' safetail_ci; 'exp89p' safetail; 'exp83c' safetail_ci; exp89s safetail; exp89l safetail_ci -> no --family override needed.
+- RUNTIME FINDING (_dl/*/ *.log, JSON time stamps): the DIS 2.25 dummy excess (+178..+485 s) is ALL before the GPU stage ('GPU shard 0' at 262-788 s = setup/IO noise); ILP sum 122-143 s and repair sum 486-566 s are flat across exp70g/85a/87a/88a/88b/89p/89q/89r/89s. total-minus-setup: 89q 1,057 s vs 89p 1,060, 70g 1,054, 85a 1,126, 88a 1,106, 89s 1,130. -> no hidden-runtime penalty for DIS 2.25; the R26 new-fact-6 '+15-20%' is machine noise. exp89q hidden L ~ exp85a's 7.02-7.19 h, exp89r ~ exp87a's.
+- 51 L_hi deadline for '+'/'0u' = 12:14:57Z + 10.2 h = 22:26:57Z (first COMPLETE header + 210 s per failed attempt in that header). 10-min poller cadence can turn a 22:17-22:27Z completion into '?'.
+- Ledger K2-family non-CI L_hi 6.87-7.81 h (exp70q max 7.81); CI (exp79a) 9.27-9.45 h. Branch A: exp89p at 00:46Z reads 07:38-08:35Z vs the A-M1 decision header 'latest 08:40Z' (thin); at 00:07Z it reads 07:00-07:56Z. No other non-CI file in branch A -> the 40-min non-CI spacing has no object there; exp89r/exp75 (CI) complete 08:41-11:00Z, separate windows.
+- A-M1 (exp89l CI) submitted at 08:45Z with the 10.9 h CI tail reads 19:39Z > 19:30Z card cutoff; deciding ~08:00Z instead gives ~45 min more.
+- Guard strings verified in CONTEXT (grep -cF): 'RISK STACK DUMMY GATES: exp89q PASS, exp89r PASS' 1; 'exp89p (K + SEC) DUMMY GATE PASS' 1; 'exp75 LINE (R25-A4' 1; 'DUMMY GATES: exp87a PASS, exp83c PASS' 1; 'R8 COVERAGE EXTENDED TO THE NIGHT FILES' 2; 'R8 COVERAGE (PC19-11' 1.
+- Feed digest 15:41Z: 0 new topics/comments; E10 watch RUN 27 15:43Z signals 0, no flag > 0.958 -> aggressive mode adds nothing.
+- 28 Sep used 5/5 (47, 48, 49, 50, 51) -> any submit before 00:00Z 29 Sep fails on the daily limit.
+- 16:01Z final JSON written (12 findings R27N-1..12).

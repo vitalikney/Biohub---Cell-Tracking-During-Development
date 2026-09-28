@@ -1,0 +1,4 @@
+- 2026-09-28T16:18Z start round 27 FACTS/DECISIONS curation; no 27/facts.json -> incremental over c26 (13:55Z)
+- 16:20Z sources: CONTEXT l.3924-3998 (14:12..15:57Z; Lit now l.3999), git dba59bd/eea3793/7faa8cf/608d950, poll hdr 16:12:02Z P51 PENDING (3 gaps), round27 report.json 16:16Z R27-A1..A9 (none in CONTEXT)
+- 16:22Z plan: FACTS header + [c27] appends (F-LB-01/02/10, F-RUN-39/41, F-RUL-05/19/20, F-MOD-48, F-TRN-58) + new F-LB-27, F-RUN-42/43/44, F-RUL-23, F-MOD-49/50, F-TRN-59; C-206/211/212/213/216/218 resolved-ish, C-118/163/209/214 updated; new C-219..C-227. Writing scratch c27_facts.py
+- 16:26Z FACTS.md patched via c27_facts.py (header; 10 [c27] appends; F-LB-27, F-RUN-42/43/44, F-RUL-23, F-MOD-49/50, F-TRN-59; C-211/212/213/216 resolved; C-118/163/206/209/214/218 updated; C-219..C-228). Next DECISIONS

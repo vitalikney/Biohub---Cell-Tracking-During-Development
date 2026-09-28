@@ -1,0 +1,9 @@
+- 2026-09-28T16:04:09Z start R27N-7 skeptic (late-night recovery rule)
+- 16:3xZ 28 Sep. Sources read: CONTEXT.md l.3700-4019 (10:47Z CI yes, 10:52Z crons, W4 AMEND 4 11:17Z, 12:25Z user confirm, MORNING TABLE v1.1 14:12Z, 15:43Z ops), l.3366-3398 (W4 AMEND 2 (5): after 02:00Z only on cap-lift yes), l.1653-1676 (R5, R7, R8: 'after 29.09 02:00 only emergency repeat, hard edge 10:00').
+- round27/scan_hyp_nightdry.json: R27N-2 freeze item (7) ALREADY contains the LATE rule text verbatim; R27N-4 already says 'retry every 10 min until the file's LATE cutoff'. So R27N-7 = same rule, count gain once.
+- round27/scan_plancheck.json: the 15:05-15:35Z 'outage' was Modern Standby on battery (lid closed), laptop on battery 64% at 15:49Z -> the realistic failure mode is standby over the 00:04Z batch, i.e. the rule fires on wake (user opens lid ~06-07Z). Raises P(use) above 5-10% unless the user plugs in.
+- Arithmetic: CI 08:30Z + 10.9 h = 19:24Z (< 19:30Z card, < 20:00Z tick; after the 18:37Z FINAL cron). Non-CI 11:30Z + 7.81 h = 19:19Z. OK. 08:30Z is stricter than AMEND 4's 08:45Z and the user's 09:30Z.
+- Conflicts: none in slot count (3 night + 2 morning = 5; morning rows with missing inputs are UNUSED by v1.1 (4)). R8 hard edge 10:00Z vs 11:30Z non-CI: superseded by user 10:19Z/10:47Z answers for 29 Sep files (same cutoff used for morning non-CI).
+- GAPS: (a) stack variant if the 23:30Z freeze itself was missed (freeze cron also session-only) -> must be pinned to headers <= 23:30Z (else exp89q), never the later 51 read; (b) R18-A7 40-min non-CI spacing not restated (branch B exp89q -> exp89p); (c) 'ahead of morning files' should not delay a morning row whose input read exists; (d) push the user when it fires (the user is present at wake), not only the morning message.
+- Verdict: NOT refuted; operational insurance, 0 GPU, byte-identical (no code), fail-soft; gain tiny EV, merged with R27N-2 (7).
+- 2026-09-28T16:06:51Z final JSON written (refuted=false)

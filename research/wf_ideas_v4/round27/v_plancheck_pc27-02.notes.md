@@ -1,0 +1,9 @@
+# PC27-02 verify notes (2026-09-28T16:04:09Z)
+- Rule hole confirmed: CONTEXT l.3742 R25-A1 (4) "ERROR, not terminal by 08:00Z 29 Sep, or L_hi > 10.2 h: '?'"; l.3587-3588 GAP RULE PC24-08 covers only 8.0 h non-CI; l.3325 "v rule (L_hi > 10.2 h -> ?) stands"; 12:25Z night rule l.3899: '+'/'0u' -> exp89r, else exp89q.
+- ledger.md (16:02Z): 56640366 PENDING, last PENDING 16:01:59Z; 438 polls, 3 gaps >15 min (05:06->06:22Z, 14:54->15:15Z, 15:15->15:41Z) ~123 min of ~74 h (~2.8%). Normal bound width ~0.17 h (exp79a (9.27, 9.45]).
+- PC27-01 (scan_plancheck.json): 15:05-15:35Z gap = Modern Standby on battery (lid); laptop on battery -> gap tonight more likely than the base rate.
+- FLAW in proposed action: "code the read on its display" for ALL codes. Only '+'/'0u' are fail-soft-safe (skipped insertion only lowers display). '-'/'0' under a gap would become a CI-negative verdict (C51 '-' -> CI-risk flag on every CI file; exp75 partner rule (a) 'probe 51 -' -> A first). Also anti-conservative downstream: MORNING TABLE v1.1 uses exp87a's display as a subtrahend (dd = (exp89r-exp89p)-(exp87a-exp85a)) and as Rr comparator; a lowered exp87a display (skipped insertion) inflates dd / Rr '+' -> spurious DIS '+' -> exp89s, or Rr '+' -> exp89q.
+- Second gap: normal 10-min cadence gives L_hi in (10.2, ~10.37] with L_lo <= 10.2 and no >15 min gap -> proposed rule does not cover it. Simpler: for '+'/'0u' ignore L_hi (<= 10.75 COMPLETE).
+- Tightening source: e10_watch hourly LB snapshots (our submission count 52->53) can bound completion inside a poll gap.
+- Gain: P(51 '+'/'0u') ~0.3-0.4 x P(gap straddles ~22:27Z with completion before it) ~0.02-0.05 -> ~1% chance of flipping exp89q->exp89r; value = CI on a single-embryo public read, ~0.0000x expected. Cost zero (text only, pre-score).
+- 2026-09-28T16:06:33Z final JSON written (refuted=false, narrowed fix)

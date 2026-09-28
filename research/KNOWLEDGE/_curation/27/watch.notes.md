@@ -1,0 +1,4 @@
+- 2026-09-28 16:18 UTC: round 27 watch started; no prior watch.json in 27
+- 16:20Z CONTEXT 4019 l; new l.3924-3997 (R26-A1 coverage, morning v1.1, exp89s build+gate PASS, partner v2, 15:43 OPS outage+defaults, 15:57 ban report API cut). round27 report.json 16:16Z R27-A1..A9. battery 53% status1 16:19Z
+- 16:24Z verified: R26-A1/A2/A3/A5(1) logged (l.3924-3978), ledger l.82 has t, RESULTS still ends probe 46, REPORT.md only rounds 20-23, round26 tracked (dba59bd), round27 untracked, no tools/gate_dummy.py, poll 16:12:02Z 51 PENDING (l.23749/23752), R27-A1..A9 none in CONTEXT; writing WATCHLIST
+- 16:31Z WATCHLIST.md + watch.json written (20 alerts); done

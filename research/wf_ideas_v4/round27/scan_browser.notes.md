@@ -1,0 +1,10 @@
+# round27 scan_browser notes (2026-09-28T15:42:43Z)
+- 15:42Z e10_snapshot -> experiments/e10_watch/20260928T1542Z.txt CHANGES=16 vs 1422Z. Kernel changes: flexonafft Lineage Forge lastRunTime 13:02:36->12:57:08 (re-run metadata; 0.947 family); amanatar NEW notebookd71800bfae (lastRun 15:42:50, 0 votes). x138 anvithpothula/biohub-0-953-lb-original unchanged.
+- LB 15:43Z: 3968 teams; ours 0.958 rank 138 (125 strictly-better+1), pos 14/21 in 0.958 block; LastSubmission 05:02:30 (probe 51 12:14:57Z not yet scored). Counts vs r26 13:18Z: 0.953 420->415, 0.954 140->138, 0.955 97->102, 0.956 68->78, 0.957 42->43, 0.958 20->21, 0.959 18->20, >=0.960 103->104, >=0.970 9->10.
+- 43 score changes since 1318Z; their LastSubmissionDate all 05-09Z -> scoring lag ~6-9 h. Movers: Kayla L. 0.969->0.970 (#10), Makoto Nagatomo 0.964->0.965, yuto083 0.962->0.963, 寻找队友QQ 0.954->0.960, rogerrogerroger3r 0.957->0.959, maesaer 0.956->0.959, marchq 0.955->0.958.
+- 7 teams <=0.953 -> 0.956 across 1318->1542 (Mathurin Ache, Habibur_Rahman, kta_jpn, Boiled-Sweet-Potato, Sankalp Thakur, Danzzzl, juliencst); per single snapshot window 1422->1542 = 4 (<5). No public notebook > 0.953 exists -> nothing to gate.
+- Digests 1338Z,1408Z,1438Z,1541Z: E10 FLAG none; 1 new comment: 743929 Cyrus 13:43Z "this is overfitting brother. shake up is coming" (no knob).
+- amanatar/notebookd71800bfae is NOT in `kernels list --competition biohub... --user amanatar` -> not a biohub kernel (other comp).
+- Chrome ~15:50Z: Overview unchanged ('A DAY TO GO', timeline 29 Sep 11:59 PM UTC), 13,475 entrants, 4,545 participants (+1), 3,967 teams, 92,814 submissions (+280 vs r26 92,534). Pinned topics same, no host announcement.
+- Discussion (recent comments): top = 743929 '2 hours ago' (Cyrus 13:43Z), 743006 '3 hours ago' (g john rao 12:27Z, already logged r26). 0 new topics.
+- Code tab Recently Run: Lineage Forge 0.947 (3h), Biohub Cell Tracking 0.953 (kunaldesale, 5h, known), rest unchanged; best public notebook score 0.953. Nothing pulled.

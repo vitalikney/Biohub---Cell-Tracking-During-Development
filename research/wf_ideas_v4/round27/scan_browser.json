@@ -1,0 +1,45 @@
+{
+ "summary": "Round-27 delta scan, 15:42-15:52 UTC 28 Sep (18:42-18:52 MSK), against round 26 (13:18Z). Nothing actionable: there is no public notebook above 0.953, no disclosed knob and no host change. Ours: 0.958 at rank #138 of 3,968 (was #134), 125 strictly above +1, 14th of 21 in the 0.958 block. The LB still shows our last submission as 05:02:30, so probe 51 (12:14:57Z) is not scored yet. The 43 score changes since 13:18Z all come from submissions made at 05-09Z, a scoring lag of about 6-9 h, which fits the 21:30-22:15Z read estimate for probe 51. E10 P1: experiments/e10_watch/20260928T1542Z.txt CHANGES=16 vs 1422Z. The only kernel changes are a flexonafft Lineage Forge (0.947) re-run timestamp and a new amanatar kernel that is not a biohub kernel. P2 look-check: 4 teams in 1422->1542 and 3 in 1318->1422 moved from <=0.953 to 0.956, so the largest group per window is 4 (<5) and there is no P2 signal. No public source exists to gate. LB counts 1318Z->1543Z: 0.953 420->415, 0.954 140->138, 0.955 97->102, 0.956 68->78, 0.957 42->43, 0.958 20->21, 0.959 18->20, >=0.960 103->104, >=0.970 9->10. Discussion: 0 new topics and 1 new comment, Cyrus on 743929 at 13:43Z ('this is overfitting brother. shake up is coming'), which has no knob. E10 FLAG none in the 1338Z/1408Z/1438Z/1541Z digests. Overview is unchanged ('A DAY TO GO'); submissions are 92,814 (+280). Nothing pulled.",
+ "findings": [
+  {
+   "id": "r27-e10-p1-null",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "E10 P1 at 15:42Z: CHANGES=16 vs 1422Z, and none of them is a port trigger. Kernel changes: (a) the lastRunTime of flexonafft/biohub-lineage-forge-precision-tracking changed from 13:02:36 to 12:57:08 (the same 0.947 re-run already logged in r26; the Code tab shows 'Score: 0.947', updated 3h ago). (b) NEW amanatar/notebookd71800bfae (lastRun 15:42:50, 0 votes). `kernels list --competition biohub-cell-tracking-during-development --user amanatar` does not list it, so it is not a biohub kernel. x138 anvithpothula/biohub-0-953-lb-original, thtennant and amanatar/optimized-biohub-max-score are unchanged. The best public notebook score is still 0.953 (scoreDescending top: HF v3 / amanatar / kunaldesale / x138).",
+   "evidence": "experiments/e10_watch/20260928T1542Z.txt (DIFF section); https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/code?sortBy=dateRun",
+   "action": "None. E10 not met (no public notebook >= 0.959, none > 0.953)."
+  },
+  {
+   "id": "r27-lb-delta",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "LB 15:43Z vs r26 13:18Z: 3,968 teams. Ours: 0.958 at #138 (was #134), 125 = 1 + teams strictly better, 14th of 21 in the 0.958 block (ranks 125-145), LastSubmission still 05:02:30, so probe 51 exp87a is not yet scored. Counts: 0.953 420->415, 0.954 140->138, 0.955 97->102, 0.956 68->78, 0.957 42->43, 0.958 20->21, 0.959 18->20, >=0.960 103->104, >=0.970 9->10. Top 20: Kayla L. 0.969->0.970 moves #14->#10. #1-#9 are unchanged: yu4u 0.978, Sergio Alvarez 0.976, Gabriel 0.975, taiseiu 0.974, then 0.971 x3 and 0.970 x3. Other risers: Makoto Nagatomo 0.964->0.965 (#39), yuto083 0.962->0.963 (#55), 寻找队友QQ2593124087 0.954->0.960 (#95), rogerrogerroger3r 0.957->0.959 (#116), maesaer 0.956->0.959 (#120), marchq 0.955->0.958 (#137, lands just above us in the 0.958 block by earlier submission time).",
+   "evidence": "experiments/e10_watch/20260928T1542Z.txt histogram + leaderboard_rows; diff against experiments/e10_watch/20260928T1318Z.txt",
+   "action": "None. Rank drift inside the 0.958 block comes from late-scored teams. It does not change the night plan."
+  },
+  {
+   "id": "r27-scoring-lag",
+   "kind": "new-fact",
+   "urgency": "today",
+   "what": "All 43 score changes that appeared between 13:18Z and 15:43Z have LastSubmissionDate between 05:27Z and 09:48Z (hours 05:1, 06:6, 07:13, 08:17, 09:6), so the scoring lag is currently about 6-9 h. Probe 51 (12:14:57Z) therefore lands around 18:15-21:15Z at the earliest, which is consistent with or slightly earlier than the 21:30-22:15Z read estimate. The P2 look-check found 7 teams moving from <=0.953 to 0.956 across the 1318->1542 span, but per snapshot window only 3 (1318->1422) and 4 (1422->1542), all below the >=5 threshold. The teams are Mathurin Ache, Habibur_Rahman, kta_jpn, Boiled-Sweet-Potato, Sankalp Thakur, Danzzzl and juliencst, with submissions at 06:20-08:54Z. No public notebook scores above 0.953, so there is no source for tools/e10_port_gate.py. The most likely cause is x138 plus the 743929 knobs that are already public (ILP_DIVISION_WEIGHT 0.4, READMIT_MIN_SCORE 0.94), which we already hold in exp85a.",
+   "evidence": "experiments/e10_watch/20260928T1422Z.txt (largest group 3), 20260928T1542Z.txt (largest group 4); CONTEXT.md P2 SEARCH SIGNAL definition (line ~2140)",
+   "action": "Start polling for the probe 51 read from ~18:30Z (21:30 MSK) instead of 21:30Z. No port action."
+  },
+  {
+   "id": "r27-discussion-delta",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "Discussion since r26: 0 new topics and 1 new comment, by Cyrus on 743929 at 13:43Z: 'this is overfitting brother. shake up is coming'. It discloses no knob. John Taylor has not replied since 00:10Z and has not answered Justin CH123's 04:13Z follow-ups (DIV weight 0.2/0.6, closed knobs, third lever). His post still says 'The specific settings go in the notebook after the deadline.' In the Chrome list (recent comments), 743929 shows '2 hours ago' and 743006 shows '3 hours ago' (g john rao 12:27Z, already in CONTEXT 12:40Z). E10 FLAG is none in the 1338Z, 1408Z, 1438Z and 1541Z digests.",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/743929 ; experiments/discussions/digest_20260928T1408Z.md; experiments/discussions/743929.md",
+   "action": "None. There is no new disclosed value to turn into a build, so AGGRESSIVE MODE has nothing to act on this round."
+  },
+  {
+   "id": "r27-overview-unchanged",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "The Overview page is unchanged: banner 'A DAY TO GO', timeline 'September 29, 2026 - Final Submission Deadline' at 11:59 PM UTC, and the same evaluation and code requirements (<= 12 h CPU/GPU, internet off). Counts: 13,475 entrants, 4,545 participants (+1), 3,967 teams, 92,814 submissions (+280 vs r26's 92,534). There is no host announcement. The pinned topics are the same (workshop last comment 2 days ago, getting started, welcome).",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/overview",
+   "action": "None."
+  }
+ ]
+}

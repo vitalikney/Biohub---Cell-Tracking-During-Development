@@ -3996,6 +3996,42 @@ Mention it to the user in one line (R9-A8 item 6).
   15:56Z); the round prompt now runs the feed only if the newest digest is > 100 min old and asks agents to minimise
   Kaggle API calls; from now on kernel-status waiters poll every 5 min. Poller (1 call / 10 min) and E10 loop (8 calls
   / h) unchanged.
+- 2026-09-28 16:26 UTC, CORRECTION to the 15:43Z OPS line: it was MODERN STANDBY ON BATTERY, not a network outage (R27-A1 (b))
+  Kernel-Power events: 18:00 MSK (15:00Z) entered Modern Standby (Reason: Lid); 18:15:42 MSK 'Connectivity in standby:
+  Disconnected' (policy); brief wake 18:15:31 MSK (battery drain budget), back into standby; 18:39:48 MSK exit (Lid).
+  Again 19:05:23-19:09:53 MSK (Idle Timeout on battery; exit Power Button). The session's 15:4x UTC check looked only
+  at Power-Troubleshooter events and wrongly said 'not a sleep'. At 16:26Z: Win32_Battery BatteryStatus 1
+  (discharging), 50%, ~73 min left. Idle standby on AC is 'never' (powercfg STANDBYIDLE AC = 0), so on the charger
+  with the lid open the loops run. The user was asked (16:27Z) to plug in the charger until 23:00 MSK 29 Sep and not
+  to close the lid (optional, run by the user: powercfg LIDACTION AC = 0). The session never changes power settings.
+  Watchdog (background, local reads only): exits -> notify when on AC, battery < 30%, or the newest poll header > 25
+  min old.
+- 2026-09-28 16:26 UTC, GAP RULE v2 (R27-A2; pre-score: the newest header shows 56640366 PENDING)
+  GAP RULE v2 (CI reads; replaces the L_hi > 10.2 h clause of R25-A1 (4) in these cases only). (1) If probe 51 is
+  COMPLETE without ERROR, its display is >= 0.959 (or 0.958 with an attributable UP and SubmissionCount 53), and L_hi
+  > 10.2 h (from a poll gap or the normal 10-min cadence, up to the 10.75 h admit), code it '+'/'0u' with the flag
+  UNPROVEN-ins. It counts as a normal read for the 12:25Z exp89r/exp89q choice and for BEST_CI. Add the footnote
+  ins-tail? if L_lo > 9.6 h. (2) A display <= 0.958 with no attributable UP (a would-be 0 or -) and L_hi > 10.2 h
+  stays ?: no C51 -, no CI-risk flag, and exp75 partner rule v2 (a) treats 51 as not -. (3) MORNING TABLE v1.1: while
+  51 is UNPROVEN-ins, its display is not a comparator. Branch-A dd and Rr code ? unless they also read + against
+  exp85a 0.958. (4) Before applying the rule, tighten L_hi from the hourly e10_watch LB snapshots (the first snapshot
+  where our SubmissionCount goes 52 -> 53). Use the same snapshots for S0/S1 if the downloads were missed. (5) The
+  same +/0u-only asymmetry applies to exp89r, exp75 (the >= 0.955 pair-B row only) and exp89l. Operational: no 3-min
+  tight-poll loop; do not restart the poller between 21:00Z and 22:30Z unless its newest header is > 15 min old.
+- 2026-09-28 16:26 UTC, FACT CORRECTION (R27-A3 (1)): DIS runtime = sibling
+  Round-26 new fact 6 (DIS 2.25 dummies +15-20%) is WRONG. The excess is the silent pre-GPU phase: cell 4 runs
+  sorted(Path(/kaggle/input).rglob(biohub-v1284-head-s075/v1284_head.pt)), an I/O walk over the whole input mount that
+  takes 203-788 s on any config (exp88b without DIS 428 s, exp70q 746 s). Compute (last log time minus the GPU shard 0
+  line) is equal: exp89q/89p 1,057/1,059 s, exp89s/85a 1,130/1,126 s, exp89r/87a 1,473/1,569 s, exp88a/70g 1,107/1,054
+  s. Per-clip ILP is equal too (89p 25.0/16.5/4.4/76.8 s vs 89q 17.9/24.0/4.1/76.7 s). Inferred, since no DIS file has
+  been read yet: DIS files have the hidden L of their parent family, exp89q ~ exp85a (7.0-7.2 h) and exp89r ~ exp87a
+  (CI 9.3-9.5 h, tail 10.9 h). No runtime flag on exp89q/r/s. Do not patch the rglob in gated files (byte identity).
+- 2026-09-28 16:26 UTC, FINALS CARD v4 STORED + round-27 facts (R27-A8, R27-A9 (2))
+  research/wf_ideas_v4/round27/finals_card_v4_ru.md (Russian, MSK first) is stored; it is filled at 12:03Z / 18:37Z 29
+  Sep by its table, with the R27-A8 edits (conditional opener, П3 silver ~0.39-0.63, token matching by file-name
+  substrings, exp83c = 3 levers, pool per GAP RULE v2, DIS PENDING windows = parent family, optional DIS footnote).
+  Facts: rank 138 at 15:43Z (0.958 block of 21, 14th; 124 teams >= 0.959); E10 null; no disclosed knob; GPU 9,988.9 s
+  of 21,600 s used at 15:44Z (~3.2 h left); probe 51 read expected ~20:50-22:15Z.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

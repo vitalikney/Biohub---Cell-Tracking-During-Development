@@ -1,0 +1,10 @@
+# v_hyp_nightdry R27N-5 notes
+- 2026-09-28T16:04Z started; no prior json.
+- Sources: CONTEXT.md 12:17Z (00:46 chosen as '>= 40 min after exp86c', a non-CI file then), 12:23Z/12:25Z (user confirm keeps 00:46 in both branches; fallback exp83c already at 00:07Z), 14:12Z MORNING TABLE v1.1 (A-M1 decide at first header with exp89p terminal, latest 08:40Z), R18-A7 at CONTEXT ~3140 (spacing reason: same-batch latencies swap ~20 min; 43/44 co-completed = two NON-CI files).
+- Ledger (experiments/lb_poll/ledger.md): non-CI K2 family L_hi 6.87-7.81 h (14 reads, max exp70q 7.81); CI exp79a (9.27,9.45]. 28 Sep night: exp78b 00:06:09 non-CI + exp79a 00:06:33 CI submitted 24 s apart -> 07:32Z vs 09:33Z, no latency penalty; 26 Sep 21:15/21:17/21:38 three concurrent non-CI all ~7 h -> no concurrency slowdown evidence.
+- Check: 00:46 + 7.81 h = 08:35Z (first-seen, poll quantisation already inside L_hi) -> '?' only if L_hi > ~7.9 h or a poll gap/standby at 08:30-08:40Z. Claimed 5-10% plausible upper-ish; I estimate ~3-8%.
+- EXTRA PLUS 1 (not in finding): at 00:46 exp89p's tail (08:35Z+) approaches the earliest CI completions (exp75 >= 00:06 + 8.96 h = 09:04Z; exp89r ~09:0xZ) -> ~25-30 min separation; at 00:07 -> >= ~65 min. Cleaner poll-window separation for the '0u' UP attribution.
+- EXTRA PLUS 2: scan_plancheck (round27) found laptop battery/lid standby kills network+crons. One batch at 00:04-00:07Z = one wake window instead of a second action 42 min later -> fewer ways to lose the slot.
+- Costs: E10 'pushes out the last-listed file' optionality between 00:07 and 00:46 lost -> E10 would take a morning slot instead (morning slots often UNUSED); negligible. Procedural: user confirmed '00:46 UTC' - time was derived from the spacing rule, not a user preference; still should be stated to the user pre-score (in the pre-freeze message), not only in the morning.
+- Branch B unchanged. Hidden run identical (same file) -> no private/value effect; purely schedule.
+- Verdict: not refuted; small positive, 0 cost.
