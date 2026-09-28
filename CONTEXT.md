@@ -3821,6 +3821,16 @@ Mention it to the user in one line (R9-A8 item 6).
   exp75 is lifted from the R21-A3 (e) NO-GO list in its new role as the private-hedge candidate (10:16Z; user 3+2 yes
   10:19Z).
   {V_pub, exp75} hedges only the cap lever. CI is hedged only by #37 or exp70g.
+- 2026-09-28 11:19 UTC, exp88c GATE PASS + exp89a/exp89e BUILT + LEDGER (R25-A3/A5/A8; 50 still PENDING)
+  exp88c (exp70g + ILP_DISAPPEARANCE_WEIGHT 1.75) vs the R25-A3 (a) line: validate ok, 0 errors, DIVINS ENABLED, nodes
+  122,231 (+0.81%, in +0.4..+1.3%; SCIP replay predicted +0.85%), edges 118,028, forks 84 (within +-5 of 81), 1,405 s,
+  CSV 459afc83aea0 -> PASS. exp86c WAIVER (R25-A3 (b)) applied: PASS (per-clip readmit check not applied). BUILT (CPU,
+  no push; shas equal the round-25 dry-run after using its exact folder names): exp89e_k2cap6_k_dis175 (C6 + JT + DIS
+  1.75; 61b59191; R+ night file), exp89a_k2cap6_ci_dis225 (C6 + DIS 2.25 + CI; ddd97ed3; R0/R-/R? night file). The
+  realised one is pushed at 50's read. Ledger: exp89[abcghilmno] and exp90a -> safetail_ci above exp8\d,
+  test_round25_exp89_families (27 ledger tests pass). R8 COVERAGE extended to exp89a/b/h/o and exp90a (coordinject
+  dataset as exp79a). tools/uptest.py = the UP-test script (save / compare). Round prompt KEY FACTS refreshed (R25-A8
+  (a)).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
