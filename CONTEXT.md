@@ -3414,6 +3414,20 @@ Mention it to the user in one line (R9-A8 item 6).
 - 2026-09-28 02:46 UTC, E10 SIGNAL CHECKED (watch loop run 15, 02:43Z): anvithpothula/biohub-v1284-head-s075-sample-notebook appeared in the author's
   list; its page (Chrome, read-only): "Version 1 of 1", 23 s run, input = the V1284 head dataset only, 0 output files -> a dataset
   sample notebook, not a competition submission, no score -> NOT a trigger.
+- 2026-09-28 04:31 UTC, 29 SEP FINALS CARD + E10 v3 NOW + S7 + SEC-STACK GATE (round 23, R23-A1/A2/A3; written while the last header 2026-09-28T04:26:37Z shows
+  47/48/49 PENDING). (1) FINALS CARD (the user picks on 29 Sep; the session proposes, never re-ticks): V_pub = the highest public
+  display among all COMPLETE 26-29 Sep refs (E10 copies included), ties: attributable UP > non-CI > fewer levers > earlier submit;
+  SEC files excluded while Q3 is open; CI files info-only (post-CSV coordinate shift, in-sample 4-clip lab, no like-for-like LB
+  record); the insertion gate must read 'did NOT fire'. Recommended pair {V_pub, #37 56563521} (model: bronze ~0.50-0.76 / silver
+  ~0.22-0.47) vs the ticked {#37, #38} (~0.34-0.66 / ~0.03-0.23); {V_pub, #38} is lower by ~0.04-0.15 bronze (model-conditional).
+  (2) E10 v3 NOW: trigger = a public notebook whose own public score is strictly above our best display over all our COMPLETE refs
+  (now >= 0.957); SI = the copy + the BASE folder's probe.json change keys (now exp70g: CAP 6, FRAME_CAP 1, THRESH 0.4, STEAL 1,
+  ALPHA 1, REPAIR 34200, DIVINS_DEADLINE 28800, LOWREFINE 1); SI gate REF = experiments/<BASE>. (3) S7: exp78a and exp78b both '+'
+  with disp(exp78a) > disp(exp78b) -> the cap direction peaked at 8: W2a = exp81, no exp80a/exp84a, BASE = exp78a. (4) SEC-STACK
+  GATE for exp82a/b/c: validate ok, 0 errors, Secondary 7029fe69, node rows identical to the exp81 dummy (121,085), runtime <= 1,920
+  s; exp83c-g: R22-A1 checks + topology identical to the sibling (83c-81, 83d-82b, 83e-82a, 83f-80a, 83g-82c). (5) OPS NOTE: the
+  round-23 curator agents failed with 'weekly limit reached (resets Oct 2)'; research rounds may no longer run - the main session
+  continues the reads/submits/finals proposal itself.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
