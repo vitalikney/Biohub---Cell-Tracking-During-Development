@@ -2,3 +2,8 @@
 - 20:14Z sources: CONTEXT l.3999-4093 (16:26..20:07Z; Lit now l.4094), git 756c513..d150eec (HEAD 20:07:06Z), ledger 20:03:02Z (462 polls, 3 gaps, P51 PENDING L>7.80h), round28 report.json 20:05Z R28-A1..A6 (none logged), ideas_29sep rank.json (16 refuted)
 - 20:15Z plan FACTS: header; [c28] appends F-LB-01/02/10, F-MET-10, F-RUN-39/42/43/44, F-RUL-05/20/22, F-MOD-50, F-TRN-58; new F-LB-28, F-RUN-45 (crons never fire), F-RUL-24 (autonomous mode), F-TRN-60; C-219/220/221/226 resolved, C-118/209/214/218/222/223/224/225/227/228 updated; new C-229..C-236
 - 20:16Z FACTS.md patched via c28_facts.py (header; 14 [c28] appends; F-LB-28, F-RUN-45, F-RUL-24, F-TRN-60; C-219/220/221/226 resolved; 10 C updates; C-229..C-236). Next DECISIONS
+- 20:18Z DECISIONS.md patched via c28_dec.py (header; P51-P55 appends; [c28] build table; [c28] finals paragraph + snapshot; 2f E10; 2h 9 appends + 17 rows; §3 7 appends + 7 rows; closing). Tables validated. Next facts.json
+- 20:19Z NEW: commit e42769c (20:18:20Z) took my FACTS.md; CONTEXT +3 entries 20:13/20:18/20:18 (R28-A1, R28-A2 LOGGED); Lit l.4134; ledger 20:13:04Z P51 L>7.96h. Updating [c28] texts in place (c28b script)
+- 20:20Z c28b applied: R28-A1/A2 LOGGED statuses, P51 L>7.96h @20:13:02Z, C-229/232/233/235/236 resolved, new C-237 (cron failure explanation 20:13 vs 20:18); DECISIONS §3 +4 rows (RULE v2.1, exp89l gate, no-freeze fallback+G4, timers). Tables validated. Next facts.json
+- 20:20Z added C-238 (00:44Z exp89p timer vs 00:46Z / +40 min spacing). Writing facts.json
+- 20:22Z facts.json written (10 alerts). Done.

@@ -1,0 +1,11 @@
+# v_recheck R29-RC-B notes
+- 2026-09-28T20:38:51Z start; no prior json
+- Read scratchpad r29/rc_curse.py + rc_curse_out.json, rc_rho.py + rc_rho_out.json; round29/scan_recheck.json (RC-B), finals_card_v5_ru.md l.16-28, 80-90; CONTEXT l.3179-3181 (V_pub rule, ties: last attributable UP first), l.3739-3740 ('0u' definition), l.3937.
+- Prior art: round20/REPORT.md l.64 already added the anti-curse V_pub rule (replace only at strictly larger display or UP). Core verdict is not new.
+- Error 1: finding says 'ties go to exp85a'. Pre-registered tie order (1) = last attributable UP -> an exp89p/q '0u' at 0.958 BECOMES V_pub (also scan_hyp_cardfix inconsistency 2).
+- Own MC scratchpad r29/vr_rcb_0u.py: '0u' SEC case E[S] = -0.05/+0.06/+0.21e-3 (mu -0.2, s 1.2, rho .3/.5/.8), -0.26/-0.10/+0.14e-3 (mu -0.5); vs '+' 0.959 case +0.12/+0.34/+0.66 and -0.10/+0.17/+0.57. s=2.5e-3 (seed spread) barely changes it. So the note targets the milder case and misses the worse one.
+- Error 2: at +0.001 the finding's own numbers are +EV in 5/6 cells; offering {exp85a,#37} as 'near-equal alternative' can only cost EV if taken, and invites a post-hoc deviation from the pre-registered V_pub order.
+- Error 3: 'private keeps ~25-70%' - pool out: 0.068/0.589 = 12% at muS -0.5 rho .3; range is ~12-73%.
+- Minor: card is v5 now (round29/finals_card_v5_ru.md), not v4.
+- 2026-09-28T20:41:16Z wrote json (refuted=true: action mis-aimed, tie rule misstated)
+- 2026-09-28T20:41:30Z wrote json (refuted=true: action mis-aimed, tie rule misstated)

@@ -1,0 +1,81 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/FACTS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/DECISIONS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/29/facts.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/29/facts.json"
+ ],
+ "alerts": [
+  {
+   "kind": "risk",
+   "what": "The stored night texts fail open. kaggle 2.2.4 prints its 'outdated kaggle version' warning to STDOUT, so the nb_try dedupe reads a list that already holds the token as 'absent' and would submit a duplicate at the idempotent backups. An empty T54 would also fire exp89p at once, because date -u -d '' gives today 00:00Z.",
+   "evidence": "FACTS F-RUL-25, C-242, C-238; research/wf_ideas_v4/round29/report.json R29-A1; round29/report.notes.md 'R29-A1 exact snippets' (mock rc 1 with the old parser); site-packages/kaggle/api/kaggle_api_extended.py l.9117-9130 (re-read by the curator)",
+   "suggested_action": "Before the 23:33Z freeze, apply R29-A1 to round29/night_checklist.md and freeze_line_template.md: the fail-closed 'ref,' slice for the nb_try, G2 and T54 parsers plus the T54 fallback. Then take the new sha8s and name them in the freeze.",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "Probe 51 (exp87a, 56640366) is PENDING at the 20:53:11Z header (L > 8.63 h). The read is expected ~21:31-21:42Z. It is ins-tail if the last PENDING header comes after 21:50:57Z, and it is admitted only if the first COMPLETE header + 210 s x failed attempts <= 22:59:57Z. The admit-slack sign in R28-A4 (i) and in the 20:18 (c) text is inverted.",
+   "evidence": "experiments/lb_poll/ledger.md 20:53:12Z; FACTS F-RUN-39, C-243; tools/runtime_ledger.py l.197-199; round29/report.json R29-A3",
+   "suggested_action": "At the first COMPLETE header, code 51 and run 'uptest.py save S1_51'. In branch A, build exp89l at once (sha8 cad1d47f), then push its dummy. Gate it with the logged RULE v2.1 gate, not scratchpad gate85.py.",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "The G4 check that the freeze exists (grep -cF 'W4 FREEZE: NIGHT 29 Sep') passes with no freeze, because CONTEXT l.4125 already quotes that string. CONTEXT 16:38 l.4054 still points the batch at the R27N-2/R27N-3 texts, which the round-29 checklist supersedes. The waiter texts point at those old texts too.",
+   "evidence": "FACTS C-239, C-240, F-RUN-46; research/wf_ideas_v4/round29/v_plancheck_pc29-01.json, v_plancheck_pc29-02.json",
+   "suggested_action": "Log the R29-A2 CONTEXT entry before 23:33Z. It should say that every night step runs night_checklist.md (new sha8) and that the anchored grep -E regex is the only freeze check. The entry must not start with the freeze header shape.",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "MORNING TABLE v1.1 (1) says 'only DIS + keeps DIS 2.25 in a morning file', but its own A-M2 row sends exp89q (which contains DIS) on Rr '+' without DIS '+'. The table has to be read one way or the other before any night read.",
+   "evidence": "FACTS C-244; CONTEXT 14:12 l.3931-3955; research/wf_ideas_v4/round29/report.json R29-A2 (6), plan_issues (g)",
+   "suggested_action": "Log one reading pre-score, in the R29-A2 entry. Either the A-M2 Rr row is an explicit exception (and with DIS '-' A-M2 is UNUSED), or the strict reading applies.",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "Timer completion notices queue while the session is busy. A full multi-agent round at 22:47Z or 01:13Z can therefore delay the 51 read, the 23:33Z freeze, the 00:04Z batch or the 01:30Z backup. Between 01:30Z and 06:07Z nothing checks for missing night files.",
+   "evidence": "FACTS F-RUN-45; research/wf_ideas_v4/round29/report.json R29-A5, next_focus, plan_issues (j)",
+   "suggested_action": "Skip the 22:47Z round, or keep it to one short step that ends by 23:25Z. Launch no round from 23:25Z to ~00:50Z. Start every round from 01:13Z to 06:17Z with the checklist section-5 G2 list and the LATE check.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "Several live waiter texts are stale, and none of them can be edited. The 01:30Z text says 'CI only until 01:45' (W4 now covers all files). The 07:23Z text says 'build exp89l only with P' (it should be built at 51's read). The 12:03Z text opens card v4, which lacks the R27-A8 edits. Card v5 (aadead83) exists but is not referenced in CONTEXT.",
+   "evidence": "FACTS F-RUN-46, C-230, C-247, C-249; research/wf_ideas_v4/round29/v_hyp_freezetext_r29f-5.json, v_hyp_cardfix_r29cf-5.json",
+   "suggested_action": "Treat waiter texts as pointers only and redirect them through CONTEXT (R29-A2 (1), (5)). Put a SUPERSEDED banner on card v4. Do not re-arm the timers.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "contradiction",
+   "what": "Freeze template item (9) says 'on an equal display V_pub stays exp85a'. The logged tie order puts the last attributable UP first, so an exp89p or exp89q '0u' at 0.958 becomes V_pub.",
+   "evidence": "FACTS C-245; round29/freeze_line_template.md l.96; CONTEXT l.3181, l.3419; round29/finals_card_v5_ru.md l.20-24",
+   "suggested_action": "Apply the R29-A1 (f) wording before the freeze: code 0 / MASKED / BLIND keeps exp85a, and 0u follows the tie order (1).",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "A morning CI read (A-M1 ~16:55-17:57Z, tail ~19:39Z) can land after the 18:37Z finals proposal. Only the 19:43Z reminder would catch it, 17 min before the 20:00Z tick.",
+   "evidence": "FACTS F-RUL-22; research/wf_ideas_v4/round29/report.json R29-A7, plan_issues (k)",
+   "suggested_action": "At each morning submit, start a local notify-only watcher. After 18:00Z, re-apply the card v5 V_pub order and send one Russian MSK line if V_pub or the pair changes.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "stale",
+   "what": "experiments/RESULTS.md still has no rows for P47-P51. It was last touched ~04:54Z (commit 59e14e2).",
+   "evidence": "FACTS C-118; experiments/lb_poll/ledger.md 20:53:12Z",
+   "suggested_action": "Add the P47-P51 rows (0.955 / 0.957 / 0.955 / 0.958 / pending) after 51 reads, before the finals message.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "risk",
+   "what": "PowerShell 'Get-Date -Format u' prints local MSK time with a 'Z' suffix. A hand-written UTC time taken from it is 3 h wrong. The scripted paths already use true UTC.",
+   "evidence": "FACTS F-RUN-46; research/wf_ideas_v4/round29/v_hyp_cardfix_r29cf-6.json",
+   "suggested_action": "Take UTC only from bash 'date -u', [DateTime]::UtcNow or datetime.now(timezone.utc), including for the freeze header time (R29-A1 (d), R29-A2 (4)).",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 29 (21:02 UTC 28 Sep), an incremental pass over curation 28. There are no new CONTEXT entries or commits since 20:18Z (HEAD e42769c). P51 exp87a is still PENDING at the 20:53:11Z header (L > 8.63 h). The best display is still 0.958 = exp85a = V_pub; we are #140 of 3,974 at 20:41Z, with 127 teams >= 0.959; E10 and the feed are null. FACTS: new F-LB-29 (LB 20:41Z), F-RUN-46 (stale waiter texts, PowerShell UTC trap), F-RUL-25 (kaggle 2.2.4 output: success string, stdout version warning, 429 text), F-TRN-61 ('~1/6' is one lever, not a transfer law). There are [c29] notes on F-LB-01/02/10, F-MET-10, F-RUN-39/42/43/45, F-RUL-22, F-MOD-50 and F-TRN-58. C-118/209/225/230/232/238 are updated, and C-239..C-249 are new: vacuous G4, batch-text pointer, success string, fail-open parsers, admit-slack sign, the MORNING TABLE A-M2 conflict, the tie wording, card v4 pairs, exp89l build time, gate85.py, and the 01:30Z CI-only text. DECISIONS: [c29] appends on P51-P56; a new build table; a new finals snapshot (21:00Z; TICKED #37 + #38; V_pub exp85a); an E10 note; 8 §2h rows for R29-A1..A8 (all PROPOSED); R5/R8/§f status notes and 2 §3 rows (round-29 proposals, round-29 rejections). All tables validated."
+}

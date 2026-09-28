@@ -1,0 +1,10 @@
+# v_recheck R29-RC-A (1/6 lab->LB bar) - skeptic notes (2026-09-28 ~21:4xZ)
+- No prior answer file. Read scan_recheck.notes.md/json (RC-A table), IDEAS.md l.41 header (R8 bar '~+0.012 lab = +0.002 public at ~1/6; I-320').
+- RESULTS.md l.48/117: z-flip lab = +0.0108 (12 videos, pilkwang exp30->exp31 line) / +0.010 leaky 4-video; P16 LB -0.009 was on the exp29 base -> pair crosses bases. +0.0108 < +0.012, so the claim 'the bar would have admitted z-flip' is WRONG (only ef_a3 +0.0162 and axis-flip +0.0214).
+- RESULTS.md l.58: P25 exp44 v2 (takaito + axis-flip + hygiene) = +0.002 vs P24; the RC-A table lists axis-flip only as P19 wrong sign (scan's own (C) notes say axis-flip sign 'depends on the base').
+- RESULTS.md l.113: P18 hygiene local +0.0011, its own OUTCOME line: 'both inside noise ... inconclusive on magnitude'.
+- FACTS F-TRN-51: cap>=8 vs cap6 lab +0.0006..+0.0019, CI90 includes 0 for every arm, flips negative without 2 clips; judge logged it as a NULL, not a sign. C-138: cap6 lab -0.00057 (0 TP/4 FP). -> P45, P47, P49 are lab-NULLS, not 'wrong sign'. P41 dc0.30: exp60 lab -0.0006/+0.0010 (null), exp64 44b6 +0.0034 in-sample (C-101).
+- Labs mixed: friend B 12 LOEO-44b6 (P16/P18/P19/P21), friend A 199 videos (P20), laptop CONFIRMATION (P27-P30), exp60 in-sample (P35/41/45-50), other team's LB vs our lab on truncation (R28-NF, 744093). The '1/6' ratio and R8 bar were defined on the exp60 lab only.
+- Recount with lab-null pairs dropped (P18, P41 exp60, P45, P47, P49): right 5 (P28, P35, P48, P50, truncation) vs wrong 4-5 (P19, P21, P16, P30, [P41 via exp64]) -> ~50%, not 'below a coin flip'. Structural class '2/2' = K + truncation, n=2, class boundaries post hoc (z-flip = TTA, z shift = structural).
+- Core point survives: 1/6 came from one lever (F-TRN-27 c9), lab magnitude does not predict LB. But the practical conclusion is unchanged (finding says so): no build, no night/morning change -> LB/private value 0.
+- Verdict: refute AS STATED (replacement class table has errors and would give 29-Sep agents a post-hoc n=2 'structural transfers' rule). Keep narrow annotation only.

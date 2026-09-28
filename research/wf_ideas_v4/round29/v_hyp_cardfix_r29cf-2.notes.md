@@ -1,0 +1,8 @@
+# v_hyp_cardfix R29CF-2 skeptic notes (2026-09-28 ~20:40Z)
+- No prior answer file existed; started fresh.
+- Stale text located: round29/freeze_line_template.md l.96 item (9): "...0 or - removes SEC from every morning file; on an equal display V_pub stays exp85a." (copied verbatim from round28/report.json R28-A4 (vi)). Only occurrence among round29 texts; night_checklist.md does not contain it.
+- Card v5 (round29/finals_card_v5_ru.md l.59) ALREADY has the corrected wording (code 0 -> exp85a, fewer levers; 0u -> order (1)); change log l.154 records it. So only the freeze template disagrees.
+- Tie order sources: CONTEXT l.3181 "Ties: the last attributable UP at that display, then non-CI, then fewer stacked levers, then the earlier submit"; l.3419 same; card v5 l.20-24 (1)-(4). exp85a's own UP (21 teams, 12:16Z entry l.3857) was also at 0.958, so "last attributable UP" -> exp89p on 0u. Logic check: 0u at equal display means our team's best raw rose, i.e. exp89p raw > exp85a raw on public.
+- P codes CONTEXT l.3937-3938: '0u' = 0.958 with attributable UP; '0' = 0.958 with k=0 or MASKED/BLIND. Proposed wording matches.
+- Freeze not yet logged: grep -cE '^- 2026-09-2[89] [0-9:]+ UTC, W4 FREEZE: NIGHT 29 Sep' CONTEXT.md = 0 at 20:39:39Z. Fix is in time (freeze 23:30Z).
+- Value: consistency only (info line), 0 GPU / 0 API / 0 slots; prevents a future fill reading the logged freeze line as overriding order (1). Probability of '0u' modest (SEC prior negative) but cost ~0. Not a change of any pre-registered rule: it aligns the info text to the rule written before reads. Considered counter: "exp85a safer on private" -> would be a post-hoc override of order (1); rejected.

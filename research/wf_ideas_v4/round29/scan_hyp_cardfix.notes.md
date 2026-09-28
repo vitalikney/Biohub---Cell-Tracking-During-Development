@@ -1,0 +1,13 @@
+# scan_hyp_cardfix notes (round 29)
+- 2026-09-28T20:19Z start; round29 folder created; no prior json.
+- 20:20Z clock note: PowerShell `Get-Date -Format u` prints LOCAL time (MSK) with a 'Z' suffix (showed 23:18:52Z at 20:19Z UTC). Use bash `date -u`.
+- 20:20Z probe 51 (56640366) still PENDING at poll header 20:13:02Z (ledger L > 7.96 h). Card keeps <C51_READ> placeholder.
+- Sources read: round27/finals_card_v4_ru.md (mtime 15:55:37Z, unchanged since round 27 -> R27-A8 (1)-(5) NOT applied, confirms PC28-04), round27/report.json R27-A8, round28/report.json R28-A4 (vi), R28-A5, R28-A1 waiter list, round26/report.json R26-A5 (partner rule v2), CONTEXT l.3834-4133 (Q3 11:26Z, partner rule v2 14:12Z, 16:32Z user agreement, 744093 16:39Z, 20:13Z timers, 20:18Z rule v2.1/no-freeze).
+- Integer check (local, _dl/*/submission.csv): ALL dummy CSVs int64 z/y/x, 0 non-integer, incl. finals candidates not in the 16:39Z list: #37 exp58 b6de85c1f3c6, #38 exp58n 4fa58e861bd6, exp70g 62d832697d3b, exp79a 4280044276fc, exp83c 3d1d738176cd, exp89s 8956f46c6824 (+ exp85a ce8164a8202f, exp87a db3faf078781, exp89p 629fc20b4815, exp89q 0b72bdc4d312, exp89r 61601d0222b4, exp75 d6d9d808303f). exp89l not built.
+- Card inconsistency 1: v4 П1 = {V_nonCI, exp75}; partner rule v2 (R26-A5 (1), CONTEXT 14:12Z) and the user's 16:32Z 'согласен' are {V_pub, #37 / exp75}. Same pair when V_pub is non-CI; when V_pub is a CI file (exp87a/exp89r/exp89l at a new top), v4 П1 drops V_pub from the finals -> not in the agreed plan.
+- Card inconsistency 2: R28-A4 (vi) SEC line 'on an equal display V_pub stays exp85a' holds only for code '0' (tie order (3) fewer levers 2<3); with '0u' tie order (1) makes exp89p V_pub.
+- Card inconsistency 3: step 7 exp75 'clean' keeps L_hi <= 10.2 h, but GAP RULE v2 (5) admits the >= 0.955 row with L_hi 10.2-10.75 h as UNPROVEN-ins.
+- 20:35Z wrote round29/finals_card_v5_ru.md (v4 + R27-A8 (1)-(7) + R28-A5 + R28-A4 (vi) CI/SEC + 16:32Z agreement + 744093 + GAP RULE v2 (5) exp75 clause); fill-table JSON parses; change list (18 items) at file end.
+- Feed digest 18:57Z (experiments/discussions/digest_20260928T1857Z.md): 0 new topics/comments; best public notebook 0.953; E10 FLAG none -> aggressive mode: nothing disclosed to act on.
+- Honest null: no inference/post-proc lever reaches R8 (whitelist {K, SEC, DIS 2.25, CI} exhausted by exp89s/exp89l; 16 ideas refuted 20:00Z; IDEAS.md FINALS cluster has no open finals-strategy item beyond I-492/I-495/I-508).
+- 20:27Z wrote scan_hyp_cardfix.json (7 findings).

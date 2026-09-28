@@ -1,0 +1,5 @@
+- 20:54:04Z 2026-09-28 start: no _curation/29/ideas.json -> incremental run over curation 28 (521 ideas, HEAD e42769c). Scripts in scratchpad (patch28.py, gen_md28.py).
+- 20:56Z sources since c28: CONTEXT unchanged (4154 l., HEAD e42769c, no new commit); new = round29/ untracked (report.json 20:52-55Z R29-A1..A8, 5 scans, 13 verdicts, finals_card_v5_ru.md, freeze_line_template.md, night_checklist.md), poll header 20:53:11Z (51 PENDING L>8.63h), e10 2018Z/2041Z, digest 2027Z (null). Plan: patch29.py -> ideas_c29.json, gen_md29.py.
+- 21:00Z patch29.py OK -> scratch ideas_c29.json: 534 ideas (I-522..I-534), 45 change records; in-plan 128->138, refuted 255->258; at-risk 16 (+I-522, I-524, I-526, I-527, I-529; I-495, I-492 off). Next gen_md29.
+- 21:03Z ideas.json (534 ideas, 45 change records) + IDEAS.md (994 lines) WRITTEN; gen.py/gen2.py verify rows 534/534, body+ranking equal. Orphans: strict 1 (I-233), at-risk 16. Next: _curation/29/ideas.json.
+- 21:04Z _curation/29/ideas.json written (8 alerts). DONE.

@@ -3,3 +3,6 @@
 - 20:14Z read round28 report.json (R28-A1..A6, rejected, new_facts), 4 scans + 8 verdicts, ideas_29sep (16 cands MD-1..3/IB29-01..10/MM-1..3 all refuted; mapped IB29->I-029/454/183/333/331/384/440/175/222/441, MD-3->I-334, MM-3->I-484). Plan: ~45 updates + new I-510..I-521.
 - 20:27Z patch28.py OK -> scratch ideas_c28.json: 521 ideas (I-510..I-521), 62 change records; refuted 245->255, lab-tested 26->28; at-risk 17 (+I-510, I-511, I-516, I-495). Next: gen_md28.
 - 20:17Z NEW commit f05e678 (background timers) landed; CONTEXT 4124 lines -> fold in before writing. (earlier note '20:27Z' was a mis-typed clock, real ~20:15Z)
+- 20:19Z NEW commit e42769c (round 28: rule v2.1, exp89l gate, no-freeze fallback, waiters primary); CONTEXT 4154 -> folding in.
+- 20:22Z folded f05e678 + e42769c (CONTEXT l.4094-4133: timers, RULE v2.1/exp89l gate/no-freeze fallback pre-score, crons never fire -> waiters primary). ideas.json (521 ideas, 62 change records) + IDEAS.md (973 lines) WRITTEN; rows 521/521 match. Orphans: strict 1 (I-233), at-risk 13. Next: _curation/28/ideas.json.
+- 20:22:40Z _curation/28/ideas.json written (8 alerts). DONE.

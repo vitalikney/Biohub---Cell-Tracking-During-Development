@@ -1,0 +1,61 @@
+{
+ "summary": "Round 29 CARDFIX (written 2026-09-28 ~20:40Z = 23:40 MSK; probe 51 56640366 still PENDING at the 20:13:02Z header). Written: C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/wf_ideas_v4/round29/finals_card_v5_ru.md. It is card v4 plus R27-A8 (1)-(7) applied verbatim, the R28-A5 notes, the R28-A4 (vi) CI and SEC texts, the user's 16:32Z agreement ({V_pub, #37 or exp75}; the JT best + neighbour pair not recommended) and the 744093 integer-coordinate note. Placeholders are kept for every pending read (C51, SEC, DIS, exp75, PENDING lines). The fill table is keyed on file-name tokens ('exp89r = ' ... 'exp89s = ', 'exp58 = ', the E10 tokens) and its JSON parses. The file ends with an 18-item change list. Three card and rule inconsistencies were found and fixed in v5. (1) v4's П1 {V_nonCI, exp75} and П2 {V_CI, exp75} leave V_pub out of the finals whenever V_pub is a CI file, or a CI file ties a non-CI V_pub. That contradicts the user's 16:32Z agreement and partner rule v2, so v5 anchors every pair on V_pub and keeps {V_nonCI, exp75} only as an info row that needs a separate yes. (2) The R28-A4 (vi) SEC line 'on an equal display V_pub stays exp85a' is true only for code '0'. Under '0u', tie order (1) makes exp89p V_pub. This line is due in the 23:30Z freeze text, so its wording must be fixed before then. (3) Card step 7 kept exp75's L_hi <= 10.2 h clean clause, which GAP RULE v2 (5) overrides for the >= 0.955 row. New fact from local files: all finals-candidate dummy CSVs, including #37, #38, exp70g, exp79a, exp83c and exp89s, which were missing from the 16:39Z check, have int64 z/y/x with 0 non-integer values. Honest null on levers: no new inference or post-processing idea reaches R8. The {K, SEC, DIS 2.25, CI} whitelist is used up by exp89s and exp89l, the 18:57Z feed digest shows 0 new topics and comments (best public notebook 0.953), and nothing is disclosed for aggressive mode.",
+ "findings": [
+  {
+   "id": "R29CF-1",
+   "kind": "plan-issue",
+   "what": "Finals card v4 pair construction conflicts with the user's 16:32Z agreement and EXP75 PARTNER RULE v2. П1 = {V_nonCI, exp75} and П2 = {V_CI, exp75} exclude V_pub whenever V_pub is a CI file (exp87a / exp89r / exp89l reaching a new top), or whenever a CI file ties a non-CI V_pub (the v4 П2 condition 'V_CI >= V_nonCI'). The R27C-2 Q3 line is built on that П1. Card v5 anchors П1/П2/П3 on V_pub: with a non-CI V_pub, П1 = {V_pub, exp75}, the same pair as in v4. With a CI V_pub, П3 {V_pub, #37} comes first and П2 {V_pub, exp75} is shown only as a trade at >= 0.955 (rule v2 (b)). {V_nonCI, exp75} becomes an info row, 'outside the agreed plan, only on a separate yes', and it carries the Q3 line.",
+   "evidence": "round27/finals_card_v4_ru.md l.31-45 (П1 {<V_NONCI_FILE>, exp75}; П2 condition '[если V_CI >= V_nonCI ...]'); CONTEXT.md l.3965-3973 (partner rule v2: A {V_pub, #37}, B {V_pub, exp75}); CONTEXT.md l.4041-4050 (16:32Z 'согласен': finals plan stays {V_pub, #37 / exp75}); round29/finals_card_v5_ru.md section 2 + change item 12",
+   "action": "Main session: adopt card v5 as the fill source for 12:03Z / 18:37Z. When the Q3 conditional line (R27-A8) is logged at the 23:30Z freeze, word it for the info row: 'if V_pub is a CI file and V_nonCI carries SEC, the out-of-plan {V_nonCI, exp75} info row shows the best SEC-free non-CI file'. If the session prefers v4's split-lever П1 even when V_pub is CI, ask the user in one line (it drops the best public file from the finals). Do not do it silently.",
+   "urgency": "today"
+  },
+  {
+   "id": "R29CF-2",
+   "kind": "plan-issue",
+   "what": "The R28-A4 (vi) SEC info line ('on an equal display V_pub stays exp85a') contradicts the logged tie order when exp89p reads '0u'. With 0.958 and an attributable UP, order (1) makes exp89p V_pub; exp85a stays V_pub only for code '0' (unresolved -> (2) both non-CI -> (3) fewer levers, 2 < 3). The line is scheduled for the 23:30Z freeze text, so its wording must be fixed before then.",
+   "evidence": "round28/report.json R28-A4 (vi); CONTEXT.md l.3937-3938 (P codes '0u' / '0'); card tie order (1)-(4); round29/finals_card_v5_ru.md section 4 SEC line",
+   "action": "In the freeze line, replace 'on an equal display V_pub stays exp85a' with 'on an equal display with code 0 (k = 0 / MASKED / BLIND) V_pub stays exp85a (fewer levers); with 0u the tie order (1) applies'. 0 GPU, 0 API.",
+   "urgency": "now"
+  },
+  {
+   "id": "R29CF-3",
+   "kind": "plan-issue",
+   "what": "Card step 7 (exp75 'clean' requires L_hi <= 10.2 h) ignores GAP RULE v2 (5). A >= 0.955 exp75 read with L_hi between 10.2 and 10.75 h would drop pair B on a bookkeeping artefact. v5 step 7: >= 0.955 with L_hi 10.2-10.75 h = clean, flagged UNPROVEN-ins; <= 0.954 with L_hi > 10.2 h = '?' -> branch (c). The v5 section 3 also notes that a GAP-rule '?' is not a C51 '-'.",
+   "evidence": "round27/finals_card_v4_ru.md fill step 7; CONTEXT.md l.4009-4020 (GAP RULE v2 (2), (5)); CONTEXT.md l.3967 (rule v2 clean clause)",
+   "action": "Use the v5 step 7 when filling. Optionally add one clause to the freeze line: 'EXP75 PARTNER RULE v2 clean clause is read with GAP RULE v2 (5)'.",
+   "urgency": "today"
+  },
+  {
+   "id": "R29CF-4",
+   "kind": "new-fact",
+   "what": "744093 integer check extended to every finals candidate. All local dummy CSVs have int64 z/y/x with 0 non-integer values, including the files missing from the 16:39Z check: #37 exp58 b6de85c1f3c6, #38 exp58n 4fa58e861bd6, exp70g 62d832697d3b, exp79a 4280044276fc, exp83c 3d1d738176cd and exp89s 8956f46c6824. Also exp85a ce8164a8202f, exp87a db3faf078781, exp89p 629fc20b4815, exp89q 0b72bdc4d312, exp89r 61601d0222b4 and exp75 d6d9d808303f. exp89l is not built; its gate (R28-A2 (b)) already checks integers.",
+   "evidence": "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/_dl/*/submission.csv (pandas check, ~20:30Z); CONTEXT.md l.4059-4065",
+   "action": "None beyond the card line (v5 section 4 'Координаты', fill step 11). Log as a fact at the next CONTEXT entry.",
+   "urgency": "info"
+  },
+  {
+   "id": "R29CF-5",
+   "kind": "recheck-old",
+   "what": "Card v4 on disk is still unedited (mtime 15:55:37Z). CONTEXT 16:26Z claims the R27-A8 edits are in it, which is false (PC28-04 re-confirmed). v5 now contains them in a separate file; v4 is left untouched.",
+   "evidence": "round27/finals_card_v4_ru.md mtime 2026-09-28 18:55:37 +0300; CONTEXT.md l.4029-4034",
+   "action": "Log the R28-A5 correction pointing to v5: 'the 16:26Z entry was wrong: the card lacked R27-A8 (1)-(5); applied in research/wf_ideas_v4/round29/finals_card_v5_ru.md at ~20:35Z; fill from v5'. Point the 12:03Z and 18:37Z waiters' instructions at v5.",
+   "urgency": "today"
+  },
+  {
+   "id": "R29CF-6",
+   "kind": "new-fact",
+   "what": "Clock pitfall: in this environment PowerShell 'Get-Date -Format u' prints LOCAL time (MSK) with a 'Z' suffix. At 20:19Z it printed 23:18:52Z. Any agent or waiter step that takes UTC from it, such as G0 'clock >= 00:00:30Z' or a header-age check, would be 3 h off. Bash 'date -u' is correct.",
+   "evidence": "this agent: PowerShell Get-Date -Format u -> '2026-09-28 23:18:52Z' while bash date -u -> 'Mon Sep 28 20:19:40 UTC 2026'",
+   "action": "Check that the night-batch checklist, the backups and the waiters use bash 'date -u' or [DateTime]::UtcNow, never 'Get-Date -Format u'. v5 fill step 1 says so.",
+   "urgency": "now"
+  },
+  {
+   "id": "R29CF-7",
+   "kind": "new-hypothesis",
+   "what": "Honest null: no new inference-only or post-processing idea on x138 reaches R8 this round. Reasons: the morning whitelist {K, SEC n2a, DIS 2.25, CI} is used up by exp89s (built, PASS) and exp89l (build-ready, branch A); the 20:00Z sweep refuted all 16 candidates; the IDEAS.md FINALS cluster has no open finals-strategy item beyond I-492, I-495 and I-508, which v5 now implements; the 18:57Z feed digest shows 0 new topics and comments, the best public notebook is 0.953 and E10 FLAG is none, so aggressive mode has nothing to act on. I did not re-propose any closed idea, OVERLAP-CONSENSUS included.",
+   "evidence": "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/IDEAS.md (FINALS rows I-465..I-508); CONTEXT.md l.4073-4080; experiments/discussions/digest_20260928T1857Z.md",
+   "action": "None. Keep the ~3 GPU-h in reserve for exp89l (branch A) and any E10 >= 0.959.",
+   "urgency": "info"
+  }
+ ]
+}

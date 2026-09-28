@@ -1,0 +1,8 @@
+- 2026-09-28T20:38:52Z start v_plancheck PC29-02; round29 has night_checklist.md (23:29 local), freeze_line_template.md (23:28 local)
+- 20:40Z verified waiter cmdlines (Win32_Process): 23:33Z says "per R27-A4 (R27N-2 text in round27/scan_hyp_nightdry.json)"; 00:04Z "with the R27N-3 guards"; 00:44Z/00:20Z/00:50Z "freeze-line guards". Waiter texts are immutable -> a pointer is the only fix. CONFIRMED.
+- round28/report.json R28-A4 (iii) guarded T54, (iv) nb_try exit 3, (v) "store ... in the freeze line (or in a file it names)" -> PC29-02 largely restates R28-A4 (v); new part = the waiter texts are stale + no CONTEXT pointer.
+- round29/night_checklist.md (sha8 075152c4 at 20:40Z) already has: nb_try v3 (network test FIRST incl rate.?limit/429, then DAILY LIMIT regex 'daily|allowance|submission limit|per day|tomorrow|exceeded' -> return 3, then HARD FAIL w/o 'limit'); anchored G4 regex l.96; guarded T54 section 4 (max(exp89q+40min, 00:46Z), run_in_background until-loop, both branches); exp89p both branches.
+- round29/freeze_line_template.md (sha8 c675d7c3): 10.75 h edge (l.28-35), item (5) GAP RULE override (l.67), names checklist path + <CHECKLIST_SHA8> (l.101).
+- CONTEXT.md (4154 lines): grep night_checklist / NIGHT TEXT / freeze_line_template -> 0 hits. Only l.4132 "the freeze follows R27-A4 + R28-A4". => pointer line still MISSING. That is the residual action.
+- Caveat on the finding's own regex: 'daily|allowance|submission limit|limit' with bare 'limit' is safe only AFTER the network test (else 'rate limit'/429 -> exit 3 = STOP batch, no retry). Use night_checklist.md ordering, not the finding's literal.
+- 20:40:23Z wrote v_plancheck_pc29-02.json (refuted=false; residual action = CONTEXT pointer)

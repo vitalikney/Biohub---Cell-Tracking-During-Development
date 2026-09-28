@@ -1,0 +1,5 @@
+- 2026-09-28T20:54Z start round 29 FACTS/DECISIONS curation; no 29/facts.json -> incremental over c28 (20:22Z)
+- 20:58Z sources: CONTEXT unchanged since 20:18Z (Lit l.4134; HEAD e42769c); ledger 20:53:12Z P51 PENDING L>8.63h (467 polls, 3 gaps); round29 report.json 20:55Z R29-A1..A8 (none logged); e10 RUN 32 20:41Z #140/3,974, 127 >=0.959; digest 2027Z 0 new; sha8 checklist 075152c4, template c675d7c3, card v5 aadead83, card v4 7be5aa21
+- 21:03Z FACTS.md patched via c29_facts.py (header; 12 [c29] appends; F-LB-29, F-RUN-46, F-RUL-25, F-TRN-61; C-118/209/225/230/232/238 updated; new C-239..C-249). Tables validated. Next DECISIONS
+- 21:08Z DECISIONS.md patched via c29_dec.py (header; P51/P52/P53/P54/P55-56 appends; [c29] build table; [c29] finals paragraph + snapshot; 2f E10; 2h 8 rows R29-A1..A8; §3 R5/R8/§f appends + 2 rows; closing). Tables validated (fixed 2 §3 rows to 5 cols). Next: re-check poll, facts.json
+- 21:05Z facts.json written (10 alerts). Done.

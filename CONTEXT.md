@@ -4131,6 +4131,25 @@ Mention it to the user in one line (R9-A8 item 6).
   backup checks 00:20 and 00:50 UTC and the post-deadline 00:07 UTC 30 Sep. The 5ece5d24 freeze cron prompt (W4 AMEND
   3) is stale: the freeze follows R27-A4 + R28-A4. Residual risk: a VS Code / extension restart kills the session's
   waiters silently (the detached lb_poll / e10 / feed loops survive); the user can say 'продолжи'.
+- 2026-09-28 21:11 UTC, NIGHT TEXT POINTER + CARD v5 + A-M2 PRECEDENCE (round 29; pre-score: header 21:03:12Z shows 56640366 PENDING)
+  (1) Every night step (00:04Z batch, T54, the 00:20/00:44/00:50/01:30Z backups, the 06:07Z post-wake) runs
+  research/wf_ideas_v4/round29/night_checklist.md (sha8 2b442e87, after the R29-A1 fixes: fail-closed dedupe that
+  slices from the first 'ref,' line because kaggle 2.2.4 prints a version warning on stdout - mocks absent 10 /
+  present 0 / warning+present 0 / warning+absent 10 / no header 2; same slice in the G2 and T54 parsers; T54 never
+  empty; banner; UTC only from bash date -u). The freeze line comes from
+  research/wf_ideas_v4/round29/freeze_line_template.md (sha8 dcdfeebc). Timer texts are pointers only; R27N-3 and
+  R27N-4 are superseded. (2) The freeze check is ONLY: grep -E '^- 2026-09-2[89] [0-9:]+ UTC, W4 FREEZE: NIGHT 29 Sep'
+  CONTEXT.md | tail -1; empty -> NO_FREEZE -> the 20:18Z (c) fallback; STACK is read only from that entry. (3) kaggle
+  2.2.4 submit success = rc 0 + 'N submissions remaining today.'. (4) UTC only from bash date -u. (5) CORRECTION: card
+  v4 never got the R27-A8 edits (the 16:26Z line was wrong); the 12:03Z and 18:37Z fills use
+  research/wf_ideas_v4/round29/finals_card_v5_ru.md (sha8 aadead83; anchors every pair on V_pub per partner rule v2
+  and the user's 16:32Z agreement, applies GAP RULE v2 (5) to exp75, carries the R29CF-2 tie wording); v4 carries a
+  SUPERSEDED banner. (6) MORNING TABLE v1.1 PRECEDENCE (logged before any night read): the A-M2 Rr row is an explicit
+  exception to the winners-only rule: Rr '+' with DIS '?' -> exp89q (the non-CI twin of the stack that won); DIS '-'
+  -> A-M2 UNUSED (Rr '+' with DIS '-' implies exp89p >= exp85a + 0.003, which dominates exp89q). The winners-only rule
+  governs new builds (exp89s/t) only. (7) SESSION HYGIENE (R29-A5): no workflow round from 23:25Z until exp89p is
+  listed (~00:50Z); the 22:47Z round is skipped or kept to a short in-session step; the 01:13Z round runs only if all
+  3 night files are listed; each round 01:13-06:17Z starts with checklist section 5 (one list call).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

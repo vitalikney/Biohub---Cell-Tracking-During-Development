@@ -1,0 +1,11 @@
+- 2026-09-28T20:40:03Z start verification of R29-RC-C
+- 23:4xZ R28-RC-C (round28/v_recheck_r28-rc-c-...json) was REFUTED: its action (2) 'A first at exp75=0.954' DROPPED; central +0.0002 was the refuted revised prior (standing: P(>=0) 0.65-0.75, central +0.0005). Finding's point (3) 'stands' is false.
+- CONTEXT l.3489: probe-50 decomposition - almost all of exp85a (V_pub) vs exp70g change = READMIT 0.94 (+1,022 nodes, lowrefine +3%); ILP 0.4 near-inert (+49 nodes/+3 forks). V_pub vs #37 = cap6 + ILP0.4 + READMIT0.94 -> dominant diff is a node/lowrefine lever, not fork-set. Card v5 l.60: 'K: +0.84% nodes ~-0.0008 on any embryo'.
+- exp60 results.md ALL rows: ins35 44b6 +0.0058 (not 0); dc0.30 44b6 -0.0006; dc0.35 -0.0074; linefit -0.0031 on 44b6 -> 'every fork-set lever reads 0 on 44b6' is cherry-picked (only caps>=6/nosteal/forkmid/dc0.20).
+- F-TRN-51: cap lab = NULL (CI90 incl 0); P47 cap12 LB '-' vs lab '+' -> lab embryo split of fork levers does not transfer to LB.
+- F-TRN-31: z shift 44b6 +0.00251 vs 6bba +0.00153 = 1.6x, not 3x; truncation -0.0131/-0.0043 = 3x (R28 fact 5) - neither is CI. CI on 44b6 dummies unmeasured (~50 GT edges, R28-RC-C); dummy lab gives CI wrong sign. Bigger |effect| on 44b6 = bigger variance, sign unknown.
+- round29/finals_card_v5_ru.md already has section 6 (743006, one embryo, unverified, 'mixed split possible') and 'all reads on one public embryo' -> action (1) already done; P3 wording '#37 hedges everything (cap 6, K, CI, SEC, DIS)' is more accurate than the proposed A=fork-set text.
+- 743006 itself says 'could be a mix split'; mc26 already models one private draw with fixed sd -> nothing new.
+- Probe 51 still PENDING in poll.log (last lines).
+- VERDICT: refuted (no decision change; proposed card text (2) factually wrong; (3) resurrects refuted R28-RC-C action).
+- 2026-09-28T20:41:51Z JSON written

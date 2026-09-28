@@ -1,3 +1,5 @@
+> [SUPERSEDED 28 Sep 21:12 UTC] Use research/wf_ideas_v4/round29/finals_card_v5_ru.md (sha8 aadead83) for the 12:03Z and 18:37Z fills; this v4 lacks the R27-A8 edits.
+
 # КАРТОЧКА ФИНАЛОВ v4 (черновик, раунд 27; заполнить 29 сен в 15:03 МСК / 12:03 UTC и в 21:37 МСК / 18:37 UTC)
 
 Источник: R26-A5 (2) (правки к черновику R26F-8), правило партнёра exp75 v2 (CONTEXT 28 сен 14:12 UTC), пул и PENDING (R26-A4 (d)), утренняя таблица v1.1.

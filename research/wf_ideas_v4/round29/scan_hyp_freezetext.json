@@ -1,0 +1,85 @@
+{
+ "summary": "Round 29 freeze-text scan (local files only; 0 Kaggle calls, nothing submitted, pushed or committed). Wrote research/wf_ideas_v4/round29/freeze_line_template.md: the full W4 FREEZE line, header literal 'W4 FREEZE: NIGHT 29 Sep', items (1)-(10) = R27N-2 + R27-A4 + R27-A7 (2) + R27-A8 Q3 + R28-A4 (i)-(vii), with <FIELD> placeholders only for unknowns. Also wrote research/wf_ideas_v4/round29/night_checklist.md (sha8 075152c4): prelude with verified kernel ids and the exact -m texts for probes 52-54, nb_try v3, 00:03Z pre-check, G0-G5, branch A/B submit blocks, ledger + read windows, the guarded T54 waiter, rules for the 00:20/00:44/00:50/01:30Z timers, and the network branch with Russian push texts. All code blocks pass bash -n; the classifier and T54 were tested on mocks. Most important finding: kaggle 2.2.4 prints only 'N submissions remaining today.' on success. nb_try's 'Successfully submitted' test never fires, and R28-A4's bare 'limit' would STOP the batch on a 429; v3 fixes both (R29F-2/3). Also: the admit-edge slack sign is inverted in R28-A4 (i) and in the logged 20:18Z (c) (R29F-4). The 01:30Z / 00:44Z / 00:50Z timer texts contradict the LATE and T54 rules (R29F-5). Eight smaller conflicts are resolved in the template (R29F-6). E10 displacement voids both morning decisions (R29F-7). The RULE v2.1 anchor question is moot, since both anchors carry the same timestamp (R29F-8). No new score lever reaches R8 (R29F-9).",
+ "findings": [
+  {
+   "id": "R29F-1",
+   "kind": "plan-issue",
+   "what": "READY TEXTS WRITTEN. research/wf_ideas_v4/round29/freeze_line_template.md = the full W4 freeze line (header literal 'W4 FREEZE: NIGHT 29 Sep', items (1)-(10)) = R27N-2 + R27-A4 (items 1/4/7/8, DIS fact) + R27-A7 (2) + R27-A8 Q3 line + R28-A4 (i)-(vii), with <FIELD> placeholders only for unknowns (51 status/display/L bounds/first COMPLETE header/failed attempts/k/count/code/flag, STACK, E10, ops ages, battery, GPU, timer count, checklist sha8). research/wf_ideas_v4/round29/night_checklist.md = the single stored night text: prelude with -m texts and kernel ids, nb_try v3, 00:03Z pre-check, G0-G5, submit blocks for branches A/B, ledger + read windows, guarded T54 waiter, rules for the 00:20/00:44/00:50/01:30Z timers, network branch with 3 Russian push texts.",
+   "evidence": "Both files in research/wf_ideas_v4/round29/. night_checklist.md sha256[:8] 075152c4 at 20:52Z. bash -n passes on all 8 code blocks. The T54 snippet was tested on mock lists (no exp89q -> 2026-09-29T00:46:00Z; exp89q at 00:07:12 -> 00:47:12Z). Kernel ids + code sha8 were re-verified locally: 89r 5894ea50, 89q b80dae26, 75 ab621c13, 89p 2b9bc585, 83c e8f5a8a6. family_of: 89r/75/83c safetail_ci, 89q/89p safetail. exp_token is correct on all 5 -m texts.",
+   "action": "At the 23:33Z freeze timer: fill the <> fields and log the fenced block as ONE CONTEXT entry above '## 9. Literature'. Put the checklist sha8 in item (10). The 00:04Z batch and the 00:20/00:44/00:50/01:30Z timers follow night_checklist.md, not the timer message texts or the cron prompts.",
+   "urgency": "now"
+  },
+  {
+   "id": "R29F-2",
+   "kind": "new-fact",
+   "what": "nb_try SUCCESS TEST NEVER FIRES. kaggle 2.2.4 prints only 'N submissions remaining today.' after a successful kernel submit. The server message is empty, and cli.py does print(out, end=''). 'Successfully submitted' is absent from every real submit in the session transcripts (~40 submits, 6 Sep - 28 Sep 12:15Z). Errors come from kagglesdk as HTTPError(resp['message']): the server text, with no status code, goes to stderr with exit 1. Consequences: (a) R27N-4 nb_try treats every success as 'no match'. It self-heals on the next pass (sleep 30 s, list, ALREADY -> return 0), but the batch log reads like a failure. (b) R27N-3's 'Expect Successfully submitted. Any other output: do NOT resubmit blindly' makes the operator misread every success. (c) The HARD FAIL pattern '40[0134]' may never match a JSON-body error. nb_try v3 (in the checklist) fixes all three. Success = rc 0 AND '[0-9]+ submissions remaining today'. The checks then run network (incl. rc 124, 'Max retries', 429, 'rate limit') -> daily-limit (daily|allowance|submission limit|per day|tomorrow|exceeded; exit 3) -> hard fail (not found|could not find|forbidden|permission|unauthori|does not exist|40x) -> UNKNOWN = list first. Bonus: the remaining-today count is a free used_today check.",
+   "evidence": "site-packages kaggle/api/kaggle_api_extended.py competition_submit_cli (prints f'{limits.num_allowed_now} submissions remaining today.'; returns submit_result.message); kaggle/cli.py main (print(out, end=''); except HTTPError: print(e, file=sys.stderr); exit(1)); kagglesdk/kaggle_http_client.py _prepare_response (raise HTTPError(resp['message'])). Transcript outputs, e.g. 2026-09-26T21:15Z 'tail -2' shows only '2 submissions remaining today.'; 2026-09-28T12:15Z '0 submissions remaining today.'. Classifier test on 10 mock outputs: SUCCESS x2, NETWORK x3 (DNS 'Max retries exceeded', 429, rc 124), DAILY x1, HARD x2, UNKNOWN x2 (rc 0 with no line; odd text).",
+   "action": "Use nb_try v3 from night_checklist.md section P for every night submit. Delete R27N-3's 'Expect Successfully submitted' sentence from any prompt. Residual risk: if Kaggle returns the daily limit as HTTP 429, v3 retries it as network for 20 min, then pushes the user. That is harmless, because the list-first check makes it duplicate-safe.",
+   "urgency": "now"
+  },
+  {
+   "id": "R29F-3",
+   "kind": "plan-issue",
+   "what": "R28-A4 (iv) DAILY-LIMIT REGEX IS TOO WIDE AND IN THE WRONG ORDER. 'daily|allowance|submission limit|limit' contains a bare 'limit', so a transient 429 / 'rate limit' answer would exit 3 = STOP the whole batch with the user asleep. The same regex also sits after the success test, which never fires (R29F-2). Fix, in nb_try v3: test network first (incl. 'rate.?limit', 429, 'Max retries'), then daily without the bare 'limit', then hard fail. 'exceeded' is safe only because the network test ('Max retries exceeded') runs before it.",
+   "evidence": "round28/report.json R28-A4 (iv) text; poll.log / ledger.md 429 wording '429 Client Error: Too Many Requests for url: ...ListSubmissions'; classifier test in notes (the DNS 'Max retries exceeded' sample -> NETWORK, not DAILY).",
+   "action": "Use v3's order as written. Do not re-add a bare 'limit'.",
+   "urgency": "now"
+  },
+  {
+   "id": "R29F-4",
+   "kind": "plan-issue",
+   "what": "ADMIT-EDGE SLACK SIGN IS INVERTED in two stored texts. R28-A4 (i) says 'first COMPLETE header <= 22:59:57Z + 210 s per failed attempt'. The logged CONTEXT 20:18Z (c) says 'a first COMPLETE header later than 22:59:57Z + 210 s per failed attempt = ?'. The ledger computes L_hi = header time + 210 s x failed attempts - submit (runtime_ledger.py l.210: first_result_upper = p.ts + RETRY_SLACK_S * failed_attempts). So the correct test is header + 210 s x f <= 22:59:57Z. The stored wording would admit a header up to 22:59:57Z + 210 f, i.e. L_hi up to 10.75 h + 0.058 f h. R27N-2 had the sign right for the 10.2 h mark. The texts differ only when the COMPLETE header carries >= 1 failed attempt AND lands within 210 f s of the edge (P << 1%), but the freeze is meant to be mechanical.",
+   "evidence": "tools/runtime_ledger.py l.42 RETRY_SLACK_S = 210 and l.210; CONTEXT.md l.4119-4124 (20:18Z (c)); round28/report.json R28-A4 (i); round27 R27N-2 item (1) ('first COMPLETE header + 210 s per failed attempt later than 22:26:57Z').",
+   "action": "The template item (1) uses the ledger's L_hi as the arbiter and states the correct form, marked [R29]. No rule change: the logged 20:18Z (c) text is read with L_hi = the ledger value.",
+   "urgency": "today"
+  },
+  {
+   "id": "R29F-5",
+   "kind": "plan-issue",
+   "what": "TIMER MESSAGE TEXTS CONTRADICT THE FROZEN RULES (these timers are the primary trigger path). (a) 01:30Z timer (PID 23464): 'if any frozen night file is missing, send it (CI only until 01:45 UTC)'. Freeze item (7) lets any missing due file go until 01:45Z (non-CI with >= 40 min spacing), then LATE with cutoffs CI 08:30Z / non-CI 11:30Z. (b) 00:44Z timer (PID 4732): 'submit exp89p at 00:46 UTC' and 00:50Z timer (PID 36784): 'exp89p (due 00:46 UTC)'. In branch B, or in branch A after an exp89r -> exp89q substitution, exp89p's slot is T54 = max(00:46Z, exp89q ACTUAL + 40 min). If the stack slipped (e.g. sent by the 00:20Z backup), those texts would send exp89p < 40 min after exp89q, against R18-A7 / R26-A4 (c). (c) Timers exist as scratchpad timer.sh processes, not as R28-A1's ': WAITER_<LABEL>' tagged loops, so R28-A4 (vii)'s 'tag count' check has nothing to count. Count 'timer.sh 2026-09-29T0' command lines instead. All the listed timers were alive at 20:22Z: 22:47, 23:33, 00:04, 00:20, 00:44, 00:50, 01:13, 01:30, 02:13-18:13 hourly, 06:07, 07:23, 08:30, 11:10, 12:03, 18:37, 19:43, 21:05, 30 Sep 00:07. The 51 watcher (PID 31952) and the lb_poll / e10 / feed loops were alive. Battery: status 2, 78%.",
+   "evidence": "Win32_Process CommandLine read-only at 20:22Z (timer.sh args quoted in the notes); CONTEXT l.4094-4103, l.4127-4133; round28 R28-A1 / R28-A4 (vii).",
+   "action": "When a timer fires, follow night_checklist.md section 5 (DUE = T54 from step 4; any missing due file until 01:45Z; LATE after), not the message text. Freeze item (8) records the timer.sh count. No need to re-arm the timers: they only carry a pointer.",
+   "urgency": "now"
+  },
+  {
+   "id": "R29F-6",
+   "kind": "plan-issue",
+   "what": "SMALLER TEXT CONFLICTS, all resolved in the template or checklist. (1) Fallback time for exp83c: the user's 12:25Z text says 'exp89p fails -> exp83c (CI) at 00:07 UTC'; R27N-2 says 'in exp89p's slot'. Resolution: a G5 failure at 00:04Z sends exp83c at 00:07Z; a hard failure at T54 (nb_try exit 2) sends it in that slot. (2) R27N-2 item (4) branch A 'exp89p at 00:07Z' and R27N-3's read line '07:00-07:56Z (A, 00:07Z)' are obsolete. The default is 00:46Z in both branches (R27-A6 (ii) unanswered, CONTEXT 16:38Z), read 07:38-08:35Z. (3) R27-A4 (7)(a) no-freeze cutoff 'headers <= 23:30Z' is superseded by the logged 20:18Z (c) 'header stamped before the stack's submit'. (4) R27N-4 'retry every 10 min (a session cron ...)' is replaced by a run_in_background loop, since crons never fire (0/31). (5) R27N-3's T54 used the Monitor tool, branch B only, with r[0] (IndexError in branch A). It is replaced by the guarded both-branch snippet (R28-A4 (iii)), tested. (6) R27N-2 item (8) 'CronList shows ...' is replaced by the timer count. (7) R27N-2 item (2) 'retry the manual poll until 23:59Z' can now only produce '?', because a first COMPLETE header after ~23:00Z is past the 10.75 h edge. Only the GAP RULE v2 (4) e10-snapshot tightening can still admit 51. Stated in item (2). (8) Three pre-score lines that were to be logged 'with the freeze line' are not in CONTEXT (grep 0 at 20:40Z): R27-A7 (2) morning-at-decision-header, R27-A8 Q3 conditional, R28-A4 (vi) SEC/CI info. The template carries them in items (6) and (9).",
+   "evidence": "CONTEXT l.3899-3907 (12:25Z), l.4051-4058 (16:38Z), l.4119-4124 (20:18Z (c)); round27 R27N-2/3/4, R27-A4/A7/A8; round28 R28-A4; grep -c of 'decision header (the MORNING', 'SEC-free non-CI', 'SEC n2a dummy-lab' in CONTEXT.md = 0.",
+   "action": "None beyond logging the template as written.",
+   "urgency": "today"
+  },
+  {
+   "id": "R29F-7",
+   "kind": "plan-issue",
+   "what": "E10 DISPLACEMENT COSTS BOTH MORNING DECISIONS, and no stored text says so. If a PASSED E10 v3 copy takes probe 52, exp89p drops out (5/day). MORNING TABLE v1.1 then has P = '?' (A-M1 exp89l UNUSED) and, in branch B, Q = exp89q vs exp89p's display = '?' (B-M1 exp89s UNUSED). So an E10 copy trades the SEC read and the DIS read for its own read. That is the right trade only for a notebook clearly above 0.958 (the E10 trigger >= 0.959 already requires this). Stated pre-score in template item (3).",
+   "evidence": "CONTEXT l.3931-3955 (MORNING TABLE v1.1 codes use P and Q); R27N-2 item (3); E10 trigger >= 0.959 (KEY FACTS).",
+   "action": "Log it inside the freeze line (item (3) of the template). No rule change.",
+   "urgency": "today"
+  },
+  {
+   "id": "R29F-8",
+   "kind": "recheck-old",
+   "what": "RULE v2.1 ANCHOR AMBIGUITY (R28-A2 (a), logged 20:18Z) IS MOOT. In the downloaded dummy logs the 'V1284 head patched ... mode = candidate' line and the 'GPU shard 0' line have the same timestamp. Compute from either anchor: exp89r 1,473 / 1,473 s (whole 1,959 s), exp87a 1,569 / 1,569 s (1,870 s), exp89q 1,057 / 1,057 s (1,576 s). So the 16:26Z fact line (GPU shard 0) and the 20:18Z rule (mode = candidate) agree, and the exp89l gate needs no re-measurement.",
+   "evidence": "_dl/biohub-exp89r-k2cap6-k-sec-dis225-ci/*.log, _dl/biohub-exp87a-k2cap6-div04-ra094-ci/*.log, _dl/biohub-exp89q-k2cap6-k-sec-dis225/*.log (parsed read-only; notes 20:35Z).",
+   "action": "One info clause when the exp89l gate is read (branch A only). Nothing else.",
+   "urgency": "info"
+  },
+  {
+   "id": "R29F-9",
+   "kind": "new-fact",
+   "what": "HONEST NULL ON NEW LEVERS: nothing new reaches R8 this round. This round made no Kaggle calls, so no new disclosure could be seen. The 20:00Z sweep refuted all 16 candidates. The whitelist {K, SEC, DIS 2.25, CI} is exhausted by the night files, exp89s (PASS) and exp89l (build-ready, branch A). Every closed family stays closed: forkmid, K3b, forkblob, ANTIPAR, DNVETO, K4, gap LAP/sandwich, z-split, runtime-headroom, swapfix, stitch, leaf prune, float output, edge filter, head retrain, OVERLAP-CONSENSUS, LEARNED_BONUS, max_neighbors, dt=2 fork, third-child fork. The only 'ideas' this round are operational (R29F-2..7). Their value is protecting the three night reads (they cut P(batch misfire), not the score).",
+   "evidence": "research/KNOWLEDGE/IDEAS.md curation 28 (521 ideas, 255 refuted; l.192-202); CONTEXT 20:00Z sweep entry; round28 R28P-11.",
+   "action": "None. Run the feed only if the newest digest is > 100 min old; the E10 trigger stays >= 0.959.",
+   "urgency": "info"
+  },
+  {
+   "id": "R29F-10",
+   "kind": "new-fact",
+   "what": "STATE AT 20:20Z (local reads only). Probe 51 (56640366) PENDING at header 20:13:02Z (L >= 7.97 h); marks: 10.2 h = 22:26:57Z, 10.75 h = 22:59:57Z, ins-tail? if L_lo > 9.6 h (last PENDING header after 21:50:57Z). The 6 non-freeze G4 strings are present (CONTEXT l.3311, 3659, 3810, 3908, 3915, 3924). grep -cF 'W4 FREEZE: NIGHT 29 Sep' = 1 already (the 20:18Z entry quotes it) and the anchored -E check = 0, so only the -E form is valid. The exp89l folder is not built (correct: branch A only). Dataset baselines on disk: ft-weights 80069686 / 2026-09-23 23:54:03.317000; n2a 7724030 / 2026-09-27 21:25:35. Finals card v4 (mtime 15:55Z) still lacks the R27-A8 / R28-A5 edits (l.64 '22:30 MSK', l.113 POOL 'CI L_hi <= 10.2 h'). Not night-critical; due before the 12:03Z fill.",
+   "evidence": "experiments/lb_poll/poll.log l.25213-25222; CONTEXT.md greps; experiments/lb_poll/dataset_baseline/*.meta.csv; research/wf_ideas_v4/round27/finals_card_v4_ru.md.",
+   "action": "Apply R28-A5 to the card after the freeze (tonight or at the 07:23Z prep).",
+   "urgency": "today"
+  }
+ ]
+}

@@ -1,0 +1,8 @@
+{
+ "task": "round29 v_hyp_cardfix R29CF-7 skeptic",
+ "complete": true,
+ "refuted": false,
+ "reason": "The honest null holds. (1) Feed: the newer digest_20260928T2027Z.md also has 0 new topics and 0 new comments, best public notebook 0.953, E10 FLAG none. The finding cited the older 1857Z digest, but both are null. The E10 P1 snapshot 20260928T2018Z.txt and round29/scan_browser.json show no new notebook and no disclosed knob; 744093 (integer centroids) is already handled by R29CF-4. So aggressive mode has nothing to build. (2) The whitelist {K, SEC n2a, DIS 2.25, CI} is used up: exp89s is built (dummy 1,130 s, CONTEXT l.4025), and exp89l is gated for branch A (CONTEXT l.4104-4119, morning table v1.1 l.4079-4080). (3) The 20:00Z ideas_29sep sweep (commit 9bcd86f, 16 candidates, all refuted) is on disk. (4) round29 scan_recheck R29-RC-A overturns the 1/6 lab bar as a rule, but it explicitly keeps 'nothing research-originated is added on 29 Sep' on the depth cap, R8 and the lack of read slots. The one structural lab-positive item (z shift +0.1 vox) stays post-deadline under R25-RC-B/R28-RC-A. No closed idea is re-proposed, so there is no refutable value or feasibility claim.",
+ "fix": "None needed for the substance. Evidence nit: cite experiments/discussions/digest_20260928T2027Z.md (the newest, also null) next to the 1857Z digest. When logging, add that R29-RC-A retires the '+0.012 lab bar' as a kill reason while the null stands on the depth cap, R8 and the absence of read slots.",
+ "realistic_gain": "0 on public and private. It keeps ~3 GPU-h and API budget in reserve for exp89l (branch A) and any E10 >= 0.959 trigger."
+}

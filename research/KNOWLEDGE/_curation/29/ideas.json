@@ -1,0 +1,67 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/ideas.json",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/IDEAS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/29/ideas.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/29/ideas.json"
+ ],
+ "alerts": [
+  {
+   "kind": "risk",
+   "what": "The stored night checklist's nb_try dedupe fails open. kaggle 2.2.4 prints its 'outdated version' warning to STDOUT. The parser then takes that warning as the CSV header, reads 'token absent' and submits again. This would hit the idempotent 00:20/00:44/00:50/01:30Z backups. The G2 and T54 parsers have the same defect, and an empty T54 fires exp89p at once, because date -u -d '' gives today 00:00Z. The fix is written and mock-tested but not applied: the checklist sha8 is still 075152c4.",
+   "evidence": "research/wf_ideas_v4/round29/report.json R29-A1 (a)(b), new_facts 5; research/wf_ideas_v4/round29/report.notes.md 'R29-A1 exact snippets' (mocks 20:47-20:50Z); research/wf_ideas_v4/round29/v_hyp_freezetext_r29f-1.json; research/wf_ideas_v4/round29/night_checklist.md l.40, l.84-91, l.142-149; research/KNOWLEDGE/ideas.json I-522",
+   "suggested_action": "Before the 23:33Z freeze (02:33 MSK): replace checklist l.40 with the stored DEDUP snippet, add the '^ref,' slice to G2/T54 and the T54 fallback, run bash -n and the mocks, then recompute the sha8.",
+   "urgency": "now"
+  },
+  {
+   "kind": "stale",
+   "what": "CONTEXT still sends the night steps to stale texts. l.4054 names R27N-2/R27N-3 for the 00:04Z batch, and the waiters cite R27N-3 guards, '00:46' and 'CI only until 01:45'. The stored 'grep -cF W4 FREEZE: NIGHT 29 Sep' check already returns 1 because l.4125 quotes the literal. A missed freeze would therefore skip the no-freeze fallback. CONTEXT has 0 hits for night_checklist or freeze_line_template.",
+   "evidence": "CONTEXT.md l.4054, l.4125; research/wf_ideas_v4/round29/v_plancheck_pc29-01.json; research/wf_ideas_v4/round29/v_plancheck_pc29-02.json; research/wf_ideas_v4/round29/report.json R29-A2 (1)-(3); research/KNOWLEDGE/ideas.json I-524, I-511",
+   "suggested_action": "Log the R29-A2 entry above '## 9. Literature'. Use a non-freeze header. Name both files with their new sha8s, say that only the anchored grep -E freeze check counts, state the stdout-warning and UTC rules, and add the checklist banner.",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "MORNING TABLE v1.1 contradicts itself. Clause (1) says 'only DIS + keeps DIS 2.25', but the A-M2 row says 'else Rr + -> exp89q', and exp89q carries DIS 2.25. This has to be resolved pre-score, before any night read. Otherwise the A-M2 choice becomes post-hoc.",
+   "evidence": "CONTEXT.md l.3931-3955; research/wf_ideas_v4/round29/scan_plancheck.json PC29-04; research/wf_ideas_v4/round29/report.json R29-A2 (6); research/KNOWLEDGE/ideas.json I-527",
+   "suggested_action": "Log the R29-A2 (6) precedence line (or the strict reading) in the same entry, before the 23:33Z freeze.",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "Probe 51 (exp87a, 56640366) was still PENDING at 20:53:11Z (L > 8.63 h). The read is expected ~21:31-21:42Z (00:31-00:42 MSK), with the admit edge at 22:59:57Z. In branch A, exp89l must be built and dummied AT the read, not at the 07:23Z waiter; otherwise its dummy misses the 08:40Z A-M1 header. scratchpad gate85.py cannot gate it. Round 29 also found the admit-edge slack sign inverted in the logged 20:18Z text.",
+   "evidence": "experiments/lb_poll/poll.log header 2026-09-28T20:53:11Z; experiments/lb_poll/ledger.md; research/wf_ideas_v4/round29/report.json R29-A3, new_facts 1; research/wf_ideas_v4/round29/scan_plancheck.json PC29-03, PC29-06; research/wf_ideas_v4/round29/scan_hyp_freezetext.json R29F-4; research/KNOWLEDGE/ideas.json I-438, I-485, I-500",
+   "suggested_action": "At the read, code with the ledger L_hi (admit if header + 210 s x failed attempts <= 22:59:57Z) and save S1_51. In branch A, build exp89l (cad1d47f) at once, push the dummy and gate it with the R29-A3 (4) v2.1-specific checklist.",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "Round 30 is due from the 22:47Z timer (01:47 MSK). A long foreground workflow round then, or between 23:25Z and ~00:50Z, can delay the queued freeze, batch and backup notices. Nothing checks for missing night files between 01:30Z and 06:07Z. Also, 31 timer.sh waiters are alive but their texts are stale, and none carries a ': WAITER_' tag.",
+   "evidence": "research/wf_ideas_v4/round29/report.json R29-A5, next_focus, new_facts 9; research/wf_ideas_v4/round29/scan_plancheck.json PC29-07; research/wf_ideas_v4/round29/v_hyp_freezetext_r29f-5.json; research/KNOWLEDGE/ideas.json I-530, I-510",
+   "suggested_action": "Skip round 30, or keep it to one short step that ends by 23:25Z. From 01:13Z, start each round with checklist section 5. Count timer.sh processes rather than tags, and never re-arm a timer only to change its text.",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "CONTEXT 16:26Z (l.4029-4034) says finals card v4 has the R27-A8 edits. It does not: the file has been unchanged since 15:55:37Z. The 12:03Z waiter still opens v4. Card v5 (round29/finals_card_v5_ru.md, aadead83) has the fixes, including every pair anchored on V_pub per partner rule v2 and the user's 16:32Z agreement. No correction is logged and there is no banner on v4.",
+   "evidence": "CONTEXT.md l.4029-4034; research/wf_ideas_v4/round29/v_hyp_cardfix_r29cf-5.json; research/wf_ideas_v4/round29/v_plancheck_pc29-09.json; research/wf_ideas_v4/round29/scan_hyp_cardfix.json R29CF-1; research/KNOWLEDGE/ideas.json I-526, I-495",
+   "suggested_action": "Log the R29-A2 (5) correction and put the SUPERSEDED banner at the top of round27/finals_card_v4_ru.md. Fill v5 at 12:03Z (15:03 MSK) and 18:37Z (21:37 MSK).",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "The corrected user message is still not recorded: the lost 20:47 MSK round was caused by the cron defect, not the battery, and VS Code must stay open without a reload or update. Round 29 does not mention it.",
+   "evidence": "research/wf_ideas_v4/round28/report.json R28-A1 (3); CONTEXT.md l.4094-4103 (20:13Z 'battery standby' wording), l.4127-4133; research/KNOWLEDGE/ideas.json I-510",
+   "suggested_action": "Send the one Russian MSK-first correction line with the next status message.",
+   "urgency": "today"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "Several round-29 proposals have no owner or CONTEXT line yet: P's UP-test mechanics with the E10-snapshot converter backup (a missing S0 makes P BLIND, so A-M1 becomes UNUSED), late-read watchers per morning submit, the E10 displacement cost, and round29/REPORT.md, whose write the harness blocked.",
+   "evidence": "research/wf_ideas_v4/round29/report.json R29-A6, R29-A7, report_md_ru_note; research/wf_ideas_v4/round29/scan_plancheck.json PC29-05, PC29-08; research/wf_ideas_v4/round29/scan_hyp_freezetext.json R29F-7; research/KNOWLEDGE/ideas.json I-528, I-529, I-531, I-232",
+   "suggested_action": "Put the S0/S1 sentence in freeze item (1) (R29-A1 (h)). Start a watcher at each morning submit. Write round29/REPORT.md from report_md_ru.",
+   "urgency": "before-finals"
+  }
+ ],
+ "summary": "Curation 29 (~21:05 UTC 28 Sep) is an incremental pass over curation 28. Git HEAD e42769c and CONTEXT.md (4,154 lines) are unchanged. The new inputs are untracked round 29 (report.json R29-A1..A8, 5 scans, 13 verdicts, finals_card_v5_ru.md, freeze_line_template.md, night_checklist.md), poll header 20:53:11Z (probe 51 PENDING, L > 8.63 h), E10 20:18Z/20:41Z and feed 20:27Z (null; rank 140 of 3,974). The ledger now has 534 ideas: 13 are new (I-522..I-534) and 45 change records were written. Ten new ideas are in-plan: fail-closed nb_try/G2/T54 parsers, nb_try v3 order, stored-night-text pointer, UTC clock rule, card v5, A-M2 precedence, P UP-test + E10 converter, late-read watchers, free session overnight, E10 displacement cost. Three are refuted: the R29-RC-B card line, the R29-RC-C geometry-hedge text, and the R29-RC-A class table (only the narrow '~1/6 is one lever, not a law' annotation is kept and applied to I-320 and the round-agent note). About 30 existing ideas were updated, including I-438, I-485, I-500, I-501, I-503, I-504, I-510 and I-495 (superseded by card v5). No old ID changed kind. Counts: in-plan 128->138, refuted 255->258. Orphans: 1 strict (I-233) and 16 at-risk; new at-risk are I-522, I-524, I-526, I-527 and I-529, while I-495 and I-492 left the list. The gen.py/gen2.py checks passed (534/534 rows; body and ranking equal)."
+}

@@ -1,0 +1,81 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/INDEX.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/CHANGES.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/29/index.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/29/index.json"
+ ],
+ "alerts": [
+  {
+   "kind": "risk",
+   "what": "The stored night texts fail open (R29-A1). kaggle 2.2.4 prints its outdated-version warning to STDOUT, so the nb_try, G2 and T54 parsers read it as the CSV header, and the idempotent backups would submit a duplicate. An empty T54 would fire exp89p at once, because date -u -d '' gives today 00:00Z. The fix is written and mock-tested but not applied: the sha8s are still 075152c4 and c675d7c3 (checked 21:08Z).",
+   "evidence": "research/wf_ideas_v4/round29/report.json R29-A1; research/wf_ideas_v4/round29/report.notes.md 'R29-A1 exact snippets'; research/KNOWLEDGE/FACTS.md C-242, F-RUL-25; research/KNOWLEDGE/INDEX.md TOP ALERTS 1",
+   "suggested_action": "Before the 23:33Z freeze: apply the fail-closed '^ref,' slice to nb_try/G2/T54 and add the non-empty T54 fallback. Then run bash -n and the mocks, and recompute both sha8s.",
+   "urgency": "now"
+  },
+  {
+   "kind": "stale",
+   "what": "CONTEXT has no pointer to the round-29 texts: it has 0 hits for night_checklist or finals_card_v5, and l.4054 still points the batch at R27N-2/R27N-3. The stored G4 check grep -cF 'W4 FREEZE: NIGHT 29 Sep' already returns 1 via l.4125, so a missed freeze would skip the no-freeze fallback. Only the anchored grep -E regex is valid; it currently returns 0.",
+   "evidence": "CONTEXT.md l.4054, l.4125; research/KNOWLEDGE/FACTS.md C-239, C-240; research/wf_ideas_v4/round29/v_plancheck_pc29-01.json, v_plancheck_pc29-02.json; research/KNOWLEDGE/WATCHLIST.md W290",
+   "suggested_action": "Log one R29-A2 entry above '## 9. Literature', not in the freeze-header shape. It should name both new sha8s and card v5, state the stdout and UTC rules, fix the admit-slack sign, and add the DET_THRESHOLD line (W279 (1)), the R28-A6 lines and the battery correction.",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "MORNING TABLE v1.1 contradicts itself. Clause (1) says 'only DIS + keeps DIS 2.25', but the A-M2 row sends exp89q (which carries DIS) on Rr '+'. The choice becomes post-hoc unless one reading is logged before any night read.",
+   "evidence": "CONTEXT.md l.3931-3955; research/KNOWLEDGE/FACTS.md C-244; research/KNOWLEDGE/IDEAS.md I-527; research/wf_ideas_v4/round29/scan_plancheck.json PC29-04",
+   "suggested_action": "Log the R29-A2 (6) precedence, or the strict reading, in the same entry before 23:33Z.",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "Probe 51 exp87a (56640366) is still PENDING at the 21:03:12Z header (L > 8.80 h). The read is expected ~21:31-21:42Z. It is admitted only if the first COMPLETE header + 210 s x failed attempts <= 22:59:57Z; the sign is inverted in CONTEXT l.4122-4123. In branch A, exp89l (cad1d47f) must be built and dummied at the read, under a v2.1-specific gate (scratchpad gate85.py cannot gate it).",
+   "evidence": "experiments/lb_poll/poll.log l.25518; experiments/lb_poll/ledger.md; tools/runtime_ledger.py l.197-199; research/KNOWLEDGE/FACTS.md C-243, C-247, C-248; research/wf_ideas_v4/round29/report.json R29-A3",
+   "suggested_action": "At the read: code 51 and run uptest save S1_51. In branch A, build exp89l and push its dummy at once.",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "A long round can delay the queued trigger notices. Round 30 (22:47Z timer) and any round from 23:25Z to ~00:50Z could hold up the 51 read, the freeze, the batch or the backups. Nothing checks for missing night files between 01:30Z and 06:07Z.",
+   "evidence": "research/wf_ideas_v4/round29/report.json R29-A5, next_focus; research/KNOWLEDGE/FACTS.md F-RUN-45",
+   "suggested_action": "Skip round 30, or keep it to one short step that ends by 23:25Z. Start rounds 01:13-06:17Z with checklist section 5.",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "Freeze template item (9) says 'equal display keeps exp85a', but the logged tie order makes an exp89p/exp89q '0u' at 0.958 the V_pub. PowerShell Get-Date -Format u prints MSK time with a 'Z' suffix, so it cannot give the freeze header time.",
+   "evidence": "research/KNOWLEDGE/FACTS.md C-245, F-RUN-46; research/wf_ideas_v4/round29/freeze_line_template.md l.96; research/KNOWLEDGE/WATCHLIST.md T143/W284, I341",
+   "suggested_action": "Fix item (9) per R29-A1 (f). Fill the freeze at 23:33Z with a real UTC header from date -u, then check that the anchored regex returns 1.",
+   "urgency": "today"
+  },
+  {
+   "kind": "contradiction",
+   "what": "CONTEXT 16:26Z (l.4029-4034) says card v4 has the R27-A8 edits, but it does not. Card v4 has no banner, and the 12:03Z waiter opens it. Card v5 (aadead83) is the correct fill source.",
+   "evidence": "CONTEXT.md l.4029-4034; research/KNOWLEDGE/FACTS.md C-230, C-246; research/wf_ideas_v4/round29/v_hyp_cardfix_r29cf-5.json, v_plancheck_pc29-09.json",
+   "suggested_action": "Log the correction, put a SUPERSEDED banner on round27/finals_card_v4_ru.md, and fill v5 at 12:03Z and 18:37Z.",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "The user has not been told that the 20:47 MSK round was lost to the cron defect, not the battery, or that VS Code must stay open without a reload or update.",
+   "evidence": "CONTEXT.md l.4094-4103 vs l.4127-4133; research/wf_ideas_v4/round28/report.json R28-A1 (3); research/KNOWLEDGE/WATCHLIST.md W297",
+   "suggested_action": "Send one Russian line, MSK first, with the next status.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "Several records are out of date. experiments/RESULTS.md lacks P47-P51. e10v3/runbook.notes.md l.66 still says 'SC >= 0.958'. round29/REPORT.md was never written. Late-read watchers per morning submit (R29-A7) and the S0/S1 sentence for P (R29-A6) have no owner.",
+   "evidence": "experiments/RESULTS.md l.79; research/wf_ideas_v4/e10v3/runbook.notes.md l.66; research/wf_ideas_v4/round29/report.json report_md_ru_note, R29-A6, R29-A7; research/KNOWLEDGE/WATCHLIST.md W126, W286, W293, W296",
+   "suggested_action": "Add the RESULTS rows after 51 reads and fix runbook l.66. Write REPORT.md from report_md_ru. Start a watcher at each morning submit.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "The '~1/6 lab-to-LB' ratio holds for one lever only; it is not a transfer law. Division levers also transfer weakly across lab embryos (fork-set Spearman 0.27, against Pearson 0.996 for geometry). Strict orphan I-233 is still open.",
+   "evidence": "research/KNOWLEDGE/FACTS.md F-TRN-61; research/wf_ideas_v4/round29/scan_recheck.notes.md (B); research/KNOWLEDGE/IDEAS.md ORPHANS l.861",
+   "suggested_action": "Keep the finals choice LB-driven. Cover these in the post-deadline review.",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 29 index (~21:10 UTC 28 Sep) is an incremental pass over curation 28. INDEX.md was rewritten (71 lines): STATE IN 10 LINES, WHERE THINGS ARE (new anchors for IDEAS/FACTS/DECISIONS/WATCHLIST and the round-29 files), 8 top open ideas and 10 deduplicated alerts, with curator urgency disagreements settled. CHANGES.md has a new section 29. No CONTEXT entry or commit has been made since 20:18Z (HEAD e42769c). P51 exp87a is still PENDING at the 21:03:12Z header, L > 8.80 h. The best score is still 0.958 (exp85a = V_pub), rank #140 of 3,974, and finals are still ticked as #37 + #38. Round 29 wrote night_checklist.md, freeze_line_template.md and finals_card_v5_ru.md, but none is fixed (the sha8s are unchanged) or referenced in CONTEXT. The five [now] items are: fail-open parsers (R29-A1); the CONTEXT pointer plus the vacuous G4 check (R29-A2); the MORNING TABLE A-M2 precedence; the P51 read with the exp89l dummy at the read; and keeping round 30 short. Ideas now number 534 (in-plan 138, refuted 258). New contradictions C-239..C-249 are open."
+}

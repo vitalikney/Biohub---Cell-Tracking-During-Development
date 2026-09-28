@@ -1,0 +1,67 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/ideas.json",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/IDEAS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/28/ideas.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/28/ideas.json"
+ ],
+ "alerts": [
+  {
+   "kind": "contradiction",
+   "what": "The last message to the user blamed the battery for the lost 20:47 MSK round, and the 20:13Z CONTEXT entry repeats it ('a busy session / battery standby'). Round 28 and the 20:18Z entry show the real cause: session crons never fired (0 of 31 since 26 Sep), and at 20:47 MSK the laptop was on AC and awake. The correction was never sent. Neither was the condition the user has to meet overnight: keep the VS Code window open and do not reload or update it.",
+   "evidence": "CONTEXT.md l.4094-4103 (20:13Z wording), l.4127-4133 (20:18Z: 0/31, waiters primary); research/wf_ideas_v4/round28/report.json R28-A1 (3); research/wf_ideas_v4/round28/scan_plancheck.json PC28-06; research/KNOWLEDGE/ideas.json I-510",
+   "suggested_action": "In the answer to 'какой статус', send the one Russian correction line from R28-A1 (3), MSK first, including the VS Code condition.",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "Probe 51 (exp87a, K + CI) was still PENDING at the 20:13:02Z header, L > 7.97 h. Its score is expected about 21:31-21:42Z (00:31-00:42 MSK). The 10.2 h mark is 22:26:57Z; the 10.75 h admit edge is 22:59:57Z plus 210 s per failed attempt, and a later read counts as '?', which sends exp89q. The read decides the branch: A means exp89r plus an exp89l build and dummy, and that dummy must PASS before 08:40Z. B means exp89q. RULE v2.1, the exp89l gate and the no-freeze fallback were logged pre-score at 20:18Z.",
+   "evidence": "experiments/lb_poll/poll.log header 2026-09-28T20:13:02Z; research/wf_ideas_v4/round28/report.json new_facts 1, R28-A3; CONTEXT.md l.4104-4126; research/KNOWLEDGE/ideas.json I-438, I-500, I-485, I-501, I-511",
+   "suggested_action": "Do not restart the poller between 21:00Z and 22:30Z unless its header is more than 15 min old. Read 51 at the watcher under R25-A1 (4), GAP RULE v2 and the admit edge; run the UP test with count 53, branch, and in branch A build and dummy exp89l. Then run round 29.",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "The 23:33Z freeze timer will run the freeze. None of the R28-A4 amendments is stored in any text yet: the 10.75 h admit edge in item (1), item (5) (GAP RULE v2 overrides the 10.2 h clauses of R26-A4 (a)/(d), and (b) masking amends the ARM CODES), the guarded T54 (R27N-3's snippet raises IndexError in branch A), nb_try exit 3 (the HARD-FAIL regex still matches 'limit', which would send exp83c on a daily-limit error), one stored checklist text, and the SEC/CI info lines. The decision-header line and the Q3 П1 line are also unlogged.",
+   "evidence": "research/wf_ideas_v4/round28/report.json R28-A4; research/wf_ideas_v4/round28/scan_hyp_prefreeze.json R28P-2, R28P-4, R28P-6, R28P-7; CONTEXT.md l.4127-4133 ('the freeze follows R27-A4 + R28-A4'); research/KNOWLEDGE/ideas.json I-503, I-504, I-491, I-490, I-507, I-508, I-512",
+   "suggested_action": "Prepare the full freeze text in round 29 (R27N-2 + R27-A4 + R28-A4) and log it at 23:33Z with the literal 'W4 FREEZE: NIGHT 29 Sep'. Store the corrected checklist and nb_try in the same line.",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "Every night, morning and finals step now depends on the session's background timers: freeze 23:33Z, batch 00:04Z, exp89p 00:44Z, backups 00:20/00:50/01:30Z, morning 07:23/08:30/11:10Z, finals 12:03/18:37Z, reminders 19:43/21:05Z, and 00:07Z on 30 Sep. A VS Code or extension restart kills them silently. The exp89p timer fires at 00:44Z, but the logged send time is 00:46Z and the guarded T54 is max(exp89q actual + 40 min, 00:46Z), so the step must wait after the timer fires.",
+   "evidence": "CONTEXT.md l.4094-4103, l.4127-4133, l.4051-4058; research/wf_ideas_v4/round28/report.json R28-A1, R28-A4 (iii); research/KNOWLEDGE/ideas.json I-510, I-479, I-517",
+   "suggested_action": "At each round and at the 06:07Z post-wake check, confirm the timers are alive and re-arm any that are missing. The batch must compute T54 rather than send at the timer time.",
+   "urgency": "today"
+  },
+  {
+   "kind": "contradiction",
+   "what": "CONTEXT 16:26Z says finals card v4 was stored 'with the R27-A8 edits'. The file on disk (mtime 15:55Z) has none of edits (1)-(5): the conditional opener, the П3 silver range, file-name token matching, 'exp83c = 3', and the pool per GAP RULE v2. Defect (5) could drop a CI V_pub candidate from the pool.",
+   "evidence": "research/wf_ideas_v4/round28/v_plancheck_pc28-04.json; research/wf_ideas_v4/round28/report.json R28-A5; CONTEXT.md l.4029-4034; research/KNOWLEDGE/ideas.json I-495",
+   "suggested_action": "Apply R28-A5 tonight after the freeze, or at the latest before the 12:03Z (15:03 MSK) fill. Log the CONTEXT correction of the 16:26Z entry.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "contradiction",
+   "what": "CONTEXT 16:26Z says 'Idle standby on AC is never'. On 28 Sep a Modern Standby by Idle Timeout ON AC ran from 19:51 to 20:40 MSK (the poller was not interrupted). A standby near 00:04Z would delay the batch timer until wake. The backups cover the gap, but the 16:26Z statement is wrong.",
+   "evidence": "CONTEXT.md l.3999-4008; research/wf_ideas_v4/round28/scan_plancheck.json PC28-06; research/wf_ideas_v4/round28/report.json new_facts 5; research/KNOWLEDGE/ideas.json I-497, I-498",
+   "suggested_action": "Correct it in one line in the freeze item (8) power check. Keep the lid open and the charger in. Keep-awake stays off by default (the user did not answer).",
+   "urgency": "info"
+  },
+  {
+   "kind": "stale",
+   "what": "The R28-A6 lines are not logged: the softened truncation-calibration line (probes 32/33 were no-ops under an int-casting scorer; lab -0.0050 vs LB -0.008), the E10 runbook l.66 fix (still 'OUR = 0.957 ... SC >= 0.958'), and the round-29 KEY FACTS. experiments/RESULTS.md still has no rows for probes 47-50, and the 0.958 best exists only in CONTEXT and the ledger.",
+   "evidence": "research/wf_ideas_v4/round28/report.json R28-A6; research/wf_ideas_v4/e10v3/runbook.notes.md l.66 (per R28P-9 (b)); experiments/RESULTS.md (no rows 47-50); research/KNOWLEDGE/ideas.json I-516, I-364, I-259",
+   "suggested_action": "Log R28-A6 (1) and fix runbook l.66 before 23:30Z. Add RESULTS rows 47-51 once probe 51 is read.",
+   "urgency": "today"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "I-233 (the poller logs error_description) is still the only strict orphan. 13 items are at risk: the freeze and night mechanics I-490, I-491, I-503, I-504, I-507 and I-508; the finals pool and card, I-492 and I-495; the truncation line I-516; and the older post-deadline or ops items I-252, I-336, I-407 and I-448. The 20:00Z sweep's 16 refutations exist only in research/wf_ideas_v4/ideas_29sep/v_*.json, and CONTEXT names them without reasons.",
+   "evidence": "research/KNOWLEDGE/IDEAS.md ORPHANS; research/KNOWLEDGE/ideas.json meta.curations[n=28]; CONTEXT.md l.4073-4080",
+   "suggested_action": "Close I-233 in one line. The night items close when the freeze line is logged. Carry I-252, I-336 and I-407 into the post-deadline agenda by 30 Sep.",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 28 (2026-09-28 ~20:25 UTC, HEAD e42769c) is an incremental update of curation 27: 509 -> 521 ideas, 62 change records, 13 clusters, stable IDs. Sources read: CONTEXT.md l.4035-4133 (10 new entries, 16:30-20:18Z); commits 756c513..e42769c (10); the poll/ledger to the 20:13Z header (probe 51 still PENDING); round 28 in full (report.json R28-A1..A6, REPORT.md, 4 scans, 8 verdicts); and the 29-Sep ideas sweep (16 candidates, v_0..v_15). Logged since curation 27: on AC at 16:30Z (the powercfg request was declined); the user agreed to the {V_pub, #37 / exp75} hedge and against the JT-style pair; backup checks, reminder 64b9bb56 and exp89p at 00:46Z by default; 744093 (float centroids -0.008; our files are integer); the travel window and a 06:07Z post-wake check; the sweep (all 16 refuted, MORNING TABLE v1.1 unchanged); autonomous mode (hourly rounds on 29 Sep, GPU no longer binding, teammates as fallback); background timers at 20:13Z; and at 20:18Z RULE v2.1, the exp89l gate and the no-freeze fallback pre-score, plus 'crons never fire -> waiters are the primary path'. New IDs: I-510 waiters (logged), I-511 no-freeze fallback (logged), I-512 SEC dummy-lab info line, I-513 CI prior cut (refuted), I-514 SEC swap tonight (refuted), I-515 G3 false NETWORK (refuted), I-516 truncation calibration / floatout anchor void, I-517 post-wake check, I-518 LEARNED_BONUS 0.75, I-519 max_neighbors, I-520 dt=2 fork, I-521 third-child fork (the last four refuted). The IB29 re-proposals are folded into I-029, I-454, I-183, I-333, I-331, I-384, I-440, I-175, I-222 and I-441. Status moves: I-498, I-499 and I-472 go to refuted. Counts: in-plan 128, refuted 255, lb-tested 61, lab-tested 28, deferred 47, open-untested 2. Orphans: 1 strict (I-233), 13 at risk. Still open: the 'not the battery' correction to the user; the R28-A4 freeze amendments at 23:33Z (nb_try 'limit' hole, T54 IndexError, admit edge, item (5)); card v4 missing its edits; the R28-A6 lines; and RESULTS rows 47-50. Probe 51 is due about 21:31-21:42Z (00:31-00:42 MSK). Round 29 is running (round29/ untracked, not read)."
+}

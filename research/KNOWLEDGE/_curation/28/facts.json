@@ -1,0 +1,81 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/FACTS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/DECISIONS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/28/facts.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/28/facts.json"
+ ],
+ "alerts": [
+  {
+   "kind": "risk",
+   "what": "Background timers are now the only working trigger for tonight: the 23:33Z freeze, the 00:04Z batch, the 00:44Z exp89p step, the 00:20/00:50/01:30Z backups, the 06:07Z post-wake check and the 12:03Z/18:37Z proposals. Session crons have never fired (0 of 31). A VS Code or extension restart or update would kill every timer without warning, as the 06:04Z restart did to ~13 crons.",
+   "evidence": "FACTS F-RUN-45, C-229; CONTEXT 20:13 l.4094-4103, 20:18 l.4127-4133; research/wf_ideas_v4/round28/v_plancheck_pc28-01.json",
+   "suggested_action": "Tell the user in Russian, MSK first, not to close, reload or update VS Code or Claude Code overnight. At every hand-launched round and at post-wake, count the tagged timers alive and re-arm any that are missing.",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "Three explanations of the lost rounds disagree. The user was told that the 20:47 MSK round was lost to the battery. CONTEXT 20:13 says the crons fire only when the session is idle and blames a busy session or battery standby. Round 28 and CONTEXT 20:18 say 0 of 31 crons ever fired, the 12:47Z cron was missed while idle, awake and on AC, and the laptop was on AC and awake at 17:47Z.",
+   "evidence": "FACTS C-231, C-237; CONTEXT 20:13 l.4095-4097 vs 20:18 l.4128-4129; research/wf_ideas_v4/round28/report.json new_facts (5), plan_issues (8)",
+   "suggested_action": "Send the R28-A1 (3) Russian correction to the user, and log one CONTEXT line saying that the 20:13 'idle / battery' wording is superseded by the 20:18 entry.",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "The 20:13 timer fires the exp89p step at 00:44Z, but exp89p must be submitted at 00:46Z in branch A and at max(00:46Z, exp89q submit + 40 min) in branch B. An immediate submit at 00:44Z in branch B would come ~39 min after exp89q and break the logged spacing rule.",
+   "evidence": "FACTS C-238; CONTEXT 20:13 l.4094-4103, 16:38 l.4056-4058, 12:25 l.3899-3903; research/wf_ideas_v4/round28/scan_hyp_prefreeze.json R28P-2",
+   "suggested_action": "In the 23:30Z freeze text (R28-A4), state that the 00:44Z step waits until T54, and use the guarded T54 code (no IndexError in branch A).",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "Probe 51 (exp87a, 56640366) is still PENDING at 20:13:02Z (L > 7.96 h). Its score is expected ~21:31-21:42Z (00:31-00:42 MSK). The 10.2 h mark is at 22:26:57Z and the admit edge at 22:59:57Z (+210 s per failed poll attempt). Its code under GAP RULE v2 picks the stack (exp89r or exp89q) and whether exp89l is built.",
+   "evidence": "FACTS F-RUN-39 [c28]; experiments/lb_poll/ledger.md 20:13:04Z; CONTEXT 16:26 l.4009-4020, 20:18 l.4104-4126",
+   "suggested_action": "Run R28-A3 when the watcher fires: uptest against S1_1214Z (SubmissionCount 53), code, branch. In branch A, build exp89l (cad1d47f) and read its dummy against the gate logged at 20:18 (PASS before 08:40Z). Do not restart the poller between 21:00 and 22:30Z unless its header is more than 15 min old.",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "The 23:30Z freeze line still needs the R28-A4 fixes. These are exp89p at 00:46Z in both branches (the stored texts still say 00:07Z), a guarded T54, nb_try exit 3 on a daily-limit error (the stored regex still matches 'limit'), the 10.75 h admit edge, and item (5) with the GAP RULE v2 override of R26-A4 (a)/(d). The MASKED rule (R26-A4 (b)) is also still open.",
+   "evidence": "FACTS C-214, C-222, C-225, C-234, F-MOD-50 [c28]; research/wf_ideas_v4/round28/scan_hyp_prefreeze.json R28P-2, R28P-4, R28P-6, R28P-7; research/wf_ideas_v4/round28/report.json R28-A4",
+   "suggested_action": "Prepare the full freeze text (R27N-2 + R27-A4 + R28-A4) before 23:30Z and log it with the exact G4 header 'W4 FREEZE: NIGHT 29 Sep'.",
+   "urgency": "today"
+  },
+  {
+   "kind": "contradiction",
+   "what": "CONTEXT 16:26 says finals card v4 is stored with the R27-A8 edits. The file (mtime 15:55Z) has none of edits (1)-(5): the unconditional П1 opener, П3 silver without its range, probe-number tokens, 'exp83c = 3' missing, and a pool 'CI L_hi <= 10.2 h' that contradicts GAP RULE v2. The Q3 conditional line is also not logged in CONTEXT.",
+   "evidence": "FACTS C-230, C-224, C-223; research/wf_ideas_v4/round28/v_plancheck_pc28-04.json; CONTEXT 16:26 l.4029-4032",
+   "suggested_action": "Apply R28-A5 tonight or at least before the 12:03Z (15:03 MSK) fill, and log a CONTEXT correction.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "deadline",
+   "what": "The finals are still ticked #37 + #38 (0.954 / 0.953), below V_pub exp85a (0.958). The user agreed at 16:32 to the plan {V_pub, #37 / exp75}, but only the user's own tick by 20:00 UTC (23:00 MSK) on 29 Sep changes the selection. The session never ticks.",
+   "evidence": "DECISIONS §2 [c28] snapshot; FACTS F-RUL-22 [c28], F-RUL-20 [c28]; CONTEXT 16:32 l.4041-4050, 20:07 l.4092-4093",
+   "suggested_action": "Keep the 12:03Z and 18:37Z proposal timers and the 19:43Z and 21:05Z reminder timers alive, and check them at post-wake (06:07Z).",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "forgotten",
+   "what": "experiments/RESULTS.md still has no rows for P47 (0.955), P48 (0.957), P49 (0.955), P50 (0.958, best) or P51 (pending). Its last change was 59e14e2 at 05:03:50Z.",
+   "evidence": "FACTS C-118 [c28]; git log -- experiments/RESULTS.md",
+   "suggested_action": "Add the P47-P50 rows at the next commit, and P51 after its read.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "The E10 runbook text still gives the old trigger ('OUR = 0.957 ... SC >= 0.958'). The loop and the feed tool already use >= 0.959 against 0.958. The 744093 / probes 32-33 knowledge line and the KEY FACTS refresh (R28-A6) are also not logged.",
+   "evidence": "FACTS F-LB-10 [c28]; research/wf_ideas_v4/round28/scan_hyp_prefreeze.json R28P-9 (b); research/wf_ideas_v4/round28/report.json R28-A6",
+   "suggested_action": "Fix research/wf_ideas_v4/e10v3/runbook.notes.md l.66 and log the softened 744093 line (probes 32/33 were no-ops under an int-casting scorer) before the freeze.",
+   "urgency": "info"
+  },
+  {
+   "kind": "risk",
+   "what": "The GPU quota readings still disagree (API 21,600 s total vs the Settings page at 30 h/week). The user said at 20:07 that the 3 GPU-h is not binding: if the quota runs out, teammates push the morning files from folders prepared with --owner, never with their tokens.",
+   "evidence": "FACTS C-227 [c28], F-RUL-05 [c28], F-RUL-24; CONTEXT 20:07 l.4084-4089",
+   "suggested_action": "Before any exp89l dummy push, read the Settings page. If the quota is exhausted, prepare the --owner folder and exact commands for a teammate. Do not use teammates' tokens.",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 28 (state 20:24 UTC 28 Sep; HEAD e42769c; ledger 20:13:04Z: P51 exp87a still PENDING, L > 7.96 h). Sources since curation 27: CONTEXT l.3999-4133 (16:26-20:18Z; Literature is now l.4134), commits 756c513 through e42769c, round 28 (report.json 20:05Z, R28-A1..A6), and the ideas_29sep sweep (16 candidates, all refuted). Key changes. GAP RULE v2 was logged before the score at 16:26, along with the standby and DIS-runtime corrections. The user agreed with the hedge plan {V_pub, #37 / exp75} at 16:32. exp89p defaults to 00:46Z in both branches. Backup night checks were set. 744093 (float centroids cost -0.008) does not affect our integer files. Session crons have never fired (0 of 31), so since 20:13/20:18 background timers are the main trigger. RULE v2.1, the exp89l dummy gate (PASS before 08:40Z), the no-freeze fallback and G4 were logged before the score at 20:18. Autonomous mode started at 20:07: hourly rounds, GPU no longer a limit for tests, submits still by the logged rules, and the session never ticks. Best score is still 0.958 = exp85a = V_pub, #139 of 3,973 at 19:36Z. The finals are still ticked #37 + #38. FACTS.md: new header; [c28] notes on F-LB-01/02/10, F-MET-10, F-RUN-39/42/43/44, F-RUL-05/20/22, F-MOD-50 and F-TRN-58. New rows: F-LB-28, F-RUN-45 (crons never fire; timers), F-RUL-24 (autonomous mode) and F-TRN-60 (SEC and CI dummy-lab reads, R28-RC-C refuted, sweep null). Contradictions: C-219, C-220, C-221, C-226, C-229, C-232, C-233, C-235 and C-236 resolved; C-118, C-209, C-214, C-218, C-222, C-223, C-224, C-225, C-227 and C-228 updated; new C-229 to C-238. DECISIONS.md: new header; [c28] appends on P51-P56; a [c28] build table; a [c28] finals paragraph and CURRENT candidates snapshot; a 2f E10 line; in 2h, 9 status appends and 17 new rows (11 logged lines plus R28-A1..A6, with A1 and A2 now LOGGED); in section 3, 7 appends and 11 new rules (GAP RULE v2, hedge agreement, backups, exp89p default, autonomous mode, no new build, round-28 proposals, RULE v2.1, exp89l gate, no-freeze fallback + G4, timers). Note: the main session committed an earlier pass of FACTS.md in e42769c; this second pass updated it in place. Tables were checked for column counts."
+}

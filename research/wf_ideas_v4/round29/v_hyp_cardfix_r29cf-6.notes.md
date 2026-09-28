@@ -1,0 +1,12 @@
+# v_hyp_cardfix R29CF-6 (clock pitfall) - skeptic notes
+- 20:38Z reproduced: PowerShell `Get-Date -Format u` -> 2026-09-28 23:38:48Z; `[DateTime]::UtcNow.ToString('u')` and `(Get-Date).ToUniversalTime().ToString('u')` -> 20:38:48Z; `Get-Date -Format K` -> +03:00; TZ = Russian Standard Time. bash `date -u` -> 20:38:41 UTC. FACT CONFIRMED (the 'u' format specifier does not convert to UTC; documented .NET behaviour).
+- Audit of the night mechanisms (none use Get-Date):
+  - scratchpad/timer.sh (31 live processes, 22:47Z 28 Sep .. 00:07Z 30 Sep): `date -u -d "$1" +%s` vs `date -u +%s` -> correct.
+  - night_checklist.md: G0 uses python datetime.now(timezone.utc); G1 parses the poll.log header as UTC; G2 TS=$(date -u ...); nb_try logs use date -u; T54 waiter uses date -u -d "$T54" (T54 has Z suffix); t0 uses date +%s (epoch, tz-independent). Kaggle list 'date' is UTC. The only PowerShell calls are battery/process queries (no clock).
+  - experiments/lb_poll/lb_poll.py:25 header = datetime.now(timezone.utc) -> correct.
+  - e10_watch_loop.py / ladder_watch.py: Clock uses UTC = dt.timezone.utc.
+  - run_e10_watch_loop.sh / run_feed_loop.sh / run_ladder_watch.sh: date -u.
+  - finals_card_v5_ru.md step 1 (line 82) and changelog item 16 already carry the warning.
+  - CONTEXT.md: no occurrence of 'Get-Date' (neither use nor warning).
+- Residual risk only: an ad-hoc agent turn writing a CONTEXT line / header-age check via PowerShell. Cheap fix: one warning line in night_checklist.md PRELUDE and in CONTEXT.
+- Verdict: not refuted as a fact; the action is already satisfied by the scripts; value = ops safety, 0 score effect.

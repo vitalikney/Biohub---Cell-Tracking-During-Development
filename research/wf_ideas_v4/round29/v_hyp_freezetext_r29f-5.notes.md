@@ -1,0 +1,9 @@
+# v_hyp_freezetext R29F-5 notes
+- 2026-09-28T20:38:46Z start; no prior json
+- 20:39Z Win32_Process read-only (local, no Kaggle): timer.sh texts confirmed verbatim. PID 23464 01:30Z: 'send it (CI only until 01:45 UTC), log LATE'. PID 4732 00:44Z: 'submit exp89p at 00:46 UTC (>= 40 min after the non-CI stack) if not yet sent' -> NOTE the finding omits the parenthetical; the 00:44Z text DOES carry the spacing rule, only the fixed '00:46' is stale. 00:50Z: 'if exp89p (due 00:46 UTC) or another frozen night file is missing, send it with the freeze-line guards (never blind)' -> refers to freeze-line guards (item (4) T54). 00:20Z text fine.
+- 0 processes with ': WAITER_' tag (excluding my own query) -> (c) confirmed; R28-A4 (vii) tag count would be 0. Already handled: freeze template item (8) = 'Win32_Process timer.sh count', checklist step 0 counts 'timer\.sh 2026-09-29T0(0|1)'.
+- BatteryStatus 2, 78% at 20:39Z.
+- Origin of 'CI only': CONTEXT l.3707 (10:47Z) superseded the 07:47Z 'non-CI only after 02:00Z'; W4 = 00:05-01:45Z for all files (l.3163, l.3840 40-min spacing). So the 01:30Z text is stale.
+- Overlap: scan_plancheck.json PC29-07 already reports the 01:30Z 'CI only' conflict (+ no LATE check 01:30-06:07Z). night_checklist.md §5 [R29] and freeze_line_template.md item (10) already implement the finding's action (follow checklist, not message text). Finding adds no new action.
+- Impact bound: only fires if the batch AND nb_try's 10-min background loop (section N) both failed; a non-CI file skipped at 01:30Z would go at 06:07Z post-wake (read ~13:10Z < 20:00Z tick; within non-CI LATE cutoff 11:30Z). Spacing slip only if exp89q is sent after 00:06Z (nb_try backoff up to 20 min).
+- 20:42Z final JSON written: refuted=false (confirmed with qualifications; (b) overstated; duplicate of PC29-07; action already in checklist).

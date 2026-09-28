@@ -1,0 +1,8 @@
+- 2026-09-28T20:38:51Z start R29CF-5 verification (no prior json)
+- 20:40Z v4 card mtime 2026-09-28 18:55:37 +0300 (=15:55:37Z), older than the CONTEXT 16:26Z entry (l.4029-4034) that says it contains R27-A8 edits.
+- v4 grep: '0.39'/'0.63' (A8 (2)) 0 hits, 'подстрок'/'substring' (A8 (3)) 0, 'GAP' (A8 (5)) 0; token_refs still `'exp83c'` style; A8 (4) 'exp83c = 3' step absent (only JSON levers:3). => claim false, PC28-04 confirmed again.
+- v5 (round29/finals_card_v5_ru.md, 23:26:43 MSK): 0.39/0.63 x2, substring x1, GAP x8, 10.75 x7; single ```json block parses (keys match_rule, fixed_refs, token_refs, placeholders, fill_times); 33 placeholders.
+- CONTEXT after l.4034 (to l.4133 end of §14): no correction line for the 16:26Z claim yet.
+- Waiters (Win32_Process cmdlines, timer.sh in scratchpad acabaea6): 12:03Z text = "fill research/wf_ideas_v4/round27/finals_card_v4_ru.md ... (per its table and the R27-A8 edits)" -> explicitly points at v4. 18:37Z = "refresh the finals card" (no path). 19:43Z reminder no path. Waiter args are immutable; re-pointing = kill+re-arm (risk of losing a waiter).
+- Caveat: v5 also carries R29CF-1 (pair re-anchoring on V_pub), a substantive change beyond R27-A8; 'fill from v5' adopts it, so the correction line should be conditional on R29CF-1..3 verdicts.
+- 2026-09-28T20:40:40Z final JSON written (refuted=false, with caveats: no waiter re-arm; v5 pointer conditional on R29CF-1..3)

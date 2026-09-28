@@ -1,0 +1,14 @@
+# round29 plancheck notes (started 20:18Z 28 Sep)
+- 20:20Z: newest poll header 2026-09-28T20:13:02Z, 56640366 PENDING (poll.log l.25213/25216). 31 timer.sh waiters alive (22:47Z .. 30 Sep 00:07Z), plus 51 watcher (pid 31952, COMPLETE|ERROR), E10 SIGNAL watcher, FEED SIGNAL watcher, battery/poll watchdog (pid 10576). Freeze waiter text cites only R27-A4/R27N-2 (not R28-A4). MORNING PREP waiter text: "build/dummy exp89l only on branch A with P '+'/'0u'" -> conflicts with R28-A2(b) (build at 51 read; PASS before 08:40Z).
+- 20:25Z G4: grep -cF 'W4 FREEZE: NIGHT 29 Sep' CONTEXT.md = 1 already (CONTEXT l.4125 = R28-A2 (d) text); regex '^- 2026-09-2[89] [0-9:]+ UTC, W4 FREEZE: NIGHT 29 Sep' = 0. Stored R27N-3 G4 (round27/scan_hyp_nightdry.json) uses -F -> vacuous.
+- Other G4 strings: all >= 1. Past submission tokens: exp89r/q/p/l/s, exp75, exp83c = 0 rows (dedupe safe).
+- Compute anchors: 'mode = candidate' == 'GPU shard 0' timestamps in _dl logs: exp89r 485.77 (compute 1,473), exp87a 300.46 (1,569), exp89p 253.26 (1,059), exp85a 262.0 (1,126), exp89q 519.47 (1,057), exp89s 436.11 (1,129). CI adds 416-443 s -> exp89l compute ~1,475-1,502 s.
+- scratchpad gate85.py: whole-kernel <= 1900 only, no compute/Secondary/COORDINJECT/integer checks (stale for v2.1).
+- MORNING TABLE v1.1 conflict: (1) 'Only DIS + keeps DIS 2.25 in a morning file' vs (2) A-M2 'else Rr + -> exp89q' (K+SEC+DIS). Case 87a .959, P .959, r .960 -> Rr +, dd 0 -> DIS ?.
+- LB CSV LastSubmissionDate = newest SCORED submission (S1_0934Z: 00:50:37 = probe 49 0.955 while best was 48 0.957) -> not a best marker.
+- e10 20260928T2018Z: rank 140/3,974, 13th of 22 in 0.958, 127 >= 0.959, 106 >= 0.960; kernels no change; Pawan Rama Mali 10:12:32Z sub scored 19:41-20:18Z.
+- uptest.py load() reads only _lb/<tag>/*.zip|*.csv; e10 txt has 'Rank,TeamId,...' rows >= 0.953 -> converter needed for GAP RULE v2 (4).
+- finals_card_v4_ru.md mtime 15:55Z: l.31 unconditional, l.40 '~0.51', l.64 22:30 MSK promise (no 19:30Z waiter), l.101 probe-number tokens. R28-A5 still pending.
+- 01:30Z waiter text 'CI only until 01:45 UTC' vs R27N-2 (7) LATE cutoffs CI 08:30Z / non-CI 11:30Z. No night-submission check in hourly rounds 02:13-05:13Z.
+- MORNING PREP waiter: 'build/dummy exp89l only on branch A with P +/0u' (would build after ~07:50Z) vs R28-A2 (b)/R28-A3 (3): build at 51 read.
+- 20:36Z wrote scan_plancheck.json (10 findings)

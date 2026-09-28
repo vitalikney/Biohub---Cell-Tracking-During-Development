@@ -1,0 +1,7 @@
+- 2026-09-28T20:38Z start v_plancheck PC29-01
+- 20:40Z reproduced: grep -nF 'W4 FREEZE: NIGHT 29 Sep' CONTEXT.md -> 1 hit, l.4125 (R28-A2 (d) text, 20:18Z entry); anchored -E regex -> 0 hits (rc=1). CONTEXT 4154 lines, no CR.
+- round27/scan_hyp_nightdry.json R27N-3 G4 loop includes "W4 FREEZE: NIGHT 29 Sep" in a grep -cF loop with rule "each count must be >= 1" -> vacuous PASS confirmed.
+- CONTEXT l.4054: "The 00:04 UTC batch cron (2ab38c73) is kept unchanged; its checklist is the R27N-2/R27N-3 text" -> the logged pointer still leads to the vacuous check. timer.sh just echoes the stored message (no logic).
+- Fix already drafted: round29/night_checklist.md l.~94-96 uses -F loop WITHOUT freeze + separate anchored -E FREEZE count; rule "FREEZE 0 -> 20:18Z (c) no-freeze fallback". round29/freeze_line_template.md header matches the regex. Not yet referenced from CONTEXT (grep night_checklist CONTEXT.md = 0).
+- Verdict: valid, not refuted. Remaining action = one CONTEXT line redirecting all night steps to round29/night_checklist.md (+ freeze logged with the anchored header, verify regex = 1). Zero Kaggle calls, no submission change.
+- 20:39Z wrote v_plancheck_pc29-01.json (refuted=false)

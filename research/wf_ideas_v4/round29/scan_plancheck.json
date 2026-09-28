@@ -1,0 +1,85 @@
+{
+ "summary": "Round 29 plan check, 20:18-20:35Z 28 Sep. State: the newest poll header, 20:13:02Z, shows 56640366 PENDING (L > 7.96 h). 31 timer.sh waiters are alive (22:47Z 28 Sep to 00:07Z 30 Sep), as are the 51 watcher (COMPLETE|ERROR), the E10/FEED signal watchers and the battery/poll watchdog. R28-A2 was logged pre-score at 20:18Z. All G4 strings exist, and no past submission carries a night token. Two defects must be fixed before the freeze. (1) The stored R27N-3 G4 freeze check is now vacuous: grep -cF 'W4 FREEZE: NIGHT 29 Sep' already returns 1 because of the R28-A2 (d) line itself. (2) The freeze and batch waiter texts point only to R27-A4/R27N-2/R27N-3, so the R28-A4 fixes (guarded T54, nb_try exit 3, 10.75 h admit edge, item (5)) exist only in round28/report.json. For the morning: the 07:23Z waiter text would build exp89l only after P reads, which would likely miss the 08:40Z A-M1 header. MORNING TABLE v1.1 also contradicts itself on A-M2 (Rr '+' -> exp89q carries DIS, while (1) says only DIS '+' keeps DIS). Missing mechanics: the UP-test S0 for P, since uptest.py cannot read the e10 snapshots; LATE checks between 01:30Z and 06:07Z; a push for late-evening morning reads. New fact: the RULE v2.1 compute anchor is not ambiguous, because 'mode = candidate' and 'GPU shard 0' carry the same timestamp in all 6 dummy logs. exp89l's expected compute is ~1,475-1,500 s (PASS < 1,620). Still true: no E10 trigger; rank 140 at 20:18Z with 127 teams >= 0.959; R28-A5 card edits pending.",
+ "findings": [
+  {
+   "id": "PC29-01",
+   "kind": "plan-issue",
+   "urgency": "now",
+   "what": "The G4 freeze check in the stored night batch is VACUOUS. R27N-3's G4 loop (round27/scan_hyp_nightdry.json) and the 00:04Z waiter ('with the R27N-3 guards') count the freeze with grep -cF 'W4 FREEZE: NIGHT 29 Sep' CONTEXT.md. That count is already 1 at 20:25Z, before any freeze exists, because the R28-A2 (d) text at CONTEXT l.4125 quotes the literal. The hardened regex '^- 2026-09-2[89] [0-9:]+ UTC, W4 FREEZE: NIGHT 29 Sep' correctly returns 0. A batch or backup that runs the stored -F check would treat the missing freeze as present, skip the R28-A2 (c) no-freeze fallback, and look for STACK in the wrong line.",
+   "evidence": "grep -cF 'W4 FREEZE: NIGHT 29 Sep' CONTEXT.md -> 1 (l.4125, inside the 20:18Z RULE v2.1 entry); grep -cE '^- 2026-09-2[89] [0-9:]+ UTC, W4 FREEZE: NIGHT 29 Sep' -> 0; round27/scan_hyp_nightdry.json R27N-3 G4 loop; timer.sh 00:04Z waiter text 'with the R27N-3 guards'. The other G4 strings are all >= 1 (RISK STACK 1, exp89p GATE 1, exp75 LINE 1, exp87a/exp83c 1, R8 night 2, R8 PC19-11 1).",
+   "action": "In the batch text used at 00:04Z, the 00:20/00:44/00:50/01:30Z steps and post-wake, replace the G4 freeze item with FZ=$(grep -E '^- 2026-09-2[89] [0-9:]+ UTC, W4 FREEZE: NIGHT 29 Sep' CONTEXT.md | tail -1); [ -n \"$FZ\" ] && echo FREEZE_OK || echo NO_FREEZE. Read STACK only from the entry that starts at that line. NO_FREEZE -> the R28-A2 (c) fallback. Remove the freeze string from the -F loop and keep the other six strings. At 23:33Z write the header with the real time, not '23:30', through the usual entry() helper, so the line reads exactly '- 2026-09-28 HH:MM UTC, W4 FREEZE: NIGHT 29 Sep (...'. Then re-run the regex and expect 1."
+  },
+  {
+   "id": "PC29-02",
+   "kind": "plan-issue",
+   "urgency": "now",
+   "what": "The freeze and batch waiters point at texts that lack the R28-A4 fixes. The 23:33Z waiter says 'log the freeze line per R27-A4 (R27N-2 text in round27/scan_hyp_nightdry.json)'. The 00:04Z, 00:20Z, 00:44Z and 00:50Z waiters say 'per the freeze line ... with the R27N-3 guards'. R28-A4 (i)-(vii) exists only in round28/report.json. It covers the 10.75 h admit edge, item (5)'s GAP-RULE override, the guarded T54 (R27N-3's r[0] raises IndexError in branch A), nb_try exit 3 on daily limit (the stored HARD FAIL regex still contains 'limit' -> exp83c fallback) and one stored text. After a compaction, or in a fresh turn woken by a waiter, the session would follow the stale texts. CONTEXT still says 'R28-A4 pending'.",
+   "evidence": "Win32_Process command lines of timer.sh 2026-09-28T23:33:00Z and 2026-09-29T00:04/00:20/00:44/00:50:00Z; round28/report.json R28-A4; round27/scan_hyp_nightdry.json R27N-3 (T54 snippet r[0]), R27N-4 (regex 'limit|not found|forbidden|unauthori|40[0134]').",
+   "action": "Before 23:30Z (not later than the 22:47Z round), write ONE combined night text and log a CONTEXT pointer line naming it with its sha8: 'NIGHT TEXT (R27N-2 + R27-A4 + R28-A4 + PC29-01/04) = <path>'. Every waiter step reads that file first. The file must contain (a) the freeze template with the 10.75 h edge and item (5) as in R28-A4; (b) G0-G5 with the PC29-01 regex; (c) nb_try with, before the HARD FAIL test, if printf '%s' \"$O\" | grep -qiE 'daily|allowance|submission limit|limit'; then echo \"DAILY LIMIT $tok\"; return 3; fi, and 'limit' deleted from the HARD FAIL regex; (d) the guarded T54: r=[...exp89q rows]; print('2026-09-29T00:46:00Z' if not r else max(t_q+40min, 00:46Z)), waited on with a run_in_background until-loop in both branches (the existing 00:44Z waiter is the duplicate path; G2 dedupes); (e) exp89p at 00:46Z in both branches. Add a one-line note in the file that the waiter texts are pointers only."
+  },
+  {
+   "id": "PC29-03",
+   "kind": "plan-issue",
+   "urgency": "today",
+   "what": "The 07:23Z MORNING PREP waiter text contradicts R28-A2 (b) and R28-A3 (3) on exp89l timing. The waiter says 'build/dummy exp89l only on branch A with P +/0u', i.e. after exp89p reads (07:46-07:58Z). The logged rule is: build and push the dummy at 51's read in branch A, with a PASS before the A-M1 header (latest 08:40Z). Built at ~08:00Z, the dummy would take ~29-38 min (setup 250-790 s + compute ~1,480 s) and would PASS around 08:30-08:45Z. That misses or just touches the 08:40Z header and the 08:45Z CI cutoff, so A-M1 is lost.",
+   "evidence": "timer.sh 2026-09-29T07:23:00Z command line; CONTEXT 20:18Z entry (b) 'exp89l is a MORNING file: its dummy must PASS before its A-M1 decision header (latest 08:40Z)'; round28/report.json R28-A3 (3); setup times from the _dl logs: exp89r 486 s, exp87a 300 s, exp89q 519 s, exp89s 436 s.",
+   "action": "At 51's read in branch A (+ / 0u, incl. UNPROVEN-ins), build exp89l immediately (STOP unless sha8 cad1d47f; recipe $B $KB $C6 $JT $N2 $CI from round21 build_env_git_bash + round25 scan_hyp_sched29), then run the PRE-PUSH dataset check, log the R8 line and push the dummy. Log 'exp89l dummy pushed <ts>, version v<n>'. At 07:23Z only verify the PASS. If exp89l was not built by then (missed wake), build it at 07:23Z without waiting for P. The A-M1 submit must use the kernel version whose dummy PASSED (-v <n>; R27N-3 hard-codes -v 1 for night files only). If P reads later than 08:40Z or not '+'/'0u', the built exp89l stays UNUSED."
+  },
+  {
+   "id": "PC29-04",
+   "kind": "plan-issue",
+   "urgency": "today",
+   "what": "MORNING TABLE v1.1 contradicts itself on DIS in A-M2. Clause (1) says 'Only DIS + keeps DIS 2.25 in a morning file; 0, - and ? drop it (winners only)'. Clause (2) A-M2 says 'DIS + -> exp89s; else Rr + -> exp89q', and exp89q = K + SEC + DIS 2.25. Realistic case: exp87a 0.959, P 0.959, exp89r 0.960. Then Rr is '+' but dd = (0.960 - 0.959) - (0.959 - 0.958) = 0, so DIS is '?'. The table sends exp89q, while (1) forbids DIS. The session deciding at ~09:30-11:00Z would pick a row after seeing the reads, which is post-hoc. A worse case: DIS '-' (dd <= -0.002) together with Rr '+' is possible when SEC is large, and the table would still send exp89q.",
+   "evidence": "CONTEXT l.3931-3955 (14:12Z MORNING TABLE v1.1 (1) and (2)); round26/report.json (same text; the rationale is 'the non-CI twin of the winning stack').",
+   "action": "Log a pre-score precedence line before any night read, best inside the freeze line: 'MORNING TABLE v1.1 precedence (pre-score): the A-M2 Rr row is an explicit exception to (1). exp89q goes as the non-CI twin of a stack whose own display won (Rr +), unless DIS = -, in which case A-M2 is UNUSED. The winners-only sentence of (1) governs the new builds (exp89s, exp89t), not the twin.' If the main session prefers the strict reading instead, log 'A-M2 Rr row applies only when DIS is +' before the reads. Either way, fix it before 07:00Z."
+  },
+  {
+   "id": "PC29-05",
+   "kind": "plan-issue",
+   "urgency": "today",
+   "what": "The UP-test mechanics for the night reads are unstated, and the e10 backup path does not work as written. P '0u' (branch A, which decides A-M1 exp89l) needs an S0 with our count 53 taken before exp89p completes (~07:46-07:58Z) and an S1 with count 54. GAP RULE v2 (4) says to 'use the e10_watch snapshots' as backup. tools/uptest.py load() reads only _lb/<tag>/*.zip or *.csv, while the e10 snapshots are .txt files, so the backup path fails as written. A missing S0 makes the read BLIND, P becomes '0', and A-M1 is UNUSED. Side fact: the LB CSV LastSubmissionDate is the newest SCORED submission, not the best (S1_0934Z shows 00:50:37 = probe 49 at 0.955 while the best was probe 48's 0.957). It flips to 12:14:57 when 51 scores whatever the score, so it marks a completion, never an UP.",
+   "evidence": "tools/uptest.py l.18-30 (load); experiments/e10_watch/20260928T2018Z.txt section 'leaderboard_rows' (header 'Rank,TeamId,TeamName,LastSubmissionDate,Score,SubmissionCount,TeamMemberUserNames', rows >= 0.953, our row count 52); experiments/lb_poll/_lb/S1_0934Z vs S1_0753Z rows for TeamId 16810638.",
+   "action": "(a) State in the freeze line: 'Branch A: S0 for P = S1_51 (count 53) if no other file of ours completes before exp89p; S1 = uptest save at the first header with exp89p terminal (count must be 54).' In branch B P's UP is not used. (b) For the e10 backup, use a converter that makes no API call: python -c \"import pathlib as p,sys;t=p.Path(sys.argv[1]).read_text(encoding='utf-8');s=t.split('======== leaderboard_rows ========')[1].split('======== histogram')[0].splitlines();i=[k for k,l in enumerate(s) if l.startswith('Rank,TeamId')][0];d=p.Path('experiments/lb_poll/_lb/E10_'+p.Path(sys.argv[1]).stem);d.mkdir(parents=True,exist_ok=True);(d/'lb.csv').write_text(chr(10).join(l for l in s[i:] if l.strip())+chr(10),encoding='utf-8')\" experiments/e10_watch/<TS>.txt; then python tools/uptest.py compare E10_<TS0> E10_<TS1>. Rows below 0.953 are missing, which does not matter for an UP inside the 0.958 block. (c) At post-wake 06:07Z, if S1_51 is missing, run python tools/uptest.py save S0_night (1 call)."
+  },
+  {
+   "id": "PC29-06",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "The RULE v2.1 compute anchor is NOT ambiguous. In every dummy log, the 'V1284 head patched ... mode = candidate' line and the 'GPU shard 0' line carry the same timestamp (within 1 ms), so R28's anchor worry is moot. Computes (last log time - anchor): exp89r 1,473 s, exp87a 1,569 s, exp89p 1,059 s, exp89q 1,057 s, exp85a 1,126 s, exp89s 1,129 s. CI adds 416-443 s, so the expected exp89l compute is ~1,475-1,502 s: PASS under 1,620 s. Whole-kernel = setup (253-519 s seen; up to 788 s) + compute, which can exceed 2,100 s and then passes by the compute clause. The scratchpad gate85.py still checks only whole-kernel <= 1,900 s and has no compute, Secondary, COORDINJECT or integer checks, so it must not be used for the exp89l gate.",
+   "evidence": "_dl/biohub-exp89r-k2cap6-k-sec-dis225-ci/*.log: 'time':485.773 mode = candidate, 485.773 GPU shard 0, COORDINJECT SUMMARY 1947.09 replaced 0.916, end 1959.21; the same for the exp87a/exp89p/exp85a/exp89q/exp89s logs; scratchpad/gate85.py l.46 (time <= 1900).",
+   "action": "Gate exp89l with a v2.1-specific check: validate_csv ok; counts of Traceback/FAILED/DEADLINE:/FALLING BACK = 0; 'DIVINS ENABLED'; 'Secondary SHA256: 7029fe69'; nodes/edges/forks == 122,110/117,957/88; the COORDINJECT SUMMARY line has videos=4/4 and replaced in 0.90-0.93; integer change vs the exp89p CSV 0.60-0.69 with all z/y/x integer; runtime PASS if end <= 2,100 OR end - t(mode = candidate) <= 1,620. Log setup, compute and the GPU model. Optional: add one sentence to the exp89l gate line saying the two anchors are identical."
+  },
+  {
+   "id": "PC29-07",
+   "kind": "plan-issue",
+   "urgency": "today",
+   "what": "Nothing checks for LATE night files between 01:30Z and 06:07Z, and the 01:30Z waiter text conflicts with the LATE rule. The 01:30Z backup says 'send it (CI only until 01:45 UTC)'. R27N-2 (7) / R27-A4 (7) set the LATE cutoffs at CI by 08:30Z and non-CI by 11:30Z, with LATE files ahead of the morning files. The hourly round waiters at 02:13-05:13Z only launch research. If the batch or nb_try loop died (extension reload, busy session, network) after 01:30Z, no LATE file goes before the 06:07Z post-wake. From 05:10Z the laptop is on battery or asleep. A round launched at 22:47Z or 01:13Z as a long foreground workflow can also delay the queued freeze (23:33Z) or backup (01:30Z) notifications.",
+   "evidence": "timer.sh command lines 2026-09-29T01:30:00Z ('CI only until 01:45 UTC'), 02:13-05:13Z ('launch the next research round unless one is running'); round27/scan_hyp_nightdry.json R27N-2 item (7); CONTEXT 16:43Z (laptop asleep 05:10-06:00Z).",
+   "action": "(a) Make step 0 of every hourly round from 01:13Z to 06:17Z the idempotent G2 check: 1 list call; if a due night file is missing and no nb_try loop is alive, send it LATE per R27-A4 (7). (b) Read the 01:30Z waiter as 'LATE rule per the freeze line'. (c) Keep the 22:47Z round short or skip it (round 29 already covers the pre-night), so that it ends by 23:25Z. Launch no round between 23:25Z and the 00:06Z submit."
+  },
+  {
+   "id": "PC29-08",
+   "kind": "plan-issue",
+   "urgency": "today",
+   "what": "Late-evening morning reads can land after the 18:37Z FINAL proposal, and only the 19:43Z reminder catches them, 17 min before the 20:00Z tick-by. A-M1 is CI: submitted at ~08:00Z it reads ~17:20-17:30Z, but at the 08:45Z cutoff it reads 18:03-18:15Z with a tail to ~19:39Z. M2 is non-CI: submitted at the 11:30Z cutoff it reads 18:31-18:41Z. R27-A7 (2) (submit at the decision header) cuts this risk but does not remove it, because B-M1 (latest header 10:30Z) and A-M2 (latest header 11:00Z) can still fall late.",
+   "evidence": "CONTEXT 14:12Z MORNING TABLE v1.1 cutoffs; round27/report.json R27-A7 (2); the ledger's latency families (non-CI L 7.01-7.19 h, CI 9.27-9.45 h, tail 10.9 h).",
+   "action": "At each morning submit, start a local-only background watcher on poll.log for that ref, the same form as the 51 watcher: until last | grep -qE '^<ref>,.*(COMPLETE|ERROR)'; do sleep 60; done. When it fires after 18:00Z, re-apply the card's V_pub order and push one Russian line (MSK first) at once if V_pub or the pair changes. It stays notify-only, and the session never ticks. Say in the 18:37Z FINAL text which reads are still pending and their expected MSK times."
+  },
+  {
+   "id": "PC29-09",
+   "kind": "recheck-old",
+   "urgency": "today",
+   "what": "R28-A5 is still pending. finals_card_v4_ru.md (mtime 15:55Z) has none of R27-A8 (1)-(5). l.31: the opener is still unconditional. l.40: П3 silver still reads '~0.51'. l.64 promises a 22:30 MSK (19:30Z) line, but only a 19:43Z waiter exists. l.101 still keys the tokens on probe numbers. l.127 lists notify 19:30Z. The 12:03Z waiter says to fill the card 'per its table and the R27-A8 edits', so an unedited card gives an inconsistent proposal.",
+   "evidence": "research/wf_ideas_v4/round27/finals_card_v4_ru.md l.31, l.40, l.64, l.101, l.127; timer.sh 12:03Z/18:37Z/19:43Z texts.",
+   "action": "Apply R28-A5 in the quiet window after the 00:46Z submit or at 06:07Z (text only, 0 API). Also fix l.64/l.127 to '22:43 МСК (19:43 UTC)' plus the PC29-08 read-watcher pushes, then log the CONTEXT correction."
+  },
+  {
+   "id": "PC29-10",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "KEY FACTS at 20:18Z: 3,974 teams; we are rank 140 at 0.958, 13th of 22 in the 0.958 block (ranks 128-149); 127 teams >= 0.959, 106 >= 0.960; top unchanged (yu4u 0.978). E10: no kernel change since 19:41Z; the best public notebook is 0.953, so no trigger (>= 0.959). Feed: last run 18:57Z with 0 new; the next is due ~20:27Z, so it is not run here (< 100 min). Probe 51: PENDING at 20:13:02Z (L > 7.96 h); expected 21:31-21:42Z, 10.2 h = 22:26:57Z, admit 22:59:57Z. Another team's 10:12:32Z submission scored between 19:41Z and 20:18Z (L 9.5-10.1 h), so the scoring queue shows no stall. No disclosed knob in this window, so aggressive mode adds nothing.",
+   "evidence": "experiments/e10_watch/20260928T2018Z.txt (histogram and DIFF vs 20260928T1941Z); experiments/discussions/feed_loop.log (18:57:19Z); experiments/lb_poll/poll.log header 2026-09-28T20:13:02Z; ledger.md row 56640366 '> 7.96 (pending)'.",
+   "action": "Refresh KEY FACTS (rank 140, 127 teams >= 0.959). No E10 or feed call needed this round."
+  }
+ ]
+}
