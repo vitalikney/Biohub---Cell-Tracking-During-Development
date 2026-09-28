@@ -3344,8 +3344,7 @@ Mention it to the user in one line (R9-A8 item 6).
 - 2026-09-28 01:02 UTC, R21-A5/A6: ledger rule exp83* -> safetail_ci (+ test; 25 pass). CI stacks built (shas match round 21): exp83a = exp78b + CI
   (80a0856f), exp83b = exp78a + CI (d9b0834d); both dummies pushed now (the only W2b CI candidates). exp81 and exp80a dummies COMPLETE
   (gates per R21-A3 logged earlier).
-- 2026-09-28 01:02 UTC, s terminal header, quoting the last poll.log header that shows it PENDING:
-  '2026-09-28 01:02 UTC UTC, W2 TABLE v4 + DIV STOP RULES (round 21; last poll header 2026-09-28T00:56:01Z shows
+- 2026-09-28 01:02 UTC, W2 TABLE v4 + DIV STOP RULES (round 21; last poll header 2026-09-28T00:56:01Z shows
     56623073 PENDING; amends READ TABLE v3 (4) and consolidates v3 (6)/(8); v3 (1)-(3) and (5) stand).
   (1) W2a (08:45-10:00Z) = v3 (3) unchanged: exp80a iff exp78b '+', disp(exp78b) >= disp(exp78a), 46 not '-' (46 = 0),
     exp80a dummy PASS (logged); otherwise the SEC file exp81 (exp70g + n2a).
