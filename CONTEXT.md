@@ -3612,6 +3612,16 @@ Mention it to the user in one line (R9-A8 item 6).
   (3) E10 copies after 02:00Z = CASE BY CASE ('Решим, после просмотра ноутбука'): before 02:00Z the E10 v3 rule stands
   (copy + submit at trigger); after 02:00Z the session builds + dummies the copy and shows the user the notebook
   (page, score, diff) and submits only on the user's yes for that notebook.
+- 2026-09-28 07:54 UTC, W1 READ: PROBE 49 exp78a (K2 + cap 8) = 0.955 -> '-' (no UP); S1 FIRES: DIV volume closed, BASE = exp70g
+  Header 07:52:52Z: 56624341 COMPLETE public 0.955 (48/50 PENDING). UP test: S0 = _lb/S0_0729Z (rank 181, count 49) vs
+  S1 = _lb/S1_0753Z (rank 182, count 50 = exactly one completion = 49, last date 00:50:37) -> 0 TeamIds passed, no UP.
+  L in (7.0, 7.04] h. CAP CURVE (public): cap 4 (#37) 0.954, cap 6 (exp70g) 0.956, cap 8 0.955, cap 12 + fc2 0.955 ->
+  cap 6 is the optimum. W2 v4 (5) S1: exp78a and exp78b both '-' -> DIV volume closed, BASE exp70g, no exp80a, no DIV
+  file in W3/W4. Lookup on b = exp70g: JT(b) = exp85a (scored as probe 50), JT+CI(b) = exp87a, RA92(b) = exp86c, CI(b)
+  = exp79a (scored as probe 48), SEC(b) = exp81. Dead: exp86a/b, exp87b/i, exp83a/b, exp82a-c, exp83d-g, exp84a,
+  exp80a. W2b TABLE v5: Row 1 and Row 2 moot -> Row 3: at 50's terminal header (latest 14:00Z) R+ -> exp86c, else ->
+  exp81. R24-A6 T1: nothing to push (no S3). Rank 182 (3,967 teams), 171 strictly above 0.956, 11th of 65 in the 0.956
+  block.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
