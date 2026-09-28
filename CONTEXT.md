@@ -3411,6 +3411,9 @@ Mention it to the user in one line (R9-A8 item 6).
 - 2026-09-28 01:50 UTC, CI-STACK DUMMY GATE READ (R22-A1 criteria, logged before the outputs were read): exp83a (exp78b + CI) PASS - validate ok, 0 errors,
   COORDINJECT 4/4 (91.5% rows moved), topology columns identical to exp78b (121,252 / 117,092 / 95), integer-coordinate change 0.646, 1,798 s,
   CSV c85e1c8c8a53; exp83b (exp78a + CI) PASS - same checks vs exp78a (121,252 / 117,086 / 86), 0.646, 1,882 s, CSV bde71fe839e0.
+- 2026-09-28 02:46 UTC, E10 SIGNAL CHECKED (watch loop run 15, 02:43Z): anvithpothula/biohub-v1284-head-s075-sample-notebook appeared in the author's
+  list; its page (Chrome, read-only): "Version 1 of 1", 23 s run, input = the V1284 head dataset only, 0 output files -> a dataset
+  sample notebook, not a competition submission, no score -> NOT a trigger.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
