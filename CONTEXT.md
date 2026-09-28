@@ -4165,6 +4165,12 @@ Mention it to the user in one line (R9-A8 item 6).
   exp79a); Q3: a final only as V_pub. Gate = the 20:18Z (b) text (vs the exp89p dummy CSV 629fc20b4815: topology
   122,110 / 117,957 / 88; Secondary 7029fe69; COORDINJECT 4/4 replaced 0.90-0.93; change 0.60-0.69; integer z/y/x;
   RULE v2.1). It is a MORNING file (A-M1, CI, decision at exp89p's terminal header, latest 08:40Z).
+- 2026-09-28 22:16 UTC, exp89l (K + SEC + CI) DUMMY GATE PASS (20:18Z (b) gate)
+  Dummy v1 COMPLETE 22:15Z. vs the exp89p dummy: validate ok; 0 Traceback/FAILED/DEADLINE:/FALLING BACK; DIVINS
+  ENABLED; 'Secondary SHA256: 7029fe69'; topology identical (122,110 / 117,957 / 88); COORDINJECT 4/4 replaced 0.915
+  (in 0.90-0.93); integer-coordinate change 0.646 (in 0.60-0.69); all z/y/x integer; RULE v2.1: whole-kernel 1,786 s
+  <= 2,100 s (compute from the anchor 1,550 s <= 1,620 s); CSV 2c1868375972 -> PASS. A-M1 candidate: submitted at
+  exp89p's terminal header iff P = '+' / '0u' (latest 08:40Z header, by 08:45Z).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
