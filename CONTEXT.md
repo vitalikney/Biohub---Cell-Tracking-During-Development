@@ -3853,6 +3853,21 @@ Mention it to the user in one line (R9-A8 item 6).
   Writes'). Per the denial the session does not pursue the finals tick by any route (browser, API, later turn).
   Replaced by a notify-only job at 00:05 MSK (read SELECTED read-only; if it is not the proposed pair, push the user
   the exact pair; Kaggle deadline 02:59 MSK); the 22:43 MSK reminder stays. The user's own tick is the ONLY path.
+- 2026-09-28 12:16 UTC, READ: PROBE 50 exp85a (exp70g + ILP_DIVISION_WEIGHT 0.4 + READMIT_MIN_SCORE 0.94) = 0.958 -> R+ (UP 21 teams); NEW BEST 0.958 (non-CI)
+  Header 12:13:42Z: 56629533 COMPLETE public 0.958. UP test (tools/uptest.py): S0 = _lb/S1_0934Z (rank 153, 0.957,
+  count 51) vs S1 = _lb/S1_1214Z (rank 134, 0.958, count 52 = exactly one completion = 50, last date 05:02:30) -> 21
+  TeamIds passed = UP, attributable to 50. Latency L in (7.02, 7.19] h (family safetail). Rank 134 of 3,969, 121
+  strictly above, 13th of 20 in the 0.958 block. K lever code R+ (display >= 0.957). The 743929 knobs work on our
+  base: +0.002 on top of exp70g (JT reported +0.001 each on his fork). V_pub = exp85a 56629533 (non-CI). E10 trigger
+  now >= 0.959 (kaggle_feed default to be raised).
+- 2026-09-28 12:16 UTC, PROBE 51 SUBMITTED: exp87a (FULL = exp70g + K + CI; ref 56640366, 12:14:57Z) per W2b AMENDMENT A2 row R+
+  Guards: dummy PASS 10:16Z (R22-A1 vs exp85a; CSV db3faf078781); poll header 12:13:42Z (1 min, no 429); no duplicate;
+  4 submits used today before it (Kaggle: '0 submissions remaining today'); R8 COVERAGE exp87a (07:44Z line); dataset
+  baseline unchanged (ft-weights 2026-09-23 23:54:03, n2a 2026-09-27 21:25:35); no NEVER_SUBMIT.md. -m 'probe 51:
+  exp87a = exp70g (cap 6) + ILP_DIVISION_WEIGHT 0.4 + READMIT_MIN_SCORE 0.94 + coordinject ALPHA 0.5 MAX_UM 3.0
+  (FULL)'. Family safetail_ci (rule exp87[abce]); expected read ~21:30-22:15Z (00:30-01:15 MSK). READ RULE (A2 (4)):
+  50 displayed >= 0.958 -> REF = exp85a; '+' = display >= 0.959; equal 0.958 with an attributable UP = '0u' ('+' for
+  BEST_CI only); equal with 0 teams passed = '0' = NON-ADDITIVE stop; below = '-'.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

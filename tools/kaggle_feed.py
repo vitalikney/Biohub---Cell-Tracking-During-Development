@@ -169,7 +169,7 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--topics", type=int, default=40)
     ap.add_argument("--no-kernels", action="store_true")
-    ap.add_argument("--our-best", type=float, default=0.957)
+    ap.add_argument("--our-best", type=float, default=0.958)
     ap.add_argument("--since", default="", help="first run only: report topics/comments dated at or after this "
                     "(e.g. '2026-09-27 18:00'); later runs report what was not seen before")
     a = ap.parse_args(argv)
