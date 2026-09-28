@@ -4032,6 +4032,12 @@ Mention it to the user in one line (R9-A8 item 6).
   substrings, exp83c = 3 levers, pool per GAP RULE v2, DIS PENDING windows = parent family, optional DIS footnote).
   Facts: rank 138 at 15:43Z (0.958 block of 21, 14th; 124 teams >= 0.959); E10 null; no disclosed knob; GPU 9,988.9 s
   of 21,600 s used at 15:44Z (~3.2 h left); probe 51 read expected ~20:50-22:15Z.
+- 2026-09-28 16:30 UTC, OPS: laptop ON AC
+  16:29Z watchdog: BatteryStatus 2 (AC), 51%, newest poll header 7 min old. The user asked the session to run the
+  powercfg LIDACTION commands; the session declined (changing OS/system settings is on its prohibited list even on
+  request) and gave the user the commands and the Control Panel path to run themselves. The lid-close setting is not
+  visible via powercfg /q in this plan (hidden); keep the lid open. New watchdog (local reads only): notifies if the
+  laptop goes back on battery or the newest poll header is > 25 min old.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
