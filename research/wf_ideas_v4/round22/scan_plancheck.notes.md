@@ -1,0 +1,19 @@
+# round22 plancheck notes (started 01:03Z 28 Sep)
+- 01:05Z read CONTEXT l.2599-3377 (last RESUME POINT still 26 Sep 22:46Z l.2599), round21 REPORT + scan_plancheck.
+- LANDED from round 21: R21-A1 R8 COVERAGE (l.3311), A3 gates (l.3316), A5/A6 ledger exp83 + exp83a/b built (l.3344; runtime_ledger.py l.80), A7 W2 TABLE v4 (l.3347), A8 W4 AMEND 2 (l.3366), commits b0bac2e..acbea01.
+- NOT LANDED: A4 (RESUME POINT / 18:56Z correction / MEMORY: project-lb-probe-approval.md still says 'E10 v1 in force', modified 2026-09-25), A9 finals card (grep 'FINALS CARD' = 0), A11 GPU quota (no 27/28 Sep reading), A12 info lines, E10 SI knobs line.
+- Probe 49 CONTEXT entry (l.3342) lacks ref 56624341 and 00:50:37Z; poll.log header 00:45:59Z (4.6 min old, no 429) -> compliant, just unlogged.
+- poll.log 00:56:01Z: 47 56623073, 48 56623105, 49 56624341 PENDING.
+- E10 snapshot 20260928T0043Z: RUN 13, 0 signals; our row #167 0.956 count 48, pos 10/58 in 0.956 block (k=9); >=0.955: 297.
+- e10_watch_loop.py l.28/l.78 LOOK text still 'trigger >= 0.955'; runbook research/wf_ideas_v4/e10v3/runbook.json computes OUR dynamically (ok) but SI K line hardcodes DIVINS_CAP=4 (K2 recipe), below exp70g cap 6.
+- Stack builds exp82a-c, exp83c-g, exp84a exist only as round-21 scratch sha claims (r21w-1); experiments/ has only exp83a/exp83b.
+- Dummy counts for CI-equality gates: _dl exp78a 238,338 rows = 121,252 nodes + 117,086 edges (86 forks); exp78b 121,252 + 117,092 (95 forks).
+- 01:06Z runtime_ledger (out -> scratchpad): 56623073 exp78b safetail 9.5h, 56623105 exp79a safetail_ci 10.75h, 56624341 exp78a safetail; all PENDING at header 01:06:02Z.
+- exp83a/exp83b notebooks: sha 80a0856f / d9b0834d (= r21w-1); exp83b vs exp79a source diff = cap 6->8 + header only. metadata T4, internet off, private, coord-inject attached.
+- CI equality gate test: _dl exp70g vs exp79a: non-coord columns (id,dataset,row_type,node_id,t,source_id,target_id) identical = True; integer coord change among nodes 0.6459. tools/dummy_gates.py has no CI mode.
+- 01:03Z extra snapshot (20260928T0103Z.txt): our #168, pos 10/59 in 0.956 block (k=9), >=0.955: 300, P2 none; Fernando Couto 0.954->0.956 ranked below us.
+- Conflict: W2 v4 (2)(iv) + W4 AMEND 2 (1)-2 ('?' lever -> stack) vs CI-RAN GATE NO-OP clause (l.3325) and R21-A3 (d) ERROR>10h no CI stack.
+- R13-A1 (5) 'F1 consolidation by 28 Sep 12:00Z' (l.2709) never superseded; v2 (9) V_pub admits W3/W4 files.
+- runbook research/wf_ideas_v4/e10v3/runbook.json: OUR dynamic (ok), SI K line DIVINS_CAP=4, finals default 'display >= 0.955, #37' (stale vs V_pub 0.956).
+- git: round21 committed (45 files), no Co-Authored-By in last 3; untracked experiments/ds_secw_corwin_v1/weights (8 MB, not ignored).
+- 01:12Z wrote scan_plancheck.json (11 findings)

@@ -1,0 +1,74 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/ideas.json",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/IDEAS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/22/ideas.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/22/ideas.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "what": "The CI-STACK DUMMY GATE (R22-A1, new I-420) is not in CONTEXT. The exp83a/exp83b dummies were RUNNING at 01:28:54Z and should finish around 01:30-01:40Z. The gate has to be written before either output is read, otherwise the W2b (i)/(iv) CI stacks get read with no pre-registered pass rule.",
+   "evidence": "research/wf_ideas_v4/round22/report.json R22-A1; research/wf_ideas_v4/round22/scan_plancheck.json PC22-03; research/wf_ideas_v4/round22/report.notes.md (01:28Z); CONTEXT.md l.3344-3346; research/KNOWLEDGE/ideas.json I-420, I-404",
+   "suggested_action": "Append the R22-A1 line now. If an output was already listed, add '(written after the output was listed; criteria are mechanical and fixed by the sibling CSVs)'. Then run the pandas sibling compare and have a PASS by 11:45Z.",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "W2 TABLE v4 (2)(iv) and W4 AMEND 2 (1)-2 (logged 01:02Z) would stack CI on ANY CI '?'. The CI-RAN GATE and R21-A3 (d) (logged 00:00Z) forbid a stack after a NO-OP, 'v' or ERROR CI. Separately, W2a has no rule for the case where 47/49 are not terminal at 10:00Z.",
+   "evidence": "CONTEXT.md l.3316-3337, l.3347-3377; research/wf_ideas_v4/round22/scan_plancheck.json PC22-02, PC22-06; research/wf_ideas_v4/round22/v_hyp_morning_brief_r22mb-2.json; research/KNOWLEDGE/ideas.json I-421, I-414, I-415, I-413",
+   "suggested_action": "Log the R22-A3 PRE-SCORE CLARIFICATIONS (CI-? SCOPE; W2a -> exp81 if a DIV ref is not terminal at 10:00Z; 12:00Z consolidation superseded; no CI after 02:00Z; probe-49 record; exp84a lab prior), quoting a header that shows 47/48/49 PENDING. Hard stop 06:45Z.",
+   "urgency": "now"
+  },
+  {
+   "kind": "forgotten",
+   "what": "The RESUME POINT has now been skipped for 7 rounds: the last one is CONTEXT l.2599 (26 Sep 22:46Z), and MEMORY still says 'E10 v1 in force'. The probe-45 correction line (127 passed, exp70g class C) is also missing. The night runs unattended, so a restarted session would apply stale rules to the W1 reads.",
+   "evidence": "research/wf_ideas_v4/round22/report.json R22-A2; research/wf_ideas_v4/round22/scan_plancheck.json PC22-01; research/wf_ideas_v4/round22/v_plancheck_pc22-01.json; research/KNOWLEDGE/ideas.json I-257, I-296, I-326",
+   "suggested_action": "Write R22-A2 (1) RESUME POINT, (2) the correction verbatim and (3) the MEMORY rewrite between polls. Do it now, and before the first W1 terminal header (~06:45Z) at the latest.",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "The 29 Sep FINALS CARD (R21-A9 -> R22-A4) is still not logged, the 2nd deferral. It now also has to carry the balanced CI caveat (Eric -0.002 vs probe 31 +0.002) and the E10 v3 NOW line: trigger > our best display (>= 0.957), SI = BASE's DIVINS settings rather than cap 4, and no 0.955 floor. The card must be written before any W1 score, or it becomes post-hoc.",
+   "evidence": "research/wf_ideas_v4/round22/report.json R22-A4; research/wf_ideas_v4/round22/scan_hyp_morning_brief.json r22mb-3; research/wf_ideas_v4/round22/v_recheck_r22-rc-a-i046-eric-subvoxel-not-a-ci-trans.json; research/wf_ideas_v4/round22/scan_plancheck.json PC22-04; research/KNOWLEDGE/ideas.json I-406, I-393, I-364, I-046",
+   "suggested_action": "Append R22-A4 (A)+(B), quoting a header with all three W1 refs PENDING, before 06:45Z. Fix the '>= 0.955' text in e10_watch_loop.py only at its next planned edit.",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "Nine of the eleven stack builds that the W2 v4 lookup and W4 AMEND 2 depend on (exp82a-c, exp83c-g, exp84a) do not exist in experiments/; they exist only as round-21 scratch sha claims. Separately, the GPU quota has not been read for the 3rd time (estimated ~20.6-22 h of 30 used at 1x, ~25-26.5 h if T4x2 bills 2x). Either gap can cost a W3/W4 or E10 slot, because each slot needs a PASSED dummy by 00:00Z 29 Sep.",
+   "evidence": "research/wf_ideas_v4/round22/scan_plancheck.json PC22-07, PC22-08; research/wf_ideas_v4/round22/v_plancheck_pc22-08.json; research/wf_ideas_v4/round22/report.json R22-A5, R22-A6; CONTEXT.md l.2542, l.3344-3346; research/KNOWLEDGE/ideas.json I-416, I-400, I-405",
+   "suggested_action": "Rebuild the nine stacks tonight on CPU without pushing, check the sha prefixes and ledger families, and commit the named folders (R22-A11). Read https://www.kaggle.com/settings once before the next dummy push and apply the R22-A5 thresholds.",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "The 28 Sep morning brief (new I-425) has to go out at the first header where 47 AND 49 are terminal, and no later than 09:30Z. Q1 (lift the 29 Sep 02:00Z cap, default NO) changes W4 only if answered by ~23:00Z 28 Sep. Q2 confirms E10 after 02:00Z.",
+   "evidence": "research/wf_ideas_v4/round22/report.json R22-A8; research/wf_ideas_v4/round22/scan_hyp_morning_brief.json r22mb-1, r22mb-2, r22mb-4, r22mb-5; research/KNOWLEDGE/ideas.json I-425, I-300, I-330",
+   "suggested_action": "Send it using the r22mb-1 template with the r22mb-2 fill rules and all R22-A8 edits (no CI after 02:00Z, a neutral Q1, CI-? SCOPE wording in the W2b branch). Then log 'MORNING BRIEF SENT hh:mmZ; defaults Q1=НЕТ, Q2=ДА'.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "The orchestrator task template is stale again: it says E10 >= 0.956, finals by row 3, the R8 hard line and a 12:00Z consolidation. With it, round-23 agents will raise false violations.",
+   "evidence": "research/wf_ideas_v4/round22/scan_plancheck.json PC22-11; research/wf_ideas_v4/round22/report.json R22-A10; research/KNOWLEDGE/ideas.json I-259",
+   "suggested_action": "Update the template's key-facts paragraph before round 23 (~03:30Z 28 Sep), pointing to the round-22 CONTEXT lines.",
+   "urgency": "today"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "Round 22 closed several items only in research files: ALPHA (I-410, now has a lab), fc2 at cap 6 (new I-422), the DaughterNet fold subset (new I-423) and the MITO3 rewrite (I-082: pluggable, but its probmat features are NaN in the ship path). It also moved the claimed-daughter pool (32/99) into a single post-deadline theft-aware ranker (new I-424). None of these is in CONTEXT yet (R22-A9), so later rounds could re-propose them.",
+   "evidence": "research/wf_ideas_v4/round22/report.json R22-A9, rejected; research/wf_ideas_v4/round22/scan_hyp_extra_levers_29sep.json R22XL-1..5; research/wf_ideas_v4/round22/scan_recheck.json R22-RC-B, R22-RC-C; research/KNOWLEDGE/ideas.json I-410, I-422, I-423, I-424, I-082",
+   "suggested_action": "Write the single R22-A9 info line after A1-A4, and put I-424 plus I-082 on the post-deadline agenda (I-252).",
+   "urgency": "info"
+  },
+  {
+   "kind": "risk",
+   "what": "S3 / exp84a (cap 48 fc2) now has a weak lab prior against it: on exp60, cap48fc2 vs cap24fc2 is 0 TP / +4 FP, and the orphan supply is used up by cap 24. This is not a veto, because the lab under-valued cap 6 on public, but the pre-submit line has to state it.",
+   "evidence": "research/wf_ideas_v4/round22/scan_recheck.json R22-NF-cap48-adds-no-lab-tp-over-cap24; research/wf_ideas_v4/round22/report.json R22-A3 (6); CONTEXT.md l.3347-3365 (5) S3; research/KNOWLEDGE/ideas.json I-400, I-408",
+   "suggested_action": "If S3 fires, quote 'exp60 in-sample: cap48fc2 vs cap24fc2 = 0 TP / +4 FP; a weak prior, not a veto' in the exp84a pre-submit line.",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 22 (2026-09-28 ~01:50 UTC) is an incremental update over curation 21, at HEAD acbea01 plus the untracked round22/.\n\nSources:\n- CONTEXT.md l.3311-3377: 7 new entries (R8 COVERAGE, R21-A3 gates, W1 submits, the exp83 ledger rule and CI stacks, W2 TABLE v4 + S1-S6, W4 AMEND 2).\n- research/wf_ideas_v4/round22/: report.json R22-A1..A11, 5 scans, 13 skeptic verdicts.\n- The exp83a/exp83b probe.json files.\n- poll.log and ledger.md to 01:36Z, and E10 run 13.\n\nThe ledger goes from 419 to 425 ideas in 13 clusters, with 53 change records. New ideas:\n- I-420: CI-STACK DUMMY GATE.\n- I-421: PRE-SCORE CLARIFICATIONS / CI-? SCOPE.\n- I-422: fc2 at cap 6, refuted.\n- I-423: DaughterNet fold subset, refuted by construction.\n- I-424: post-deadline theft-aware division ranker for claimed daughters.\n- I-425: the 28 Sep morning brief.\n\nMain status changes:\n- W1 is submitted. Probes 47 (exp78b, I-398), 48 (exp79a, the first coordinject file on the LB, I-401/I-324) and 49 (exp78a, I-397) were all PENDING at 01:36Z. There are no new scores, so the lb-tested count is unchanged.\n- Items now logged in CONTEXT: I-324, I-396, I-399, I-413, I-414, I-415, I-418, I-383, I-404, I-327.\n- I-410 ALPHA has a lab and is refuted or dominated.\n- I-082 MITO3 moves from refuted to deferred-after-deadline: it is a pluggable edges-only stage, but its probmat features are NaN in the ship path.\n- Wording/evidence updates: I-046 (a failure-class record, not a CI transfer record); I-080/I-059/I-060/I-064 (RC-B anatomy added); I-408 (TP/FP curve by cap); I-412, I-049, I-139 (John Taylor's knobs, log only); I-259 (task template, back to in-plan).\n\nStatus totals: lb-tested 55, lab-tested 24, refuted 207, deferred 46, in-plan 91, open-untested 2.\n\nOrphans: the strict orphan is still I-233. At-risk items: I-252, I-257, I-259, I-330, I-336, I-405, I-406, I-407, I-416, I-420, I-421, I-425.\n\nThe most urgent items are the R22-A1 gate before the exp83a/b outputs are read, and R22-A2/A3/A4 before 06:45Z."
+}

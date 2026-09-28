@@ -1,0 +1,14 @@
+# round22 report notes
+- 2026-09-28T01:28:01Z start: report.json absent; writing fresh.
+- 01:28Z judge checks (read-only):
+  - CONTEXT.md 3398 lines; RESUME POINT last at l.2599 (26 Sep 22:46Z); 0 hits 'FINALS CARD', 'CORRECTION to the 18:56', 'CI-? SCOPE'. Last GPU quota line l.2542 (07:55/30 h, 26 Sep).
+  - poll.log header 2026-09-28T01:26:07Z: 56623073 (47 exp78b), 56623105 (48 exp79a), 56624341 (49 exp78a, submitted 00:50:37Z) all PENDING.
+  - kaggle kernels status 01:28:54Z: vitaliineibauer/biohub-exp83a-k2cap12fc2-ci RUNNING; biohub-exp83b-k2cap8-ci RUNNING.
+  - experiments/ has exp80a, exp81, exp83a, exp83b only; exp82a-c, exp83c-g, exp84a absent (PC22-07 confirmed).
+  - CONTEXT l.2709-2710 R13-A1 (5) 'F1 consolidation by 28 Sep 12:00Z' never superseded (PC22-05 confirmed); l.3316-3334 CI-RAN NO-OP / (d) ERROR>10h vs W2 v4 (2)(iv) and W4 AMEND 2 (1)-2 conflict confirmed (PC22-02).
+  - e10_watch_loop.py l.28/l.78 still '>= 0.955' (PC22-04).
+  - memory/project-lb-probe-approval.md description still 'E10 v1 in force' (PC22-01).
+  - W4 AMEND 2 (5) allows no CI kind after 02:00Z -> CI T_last 07:30Z vs 08:00Z (r22mb-6) is moot.
+  - Quota estimate conflict: r22mb-1 skeptic '~19.5-21' (copied from R21-A11) vs PC22-08 skeptic '~20.6-22 h (1x) / 25-26.5 h (2x)' -> use PC22-08.
+  - Earliest W1 terminal: safetail latency floor 6.69 h -> 47 could be terminal ~06:58-07:06Z -> pre-score deadline 06:45Z.
+- 2026-09-28T01:32:58Z report.json (11 actionable R22-A1..A11) and REPORT.md written; exp83a/b still RUNNING at 01:28:54Z.

@@ -1,0 +1,11 @@
+# v_recheck R22-RC-B notes
+- 2026-09-28T01:23:46Z start; no prior JSON.
+- 01:25Z Re-aggregated scratchpad r22/supply_all.json + supply3.json (56 clips, 99 GT div): control 16/25, ins35 25/31, cap6 25/35, cap12fc2 28/42, cap24fc2 30/47, cap48fc2 30/51, uncapped 30/59 -> matches finding.
+- Anatomy at cap24fc2: claimed 3+29=32, one_daughter_missing 21, orphan in_gates thr_low 11, orphan out_gates 5, parent side 2+1+1=4 -> matches. BUT class 'TP' = 26 vs official division_tp 30 (supply3.py approximates TP as 'u in tpset'); so the miss anatomy sums to 73 vs FN 69 -> ~4 misclassified. Minor.
+- supply2.json diag (control, 35 claimed): claimant unmatched 34, motion_relinked 32, ep>=0.6 19, geo_ok (steal relaxed) 25, DaughterNet sc>=0.4 3 -> matches. pool.json: relaxed claimed triples 2,894,751 (all relaxed 2,990,738) -> "2.89M" ok.
+- div_insert.py score = p_par(u)*p_dau(v)*p_dau(c1)^alpha, steal needs ep<0.3 and score>=ep+0.2 -> supply3's sc formula matches (alpha 1).
+- Overlap: round8/scan_recheck.json R8-RC-C already measured 62/99 detected-unforked (steal 35 / orphan 27) and put a learned far-daughter pair model post-deadline, with lab break-even precision J/(1+J)=0.114, private 0.11-0.20 (PRE-REG v3 R2). R22-RC-B adds claimant anatomy + cap curve; partly a repeat.
+- 45% bar (PROMPT_FRIEND_A.md l.39) is superseded by the R2 break-even already (R8-RC-C); 'public pays more per fork' rests on one probe (45, +0.002 = rounding-level) while lab cap6 vs cap4 = +0 TP/+4 FP. Probes 47/49 (cap12fc2, cap8) still PENDING at 01:24Z (poll.log) -> do not call it 'stale because of public' before they read.
+- Risk: 'supply exhausted by cap 24' is in-sample lab; must NOT be used post hoc to alter pre-registered S3/exp80a/exp84a rules (CONTEXT 01:02Z R21 (5)).
+- Verdict: not refuted; curator/post-deadline only; feasibility trivial (no build, R8 respected).
+- 2026-09-28T01:26:04Z final JSON written (refuted=false).

@@ -1,0 +1,4 @@
+- 2026-09-28 01:34Z start round 22 watch; no watch.json in 22 -> building incrementally from WATCHLIST.md (02:49 27Sep? check)
+- 01:37Z read round22 REPORT.md/report.json (R22-A1..A11, written 01:32:52Z) + scan notes; CONTEXT now 3398 l. (new l.3311-3377); commits d36a4b2..acbea01 (no trailer). Landed: R21-A1 (l.3311), A3 (l.3316), A2 W1 submits (l.3338,3342), A5/A6 (l.3344), A7 (l.3347), A8 (l.3366), A13 (d36a4b2). Not landed: R21-A4/A9/A11/A12, RESULTS rows, E10 text.
+- 01:40Z mapped: done W216/W203/W217/W218/W219(1)/W220/W221/W223/T113/T18; new W224-W229 (R22-A1/A3/A6/A7/A10/A11), T129-T133, I249-I260; W185=R22-A2, W214=R22-A4, W212=R22-A5, W202+=R22-A9, W222=R22-A8. Writing WATCHLIST.
+- 01:39Z WATCHLIST.md + watch.json written (complete, 15 alerts)

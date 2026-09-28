@@ -1,0 +1,80 @@
+{
+ "task": "round22 scan_hyp_morning_brief",
+ "written_utc": "2026-09-28T01:10Z",
+ "complete": true,
+ "summary": "Brief template ready (r22mb-1, Russian, placeholders) with fill rules (r22mb-2). The fill rules are a case table from the 47/49 codes to BASE, DIV stop rule and W2a/W2b. They are copied from READ TABLE v3, W2 TABLE v4 and W4 AMEND 2 without change. Send ONE message at the first header with 47 and 49 terminal (~08:15-08:50Z, latest 09:30Z). 48 (CI) is not waited for; the brief states W2b conditionally. The questions are numbered with defaults: (1) lift the 02:00Z cap, default NO (worth <= 2 files, <= ~0.02 bronze); (2) E10 copy after 02:00Z until ~10:00Z, default YES. Q3 (SEC as a final) is a passive 'public-only' line. The finals block uses {V_pub, #37} with the R21-A9 ranges. Blockers before the brief: append R21-A9 finals card lines to CONTEXT before ~07:25Z (not landed), and write R21-A4's RESUME POINT (the last one is still 26 Sep 22:46Z). Minor: the CI T_last value differs between two tables (07:30Z vs 08:00Z); quote 07:30Z. Nothing reaches R8, and no new mechanism is proposed.",
+ "findings": [
+  {
+   "id": "r22mb-1",
+   "kind": "new-hypothesis",
+   "urgency": "today",
+   "what": "Russian morning brief TEMPLATE (R20-A12 + R21-A10 merged into one message, 4 blocks: night / next windows / finals logic / 2 numbered questions + a passive Q3 line). Placeholders in {BRACES}. No new mechanism; runtime cost 0; gate = the existing table rules only.\n\nДоброе утро. Сводка на {HHMM}Z 28.09.\n\n1. Ночь\n- Вчера: 45 = exp70g (K2 + вставка cap 6) = 0.956, наш лучший; 46 (cap 6 + thr 0.3 + forkmid) = 0.956, ничего не добавил.\n- W1 ушёл по плану (3 файла, пробные прогоны чистые):\n  • 47 exp78b (cap 12 + frame cap 2): {D47} -> {C47_RU};\n  • 49 exp78a (cap 8): {D49 | ждём ~08:15-08:45Z} -> {C49_RU};\n  • 48 exp79a (cap 6 + CI-сдвиг координат): ждём ~09:40-10:40Z.\n- Вторичка N2 дообучена (эпоха 2); файл exp81 = exp70g + N2, пробный прогон чистый (121 085 узлов, -0.14%).\n- Собраны стеки с CI: exp83a (cap 12 + CI) и exp83b (cap 8 + CI), пробные прогоны {PASS | идут}. exp80a (cap 24 + fc2): PASS.\n- Таблица {HHMM}Z: мы #{RANK}, {DISP}. Квота GPU {Q}/30 ч.\n\n2. Дальше (автоматически по таблицам W2 v4 и W4 amend 2, от тебя ничего не нужно)\n- База для стеков: {BASE_RU}. Направление cap: {DIV_RU}.\n- W2a {T_W2A}Z: {W2A_RU}.\n- W2b 12:00Z (первым идёт публичный ноутбук выше нашего, если появится): {W2B_RU}.\n- 29.09, 00:05-01:45Z: до 4 файлов (полный стек «+»-рычагов на базе; по файлу на каждый непрочитанный рычаг) + слот под копию. Ступеней ручек, N1, tau, DC не будет.\n\n3. Финалы 29.09 (отмечаешь ты до 20:00Z; сейчас стоят #37 + #38)\n- Первый файл: лучший по дисплею на паблике из тех, что можно ставить без нового «да» (без CI и без новой вторички, время <= 9 ч). Сейчас это {V_PUB}.\n- Второй: всегда #37 (K2, cap 4, 0.954). Он страхует private от всего, что подобрано по паблику после 26.09. #38 уходит.\n- Более крупный cap сменит exp70g только при строго большем дисплее или при равном дисплее с подтверждённым подъёмом (защита от случайной удачи на одном эмбрионе).\n- По модели (не измерение): у {V_pub, #37} бронза ~0.55-0.8, серебро ~0.2-0.55; у текущей пары #37 + #38 ~0.35-0.65 и ~0.03-0.23.\n- Итоговое предложение пришлю 29.09 в 12:00Z, обновлю в 18:00Z.\n\n4. Вопросы (ответь номером; без ответа действует вариант по умолчанию)\n1) Снять лимит «последний сабмит 02:00Z 29.09» и отправлять до ~{T_LAST}Z (CI до ~07:30Z)? Это ещё 1-2 файла по результатам ночных чтений, со счётом до ~18:15Z. Польза малая: шанс поднять дисплей на 0.001 примерно 1 из 3-6, для private около нуля. По умолчанию: НЕТ. Ответ нужен до ~23:00Z сегодня.\n2) Если после 02:00Z 29.09 появится публичный ноутбук выше нашего лучшего (сейчас >= {E10_THR}), копировать его до ~10:00Z? Финалы без твоей отметки не меняются. По умолчанию: ДА.\nДля сведения (не вопрос): файлы с новой вторичкой (exp81 и стеки с ней) остаются только пробами на паблике. Спрошу отдельно, только если такой файл станет лучшим по дисплею.",
+   "evidence": "CONTEXT.md l.3196-3200 (45 read), l.3307-3310 (46 read), l.3316-3346 (R21-A3 gates, W1 submits, exp83a/b), l.3347-3378 (W2 TABLE v4, W4 AMEND 2); round20/report.json R20-A9, R20-A12; round21/report.json R21-A9 (iii)/(iv), R21-A10, R21-A11; experiments/lb_poll/poll.log l.18689-18754 (refs 56623073, 56623105, 56624341)",
+   "action": "Main session: fill the placeholders with FILL RULES (r22mb-2) and send as ONE chat message at the first header with 47 and 49 terminal (latest 09:30Z). Log 'MORNING BRIEF SENT hh:mmZ' plus the two defaults in CONTEXT."
+  },
+  {
+   "id": "r22mb-2",
+   "kind": "new-hypothesis",
+   "urgency": "today",
+   "what": "FILL RULES for the template: a case table (a)-(f) that maps the 47/49 codes to BASE, DIV stop rule and W2a; a conditional W2b text, because 48 (CI) is unread at send time; V_pub, T_last and the E10 threshold formulas; answer parsing. Everything is copied from the pre-registered tables, with no new rule.\n\nFILL RULES (main session; all from CONTEXT READ TABLE v3 (1)/(5), R21-A3 (b)/(c), W2 TABLE v4, W4 AMEND 2, R21-A9):\n- Send ONE message at the first poll header where 47 AND 49 are terminal (expected ~08:15-08:50Z); hard latest 09:30Z even if 49 is PENDING. 48 is never waited for.\n- D47/D49 = display; C*_RU from the count rule (S0 = newest download with count 48, then 49; fresh manual download within ~10 min of each terminal header; log k):\n  '+' -> 'лучше cap 6 (дисплей {D} / подъём: обогнали {N} команд)'; '0' -> 'не лучше cap 6'; '?' -> 'не читается (дисплей равен, подъём не виден)'; '-' -> 'хуже cap 6'; ERROR -> 'ошибка на {L} ч' (one unchanged resubmit only if L < 10 h and a W2 slot would otherwise stay empty).\n- '0' only if exp70g still holds our unrounded best at that S0; after an UP of 47, a 0.956 for 49 is '?'. k = 0 -> '?'.\n- BASE_RU = strictly highest display among COMPLETE cap-family files; tie -> the file with the attributable UP; else exp70g > exp78a > exp78b > exp80a > exp70q.\n- DIV_RU / W2A_RU by case:\n  (a) 47 '+' and D47 >= D49 -> DIV 'идём дальше: cap 24 + fc2 (S3)'; W2A 'exp80a = K2 + cap 24 + frame cap 2'.\n  (b) 49 '+' and 47 not '+' -> DIV 'стоп на cap 8 (S2)'; W2A 'exp81 = exp70g + N2 (проба новой вторички)'.\n  (c) both '-' or '0' -> DIV 'закрыто, база exp70g (S1)'; W2A 'exp81'.\n  (d) any '?' without a '+' -> DIV 'шага нет (S4)'; W2A 'exp81'.\n  (e) both '+' with D49 > D47 -> BASE exp78a; DIV 'стоп на cap 8'; W2A 'exp81'.\n  (f) 49 PENDING at send time -> W2A 'решится после чтения 49 (~08:45Z): cap 24 + fc2, если cap 12 «+» и не ниже cap 8; иначе exp81'.\n- W2B_RU (48 unread at send time; state it conditionally): 'после чтения 48 (~10:40Z): если CI «+» -> {exp83a при базе cap 12 | exp83b при базе cap 8 | при базе exp70g слот уходит на вечер (<= 23:30Z) под стек «+»-рычагов}; иначе {exp81, если W2a взял exp80a | стек база + CI, если CI не читается и база cap 8/12 | вечерний стек или пусто}'. CI-RAN GATE: dL = L_hi(48) - L_hi(47) <= 0.5 h -> CI did not run -> '?' (post-deadline list, never resubmitted).\n- V_PUB = R20-A9 (a)/R21-A9 (i): 'exp70g (cap 6), 0.956' unless a non-CI non-SEC cap file is strictly higher or equal with an attributable UP; L_hi <= 9.0 h; gate did NOT fire.\n- T_LAST = 18:30Z - (L_ref + 0.25 h), L_ref = the largest L_hi of our 3 newest COMPLETE K2-like refs (with 7.81 h: ~10:25Z). CI: quote the stricter 07:30Z (W4 AMEND 2 (5)), not 08:00Z.\n- E10_THR = our best display + 0.001 (now 0.957; 0.958 if 47/49 displays 0.957).\n- Parse answers per R16-A1 (5): an answer counts only for the question it names; a bare 'ок/да' is an acknowledgement -> defaults stand, reply once with the numbered checklist, no second nag. Echo the parsed answer in one CONTEXT line.",
+   "evidence": "READ TABLE v3 (1)/(5) CONTEXT l.3222-3262; R21-A3 (b)/(c) l.3316-3337; W2 TABLE v4 (1)-(5) l.3347-3365; W4 AMEND 2 (5) l.3374-3378; v2 (7) l.3172-3175; R16-A1 (5) l.2906-2913",
+   "action": "Use them verbatim when filling. When a case falls outside (a)-(f), write 'по таблице v4' and log the case in CONTEXT, with no new rule."
+  },
+  {
+   "id": "r22mb-3",
+   "kind": "plan-issue",
+   "urgency": "now",
+   "what": "The finals card lines (R20-A9, with the R21-A9 changes: V_pub definition, #37 partner, ranges, the Russian 29 Sep message, the E10/SI line) are NOT in CONTEXT.md. The brief's block 3 quotes them, and their deadline is the first W1 terminal header (~07:30Z).",
+   "evidence": "grep 'FINALS CARD' CONTEXT.md = 0 hits at 01:05Z; IDEAS.md curation 21 tail: 'R20-A3, R20-A7, R20-A9, R20-A10 and R20-A13 are NOT' logged; round21 R21-A9 deadline 'before the first W1 terminal header (~07:30Z 28 Sep)'",
+   "action": "Append R21-A9 (R20-A9 verbatim plus (i)-(v)) to CONTEXT before 07:25Z, i.e. before 56623073 can turn terminal, and quote the poll header showing it PENDING. Then send the brief."
+  },
+  {
+   "id": "r22mb-4",
+   "kind": "plan-issue",
+   "urgency": "today",
+   "what": "Send timing. At 08:00Z likely only 47 is read. 49 (submitted 00:50:37Z) scores ~08:12-08:45Z and 48 (CI) ~09:30-10:42Z. W2a (08:45-10:00Z) needs both DIV reads. So the one message should go at the first header with 47 and 49 terminal (latest 09:30Z), with 48 given conditionally. 48 gets no second morning message: W2b runs by itself, and a CI file becoming the best display goes into the 29 Sep 12:00Z finals message as INFO with the CI caveat (R21-A9 (i)).",
+   "evidence": "poll.log: 47 00:06:09Z, 49 00:50:37Z, 48 00:06:33Z; K2-family L 7.36-7.81 h (CONTEXT 45/46 reads, round 21 'L_hi 7.54 -> 7.81'); CI model 9.4-10.6 h (round 21 facts)",
+   "action": "Set the brief waiter on '47 AND 49 terminal OR 09:30Z'. Do not wait for 48."
+  },
+  {
+   "id": "r22mb-5",
+   "kind": "new-hypothesis",
+   "urgency": "info",
+   "what": "The honest arithmetic behind question 1 (lift the 02:00Z cap), default NO. 29 Sep has 5 slots, and W4 uses <= 4 planned files plus 1 held for E10. After 02:00Z only a non-CI twin of a '+' FULL, one DIV step under S3, or an E10 copy is allowed, so the lift buys <= 2 extra files, submitted after the W4 reads (~07:40-09:30Z) and read by ~18:15Z. P(one of them raises V_pub's display) ~0.15-0.35 (this week: 1 clear step, 45, in ~8 knob probes 39-46). The bronze spread among cap-family F1s paired with #37 is <= ~0.06 (R21-A9 (iii)), so the expected medal value is <= ~0.02 bronze, and the private value is ~0 because of winner's curse. Cost: less time to review the finals before the ~19:00Z FINALS READ. A late or PENDING file is harmless, because a non-COMPLETE file is never a final. So the default stays NO. The user's 19:10Z wish to 'try all variants first' is the only argument for YES, and the brief says so neutrally.",
+   "evidence": "W4 AMEND 2 (1),(2),(5) CONTEXT l.3366-3378; v2 (7) T_last formula l.3172-3175; R21-A9 (iii) ranges; USER 19:10:58Z entry",
+   "action": "Keep question 1 as written (default NO, answer by ~23:00Z 28 Sep). If YES: log T_last from the formula using the L_hi of 47/49 and use only the W4 AMEND 2 (5) content."
+  },
+  {
+   "id": "r22mb-6",
+   "kind": "plan-issue",
+   "urgency": "later",
+   "what": "The CI T_last after a lift has two values: v2 (7) T_last - 2.4 h gives ~08:00Z (the R20-A12 wording 'CI до ~08:00Z'), while W4 AMEND 2 (5) says ~07:30Z.",
+   "evidence": "CONTEXT l.3173-3174 vs l.3375; round20 R20-A12 action text",
+   "action": "The brief quotes the stricter 07:30Z. If the lift is granted, log one line: 'CI T_last = min(07:30Z, T_last - 2.4 h)'."
+  },
+  {
+   "id": "r22mb-7",
+   "kind": "plan-issue",
+   "urgency": "today",
+   "what": "The last RESUME POINT is still 26 Sep 22:46Z (R21-A4 not landed; 7th round in a row). The brief's 'night' block must match a fresh RESUME POINT (45/46 reads, W1 refs, N2/exp81, exp80a, exp83a/b, W2 v4, W4 AMEND 2, finals = user picks 29 Sep).",
+   "evidence": "grep 'RESUME POINT' CONTEXT.md: last at l.2599 (2026-09-26 22:46 UTC)",
+   "action": "Write R21-A4's RESUME POINT before the brief. Its fact list can be the brief's block 1 in English."
+  },
+  {
+   "id": "r22mb-8",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "Q3 (a SEC/N2 file as a final) is kept as a passive line with default 'public-only', not as a question. R20-A12 forbids re-asking unless a SEC file tops the display, and no SEC file is on the LB before W2a. The E10-after-02:00Z question is a confirmation with default YES: W4 AMEND 2 (5) already allows it under E10 v3 until ~10:00Z. Its threshold must follow our best display (best + 0.001), not a fixed 0.957.",
+   "evidence": "R20-A12, R21-A10 (round20/21 report.json); W4 AMEND 2 (5) CONTEXT l.3374-3378; R21-A9 (v)",
+   "action": "None beyond using the template wording. If 47 or 49 displays 0.957, write 0.958 in question 2 and in the E10 loop note."
+  },
+  {
+   "id": "r22mb-9",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "Nothing in this scan reaches R8, and no new mechanism is proposed. The R8 hard line (27 Sep 12:00Z) has passed. Every lever in the brief is already registered: cap rungs, N2/SEC, CI, the W2 v4 and W4 AMEND 2 stacks, and E10 v3. No closed family is re-proposed: overlap consensus, forkmid, K3b, forkblob, ANTIPAR, DNVETO, K4, gap, z-split, headroom, swapfix, stitch, leaf prune, float, edge filter, head retrain, cap 10/16, fc2 on cap 8, thr/DC/tau rungs, N1.",
+   "evidence": "IDEAS.md curation 21 header ('nothing reaches R8', R21RK-9, r21w-10); round21/REPORT.md section 5",
+   "action": "None."
+  }
+ ]
+}

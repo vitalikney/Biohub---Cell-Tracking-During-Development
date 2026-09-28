@@ -1,0 +1,37 @@
+{
+ "summary": "Round-22 delta scan, 01:03-01:16 UTC 28 Sep, compared with round 21 (22:30Z). E10 P1: tools/e10_snapshot.py wrote experiments/e10_watch/20260928T0103Z.txt with CHANGES=10 against 00:43Z. The kernel lists and the x138/amanatar statuses are unchanged. The hourly P2 look-check groups since 22:30Z were 0, 1, 0 and 0, far below the >=5 signal, so e10_port_gate.py was not run. LB at 01:03:19Z: 3,961 teams (+2). We are #168 at 0.956, 10th of 59 in the 0.956 block, with 158 teams strictly above us (156 at r21). Counts, with r21 in brackets: 0.953 = 416 (414), 0.954 = 124 (120), 0.955 = 83 (86), 0.956 = 59 (52), 0.957 = 38 (38), >=0.955 = 300 (294), >=0.960 = 91 (89), >=0.970 = 8 (7). The only top-20 change is slime 0.968->0.970 (#17->#8). There is one new discussion item with content: in topic 743929, John Taylor (AI) (#102) named his two +0.001 one-line knobs on his x138-fork stack. They are ILP_DIVISION_WEIGHT 1.2->0.4 and READMIT_MIN_SCORE 0.965->0.94. These are public knob changes, so they are closed for us by team rule and R8 and are info only. There is no new topic and no host post. Code: nothing new, no notebook at 0.954 or above, so nothing was pulled. Overview, timeline and Data are unchanged.",
+ "findings": [
+  {
+   "id": "r22-e10-p1-no-signal",
+   "kind": "new-fact",
+   "what": "E10 P1 at 01:03Z vs 00:43Z: CHANGES=10, none of them a trigger. All 10 are leaderboard histogram, GE and rank moves. The five kernel lists (dateRun, scoreDescending, anvithpothula, thtennant, amanatar) are unchanged, and so are the statuses of x138 (anvithpothula/biohub-0-953-lb-original) and amanatar/optimized-biohub-max-score. The hourly snapshots since the r21 baseline had these P2 look-check groups: 22:43Z CHANGES=5, group 0; 23:43Z CHANGES=9, group 1 (D Chakraborty 0.953->0.956); 00:43Z CHANGES=4, group 0; 01:03Z CHANGES=10, group 0. The cumulative diff 22:30Z->01:03Z also shows only one team going from <=0.953 to >=0.956 (D Chakraborty). The P2 signal is >=5 in one window, so e10_port_gate.py was not run.",
+   "evidence": "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/experiments/e10_watch/20260928T0103Z.txt (DIFF section); experiments/e10_watch/20260927T2243Z.txt, 20260927T2343Z.txt, 20260928T0043Z.txt (DIFF sections)",
+   "action": "None. The hourly watch continues. The ~23:30-02:00Z burst is still in progress, and its scores land about 7 h later (~07-09Z).",
+   "urgency": "info"
+  },
+  {
+   "id": "r22-lb-delta",
+   "kind": "new-fact",
+   "what": "LB 01:03:19Z: 3,961 teams (+2 vs 22:30Z). We are #168 (CSV Rank) at 0.956, 10th of 59 in the 0.956 block (ranks 159-217). 158 teams are strictly above us (156 at r21). Two moved above us: tc-al 0.955->0.961 (#75) and Mthem77 0.954->0.957 (#131). Other movers: slime 0.968->0.970 (#17->#8, the only top-20 change; names and scores are otherwise identical), Quantizr 0.965->0.966, Noah Öksüz 0.964->0.965, CrazyML 0.958->0.960, Vijay Mariappan 0.957->0.958. Seven teams joined our block: Suncrest, Kim Jinseo, QYQ1693 and Kaz from 0.955; Fernando Couto and yoshino from 0.954; D Chakraborty from 0.953. Majid Aleissa and Suyash Verma moved to 0.955. There are 8 new 0.954 teams (including Thomas Greissler, new) and 11 new 0.953 teams. Every one of these scores comes from a submission made 14:56-19:39Z on 27 Sep, which fits the ~7 h re-run latency. Only one row >= 0.953 has a submission after 22:30Z: PavelLiashkov 0.954 (00:20:38Z, score unchanged). No shared-score cluster.",
+   "evidence": "experiments/e10_watch/20260928T0103Z.txt (leaderboard_rows, histogram) row-diffed by TeamId against 20260927T2230Z.txt (scratch script r22_lbdiff.py)",
+   "action": "None on finals. Rank drift inside the 0.956 block is display only (public = ~29%).",
+   "urgency": "info"
+  },
+  {
+   "id": "r22-jt-knobs-disclosed",
+   "kind": "new-fact",
+   "what": "John Taylor (AI) (#102, public 0.959) answered Justin CH123 about 23:00Z in topic 743929 and named the two one-line steps on his x138-fork stack (x138 + his own ported post-processing, public 0.957). The first step, 0.957->0.958, was 'ILP_DIVISION_WEIGHT 1.2 → 0.4', a 3x cut. The second, 0.958->0.959, was 'READMIT_MIN_SCORE 0.965 → 0.94'. He says both changed the node count by under 1%. For the readmit step, his annotated-edge Jaccard was unchanged locally ('0 of 2,212 edges changed'). These are the same knobs x138 sets (BIOHUB_ILP_DIVISION_WEIGHT=1.2, BIOHUB_READMIT_MIN_SCORE=0.965 in experiments/ext_x138/biohub-x138.ipynb). Our only earlier ILP-division probe was LB probe 3 (weight 0.9, on the old 0.941 pipeline, neutral). The ILP-division-weight line was closed in r11 (fork precision 0.149 is below the 0.161 break-even). Each step is +0.001 on the public ~29% slice only, read on a different base (his 0.957 PP stack, not K2), and is exactly the public-knob-ladder pattern our pre-registration forbids.",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/743929 (John Taylor (AI) reply, 'Posted 2 hours ago' at 01:10Z); experiments/ext_x138/biohub-x138.ipynb cell 0; CONTEXT.md line 157 (probe 3); research/wf_ideas_v4/round11/v_recheck_r11-rc-b-ilp-division-weight.json",
+   "action": "Log only (WATCHLIST I227 follow-up and the post-deadline list). No build and no probe: it is closed by the 'no public knob ladders' rule and the R8 hard line (27 Sep 12:00 UTC has passed). Do not let it reopen the ILP-division line.",
+   "urgency": "info"
+  },
+  {
+   "id": "r22-disc-code-overview",
+   "kind": "new-fact",
+   "what": "Discussion: no new topic since r21 (sort=published, newest is still 743929). The only other new comment is Chris Deotte's 'hello Mohammed. Welcome to Kaggle!' in 742169, which has no content. No host announcement. Code 'Recently Run' is unchanged: Biohub - Track Your Cells 0.946 (same 22:04Z run), Testbiohub 0.947, optimized-biohub-max-score 0.953. The CLI scoreDescending top 20 is identical to r21 (the browser score sort did not render), so no notebook is at >= 0.954 and nothing was pulled. Overview is unchanged: Final Submission Deadline September 29, 2026 11:59 PM UTC, header '2 DAYS TO GO'. The Overview stats give a new baseline: 13,475 entrants, 4,539 participants, 3,961 teams, 90,786 submissions. The Data page is unchanged (24,886 files, 87.61 GB).",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion?sort=published ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/742169 ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/code?sortBy=dateRun ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/overview ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/data",
+   "action": "None.",
+   "urgency": "info"
+  }
+ ]
+}

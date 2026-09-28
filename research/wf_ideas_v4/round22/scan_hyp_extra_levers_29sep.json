@@ -1,0 +1,57 @@
+{
+ "task": "round 22 scan_hyp_extra_levers_29sep: cheap pre-buildable rungs beyond cap/CI/SEC on the cap-6 base (steal, DIVINS_ALPHA, fold-ensemble size, frame cap 2 on cap 6); at most 3 ranked candidates",
+ "written_utc": "2026-09-28T01:25Z",
+ "complete": true,
+ "files": {
+  "notes": "research/wf_ideas_v4/round22/scan_hyp_extra_levers_29sep.notes.md",
+  "lab": "C:/Users/vital/AppData/Local/Temp/claude/c--Users-vital-Documents-kAGGLE-Biohub---Cell-Tracking-During-Development/acabaea6-42c1-4115-a146-2ddc5bb7e8c8/scratchpad/r22lev/{sweep.py,an.py,sweep_raw.json,an.json,sweep.log}"
+ },
+ "ranking": [
+  "R22XL-2 cap6+fc2 (structural re-rank, weak +, knob-banned, do not build)",
+  "R22XL-3 ALPHA (refuted/dominated)",
+  "R22XL-4 fold subset (untestable, volume in disguise)"
+ ],
+ "summary": "Round 22 extra-levers scan for 29 Sep (written ~01:25Z 28 Sep, before any W1 read). I re-ran the exp60 insertion lab (56 clips, in-sample 5-fold DaughterNet; cap-4 parity exact at 0.939878) with 14 arms over DIVINS_ALPHA, frame cap on cap 6 and steal cap. Result: nothing reaches R8, and nothing earns a pre-built rung. (1) cap 6 + FRAME_CAP 2 is the only lever that differs structurally from 'more cap'. It re-ranks at equal volume (289 vs 286 insertions): 26/56 clips change, 30 in / 27 out, net -1 evaluable FP. Lab gain vs cap 6 is +0.0002 (bootstrap CI90 -0.0002..+0.0008; 44b6 0). Its public prior is weak (E ~+0.0001, P(display >= 0.957) ~0.2). It is a knob rung, which v2 (6) and W4 AMEND 2 (4) ban in W3/W4. exp78b (cap 12 + fc2) already carries fc2, so it adds no decision value. (2) DIVINS_ALPHA: 0.5 is an exact lab null at cap 6 (52 swaps, 0 net evaluable). alpha 0 is extra volume in disguise (eligible x3.8, +44 insertions) with adj edge -0.00016. alpha 2/3 is refuted in the lab (-0.0017/-0.0022; it drops 3-4 TPs, including the only 44b6 TP). (3) DaughterNet fold-subset ensembles cannot be replayed from the dumps, which hold only the ensemble p. Fewer folds give more extreme p (r9h-4: 99th pct 0.90 vs 0.83), which again means more volume above thr 0.4, plus noise. It has no gate. A smaller steal cap (sf 0.34) is null (-0.00007). Steal off stays closed (-0.002). Runtime is ~0 h for every arm: selection happens after DaughterNet scoring. Recommendation: keep W2 TABLE v4 / W4 AMEND 2 as written. Build nothing. The cap direction reads (47 exp78b, 49 exp78a) already span every structural insertion lever we have.",
+ "findings": [
+  {
+   "id": "R22XL-1",
+   "kind": "new-fact",
+   "what": "Lab (in-sample exp60, 56 clips): alpha and frame-cap-on-cap-6 arms vs cap 6. cap6_fc2 +0.000208 (CI90 -0.00019..+0.00081; 44b6 0, 6bba +0.00025; 289 insertions; 30 in 0TP/1FP/29ign, 27 out 0TP/2FP/25ign; adj edge +7e-5). cap6_a05 0.000000 (52 in / 30 out; 1 FP for 1 FP). cap6_a0 +0.00059 (CI90 -0.00055..+0.00228; 330 insertions, eligible 1994->7620; adj edge -0.000158). cap6_a2 -0.00174, cap6_a3 -0.00215 (44b6 -0.0050 each; lose 3-4 TP). cap12_fc2_a05 is +0.0001 over cap12_fc2 (556 vs 462 insertions = more volume). cap6_sf0.34 -0.00007.",
+   "evidence": "C:/Users/vital/AppData/Local/Temp/claude/c--Users-vital-Documents-kAGGLE-Biohub---Cell-Tracking-During-Development/acabaea6-42c1-4115-a146-2ddc5bb7e8c8/scratchpad/r22lev/sweep.py, sweep_raw.json, an.json, sweep.log (373 s); cap4 parity 0.939878 div 25/31/74 = r20ins an2.json; tools/div_insert.py l.244-298 (score = p_par(u)*p_dau(v)*p_dau(c1)**alpha; caps applied after scoring).",
+   "action": "Log one CONTEXT info line with the caveat 'in-sample, <= 3 evaluable changes per arm, lab sign was wrong for cap6'. Add to the IDEAS I-410 row: ALPHA now has a lab. >1 is refuted, 0.5 is a null, 0 is volume in disguise.",
+   "urgency": "today"
+  },
+  {
+   "id": "R22XL-2",
+   "kind": "new-hypothesis",
+   "what": "Candidate 1 of 3 (the only structural one): exp70g with DIVINS_FRAME_CAP 2 at cap 6 (steal cap 3). It re-ranks at equal volume: in a frame with two strong triples, the second one displaces a weaker triple from a later frame. It is not 'more cap'. Arithmetic: 46% of lab clips change, ~1 swap each, ~5% of swaps evaluable -> public ~29-38 clips x 0.46 x ~2 swaps x 5% = ~1.5 evaluable changes. The lab net is -1 FP per 3 evaluable changes, so E ~+0.0001..+0.0003 if the sign transfers (a TP is worth ~+0.0023 public, an FP ~-0.0007). exp70g sits at ~0.95634, so +1.6e-4 shows as 0.957. Honest prior: P(display >= 0.957) ~0.2, P(<= 0.955) ~0.15. Private ~0 +/- 0.001. Runtime +0 h.",
+   "evidence": "an.json cap6_fc2; round20 an2.json cap6_fc2 (same numbers); dummy insertions cap6 6/0/6/6 (3 of 4 dummy videos at cap, so fc2 can bind); CONTEXT l.3347-3377 (W2 TABLE v4; W4 AMEND 2 (4) 'Never: knob ... rungs'), READ TABLE v2 (6).",
+   "action": "DO NOT BUILD. It is a knob rung, which W3/W4 ban. Its read is dominated by exp78b (cap 12 + fc2, already on the LB), and no S1-S6 branch needs it. The only admissible use would be as a replacement for the exp76e filler in an otherwise EMPTY W2b/W3 slot, and that needs a new user OK because it changes a pre-registered filler. Cheapest honest gate if the user asks: a dummy (121,252 nodes; forks within +-2 of exp70g's 81; 'cap_frame: 2' in the DIVINS ENABLED line; 0 errors), read against exp70g with the v3 codes.",
+   "urgency": "info"
+  },
+  {
+   "id": "R22XL-3",
+   "kind": "recheck-old",
+   "what": "Candidate 2 of 3: DIVINS_ALPHA (I-410; closed without a lab in round 20). It now has a lab, and every value is either refuted or not structural. alpha 2-3 (a stricter c1 test): -0.0017..-0.0022, drops the only 44b6 TP. alpha 0.5: an exact null at cap 6. alpha 0: eligibility x3.8 and +44 insertions (volume in disguise), with an adj-edge loss of -0.00016, the sign that transferred in round 20 (no frame cap: -0.00055). At cap 12 fc2, alpha 0.5 = +0.0001 via +94 insertions, i.e. the cap-24 step under another name.",
+   "evidence": "an.json cap6_a0/a05/a2/a3, cap6_fc2_a2, cap8_a2, cap12_fc2_a2, cap12_fc2_a05.",
+   "action": "Close I-410 ALPHA as lab-tested/refuted (a2/a3) and dominated (a0/a05). Never a rung on 28-29 Sep.",
+   "urgency": "info"
+  },
+  {
+   "id": "R22XL-4",
+   "kind": "recheck-old",
+   "what": "Candidate 3 of 3: DaughterNet fold-ensemble size (subset of the 5 fold_*.pt via DIVINS_WEIGHTS). It cannot be replayed from the exp60 dumps, which hold only the 5-fold mean p, and every train clip was in 4 of 5 folds (in-sample either way). Fewer folds give more extreme p (r9h-4: fold p 99th pct 0.90 vs ensemble 0.83), so more triples pass thr 0.4. That is volume in disguise plus model variance, with no expected gain. Runtime saving is <= ~0.3 h of the <= 0.85 h insertion cost, and there is no runtime problem to fix. v1+v2 averaging is I-063 (deferred after the deadline).",
+   "evidence": "tools/daughternet.py l.93-129 (mean softmax over loaded models); weights are 5 files fold_0..fold_4.pt; IDEAS I-066 curation 9 (r9h-4), I-063.",
+   "action": "Do not build. Record as refuted by construction (no gate possible before the deadline).",
+   "urgency": "info"
+  },
+  {
+   "id": "R22XL-5",
+   "kind": "plan-issue",
+   "what": "Honest R8 statement for the 29 Sep extra-lever question: no new mechanism reaches R8. The remaining insertion levers are knob values on the existing code path, and the pre-registration bans them in W3/W4. Of these, only fc2 at cap 6 is structurally distinct from volume, and its expected public gain (~+0.0001) is below one evaluable event. steal off (-0.002), steal cap 2 (null), thr 0.3 (probe 46 code 0) and thr 0.2 stay closed. The cap direction already on the LB (47 cap12 fc2 = volume + fc2 + steals, 49 cap 8 = pure volume) is the complete test of the insertion levers.",
+   "evidence": "CONTEXT l.3307-3310 (46 code 0), l.3347-3377; round20 R20ID-6; this scan R22XL-1..4.",
+   "action": "No change to W2 TABLE v4 / W4 AMEND 2. The 29 Sep slots stay: E10 copy, FULL stack of '+' levers, '?' lever files, exp84a only under S3, and the non-CI twin.",
+   "urgency": "today"
+  }
+ ]
+}

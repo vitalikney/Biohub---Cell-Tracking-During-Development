@@ -3375,6 +3375,39 @@ Mention it to the user in one line (R9-A8 item 6).
     under S3, an E10 copy; non-CI T_last ~10:25Z, CI T_last ~07:30Z (v2 (7)). An E10 copy after 02:00Z: E10 v3 lifted R8
     for E10 items, so it is allowed under E10 v3 until ~10:00Z (run completes before the ~19:00Z FINALS READ); the
     morning message confirms (R21-A10).
+- 2026-09-28 01:48 UTC UTC, CI-STACK DUMMY GATE (round 22, PC22-03; written before either dummy output was read): exp83a
+  (exp83b) PASS iff (1) validate ok; (2) 0 Traceback/FAILED/DEADLINE:/FALLING BACK; (3) COORDINJECT SUMMARY 4/4 with
+  ~91.5% of rows moved; (4) columns id,dataset,row_type,node_id,t,source_id,target_id identical to the exp78b (exp78a)
+  dummy CSV, i.e. 121,252 nodes / 117,092 (117,086) edges / 95 (86) forks; (5) the fraction of node rows whose integer
+  z/y/x changed is in 0.60-0.69 (reference: exp79a vs exp70g = 0.646); (6) runtime <= 2,100 s. A FAIL means W2b (i)/(iv)
+  skip that stack (W2 v4 (2)(i): dummy PASSED by 11:45Z, else go on).' Check it with a pandas compare: sort both CSVs by
+  id, compare the 7 columns, count node rows with changed integer coordinates. Log both counts, the CSV sha12 and the
+  runtime. If an output was already listed before the line landed, write the line anyway and add '(written after the
+  output was listed; criteria are mechanical and fixed by the sibling CSVs)
+- 2026-09-28 01:48 UTC UTC, PRE-SCORE CLARIFICATIONS (round 22; no new mechanism, no new slot; written while the last
+  header 2026-09-28T01:46:10Z shows 47/48/49 PENDING): (1) CI-? SCOPE: W2 TABLE v4 (2)(iv) and W4 AMEND 2 (1)-2 apply to
+  a CI "?" only when it comes from MASKED, BLIND, or 0.5 < dL < 1.2 h with L_hi <= 10.2 h. A CI "?" from NO-OP (dL <=
+  0.5 h), "v" (L_hi > 10.2 h) or ERROR gets no CI stack in W2/W3/W4; W2b then falls to (v). (2) W2a with a DIV ref not
+  terminal at 10:00Z: the exp80a condition counts as failed -> W2a = exp81; exp80a may still take W2b (iii) at 12:00Z if
+  its condition holds by then. (3) R13-A1 (5) "F1 consolidation by 28 Sep 12:00Z" is SUPERSEDED by the user letter of 27
+  Sep 19:10:58Z and READ TABLE v2 (7)/(9): no finals decision at 28 Sep 12:00Z; proposals at 29 Sep 12:00/18:00Z; FINALS
+  READ ~19:00Z. (4) After 02:00Z 29 Sep no CI file is allowed (W4 AMEND 2 (5) kinds), so the CI T_last there (07:30Z vs
+  v2 (7) T_last - 2.4 h) is moot. (5) Probe 49 record: ref 56624341 submitted 00:50:37Z; header before it 00:45:59Z (4.6
+  min, no 429); family safetail. (6) If S3 fires, the exp84a pre-submit line states the lab prior "exp60 in-sample:
+  cap48fc2 vs cap24fc2 = 0 TP / +4 FP; a weak prior, not a veto".
+- 2026-09-28 01:48 UTC ===== RESUME POINT (supersedes the 26 Sep 22:46 UTC block; read this and every dated entry after it) =====
+  (a) FINALS: #37 56563521 + #38 56563534 ticked; the user picks on 29 Sep (letter 27 Sep 19:10:58Z); the session proposes at the
+  29 Sep 12:00/18:00Z checks and never re-ticks. (b) BEST: exp70g 56606948 (K2 + insertion cap 6) = 0.956, #168 (10th of 59 in
+  the 0.956 block at 01:03Z), L (7.49, 7.67] h. (c) STATE: W1 47 exp78b 56623073 (00:06:09Z), 48 exp79a 56623105 (00:06:33Z),
+  49 exp78a 56624341 (00:50:37Z) PENDING at 2026-09-28T01:46:10Z; dummies PASS exp78a/78b/79a/79d/76a/76d/76e/72/75/81/80a; exp83a/b dummies
+  pushed 01:01Z (gate R22-A1); n2a sha 7029fe69 in biohub-secft-n2a-v1. (d) RULES: E10 v3 (copy any public notebook above our
+  best display; verbatim + SI with the BASE's DIVINS settings); letter (b); Q1/Q2/N2 yes, Q3 open; aggressive mode + autonomous
+  night; READ TABLE v2/v3; R8 COVERAGE; R21-A3 gates / CI-RAN / ERROR rules; W2 TABLE v4 + S1-S6; W4 AMEND 2; round-22 lines.
+  (e) OPEN: Q3; the 02:00Z 29 Sep cap lift; E10 after 02:00Z; the finals pair. (f) TIMERS: 47 read from ~06:58Z; 49 ~07:40-08:45Z;
+  48 ~09:40-10:40Z; morning brief after 47+49 (latest 09:30Z); W2a 08:45-10:00Z; W2b 12:00Z; W3 <= 23:30Z; W4 29 Sep 00:05-01:45Z;
+  29 Sep checks 12:00/18:00Z; FINALS READ ~19:00Z; E10 hourly loop; research rounds ~every 2.5-3 h.
+- 2026-09-28 01:48 UTC, CORRECTION to the 18:56Z probe-45 read: S0 = e10_watch/20260927T1743Z.txt (count 46, #288) -> 127 TeamIds passed, not 113;
+  code P6 unchanged; exp70g is class C under L9 (not class B) - irrelevant now that the user picks the finals on 29 Sep.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

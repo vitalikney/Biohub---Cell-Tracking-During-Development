@@ -1,0 +1,8 @@
+# r22mb-2 skeptic notes (2026-09-28T01:23:44Z)
+- 01:25Z: source text = round22/scan_hyp_morning_brief.json r22mb-2. Checked against CONTEXT l.3222-3289 (READ TABLE v3), l.3316-3337 (R21-A3), l.3347-3365 (W2 v4), l.3366-3378 (W4 AMEND 2), l.2906-2913 (R16-A1 (5)), l.2917-2925 (E10 v3), round21/report.json R21-A9/A10.
+- Cases (a)-(d) match W2 v4 (1)/(5) S1-S4 and v3 (3)/(5). (e) 'stop at cap 8' is derived (S2 literal needs 78b not '+'); consistent in effect (W2a cond fails; W4 bans cap 10/16) but not a literal S-rule.
+- DEFECT 1: W2B_RU else-branch 'base + CI stack if CI unreadable, base cap 8/12' = W2 v4 (2)(iv) literal, but contradicts R21-A3 (b) NO-OP 'never licenses a CI resubmit' and R21-A3 (d) ERROR>10h 'no CI stack'; same conflict flagged independently by round22 scan_plancheck PC22-02 (CI-? SCOPE line proposed). The fill text states both without scoping.
+- DEFECT 2: (f) 49 PENDING has no 10:00Z fallback (W2a window ends 10:00Z); PC22-06 proposes 'exp80a condition counts as failed -> exp81; exp80a may still go in W2b (iii)'. (f) also gives no DIV_RU.
+- DEFECT 3: V_PUB (non-CI non-SEC narrowing) and E10_THR (>= best+0.001) come from R21-A9 (i)/(v), which is NOT in CONTEXT (r22mb-3; plancheck 'A9 NOT LANDED'). experiments/lb_poll/e10_watch_loop.py l.28/l.78 still says trigger >= 0.955 -> brief would state 0.957 while the running watcher flags >= 0.955. Evidence claim 'all in CONTEXT.md' is false for these two.
+- Minor: CI-RAN sibling fallback (47 not COMPLETE -> exp70g 7.67 h) omitted; W2b (i) 'dummy PASSED by 11:45Z else go on' omitted.
+- Value: 0 LB/private (procedure only; no mechanism, no slot). Feasibility trivial. Verdict: not usable VERBATIM; usable after 4 edits.

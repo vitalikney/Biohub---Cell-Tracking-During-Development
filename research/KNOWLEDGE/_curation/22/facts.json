@@ -1,0 +1,74 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/FACTS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/DECISIONS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/22/facts.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/22/facts.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "what": "exp83a/exp83b are the only W2b CI candidates, and they have no pre-registered pass gate. Their dummies were RUNNING at 01:28:54Z and should finish ~01:30-01:40Z. tools/dummy_gates.py has no CI mode, and W2 v4 (2)(i) requires 'dummy PASSED by 11:45Z' without defining PASS.",
+   "evidence": "FACTS F-MOD-41, C-178; CONTEXT 01:02 l.3344-3346, l.3351-3352; research/wf_ideas_v4/round22/report.json R22-A1; round22/report.notes.md 01:28Z",
+   "suggested_action": "Append the R22-A1 CI-STACK DUMMY GATE line before reading either output. If an output was already listed, add the '(written after the output was listed ...)' note. Then run the pandas sibling compare and log the counts, CSV sha12 and runtime.",
+   "urgency": "now"
+  },
+  {
+   "kind": "forgotten",
+   "what": "The RESUME POINT is still 26 Sep 22:46Z (7th round flagging it). The P45 correction (127 passed, not 113; exp70g is class C) is not logged, and MEMORY still says 'E10 v1 in force'.",
+   "evidence": "FACTS C-26 [c22], C-159 [c22]; CONTEXT l.2599; research/wf_ideas_v4/round22/report.json R22-A2, plan_issues (1)",
+   "suggested_action": "Write R22-A2 (1)-(3) now (~01:45-02:30Z), between polls, before any W1 read",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "Two LOGGED rules conflict on a CI '?'. W2 TABLE v4 (2)(iv) and W4 AMEND 2 (1)-2 would build a CI stack after any CI '?'. The CI-RAN GATE and the R21-A3 (d) ERROR rules forbid a CI stack or resubmit after a NO-OP, 'v' or ERROR read. Two more gaps: W2a has no rule for an unread 47/49 at 10:00Z, and R13-A1 (5) 'F1 consolidation by 28 Sep 12:00Z' was never superseded.",
+   "evidence": "FACTS C-175, C-176, C-181; CONTEXT l.3322-3326, l.3331-3332, l.3353-3354, l.3368, l.2709-2710; research/wf_ideas_v4/round22/report.json R22-A3 (1)-(3)",
+   "suggested_action": "Append R22-A3 PRE-SCORE CLARIFICATIONS while the last header still shows 56623073/56623105/56624341 PENDING, and quote that header. Hard stop 06:45Z.",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "The finals card is still not in CONTEXT (R20-A9 -> R21-A9 -> R22-A4; 2nd deferral). The CI caveat in READ TABLE v2 (9) is one-sided: it gives Eric's -0.002 without probe 31's +0.002. The E10 text still says >= 0.955 with an SI at cap 4.",
+   "evidence": "FACTS C-164 [c22], C-163 [c22], C-180; CONTEXT l.3187; experiments/lb_poll/e10_watch_loop.py l.28, l.78; research/wf_ideas_v4/round22/report.json R22-A4",
+   "suggested_action": "Log R22-A4 (card + balanced CI caveat + E10 NOW line: trigger >= 0.957, SI = exp70g DIVINS settings) before 06:45Z. Fix the loop text only at its next planned edit.",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "The first W1 read can come at ~06:58Z (safetail latency floor 6.69 h), not at ~07:30Z as CONTEXT 00:06 says. Every pre-score line must land by 06:45Z. S0 for the first read = the newest download at count 48 (e10 20260928T0103Z qualifies, k = 9); log k and take a fresh manual S1.",
+   "evidence": "FACTS F-RUN-36, C-177, F-LB-15 [c22]; research/wf_ideas_v4/round22/report.notes.md 01:28Z; R22-A7",
+   "suggested_action": "Set one waiter per ref (56623073, 56623105, 56624341). Follow R22-A7. For 48, apply the CI-RAN GATE against 47 (exp70g 7.67 h if 47 is not COMPLETE).",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "9 of the 11 planned stack builds (exp82a-c, exp83c-g, exp84a) exist only as round-21 sha claims and are not in experiments/. A late build error (path mangling, --set order) could cost a W3/W4 slot, since W4 dummies must PASS by 00:00Z 29 Sep.",
+   "evidence": "FACTS F-MOD-41, C-170 [c22]; research/wf_ideas_v4/round22/report.json R22-A6",
+   "suggested_action": "Rebuild tonight on CPU with the r21w-1 commands (MSYS_NO_PATHCONV=1) and check the sha prefixes. Commit the named folders only. Push dummies only when a read makes a stack reachable.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "The GPU quota is still unread (3rd deferral). Round 22 estimates ~20.6-22 h used at 1x, or ~25-26.5 h if T4x2 bills at 2x (only ~3.5-5 h left). This replaces round 21's ~19.5-21 h.",
+   "evidence": "FACTS F-RUL-05 [c22], C-172 [c22]; research/wf_ideas_v4/round22/report.json R22-A5",
+   "suggested_action": "Read kaggle.com/settings once before the next dummy push. Apply the 5 h / 3 h thresholds. If unread, assume the 3-5 h case.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "RESULTS.md still ends at P38; P39-P46 are scored and P47-P49 are pending. The CONTEXT probe-49 line lacks the ref, time and family (56624341, 00:50:37Z, safetail).",
+   "evidence": "FACTS C-118 [c22]; CONTEXT 00:50 l.3342; experiments/lb_poll/poll.log header 01:26:07Z; R22-A3 (5), R22-A11",
+   "suggested_action": "Add the P49 record in R22-A3 (5). Add P39-P49 to RESULTS.md at the next hygiene commit, as the user, with no Co-Authored-By trailer.",
+   "urgency": "info"
+  },
+  {
+   "kind": "deadline",
+   "what": "Morning brief Q1 (lift the 02:00Z 29 Sep cap, default no) needs the user's answer. W4 AMEND 2 (5) allows post-02:00Z files only with that yes; an E10 copy is already allowed until ~10:00Z. Finals stay #37 + #38 until the user picks on 29 Sep.",
+   "evidence": "FACTS C-165 [c22], C-173 [c22], F-RUL-12 [c22]; CONTEXT 01:02 l.3374-3377; research/wf_ideas_v4/round22/report.json R22-A8",
+   "suggested_action": "Send the R22-A8 Russian message at the first header where 47 AND 49 are terminal (latest 09:30Z), with the 7 edits. Never wait for 48.",
+   "urgency": "before-finals"
+  }
+ ],
+ "summary": "Curation 22 (state 01:35 UTC 28 Sep; HEAD acbea01 = origin/main). New since curation 21: at 00:00 the R8 COVERAGE line and the R21-A3 gates were LOGGED (git d36a4b2 00:00:36Z), before the first CI submit; the gates cover the exp81/exp80a PASS lines, the CI-RAN GATE, the 46 addendum, the ERROR rules and the NO-GO list. W1 went out on time: P47 exp78b 56623073 at 00:06:09Z, P48 exp79a 56623105 at 00:06:33Z (the first CI file on the LB) and P49 exp78a 56624341 at 00:50:37Z. All three were PENDING at 01:26:07Z; 2 slots are left on 28 Sep. At 01:02 the exp83* -> safetail_ci ledger rule landed, exp83a/exp83b were built with their dummies pushed (RUNNING at 01:28:54Z), and W2 TABLE v4 + S1-S6 (pre-score, header 00:56:01Z) and W4 AMEND 2 were LOGGED. LB 01:03Z: #168 of 3,961, 10th of 59 in the 0.956 block, k = 9. E10: 13 runs, 0 signals. Finals are still ticked #37 + #38. Round 22 (R22-A1..A11) is PROPOSED and not in CONTEXT. FACTS.md: new header; [c22] notes on F-LB-01/02/03/10/15/16, F-RUN-11/34/35, F-RUL-01/05/12 and F-MOD-40; new F-LB-17 (W1 record), F-LB-18 (competitor intel, John Taylor knobs), F-RUN-36 (W1 timing, 06:45Z hard stop), F-MOD-41 (exp83a/b builds and gate; 9 stacks missing) and F-TRN-54 (round-22 lab rechecks); C-26/118/159/163/164/165/169/170/172/173 updated; C-167, C-168 and C-171 resolved; new C-175..C-181 (CI-? scope, 12:00Z consolidation, earliest 47 terminal, undefined CI-stack PASS, MITO3 probmat NaN, one-sided CI caveat, W2a with an unread DIV ref). DECISIONS.md: new header; P47/P48/P49 rows; a §1 [c22] update with an 11-row build table; a §2 [c22] finals paragraph and a new candidates snapshot (V_pub = exp70g); a §2f E10 paragraph; §2h (12 status appends, 9 new rows) and §3 (11 status appends to R5/R8/R9/E10 v3 and the R20/R21 rules, 5 new R22 rows); a closing paragraph."
+}

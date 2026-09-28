@@ -1,0 +1,6 @@
+- 01:34:44Z 2026-09-28 start: no _curation/22/ideas.json -> incremental run over curation 21 (HEAD then 4ac7126/d36a4b2?). Now HEAD acbea01.
+- 01:35:42Z sources: CONTEXT l.3311-3377 (R8 COVERAGE 00:00, R21-A3 gates 00:00, W1 submits 00:06/00:50, R21-A5/A6 01:02, W2 TABLE v4 + S1-S6 01:02, W4 AMEND 2 01:02); round22 report.json (R22-A1..A11, 01:32Z) + 5 scans + 13 v_*; round21 REPORT.md (render of already-read report.json).
+- 01:37:37Z backups ideas_c21.json.c22bak / IDEAS_c21.md.c22bak in scratchpad; plan patch22.py (new I-420..I-424/I-425), mk_gen22.py -> gen_md22.py, md22_tail.py.
+- 01:43:25Z ideas.json written (patch22.py: 53 change records, 419 -> 425 ideas, I-420..I-425 new; in-plan 88->91, refuted 206->207 (+I-422/I-423, I-082 -> deferred), deferred 44->46). CONTEXT re-checked 01:43Z: still 3398 lines, HEAD acbea01.
+- 01:43:25Z IDEAS.md regenerated (gen_md22.py via mk_gen22.py + md22_tail.py; 6 new + 47 updated c22 markers; ~850 KB; 425 rows). Next: _curation/22/ideas.json.
+- 01:44:09Z: _curation/22/ideas.json written (9 alerts, valid JSON). DONE.

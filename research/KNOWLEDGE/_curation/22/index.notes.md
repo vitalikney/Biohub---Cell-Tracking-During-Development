@@ -1,0 +1,5 @@
+- 01:45:00Z 2026-09-28 start curation 22 index; no _curation/22/index.json -> incremental over c21 INDEX.md (75 l.) + CHANGES.md (1213 l.)
+- 01:45:47Z anchors gathered: CONTEXT 3398 l. (unchanged since curators; R22 not logged), poll 01:36:09Z 47/48/49 PENDING, e10 RUN 14 01:43:54Z 0 signals, 0143Z #169 10/59; IDEAS/FACTS/DECISIONS/WATCHLIST line anchors. Writing INDEX.md
+- 01:46:56Z INDEX.md written (75 l.), anchors verified. Next CHANGES.md append
+- 01:47:22Z CHANGES.md section 22 appended. Next index.json
+- 01:47:53Z index.json written (10 alerts). DONE.

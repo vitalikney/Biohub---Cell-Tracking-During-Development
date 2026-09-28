@@ -1211,3 +1211,35 @@ Curator logs: `research/KNOWLEDGE/_curation/4/`.
 - **New:** R8 COVERAGE line before exp79a (R21-A1); W1 submit procedure (R21-A2); exp83 ledger rule + exp83a/b dummies (R21-A5/A6); R21-A3 CONTEXT write (PASS lines, CI-RAN GATE, 46 S0 addendum, ERROR rules, NO-GO); W2 TABLE v4 / W4 AMEND 2 / finals card before ~07:30Z (R21-A7..A9); E10 after 02:00Z question (R21-A10); scratch-only builds; latency-drift and sub-display reading caveats (R21-A12).
 - **Carried over:** RESUME POINT (R20-A3 -> R21-A4), GPU quota (R20-A7 -> R21-A11), E10 stale texts (R20-A10 (5) -> R21-A9 (v)), finals card (R20-A9 -> R21-A9), records (RESULTS, REPORT.md -> R21-A13).
 - **Curator disagreements settled here:** exp83 ledger rule [now] vs [today] -> [now]; finals card [today] vs [before-finals] -> [today]; RESULTS rows [info] vs [before-finals] -> [before-finals].
+
+## 22 - 2026-09-28 ~01:48 UTC (curation 22; git HEAD acbea01 = origin/main + untracked `research/wf_ideas_v4/round22/`, `experiments/ext_succskip/`, `experiments/ext_corwin-biocel-aux/_booster/`, `experiments/e10_watch/20260928T0043Z..0143Z.txt`, `experiments/ds_secw_corwin_v1/weights/`)
+
+**Sources since curation 21:**
+- `CONTEXT.md` l.3311-3377, 7 entries: R8 COVERAGE 00:00 (l.3311); R21-A3 gates 00:00 (l.3316-3337); W1 SUBMITS 00:06 (l.3338) and 00:50 (l.3342); R21-A5/A6 exp83 rule + builds 01:02 (l.3344); W2 TABLE v4 + S1-S6 01:02 (l.3347); W4 AMEND 2 01:02 (l.3366). `## 9. Literature` moved to l.3378.
+- Commits d36a4b2 (round 21 + REPORT.md), b0bac2e, 978124d, ad5cbaf, bb3c299, acbea01 (`git log`).
+- Round 22: `research/wf_ideas_v4/round22/report.json` + `REPORT.md` R22-A1..A11 (01:32:58Z), 5 `scan_*.json`, 13 `v_*.json`. New probe.json: `experiments/exp83a_k2cap12fc2_ci/`, `experiments/exp83b_k2cap8_ci/`.
+- Polls and LB: `experiments/lb_poll/poll.log` to 01:36:09Z (P47/P48/P49 PENDING); `experiments/e10_watch/watch_loop.log` RUN 13-14 (0 signals); `experiments/e10_watch/20260928T0143Z.txt` l.1013 (#169, 10th of 59 in the 0.956 block).
+
+**Ideas** (`IDEAS.md` CHANGES (22) l.117-125; `ideas.json` meta.curations[n=22], 53 records; `_curation/22/ideas.json`):
+- **New:** I-420 CI-STACK DUMMY GATE; I-421 PRE-SCORE CLARIFICATIONS (CI-? SCOPE etc.); I-422 fc2 at cap 6 (refuted, banned knob rung); I-423 DaughterNet fold subset (refuted by construction); I-424 post-deadline theft-aware ranker for claimed daughters (32/99 missed GT divisions); I-425 28 Sep morning brief.
+- **Status changes:** W1 submitted, no score yet: I-398 (P47), I-401 + I-324 (P48, first CI on the LB), I-397 (P49), I-381. Logged in CONTEXT: I-324, I-396, I-399, I-413, I-414, I-415, I-418, I-383, I-404, I-327. I-410 ALPHA -> refuted/dominated (lab); I-082 MITO3 refuted -> deferred-after-deadline (pluggable edges-only, probmat features NaN in the ship path); I-259 task template -> in-plan. Wording/evidence updates: I-046 (failure-class record, not CI transfer), I-080, I-059, I-060, I-064, I-408, I-412, I-049, I-139.
+- **Counts c21 -> c22:** 419 -> 425. lb-tested 55, lab-tested 24, in-plan 88 -> 91, refuted 206 -> 207, deferred 44 -> 46, open 2. The strict orphan is still I-233; at risk: I-252, I-257, I-259, I-330, I-336, I-405, I-406, I-407, I-416, I-420, I-421, I-425.
+
+**Facts and decisions** (`FACTS.md`, `DECISIONS.md`, rows marked [c22]; `_curation/22/facts.json`):
+- **New facts:** F-LB-17 W1 record (l.234); F-LB-18 competitor intel, John Taylor knobs (l.235); F-RUN-36 W1 timing, safetail floor 6.69 h (l.276); F-MOD-41 exp83a/b builds + undefined CI gate, 9 stacks missing (l.345); F-TRN-54 round-22 lab rechecks (l.404).
+- **[c22] appends:** F-LB-01/02/03/10/15/16, F-RUN-11/34/35, F-RUL-01/05/12, F-MOD-40; C-26/118/159/163/164/165/169/170/172/173.
+- **Resolved contradictions:** C-167, C-168, C-171.
+- **New contradictions C-175..C-181** (l.584-590): CI stack after a CI '?'; 12:00Z consolidation not superseded; earliest 47 terminal; undefined CI-stack PASS; MITO3 probmat NaN; one-sided CI caveat; W2a with an unread DIV ref.
+- **DECISIONS.md:** P47/P48/P49 rows (l.182-184); §1 [c22] 11-row build table (l.396); §2 [c22] finals paragraph + snapshot (l.654-656; V_pub = exp70g); §2f E10 paragraph (l.929); §2h rows (l.1029-1037); §3 11 appends + 5 R22 rows.
+
+**Watchlist** (`WATCHLIST.md`; `_curation/22/watch.json`):
+- **New:** W224-W229 (R22-A1/A3/A6/A7/A10/A11), T129-T133, I249-I261.
+- **Done:** W216 (R8 COVERAGE), W203 (W1 submits), W217 (R21-A3), W218, W219 (1) (exp83 rule + dummies), W220 (W2 v4), W221 (W4 AMEND 2), W223 (round 21 committed), T113, T18.
+- **Re-keyed:** W185 -> R22-A2 (7th round), W214 -> R22-A4 (2nd), W212 -> R22-A5 (3rd), W222 -> R22-A8, W202 -> R22-A9.
+- **Still overdue:** W126 RESULTS rows P39-P46, E10 loop text '>= 0.955' (`experiments/lb_poll/e10_watch_loop.py` l.28, l.78), W176/W177/W182.
+
+**Alerts** (`INDEX.md` TOP ALERTS, 10 after dedup):
+- **Resolved since curation 21:** R21-A1 R8 COVERAGE (l.3311, d36a4b2); R21-A2 W1 submits (l.3338, l.3342); R21-A3 gates (l.3316); R21-A5/A6 exp83 rule + exp83a/b dummies (l.3344; `tools/runtime_ledger.py` l.80); R21-A7/A8 W2 TABLE v4 / W4 AMEND 2 pre-score (l.3347, l.3366); R21-A13 round 21 committed with REPORT.md (d36a4b2).
+- **New:** R22-A1 CI-STACK DUMMY GATE before the exp83a/b outputs are read; R22-A3 CI-? SCOPE contradiction + W2a/consolidation gaps; W1 read window starts ~06:58Z (hard stop 06:45Z for pre-score lines); 9 missing stack builds (R22-A6/A11); stale task template (R22-A10); round-22 closures only in research files (R22-A9); weak cap-48 lab prior for exp84a.
+- **Carried over:** RESUME POINT (R21-A4 -> R22-A2), finals card + E10 NOW line (R21-A9 -> R22-A4), GPU quota (R21-A11 -> R22-A5, estimate raised to ~20.6-22 h / 25-26.5 h at 2x), morning message (R21-A10 -> R22-A8), RESULTS rows.
+- **Curator disagreements settled here:** R22-A3 [now]/[today] -> [now]; R22-A4 [now]/[today] -> [now]; task template [today]/[now] -> [now]; RESULTS rows [info]/[before-finals] -> [info] with the FINALS READ as deadline.

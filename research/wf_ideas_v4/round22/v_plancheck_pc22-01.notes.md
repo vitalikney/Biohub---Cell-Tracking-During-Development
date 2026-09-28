@@ -1,0 +1,9 @@
+- 2026-09-28T01:23:46Z start PC22-01 verification
+- 01:24Z CONTEXT.md 3398 lines; RESUME POINT blocks l.2006/2148/2205/2599 -> last = 26 Sep 22:46Z (l.2599). grep 'CORRECTION to the 18:56' = 0. CONFIRMED stale.
+- Line pointers checked, all correct: 2917 E10 v3 (11:08Z), 2927 letter (b), 3171 v2 (7), 3194 FINALS READ, 3222 table v3, 3311 R8 COVERAGE, 3316 R21 GATES/CI-RAN, 3347 W2 v4, 3366 W4 AMEND 2.
+- memory/project-lb-probe-approval.md: description 'E10 v1 in force'; frontmatter modified 2026-09-25T13:38Z but file mtime 2026-09-27 01:46 +0300 (= 26 Sep 22:46Z); content ends at 'E10 v2 pending'. No E10 v3 / letter (b) / Q1/Q2/N2 yes / aggressive mode. MEMORY.md index l.8 'no standing submit OK ... E10 port rule proposed', l.9 'Resume point ... 26 Sep post-score'. CONFIRMED stale.
+- round21/report.json R21-A4 (A)(B)(C), deadline '~00:10-01:30Z 28 Sep'; 6th deferral per PC21-02 -> 7th now. CONFIRMED.
+- Facts: e10_watch/20260928T0103Z.txt: D: Discipline rank 168, 0.956, LSD 14:36:59, count 48; 0.956 block starts at #159 (59 rows) -> k = 9 teams above us in block. CONFIRMED.
+- lb_poll/ledger.md 01:16:05Z: 56623073 exp78b, 56623105 exp79a, 56624341 exp78a all PENDING. CONFIRMED.
+- Recomputed 18:56Z correction: S0 e10_watch/20260927T1743Z.txt (we #288, 287 above) vs S1 lb_poll/ladder_watch/20260927T185549Z csv (161 above) -> 127 TeamIds passed (not 113). CONFIRMED; code P6 unchanged.
+- Verdict: not refuted. Pure logging/crash-safety, 0 score effect, no slot/GPU, no rule conflict (R1-R10 untouched). Only nit: 'modified 2026-09-25' is the frontmatter field; real last write was 26 Sep 22:46Z (still pre-E10 v3).

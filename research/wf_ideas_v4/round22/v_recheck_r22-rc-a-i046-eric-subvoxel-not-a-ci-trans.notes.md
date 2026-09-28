@@ -1,0 +1,11 @@
+# R22-RC-A i046 recheck notes (2026-09-28T01:23:43Z)
+- No prior JSON for this task existed; started fresh.
+- Eric 742064 (https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/742064), posted 19 Sep: "sub-voxel peak refinement" +0.0078 on 12 official val videos, -0.002 LB twice; method undisclosed (browser_intel l.365 item 56). x138 (V1284 head) went public 21 Sep (CONTEXT l.1381) -> "pre-head stack" is plausible (inference, not stated by Eric).
+- CI lab (kernel path) research/wf_ideas_v4/bigger_levers/check_coord_refiner.json: a0.5 3um per clip -0.0029/+0.0125/0/+0.0029 pooled +0.00215; a1.0 -0.00498; a0.3 -0.00125 ("noise floor ~ effect size"); division TP change 0. Finding's numbers match. (CONTEXT 12:49Z entry quotes the older float-path +0.0032 / -0.0057.)
+- COUNTER-RECORD the finding omits: probe 31 exp51 = exp48 + x138 V1284 coordinate head (peak-level, pre-ILP, trained on train videos) LB 0.948 -> 0.950 (+0.002), confounded by -2.9% nodes (CONTEXT l.1424-1446). Same class as Eric (peak-level, changes links) with opposite sign. So peak-level records split -0.002 / +0.002; neither is post-CSV.
+- Float output probes 32/33 ties: round18 skeptic ruled them uninformative (safe encoding may be a no-op under server rounding).
+- Old wording already says "nearest", not "like-for-like"; "WRONG" is overstated. Pre-head means Eric had MORE headroom than CI on x138+head, so difference (1) does not favour CI. Link changes (2) add variance of either sign, not a sign bias.
+- R21-A9 finals card NOT yet in CONTEXT (grep empty); it is scheduled before ~07:30Z 28 Sep, message 29 Sep 12:00Z. Probe 48 (56623105) PENDING at the 01:16:05Z poll header; expected ~09:40-11:00Z -> by the 29 Sep message probe 48 will usually be the operative record, so the Eric line only matters if 48 ERRORs or CI-RAN codes NO-OP/'?'.
+- Probe 48 is still public-only (one embryo, ~29%); not a private transfer record. The in-sample refiner (trained on train embryos, LMM team, built for a 0.926-era notebook) is the dominant private risk; that must remain in the caveat.
+- Verdict: partly refuted; wording-only, feasible, zero score gain; adopt merged text below.
+- 2026-09-28T01:26:48Z final JSON written (refuted=true, partly).
