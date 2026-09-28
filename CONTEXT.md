@@ -4048,6 +4048,14 @@ Mention it to the user in one line (R9-A8 item 6).
   the finals hedge: the partner (#37, or exp75 if it reads >= 0.955 clean) carries neither K nor cap 6; the JT-style
   {best + closest neighbour} pair is NOT recommended. The user wrote 'согласен' (agrees): the finals plan stays
   {V_pub, #37 / exp75}.
+- 2026-09-28 16:38 UTC, ROUND 27 REMAINDER APPLIED (R27-A5 part, R27-A7 (1), R27-A9 (3))
+  Backup one-shot session crons for the night batch at 00:20, 00:50 and 01:30 UTC (03:20/03:50/04:30 MSK): each lists
+  submissions first and sends only a due file that is missing (LATE), never a blind retry; a daily-allowance error =
+  STOP + notify. The 00:04 UTC batch cron (2ab38c73) is kept unchanged; its checklist is the R27N-2/R27N-3 text
+  written into the 23:3x UTC freeze line. The 22:43 MSK reminder cron was recreated (64b9bb56) with the V_pub re-check
+  folded in (notify-only; no separate 22:30 MSK job). Round-28 KEY FACTS refreshed (power/standby risk, GAP RULE v2,
+  RULE v2.1, API-load cut, the user's agreement on the hedge pair). R27-A6 (ii) unanswered -> default: exp89p at 00:46
+  UTC in both branches.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
