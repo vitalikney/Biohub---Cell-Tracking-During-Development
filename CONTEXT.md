@@ -4091,6 +4091,16 @@ Mention it to the user in one line (R9-A8 item 6).
   and E10 v3 (before 02:00 UTC an E10 copy per the rule; after 02:00 UTC an E10 copy needs the user's yes for that
   notebook - dummy it and ask). (4) Finals: the session never ticks; proposals at 12:03/18:37 UTC, reminders 19:43 UTC
   and 21:05 UTC.
+- 2026-09-28 20:13 UTC, SECOND TRIGGER PATH: background session timers (user: rounds did not self-start; must work unattended overnight)
+  Session crons proved unreliable (they fire only when the session is idle at that minute; 15:47, 18:17 and 20:47 MSK
+  rounds were lost to a busy session / battery standby). Added a second, independent path: one background Bash timer
+  per event (scratchpad timer.sh: loops on the UTC clock every 30 s, so it survives standby and fires on wake; its
+  completion notification is queued until the session is free). Timers (UTC): research rounds 20:17 and 22:47 (28
+  Sep), then hourly 01:13-18:13 (29 Sep; 06:07 post-wake, 11:10 and 12:03 also launch a round); W4 freeze 23:33; night
+  batch 00:04 and exp89p 00:44; backup check 01:30; morning prep 07:23; M1 CI deadline check 08:30; M2 non-CI deadline
+  check 11:10; finals proposal 12:03 and 18:37; reminders 19:43 and 21:05. The crons remain as the first path; every
+  submit step lists submissions first (dedupe by file token), so a double trigger cannot double-submit. The Chrome
+  browser (claude-in-chrome) is connected and used by the round's scan agent for notebook pages / discussions.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
