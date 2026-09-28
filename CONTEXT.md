@@ -3985,6 +3985,17 @@ Mention it to the user in one line (R9-A8 item 6).
   answering the three R26-A6 questions -> DEFAULTS: no exp89t, no exp89u; the depth-cap reading for {K, SEC, DIS 2.25,
   CI} stands (not objected). RISK NOTE: the night batch (00:04 UTC) and morning prep depend on this session and the
   network being up; a network failure branch is being written by round 27.
+- 2026-09-28 15:57 UTC, KAGGLE BAN REPORT (elsewhere) -> API LOAD CUT
+  The user shared a Kaggle notice received by another person: an automated review unpublished a notebook (2026-09-27
+  22:21) and banned the account for 'Resource abuse' (Community Guidelines / Terms); that person suspects Claude
+  submitted a TPU notebook and polled its status every 30-60 min; appeal filed. Our profile: notebooks = private GPU
+  competition-inference runs (~25-35 min, no TPU, no internet, no keep-alive), within the weekly quota; submissions
+  5/day; no teammate tokens used on this PC. Our API load today (28 Sep): ~86 ListSubmissions polls (every 10 min),
+  ~15 E10 runs x 8 calls, ~18 discussion-feed runs x ~50 calls (~900, the largest share), plus kernels-status waiters
+  (60-90 s steps). ACTIONS: the feed loop is slowed to every 90 min with --topics 12 (~15-25 calls per run; restarted
+  15:56Z); the round prompt now runs the feed only if the newest digest is > 100 min old and asks agents to minimise
+  Kaggle API calls; from now on kernel-status waiters poll every 5 min. Poller (1 call / 10 min) and E10 loop (8 calls
+  / h) unchanged.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
