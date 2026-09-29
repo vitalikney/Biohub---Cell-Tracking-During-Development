@@ -1,0 +1,8 @@
+# v_recheck R34-RC-B notes
+- 2026-09-29T05:23Z started; no prior json
+- Numbers in scratchpad r34/mc34_vpub87a.txt verified: revised-prior (CI_MU 0-0.0004, sd .001-.0015) P3 bronze >= P2 in 5/6, P2 silver ahead 6/6, E within 0.1e-3. Ranges slightly misquoted (P3 0.709-0.783 incl. K run; P2 silver 0.526-0.606).
+- FATAL: the 'revised CI prior' is R28-RC-C's prior cut, which round 28 REFUTED (round28/report.json l.50 'rejected': 'R28-RC-C, the prior revision (... central +0.0002) ... REFUTED'); round29/report.json + v_recheck_r29-rc-c...json restate: 'Round 28 REFUTED R28-RC-C ... The standing prior is P(>=0) 0.65-0...'. mc26.py default CI_MU 0.0005 CI_SD 0.0008 = standing prior.
+- Under the standing prior (r26/mc26_grid.txt l.105-219, VPUB=exp87a): P2 {exp87a,exp75} bronze > P3 in 9-10 of 13 runs (base 0.821 vs 0.787; seed23 0.825/0.790; RHO .5 0.811/0.765; qpub0 0.776/0.730; overfit 0.876/0.853), P3 ahead only at CI_SD >= 0.0015-0.002. Silver P2 ahead 13/13. So 'UPHELD' rests on a refuted prior; the honest recompute would favour P2, i.e. put the model against the pre-registered rule (b) - which is a post-hoc display question, not something to 'uphold'.
+- Card v5 step 10 (round29/finals_card_v5_ru.md l.90): 'Числа модели не пересчитывать. Если V_pub != exp85a, оставить фразу «не пересчитывали».' -> action (1)/(2) directly contradicts the card's own pre-set fill rule; l.47 is not 'false', it is the mandated wording.
+- Printing refuted-prior numbers on the finals card the user reads before ticking = misleading. Gain on private: 0 (card text only; rule unchanged).
+- 2026-09-29T05:24Z final JSON written (refuted)

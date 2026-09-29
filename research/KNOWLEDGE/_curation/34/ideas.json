@@ -1,0 +1,67 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/ideas.json",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/IDEAS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/34/ideas.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/34/ideas.json"
+ ],
+ "alerts": [
+  {
+   "kind": "risk",
+   "what": "Watchers 1760 (exp89r) and 17532 (exp75) print the header but save no LB. The e10 snapshots can fail: RUN 41 at 05:41Z fetched 0 of 8 during the 05:34-05:47Z outage. The loop also stops at 12:00Z. exp75 (09:05-10:05Z) and exp89r (09:23-09:34Z) can therefore complete inside one gap. The count then moves by 2, an exp89r 0.959 UP is MASKED, and exp87a stays V_pub by default. This is I-561 (R34-A1), which is not logged or armed.",
+   "evidence": "research/wf_ideas_v4/round34/report.json R34-A1, plan_issues (a); research/wf_ideas_v4/round34/scan_plancheck.json PC34-01; experiments/e10_watch/watch_loop.log l.49; CONTEXT.md l.4336-4342 (last entry, no save step)",
+   "suggested_action": "In the 06:07Z step, arm the three conditional 'timeout 180 python tools/uptest.py save' jobs: post_exp75 if exp89r is still PENDING, and post_exp89r / post_exp89p only on COMPLETE 0.959. Job (c) must be alive before 07:38Z and jobs (a)/(b) before 09:00Z. Log the one-line OPS entry.",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "Card v5 l.45 names exp70g as the 'closest neighbour' of V_pub and says the pair is 'below P1'. For V_pub exp87a (a CI file) both parts are wrong. The closest neighbour is exp85a 56629533, which differs only by CI, and a CI V_pub has no P1 row. This is I-562 (R34-A2).",
+   "evidence": "research/wf_ideas_v4/round34/report.json R34-A2, plan_issues (b); research/wf_ideas_v4/round34/v_recheck_r34-rc-c-jt-neighbour-pair-rejection-uphel.json; research/wf_ideas_v4/round29/finals_card_v5_ru.md l.45",
+   "suggested_action": "At the 12:03Z fill, change l.45 in the FILLED copy only: name {exp87a, exp85a}, say it keeps cap 6 and K in both files, insures only CI and is not in the agreed plan, and put no model numbers on it. The template stays a134d5e4. Re-check at 18:37Z.",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "Every round-34 model output (scratchpad r34/mc34_vpub87a, mc34_exp89u, mc34_allpartners) used the CI prior CI_MU 0.0002, which was refuted in round 28. The skeptics' captions ('ABOVE P3 on silver 12/12', '5 of 6') come from those files too. Under the standing prior N(+0.0005, 0.0008), P2 {exp87a, exp75} is ahead of P3 on bronze in about 10 of 13 runs (I-513, I-563, I-494).",
+   "evidence": "research/wf_ideas_v4/round34/report.json plan_issues (c), new_facts (6), rejected; research/wf_ideas_v4/round34/v_recheck_r34-rc-b-r25-rule-b-ci-vpub-p3-first-uphel.json; research/wf_ideas_v4/round28/report.json rejected (R28-RC-C)",
+   "suggested_action": "Put no mc34_* number on the card or in any user message. Keep card l.47 'not recomputed' (step 10, l.90) and EXP75 PARTNER RULE v2 (b) as logged. A standing-prior info caption goes in only with the user's OK, and without the word 'recommend'.",
+   "urgency": "today"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "The C11 record for the probe 54/52 reads (I-559, R33-A4 (b)) is still not logged. It is written only after the A-M1 decision, and it is easy to skip in the morning rush.",
+   "evidence": "research/wf_ideas_v4/round33/report.json R33-A4 (b); research/wf_ideas_v4/round33/v_recheck_r33-rc-b-c11-retrain-family-first-x138-rea.json; CONTEXT.md l.4329-4342 (not included)",
+   "suggested_action": "In the post-decision CONTEXT entry after A-M1 (~08:45Z), and again after A-M2, write the mapped C11 line: P '+' = UNPROVEN, '-' = UPHELD, '0' = not overturned, '?' = no read. Never write it at the decision header.",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "The card v5 info lines (I-539) are still not on the card (a134d5e4 re-verified 06:00Z). The 12:03Z fill needs the I-548 standing-prior numbers, the l.45 fix (I-562) and the medal-line rank line: #133 of 3,984 at 05:14Z, silver ~#199, bronze ~#398.",
+   "evidence": "research/wf_ideas_v4/round34/report.notes.md 06:00Z; research/wf_ideas_v4/round34/report.json new_facts (4), (6); experiments/e10_watch/20260929T0513Z.txt l.1149",
+   "suggested_action": "Fill card v5 at 12:03Z (15:03 MSK) with all three, compute a new sha8, and refresh at 18:37Z. The user ticks by 20:00Z.",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "The corrected user message from R28-A1 (3) has still not been sent or recorded. It says the lost round was not caused by the battery, and asks the user to keep VS Code open and not reload or update it (I-510). The laptop was on battery (72%) at 06:00Z after the trip.",
+   "evidence": "research/wf_ideas_v4/round34/report.json R34-A4, new_facts (1); CONTEXT.md l.4325-4342 (no such line)",
+   "suggested_action": "Add the sentence to the 06:07Z MSK brief or the 07:23Z message.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "experiments/RESULTS.md still has no rows for probes 47-51. None of rounds 29-34 has a REPORT.md; round 34's text is only in report.json 'report_md_ru' (I-232).",
+   "evidence": "experiments/RESULTS.md; research/wf_ideas_v4/round34/report.json next_focus; research/wf_ideas_v4/round34/report.notes.md 06:05:39Z",
+   "suggested_action": "After the morning decisions, the main session writes the RESULTS rows 47-51 (and 52-54 once they read) and saves the round 29-34 REPORT.md files. Low priority.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "risk",
+   "what": "The 06:07Z step found the laptop on battery (72%) and a 05:34-05:47Z network outage: two poll headers FAILED and e10 RUN 41 fetched 0 of 8. All loops are alive, and 18900 'BACK ON AC' is already armed (R34-A4, I-517).",
+   "evidence": "research/wf_ideas_v4/round34/report.json R34-A4, new_facts (1); experiments/lb_poll/poll.log headers 05:34:41Z / 05:46:17Z; experiments/e10_watch/watch_loop.log l.49",
+   "suggested_action": "Restart no loop and do not arm a second AC watcher. Check the e10 chain only if the 06:41Z run fails again while poll.log succeeds. Re-push the R31-A2 power message only if the laptop is still on battery.",
+   "urgency": "now"
+  }
+ ],
+ "summary": "Curation 34 (~06:20 UTC 29 Sep, HEAD b4848cb) is an incremental pass over curation 33 and keeps all existing IDs. It covers b4848cb (round 33 committed plus the CONTEXT 04:51Z entries: P LATE THRESHOLD at l.4329-4335 and OPS per-ref watchers + R33-A3 at l.4336-4342; Literature is now l.4343). It also covers round 34 (untracked; report.json R34-A1..A4 written 06:05Z, 4 scans, 5 verdicts), the ledger at 06:07:56Z (3 night refs PENDING), the poll failures at 05:34 and 05:46Z, e10 0513Z (null) and RUN 41 (0/8), and feed digest 0528Z (topic 744250, no knob). There is no new LB score. The ledger grows from 560 to 563 ideas with 35 change records. New: I-561, conditional night-ref LB saves for the running-champion UP test (R34-A1, at-risk, now); I-562, the card v5 l.45 correction at the fill for a CI V_pub (R34-A2, at-risk); and I-563, the card l.47 recompute / 'P3 first upheld', which is REFUTED because it rests on the refuted R28-RC-C CI prior. Logged and taken off the at-risk list: I-557, I-558 and I-529, all at 04:51Z. Updated: I-487 (the exp89u revival R34-RC-A is refuted again), I-513 (guard against the refuted prior: no mc34_* numbers), I-494 (under the standing prior P2 is ahead of P3 on bronze in ~10 of 13 runs; rule (b) is unchanged because a change would be post-hoc), I-412 (the JT pair rejection is upheld), and I-548 (#133 of 3,984; standing-prior rows). I-353 and I-442 get the alias Charannoo divrelax (no build). I-026 gets 4 new repos and the full-tree scan rule. I-517 and I-497 get R34-A4 (on battery, no restart). Also updated: I-552, I-490, I-535, I-526, I-539, I-434, I-500, I-543, I-479, I-478, I-465, I-320, I-364, I-541, I-475, I-556, I-259, I-232 and I-481. The 12 at-risk orphans are I-252, I-336, I-407, I-448, I-516, I-526, I-539, I-540, I-548, I-559, I-561 and I-562; I-233 is the one strict orphan. Status counts: lb-tested 62, lab-tested 28, refuted 266, deferred 49, in-plan 156, open-untested 2. Verification: every row regenerates identically (gen.py: 563 rows, 0 bad), gen2.py body and ranking are equal, and all IDs are unique."
+}

@@ -1,0 +1,4 @@
+- 2026-09-29 06:07Z start round 34 watch; no prior watch.json in 34
+- 06:10Z read CONTEXT to l.4342 (04:51Z R33-A2 + R33-A1 OPS logged; b4848cb commits round33); round34 report.json (R34-A1..A4); poll 05:57:51Z all PENDING (05:34/05:46 FAILED); Win32 06:07Z: battery 2 (AC 77%), watchers 16292/1760/17532, watchdog 28052 (06:02Z), feed-signal 13836; NO post_exp save jobs (R34-A1 not armed)
+- 06:14Z verified: CONTEXT new entries, RESULTS still ends probe 46 (l.79), runbook l.66 unchanged, REPORT.md 29-34 absent, card a134d5e4; drafting WATCHLIST
+- 06:17Z WATCHLIST.md written (W314/W315 done; new W319-W322, T198-T200, I382-I390); watch.json written (14 alerts); done

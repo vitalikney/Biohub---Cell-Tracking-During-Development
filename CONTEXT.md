@@ -4348,6 +4348,16 @@ Mention it to the user in one line (R9-A8 item 6).
   PENDING; watchdog re-armed (battery or poll > 25 min). Feed: new topic 744250 (kostopr4v 05:06Z: 'is a notebook
   still running at the 23:59 deadline scored before the final selection locks?'; no host answer) - no impact (our
   finals must read before 20:00Z).
+- 2026-09-29 06:20 UTC, OPS: night-ref LB saves armed (R34-A1), procedure only, 0-3 LB downloads
+  Three background jobs: (a) when exp75 (56656157) is terminal and exp89r is still PENDING -> 'timeout 180 python
+  tools/uptest.py save post_exp75' (S0 for exp89r); (b) when exp89r (56656147) is COMPLETE at 0.959 -> save
+  post_exp89r; (c) when exp89p (56657612) is COMPLETE at 0.959 -> save post_exp89p. UP test: for exp89r S0 =
+  post_exp75 if it exists, else the newest save/snapshot with count = S1 - 1; for exp89p S0 = any snapshot with count
+  53 and display 0.959 (e.g. e10 20260929T0513Z built into _lb per R32-A2); S1 = post_<token>; the count must move by
+  exactly +1, otherwise MASKED and the champion stays. Reason: the e10 RUN 41 at 05:41Z fetched 0/8 during the trip's
+  outage, and the exp75/exp89r windows overlap. R34-A2 (card fill): the 'best + closest neighbour' info line names the
+  file with the fewest lever differences from V_pub (exp87a -> exp85a), no model numbers; R34-A3 curator records
+  (Charannoo divrelax etc.) later.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

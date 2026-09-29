@@ -1,0 +1,110 @@
+{
+ "task": "curation 34 watch: WATCHLIST maintenance + forgotten items",
+ "curated_at": "2026-09-29T06:15Z",
+ "files_written": [
+  "research/KNOWLEDGE/WATCHLIST.md",
+  "research/KNOWLEDGE/_curation/34/watch.notes.md",
+  "research/KNOWLEDGE/_curation/34/watch.json"
+ ],
+ "alerts": [
+  {
+   "kind": "forgotten",
+   "what": "W319 = R34-A1: three conditional LB-save jobs (post_exp75 / post_exp89r / post_exp89p) not armed; night watchers 1760/17532/16292 save nothing",
+   "evidence": "research/wf_ideas_v4/round34/report.json R34-A1; Win32_Process 06:08Z shows no uptest.py save job; grep -c R34-A1 CONTEXT.md = 0",
+   "suggested_action": "Arm job (c) before 07:38Z and (a)(b) before 09:00Z; log the one-line OPS entry",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "e10 RUN 41 fetched 0/8 during the 05:34-05:47Z outage; no LB snapshot 05:13Z-06:41Z",
+   "evidence": "research/wf_ideas_v4/round34/report.notes.md 06:00Z; experiments/e10_watch/watch_loop.log 05:47:43Z",
+   "suggested_action": "Check RUN 42 at 06:41Z; if it fails while poll.log succeeds, inspect the run_e10_watch_loop.sh chain",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "uptest.py compare does not enforce count +1; SubmissionCount counts scored files only",
+   "evidence": "research/wf_ideas_v4/round34/scan_plancheck.notes.md 05:25Z",
+   "suggested_action": "Check +1 by eye at each UP test; else MASKED, champion stays",
+   "urgency": "today"
+  },
+  {
+   "kind": "contradiction",
+   "what": "Card v5 l.45 names exp70g as closest neighbour and compares with a П1 row that does not exist for CI V_pub exp87a",
+   "evidence": "research/wf_ideas_v4/round29/finals_card_v5_ru.md l.45; round34/report.json R34-A2",
+   "suggested_action": "Apply the R34-A2 replacement in the FILLED copy at 12:03Z, no model numbers; re-check 18:37Z",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "mc34_*.txt model numbers use the refuted CI prior (CI_MU 0.0002, R28-RC-C)",
+   "evidence": "research/wf_ideas_v4/round34/report.json plan_issues (c); round34/v_recheck_r34-rc-b-*.notes.md",
+   "suggested_action": "Never quote mc34 numbers on the card or to the user; standing prior = mc26.py CI_MU 0.0005 CI_SD 0.0008",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "RESULTS.md probe rows end at 46; probes 47-51 (and night 52-54) missing",
+   "evidence": "experiments/RESULTS.md l.79; last commit 59e14e2 28 Sep 05:03Z",
+   "suggested_action": "Add rows before the 12:03Z card fill",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "REPORT.md absent for rounds 29-34; round 34 untracked",
+   "evidence": "git status ?? research/wf_ideas_v4/round34/; round34/report.json next_focus",
+   "suggested_action": "Save report_md_ru as REPORT.md for each round; commit with the next CONTEXT commit (no Co-Authored-By)",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "E10 runbook l.66 still says OUR = 0.957 / SC >= 0.958 (should be 0.959 / >= 0.960)",
+   "evidence": "research/wf_ideas_v4/e10v3/runbook.notes.md l.66",
+   "suggested_action": "Fix before the 06:41Z E10 read (W286 (2))",
+   "urgency": "now"
+  },
+  {
+   "kind": "forgotten",
+   "what": "W279 (1) DET_THRESHOLD-closed line never logged",
+   "evidence": "research/wf_ideas_v4/round27/report.json R27-A9 (1); grep -c DET_THRESHOLD CONTEXT.md = 0",
+   "suggested_action": "Fold into the W319 OPS line before 07:23Z",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "Morning decision chain: 07:23Z prep, exp89p read 07:38-08:35Z (P LATE 08:46:36Z), A-M1 submit by 08:45Z, A-M2 by 11:30Z, card 12:03Z, proposal 18:37Z, tick 20:00Z UTC, deadline 23:59Z",
+   "evidence": "CONTEXT.md l.4274-4342; research/wf_ideas_v4/round33/report.json new_facts (1)(6)",
+   "suggested_action": "Follow the logged functions; never tick for the user",
+   "urgency": "today"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "Under the standing prior exp87a rows exist (mc26_grid.txt) and favour P2 {exp87a,exp75} over P3 on bronze 9-10/13, silver 13/13; card says 'не пересчитывали'",
+   "evidence": "research/wf_ideas_v4/round34/v_recheck_r34-rc-b-*.notes.md; round34/report.json new_facts (6)",
+   "suggested_action": "Keep EXP75 PARTNER RULE v2 (b) as logged; relevant if exp75 reads >= 0.955 clean",
+   "urgency": "info"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "Late-P path can send exp89q, which shares the 8.0 h safetail gate; card v flag required",
+   "evidence": "research/wf_ideas_v4/round34/report.json plan_issues (d)",
+   "suggested_action": "If fired, add 'P late > 8.0 h; exp89q shares the gate' to exp89q's card row",
+   "urgency": "today"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "exp89u partner revival rests only on the K prior (break-even K_priv ~+0.0003) and would put K in both finals, against the 16:32Z agreed hedge",
+   "evidence": "research/wf_ideas_v4/round34/v_recheck_r34-rc-a-*.notes.md; round34/report.json rejected R34-RC-A",
+   "suggested_action": "Keep exp89u off unless the user explicitly says yes (W302 (4))",
+   "urgency": "info"
+  },
+  {
+   "kind": "deadline",
+   "what": "Topic 744250 (selection of notebooks running at 23:59Z) has no host answer; no effect on us since the tick is 20:00Z UTC",
+   "evidence": "experiments/discussions/744250.md; round34/report.json new_facts (2)",
+   "suggested_action": "Quote any host answer when the feed signals",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 34 (06:15Z 29 Sep). Done since curation 33: W314 per-ref watchers and W315 P LATE 8.0 h (CONTEXT l.4329-4342, b4848cb); round 33 committed; trip passed (outage 05:34-05:47Z); laptop on AC 77% at 06:08Z; watchdog 28052 armed 06:02Z. Due now: W319 = R34-A1 conditional LB saves (job (c) before 07:38Z, (a)(b) before 09:00Z), not armed; runbook l.66 stale; e10 RUN 42 06:41Z must fetch OK. Overdue: RESULTS rows 47-51, REPORT.md rounds 29-34 + round34 commit, DET_THRESHOLD line, int-casting/cron-defect lines. Today: 07:23Z prep, exp89p read (A-M1 by 08:45Z), A-M2 by 11:30Z, card 12:03Z with W320 (R34-A2 l.45 fix, no mc34 numbers), 18:37Z proposal, tick 20:00Z UTC, deadline 23:59Z. New insights I382-I390 (failed e10 snapshot, uptest compare not enforcing +1, refuted-prior mc34 numbers, standing-prior exp87a rows favour P2, exp89u vs K hedge, Charannoo values, late-P->exp89q path, bin order, card l.45 error)."
+}

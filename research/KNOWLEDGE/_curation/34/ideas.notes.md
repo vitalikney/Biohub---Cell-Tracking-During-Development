@@ -1,0 +1,4 @@
+- 06:07:47Z 2026-09-29 start: no _curation/34/ideas.json -> incremental run over curation 33 (560 ideas). Reuse scratchpad patch33.py/gen_md33.py pattern.
+- 06:09:26Z sources since c33: b4848cb (CONTEXT 04:51Z P LATE THRESHOLD l.4329-4335 + OPS watchers/R33-A3 l.4336-4342; Literature l.4343), round34/ untracked (report.json R34-A1..A4 06:05Z; 4 scans; 5 verdicts), ledger 06:07:56Z (3 PENDING), poll failures 05:34/05:46Z, e10 0513Z/0541Z(0/8), digest 0528Z (744250). Plan: new I-561 (R34-A1 night-ref LB saves), I-562 (R34-A2 card l.45), I-563 (R34-RC-B refuted); ~30 updates; I-557/I-558/I-529 LOGGED -> off at-risk.
+- 06:14:31Z ideas.json (563 ideas, 35 change records) + IDEAS.md (1057 lines) WRITTEN from patch34.py/gen_md34.py; verify next.
+- 06:15:15Z verify OK (gen.py rows 563 bad 0; gen2.py body+rank equal; ids unique). _curation/34/ideas.json written (8 alerts). DONE.

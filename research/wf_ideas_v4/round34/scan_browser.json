@@ -1,0 +1,37 @@
+{
+ "summary": "Round-34 delta scan, 05:13-05:16 UTC 29 Sep (08:13-08:16 MSK), compared with round 33 (04:13-04:17Z). The one new item is a discussion topic, 744250 'Time of publishing private results'. It asks a question about the selection lock and has 0 comments and no host reply. It carries no knob and nothing to build. No new notebook appeared, no public notebook is above 0.953 (E10 FLAG none), and there is no host announcement. Ours: CSV #133 (was #132), 0.959, SubmissionCount still 53, so night probes 52-54 are still unscored. 1 + teams strictly above = 116. We are 18th of 22 in the 0.959 block, because Sam Barnett moved 0.957->0.959 and ranks ahead of us at #116. E10 P1: experiments/e10_watch/20260929T0513Z.txt has CHANGES=4 against 0441Z, all on the leaderboard. The kernel lists and statuses report 'no change', and the P2 largest group is 0. LB counts r33->r34: 0.953 404->402, 0.954 134->133, 0.955 110->113, 0.956 124, 0.957 50, 0.958 20, 0.959 21->22, 0.960 20, >=0.960 115, 3,984 teams (+3). The top-40 order is unchanged; only r3takahashi moved, 0.961->0.963 (#57). Overview: 94,402 submissions (+94), 4,568 participants (+3), and the timeline is unchanged. Nothing pulled.",
+ "findings": [
+  {
+   "id": "r34-new-topic-744250-selection-lock",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "New discussion topic 744250 'Time of publishing private results' by kostopr4v (992nd in the competition), posted ~05:06Z with 0 comments and 0 votes. It asks what happens to a notebook still running at the Sep 29 23:59 UTC deadline: can its score be seen and the notebook selected, or does selection lock at 23:59 so that teams must \"choose blind (or rely on auto-selection by public score)\". There is no host answer yet. It is only a question, with no disclosed knob or technique. It does not affect our plan: the user ticks the finals by 20:00Z (23:00 MSK), and every candidate is already scored or scheduled well before then.",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/744250 (read in Chrome at 05:15Z); https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion?sort=recent-comments",
+   "action": "None now. If a host answer appears before 20:00Z, the next scan should quote it. Keep the rule of ticking by 20:00Z, and submit nothing late that the finals would depend on."
+  },
+  {
+   "id": "r34-e10-p1-null",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "E10 P1 at 05:13Z shows CHANGES=4 against 0441Z, and every change is on the leaderboard histogram (0.957 +1, 0.955 +2, total teams +2). comp_dateRun, comp_scoreDescending, the anvithpothula list (live x138 slug biohub-0-953-lb-original), the thtennant and amanatar lists and both statuses report 'no change'. P2 look-check: largest group 0, so there is no signal and tools/e10_port_gate.py was not needed. The newest feed digest is 20260929T0358Z: 'new topics 0, new comments 0', 'E10 FLAG: none', top best_public_score 0.9530. It was 76 min old (< 100), so kaggle_feed.py was not re-run. The next loop run (~05:28Z) should pick up topic 744250.",
+   "evidence": "experiments/e10_watch/20260929T0513Z.txt DIFF section; experiments/discussions/digest_20260929T0358Z.md; experiments/discussions/feed_loop.log (03:58:09Z rc=0)",
+   "action": "None. E10 (a public notebook >= 0.959) is not met."
+  },
+  {
+   "id": "r34-lb-delta",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "The LB CSV at 05:14:13Z, compared with r33's at 04:13Z, has 7 score changes and 1 new row >= 0.953. The changes: r3takahashi 0.961->0.963 (#57); Sam Barnett 0.957->0.959 (#116, first in our block); Mehrdad Naderi 0.954->0.957; pwxc00 0.953->0.955; Apoorv Saraogee 0.953->0.955; Joseph Adamski 0.954->0.955; John Cisowski 0.953->0.954. The new row is 'Nat Bel ML Fun' at 0.953. Last submissions are dated 21:12-23:34Z on 28 Sep, the usual scoring lag. SubmissionCount grew on 43 rows (ymg_aq 51->56, Shoko 43->44, 'que la cuenten como quieran' 34->35). The top-40 order and scores are unchanged: yu4u 0.978, Sergio Alvarez 0.976, Gabriel 0.975, taiseiu 0.974. Our row is '133,16810638,D: Discipline,2026-09-28 12:14:57,0.959,53'. Strictly-better + 1 = 116, and we are 18th of 22 in the 0.959 block (ranks 116-137). SubmissionCount 53 means probes 52 exp89r / 53 exp75 / 54 exp89p are still unscored, consistent with the r32/r33 read windows (earliest exp89p ~07:38Z).",
+   "evidence": "experiments/e10_watch/20260929T0413Z.txt vs 20260929T0513Z.txt (TeamId row diff); histogram in 20260929T0513Z.txt (publicleaderboard-2026-09-29T05:14:13.csv)",
+   "action": "None. The MORNING TABLE v1.1 is unchanged. The next scan should look for SubmissionCount 54+ on our row from ~07:38Z."
+  },
+  {
+   "id": "r34-code-overview-null",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "Code, Recently Created (Chrome, 05:15Z): no new notebook. The newest unpinned one is still 'Robust Cell Tracking During Development via Chan.' (5 days, 0.1). The CLI scoreDescending list is unchanged and its top is 0.953 (x138 family). Nothing is >= 0.954 and there is no new idea, so nothing was pulled. Overview: '19 HOURS TO GO'; 13,475 entrants, 4,568 participants (+3), 3,984 teams (+3), 94,402 submissions (+94 vs 94,308). The timeline is unchanged (September 29, 2026 - Final Submission Deadline, 11:59 PM UTC), and there is no host announcement. No team disclosed a knob, so AGGRESSIVE MODE has nothing to build.",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/code?sortBy=dateCreated ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/overview",
+   "action": "None. The finals tick is still for the user by 20:00Z (23:00 MSK)."
+  }
+ ]
+}

@@ -1,0 +1,10 @@
+- 2026-09-29T05:23:28Z start recheck R34-PI-exp89u-timeline
+- 05:25Z sources: CONTEXT 16:43Z (laptop asleep 05:10-06:00Z), 14:12Z MORNING TABLE v1.1 (exp89u listed ONLY in branch B M2, with exp75 <= 0.953 condition; A-M1 = CI slot exp89l), 15:43Z default no exp89u, 20:07Z GPU bound lifted, 23:34Z freeze (8) GPU ~2.7 h est., (6) MORNING TIMING = submit at the decision header, 40-min non-CI spacing, 5/day; 00:47Z 2 submits left; 02:53Z A-M2 function (latest 11:00Z header, by 11:30Z); 04:51Z P late 8.0 h.
+- Timeline facts check: exp89p read window 07:38-08:35Z, A-M1 header <= 08:40:36Z, cutoff 08:45Z -> correct. A-M2 decided at exp89r terminal header (expected 09:25-09:35Z, latest 11:00Z); if exp89u took an UNUSED A-M2 at that header (MORNING TIMING), read = +6.87-7.67 h ~16:20-17:15Z, worst case 11:30Z -> 18:22-19:10Z. Finding quotes only the worst case.
+- Dummy runtime refs: K2 dummy ~1,512 s, exp70g ~1,712-1,874 s, exp89s 1,566 s -> 25-31 min + queue. Push at ~05:35Z -> PASS ~06:05-06:25Z, i.e. NOT before 06:00Z; the 06:00Z question would carry 'dummy running'.
+- R26 dry-run sha8 for exp89u = 6df9c9b6 (round26 report item 5) -> use as build STOP check.
+- Gate numbers grounded: exp85a dummy 122,328/118,137/85; K2/exp70g 121,252 nodes (cap never changes nodes); exp70g-K2 edges +6.
+- Rule gap: v1.1 branch A has no exp89u row; A-M1 is the CI row. Putting exp89u into A-M1/A-M2 UNUSED is an amendment that must be logged pre-score, i.e. before exp89p's first terminal header (~07:38Z) for A-M1 and before exp89r's header for A-M2, with the user's yes also before that header; otherwise post-hoc (P code decides the slot).
+- Value caveat (not this item's own claim): R26M-5 'cap-4 hedge <= ~+0.0006; every cap > 4 beat cap 4 on public'; revival is mc26-model-conditional (K_MU break-even ~+0.0003). Build+dummy is no-submit-risk; cost ~0.5 GPU-h + ~6-8 API calls.
+- Verdict: not refuted; timeline correct and feasible with corrections.
+- 2026-09-29T05:26:23Z wrote JSON (refuted=false)

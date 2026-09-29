@@ -1,0 +1,9 @@
+- 2026-09-29T05:23:29Z start recheck R34-RC-C (JT neighbour pair)
+- Sources: session scratchpad r34/mc34_allpartners.txt (6 runs), r34/mc34_vpub87a.txt (6 runs); r26/mc26.py (bronze = top 10%, silver = top 5%); CONTEXT l.1895 (objective: P(private > raw x138) first, silver second), l.4041-4050 (16:32Z user agreement); round29/finals_card_v5_ru.md l.30, l.45, l.47.
+- Bronze {exp87a,exp85a} vs P3 {exp87a,#37}: allpartners below 5/6 (CMODE=norm 0.862 vs 0.851 is the exception); vpub87a below 6/6 (0.629-0.754 vs 0.709-0.783). Total 11/12. Finding's range 0.629-0.754 comes from vpub87a, the '5 of 6' from allpartners (mixed files).
+- Silver: JT pair ABOVE P3 in 12/12 (e.g. 0.572 vs 0.538, 0.709 vs 0.645, 0.496 vs 0.473). Eval: above P3 in 3/12 (CMODE norm, CI_MU=0 sd .0015, CI sd .0015 tie 2.682 vs 2.681). Finding omits this.
+- vs exp89u pair bronze: margins 0.077-0.102 except CMODE=norm 0.001 (0.862 vs 0.863); vpub87a RHO=0.5 run 0.052. Claim 'by 0.04-0.10 in 6 of 6' wrong for CMODE=norm.
+- Card v5 l.45 says the JT-style row is below 'on bronze, silver and E[value]': with V_pub=exp87a and exp85a as neighbour, 'silver' would be FALSE. Caption must be bronze-only and compare to P3 (P1 exists only for non-CI V_pub).
+- Structural reason survives independent of MC: pair keeps cap 6 + K in both files (exp85a 0.958 = JT values selected on public), hedges only CI (+0.001 public, prior mean +0.0002).
+- Verdict: UPHELD (not refuted), with wording corrections. No Kaggle calls, no builds.
+- 2026-09-29T05:26:07Z JSON written; done

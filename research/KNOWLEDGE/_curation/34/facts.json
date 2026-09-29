@@ -1,0 +1,60 @@
+{
+  "files_written": [
+    "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/FACTS.md",
+    "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/DECISIONS.md",
+    "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/34/facts.notes.md",
+    "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/34/facts.json"
+  ],
+  "alerts": [
+    {
+      "kind": "forgotten",
+      "what": "The R34-A1 conditional night-ref LB saves (post_exp75, post_exp89r, post_exp89p) are not armed. The per-ref watchers 1760 and 17532 print the header but save no LB. The e10 hourly snapshots can fail: RUN 41 at 05:41Z fetched 0 of 8. exp75 and exp89r can finish inside one snapshot gap, and then an exp89r UP at 0.959 is MASKED by construction.",
+      "evidence": "FACTS F-RUN-53, C-282; research/wf_ideas_v4/round34/report.json R34-A1; experiments/e10_watch/watch_loop.log 05:47:43Z; curator Win32_Process read at 06:08Z found no post_exp* process",
+      "suggested_action": "Arm job (c) post_exp89p before 07:38Z, and jobs (a) post_exp75 and (b) post_exp89r before 09:00Z. Each is a run_in_background waiter that uses 'timeout 180 python tools/uptest.py save <tag>', 0-3 read-only calls in total. Log one OPS line in CONTEXT.",
+      "urgency": "now"
+    },
+    {
+      "kind": "deadline",
+      "what": "exp89p (P54) read window: first terminal header expected ~07:47-07:58Z. A-M1 is decided at the 08:40Z header (manual list at 08:40:00Z if still PENDING; nb_try exp89l cutoff 08:45Z). The P late mark for A-M2 and the card SEC line is now 08:46:36Z (R33-A2 LOGGED 04:51).",
+      "evidence": "CONTEXT 04:51 l.4329-4335, 02:53 l.4294-4312 (2); experiments/lb_poll/ledger.md 06:07:56Z (L > 5.36 h); DECISIONS P54 row",
+      "suggested_action": "At the 07:23Z prep, use the logged 8.0 h mark rather than the old 10.2 h. If P reads late and d_R >= 0.960 sends exp89q, add the v flag on exp89q's card row (PC34-04).",
+      "urgency": "today"
+    },
+    {
+      "kind": "contradiction",
+      "what": "Card v5 l.45 (template a134d5e4) names {<V_PUB_FILE>, exp70g} as 'best + closest neighbour', below P1. For V_pub exp87a (CI) the closest neighbour is exp85a, which differs only by CI, and a CI V_pub has no P1 row.",
+      "evidence": "research/wf_ideas_v4/round29/finals_card_v5_ru.md l.45; FACTS C-279; research/wf_ideas_v4/round34/report.json R34-A2",
+      "suggested_action": "At the 12:03Z and 18:37Z fills, edit the FILLED copy only: {exp87a 56640366, exp85a 56629533}, with no model numbers. If V_pub changes, name the COMPLETE file with the fewest lever differences from it.",
+      "urgency": "today"
+    },
+    {
+      "kind": "risk",
+      "what": "Every round-34 mc34_*.txt model number used the refuted CI prior CI_MU 0.0002 (R28-RC-C). Standing prior N(+0.0005, 0.0008): {exp87a, exp75} .824/.622, {exp87a, #37} .791/.580, {exp87a, exp85a} .742/.586 (bronze/silver, base K).",
+      "evidence": "FACTS F-TRN-66, C-280; research/wf_ideas_v4/round34/report.json plan_issues (c), new_facts (6); research/wf_ideas_v4/round28/report.json rejected",
+      "suggested_action": "Do not copy any mc34 number to the card or a user message. The judgmental model ranks only. Card step 10 ('Числа модели не пересчитывать') still applies.",
+      "urgency": "before-finals"
+    },
+    {
+      "kind": "risk",
+      "what": "A network outage from 05:34 to 05:47Z during the user's trip left 2 empty poll headers and made e10 RUN 41 fetch 0 of 8. The machine is back on AC (BatteryStatus 2, 78% at 06:08Z), and the 05:57Z and 06:07Z polls are OK.",
+      "evidence": "FACTS F-RUN-52; experiments/lb_poll/poll.log l.28681-28746; experiments/e10_watch/20260929T0541Z.txt; Win32_Battery curator read at 06:08Z",
+      "suggested_action": "Do not restart any loop. Check that e10 RUN 42 (06:41:53Z) fetched OK. Only if it fails again while poll.log succeeds, inspect its chain (R34-A4).",
+      "urgency": "today"
+    },
+    {
+      "kind": "stale",
+      "what": "experiments/RESULTS.md still has no rows after P46. P47-P51 are scored (0.955 / 0.957 / 0.955 / 0.958 / 0.959) and P52-P54 are pending. The last change is commit 59e14e2 (28 Sep 05:03Z).",
+      "evidence": "FACTS C-118; git log -- experiments/RESULTS.md; experiments/lb_poll/ledger.md 06:07:56Z",
+      "suggested_action": "Add rows P47-P54 after the night reads (main session; the curator may not edit RESULTS.md).",
+      "urgency": "before-finals"
+    },
+    {
+      "kind": "orphan-idea",
+      "what": "New discussion 744250 (05:06Z) asks whether a notebook still running at 23:59Z can be scored and then selected, or whether selection locks. There is no host answer.",
+      "evidence": "experiments/discussions/744250.md; FACTS F-RUL-33; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/744250",
+      "suggested_action": "No action needed, because the user ticks by 20:00Z and all candidate reads land before then. Quote any host answer if the feed signals one.",
+      "urgency": "info"
+    }
+  ],
+  "summary": "Curation 34 (state 06:15 UTC, 29 Sep). The two knowledge files were updated in place: FACTS.md and DECISIONS.md are now 'curation 34', and the 04:42Z state lines became 'Previous state'. Sources since c33: commit b4848cb, which adds 2 CONTEXT entries at 04:51 (R33-A2 P LATE THRESHOLD logged pre-score, late mark 08:46:36Z; OPS: R33-A1 per-ref watchers and R33-A3 morning late-read and save procedure); poll.log up to 06:07:54Z (P52 exp89r, P53 exp75, P54 exp89p still PENDING, L > 6.04 / 6.04 / 5.36 h; 2 empty polls during the 05:34-05:47Z outage); e10 0513Z (LB #133 of 3,984, 18th of 22 at 0.959); e10 0541Z (0 of 8 fetched); feed digest 0528Z (new topic 744250); round34 report.json (R34-A1..A4 proposed; RC-A exp89u and RC-B 'P3 ahead' refuted as refuted-prior artefacts). FACTS: new F-LB-34, F-RUN-52, F-RUN-53, F-RUL-32, F-RUL-33, F-MOD-53 and F-TRN-66; [c34] notes on F-LB-01/02/10, F-RUN-43/45/50/51, F-RUL-22/29/30/31, C-118, C-263, C-273 (resolved), C-274 (resolved); new contradictions C-279 (card l.45 neighbour, open), C-280 (refuted prior in mc34, resolved), C-281 (Charannoo disclosure, resolved), C-282 (UP-test masking, open) and C-283 (P2/P3 order, resolved). DECISIONS: new state line; [c34] cells on P52-P56; section-1 update paragraph; section-2 paragraph and a new CURRENT finals candidates snapshot at 06:15Z (V_pub exp87a 0.959, still ticked #37 + #38; exp85a now named exp87a's closest neighbour; exp89u added as a refuted non-candidate); R5/R6/R7/R8/R10/section-f statuses; the Round-33 row marked as logged, plus 3 new rows (the 04:51 logged rules, round-34 proposals, round-34 rejections); changelog. Tables were checked for pipe and column integrity. No other file was touched, nothing was committed, and Kaggle was not contacted (read-only local process and battery checks only)."
+}

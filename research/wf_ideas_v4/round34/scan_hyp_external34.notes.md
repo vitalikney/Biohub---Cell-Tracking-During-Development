@@ -1,0 +1,16 @@
+# round34 scan_hyp_external34 notes (started 2026-09-29T05:15Z)
+- no prior scan_hyp_external34.json -> fresh run. Chrome NOT used (task says do NOT use Chrome; the "5 page loads" allowance is overridden by that). No Kaggle API call made by this scan.
+- Window: since 04:43Z 29 Sep (round33 covered to ~04:20Z).
+- Feed: newest digest still digest_20260929T0358Z.md (feed_loop.log last line 03:58:09Z, 0 new topics/comments, E10 FLAG none). Next feed ~05:28Z not yet run at 05:15Z.
+- experiments/discussions/743929.md re-written 04:42Z (mtime 07:42 local MSK) but content unchanged: last comment JT 28 Sep 20:46 "very true brother" (the 1 comment counted by the 21:57Z feed). Justin's 04:13Z 28 Sep follow-up (which way lost / third knob) still unanswered by JT.
+- e10_watch: 20260929T0441Z (RUN 40, CHANGES 8, signals 0) and extra snapshot 20260929T0513Z (CHANGES 4). Kernel lists and statuses: no change in either. Top public notebook still 0.953; newest Biohub run still flexonafft 28 Sep 13:02:36.
+- LB 05:14Z: 3,984 teams; top-4 unchanged (0.978/0.976/0.975/0.974); >=0.960 115; >=0.970 11; 0.959 block 22 (116-137); 0.958 block 20 (138-157). Ours rank 133 (was 132 at 03:42Z), 0.959, 18th of 22 in the 0.959 block, SubmissionCount 53, last sub 28 Sep 12:14:57 => probes 52/53 (00:05Z) have not raised our public score (PENDING or <=0.959; read via lb_poll, not here).
+- Movers 04:13->05:13Z: r3takahashi .961->.963 (sub 23:34Z 28 Sep), Sam Barnett .957->.959 (21:12Z, took rank ahead of us -> our 132->133), Mehrdad Naderi .954->.957 (22:09Z), pwxc00 .953->.955, Apoorv Saraogee .953->.955, Joseph Adamski .954->.955, John Cisowski .953->.954, Nat Bel .953 new. All submissions 21:12-23:34Z 28 Sep = daily burst finishing re-runs; P2 largest group 0.
+- 0.959 block order (05:14Z CSV): Sam Barnett (sub 21:12Z 28 Sep) is #116, above earlier-submitted teams -> order inside a displayed score follows the unrounded score (known since 25 Sep, CONTEXT l.1849); our 18/22 = lower part of the bin; re-submitting for tie order is closed (IDEAS header).
+- 05:17Z WebSearch '"biohub-cell-tracking-during-development" READMIT_MIN_SCORE OR ILP_DIVISION_WEIGHT': no page discloses these knobs. Repos new to our files, checked with WebFetch:
+  - https://github.com/MapleBadger666/biohub-cell-tracking : own UNet+transformer+'Frozen V9' graph policy, local Fold0 only, NO LB score; det thr 0.995/0.9975, 3 um pooling. Not x138 family.
+  - https://github.com/Jin-Ruoting/Cell-Tracking-During-Development : LB 0.947 (E029 = Aman Atar Geometric Fusion repro, Pilkwang artifacts); det thr 0.96875, ILP DIS 1.5 (orig 1.575), div 1.0, edge -1.0, motion gates 6.0/10.0 um, min track 6, DeepCenter 0.25, gap 8.5 um. 0.947 family, below x138; DIS < 2 direction closed (DIS 1.75 closed, I-list header).
+  - https://github.com/Charannoo/biohub : divergence-relaxation division look-ahead replacing 12 um min_div_dist on the royerlab baseline, 1 commit, no score, no values. Not x138.
+  - https://github.com/Tobi-joshua/Biohub---Cell-Tracking-During-Development : classical Hungarian tracker + UI, no score. Not relevant.
+  - Gluzdov-Dmitrii and vicky0718 already logged (wf_ideas_v3 h_kaggle-intel / h_github-intel, round32).
+- Verdict: delta null for x138 family; AGGRESSIVE MODE has nothing to build; nothing reaches R8.

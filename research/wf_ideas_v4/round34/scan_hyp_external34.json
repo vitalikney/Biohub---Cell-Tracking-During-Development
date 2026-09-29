@@ -1,0 +1,29 @@
+{
+ "summary": "Round-34 external delta for the window since 04:43Z on 29 Sep, checked 05:14-05:20Z. Nothing new is actionable. The newest feed digest is still 03:58Z (0 new topics, 0 comments, E10 FLAG none); the 05:28Z feed run had not happened yet. 743929.md was rewritten at 04:42Z with the same content, and Justin's questions about the third knob are still unanswered. The e10 snapshots at 04:41Z (RUN 40) and 05:13Z show no change in the kernel lists or statuses. The best public notebook is still 0.953, and no Biohub notebook has run since 28 Sep 13:02Z. On the LB (05:14Z, 3,984 teams) the only movement is the tail of the daily burst (submissions from 21:12-23:34Z on 28 Sep, largest P2 group 0). We are #133, 0.959, 18th of 22 in the 0.959 block, SubmissionCount 53. Probes 52/53/54 have not completed. A GitHub search plus 4 WebFetches found 4 repos we had not logged (MapleBadger666, Jin-Ruoting 0.947, Charannoo, Tobi-joshua). None of them is in the x138 family and none discloses a knob above our base. Chrome and the Kaggle API were not used. No hypothesis reaches R8.",
+ "findings": [
+  {
+   "id": "r34x-1-delta-null",
+   "kind": "new-fact",
+   "what": "Nothing new since 04:43Z. Feed: the last run is 03:58:09Z (0/0, E10 FLAG none), and the next is due ~05:28Z. discussion 743929: the file was rewritten at 04:42Z with the same content, and the last comment is still JT's 28 Sep 20:46Z. JT has not answered Justin's 28 Sep 04:13Z questions (which side of DIV 0.4 lost, which knobs closed, a third knob). E10: the 04:41Z and 05:13Z snapshots show no change in comp_dateRun, scoreDescending, user lists or statuses. The top public score is still 0.953 and the newest run is flexonafft 28 Sep 13:02:36. LB 05:14Z: 3,984 teams, top-4 unchanged (0.978/0.976/0.975/0.974), 115 teams at or above 0.960, 11 at or above 0.970. Blocks: 0.959 = 22 (ranks 116-137), 0.958 = 20 (138-157). Movers 04:13->05:13Z: r3takahashi .961->.963, Sam Barnett .957->.959, Mehrdad Naderi .954->.957, pwxc00/Apoorv Saraogee/Joseph Adamski ->.955, John Cisowski ->.954. All of these submitted between 21:12 and 23:34Z on 28 Sep, the daily burst finishing its re-runs, and the largest P2 group is 0. We are at rank 133 (132 at 03:42Z), 0.959, 18th of 22. Sam Barnett submitted later than us but sits at #116, which again shows that the order inside a bin follows the unrounded score (known, CONTEXT l.1849). Our SubmissionCount is 53 and our last submission is 28 Sep 12:14:57, so none of probes 52/53/54 has completed. The ledger at 05:14:40Z has all three PENDING.",
+   "evidence": "experiments/discussions/feed_loop.log (last 2026-09-29T03:58:09Z); experiments/discussions/digest_20260929T0358Z.md; experiments/discussions/743929.md; experiments/e10_watch/20260929T0441Z.txt and 20260929T0513Z.txt (DIFF sections, histogram, leaderboard_rows); experiments/lb_poll/ledger.md (05:14:40Z)",
+   "action": "None. The night reads, MORNING TABLE v1.1 and finals card v5 stay unchanged. Re-submitting for tie order stays closed.",
+   "urgency": "info"
+  },
+  {
+   "id": "r34x-2-github-new-repos-no-x138-knobs",
+   "kind": "new-fact",
+   "what": "The 05:17Z WebSearch found no page that discloses READMIT_MIN_SCORE or ILP_DIVISION_WEIGHT. 4 repos were not in our files. (1) MapleBadger666/biohub-cell-tracking: its own UNet, transformer and 'Frozen V9' graph policy, with local Fold0 numbers only and no LB score; detection threshold 0.995/0.9975, 3 um pooling. (2) Jin-Ruoting/Cell-Tracking-During-Development: LB 0.947 (E029 = a repro of Aman Atar's Geometric Fusion); detection threshold 0.96875, ILP disappearance 1.5 (orig 1.575), division 1.0, edge -1.0, motion gates 6.0/10.0 um, min track 6, DeepCenter 0.25, gap 8.5 um. This is the 0.947 family, below x138, and DIS below 2 is a closed direction (DIS 1.75 closed). (3) Charannoo/biohub: a division look-ahead ('divergence relaxation') that replaces the 12 um min_div_dist of the royerlab baseline; 1 commit, no score, no values. The mechanism is covered by the closed division-hygiene and forkmid entries. (4) Tobi-joshua: a classical Hungarian tracker with a UI, no score. None discloses an x138-family value, so AGGRESSIVE MODE has nothing to build.",
+   "evidence": "https://github.com/MapleBadger666/biohub-cell-tracking ; https://github.com/Jin-Ruoting/Cell-Tracking-During-Development ; https://github.com/Charannoo/biohub ; https://github.com/Tobi-joshua/Biohub---Cell-Tracking-During-Development ; research/wf_ideas_v4/round34/scan_hyp_external34.notes.md",
+   "action": "None tonight. The curator may add the 4 repos to the GitHub intel list as 'no x138 knobs'.",
+   "urgency": "info"
+  },
+  {
+   "id": "r34x-3-no-hypothesis-reaches-r8",
+   "kind": "new-hypothesis",
+   "what": "Honest answer: nothing reaches R8. The delta contains no disclosed x138-family value, no new public notebook and no new technique. The GitHub values found (DIS 1.5, detection threshold 0.96875/0.995, motion gates 6/10 um, min track 6) belong to other families and map to closed items (DIS below 2, DET_THRESHOLD, MIN_TRACK_LEN). A look-ahead division gate maps to the closed forkmid and division-hygiene family. Rounds 28-33 already found the whitelist {K, SEC n2a, DIS 2.25, CI} exhausted, and JT's third knob stays undisclosed until after the deadline (I-412). Expected gain of any new build: 0. It also has no read slot, because the remaining 29 Sep slots belong to MORNING TABLE v1.1.",
+   "evidence": "research/KNOWLEDGE/IDEAS.md header (curation 33, I-001..I-560; closed list); round33/scan_hyp_external33.json r33x-3",
+   "action": "Build, dummy and propose nothing.",
+   "urgency": "info"
+  }
+ ]
+}

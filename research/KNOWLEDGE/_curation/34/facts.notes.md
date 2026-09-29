@@ -1,0 +1,7 @@
+- 2026-09-29T06:06:58Z start round 34 curation (facts.json absent -> fresh run)
+- 06:07Z poll 05:57:51Z: 3 night refs still PENDING (522 polls, 8 empty: +05:34:41Z,+05:46:17Z DNS/SSL errors); CONTEXT unchanged since commit b4848cb (04:51Z entries new vs c33)
+- 06:08Z Win32 06:08Z: watchers 16292/1760/17532 alive; R34-A1 save jobs NOT armed (no post_exp* process); 28052 battery/poll-stale watchdog (06:02Z); BatteryStatus 2 (AC) 78%; e10 0513Z LB #133 18/22 block, 0541Z fetch 0/8
+- 06:10Z verified card v5 l.45 text + sha8 a134d5e4, mc26 standing prior CI_MU 0.0005/SD 0.0008, R28-RC-C refuted (round28 report); RESULTS.md last 59e14e2. Writing c34 patch script.
+- 06:11Z FACTS.md patched (c34_facts.py); pipes validated
+- 06:13Z DECISIONS.md patched (c34_dec.py: state line, P52-P56 cells, §1 update, §2 para + snapshot, R5-R8/R10/§f, R33 row status + 3 new rows, changelog); pipes validated
+- 06:14Z facts.json written (7 alerts). Done.

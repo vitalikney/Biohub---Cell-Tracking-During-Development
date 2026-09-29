@@ -1,0 +1,37 @@
+{
+  "summary": "Round 34 plan check, 05:14-05:30Z 29 Sep, 0 Kaggle calls. State: poll header 05:14:38Z shows 56656147 exp89r, 56656157 exp75 and 56657612 exp89p PENDING, and 56640366 exp87a COMPLETE 0.959. The e10 snapshots 0441Z and 0513Z show no kernel change; the best public notebook is 0.953; we are #133 with count 53, 18th of 22 in the 0.959 block. Feed 03:58Z: 0 new. No E10 trigger and no disclosed knob, so aggressive mode has nothing to build. Card v5 a134d5e4 and checklist 2b442e87 match. Watchers 16292 (any ref), 1760 (exp89r) and 17532 (exp75) are alive with correct patterns. Timers 06:07Z through 30 Sep 00:07Z are alive; timer.sh re-checks the clock, so standby cannot shift them. AC 77%. One concrete gap, procedure only, not a rule rewrite. The night-ref watchers take no LB save. exp75 (09:05-10:05Z) and exp89r (09:23-09:34Z) are likely to complete inside one snapshot gap: the e10 loop runs at xx:41Z, and the round snapshots at xx:13Z are not guaranteed. If exp89r displays 0.959 (a tie with champion exp87a), the running-champion UP test (02:02Z (2), R32-A2) then sees count +2 = MASKED, and exp87a stays by default even when exp89r is higher unrounded. Fix: conditional LB saves at the terminal headers, 0-2 Kaggle calls.",
+  "findings": [
+    {
+      "id": "PC34-01",
+      "kind": "plan-issue",
+      "what": "The night-ref read watchers (1760 for 56656147, 17532 for 56656157) print the header but take no LB save. The V_pub running-champion rule (02:02Z (2)) lets a later file at the champion's display (0.959) replace exp87a only on an attributable UP, i.e. an S0/S1 pair whose SubmissionCount differs by exactly 1. R32-A2 takes S0/S1 from the e10 snapshots. These come from e10_watch_loop.py at xx:41Z (INTERVAL_S 3600, END 12:00Z) plus the round-agent snapshots at xx:13Z, which are not guaranteed. The LB SubmissionCount counts SCORED submissions only: it is 53 now, with 3 pending. exp75 is expected 09:05-10:05Z and exp89r 09:23-09:34Z, so both can complete inside one 09:13-09:41Z or 09:41-10:13Z gap. The next snapshot then shows +2, and exp89r at 0.959 goes MASKED: the champion stays by default even if exp89r is higher unrounded. R33-A3 fixed the same problem for the MORNING files only. Where it matters: V_pub is one of the two finals, and exp89r = 0.959 is a likely outcome (Rr '0'). Sam Barnett (#116, 0.957 -> 0.959, last submission 21:12Z) sits above us in the 0.959 block, which confirms that the block order follows the unrounded score, so the UP test is informative.",
+      "evidence": "Win32_Process 05:18Z: 1760 'until last | grep -qE \"^56656147,.*(COMPLETE|ERROR)\" ... awk' and 17532 (same with 56656157), with no uptest call. experiments/lb_poll/e10_watch_loop.py l.64-65 (END 12:00Z, INTERVAL_S 3600); watch_loop.log RUN 40 04:42Z, next 05:41:53Z. experiments/e10_watch/20260929T0441Z.txt and 20260929T0513Z.txt: our count 53 with 3 refs pending. tools/uptest.py compare prints both counts but does not enforce them. CONTEXT 00:06Z read windows; 02:02Z (2); 03:56Z R32-A2; 04:51Z OPS line (R33-A3 covers the morning files only).",
+      "action": "0 Kaggle calls unless a condition fires; no rule change. Arm now, next to 1760/17532 (or handle by hand the moment each watcher notifies), two run_in_background Bash jobs. (a) exp75: cd \"/c/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development\" && last(){ awk '/^=== /{blk=\"\"} {blk=blk\"\\n\"$0} END{print blk}' experiments/lb_poll/poll.log; }; until last | grep -qE \"^56656157,.*(COMPLETE|ERROR)\"; do sleep 60; done; if last | grep -qE \"^56656147,.*PENDING\"; then timeout 180 python tools/uptest.py save post_exp75; fi. (b) exp89r: the same with 56656147 in the until-grep and 'if last | grep -qE \"^56656147,.*COMPLETE,0[.]959,\"; then timeout 180 python tools/uptest.py save post_exp89r; fi'. Use at the UP test: S0 = post_exp75 when exp75 completed first, else the newest e10 snapshot before exp89r's header with an unchanged count. S1 = post_exp89r. Build lb.csv per R32-A2 only for e10-snapshot tags. The count check (+1 exactly) stays as logged. A +2 save is still MASKED. At most 2 LB downloads. Log one OPS line: 'night-ref LB saves armed (PC34-01), procedure only'.",
+      "urgency": "today"
+    },
+    {
+      "id": "PC34-02",
+      "kind": "new-fact",
+      "what": "External delta is null since round 33. There is no new public notebook, no kernel change and no disclosed technique. The best public notebook is still 0.953. LB 05:14Z: 3,984 teams, 115 of them >= 0.960, and 22 at 0.959 (ranks 116-137). We are #133 (count 53), so the night probes are unscored. Movers (#57 r3takahashi 0.961 -> 0.963, #116 Sam Barnett 0.957 -> 0.959, #194 0.954 -> 0.957 and a few in 0.953-0.955) all submitted 21:12-23:34Z on 28 Sep, the daily burst with scoring lag. P2 largest group is 0.",
+      "evidence": "experiments/e10_watch/20260929T0441Z.txt and 20260929T0513Z.txt (DIFF: kernel lists and statuses 'no change'; histogram only); experiments/discussions/feed_loop.log 03:58:09Z (0 new topics, 0 new comments, E10 FLAG none).",
+      "action": "None. The E10 trigger stays at >= 0.960 and aggressive mode has nothing to build. Next e10 run ~05:41Z (or on wake); next feed run ~05:28Z.",
+      "urgency": "info"
+    },
+    {
+      "id": "PC34-03",
+      "kind": "new-fact",
+      "what": "Ops state at 05:18Z, read locally. One lb_poll.py (37016; headers every ~10 min, the latest 05:14:38Z). One e10 chain (-> 18040). One feed loop (10924). The read watchers 16292, 1760 and 17532 are alive. The one-shot watchdog 25988 will fire and exit at the unplug, and the 06:07Z step re-arms it (R31-A2). timer.sh jobs are alive for 06:07, 07:13, 07:23, 08:13, 08:30, 09:13, 10:13, 11:10, 12:03, 13:13-18:13, 18:37, 19:43, 21:05 and 00:07Z on 30 Sep. timer.sh loops on 'date -u' every 30 s, so a Modern Standby delays a timer only until the wake and never shifts it. BatteryStatus is 2 (AC), 77%. Card v5 sha8 is a134d5e4 and the night checklist is 2b442e87. HEAD is b4848cb (Round 33).",
+      "evidence": "Win32_Process / Win32_Battery at 05:18Z; the scratchpad timer.sh source; sha256sum of research/wf_ideas_v4/round29/finals_card_v5_ru.md and night_checklist.md; poll.log headers 00:23-05:14Z every ~10 min 2 s.",
+      "action": "None beyond the logged 06:07Z step.",
+      "urgency": "info"
+    },
+    {
+      "id": "PC34-04",
+      "kind": "new-fact",
+      "what": "A low-probability consequence of R33-A2, for the card only. Take the case where exp89p reads late (header + 210 s x failed attempts > 08:46:36Z) with d_P <= 0.958, while exp89r reads d_R >= 0.960. P then becomes '?' and DIS becomes '?', and the A-M2 function (02:53Z (1) step 2) sends exp89q. exp89q is safetail with the same 8.0 h in-kernel insertion gate (K + SEC + DIS, L expected = exp85a's). A long exp89p hidden run is therefore evidence that exp89q's own read may carry the same insertion-skip depression. This is a consistent reading of the logged rules and is not a bug. 0 of 12 non-CI safetail reads exceeded 7.81 h.",
+      "evidence": "CONTEXT 04:51Z P LATE THRESHOLD; 02:53Z (1); 23:34Z (9) ('exp89q L = exp85a L (7.0-7.2 h)'); tools/runtime_ledger.py safetail DIVINS gate 8.0 h.",
+      "action": "No rule change. If this path fires, put the v flag on exp89q's card row ('P late > 8.0 h; exp89q shares the gate'). exp89q's own L decides that flag.",
+      "urgency": "info"
+    }
+  ]
+}

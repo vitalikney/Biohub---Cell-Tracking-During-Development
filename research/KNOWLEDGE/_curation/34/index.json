@@ -1,0 +1,74 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/INDEX.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/CHANGES.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/34/index.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/34/index.json"
+ ],
+ "alerts": [
+  {
+   "kind": "forgotten",
+   "what": "W319 / R34-A1 / I-561: the conditional night-ref LB saves (post_exp89p, post_exp75, post_exp89r) are not armed. A re-check at 06:17Z found no uptest.py save or post_exp* process. Without them, an exp89r 0.959 UP can be MASKED and exp87a stays V_pub by default.",
+   "evidence": "research/wf_ideas_v4/round34/report.json R34-A1; research/wf_ideas_v4/round34/scan_plancheck.json PC34-01; research/KNOWLEDGE/FACTS.md F-RUN-53, C-282; Win32_Process read 06:17Z",
+   "suggested_action": "Arm post_exp89p before 07:38Z, and post_exp75 (only if exp89r is still PENDING) and post_exp89r (only on COMPLETE 0.959) before 09:00Z, each as 'timeout 180 python tools/uptest.py save <tag>'. Log one OPS line and fold in the W279 (1) and W297 lines.",
+   "urgency": "now"
+  },
+  {
+   "kind": "stale",
+   "what": "The E10 runbook trigger line still says OUR = 0.957, SC >= 0.958.",
+   "evidence": "research/wf_ideas_v4/e10v3/runbook.notes.md l.66 (read 06:17Z); research/KNOWLEDGE/WATCHLIST.md W286 (2)",
+   "suggested_action": "Change it to 'OUR = 0.959 (exp87a), SC >= 0.960' before the 06:41Z E10 run.",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "e10 RUN 41 fetched 0 of 8 during the network outage (~05:30-05:57Z), so there is no LB snapshot between 05:13Z and 06:41Z. The machine is back on AC (79% at 06:17Z) and all loops are alive.",
+   "evidence": "experiments/e10_watch/watch_loop.log (RUN 41); CONTEXT.md l.4343-4350 (06:09Z POST-WAKE CHECK); research/KNOWLEDGE/FACTS.md F-RUN-52",
+   "suggested_action": "Check that RUN 42 (06:41:53Z) fetched OK. Only if it fails while poll.log succeeds, inspect the e10 chain. Restart no loop.",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "Morning chain: 07:23Z prep; exp89p read 07:38-08:35Z (P late mark 08:46:36Z); A-M1 exp89l by 08:45Z iff exp89p >= 0.959; A-M2 by 11:30Z. At each UP test, check by eye that SubmissionCount rose by exactly 1. If P reads late and A-M2 goes to exp89q, add the v flag on exp89q's card row.",
+   "evidence": "CONTEXT.md l.4273-4342; research/KNOWLEDGE/DECISIONS.md §1 l.199-202; research/KNOWLEDGE/WATCHLIST.md l.61-64, I383, I388",
+   "suggested_action": "Follow the logged 02:02Z, 02:53Z (1) and 04:51Z functions, and act at the header, not at the cutoff.",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "Every round-34 mc34_* model number uses the refuted CI prior CI_MU 0.0002. The standing prior is N(+0.0005, 0.0008).",
+   "evidence": "research/wf_ideas_v4/round34/report.json plan_issues (c); research/wf_ideas_v4/round28/report.json rejected; research/KNOWLEDGE/FACTS.md C-280, F-TRN-66",
+   "suggested_action": "Put no mc34 number on the card or in any user message. Card l.47 stays 'not recomputed'.",
+   "urgency": "today"
+  },
+  {
+   "kind": "contradiction",
+   "what": "Card v5 l.45 names exp70g as V_pub's closest neighbour, below P1. For the CI V_pub exp87a the neighbour is exp85a 56629533, and there is no P1 row.",
+   "evidence": "research/wf_ideas_v4/round29/finals_card_v5_ru.md l.45; research/wf_ideas_v4/round34/report.json R34-A2; research/KNOWLEDGE/FACTS.md C-279",
+   "suggested_action": "At the 12:03Z fill, together with the I-539 info lines, the I-548 numbers and the rank line, edit the FILLED copy only and give it a new sha8. Re-check at 18:37Z.",
+   "urgency": "today"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "Three records are still not written: the C11 line for probes 54 / 52 (I-559), the I-510 'not the battery / keep VS Code open' message (not in the 06:09Z entry), and the W279 (1) DET_THRESHOLD and W297 cron-defect lines.",
+   "evidence": "research/wf_ideas_v4/round33/report.json R33-A4 (b); CONTEXT.md l.4343-4350; research/KNOWLEDGE/WATCHLIST.md l.47-48",
+   "suggested_action": "Write them in the post-decision entries after A-M1 and A-M2, and send the I-510 line with the 07:23Z message.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "experiments/RESULTS.md has no rows after P46 (P47-P51 are scored, P52-P54 are pending). REPORT.md is missing for rounds 29-34, and round 34 is untracked.",
+   "evidence": "experiments/RESULTS.md; git status (?? research/wf_ideas_v4/round34/); research/KNOWLEDGE/FACTS.md C-118",
+   "suggested_action": "The main session adds the rows and saves report_md_ru as REPORT.md after the morning decisions, then commits as the user.",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "Finals messages: 18:37Z proposal ('the pair by the card', never 'рекомендую'), 19:43Z reminder, 20:00Z user tick. Keep exp89u off without an explicit user yes. The logged EXP75 PARTNER RULE v2 (b) stays, even though the standing prior favours P2 on bronze.",
+   "evidence": "CONTEXT.md l.3848-3855; research/KNOWLEDGE/WATCHLIST.md I385-I386 l.112-113; research/KNOWLEDGE/DECISIONS.md §2 l.978-980",
+   "suggested_action": "Send the proposal from the filled card v5. The session never ticks.",
+   "urgency": "before-finals"
+  }
+ ],
+ "summary": "Curation 34 index is done (state ~06:17 UTC, 29 Sep; HEAD d9d259e).\n\nFiles:\n- research/KNOWLEDGE/INDEX.md was rewritten (70 lines): state in 10 lines, a map with curation-34 line anchors, 8 top open ideas and 10 deduplicated alerts.\n- research/KNOWLEDGE/CHANGES.md got a new section '## 34'.\n\nWhat changed since curation 33:\n- 3 new CONTEXT entries: 04:51Z P late 8.0 h, 04:51Z per-ref watchers plus morning procedure, and 06:09Z post-wake check.\n- No new LB score. P52-P54 are PENDING; we are #133 of 3,984 at 0.959.\n- Ideas went from 560 to 563: I-561 and I-562 are in-plan and at risk, I-563 is refuted. I-557, I-558 and I-529 are now logged.\n- New facts F-LB-34, F-RUN-52/53, F-RUL-32/33, F-MOD-53 and F-TRN-66. C-273 and C-274 are resolved. Of the new C-279..C-283, C-279 and C-282 are open.\n- New watchlist items W319-W322, T198-T200 and I382-I390.\n\nTop alert: the R34-A1 LB-save jobs are still not armed (re-checked 06:17Z).\n\nSettled between curators: the battery (back on AC since 06:01Z per CONTEXT l.4343-4350), mc34 urgency (today) and RESULTS/REPORT urgency (today, after the morning decisions).\n\nNo other file was edited, nothing was committed and Kaggle was not contacted."
+}

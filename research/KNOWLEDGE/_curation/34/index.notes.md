@@ -1,0 +1,5 @@
+- 06:16Z start curation 34 index; no prior index.json; INDEX.md 70 lines (c33), CHANGES.md 1620 lines
+- 06:17Z sources: HEAD d9d259e (06:09Z POST-WAKE CHECK, CONTEXT l.4343-4350, Literature l.4351, 4371 lines); poll hdr 06:07:54Z l.28746 3 PENDING; Win32 06:17Z: no uptest save / post_exp job (W319 still unarmed), watchers 16292/1760/17532 alive, AC 79%; runbook l.66 still 0.958. Writing INDEX.md
+- 06:20Z INDEX.md written (70 lines); cites fixed (I385, mc26 grid). Next: CHANGES.md section 34
+- 06:22Z CHANGES.md section 34 appended. Next: index.json
+- 06:23Z index.json written. DONE
