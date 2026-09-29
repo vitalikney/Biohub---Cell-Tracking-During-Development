@@ -4430,6 +4430,14 @@ Mention it to the user in one line (R9-A8 item 6).
   2.25 + coordinject ALPHA 0.5 MAX_UM 3.0 (K + DIS + CI; best + DIS)'. Guards: G1 header < 15 min, G2 used_today 3 and
   token exp89t absent, G3 ft-weights baseline, G5 COMPLETE; nb_try via the night_checklist PRELUDE. Slot 2 remains
   A-M2 rule (a) (exp89s iff exp89r >= 0.958).
+- 2026-09-29 08:28 UTC, USER: SLOT 2 HELD UNTIL 15:00 MSK (12:00 UTC) ('второй слот пока не тратим до последнего (до 15 по мск)'; pre-score: exp89r/exp75 PENDING)
+  Amends A-M2 rule (a) (08:19Z): exp89s is NOT sent automatically at exp89r's read. The slot-2 decision moves to
+  ~11:55-12:00Z (14:55-15:00 MSK). Candidates at that time: (1) exp89s (K + DIS, non-CI) if rule (a)'s condition holds
+  (exp89r COMPLETE, no ERROR, >= 0.958 with L_hi <= 10.2 h, or >= 0.959 with L_hi <= 10.75 h); (2) a better candidate
+  that appears before then (an E10 copy of a public notebook >= 0.960, or a newly disclosed idea), non-CI only (a CI
+  file sent at 12:00Z would read ~21:30Z, after the 20:00Z tick); the session proposes it to the user. A non-CI file
+  sent at 12:00Z reads ~19:05-19:15Z (L 7.0-7.2 h), before the 20:00Z tick. The session asks the user at ~11:55Z with
+  the recommendation; with no answer by 12:00Z it applies (1), else leaves the slot UNUSED.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
