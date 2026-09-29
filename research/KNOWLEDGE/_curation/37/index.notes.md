@@ -1,0 +1,4 @@
+- 2026-09-29 ~10:00Z index curator 37 started; no index.json; read INDEX.md (c36) + CHANGES tail.
+- ~10:05Z INDEX.md rewritten for c37 (12 alerts, 8 ideas); next: CHANGES.md section 37.
+- ~10:08Z CHANGES.md section 37 appended; writing index.json.
+- ~10:10Z index.json written; done.

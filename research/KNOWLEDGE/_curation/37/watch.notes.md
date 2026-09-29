@@ -1,0 +1,5 @@
+- 2026-09-29T09:42:19Z start curation 37 watch; no prior 37/watch.json; base = 36 WATCHLIST (08:40Z)
+- 2026-09-29T09:42:40Z read CONTEXT l.4440-4487 (08:51Z CLARIFY+timer note, 09:00Z exp89t submitted, 09:09Z exp75 0.955, 09:19Z exp89r 0.957 rule (a) not met); round37 report.json R37-A1..A8 (09:40Z)
+- 2026-09-29T09:43:01Z poll 09:38:34Z exp89t PENDING; e10 RUN45 0941Z rank 140, 16/20 of 0.959 block, count 56; RESULTS rows still end at 46
+- 2026-09-29T09:43:42Z greps done; drafting WATCHLIST (W338-W345=R37-A1..A8, T213-T218, C7-C9, I409-I418)
+- 2026-09-29T09:46:50Z WATCHLIST.md + watch.json written (15 alerts); done

@@ -1,0 +1,37 @@
+{
+ "summary": "Round-37 delta scan, 09:13-09:19 UTC 29 Sep (12:13-12:19 MSK), compared with round 36 (08:13-08:20Z). Nothing new can be acted on. E10 P1 (experiments/e10_watch/20260929T0913Z.txt, CHANGES=11 against 0841Z): all 11 changes are on the leaderboard. The kernel lists and statuses (x138 live slug anvithpothula/biohub-0-953-lb-original) report no change, and the P2 largest group is 0, so port_gate was not needed. The feed digest 0828Z (45 min old, not re-run) shows the 2 topics already seen in r36, 0 new comments, E10 FLAG none and best public 0.9530. Chrome found 3 new comments and no knobs. On 744273, Satwik (#411) says local division gains did not transfer to the public LB and guesses the public embryo is easier, with 'very few divisions'. Yassine Alouini says a shakeup is 'Very highly' likely. On 744278, fheizz answers 'nah too late'. 744250 still has no host answer. The Code tab is unchanged and nothing was pulled. The Overview shows '15 HOURS TO GO', 3,988 teams, 95,359 submissions, the timeline unchanged and no announcement. LB CSV 09:14Z against 08:13Z: 0.953 396->397, 0.954 127->120, 0.955 104->101, 0.956 138->147, 0.957 60->63, 0.958 20, 0.959 20, >=0.960 123->124. Ours: #140 (was #139), 0.959, SubmissionCount 56. We are 16th of 20 in the 0.959 block (ranks 125-144). Probe 53 exp75 = 0.955; exp89r (56656147) and exp89t (56669888) are PENDING.",
+ "findings": [
+  {
+   "id": "r37-e10-p1-null",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "E10 P1 at 09:13Z shows CHANGES=11 against 0841Z, all on the leaderboard (0.976 1->2, 0.975 1->0, 0.967 +1, 0.963 -1, 0.962 +1, 0.957 +2, 0.956 +5, 0.955 -3; >=0.960 123->124; our rank 139->140). comp_dateRun, comp_scoreDescending, the anvithpothula/thtennant/amanatar kernel lists and both kernel statuses (x138 live slug anvithpothula/biohub-0-953-lb-original and amanatar/optimized-biohub-max-score) all report 'no change'. P2 look-check: no team jumped from <=0.953 to >=0.956 with a shared score (largest group 0), so there is no port signal and tools/e10_port_gate.py was not needed. The newest feed digest is 20260929T0828Z, 45 min old at scan time (< 100 min), so kaggle_feed.py was not re-run. It lists new topics 744278 and 744273 (both already covered in r36), 0 new comments and 'E10 FLAG: none'. Its best public notebook is 0.9530 (kunaldesale2408, amanatar, raunakdey07, anvithpothula).",
+   "evidence": "experiments/e10_watch/20260929T0913Z.txt DIFF section; experiments/discussions/digest_20260929T0828Z.md; experiments/discussions/feed_loop.log (08:28:33Z rc=0)",
+   "action": "None. E10 (a public notebook >= 0.959) is not met."
+  },
+  {
+   "id": "r37-lb-delta",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "LB CSV publicleaderboard-2026-09-29T09:14:09.csv against r36's 08:13:59Z. Counts: 0.953 396->397, 0.954 127->120, 0.955 104->101, 0.956 138->147, 0.957 60->63, 0.958 20->20, 0.959 20->20, >=0.960 123->124; total teams 3,988 (+1). Top-20 movers: Gabriel 0.975->0.976 (#3->#2, count 32->33); Sergio Alvarez #2->#3 on the tie (0.976, earlier submission loses); Kayla L. #12->#11 (count 70->71, still 0.970); Syed Asad Ali #11->#12. yu4u still leads at 0.978. Other movers (e10 info): yuto083 0.963->0.967 (#26), len8487 0.956->0.962 (#86), Praxel 0.954->0.957, 7 teams 0.955->0.956. All these late submissions are timestamped 00:02-02:41Z, so they come from the midnight burst still being scored. Our row is '140,16810638,D: Discipline,2026-09-29 00:46:36,0.959,56'. The count moved 54->56 because probe 55 exp89t (56669888, 09:00:17Z) is counted and probe 53 exp75 (56656157) is now COMPLETE at 0.955. We are 16th of 20 in the 0.959 block (ranks 125-144), with 124 teams strictly better (+1: the 0.960 block grew 20->22). Silver is #200 (0.957 block, 165-227) and bronze #399 (0.955 block, 375-475). Per poll.log, probe 52 exp89r (56656147) and probe 55 exp89t (56669888) are PENDING.",
+   "evidence": "experiments/e10_watch/20260929T0813Z.txt vs 20260929T0913Z.txt (leaderboard_rows + histogram); experiments/lb_poll/poll.log latest block",
+   "action": "None. The A-M2 decision still waits for the exp89r read, and the exp89t read follows its window."
+  },
+  {
+   "id": "r37-discussion-comments",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "Three new comments since r36 (Chrome, recent-comments sort, ~09:17Z), none disclosing a knob value, dataset or technique we can build. (a) 744273 (SGHWR, now '49TH'), Satwik (#411, ~09:08Z): 'I believe the public LB has very few divisions.' Satwik reports that division changes with consistent local gains (held-out 41 videos, all 199, an external dataset) gave 'either no change or a slight drop' on the LB. The guess is that the public embryo is easier and less dense, and that the public model (x138 family) 'might fall apart on private LB'. This is an unverified opinion. It fits our own record: division knobs K and DIS moved the public LB by only +0.001-0.002, and division lab gains transfer poorly. It adds no new fact for the finals choice, which stays with the user (V_pub + #37 or exp75). (b) 744273, Yassine Alouini (#1139, ~09:16Z) expects a shakeup 'Very highly' because many submissions are forks and tweaks. (c) 744278, fheizz (#282) replies 'nah too late' to the join question; there is no host reply. 744250 'Time of publishing private results' still shows 'Posted 4h ago' with 0 comments and no host answer. JT's 0.953->0.959 thread was last commented 12 h ago, with nothing new.",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/744273 ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/744278 ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion?sort=recent-comments",
+   "action": "Nothing to build (AGGRESSIVE MODE: no disclosed values). Optionally add one line to CONTEXT that 744273/Satwik is a second external report that division and post-processing lab gains do not transfer to the public LB. The next feed run (~09:58Z) will pick up the comments."
+  },
+  {
+   "id": "r37-code-overview-null",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "Code, Recently Created (Chrome ~09:18Z): unchanged. The newest unpinned notebook is still 'Robust Cell Tracking During Development via Chan.' (Updated 5d ago, Score 0.1); x138 'Biohub 0.953 LB | ORIGINAL' is still at 0.953, 233 votes. Score sort: unchanged per e10 comp_scoreDescending and the digest (best 0.9530). Nothing is >= 0.954 and there is no new idea, so nothing was pulled into experiments/ext_*. Overview: 'BIOHUB · RESEARCH CODE COMPETITION · 15 HOURS TO GO'; 13,475 entrants, 4,572 participants (+1), 3,988 teams (+1), 95,359 submissions (+194 since r36's 95,165). The timeline is unchanged ('Final Submission Deadline', September 29, 2026) and there is no host announcement.",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/code?sortBy=dateCreated ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/overview",
+   "action": "None. The finals tick is still for the user by 20:00Z (23:00 MSK)."
+  }
+ ]
+}

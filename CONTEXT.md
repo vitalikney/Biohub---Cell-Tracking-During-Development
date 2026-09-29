@@ -4485,6 +4485,20 @@ Mention it to the user in one line (R9-A8 item 6).
   expected display is ~0.958 and it cannot become V_pub). exp89t (K + DIS + CI) PENDING, expected ~0.959 + DIS (~0) ->
   most likely 0.959 (a tie with the champion exp87a). V_pub stays exp87a 56640366; SEC files are out of the V_pub
   race.
+- 2026-09-29 09:57 UTC, ROUND 37 APPLIED (R37-A1..A5)
+  (A1) The user was told at 09:19Z that rule (a) failed and the recommendation for slot 2 is UNUSED; final ask at
+  11:50Z. (A2) TIMER TEXTS: the 11:10Z timer's 'M2 ... submit by 11:30 UTC' is superseded -> LOG ONLY (A-M2 UNUSED:
+  exp89r 0.957 < 0.958; the user's 12:00Z hold governs slot 2); the 12:03Z timer's 'card v4' is superseded -> send the
+  pre-filled block scratchpad card_fill_1203.txt (template round29/finals_card_v5_ru.md a134d5e4) with the R37-A4
+  edits. (A3) S0 FOR THE exp89t UP TEST: a background job saves the LB as pre_exp89t at 17:40Z if 56669888 is still
+  PENDING (1 read-only download; count must be 56); fallback S0 = e10_<ts> built at 11:45Z from the newest e10
+  snapshot <= 12:00Z (scratchpad mk_s0.py; count 56). On a 0.959 read: compare pre_exp89t (or the fallback, flagged
+  stale) with post_exp89t; count 56 -> 57 required (one lag re-save if +0); k >= 1 -> exp89t becomes V_pub; k = 0 /
+  MASKED / BLIND -> exp87a stays. (A4) 12:03Z CARD: from card_fill_1203.txt; refresh the header/SELECTED/rank; edits:
+  section 3 'exp75 прочитан: 0.955, чистый (CI отработал, L 8.88-9.05 ч). Если нужен партнёр без CI - #37 (П3).';
+  section 5 '... чтение >= 0.960 или 0.959 с приписываемым UP - до 22:45 МСК' and 'пришлю одну строку сразу после
+  чтения exp89t (и проверю в 22:43 МСК)'; optional Satwik (744273) line; re-run the token checks. (A5) 11:50Z slot-2
+  message; default UNUSED at 12:00Z (DIS 1.75 / exp89e not revived).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

@@ -1,0 +1,12 @@
+# round37 scan_browser notes (2026-09-29T09:13:47Z)
+- 09:13Z no prior scan_browser.json in round37 -> fresh run.
+- 09:13Z e10 snapshot experiments/e10_watch/20260929T0913Z.txt CHANGES=11 vs 0841Z; all LB; kernels/status no change; P2 largest group 0.
+- LB CSV 09:14:09Z vs 08:13Z: 0.953 396->397, 0.954 127->120, 0.955 104->101, 0.956 138->147, 0.957 60->63, 0.958 20, 0.959 20, >=0.960 123->124; teams 3988. Ours #140, 0.959, SubmissionCount 56, 16th of 20 in 0.959 block (125-144).
+- Top-20: Gabriel 0.975->0.976 (#3->#2); Kayla L. #12->#11 (count 70->71); rest unchanged. len8487 0.956->0.962 (#86), yuto083 0.963->0.967 (#26).
+- Feed digest 20260929T0828Z (45 min old, not re-run): new topics 744278, 744273 (both seen in r36), 0 new comments, E10 FLAG none, best public 0.9530.
+- poll.log: probe 53 exp75 = 0.955 (COMPLETE); probe 52 exp89r PENDING; probe 55 exp89t 56669888 PENDING.
+- ~09:17Z Chrome discussion?sort=recent-comments: new comments only on 744273 (2) and 744278 (1). 744250 still 'Posted 4h ago' (0 comments, no host answer). JT thread last comment 12h ago.
+- 744273 new comments: Satwik (#411, ~09:08Z) 'I believe the public LB has very few divisions' - local division gains (held-out 41, full 199, external) gave no change or slight drop on LB; public = easier/less dense embryo; public model 'largely seems to have been tuned for the LB'. Yassine Alouini (#1139, ~09:16Z): shakeup 'Very highly' because submissions are forks/tweaks. No knob values. SGHWR now '49TH'.
+- 744278: fheizz (#282) 'nah too late'. No host.
+- Code Recently Created ~09:18Z: unchanged (newest unpinned still 'Robust Cell Tracking...' 5d ago 0.1; x138 0.953 233 votes). Nothing >= 0.954, nothing pulled.
+- Overview ~09:19Z: '15 HOURS TO GO'; 13,475 entrants, 4,572 participants (+1), 3,988 teams (+1), 95,359 submissions (+194 vs 95,165 at r36). Timeline unchanged (Final Submission Deadline September 29, 2026). No announcement. Tab closed.

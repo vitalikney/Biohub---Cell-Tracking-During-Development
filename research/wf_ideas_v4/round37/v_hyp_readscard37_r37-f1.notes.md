@@ -1,0 +1,7 @@
+# v_hyp_readscard37 R37-F1 skeptic notes (2026-09-29, ~09:3x UTC)
+- The CONTEXT.md entry already exists: commit 348b9dc (12:19 MSK = 09:19Z) "Probe 52 exp89r = 0.957; DIS ~ 0; exp89s not sent", CONTEXT.md l.4479-4487 ("2026-09-29 09:19 UTC, READ: PROBE 52 exp89r ..."). It has the header 09:18:30Z, L (9.04, 9.22], ADMIT (a), gate not fired, DIS 0.000 +-0.002, dd 0, B25 not reopened, rule (a) not met, 'no save' LB job, V_pub exp87a, exp89t expectation.
+- The finding's "Append ONE line now" would DUPLICATE it. Its only new pieces: the L refinement to (9.06, 9.14] via e10 0913Z count 56 (post_exp75 09:08:57Z count 55), and k = 0 (16 of 20 in the 0.959 block, e10 0913Z l.280). Neither changes any decision.
+- The count refinement assumes that the LB SubmissionCount rises at scoring completion, not at submit. exp89t 56669888 was submitted ~08:58Z and count was 55 at 09:08:57Z, so this is plausible but unproven. It does not matter, since L_hi is well below 10.2 h either way.
+- Wording issue: "A-M2 is UNUSED" overstates. Under the 08:28Z USER HOLD (CONTEXT l.4433-4440), slot 2 is decided at ~11:55-12:00Z, and candidate (2) (an E10 copy >= 0.960 or a newly disclosed idea, non-CI) stays open. Only candidate (1) exp89s fails rule (a). The logged line says it correctly: "default now UNUSED".
+- Also "display 0.957 <= 0.957": the rule-(a) threshold is >= 0.958 (l.4436), so the correct phrasing is 0.957 < 0.958.
+- Ledger row 56656147 verified: experiments/lb_poll/ledger.md l.23 (COMPLETE 0.957 @ 09:18:30Z, (9.04, 9.22], ADMIT (a), gate not fired).

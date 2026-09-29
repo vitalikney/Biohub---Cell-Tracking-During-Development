@@ -1,0 +1,95 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/INDEX.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/CHANGES.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/37/index.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/37/index.json"
+ ],
+ "alerts": [
+  {
+   "kind": "risk",
+   "what": "Stale timers: pid 17304 (11:10Z, 'submit by 11:30 UTC') and pid 33456 (12:03Z, card v4) contradict rule (a), the 12:00Z hold and card v5.",
+   "evidence": "research/wf_ideas_v4/round37/report.json R37-A2; research/KNOWLEDGE/FACTS.md C-297, C-298",
+   "suggested_action": "Kill and re-arm both pointer-only before 11:10Z; otherwise act on CONTEXT rules, not the timer text.",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "Slot-2 status message (R37-A1) unsent; any new non-CI candidate needs its dummy by ~11:15Z (14:15 MSK, not 14:55).",
+   "evidence": "research/wf_ideas_v4/round37/report.json R37-A1, plan_issues (5); CONTEXT.md l.4479-4487",
+   "suggested_action": "Send the MSK message now; 11:50Z message; 12:00Z log 'slot 2 UNUSED' absent a new explicit yes.",
+   "urgency": "now"
+  },
+  {
+   "kind": "forgotten",
+   "what": "exp89t has no count-56 S0 for its UP test; a 0.959 read would be MASKED/BLIND.",
+   "evidence": "research/wf_ideas_v4/round37/report.json R37-A3; research/wf_ideas_v4/round37/scan_plancheck.json PC37-01; CONTEXT.md l.4459-4470",
+   "suggested_action": "Arm the 17:40Z 'timeout 180 python tools/uptest.py save pre_exp89t' job now; run mk_s0.py on the last e10 snapshot at 11:45Z.",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "12:03Z card fill from scratchpad card_fill_1203.txt (dd1bdc22) needs R37-A4 edits (a)-(c); block exists only in the scratchpad.",
+   "evidence": "research/wf_ideas_v4/round37/report.json R37-A4; research/KNOWLEDGE/FACTS.md C-301; research/KNOWLEDGE/WATCHLIST.md W341, I411",
+   "suggested_action": "Pre-fill by ~11:40Z, refresh header/SELECTED/rank, token checks, send 12:03Z; rebuild from scan_hyp_readscard37.json R37-F4 if lost.",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "R37-A6 CONTEXT addendum (count-jump L (9.06, 9.14] h, k = 0, Satwik null, exp89t prior, timers superseded) and the R8-override line (W336) not logged.",
+   "evidence": "research/wf_ideas_v4/round37/report.json R37-A6; research/KNOWLEDGE/WATCHLIST.md W343, W336",
+   "suggested_action": "Append one addendum with the next commit; do not re-log the 09:19Z read.",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "Round 38 at 10:13Z is the last scan that can feed slot 2.",
+   "evidence": "research/wf_ideas_v4/round37/report.json next_focus; experiments/discussions/digest_20260929T0918Z.md l.42",
+   "suggested_action": "Run it browser-only; after 11:15Z any sighting is information only.",
+   "urgency": "today"
+  },
+  {
+   "kind": "contradiction",
+   "what": "exp89t read window is ~17:53-19:54Z, wider than card step 9's 9.27-9.45 h; admit edge 19:45:17Z falls after the 19:43Z reminder.",
+   "evidence": "research/wf_ideas_v4/round37/report.json R37-A7; research/KNOWLEDGE/FACTS.md C-299; experiments/lb_poll/ledger.md 09:38:35Z",
+   "suggested_action": "Watch from 17:53Z, code the read at once, push MSK on any V_pub change, re-read poll.log ~19:47Z if still PENDING.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "deadline",
+   "what": "User ticks finals by 20:00Z (SELECTED expected {#37, #38}); hindsight guard I-336, I-252, I-407 (+ I-582) before 23:00Z.",
+   "evidence": "CONTEXT.md l.3844-3855, l.4091-4092; research/KNOWLEDGE/IDEAS.md ORPHANS l.942",
+   "suggested_action": "Cards at 12:03Z / 18:37Z; read-only SELECTED check ~20:00-20:30Z; push the hindsight-guard commit before 23:00Z.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "risk",
+   "what": "Laptop was on battery (78%) at 08:50Z; all evening reads depend on the session staying alive.",
+   "evidence": "CONTEXT.md l.4453-4458",
+   "suggested_action": "Remind the user once: charger in, lid open until 23:00 MSK.",
+   "urgency": "today"
+  },
+  {
+   "kind": "contradiction",
+   "what": "Pre-registered 'П3 first' vs round-37 MC ranking П2 {exp87a, exp75} ahead at CI sd <= 0.0012 (break-even ~+0.0004..+0.0006).",
+   "evidence": "research/wf_ideas_v4/round37/report.json R37-A8, plan_issues (7); research/KNOWLEDGE/FACTS.md C-303",
+   "suggested_action": "Keep the registered order on the card; optional chat caption only (I-581).",
+   "urgency": "info"
+  },
+  {
+   "kind": "stale",
+   "what": "experiments/RESULTS.md stops at P46; round 37 (and 29-35) lack REPORT.md; round 37 untracked.",
+   "evidence": "experiments/RESULTS.md l.79; research/wf_ideas_v4/round37/report.notes.md 09:40Z",
+   "suggested_action": "Backfill after the 20:00Z tick.",
+   "urgency": "info"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "Satwik (744273): public embryo is division-poor (I-582); count-jump completion timing method (I409).",
+   "evidence": "experiments/discussions/digest_20260929T0918Z.md; research/KNOWLEDGE/ideas.json I-582; research/KNOWLEDGE/WATCHLIST.md I409, I413",
+   "suggested_action": "Include in the R37-A6 addendum; check cap 6 / K private deltas on 30 Sep.",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 37 index (~10:00Z 29 Sep, HEAD 348b9dc). INDEX.md rewritten (71 lines): state (P53 exp75 0.955 clean, P52 exp89r 0.957, rule (a) not met, exp89s not sent; P55 exp89t submitted 09:00:17Z and PENDING at 09:48:35Z; V_pub exp87a 0.959, rank #140/3,989; 1 submit left, slot 2 defaults UNUSED), refreshed anchors for IDEAS/FACTS/DECISIONS/WATCHLIST/CONTEXT, top 8 open ideas (I-576, I-575, I-577, I-578, I-580, I-579, I-336/I-252/I-407, I-233), 12 deduplicated alerts with settled urgency disagreements, and HOW TO USE. CHANGES.md: appended section '37' (sources, LB, ideas 574->582 with status moves, new facts F-LB-37/F-RUN-56/F-RUL-37/F-TRN-70/71, C-297..C-303, C-288..C-290 resolved, watchlist deltas, resolved/new/carried alerts). No Kaggle calls, no commits, no other files edited."
+}

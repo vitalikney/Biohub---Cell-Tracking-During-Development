@@ -1,0 +1,67 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/ideas.json",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/IDEAS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/37/ideas.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/37/ideas.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "what": "The slot-2 closure (I-575, from R37-A1 and R37-A5) is not recorded. Rule (a) failed at 09:19Z (exp89r 0.957 < 0.958), so under the user's 08:28Z hold slot 2 defaults to UNUSED. The MSK status message only helps until ~11:15Z (14:15 MSK), because any new non-CI file needs its dummy pushed by then. The scan draft's window 'до 14:55 МСК' is wrong.",
+   "evidence": "research/wf_ideas_v4/round37/report.json R37-A1, R37-A5, plan_issues (5); CONTEXT.md l.4433-4440, l.4479-4487; research/KNOWLEDGE/ideas.json I-575, I-569",
+   "suggested_action": "Now: send the R37-A1 MSK message, unless the user was already told after the 09:19Z read. 11:50Z (14:50 MSK): send the slot-2 message. 12:00Z: log 'slot 2 UNUSED (rule (a) not met; 08:28Z hold); DIS 1.75 / exp89e not revived'. Send exp89s only on a new explicit yes.",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "Two timers with stale texts were still armed at 09:36Z. Pid 17304 fires at 11:10Z with 'M2 NON-CI DEADLINE CHECK ... submit by 11:30 UTC', which contradicts rule (a) and the user's 12:00Z hold. Pid 33456 fires at 12:03Z with 'fill ... round27/finals_card_v4_ru.md', which is card v4 instead of v5. After a compaction, either text could trigger a wrong submit or the wrong card (I-576).",
+   "evidence": "research/wf_ideas_v4/round37/report.notes.md 09:36Z; research/wf_ideas_v4/round37/report.json R37-A2, plan_issues (2); research/wf_ideas_v4/round37/scan_plancheck.json PC37-02",
+   "suggested_action": "Before 11:10Z: kill pids 17304 and 33456 and re-arm them with the pointer-only texts from R37-A2. At the least, log that both texts are superseded (R37-A6 (d), I-579).",
+   "urgency": "now"
+  },
+  {
+   "kind": "forgotten",
+   "what": "exp89t's UP test has no count-matched S0 (I-577). exp89t is most likely to read 0.959, a tie with exp87a. The logged 09:00Z rule then needs 'S0 = the newest count-matched save before its header', but post_exp75 has count 55, and watcher 29636/30864 saves only post_exp89t. The e10 loop ends at 12:00Z, and converting an unsliced e10 snapshot crashes with KeyError 'TeamId'. Without an S0, a 0.959 read is MASKED/BLIND.",
+   "evidence": "research/wf_ideas_v4/round37/report.json R37-A3, plan_issues (1); research/wf_ideas_v4/round37/scan_plancheck.json PC37-01; research/wf_ideas_v4/round37/report.notes.md 09:36Z-09:37Z; CONTEXT.md l.4459-4470",
+   "suggested_action": "Now: arm the 17:40Z background job 'timeout 180 python tools/uptest.py save pre_exp89t' (only if 56669888 is still PENDING; count must be 56). 11:45Z (14:45 MSK): run scratchpad mk_s0.py on the last e10 snapshot and log S0_fallback. At a 0.959 read: compare, do one lag re-save, and log k.",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "The 12:03Z (15:03 MSK) finals card has to be sent from the pre-filled block card_fill_1203.txt (sha8 dd1bdc22, I-578). That block exists only in the session scratchpad, not in the repo. It already carries the I-562, I-565 and I-573 edits. Still needed: the three R37-A4 edits (the section 3 exp75 lines, the '0u' admit clause, the immediate-push promise) and a refresh of the header, SELECTED and rank. SELECTED is expected to be {#37, #38}, so the user must re-tick by 20:00Z.",
+   "evidence": "research/wf_ideas_v4/round37/report.json R37-A4; research/wf_ideas_v4/round37/report.notes.md 09:38Z; research/wf_ideas_v4/round29/finals_card_v5_ru.md (sha8 a134d5e4); research/KNOWLEDGE/ideas.json I-526, I-578",
+   "suggested_action": "Pre-fill by ~11:40Z. At 12:03Z: refresh, apply edits (a)-(c), re-run the token checks, and send. The P2/P3 break-even caption (I-581) is optional and goes in chat only.",
+   "urgency": "today"
+  },
+  {
+   "kind": "contradiction",
+   "what": "Card step 9 gives exp89t a read window of 9.27-9.45 h, but the observed CI-family L is 8.88-9.48 h, so the read can come as early as ~17:53Z (20:53 MSK). The 19:43Z reminder also runs 2 min before the 10.75 h admit edge at 19:45:17Z. After 12:00Z the newest e10 snapshot is ~7 h stale for the 18:37Z rank (I-580).",
+   "evidence": "research/wf_ideas_v4/round37/report.json R37-A7, plan_issues (4); research/wf_ideas_v4/round37/scan_hyp_readscard37.json R37-F3; experiments/lb_poll/ledger.md (09:38:35Z); CONTEXT.md l.4459-4470",
+   "suggested_action": "Watch from 17:53Z. Code the read at once under the 09:00Z rule and push the user in MSK immediately on any V_pub change. If exp89t is still PENDING at 19:43Z, re-read poll.log at ~19:47Z. Take the 18:37Z rank from post_exp89t or pre_exp89t, else run one fill_1837 save.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "Several bookkeeping items are behind. experiments/RESULTS.md still has no rows for probes 47-55 (52 = 0.957, 53 = 0.955 and 54 = 0.956 exist only in CONTEXT.md and the ledger). Round 37 has no REPORT.md (the Write was refused; the text is in report.json 'report_md_ru'). The R37 CONTEXT addendum (I-579) is not logged; it covers the count-jump L refinement for exp89r to (9.06, 9.14] h, k = 0, Satwik's null and the exp89t prior.",
+   "evidence": "experiments/RESULTS.md (last probe row l.79 = probe 46); research/wf_ideas_v4/round37/report.notes.md 09:40Z; research/wf_ideas_v4/round37/report.json R37-A6; CONTEXT.md l.4471-4487",
+   "suggested_action": "Append the one R37-A6 line with the next commit, without re-logging the 09:19Z read. After the finals tick, write round37 REPORT.md and the RESULTS.md rows.",
+   "urgency": "info"
+  },
+  {
+   "kind": "deadline",
+   "what": "Some post-deadline items carry 29 Sep deadlines. I-336 (HINDSIGHT GUARD: a falsifiable private prediction in a pushed commit before the first private score), I-252 (the H2/H3 lessons by 23:00Z/23:59Z) and I-407 (the cap-family private-read line before 23:59Z) are still at-risk. New I-582 (Satwik: 'the public embryo is division-poor') should be added to the private-read comparison.",
+   "evidence": "research/KNOWLEDGE/ideas.json I-336, I-252, I-407, I-582; experiments/discussions/744273.md; experiments/discussions/digest_20260929T0918Z.md",
+   "suggested_action": "After the finals tick, before 23:00Z: push the hindsight-guard prediction and the one I-407 line, naming I-582 as an item to check on 30 Sep.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "risk",
+   "what": "At 08:50Z the laptop was on battery again (78%). The power watchdog is armed, but exp89t's read, the 18:37Z card and the 19:43Z/19:47Z checks all depend on the session staying alive until ~20:00Z (I-497, I-517).",
+   "evidence": "CONTEXT.md l.4453-4458 (08:51Z OPS note)",
+   "suggested_action": "Remind the user once to keep the charger in and the lid open until 23:00 MSK.",
+   "urgency": "today"
+  }
+ ],
+ "summary": "Curation 37 (2026-09-29 ~09:55 UTC, HEAD 348b9dc) was an incremental pass over curation 36: 574 -> 582 ideas, 50 change records. Sources: 4 commits since 785be93 (CONTEXT l.4441-4487: 08:51Z CLARIFY + SEC exception, 08:51Z 08:30Z timer note, 09:00Z P55 exp89t submitted, 09:09Z READ P53, 09:19Z READ P52; Literature at l.4488), round 37 (untracked; report.json R37-A1..A8 at 09:40Z, no REPORT.md, 4 scans, 8 verdicts), the ledger at 09:38:35Z, e10 0841Z/0913Z/0941Z and digest 0918Z. NEW LB SCORES: probe 53 exp75 = 0.955, clean, +0.001 vs #37, so CI is 3/3 positive on public (I-465 lb-tested, I-324). Probe 52 exp89r = 0.957: Rr '-', DIS ~0 with dd 0 so DIS reads '?', rule (a) not met, exp89s not sent (I-478 lb-tested; I-484 refuted; I-568 applied). Probe 55 exp89t (K + DIS + CI) was submitted at 09:00:17Z and is PENDING (I-486); it most likely ties exp87a at 0.959. V_pub stays exp87a 0.959; 1 submit is left and slot 2 defaults to UNUSED. The rank is #140 of 3,989. Logged or done since curation 36: I-570, I-571, I-572 and I-573 (pre-applied into the card block), all now off the at-risk list. New ideas: I-575 slot-2 closure, I-576 stale timers 17304/33456, I-577 exp89t S0 (mk_s0.py at 11:45Z + pre_exp89t at 17:40Z), I-578 12:03Z card from card_fill_1203.txt, I-579 CONTEXT addendum + count-jump completion timing, I-580 exp89t read handling (17:53-19:54Z, 19:47Z re-read) and I-581 optional P2/P3 break-even caption, all in-plan and at-risk. I-582 (Satwik: the public embryo is division-poor) is deferred-after-deadline. Closed: R37-RC-A DIS 1.75 (I-461, I-451), the R37-F1 duplicate, the R37-RC-B wording, the R37-RC-C / blind exp89s and E10/aggressive again. Counts: lb-tested 65, lab-tested 28, refuted 271, deferred 50, in-plan 166, open-untested 2. At-risk 16, strict 1 (I-233). Cluster order is unchanged. Verification: gen.py found 582 rows with 0 mismatches, gen2.py found body and ranking equal, and the IDs are unique."
+}

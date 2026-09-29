@@ -1,0 +1,7 @@
+# v_hyp_readscard37_r37-f8 notes (started 2026-09-29T09:26:27Z)
+- no prior json; checking scan_browser/plancheck/recheck + digests for any disclosed values contradicting F8
+- 09:27Z sources read: scan_hyp_readscard37.json (F8 origin), scan_browser.json (3 new comments, none with values; Code tab unchanged; best public nb 0.953), scan_plancheck.json PC37-04/07, scan_recheck.json R37-RC-A (DIS 1.75 revival UPHELD as not-build), experiments/discussions/digest_20260929T0918Z.md (E10 FLAG none; 744273 Satwik/Yassine no values: https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/744273).
+- R8 (CONTEXT l.1671): new mechanisms due by 27 Sep 12:00 UTC; after 29 Sep 02:00 only emergency repeat. Only user lifts (E10 v3, aggressive mode for disclosed values) reopen -> none fired. Null is structurally correct.
+- IDEAS.md cluster ranking l.232-250: every cluster refuted/closed/deferred; LOC I-029 +0.1 vox z shift = in-sample +0.0016, ~+0.0003 transfer, post-deadline, and integer-coordinate output would absorb it (744093 fractional coords -0.008) -> not a candidate.
+- Refute attempt on timing: F8 says 'non-CI must be sent by ~12:45Z'. User hold (CONTEXT 08:28Z l.4433-4440) sets the decision at 11:55-12:00Z (non-CI at 12:00Z reads ~19:05-19:15Z, L 7.0-7.2 h); PC37-04: any new non-CI candidate needed its dummy pushed by ~11:15Z. So 12:45Z is too loose (zero margin to 20:00Z tick, contradicts user's 12:00Z hold) - wording nit, does not change the null.
+- Verdict: NOT refuted (null holds); fix = cutoff wording.

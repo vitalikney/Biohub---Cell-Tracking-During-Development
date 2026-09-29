@@ -1,0 +1,14 @@
+# round37 scan_recheck notes (2026-09-29T09:13Z)
+- 09:15Z state (poll.log header 09:08:28Z l.29844): exp87a 0.959 V_pub; exp75 56656157 = 0.955 (read 09:09Z, clean); exp89r 56656147 + exp89t 56669888 PENDING; exp89p 0.956 (SEC '-'). 1 submit left today; slot 2 held to ~12:00Z, non-CI only (CONTEXT 08:28Z).
+- Prior rechecks: 108 items R2..R36 (ls round*/v_recheck_*). R35-PI / R36-NF: lens saturated. Chose 3 items that bear on slot 2 (12:00Z) + finals tick (20:00Z) and were never rechecked as such:
+  (A) DIS 1.75 exclusion (MORNING TABLE v1.1 (0)(i) 28 Sep 14:12Z; R26-RC-A 'do not build DIS 1.75'); exp89e_k2cap6_k_dis175 built 61b59191 (CONTEXT 28 Sep 11:19Z), never dummied.
+  (B) SISTER_SYMMETRY_TAU 0.7 exclusion (CONTEXT 28 Sep 12:23Z 'cap 8 = +5 insertions read -0.001'); exp88b dummy PASS +5 forks (10:16Z), exp89f (K+TAU) never built.
+  (C) EXP75 PARTNER RULE v2 (b) 'P3 {V_pub,#37} first, P2 {V_pub,exp75} as trade' now that exp75 = 0.955 clean (3rd CI + read).
+- Dummy lab (scratchpad r26/dummy_lab_summary.json): exp70g 0.92052 (TP2047/FP101/FN80); exp88c DIS1.75 0.92039 (2048/101/79); exp88a DIS2.25 0.91973 (2046/103/81); exp85a 0.92184.
+- mc26 (scratchpad r26/mc26.py) standing prior CI N(+0.0005,0.0008): VPUB=exp87a rows in r26/mc26_grid.txt l.105+: P2 bronze .821/.825 vs P3 .787/.790; P3 ahead only at CI_SD>=0.0015 (.785 vs .780) / 0.002 (.782 vs .754).
+- (B) TAU 0.7 dropped as a pick: already rechecked in R19-RC-A (TAU 0.75, refuted: DC 0.20/0.225 null reads, embryo-split coin flip). Replaced by (C') exp89s slot-2 value after exp89t.
+- mc26 re-run 09:2xZ (scratchpad r37/mc37_p2p3.txt, VPUB=exp87a, SEED 37): P2{87a,75} vs P3{87a,#37} bronze/silver: CI .0005/.0008 .815/.612 vs .784/.571; .0005/.0012 .790/.614 vs .782/.574; .0005/.0015 .773/.615 vs .779/.578; .0007/.0008 .846/.649 vs .802/.597; .0007/.0012 .819/.648 vs .798/.600; .0007/.0015 .800/.645 vs .795/.601; K_MU .0003 .787/.596 vs .749/.525; RHO .5 .809/.639 vs .778/.579; overfit .866/.727 vs .863/.676; qpub0 .778/.571 vs .746/.500; CI 0 .713/.532 vs .741/.513; CI -.0003 .663/.480 vs .718/.473. Break-even CI private mean ~+0.0003 (sd .0012) / ~+0.0005 (sd .0015).
+- Display MC (inline): exp85a true U[.9575,.9585): P(>=.960) DIS1.75 N(.0002,.0008) 0.063; TAU0.7 N(0,.001) 0.075; DIS2.25 N(0,.0008) 0.038.
+- MC exp89s vs exp89t (scratchpad r37/mc37_s_vs_t.py/.txt; additive; CI N(.001,.0005), SEC N(-.0015,.001), DIS N(0,.0012), constrained to 85a .958/87a .959/89p .956): P(exp89s becomes V_pub | d_R) = 0 if exp89t on time; with p_late 0.03: .0001/.0031/.016/.029 at d_R .957/.958/.959/.960; exp89t>=.960 given d_R: .11/.75/1.0/1.0. R36H-1 (pre-exp89t) had P(exp89s V_pub | .958) .29-.38.
+- Poll header 09:18:30Z: exp89r 56656147 still PENDING (L > 9.22 h); 10.2 h mark 10:17:28Z, admit 10.75 h 10:50:28Z.
+- 09:25Z wrote scan_recheck.json (4 findings: RC-A upheld, RC-B P3-first order not supported, RC-C exp89s value revised down, NF)

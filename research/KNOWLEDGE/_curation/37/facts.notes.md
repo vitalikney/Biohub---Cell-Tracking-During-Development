@@ -1,0 +1,5 @@
+- 2026-09-29T09:42Z start round 37 curation (facts.json absent -> fresh run)
+- 09:44Z sources read: CONTEXT l.4441-4487 (08:51 CLARIFY R36-A2 LOGGED, 08:51 timer note R36-A3, 09:00 P55 exp89t SUBMITTED 56669888, 09:09 P53 exp75 0.955 clean, 09:19 P52 exp89r 0.957; Lit l.4488); poll header 09:38:34Z l.30027 (exp89t PENDING); ledger 09:38:35Z (544 polls); e10 0913Z/0941Z (#140, count 56, 124 >= 0.960); digest 0918Z (Satwik 09:06Z, Yassine 09:13Z); round37 report.json (R37-A1..A8). commits 7caa068 9693f08 782eed2 348b9dc
+- 09:45Z FACTS.md patched (c37_facts.py): state line, F-LB-37, F-RUN-56, F-RUL-37, F-TRN-70/71, C-297..C-303, [c37] notes; pipe check run
+- 09:47Z DECISIONS.md patched (c37_dec.py): state, P52/P53/P55/P55-P56 cells, §1 para, §2 para + 09:45Z snapshot, R5-R8/R10/§f, EXP75 PARTNER v2, GAP v2, rule (a), exp89t, slot-2 hold, R36 rows; 5 new §3 rows; changelog; pipe check OK
+- 09:48Z facts.json written (8 alerts). Done.

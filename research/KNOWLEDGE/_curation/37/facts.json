@@ -1,0 +1,67 @@
+{
+  "files_written": [
+    "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/FACTS.md",
+    "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/DECISIONS.md",
+    "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/37/facts.notes.md",
+    "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/37/facts.json"
+  ],
+  "alerts": [
+    {
+      "kind": "contradiction",
+      "what": "Two background timers still hold stale texts. Timer 17304 fires at 11:10Z with 'M2 NON-CI DEADLINE CHECK ... submit by 11:30 UTC', which conflicts with the user's 12:00Z hold and with rule (a), which already failed. Timer 33456 fires at 12:03Z and points at card v4 instead of card v5 (a134d5e4).",
+      "evidence": "research/wf_ideas_v4/round37/report.json R37-A2; research/wf_ideas_v4/round37/report.notes.md 09:36Z; CONTEXT 08:28 l.4433-4440, 09:19 l.4479-4487; FACTS C-297, C-298",
+      "suggested_action": "Before 11:10Z, kill both timers and re-arm them with pointer-only texts (R37-A2). If they are not re-armed, act on the CONTEXT rules when they fire, not on the timer text.",
+      "urgency": "now"
+    },
+    {
+      "kind": "risk",
+      "what": "exp89t's UP test has no count-56 S0. post_exp75 has count 55. The exp89t watcher saves only post_exp89t, and only at 0.959. The e10 loop ends at 12:00Z, and a naive e10 -> _lb conversion crashes with KeyError 'TeamId'. If exp89t reads 0.959 (the most likely display, a tie with exp87a), the only test that could promote it would be MASKED/BLIND.",
+      "evidence": "CONTEXT 09:00 l.4459-4470 (S0 = newest count-matched save before its header); research/wf_ideas_v4/round37/report.json R37-A3, plan_issues (1); FACTS F-RUN-56, C-300",
+      "suggested_action": "Arm the 17:40Z 'timeout 180 python tools/uptest.py save pre_exp89t' job now. At ~11:45Z, build the fallback S0 from the last e10 snapshot with scratchpad mk_s0.py and check that its count is 56.",
+      "urgency": "today"
+    },
+    {
+      "kind": "deadline",
+      "what": "Slot 2 (the last submit today) defaults to UNUSED at the 11:50-12:00Z decision, because rule (a) failed (exp89r 0.957 < 0.958). A new non-CI candidate would need its dummy pushed by ~11:15Z (14:15 MSK), not 14:55 MSK as the scan draft said. exp89s now needs a new explicit user yes.",
+      "evidence": "CONTEXT 08:28 l.4433-4440, 09:19 l.4479-4487; research/wf_ideas_v4/round37/report.json R37-A1, R37-A5; FACTS C-302, F-MOD-49",
+      "suggested_action": "Send the R37-A1 status message now, with the 14:15 MSK cutoff. Send the R37-A5 message at 11:50Z. With no answer by 12:00Z, log 'slot 2 UNUSED'.",
+      "urgency": "now"
+    },
+    {
+      "kind": "deadline",
+      "what": "12:03Z card fill: the pre-filled block (scratchpad card_fill_1203.txt, sha8 dd1bdc22) still needs three edits. (a) The section-3 fallback lines are false, because exp75 read 0.955 clean. (b) The section-5 admit clause lacks the '0u' case (0.959 with an attributable UP). (c) The 22:43-only push promise must become an immediate push.",
+      "evidence": "research/wf_ideas_v4/round37/report.json R37-A4, plan_issues (3); CONTEXT 09:09 l.4471-4478; FACTS C-301, C-294",
+      "suggested_action": "Apply the three R37-A4 edits. Refresh the header, SELECTED and the rank, then re-run the token checks and send at 12:03Z. The optional R37-A8 П2/П3 caption goes in chat only.",
+      "urgency": "today"
+    },
+    {
+      "kind": "deadline",
+      "what": "exp89t (P55, 56669888) reads between ~17:53Z (L 8.88 h) and ~19:54Z. Its 10.75 h admit edge is 19:45:17Z, two minutes after the 19:43Z reminder. The user ticks the finals by 20:00Z.",
+      "evidence": "CONTEXT 09:00 l.4459-4470; experiments/lb_poll/ledger.md 09:38:35Z; research/wf_ideas_v4/round37/report.json R37-A7; FACTS C-299, F-RUN-55",
+      "suggested_action": "Code the read as soon as the watcher fires. On any V_pub change, push the user in MSK right away with П3 {exp89t, #37}. If exp89t is still PENDING at 19:43Z, re-read poll.log at ~19:47Z.",
+      "urgency": "before-finals"
+    },
+    {
+      "kind": "forgotten",
+      "what": "The only new facts from round 37 are not yet in CONTEXT. They are the exp89r L refinement (9.06, 9.14] h from the count jump, k = 0, the Satwik division null, the exp89t prior and the stale-timer supersede. They matter after a context compaction.",
+      "evidence": "research/wf_ideas_v4/round37/report.json R37-A6; FACTS F-RUN-56, F-TRN-71",
+      "suggested_action": "Log the single R37-A6 addendum with the next commit, without duplicating the 09:19Z entry.",
+      "urgency": "today"
+    },
+    {
+      "kind": "stale",
+      "what": "experiments/RESULTS.md still has no rows after P46, although P47-P54 are scored and P55 is pending.",
+      "evidence": "git log -- experiments/RESULTS.md (59e14e2, 28 Sep 05:03Z); experiments/lb_poll/ledger.md 09:38:35Z; FACTS C-118",
+      "suggested_action": "The ledger and the CONTEXT reads are authoritative. Backfill RESULTS.md after the finals if wanted.",
+      "urgency": "info"
+    },
+    {
+      "kind": "risk",
+      "what": "The pre-registered order puts П3 {exp87a, #37} first. The round-37 standing-prior MC ranks П2 {exp87a, exp75} ahead on bronze at private CI sd <= 0.0012, with break-even at a private CI mean of ~+0.0004..+0.0006. This is post-hoc information, not a rule change. Satwik's report of few divisions on the public LB does not separate П3 from П2.",
+      "evidence": "research/wf_ideas_v4/round37/report.json R37-A8, rejected (R37-RC-B), plan_issues (6)-(7); CONTEXT 09:09 l.4471-4478; FACTS C-303, F-TRN-70, F-TRN-71",
+      "suggested_action": "Optionally give the user the corrected R37-A8 caption with the 12:03Z card (chat only). Keep the П3-first wording on the card.",
+      "urgency": "info"
+    }
+  ],
+  "summary": "Curation 37 (state 09:45 UTC 29 Sep, HEAD 348b9dc). Sources: CONTEXT l.4441-4487, poll header 09:38:34Z, ledger 09:38:35Z, e10 0913Z/0941Z, digest 0918Z, round-37 report. R36-A2 CLARIFY and the R36-A3 timer note were LOGGED at 08:51, pre-score. P55 exp89t (K + DIS 2.25 + CI) was submitted at 09:00:17Z (56669888) after dummy PASS; 4 of 5 submits are used today. P53 exp75 = 0.955 clean (third CI '+'): pair B is shown as a trade and П3 {exp87a, #37} stays recommended. P52 exp89r = 0.957: DIS ~ 0, rule (a) not met, exp89s not sent. V_pub stays exp87a 0.959, #140 of 3,989. FACTS.md: new F-LB-37, F-RUN-56, F-RUL-37, F-TRN-70, F-TRN-71 and C-297..C-303; C-288/289/290 resolved; [c37] notes on 17 rows. DECISIONS.md: P52/P53/P55 rows filled; new 09:45Z finals-candidate snapshot; rule statuses (R5-R8, R10, §f, EXP75 PARTNER v2, GAP v2, rule (a), slot-2 hold, R36) updated; 5 new rule rows (CLARIFY, P53 read, P52 read, R37 proposals, R37 rejected); changelog. 0 Kaggle calls, no commits."
+}

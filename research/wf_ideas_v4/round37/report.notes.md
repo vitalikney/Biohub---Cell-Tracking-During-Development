@@ -1,0 +1,10 @@
+# round37 report notes
+- 2026-09-29T09:33:50Z start: no report.json present; synthesizing from scan_*.json + v_*.json (skeptic verdicts)
+- 09:34Z read CONTEXT tail (last entry 09:19Z exp89r = 0.957, commit 348b9dc), round36 REPORT.md/report.json (format), all round37 scan_*.notes.md + skeptic notes.
+- 09:35Z poll.log last header 09:28:32Z: 56669888 exp89t PENDING (ledger row 20); exp89r COMPLETE 0.957 (l.29914).
+- 09:36Z processes (Win32_Process): stale timers still armed: pid 17304 (11:10Z 'M2 NON-CI DEADLINE CHECK ... submit by 11:30 UTC'), pid 33456 (12:03Z 'fill round27/finals_card_v4_ru.md'); OK timers 11:50Z (pid 21496), 18:37Z, 19:43Z, 21:05Z, 00:07Z; hourly rounds 10:13..18:13Z. exp89t watcher (pids 29636/30864) saves post_exp89t only at COMPLETE 0.959. NO pre_exp89t save job exists.
+- 09:37Z dry-run of scratchpad mk_s0.py logic into scratchpad r37rep/_lb (not into repo): e10 0913Z block header 'CSV rows with Score >= 0.953: 992 of 3991 rows kept' -> slice from 'Rank,' works; uptest.load: rank 140, 0.959, count 56, last 00:46:36; compare post_exp75 -> e10_0913Z: 0 passed, no UP. e10 loop END 12:00Z (l.64).
+- 09:38Z card v5 sha8 a134d5e4 unchanged; filled draft scratchpad card_fill_1203.txt block sha8 dd1bdc22: П1 0, рекомендую 0, '<' 0, '[если' 0, П4 0; leftover: section 3 lines 1-2 are false-condition fallbacks (exp75 read 0.955 clean); section 5 admit clause names only '>= 0.960' (GAP RULE v2 also admits '0u'); 'пришлю одну строку в 22:43' vs PC37-05(b) immediate push.
+- 09:39Z R34 precedent: R34-RC-B skeptic allowed a P2/P3 caption only with STANDING-prior rows; R37-RC-B skeptic grid (scratchpad r37skep/mc_std_grid.txt, CI_MU .0005): bronze P2>P3 9/9 at sd .0008, 8/9 at sd .0012, tie at sd .0015 (P3 5/9); break-even CI mean ~+0.0004..+0.0006.
+- Kaggle API calls this report: 0.
+- 09:40Z report.json written (8 actionable R37-A1..A8; report_md_ru embedded). REPORT.md NOT written: the Write tool refused it ('Subagents should return findings as text'); the Russian text is in report.json 'report_md_ru' (source scratchpad r37rep/report_ru.txt) for the orchestrator to write.
