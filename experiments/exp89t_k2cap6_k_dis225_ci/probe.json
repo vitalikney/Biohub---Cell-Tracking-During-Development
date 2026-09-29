@@ -1,0 +1,24 @@
+{
+ "base": "x138 verbatim = exp56 (anvithpothula/biohub-x138, author public 0.953; x138 datasets, docker pin and machine shape); built by tools/build_probe_kernel.py --base x138",
+ "change": {
+  "DIVINS_ENABLE": "1",
+  "DIVINS_STEAL": "1",
+  "DIVINS_ALPHA": "1",
+  "DIVINS_THRESH": "0.4",
+  "DIVINS_DUMP": "0",
+  "REPAIR_DEADLINE_S": "34200",
+  "DIVINS_DEADLINE_S": "28800",
+  "LOWREFINE_ENABLE": "1",
+  "DIVINS_CAP": "6",
+  "DIVINS_FRAME_CAP": "1",
+  "ILP_DIVISION_WEIGHT": "0.4",
+  "READMIT_MIN_SCORE": "0.94",
+  "ILP_DISAPPEARANCE_WEIGHT": "2.25",
+  "COORDINJECT_ENABLE": "1",
+  "COORDINJECT_ALPHA": "0.5",
+  "DEGRADE_KEEP_DIV": "1",
+  "PATCHES": "divinsert+lowrefine+coordinject+safetail"
+ },
+ "note": "",
+ "rule": "compare with exp56 (x138 verbatim on our account); above exp56 adopt, ties recorded"
+}

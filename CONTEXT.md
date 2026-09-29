@@ -4412,6 +4412,17 @@ Mention it to the user in one line (R9-A8 item 6).
   10.2 h) -> A-M2 UNUSED. exp89s is read vs exp85a 0.958: '+' >= 0.959 (a clean DIS read); it can become V_pub only at
   >= 0.960, or at 0.959 with an attributable UP over the champion exp87a (running-champion rule, conservative
   reading).
+- 2026-09-29 08:23 UTC, exp89t (K + DIS 2.25 + CI) BUILT + DUMMY PUSHED (user idea 'add CI to exp89s'; submit only on the user's yes)
+  exp89t_k2cap6_k_dis225_ci = exp87a + ILP_DISAPPEARANCE_WEIGHT 2.25 (ipynb 76b898dd = the round-26 dry-run; cell diff
+  vs exp87a = the DIS line + the cell-1 drift-guard value only; ledger safetail_ci). ft-weights baseline unchanged.
+  Dummy pushed 08:22:49Z. It is the 'best + DIS' stack: vs exp87a 0.959, '+' = display >= 0.960 = a new V_pub (CI).
+  Timing: submit ~09:05Z at dummy PASS -> typical CI read 9.3-9.5 h = ~18:25-18:35Z (21:25-21:35 MSK), before the
+  20:00Z tick; the rare tail (up to ~10.9 h) would land after 20:00Z (then public display only, not a final). This
+  breaks the logged 08:45Z CI cutoff by ~20 min (the cutoff was set for the tail case); the user is told. SLOT PLAN
+  (pending the user's yes): free slot 1 (the cancelled A-M1) -> exp89t; slot 2 stays A-M2 rule (a) (exp89s iff exp89r
+  >= 0.958). Gate (R22-A1 vs the exp87a dummy CSV db3faf078781, since only DIS differs the topology differs: nodes
+  within +-1.5% of exp87a 122,328; COORDINJECT 4/4 replaced 0.90-0.93; change 0.60-0.69; integer z/y/x; 0 errors; RULE
+  v2.1 runtime).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
