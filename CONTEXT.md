@@ -4262,6 +4262,14 @@ Mention it to the user in one line (R9-A8 item 6).
   (private-hedge candidate)'. Families safetail_ci (both). Read windows: exp89r = exp87a's L (~09:25-09:35Z expected;
   10.2 h mark 10:17Z; admit 10.75 h 10:50Z); exp75 T + 9.0-10.0 h (~09:05-10:05Z). T54 (exp89p) = 00:46:00Z (branch A,
   no exp89q row).
+- 2026-09-29 00:47 UTC, NIGHT BATCH DONE: probe 54 exp89p (ref 56657612, 00:46:36Z) submitted; night = 52 exp89r / 53 exp75 / 54 exp89p
+  Slot 54 at T54 00:46:00Z (branch A, no exp89q row). Guards at 00:46:20Z: G1 header 00:43:51Z (2.5 min) OK; G2
+  used_today 2 [exp75, exp89r], exp89p free; G3 ft-weights / n2a baseline OK. nb_try exp89p rc 0 '2 submissions
+  remaining today' (00:46:38Z); no fallback needed. -m 'probe 54: exp89p = exp70g (cap 6) + ILP_DIVISION_WEIGHT 0.4 +
+  READMIT_MIN_SCORE 0.94 + n2a SEC 7029fe69 (K + SEC)'. Family safetail; read window ~07:38-08:35Z. Branch A, E10
+  none, 2 submits left on 29 Sep for the MORNING TABLE v1.1 files. The 00:20Z backup check found exp89r / exp75 listed
+  and exp89p not yet due (no action). Reads: exp89p vs exp85a 0.958 (P code; A-M1 exp89l on P '+'/'0u'); exp89r vs
+  exp87a 0.959 (Rr); exp75 vs #37 0.954 (EXP75 PARTNER RULE v2); DIS code per R26-A2 (1) branch A.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
