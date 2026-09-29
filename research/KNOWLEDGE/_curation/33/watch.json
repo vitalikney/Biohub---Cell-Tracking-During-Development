@@ -1,0 +1,110 @@
+{
+ "task": "curation 33: WATCHLIST + forgotten items (29 Sep ~04:45Z)",
+ "written_utc": "2026-09-29T04:47Z",
+ "files_written": [
+  "research/KNOWLEDGE/WATCHLIST.md",
+  "research/KNOWLEDGE/_curation/33/watch.notes.md",
+  "research/KNOWLEDGE/_curation/33/watch.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "what": "W314 = R33-A1: arm two per-ref night read watchers (exp89r 56656147, exp75 56656157); 16292 is one-shot and will exit on exp89p",
+   "evidence": "research/wf_ideas_v4/round33/report.json R33-A1, plan_issues (a); round33/v_plancheck_pc33-01.notes.md; Win32_Process at 04:38Z shows only 16292/13516; grep -c R33-A1 CONTEXT.md = 0",
+   "suggested_action": "Arm both run_in_background until-loops now with the awk 'SubmissionStatus.' formatter (not cut -c1-220), keep 16292, and log the one-line CONTEXT OPS entry",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "T195: there is no timer between 09:13Z and 10:13Z, and exp75 and exp89r both land in that gap; without W314, A-M2 slips 40-100 min and the M2 read can slide past 18:37Z",
+   "evidence": "round33/report.json new_facts (1), R33-A1 why; round33/scan_plancheck.notes.md",
+   "suggested_action": "Covered by W314; round 34 (05:13Z) and the 06:07Z post-wake step verify that the watchers are alive",
+   "urgency": "today"
+  },
+  {
+   "kind": "contradiction",
+   "what": "W315 = R33-A2 (optional): R31-A1 applies the CI 10.2 h late clause to exp89p, which is non-CI safetail with an 8.0 h insertion gate",
+   "evidence": "round33/report.json R33-A2, plan_issues (b); tools/runtime_ledger.py l.48/l.60; CONTEXT.md l.3021, l.3249; card v5 l.16",
+   "suggested_action": "Log the pre-score P LATE THRESHOLD line (8.0 h, mark 08:46:36Z) before exp89p's first terminal header, at the latest at the 07:23Z prep, or else leave the 10.2 h text; never settle it after the score",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "W316 = R33-A3: a late-read watcher per morning submit, ending with 'timeout 180 python tools/uptest.py save post_<token>', because the e10 loop ends at 12:00Z and two morning reads in one hourly gap are MASKED",
+   "evidence": "round33/report.json R33-A3, plan_issues (c)(d); experiments/lb_poll/e10_watch_loop.py l.64; R30-A4 (c) was never copied to CONTEXT",
+   "suggested_action": "Arm it at each morning submit (exp89l ~08:45Z, M2 by 11:30Z); run compare only on a display tie with V_pub",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "W317 (b) = R33-A4 (b): the C11 record wording after the A-M1/A-M2 decisions ('UNPROVEN' on a P '+', never 'OVERTURNED')",
+   "evidence": "round33/report.json R33-A4 (b), rejected R33-RC-B; round33/v_recheck_r33-rc-b-*.notes.md; research/wf_ideas_v3/browser_intel.md l.123",
+   "suggested_action": "Write it in the post-decision entry, not at the decision header",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "W286 (2): e10v3/runbook.notes.md l.66 still reads 'OUR = 0.957 ... SC >= 0.958'; the true trigger is >= 0.960 (CONTEXT l.4159-4160)",
+   "evidence": "research/wf_ideas_v4/e10v3/runbook.notes.md l.66 (checked 04:38Z)",
+   "suggested_action": "Fix l.66 before the 05:41Z E10 run; add the int-casting line (W286 (1))",
+   "urgency": "now"
+  },
+  {
+   "kind": "forgotten",
+   "what": "W126: RESULTS.md probe rows stop at probe 46; probes 47-51 (and 52-54 when read) are missing",
+   "evidence": "experiments/RESULTS.md l.79; CONTEXT.md l.4153-4160, l.4254-4272",
+   "suggested_action": "Add the rows before the 12:03Z card fill",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "forgotten",
+   "what": "W296/W303: REPORT.md is absent for rounds 29-33 (harness-refused), and round 33 is untracked",
+   "evidence": "ls research/wf_ideas_v4/round{29..33}/REPORT.md -> absent; round33/report.notes.md 04:33Z; git status '?? research/wf_ideas_v4/round33/'",
+   "suggested_action": "Save each report_md_ru as REPORT.md and commit round 33 with the next CONTEXT commit (as the user, no Co-Authored-By)",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "W279 (1) DET_THRESHOLD closed line, W297 cron-defect correction, W308 I-045 'weakened' note: still absent from CONTEXT",
+   "evidence": "grep -c on CONTEXT.md at 04:38Z: DET_THRESHOLD 0, 'cron defect' 0, I-045 0, 'battery standby' 1",
+   "suggested_action": "Fold W279 (1) and W297 into the W314 OPS line before 07:23Z; W308 post-decisions",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "Morning decision chain: 07:23Z prep (submit v1 dummy, no rebuild); exp89p read ~07:47-07:58Z; A-M1 by 08:45Z (08:40Z header rule); A-M2 by 11:30Z (02:53Z function)",
+   "evidence": "CONTEXT.md l.4274-4305, l.4322-4324; round33/report.json new_facts (6)",
+   "suggested_action": "Follow the logged rules; the 08:30Z timer text is overridden by the 08:40Z manual-A-M1 waiter",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "12:03Z card v5 fill (sha8 a134d5e4, not v4); 18:37Z FINAL proposal; 19:43Z reminder; user ticks by 20:00Z (23:00 MSK); 21:05Z last call; deadline 23:59Z",
+   "evidence": "CONTEXT.md l.4322-4324, l.3848-3855, l.4091-4099; round33/v_recheck_r33-rc-a-*.notes.md",
+   "suggested_action": "Fill v5 with W307 numbers and refreshed 11:41Z medal lines; never 'рекомендую'; never tick",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "risk",
+   "what": "I378/W317 (c): exp85a code defaults BIOHUB_VALIDATOR_ENABLE to '1' if unset, and cell 0 assigns REPAIR_DEADLINE_S twice (27000 then 34200); a late E10 copy could ship the PP sweep ON",
+   "evidence": "round33/v_recheck_r33-rc-c-*.notes.md; round33/report.json R33-A4 (c), new_facts (5)",
+   "suggested_action": "On any E10 trigger, set VALIDATOR_ENABLE='0' explicitly and grep the last assignment of each deadline knob",
+   "urgency": "info"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "I379/W317 (a): OpenKaggle BH-0005 discloses MIN_TRACK_LEN 6 -> 4, which is closed I-129 (NOT RECOMMENDED); README-only scans missed it",
+   "evidence": "round33/report.json new_facts (4), R33-A4 (a)(d), rejected",
+   "suggested_action": "Add the I-129 alias at the next curation; external scans open decisions/ and kaggle_runs/",
+   "urgency": "info"
+  },
+  {
+   "kind": "risk",
+   "what": "I380: the partner premium (~+0.2e-3) is 5-15x smaller than the cost of leaving the stale {#37,#38} ticks",
+   "evidence": "round33/scan_recheck.notes.md (EMAX calc)",
+   "suggested_action": "The 18:37Z/19:43Z pushes should stress re-ticking away from {#37,#38} over the partner choice",
+   "urgency": "before-finals"
+  }
+ ],
+ "summary": "Curation 33 updates the ~03:50Z watchlist with the CONTEXT entries at 03:56Z (round 32, l.4313-4324) and 04:10Z (power push sent, l.4325-4328), commits 6bbbdf0/dd7cf04, round 33 (R33-A1..A4, untracked) and the 04:34:31Z poll (all 3 night refs PENDING). Done: W309 push, W310 UP-test procedure, W311 (a). Superseded: W313 (by W318). New: W314-W318, T195-T197, I374-I381. Top item: W314 = R33-A1. Only one-shot watcher 16292 exists at 04:38Z, so exp89r has no watcher in the 09:13-10:13Z timer gap. Still overdue: RESULTS rows 47-51, REPORT.md for rounds 29-33, the runbook l.66 trigger, the DET_THRESHOLD and cron-defect lines."
+}

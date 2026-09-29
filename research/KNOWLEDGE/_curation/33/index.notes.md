@@ -1,0 +1,5 @@
+- 04:47Z start curation 33 index task; no index.json present
+- 04:48Z read INDEX c32, CHANGES tail, curator outputs; anchors: IDEAS CHANGES(33) l.205 ORPHANS l.900; FACTS F-LB-33 l.261 C-273 l.758; DECISIONS [c33] l.546/l.975/l.1648-1650; WATCHLIST OVERDUE l.58. Own check ~04:50Z Win32_Process: only 13516/16292 match the refs (W314 still not armed). E10 RUN 40 0441Z: rank #133 of 3,982, 18/22 in 0.959.
+- 04:49Z INDEX.md written (c33)
+- 04:50Z CHANGES.md section 33 appended
+- 04:50Z index.json written; done

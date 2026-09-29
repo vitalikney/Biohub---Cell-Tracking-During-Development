@@ -1,0 +1,6 @@
+- 2026-09-29T04:24Z start verify R33-RC-C (validator off + safetail in 10 pool nbs)
+- Parsed all cells of 10 pool nbs + exp56 (script in $TEMP/chk2.py). All 10: VALIDATOR_ENABLE=0 (c0), REPAIR_DEADLINE_S 27000 then re-set 34200 later in c0 (last wins), DIVINS_DEADLINE_S 28800, DEGRADE_KEEP_DIV 1, LOWREFINE 1. exp56: 27000 only, no safetail.
+- Levers: DIVINS_CAP 4 exp58/exp75, 6 others; DIV 0.4 + READMIT 0.94 in exp85a/87a/89l/p/q/r/s; DIS 2.25 (c0 and c1) q/r/s; CI (ALPHA 0.5, MAX_UM code default 3.0 l.5032 exp89r) in 75/87a/89l/89r; SEC n2a manifest+sha 7029fe69.. in 89l/p/q/r (cell 3 uses os.environ.get default -> respects c0). Matches claim.
+- Code: exp85a l.5068 VALIDATOR_ENABLE = env.get(...,'1')!='0' -> DEFAULT ON if unset (E10 copies must set it). l.5723 sweep gated; l.5790 else-branch; ppsweep_selected.json written with 'base'. All TRAIN_DIR uses (exp89r l.5330/5346/5454/5860/5894) inside validator paths.
+- git: nb files clean vs HEAD; probe.json change dicts consistent. Not verified: Kaggle-side pushed versions == local (no API calls, by policy).
+- Verdict: not refuted; info-only, zero score gain, keep the E10 pre-pool check.

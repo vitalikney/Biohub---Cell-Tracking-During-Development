@@ -1,0 +1,29 @@
+{
+ "summary": "Round-33 external delta, 04:13-04:20Z on 29 Sep, covering the window since 03:16Z. Nothing new and nothing actionable. The feed digest at 03:58Z has 0 new topics, 0 comments and E10 FLAG none, and the best public notebook is still 0.953. The e10_watch snapshots at 03:13Z and 03:41Z (RUN 39, signals 0) show no Biohub notebook run after 28 Sep 13:02Z. The flexonafft timestamp change is a metadata refresh of the old 0.947 notebook. LB movement is the daily burst (submissions from 19:32-21:03Z on 28 Sep) and the P2 group is 0. Our team is at #132 with 0.959 (probe 51), 17th of 21 in the 0.959 block, and probes 52/53 are still pending. A GitHub search found 3 repos we had not seen (OpenKaggle archive, IshanTiwari viewer, aakashkavuru baseline). None of them discloses an x138-family value. Chrome was not used. No hypothesis reaches R8.",
+ "findings": [
+  {
+   "id": "r33x-1-delta-null",
+   "kind": "new-fact",
+   "what": "Nothing new since 03:16Z on 29 Sep. The feed has 0 new topics and 0 new comments, and there is no host announcement. No public Biohub notebook ran after 28 Sep 13:02:36Z. flexonafft/biohub-lineage-forge-precision-tracking changed lastRunTime from 12:57:08 to 13:02:36, which re-stamps the 0.947 notebook and adds no new work. The top public score is still 0.9530 (4 notebooks), so E10 has no slug. LB at 03:42Z: 3,980 teams; the top-4 are unchanged (yu4u 0.978); 115 teams are at or above 0.960 and 11 at or above 0.970 (Corwin moved 0.969->0.970). The 02:41->03:41Z diffs show 10 teams moving inside 0.953-0.962, with submissions from 19:32-21:03Z on 28 Sep. That is the daily burst, and the largest P2 group is 0. Our team: rank 132, 0.959, 17th of 21 in the 0.959 block (ties are broken by the earlier submission, ours 28 Sep 12:14:57), submission count 53. Night probes 52 (exp89r) and 53 (exp75), both submitted at 00:05Z, are still PENDING.",
+   "evidence": "experiments/discussions/digest_20260929T0358Z.md; feed_loop.log 2026-09-29T03:58:09Z rc=0; experiments/e10_watch/20260929T0313Z.txt and 20260929T0341Z.txt (DIFF sections, RUN 39 signals 0); experiments/lb_poll/_night_subs.csv",
+   "action": "None. The night reads, MORNING TABLE v1.1 and finals card v5 stay unchanged.",
+   "urgency": "info"
+  },
+  {
+   "id": "r33x-2-github-new-repos-no-knobs",
+   "kind": "new-fact",
+   "what": "The GitHub WebSearch at ~04:15Z found 3 repos not in wf_ideas_v3/h_github-intel. (1) OpenKaggle/biohub-cell-tracking-research: an archive with methods, tests and campaign records under the tag snapshot-2026-09; its README gives no scores and no knob values. (2) IshanTiwari-030800/BioHub-Kaggle: an interactive viewer notebook, 4 commits, no scores. (3) aakashkavuru101/BioHub-kaggle: a baseline with a 3D U-Net plus temporal attention, a cross-attention linker, local-max suppression and '--epochs 3', no LB score and no ILP or threshold values. None of them discloses an x138-family knob, so AGGRESSIVE MODE has nothing to build. The repos already logged (JunhaoLiXD, canakbass 0.863, sota1111, Caffeinated-Code, davidlueng986-alt, Kai-Gowers) did not change the picture.",
+   "evidence": "https://github.com/OpenKaggle/biohub-cell-tracking-research ; https://github.com/IshanTiwari-030800/BioHub-Kaggle ; https://github.com/aakashkavuru101/BioHub-kaggle ; research/wf_ideas_v3/h_github-intel.json (known repos)",
+   "action": "None tonight. OpenKaggle's campaign records are post-deadline reading at most.",
+   "urgency": "info"
+  },
+  {
+   "id": "r33x-3-no-hypothesis-reaches-r8",
+   "kind": "new-hypothesis",
+   "what": "Honest answer: nothing reaches R8. The delta contains no disclosed value, no new public notebook and no technique, so there is nothing to map to a build. Every idea the delta could suggest is covered by IDEAS.md (I-001..I-556). Rounds 28-32 already concluded that the whitelist {K, SEC n2a, DIS 2.25, CI} is exhausted by the night files, exp89s and exp89l. JT's third knob stays undisclosed until after the deadline (I-412), and the 0.953-0.957 burst is the daily pattern (r25 refuted). Expected gain of any new build: 0, and it has no read slot, since the 2 remaining 29 Sep slots belong to MORNING TABLE v1.1.",
+   "evidence": "research/KNOWLEDGE/IDEAS.md header (rounds 28-32 R28P-11 ... r32x-4); round32/scan_hyp_external32.json r32x-4",
+   "action": "Build, dummy and propose nothing.",
+   "urgency": "info"
+  }
+ ]
+}

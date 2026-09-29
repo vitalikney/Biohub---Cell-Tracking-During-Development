@@ -1,0 +1,9 @@
+# v_recheck R33-RC-A (finals emax premium small / stale ticks dominate) - skeptic notes
+- 2026-09-29 ~04:4xZ start; JSON absent -> fresh run.
+- Card v5 (round29/finals_card_v5_ru.md): l.12 'Сейчас отмечены: <SELECTED>' already filled by fill step 2 (API group=SUBMISSION_GROUP_SELECTED) at 12:03Z and 18:37Z; l.46 already states the ticked {#37,#38} pair's bronze/silver (0.48-0.66 / 0.10-0.23), refreshed by R31-RC-A (verdict not refuted) to 0.20-0.58 / 0.02-0.16 vs agreed pairs 0.61-0.85. So the stale-tick cost is already on the card, in the decision-relevant unit (medal probability), in Russian, as a fact.
+- Fill step 10: 'Числа модели не пересчитывать' -> adding a new raw-score normal-model number (0.001-0.0035 private) is a third judgmental model on the card; R31-RC-A caveat (c): only direction is decision-grade.
+- ARMED TIMERS (Win32_Process timer.sh command lines, read now): 19:43Z text = 'FINALS TICK REMINDER (22:43 MSK): re-read poll.log for V_pub changes since 18:37 UTC; read SELECTED via the API; if not the recommended pair, message/push the user (deadline 23:00 MSK, Kaggle 02:59 MSK); never tick.' -> action (2) is ALREADY implemented. 21:05Z 'FINALS LAST CALL' also reads SELECTED. 12:03Z and 18:37Z texts both say 'read SELECTED via the API'.
+- CONTEXT 28 Sep 11:27Z/11:28Z: 22:43 MSK reminder defined as 'if SELECTED differs from the proposal' since then; the stale-tick risk (not auto-select) has been the operating assumption since 26 Sep (ticks exist since 26 Sep 20:04Z, CONTEXT l.2600).
+- Side note (not this finding): the 12:03Z timer text still points at round27/finals_card_v4_ru.md; R32-A3 (CONTEXT 03:56Z) already says fill v5 (a134d5e4). Already handled.
+- Verdict: refuted (no new action; both proposed actions already exist; the premium recompute changes no decision).
+- 04:27Z wrote JSON (refuted=true)

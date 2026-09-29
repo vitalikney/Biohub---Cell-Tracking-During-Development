@@ -1,0 +1,9 @@
+- 2026-09-29T04:24:37Z start R33-RC-B verification
+- ledger.md (04:24:30Z poll): 56657612 exp89p PENDING (safetail, gate 8.0 h); 56656147 exp89r PENDING, also carries n2a (CI, read ~09-10Z). exp81 (exp70g+n2a) never submitted -> exp89p is indeed the first SEC/n2a LB read in time.
+- Old secondary/primary swap reads in ledger: probe 7 exp08 sec FT 0.929 (-0.014 vs 0.943), probe 10 friend-A sec 0.920 (-0.024), probe 13 exp23 sec FT 0.937 (vs exp03b 0.944), probes 15-17 primary swaps 0.944/0.938/0.943 vs 0.947. "0 of 5" consistent.
+- n2a = epoch-2 continuation of exp71 (y3uanm v1 distilled-secondary recipe), sha 7029fe69, proxy student/teacher 0.998/1.010 (CONTEXT l.3300-3303, 2467, 3286-3294). Distillation label correct.
+- CONTEXT l.4244-4248: SEC dummy-lab -0.0008..-0.0020 on 5/5 pairs (6bba, FP +4..+6); same bed signed probe 10 correctly.
+- CONTEXT l.3940-3942: lab's own DIS rule says four 3-dec displays carry up to 0.002 rounding error; a single pair diff carries up to ~0.001. R30-A1 (l.4273-4278): P '+' = display >= 0.959 COMPLETE by 08:40Z header; 0.958 = '0' BLIND; ERROR/late = '?'; V_pub pool only if L_hi <= 9.0 h.
+- browser_intel.md l.123 (743222 imissher): two unmodified runs of his stack read 0.948 / 0.946 -> single public reads can move 0.001-0.002 without any change (his stack; ours is deterministic per round23, but rounding stays).
+- Verdict: record-only, feasible, but the 'OVERTURNED' mapping for a 0.959 display overclaims (one public embryo, 1-ULP difference, lab prior negative) and omits '?' and exp89r. Refute as worded; fix = reword to UNPROVEN-positive.
+- 2026-09-29T04:26:04Z final JSON written (refuted=true, reword fix)

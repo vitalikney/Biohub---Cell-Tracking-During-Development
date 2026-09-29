@@ -1,0 +1,11 @@
+# round33 scan_browser notes (2026-09-29T04:13:29Z)
+- 04:13Z: no prior scan_browser.json for round33; created folder.
+- 04:13Z: python tools/e10_snapshot.py -> experiments/e10_watch/20260929T0413Z.txt CHANGES=8 vs 0341Z; all 5 kernel lists + 2 statuses 'no change'; P2 largest group 2 (<5).
+- LB CSV publicleaderboard-2026-09-29T04:13:49 vs r32 0313Z: 9 score changes: Corwin 0.969->0.970 (#11), Ad Space available 0.965->0.967 (#26), Artalmaz31 0.961->0.962 (#74), Manish 0.954->0.956, Soetsu Shida 0.953->0.956, AbhiniveshSharma5354 new->0.956, Marek Nurzynski 0.954->0.955, Pathik Patel 0.953->0.955, Maksim Shekhunov 0.953->0.954; all LastSubmissionDate 16:56-21:36Z 28 Sep (scoring lag). 56 SubmissionCount changes.
+- Counts 0413Z: 0.953 404 (r32 407), 0.954 134 (135), 0.955 110 (108), 0.956 124 (121), 0.957 50, 0.958 20, 0.959 21, 0.960 20, >=0.960 115, total 3981 (+1).
+- Ours: '132,16810638,D: Discipline,2026-09-28 12:14:57,0.959,53' -> strictly better+1 = 116, 17/21 in 0.959 block; SubmissionCount 53 = probes 52-54 not yet scored.
+- Digest experiments/discussions/digest_20260929T0358Z.md: 0 new topics, 0 new comments, E10 FLAG none, top best_public_score 0.9530 (15 min old -> feed not re-run).
+- 04:16Z Chrome (own new tab, closed): Discussion recent-comments https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion?sort=recent-comments -> 0 new topics/comments; order unchanged (743929 last comment 7h ago; 744093 float centroids posted 12h ago; Public/Private split 16h).
+- Code Recently Created https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/code?sortBy=dateCreated -> no new notebook; newest unpinned still 'Robust Cell Tracking ... via Chan.' (5d, 0.1); x138 231 votes (+1), 0.953.
+- Overview: '20 HOURS TO GO'; 13,475 entrants, 4,565 participants (+1), 3,981 teams, 94,308 submissions (+105 vs r32 94,203); timeline unchanged (Final Submission Deadline September 29, 2026). No announcement.
+- Nothing pulled (no notebook >= 0.954, no new idea). No disclosed knob.

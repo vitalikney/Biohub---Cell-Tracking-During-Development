@@ -1,0 +1,60 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/FACTS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/DECISIONS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/33/facts.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/33/facts.json"
+ ],
+ "alerts": [
+  {
+   "kind": "forgotten",
+   "what": "The R33-A1 per-ref watchers for exp89r (56656147) and exp75 (56656157) are not armed. The only night-ref watcher is 13516 / 16292, which exits on the FIRST of the 3 refs to finish, expected to be exp89p at ~07:47-08:35Z. exp89r (~09:23-09:34Z) and exp75 (09:05-10:05Z) fall in the 09:13-10:13Z timer gap. A-M2 could therefore slip 40-100 min, and an M2 read could land after the 18:37Z FINAL proposal. No CONTEXT step re-arms the watcher: R30-A4 (b) exists only in round30/report.json.",
+   "evidence": "FACTS F-RUN-50, C-274; curator Win32_Process read at 04:40Z (only 13516/16292 match the refs); research/wf_ideas_v4/round33/v_plancheck_pc33-01.json (skeptic: not refuted); round33/report.json R33-A1",
+   "suggested_action": "Arm two run_in_background watchers now: one for 56656147 and one for 56656157. Use the 16292 awk formatter, not 'cut -c1-220', which truncates the score. Keep 16292. If it fires on a ref other than 56657612, arm a watcher for 56657612. Log the one-line OPS note from R33-A1.",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "The logged late clause for the P code (R31-A1 / 02:53 (1), GAP RULE v2 at 10.2 h) is the CI threshold. exp89p is non-CI safetail, whose insertion gate is 8.0 h. runtime_ledger l.48/l.60, CONTEXT l.3021/l.3249 and card v5 l.16 already treat a non-CI L_hi > 8.0 h as 'the insertion gate may have fired'. A late depressed d_P could cause a false DIS '+' or a false P '0'/'-' for A-M2.",
+   "evidence": "FACTS C-273, F-RUL-31; tools/runtime_ledger.py l.48, l.59-60; experiments/lb_poll/ledger.md row 56657612 'insertion gate 8.0 h: open'; round33/report.json R33-A2",
+   "suggested_action": "R33-A2 is optional. Either log the pre-score line (P late mark 08:46:36Z for A-M2 and the card SEC line; A-M1 unchanged) before exp89p's first terminal header, at the latest the 07:23Z prep, or leave it and let the logged 10.2 h text govern. Do not settle it after the score. The probability is low: 0 of 12 non-CI reads went above 8.0 h.",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "The e10 watch loop stops at 12:00Z (e10_watch_loop.py l.64). exp89l (CI, read ~17:15-17:25Z) and an M2 file (non-CI, read ~16:40-17:30Z) can complete inside one hourly round gap. The count then moves by 2, equal displays are MASKED and the running champion stays by default. tools/uptest.py save still has no internal timeout.",
+   "evidence": "FACTS F-RUN-51, F-RUN-49, C-267; experiments/lb_poll/e10_watch_loop.py l.64; round33/report.json R33-A3",
+   "suggested_action": "At each morning submit, arm the R33-A3 late-read watcher. It ends with 'timeout 180 python tools/uptest.py save post_<token>' (1 call per file, <= 2 in total). Run compare only when the display equals the running champion's.",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "Morning decisions are unchanged: MORNING TABLE v1.1, 02:02 / 02:53 lines, and the R32-A3 pointers LOGGED at 03:56. (1) exp89p's first terminal header is expected ~07:47-07:58Z. A-M1 is decided at the last header <= 08:40:36Z. On >= 0.959, submit exp89l v1 (the gated dummy, no rebuild) by 08:45Z. (2) A-M2 is decided at exp89r's first terminal header (~09:23-09:34Z, latest 11:00Z) and submitted by 11:30Z. (3) 2 submits are left on 29 Sep. (4) The finals are still ticked #37 + #38, and the user ticks by 20:00Z. At 04:44:33Z all 3 night refs were still PENDING.",
+   "evidence": "DECISIONS P52-P56 rows [c33] and the [c33] snapshot; FACTS F-RUL-28, F-RUL-30, F-RUN-48; experiments/lb_poll/poll.log header 04:44:33Z (l.28376)",
+   "suggested_action": "Act at the decision header, not at the cutoff. Fill card v5 (a134d5e4) at 12:03Z with the R31-A4 numbers. The medal lines are unchanged: silver ~#199 in the 0.957 block, bronze ~#398 in the 0.955 block.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "Card v5 (a134d5e4, re-verified 04:31Z) still has stale parts. (1) l.39 and l.46-47 carry the exp85a model numbers (R31-A4 is still PROPOSED). (2) l.114 still says 'only on P +/0u'. (3) l.93, l.138 and l.152 name dead cron ids. The live 12:03Z timer text still names card v4. The 03:56 R32-A3 line (fill v5) now governs.",
+   "evidence": "FACTS C-255, C-263, C-269, F-RUL-22; CONTEXT 03:56 l.4313-4324",
+   "suggested_action": "At the 12:03Z fill, use card v5 with the R31-A4 numbers and the 04:13Z medal lines. Optionally make the text-only waiter-id edit with a new sha8.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "stale",
+   "what": "experiments/RESULTS.md still ends at P46. It has no rows for P47-P51 (0.955 / 0.957 / 0.955 / 0.958 / 0.959) or for the pending P52-P54. It was last changed in 59e14e2 (05:03Z 28 Sep).",
+   "evidence": "FACTS C-118; git log -- experiments/RESULTS.md; experiments/RESULTS.md l.79",
+   "suggested_action": "Add the rows after the night reads, before the finals message",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "OpenKaggle/biohub-cell-tracking-research decisions/BH-0005 discloses BIOHUB_OUTPUT_MIN_TRACK_LEN 6 -> 4. It is unsubmitted and backed by a lab-only 2-fold claim, and the round-33 scan first missed it. It maps to closed I-129: LB probe 6 read -0.002, and +2.13% nodes costs ~-0.002 on any embryo. R8 bars it after 02:00Z without the user's yes. It is recorded as exp89m, NOT RECOMMENDED.",
+   "evidence": "FACTS F-TRN-65, C-275; research/wf_ideas_v4/round33/v_hyp_external33_r33x-3-no-hypothesis-reaches-r8.json; round33/report.json R33-A4 (a)",
+   "suggested_action": "No slot and no build. Add the I-129 alias at the next IDEAS curation. Future external scans should open decisions/ and kaggle_runs/, not only the README.",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 33 reflects the state at 04:42 UTC on 29 Sep and builds on curation 32. It covers two commits: 6bbbdf0 (03:56Z) and dd7cf04 (04:10Z). It also covers two new CONTEXT entries. The 03:56 entry LOGGED R32-A1..A3 with no rule change: a push timer, a 0-call UP-test procedure with 'timeout 180' saves, and a note that timer texts are pointers. The 04:10 entry records that the R31-A2 power push was SENT. Round 33 (report.json 04:36Z) is also covered. The night probes P52 exp89r, P53 exp75 and P54 exp89p are still PENDING at the 04:34:31Z and 04:44:33Z headers (ledger L > 4.48 / 4.48 / 3.79 h). V_pub is still exp87a at 0.959. On the 04:13Z LB we are #132 of 3,981, 17th of 21 in the 0.959 block, with a count of 53. The medal lines are unchanged. The external delta is null. The finals are still ticked #37 + #38. FACTS.md gets the new facts F-LB-33 (LB and external state), F-RUN-50 (one-shot read watcher and the 09:13-10:13Z timer gap), F-RUN-51 (e10 loop ends 12:00Z), F-RUL-30 (the 03:56 / 04:10 logs), F-RUL-31 (P late threshold 8.0 vs 10.2 h), F-MOD-52 (all 10 pool notebooks run validator OFF with identical safetail settings; the validator code default is ON) and F-TRN-65 (BH-0005 MIN_TRACK_LEN 4 = closed I-129; C11 record wording). It adds [c33] notes on F-LB-01/02/10, F-RUN-43/45/46/48/49 and F-RUL-22/27/28/29. On contradictions, C-247, C-266, C-268 and C-269 are resolved by the logged lines and C-267 is partly resolved. C-118, C-255 and C-263 are still open. There are new contradictions C-273..C-278: C-273 and C-274 are open, and C-275..C-278 are resolved by the skeptics. DECISIONS.md gets a new state line; [c33] cells on P52-P56; a section-1 update; a section-2 [c33] paragraph and a finals snapshot table (exp89m added as not a candidate); [c33] status on R1-R10 and the section-f finals rule; status updates on the R31 and R32 proposal rows; new rows for the logged R32-A1..A3 + push, the round-33 proposals and the round-33 rejections; and a changelog entry. The most urgent item is that the R33-A1 per-ref watchers were not armed at 04:40Z."
+}

@@ -1,0 +1,60 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/ideas.json",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/IDEAS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/33/ideas.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/33/ideas.json"
+ ],
+ "alerts": [
+  {
+   "kind": "risk",
+   "what": "Only one night-ref read watcher is running: PID 16292. It is one-shot and will exit on exp89p (~07:47Z), and no logged step re-arms it. exp89r (~09:23-09:34Z) and exp75 (09:05-10:05Z) both land in the 09:13-10:13Z gap between timers. A-M2 could therefore be decided 40-100 min late, which could push the non-CI M2 read to ~19:05Z, after the 18:37Z FINAL proposal (I-557, R33-A1, skeptic-confirmed).",
+   "evidence": "research/wf_ideas_v4/round33/report.json R33-A1, plan_issues (a)(d); v_plancheck_pc33-01.json; report.notes.md 04:30Z; CONTEXT.md l.4325-4328 is the last entry (no re-arm step)",
+   "suggested_action": "Now, and before 09:05Z at the latest: arm two run_in_background watchers (56656147 and 56656157) with 16292's awk formatter. Do NOT use 'cut -c1-220', which truncates the exp89r row before the score. Keep 16292 running. Log the one-line OPS entry.",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "R31-A1 / 02:53Z (1) apply the CI late threshold of 10.2 h to exp89p. But exp89p is non-CI safetail, whose insertion gate is 8.0 h. A late, depressed d_P could therefore fake a DIS '+' or a P '0'. The chance is low: 0 of 12 non-CI reads went above 8.0 h. The optional pre-score fix is I-558 (R33-A2, self-checked only).",
+   "evidence": "research/wf_ideas_v4/round33/report.json R33-A2, plan_issues (b); tools/runtime_ledger.py l.48, l.59-60; CONTEXT.md l.3021, l.3249; research/wf_ideas_v4/round29/finals_card_v5_ru.md l.16",
+   "suggested_action": "If adopted, log the P LATE THRESHOLD line above '## 9. Literature' by the 07:23Z prep, quoting a header that still shows 56657612 PENDING. If it is not logged before exp89p's first terminal header, the 10.2 h text governs. Never settle it after the score.",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "The e10 loop stops at 12:00Z (e10_watch_loop.py l.64). exp89l and the M2 file can both complete inside one hourly snapshot gap. Our count would then move by 2, the equal-display UP test would be MASKED, and V_pub would stay where it is by default (I-529, R33-A3).",
+   "evidence": "research/wf_ideas_v4/round33/report.json R33-A3, plan_issues (c); round33/report.notes.md (e10_watch_loop.py l.64 END 12:00 UTC)",
+   "suggested_action": "At each morning submit, arm the late-read watcher so it runs 'timeout 180 python tools/uptest.py save post_<token>' as soon as it fires (at most 2 calls). Run the compare only when the display equals the running champion's.",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "The 04:10Z power push asked for the charger and an open lid, but it did not include the R28-A1 (3) correction ('not the battery; keep VS Code open, no reload/update'). That correction is still not recorded (I-510). The timer texts for 07:23Z, 08:30Z, 12:03Z and 18:37Z were still stale at 04:15Z; per R32-A3, logged 03:56Z, the logged line governs (I-553).",
+   "evidence": "CONTEXT.md l.4325-4328; CONTEXT.md l.4313-4324 (R32-A3); research/wf_ideas_v4/round33/scan_plancheck.json PC33-05",
+   "suggested_action": "Add the R28-A1 (3) sentence to the 06:07Z brief or the 07:23Z message. At each timer, follow the logged line and do not re-arm timers.",
+   "urgency": "today"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "The C11 record for the probe 54 / 52 reads (I-559, R33-A4 (b)) exists only in round33 report.json and in this ledger. The reworded mapping is: P '+' = UNPROVEN first positive distilled-FT read; '-' = UPHELD; '0' = not overturned; '?' = no read; exp89r is the second n2a point. The original 'OVERTURNS' wording was refuted as an overclaim.",
+   "evidence": "research/wf_ideas_v4/round33/report.json R33-A4 (b); v_recheck_r33-rc-b-c11-retrain-family-first-x138-rea.json",
+   "suggested_action": "Write the mapped line in the post-decision CONTEXT entry after the A-M1 submit or UNUSED decision (~08:45Z), never at the decision header. It is a record only and must not move any finals choice.",
+   "urgency": "today"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "OpenKaggle BH-0005 discloses BIOHUB_OUTPUT_MIN_TRACK_LEN 6 -> 4 (unsubmitted; the lab claim covers 2 folds). This maps to the closed I-129 (LB probe 6 at -0.002). The aggressive-mode mapping exp89m (exp85a + MTL 4) is NOT recommended: +2.13% nodes costs about -0.002, R8 bars it without a user yes, and the read would land after 19:30Z. R33-A4 (d): external scans should also open decisions/ and kaggle_runs/ in new repos, not only the README.",
+   "evidence": "https://github.com/OpenKaggle/biohub-cell-tracking-research (decisions/BH-0005-min-track-length.md); research/wf_ideas_v4/round33/report.json R33-A4 (a)(d), rejected; v_hyp_external33_r33x-3-no-hypothesis-reaches-r8.json",
+   "suggested_action": "No build and no slot. The I-129 alias and the scan rule are recorded here; the next scans should read decisions/ and kaggle_runs/.",
+   "urgency": "info"
+  },
+  {
+   "kind": "stale",
+   "what": "Record gaps remain. Rounds 29-33 have no REPORT.md (for rounds 32/33 the text is in report.json 'report_md_ru'; I-232). experiments/RESULTS.md has no rows for probes 47-51. The card v5 info lines (I-539) are still missing (sha8 a134d5e4 re-verified at 04:31Z).",
+   "evidence": "research/wf_ideas_v4/round33/report.notes.md 04:31Z, 04:33Z; experiments/RESULTS.md; research/wf_ideas_v4/round29/finals_card_v5_ru.md",
+   "suggested_action": "At the 12:03Z fill, add the info lines and record the new sha8. After the morning decisions, write the REPORT.md files for rounds 29-33 and RESULTS rows 47-51 (low priority).",
+   "urgency": "before-finals"
+  }
+ ],
+ "summary": "Curation 33 (~04:55 UTC 29 Sep, HEAD dd7cf04) is an incremental pass over curation 32 and keeps all existing IDs. It covers 6bbbdf0 (round 32 committed plus the CONTEXT 03:56Z entry at l.4313-4324, which logs R32-A1..A3), dd7cf04 (CONTEXT 04:10Z power push SENT, l.4325-4328), and round 33 (untracked; report.json R33-A1..A4 written 04:36Z, 4 scans, 4 verdicts). It also reads the ledger at 04:34:33Z (3 night refs PENDING), e10 0413Z and digest 0358Z (both null). There is no new LB score. The ledger grows from 556 to 560 ideas with 37 change records. New entries: I-557 per-ref night read watchers (at-risk, now); I-558 P late threshold 8.0 h (optional, pre-score, at-risk); I-559 C11 record for probes 54/52 (record-only, at-risk); I-560 finals-pool config invariants, where the sweep-drift risk is refuted on all 10 pool files and the E10 pre-pool validator gate is set. Closed or updated: I-546 (push SENT), I-552 and I-553 (LOGGED 03:56Z); all three come off the at-risk list. I-529 gets the R33-A3 immediate-save refinement. I-129 gets the alias OpenKaggle BH-0005, and exp89m is not recommended. I-087 and I-258: the stale-tick line is refuted because it is already in place. I-116 and I-119: C11 'overturns' is refuted as an overclaim. The external items (I-364, I-412, I-475, I-541, I-320, I-026) are null. The 13 at-risk orphans are I-252, I-336, I-407, I-448, I-516, I-526, I-529, I-539, I-540, I-548, I-557, I-558 and I-559; I-233 is the one strict orphan. Status counts: lb-tested 62, lab-tested 28, refuted 265, deferred 49, in-plan 154, open-untested 2. Verification: every row regenerates identically (gen.py: 560 rows, 0 bad), gen2.py body and ranking are equal, and all IDs are unique."
+}

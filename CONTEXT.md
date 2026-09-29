@@ -4326,6 +4326,20 @@ Mention it to the user in one line (R9-A8 item 6).
   PushNotification (mobile push requested; Remote Control now active): results from ~10:38 MSK, decisions by 11:45 and
   14:30 MSK, finals card 15:03 MSK; after the trip plug in the charger and keep the lid open; tick the finals by 23:00
   MSK.
+- 2026-09-29 04:51 UTC, P LATE THRESHOLD (round 33, R33-A2; pre-score: header 2026-09-29T04:44:33Z shows 56657612 PENDING)
+  exp89p is family safetail, whose insertion gate is 8.0 h, so the late clause that R31-A1 / 02:53Z (1) apply to P
+  uses 8.0 h, not the CI 10.2 h (tools/runtime_ledger.py: safetail_ci 10.2 h = the same in-kernel 8.0 h gate + CI_lo
+  2.2 h; CONTEXT already puts the safetail v suffix at 8.0 h). If exp89p's first terminal header + 210 s x failed
+  attempts > 08:46:36Z: P '+' stands (flag v); P '0'/'-' becomes '?' for A-M2 (02:53Z (1) step 2) and for the card SEC
+  line; a branch-A DIS '+' computed from that d_P becomes '?'; DIS '-' stands. A-M1 is unchanged (it needs L_hi <= 7.9
+  h). Amends 02:02Z (4) (a v suffix does not change the P code) for A-M2 only.
+- 2026-09-29 04:51 UTC, OPS: per-ref night read watchers (R33-A1) + morning procedure (R33-A3)
+  Watchers armed for 56656147 (exp89r) and 56656157 (exp75) in addition to the one that fires on the first of the
+  three refs (expected exp89p ~07:47-08:35Z); ops only, no rule change. After each morning submit (A-M1 exp89l; A-M2
+  exp89s or exp89q) arm a late-read watcher that also saves the LB once ('timeout 180 python tools/uptest.py save
+  post_<token>'); run the UP compare only if the file's display equals the running champion's. External delta (round
+  33): null; 743929 has no new comment after JT's 20:46Z reply (checked in Chrome at 04:43Z at the user's request); no
+  new topic after 744093.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

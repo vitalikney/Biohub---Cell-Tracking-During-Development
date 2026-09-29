@@ -1,0 +1,4 @@
+- 04:37Z start curation 33 watch; no prior watch.json; base = WATCHLIST.md curation 32 (~03:50Z)
+- 04:38Z read CONTEXT to l.4328 (new: 03:56Z R32 entry l.4313-4323, 04:10Z push l.4324-4327; commits 6bbbdf0, dd7cf04), round33 report.json + notes (R33-A1..A4), poll 04:34:31Z all PENDING, Win32: only 16292 read watcher -> R33-A1 not armed yet
+- 04:40Z WATCHLIST.md written (W309/W310/W311(a) done; W313 superseded by W318; new W314-W318, T195-T197, I374-I381); line refs verified
+- 04:41Z watch.json written (14 alerts); done

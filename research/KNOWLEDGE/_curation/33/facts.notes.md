@@ -1,0 +1,7 @@
+- 2026-09-29T04:37:54Z start round 33 facts curation; no prior 33/facts.json; base = c32 (03:51Z)
+- 04:38Z sources since c32: CONTEXT +2 entries 03:56Z & 04:10Z (l.4313-4328); commits 6bbbdf0, dd7cf04; poll header 04:34:31Z 3 night refs PENDING (514 polls); e10 0413Z #132 0.959 17/21 count 53; feed 03:58Z null; round33 report.json 04:36Z R33-A1..A4
+- 04:40Z verified: runtime_ledger l.48 DIVINS_GATE_H 8.0, l.59 safetail_ci 10.2; e10_watch_loop l.64 END 12:00Z; CONTEXT l.4313-4324 (03:56) + l.4325-4328 (04:10); Win32_Process 04:40Z: only 13516/16292 watch the night refs (R33-A1 per-ref watchers NOT armed yet); lb_poll 37016, e10 18040; BatteryStatus 2. Plan: new F-LB-33, F-RUN-50/51, F-RUL-30/31, F-MOD-52, F-TRN-65, C-273..C-278; [c33] notes on F-LB-01/02/10, F-RUN-43/45/46/48/49, F-RUL-22/27/28/29, C-118, C-247, C-255, C-263, C-266..C-269
+- 04:42Z FACTS.md patched via c33_facts.py
+- 04:43Z FACTS table pipes validated (F rows 4, C rows 6); writing c33_dec.py
+- 04:45Z DECISIONS.md patched via c33_dec.py (state line, P52-P56 cells, §1 update, §2 [c33] paragraph + snapshot, R1-R10 + §f, R31/R32 rows, 3 new rule rows, changelog); pipes validated
+- 04:45Z newest header 04:44:33Z still 3 refs PENDING; facts.json written (7 alerts). Done.

@@ -1,0 +1,29 @@
+{
+ "summary": "Round-33 delta scan, 04:13-04:17 UTC 29 Sep (07:13-07:17 MSK), compared with round 32 (03:13-03:20Z). Nothing is actionable. There is no new notebook, no public notebook above 0.953 (E10 FLAG none), no new discussion topic or comment, no disclosed knob and no host announcement. Ours: #132, 0.959, SubmissionCount 53, so night probes 52-54 are still unscored, as expected. 1 + teams strictly above = 116; we are 17th of 21 in the 0.959 block, unchanged. E10 P1: experiments/e10_watch/20260929T0413Z.txt has CHANGES=8 against 0341Z. All 5 kernel lists and both statuses report 'no change', and the P2 largest group is 2 (the signal needs >= 5). LB counts r32->r33: 0.953 407->404, 0.954 135->134, 0.955 108->110, 0.956 121->124, 0.957 50, 0.958 20, 0.959 21, 0.960 20, >=0.960 115, 3,981 teams (+1). Top-10 change: Corwin 0.969->0.970 (#11). Overview: 94,308 submissions (+105). Nothing pulled.",
+ "findings": [
+  {
+   "id": "r33-e10-p1-null",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "E10 P1 at 04:13Z shows CHANGES=8 against 0341Z, and every change is on the leaderboard. comp_dateRun, comp_scoreDescending, the anvithpothula list (live x138 slug biohub-0-953-lb-original), the thtennant and amanatar lists and both kernel statuses report 'no change'. P2 look-check: 2 teams went from <=0.953 (or were new) to 0.956, so the largest group is 2, under the >= 5 signal. There is no P2 signal, so tools/e10_port_gate.py was not needed. The newest feed digest is 20260929T0358Z: 'topics checked 16; new topics 0, new comments 0', 'E10 FLAG: none', and the best_public_score top is 0.9530 (x138 family). It was 15 min old, so kaggle_feed.py was not re-run.",
+   "evidence": "experiments/e10_watch/20260929T0413Z.txt DIFF section; experiments/discussions/digest_20260929T0358Z.md; experiments/discussions/feed_loop.log (03:58:09Z rc=0)",
+   "action": "None. E10 (>= 0.959 public notebook) is not met."
+  },
+  {
+   "id": "r33-lb-delta",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "The LB CSV at 04:13:49Z, compared with r32's at 03:13Z, has 9 score changes and 56 rows whose SubmissionCount grew. Score changes: Corwin 0.969->0.970 (now #11, into the 0.970 block); 'Ad Space available' 0.965->0.967 (#26); Artalmaz31 0.961->0.962 (#74); Manish 0.954->0.956; Soetsu Shida 0.953->0.956; AbhiniveshSharma5354 new->0.956; Marek Nurzynski 0.954->0.955; Pathik Patel 0.953->0.955; Maksim Shekhunov 0.953->0.954. All of these submissions are dated 16:56-21:36Z on 28 Sep, which is the known scoring lag and evening burst (not a signal, per r25). Top-4 unchanged: yu4u 0.978, Sergio Alvarez 0.976, Gabriel 0.975, taiseiu 0.974. In the top-40 only SubmissionCount moved (unicellular 182, Deniz Özaydın 83, 'que la cuenten como quieran' 34). Ours: '132,16810638,D: Discipline,2026-09-28 12:14:57,0.959,53', strictly-better + 1 = 116, 17th of 21 in the 0.959 block (ranks 116-136). SubmissionCount 53 means probes 52 exp89r / 53 exp75 / 54 exp89p are still unscored. That is consistent with the read windows logged in r32 (earliest exp89p ~07:38Z).",
+   "evidence": "experiments/e10_watch/20260929T0313Z.txt vs 20260929T0413Z.txt (TeamId row diff); histogram in 20260929T0413Z.txt (publicleaderboard-2026-09-29T04:13:49.csv)",
+   "action": "None; the plan and the MORNING TABLE v1.1 are unchanged. The next scan should look for SubmissionCount 54+ on our row from ~07:38Z."
+  },
+  {
+   "id": "r33-discussion-code-overview-null",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "Discussion (Chrome, Recent Comments, 04:15Z): there are 0 new topics and 0 new comments, and the order is unchanged. 743929 'Public 0.953 to 0.959 in two days...' last comment '7h ago by John Taylor (AI)'; 744093 float-centroids post is at 12h with no comments; the Public/Private split thread is at 16h. The pinned topics are unchanged (workshop 2d). Code, Recently Created: no new notebook; the newest unpinned one is still 'Robust Cell Tracking During Development via Chan.' (5d, 0.1). x138 'Biohub 0.953 LB | ORIGINAL' has 231 votes (+1) and still scores 0.953. By score, the CLI scoreDescending list shows no change and the digest top is 0.9530. Nothing is >= 0.954, and there is no new idea, so nothing was pulled. Overview: '20 HOURS TO GO'; 13,475 entrants, 4,565 participants (+1), 3,981 teams, 94,308 submissions (+105 vs 94,203). The timeline is unchanged (Final Submission Deadline September 29, 2026), and there is no host announcement. No team disclosed a knob, so AGGRESSIVE MODE has nothing to build.",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion?sort=recent-comments ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/code?sortBy=dateCreated ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/overview",
+   "action": "None. The finals tick is still for the user by 20:00Z (23:00 MSK)."
+  }
+ ]
+}
