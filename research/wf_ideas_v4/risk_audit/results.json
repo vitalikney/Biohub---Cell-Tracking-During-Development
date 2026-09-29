@@ -1,0 +1,257 @@
+[
+ {
+  "verdict": "Yes. Our main final is the kind of file Cyrus describes. All of our files are built on the public x138 notebook. Of the +0.006 that exp87a gains on the public board over x138 (0.953 -> 0.959), about +0.004 (cap 6 +0.002, K +0.002) was chosen only from public reads, and our own lab disagreed or could not test it. About +0.001 (DaughterNet insertion) has an honest out-of-fold check. The last +0.001 (CI) has only an in-sample lab check plus three public reads. The finals pair limits the damage: partner #37 = x138 + insertion cap 4 carries none of cap 6, K or CI. So the realistic floor is roughly x138-level + insertion, not a collapse. The silver-level position (#141 now; silver cutoff around #199) is what is really at risk.",
+  "risk_grade": "high",
+  "points": [
+   {
+    "claim": "The public gain decomposes step by step: x138 0.953 -> +insertion cap 4 0.954 (+0.001) -> cap 6 0.956 (+0.002) -> +K 0.958 (+0.002) -> +CI 0.959 (+0.001). Each display is rounded to 3 decimals, so each step is +-0.001. By how each piece was chosen, about 67% of the lift (+0.004) is public-tuned, about 17% (+0.001) is CV-backed and about 17% (+0.001) is mixed (in-sample lab + public reads).",
+    "evidence": "RESULTS.md l.67 (probe 34 x138 0.953), l.68/l.70 (#35/#37 0.954), l.78 (probe 45 exp70g 0.956); CONTEXT 28 Sep 12:16Z l.3856 (probe 50 exp85a 0.958); 21:45Z l.4153 (probe 51 exp87a 0.959)",
+    "direction": "raises risk"
+   },
+   {
+    "claim": "x138 itself was never tested by us on unseen data. Its detector and edge network (pilkwang weights) saw all 199 train videos, so every lab we have on it is in-sample. The only honest check touches the V1284 coordinate head: heads trained on one embryo and tested on the other still beat no head. x138's relink/readmit/gap-filler chain comes from public notebooks and was tuned on the public board. However, about 407 teams sit exactly at 0.953, and most rows from 0.953 to 0.959 are x138 forks, so a drop of x138 itself is shared by everyone. What moves ranks is the tweaks on top of it.",
+    "evidence": "RESULTS.md l.5 and F-TRN-01 (pilkwang weights saw all 199); FACTS F-TRN-35; lens_private-finals.notes.md 17:45 (6bba->44b6 1.452 vs 1.499 um, 44b6->6bba 1.570 vs 1.720); CONTEXT 24 Sep 16:30 l.1430-1431 (x138 stages each neutral alone on LB); lb.csv e10_20260929T1141Z: 0.953 = 407 rows, 0.954-0.959 = 475 rows",
+    "direction": "neutral"
+   },
+   {
+    "claim": "DaughterNet insertion (our own) is the only component chosen by honest CV: settings picked on SELECTION, one run on held-out CONFIRMATION videos with out-of-fold probabilities, +0.0019. Both public reads agree (+0.001 on two different bases). The support is thin: 90% CI [-0.0007, +0.0050], added-fork precision 27% against a 26.5% break-even. The folds held out videos, not an embryo, and the shipped model is trained on all 199 videos.",
+    "evidence": "CONTEXT 24 Sep 00:40 l.1305-1310; 23 Sep 21:40 l.1275-1279 (5 folds, 44b6 leak groups, OOF parent AUC 0.848); RESULTS.md l.61 (0.947->0.948) and l.68 (0.953->0.954); FACTS F-TRN-10/F-TRN-20 (the exp60 x138-lab +0.0065 is an in-sample upper bound)",
+    "direction": "lowers risk"
+   },
+   {
+    "claim": "Cap 6 is purely public-tuned. We tried four caps on the public board (4/6/8/12 = 0.954/0.956/0.955/0.955) and kept the peak. The pre-registered lab on 56 x138 clips was negative even in-sample: -0.00057, P(<0) 0.98, 0 TP / 4 FP among the extra forks. Its rule chose exp70b, and that was overridden in the user's aggressive mode.",
+    "evidence": "research/wf_ideas_v4/reach0955/ins_cap6.notes.md (cap 6 ALL -0.00057, 44b6 -0.00079, DECISION exp70b); CONTEXT 27 Sep 11:16Z l.2946-2951 (aggressive mode, exp70g submitted); 28 Sep 07:54Z l.3618 (cap curve)",
+    "direction": "raises risk"
+   },
+   {
+    "claim": "K (ILP_DIVISION_WEIGHT 0.4 + READMIT_MIN_SCORE 0.94) is public-tuned by someone else. John Taylor picked the values with a two-arm-per-knob search on the public board and reported that his local scores had the wrong sign 4 out of 4 times. Cyrus answered 'this is overfitting' in that thread. We read it once (0.956 -> 0.958). The only 'replication' (Kai-Gowers 0.956 vs 0.953) is on the same public embryo. About 50 teams moved with it, so a private drop would be correlated across them. Our own evidence against it: an earlier in-sample check found fork precision too low to support changing ILP_DIVISION_WEIGHT; the +0.84% extra nodes cost about -0.0008 on any embryo; the dummy lab (+0.0013) is sanity only.",
+    "evidence": "CONTEXT 28 Sep 04:38Z l.3433-3436; 16:32Z l.4041-4050; 29 Sep 07:46Z l.4385; 26 Sep closure l.2348; discussions/743929.md l.20",
+    "direction": "raises risk"
+   },
+   {
+    "claim": "CI (coordinject from the public yuki0731 dataset) is mixed. ALPHA 0.5 was chosen on a 4-clip in-sample lab (+0.0032 pooled, per clip -0.021 to +0.0125; ALPHA 1.0 was -0.0057). It was never picked from several public arms, and it read +0.001 on three different bases (exp70g, exp85a, #37). But all three reads are the same public embryo, and the dataset's author built it for an older notebook and reported no measured gain.",
+    "evidence": "CONTEXT 27 Sep 12:49Z l.2984-2987; 26 Sep 21:11Z l.2439-2440; 29 Sep 09:09Z l.4474 (three +0.001 reads); card_1203_sent.txt section 4",
+    "direction": "neutral"
+   },
+   {
+    "claim": "The edge filter already showed on our own project how in-sample labs inflate results. It passed the lab (+0.0162 and +0.0095) and gave 0 on the public board (0.947 and 0.946). Other teams saw the same pattern (Civitasmass, You WeiLin, sghwr in 744273). The lesson cuts both ways. We do not overrate the lab (cap 6 was not picked from it), but cap 6 and K are the reverse case: public gains without independent confirmation, and they can vanish on the private board the same way.",
+    "evidence": "RESULTS.md l.62-63 (probes 29/30); CONTEXT 24 Sep 16:55Z l.1441-1445; 29 Sep 08:51Z l.4456-4457; 11:39Z l.4540-4546",
+    "direction": "raises risk"
+   },
+   {
+    "claim": "The public board may be a single embryo (about 29% of the test). All of our roughly 22 probes on the x138 base read that one embryo, and levers were kept or dropped by those reads. That is selection on one embryo, so the kept levers are biased upward. An unconfirmed claim (Satwik) says the public embryo has few divisions, which would make cap 6 and K, both division-side, the least reliable to carry over.",
+    "evidence": "finals card card_1203_sent.txt section 6 (743006 g john rao, 744273 Satwik, both unconfirmed); RESULTS.md l.67-79 plus CONTEXT probes 47-55",
+    "direction": "raises risk"
+   },
+   {
+    "claim": "The finals pair limits the damage. #37 carries only x138 + safetail/lowrefine (output-neutral on the public board: twin #38 = 0.953) + CV-backed insertion. If cap 6 and K give nothing on the private board, the best of the two files falls back to about #37/exp75 level (public-equivalent about 0.954-0.955). That is around the bronze boundary (bronze #398 falls in the 0.955 block, silver #199 in the 0.957 block), not a collapse. The finals model (single-embryo assumption, computed for exp85a) puts П3 at bronze ~0.68-0.85 and silver ~0.39-0.63.",
+    "evidence": "RESULTS.md l.71 (#38 0.953); CONTEXT 29 Sep 07:46Z l.4384; 12:37Z l.4579 (SELECTED = exp87a 56640366 + #37 56563521); card_1203_sent.txt section 2",
+    "direction": "lowers risk"
+   },
+   {
+    "claim": "Compared with a typical x138 fork, we have one real advantage: an honest CV check behind one lever (insertion), and we measured how much our lab inflates. The teams above 0.960 (about 124) mostly appear to bring their own retrained models and are less exposed. Many of the 0.955-0.959 teams stack the same public knobs (K) and would drop with us. So our rank loss from a cap-6/K collapse is partly offset by theirs; I cannot quantify this, because there is no private data.",
+    "evidence": "CONTEXT 26 Sep 21:11Z l.2443-2444 (band teams jumped from x138 with own models); 28 Sep 16:32Z l.4044-4045 (~50 teams jumped with K); lb.csv e10_20260929T1141Z (124 teams > 0.959)",
+    "direction": "lowers risk"
+   }
+  ],
+  "action": "Keep the current П3 tick {exp87a 56640366, #37 56563521} (verified through the API at 15:37 MSK, 12:37 UTC). Do not swap #37 for exp75: exp75 also carries CI, and #37 is the only partner that sheds all three levers with no honest check. On exp89t (read expected ~21:20 MSK): if it reads only 0.959 with an attributable UP, the exposure lens favours keeping exp87a. The swap would trade a public gap below 0.001 for a fourth lever with no honest check (DIS, indirect public estimate 0.000 +-0.002). Promote it only at >= 0.960, and even then it is the user's call. Do not use the reserve slot for any public-tuned tweak. Final tick deadline 23:00 MSK (20:00 UTC)."
+ },
+ {
+  "verdict": "Yes. By Cyrus's own definition we are in that group. Every file we have is built on the public x138 anchor. None of the levers in V_pub exp87a has an honest out-of-embryo validation. About 5 of our 6 thousandths above the anchor (0.953 -> 0.959) were chosen or confirmed only by public reads on one embryo, and two of them (cap 6 and CI) were adopted even though our lab pointed the other way. The exposure is small in absolute terms (~0.005), and the partner #37 limits it: #37 was fixed by a rule written before any scores, not picked by its public score. The worst realistic outcome is dropping back to the level of x138 + insertion. That costs silver much more than bronze. Adversarial model: {exp87a, #37} bronze 0.79 -> 0.57-0.67, silver 0.58 -> 0.20-0.34.",
+  "risk_grade": "high",
+  "points": [
+   {
+    "claim": "We are literally the 'public code anchor' profile: all of our files are x138 plus tweaks, and the 0.953 x138 block is the largest crowd on the board.",
+    "evidence": "CONTEXT l.4566-4567 (probe 34: x138 verbatim = 0.953) and RESULTS.md l.67-71; lb.csv e10_20260929T1141Z: 407 teams at 0.953, 115 at 0.954, 100 at 0.955, 150 at 0.956, 67 at 0.957, 21 at 0.958, 22 at 0.959 (we are #141 of 3,994).",
+    "direction": "raises risk"
+   },
+   {
+    "claim": "No honest validation exists for any lever in exp87a. Our lab is in-sample, and our lab record for predicting the LB is poor.",
+    "evidence": "CONTEXT §11 l.235-238: the pilkwang weights saw all 199 train videos, so hold12 and LOEO are memorised. The CI refiner lab is 'in-sample for the refiner' (l.2985). FACTS F-TRN-61: of the local or in-sample gains >= +0.005, only 1 of 6 read positive on the LB, across 4 labs.",
+    "direction": "raises risk"
+   },
+   {
+    "claim": "The lab and the LB have contradicted each other again and again, which is why we steered by the public board.",
+    "evidence": "RESULTS.md: l.33 probe 1 (hold12 0.9902 -> LB 0.899); l.45-48 Z-flip (local +0.010/+0.017 -> LB -0.003/-0.009); l.52 axis-flip (+0.021 local -> -0.001); l.62-63 edge filter (+0.016 -> 0, +0.0095 -> -0.001); l.54 relink OFF (+0.0053 -> -0.002); l.113 hygiene (+0.0011 -> -0.001). CONTEXT l.2796-2798: DC 0.30 had lab +0.0013 but public -0.005.",
+    "direction": "raises risk"
+   },
+   {
+    "claim": "Two of the four levers in V_pub were adopted even though the lab pointed the other way. Cap 6 was even submitted against its own pre-registered rule.",
+    "evidence": "Cap-6 lab arm, CONTEXT l.2545-2549 / FACTS F-TRN-42: pooled -0.00057, bootstrap 90% interval -0.00125..-0.00011 (entirely negative), its 85 extra insertions = 0 TP / 4 FP / 81 unannotated; the rule said 'exp70g is not submitted'. It went in anyway under the user's aggressive mode (l.2947-2951; DEVIATION RECORD l.2966). CI: the dummy lab reads -0.0055 against LB +0.001 (FACTS F-TRN-60 (b)); ALPHA 0.5 was picked on 4 in-sample clips, per clip -0.021 / +0.0125 / 0 / +0.0083 (l.2985-2986).",
+    "direction": "raises risk"
+   },
+   {
+    "claim": "Many of our choices came from public ladders, and V_pub is the top of those ladders.",
+    "evidence": "Cap 4/6/8/12 = 0.954/0.956/0.955/0.955, and we took the peak ('cap 6 is the optimum', l.3618). DC 0.20/0.225/0.30 = 0.954/0.954/0.949, submitted against the no-threshold-neighbours rule (DEVIATION RECORD l.2816-2821). Min track length 4/6/8, gap 5/6.5, det 0.95, secondary weight 0.5, forkmid 4.5, DIVINS_THRESH 0.3 (RESULTS l.35-41, 75-79). On/off arms: K, CI, SEC (P54 0.956), DIS (P52 0.957). The user lifted the public-ladder ban on 26 Sep 20:33Z (l.2800).",
+    "direction": "raises risk"
+   },
+   {
+    "claim": "Probe count: 56 scored submissions plus 1 pending. exp87a is the best of 21 scored x138-family reads, which breaks our own rule not to pick finals by the max public score.",
+    "evidence": "RESULTS/CONTEXT: probes 1-55 plus the accidental duplicate 56252506 (RESULTS l.51) = 56 scored, matching our LB row SubmissionCount 56 (lb.csv, 11:41Z); exp89t 56669888 is pending, 57 in total. P34-P54 = 21 scored x138-family reads. §11a l.337: 'never pick finals by the max public score over many runs'. That rule was aimed at run noise, and our kernels are deterministic.",
+    "direction": "raises risk"
+   },
+   {
+    "claim": "Magnitude: most of our public edge over the anchor rests only on public reads, and the blocks are dense enough that losing it costs hundreds of ranks.",
+    "evidence": "exp87a 0.959 vs x138 0.953 = +0.006: insertion +0.001 (lab support on both train embryos) + cap 6 +0.002 (P45) + K +0.002 (P50) + CI +0.001 (P48/51/53). Each step is one 3-decimal step (±0.0005 rounding) on roughly one embryo, ~29% of the test. Cumulative ranks in lb.csv: 0.959 ends at #146, 0.957 at #234, 0.956 at #384, 0.955 at #484. So silver (~#199) sits in the 0.957 block and bronze (~#399) in the 0.955 block.",
+    "direction": "raises risk"
+   },
+   {
+    "claim": "K is a disclosed public knob. It adds nodes, and its outside replication was on the same public embryo, so it says nothing independent about the private test.",
+    "evidence": "The K values come from discussion 743929, where John Taylor describes tuning each knob with raised and lowered arms on the public board (CONTEXT l.3505-3509). READMIT 0.94 adds +1,022 nodes (+0.84%) (l.3489-3490), a mechanical node-count cost wherever edges do not improve. Kai-Gowers got +0.003 on an x138 port, but on the public LB (FACTS F-TRN-67). Against this, the dummy lab sign did match for K (+0.0013 lab vs +0.002 LB; F-TRN-68).",
+    "direction": "raises risk"
+   },
+   {
+    "claim": "The partner #37 was not chosen over #38 by a public read. The rule that picked it was written before either score existed, and #37 was its default.",
+    "evidence": "The K2/TWIN READ TABLE, logged 25 Sep 23:12Z before any score (CONTEXT l.1978-1990), made K2 the default F1. Row 3 needed only d1 >= -0.001. Read 26 Sep 07:35Z: K2 0.954, twin 0.953, so row 3 applied and F1 = K2 (l.2070-2080). Caveat: the insertion itself entered only after public +0.001 twice (P28, P35), with in-sample lab support on both embryos (44b6 +0.0058, 6bba +0.0065, l.2335). #37 also carries insertion cap 4, which came from the laptop lab, not a ladder.",
+    "direction": "lowers risk"
+   },
+   {
+    "claim": "There was some discipline: some public-positive directions were refused, and levers that read negative or flat were dropped.",
+    "evidence": "READMIT 0.92 was excluded as 'the closest thing to public fitting' (l.3887-3889). SEC read -0.002 and was removed (l.4394-4403). DIS read ~0 and exp89s was not sent (l.4479-4488). The reserve slot is held and not burned (l.4568-4577).",
+    "direction": "lowers risk"
+   },
+   {
+    "claim": "Public deltas are real effects on the public embryo, not luck of the run. So the risk is transfer across embryos, not mining noise.",
+    "evidence": "FACTS: 'Pipelines are bit-deterministic run to run' (exp46 = exp39, exp54 = exp48, exp56 reproduced every x138 counter). x138 reproduced 0.953 exactly (RESULTS l.67). UP tests confirm each 0.001 step moved our unrounded score: 127/33/21/12 teams passed (CONTEXT l.3196-3198, l.3639, l.3856, l.4153).",
+    "direction": "lowers risk"
+   },
+   {
+    "claim": "Our neighbours on the board look at least as public-driven as we do. A shakeup of the kind Cyrus describes would hit them too, which limits how much our rank can move against them.",
+    "evidence": "lb.csv median SubmissionCount: >= 0.960 = 63.5 (124 teams), 0.957-0.959 = 57 (110 teams), 0.954-0.956 = 38 (365 teams); ours is 56. The team's own rival model already assumes 0.955-0.959 rivals keep only 0-35% of their public margin (scratchpad r21/mc20.py sel()). Missing evidence: how many of those teams are x138-based.",
+    "direction": "neutral"
+   },
+   {
+    "claim": "Adversarial model rerun: with the public-only levers at 0 or slightly negative on the private test, silver mostly goes and bronze drops to about 0.57-0.67. In both of those worlds #37 is a better partner than exp75.",
+    "evidence": "scratchpad r26/mc26.py with VPUB=exp87a (a judgmental model, not a measurement). Base: {exp87a,#37} bronze 0.786 / silver 0.575. cap6/K/CI means set to 0: 0.673 / 0.343, {exp87a,exp75} 0.645 / 0.360. Slightly negative (C -0.0005, K -0.0005, CI -0.0003): 0.568 / 0.200, {exp87a,exp75} 0.470 / 0.196, exp87a alone 0.261 / 0.126.",
+    "direction": "raises risk"
+   },
+   {
+    "claim": "What would make this case wrong: the private embryos behave like the public one for divisions, K and CI; or the neighbours are more overfit than we are; or the insertion carries most of the value on the private test.",
+    "evidence": "CI has three separate +0.001 reads on three different bases (P48, P51, P53; CONTEXT l.4471-4475). The K dummy-lab sign matched the LB (F-TRN-68). The insertion is lab-positive on both train embryos. All of this is still single-embryo or in-sample, and we have no out-of-embryo test that could settle it.",
+    "direction": "lowers risk"
+   }
+  ],
+  "action": "1) Keep #37 as the partner and do not switch to exp75: in the adversarial worlds, where CI is ~0 or negative on the private test, {exp87a, #37} beats {exp87a, exp75}. Also make sure #37 stays ticked at the 23:00 MSK tick (20:00 UTC). 2) Do not spend the reserve slot. Any file sent now would be one more public-picked lever, and an x138-family file can no longer finish scoring before 02:59 MSK (23:59 UTC). 3) exp89t, read expected ~21:20 MSK (18:20 UTC): the pre-registered rule promotes it to V_pub at >= 0.960. Under this lens that would add a fifth public-only lever (DIS read ~0 via exp89r), so the user may prefer to keep exp87a unless exp89t clearly beats it. This is a judgment call of about 0.001 either way."
+ },
+ {
+  "verdict": "По месту в рейтинге риск умеренный: медаль скорее всего сохранится, серебро под реальной угрозой. Встряска, о которой пишет Cyrus, бьёт по всему семейству x138 (769 из 1 005 команд с ≥0.953 точно форки). Если все форки теряют одинаково, наше место среди них не меняется: в модели это #141 при любой общей потере от 0 до 0.010. Почти все независимые команды уже выше нас: из 53 команд с ≥0.965 43 были на ≥0.960 ещё 26 сентября, так что обогнать нас им нечем. Реальный риск в наших собственных добавках, подогнанных под паблик. Только cap 6 даёт +0.002 на паблике при минусе в лаборатории: если на приватном он стоит 0, exp87a падает с #141 до ~#217, это за линией серебра (~200), но в бронзе. Без медали мы остаёмся только в одном случае: не срабатывает и вставка делений K2, а чужие прибавки при этом держатся (~#541).",
+  "risk_grade": "moderate",
+  "points": [
+   {
+    "claim": "Состав паблика по блокам (lb.csv, 11:41Z): 0.978-0.965 = 53 команды; 0.964 = 8, 0.963 = 18, 0.962 = 8, 0.961 = 15, 0.960 = 22 (≥0.960 всего 124); 0.959 = 22 (#125-146, мы 17-е, ранг #141, выше нас 140); 0.958 = 21; 0.957 = 67; 0.956 = 150; 0.955 = 100; 0.954 = 115 (#485-599); 0.953 = 407 (#600-1006, точные копии x138). Всего 3 994 команды. Линии медалей при ~4 000: серебро ~#200 (внутри блока 0.957), бронза ~#400 (внутри 0.955), золото ~#18.",
+    "evidence": "experiments/lb_poll/_lb/e10_20260929T1141Z/lb.csv (посчитано локально); гистограмма experiments/e10_watch/20260929T1141Z.txt; CONTEXT l.4384 (29 Sep 07:46Z: silver #199 в 0.957, bronze #398 в 0.955)",
+    "direction": "neutral"
+   },
+   {
+    "claim": "Кто форк, а кто нет (прокси по траекториям в 76 снимках e10_watch с 26.09 16:20Z). Форком считаю команду, которая хоть раз стояла ровно на 0.953 или 0.954: таких 769 из 1 005. Из 53 команд с ≥0.965 43 были на ≥0.960 уже 26.09 16:20Z, и только 3 когда-либо стояли на 0.953/0.954. Широкое определение независимых (≥0.965 плюс ранние ≥0.960 без следов 0.953/0.954) даёт 77 команд, и все они выше нас. Значит, независимые почти целиком уже над нами, и если форки просядут, обгонять нас им нечем.",
+    "evidence": "scratchpad rr/traj.py, rr/scen.py (разбор experiments/e10_watch/2026*.txt); CONTEXT l.1562 (25.09 11:00Z: 39 команд ≥0.960, 241 копия ровно на 0.953)",
+    "direction": "lowers risk"
+   },
+   {
+    "claim": "Сценарий (b): все форки теряют одинаковую величину L, независимые держатся. exp87a остаётся на #141 при L = 0 / 0.002 / 0.004 / 0.006 / 0.010. Встряска, общая для x138, наш ранг не двигает. Навредить может только независимая команда, которая сейчас ниже 0.959. Таких нет среди доказанных форков, но в блоках 0.955-0.959 есть 133 команды без следов 0.953/0.954 (их тип неизвестен). Даже если все они независимые и форки теряют ≥0.004, выходит ~#274, это бронза.",
+    "evidence": "rr/scen.py, секция (b); подсчёт классов в rr/traj.py",
+    "direction": "lowers risk"
+   },
+   {
+    "claim": "Наша уникальная уязвимость — cap 6. На паблике он дал +0.002 (cap 4 #37 0.954 → cap 6 exp70g 0.956), а в лаборатории −0.00057: 85 лишних вставок, из них 0 TP, 4 FP, 81 без разметки. Если только у нас cap 6 = 0 на приватном, exp87a переходит с #141 на #217, за линию серебра. Если он равен лабораторному значению, то #287. В обоих случаях бронза.",
+    "evidence": "CONTEXT l.2545-2546 и l.2976-2977 (лаборатория cap 6), l.3196 (probe 45 = 0.956), l.3618 (кривая cap); rr/scen.py секция own-only",
+    "direction": "raises risk"
+   },
+   {
+    "claim": "CI (coordinject) — чужой публичный код (yuki0731, команда LMM 0.961). Лаборатория у рефайнера in-sample (+0.0032 на 4 клипах), на паблике +0.001. Если только CI = 0, получается #162. Если cap 6 и CI оба 0, то #346: бронза, но далеко от серебра.",
+    "evidence": "CONTEXT l.2984-2986, l.3029-3030 ('PUBLIC-ONLY ... refiner lab in-sample'); rr/scen.py own-only",
+    "direction": "raises risk"
+   },
+   {
+    "claim": "Рычаг K (ILP_DIVISION_WEIGHT 0.4 + READMIT_MIN_SCORE 0.94) делит с нами толпа, поэтому при провале на приватном он бьёт по всем его пользователям сразу. Блок 0.956 из 150 команд аномально больше блока 0.955 (100). Это согласуется с внешним повтором: Kai-Gowers взял x138 + K и получил 0.956 против 0.953. У автора K локальная валидация 4 из 4 раз ошибалась в знаке, то есть K подобран по паблику. Если K = 0 для всех, кто его взял, а у нас ещё cap 6 и CI = 0 и держится только K2, наш ранг от #135 до #391 (зависит от того, у скольких форков есть K, и от K2 = +0.001…+0.003). Бронза во всех вариантах.",
+    "evidence": "CONTEXT l.4385 (Kai-Gowers nb953k 0.956 vs 0.953), l.3433-3436 (743929: 'local scores had the sign wrong 4/4'), l.3856-3861 (probe 50 = 0.958, +0.002); rr/scen.py секция consistent (a)",
+    "direction": "neutral"
+   },
+   {
+    "claim": "Вставка делений в K2 — единственная наша добавка с опорой на тренировочные эмбрионы: +0.0058 на 44b6 и +0.0065 на 6bba. Но оценки конфигурации #35 помечены как in-sample верхняя граница (+0.0157 и +0.0090), а прецедент с фильтром рёбер (локально +0.016, на ЛБ 0, пробы 29/30) показывает, что лаборатория переоценивает изменения, опирающиеся на сети и ILP. Худший случай (a-worst): у нас стоит только K2 = +0.001, а чужие прибавки держатся полностью. Тогда ранг ~#541 и медали нет. При K2 = +0.003 ранг ~#309.",
+    "evidence": "CONTEXT l.2334, l.1875-1876 и l.1932 (IN-SAMPLE UPPER BOUND), l.1436-1440 (фильтр рёбер); MEMORY project-edge-filter-finding; rr/scen.py секция (a)",
+    "direction": "raises risk"
+   },
+   {
+    "claim": "Сценарий (a), симметричный вариант: у всех форков прибавки над x138 сжимаются в ту же долю, что у нас (1/6). Тогда наш ранг ~#135 (с K2 = +0.003 — #78). Встряска против переобученных под паблик вредит нам только тогда, когда наши добавки подогнаны сильнее, чем у соседей.",
+    "evidence": "rr/scen.py секция (a) a-sym",
+    "direction": "lowers risk"
+   },
+   {
+    "claim": "Сценарий (c): независимые держатся, форки случайно перемешиваются. При ±0.002 у exp87a медиана #145, 5-95% от #107 до #238, P(серебро) ~0.81, P(бронза+) ~1.0. При ±0.003 медиана ~#160, от #93 до #340, P(серебро) ~0.63. У одного #37 при ±0.002 медиана ~#516-538 и P(бронза+) ~0.3: сам по себе #37 почти никогда не держит медаль.",
+    "evidence": "rr/scen.py секция (c) (4 000 прогонов на вариант)",
+    "direction": "lowers risk"
+   },
+   {
+    "claim": "Сводная модель (d): прибавки форков сжимаются в 0.2-0.7 раза, общий сдвиг независимых ~N(0; 0.003), шум 0.0012 у каждой команды; K2 ~N(+0.0015; 0.001), cap 6 ~N(−0.0003; 0.0007), K и CI сжимаются как у толпы. Для пары max(exp87a, #37): медиана #166-169, 5-95% от #59 до #613, P(серебро) ~0.59, P(бронза+) ~0.85. Параметры модели выбраны мной, а не измерены. Это согласуется с прежними оценками: карточка v4 давала П3 серебро ~0.39-0.63, прогноз 26.09 давал бронзу+ ~0.65-0.7, когда наш лучший был 0.954.",
+    "evidence": "rr/scen.py секция (d); CONTEXT l.4031 (card v4 П3 silver ~0.39-0.63), l.2324-2334 (прогноз 26.09 16:54Z)",
+    "direction": "neutral"
+   },
+   {
+    "claim": "Чего нет. Данных о приватном нет. Независимость команд определена по прокси (траектории с 26.09; раньше снимков с командами нет). Место #37 внутри блока 0.954 взято по старым наблюдениям (6-е из 73, 12-е из 100), сейчас оно неизвестно. Команды ниже 0.953 в lb.csv не входят: независимые из диапазона 0.93-0.95 обгонят нас, только если форки просядут на 0.01-0.03. Блок 0.947 той же линии (x138 = thtennant frontier947-readmit), так что он просядет вместе с x138.",
+    "evidence": "lb.csv содержит только ≥0.953; CONTEXT l.1381 (происхождение x138), l.2033/l.2632 (место #37 в блоке 0.954)",
+    "direction": "neutral"
+   }
+  ],
+  "action": "Ничего срочного. Отмеченная пара {exp87a 56640366, #37 56563521} с точки зрения ранга правильная, её стоит оставить до 23:00 МСК (20:00 UTC). #37 содержит только K2, единственную добавку с опорой на тренировочные эмбрионы, и страхует от всех трёх подогнанных под паблик добавок (cap 6, K, CI). exp75 = #37 + CI страхует только от cap 6 и K, а CI — чисто публичная добавка с in-sample лабораторией. Новый файл риск не снижает: запасной слот по-прежнему только под новый публичный ноутбук с вашего «да» и с успеванием досчитаться до 02:59 МСК."
+ },
+ {
+  "verdict": "The finals Monte Carlo (mc26.py plus mc20.py, round 39) puts the ticked pair {exp87a, #37} at about 0.79 bronze and 0.58 silver. That assumes cap 6, K and CI each keep roughly 20-50% of their public gain on the private set. I reran it with cap 6 and K both centred at -0.001: the pair falls to about 0.56 bronze and 0.19 silver, and to about 0.53 / 0.16 if CI is also worth 0. Almost all of what is left comes from #37 (exp87a alone drops from 0.71 to 0.18-0.25 bronze). So we are squarely in Cyrus's category with our main file: an x138 fork with levers tuned on the public board. The #37 hedge protects bronze fairly well, but most of the silver chance goes in that scenario. The model is a judgment call and only ranks options.",
+  "risk_grade": "moderate",
+  "points": [
+   {
+    "claim": "The model gives our levers private value by assumption, not by any honest cross-validation. Cap 4 to 6 (C) is a mechanistic draw with mean about +0.0004, sd 0.0022, P(C<0) 0.50. K is N(+0.0009, 0.0012), about 45% of its +0.002 public gain. CI is N(+0.0005, 0.0008), and round 39 used sd 0.0012. The K2 insertion is I ~ N(0.4-0.9e-3, 0.7-0.9e-3). #38 is set equal to x138 (X). C and K are uncorrelated (RHO 0).",
+    "evidence": "scratchpad r26/mc26.py lines 14-17 and 'terms()'; r21/mc20.py our_terms(); C statistics quoted in round39/v_recheck_r39-rc-b-...json and scan_recheck.json R39-RC-B",
+    "direction": "raises risk"
+   },
+   {
+    "claim": "Cap 6 and K have no evidence outside the public board. The only non-public reading for cap 6 is negative (exp60 lab -0.0006, in-sample). K is the public-board-tuned setting from John Taylor, and its extra nodes cost about -0.0008 on any embryo. Only the insertion has transferred from lab to LB (three LB pairs, +0.001 each). Even that lab is an in-sample upper bound, and it weakens on dense clips (quartile Q2 -0.0005).",
+    "evidence": "card_1203_sent.txt section 4 (cap 6: 'lab -0.0006'; K: '+0.84% nodes ~-0.0008'); FACTS.md F-TRN-03, F-TRN-10, F-TRN-14; 743929.md (JT: 'says nothing about the private one')",
+    "direction": "raises risk"
+   },
+   {
+    "claim": "The model already assumes rivals are overfitted: 0.955-0.959 teams that are not 'genuine' keep only 0-35% of their public margin, and x138 byte-copies all sit at X. The default numbers therefore price in Cyrus for the field but not for us. The worst variant is a field that keeps more of its gains while our levers fail (field 'central' in the harsh run): {exp87a, #37} 0.38 bronze, 0.08 silver.",
+    "evidence": "mc20.py draw_field/sel (overfit be 0-0.10, mid 0.10-0.25, central 0.20-0.35; genuine keep 0.6); my rerun scratchpad/cyrus/grid.txt (SC=central, seeds 39/40: 0.378/0.085, 0.376/0.078)",
+    "direction": "raises risk"
+   },
+   {
+    "claim": "Rerun at the model's default settings reproduces round 39: {exp87a, #37} bronze 0.789-0.790, silver 0.577-0.587; {exp87a, exp75} 0.800 / 0.619-0.631; {exp87a, exp85a} (John Taylor's 'best plus nearest neighbour') 0.750-0.756 / 0.597-0.607.",
+    "evidence": "scratchpad/cyrus/grid.txt rows 'base CI_MU=0.0005 SEED=39/40'; matches r39 baseline '#37 .790/.584, exp75 .800/.622' in scan_recheck.json R39-RC-B. Card v3 gave П3 bronze ~0.68-0.85, silver ~0.39-0.63 (card_1203_sent.txt section 2)",
+    "direction": "neutral"
+   },
+   {
+    "claim": "The Cyrus stress test (cap 6 and K both N(-0.001, 0.0012)) cuts the pair to bronze 0.556-0.561, silver 0.191-0.197. With CI also at 0: 0.530-0.536 / 0.159-0.167. With CI at -0.0005: 0.511-0.518 / 0.137-0.143. With cap 6 and K worth exactly 0: 0.715-0.718 / 0.423-0.430.",
+    "evidence": "scratchpad/cyrus/grid.txt (seeds 39 and 40); script scratchpad/cyrus/mc_cyrus.py wraps r26/mc26.py unchanged",
+    "direction": "raises risk"
+   },
+   {
+    "claim": "The #37 hedge carries the pair in that scenario. exp87a alone falls from 0.71 to 0.18-0.25 bronze, and the ticked-before pair {#37, #38} (roughly #37 alone) sits at 0.48. The pair is worth only about +0.05 bronze over #37 alone. Dropping the hedge for John Taylor's near-twin exp85a would collapse it to 0.22-0.27 bronze.",
+    "evidence": "grid.txt: 'single exp87a' harsh rows 0.130-0.251; '{exp87a,exp85a}' harsh rows 0.179-0.271; '{#37,#38}' 0.476-0.482",
+    "direction": "lowers risk"
+   },
+   {
+    "claim": "Under the Cyrus scenario, #37 beats exp75 as partner on bronze once CI is doubtful (CI 0: 0.53 vs 0.50-0.51; CI -0.0005: 0.51-0.52 vs 0.38). exp75 is better only on silver, and only while CI holds on the private set. The ticked П3 is the more Cyrus-robust of the two agreed pairs.",
+    "evidence": "grid.txt harsh rows for CI_MU 0.0005 / 0 / -0.0005, seeds 39/40",
+    "direction": "lowers risk"
+   },
+   {
+    "claim": "The only pair that really cuts Cyrus exposure gives up the 0.959 file: {exp75, #37} has no cap 6 and no K. It scores 0.71 / 0.36 in every world, 0.62-0.64 / 0.26-0.27 in the harsh case with CI 0, and sits at 0.71 / 0.36 against {exp87a, #37} at 0.79 / 0.58 by default. By this model it pays off on bronze only if P(cap 6 and K both clearly negative on private) is above about 0.45, and on silver above about 0.7. It is also outside the agreed 'V_pub plus hedge' plan.",
+    "evidence": "extra rerun VPUB=exp75 PARTNERS=#37 (seeds 39/40): default 0.710-0.714/0.358-0.366; harsh CI 0 0.624-0.639/0.262-0.273; harsh CI +0.0005 0.701-0.712/0.359-0.368; break-even is my arithmetic on these rows",
+    "direction": "neutral"
+   },
+   {
+    "claim": "The model's field is out of date and treats rival teams as independent of our levers. Since the 28 Sep 13:18Z base, the 0.956 block grew from 68 to 150 and 0.957 from 42 to 67, probably many x138 + K copies after John Taylor posted K in 743929 (unproven). Rebased on the 11:41Z LB, the pair gets 0.757-0.758 / 0.549-0.552 by default and 0.464-0.483 / 0.130-0.139 in the harsh case. If 82 of the 0.956 teams are x138+K clones sharing our K draw, the harsh case improves to 0.543-0.556 / 0.154-0.161, because those clones fall with K.",
+    "evidence": "e10_watch 20260928T1318Z (0.956: 68) vs e10_20260929T1141Z/lb.csv (0.956: 150, 0.957: 67, >=0.960: 124, 3,994 teams); grid.txt FIELD=now and KCLONE=82 rows; mc26.py field comment line 2",
+    "direction": "raises risk"
+   },
+   {
+    "claim": "The insertion prior barely moves in these runs, and it is the only lever #37 carries. With the pessimistic insertion setting plus harsh cap 6 and K plus CI 0, the pair falls to 0.44 / 0.13. If Satwik is right that the private embryo is denser than the public one, this is the relevant tail (insertion is weakest on dense clips).",
+    "evidence": "grid.txt SC=inspes rows (0.442/0.134, 0.440/0.131); 744273.md Satwik 09:06Z; FACTS.md F-TRN-14",
+    "direction": "raises risk"
+   }
+  ],
+  "action": "Nothing is forced, and the current tick {exp87a 56640366, #37 56563521} (API 12:37Z) is already the most Cyrus-robust of the agreed pairs on bronze. Do not swap #37 for exp85a: under the stress test that pair falls to 0.22-0.27 bronze. Swap to exp75 (П2) only if you trust CI on the private set, since it gains silver only while CI holds. The only way to cut exposure to cap 6 and K is {exp75 56656157, #37 56563521}, which drops the 0.959 file. By this judgmental model it is worth it only if you put more than about 45% (bronze) or about 70% (silver) on both cap 6 and K being clearly negative on the private set. It is outside the agreed plan and needs the user's own decision before the 23:00 MSK (20:00 UTC) tick; Kaggle allows re-selection until 02:59 MSK. Files: scratchpad cyrus/mc_cyrus.py, cyrus/grid.sh, cyrus/grid.txt; no repo writes, no Kaggle calls."
+ },
+ "**Skeptic re-check of the four lenses (exposure, relrank, model, adversary)**\n\nBottom line: the facts behind all four lenses hold, and every model number reproduces. The main problems are the claims about how safe the #37 partner is, and the categorical \"keep #37 over exp75\" advice. The files support that advice only if CI (coordinject) fails on the private embryo.\n\n**The 5 decision-relevant numbers, re-checked**\n\n1. **Leaderboard blocks and medal lines: CONFIRMED.**\n   - Recomputed from lb.csv e10_20260929T1141Z: 1,006 rows. We are rank 141 (0.959, SubmissionCount 56, 17th of 22 in the 0.959 block). 124 teams are ≥0.960 and 53 are ≥0.965.\n   - Blocks by rank: 0.959 is #125-146, 0.958 #147-167, 0.957 #168-234, 0.956 #235-384 (150 teams), 0.955 #385-484 (100), 0.954 #485-599 (115), 0.953 #600-1006 (407).\n   - With 3,994 teams (CONTEXT l.4548), silver ~#199 falls in the 0.957 block and bronze ~#399 in the 0.955 block. The 475 teams at 0.954-0.959 and the submission-count medians (63.5 / 57 / 38) also check out.\n   - Caveat: relrank's label \"0.953 = точные копии x138\" (all 407 teams at 0.953 are exact x138 copies) is unproven. It only means those teams were seen at 0.953.\n\n2. **Public lift decomposition 0.953 → 0.954 → 0.956 → 0.958 → 0.959: CONFIRMED.**\n   - Sources: RESULTS l.67 (P34), l.70 (#37), l.78 (P45; exp70g = K2 + cap 6 only, CONTEXT l.2473), CONTEXT l.3856 (P50), l.4153 (P51).\n   - The lenses count the public-only share differently: exposure says 4 of 6 thousandths, adversary says 5 of 6. The difference is only whether CI is counted as \"mixed\" or \"public-only\".\n\n3. **Cap-6 lab −0.00057 (bootstrap 90% −0.00125..−0.00011, 85 extra insertions = 0 TP / 4 FP / 81 unannotated): CONFIRMED** at CONTEXT l.2545-2547 and FACTS F-TRN-42.\n   - Overstated as evidence against cap 6: it rests on only 4 annotated insertions out of 85. CONTEXT C-133 calls it an \"in-sample, near-blind estimate\". F-TRN-68 says the dummy lab \"MISSED cap 4 → 6 (lab 0.0000, LB +0.002; the lab has 0 division TP)\".\n   - So cap 6 has no usable lab evidence in either direction, not \"clear negative lab evidence\".\n\n4. **Insertion \"honest CV\" +0.0019, 90% CI [−0.0007, +0.0050], 27% precision: the number is CONFIRMED (CONTEXT l.1305-1307), but it is overstated as backing for the shipped lever.**\n   - The same line says the run \"Fails the gate narrowly (... 4/15 = 27% < 31%)\". l.1308 says \"even a perfect transfer would move the public score by ~0\".\n   - The confirmed setup was the v1 steal sub-test at threshold 0.5, on the pre-x138 exp39 line. The shipped #35/#37 config uses \"ens threshold 0.4\" (l.1331, l.1770), and l.1305 says the threshold \"must be re-calibrated for the ensemble\".\n   - The folds held out videos, not an embryo. Adversary's \"no lever has honest out-of-embryo validation\" is the accurate wording.\n   - Exposure's \"CV-backed\" should read: \"held-out-video OOF for an earlier config on an earlier base; failed its gate; public +0.001 twice\".\n\n5. **Monte Carlo numbers: all REPRODUCED from scratchpad cyrus/grid.txt and my rerun of mc_cyrus.py.**\n   - Model lens:\n     - Default: {exp87a, #37} 0.789-0.790 bronze / 0.577-0.587 silver.\n     - Harsh (cap 6 and K centred at −0.001): 0.556-0.561 / 0.191-0.197. With CI also 0: 0.530-0.536 / 0.159-0.167.\n     - exp87a alone, harsh: 0.13-0.25 bronze. Field \"central\": 0.376-0.378 / 0.078-0.085. FIELD=now and KCLONE rows match.\n   - Adversary: my seed-39 rerun gives 0.667/0.336 (they quote 0.673/0.343) and 0.556/0.193 (they quote 0.568/0.200). Within seed noise.\n   - Relrank (reran rr/scen.py): #141 in scenario (b), #217 with cap 6 = 0, #287 with cap 6 at its lab value, #162 with CI = 0, #346 with cap 6 + CI = 0, #541 in a-worst, #309 with K2 at +0.003. Scenario (c) P(silver) 0.81 / 0.63; scenario (d) pair P(silver) 0.59, P(bronze+) 0.85. 769 proven forks. All match.\n\n**Wrong or unsupported claims**\n\n- **The \"floor\" claims in exposure and adversary are wrong as worded.**\n  - Exposure: \"falls back to about #37/exp75 level ... around the bronze boundary, not a collapse\". Adversary: \"worst realistic outcome = x138 + insertion ... costs silver much more than bronze\".\n  - #37 alone at 0.954 ranks about #489 on today's board (scen.py prints \"#37 as best would be ~489\"). That is below the bronze line (#399). FACTS F-TRN-63 says the same: \"#37 (0.954) sits below the public bronze line\". exp75 at 0.955 straddles the line.\n  - Falling back to #37 keeps bronze only if the rival forks also lose their public gains. Evidence:\n    - relrank a-worst: #541, no medal.\n    - #37 alone P(bronze+): scenario (c) 0.29-0.32; model 0.48 in general, 0.31 when the field keeps its gains (\"central\").\n- **\"#37 is the better partner than exp75 in both adversarial worlds\" (adversary) is true only for bronze.**\n  - Levers-at-0 world: exp75 wins silver (0.355-0.360 vs 0.336-0.343).\n  - At the model's default settings with the standing CI prior (CI_SD 0.0008, my rerun), exp75 wins both: 0.821/0.616 vs 0.784/0.576. F-TRN-66 records the same (.824/.622 vs .791/.580) and marks \"P3 slightly ahead\" as refuted.\n  - Exposure's \"Do not swap #37 for exp75\" is therefore a bet that CI fails on the private embryo, not something the model shows. The earlier chat answer (CONTEXT l.4581: \"the choice is the sign of CI on the private\") is the correct framing.\n- **\"CI was adopted even though our lab pointed the other way\" (adversary) is wrong on timing.**\n  - At selection time (27 Sep 12:49Z, l.2985) the refiner lab was +0.0032 at ALPHA 0.5.\n  - The −0.0055 dummy-lab read came later (round 28). F-TRN-60(b) says it is one event and \"never a sign read for coordinate-only changes\".\n  - Only cap 6 was submitted against its own pre-registered rule.\n- **\"The teams above 0.960 mostly bring their own retrained models\" (exposure) is only partly supported.**\n  - Relrank's own trajectory run: of the 71 teams at 0.960-0.964, 18 were seen at 0.953/0.954 and only 24 were already ≥0.960 on 26 Sep 16:20Z.\n  - Only the 53 teams at ≥0.965 look mostly independent (43 were already ≥0.960 by then).\n- **Relrank's verdict \"без медали только в одном случае (~#541)\" (no medal in only one case, ~#541) omits a line its own script prints.**\n  - \"cap6+K+CI = 0 (K own-only) → rank 570\" is also outside the medals.\n  - Scenario (b) (#141 for any shared loss L) holds by construction: it assumes we lose exactly what every fork loses. That is the opposite of Cyrus's premise that the more over-fitted files lose more.\n- **Minor.**\n  - Exposure quotes the finals-card model П3 0.68-0.85 / 0.39-0.63. Those are the exp85a numbers, now stale (C-263). The round-31 exp87a re-run gives 0.61-0.83 / 0.39-0.64.\n  - The grid's \"{#37,#38} ticked\" row label is also stale (the current tick is {exp87a, #37}), but the numbers themselves are fine.\n\n**Contradictions between the lenses**\n\n- **Risk grade.** Relrank rates it \"moderate, medal likely\". Its (c) and (d) scenarios give P(bronze+) 0.85-1.0 because the independent teams hold and the forks only jitter. The model lens under Cyrus-harsh assumptions gives 0.53-0.56, and 0.38 if the field keeps its gains.\n  - The difference comes entirely from the field assumption: do rival forks lose their public-tuned gains as well?\n  - Nobody can measure that. The honest range for the ticked pair is about 0.4-0.85 bronze and 0.1-0.6 silver.\n- **What honest validation supports insertion.** Exposure says an honest CV check; adversary says none out-of-embryo; relrank says it is based on the training embryos. Per item 4, the adversary's wording is the most accurate.\n- **CI classification.** Exposure calls it neutral/mixed; relrank and adversary call it public-only. The refiner lab was in-sample positive, the dummy lab has the wrong sign (0 of 2), and there are three +0.001 public reads, all on one embryo. \"Mixed, leaning public\" is fair.\n\n**What holds across all four lenses**\n- We are in Cyrus's category.\n- The #37 hedge is what keeps the bronze probability up. Without it, exp87a alone drops to 0.13-0.25 bronze under the harsh assumptions.\n- The reserve slot has no safe use now. An x138-family file had to be submitted by about 14:30-15:00Z (CONTEXT l.4586).\n- The {exp87a, exp85a} pair is the worst option (0.17-0.27 bronze under harsh assumptions).\n\n**Evidence that does not exist**\n- Any private or out-of-embryo read of cap 6, K or CI.\n- The rival field's actual composition. Fork versus independent is a proxy built from snapshots taken since 26 Sep 16:20Z.\n- The adversary's MC outputs were not saved to files; I reproduced them approximately.\n\nFiles I read or ran (no repo writes, no Kaggle calls):\n- C:\\Users\\vital\\Documents\\kAGGLE\\Biohub - Cell Tracking During Development\\CONTEXT.md\n- C:\\Users\\vital\\Documents\\kAGGLE\\Biohub - Cell Tracking During Development\\experiments\\RESULTS.md\n- C:\\Users\\vital\\Documents\\kAGGLE\\Biohub - Cell Tracking During Development\\research\\KNOWLEDGE\\FACTS.md\n- C:\\Users\\vital\\Documents\\kAGGLE\\Biohub - Cell Tracking During Development\\experiments\\lb_poll\\_lb\\e10_20260929T1141Z\\lb.csv\n- C:\\Users\\vital\\AppData\\Local\\Temp\\claude\\c--Users-vital-Documents-kAGGLE-Biohub---Cell-Tracking-During-Development\\acabaea6-42c1-4115-a146-2ddc5bb7e8c8\\scratchpad\\cyrus\\grid.txt, cyrus\\mc_cyrus.py, r26\\mc26.py, rr\\scen.py, rr\\traj.py",
+ "**Вердикт: риск умеренный, если говорить о медали вообще, и высокий для серебра.** Мы именно та группа, о которой пишет Cyrus. Но пара финалов сильно смягчает удар.\n\n**Почему мы в зоне риска**\n- Все наши файлы построены на публичном ноутбуке x138 (0.953). Ровно на 0.953 стоят 407 команд (lb.csv 11:41Z).\n- exp87a на паблике выше x138 на 0.006. Из них: вставка делений +0.001, cap 6 +0.002, K +0.002, CI +0.001 (RESULTS l.67–78, CONTEXT l.3856, l.4153). Каждый шаг измерен с точностью ±0.0005 из-за округления.\n- Как минимум 4 из этих 6 тысячных выбраны только по чтениям паблика. У cap 6 и K нет никакой другой проверки. Ни одна добавка не проверялась на отложенном эмбрионе.\n- Cap 6 выбран как пик «лесенки» 4/6/8/12 = 0.954/0.956/0.955/0.955 (CONTEXT l.3618). Отправили его вопреки нашему же заранее записанному правилу (l.2947–2966). Лаборатория по нему почти слепая: из 85 добавленных вставок размечены только 4.\n- K взят у John Taylor. Он подбирал его по пабличному рейтингу, и его локальная оценка 4 раза из 4 ошибалась в знаке (l.3433–3436).\n- CI (coordinject) проверен лабораторией только на тех же данных, на которых учились модели (4 клипа, +0.0032). Три чтения паблика по +0.001 сделаны на том же эмбрионе.\n- Паблик — это, вероятно, один эмбрион, около 29% теста. Мы уже видели, как расходятся лаборатория и рейтинг: фильтр рёбер дал локально +0.016, а на ЛБ 0 (пробы 29/30).\n\n**Что нас защищает**\n- Партнёр #37 = x138 + только вставка (cap 4). В нём нет ни cap 6, ни K, ни CI. Его выбрали по правилу, записанному до того, как появились очки (CONTEXT l.1978–2080).\n- У вставки есть хоть какая-то проверка помимо паблика: на отложенных видео (не эмбрионе) +0.0019, на старой конфигурации, и свой порог она не прошла. Плюс два чтения паблика по +0.001. Опора слабая, но у остальных добавок нет и такой.\n- Прогоны детерминированы, то есть наши прибавки на паблике реальны, а не шум. Риск только в том, перенесутся ли они на другой эмбрион.\n- Общий провал x138 место почти не меняет: 769 из 1 005 команд с ≥0.953 хоть раз стояли на 0.953/0.954, то есть это тоже форки x138. K взяли многие: блок 0.956 вырос с 68 до 150 команд с 28 сентября, и эти команды упадут вместе с нами.\n- Честная оговорка: сам #37 (0.954) сегодня стоит около #489, это ниже бронзы (~#399). Он спасает медаль, только если соседи тоже теряют свои пабличные прибавки.\n\n**Шансы на медаль (субъективная модель по одному эмбриону, данных о приватном нет)**\n- Сейчас мы #141 из 3 994. Серебро кончается около #199 (блок 0.957), бронза около #399 (блок 0.955).\n- Базовый вариант модели для пары: бронза ~0.79, серебро ~0.58.\n- Если cap 6 и K на приватном дают 0: бронза ~0.72, серебро ~0.42. Если оба дают −0.001: ~0.56 и ~0.19. Если ещё и CI = 0: ~0.53 и ~0.16.\n- Хуже всего, если наши добавки провалятся, а соседи свои удержат: ~0.38 и ~0.08. Например, если держится только вставка, это ~#541, без медали.\n- Если не срабатывает только cap 6, получаем ~#217: вне серебра, но в бронзе.\n- Честный диапазон: бронза примерно 0.4–0.85, серебро 0.1–0.6.\n\n**Что менять до 23:00 МСК (20:00 UTC): ничего менять не нужно**\n- Оставьте отметку {exp87a 56640366, #37 56563521}.\n- #37 или exp75 — это ставка на то, сработает ли CI на приватном. Если сработает, exp75 чуть лучше (~0.82/0.62 против ~0.78/0.58). Если CI около нуля или в минусе, #37 надёжнее по бронзе. С учётом предупреждения Cyrus я бы оставил #37.\n- exp85a в пару не брать: при жёстком сценарии там 0.17–0.27 на бронзу.\n- Единственная пара, которая реально убирает риск cap 6 и K, — {exp75, #37}: ~0.71/0.36 в базовом варианте. Она окупается, только если вы больше чем на ~45% уверены, что и cap 6, и K на приватном в минусе. Решать вам, я не рекомендую.\n- exp89t (результат около 21:20 МСК): повышать только при ≥0.960, по правилу. Если будет 0.959, оставить exp87a: это была бы ещё одна добавка, подобранная по паблику.\n- Запасной слот не тратить: любой новый файл был бы ещё одной подгонкой под паблик.\n\nВсе цифры проверены повторным пересчётом. Сценарии: scratchpad `cyrus\\grid.txt` и `rr\\scen.py`."
+]

@@ -4590,6 +4590,20 @@ Mention it to the user in one line (R9-A8 item 6).
   proper CV, heavily overfitted to public), You WeiLin 12:24Z (local best scores poorly on LB and vice versa),
   Civitasmass 11:32Z. No knob/value -> nothing to build; supports keeping a partner without cap 6 and K (both П3 and
   П2 do). E10 FLAG none.
+- 2026-09-29 13:21 UTC, PRIVATE-RISK AUDIT (user question on 744273 Cyrus)
+  User asked how exposed we are to the Cyrus shakeup (public-code anchor without CV). Workflow private-risk-audit (4
+  lenses + skeptic + synthesis; 0 Kaggle calls): research/wf_ideas_v4/risk_audit/ (results.json, skeptic.md,
+  answer_ru.md; scenario scripts in scratchpad cyrus/, rr/). Verdict: medal risk MODERATE, silver risk HIGH. Of
+  exp87a's +0.006 over x138, >= 4 thousandths (cap 6, K) are public-only; no lever has an out-of-embryo check;
+  insertion's held-out-video OOF +0.0019 is on an older config and failed its gate (skeptic). #37 alone (0.954) ranks
+  ~#489 today (below bronze ~#399), so the hedge keeps bronze only if rival forks also lose their public gains. MC
+  (judgmental, one embryo): pair {exp87a, #37} bronze ~0.79 / silver ~0.58 default; cap 6 + K at -0.001 -> ~0.56 /
+  ~0.19; + CI = 0 -> ~0.53 / ~0.16; field keeps gains -> ~0.38 / ~0.08. #37 vs exp75 = the sign of CI on private
+  (exp75 better at the default CI prior 0.82/0.62 vs 0.78/0.58; #37 better on bronze if CI ~0 or negative). {exp75,
+  #37} (drops cap 6 and K) pays only if P(cap 6 and K both clearly negative on private) > ~45%; outside the agreed
+  plan, user's call. OPEN QUESTION TO THE USER (pre-read, not post-hoc): on an exp89t read of 0.959 with an
+  attributable UP, follow the logged rule (promote) or keep exp87a (the audit argues DIS is one more public-only
+  lever, DIS ~0). Default until the user answers = the logged rule.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
