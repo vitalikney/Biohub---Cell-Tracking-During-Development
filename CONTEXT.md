@@ -4740,6 +4740,18 @@ Mention it to the user in one line (R9-A8 item 6).
   post-deadline write-up wording (DIS private sign unknown -0.003..+0.0007; I-384 sub-form closed by probe 54;
   FLOW_Z_WEIGHT 0.6/1.5 refuted). LB Chrome 18:16Z: #154 of 4 007, 6th from the bottom of the 0.959 block (block to
   #159). exp89t PENDING at 18:45:27Z (L 9.75 h).
+- 2026-09-29 19:06 UTC, READ: PROBE 55 exp89t = 0.960 -> T1, NEW V_pub (decision B)
+  READ: PROBE 55 exp89t 56669888 (K + DIS 2.25 + CI, no SEC) = 0.960, COMPLETE at the poll.log header
+  2026-09-29T19:05:33Z (F = 0; last PENDING header 18:55:30Z) -> L in (9.92, 10.09] h; header <= 19:12:17Z -> code T1
+  (normal read, no UNPROVEN-ins); L_lo > 9.6 h -> the pre-registered 'ins-tail?' footnote (the insertion gate may have
+  fired on the last clips, <= ~0.0005; by the logged rule a normal read). Decision B (display >= 0.960) -> exp89t
+  REPLACES exp87a as V_pub. RECOMMENDED PAIR = П3 {exp89t 56669888, #37 56563521} (header 2026-09-29T19:05:33Z, L_hi
+  10.09 h); П2 {exp89t 56669888, exp75 56656157} = trade (decision B: display >= 0.960). API SELECTED at 19:05:53Z =
+  {56640366 exp87a, 56563521 #37} = case a_old -> push: 'сначала снимите exp87a 56640366, потом отметьте exp89t
+  56669888 (#37 оставьте); проверьте «2 of 2 selected» до 23:00 МСК'. Direct DIS read with CI: exp89t 0.960 vs exp87a
+  0.959 (+0.001 rounded; true difference in (0.000, +0.002) on one embryo). The 19:43Z / 21:05Z checks now compare
+  against V_pub = exp89t (R39-A4 comparator; readtime.sh does this). No card rebuild (R44-A2 (f): after the PENDING
+  card a later read gets the push only).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
