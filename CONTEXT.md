@@ -4579,6 +4579,17 @@ Mention it to the user in one line (R9-A8 item 6).
 - 2026-09-29 12:37 UTC, USER RE-TICKED: API SELECTED at 12:37:31Z = {56640366 exp87a (0.959), 56563521 #37 (0.954)} = П3 (card v3 first choice).
   The user asks whether exp75 (П2) is better than #37; answered in chat (the choice is the sign of CI on the private; either passes the
   R39-A4 comparator).
+- 2026-09-29 12:59 UTC, FEED 12:58Z: FINISH-BY-23:59Z RULE (744250) + 744273 comments
+  Feed 12:58Z: (1) 744250, Chris Deotte 12:57Z (a well-known Grandmaster, not the host): a notebook still running at
+  23:59Z 'is not eligible nor can we select it' -> a file must FINISH scoring by 23:59Z. Consequence for the reserve
+  slot (R38-A2 (d) / 11:54Z entry): an E10 or any new file is useful only if submitted by 23:59Z - L_hi of its family
+  (x138-like non-CI ~9.0-9.5 h -> by ~14:30-15:00Z; CI 10.75 h -> by ~13:15Z; to read before the user's 23:00 MSK
+  tick: 20:00Z - L_hi). After those times the slot is dead for x138-family files; only a genuinely short notebook
+  could still use it. exp89t (T0 09:00:17Z, L_hi <= 10.75 h -> by 19:45Z) is unaffected. (2) 744273: Cyrus 11:53Z
+  (shakeup likely, 'not necessarily within the top 10'; biggest changes around public-code-anchor solutions without
+  proper CV, heavily overfitted to public), You WeiLin 12:24Z (local best scores poorly on LB and vice versa),
+  Civitasmass 11:32Z. No knob/value -> nothing to build; supports keeping a partner without cap 6 and K (both П3 and
+  П2 do). E10 FLAG none.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
