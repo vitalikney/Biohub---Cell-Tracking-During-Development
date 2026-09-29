@@ -4604,6 +4604,17 @@ Mention it to the user in one line (R9-A8 item 6).
   plan, user's call. OPEN QUESTION TO THE USER (pre-read, not post-hoc): on an exp89t read of 0.959 with an
   attributable UP, follow the logged rule (promote) or keep exp87a (the audit argues DIS is one more public-only
   lever, DIS ~0). Default until the user answers = the logged rule.
+- 2026-09-29 13:34 UTC, USER DECISION B: exp89t PROMOTES ONLY AT >= 0.960
+  The user chose B ('давай B', chat ~13:30Z), BEFORE the exp89t read (pre-registered, not post-hoc): exp89t 56669888
+  replaces exp87a 56640366 as V_pub ONLY on a public read >= 0.960 (admit rules unchanged: poller header <= 19:45:17Z,
+  > 19:12:17Z flagged UNPROVEN-ins). A 0.959 read keeps exp87a WHATEVER the UP test says (the 0.959 + attributable-UP
+  promotion of the 02:02Z rule is withdrawn for exp89t; reason: the private-risk audit - DIS is one more public-only
+  lever, ~0 - and the gap at equal display is < 0.001 on one embryo). Consequences: R38-A5 T3 '0u' is merged into T4
+  (message: 'exp89t = 0.959 (ЧЧ:ММ МСК): по вашему решению B основной остаётся exp87a 56640366, пара {exp87a, #37} без
+  изменений'); the 17:40Z pre_exp89t save job was CANCELLED (no decision value; fewer Kaggle calls in the 17:30-20:00Z
+  window); the exp89t watcher may still save post_exp89t on 0.959 (1 call, info only); the fallback S0
+  e10_20260929T1141Z stays for an info-only compare. On >= 0.960 the message is 'снимите exp87a 56640366, отметьте
+  exp89t 56669888 (#37 оставьте)'. Current tick (API 12:37Z) = {exp87a, #37}.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
