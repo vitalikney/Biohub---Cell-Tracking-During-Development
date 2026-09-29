@@ -4340,6 +4340,14 @@ Mention it to the user in one line (R9-A8 item 6).
   post_<token>'); run the UP compare only if the file's display equals the running champion's. External delta (round
   33): null; 743929 has no new comment after JT's 20:46Z reply (checked in Chrome at 04:43Z at the user's request); no
   new topic after 744093.
+- 2026-09-29 06:09 UTC, POST-WAKE CHECK (06:07Z timer)
+  The user's trip: laptop on battery 05:27Z, network lost ~05:30-05:57Z (poll headers 05:34Z / 05:46Z NameResolution
+  errors; round 34's report + curation failed ENOTFOUND and are being re-run from cache; e10 run at 05:47Z logged
+  fetch failures but did not hang), back on AC 06:01Z (77%). At 06:09Z: poller header 06:07:54Z OK; lb_poll (37016),
+  e10_watch_loop (18040) and the feed loop (10924) alive, none restarted; night refs 56656147 / 56656157 / 56657612
+  PENDING; watchdog re-armed (battery or poll > 25 min). Feed: new topic 744250 (kostopr4v 05:06Z: 'is a notebook
+  still running at the 23:59 deadline scored before the final selection locks?'; no host answer) - no impact (our
+  finals must read before 20:00Z).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

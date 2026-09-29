@@ -1,0 +1,95 @@
+E10-P1 WATCH SNAPSHOT 20260929T0541Z (2026-09-29 05:41 UTC)
+A change is NOT a port trigger; it only tells the human where to look.
+What: E10 PORT RULE P1 light check (CONTEXT.md, 26 Sep 09:03 UTC entry; in force since the user's 09:10 UTC conditional yes). P1 only gathers; a P2 search signal starts a look, never a port by itself.
+Read-only: Kaggle CLI `kernels list`, `kernels status`, `competitions leaderboard --download` (temp folder, deleted after parsing). Nothing is pulled, pushed or submitted.
+The kernel API has no score field: public scores come only from the leaderboard below and the notebook pages.
+x138 = anvithpothula/biohub-0-953-lb-original (live slug). The old slug anvithpothula/biohub-x138 returns 404 since the rename; a 404 there is NOT a signal, so it is not queried.
+Sections: 5 kernel lists (raw CLI CSV), 2 statuses (raw), leaderboard (CLI message), leaderboard_rows (CSV rows with Score >= 0.953), histogram (parsed), then the DIFF vs the newest earlier snapshot.
+mode: LIVE | CLI calls took 350 s | fetch: 0 OK, 0 NOTFOUND, 8 FAILED
+
+======== comp_dateRun ========
+what: public competition kernels, top 20 by dateRun
+cmd: kaggle kernels list --competition biohub-cell-tracking-during-development --sort-by dateRun --page-size 20 -v
+fetch: FAILED attempts=3 rc=1
+retries: attempt 1: rc=1 stdout=0 chars stderr="HTTPSConnectionPool(host='api.kaggle.com', port=443): Max retries exceeded with url: /v1/kernels.KernelsApiService/ListKernels (Caused by SSLError(SSLEOFError(8" | attempt 2: rc=1 stdout=0 chars stderr="HTTPSConnectionPool(host='api.kaggle.com', port=443): Max retries exceeded with url: /v1/kernels.KernelsApiService/ListKernels (Caused by SSLError(SSLEOFError(8" | attempt 3: rc=1 stdout=0 chars stderr="HTTPSConnectionPool(host='api.kaggle.com', port=443): Max retries exceeded with url: /v1/kernels.KernelsApiService/ListKernels (Caused by SSLError(SSLEOFError(8"
+--- stdout ---
+--- stderr ---
+HTTPSConnectionPool(host='api.kaggle.com', port=443): Max retries exceeded with url: /v1/kernels.KernelsApiService/ListKernels (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))
+
+======== comp_scoreDescending ========
+what: public competition kernels, top 20 by scoreDescending
+cmd: kaggle kernels list --competition biohub-cell-tracking-during-development --sort-by scoreDescending --page-size 20 -v
+fetch: FAILED attempts=3 rc=1
+retries: attempt 1: rc=1 stdout=0 chars stderr="HTTPSConnectionPool(host='api.kaggle.com', port=443): Max retries exceeded with url: /v1/kernels.KernelsApiService/ListKernels (Caused by SSLError(SSLEOFError(8" | attempt 2: rc=1 stdout=0 chars stderr="HTTPSConnectionPool(host='api.kaggle.com', port=443): Max retries exceeded with url: /v1/kernels.KernelsApiService/ListKernels (Caused by SSLError(SSLEOFError(8" | attempt 3: rc=1 stdout=0 chars stderr="HTTPSConnectionPool(host='api.kaggle.com', port=443): Max retries exceeded with url: /v1/kernels.KernelsApiService/ListKernels (Caused by SSLError(SSLEOFError(8"
+--- stdout ---
+--- stderr ---
+HTTPSConnectionPool(host='api.kaggle.com', port=443): Max retries exceeded with url: /v1/kernels.KernelsApiService/ListKernels (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))
+
+======== user_anvithpothula ========
+what: kernels of anvithpothula, top 10 by dateRun
+cmd: kaggle kernels list --user anvithpothula --sort-by dateRun --page-size 10 -v
+fetch: FAILED attempts=3 rc=1
+retries: attempt 1: rc=1 stdout=0 chars stderr="HTTPSConnectionPool(host='api.kaggle.com', port=443): Max retries exceeded with url: /v1/kernels.KernelsApiService/ListKernels (Caused by SSLError(SSLEOFError(8" | attempt 2: rc=1 stdout=0 chars stderr="HTTPSConnectionPool(host='api.kaggle.com', port=443): Max retries exceeded with url: /v1/kernels.KernelsApiService/ListKernels (Caused by SSLError(SSLEOFError(8" | attempt 3: rc=1 stdout=0 chars stderr="HTTPSConnectionPool(host='api.kaggle.com', port=443): Max retries exceeded with url: /v1/kernels.KernelsApiService/ListKernels (Caused by SSLError(SSLEOFError(8"
+--- stdout ---
+--- stderr ---
+HTTPSConnectionPool(host='api.kaggle.com', port=443): Max retries exceeded with url: /v1/kernels.KernelsApiService/ListKernels (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))
+
+======== user_thtennant ========
+what: kernels of thtennant, top 10 by dateRun
+cmd: kaggle kernels list --user thtennant --sort-by dateRun --page-size 10 -v
+fetch: FAILED attempts=3 rc=1
+retries: attempt 1: rc=1 stdout=0 chars stderr="HTTPSConnectionPool(host='api.kaggle.com', port=443): Max retries exceeded with url: /v1/kernels.KernelsApiService/ListKernels (Caused by SSLError(SSLEOFError(8" | attempt 2: rc=1 stdout=0 chars stderr="HTTPSConnectionPool(host='api.kaggle.com', port=443): Max retries exceeded with url: /v1/kernels.KernelsApiService/ListKernels (Caused by SSLError(SSLEOFError(8" | attempt 3: rc=1 stdout=0 chars stderr='HTTPSConnectionPool(host=\'api.kaggle.com\', port=443): Max retries exceeded with url: /v1/kernels.KernelsApiService/ListKernels (Caused by NameResolutionError("H'
+--- stdout ---
+--- stderr ---
+HTTPSConnectionPool(host='api.kaggle.com', port=443): Max retries exceeded with url: /v1/kernels.KernelsApiService/ListKernels (Caused by NameResolutionError("HTTPSConnection(host='api.kaggle.com', port=443): Failed to resolve 'api.kaggle.com' ([Errno 11001] getaddrinfo failed)"))
+
+======== user_amanatar ========
+what: kernels of amanatar, top 10 by dateRun
+cmd: kaggle kernels list --user amanatar --sort-by dateRun --page-size 10 -v
+fetch: FAILED attempts=3 rc=1
+retries: attempt 1: rc=1 stdout=0 chars stderr='HTTPSConnectionPool(host=\'api.kaggle.com\', port=443): Max retries exceeded with url: /v1/kernels.KernelsApiService/ListKernels (Caused by NameResolutionError("H' | attempt 2: rc=1 stdout=0 chars stderr='HTTPSConnectionPool(host=\'api.kaggle.com\', port=443): Max retries exceeded with url: /v1/kernels.KernelsApiService/ListKernels (Caused by NameResolutionError("H' | attempt 3: rc=1 stdout=0 chars stderr='HTTPSConnectionPool(host=\'api.kaggle.com\', port=443): Max retries exceeded with url: /v1/kernels.KernelsApiService/ListKernels (Caused by NameResolutionError("H'
+--- stdout ---
+--- stderr ---
+HTTPSConnectionPool(host='api.kaggle.com', port=443): Max retries exceeded with url: /v1/kernels.KernelsApiService/ListKernels (Caused by NameResolutionError("HTTPSConnection(host='api.kaggle.com', port=443): Failed to resolve 'api.kaggle.com' ([Errno 11001] getaddrinfo failed)"))
+
+======== status_amanatar__optimized-biohub-max-score ========
+what: kernel status of amanatar/optimized-biohub-max-score
+cmd: kaggle kernels status amanatar/optimized-biohub-max-score
+fetch: FAILED attempts=3 rc=1
+retries: attempt 1: rc=1 stdout=0 chars stderr="HTTPSConnectionPool(host='api.kaggle.com', port=443): Max retries exceeded with url: /v1/kernels.KernelsApiService/GetKernelSessionStatus (Caused by NameResolut" | attempt 2: rc=1 stdout=0 chars stderr="HTTPSConnectionPool(host='api.kaggle.com', port=443): Max retries exceeded with url: /v1/kernels.KernelsApiService/GetKernelSessionStatus (Caused by NameResolut" | attempt 3: rc=1 stdout=0 chars stderr="HTTPSConnectionPool(host='api.kaggle.com', port=443): Max retries exceeded with url: /v1/kernels.KernelsApiService/GetKernelSessionStatus (Caused by NameResolut"
+--- stdout ---
+--- stderr ---
+HTTPSConnectionPool(host='api.kaggle.com', port=443): Max retries exceeded with url: /v1/kernels.KernelsApiService/GetKernelSessionStatus (Caused by NameResolutionError("HTTPSConnection(host='api.kaggle.com', port=443): Failed to resolve 'api.kaggle.com' ([Errno 11001] getaddrinfo failed)"))
+
+======== status_anvithpothula__biohub-0-953-lb-original ========
+what: kernel status of anvithpothula/biohub-0-953-lb-original
+cmd: kaggle kernels status anvithpothula/biohub-0-953-lb-original
+fetch: FAILED attempts=3 rc=1
+retries: attempt 1: rc=1 stdout=0 chars stderr="HTTPSConnectionPool(host='api.kaggle.com', port=443): Max retries exceeded with url: /v1/kernels.KernelsApiService/GetKernelSessionStatus (Caused by NameResolut" | attempt 2: rc=1 stdout=0 chars stderr="HTTPSConnectionPool(host='api.kaggle.com', port=443): Max retries exceeded with url: /v1/kernels.KernelsApiService/GetKernelSessionStatus (Caused by NameResolut" | attempt 3: rc=1 stdout=0 chars stderr="HTTPSConnectionPool(host='api.kaggle.com', port=443): Max retries exceeded with url: /v1/kernels.KernelsApiService/GetKernelSessionStatus (Caused by NameResolut"
+--- stdout ---
+--- stderr ---
+HTTPSConnectionPool(host='api.kaggle.com', port=443): Max retries exceeded with url: /v1/kernels.KernelsApiService/GetKernelSessionStatus (Caused by NameResolutionError("HTTPSConnection(host='api.kaggle.com', port=443): Failed to resolve 'api.kaggle.com' ([Errno 11001] getaddrinfo failed)"))
+
+======== leaderboard ========
+what: public leaderboard, full download (rows >= 0.953 and the histogram below)
+cmd: kaggle competitions leaderboard biohub-cell-tracking-during-development --download -p <tmpdir>
+fetch: FAILED attempts=3 rc=1
+retries: attempt 1: rc=1 stdout=0 chars stderr="HTTPSConnectionPool(host='api.kaggle.com', port=443): Max retries exceeded with url: /v1/competitions.CompetitionApiService/DownloadLeaderboard (Caused by NameR" | attempt 2: rc=1 stdout=0 chars stderr="HTTPSConnectionPool(host='api.kaggle.com', port=443): Max retries exceeded with url: /v1/competitions.CompetitionApiService/DownloadLeaderboard (Caused by NameR" | attempt 3: rc=1 stdout=0 chars stderr="HTTPSConnectionPool(host='api.kaggle.com', port=443): Max retries exceeded with url: /v1/competitions.CompetitionApiService/DownloadLeaderboard (Caused by NameR"
+--- stdout ---
+--- stderr ---
+HTTPSConnectionPool(host='api.kaggle.com', port=443): Max retries exceeded with url: /v1/competitions.CompetitionApiService/DownloadLeaderboard (Caused by NameResolutionError("HTTPSConnection(host='api.kaggle.com', port=443): Failed to resolve 'api.kaggle.com' ([Errno 11001] getaddrinfo failed)"))
+
+======== histogram ========
+leaderboard fetch FAILED: no histogram in this snapshot
+
+======== DIFF vs 20260929T0513Z.txt ========
+window: 2026-09-29 05:13Z -> 2026-09-29 05:41Z (0.5 h)
+[comp_dateRun] public competition kernels, top 20 by dateRun: NOT COMPARED (fetch earlier OK, now FAILED)
+[comp_scoreDescending] public competition kernels, top 20 by scoreDescending: NOT COMPARED (fetch earlier OK, now FAILED)
+[user_anvithpothula] kernels of anvithpothula, top 10 by dateRun: NOT COMPARED (fetch earlier OK, now FAILED)
+[user_thtennant] kernels of thtennant, top 10 by dateRun: NOT COMPARED (fetch earlier OK, now FAILED)
+[user_amanatar] kernels of amanatar, top 10 by dateRun: NOT COMPARED (fetch earlier OK, now FAILED)
+[status_amanatar__optimized-biohub-max-score] kernel status of amanatar/optimized-biohub-max-score: NOT COMPARED (fetch earlier OK, now FAILED)
+[status_anvithpothula__biohub-0-953-lb-original] kernel status of anvithpothula/biohub-0-953-lb-original: NOT COMPARED (fetch earlier OK, now FAILED)
+[leaderboard] teams per score >= 0.955, >= lines, total teams, our rank: NOT COMPARED (fetch earlier OK, now FAILED)
+CHANGES: 0. A change is NOT a port trigger; it only tells the human where to look.

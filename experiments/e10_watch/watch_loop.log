@@ -46,3 +46,8 @@ E10 SIGNAL: anvithpothula/biohub-v1284-head-s075-sample-notebook (c) watched use
 2026-09-29T02:42:07Z INFO (c) amanatar/rsna-knee-abnormality-detection: watched user amanatar, not Biohub-related: new lastRunTime 2026-09-28 14:57:51 (new in the amanatar top-10); lastRunTime 2026-09-28 14:57:51 "RSNA Knee Abnormality Detection" by Aman Atar
 2026-09-29T03:42:06Z RUN 39 snapshot 20260929T0341Z.txt CHANGES=5 fetch OK 8/8 | calls 8 429s 0 | signals 0 | next run 2026-09-29T04:41:53Z
 2026-09-29T04:42:06Z RUN 40 snapshot 20260929T0441Z.txt CHANGES=8 fetch OK 8/8 | calls 8 429s 0 | signals 0 | next run 2026-09-29T05:41:53Z
+2026-09-29T05:47:43Z RUN 41 snapshot 20260929T0541Z.txt CHANGES=0 fetch OK 0/8 FAILED comp_dateRun,comp_scoreDescending,user_anvithpothula,user_thtennant,user_amanatar,status_amanatar__optimized-biohub-max-score,status_anvithpothula__biohub-0-953-lb-original,leaderboard | calls 24 429s 0 | signals 0 | next run 2026-09-29T06:41:53Z
+2026-09-29T05:47:43Z WARN (a/b): comp_scoreDescending fetch failed: (a)/(b) not evaluated this run
+2026-09-29T05:47:43Z WARN (c) anvithpothula: user_anvithpothula fetch failed: (c) not evaluated for anvithpothula this run
+2026-09-29T05:47:43Z WARN (c) thtennant: user_thtennant fetch failed: (c) not evaluated for thtennant this run
+2026-09-29T05:47:43Z WARN (c) amanatar: user_amanatar fetch failed: (c) not evaluated for amanatar this run
