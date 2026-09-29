@@ -4544,6 +4544,34 @@ Mention it to the user in one line (R9-A8 item 6).
   Reading for us: same pattern as our edge filter (+0.016 local, 0 on LB, probes 29/30) and SEC; our public gains (cap
   6 +0.002, K +0.002, CI +0.001) are exactly the LB-tuned kind, so the planned pair keeps a hedge without cap 6 and K
   (#37 or exp75); running-champion rule unchanged; slot-2 recommendation stays UNUSED.
+- 2026-09-29 11:45 UTC, S0_fallback = e10_20260929T1141Z (R37-A3 (1), 0 Kaggle calls): experiments/lb_poll/_lb/e10_20260929T1141Z/lb.csv; ours rank 141,
+  0.959, SubmissionCount 56 (as required), last 00:46:36; 3 994 teams; 124 teams > 0.959; 0.959 block = 22 rows, we are 17th of 22.
+- 2026-09-29 11:54 UTC, SLOT 2 DECISION (user, chat ~11:56Z): HELD IN RESERVE, nothing sent now
+  The user: 'держим его в запасе' (in case a new public notebook appears). Nothing is sent at 12:00Z: rule (a) failed
+  (exp89r 0.957 < 0.958); no E10 >= 0.960 (best genuine public biohub notebook 0.953); no disclosed x138-family knob
+  with values since 09:14Z (744273 has no values; 738833 = questions to the hosts); a CI file sent now reads
+  ~00:00-01:45 MSK (after the user's 23:00 MSK tick, before Kaggle's 02:59 MSK); no non-CI candidate with a
+  pre-registered reason. The slot stays open until 23:59Z ONLY via R38-A2 (d): a flag -> verify it is a biohub
+  notebook (1 competition-scoped list call), show it to the user in MSK with its expected read time, and submit only
+  on the user's explicit yes for that notebook (E10 after 02:00Z = per-notebook yes). R38-A3 (the mid_<token> save
+  between the two completions) applies to ANY slot-2 submit today. Card v3 SEC clause at 12:03Z: 'exp89s не отправлен;
+  последний слот дня держим в запасе (только под новый публичный ноутбук, по вашему «да»)'.
+- 2026-09-29 11:54 UTC, ROUND 39 APPLIED (R39-A1..A6; A7/A8 scheduled)
+  Report research/wf_ideas_v4/round39/report.json. (A1) slot-2 message sent 11:48Z + push 11:50Z; decision above. (A2)
+  S0 fallback = e10_20260929T1141Z (count 56; #141 of 3 994; 17th of 22) - card l.8 uses 22, never '17 of 21'; the R38
+  'Fanch above us on the earlier timestamp' line is WRONG (order inside a display block = unrounded score) and must
+  not reach the user. (A3) T7 trigger armed: scratchpad t7_trigger.sh (local, 0 Kaggle calls): first non-error
+  poll.log header >= 19:12:17Z, expected ~19:20Z (22:20 MSK); on PENDING -> 1 SELECTED read + the R38-A5 (6) T7 text.
+  (A4) SELECTED CHECK COMPARATOR (18:37Z / 19:43Z / 21:05Z timers and the T7 message): no push iff SELECTED = exactly
+  2 refs = {V_pub, #37 56563521} (П3) or {V_pub, exp75 56656157} (П2), V_pub = the running champion after any exp89t
+  promotion; if the user named a pair in chat, only that pair passes; otherwise push the exact untick/tick steps (to
+  П3 by default, or to П2 if the user chose П2 and only the V_pub member is stale). The timer texts are pointers to
+  this line. (A5) pre_exp89t (17:40Z) is a valid S0 only if our row shows SubmissionCount 56 and LastSubmissionDate
+  2026-09-29 00:46:36; otherwise use e10_20260929T1141Z flagged stale and say so in the T3 log. (A6) round prompt:
+  after 12:00Z the browser agent uses Chrome only (no e10_snapshot.py, 0 Kaggle calls); 17:30-20:00Z no agent calls
+  Kaggle; KEY FACTS tie order fixed; hourly rounds continue. (A7) mk_card_1837.py to be built and dry-run before
+  17:40Z. (A8) re-arm the watchdog after any alert; liveness check of all armed jobs at the 17:13Z round. (A9) only if
+  asked (cap-6 partner line).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

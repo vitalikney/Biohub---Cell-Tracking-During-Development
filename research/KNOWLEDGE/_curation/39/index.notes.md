@@ -1,0 +1,6 @@
+- 11:45Z 29 Sep: start curation-39 index; no prior index.json
+- 11:45Z read c38 INDEX, CONTEXT l.4509-4546 (c8130a6 committed 11:10Z+11:39Z), poll 11:38:57Z exp89t PENDING, e10 1141Z #141/3994 17 of 22
+- 11:46Z anchors collected (IDEAS CHANGES l.232 rank l.245 ORPHANS l.960; FACTS §3 l.231 F-LB-39 l.273 F-RUN-58 l.336 F-RUL-39 l.380 F-TRN-74/75 l.519-520 C-315..C-326 l.840-851; DECISIONS §1 l.145 P55 l.208 [c39] l.565, §2 l.632 snapshot l.1006, §3 l.1677 rows l.1815-1818; WATCHLIST DUE l.68 C l.81 NEXT l.93 LATER l.123 INS l.150). HEAD c8130a6 commits 11:10Z+11:39Z. S0 lb.csv 1141Z exists 11:45Z (unlogged). Writing INDEX.md
+- 11:47Z INDEX.md written; appending CHANGES 39
+- 11:47Z CHANGES 39 appended; writing index.json
+- 11:48Z index.json written. DONE

@@ -1,0 +1,12 @@
+# round39 plancheck notes (started 11:10Z)
+- 11:20Z read CONTEXT 07:59Z-11:10Z entries, round38 report.json + scan_plancheck.json (PC38-01..07).
+- Process census (ps /proc cmdline, 0 Kaggle calls): alive = timers 11:45Z S0 (win 24636), 11:50Z slot-2 (21496), 12:03Z card (33456, text still names round27 v4 = pointer), hourly rounds 13:13-18:13Z, 18:37Z FINAL card, 19:43Z TICK REMINDER, 21:05Z LAST CALL, 00:07Z POST-DEADLINE; pre_exp89t.sh (win 36816, R38-A4 version with lastok + retry); manual_admit.sh (win 3028); exp89t watcher (win 30864; uses last() incl. error blocks; post_exp89t only on COMPLETE 0.959); E10-signal watcher (20284), feed-signal watcher (24728), battery/stale watchdog (22236, one-shot: breaks on first alert); poller lb_poll.py (win 37016, no END); e10 loop (18040, ends 12:00Z). Old 18408/35124 and 17304 gone.
+- GAP: no trigger at 19:12:17Z for R38-A5 T7 (no timer between 18:37Z and 19:43Z). grep CONTEXT '19:12' -> only rule text l.4468/4532.
+- Card v3 scratchpad card_fill_1203_v3.txt read: header l.3 still 09:18Z poller, l.8 '#140 из 3 988, 16 из 20' (to fill at 12:03Z); newest e10 20260929T1110Z: #141 of 1001 rows shown (3 991 teams), 17 of 22 in 0.959 block (block grew 21->22), count 56, >=0.960 = 124.
+- lb_poll.py: 3 attempts, sleep 30, loop sleep 600, no end. Battery status 2 (AC) 78%; STANDBYIDLE 0 on AC and DC.
+- 11:30Z timer texts (/proc cmdline): 18:37Z 'refresh the finals card ... steps for the recommended pair'; 19:43Z 'if not the recommended pair, message/push'; 21:05Z same -> no P2 acceptance; card v3 l.50 promises 'если отмечено не то, что вы выбрали'. CONTEXT has no comparator rule (grep LAST CALL/TICK REMINDER/П2 обмен).
+- tools/e10_snapshot.py = 8 CLI calls per run (5 kernel lists, 2 statuses, 1 LB download); snapshot 1110Z = this round's run. After 12:00Z E10 not actionable before the tick (R38-A2 (d)).
+- ledger.md CI family L: exp75 (8.88,9.05], exp89r (9.04,9.22], exp79a (9.27,9.45], exp87a (9.30,9.48] -> exp89t earliest ~17:53Z; pre_exp89t at 17:40Z = 8.66 h. S0 validity guard (count 56) not logged.
+- Poller cadence 601-603 s; from 11:08:50Z -> headers ~19:10:2x, ~19:20:3x, ~19:40:3x, ~19:50:3x (+-1 min). First header >= 19:12:17Z ~19:20:3xZ.
+- card v3 sha8 ae03f566 verified; mk_card_v3.py token asserts present. Re-save precedent uses post_<token>_b tag (CONTEXT l.4388) -> no overwrite problem.
+- 11:20Z wrote scan_plancheck.json (7 findings PC39-01..07)

@@ -1,0 +1,37 @@
+{
+  "summary": "SLOT-2 LAST CALL (scan 11:10-11:16Z, 0 Kaggle calls). ONE LINE: nothing disclosed since 09:14Z (discussions, Code tab, digests, e10) gives any file on our best base a pre-registered, non-post-hoc reason to use slot 2; recommend slot 2 UNUSED at 12:00Z (the logged default); nothing reaches R8. Evidence: feed digest 0918Z = 3 comments already covered (Satwik/Yassine/fheizz, no values); digest 0958Z = 0 new topics/comments (0.9812 flag = other competition); e10 20260929T1110Z DIFF vs 1041Z = all kernel lists and statuses 'no change', newest competition kernel still flexonafft 28 Sep 13:02Z, best genuine public notebook 0.953; LB 11:10:54Z ours #141, 0.959, count 56, 17th of 22 in the 0.959 block, >= 0.960 unchanged at 124. Timing: a CI file can no longer read before 19:45:17Z (L 8.88-9.48 h -> latest submit 10:15-10:52Z, passed); a non-CI file reads by 19:45:17Z if sent by 12:33Z (L_hi 7.19 h), but a not-yet-dummied build needs 35-45 min, so any disclosure seen after ~11:15Z cannot pass a gate inside the user's 12:00Z hold. The only gated non-CI candidate, exp89s (K + DIS), has expected display ~0.958 after DIS ~ 0, cannot be a partner (carries K + cap 6) and is excluded by the task. No new idea invented: every inference-only/post-proc lever on x138 is closed or refuted in IDEAS.md (curation 38 whitelist), and no new finals-strategy option exists because every V_pub/partner candidate is already submitted.",
+  "findings": [
+    {
+      "id": "R39S-1",
+      "kind": "new-fact",
+      "what": "External delta since 09:14Z is NULL for slot 2: no new discussion topic or comment with values, no new or updated public biohub notebook, no disclosed x138-family knob. Aggressive mode has nothing to act on.",
+      "evidence": "experiments/discussions/digest_20260929T0918Z.md (744278 fheizz 08:29Z; 744273 Satwik 09:06Z 'public LB has very few divisions', no values; Yassine 09:13Z, no values: all covered r37/r38); experiments/discussions/digest_20260929T0958Z.md (16 topics, 0 new topics, 0 new comments; E10 flag 0.9812 beraterolelk = other competition, CONTEXT 10:00Z); experiments/discussions/feed_loop.log last run 09:58:41Z; experiments/e10_watch/20260929T1110Z.txt DIFF vs 1041Z: comp_dateRun/comp_scoreDescending/user lists/2 statuses 'no change', newest competition kernel flexonafft/biohub-lineage-forge-precision-tracking 2026-09-28 13:02Z, best public 0.953; round38/scan_browser.json (Chrome 10:13-10:20Z: no new topics, Code tab unchanged).",
+      "action": "Slot-2 message at 11:50Z (R37-A5 text): default UNUSED stands. Before sending, glance ONCE at the ~11:28Z feed digest and the ~11:41Z e10 snapshot (local files, 0 extra calls); a hit there is record-only under the 12:00Z hold (PC38-03 / R38-A2 (d) governs an E10 flag).",
+      "urgency": "now"
+    },
+    {
+      "id": "R39S-2",
+      "kind": "plan-issue",
+      "what": "Slot-2 timing arithmetic (for the 11:50Z message and the 12:00Z log): CI files are already unable to read before the 19:45:17Z admit edge; a non-CI file reads in time only if submitted by ~12:33Z; a fresh build cannot be gated inside the user's 12:00Z hold.",
+      "evidence": "CI: exp75 L (8.88, 9.05] h, exp89r (9.04, 9.22] h, exp87a (9.30, 9.48] h -> latest submit 19:45:17Z - 9.05..9.48 h = 10:15-10:42Z (passed). Non-CI: exp89p L (7.03, 7.19] h -> 19:45:17Z - 7.19 h = 12:33:53Z. New build: dummy compute ~1,130 s + pre-GPU rglob 203-788 s + queue + gate = 35-45 min (round37 report.json R37-A1 'why'). The 11:10Z timer log (CONTEXT l.4535) already records A-M2 UNUSED.",
+      "action": "In the 12:00Z CONTEXT entry write: 'slot 2 UNUSED: no disclosure since 09:14Z; CI cannot read before 19:45:17Z; non-CI latest 12:33Z but no candidate with a pre-registered reason'. No build, no dummy, no submit.",
+      "urgency": "today"
+    },
+    {
+      "id": "R39S-3",
+      "kind": "new-hypothesis",
+      "what": "Honest answer on new ideas: nothing reaches R8. No inference-only or post-processing lever on x138 is open (all closed/refuted per IDEAS.md curation 38 and the task's closed list), and no finals option is missing from the submitted set: V_pub exp87a 56640366 (or exp89t on its playbook), partners #37 56563521 / exp75 56656157 are all already scored, so a new public read adds no finals value. exp89s would read ~0.958 (0.958 K base + DIS ~0), P(>= 0.960) ~0.02-0.05, and is not partner-eligible.",
+      "evidence": "CONTEXT 09:19Z (DIS estimate 0.000 +-0.002), 08:51Z R36-A2 (pool rules), 09:09Z exp75 partner rule v2; research/KNOWLEDGE/IDEAS.md curation 38 (rounds 28-38 found nothing research-originated for 29 Sep; I-320); CONTEXT 20:00Z 28 Sep ideas sweep (16/16 refuted).",
+      "action": "None. Do not revive exp89s, exp89u, DIS 1.75/exp89e, TAU 0.7, exp86c or any closed idea. Keep the attention on the exp89t read playbook (R38-A5) and the 12:03Z card v3.",
+      "urgency": "info"
+    },
+    {
+      "id": "R39S-4",
+      "kind": "recheck-old",
+      "what": "Leaving slot 2 unused also keeps exp89t's UP test clean: a non-CI file sent at ~12:00Z completes ~19:05-19:15Z, inside exp89t's tail window (10.2 h mark 19:12Z), where it would break the 'count S0 + 1 with exp89t the only newly scored ref' check unless the R38-A3 arming is done. UNUSED makes R38-A3 void, as logged.",
+      "evidence": "research/wf_ideas_v4/round38/report.json R38-A3 'why'; CONTEXT 10:54Z (A3 conditional; A5 T3 count rule).",
+      "action": "No action beyond confirming R38-A3 stays unarmed when slot 2 is UNUSED.",
+      "urgency": "info"
+    }
+  ]
+}

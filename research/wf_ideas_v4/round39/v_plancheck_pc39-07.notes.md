@@ -1,0 +1,7 @@
+- 11:24Z start PC39-07 verification; no prior v_plancheck_pc39-07.json
+- 11:25Z CONTEXT l.4428-4440 (08:28Z user hold): at 12:00Z apply (1) exp89s iff rule (a), else UNUSED. l.4469-4490 (09:19Z): exp89r 0.957 < 0.958 -> rule (a) failed. l.4538 (11:10Z timer): A-M2 UNUSED logged.
+- 11:25Z e10 20260929T1110Z.txt DIFF vs 1041Z: kernel lists + 2 statuses no change; LB only; ours #141 0.959 count 56, 17th of 22 in 0.959 block. Best genuine public notebook still 0.953 (x138).
+- 11:25Z feed_loop.log last run 09:58:41Z (0 new topics/comments; 0.9812 flag = other competition, CONTEXT 10:00Z). Next run ~11:28Z not yet in log at 11:24:52Z.
+- 11:25Z round39 scan_browser.json (Chrome 11:13Z): only new item = question on host thread 738833 (marker/intensity processing), no knob/values. scan_hyp_slot2last39.json concurs: slot 2 UNUSED; non-CI latest submit 12:33Z, new build needs 35-45 min.
+- Nuance: '12:00Z slot 2 expires UNUSED' is loose wording: the 12:00Z decision is UNUSED; the slot technically stays open to 23:59Z (R38-A2 (d)/PC38-03: an E10 flag after 11:30Z needs explicit user yes for a post-23:00 MSK read). Not a refutation.
+- Verdict: not refuted (accurate null; no action beyond logged entry).

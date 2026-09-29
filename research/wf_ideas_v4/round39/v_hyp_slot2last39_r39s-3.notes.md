@@ -1,0 +1,8 @@
+- 2026-09-29T11:24:26Z start verify R39S-3 (info, 'nothing reaches R8')
+- 11:25Z checked: ledger.md exp85a (K base, cap6+IDW0.4+RA0.94) = 0.958 (l.25), exp87a 0.959 (l.24), exp89p 0.956 (l.21) -> "K base 0.958" correct.
+- CONTEXT 09:19Z: DIS = 0.000 (+-0.002) from display differences; rule (a) failed -> exp89s not sent; default slot 2 UNUSED. 11:10Z timer log A-M2 UNUSED.
+- IDEAS.md l.51 curation 38: whitelist {K, SEC n2a, DIS 2.25, CI} exhausted; closed list covers exp89s/exp89u/DIS1.75/TAU0.7/RA0.92 (exp86c). I-320 honest-null record rounds 28-38.
+- P(exp89s >= 0.960): round37 report says 0.03-0.11, scan_plancheck37 0.03-0.06; finding's 0.02-0.05 slightly narrow at top, immaterial (action unchanged).
+- scan_recheck39 R39-RC-A: promotion asymmetry -> any non-CI slot-2 file worth <= 0 vs UNUSED; supports the null.
+- scan_hyp R39S-1: no new disclosure since 09:14Z -> aggressive mode has nothing to act on.
+- Verdict: not refuted (info, no action). 0 Kaggle calls.

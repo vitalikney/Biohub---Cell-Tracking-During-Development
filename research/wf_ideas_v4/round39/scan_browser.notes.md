@@ -1,0 +1,11 @@
+# round39 scan_browser notes (29 Sep, start 11:10Z / 14:10 MSK)
+- 11:10Z scan_browser.json absent -> fresh run.
+- 11:10Z python tools/e10_snapshot.py -> experiments/e10_watch/20260929T1110Z.txt CHANGES=6 vs 1041Z; all kernel lists + both statuses no change; P2 largest group 1 (<5) -> no port_gate.
+- LB CSV 11:10:54Z vs r38 1013Z: 0.953 402->402, 0.954 116->115, 0.955 100->100, 0.956 149->150, 0.957 64->67, 0.958 21->21, 0.959 21->22, >=0.960 124->124; teams 3991->3992.
+- Ours #141 0.959 count 56 (unchanged); 17th of 22 in 0.959 block (125-146). Manish 0.956->0.959 joined at #142 (below us).
+- Movers (all 03:29-07:39Z subs): Manish ->0.959, tyvallo 0.955->0.957, Jamie Nojek 0.953->0.957 (07:39Z), KR_no_1 ->0.957, dddkk0/TongYi Hong/Shubham ->0.956, jwboost/Hibachi/Amil ->0.955; 4 new at 0.953. Top-25: only counts (umizora 15->16, Quantizr, Yaroslav).
+- poll.log: probe 55 exp89t 56669888 still PENDING.
+- newest digest 0958Z (73 min old at 11:11Z) -> feed not re-run.
+- ~11:13Z Chrome discussion?sort=recent-comments: only new item = pinned host topic 738833 'Cell Tracking In-Person Workshop', new comment 22 min ago (~10:51Z) by José Luiz Luna-Xavier (#2533): questions on nuclear marker (h2afva-mCherry?), consistency across embryos 44b6/6bba/hidden, intensity processing. No host answer; no knob. 744273/744278/744250/JT thread unchanged (2h/3h/6h/14h).
+- ~11:15Z Code Recently Created: unchanged (newest unpinned 'Robust Cell Tracking ... via Chan.' 5d, 0.1). Nothing pulled.
+- ~11:16Z Overview: 13 HOURS TO GO; 13,475 entrants, 4,575 participants, 3,991 teams, 95,631 submissions (+105 vs r38 95,526); timeline unchanged; no announcement. Tab closed.

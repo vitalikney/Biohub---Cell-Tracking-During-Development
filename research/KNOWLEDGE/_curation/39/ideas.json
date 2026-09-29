@@ -1,0 +1,67 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/ideas.json",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/IDEAS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/39/ideas.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/39/ideas.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "what": "The slot-2 steps are due in the next 20 minutes and none is logged yet. First the S0 build, with its named fallback (I-577, R39-A2). Then the UNUSED message, then the 12:00Z line (I-575, R39-A1). mk_s0.py has no try/except, so a snapshot without leaderboard_rows raises StopIteration. Without the fallback, the exp89t UP test could start with no count-56 S0.",
+   "evidence": "research/wf_ideas_v4/round39/report.json R39-A1, R39-A2, plan_issues (6); research/wf_ideas_v4/round39/scan_plancheck.json PC39-06 (b); experiments/e10_watch/20260929T1110Z.txt (count 56, #141 of 3,992, 17th of 22); CONTEXT.md l.4538-4546; research/KNOWLEDGE/ideas.json I-575, I-577",
+   "suggested_action": "14:45 MSK (11:45Z): run 'mk_s0.py 20260929T1141Z'. On StopIteration, a missing file or a count other than 56, run 'mk_s0.py 20260929T1110Z' instead and log which tag was used. 14:50 MSK (11:50Z): send the UNUSED message. Do not give the exp89t UP-test hygiene as a reason. 15:00 MSK (12:00Z): log the R39-A1 (2) line, including 'R38-A3 applies to any slot-2 submit before 12:43Z'.",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "The round-prompt KEY FACTS still say 'ties broken by the EARLIER submission'. Order inside a display block is actually the unrounded score; time only breaks byte-copy ties (R39-RC-C). Curation 38's I-548 note 'Fanch joined above us on the earlier timestamp' repeated the same error: Fanch's file is later (03:20:41Z) and still ranks above us. That note never reached CONTEXT or card v3, but it must not reach the card or any message.",
+   "evidence": "research/wf_ideas_v4/round39/report.json R39-A2, R39-A6 (4), new_facts (3), plan_issues (7); research/wf_ideas_v4/round39/v_recheck_r39-rc-c-tie-rule-unrounded-order-reconfir.json; research/KNOWLEDGE/ideas.json I-259, I-542, I-548",
+   "suggested_action": "Before 16:13 MSK (13:13Z, round 40), apply the R39-A6 (4) KEY FACTS wording: unrounded order; slot 2 = UNUSED; SELECTED comparator = R39-A4. Card l.8 must come from the S0 build (block 22), never from '17 of 21' and never from the Fanch sentence.",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "Rounds 40-44 will run tools/e10_snapshot.py (8 Kaggle calls per run, about 40 in total) unless the round prompt changes (I-591, R39-A6). The 17:13Z and 18:13Z rounds would overlap calls that must not hit a 429: the 17:40Z pre_exp89t save, the exp89t read saves and the single-attempt 19:44:45Z manual-admit list. This also conflicts with the API-load feedback after the 28 Sep ban report.",
+   "evidence": "research/wf_ideas_v4/round39/report.json R39-A6, plan_issues (3); research/wf_ideas_v4/round39/scan_plancheck.json PC39-03; research/KNOWLEDGE/ideas.json I-591, I-313, I-288",
+   "suggested_action": "Before 16:13 MSK (13:13Z), edit the round prompt: the browser agent uses Chrome only and never e10_snapshot.py; agents make 0 Kaggle calls from 20:30 to 23:00 MSK (17:30-20:00Z); keep the hourly rounds; make the 18:13Z round READS-vs-CARD from local files.",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "The R38-A5 T7 branch is pre-registered in CONTEXT, but nothing fires it (I-588). If exp89t is still PENDING at the first header >= 19:12:17Z (~19:20Z), the next job is the 19:43Z reminder, so the user would get 17 min instead of ~40 min before 23:00 MSK. The user probably still has the weaker {#37, #38} ticked (~0.49 bronze / ~0.11 silver). Related gap: the 18:37Z/19:43Z/21:05Z timer texts check against 'the recommended pair', so they would push a deliberate П2 tick back to П3 (I-589).",
+   "evidence": "research/wf_ideas_v4/round39/report.json R39-A3, R39-A4, plan_issues (1)-(2), new_facts (4); research/wf_ideas_v4/round39/report.notes.md 11:30Z (no 19:1x job in the process table); CONTEXT.md l.4509-4537 (A5 T7); research/KNOWLEDGE/ideas.json I-588, I-589",
+   "suggested_action": "Right after the 15:03 MSK (12:03Z) card, and at the latest before 21:13 MSK (18:13Z): arm scratchpad t7_trigger.sh with run_in_background (0 Kaggle calls). Log it in one CONTEXT line together with the R39-A4 comparator line.",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "Two pieces of evening tooling are proposed but not built or logged, and both are due before 20:40 MSK (17:40Z). First, the pre_exp89t S0 validity guard (I-590): count 56 and LastSubmissionDate 00:46:36, otherwise use the fallback flagged stale, because a completion just before 17:40Z would turn a real UP into BLIND. Second, the 18:37Z card builder mk_card_1837.py (I-592): card v3 l.3/l.48 go stale, and hand edits during a T3 read are how the PC38-01 token errors came in.",
+   "evidence": "research/wf_ideas_v4/round39/report.json R39-A5, R39-A7, plan_issues (4)-(5); research/wf_ideas_v4/round39/scan_plancheck.json PC39-04, PC39-05; research/KNOWLEDGE/ideas.json I-590, I-592",
+   "suggested_action": "During rounds 40-42 (16:13-19:13 MSK): log the R39-A5 line, then build and dry-run mk_card_1837.py for PENDING/T1..T6 and log the sha8s. Both must be done before 20:40 MSK (17:40Z).",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "Watchdog 22236 is one-shot: it stops after the first ON-BATTERY or POLL-STALE alert (I-497, R39-A8). The laptop lost network on battery twice in the last day. After a single alert, the 20:40-22:50 MSK chain (S0 save, exp89t read, T7, manual-admit, SELECTED checks) would run unwatched.",
+   "evidence": "research/wf_ideas_v4/round39/report.json R39-A8, new_facts (6); research/wf_ideas_v4/round39/scan_plancheck.json PC39-06 (a); research/KNOWLEDGE/ideas.json I-497, I-529",
+   "suggested_action": "Re-arm the watchdog right after any alert. At 20:13 MSK (17:13Z), confirm that the watchdog, pre_exp89t 36816, manual_admit 3028, watcher 30864, the T7 trigger and poller 37016 are alive, and log one line.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "The bookkeeping is still behind. experiments/RESULTS.md has no rows for probes 47-55. Rounds 37, 38 and 39 have no REPORT.md (the harness refused the Write each time). Two CONTEXT entries (11:10Z, 11:39Z) and round39/ are uncommitted.",
+   "evidence": "experiments/RESULTS.md (last probe row 46); research/wf_ideas_v4/round39/report.json next_focus NOTE; git status (M CONTEXT.md, ?? research/wf_ideas_v4/round39/); research/KNOWLEDGE/ideas.json I-232",
+   "suggested_action": "Commit CONTEXT.md and round39/ with the 12:00Z log, as the user with no co-author trailer. After the finals tick, add RESULTS rows 47-55 and render REPORT.md for rounds 37-39 from report.json.",
+   "urgency": "info"
+  },
+  {
+   "kind": "deadline",
+   "what": "Three post-deadline items with a 29 Sep deadline are still at-risk. I-336 is the HINDSIGHT GUARD: a falsifiable private prediction in a pushed commit before the first private score. I-252 is the H2/H3 lessons. I-407 is the cap-family private-read line, which should cite Satwik's 744273 claim plus the 11:39Z Civitasmass comment that local gains are negligible or negative on public (I-582).",
+   "evidence": "research/KNOWLEDGE/ideas.json I-336, I-252, I-407, I-582; CONTEXT.md l.4540-4546; research/KNOWLEDGE/IDEAS.md ORPHANS",
+   "suggested_action": "After the finals tick and before 02:00 MSK 30 Sep (23:00Z), push the hindsight-guard prediction and the single I-407 line.",
+   "urgency": "before-finals"
+  }
+ ],
+ "summary": "Curation 39 (2026-09-29 ~11:45 UTC / 14:45 MSK, HEAD 75f0efe plus two uncommitted CONTEXT entries) was an incremental pass over curation 38: 587 -> 593 ideas, 37 change records. Sources: 75f0efe (10:54Z ROUND 38 APPLIED, CONTEXT l.4509-4537), 11:10Z TIMER 'A-M2 UNUSED' (l.4538-4539), 11:39Z DISCUSSION 744273 RE-READ (Civitasmass, no values; l.4540-4546), round 39 (untracked; report.json R39-A1..A9 at 11:33Z, no REPORT.md, 4 scans, 7 verdicts), the ledger at 11:28:56Z, e10 1110Z and the feed digest 1128Z. No new LB score: exp89t (P55) is still PENDING (L > 2.47 h). V_pub stays exp87a 0.959; rank #141 of 3,992, 17th of 22 in the 0.959 block. New ideas: I-588 T7 trigger, I-589 SELECTED comparator, I-590 pre_exp89t S0 validity guard, I-591 0-API Chrome-only rounds after 12:00Z, I-592 18:37Z card builder (all in-plan, at-risk), and I-593 cap-6 partner under a lab C prior (refuted as written; only the corrected R39-A9 line may be used if the user asks). Now logged, so off the at-risk list: I-583 card v3 ae03f566, I-584, I-586, I-580, I-579 and I-577. Other updates: I-575 (11:10Z log + R39-A1 12:00Z UNUSED line), I-585 (any slot-2 submit before 12:43Z), I-576/I-553 (11:10Z pointer done), I-435 (exp86c upheld closed), I-542/I-548 (tie order = unrounded score; the curation-38 Fanch note corrected), I-259 (KEY FACTS tie wording), I-484/I-541/I-364/I-432/I-582 (nulls incl. 738833 and 744273), I-486, I-556, I-232, I-227, I-494, I-581, I-529, I-497, I-288, I-313, I-526, I-552. Counts: lb-tested 65, lab-tested 28, refuted 274, deferred 50, in-plan 174, open-untested 2. At-risk: 15 (6 off, 5 on). Strict: 1 (I-233). Cluster order is unchanged. Verification: gen.py 593 rows, 0 bad; gen2.py body and ranking equal; IDs unique."
+}

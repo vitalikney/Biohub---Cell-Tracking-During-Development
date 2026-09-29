@@ -1,0 +1,37 @@
+{
+ "summary": "Round-39 delta scan, 11:10-11:16 UTC 29 Sep (14:10-14:16 MSK), compared with round 38 (10:13-10:20Z). There is nothing to act on. E10 P1 (experiments/e10_watch/20260929T1110Z.txt, CHANGES=6 against 1041Z) changed on the leaderboard only. Every kernel list and both statuses (x138 live slug) report no change, and the P2 largest group is 1 (below 5), so port_gate was not run. No digest has been written since 0958Z (73 min old at 11:11Z, under 100 min), so the feed was not re-run. The only new discussion item is a participant question on host thread 738833 about the image marker and intensity processing. It has no answer and discloses no knob. The Code tab is unchanged and nothing was pulled. The Overview shows '13 HOURS TO GO' and 95,631 submissions (+105), with no announcement. LB CSV 11:10:54Z against 10:14Z: 0.953 402->402, 0.954 116->115, 0.955 100->100, 0.956 149->150, 0.957 64->67, 0.958 21->21, 0.959 21->22, >=0.960 124->124, teams 3,991->3,992. Our row is unchanged: #141, 0.959, count 56. We are 17th of 22 in the 0.959 block, and Manish joined it below us (#142). Probe 55 exp89t (56669888) is still PENDING.",
+ "findings": [
+  {
+   "id": "r39-e10-p1-null",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "E10 P1 at 11:10Z shows CHANGES=6 against 1041Z, all on the leaderboard histogram (0.959 +1, 0.957 +2, 0.956 -1, 0.955 +2, >=0.955 480->484, teams 3991->3992). comp_dateRun, comp_scoreDescending, the anvithpothula/thtennant/amanatar kernel lists and both kernel statuses (amanatar/optimized-biohub-max-score and the x138 live slug anvithpothula/biohub-0-953-lb-original) report 'no change'. P2 look-check: the largest group is 1 (one team <=0.953 -> 0.957: Jamie Nojek, sub 07:39:39Z), below the >=5 signal, so there is no port signal and tools/e10_port_gate.py was not run. Discussion feed: the newest digest is still experiments/discussions/digest_20260929T0958Z.md (0 new topics, 0 new comments; its E10 FLAG, beraterolelk 0.9812, is the known other-competition false positive), and no digest has been written since r38. It was 73 min old at 11:11Z (< 100 min), so kaggle_feed.py was not re-run (API load kept minimal). The best genuine public biohub notebook is still 0.953 (x138).",
+   "evidence": "experiments/e10_watch/20260929T1110Z.txt DIFF section; experiments/discussions/feed_loop.log (last run 09:58:41Z rc=0)",
+   "action": "None. E10 (a genuine public notebook >= 0.960) is not met."
+  },
+  {
+   "id": "r39-lb-delta",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "LB CSV publicleaderboard-2026-09-29T11:10:54 (downloaded by e10_snapshot; no extra API call) against r38's 10:14:05Z. Counts: 0.953 402->402, 0.954 116->115, 0.955 100->100, 0.956 149->150, 0.957 64->67, 0.958 21->21, 0.959 21->22, >=0.960 124->124; total teams 3,991->3,992. Top 25: no score or rank changes, only counts (umizora 15->16, Quantizr 23->24, Yaroslav 37->38). Movers, all with submissions timestamped 03:29-07:39Z, so these are late-scored night subs: Manish 0.956->0.959 (#142, 18 subs); tyvallo 0.955->0.957; Jamie Nojek 0.953->0.957 (07:39:39Z, 88 subs); KR_no_1 0.956->0.957; dddkk0, TongYi Hong (0.953->0.956) and Shubham Sahu2003 ->0.956; jwboost, Hibachi Fried Rice and Amil Gentili ->0.955; 4 new teams at 0.953. Our row: '141,16810638,D: Discipline,2026-09-29 00:46:36,0.959,56', unchanged. The 0.959 block is ranks 125-146 (22 teams) and we are 17th. Manish placed below us at #142, so our rank holds at 141. Our count is still 56, which matches the R37-A3 S0 requirement for the exp89t UP test. poll.log: probe 55 exp89t 56669888 is still PENDING (read expected ~18:17-18:29Z).",
+   "evidence": "experiments/e10_watch/20260929T1013Z.txt vs 20260929T1110Z.txt (leaderboard_rows); experiments/lb_poll/poll.log",
+   "action": "None. 20260929T1110Z (count 56, <= 12:00Z) is available as an e10-fallback S0 for the exp89t read if the 17:40Z pre_exp89t snapshot is missing."
+  },
+  {
+   "id": "r39-discussion-738833-question",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "Chrome, discussion sorted by recent comments (~11:13Z). The only new content is a comment on the pinned host topic 738833 'Cell Tracking In-Person Workshop' (Jordão Bragantini). José Luiz Luna-Xavier (#2533) posted it ~10:51Z ('22 minutes ago'), titled 'Nuclear marker and intensity processing of the image volumes'. It asks whether the channel is only the histone H2A.F/Z-mCherry signal, whether the line, channel and microscope are the same for 44b6, 6bba and the hidden test, and whether volumes were 'rescaled, normalised per frame/crop, deconvolved, fused ... or bleach-corrected'. There is no host answer, and it discloses no knob, value, dataset or technique, so AGGRESSIVE MODE has nothing to build. Other threads are unchanged: 744273 shakeup (last comment 2h ago, Yassine Alouini), 744278 new entrants (3h, fheizz), 744250 'Time of publishing private results' (0 comments, 6h, no host answer), JT 'Public 0.953 to 0.959 in two days...' (14h). The host post itself (workshop Nov 30-Dec 3 2026, Redwood City, for eligible prize winners) is not new.",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/738833 ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion?sort=recent-comments",
+   "action": "None. If a host answer appears, it could inform intensity-normalisation choices after the competition, but nothing can be built before the 20:00Z tick."
+  },
+  {
+   "id": "r39-code-overview-null",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "Code, Recently Created (Chrome ~11:15Z): unchanged. The newest unpinned notebook is still 'Robust Cell Tracking During Development via Chan.' (Updated 5d ago, Score 0.1), then 6-9-day-old items. x138 'Biohub 0.953 LB | ORIGINAL' is still 0.953 with 233 votes. The score sort is unchanged per the e10 comp_scoreDescending list. Nothing is >= 0.954 and there is no new idea, so nothing was pulled into experiments/ext_*. Overview (~11:16Z): 'BIOHUB · RESEARCH CODE COMPETITION · 13 HOURS TO GO'; 13,475 entrants, 4,575 participants, 3,991 teams (the CLI says 3,992), 95,631 submissions (+105 since r38's 95,526). The timeline is unchanged (Start June 29; Entry and Team Merger September 22; Final Submission Deadline September 29, 2026). There is no host announcement.",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/code?sortBy=dateCreated ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/overview",
+   "action": "None. The user still ticks the finals by 20:00Z (23:00 MSK)."
+  }
+ ]
+}

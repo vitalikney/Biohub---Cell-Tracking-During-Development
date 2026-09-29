@@ -1,0 +1,5 @@
+- 2026-09-29T11:35Z started curation 39 watch; no 39/watch.json; base = 38 WATCHLIST (10:45Z)
+- 2026-09-29T11:36Z read CONTEXT l.4509-4539 (10:54Z R38 applied; 11:10Z timer log), round39 report.json R39-A1..A9 + scan notes; poll 11:28:55Z exp89t PENDING; RUN46 10:42Z OK; feed 11:28Z null; RESULTS still ends probe 46
+- 2026-09-29T11:36Z verified round prompt still has 'ties broken by the EARLIER submission' and browser agent runs e10_snapshot.py first (biohub-research-round.js l.20, l.37) -> W359/C14 open; drafting W354-W363, T224-T228, C14-C16, I430-I439
+- 2026-09-29T11:38Z WATCHLIST.md written (curation 39); line refs verified; writing watch.json
+- 2026-09-29T11:39Z watch.json written (14 alerts); done
