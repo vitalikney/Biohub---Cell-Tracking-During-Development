@@ -1,0 +1,7 @@
+- 2026-09-29 10:30Z start R38T-H3 skeptic; read CONTEXT l.1665-1680 (R8), l.4440-4529, round38 scans.
+- 10:31Z R8 (CONTEXT l.1674-1675): new mechanisms by 27.09 12:00Z; after 29.09 02:00Z only an emergency repeat (hard edge 10:00Z). Slot 2 is used only under the user's 08:28Z hold (CONTEXT l.4440, l.4488-4497).
+- round37/report.json R37-A1: a non-CI dummy has to be pushed by ~11:15Z (compute ~1,130 s + queue + R22-A1 gate = 35-45 min). R37 rejected list: DIS 1.75/exp89e, blind exp89s, exp89u, tie-order resubmit (I-542), TAU 0.7, exp86c are all closed.
+- KNOWLEDGE/INDEX.md l.39: I-575 = slot-2 closure. CHANGES.md l.1529: I-542 refuted (resubmit to win the tie order).
+- round38/scan_browser.json (10:13-10:20Z): E10 null, best genuine notebook 0.9530, no disclosed values, no new topics, 744250 has no host answer.
+- Extra timing check: a 12:00Z submit reads at +7.5-8.9 h (non-CI #37 7.54 h; exp75 CI 8.88-9.05 h), i.e. ~19:30-21:00Z, which is at or after the 20:00Z tick. So even a late 'yes' has a marginal read time. This makes the null stronger, it does not weaken it.
+- Verdict: not refuted.

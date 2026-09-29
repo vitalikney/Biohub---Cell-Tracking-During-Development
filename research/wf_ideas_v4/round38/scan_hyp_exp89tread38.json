@@ -1,0 +1,160 @@
+{
+ "task": "round 38 scan_hyp_exp89tread38: exp89t read playbook + card_fill_1203_v2 gaps + new ideas",
+ "written_utc": "2026-09-29T10:30Z",
+ "summary": "exp89t (56669888, sent 09:00:17Z, PENDING at the 10:08:39Z header) READ PLAYBOOK, built only from logged rules: the 09:00Z read rule, the 02:02Z (2) running-champion rule (conservative reading), GAP RULE v2 (10.2 h edge = 19:12:17Z / 22:12 MSK, 10.75 h admit edge = 19:45:17Z / 22:45 MSK, L_hi = first terminal header + 210 s x failed attempts), R37-A3 (UP test 56 -> 57), card v5 step 4 / R26-A4 (b), and the section-5 swap. It gives 8 outcome rows (T1-T8), each with V_pub, the pair and a one-line Russian message with the untick/tick steps for the three likely SELECTED states. V_pub changes only on T1-T3: '+' >= 0.960, or 0.959 with an attributable UP. Both hold also with L_hi 10.2-10.75 h, flagged UNPROVEN-ins. After 22:45 MSK nothing changes, even at 0.960. The 10.2 h edge never changes V_pub: it only flips '0'/'-' to '?', which change nothing. Seven gaps between the rules and card_fill_1203_v2.txt, most urgent first: (G1) the Satwik line keeps 'Это довод за страховку #37', which R37-A4 dropped, and lacks 'не подтверждено'. Fix it before the 12:03Z card. (G2) R37-A3 treats count 56 -> 58 as MASKED. The binding card step 4 / R26-A4 (b) says a slot-2 file with a strictly lower display does not mask. (G3) Section 5 leaves 22:45-23:00 MSK undefined and keys on completion rather than the poll header. (G4) The swap text and the template fill tables lack exp89t: V_CI, the neighbour line, 'П3 страхует ... DIS', the token row and the lever count. (G5) I-548's model numbers disagree with R37-A4's 'keep step 10'. (G6) Stale S0 with k >= 1 still promotes exp89t per R37-A3; the task wording lumps it with the no-change rows. (G7) The task preamble facts are stale. New ideas are procedure only. H1: one manual submissions list at 19:45:00Z if exp89t is still PENDING (1 call, ~0.3-0.7% chance to decide V_pub). H2: S1 re-saves allowed until 19:50Z, because a later S1 can only lower k. Honest null: nothing reaches R8 for a new build or for slot 2.",
+ "findings": [
+  {
+   "id": "R38T-T0",
+   "kind": "recheck-old",
+   "what": "PLAYBOOK INPUTS AND CODING. Ref 56669888, T0 = 09:00:17Z. H = the first poll.log header, manual headers included, in which 56669888 is terminal. F = that header's failed attempts. L_hi = H + 210 s x F - T0. Edges: 10.2 h = 19:12:17Z (22:12 MSK); 10.75 h = 19:45:17Z (22:45 MSK); tick deadline 20:00Z (23:00 MSK). Codes vs the running champion exp87a 56640366 (0.959, COMPLETE 28 Sep 21:43Z): '+' = COMPLETE and display >= 0.960; '0u' = 0.959 with an attributable UP; '0' = 0.959 with k = 0 / MASKED / BLIND; '-' = <= 0.958. UP test (R37-A3 + R35-A1): S0 = pre_exp89t (17:40Z save, count 56), or e10_<ts> (~11:41Z, count 56) flagged 'stale S0'; S1 = post_exp89t; the count must move 56 -> 57, with one lag re-save ~5 min later if still 56. 'Attributable' = k >= 1 and the count check holds, or the R26-A4 (b) exemption applies (see G2). GAP RULE v2: L_hi <= 10.2 h -> code as read; 10.2 < L_hi <= 10.75 h -> '+'/'0u' stand flagged UNPROVEN-ins (a normal read, so V_pub changes), '0'/'-' -> '?'; L_hi > 10.75 h or ERROR -> '?'. Tie orders (2)-(4) do not apply (not a co-completion). The R36-A2 (iii) SEC exception does not apply (both files are SEC-free). Consequence: the 10.2 h edge never changes V_pub; only the 10.75 h edge does.",
+   "evidence": "CONTEXT.md l.4459-4470 (09:00Z read rule), l.4273-4293 (02:02Z (1)-(2) running champion, conservative reading), l.4180-4191 (GAP RULE v2 + L_hi definition), l.4441-4452 (R36-A2), l.4351-4358 and l.4381-4393 (R34-A1, R35-A1); round37/report.json R37-A3, R37-A7; tools/runtime_ledger.py ~l.205-221 (first_result_upper = ts + RETRY_SLACK_S x failed_attempts); tools/uptest.py compare (passed = above in S0 and below in S1; missing team = not passed); poll.log header 2026-09-29T10:08:39Z: 56669888 PENDING.",
+   "action": "Code the read with this table at the first terminal header. Before any user message, make 1 read-only SELECTED call (card step 2) and pick the untick/tick variant: (a) {exp87a 56640366, #37 56563521}; (b) {exp87a 56640366, exp75 56656157}; (c) {#37 56563521, #38 56563534}. Kaggle allows at most 2 ticks, so every message says 'сначала снимите, потом отметьте' and ends with 'проверьте «2 of 2 selected»'. The session never ticks.",
+   "urgency": "today"
+  },
+  {
+   "id": "R38T-T1",
+   "kind": "recheck-old",
+   "what": "ROW T1: '+' clean. COMPLETE, display >= 0.960, H + 210 s x F <= 19:12:17Z. Result: V_pub = exp89t 56669888 (CI, 4 levers: cap 6, K, CI, DIS). Pair П3 = {exp89t 56669888, #37 56563521}; #37 now hedges cap 6, K, CI and DIS. П2 {exp89t 56669888, exp75 56656157} only as a trade. V_CI = exp89t; V_nonCI stays exp85a 56629533. The info line 'лучший + ближайший сосед' becomes {exp89t, exp87a} (differs only by DIS; not taken). Card section 4 DIS line: 'прямое чтение с CI: exp89t = <d> против exp87a 0.959 (+<d-0.959>)'. E10 trigger -> >= 0.961 (moot: no slot).",
+   "evidence": "09:00Z rule '+' >= 0.960 -> new V_pub (CI, 4 levers) (CONTEXT l.4468-4469); card_fill_1203_v2.txt section 5 swap; R34-A2 neighbour rule (CONTEXT l.4358-4360); R36-A2 (iv) 4 levers.",
+   "action": "Push at once, not waiting for 19:43Z. Variant (a): 'exp89t = <0.960> (<ЧЧ:ММ> МСК, <ЧЧ:ММ> UTC): новый основной файл — exp89t 56669888 (с CI, 4 рычага: cap 6, K, CI, DIS); пара П3 = {exp89t 56669888, #37 56563521}: снимите галочку с exp87a 56640366, отметьте exp89t 56669888 (#37 оставьте), проверьте «2 of 2 selected» до 23:00 МСК (20:00 UTC); П2 {exp89t 56669888, exp75 56656157} — только как обмен.' Variant (b): '... снимите exp87a 56640366, отметьте exp89t 56669888 (exp75 оставьте — это П2 {exp89t, exp75}; для П3 вместо exp75 поставьте #37 56563521) ...'. Variant (c): '... снимите #38 56563534, отметьте exp89t 56669888 (#37 оставьте) ...'.",
+   "urgency": "today"
+  },
+  {
+   "id": "R38T-T2",
+   "kind": "recheck-old",
+   "what": "ROW T2: '+' UNPROVEN-ins. COMPLETE, display >= 0.960, 19:12:17Z < H + 210 s x F <= 19:45:17Z. Result: as T1 (V_pub = exp89t, П3 {exp89t, #37}), with the pool row flagged UNPROVEN-ins. Add the footnote 'ins-tail?' if L_lo > 9.6 h. GAP RULE v2 treats this as a normal read.",
+   "evidence": "Card v5 section 1 pool text; CONTEXT l.4184-4186; R37-A7 (2).",
+   "action": "Push the T1 message with this clause added after the file name: '(завершился после 22:12 МСК: пометка UNPROVEN-ins — гейт вставки мог сработать на последних клипах; по записанному правилу это обычное чтение)'. Same untick/tick variants.",
+   "urgency": "today"
+  },
+  {
+   "id": "R38T-T3",
+   "kind": "recheck-old",
+   "what": "ROW T3: '0u' = 0.959 with an attributable UP. COMPLETE; H + 210 s x F <= 19:45:17Z (above 19:12:17Z flagged UNPROVEN-ins); compare(S0 count 56, S1 count 57) gives k >= 1. This includes the 'stale S0' e10 fallback: R37-A3 says 'k >= 1: exp89t becomes V_pub', and a stale S0 only biases k toward 0, never up. Result: V_pub = exp89t, pairs as in T1. S1 retries: see R38T-H2.",
+   "evidence": "R37-A3 (3); 02:02Z (2) (a later file replaces the champion iff its own completion gave an attributable UP); uptest.py docstring 'public bests never fall, so any such team = our best rose'.",
+   "action": "At the header, send the interim line: 'exp89t = 0.959 (<ЧЧ:ММ> МСК, <ЧЧ:ММ> UTC): делаю UP-тест, ответ в течение ~10 мин.' After the test: 'UP-тест exp89t: после его завершения мы обошли <k> команд (счётчик 56 → 57) — он выше exp87a без округления, основной теперь exp89t 56669888 (с CI, 4 рычага); снимите exp87a 56640366, отметьте exp89t 56669888 (#37 56563521 оставьте) → П3 = {exp89t, #37}; проверьте «2 of 2 selected» до 23:00 МСК (20:00 UTC).' Use variants (b)/(c) as in T1. Log the S0/S1 tags, counts and k; add 'stale S0' if the e10 fallback was used.",
+   "urgency": "today"
+  },
+  {
+   "id": "R38T-T4",
+   "kind": "recheck-old",
+   "what": "ROW T4: '0' = 0.959 with no attributable UP. Covers k = 0; MASKED (the count did not move exactly +1 after the lag re-save and the R26-A4 (b) exemption does not apply); BLIND (the LB download failed after the H2 retries); a stale S0 with k = 0; and 0.959 with L_hi 10.2-10.75 h and no UP (coded '?'). Result: V_pub stays exp87a 56640366 (running champion, conservative reading). Pair П3 {exp87a 56640366, #37 56563521}. DIS on the CI base ~0 ('?' if L_hi > 10.2 h).",
+   "evidence": "02:02Z (2): 'k = 0 / MASKED / BLIND -> the champion STAYS'; R37-A3 (3); GAP RULE v2.",
+   "action": "Push: 'exp89t = 0.959 (<ЧЧ:ММ> МСК, <ЧЧ:ММ> UTC), но обойдённых команд нет (<0 / MASKED / BLIND>): по правилу «чемпион по порядку завершения» основной остаётся exp87a 56640366, пара П3 {exp87a 56640366, #37 56563521} без изменений (DIS на базе с CI ≈ 0).' Append by SELECTED: (a) 'ничего менять не нужно'; (b) 'у вас П2 {exp87a, exp75} — это допустимый обмен, менять не обязательно'; (c) 'снимите #38 56563534, отметьте exp87a 56640366, проверьте «2 of 2 selected» до 23:00 МСК (20:00 UTC)'.",
+   "urgency": "today"
+  },
+  {
+   "id": "R38T-T5",
+   "kind": "recheck-old",
+   "what": "ROW T5: '-' = display <= 0.958. Result: V_pub stays exp87a, pair П3 unchanged. The card DIS line reads 'DIS 2.25 на базе с CI: <d - 0.959> (exp89t <d>)', or '?' if L_hi > 10.2 h. With exp89r's indirect estimate of 0.000, this closes DIS as ~0 or negative. It is info only; no slot remains.",
+   "evidence": "09:00Z rule 'below -> no change'; 09:19Z DIS estimate (CONTEXT l.4482-4483).",
+   "action": "Push: 'exp89t = <0.958> (<ЧЧ:ММ> МСК, <ЧЧ:ММ> UTC): ниже exp87a (DIS 2.25 на базе с CI <−0.001>), основной остаётся exp87a 56640366, пара П3 {exp87a 56640366, #37 56563521} без изменений.' Append the SELECTED variant exactly as in T4.",
+   "urgency": "today"
+  },
+  {
+   "id": "R38T-T6",
+   "kind": "recheck-old",
+   "what": "ROW T6: ERROR (any time). Result: '?', V_pub stays exp87a, П3 unchanged, DIS on the CI base unread. No re-submit: slot 2 is the last submit of the day and a CI file cannot read before 20:00Z.",
+   "evidence": "Freeze (1) 'ERROR -> ?'; CI L >= 8.88 h, so a file sent after ~11:07Z cannot read before 20:00Z.",
+   "action": "Push: 'exp89t завершился с ошибкой (<ЧЧ:ММ> МСК, <ЧЧ:ММ> UTC): основной остаётся exp87a 56640366, пара П3 {exp87a 56640366, #37 56563521} без изменений; DIS с CI не прочитан.' Append the SELECTED variant as in T4.",
+   "urgency": "today"
+  },
+  {
+   "id": "R38T-T7",
+   "kind": "recheck-old",
+   "what": "ROW T7: still PENDING in the last header at or after 19:12:17Z (22:12 MSK). From here any read is UNPROVEN-ins: '+'/'0u' up to 19:45:17Z -> T2/T3; '0'/'-' -> '?', i.e. T4/T5 with DIS '?'; later -> T8. The user should tick the default pair now, so that a late swap is one untick and one tick. This is the provisional-tick logic of I-227 (in-plan), not a new rule.",
+   "evidence": "GAP RULE v2; I-227 (IDEAS.md l.277, in-plan 'never 0/2 or 1/2 selected'); R37-A7 (3) (19:43Z reminder, 19:47Z re-read).",
+   "action": "Push at 19:12Z: 'exp89t ещё считается в 22:12 МСК (19:12 UTC): основным он станет, только если прочитается до 22:45 МСК (19:45 UTC) с паблик ≥ 0.960 или 0.959 с UP (с пометкой UNPROVEN-ins); позже — не финал. Отметьте уже сейчас П3 {exp87a 56640366, #37 56563521} (снимите #38 56563534, отметьте exp87a 56640366); если exp89t её сменит, пришлю одну строку сразу.' Drop the parenthesis if SELECTED is already (a) or (b). Then run R38T-H1 (manual list at 19:45:00Z) instead of the 19:47Z poll.log re-read.",
+   "urgency": "today"
+  },
+  {
+   "id": "R38T-T8",
+   "kind": "recheck-old",
+   "what": "ROW T8: the first terminal header + 210 s x F is after 19:45:17Z (22:45 MSK). This includes reads after 20:00Z (23:00 MSK). Result: '?' at any display, including >= 0.960. It is not a final and V_pub stays exp87a. Kaggle allows re-selection until 23:59Z (02:59 MSK), but the logged admit edge (L_hi <= 10.75 h) excludes the file. This is not a post-hoc option.",
+   "evidence": "Freeze (1) 'L_hi > 10.75 h ... -> ?'; card v5 section 1 pool rule; card_fill_1203_v2 section 5.",
+   "action": "Push: 'exp89t прочитан только в <ЧЧ:ММ> МСК (<ЧЧ:ММ> UTC), позже края допуска 22:45 МСК: паблик <X> — только для сведения, в финал он не идёт при любом значении; основной остаётся exp87a 56640366, пара П3 {exp87a 56640366, #37 56563521} — ничего не меняйте.' At the 21:05Z SELECTED check, compare against П3 (or П2) with exp87a.",
+   "urgency": "today"
+  },
+  {
+   "id": "R38T-G1",
+   "kind": "plan-issue",
+   "what": "CARD v2 CONTRADICTS R37-A4 (Satwik line). card_fill_1203_v2.txt section 6 adds 'Satwik в обсуждении 744273 (29 сен): ... Это довод за страховку #37.' R37-A4 explicitly says: 'Drop the scan's \"ещё один довод за страховку #37\": exp75 = #37 + CI hedges cap 6 and K just as well.' R37-A4 also asked for 'Не подтверждено:'. As written, the line tilts П3 over П2 on a non-argument, which is post-hoc steering.",
+   "evidence": "scratchpad card_fill_1203_v2.txt l.54; diff vs card_fill_1203.txt (+ l.54); round37/report.json R37-A4 (optional line text).",
+   "action": "Before the 12:03Z (15:03 MSK) send, replace l.54 with R37-A4's text: 'Не подтверждено: Satwik (744273, 12:06 МСК) пишет, что на паблике мало делений и его улучшения делений дали на паблике 0 или минус. Если так, cap 6 и K проверены на «лёгком» эмбрионе; оба партнёра (#37 и exp75) их не несут, так что на выбор П3/П2 это не влияет.' Or drop the optional line. Re-run the token checks.",
+   "urgency": "now"
+  },
+  {
+   "id": "R38T-G2",
+   "kind": "plan-issue",
+   "what": "MASKING CONTRADICTION. R37-A3 (3) says 'If a slot-2 file completed in between (count 56 -> 58), the UP is MASKED.' Card v5 step 4 and R26-A4 (b), applied verbatim by freeze (5), say a file whose display is strictly below our shown best, with our shown best unchanged during the window, does NOT mask. A slot-2 file at <= 0.958 has an unrounded score < 0.9585 <= exp87a's, so it cannot move our row. The two texts diverge only if slot 2 is used (the default at 12:00Z is UNUSED). R37-A5 also saves post_exp89s only at 0.958/0.959, so no count-57 S0 exists if exp89s completes first at a lower display.",
+   "evidence": "round37/report.json R37-A3 (3); finals_card_v5_ru.md step 4 (l.85); CONTEXT l.4218-4220 (freeze (5): '(b) masking applies verbatim'); R37-A5 (post_exp89s watcher at 0.958/0.959).",
+   "action": "Only if slot 2 is sent: log before either read 'exp89t UP test: count 56 -> 58 is MASKED only if the slot-2 file's display is >= 0.959; a strictly lower slot-2 file does not mask (R26-A4 (b), card step 4)'. Widen the post_exp89s watcher to save on ANY terminal status while 56669888 is PENDING, which gives a count-57 S0. Slot 2 UNUSED -> nothing to do.",
+   "urgency": "today"
+  },
+  {
+   "id": "R38T-G3",
+   "kind": "plan-issue",
+   "what": "CARD v2 SECTION 5 ADMIT WORDING. (i) 'в пул входит, если завершится до 22:12 МСК' keys on completion. The rule keys on the first poll header that shows the file terminal, plus 210 s per failed attempt. With ~10-min headers, a file finishing at 22:05 MSK can land in the UNPROVEN-ins band. (ii) The 22:45-23:00 MSK window is undefined: the text jumps from 'до 22:45 МСК' to 'после 23:00 МСК — не финал'. Under GAP RULE v2, a first terminal header after 22:45:17 MSK is '?' and out of the pool even at 0.960.",
+   "evidence": "card_fill_1203_v2.txt l.48; CONTEXT l.4187-4191 (L_hi = header + 210 s x failed; > 10.75 h -> '?').",
+   "action": "At the 12:03Z fill, make a 2-phrase edit in section 5: 'в пул входит, если поллер покажет его завершённым до 22:12 МСК' and 'если позже 22:45 МСК — не финал при любом паблике'. This is wording only; no rule change.",
+   "urgency": "now"
+  },
+  {
+   "id": "R38T-G4",
+   "kind": "plan-issue",
+   "what": "exp89t MISSING FROM THE FILL MACHINERY. The section-5 swap changes only П3/П2. It does not update (i) 'Лучший файл с CI: V_CI = exp87a' -> exp89t, (ii) the neighbour info line {exp87a, exp85a} -> {exp89t, exp87a} (R34-A2: fewest lever differences = DIS only), or (iii) 'П3 ... #37 страхует всё сразу (cap 6, K, CI)' -> '(cap 6, K, CI, DIS)'. The template's fixed_refs/token_refs, the step-5 lever list and the <V_CI_*> source list have no exp89t entry.",
+   "evidence": "card_fill_1203_v2.txt l.20, l.28, l.31, l.48; finals_card_v5_ru.md l.86 (lever list), l.99-117 (refs), l.129 (V_CI source); CONTEXT l.4450 (exp89t = 4 levers), l.4463 (dummy CSV 6edc1f180116, integer coordinates).",
+   "action": "For the 18:37Z fill and any T1-T3 message, use the token row 'exp89t = ' -> {ref 56669888, ci true, sec false, levers 4 (cap 6, K, CI, DIS), L from ledger, dummy_csv 6edc1f180116 int}. On a V_pub change, also update the V_CI line, the neighbour line and the П3 'страхует' list. Do not edit the template (a134d5e4); edit the filled copy only.",
+   "urgency": "today"
+  },
+  {
+   "id": "R38T-G5",
+   "kind": "plan-issue",
+   "what": "MODEL-NUMBER CONFLICT. card_fill_1203_v2 section 2 keeps the exp85a-based numbers (П2 bronze ~0.75-0.93, П3 ~0.68-0.85, ticked {#37, #38} ~0.48-0.66) plus 'не пересчитывали', per card step 10 and R37-A4 ('keep step 10'). Curated I-548 says to replace them for V_pub exp87a with the mc31v re-run (П2 0.63-0.85 / silver 0.43-0.68, П3 0.61-0.83 / 0.39-0.64, ticked 0.20-0.58), and to re-run if V_pub changes. The two sources disagree. The card as drafted overstates the ticked {#37, #38} pair (0.48-0.66 vs 0.20-0.58), which weakens the push to re-tick.",
+   "evidence": "card_fill_1203_v2.txt l.26-33; IDEAS.md I-548 (l.960); round37/report.json R37-A4.",
+   "action": "The main session picks one before 12:03Z. The minimal honest fix keeps step 10 (the later decision) and adds nothing. If I-548 is adopted instead, change all three ranges together and keep 'модель ранжирует, но не решает'. Do not re-run the model for exp89t (step 10).",
+   "urgency": "now"
+  },
+  {
+   "id": "R38T-G6",
+   "kind": "plan-issue",
+   "what": "STALE S0 WORDING. This round's task lists 'stale fallback S0' among the no-change outcomes. R37-A3 says: use e10_<ts> flagged 'stale S0' ('conservative, because k is biased toward 0') and 'k >= 1: exp89t becomes V_pub'. A stale S0 with k >= 1 and count 56 -> 57 is attributable. Only k = 0 keeps exp87a. Treating stale k >= 1 as no-change would be an unlogged, post-hoc tightening.",
+   "evidence": "round37/report.json R37-A3 (3); uptest.py compare semantics (a team passed must have been above us at S0 and below at S1; public bests never fall).",
+   "action": "Apply R37-A3 verbatim (row T3). Log 'stale S0' next to k.",
+   "urgency": "today"
+  },
+  {
+   "id": "R38T-G7",
+   "kind": "new-fact",
+   "what": "This round's task preamble is stale: it says 'best public 0.958 = exp85a' and 'E10 trigger >= 0.959'. CONTEXT has best public 0.959 = exp87a 56640366 since 28 Sep 21:45Z, with the E10 trigger at >= 0.960 (>= 0.961 after a T1/T3 promotion). No action on the files; the round prompt should be refreshed.",
+   "evidence": "CONTEXT l.4153-4160.",
+   "action": "Refresh the KEY FACTS in the round prompt for rounds 39+.",
+   "urgency": "later"
+  },
+  {
+   "id": "R38T-H1",
+   "kind": "new-hypothesis",
+   "what": "MANUAL LIST AT THE ADMIT EDGE. Mechanism: the ~10-min poller puts H up to 10 min after the real completion. A completion at 19:36-19:45Z can be first seen after 19:45:17Z, which codes as '?' (T8) even at 0.960. One manual submissions list at 19:45:00Z, appended as '=== <UTC> [manual-admit]' (the HEADER regex accepts it; precedent '[manual-night]'), admits every completion <= 19:45:00Z. Expected value: P(L in 10.58-10.75 h) ~1-2% (CI tail) x P('+' or '0u') ~0.35-0.4 = ~0.4-0.8% chance that V_pub is decided correctly instead of '?'. Cost: 1 read-only Kaggle call, 0 GPU. It supersedes the 19:47Z poll.log re-read of R37-A7 (3). The same trick at 19:12Z is NOT needed: the 10.2 h edge does not change V_pub (R38T-T0).",
+   "evidence": "poll.log header cadence ~10 min (09:58:37Z, 10:08:39Z); runtime_ledger.py HEADER regex l.91; precedent 02:53Z (2) manual-A-M1 (CONTEXT l.4302-4305).",
+   "action": "Arm now (pre-read) one background waiter: at 19:45:00Z, if the last header shows 56669888 PENDING, run one 'timeout 60 kaggle competitions submissions -v' and append it to poll.log as '=== <UTC> [manual-admit]'. Gate: none (a procedure). Log the line in CONTEXT before 17:53Z.",
+   "urgency": "today"
+  },
+  {
+   "id": "R38T-H2",
+   "kind": "new-hypothesis",
+   "what": "S1 RE-SAVES UNTIL 19:50Z (BLIND and LB lag). R35-A1 allows one lag re-save; nothing covers a failed LB download, which becomes BLIND and keeps exp87a. Since public bests never fall, a team counted as passed at any later S1 was passed by our rise. A later S1 can only lower k, never create a false pass, provided the count is still 57 (it cannot be 58 with slot 2 UNUSED). Allowing up to 3 re-saves (every ~10 min, each 'timeout 180 python tools/uptest.py save post_exp89t_<n>') until 19:50Z turns a transient BLIND or lag into a real read. Value: the ~25-30% prior of a 0.959 read x the P(BLIND/lag) share (~5-10% judging by the 05:30Z outage and the e10 0/8 fetch run) = ~1-3% of V_pub decisions resolved instead of defaulting. Cost: <= 3 LB downloads.",
+   "evidence": "uptest.py docstring; R35-A1 (CONTEXT l.4386-4389); ops outage 05:30-05:57Z (CONTEXT l.4344-4346).",
+   "action": "Log pre-read: 'exp89t S1: on a download failure or unchanged count, re-save every ~10 min, at most 3 times, until 19:50Z; the first save with count 57 is S1; none -> BLIND/MASKED, champion stays'. Gate: none (procedure, pre-score).",
+   "urgency": "today"
+  },
+  {
+   "id": "R38T-H3",
+   "kind": "new-hypothesis",
+   "what": "HONEST NULL ON NEW MECHANISMS. Nothing reaches R8. New mechanisms closed on 27 Sep 12:00Z. The only remaining submit (slot 2) needs a dummy by ~11:15Z (14:15 MSK) and defaults to UNUSED (rule (a) failed at exp89r 0.957). No disclosed x138-family value with numbers exists (R37: Satwik, Yassine, SGHWR gave none), and no public notebook is above 0.953. Inference/post-processing ideas would re-open closed families (edge filter, forkmid, float output, etc.) or DIS 1.75 / exp89e (excluded by the user). Re-submitting for tie order is refuted (I-542). The exp89t read can only choose V_pub among existing refs.",
+   "evidence": "CONTEXT R8 (l.1671); R37-A1/A5 (dummy cutoff ~11:15Z); IDEAS I-575, I-542; round37 rejected list; CONTEXT 10:00Z feed false positive (best genuine public notebook 0.953).",
+   "action": "Do not build anything. Slot 2 stays by the logged 12:00Z default unless the browser scan of this round finds an E10 >= 0.960 or a disclosed value before ~11:15Z.",
+   "urgency": "info"
+  }
+ ],
+ "report_md_ru": "# Раунд 38: плейбук чтения exp89t (29 сен ~13:30 МСК / 10:30 UTC)\n\nexp89t 56669888 отправлен в 12:00 МСК (09:00 UTC).\n- Край 10.2 ч — 22:12 МСК (19:12 UTC).\n- Край допуска 10.75 ч — 22:45 МСК (19:45 UTC).\n- Отметить финалы до 23:00 МСК (20:00 UTC).\n\nОсновной файл меняется только в строках T1–T3:\n- T1–T2: паблик ≥ 0.960;\n- T3: 0.959 с приписываемым UP (счётчик 56 → 57, k ≥ 1).\n\nОбе строки действуют и при L_hi 10.2–10.75 ч, с пометкой UNPROVEN-ins. Тогда основной — exp89t, пара П3 = {exp89t 56669888, #37 56563521}.\n\nВо всех остальных случаях основной остаётся exp87a 56640366, пара П3 = {exp87a, #37}:\n- 0.959 без UP (0 / MASKED / BLIND);\n- ≤ 0.958;\n- ERROR;\n- завершение позже 22:45 МСК.\n\nКрай 10.2 ч на выбор основного не влияет.\n\nРасхождения с card_fill_1203_v2 (до 15:03 МСК):\n1. Строка Satwik содержит фразу «довод за #37», которую R37-A4 убрал.\n2. В разделе 5 не описано окно 22:45–23:00 МСК; «завершится» надо заменить на «поллер покажет».\n3. Числа модели: I-548 расходится с R37-A4.\n\nОстальное — до 21:37 МСК: при смене основного обновить V_CI, строку соседа и список «страхует … DIS»; правило MASKED при использованном слоте 2 разойдётся с R26-A4 (b).\n\nНовые процедуры:\n- ручной список в 22:45 МСК (1 вызов);\n- до 3 повторных сохранений ЛБ до 22:50 МСК для UP-теста.\n\nНовых механизмов, проходящих R8, нет."
+}

@@ -1,0 +1,6 @@
+- 2026-09-29T10:40Z start round 38 curation (facts.json absent -> fresh run)
+- 10:42Z sources read: CONTEXT l.4488-4508 (09:57 ROUND 37 APPLIED R37-A1..A5, 10:00 FEED E10 false positive); Lit l.4509; round38 report.json (R38-A1..A7, 10:38Z) + notes; poll.log header 10:38:44Z l.30393 (exp89t PENDING); ledger 10:38:46Z (550 polls); e10 1013Z l.281/l.1166/l.1196; git 66f1eeb, 135788c
+- 10:44Z plan: FACTS state line + F-LB-38, F-RUN-57, F-RUL-38, F-TRN-72/73; [c38] notes F-LB-01/02/10, F-RUN-43/55/56, F-RUL-01, F-MOD-49/55, F-TRN-71; C-297..C-301 notes; new C-304..C-314. DECISIONS: state, P55 cells, §1 para, §2 para + 10:45Z snapshot, R1-R10/§f cells, rows 1715/1719/1754/1756/1762, 4 new §3 rows, changelog
+- 10:45Z FACTS.md patched (scratchpad c38_facts.py): state line, F-LB-38, F-RUN-57, F-RUL-38, F-TRN-72/73, 10 [c38] notes, C-297..C-301 notes, C-304..C-314; pipe check 0 bad
+- 10:47Z DECISIONS.md patched (c38_dec.py): state, P55 cells, §1 para, §2 para + 10:45Z snapshot, R1-R10/§f, EXP75 v2, GAP v2, rule (a), slot-2 hold, R37 row; 4 new §3 rows; changelog; pipe check OK
+- 10:47Z facts.json written (8 alerts). Done.

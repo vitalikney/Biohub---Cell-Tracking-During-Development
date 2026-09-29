@@ -1,0 +1,7 @@
+# R38-RC-B verify notes (2026-09-29T10:28:24Z)
+- 10:28Z probe 26 verified RESULTS.md l.59: exp45 = exp29 OUTPUT_SAFE_DIVISIONS=0 -> 0.911 (J_pub 0.36). Note: J is a RATIO; says nothing about COUNT of public divisions (Satwik's claim is count).
+- 10:29Z ledger.md: exp70d (DC 0.30) 0.949, exp70j/k (DC 0.20/0.225) 0.954, exp70b forkmid 0.954, exp70g (cap6) 0.956, exp85a (K) 0.958 -> fork-set record as quoted.
+- round37/report.json R37-A4 (PC37-07 corrected) ALREADY carries a hedged optional line: 'Не подтверждено: Satwik (744273, 12:06 МСК) ... Если так, cap 6 и K проверены на «лёгком» эмбрионе; оба партнёра (#37 и exp75) их не несут, так что на выбор П3/П2 это не влияет.' and says DROP 'довод за страховку #37'.
+- scratchpad card_fill_1203_v2.txt (13:01 local) l.54 still has the STALE line '... Это довод за страховку #37.' -> must be replaced regardless (R37-A4).
+- Skeptic: (1) J_pub 0.36 is a ratio; it cannot refute a COUNT claim ('few divisions'). (2) '1-2 events' assumes D=TP+FP+FN 50-150; probe 41 DC0.30 -0.005 = 1 event at D~20 as well; +0.001/+0.002 steps can also be edge/node-bonus changes (K adds 3 safe + 1 insertion forks, CONTEXT l.3579-3582). So 'premise not supported' is overclaimed -> 'not testable from our probes'. Decision impact: none (both partners lack cap 6/K; (ii) stays closed = same as R37-A4). Value of rewording: marginal, adds an unverified count claim to the user card.
+- 10:30Z final JSON written: refuted=true (overclaimed premise rebuttal; duplicates R37-A4; stale l.54 must be replaced per R37-A4).

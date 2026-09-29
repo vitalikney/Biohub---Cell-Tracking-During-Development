@@ -1,0 +1,8 @@
+- 2026-09-29T10:26:25Z start R38T-G5 check
+- ~10:30Z read: scratchpad card_fill_1203_v2.txt l.26-33 (P2 0.75-0.93/0.59-0.78, P3 0.68-0.85/0.39-0.63, ticked 0.48-0.66/0.10-0.23, l.33 'model for V_pub exp85a 28 Sep 16:18 MSK, not recomputed').
+- IDEAS.md l.960 I-548 = R31-A4 (round31/report.json, 02:38Z) mc31v numbers. IDEAS l.1012: 'R31-A4 (card numbers) ... not logged' -> never adopted into CONTEXT.
+- Template round29/finals_card_v5_ru.md step 10 (l.91): 'do not recompute; if V_pub != exp85a keep "не пересчитывали"'. Template last committed a9ac9ee (02:53Z, AFTER R31-A4) with step 10 kept.
+- CONTEXT l.4494-4497 R37-A4 (09:57Z): card from card_fill_1203.txt, keep step 10; round37 report R37-A4 'Keep the П3/П2 order and wording ... and step 10'; R37-A8 captions chat only, 'step 10 stays'. IDEAS l.979 (curation 37) routes I-548 through the R37-A4 card path.
+- => precedence already on record: later decision (R37-A4) > unadopted R31-A4/I-548. No live conflict.
+- Ranking: ticked {#37,#38} < P3 under both sources (0.48-0.66 < 0.68-0.85; 0.20-0.58 < 0.61-0.83) -> re-tick direction unchanged. Ticked drop in mc31v is field drift (02:14Z field), not V_pub; mc31v field itself now 8 h stale.
+- Verdict: refuted (no action beyond the finding's own 'keep step 10' = status quo). 0 Kaggle calls.

@@ -1,0 +1,81 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/INDEX.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/CHANGES.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/38/index.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/38/index.json"
+ ],
+ "alerts": [
+  {
+   "kind": "contradiction",
+   "what": "Card v2 (scratchpad card_fill_1203_v2.txt) re-imports the dropped Satwik argument 'Это довод за страховку #37.' and has a stale header and rank, a premature slot-2 clause, and no 22:45-23:00 MSK band.",
+   "evidence": "research/wf_ideas_v4/round38/report.json R38-A1; research/wf_ideas_v4/round38/v_plancheck_pc38-01.json; research/KNOWLEDGE/FACTS.md C-304..C-307",
+   "suggested_action": "Write card_fill_1203_v3.txt by 11:40Z (14:40 MSK) with token check 'довод' = 0, and send it at 12:03Z (15:03 MSK).",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "Slot 2: send the 11:50Z message. If there is no new yes, log 'slot 2 UNUSED' at 12:00Z (15:00 MSK). The 11:10Z timer is log-only.",
+   "evidence": "CONTEXT.md l.4488-4501 (R37-A5); research/KNOWLEDGE/WATCHLIST.md T209",
+   "suggested_action": "Send the message at 11:50Z and write the UNUSED log at 12:00Z. Submit nothing.",
+   "urgency": "now"
+  },
+  {
+   "kind": "forgotten",
+   "what": "The 12:00Z CONTEXT entry (R38-A2) must carry the R37-A6 addendum (count-jump L, k = 0, Satwik null, exp89t prior), the timers as pointers, the Satwik-line lock and the E10 policy for after 12:00Z.",
+   "evidence": "research/wf_ideas_v4/round38/report.json R38-A2; research/wf_ideas_v4/round38/scan_plancheck.json PC38-03, PC38-06",
+   "suggested_action": "Write one entry at 12:00Z and commit it as the user with no co-author trailer.",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "The 17:40Z pre_exp89t save job (pid 18408) reads only the last poll.log block, skips on a transient error block and never retries.",
+   "evidence": "research/wf_ideas_v4/round38/report.json R38-A4; research/wf_ideas_v4/round38/report.notes.md 10:34Z; research/KNOWLEDGE/FACTS.md C-308, F-RUN-57",
+   "suggested_action": "Run mk_s0.py at 11:45Z. Before 17:40Z, kill 18408/35124 and re-arm per R38-A4, or do the save by hand.",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "The exp89t read playbook T0-T8 and the RECOMMENDED PAIR line are not logged, and the 19:47Z re-read misses completions in (19:40:33, 19:45:17].",
+   "evidence": "research/wf_ideas_v4/round38/report.json R38-A5, R38-A6; research/wf_ideas_v4/round38/v_hyp_exp89tread38_r38t-h1.json",
+   "suggested_action": "Before 17:53Z (20:53 MSK), log the playbook and arm the self-contained 19:44:45Z script.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "The round-prompt KEY FACTS still say 0.958 = exp85a and E10 >= 0.959. Round 38 is uncommitted, rounds 37 and 38 have no REPORT.md, and RESULTS.md stops at P46.",
+   "evidence": "research/wf_ideas_v4/round38/report.json R38-A7; research/wf_ideas_v4/round38/report.notes.md 10:38:56Z; experiments/RESULTS.md l.79",
+   "suggested_action": "Refresh KEY FACTS before round 39 (13:13Z). Do the RESULTS rows and REPORT.md files after the 20:00Z tick.",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "The weaker pair {#37, #38} is still ticked. The recommended pair is П3 {exp87a 56640366, #37 56563521}.",
+   "evidence": "research/KNOWLEDGE/DECISIONS.md §2 l.999-1001; research/KNOWLEDGE/FACTS.md F-TRN-73",
+   "suggested_action": "Card v3 §5 should ask the user to tick now. Verify SELECTED at ~20:00-20:30Z and at 21:05Z.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "deadline",
+   "what": "The hindsight guard (I-336), the H2/H3 lessons (I-252) and the I-407 line (incl. I-582) are due before 23:00Z.",
+   "evidence": "research/KNOWLEDGE/IDEAS.md ORPHANS l.950",
+   "suggested_action": "Push them after the finals tick.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "contradiction",
+   "what": "Slot-2 masking: R37-A3 (3) says MASKED, but R26-A4 (b) says a strictly lower display does not mask. This matters only on a slot-2 yes.",
+   "evidence": "research/wf_ideas_v4/round38/report.json R38-A3; research/KNOWLEDGE/FACTS.md C-309",
+   "suggested_action": "Void it with the 12:00Z UNUSED log.",
+   "urgency": "info"
+  },
+  {
+   "kind": "risk",
+   "what": "After 12:00Z only kaggle_feed.py watches E10, and it is not scoped to this competition.",
+   "evidence": "CONTEXT.md l.4502-4508; research/KNOWLEDGE/WATCHLIST.md I429",
+   "suggested_action": "Make one competition-scoped kernel-list call before telling the user about a flag. Build nothing.",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 38 index task (~10:50Z, HEAD 135788c). INDEX.md was rewritten (70 lines): the state is exp87a 0.959 V_pub, rank #141 of 3,991; exp89t PENDING at 10:48:46Z; the #37 + #38 finals are still ticked; slot 2 defaults to UNUSED; round 38 R38-A1..A7 are not logged. It gives an updated anchor map (CONTEXT l.4488-4509; IDEAS l.228/950; FACTS F-LB-38 l.271 .. C-314 l.833; DECISIONS l.1001, l.1787-1790; WATCHLIST l.61-141), 8 top open ideas (I-583, I-575/579/584, I-577, I-580, I-586, I-585, I-336/252/407, I-233) and 11 deduplicated alerts. CHANGES.md now has a '## 38' section covering sources, LB, ideas (+5, I-548 refuted), facts (F-LB-38, F-RUN-57, F-RUL-38, F-TRN-72/73, C-304..C-314), watchlist and alerts (resolved, new, carried over, dropped, settled)."
+}

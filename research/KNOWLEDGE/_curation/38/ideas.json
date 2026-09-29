@@ -1,0 +1,60 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/ideas.json",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/IDEAS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/38/ideas.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/38/ideas.json"
+ ],
+ "alerts": [
+  {
+   "kind": "contradiction",
+   "what": "The pre-filled 12:03Z card block card_fill_1203_v2.txt (built 10:01Z) contradicts R37-A4. Its Satwik line ends 'Это довод за страховку #37.' and has no 'не подтверждено' flag. R37-A4 dropped that argument because exp75 (= #37 + CI) hedges cap 6 and K just as well. The block's header and rank are also stale (09:18Z poller; #140 of 3,988 against #141 of 3,991 at 10:14Z). It states the slot-2 outcome before 12:00Z and says nothing about 22:45-23:00 MSK. If v2 is sent as is, the neutral card tilts toward П3. Card v3 fixes this (I-583).",
+   "evidence": "research/wf_ideas_v4/round38/report.json R38-A1, plan_issues (1)-(3); research/wf_ideas_v4/round38/v_plancheck_pc38-01.json; research/wf_ideas_v4/round38/v_hyp_exp89tread38_r38t-g1.json, r38t-g3.json; CONTEXT.md l.4488-4501 (A4 shortened to 'optional Satwik line'); research/KNOWLEDGE/ideas.json I-583, I-578",
+   "suggested_action": "By ~11:40Z (14:40 MSK), write card_fill_1203_v3.txt with R38-A1 edits (1)-(6). Refresh the header and rank after the 11:45Z S0 build and the SEC clause after the 12:00Z log. Run the token checks: 'довод' = 0, 'подтверждено' = 2. Send at 12:03Z (15:03 MSK) and log the v3 sha8.",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "The 12:00Z (15:00 MSK) slot-2 log needs one CONTEXT entry (R38-A2) that carries several items still missing from CONTEXT. These are the R37-A6 addendum (exp89r L (9.06, 9.14] h from the count jump, k = 0, the Satwik null, the exp89t prior; I-579), the timer texts as pointers (12:03Z -> card v3; I-576), the lock on the Satwik line and the E10 policy for after 12:00Z (verify + MSK push only; I-584). Without the entry, a session after compaction loses all of them.",
+   "evidence": "research/wf_ideas_v4/round38/report.json R38-A2 (a)-(e), plan_issues (4), (7); research/wf_ideas_v4/round38/scan_plancheck.json PC38-03, PC38-06; CONTEXT.md l.4488-4508 (the last entries); research/KNOWLEDGE/ideas.json I-575, I-579, I-584",
+   "suggested_action": "At 11:50Z send the slot-2 message. At 12:00Z write ONE entry: slot 2 UNUSED (or the user's yes, then I-585) plus R38-A2 (a)-(e). Leave ledger.md untouched and commit as the user with no co-author trailer.",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "The armed 17:40Z pre_exp89t save job (pid 18408) checks only the LAST poll.log block for '^56669888,.*PENDING'. A transient error block (two today, at 05:34:41Z and 05:46:17Z) would make it print 'no pre-save' and skip the primary S0, and a failed save is never retried. Without that save, a 0.959 exp89t read falls back to the ~6 h stale e10 S0, which biases k toward 0 (I-577).",
+   "evidence": "research/wf_ideas_v4/round38/report.json R38-A4, plan_issues (5); research/wf_ideas_v4/round38/scan_plancheck.json PC38-04; research/wf_ideas_v4/round38/report.notes.md 10:34Z (Win32_Process command line)",
+   "suggested_action": "11:45Z (14:45 MSK): run mk_s0.py for the fallback S0 (e10 1013Z also has count 56). Before 17:40Z (20:40 MSK): kill 18408/35124 and re-arm per R38-A4, testing the newest NON-error block and retrying once after 5 min if 'SubmissionCount' is missing.",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "The exp89t read has no logged playbook yet. R37-A7 was never logged, and round 38 extends it to rows T0-T8 (I-580). The key gap: after a promotion nothing records the new recommended pair, so the pair-agnostic 18:37Z/19:43Z/21:05Z checks could push the user back to exp87a, and the card has no token row for exp89t. The 19:47Z poll re-read also misses completions in (19:40:33, 19:45:17]. The planned fix is a 19:44:45Z [manual-admit] list (I-586).",
+   "evidence": "research/wf_ideas_v4/round38/report.json R38-A5, R38-A6, plan_issues (8)-(10); research/wf_ideas_v4/round38/scan_hyp_exp89tread38.json R38T-T0..T8, R38T-G4, R38T-H1; research/wf_ideas_v4/round38/v_hyp_exp89tread38_r38t-h1.json; experiments/lb_poll/ledger.md (10:38:46Z: exp89t PENDING, L > 1.64 h)",
+   "suggested_action": "Before 17:53Z (20:53 MSK): log the R38-A5 playbook and arm and log the R38-A6 background script. On T1/T2/T3, first append 'RECOMMENDED PAIR = П3 {exp89t 56669888, #37 56563521}' and only then push the MSK text.",
+   "urgency": "today"
+  },
+  {
+   "kind": "contradiction",
+   "what": "R37-A3 (3) says a count jump of 56 -> 58 is MASKED. R26-A4 (b) and card v5 step 4 say a file whose display is strictly lower does not mask. The conflict only matters if the user says yes to a slot-2 file. In that case neither file has a count-57 S0 (I-585, I-490).",
+   "evidence": "research/wf_ideas_v4/round38/report.json R38-A3, plan_issues (6); research/wf_ideas_v4/round38/scan_hyp_exp89tread38.json R38T-G2; research/wf_ideas_v4/round38/scan_plancheck.json PC38-05",
+   "suggested_action": "Only on a slot-2 yes at 11:50-12:00Z: log the R38-A3 pre-read line and arm the mid_<token> save. Otherwise mark it void with the 12:00Z UNUSED log.",
+   "urgency": "info"
+  },
+  {
+   "kind": "stale",
+   "what": "The bookkeeping is behind. The round-38 prompt's KEY FACTS still say 'best public 0.958 = exp85a' and 'E10 >= 0.959' (R38-A7; the correct values are 0.959 = exp87a and E10 >= 0.960). experiments/RESULTS.md has no rows for probes 47-55. Rounds 37 and 38 have no REPORT.md because the harness refused the Write both times.",
+   "evidence": "research/wf_ideas_v4/round38/report.json R38-A7, next_focus; research/wf_ideas_v4/round38/report.notes.md 10:38:56Z; experiments/RESULTS.md (last probe row = 46); research/KNOWLEDGE/ideas.json I-259, I-232",
+   "suggested_action": "Before round 39 (13:13Z / 16:13 MSK): refresh KEY FACTS. After the finals tick: add the RESULTS rows and render the round 37/38 REPORT.md files from report.json.",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "Three post-deadline items with 29 Sep deadlines are still at-risk. I-336 (HINDSIGHT GUARD: a falsifiable private prediction in a pushed commit before the first private score), I-252 (the H2/H3 lessons by 23:00Z/23:59Z) and I-407 (the cap-family private-read line, to include I-582 Satwik's 'division-poor public' claim).",
+   "evidence": "research/KNOWLEDGE/ideas.json I-336, I-252, I-407, I-582; research/KNOWLEDGE/IDEAS.md ORPHANS",
+   "suggested_action": "After the finals tick and before 23:00Z: push the hindsight-guard prediction and the one I-407 line.",
+   "urgency": "before-finals"
+  }
+ ],
+ "summary": "Curation 38 (2026-09-29 ~10:55 UTC, HEAD 135788c) was an incremental pass over curation 37: 582 -> 587 ideas, 28 change records. Sources: 66f1eeb (09:57Z ROUND 37 APPLIED, R37-A1..A5, CONTEXT l.4488-4501), 135788c (10:00Z feed false positive, 'stacking' excluded, l.4502-4508), round 38 (untracked; report.json R38-A1..A7 at 10:38Z, no REPORT.md, 4 scans, 17 verdicts), the ledger at 10:38:46Z and the e10 1013Z snapshot. No new LB score: exp89t (P55) is still PENDING (L > 1.64 h). V_pub stays exp87a 0.959, and the rank is #141 of 3,991. New ideas: I-583 card v3 for 12:03Z (v2 re-imported the dropped Satwik argument), I-584 E10 after 12:00Z (verify + MSK push only), I-585 slot-2-yes UP-test arming (conditional), I-586 19:44:45Z manual admit list, and I-587 S1 re-saves (refuted). Status moves: I-548 (mc31v card numbers) became refuted under R38T-G5, since card step 10 governs. Updated: I-575..I-582 (the R37 items are logged as plans; the I-577 17:40Z job is flawed -> R38-A4; I-578 superseded by I-583; I-579 re-carried as R38-A2 (a); I-580 extended to the T0-T8 playbook), I-486 (dummy-lab split), I-535/I-490/I-297 (rechecks: running champion unchanged, masking relaxation, #38 stays out), I-432/I-364/I-541 (feed, E10 null), I-556/I-259/I-232 (lenses, stale KEY FACTS, no round37/38 REPORT.md). Counts: lb-tested 65, lab-tested 28, refuted 273, deferred 50, in-plan 169, open-untested 2. At-risk: 16 (off I-548, I-576, I-578; on I-583, I-584, I-586). Strict: 1 (I-233). Cluster order is unchanged. Verification: gen.py 587 rows, 0 bad; gen2.py body and ranking equal; IDs unique."
+}

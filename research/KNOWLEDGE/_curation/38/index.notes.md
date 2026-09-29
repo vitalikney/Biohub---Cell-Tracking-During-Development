@@ -1,0 +1,5 @@
+- 10:49Z start curation 38 index task; no index.json existed
+- 10:50Z anchors gathered: IDEAS CHANGES(38) l.228, rank l.241, ORPHANS l.950; FACTS F-LB-38 l.271, F-RUN-57 l.333, F-RUL-38 l.376, F-TRN-72/73 l.513-514, C-304..314 l.823-833; DECISIONS P55 l.207, [c38] l.562/999/1001, rows l.1787-1790, changelog l.2000; WATCH l.61/71/85/116/141; CONTEXT 4529 lines, new l.4488-4508, Lit l.4509; poll 10:48:46Z l.30454 exp89t PENDING; e10 RUN46 1041Z #141/3991 17/21
+- 10:51Z INDEX.md written
+- 10:51Z CHANGES.md section 38 appended
+- 10:51Z index.json written; done

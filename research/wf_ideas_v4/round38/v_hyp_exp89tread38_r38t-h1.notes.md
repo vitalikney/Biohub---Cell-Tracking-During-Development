@@ -1,0 +1,11 @@
+# R38T-H1 skeptic notes (2026-09-29 ~10:30Z)
+- No prior JSON answer existed.
+- exp89t ref 56669888 submitted 2026-09-29 09:00:17.723Z (poll.log). Admit edge 10.75 h = 19:45:17.7Z; stamp 19:45:00 -> L_hi 10.745 h (17.7 s margin); 19:44:45 -> 10.741 h.
+- runtime_ledger.py: HEADER regex `^=== (ts)(.*)$` accepts '[manual-admit]' suffix; polls sorted by ts (l.152); failed_attempts counts only '[empty stdout' / '[ERROR' in note; safetail_ci deadline_h 10.75 (l.59).
+- lb_poll.py l.25: poller stamps ts BEFORE the call -> manual stamp-before-call is the same convention.
+- Poller cadence ~602 s (09:58:37, 10:08:39, 10:18:41). Projection: headers ~19:30:31, 19:40:33, 19:50:35Z -> the real loss window is (19:40:33, 19:45:17] ~4.7 min, i.e. L in (10.67, 10.75] h, not 10.58-10.75. The 19:47Z poll.log re-read (R37 report.json action, round37) sees only the 19:40:33 header -> adds nothing; the manual list is the only fix.
+- Observed CI-family L: 8.88-9.05 (exp75), 9.04-9.22 (exp89r), 9.27-9.45 (exp48), 9.30-9.48 (exp87a). No CI file ever > 9.5 h. P(L in a 4.7-min window at 10.7 h) ~0.2-0.5% (needs a ~1.3 h Kaggle-side slowdown). P('+' >= 0.960 or '0u') given DIS ~ 0 (probe 52 dd = 0) ~0.3. Product ~0.1-0.15% (finding says 0.4-0.8%: overstated ~3-5x).
+- Private value of a correct V_pub switch exp87a -> exp89t = private DIS effect, ~0 +- 0.0003 (DIS ~ 0 on LB). EV on private ~0 ranks.
+- FEASIBILITY TRAP: scratchpad timer.sh polls the clock every 30 s and only prints a message; its notification is queued until the session is free. A 19:45:00 timer can fire 19:45:00-19:45:30 and the session may run the call even later -> stamp > 19:45:17.7 -> useless. Must be a self-contained background script (precedent night_guards.sh G2 block: TS=$(date -u +%FT%TZ); timeout 180 kaggle competitions submissions -c ... -v > _night_subs.csv; grep '^ref,' && append '=== TS [manual-...]'), fine-grained sleep, target 19:44:45Z.
+- Also skip if a poller header is already stamped >= 19:44:30Z (avoids a redundant call / same-second append), and skip if 56669888 already terminal.
+- Cost 1 read-only call (API load rule: fine). No GPU, no submit, byte-identical files. Logged pre-score -> not post-hoc; precedent manual-A-M1 (CONTEXT 02:53Z (2)).

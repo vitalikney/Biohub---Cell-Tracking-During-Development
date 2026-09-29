@@ -1,0 +1,8 @@
+- 2026-09-29T10:26Z started verify R38T-T5; no prior json
+- read: scan_hyp_exp89tread38.json (T0-T8); CONTEXT l.4180-4192 (GAP RULE v2: '0'/'-' with 10.2<L_hi<=10.75 h -> '?'), l.4273-4293 (02:02Z (2) running champion), 09:00Z probe-55 read rule ('below -> no change'), 09:19Z DIS estimate 0.000 +-0.002.
+- poll.log: 56669888 still PENDING in latest headers (no read yet); 0 Kaggle calls by me.
+- card_fill_1203_v2.txt l.42 DIS line 'Прямое чтение с CI - exp89t (раздел 5)' -> T5 fills it; template DIS_READ (card v5 l.133) is a code, not a raw diff.
+- check: exp89t = exp87a + DIS only -> direct single-lever read; a 0.958 display vs 0.959 bounds true DIS in (-0.002, 0.000), so '<-0.001>' needs a rounding caveat. Neither П3 member (exp87a, #37) carries DIS -> no finals effect. Row is consistent with logged rules; no build, no slot, no GPU.
+- gaps: push text lacks the '?' branch for L_hi > 10.2 h (only the card line has it); T8 (L_hi > 10.75 h) must take precedence over T5.
+- verdict: not refuted (procedure-correct, info only), small wording fix.
+- 10:27Z JSON written (refuted=false)

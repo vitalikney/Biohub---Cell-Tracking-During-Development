@@ -1,0 +1,8 @@
+# v_hyp_exp89tread38 R38T-T3 notes
+- 2026-09-29T10:26:26Z start; no prior json
+- 10:27Z checked: CONTEXT l.4459-4470 (09:00Z read rule: '0.959 -> V_pub only with an attributable UP (S0 newest count-matched save before its header, S1 right after)'); l.4493-4497 R37-A3 (fallback S0 flagged stale; k>=1 -> exp89t V_pub); l.4273-4281 02:02Z (2) running champion conservative. T3 is a verbatim transcription -> not post-hoc.
+- tools/uptest.py compare: above0 = rank < ours in S0; passed = rank in S1 > ours; missing -> 0 -> not passed. Stale S0 set of above-teams is a subset of fresh S0's above-teams (teams can only climb) -> k_stale <= k_fresh: claim 'biases k toward 0' holds. Residual false-pass path: a team kept on LB but rescored down (DQ without removal) inside the S0..S1 window; negligible, longer window with stale S0.
+- LB CSV Score is 3-decimal (post_exp75: 0.959, count 55); UP detection works via in-block rank (precedent exp87a UP 12). e10 20260929T1013Z snapshot has full rows incl. ours: rank 141, 0.959, count 56 -> mk_s0.py fallback parses.
+- poll.log last: 56669888 PENDING (10:27Z). Gaps in T3 text: (1) message lacks the UNPROVEN-ins clause when H+210sxF in (19:12:17, 19:45:17]; (2) '~10 мин' promise vs lag re-save (+5 min) and H2 retries to 19:50Z; (3) '56 -> 57' hardcoded: if slot 2 is used and completes first, target shifts (G2); (4) user's current SELECTED likely (c) {#37,#38} per memory -> variant (c) text is the most likely one, not the (a) text shown.
+- VALUE: sub-rounding public gain on one embryo (29%); DIS ~0 (exp89r 0.957 estimate 0.000 +-0.002); private effect ~0 either way; no harm evidence; rule pre-registered pre-score -> keep.
+- 10:32Z JSON written (refuted=false, 4 wording fixes); 0 Kaggle calls

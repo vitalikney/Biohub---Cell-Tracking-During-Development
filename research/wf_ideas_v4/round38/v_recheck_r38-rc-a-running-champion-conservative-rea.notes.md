@@ -1,0 +1,9 @@
+# R38-RC-A verifier notes (2026-09-29T10:28:10Z)
+- Reproduced pool38.py: exp89t 0.91764, exp87a 0.91675, DIS on K+CI +0.00089 (44b6 +0.00082, 6bba +0.00089). Per clip TP/FN identical, FP 93->92 on 6bba_05db0fb1, nodes 122328->121389 (-0.77%). Claims (1)(3) numbers verified.
+- DECOMPOSITION via ol.pooled score_nomult (tools/overlap_lab.py:353): exp89t-exp87a total +0.00089 = edge-only +0.00041 (the single FP flip) + node multiplier +0.00048. So 'whole gain is node bonus' is FALSE (46% is 1 FP event).
+- Other arms: DIS on K +0.00048 = edge 0 + node +0.00048; K+SEC +0.00039 = 0 + 0.00039; 70g -0.00079 = edge -0.00127 + node +0.00048. Node part is constant (deterministic from deletion), edge part ranges -0.00127..+0.00041 (1-3 edge events).
+- Implication: node bonus is embryo-independent in sign => it is ALSO in the public read. Public DIS ~0 (exp89r) => public edge part ~ -0.0005. The lab's 'positive' is exactly the component already priced into the public posterior; embryo-dependent edge part is mixed/neg. 'Mildly positive on K+CI base' rests on one FP event.
+- CONTEXT 09:00Z read rule (l.~4468) + R37-A3 (S0 pre_exp89t 17:40Z, k>=1 promote, k=0/MASKED/BLIND keep exp87a) already fix the decision; the finding changes nothing operationally -> value is only the INFO line/card text, which as drafted is factually wrong ('node bonus only').
+- Lab reliability on this base: CI on K in dummy lab -0.00509 vs three public +0.001 reads (probes 48/51/53) -> lab sign-wrong on the CI half of the K+CI base.
+- mc38_t.py: 'dummy-lab informed' prior N(+.0005,.0006) predates the +0.00089 measurement; MC posterior |k0 DIS is NEGATIVE (-0.9..-3.1e-4) so the '+0.0001-0.0002 given up at k=0' claim is not an MC output (unsupported). Also inter N(+.0004,.0003) term unexplained.
+- Verdict: refuted=true for the new claims (mechanism + 'mildly positive' + card line); running-champion rule itself stands unchanged (it is the default).
