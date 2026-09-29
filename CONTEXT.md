@@ -4476,6 +4476,15 @@ Mention it to the user in one line (R9-A8 item 6).
   (b) the R25 rule -> exp75 >= 0.955 clean -> pair B {exp87a, exp75} is shown as a TRADE ('CI в обоих файлах, CI не
   застрахован'); the recommended pair stays A/П3 {exp87a 56640366, #37 56563521}. LB save post_exp75 (09:08Z): rank
   140, 0.959, SubmissionCount 55 (= the S0 for exp89r's UP test at 0.959).
+- 2026-09-29 09:19 UTC, READ: PROBE 52 exp89r (K + SEC + DIS 2.25 + CI) = 0.957 -> Rr '-' vs exp87a 0.959; DIS ~ 0; rule (a) not met (exp89s not sent)
+  Header 09:18:30Z: 56656147 COMPLETE public 0.957 (PENDING at 09:08:28Z). Ledger: safetail_ci, L in (9.04, 9.22] h,
+  ADMIT (a), insertion gate 10.2 h did NOT fire. No UP test (display not 0.959; the LB-save job logged 'no save').
+  DIS: estimate = d_R - 0.959 + 0.002 = 0.000 (+-0.002); R26-A2 (1) dd = (0.957 - 0.956) - (0.959 - 0.958) = 0 -> DIS
+  '?'. Side line (R35-A3): B25 / learned node-drop family not reopened. RULE (a) (08:19Z): display 0.957 < 0.958 ->
+  exp89s NOT sent; under the user's hold, slot 2 is decided at ~11:50Z (default now UNUSED: with DIS ~ 0, exp89s's
+  expected display is ~0.958 and it cannot become V_pub). exp89t (K + DIS + CI) PENDING, expected ~0.959 + DIS (~0) ->
+  most likely 0.959 (a tie with the champion exp87a). V_pub stays exp87a 56640366; SEC files are out of the V_pub
+  race.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
