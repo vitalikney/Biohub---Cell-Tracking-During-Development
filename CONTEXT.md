@@ -4391,6 +4391,16 @@ Mention it to the user in one line (R9-A8 item 6).
   ===== lines; the R34-A2 neighbour line names exp85a for exp87a. (R35-A3) at exp89r's read log beside the DIS code:
   'B25 / learned node-drop family: not reopened (pre-registered before any DIS read)'. (R35-A5) rounds 36+:
   READS-vs-CARD lens (code each landed read against the logged rules and the card) instead of the recheck lens.
+- 2026-09-29 07:59 UTC, READ: PROBE 54 exp89p (K + SEC) = 0.956 -> P '-' vs exp85a 0.958; A-M1 UNUSED; SEC removed from the morning
+  Header 07:58:14Z: 56657612 COMPLETE public 0.956 (56656147 exp89r and 56656157 exp75 PENDING). L in (7.03, 7.19] h
+  approx (submitted 00:46:36Z; non-CI family; L_hi << 7.9 h). P code (02:02Z (1)): display 0.956 <= 0.957 -> '-'. No
+  UP test (not 0.959; the LB-save job logged 'display not 0.959: no save'). CONSEQUENCES (pre-registered): A-M1 ->
+  UNUSED (exp89l needs P >= 0.959); the freeze (9) SEC clause -> SEC is removed from every morning file; A-M2 (02:53Z
+  (1)) with d_P = 0.956: DIS '+' iff d_R - 0.956 >= 0.003 and d_R > 0.959, i.e. exp89r >= 0.960 -> exp89s (K + DIS, no
+  SEC); otherwise (Rr '+' with P '-' -> UNUSED; d_R <= 0.959 -> UNUSED) A-M2 UNUSED. C11 record (R33-A4 (b)): 'first
+  LB read of the distilled secondary fine-tune (SEC n2a) on the K base: -0.002 (0.958 -> 0.956); the dummy-lab
+  negative prior (-0.0008..-0.0020 on 5/5 pairs) had the right sign'. Card: SEC_READ = '-' (0.956); SEC files (exp89p,
+  exp89r, exp89l, exp89q) cannot be V_pub unless another file beats 0.959 - not applicable.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
