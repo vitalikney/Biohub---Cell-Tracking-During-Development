@@ -4358,6 +4358,26 @@ Mention it to the user in one line (R9-A8 item 6).
   outage, and the exp75/exp89r windows overlap. R34-A2 (card fill): the 'best + closest neighbour' info line names the
   file with the fewest lever differences from V_pub (exp87a -> exp85a), no model numbers; R34-A3 curator records
   (Charannoo divrelax etc.) later.
+- 2026-09-29 07:23 UTC, MORNING PREP (07:23Z timer; pre-score: header 07:18:07Z shows 56656147 / 56656157 / 56657612 PENDING)
+  No rebuild or re-push (R30-A2 / R32-A3): exp89l, exp89s, exp89q are submitted as v1 = the gated dummies. G5 at
+  07:23Z: all three KernelWorkerStatus.COMPLETE. Pending L lower bounds (R31-A3): exp89r > 7.21 h, exp75 > 7.21 h,
+  exp89p > 6.53 h (families: non-CI 6.87-7.81 h, CI 9.27-9.48 h). DECISIONS (branch A; as logged 02:02Z / 02:53Z /
+  04:51Z): A-M1 at the first header with 56657612 terminal, latest the 08:40Z header (the last header stamped <=
+  08:40:36Z; manual list at 08:40:00Z if still PENDING at the 08:30Z timer): display >= 0.959, COMPLETE, no ERROR,
+  L_hi <= 7.9 h -> nb_try exp89l (cutoff 08:45Z); anything else -> UNUSED. A-M2 at the first header with 56656147
+  terminal (latest the 11:00Z header; cutoff 11:30Z): 1. DIS '+' (d_R - d_P >= 0.003 and d_R > max(0.959, d_P)) ->
+  exp89s; 2. else if Rr '+' (d_R >= 0.960, COMPLETE, no ERROR, header + 210 s x failed <= 10:50:28Z): DIS '-' ->
+  UNUSED; DIS '?' -> exp89q iff P '+' or '?', P '0'/'-' -> UNUSED; 3. otherwise UNUSED. P late threshold 8.0 h
+  (04:51Z). COMMANDS (after the night_checklist.md PRELUDE, 2b442e87):
+  KL=vitaliineibauer/biohub-exp89l-k2cap6-k-sec-ci; KS=vitaliineibauer/biohub-exp89s-k2cap6-k-dis225; KQ in the
+  PRELUDE; M55L='probe 55: exp89l = exp70g (cap 6) + ILP_DIVISION_WEIGHT 0.4 + READMIT_MIN_SCORE 0.94 + n2a SEC
+  7029fe69 + coordinject ALPHA 0.5 MAX_UM 3.0 (K + SEC + CI; morning A-M1)'; M56S='probe 56: exp89s = exp70g (cap 6) +
+  ILP_DIVISION_WEIGHT 0.4 + READMIT_MIN_SCORE 0.94 + ILP_DISAPPEARANCE_WEIGHT 2.25 (K + DIS, non-CI; morning A-M2)';
+  M56Q='probe 56: exp89q = exp70g (cap 6) + ILP_DIVISION_WEIGHT 0.4 + READMIT_MIN_SCORE 0.94 + n2a SEC 7029fe69 +
+  ILP_DISAPPEARANCE_WEIGHT 2.25 (non-CI twin of the RISK STACK; morning A-M2)'. A-M1: nb_try exp89l $KL "$M55L"; A-M2:
+  nb_try exp89s,exp89q $KS "$M56S" or nb_try exp89s,exp89q $KQ "$M56Q". Guards per file: G1 header < 15 min, G2
+  used_today 3 (before M1) / 3-4 (before M2) and token absent, G3 baseline (ft-weights; + n2a for exp89l/exp89q), G5
+  COMPLETE. Exit 2 -> UNUSED, 3 -> STOP + push, 1 -> retry every 10 min until the cutoff.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
