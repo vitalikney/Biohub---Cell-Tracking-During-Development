@@ -1,0 +1,67 @@
+{
+  "files_written": [
+    "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/FACTS.md",
+    "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/DECISIONS.md",
+    "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/36/facts.notes.md",
+    "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/36/facts.json"
+  ],
+  "alerts": [
+    {
+      "kind": "contradiction",
+      "what": "The 07:59Z card sentence says the SEC files (exp89p, exp89r, exp89l, exp89q) 'cannot be V_pub unless another file beats 0.959'. Q3, the running-champion rule (R30-A1 (1)) and card v5 step 5 all keep SEC files in the V_pub pool. Read literally, the sentence would drop exp89r even at 0.960 or at 0.959 with an attributable UP. The R36-A2 CLARIFY line fixes this, together with 'running champion' in rule (a) and the SEC-champion tie exception, but it was not logged at 08:35Z.",
+      "evidence": "CONTEXT 07:59 l.4394-4403; research/wf_ideas_v4/round36/report.json R36-A2, plan_issues (a)-(c); FACTS C-288, C-289, C-290",
+      "suggested_action": "Log the R36-A2 line in CONTEXT, stamped with the current poll header, before exp89r's first terminal header (about 09:23Z, latest the 11:00Z header). Otherwise it does not count as pre-registered.",
+      "urgency": "now"
+    },
+    {
+      "kind": "stale",
+      "what": "Round 36 R36-A1 says to ask the user whether and when to send exp89t (ungated / gated / none). The user already answered 'отправляй exp89t' at 08:27, which is option (1): ungated at dummy PASS. The round read CONTEXT only up to l.4425. R36-A4 (1) also says to nb_try exp89s at exp89r's read, but the 08:28 user entry holds slot 2 until 12:00Z.",
+      "evidence": "CONTEXT 08:27 l.4426-4432, 08:28 l.4433-4440; research/wf_ideas_v4/round36/report.notes.md 08:27Z; research/wf_ideas_v4/round36/report.json R36-A1, R36-A4; FACTS C-291, C-292",
+      "suggested_action": "Do not send the R36-A1 question. At exp89r's read, apply rule (a) only as the slot-2 condition. Ask the user at about 11:55Z and send nothing automatically before 12:00Z.",
+      "urgency": "now"
+    },
+    {
+      "kind": "deadline",
+      "what": "exp89t (P55) had not been submitted at the 08:38:21Z header. Its dummy (pushed 08:22:49Z) must pass the R22-A1 gate against the exp87a dummy CSV db3faf078781 (nodes within +-1.5% of 122,328; COORDINJECT 4/4 replaced 0.90-0.93; change 0.60-0.69; integer coordinates; 0 errors) before the submit. Submitting at about 09:05Z gives a typical read around 18:25-18:35Z. Every minute of delay pushes the ~10.9 h tail further past the 20:00Z tick.",
+      "evidence": "CONTEXT 08:23 l.4415-4425, 08:27 l.4426-4432; experiments/lb_poll/poll.log l.29661; FACTS F-MOD-55, F-RUN-55",
+      "suggested_action": "Submit at the dummy PASS with guards G1-G5 (used_today = 3, token absent) and the probe-55 -m text. Then start the late-read watcher and one timeout-180 LB save (R33-A3).",
+      "urgency": "now"
+    },
+    {
+      "kind": "deadline",
+      "what": "Reads due next: exp75 (P53) around 09:05-10:05Z (EXP75 PARTNER RULE v2 + GAP RULE v2 (5)) and exp89r (P52) around 09:23-09:34Z, latest the 11:00Z header. Both were PENDING at 08:38:21Z (L > 8.38 h). The LB count is now 54 (exp89p counted), so the UP-test S0 for exp89r must be a count-54 save (post_exp75) or the 0813Z snapshot.",
+      "evidence": "experiments/lb_poll/poll.log l.29600, l.29661; experiments/e10_watch/20260929T0813Z.txt l.1158; CONTEXT 07:46 l.4381-4393 (R35-A1); FACTS F-RUN-53, F-LB-36",
+      "suggested_action": "At exp89r's header, log the display, L, the DIS estimate d_R - 0.959 + 0.002, the R35-A3 B25 line and, at 0.959, S0/S1 counts plus one lag re-save. Record the rule (a) outcome for the 12:00Z slot-2 decision.",
+      "urgency": "today"
+    },
+    {
+      "kind": "contradiction",
+      "what": "Card v5 (a134d5e4) predates exp89t and rule (a). It has no 'exp89t = ' token and no lever count, and exp89t is missing from the V_CI list. l.59 still has the 02:53Z A-M2 text, and the DIS_READ source is the old dd code. If exp89s becomes V_pub and exp75 reads <= 0.953, the finals carry no CI, and the card does not say so.",
+      "evidence": "research/wf_ideas_v4/round36/report.json R36-A5, plan_issues (e); research/wf_ideas_v4/round36/report.notes.md 08:27Z; FACTS C-294, F-RUL-22",
+      "suggested_action": "At the 12:03Z fill, apply R36-A5 to the FILLED copy only (the template keeps a134d5e4), together with R34-A2 and R35-A2. Re-check at 18:37Z and 19:43Z, because exp89t (~18:25-18:35Z) and a 12:00Z slot-2 file (~19:05-19:15Z) read around or after 18:37Z.",
+      "urgency": "today"
+    },
+    {
+      "kind": "risk",
+      "what": "Two late-slot timings were set by user decisions that override the R8 hard edge (10:00Z) and the logged 08:45Z CI cutoff. exp89t's CI tail (up to ~10.9 h) can land after the 20:00Z tick, and a slot-2 file sent at 12:00Z reads after the 18:37Z card. Any CI file sent at 12:00Z would read at about 21:30Z, after the tick.",
+      "evidence": "CONTEXT 08:23 l.4415-4425, 08:28 l.4433-4440; FACTS C-293, F-RUN-55",
+      "suggested_action": "Keep slot 2 NON-CI only, as the user said. Treat any read after 20:00Z as display only, not a final.",
+      "urgency": "today"
+    },
+    {
+      "kind": "stale",
+      "what": "experiments/RESULTS.md still has no rows after P46. P47-P51 and P54 are scored (0.955 / 0.957 / 0.955 / 0.958 / 0.959 / 0.956); P52 and P53 are pending, and P55 is approved.",
+      "evidence": "git log -- experiments/RESULTS.md (last change 59e14e2, 28 Sep 05:03Z); experiments/lb_poll/ledger.md 08:28:21Z; FACTS C-118",
+      "suggested_action": "Back-fill P47-P56 with scores and latencies after the exp89r/exp75 reads, before the 18:37Z card re-check if possible.",
+      "urgency": "before-finals"
+    },
+    {
+      "kind": "orphan-idea",
+      "what": "Discussion 744273 (sghwr): an edge-only post-processing tweak that won offline was A/B-tested twice on the public LB and came back flat both times. This independently confirms our own edge-filter closure (probes 29/30: +0.016 local, 0 on the LB). The post gives no values, so there is nothing to build.",
+      "evidence": "experiments/discussions/744273.md; experiments/discussions/digest_20260929T0828Z.md; FACTS F-TRN-69",
+      "suggested_action": "Record only (the optional R36-A3 side line). No build.",
+      "urgency": "info"
+    }
+  ],
+  "summary": "Curation 36 (state 08:35 UTC, amended with the 08:38:21Z header). FACTS.md and DECISIONS.md were updated in place to 'curation 36', and the 07:40Z state lines became 'Previous state'. Sources since c35: commits 332ace7 (07:46, round-35 log: R35-A1/A2/A3/A5 LOGGED), ce88ccf (07:59, P54 exp89p = 0.956, P '-', A-M1 UNUSED, SEC removed from the morning), 2fdf387 (08:19, A-M2 RULE (a), user choice, pre-score), 096d533 (08:23, exp89t = exp87a + DIS 2.25 built, dummy pushed 08:22:49Z), 6a3f778 (08:27, user yes to exp89t as probe 55) and 785be93 (08:28, slot 2 held until 12:00Z). Also read: ledger 08:28:21Z; poll headers 08:28:19Z and 08:38:21Z (exp89r and exp75 PENDING, no exp89t yet); e10 0741Z (#138) and 0813Z (#139 of 3,987, count 54); feed digest 0828Z (744273, 744278); round36 report.json (08:33Z, R36-A1..A5). FACTS new rows: F-LB-36 (P54 read, LB 08:13Z), F-RUN-55 (latencies and timing: exp89p (7.02, 7.20] h, exp89t read ~18:25-18:35Z, 12:00Z non-CI read ~19:05-19:15Z), F-RUL-36 (the six logged decisions 07:46-08:28), F-MOD-55 (exp89t build and gate), F-TRN-68 (SEC n2a on K = -0.002 on the LB; dummy-lab sign record, which missed cap 4->6 and is 0/2 on CI) and F-TRN-69 (744273 external edge-only null; round-36 MC for exp89t). [c36] notes were added on F-LB-01/02/10, F-RUN-43/45/53/54, F-RUL-01/22/35, F-MOD-49, F-TRN-41/60 and C-118; C-284 is resolved as procedure. New contradictions: C-288..C-290 (SEC-in-pool sentence, SEC-champion tie, 'champion exp87a'; OPEN, R36-A2), C-291 (R36-A1 superseded by the user yes), C-292 (rule (a) auto-send vs the 12:00Z hold), C-293 (late submits vs R8 and the CI cutoff, resolved by user decisions), C-294 (card v5 vs exp89t / rule (a), OPEN, R36-A5), C-295 (exp89t probe.json generic rule) and C-296 (exp89p L bounds). DECISIONS: new state line; P52/P53/P54/P55-P56 cells (P54 = 0.956, (7.02, 7.20], A-M1 UNUSED); a new P55 exp89t row; a section-1 update paragraph; a section-2 paragraph plus a new CURRENT finals snapshot at 08:35Z (V_pub exp87a 0.959, TICKED #37 + #38, exp89t and exp89s as pending pool entries, exp89l and exp89q out); status updates for R5/R6/R7/R8/R10/section f and the MORNING TABLE, A-M2 function, R30-A1 and round-35 rows; 6 new rows (probe 54 read, rule (a), exp89t build + yes, slot-2 hold, round-36 proposals, round-36 rejections); a changelog entry. The pipe and column counts were checked. No other file was touched, nothing was committed and Kaggle was not contacted."
+}

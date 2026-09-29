@@ -1,0 +1,7 @@
+# v_hyp_readscard_r36h-2 notes (round 36 skeptic, VALUE + FEASIBILITY)
+- 2026-09-29T08:23Z start; no prior json. Read scan_hyp_readscard.json (R36H-1/-2) + notes (MC mc36.py numbers).
+- CONTEXT.md 08:19Z 'A-M2 RULE (a)' (user choice in chat, commit 2fdf387 11:19 MSK): exp89s is sent at exp89r's read iff display >= 0.958 (L_hi <= 10.2 h; 0.959 with L_hi <= 10.75 h), cutoff 11:30Z. This IS option (A)/R36H-1 (cells 0.958/0.959 + >=0.960), already adopted. Option (B) 'UNUSED default' no longer the default.
+- CONTEXT.md 08:23Z + commit 096d533: exp89t (K + DIS 2.25 + CI) built, dummy pushed 08:22:49Z; SLOT PLAN (pending user yes): free slot 1 (cancelled A-M1) -> exp89t; slot 2 = A-M2 rule (a). Submissions left today: 2 (nb_try exp89p '2 submissions remaining today' 00:46:38Z). The finding's 'one slot remains for an E10 copy' is stale.
+- Blind exp89s now would (i) take exp89t's slot or pre-empt A-M2 rule (a) (same file; A-M2 then has no candidate), (ii) add only the d_R <= 0.957 cells vs rule (a), where P(exp89s wins | d_R) = 0.001-0.15 (scan MC) -> ~0.03-0.05 extra switch prob, EV ~+1e-5, (iii) break winners-only (I-506, R30M-7) with no user yes. Earlier read (~15:35Z) buys no decision: exp89t submit decision ~09:05Z precedes any DIS read; card 18:37Z either way.
+- Verdict: refuted as an action item (superseded + slot-infeasible); its substance (gated > blind) is correct and already implemented.
+- 2026-09-29T08:24:05Z final JSON written (refuted=true).

@@ -1,0 +1,74 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/ideas.json",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/IDEAS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/36/ideas.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/36/ideas.json"
+ ],
+ "alerts": [
+  {
+   "kind": "contradiction",
+   "what": "Round 36 was written from CONTEXT read only to l.4425, so two of its actions are out of date. R36-A1 ('ask the user about exp89t now') was already answered: the user wrote 'отправляй exp89t' at 08:27Z, which R36-A1 itself maps to option (1), send ungated at dummy PASS. R36-A4 (1) ('nb_try exp89s at exp89r's header') conflicts with the user's 08:28Z hold of slot 2 until ~12:00Z. The gated exp89t option is recorded as I-574, not chosen.",
+   "evidence": "research/wf_ideas_v4/round36/report.notes.md 08:27Z (CONTEXT read to l.4425); research/wf_ideas_v4/round36/report.json R36-A1, R36-A4 (1); CONTEXT.md l.4426-4432 (08:27Z user yes), l.4433-4440 (08:28Z slot 2 held)",
+   "suggested_action": "Follow the logged user lines. Send exp89t at its dummy PASS. At exp89r's read, only code rule (a) and log the DIS estimate. Make the exp89s submit decision at ~11:55-12:00Z (I-569, I-572).",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "The CLARIFY line has to be logged before exp89r's first terminal header, which is expected ~09:23-09:34Z (12:23 MSK) and at the latest by the 11:00Z header. The 07:59Z sentence 'SEC files ... cannot be V_pub unless another file beats 0.959' contradicts Q3 and card step 5, and order (1) has no SEC-tie exception. This is I-570 (R36-A2, PC36-01/02, R36PI-1, all upheld by the skeptics). Logging it after the read would be post-hoc.",
+   "evidence": "research/wf_ideas_v4/round36/report.json R36-A2, plan_issues (a)-(c); research/wf_ideas_v4/round36/v_plancheck_pc36-01.json, v_plancheck_pc36-02.json; CONTEXT.md l.4394-4403, l.3834-3841",
+   "suggested_action": "Now: append the one CLARIFY + ORDER (1) SEC EXCEPTION line, stamped with the current poll header that shows 56656147 PENDING. If (iii) is not wanted on finals day, use the fallback info line at the fill.",
+   "urgency": "now"
+  },
+  {
+   "kind": "forgotten",
+   "what": "The 08:30Z timer log line is overdue (I-571, R36-A3 / PC36-06). Timer pid 13740 carries a generic 'CI M1 ... submit by 08:45 UTC' text. After a compaction, that text could re-open A-M1 (exp89l, a SEC file just read '-') or be taken as an 08:45Z deadline for exp89t.",
+   "evidence": "research/wf_ideas_v4/round36/report.json R36-A3; research/wf_ideas_v4/round36/v_plancheck_pc36-06.json; CONTEXT.md l.4394-4403",
+   "suggested_action": "Log only, with 0 Kaggle calls: 'A-M1 UNUSED (P - 0.956 at 07:58:14Z); no 08:40Z list; exp89l not submitted; exp89t is outside this timer (user yes + dummy PASS)'. Do not start the 08:40Z waiter.",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "exp89t (K + DIS 2.25 + CI) is due to submit at its dummy PASS, ~08:55-09:05Z. The gate is R22-A1 against the exp87a dummy CSV db3faf078781. Guards: G1, G2 (used_today 3 and the token absent), G3 and G5. The -m text must carry the ACTUAL probe number (55 if this is the 4th submit today). Also needed: a post_exp89t watcher and a PENDING line. The typical read is ~18:25-18:35Z; a read after 20:00Z is display only.",
+   "evidence": "CONTEXT.md l.4415-4432; experiments/exp89t_k2cap6_k_dis225_ci/probe.json; research/wf_ideas_v4/round36/report.json R36-A4 (3)-(5); research/KNOWLEDGE/ideas.json I-486, I-572, I-529",
+   "suggested_action": "Submit only after the dummy PASS, with the guards and the corrected probe number. Then arm the watcher and write the PENDING line (I-572 (3)-(5)).",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "The slot-2 decision is at ~11:55-12:00Z (14:55-15:00 MSK). The session asks the user and recommends exp89s if rule (a)'s condition held: exp89r COMPLETE, no ERROR, and >= 0.958 with L_hi <= 10.2 h, or >= 0.959 with L_hi <= 10.75 h. With no answer by 12:00Z, apply that choice if the condition held, else leave the slot UNUSED. Only a non-CI file fits, because a CI file sent at 12:00Z reads ~21:30Z, after the tick. The e10 loop ends 12:00Z, so exp89s's S0 needs one pre_exp89s save at submit + 6.7 h.",
+   "evidence": "CONTEXT.md l.4404-4414 (rule (a)), l.4433-4440 (hold); research/wf_ideas_v4/round36/report.json R36-A4 (5); research/KNOWLEDGE/ideas.json I-568, I-569, I-484, I-552",
+   "suggested_action": "At exp89r's read, log the rule-(a) code and the DIS estimate d_R - 0.959 + 0.002. At ~11:55Z, ask the user. At 12:00Z, apply the choice.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "Card v5 (a134d5e4) predates rule (a) and exp89t. It has no 'exp89t = ' token, no lever count and no V_CI entry. l.59 still carries the superseded A-M2 text, and the DIS_READ source is the old dd code. This is I-573 (R36-A5), which comes on top of the R35-A2 P1 deletions (I-565, logged 07:46Z) and the l.45 correction (I-562). SELECTED is expected to be {#37, #38}, so the user must re-tick.",
+   "evidence": "research/wf_ideas_v4/round36/report.json R36-A5, plan_issues (e); research/wf_ideas_v4/round36/report.notes.md 08:27Z; research/wf_ideas_v4/round29/finals_card_v5_ru.md l.59, l.129, l.133",
+   "suggested_action": "At the 12:03Z (15:03 MSK) fill, apply the I-573 delta (a)-(e) in the FILLED copy only. Re-check at 18:37Z and 19:43Z.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "experiments/RESULTS.md still has no rows for probes 47-51 or for probe 54 (exp89p 0.956). Rounds 29-35 still have no REPORT.md; round 36 does have one. The R36-RC-A dummy-lab sign record is curator-only: K, SEC and probe 10 signed right, cap 4 -> 6 missed, CI 0 of 2 (I-496).",
+   "evidence": "experiments/RESULTS.md (no rows 47-54); git show --stat 332ace7 (round35 without REPORT.md); research/wf_ideas_v4/round36/REPORT.md; research/wf_ideas_v4/round36/report.json new_facts (6)",
+   "suggested_action": "Low priority, after the finals tick: add the RESULTS rows, save report_md_ru as round29-35/REPORT.md, and add the lab sign record to FACTS.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "These at-risk ideas are still unlogged: I-570 (CLARIFY, before exp89r's header), I-571 (08:30Z line), I-572 (read logistics), I-573 (card delta), I-526 / I-548 / I-539 (card fill, 12:03Z), I-540 ('pair by the card' wording) and I-336 / I-252 (hindsight guard and H2/H3 lessons, by 23:00Z). The last strict orphan is I-233. The previous orphans I-559 (C11, logged 07:59Z), I-564 and I-565 (logged 07:46Z) are now closed, and I-567 was closed as moot.",
+   "evidence": "research/KNOWLEDGE/IDEAS.md ## ORPHANS; research/KNOWLEDGE/ideas.json (orphan = 'at-risk' / 'strict'); CONTEXT.md l.4381-4403",
+   "suggested_action": "Close each one with a one-line CONTEXT entry at its slot: I-570 and I-571 now, I-572 at the reads, I-573 / I-526 at 12:03Z, and I-336 / I-252 by 23:00Z.",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "External signal (information only): discussion 744273 (sghwr, 07:40Z) says an edge-only post-proc tweak was A/B'd twice on public and came back flat. This is an external null replication of our edge-filter closure (probes 29/30). It also notes that the division Jaccard swings on one or two forks, so there is nothing to build.",
+   "evidence": "experiments/discussions/744273.md; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/744273; research/wf_ideas_v4/round36/report.json new_facts (1)",
+   "suggested_action": "Optionally add one sentence to the 08:30Z log line (R36-A3). Keep the edge filter closed (I-161).",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 36 (2026-09-29 ~08:45 UTC, HEAD 785be93) was an incremental pass over curation 35: 567 -> 574 ideas, 51 change records. Sources: 6 commits since 81884c9 (CONTEXT l.4381-4440: 07:46Z ROUND 35 procedures, 07:59Z READ P54, 08:19Z A-M2 RULE (a), 08:23Z exp89t built, 08:27Z user yes to exp89t, 08:28Z slot 2 held to 12:00Z; Literature at l.4441), round 36 (untracked; REPORT.md + report.json R36-A1..A5 at 08:33Z, 4 scans, 12 verdicts), ledger 08:28:21Z, e10 RUN 43 / 0813Z, feed 0828Z (744273, 744278). NEW LB score: probe 54 exp89p (K + SEC) = 0.956, so P is '-' and SEC reads -0.002 on K. I-479 is now lb-tested. A-M1 was UNUSED (I-485 exp89l refuted, never sent), and the C11 record was logged (I-559, I-116). New ideas: I-568 A-M2 rule (a) (logged; supersedes I-543, now refuted), I-569 slot-2 hold to 12:00Z (logged), and four at-risk items not yet logged: I-570 CLARIFY 07:59Z SEC sentence + SEC tie exception (before exp89r's header), I-571 08:30Z timer line, I-572 read-time logistics (its item (1) conflicts with the hold) and I-573 card fill delta for exp89t / rule (a). I-574, the gated exp89t option, is refuted because the user's 08:27Z yes chose the ungated send. I-486 exp89t is REVIVED from refuted to in-plan (built 08:23Z, dummy 08:22:49Z, user yes). I-567 is closed as moot. Off the at-risk list: I-559, I-564, I-565. Other records: the dummy-lab sign record (I-496, I-512) and 744273 as an external edge-filter null (I-161, I-162). The rank is #139 of 3,987 at 08:13Z (I-548). Counts: lb-tested 63, lab-tested 28, refuted 270, deferred 49, in-plan 162, open-untested 2. Cluster order is unchanged. Verification: gen.py found 574 rows with 0 mismatches, gen2.py found body and ranking equal, and the IDs are unique."
+}

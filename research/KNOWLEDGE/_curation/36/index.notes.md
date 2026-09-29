@@ -1,0 +1,5 @@
+- 08:48Z start: no index.json; read INDEX (71 l.), CHANGES tail (35); CONTEXT 4461 l.
+- 08:50Z anchors: CONTEXT l.4381-4440 (6 entries), Lit l.4441; poll 08:38:21Z no exp89t; e10 RUN 44 0841Z #139 16/20 in 0.959 (124-143); IDEAS CHANGES(36) l.219 ORPHANS l.928; FACTS F-LB-36 l.267 F-RUN-55 l.327 F-RUL-36 l.368 F-MOD-55 l.428 F-TRN-68/69 l.501-502 C-288..296 l.795-803; DECISIONS P55 l.205, [c36] l.556, 989-991, 1730-1735, 1941; WATCHLIST l.59/70/81/104/136
+- 08:53Z wrote INDEX.md
+- 08:55Z appended CHANGES ## 36
+- 08:56Z wrote index.json; exp89t absent up to 08:48:23Z header; done

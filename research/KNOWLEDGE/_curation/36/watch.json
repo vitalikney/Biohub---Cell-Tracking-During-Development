@@ -1,0 +1,117 @@
+{
+ "task": "curation 36 watch: WATCHLIST maintenance + forgotten items",
+ "curated_at": "2026-09-29T08:45Z",
+ "files_written": [
+  "research/KNOWLEDGE/WATCHLIST.md",
+  "research/KNOWLEDGE/_curation/36/watch.notes.md",
+  "research/KNOWLEDGE/_curation/36/watch.json"
+ ],
+ "alerts": [
+  {
+   "kind": "contradiction",
+   "what": "C1: R36-A4 (1) from round 36 says to send exp89s at once at exp89r's header if rule (a) holds (cutoff 11:30Z). The user's 08:28Z hold says slot 2 is NOT spent automatically; it is decided at ~11:55-12:00Z.",
+   "evidence": "CONTEXT.md l.4433-4440 (08:28Z USER: SLOT 2 HELD UNTIL 15:00 MSK); research/wf_ideas_v4/round36/report.json R36-A4; research/wf_ideas_v4/round36/report.notes.md 08:27Z (the report read CONTEXT only to l.4425)",
+   "suggested_action": "At exp89r's read (~09:23-09:34Z), only LOG: the rule (a) condition (the slot-2 candidate (1) flag), the DIS estimate, the B25 line, and the UP test at 0.959. Send nothing. Base the round-37 checks on l.4426-4440.",
+   "urgency": "now"
+  },
+  {
+   "kind": "forgotten",
+   "what": "W331 = R36-A3: the 08:30Z timer log line is not in CONTEXT. It should say A-M1 UNUSED, exp89l not sent, and that exp89t falls outside both the timer and the 08:45Z cutoff.",
+   "evidence": "research/wf_ideas_v4/round36/report.json R36-A3; grep -c 744273 CONTEXT.md = 0; timer pid 13740 carries the stale CI-M1 text (research/wf_ideas_v4/round36/scan_plancheck.notes.md)",
+   "suggested_action": "Append one log line (0 Kaggle calls). Do not start the 08:40Z waiter. Optionally add the 744273 edge-only null line.",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "W330 = R36-A2: the CLARIFY line must be logged pre-score, before exp89r's first terminal header. It states: SEC files stay in the V_pub pool; rule (a) says 'running champion'; the optional ORDER (1) SEC-tie exception; exp89t has 4 levers.",
+   "evidence": "research/wf_ideas_v4/round36/report.json R36-A2, plan_issues (a)-(c); CONTEXT.md l.4402-4403 ('SEC files ... cannot be V_pub unless another file beats 0.959'); grep -c CLARIFY CONTEXT.md = 0",
+   "suggested_action": "Append the CLARIFY line, stamped with the current poll header, before ~09:23Z (latest the 11:00Z header).",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "T206/W329: exp89t (K + DIS 2.25 + CI) dummy gate is due ~08:55-09:05Z. The user already said yes at 08:27Z. Submit at PASS, no later than ~09:30Z (CI read rule), with -m 'probe 55: exp89t ...', and arm the post_exp89t watcher after the submit.",
+   "evidence": "CONTEXT.md l.4415-4432, l.3685; experiments/exp89t_k2cap6_k_dis225_ci/probe.json",
+   "suggested_action": "Run the R22-A1 gate vs db3faf078781: nodes within +-1.5% of 122,328; COORDINJECT 4/4 at 0.90-0.93; change 0.60-0.69; integer coords; 0 errors. Guards G1 / G2 (used_today 3) / G3 / G5. If the gate fails: no submit, push the user.",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "C4: R36-A1 asks the user whether and when to send exp89t. The user already answered 'отправляй exp89t' at 08:27Z, before the report was written (08:33Z). A plain yes means option (1), ungated.",
+   "evidence": "CONTEXT.md l.4426-4432; research/wf_ideas_v4/round36/report.json R36-A1",
+   "suggested_action": "Do not re-ask. Optionally tell the user the MC result: P(exp89t >= 0.960) ~0.32-0.37 ungated.",
+   "urgency": "now"
+  },
+  {
+   "kind": "forgotten",
+   "what": "W334/T209: no timer exists for the ~11:55Z slot-2 ask (decision by 12:00Z = 15:00 MSK). The timer list has only 11:10Z (stale A-M2 text 'submit by 11:30Z') and 12:03Z.",
+   "evidence": "CONTEXT.md l.4433-4440 ('The session asks the user at ~11:55Z'); research/wf_ideas_v4/round36/scan_plancheck.notes.md (timer inventory); grep 11:55 CONTEXT.md hits only l.4435 / l.4439",
+   "suggested_action": "Arm a one-shot 11:50Z timer, or fold the ask into the 11:10Z step (which must not submit). Draft the message with the I401 numbers. No answer by 12:00Z -> exp89s if rule (a) held, else UNUSED.",
+   "urgency": "today"
+  },
+  {
+   "kind": "contradiction",
+   "what": "C2: the 11:10Z timer (pid 17304) carries the old A-M2 text 'latest the 11:00Z header, submit by 11:30Z', which conflicts with the user's hold until 12:00Z.",
+   "evidence": "research/wf_ideas_v4/round36/scan_plancheck.notes.md; CONTEXT.md l.4322 (R32-A3: timer texts are pointers); CONTEXT.md l.4433-4440",
+   "suggested_action": "At 11:10Z treat the timer as a pointer only: no submit; re-read l.4433-4440.",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "C3/W335: an exp89s sent in slot 2 at ~12:00Z reads ~19:01-19:49Z. That contradicts l.3685 ('non-CI by ~11:30Z; no separate midday slot'; finals must read by ~19:30Z). The tick margin is 11-59 min, and the 19:43Z timer is the last scheduled look.",
+   "evidence": "CONTEXT.md l.3683-3687, l.4438-4439; ledger exp85a (7.01, 7.19] h and exp70q (7.64, 7.81] h (research/wf_ideas_v4/round36/report.notes.md)",
+   "suggested_action": "At the exp89s submit, arm the post_exp89s watcher with an immediate MSK push at its terminal header. State the late window on the card's PENDING line.",
+   "urgency": "today"
+  },
+  {
+   "kind": "contradiction",
+   "what": "C5: the card l.59 replacement text in R36-A5 (b) ('слот A-M2: exp89s, если exp89r ≥ 0.958') is stale after the 08:28Z hold. The 12:03Z fill must show the actual 12:00Z slot-2 outcome and add exp89t (token, 4 levers, V_CI list l.129).",
+   "evidence": "research/wf_ideas_v4/round29/finals_card_v5_ru.md l.59; research/wf_ideas_v4/round36/report.json R36-A5; CONTEXT.md l.4433-4440",
+   "suggested_action": "At 12:03Z fill the FILLED copy (template a134d5e4 unchanged): R35-A2 deletions, R36-A5 (a)(c)(d), and the actual slot-2 line. Include 'V_pub exp89s and exp75 <= 0.953 -> no CI in the finals'.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "W126: experiments/RESULTS.md probe rows still end at probe 46. Probes 47-51 and 54 (exp89p 0.956) are missing.",
+   "evidence": "experiments/RESULTS.md l.79; last commit 59e14e2 (28 Sep 05:03Z); experiments/lb_poll/poll.log l.29600",
+   "suggested_action": "Add rows 47-51 and 54 now, and 52 / 53 / 55 / 56 as they read, before the 12:03Z card.",
+   "urgency": "today"
+  },
+  {
+   "kind": "contradiction",
+   "what": "C6/W336: R8's hard edge (after 29 Sep 02:00Z only emergency repeats, hard edge 10:00Z) is overridden by the user's exp89t yes and by the slot-2 hold until 12:00Z. No CONTEXT line records the override.",
+   "evidence": "CONTEXT.md l.1671, l.4426-4440",
+   "suggested_action": "Add one CONTEXT line: the user's 08:27Z / 08:28Z instructions override R8's 10:00Z edge and l.3685's 'no midday slot', so the post-deadline lessons stay honest.",
+   "urgency": "info"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "I400/I401: the SEC x CI lab interaction (~+0.0004) makes a 0.958 / 0.959 exp89r read weak DIS evidence. The P(exp89s wins | d_R) table (.958: .29-.38; .959: .57-.66) exists only in scan notes.",
+   "evidence": "research/wf_ideas_v4/round36/scan_recheck.notes.md; research/wf_ideas_v4/round36/scan_hyp_readscard.notes.md",
+   "suggested_action": "Quote both in the 11:55Z slot-2 recommendation to the user.",
+   "urgency": "today"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "I404/W337: discussion 744273 is an external null replication of our edge-filter closure (an edge-only post-proc tweak came back flat twice on public). It also notes that division Jaccard swings on 1-2 forks. Not in CONTEXT.",
+   "evidence": "experiments/discussions/744273.md; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/744273; grep -c 744273 CONTEXT.md = 0",
+   "suggested_action": "Add one line to the next CONTEXT entry (the optional clause of R36-A3); carry it into the post-deadline lessons.",
+   "urgency": "info"
+  },
+  {
+   "kind": "deadline",
+   "what": "Finals: card fill 12:03Z (15:03 MSK); re-check 18:37Z, which is only ~2 min after exp89t's typical read (18:16-18:35Z); 19:43Z notify; the user ticks by 20:00Z (23:00 MSK); deadline 23:59Z. SELECTED is currently expected to be {#37, #38}, so the user must re-tick.",
+   "evidence": "CONTEXT.md l.3851-3855, l.4091-4092, l.4418-4421; research/wf_ideas_v4/round36/report.json R36-A5 (e)",
+   "suggested_action": "If exp89t is still PENDING at 18:37Z, re-fill at its terminal header. Never tick. Verify SELECTED at ~20:00-20:30Z.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "stale",
+   "what": "W296/W303: REPORT.md is missing for rounds 29-35 (round 35 was committed in 332ace7 without it). Round 36, which has a REPORT.md, is untracked.",
+   "evidence": "git status (?? research/wf_ideas_v4/round36/); ls research/wf_ideas_v4/round3*/REPORT.md",
+   "suggested_action": "Save report_md_ru for rounds 29-35, and commit round 36 with named paths, as the user, with no Co-Authored-By, when the user asks.",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 36 (~08:40Z, 29 Sep). Since curation 35: probe 54 exp89p = 0.956, so P is '-', A-M1 is UNUSED and SEC is off the morning files (CONTEXT l.4394). The user chose A-M2 rule (a) (08:19Z). exp89t (K+DIS+CI) was built with its dummy pushed at 08:22:49Z, and the user approved it at 08:27Z. Slot 2 is held until ~11:55-12:00Z (08:28Z). The round-36 report (R36-A1..A5) read CONTEXT only to 08:23Z: R36-A1 is already answered, and R36-A4 (1) and R36-A5 (b) conflict with the user's hold (C1 / C4 / C5). Overdue now: the R36-A3 08:30Z log line. Due before exp89r's header (~09:23Z): the R36-A2 CLARIFY line, and the exp89t gate and submit (~08:55-09:30Z). Forgotten: no timer exists for the 11:55Z slot-2 ask (W334), and an exp89s sent at 12:00Z reads 19:01-19:49Z, which is tight for the 20:00Z tick (C3). RESULTS.md still ends at probe 46. New IDs: W329-W337, T206-T212, C1-C6, I400-I408."
+}

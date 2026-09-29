@@ -1,0 +1,7 @@
+- 2026-09-29T08:35Z start round 36 curation (facts.json absent -> fresh run); new commits since c35: 332ace7 ce88ccf 2fdf387 096d533 6a3f778 785be93
+- 08:40Z sources read: CONTEXT l.4381-4440 (07:46 R35 log, 07:59 P54 read, 08:19 rule (a), 08:23 exp89t built, 08:27 user yes exp89t, 08:28 slot 2 held to 12:00Z; Lit l.4441); ledger 08:28:21Z (537 polls; exp89p (7.02,7.20] 0.956); poll header 08:28:19Z l.29600 (P52/P53 PENDING, no exp89t submit); e10 0741Z (#138, count 53) + 0813Z (#139, count 54); digest 0828Z (744273, 744278); round36 report.json 08:33Z (R36-A1..A5; read CONTEXT only to l.4425 -> R36-A1 predates the 08:27 user yes)
+- plan: FACTS new F-LB-36, F-RUN-55, F-RUL-36, F-MOD-55, F-TRN-68, F-TRN-69; C-288..C-292; [c36] notes F-LB-01/02/10, F-RUN-43, F-RUL-22/35, C-118, C-284. DECISIONS: state line, P52-P55 cells, new P55 exp89t row, §1 para, §2 para + 08:35Z snapshot, R5/R7/R8/R10/§f, new rows 07:46/07:59/08:19/08:23/08:27/08:28 + round-36, changelog
+- 08:47Z FACTS.md patched (c36_facts.py): state line, 6 new F rows, 9 new C rows, 17 [c36] notes; pipe check OK
+- 08:42Z DECISIONS.md patched (c36_dec.py): state, P52-P55 cells, new P55 exp89t row, §1 para, §2 para + 08:35Z snapshot (7-col OK), R5-R8/R10/§f + MORNING TABLE / A-M2 / R30-A1 / R35 rows, 6 new §3 rows, changelog; pipe check OK
+- 08:43Z poll header 08:38:21Z (l.29661): exp89r/exp75 still PENDING, no exp89t -> state lines amended; writing facts.json
+- 08:43Z facts.json written (8 alerts). Done.

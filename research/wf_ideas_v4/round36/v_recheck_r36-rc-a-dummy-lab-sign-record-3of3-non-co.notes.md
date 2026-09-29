@@ -1,0 +1,12 @@
+# v_recheck R36-RC-A notes
+- 2026-09-29T08:23:21Z start; no prior json
+- 08:25Z reran scratchpad r36/pool.py: reproduces K +0.00132, SEC-on-K -0.00160, CI -0.00549/-0.00509, exp89r-exp87a -0.00079.
+- OMITTED PAIR (topology lever with an LB read): exp70g (cap 6, probe 45, 0.956) vs exp58 (#37 cap 4, 0.954): LB +0.002, lab 0.00000 (all 4 clip rows byte-equal: dummy_lab_exp58.json == dummy_lab_exp70g.json). So non-coordinate record is 3/4 at best, and the '1.25-1.5x' scale is broken (lab 0 -> LB +0.002).
+- Lab has division_tp = 0 on all 4 clips (3 GT divisions, all FN): blind to division levers; K (ILP_DIVISION_WEIGHT) 'right sign' came via edge side effects on 6bba_05db0fb1.
+- Per-embryo signs split: K 44b6 -0.00106 / 6bba +0.00143; SEC-on-K 44b6 +0.00063 / 6bba -0.00171. Pooled sign = 6bba's sign.
+- DIS sign flips with base in the lab: on 70g (exp88a) -0.00079, on K (exp89s) +0.00048, on K+SEC +0.00039 -> the DIS part of the exp89r prediction is not a stable prior.
+- Display rounding: each LB delta +-0.001 => K ratio 0.75-2.3x, SEC 0.6-1.9x, probe 10 3.6x: '1.25-1.5x' is spuriously precise.
+- STALE RULE: finding says 'A-M2 most likely UNUSED' using the 02:53Z function (DIS '+'/Rr '+' need >= 0.960). CONTEXT 08:19Z A-M2 RULE (a) (commit 2fdf387): exp89r display >= 0.958 -> send exp89s. The finding's own central (0.958) would SEND exp89s. Logging its line next to the A-M2 function would mislead the operator.
+- LB-only additive estimate (better than lab-scaled): exp87a 0.959 + SEC(LB -0.002) + DIS = ~0.957 + DIS.
+- Verdict: refuted (cherry-picked record, stale rule). Keep only a neutral info line if anything.
+- 2026-09-29T08:25:13Z wrote final json (refuted)

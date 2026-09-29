@@ -1,0 +1,4 @@
+- 08:23Z start R36H-3 skeptic. exp89t folder exists (built 08:22Z); commit 096d533 08:23Z 'exp89t (K + DIS + CI) built, dummy pushed' -> finding premise 'never built' stale.
+- 08:26Z CONTEXT l.4415-4425 (08:23Z entry): exp89t = exp87a + ILP_DISAPPEARANCE_WEIGHT 2.25, dummy pushed 08:22:49Z, user idea, submit ~09:05Z on user yes, slot 1; read typical 18:25-18:35Z, tail after 20:00Z; breaks logged 08:45Z CI cutoff by ~20 min. probe.json confirms knobs (CI ALPHA 0.5, DIS 2.25, DIV 0.4, READMIT 0.94).
+- External-null part holds: e10 20260929T0813Z.txt DIFF: all 5 kernel lists + 2 statuses 'no change'; only 13 LB hist moves.
+- Consistency gap: A-M2 rule (a) (08:19Z) sends exp89s (K+DIS non-CI) only if exp89r >= 0.958; exp89t (K+DIS+CI) at ~09:05Z would go before exp89r reads (submitted 00:05Z, CI L 9.27-9.48 h -> ~09:21-09:34Z), i.e. DIS sent with zero LB evidence while its non-CI sibling is gated.

@@ -1,0 +1,11 @@
+# v_plancheck PC36-01 notes (skeptic: value + feasibility)
+- 2026-09-29 08:23Z start; no prior v_plancheck_pc36-01.json. Files only; 0 Kaggle API calls.
+- CONTEXT.md l.4402-4403 (07:59Z): "SEC files (exp89p, exp89r, exp89l, exp89q) cannot be V_pub unless another file beats 0.959 - not applicable." Ambiguous wording.
+- Q3 l.3835-3836 (11:26Z 28 Sep): SEC file MAY be a final only in the V_pub slot = "the highest public display among COMPLETE files". l.3927 repeats.
+- R30-A1 (02:02Z) l.4277: "exp89p enters the V_pub pool only with L_hi <= 9.0 h" -> SEC files are explicitly in the pool. Order (1) = running champion, replace only by attributable UP (l.4278-4282).
+- Card v5 (round29/finals_card_v5_ru.md) l.17 pool = max display among COMPLETE, l.27 SEC only as V_pub, l.59 "0/- removes SEC from MORNING files", step 5 l.86 max display, no SEC exclusion; step 6 l.87 lists SEC files. Freeze (9) l.4247 same "morning file" scope.
+- So the finding's "correct" reading is right. The literal-exclusion reading ("unless ANOTHER file beats 0.959") is half-incoherent; the charitable reading ("unless one of them beats 0.959") still drops the 0.959 + attributable-UP case that order (1) allows. So the divergence is real but narrower than claimed.
+- 08:19Z A-M2 rule (a) l.4404+ covers only exp89s (V_pub at >=0.960 or 0.959+UP) - consistent with the card; no correction for SEC files is logged yet (grep CORRECTION: none after 4403).
+- exp89r ledger: PENDING at 08:18:17Z header; read window 09:20-09:35Z (tail ~11:00Z). Time to log ~1 h.
+- Value: exp89r = exp87a + SEC(-0.002 read) + DIS(~0 prior) -> expected ~0.957; >=0.960 needs DIS >= +0.003, or 0.959 + UP. Low probability (~5-10%) branch; pure bookkeeping, no build/GPU/submit. Worth doing because it is free and must precede the read (pre-registration).
+- Side note: exp89t (K+DIS+CI, SEC-free, pending user yes) would read ~18:30Z; if exp89r becomes champion at 0.960 and exp89t ties it, order (1) keeps the SEC file unless UP. Mention, do not change.

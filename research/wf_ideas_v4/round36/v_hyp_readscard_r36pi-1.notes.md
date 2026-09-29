@@ -1,0 +1,9 @@
+- 2026-09-29 08:23Z start verify R36PI-1; no prior json
+- 08:25Z poll.log header 2026-09-29T08:18:17Z: 56656147 exp89r + 56656157 exp75 PENDING; 56657612 exp89p COMPLETE 0.956. No 'CLARIFY' line in CONTEXT yet. Window to log pre-score: until exp89r header ~09:23-09:34Z (L (9.30,9.48] from 00:05:28Z).
+- CONTEXT l.4394-4402 (07:59Z): last sentence 'SEC files (exp89p, exp89r, exp89l, exp89q) cannot be V_pub unless another file beats 0.959 - not applicable'. Garbled but its most natural reading = a SEC file must beat 0.959 to be V_pub = the max-display rule; exclusion reading is a stretch.
+- Card v5 (round29/finals_card_v5_ru.md, sha a134d5e4) already unambiguous: l.27 'Файл с SEC допустим только как основной' (Q3); l.59 '0/− убирает SEC из утренних файлов' (morning FILES only); step 5 l.86 max display + running champion; lever count exp89r = 5. Freeze (9) l.4234 SEC clause = morning files; 02:02Z (2) running champion; 02:02Z (3) collision = A-M2 only.
+- Scan R36RC-2 scenario (iv) already codes exp89r >= 0.960 -> V_pub 'с CI, с SEC'. So the operative card and the fill scenarios agree; the risk is only a hesitating session at read time -> hygiene fix.
+- MC (scan notes, mc36.py): P(exp89r becomes V_pub) 0.04-0.12 (>=0.960 part 0.02-0.07; 0.959 part needs attributable UP vs S0 post_exp75).
+- Gaps the clarifier should close too: 08:19Z rule (a) says exp89s becomes V_pub vs 'the champion exp87a' -> must read 'the running champion' (exp89r if it took V_pub). exp89t (08:23Z, K+DIS+CI, 4 levers) missing from card step 5 lever list / step 9 windows; if submitted, same max-display rule.
+- Value: no model change, no Kaggle call, 0 risk; expected LB/private gain ~0 (card already yields same answer); benefit = removes a post-hoc decision point in a 4-12% branch. Not refuted, downgraded to hygiene.
+- 08:25Z final JSON written (refuted=false, hygiene)

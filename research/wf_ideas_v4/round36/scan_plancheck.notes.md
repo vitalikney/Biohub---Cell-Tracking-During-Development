@@ -1,0 +1,15 @@
+# Round 36 plancheck notes (2026-09-29T08:13:43Z)
+- 08:14Z start; round36 folder created; no prior scan_plancheck.json.
+- Read CONTEXT l.3925-4403 (MORNING TABLE v1.1 14:12Z, EXP75 PARTNER RULE v2, GAP RULE v2, freeze 23:34Z, 02:02Z/02:53Z/04:51Z/07:23Z/07:46Z/07:59Z); round35 report.json + scan_plancheck.json; card v5 sha256 a134d5e4... (unchanged).
+- poll.log last header 08:08:16Z: 56656147 exp89r / 56656157 exp75 PENDING (L > 8.04 h); 56657612 exp89p COMPLETE 0.956 L (7.02, 7.20] (ledger 08:08:17Z).
+- e10 20260929T0813Z: our row rank 139, 0.959, count 54, last 00:46:36; 16th of 20 in the 0.959 block (124-143); 123 teams >= 0.960. Kernel lists unchanged at top (best public notebook stays 0.953 per R35).
+- A-M2 arithmetic with d_P 0.956: dd = d_R - 0.957; DIS '+' needs dd >= 0.002 AND d_R > 0.959 -> d_R >= 0.960; '-' iff d_R <= 0.955; Rr '+' subset of DIS '+'. So A-M2 = exp89s iff d_R >= 0.960.
+- Unrounded bounds: CI = exp87a - exp85a in (0, 0.002); SEC = exp89p - exp85a in (-0.003, -0.001). exp89r >= 0.9595 needs DIS > ~0.001..0.004 (central ~+0.0025); exp89s >= 0.9595 needs DIS > ~0.001..0.002 (central ~+0.0015). Blind band ~[+0.0015, +0.0025].
+- 07:59Z line: 'SEC files ... cannot be V_pub unless another file beats 0.959' contradicts Q3 + card pool rule (max display, order (1)) -> must be resolved before exp89r's read.
+- Order (1) running champion (02:02Z (2)): exp89r champion at X vs later exp89s at X -> exp89r stays; rationale (CI reads, SEC negative prior) inverted: E[exp89r - exp89s] = CI + SEC ~ -0.001 on public.
+- A-M2 step 1 (DIS '+') has no 10:50:28Z admit edge; Rr has; with d_P 0.956 the Rr edge is inert. Freeze (1): L_hi > 10.75 h -> '?' regardless of display; GAP RULE v2 (5) covers exp89r.
+- Processes 08:2xZ: lb_poll 37016; e10 18040; feed 10924; watchers 1760 (exp89r), 17532 (exp75); save jobs 8368 post_exp75, 17300 post_exp89r (the 'duplicates' 36896/33920/12376/25804 are Git bin->usr wrapper parents, not second jobs); timers 08:30 (13740, stale M1 text), 09:13, 10:13, 11:10 (17304), 12:03, 13:13-18:13, 18:37, 19:43, 21:05, 30 Sep 00:07.
+- tools/uptest.py: save has no count check; compare prints counts only (as R35 noted).
+- exp89s kernel-metadata: id vitaliineibauer/biohub-exp89s-k2cap6-k-dis225, no CI dataset, no n2a; submit -v 1 = gated dummy (PASS 14:40Z 28 Sep, CSV 8956f46c6824).
+- M56S text says 'probe 56'; if exp89s goes as the 4th submit today it is probe 55 (token match unaffected).
+- 08:21Z wrote scan_plancheck.json (7 findings: PC36-01..07)

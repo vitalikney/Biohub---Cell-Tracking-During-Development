@@ -1,0 +1,6 @@
+- 2026-09-29T08:34:38Z start round 36 watch; no prior 36/watch.json
+- 08:34:56Z read CONTEXT l.4381-4440: probe54 exp89p 0.956 (07:59Z), A-M2 rule (a) 08:19Z, exp89t built 08:23Z, user yes 08:27Z, slot2 held till 12:00Z 08:28Z
+- 08:35:20Z read round36 REPORT/report.json (R36-A1..A5, written 08:33Z; saw CONTEXT to l.4425 only, missed 08:27Z user yes + 08:28Z slot-2 hold)
+- 08:37:02Z key: 08:28Z user hold moves slot-2 to 11:55-12:00Z -> conflicts R36-A4(1) 'send exp89s at once', 11:10Z timer text, l.3685 non-CI by 11:30Z; no 11:55Z timer found (grep 11:55 = only l.4435/4439)
+- 08:37:49Z checks done; drafting WATCHLIST (new W329-W337, T206-T212, I400-I408)
+- 08:41:22Z WATCHLIST.md + watch.json written (15 alerts); done

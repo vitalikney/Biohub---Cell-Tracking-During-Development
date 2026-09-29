@@ -4438,6 +4438,24 @@ Mention it to the user in one line (R9-A8 item 6).
   file sent at 12:00Z would read ~21:30Z, after the 20:00Z tick); the session proposes it to the user. A non-CI file
   sent at 12:00Z reads ~19:05-19:15Z (L 7.0-7.2 h), before the 20:00Z tick. The session asks the user at ~11:55Z with
   the recommendation; with no answer by 12:00Z it applies (1), else leaves the slot UNUSED.
+- 2026-09-29 08:51 UTC, CLARIFY 07:59Z + ORDER (1) SEC EXCEPTION (round 36, R36-A2; pre-score: header 08:48:23Z shows 56656147 and 56656157 PENDING)
+  (i) The 07:59Z SEC sentence means only that a SEC file must beat the running champion to be V_pub; SEC files enter
+  the V_pub pool by card v5 step 5 like any other file (Q3). SEC read '-' removes SEC from morning SUBMITS only.
+  exp89r becomes V_pub (56656147; CI, SEC, 5 levers) if COMPLETE, no ERROR, L_hi <= 10.2 h (a '+' with L_hi 10.2-10.75
+  h stands flagged UNPROVEN-ins) and display >= 0.960, or 0.959 with an attributable UP (S0 post_exp75, S1
+  post_exp89r). (ii) In the 08:19Z rule (a) and card step 9, 'champion exp87a' reads as the running champion. (iii)
+  ORDER (1) EXCEPTION: if the running champion carries SEC and a later COMPLETE SEC-free file (exp89s, exp89t) reaches
+  the SAME display within the pool L limits, the SEC-free file replaces it without an UP test (SEC has a direct LB
+  read of -0.002, probe 54); orders (2)-(4) choose between SEC-free files; exp87a against any later file keeps the
+  conservative reading. (iv) exp89t, if sent, has 4 levers (cap 6, K, CI, DIS). R36-A1 RESOLVED: the user answered
+  'отправляй exp89t' at ~08:25Z = option (1) ungated (submit at dummy PASS). SLOT 2: per the user's 08:28Z hold,
+  exp89s is decided at ~11:50-12:00Z (rule (a) as the default), not at exp89r's header.
+- 2026-09-29 08:51 UTC, 08:30Z TIMER NOTE (R36-A3)
+  A-M1 UNUSED (P '-' 0.956 at 07:58:14Z); no manual 08:40Z list (56657612 COMPLETE); exp89l not submitted. exp89t
+  (slot-1 reuse, the user's yes) is outside MORNING TABLE v1.1 and this timer; the 08:45Z cutoff does not apply to it.
+  744273 (sghwr ~07:40Z): an edge-only post-proc tweak A/B-d twice on public came back flat - an external null
+  replication of our edge-filter closure (probes 29/30); no values. OPS: laptop on battery again at 08:50Z (78%); push
+  sent; watchdog armed for back-on-AC.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
