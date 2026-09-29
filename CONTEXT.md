@@ -4251,6 +4251,17 @@ Mention it to the user in one line (R9-A8 item 6).
   (10) STORED TEXT: the 00:04Z batch, the 00:20/00:44/00:50/01:30Z timers and the 06:07Z post-wake step all follow
   research/wf_ideas_v4/round29/night_checklist.md (sha256[:8] 2b442e87); the stale cron prompts (5ece5d24 W4
   AMEND 3, 2ab38c73) and the timer message texts are not a source (pointers only; checklist sections 4/5 govern T54 and the backups).
+- 2026-09-29 00:06 UTC, NIGHT BATCH: PROBE 52 exp89r (ref 56656147, 00:05:28Z) + PROBE 53 exp75 (ref 56656157, 00:05:34Z) SUBMITTED
+  Per the 23:34Z W4 FREEZE line (branch A) and round29/night_checklist.md (2b442e87). Pre-check 00:04:59Z: AC 78%, DNS
+  OK. Guards: G0 00:05:00Z >= 00:00:30Z; G1 header 00:03:45Z (1.3 min, no error); G2 list OK, used_today 0, all tokens
+  free, 51 COMPLETE 0.959; G3 ft-weights / n2a baseline OK; G4 counts 1/1/1/1/2/1, FREEZE 1; G5
+  exp89r/exp89q/exp75/exp89p/exp83c COMPLETE, ids match, no NEVER_SUBMIT. nb_try: exp89r rc 0 '4 submissions remaining
+  today' (00:05:30Z); exp75 rc 0 '3 submissions remaining today' (00:05:36Z). -m: 'probe 52: exp89r = exp70g (cap 6) +
+  ILP_DIVISION_WEIGHT 0.4 + READMIT_MIN_SCORE 0.94 + n2a SEC 7029fe69 + ILP_DISAPPEARANCE_WEIGHT 2.25 + coordinject
+  ALPHA 0.5 MAX_UM 3.0 (RISK STACK + CI)'; 'probe 53: exp75 = #37 (K2 cap 4) + coordinject ALPHA 0.5 MAX_UM 3.0
+  (private-hedge candidate)'. Families safetail_ci (both). Read windows: exp89r = exp87a's L (~09:25-09:35Z expected;
+  10.2 h mark 10:17Z; admit 10.75 h 10:50Z); exp75 T + 9.0-10.0 h (~09:05-10:05Z). T54 (exp89p) = 00:46:00Z (branch A,
+  no exp89q row).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
