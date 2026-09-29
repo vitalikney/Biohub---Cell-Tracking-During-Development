@@ -4423,6 +4423,13 @@ Mention it to the user in one line (R9-A8 item 6).
   >= 0.958). Gate (R22-A1 vs the exp87a dummy CSV db3faf078781, since only DIS differs the topology differs: nodes
   within +-1.5% of exp87a 122,328; COORDINJECT 4/4 replaced 0.90-0.93; change 0.60-0.69; integer z/y/x; 0 errors; RULE
   v2.1 runtime).
+- 2026-09-29 08:27 UTC, USER: 'отправляй exp89t' (chat)
+  The user approved submitting exp89t (K + DIS 2.25 + CI) in the free slot 1 as soon as its dummy passes the 08:23Z
+  gate; the late CI timing (~09:05Z submit, typical read ~18:25-18:35Z, tail after 20:00Z) was stated to the user. -m
+  'probe 55: exp89t = exp70g (cap 6) + ILP_DIVISION_WEIGHT 0.4 + READMIT_MIN_SCORE 0.94 + ILP_DISAPPEARANCE_WEIGHT
+  2.25 + coordinject ALPHA 0.5 MAX_UM 3.0 (K + DIS + CI; best + DIS)'. Guards: G1 header < 15 min, G2 used_today 3 and
+  token exp89t absent, G3 ft-weights baseline, G5 COMPLETE; nb_try via the night_checklist PRELUDE. Slot 2 remains
+  A-M2 rule (a) (exp89s iff exp89r >= 0.958).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
