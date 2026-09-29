@@ -4665,6 +4665,16 @@ Mention it to the user in one line (R9-A8 item 6).
   trigger shows a header with no SubmissionStatus, read the newest poll.log block with a '^ref,' line by hand; the
   card rank line may be replaced by a Chrome read made before 17:30Z with its time (latest: Chrome 17:19 МСК #151 of 3
   999, 18th of 23); never quote '#148' or '17 из 22' now.
+- 2026-09-29 15:59 UTC, OPS: ROUND 42 LOST TO A NETWORK DROP; SESSION RESTART; JOBS RE-ARMED
+  Round 42 (launched 15:14Z) FAILED entirely: all 9 agents hit API errors (ECONNRESET / ENOTFOUND) - the laptop went
+  on battery at 15:08Z and lost network (poll.log error blocks 15:31:24Z and 15:43:04Z; the poller recovered at
+  15:54:45Z). The Claude session then restarted; its background-task tracking was lost (all tasks marked stopped), but
+  the Windows processes survived. At ~15:59Z: old local-only jobs (timer.sh x21, t7_trigger, feed waiter, power
+  watcher) were stopped and re-armed in the new session (exp89t-terminal waiter on poll.log, t7_trigger, timers
+  16:13/17:13/18:13 rounds, 18:37 card, 19:43 reminder, 21:05 last call, 00:07 post-deadline, power watch, feed
+  waiter). Kept untouched (they call Kaggle): the poller (w37016), manual_admit (w3028, 19:44:45Z, 1 call), the old
+  exp89t watcher (w30864, post_exp89t save on 0.959), the feed loop and its 17:29Z stop job. exp89t 56669888 still
+  PENDING at 15:54:45Z. Laptop on battery (67%) at 15:57Z; the user is asked again to plug in.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
