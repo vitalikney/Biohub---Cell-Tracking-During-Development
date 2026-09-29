@@ -1,0 +1,53 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/ideas.json",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/IDEAS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/45/ideas.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/45/ideas.json"
+ ],
+ "alerts": [
+  {
+   "kind": "risk",
+   "what": "The R45 per-event rule (R45-A1) is not in CONTEXT.md. R44-A2, logged at 17:54Z, still says to send every pushtext44 line. msg44.py hard-codes the exp87a pairs. So after a correct T1/T2 re-tick to exp89t, the 19:43Z and 21:05Z checks would print a false 'SELECTED is neither' alarm. A T3KEEP or T5 read would also be re-pushed at every later event. And if exp89t is still PENDING at the 19:44:45Z manual-admit header, the user gets the T7 text unless ADMIT_PENDING=1 is set.",
+   "evidence": "research/wf_ideas_v4/round45/report.json R45-A1, plan_issues (1)-(3); scan_plancheck.json R45-PC-01/02/05; v_plancheck_r45-pc-01.json; report.notes.md PC-02 dry run; CONTEXT.md l.4698-4712 (R44-A2 as logged); research/KNOWLEDGE/ideas.json I-627, I-628",
+   "suggested_action": "Append the R45 PER-EVENT RULE line to CONTEXT now, before T7 at 22:12 MSK (19:12 UTC). At later events act only on readtime's 'SELECTED case=' line. At the admit edge run 'ADMIT_PENDING=1 pushtext44' if exp89t is still PENDING. Never send msg44's 'SELECTED is neither' line.",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "The laptop has been on battery since 17:43Z. It drains ~21%/h and will hibernate at 2% around 23:40-00:25 MSK. That could kill the 00:05 MSK SELECTED check and will kill the 03:07 MSK save/stop/commit. Watchdog 16220 does not check the battery percentage, and pushes are not being delivered. The R45-A2 chat message has no record yet.",
+   "evidence": "research/wf_ideas_v4/round45/report.json R45-A2, new_facts (5); scan_plancheck.json R45-PC-03; v_plancheck_r45-pc-03.json; CONTEXT.md l.4698-4712 (A4: on battery from 17:43Z, push not delivered); research/KNOWLEDGE/ideas.json I-629, I-497",
+   "suggested_action": "Re-measure Win32_Battery. If still discharging, tell the user in chat (MSK first) to plug in before 23:00 MSK and keep the lid open. Optionally arm one local one-shot that fires at <= 25%.",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "exp89t 56669888 was still PENDING at the 18:45:27Z header (L 9.75 h, past the observed CI band edge of 9.48 h). A T1 read from the ~18:55:29Z header on must carry the ins-tail note. T7 fires at the first CLEAN header >= 19:12:17Z (22:12 MSK); per R45-A1 (4), a header containing '[ERROR' does not count. The admit edge is 19:45:17Z (22:45 MSK).",
+   "evidence": "experiments/lb_poll/poll.log header 2026-09-29T18:45:27Z; experiments/lb_poll/ledger.md 18:35:27Z; CONTEXT.md l.4717-4720; research/wf_ideas_v4/round45/report.json new_facts (1); research/KNOWLEDGE/ideas.json I-486, I-588",
+   "suggested_action": "Run the I-620 read-time block at each clean header, with the I-627 rule. Decision B holds: >= 0.960 -> T1/T2; 0.959 -> T3KEEP; exp87a stays V_pub otherwise.",
+   "urgency": "now"
+  },
+  {
+   "kind": "stale",
+   "what": "The 00:07Z stop order (R44-A5 (1)) says to stop watchdog v2 30176/16728 first, but both PIDs are gone. The live watchdog is 16220/9596. The R45-A3 (b) amendment is not logged. If the poller is stopped while 16220 still runs, a false NO CLEAN POLL alert fires ~00:32Z (03:32 MSK).",
+   "evidence": "research/wf_ideas_v4/round45/report.json R45-A3, plan_issues (5), new_facts (6); scan_plancheck.json R45-PC-04; report.notes.md 18:35:00Z PIDs; research/KNOWLEDGE/ideas.json I-624, I-609",
+   "suggested_action": "Log the amendment: stop the CURRENT watchdog (16220/9596 or its re-arm) first, checked by exact PID, then 37016 and the rest. If a BACK ON AC alert arrives before 22:50 MSK, re-arm watchdog v2.",
+   "urgency": "today"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "The post-deadline private read (R45-A4) and the optional hourly flip check (R45-A5) exist only in round45/report.json. A4 is one '--page-size 100' submissions call on request, with privateScore as the flip trigger. Its read_private.py copy is made only after 23:59Z. It must never use the 1 006-row e10 lb.csv as a baseline. It includes pre-registered private sign pairs and medal lines. A5 needs the user's explicit yes.",
+   "evidence": "research/wf_ideas_v4/round45/report.json R45-A4, R45-A5; scan_plancheck.json R45-PC-06; scan_hyp_lasthours45.json R45-LH-3/LH-4; research/KNOWLEDGE/ideas.json I-630, I-631, I-632",
+   "suggested_action": "Tonight, add one CONTEXT line (PRIVATE READ (R45)). After the 23:00 MSK tick is confirmed, tell the user once (MSK) that the private result is one call on request, and ask about the hourly check at the same time.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "stale",
+   "what": "Round 45 ran on stale KEY FACTS. The prompt in experiments/workflows/biohub-research-round.js l.20 still says 'Rank #151 of 3 999' and 'status polls every 5 min'. The R44-A4 refresh was never logged as KEY FACTS. Current values: #154 of 4 007 LB rows (Chrome 18:16Z), ~10-min polls, slot 2 closed unused since ~16:50Z, 18:37Z card sent (2e46a239).",
+   "evidence": "experiments/workflows/biohub-research-round.js l.20 (unchanged since 55ec8ab); CONTEXT.md l.4698-4712; research/wf_ideas_v4/round45/scan_browser.json r45-lb-rank-154-block-grew-below; research/KNOWLEDGE/ideas.json I-614, I-259",
+   "suggested_action": "If round 46 runs, put the fresh KEY FACTS in its prompt or in a CONTEXT OPS line first, and keep it to local files + Chrome with 0 Kaggle calls.",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 45 (~18:55 UTC, HEAD 2361191): incremental update over curation 44. The ledger grew from 626 to 634 ideas with 46 change records; I-627..I-634 are new. Counts now: lb-tested 65, lab-tested 28, refuted 291, deferred 51, in-plan 197, open 2. Sources: CONTEXT.md l.4698-4721 (the 17:54Z ROUND 44 APPLIED entry, the 18:13Z launch of round 45 by the user, the 18:37Z card); the untracked research/wf_ideas_v4/round45/ (R45-A1..A6, 11 verdicts); ledger 18:35:27Z; the poll.log 18:45:27Z header. No new LB score: exp89t was still PENDING at 18:45:27Z (L 9.75 h). The user's 18:13Z launch overrode R44-A1, so I-617 is closed. R44-A2, A3 and A4 are logged (I-620, I-623, I-613, I-597). The 18:37Z card and check are done (I-592, I-589). Round 45 is the 13th null round (I-556). New at-risk items: the per-event rule (I-627), the battery message (I-629) and the private read on request (I-630). Also new: the hourly flip check, pending the user's yes (I-631). Refuted: sending pushtext44 at every event (I-628), an LB-download private detector (I-632), DIS as a structural private-positive lever (I-633), FLOW_Z_WEIGHT 0.85 (I-634). I-384 is updated: IB29-06 is closed by probe 54. The at-risk list went from 13 to 14 ideas; I-233 is still the only strict orphan."
+}

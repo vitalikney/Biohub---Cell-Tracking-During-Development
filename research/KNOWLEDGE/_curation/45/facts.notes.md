@@ -1,0 +1,7 @@
+- 2026-09-29T18:40Z round 45 start; no prior facts.json
+- 18:43Z sources: HEAD 2361191 (18:37Z card); CONTEXT new 17:54 R44 APPLIED l.4698-4712, 18:13 R45 LAUNCHED l.4713-4716, 18:37 CARD l.4717-4720, Literature l.4721; round45 report.json 18:39Z R45-A1..A6 PROPOSED; poll.log hdr 18:35:24Z PENDING (l.33083); ledger 18:35:27Z 597 polls L>9.58
+- 18:46Z FACTS.md patched (c45_facts.py): state, F-LB-44, F-RUN-66, F-RUL-47, F-TRN-81, [c45] notes on F-LB-43/F-RUN-65/F-RUL-46, C-355..C-361, new C-366..C-376
+- 18:48Z DECISIONS.md patched (c45_dec.py): state, P55 cells, s1 para, s2 tick para + [c45] snapshot, R1-R10/§f [c45], R44 row note + 5 new s3 rows, changelog
+- 18:49Z late patch: 18:45:27Z header still PENDING (L 9.753 h) added to FACTS state/F-RUN-66 and DECISIONS state/snapshot
+- 18:49Z fixed stray pipes in F-RUL-47 (|delta| -> abs(delta)); table pipe counts verified
+- 18:50Z facts.json written (8 alerts). Done.

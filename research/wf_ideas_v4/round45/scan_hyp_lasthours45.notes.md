@@ -1,0 +1,11 @@
+# round45 scan_hyp_lasthours45 notes
+- 18:13Z poll.log newest header 2026-09-29T18:05:16Z: 56669888 exp89t still PENDING (line 32903). 0 Kaggle calls by me.
+- 18:15Z readtime.sh (befef6fb) dry run, SELMOCK 12:37:31Z, real poll.log: code=PENDING hdr 18:05:16Z (21:05 MSK), case a, selok=1; output scratchpad r45_readtime_mock.txt. 0 Kaggle calls.
+- 744250 local copy (experiments/discussions/744250.md): Deotte 12:57Z 'must finish before 23:59 UTC' (participant, no staff tag per R44-PC-04); kostopr4v 14:58Z asks 'private results released at 02:00 UTC?' unanswered; Selina Wu 16:04Z asks when selection locks, unanswered. No host statement on private release time.
+- poll.log columns: ref,fileName,date,description,status,publicScore,privateScore -> privateScore is the last field, empty now. lb.csv (uptest save) columns Rank,TeamId,TeamName,LastSubmissionDate,Score,SubmissionCount,TeamMemberUserNames: no public/private label.
+- 18:16Z newest header 18:15:19Z: 56669888 still PENDING (L > 9.25 h). No code.
+- DEFECT (info): _lb/e10_20260929T1141Z/lb.csv has 1 006 rows (top 1006, ends at 0.953), not 3 994; rank #141 / 124 above / 17th of 22 unaffected (top rows); '3 994' is snapshot metadata; card passes --teams 3994 explicitly -> no card change.
+- Full LB zips (uptest save) hold ~3 966-3 991 rows incl. 52 zero rows; post_exp75 (09:08:57Z) N=3991, ours #140 0.959 count 55. Zip member name = 'biohub-cell-tracking-during-development-publicleaderboard-2026-09-29T09:08:57.csv' -> the member name itself labels public vs private.
+- Medal lines Kaggle (>=1000 teams): gold <= 10 + floor(0.002N), silver <= floor(0.05N), bronze <= floor(0.10N). N=3991 -> 17/199/399 (matches CONTEXT 'bronze ~#399'); N~4005 -> 18/200/400.
+- read_selected.py prints s.public_score only -> for the private read add s.private_score.
+- Finals re-check after 13:21Z: decision B (13:34Z, pre-read), SELECTED 12:37:31Z = П3, 744250 no host statement (Deotte participant), 744273 no values, 0.963 cluster private, feed 17:29Z nothing new, slot 2 closed. No evidence-backed reason to change the tick.

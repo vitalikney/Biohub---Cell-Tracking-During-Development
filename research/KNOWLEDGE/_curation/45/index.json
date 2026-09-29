@@ -1,0 +1,67 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/INDEX.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/CHANGES.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/45/index.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/45/index.json"
+ ],
+ "alerts": [
+  {
+   "kind": "risk",
+   "what": "R45-A1 per-event push rule is not in CONTEXT. Under R44-A2 as logged, a correct re-tick to exp89t makes msg44.py print a false 'SELECTED is neither' at 19:43Z/21:05Z, and T3KEEP/T5 pushes repeat at every later event.",
+   "evidence": "research/wf_ideas_v4/round45/report.json R45-A1; v_plancheck_r45-pc-01.json; CONTEXT.md l.4698-4712; FACTS.md C-366..C-368; IDEAS.md I-627",
+   "suggested_action": "Append the R45 PER-EVENT RULE line before T7 (22:12 MSK / 19:12 UTC); act only on readtime's 'SELECTED case=' line; never send msg44's 'neither' line.",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "Laptop on battery since 17:43Z (59% at 18:41Z, ~21%/h); hibernation ~23:40-00:25 MSK endangers the 00:05 MSK check and the 03:07 MSK save/stop/commit; watchdog 16220 ignores percent; pushes not delivered.",
+   "evidence": "research/wf_ideas_v4/round45/report.json R45-A2; v_plancheck_r45-pc-03.json; WATCHLIST.md T244 l.82; FACTS.md C-370",
+   "suggested_action": "Re-measure Win32_Battery; if discharging, tell the user in chat (MSK first) to plug in before 23:00 MSK and keep the lid open.",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "exp89t 56669888 still PENDING at 18:45:27Z (L 9.75 h, past CI band). T7 at the first clean header >= 19:12:17Z; admit edge 19:45:17Z needs 'ADMIT_PENDING=1 pushtext44' if still PENDING.",
+   "evidence": "experiments/lb_poll/poll.log l.33144; FACTS.md F-RUN-66 l.354, C-367, C-368; round45/report.notes.md PC-02 dry run",
+   "suggested_action": "Run the read-time block per clean header; decision B mapping; all messages to chat.",
+   "urgency": "now"
+  },
+  {
+   "kind": "stale",
+   "what": "00:07Z stop order names dead watchdog 30176/16728; live watchdog is 16220/9596. Stopping the poller first triggers a false NO CLEAN POLL ~00:32Z.",
+   "evidence": "research/wf_ideas_v4/round45/report.json R45-A3; scan_plancheck.json R45-PC-04; FACTS.md C-369; WATCHLIST.md l.102",
+   "suggested_action": "Log R45-A3 (b): stop the current watchdog first by exact PID, then 37016 and the rest; re-arm watchdog on a BACK ON AC alert before ~19:50Z.",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "Round 45 is not logged as applied, and the post-deadline private-read plan (R45-A4) exists only in round45/report.json; hourly check (R45-A5) needs the user's yes.",
+   "evidence": "research/wf_ideas_v4/round45/report.json R45-A4, R45-A5; WATCHLIST.md W401, W402, W404; IDEAS.md I-630, I-631; FACTS.md C-371, C-372",
+   "suggested_action": "Log 'ROUND 45 APPLIED' + PRIVATE READ (R45) line tonight; never use the 1,006-row e10 lb.csv as a baseline; ask once (MSK) about the hourly check after the tick.",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "SELECTED checks at 19:43Z and 21:05Z; the user ticks by 20:00Z (23:00 MSK); after 20:00Z an a_old/b_old case must say 'смените до закрытия в 02:59 МСК'.",
+   "evidence": "CONTEXT.md l.4684-4687, l.4717-4720; DECISIONS.md §2 [c45] l.1029-1031",
+   "suggested_action": "Act on case= only; user confirms '2 of 2 selected' by 23:00 MSK.",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "Hindsight guard: prediction commit quoting the 13:21Z audit grid before 23:00Z (02:00 MSK).",
+   "evidence": "IDEAS.md ORPHANS l.1023 (I-336, I-407, I-252, I-516); CONTEXT.md l.4593-4606",
+   "suggested_action": "Push one prediction commit before 23:00Z.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "stale",
+   "what": "Round prompt KEY FACTS still '#151 of 3 999', '5 min'; current #154 of 4,007 (Chrome 18:16Z), 6th from bottom of the 0.959 block.",
+   "evidence": "experiments/workflows/biohub-research-round.js l.20; FACTS.md F-LB-44 l.283, C-373",
+   "suggested_action": "Refresh only if round 46 runs; keep it local + Chrome, 0 Kaggle calls, clear of 19:12-19:50Z.",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 45 index (~18:50 UTC / 21:50 MSK, HEAD 2361191). Rewrote research/KNOWLEDGE/INDEX.md (70 lines): state now shows the tick П3 {exp87a, #37} re-verified at 18:37:20Z, exp89t PENDING at 18:45:27Z (L 9.75 h), rank #154 of 4,007, round 44 applied, round 45 run at the user's request with R45-A1..A6 proposed but not logged, laptop on battery; refreshed all line anchors for IDEAS/FACTS/DECISIONS/WATCHLIST; top ideas I-627, I-629, I-620/I-623, I-624/I-607/I-600, I-630, I-631, hindsight group, I-233; 10 deduplicated alerts (2 new [now]: per-event rule, battery; exp89t read chain settled [now]). Appended CHANGES.md section 45: 8 new ideas I-627..I-634 (634 total; refuted 291, in-plan 197), I-617 closed, new facts F-LB-44/F-RUN-66/F-RUL-47/F-TRN-81, contradictions C-366..C-376, watchlist W398-W404/T244-T248/C36-C40, resolved alerts from curation 44. No other files edited, no commits, no Kaggle calls."
+}

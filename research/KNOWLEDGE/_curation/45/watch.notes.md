@@ -1,0 +1,4 @@
+- 18:40:45Z curation 45 watch start; no prior watch.json
+- 18:41:50Z read CONTEXT l.4698-4720 (17:54Z R44 applied=1ae6716, 18:13Z round45 by user override, 18:37Z card PENDING=2361191); round45/report.json 18:39Z R45-A1..A6 NOT applied; poll newest 18:35:24Z PENDING; census 18:41Z: watchdog 16220/9596, reader 1364/19012 alive, 29184/30288 gone; battery 59% discharging
+- 18:43:47Z WATCHLIST.md written: W398-W404 (R45-A1..A6+bookkeeping), T244-T248, C36-C40, I485-I496; W394/W395/W397/T152 done; W392 superseded by user (C36)
+- 18:44:18Z watch.json written (11 alerts), validated; done

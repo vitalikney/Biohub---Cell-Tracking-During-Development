@@ -1,0 +1,9 @@
+# v_plancheck R45-PC-05 notes (skeptic, 29 Sep ~18:31Z, 0 Kaggle calls)
+- No prior answer file; created notes.
+- sha8 recomputed 18:31Z: r44dry/readtime.sh befef6fb, r44dry/msg44.py 233e5ba5, r44dry/cardfix44.py af903431, mk_card_1837.py a19e1bd6 = CONTEXT 17:54Z (l.4698-4712). OK.
+- manual_admit.sh l.11: 'python -m kaggle competitions submissions biohub-cell-tracking-during-development -v' = lb_poll.py l.4 CMD. Header '=== $TS [manual-admit]', TS taken just before the call (19:44:45Z) <= E2 19:45:17Z; readtime HL awk '/^=== /{h=$0} /^56669888,.*SubmissionStatus\.(COMPLETE|ERROR)/' matches. OK.
+- poll.log non-standard headers (596 headers): only '[empty stdout ...' error notes + one '[manual-night]' (26677). Historical claim true.
+- CAVEAT on claim (3): lb_poll.py poll() can also write ' [ERROR <exc>]' notes (exception branch, e.g. subprocess.TimeoutExpired at 180 s). t7_trigger.sh l.6 and lastok.sh exclude ONLY 'empty stdout'; readtime.sh l.12 excludes 'empty stdout' AND '[ERROR'. So 'filters are sound' rests on history, not code. If the first header >= 19:12:17Z is an all-[ERROR block: t7_trigger fires, lastok returns the empty error block (no status line), readtime uses the previous clean header (< 19:12:17Z) -> msg44 l.93 'PENDING before 19:12:17Z: no push' -> T7 push missed (t7_trigger exits after one fire). Never happened in 596 headers; ~0 probability, impact = one informational push delayed to the manual-admit edge.
+- Claim (4) matches CONTEXT 13:34Z l.4614-4615 ('the exp89t watcher may still save post_exp89t on 0.959 (1 call, info only)'). Watcher 30864 uses last() (any block) -> fine.
+- Processes 18:32Z: poller 37016, watcher 30864, t7_trigger 16748 alive. poll.log 18:25:22Z: 56669888 still PENDING.
+- Verdict: not refuted (info finding, no action correct); add caveat: at T7, if 'T7 CHECK header' carries '[ERROR', ignore and use the next clean header by hand. Do NOT edit running t7_trigger.sh (bash reads scripts incrementally).

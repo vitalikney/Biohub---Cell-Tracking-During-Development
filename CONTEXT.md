@@ -4718,6 +4718,28 @@ Mention it to the user in one line (R9-A8 item 6).
   typical 9.3-9.5 h); API SELECTED at 18:37:20Z = {56640366 exp87a, 56563521 #37} = П3, case a (1 read-only call). Card = scratchpad
   card_1837_PENDING.txt sha8 2e46a239 (builder a19e1bd6, rank line Chrome 20:15 МСК #154 of 4 005). No push needed (PENDING before
   19:12:17Z). Next: the exp89t read push as soon as it lands; T7 at the first clean header >= 19:12:17Z; 19:43Z check; manual-admit 19:44:45Z.
+- 2026-09-29 18:54 UTC, ROUND 45 APPLIED (per-event rule, battery, private-read plan)
+  Report research/wf_ideas_v4/round45/report.json (0 Kaggle calls; no reason found to change the tick). (A1) R45
+  PER-EVENT RULE (amends R44-A2 'send every pushtext44 line'): pushtext44 is SENT only at (i) the FIRST event that
+  sees 56669888 terminal (every line except CONTEXT FIRST; on T1/T2 append CONTEXT FIRST to CONTEXT before the push),
+  (ii) T7 = PENDING at the first CLEAN header >= 19:12:17Z, (iii) the admit edge. At every LATER event (manual-admit
+  reader after an earlier read, 19:43Z, 21:05Z) act ONLY on 'SELECTED case=': a/b -> log only; a_old/b_old -> re-send
+  line 1 only (after 20:00Z replace its tail by 'отметка ещё не сменена — смените до закрытия в 02:59 МСК (23:59
+  UTC)'); d -> exact untick/tick steps to П3 {V_pub, #37 56563521}; selok=0 -> the 'Не смог проверить' line only.
+  NEVER send msg44's 'SELECTED is neither {exp87a,#37} nor {exp87a,exp75}' line (readtime.sh case= is authoritative).
+  ADMIT EDGE: at the manual-admit reader (~19:47Z), or the first clean header after 19:45:17Z if the manual call
+  failed/skipped, if READ says PENDING run 'ADMIT_PENDING=1 pushtext44' once; a later terminal header gets the T8
+  text; T7 not re-sent. A header with '[ERROR' is also an error block. (A2) battery: 69% 18:15Z -> 62% 18:35Z -> 51%
+  18:54Z (~35%/h lately); hibernate at 2% ~23:15-23:40 MSK; user told in chat. (A3) at 00:07Z stop the CURRENT
+  watchdog first, then the poller 37016 and the rest. (A4) PRIVATE READ PLAN: after 00:07Z no Kaggle job runs unless
+  the user says yes to the optional hourly check (A5); a read = 1x 'kaggle competitions submissions ... -v --page-size
+  100'; FLIP = privateScore non-empty for 56640366 or 56563521; on a flip: uptest save private_<HHMM>Z + a
+  read_private.py copy of read_selected.py (made after 23:59Z); medal lines ~ gold 10+floor(0.002N), silver
+  floor(0.05N), bronze floor(0.10N); pre-registered private sign pairs: CI = exp75 vs #37; DIS = exp89t vs exp87a; SEC
+  = exp89r vs exp89t; stack = exp87a vs #37; anchor x138 = probe 34 56545267; |delta| < 0.001 unresolved. (A6)
+  post-deadline write-up wording (DIS private sign unknown -0.003..+0.0007; I-384 sub-form closed by probe 54;
+  FLOW_Z_WEIGHT 0.6/1.5 refuted). LB Chrome 18:16Z: #154 of 4 007, 6th from the bottom of the 0.959 block (block to
+  #159). exp89t PENDING at 18:45:27Z (L 9.75 h).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

@@ -1,0 +1,67 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/FACTS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/DECISIONS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/45/facts.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/45/facts.json"
+ ],
+ "alerts": [
+  {
+   "kind": "forgotten",
+   "urgency": "now",
+   "what": "R45-A1, the per-event push rule, is not in CONTEXT. It has to be logged before the next event after the first exp89t read, and at the latest before T7 (19:12Z, 22:12 MSK). Without it, the R44-A2 rule logged at 17:54 ('send every pushtext44 line') misfires in two ways. First, msg44.py hard-codes the exp87a pairs, so after a correct re-tick to exp89t it prints a false 'SELECTED is neither ...' at the 19:43Z and 21:05Z checks. Second, on a T3KEEP or T5 read, the same read push is re-sent at every later event.",
+   "evidence": "FACTS C-366, F-RUL-47; research/wf_ideas_v4/round45/report.json R45-A1; research/wf_ideas_v4/round45/v_plancheck_r45-pc-01.json; CONTEXT ends at the 18:37 entry, l.4717-4720",
+   "suggested_action": "Append the R45 PER-EVENT RULE line to CONTEXT now. Send pushtext44 only at the first terminal read, at T7 and at the admit edge. At later events, act only on readtime's 'SELECTED case=' line, and never send msg44's 'SELECTED is neither' line to the user."
+  },
+  {
+   "kind": "deadline",
+   "urgency": "before-finals",
+   "what": "exp89t 56669888 is still PENDING at the 18:45:27Z header, L = 9.753 h, past the observed CI band (8.88-9.48 h). Any read from the ~18:55:29Z header onward carries the 'ins-tail?' note on T1. T7 falls on the first clean header at or after 19:12:17Z. If exp89t is still PENDING at the manual-admit reader (19:44:45Z list, read ~19:47Z), the plain pushtext44 prints the wrong T7 text; `ADMIT_PENDING=1 pushtext44` gives the correct 'не прочитан к 22:45' text.",
+   "evidence": "experiments/lb_poll/poll.log l.33144; FACTS F-RUN-66, C-367; research/wf_ideas_v4/round45/report.notes.md PC-02 dry run",
+   "suggested_action": "Run each event with the read-time block. At the admit edge, use ADMIT_PENDING=1 if the code is still PENDING. A header containing '[ERROR' is an error block, so apply T7 at the next clean header (C-368). The user ticks by 20:00Z (23:00 MSK)."
+  },
+  {
+   "kind": "risk",
+   "urgency": "now",
+   "what": "The laptop has been on battery since 17:43Z: 62% at 18:35Z, draining about 21%/h. Hibernation at 2% is expected around 20:40-21:25Z (23:40-00:25 MSK). That comes after the 23:00 MSK tick, but it makes the 21:05Z (00:05 MSK) SELECTED check a coin flip and the 00:07Z (03:07 MSK) save/stop/commit a near-certain miss. The watchdog (16220/9596) does not check battery percent. Pushes are not delivered, so the chat is the only channel.",
+   "evidence": "FACTS F-RUN-66, C-370; CONTEXT 17:54 l.4698-4712; research/wf_ideas_v4/round45/v_plancheck_r45-pc-03.json; research/wf_ideas_v4/round45/report.json R45-A2",
+   "suggested_action": "Send the R45-A2 message in chat now (MSK first, re-measure first, skip it if the laptop is back on AC): plug in before 23:00 MSK and keep the lid open. Do not change the power plan without the user's OK."
+  },
+  {
+   "kind": "contradiction",
+   "urgency": "before-finals",
+   "what": "The 00:07Z stop list still names a watchdog that no longer exists. R44-A5 was never logged in CONTEXT and names watchdog v2 30176/16728, which is gone; the live watchdog is 16220 (ppid 9596). If the poller is stopped first while 16220 is running, a false 'NO CLEAN POLL' alert fires at ~00:32Z. If the laptop goes back to AC, 16220 exits with 'BACK ON AC' and nothing watches the 19:15-19:45Z window unless the watchdog is re-armed.",
+   "evidence": "FACTS C-369, C-361; research/wf_ideas_v4/round45/scan_plancheck.json R45-PC-04; research/wf_ideas_v4/round45/report.json R45-A3",
+   "suggested_action": "Log R45-A3 (b): at 00:07Z, stop the current watchdog by exact PID first, then poller 37016 and the rest. On a BACK ON AC alert before ~19:50Z, re-arm watchdog v2 (local only)."
+  },
+  {
+   "kind": "deadline",
+   "urgency": "today",
+   "what": "The finals are still ticked П3 {exp87a 56640366, #37 56563521}. API SELECTED re-verified this at 18:37:20Z (case a), the first good read since 12:37:31Z. The remaining checks at 19:43Z and 21:05Z follow the R43-A3 rule. After 20:00Z, an a_old/b_old case (a promotion that was not re-ticked) needs 'смените до закрытия в 02:59 МСК' in place of the 23:00 tail (R45-A1 (2)).",
+   "evidence": "CONTEXT 18:37 l.4717-4720; DECISIONS section 2 [c45] tick paragraph and [c45] snapshot",
+   "suggested_action": "Apply the SELECTED READ RULE at 19:43Z and 21:05Z and act on case= only. The user confirms '2 of 2 selected' by 23:00 MSK."
+  },
+  {
+   "kind": "orphan-idea",
+   "urgency": "info",
+   "what": "Post-deadline private read (R45-A4): on request only, with no loop. It is one submissions call with --page-size 100 (the CLI default page is 20), and a flip means privateScore is non-empty for 56640366 or 56563521. Never use e10_20260929T1141Z/lb.csv (1,006 rows) as the baseline for N or the drop test. The hourly flip check (R45-A5) runs only on the user's explicit yes.",
+   "evidence": "FACTS F-RUL-47, C-371, C-372; research/wf_ideas_v4/round45/report.json R45-A4, R45-A5",
+   "suggested_action": "After the 23:00 MSK tick is confirmed, tell the user once, in MSK, that the private result takes one call on request, and ask about A5. Make read_private.py only after 23:59Z."
+  },
+  {
+   "kind": "stale",
+   "urgency": "info",
+   "what": "The rank line has moved. It is now #154 of 4,007 LB rows (Chrome 18:16Z), 6th from the bottom of the 0.959 block #144-#159 (newcomer Arunava Nag at #158, below us). The 18:37Z card correctly used the R44-A3 line (#154 of 4,005, 5th from the bottom). The PENDING card text 'обычно 9,3–9,5 ч' has already been exceeded (cosmetic).",
+   "evidence": "FACTS F-LB-44, C-355, C-373; research/wf_ideas_v4/round45/scan_browser.json",
+   "suggested_action": "In any later message, use 'Chrome 21:16 МСК: #154 из 4 007, 6-е снизу в блоке 0.959 (блок до #159)'. Do not re-send the card."
+  },
+  {
+   "kind": "risk",
+   "urgency": "info",
+   "what": "Corrected write-up wording from round 45. DIS has an unknown private sign (about -0.003..+0.0007; the near-GT depletion is an in-sample selection effect). The I-384 n2a-delta sub-form is CLOSED by probe 54 ('trigger did not fire', not 'premise falsified'). FLOW_Z_WEIGHT 0.85 is untested and predicted to be inert.",
+   "evidence": "FACTS F-TRN-81, C-374, C-375, C-376; research/wf_ideas_v4/round45/report.json R45-A6",
+   "suggested_action": "Use only the R45-A6 wordings in the post-deadline write-up and IDEAS cleanup. There is no score effect."
+  }
+ ],
+ "summary": "Curation 45 (state 18:45 UTC / 21:45 MSK, 29 Sep; HEAD 2361191). Sources since curation 44: commits 1ae6716 (17:54Z Round 44 applied) and 2361191 (18:37Z card); CONTEXT 17:54 ROUND 44 APPLIED (l.4698-4712; A1-A4 logged, A5 not), 18:13 ROUND 45 LAUNCHED AT THE USER'S REQUEST (l.4713-4716; overrides R44-A1), 18:37 FINALS CARD (l.4717-4720; API SELECTED 18:37:20Z = П3 case a; card sha8 2e46a239); round45 report.json 18:39Z (R45-A1..A6 PROPOSED, none in CONTEXT) with its scans and verdicts; poll.log headers to 18:45:27Z (exp89t PENDING, L = 9.753 h); ledger 18:35:27Z (597 polls). FACTS.md: new state line; new rows F-LB-44 (Chrome 18:16Z #154 of 4,007, block #144-#159, 6th from bottom, Overview 4,004 teams), F-RUN-66 (exp89t past the CI band, battery ~21%/h with hibernation ~23:40-00:25 MSK, liveness with watchdog 16220/9596 and old PIDs gone, CLI page size, e10 lb.csv 1,006 rows), F-RUL-47 (R44 applied, round 45 user override, 18:37 card, R45-A1..A6), F-TRN-81 (RC-A DIS refuted on value, I-384 wording, FLOW_Z_WEIGHT 0.85 inert, thirteenth null round); [c45] notes on F-LB-43, F-RUN-65, F-RUL-46; C-356, C-357, C-358 RESOLVED; C-360 partly resolved; C-359 reopened as C-366; C-361 superseded by C-369; new contradictions C-366..C-376. DECISIONS.md: new state line; P55 cells (PENDING 18:35:24Z and 18:45:27Z); section-1 [c45] paragraph; section-2 [c45] tick paragraph (re-verified 18:37:20Z) and a [c45] finals snapshot; [c45] notes on R1-R10 and the finals rule; a note on the Round-44 proposals row; 5 new section-3 rows (ROUND 44 APPLIED, ROUND 45 LAUNCHED (user), 18:37Z CARD, Round-45 proposals, Rejected in round 45); changelog. No probe was scored, built, pushed or submitted, and the tick is unchanged. This curator made no commit and no Kaggle calls."
+}

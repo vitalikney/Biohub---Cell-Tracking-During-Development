@@ -1,0 +1,6 @@
+- 18:41:02Z 2026-09-29 start: no _curation/45/ideas.json -> incremental run over curation 44 (626 ideas). Reuse scratchpad patch44.py/gen_md44.py.
+- 18:41:45Z sources since c44: commits 1ae6716 (CONTEXT 17:54Z ROUND 44 APPLIED l.4698-4711) + 2361191 (18:13Z ROUND 45 LAUNCHED by user l.4712-4715; 18:37Z CARD l.4716-4719); Literature l.4721; round45/ untracked (report.json R45-A1..A6 18:39Z, 4 scans, 11 v_*). Plan: patch45.py -> I-627.. + updates; gen_md45.py.
+- 18:44:08Z read round45 report/scans/verdicts + CONTEXT l.4698-4721. Plan: new I-627 per-event rule (at-risk), I-628 send-every-event (refuted), I-629 battery msg (at-risk), I-630 private read on request (at-risk), I-631 hourly flip check (user yes), I-632 LH-3 LB-download loop (refuted), I-633 RC-A DIS premise (refuted), I-634 FLOW_Z 0.85 (refuted); I-617 -> refuted (user override 18:13Z); I-620/I-623/I-613/I-597 logged 17:54Z.
+- 18:48:09Z ideas_c45.json (634 ideas, 46 change records) + IDEAS_c45.md built in scratchpad; next: verify with gen.py/gen2.py then copy.
+- 18:48:51Z ideas.json (634 ideas, 46 change records) + IDEAS.md (1215 lines) WRITTEN; 18:45:27Z header (still PENDING, L 9.75 h) folded into I-486; gen.py 634 rows 0 bad, gen2.py body/rank equal; at-risk 14. Next: _curation/45/ideas.json.
+- 18:49:21Z _curation/45/ideas.json written (6 alerts). DONE.

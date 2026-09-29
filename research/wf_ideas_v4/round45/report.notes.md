@@ -1,0 +1,14 @@
+# round45 report notes
+- 2026-09-29T18:33Z start: report.json absent; 11 findings + 11 skeptic verdicts in round45/ (scan_*.json, v_*.json).
+- 18:35:00Z local checks (0 Kaggle calls): battery 62% status 1 runtime 123 min (69% 18:14:58Z -> 21%/h; 2% ~21:26Z; WMI est ~20:38Z). PIDs alive: 16220, 9596 (watchdog), 37016 poller, 30864 watcher, 3028 manual_admit, 16748 t7, 29828 waiter, timers 29184/20960/24260/21232; GONE 30176/16728 (old watchdog v2), 30820 (18:13Z timer fired). 27876 sleep 5400 orphan alive.
+- poll.log newest header 18:25:22Z: 56669888 PENDING. 29 rows/block, oldest probe 27 (24 Sep) -> CLI default page 20? (block shows 29 rows incl. multi-line); CLI -h: --page-size default 20, max 200.
+- sha8 readtime befef6fb msg44 233e5ba5 cardfix44 af903431 mk_card a19e1bd6 (match CONTEXT 17:54Z).
+- e10_20260929T1141Z/lb.csv = 1007 lines (LH-4a confirmed). read_selected.py prints s.public_score only (LH-4b confirmed).
+- msg44.py: A/B hard-coded {56640366,56563521}/{56640366,56656157} (PC-01 confirmed by code read); ADMIT_PENDING branch l.78 (PC-02).
+- 18:35:24Z header: 56669888 still PENDING (L 9.585 h; past observed CI band 9.48 h). Next ~18:45:27Z (read there -> L_lo 9.585, no ins-tail; from 18:55Z header on L_lo > 9.6 -> ins-tail note).
+- PC-02 dry run (mock log = real tail + '=== 2026-09-29T19:44:45Z [manual-admit]' PENDING block, SELMOCK case a, NOW 19:47Z): READ code=PENDING hdr 19:44:45Z late=1; pushtext44 -> T7 text (wrong); 'ADMIT_PENDING=1 pushtext44' -> 'не прочитан к 22:45' text (right); flag does not persist after the call. Files scratchpad r45rep/poll_admitpend.log, test_pc02.txt.
+- PC-01 re-run: msg44 CODE=T1 SEL=56669888,56563521 -> 'SELECTED is neither' (false alarm); SEL old pair -> T1 text + CONTEXT FIRST; T3KEEP at NOWZ 21:05:10Z re-emits the 0.959 push (duplicate).
+- Watchdog 16220 (ppid 9596, start 17:43:52Z) loop: break on BatteryStatus != 1 (BACK ON AC) or clean-poll age > 25 min; no percent check (PC-03/04 confirmed).
+- Decision: post-deadline private read = PC-06 default (on request, no loop) + LH-3 flip detector (privateScore non-empty) per read; hourly loop only on user yes.
+- REPORT.md not written (subagent rule: no report .md files; precedent rounds 38-44); REPORT_RU text is in next_focus.
+- 18:39Z report.json written (6 actions R45-A1..A6; A5 needs the user's yes). Newest header still 18:35:24Z (PENDING). 0 Kaggle calls by this report.

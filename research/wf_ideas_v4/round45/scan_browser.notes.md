@@ -1,0 +1,8 @@
+# round45 scan_browser notes (started 2026-09-29T18:13:41Z)
+- 18:14Z: round45 folder created; no prior scan_browser.json. Chrome only, 0 Kaggle API calls (quiet window 17:30-20:00Z, R39-A6). poll.log 18:05:16Z: 56669888 still PENDING. Newest digest 1729Z: 0 new topics, 1 comment (Selina Wu 744250 16:04Z, already seen r44); E10 FLAG none; top public 0.953.
+- ~18:16Z LB (https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/leaderboard): header '6 HOURS TO GO', rows to 4,007. Us '154 D: Discipline 0.959 56 17h' + banner 'Your latest submission is being scored.' 0.959 block now #144-#159: NEW Arunava Nag #158 (0.959, 34 entries, 7h) BELOW us; RyotaroAbe pushed to #159. First 0.958 now #160 Umesh Arampath. rogerrogerroger3r 85->87 entries. Top-5 unchanged. slime #9 0.971 (173 entries). Sam Barnett #26 0.969.
+- ~18:18Z discussion?sort=recent-comments: no new topic, no new comment. 744250 still 3 comments ('Last comment 2h ago by Selina Wu', no host answer). Farewell 744357 votes 9->10, 0 comments. Workshop last comment 7h, shakeup 6h, new-entrants 10h, JT 21h.
+- ~18:19Z Code dateCreated: unchanged (newest unpinned 'Robust Cell Tracking ... via Chan.' 6d, 0.1). Code scoreDescending: same top-4 at 0.953 (Harmonic Fusion V3 248 votes), then Geometric Fusion 0.948. Nothing >= 0.954, nothing pulled.
+- A foreign tab 1196280445 (discussion URL) appeared briefly in our MCP group during the Code read and then vanished; not touched (same churn as r44).
+- ~18:21Z Overview: no change; '6 hours to go'; timeline/eval/code req (<=12 h) same. 13,475 entrants, 4,589 participants (+1), 4,004 teams (+1), 96,707 submissions (+119 vs r44).
+- 18:22Z: tab 1196280444 closed; group auto-removed.

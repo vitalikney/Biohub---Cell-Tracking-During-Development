@@ -1984,3 +1984,36 @@ Curator logs: `research/KNOWLEDGE/_curation/4/`.
   - read-time block: [now] (first header 18:15:17Z);
   - 00:07Z step: [before-finals] (2 of 3 curators);
   - Deotte / 744250: [info] (2 of 3 curators).
+
+## 45 - 2026-09-29 ~18:50 UTC (curation 45; git HEAD 2361191 = 19149bf + 1ae6716 (17:54:54Z ROUND 44 APPLIED; CONTEXT 17:13/17:54, digest_20260929T1729Z, 744250.md, round44/, curation 43/44 committed) + 2361191 (18:37:41Z card; CONTEXT 18:13/18:37, ledger, poll.log); uncommitted `research/KNOWLEDGE/*` curation-45 edits, `experiments/lb_poll/ledger.md`, `poll.log`; untracked `research/wf_ideas_v4/round45/` (no REPORT.md), `research/KNOWLEDGE/_curation/45/`, `experiments/lb_poll/_lb/e10_20260929T1141Z/`, `_night_subs.*`)
+
+**Sources:** `CONTEXT.md` l.4698-4720 (17:54Z ROUND 44 APPLIED, 18:13Z ROUND 45 LAUNCHED, 18:37Z FINALS CARD; `## 9. Literature` now l.4721); `research/wf_ideas_v4/round45/` (report.json 18:39Z R45-A1..A6, 4 scans, 11 v_*.json); `experiments/lb_poll/poll.log` to the 18:45:27Z header (l.33144); `ledger.md` 18:35:27Z; `research/KNOWLEDGE/_curation/45/{ideas,facts,watch}.json`.
+
+**LB:** no new score. P55 exp89t (56669888) PENDING at 18:15:19 / 18:25:22 / 18:35:24 / 18:45:27Z, L = 9.75 h, past the observed CI band 8.88-9.48 h (`poll.log` l.33144; `FACTS.md` F-RUN-66 l.354; `IDEAS.md` I-486). Rank #154 of 4,007 LB rows (Chrome 18:16Z), 6th from the bottom of the 0.959 block #144-#159 (`FACTS.md` F-LB-44 l.283, C-373). Tick unchanged П3 {exp87a, #37}, re-verified by API at 18:37:20Z, case a (`CONTEXT.md` l.4717-4720).
+
+**User decisions:** 18:13Z the user launched round 45 ('да сейчас запусти ... это ни на что не повлияет'), overriding R44-A1 (`CONTEXT.md` l.4713-4716).
+
+**Ops:** round 44 A1-A4 logged at 17:54Z; A5 (00:07Z stop order) not logged. Laptop on battery from 17:43Z (59% at 18:41Z, ~21%/h); pushes not delivered. Live watchdog is 16220/9596 (30176/16728 gone). 18:37Z card `card_1837_PENDING.txt` sha8 2e46a239, no push needed (`CONTEXT.md` l.4698-4720; `FACTS.md` F-RUN-66, F-RUL-47 l.406). Round 45 R45-A1..A6 are PROPOSED and **not in CONTEXT**.
+
+**Ideas** (`IDEAS.md` CHANGES (45) l.253; `ideas.json` meta.curations[-1], 46 records; `_curation/45/ideas.json`):
+- **New I-627..I-634:**
+  - in-plan: I-627 per-event rule (at risk); I-629 battery message (at risk); I-630 post-deadline private read on request (at risk); I-631 hourly flip check (gate = the user's yes);
+  - refuted: I-628 pushtext44 at every event; I-632 LB-download private detector; I-633 DIS as a structural private-positive lever; I-634 FLOW_Z_WEIGHT 0.85.
+- **Closed:** I-617 (user override). **Updated:** I-486, I-556 (13th null round), I-620 / I-623 / I-613 / I-597 (logged 17:54Z), I-592 / I-603 / I-589 (card + check done), I-526, I-614 / I-259, I-624 / I-609 / I-497, I-607 / I-283 / I-370 / I-604, I-384 / I-559 (IB29-06 sub-form closed by probe 54), I-454, I-450 / I-175, I-252.
+- **Counts c44 -> c45:** 626 -> 634 ideas; refuted 286 -> 291, in-plan 194 -> 197; lb-tested 65, lab-tested 28, deferred 51, open 2 unchanged. At-risk 13 -> 14 (off: I-617, I-620; on: I-627, I-629, I-630); strict orphan I-233 (`IDEAS.md` ORPHANS l.1023).
+
+**Facts and decisions** (`FACTS.md` and `DECISIONS.md` rows marked [c45]; `_curation/45/facts.json`; state 18:45Z):
+- **New facts:** F-LB-44 (l.283); F-RUN-66 (l.354); F-RUL-47 (l.406); F-TRN-81 (l.552).
+- **Contradictions:** resolved C-356, C-357, C-358; C-360 partly; C-359 reopened as C-366; C-361 replaced by C-369; new C-366..C-376 (l.923-933): duplicate / false pushes, admit-edge flag, '[ERROR' headers, dead watchdog PID, battery, 1,006-row lb.csv, post-deadline read cadence, stale '9,3-9,5 ч' card line, DIS private sign, I-384 wording, FLOW_Z_WEIGHT.
+- **DECISIONS.md:** §1 [c45] l.580 (P55 pending); §2 [c45] snapshot l.1029-1031; §3 [c45] rows l.1968-1972 (round 44 applied, round 45 launched, 18:37Z card, round-45 proposals, round-45 rejections); changelog l.2194.
+
+**Watchlist** (`WATCHLIST.md`, ~18:45Z; `_curation/45/watch.json`):
+- done: W394, W395, W397, T152; W392 superseded (C36 resolved);
+- new: W398-W404 (= R45-A1..A6 + bookkeeping), T244-T248, C36-C40, I485-I496;
+- still open: W126, W385 (moot unless round 46 runs).
+
+**Alerts** (`INDEX.md` TOP ALERTS, 10 after dedup):
+- **Resolved since curation 44:** round 44 not logged before 18:13Z (logged 17:54Z); card inputs (card built with '#154 из 4 005'); edge keying / L_hi (logged in R44-A2); watchdog v2 PIDs (replaced by 16220/9596).
+- **New:** [now] R45-A1 per-event rule; [now] battery; [today] 00:07Z stop order with dead PIDs; [today] round 45 not applied + private-read plan; [info] stale KEY FACTS + rank line; [info] R45-A6 write-up wordings.
+- **Carried over:** [now] exp89t read chain (new phase: ADMIT_PENDING, clean-header T7); [today] SELECTED checks; [before-finals] hindsight guard; [info] RESULTS P47-P55.
+- **Curator disagreements settled:** exp89t read chain [now] (2 of 3); private-read plan [today] (watch; ideas [before-finals], facts [info]).

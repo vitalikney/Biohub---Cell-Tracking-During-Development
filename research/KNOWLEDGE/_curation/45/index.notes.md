@@ -1,0 +1,4 @@
+- 18:51Z start curation 45 index task; no index.json present
+- 18:53Z INDEX.md written (curation 45)
+- 18:53Z CHANGES.md section 45 appended
+- 18:53Z index.json written; done

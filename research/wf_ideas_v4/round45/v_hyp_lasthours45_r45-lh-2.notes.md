@@ -1,0 +1,6 @@
+- 18:30Z start R45-LH-2 skeptic; no prior json
+- 18:31Z poll.log 18:25:22Z header: exp89t 56669888 still PENDING; exp87a 0.959, #37 0.954, exp75 0.955 (no change).
+- CONTEXT l.4579 (12:37Z tick П3), l.4593 (13:21Z audit moderate/high), l.4607 (13:34Z decision B, before read), l.4678 R43-A7 (slot 2 closed ~16:50Z), l.4698 R44-A4 (feed 17:29Z, E10 none) -> claims (a)(b)(c)(g)(h) match.
+- experiments/discussions/744250.md l.14 Chris Deotte 12:57Z; round44 scan_plancheck R44-PC-04: participant, no staff tag, selection-lock/private-release questions unanswered -> (d) matches. 744273: no knob (CONTEXT 12:59Z) -> (e).
+- Caveat: 12:37:31Z is the last API SELECTED read; freshness comes from the 18:37Z card read (R44-A2 selread), not from this finding.
+- Verdict: not refuted; info-only no-op, gain 0.
