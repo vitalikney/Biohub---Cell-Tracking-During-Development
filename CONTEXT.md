@@ -4401,6 +4401,17 @@ Mention it to the user in one line (R9-A8 item 6).
   LB read of the distilled secondary fine-tune (SEC n2a) on the K base: -0.002 (0.958 -> 0.956); the dummy-lab
   negative prior (-0.0008..-0.0020 on 5/5 pairs) had the right sign'. Card: SEC_READ = '-' (0.956); SEC files (exp89p,
   exp89r, exp89l, exp89q) cannot be V_pub unless another file beats 0.959 - not applicable.
+- 2026-09-29 08:19 UTC, A-M2 RULE (a) (user choice in chat, 08:1xZ; pre-score: header 08:18:17Z shows 56656147 exp89r and 56656157 exp75 PENDING; supersedes the A-M2 function of 02:53Z (1) now that P = '-')
+  With SEC read '-' on the K base (exp89p 0.956 vs exp85a 0.958, ~-0.002), exp89r (K + SEC + DIS 2.25 + CI) differs
+  from exp87a (K + CI, 0.959) by SEC + DIS, so its display gives an indirect DIS estimate: DIS ~ d_R - 0.959 + 0.002
+  (additivity assumed; up to +-0.002 rounding error across four displays). RULE: at exp89r's first terminal header
+  (latest the 11:00Z header): exp89r COMPLETE, no ERROR, and display >= 0.958 (DIS estimate >= +0.001) with L_hi <=
+  10.2 h (or display >= 0.959 with L_hi <= 10.75 h, GAP RULE v2) -> send exp89s (K + DIS 2.25, no SEC, non-CI; dummy
+  PASS 14:40Z 28 Sep, CSV 8956f46c6824; v1) at once, cutoff 11:30Z, with the G1/G2/G3/G5 guards and nb_try
+  exp89s,exp89q $KS "$M56S". Otherwise (display <= 0.957, ERROR, not terminal by 11:00Z, or a 0.958 read with L_hi >
+  10.2 h) -> A-M2 UNUSED. exp89s is read vs exp85a 0.958: '+' >= 0.959 (a clean DIS read); it can become V_pub only at
+  >= 0.960, or at 0.959 with an attributable UP over the champion exp87a (running-champion rule, conservative
+  reading).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
