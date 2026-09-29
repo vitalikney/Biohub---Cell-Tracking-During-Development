@@ -4752,6 +4752,8 @@ Mention it to the user in one line (R9-A8 item 6).
   0.959 (+0.001 rounded; true difference in (0.000, +0.002) on one embryo). The 19:43Z / 21:05Z checks now compare
   against V_pub = exp89t (R39-A4 comparator; readtime.sh does this). No card rebuild (R44-A2 (f): after the PENDING
   card a later read gets the push only).
+- 2026-09-29 19:07 UTC, USER RE-TICKED (chat 'поставил'): API SELECTED at 19:07:17Z = {56669888 exp89t (0.960), 56563521 #37 (0.954)} = the
+  RECOMMENDED PAIR П3 {V_pub = exp89t, #37}; case a under the R39-A4 comparator. Later checks (19:43Z, 21:05Z) log only unless it changes.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
