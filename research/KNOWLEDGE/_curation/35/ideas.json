@@ -1,0 +1,67 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/ideas.json",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/IDEAS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/35/ideas.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/35/ideas.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "what": "exp89p (probe 54, 56657612) is due to read now, in the 07:38-08:40Z window. The A-M1 decision is taken at its first terminal header: '+' means display >= 0.959, COMPLETE, no ERROR and L_hi <= 7.9 h, and leads to 'nb_try exp89l $KL \"$M55L\"' with an 08:45Z cutoff; anything else is UNUSED. Because the poller drifts, 'the 08:40Z header' will be stamped about 08:38:23Z, and the manual 08:40:00Z list is needed if the ref is still PENDING at the 08:30Z timer (I-479, I-536, I-538, I-544).",
+   "evidence": "CONTEXT.md l.4361-4380 (07:23Z MORNING PREP); experiments/lb_poll/ledger.md 07:28:10Z (56657612 PENDING, L > 6.69 h); research/wf_ideas_v4/round35/report.json new_facts (3), (4), next_focus",
+   "suggested_action": "Follow the 07:23Z prep verbatim at exp89p's first terminal header. At the 08:30Z timer, arm the single 08:40:00Z list only if 56657612 is still PENDING, and ignore the stale timer text (I-553).",
+   "urgency": "now"
+  },
+  {
+   "kind": "forgotten",
+   "what": "R35-A1 (I-564) is not logged. It adds the UP-test log line and one LB-lag re-save: if post_<token> still shows count 53, run 'timeout 180 python tools/uptest.py save post_<token>_b' once, about 5 min later. Without it, a lagging LB (+0) is silently coded 'no UP' at a 0.959 exp89p read, because tools/uptest.py compare prints the counts but does not act on them. The S0 for exp89p is the e10 07:41Z run if it lands before the header, otherwise 20260929T0713Z.",
+   "evidence": "research/wf_ideas_v4/round35/report.json R35-A1, plan_issues (a); research/wf_ideas_v4/round35/v_plancheck_pc35-01.json; tools/uptest.py l.47-54; CONTEXT.md l.4351-4360 (R34-A1 as logged)",
+   "suggested_action": "Log R35-A1 as a one-line OPS entry before exp89p's read, and apply it at the first 0.959 read (exp89p now, exp89r ~09:20-09:35Z). Do not adopt PC35-01's 'never MASKED on +0' clause (refuted, I-566).",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "Card v5 (a134d5e4) still has three lines that compare against a P1 row, and that row does not exist for a CI V_pub (exp87a). The lines are l.39 (the sd >= 0.0015 sentence), l.48 ('P1 above P3 ...') and l.54 ('exp75 = 0.954 and clean: P1 and P3 almost equal'). l.54 conflicts with the pre-registered 'P3 first' order, and with a CI V_pub exp75 at 0.954 is not a partner at all (R25 needs >= 0.955). This is I-565 (R35-A2). The 06:20Z entry fixed only l.45 (I-562).",
+   "evidence": "research/wf_ideas_v4/round35/report.json R35-A2, plan_issues (b); research/wf_ideas_v4/round35/report.notes.md 07:31Z; research/wf_ideas_v4/round29/finals_card_v5_ru.md l.31, l.39, l.42, l.45, l.48, l.54; CONTEXT.md l.4351-4360",
+   "suggested_action": "At the 12:03Z (15:03 MSK) fill, and only if V_pub has CI: in the FILLED copy delete l.39's sentence, l.48 and l.54, then add the step-11 check that 'П1' occurs 0 times between the ===== lines. The template stays a134d5e4. Re-check at 18:37Z. If exp89p reads >= 0.960 (non-CI V_pub), l.48 and l.54 stay.",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "exp89l (the A-M1 file) attaches the CI dataset yuki0731/biohub-coord-inject, but the morning G3 guard checks only ft-weights and n2a. The risk is about 0, because submitted versions pin dataset versions and only an owner deletion would break the file. This is I-567 (PC35-05), a strict orphan: optional and not assigned to anyone.",
+   "evidence": "research/wf_ideas_v4/round35/report.json plan_issues (c), new_facts (6); research/wf_ideas_v4/round35/scan_plancheck.json PC35-05; CONTEXT.md l.4361-4380 (G3 = ft-weights + n2a)",
+   "suggested_action": "Only if A-M1 fires: run 'timeout 120 python -m kaggle datasets files yuki0731/biohub-coord-inject' once before nb_try and expect 10 files dated 2026-08-25. If they are missing, push the user and leave A-M1 UNUSED. Otherwise close the item as not needed.",
+   "urgency": "now"
+  },
+  {
+   "kind": "forgotten",
+   "what": "The pre-registered side lines that must be written at the reads are not logged anywhere in CONTEXT. The first is the R35-A3 B25 line at the DIS read: 'B25 / learned node-drop family: not reopened (R35-RC-C, pre-registered ~07:30Z)', with the citations RESULTS.md l.103/105/111 and l.94 (I-133). The second is the C11 mapped line after the A-M1 and A-M2 decisions (I-559). The READS-vs-CARD lens that runs from round 36 relies on both (I-556, R35-A5).",
+   "evidence": "research/wf_ideas_v4/round35/report.json R35-A3, R35-A5; research/wf_ideas_v4/round35/v_recheck_r35-rc-c-b25-learned-peak-pruning-not-reop.json; research/wf_ideas_v4/round33/report.json R33-A4 (b)",
+   "suggested_action": "Write the C11 line in the post-decision entry after A-M1 (~08:45Z). Write the B25 side line next to the DIS code at exp89r's read (~09:20-09:35Z), never at the decision header.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "Rounds 29-35 still have no REPORT.md. The text sits only in report.json 'report_md_ru'; round 34 was committed in f2c4711 without one and round 35 is untracked. experiments/RESULTS.md still has no rows for probes 47-51 (the best is 51, 0.959). The R35-A4 curator records exist only in research/KNOWLEDGE and round35/report.json: the Kai-Gowers x138-port reads, GAP_CLOSE_MAX_GAP 2 being a no-op, tight55 being rank-neutral, and probes 43/44 tying K2.",
+   "evidence": "research/wf_ideas_v4/round35/report.json next_focus, R35-A4; research/wf_ideas_v4/round34/ (no REPORT.md); experiments/RESULTS.md (no rows 47-51); research/KNOWLEDGE/IDEAS.md ORPHANS 'Not orphans but easy to lose'",
+   "suggested_action": "After the morning decisions, as low-priority work: save report_md_ru as round29..35/REPORT.md, add RESULTS rows 47-51, and add the R35-A4 records (post-deadline is acceptable per R35-A4).",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "risk",
+   "what": "The 08:30Z and 12:03Z timer texts are still stale pointers. The logged lines govern: 02:53Z (2) at 08:30Z, the 07:23Z prep and card v5 a134d5e4 at 12:03Z. Following the timer text instead could trigger a rebuild, a re-push or card v4 (I-553).",
+   "evidence": "research/wf_ideas_v4/round35/report.json plan_issues (d); CONTEXT.md l.4313-4324 (R32-A3 timer texts are pointers), l.4361-4380",
+   "suggested_action": "At each timer, follow the logged line, not the timer text: no rebuild or re-push of exp89l / exp89s / exp89q, and fill card v5, not v4.",
+   "urgency": "today"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "At-risk ideas that are still unlogged, each with a deadline today: I-564 (UP-test log line), I-565 (card P1 deletions), I-559 (C11 record), I-539 (card info lines), I-540 (MSK brief / 'pair by the card' wording), I-548 (card fill numbers, standing prior only), I-526 (card v5 fill), I-336 (hindsight guard pushed before 23:00Z), I-252 (H2/H3 lessons). Strict orphans: I-233 and I-567.",
+   "evidence": "research/KNOWLEDGE/IDEAS.md ## ORPHANS; research/KNOWLEDGE/ideas.json (orphan = 'at-risk' / 'strict')",
+   "suggested_action": "Close each one with a one-line CONTEXT entry at its slot (reads 07:38-11:00Z, fill 12:03Z, refresh 18:37Z, H2/H3 by 23:00Z).",
+   "urgency": "today"
+  }
+ ],
+ "summary": "Curation 35 (2026-09-29 ~07:45 UTC, HEAD 81884c9) was an incremental pass over curation 34: 563 -> 567 ideas and 46 change records. The sources were the 3 new commits since b4848cb (CONTEXT 06:09Z POST-WAKE l.4343-4350, 06:20Z OPS night-ref LB saves + R34-A2 l.4351-4360, 07:23Z MORNING PREP l.4361-4380; Literature is now at l.4381), round 35 (untracked; report.json R35-A1..A5 at 07:33Z, 4 scans, 5 verdicts), ledger 07:28:10Z, e10 RUN 42 / 0713Z and feed 0658Z. No new LB score: probes 52 exp89r, 53 exp75 and 54 exp89p are PENDING at 07:28:09Z. V_pub is exp87a 0.959, rank #136 of 3,986. New ideas: I-564 (R35-A1 UP-test log line + lag re-save, in-plan, at-risk), I-565 (R35-A2 card v5 P1 deletions l.39/l.48/l.54 + 'П1 = 0' check, in-plan, at-risk), I-566 (PC35-01 as proposed, refuted) and I-567 (PC35-05 optional CI-dataset guard, open-untested, strict orphan). Logged since the last curation and now off the at-risk list: I-561 (night-ref saves) and I-562 (card l.45). Also logged: I-517 (post-wake DONE), I-538 / I-547 (07:23Z prep, L bounds, commands). Upheld closed: I-172 (probe 8 GAP_CLOSE_UM; GAP_CLOSE_MAX_GAP 2 is a no-op), I-176 (tight55) and I-133 (B25, plus the R35-A3 side line at the DIS read). The Kai-Gowers x138-port reads were mapped to I-026, I-431 (K replicated +0.003), I-138 (readmit chain / learned scorer negative), I-150 (z-flip 0.949), I-001 (deadline degrade 0.932), I-183, I-441, I-129 and I-342 (probes 43/44 tie K2, correcting 'below'). The READS-vs-CARD lens starts at round 36 (I-556). Cluster order is unchanged (FINALS, LADDER, BASE, ...). Verification: gen.py found 567 rows with 0 mismatches, gen2.py found body and ranking equal, and the IDs are unique."
+}

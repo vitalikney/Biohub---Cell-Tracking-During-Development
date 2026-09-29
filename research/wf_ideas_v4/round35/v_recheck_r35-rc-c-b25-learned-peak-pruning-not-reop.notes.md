@@ -1,0 +1,7 @@
+- 2026-09-29T07:24:07Z start verify R35-RC-C (B25 not reopened by DIS)
+- experiments/RESULTS.md: B25 rows are l.103 (4 videos: 10% +0.0041, 5% -0.0008, 13% -0.0024, 20% -0.0147), l.105 (iteration 2 image features: no gain), l.111 (12 LOEO-44b6: base 0.9001; 5/8/10/12/13% = -0.0023/-0.0036/-0.0020/-0.0062/-0.0078; recall after pp at 10% 0.9826). Numbers match the finding; its line refs l.92/l.100 are stale (actual 103/111). l.94 NMS 6 um bound (-0.026 at 97.6% recall).
+- B25 was tested on the exp29 (public 0.947) stack, not x138; x138 has no B25 code -> reopening = new code after R8 freeze.
+- CONTEXT l.1171: 'even 5% at 99.6% recall lost 0.002; hengck23 refine head a wash by the same math'. l.193: B25 CLOSED.
+- CONTEXT l.3628 knobarms: DIS 2.25 SCIP replay -0.76% nodes; R26-RC-A (round26/scan_recheck.json): dummy lab exp89p 0.92024 vs exp89q 0.92063 (+0.0004), short_track_nodes_removed 2341 -> 1909, readmitted 2166 -> 2083 -> DIS acts through ILP topology, different selection mechanism from a peak-score pruner. Claim holds.
+- Only earlier B25 mention in wf_ideas_v4: round11/scan_hyp_outside.json. No repeat.
+- Verdict: NOT refuted. Log-only closure, zero build, zero Kaggle calls, consistent with R8/finals; gain 0 (prevents a post-hoc reopen). Fix: correct line refs; drop the 'post-deadline' line as moot.

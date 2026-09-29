@@ -1,0 +1,60 @@
+{
+  "files_written": [
+    "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/FACTS.md",
+    "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/DECISIONS.md",
+    "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/35/facts.notes.md",
+    "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/35/facts.json"
+  ],
+  "alerts": [
+    {
+      "kind": "deadline",
+      "what": "exp89p (P54, 56657612) is due to read now. It was still PENDING at the 07:38:11Z header (L > 6.86 h). A-M1 is decided at the 08:40Z header. Because the poller drifts, that header will be about 08:38:23Z. If the ref is still PENDING at the 08:30Z timer, the manual list at 08:40:00Z decides instead. The nb_try exp89l cutoff is 08:45Z. The P late mark for A-M2 is 08:46:36Z.",
+      "evidence": "experiments/lb_poll/poll.log l.29295; CONTEXT 07:23 l.4361-4380; FACTS F-RUN-54, F-RUL-34; research/wf_ideas_v4/round35/report.notes.md 07:33Z",
+      "suggested_action": "At the first terminal header, code P per 02:02Z (1) and 07:23Z. If the display is 0.959, save job (c) fires: run the UP test with S0 = e10 07:41Z (if it came before the header) or 0713Z, and log the S0/S1 counts (R35-A1).",
+      "urgency": "now"
+    },
+    {
+      "kind": "contradiction",
+      "what": "For a CI V_pub (exp87a), card v5 compares against a row that does not exist. l.39 ('0.03-0.08 below П1'), l.48 ('П1 above П3 ...') and l.54 ('exp75 = 0.954 and clean: П1 and П3 nearly equal') all cite П1. The pre-registered order puts П3 first, and exp75 at 0.954 is not a partner (R25 needs >= 0.955).",
+      "evidence": "research/wf_ideas_v4/round29/finals_card_v5_ru.md l.39, l.48, l.54, l.55 (sha8 a134d5e4); FACTS C-284; research/wf_ideas_v4/round35/report.json R35-A2",
+      "suggested_action": "At the 12:03Z and 18:37Z fills, delete these lines in the FILLED copy only, without adding numbers. Add a step-11 check that 'П1' appears 0 times between the ===== lines when V_pub has CI. R35-A2 can be logged in CONTEXT before the fill.",
+      "urgency": "today"
+    },
+    {
+      "kind": "risk",
+      "what": "tools/uptest.py compare prints the S0 and S1 SubmissionCount but does not act on them. If the LB lags (count +0), a 0.959 night file would be silently coded as 'no UP'. R34-A1 is logged and armed (jobs 8368, 17300 and 27192 were alive at 07:36Z). R35-A1, which adds the count log line and one re-save, is only PROPOSED.",
+      "evidence": "tools/uptest.py l.50-54; CONTEXT 06:20 l.4351-4360; FACTS F-RUL-35, F-RUN-53; Win32_Process read by the curator at 07:36Z",
+      "suggested_action": "When exp89p or exp89r displays 0.959, read the two printed counts. If they are equal, run 'timeout 180 python tools/uptest.py save post_<token>_b' about 5 min later and compare again. If the count is still unchanged, the file is not attributable and exp87a stays champion.",
+      "urgency": "today"
+    },
+    {
+      "kind": "deadline",
+      "what": "The rest of the night reads: exp75 (P53) ~09:05-10:05Z and exp89r (P52) ~09:20-09:35Z (tail ~11:00Z; A-M2 cutoff 11:30Z). Log the R35-A3 side line at the DIS read. The e10 hourly snapshots stop at 12:00Z.",
+      "evidence": "DECISIONS P52/P53 rows [c35]; CONTEXT 07:23 l.4361-4380; research/wf_ideas_v4/round35/report.json R35-A3, next_focus; FACTS F-RUN-51",
+      "suggested_action": "Apply EXP75 PARTNER RULE v2 + GAP RULE v2 (5) to exp75. Apply the A-M2 function to exp89r and log B25 'not reopened'. Save jobs (a) and (b) are armed.",
+      "urgency": "today"
+    },
+    {
+      "kind": "stale",
+      "what": "experiments/RESULTS.md still has no rows after P46. P47-P51 are scored (0.955 / 0.957 / 0.955 / 0.958 / 0.959) and P52-P54 are pending. The last change is 59e14e2 (28 Sep 05:03Z).",
+      "evidence": "git log -- experiments/RESULTS.md; FACTS C-118; experiments/lb_poll/ledger.md 07:28:10Z",
+      "suggested_action": "Back-fill P47-P56 with their scores and latencies after the night reads, before the finals card fill if possible.",
+      "urgency": "before-finals"
+    },
+    {
+      "kind": "risk",
+      "what": "The morning G3 guard does not check the CI dataset yuki0731/biohub-coord-inject that exp89l attaches. Risk is about 0 because submitted versions pin dataset versions.",
+      "evidence": "research/wf_ideas_v4/round35/report.json plan_issues (c), new_facts (6); FACTS F-RUN-54",
+      "suggested_action": "Only if A-M1 fires, optionally run 1 call: 'timeout 120 python -m kaggle datasets files yuki0731/biohub-coord-inject'. It should list 10 files dated 2026-08-25. If they are missing, push the user and leave A-M1 UNUSED.",
+      "urgency": "info"
+    },
+    {
+      "kind": "orphan-idea",
+      "what": "Kai-Gowers/biohub-cell-tracking-v2 published x138-port LB reads (commits 29 Sep 03:26Z). nb953k (DIV 0.4 + READMIT 0.94) scored 0.956 against 0.953 for the plain port. This is external replication of our K riders. The readmit chain (0.955), the learned readmission scorer (0.954) and z-flip TTA (0.949) are new external negatives. Nothing is buildable under R8.",
+      "evidence": "FACTS F-MOD-54, F-TRN-67; research/wf_ideas_v4/round35/report.json new_facts (5), R35-A4; https://github.com/Kai-Gowers/biohub-cell-tracking-v2",
+      "suggested_action": "Record only (IDEAS I-431 support, readmission-family negatives). No build.",
+      "urgency": "info"
+    }
+  ],
+  "summary": "Curation 35 (state 07:40 UTC, 29 Sep). FACTS.md and DECISIONS.md are updated in place to 'curation 35', and the 06:15Z state lines became 'Previous state'. Sources since c34: commit d9d259e (CONTEXT 06:09 POST-WAKE CHECK), commit f2c4711 (CONTEXT 06:20 OPS: R34-A1 night-ref LB saves LOGGED and armed, R34-A2 card-fill line LOGGED), commit 81884c9 (CONTEXT 07:23 MORNING PREP logged pre-score; e10 0641Z and 0713Z; digest 0658Z), poll.log and ledger up to 07:38:11Z (P52 exp89r, P53 exp75 and P54 exp89p still PENDING; L > 7.37 / 7.37 / 6.69 h at 07:28Z), and round35 report.json (R35-A1..A5 PROPOSED). FACTS: new F-LB-35 (LB 07:14Z #136 of 3,986, 17th of 20; histogram and medal lines; movers), F-RUN-54 (morning prep, 08:40Z header ~08:38:23Z, G3 gap), F-RUL-34 (06:20 and 07:23 logged texts), F-RUL-35 (uptest compare mechanics, R35-A1), F-MOD-54 (Kai-Gowers reads) and F-TRN-67 (external K replication, negatives, DC tie correction). There are [c35] notes on F-LB-01/02/10, F-RUN-43/45/52/53, F-RUL-22/29/30/31, C-118, C-279 (resolved) and C-282 (resolved). New contradictions: C-284 (card П1 lines for a CI V_pub, open), C-285 (PC35-01 S0 bias, resolved), C-286 (DC 0.20/0.225 tie vs 'below', resolved) and C-287 (citation corrections, resolved). DECISIONS: new state line; [c35] cells on P52-P56; section-1 update paragraph; section-2 paragraph plus a new CURRENT finals snapshot at 07:40Z (V_pub exp87a 0.959, still TICKED #37 + #38, plan {V_pub, #37 / exp75}); R5/R6/R7/R8/R10/section-f statuses; the R34 row is marked A1/A2 LOGGED; 4 new rows (06:20 saves + card line, 07:23 MORNING PREP, round-35 proposals, round-35 rejections); changelog. Pipe and column integrity was checked in both files. No other file was touched, nothing was committed, and Kaggle was not contacted (read-only local process and battery check only)."
+}

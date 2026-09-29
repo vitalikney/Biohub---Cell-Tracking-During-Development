@@ -1,0 +1,5 @@
+- 2026-09-29 07:34 UTC: round 35 watch task started; no watch.json existed; reading WATCHLIST.md + round 34 notes
+- 07:37Z read CONTEXT l.4329-4380 (new: 06:09Z post-wake, 06:20Z R34-A1 OPS, 07:23Z MORNING PREP), round35/report.json R35-A1..A5; commits d9d259e f2c4711 81884c9
+- 07:38Z Win32 read-only: AC 79%; lb_poll/e10/feed + watchers 16292/1760/17532 + R34-A1 save jobs 8368/17300/27192 + watchdog 28052 + 13836 alive. poll 07:28:09Z all 3 night refs PENDING. RESULTS still ends probe 46; REPORT.md absent r29-35; runbook l.66 unchanged; card a134d5e4
+- 07:41Z drafting WATCHLIST (done: W319, W322, T198, T151 prep/W306; new W323-W328 from R35-A1..A5 + PC35-05, T201-T205, I391-I399)
+- 07:38Z WATCHLIST.md + watch.json written (13 alerts); done

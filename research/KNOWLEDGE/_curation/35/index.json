@@ -1,0 +1,88 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/INDEX.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/CHANGES.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/35/index.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/35/index.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "what": "exp89p (P54, 56657612) read -> A-M1: still PENDING at 07:38:11Z; decide at its first terminal header, latest the '08:40Z header' (~08:38:23Z by poller drift) or the manual 08:40:00Z list if PENDING at the 08:30Z timer; display >= 0.959, COMPLETE, no ERROR, L_hi <= 7.9 h -> nb_try exp89l $KL \"$M55L\" by 08:45Z, else UNUSED.",
+   "evidence": "CONTEXT.md l.4361-4380; experiments/lb_poll/poll.log l.29295; research/KNOWLEDGE/WATCHLIST.md l.46",
+   "suggested_action": "Follow the 07:23Z prep verbatim; ignore stale timer texts (I-553).",
+   "urgency": "now"
+  },
+  {
+   "kind": "forgotten",
+   "what": "R35-A1 / I-564 UP-test log line + one LB-lag re-save not logged; tools/uptest.py compare prints SubmissionCount but does not act on it, so a lagging LB (+0) would code a 0.959 read as 'no UP'. S0 for exp89p = experiments/e10_watch/20260929T0741Z.txt (RUN 43 landed 07:42:05Z, 8/8) if exp89p's header comes later, else 0713Z.",
+   "evidence": "tools/uptest.py l.47-54; research/wf_ideas_v4/round35/report.json R35-A1; experiments/e10_watch/watch_loop.log l.55; research/KNOWLEDGE/FACTS.md F-RUL-35 l.364",
+   "suggested_action": "Log R35-A1 as one OPS line; at a 0.959 read: +0 -> 'timeout 180 python tools/uptest.py save post_<token>_b' once ~5 min later, +1 -> k, +2 -> MASKED; log tags/counts/k. Do not adopt PC35-01 (I-566).",
+   "urgency": "now"
+  },
+  {
+   "kind": "forgotten",
+   "what": "First MSK message ('both morning slots may end UNUSED by rule; exp89t / exp89u stay off unless you say yes') shows no sign of being sent.",
+   "evidence": "research/wf_ideas_v4/round30/report.json R30-A5 (4); grep -c 'UNUSED by rule' CONTEXT.md = 0 (research/KNOWLEDGE/WATCHLIST.md sources)",
+   "suggested_action": "Send before the A-M1 header (~08:38Z).",
+   "urgency": "now"
+  },
+  {
+   "kind": "stale",
+   "what": "E10 runbook l.66 still 'OUR = 0.957 (exp79a), SC >= 0.958'; should be OUR = 0.959 (exp87a), SC >= 0.960.",
+   "evidence": "research/wf_ideas_v4/e10v3/runbook.notes.md l.66; research/wf_ideas_v4/round28/report.json R28-A6",
+   "suggested_action": "Fix before the next E10 read; loop ends 12:00Z.",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "Card v5 (a134d5e4) l.39, l.48, l.54 compare against a П1 row that does not exist for a CI V_pub (exp87a); l.54 'П1 и П3 почти равны' conflicts with the pre-registered 'P3 first' and exp75 0.954 is no partner (R25 >= 0.955) (C-284, I-565).",
+   "evidence": "research/wf_ideas_v4/round29/finals_card_v5_ru.md l.39/48/54; research/KNOWLEDGE/FACTS.md C-284 l.784; research/wf_ideas_v4/round35/report.json R35-A2",
+   "suggested_action": "At the 12:03Z fill (FILLED copy only, iff V_pub has CI) delete them, add the l.45 exp85a line (I-562), step-11 'П1 = 0' check, standing-prior numbers only (never mc34_*), new sha8; re-check 18:37Z.",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "08:30Z and 12:03Z timer texts are stale pointers; following them could trigger a rebuild / re-push or card v4 (I-553).",
+   "evidence": "CONTEXT.md l.4313-4324, l.4361-4380; research/wf_ideas_v4/round35/report.json plan_issues (d)",
+   "suggested_action": "Follow the logged lines (02:53Z (2), 07:23Z prep, card v5).",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "Pre-registered side lines not yet logged: R35-A3 B25 'not reopened' line at exp89r's DIS read; C11 mapped line after A-M1 / A-M2 (never 'OVERTURNED') (I-133, I-559).",
+   "evidence": "research/wf_ideas_v4/round35/report.json R35-A3; research/wf_ideas_v4/round33/report.json R33-A4 (b)",
+   "suggested_action": "Write C11 in the post-decision entry (~08:45Z and after A-M2); B25 next to the DIS code at exp89r's read (~09:20-09:35Z).",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "exp89l attaches yuki0731/biohub-coord-inject, not covered by the G3 guard (PC35-05 / I-567, strict orphan); risk ~0 since submitted versions pin dataset versions.",
+   "evidence": "research/wf_ideas_v4/round35/report.json plan_issues (c), new_facts (6); research/KNOWLEDGE/FACTS.md F-RUN-54 l.324",
+   "suggested_action": "Only if A-M1 fires: one 'timeout 120 python -m kaggle datasets files yuki0731/biohub-coord-inject' (expect 10 files dated 2026-08-25); missing -> push user, A-M1 UNUSED.",
+   "urgency": "now"
+  },
+  {
+   "kind": "stale",
+   "what": "experiments/RESULTS.md has no rows P47-P54; REPORT.md absent for rounds 29-35; round 35 untracked; R35-A4 curator records (Kai-Gowers) and four CONTEXT lines (DET_THRESHOLD closed, int-casting, cron defect, I-045) missing.",
+   "evidence": "experiments/RESULTS.md l.79; research/KNOWLEDGE/FACTS.md C-118; research/wf_ideas_v4/round35/report.json next_focus, R35-A4; research/KNOWLEDGE/WATCHLIST.md",
+   "suggested_action": "After the morning decisions, before the 12:03Z fill if possible.",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "Finals timeline: 12:03Z card fill, 18:37Z FINAL proposal, 19:43Z reminder, user ticks by 20:00 UTC (finals still TICKED #37 + #38), SELECTED check ~20:00-20:30Z, 21:05Z last call, hindsight guard (I-336) pushed before 23:00Z, deadline 23:59Z.",
+   "evidence": "CONTEXT.md l.3851-3855, l.4091-4099; research/KNOWLEDGE/DECISIONS.md §2 l.983-985",
+   "suggested_action": "Keep the timers; the session never ticks; always write '20:00 UTC'.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "Kai-Gowers x138-port reads: nb953k (DIV 0.4 + READMIT 0.94) = 0.956 vs 0.953 plain (external K replication); readmit chain 0.955, learned readmission 0.954, z-flip 0.949, single-process deadline 0.932 are negatives; not in CONTEXT.",
+   "evidence": "research/KNOWLEDGE/FACTS.md F-MOD-54 l.423, F-TRN-67 l.495; https://github.com/Kai-Gowers/biohub-cell-tracking-v2",
+   "suggested_action": "Record only (R35-A4); no build (R8).",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 35 index pass (29 Sep ~07:45 UTC, HEAD 81884c9). Rewrote research/KNOWLEDGE/INDEX.md (71 lines): state in 10 lines (V_pub exp87a 0.959, #136/3,986; P52-P54 PENDING at 07:38:11Z; 06:20Z saves and 07:23Z prep logged; A-M1/A-M2 rules; UP-test S0 = e10 0741Z snapshot which landed 07:42:05Z; round 35 R35-A1..A5 proposed; timeline to 23:59Z; 567 ideas), refreshed line anchors for IDEAS/FACTS/DECISIONS/WATCHLIST/CONTEXT, top 8 open ideas (I-564, I-565, I-559/I-133, I-567, I-548/I-539/I-526, I-540/I-510, I-336/I-252/I-407, I-233), 11 deduplicated alerts with settled curator urgency disagreements, and a resolved-since-c34 line. Appended '## 35' to research/KNOWLEDGE/CHANGES.md (sources, LB, ideas 563->567 with status moves, new facts F-LB-35/F-RUN-54/F-RUL-34/35/F-MOD-54/F-TRN-67, C-284..C-287, C-279/C-282 resolved, DECISIONS/WATCHLIST deltas, resolved/new/carried alerts). No other file touched, nothing committed, Kaggle not contacted."
+}

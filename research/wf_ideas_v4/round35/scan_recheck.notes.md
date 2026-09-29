@@ -1,0 +1,11 @@
+# Round 35 recheck notes
+
+- 2026-09-29 07:14Z start. scan_recheck.json absent -> fresh run. Poll header 07:08:05Z: 56656147 exp89r / 56656157 exp75 / 56657612 exp89p PENDING. 0 Kaggle calls, no browser.
+- Prior rechecks: 128 items rounds 2-34 (summary in tool output); R32-PI/R33-PI/R34(e) say lens saturated.
+- Never-cited RESULTS items (grep of round*/scan_recheck*.json + v_recheck*.json): GAP_CLOSE/probe 8 (0), B25 (0), NMS pool-kernel (0), exp15 (0), direct link (0 literal), TIGHT_UM (0), window 3 / gauss_focal (0).
+- x138 knobs (exp85a ipynb env cell, scratchpad exp85a_src.py): GAP_CLOSE_UM 5.0 (code default 6.0), GAP_CLOSE_MAX_GAP 2, GAP_DENSITY_ADAPTIVE 1, MOTION_RELINK_TIGHT_UM 5.5 (ppsweep tight55), FLOW_TIGHT_UM 7.0, GAPFILL_MAX_GAP 3, ILP_APPEARANCE_WEIGHT 0.0.
+- 07:16Z RC-A probe 8 GAP_CLOSE_UM (RESULTS l.29: exp24 5.0->6.5 LB 0.944 vs 0.945; exp07+pp hold12 gap 8um 0.9586 < 5um 0.9619). x138 code (exp85a_src.py l.3440-3500): effective_gap_max = min(GAP_CLOSE_MAX_GAP, 1) -> env '2' is a NO-OP; threshold = GAP_CLOSE_UM*(gap+1) = 10 um; density adaptive delta clip +-0.125 um/step (ref 6.5 um, gain 0.04). x138 sweep candidate gap45 (4.5) not selected. Same in exp56 verbatim. Verdict upheld.
+- 07:17Z RC-B tight55 (RESULTS probe 14 l.32; CONTEXT l.461 proxy 0.9490 -> 0.9511 on in-sample validator; x138 env l.76 'ppsweep_selected.json of the public run'). In flow mode 'seed' with FLOW_SEED_GATE_UM 0, TIGHT_UM 5.5 = the seed gate (l.3286); passes use FLOW_TIGHT 7.0 / relaxed 10.0 once a field exists (l.3287, l.3324). All pool files and exp56 carry 5.5 with VALIDATOR_ENABLE 0. Never isolated on LB. Verdict upheld (block-shared constant, no rank effect, no lab).
+- 07:18Z RC-C B25 learned peak pruning (RESULTS l.92: 4 LOEO videos 10% +0.0041, 5% -0.0008, 13% -0.0024, 20% -0.0147; l.100: 12 videos 5/8/10/12/13% = -0.0023/-0.0036/-0.0020/-0.0062/-0.0078, recall 0.9826 < 0.99 gate). Link to DIS 2.25 (R26-RC-A: exp89q vs exp89p dummy lab identical TP/FP/FN, +0.0004 bonus only). Pre-register: DIS read does not reopen B25. Verdict upheld.
+- 07:19Z poll header 07:18:07Z: 3 night refs still PENDING. Lens saturated 4th time.
+- 07:26Z wrote scan_recheck.json (3 recheck + 1 plan-issue).

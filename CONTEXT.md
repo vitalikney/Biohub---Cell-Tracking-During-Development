@@ -4378,6 +4378,19 @@ Mention it to the user in one line (R9-A8 item 6).
   nb_try exp89s,exp89q $KS "$M56S" or nb_try exp89s,exp89q $KQ "$M56Q". Guards per file: G1 header < 15 min, G2
   used_today 3 (before M1) / 3-4 (before M2) and token absent, G3 baseline (ft-weights; + n2a for exp89l/exp89q), G5
   COMPLETE. Exit 2 -> UNUSED, 3 -> STOP + push, 1 -> retry every 10 min until the cutoff.
+- 2026-09-29 07:46 UTC, ROUND 35: external null; read/fill procedures (R35-A1..A5; no rule change)
+  External delta null (feed 06:58Z 0 new; e10 06:41Z 8/8, 07:13Z unchanged lists; Chrome ~07:18Z no new notebook, no
+  host answer on 744250; '17 HOURS TO GO', 3,986 teams). LB 07:14Z: our row rank 136, 0.959, 17th of 20 in the 0.959
+  block; 119 teams >= 0.960; silver #199 falls in the 0.957 block, bronze #398 in the 0.955 block. External
+  replication of K: Kai-Gowers nb953k (DIV 0.4 + READMIT 0.94) 0.956 vs their x138 port 0.953 (same public embryo).
+  PROCEDURES: (R35-A1) at a 0.959 read, S0 = the newest count-matched save/snapshot before the file's first terminal
+  header (exp89p: e10 07:41Z if before the header, else 0713Z; exp89r: post_exp75), S1 = post_<token>; if S1's count
+  equals S0's (LB lag), one re-save ~5 min later (post_<token>_b); still unchanged -> not attributable, champion
+  stays; log S0/S1 tags, counts and k. (R35-A2) at the 12:03Z / 18:37Z fill with a CI V_pub: delete the dangling П1
+  references (l.39 sentence, l.48 line, l.54 line) in the FILLED copy, and check that 'П1' occurs 0 times between the
+  ===== lines; the R34-A2 neighbour line names exp85a for exp87a. (R35-A3) at exp89r's read log beside the DIS code:
+  'B25 / learned node-drop family: not reopened (pre-registered before any DIS read)'. (R35-A5) rounds 36+:
+  READS-vs-CARD lens (code each landed read against the logged rules and the card) instead of the recheck lens.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

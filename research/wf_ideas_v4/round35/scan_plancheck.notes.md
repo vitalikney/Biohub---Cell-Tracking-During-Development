@@ -1,0 +1,15 @@
+# round35 plancheck notes
+- 07:13Z start; no prior scan_plancheck.json
+- 07:14Z poll header 07:08:05Z: 56656147 exp89r / 56656157 exp75 / 56657612 exp89p PENDING; 56640366 exp87a COMPLETE 0.959.
+- e10 20260929T0641Z (RUN 42 OK 8/8) and 20260929T0713Z (scan agent): kernel lists/statuses no change; best public nb 0.953; LB file 07:14:01: 3,986 teams, >=0.960 119, 0.959 block 20 (ranks 120-139), ours #136 count 53 date 2026-09-28 12:14:57 (17th of 20). Rank 133 (05:13Z) -> 136: 3 teams entered above us in 2 h.
+- 0713Z movers: 28 teams, all with submissions 00:00-00:37Z 29 Sep already scored (e.g. Guest21222 00:06:14 -> 0.967; Asan Ashirov 00:03:57 0.956->0.960). x138 author Anvith Pothula 0.957 -> 0.958 (sub 00:02:53Z); his kernel list unchanged.
+- feed 06:58Z digest_20260929T0658Z: 0 new topics/comments, E10 FLAG none; 744250 no host answer.
+- Win32_Process 07:2xZ: watchers 16292 (any ref), 1760 (exp89r), 17532 (exp75); R34-A1 save jobs 8368 (post_exp75), 17300 (post_exp89r at 0.959), 27192 (post_exp89p at 0.959) alive, patterns match poll.log 'SubmissionStatus.COMPLETE,0.959,'; watchdog 28052; feed-signal watcher 13836; timers 07:23, 08:13, 08:30, 09:13, 10:13, 11:10, 12:03, 13:13-18:13, 18:37, 19:43, 21:05, 30 Sep 00:07 alive.
+- sha8: finals_card_v5_ru.md a134d5e4, night_checklist.md 2b442e87 (match CONTEXT).
+- LB LastSubmissionDate column = max submit time among SCORED subs (28 Sep 0722Z: 00:06:09 with best 0.956; 0822Z 00:50:37) -> not a best-file attribution.
+- R32-A2 awk extraction on 0713Z works (985 rows, our row found). compare() works on truncated S0 (above-us teams all >= 0.959).
+- tools/uptest.py compare does not check counts; save has no count check either. Count +0 (LB lag) would be read as MASKED/no-UP.
+- Card v5 file l.39 ('...ниже П1 по бронзе' inside the П2 block) and l.48 ('П1 выше П3, пока ...') reference П1, which does not exist when V_pub is CI (step 8). R34-A2 fixed only l.45.
+- exp89l kernel-metadata uses yuki0731/biohub-coord-inject (external); G3 checks only ft-weights/n2a. Kernel versions pin dataset versions -> no action (info).
+- Float check: d_R - d_P >= 0.003 thresholds evaluate correctly in Python floats for all grid cells.
+- 07:23Z final JSON written (PC35-01..05)

@@ -1,0 +1,7 @@
+- 2026-09-29T07:34:31Z start round 35 curation (facts.json absent -> fresh run)
+- 07:35Z sources since c34: commits f2c4711 (06:20 OPS R34-A1 armed l.4351-4360), 81884c9 (07:23 MORNING PREP l.4361-4380; e10 0641Z #134/21, 0713Z #136 17/20; digest 0658Z null); poll/ledger 07:28:09Z all 3 PENDING (L>7.37/7.37/6.69); round35 report.json 07:33Z R35-A1..A5
+- 07:37Z verified: RESULTS l.17/40/43/94/103/105/111, uptest.py compare l.50-54 (prints counts, no action), card l.39/45/48/54/55 sha8 a134d5e4; Win32 07:36Z all 11 procs alive incl. save jobs 8368/17300/27192 (06:20:37Z), battery AC 79%; CONTEXT 06:09 l.4343, 06:20 l.4351-4360, 07:23 l.4361-4380, Lit l.4381
+- 07:39Z FACTS.md patched (c35_facts.py); pipe check run
+- 07:41Z FACTS.md patched (c35_facts.py, 25 c35 lines, pipes OK); DECISIONS.md patched (c35_dec.py: state, P52-P56 cells, §1 para, §2 para + 07:40Z snapshot, R5-R8/R10/§f, R34 row + 4 new rows, changelog)
+- 07:41Z poll header 07:38:11Z (l.29295): all 3 still PENDING -> state lines amended; writing facts.json
+- 07:42Z facts.json written (7 alerts). Done.

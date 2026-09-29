@@ -1,7 +1,7 @@
 {
  "version": 1,
- "last_run_utc": "2026-09-29T06:41:53Z",
- "runs": 42,
+ "last_run_utc": "2026-09-29T07:41:53Z",
+ "runs": 43,
  "signals": 1,
  "streak_429": 0,
  "good": {
@@ -54,7 +54,7 @@
      "title": "Biohub: Harmonic Fusion V3",
      "author": "Raunak Dey",
      "lastRunTime": "2026-09-25 09:09:04.280000",
-     "totalVotes": "234"
+     "totalVotes": "235"
     },
     {
      "ref": "denpugovkin/biohub-exp003-two-embryos",
@@ -154,7 +154,7 @@
      "title": "Biohub: Harmonic Fusion V3",
      "author": "Raunak Dey",
      "lastRunTime": "2026-09-25 09:09:04.280000",
-     "totalVotes": "234"
+     "totalVotes": "235"
     },
     {
      "ref": "amanatar/optimized-biohub-max-score",
@@ -436,17 +436,17 @@
    ],
    "user_amanatar": [
     {
+     "ref": "amanatar/rsna-knee-abnormality-detection",
+     "title": "RSNA Knee Abnormality Detection",
+     "author": "Aman Atar",
+     "lastRunTime": "2026-09-29 07:35:07.777000",
+     "totalVotes": "1"
+    },
+    {
      "ref": "amanatar/notebookd71800bfae",
      "title": "notebookd71800bfae",
      "author": "Aman Atar",
      "lastRunTime": "2026-09-28 15:43:30.523000",
-     "totalVotes": "1"
-    },
-    {
-     "ref": "amanatar/rsna-knee-abnormality-detection",
-     "title": "RSNA Knee Abnormality Detection",
-     "author": "Aman Atar",
-     "lastRunTime": "2026-09-28 14:57:51.570000",
      "totalVotes": "1"
     },
     {
@@ -513,12 +513,12 @@
   }
  },
  "good_from": {
-  "comp_dateRun": "20260929T0641Z.txt",
-  "comp_scoreDescending": "20260929T0641Z.txt",
-  "user_anvithpothula": "20260929T0641Z.txt",
-  "user_thtennant": "20260929T0641Z.txt",
-  "user_amanatar": "20260929T0641Z.txt",
-  "status_amanatar__optimized-biohub-max-score": "20260929T0641Z.txt",
-  "status_anvithpothula__biohub-0-953-lb-original": "20260929T0641Z.txt"
+  "comp_dateRun": "20260929T0741Z.txt",
+  "comp_scoreDescending": "20260929T0741Z.txt",
+  "user_anvithpothula": "20260929T0741Z.txt",
+  "user_thtennant": "20260929T0741Z.txt",
+  "user_amanatar": "20260929T0741Z.txt",
+  "status_amanatar__optimized-biohub-max-score": "20260929T0741Z.txt",
+  "status_anvithpothula__biohub-0-953-lb-original": "20260929T0741Z.txt"
  }
 }

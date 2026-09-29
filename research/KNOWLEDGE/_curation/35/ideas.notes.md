@@ -1,0 +1,5 @@
+- 07:34:38Z 2026-09-29 start: no _curation/35/ideas.json -> incremental run over curation 34 (563 ideas). Reuse scratchpad patch34.py/gen_md34.py.
+- 07:36:36Z sources since c34 (b4848cb): d9d259e (CONTEXT 06:09Z POST-WAKE l.4343-4350), f2c4711 (round34 committed; CONTEXT 06:20Z OPS R34-A1 saves + R34-A2 l.4351-4360), 81884c9 (CONTEXT 07:23Z MORNING PREP l.4361-4380; Literature l.4381), round35/ untracked (report.json R35-A1..A5 07:33Z; 4 scans; 5 verdicts), ledger 07:28:10Z (3 PENDING), e10 0641Z(8/8)/0713Z, digest 0658Z. Plan: new I-564 (R35-A1 UP log line + lag re-save), I-565 (R35-A2 card П1 lines), I-566 (PC35-01 as proposed, refuted), I-567 (PC35-05 CI dataset check, optional); ~40 updates; I-561/I-562 LOGGED 06:20Z -> off at-risk.
+- 07:38:59Z patch35.py OK: 563 -> 567 ideas, 46 change records; at-risk 12 (-I-561/I-562 logged, +I-564/I-565), strict +I-567. Next gen_md35.py.
+- 07:40:47Z ideas.json (567 ideas, 46 change records) + IDEAS.md (1068 lines) WRITTEN from patch35.py/gen_md35.py; verify OK (gen.py rows 567 bad 0; gen2.py body+rank equal; ids unique).
+- 07:42:11Z _curation/35/ideas.json written (8 alerts). DONE.

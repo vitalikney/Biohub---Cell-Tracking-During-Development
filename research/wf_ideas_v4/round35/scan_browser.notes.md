@@ -1,0 +1,9 @@
+# round35 scan_browser notes (started 2026-09-29T07:13Z)
+- 07:13Z e10 snapshot experiments/e10_watch/20260929T0713Z.txt CHANGES=14 vs 0641Z, all leaderboard; kernel lists/statuses no change; P2 largest group 1 (no signal).
+- LB CSV publicleaderboard-2026-09-29T07:14:01.csv: 3986 teams. counts 0.953 400 / 0.954 128 / 0.955 103 / 0.956 138 / 0.957 57 / 0.958 20 / 0.959 20 / >=0.960 119. (r34 05:13Z: 402/133/113/124/50/20/22/115)
+- Ours: '136,16810638,D: Discipline,2026-09-28 12:14:57,0.959,53' -> 17th of 20 in 0.959 block (ranks 120-139); SubmissionCount 53 -> probes 52-54 still unscored (poll 07:08Z: 56656147/56656157/56657612 PENDING).
+- Top-20 unchanged (yu4u 0.978, Sergio Alvarez 0.976, Gabriel 0.975, taiseiu 0.974). Movers since 05:13Z: Guest21222 0.962->0.967 (#30), BorisV 0.963->0.966, thisray 0.960->0.964, Sam Barnett 0.959->0.963, Asan Ashirov 0.956->0.960, Anvith Pothula (x138 author) 0.957->0.958 (#157, 147 subs, last sub 00:02:53Z). 58 rows new/changed >=0.953.
+- Digests 0528Z (new topic 744250 only, already in r34) and 0658Z (0 new topics, 0 new comments, E10 FLAG none, best public 0.9530). Newest digest 15 min old -> feed not re-run.
+- 07:20Z Chrome (own new tab, closed after): Discussion ?sort=recent-comments: newest = 744250 'Time of publishing private results' (kostopr4v, Posted 2h ago, 0 comments, no host reply); next 'Public 0.953 to 0.959 in two days' last comment 10h ago (old). No new topics/comments since r34.
+- Code ?sortBy=dateCreated: newest unpinned still 'Robust Cell Tracking During Development via Chan.' (5d, 0.1). No new notebook; CLI scoreDescending top 0.953 unchanged. Nothing pulled.
+- Overview: '17 HOURS TO GO'; 13,475 entrants, 4,570 participants (+2), 3,986 teams (+2), 94,903 submissions (+501 vs 94,402 at r34). Timeline unchanged (Sep 29 Final Submission Deadline 11:59 PM UTC). No host announcement.

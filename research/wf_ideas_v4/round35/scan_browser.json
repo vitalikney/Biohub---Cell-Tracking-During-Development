@@ -1,0 +1,29 @@
+{
+ "summary": "Round-35 delta scan, 07:13-07:21 UTC 29 Sep (10:13-10:21 MSK), compared with round 34 (05:13-05:16Z). Nothing new that can be acted on. There are no new discussion topics or comments: 744250 still has 0 comments and no host reply. No new or updated public notebook appeared, and the E10 FLAG is none (best public 0.9530). The Overview has no host announcement and the timeline is unchanged. E10 P1: experiments/e10_watch/20260929T0713Z.txt has CHANGES=14 against 0641Z, all on the leaderboard. The kernel lists and statuses (incl. x138 anvithpothula/biohub-0-953-lb-original) report 'no change', and the P2 largest group is 1, so there is no signal and tools/e10_port_gate.py was not needed. LB CSV 07:14:01Z: 3,986 teams (+2); 0.953 402->400, 0.954 133->128, 0.955 113->103, 0.956 124->138, 0.957 50->57, 0.958 20, 0.959 22->20, >=0.960 115->119. Ours: #136 (was #133), 0.959, SubmissionCount 53, so night probes 52-54 are still unscored (poll 07:08Z: all PENDING). We are 17th of 20 in the 0.959 block (ranks 120-139). The top 20 are unchanged. The x138 author Anvith Pothula moved 0.957->0.958 but published no new notebook. Overview: 94,903 submissions (+501), 4,570 participants (+2). Nothing pulled.",
+ "findings": [
+  {
+   "id": "r35-e10-p1-null",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "E10 P1 at 07:13Z shows CHANGES=14 against 0641Z, all on the leaderboard histogram (0.967 +2, 0.966 +1, 0.956 +6, 0.955 -5, >=0.960 117->119, teams +2, our rank 134->136). comp_dateRun, comp_scoreDescending, the anvithpothula list (live x138 slug unchanged, last run 2026-09-21), the thtennant and amanatar lists and both kernel statuses report 'no change'. P2 look-check: largest same-score group 1 (< 5), so there is no port signal. Feed digests since r34: 20260929T0528Z has only the new topic 744250, already reported in r34. 20260929T0658Z has 'new topics 0, new comments 0' and 'E10 FLAG: none', with top best_public_score 0.9530 (kunaldesale2408, amanatar, raunakdey07, anvithpothula). The newest digest was 15 min old, so kaggle_feed.py was not re-run (API load kept minimal).",
+   "evidence": "experiments/e10_watch/20260929T0713Z.txt DIFF section; experiments/discussions/digest_20260929T0528Z.md; experiments/discussions/digest_20260929T0658Z.md; experiments/discussions/feed_loop.log (06:58:26Z rc=0)",
+   "action": "None. E10 (a public notebook >= 0.959) is not met."
+  },
+  {
+   "id": "r35-lb-delta",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "LB CSV publicleaderboard-2026-09-29T07:14:01.csv compared with r34's 05:14Z CSV: 58 rows >= 0.953 are new or changed, and none dropped. Most last submissions are at 00:00-00:52Z, which is the midnight burst being scored now. The top 20 are unchanged (yu4u 0.978, Sergio Alvarez 0.976, Gabriel 0.975, taiseiu 0.974, then 0.971 x3). Main movers: Guest21222 0.962->0.967 (#30), Rasheed Khoshnaw 0.966->0.967 (#29), BorisV 0.963->0.966 (#32), ibyyue 0.964->0.966 (#35), thisray 0.960->0.964 (#54), Sam Barnett 0.959->0.963 (#57), Asan Ashirov 0.956->0.960 (#101), Miz 0.958->0.960 (#114), and Anvith Pothula (x138 author) 0.957->0.958 (#157, 147 subs, no new public notebook). Counts: 0.953 400, 0.954 128, 0.955 103, 0.956 138, 0.957 57, 0.958 20, 0.959 20, >=0.960 119. Our row is '136,16810638,D: Discipline,2026-09-28 12:14:57,0.959,53'. Strictly-better + 1 = 120, and we are 17th of 20 in the 0.959 block (ranks 120-139). Several other teams' 00:0xZ submissions scored between 06:41Z and 07:13Z. Our 00:05Z probes 52 exp89r (56656147) and 53 exp75 (56656157) and the 00:46Z probe 54 exp89p (56657612) were still PENDING at the 07:08Z poll. That matches the logged read windows (exp89p from ~07:38Z, exp75 09:05-10:05Z, exp89r 09:23-09:34Z), so it is not an anomaly.",
+   "evidence": "experiments/e10_watch/20260929T0513Z.txt vs 20260929T0713Z.txt (TeamId row diff); experiments/lb_poll/poll.log block 2026-09-29T07:08:05Z",
+   "action": "None. The MORNING TABLE v1.1 is unchanged. The next scan should look for SubmissionCount 54+ on our row. The R34-A1 night-ref saves stay the procedure for the UP test."
+  },
+  {
+   "id": "r35-discussion-code-overview-null",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "Discussion, recent comments (Chrome, ~07:18Z): the newest item is still 744250 'Time of publishing private results' (kostopr4v, 'Posted 2h ago', 0 comments, no host answer). The next item is 'Public 0.953 to 0.959 in two days...' (John Taylor (AI), last comment 10h ago, already covered). Code, Recently Created: no new notebook; the newest unpinned one is still 'Robust Cell Tracking During Development via Chan.' (5d, Score 0.1). Nothing is >= 0.954 and there is no new idea, so nothing was pulled. Overview: '17 HOURS TO GO'; 13,475 entrants, 4,570 participants (+2), 3,986 teams (+2), 94,903 submissions (+501 vs 94,402 in r34). The timeline is unchanged ('September 29, 2026 - Final Submission Deadline', 11:59 PM UTC), and there is no host announcement. No team disclosed a knob, so AGGRESSIVE MODE has nothing to build.",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion?sort=recent-comments ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/744250 ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/code?sortBy=dateCreated ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/overview",
+   "action": "None. The finals tick is still for the user by 20:00Z (23:00 MSK). If a host answer to 744250 appears, the next scan should quote it."
+  }
+ ]
+}

@@ -1,0 +1,4 @@
+- 07:43Z start: read INDEX (70 l.) and CHANGES tail (34)
+- 07:43Z anchors gathered: CONTEXT 4401 l. (Lit l.4381; 07:23Z prep l.4361-4380); IDEAS CHANGES(35) l.212, ORPHANS l.914; FACTS F-LB-35 l.265, F-RUN-54 l.324, F-RUL-34/35 l.363-364, F-MOD-54 l.423, F-TRN-67 l.495, C-284..287 l.784-787; DECISIONS P52-56 l.200-203, [c35] l.552/983/985/1701-1704/1908; WATCHLIST l.46/58/81/115; poll 07:38:11Z P54 PENDING; e10 RUN 43 0741Z 8/8 signals 0 (07:42:05Z)
+- 07:45Z wrote INDEX.md (71 l.) and appended CHANGES ## 35
+- 07:45Z wrote index.json; done
