@@ -4270,6 +4270,27 @@ Mention it to the user in one line (R9-A8 item 6).
   none, 2 submits left on 29 Sep for the MORNING TABLE v1.1 files. The 00:20Z backup check found exp89r / exp75 listed
   and exp89p not yet due (no action). Reads: exp89p vs exp85a 0.958 (P code; A-M1 exp89l on P '+'/'0u'); exp89r vs
   exp87a 0.959 (Rr); exp75 vs #37 0.954 (EXP75 PARTNER RULE v2); DIS code per R26-A2 (1) branch A.
+- 2026-09-29 02:02 UTC, MORNING/FINALS TEXT RESOLUTIONS (round 30, R30-A1; pre-score: header 01:54:04Z shows 56656147 / 56656157 / 56657612 PENDING)
+  (1) A-M1 TRIGGER: our LB row is exp87a 0.959 since 21:45Z, so exp89p's P code comes from its display alone: '+' =
+  display >= 0.959, COMPLETE, no ERROR, terminal by the 08:40Z header -> exp89l; 0.958 = '0' (the UP test is BLIND by
+  construction: a 0.958 display cannot move a 0.959 row; '0u' unreachable) -> A-M1 UNUSED, no uptest call; <= 0.957,
+  ERROR or late -> UNUSED. Supersedes freeze (9)'s 'V_pub stays exp85a'. exp89p enters the V_pub pool only with L_hi
+  <= 9.0 h. (2) TIE ORDER (1) = RUNNING CHAMPION, CONSERVATIVE READING (the one reading logged): the first COMPLETE
+  file at the top display is the champion (now exp87a 0.959, completed 21:43Z); a later file at the same display
+  replaces it ONLY if its own completion gave an attributable UP (k >= 1 with the count check, i.e. it is higher
+  unrounded); k = 0 / MASKED / BLIND -> the champion STAYS. (2) non-CI, (3) fewer levers, (4) earlier submit decide
+  only co-completions in one poll window. Reason for the conservative reading: an unresolved tie carries no evidence
+  that the later file is better, and CI has two LB '+' reads (probes 48 and 51) plus lower matched 3D error on 7/8
+  train clips, while SEC has a weak negative dummy-lab prior. Replaces the literal 'last attributable UP at that
+  display' (l.3181) and card v5 order (1). (3) A-M2 SEC/Rr COLLISION: P '0' or '-' -> the freeze (9) SEC clause
+  governs: A-M2 sends only SEC-free files (exp89s on DIS '+'), otherwise UNUSED; so (P 0.958, exp89r 0.960, DIS '?')
+  -> A-M2 UNUSED. P '?' leaves SEC unread: the 21:11Z (6) exception applies as written (Rr '+' with DIS '?' ->
+  exp89q). (4) WORDING: 'L <= 7.9 h at the 08:40Z header' -> 'L_hi <= 7.9 h + 210 s x failed attempts; a v suffix does
+  not change the P code or A-M1'; 'k >= 1' -> 'an attributable UP (k >= 1, not MASKED / BLIND)'. CARD v5 edited (order
+  (1), the SEC sentence, step 5, exp87a fixed_refs 0.959 / L (9.30, 9.48] / UP 12, exp89l dummy CSV 2c1868375972): new
+  sha8 aab8801a. (5) R30-A2 for the 07:23Z prep: do NOT rebuild or re-push exp89l / exp89s / exp89q (submit -v 1 = the
+  gated dummy); decision grid and exact nb_try commands per round30/report.json R30-A2 (tokens exp89l; exp89s,exp89q;
+  kernel ids KL = vitaliineibauer/biohub-exp89l-k2cap6-k-sec-ci, KS = vitaliineibauer/biohub-exp89s-k2cap6-k-dis225).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

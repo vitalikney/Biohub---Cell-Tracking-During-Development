@@ -1,0 +1,11 @@
+# notes R30-RC-B timer-on-private (verifier)
+- 2026-09-29T01:29:41Z start
+- Checked: exp89r ipynb cell 0 l.71 KERNEL_START_TS = time at cell 0; l.116-117 REPAIR 34200 / DIVINS 28800; cell 7 l.53-62 DIVINS gate on elapsed since kernel start; l.2138 geffs sorted; l.2182 repair per-dataset check; cell 8 l.151/158 CI deadline 37800 from KERNEL_START_TS. Code facts CONFIRMED.
+- Ledger (experiments/lb_poll/ledger.md l.23-37): L bounds as quoted. L includes queue+scoring, so runtime <= L_hi (conservative). One hidden run = both boards (CONTEXT l.1812, R5H-1).
+- NON-CI (#37 7.54, #38 6.87, exp70g 7.67, exp85a 7.19): L_hi < 8.0 h DIVINS < 9.5 h REPAIR -> PROVEN no gate fired anywhere. UPHELD.
+- CI (exp79a L_hi 9.45, exp87a 9.48): the '10.2 h mark' = 8.0 + CI_lo 2.2 h, the model PC25-07 (CONTEXT l.3749) says is CONTRADICTED (measured dL 1.60-2.18). With dL_lo 1.60 the mark is 9.60 h -> margins only 0.12-0.15 h.
+- dL itself is a latency DIFFERENCE between two hidden runs on different machines: exp79a-exp70g gives 1.60-1.96, exp87a-exp85a gives 2.11-2.47. Non-CI same-family spread is +-0.4 h (exp78a 6.87-7.04 vs exp78b 7.27-7.45; exp70a vs exp70e; range 6.87-7.81). So the true CI stage time X is only known to ~[1.3, 2.3] h; independent dummy-scaled estimate ~2.1 h (CONTEXT l.3067: ~100 videos/2 GPUs x ~150 s) with per-video 71-238 s by detection count -> not tight.
+- For DIVINS to have fired on exp87a's tail: pre-CI > 8.0 h <=> X < 1.48 h (exp79a: X < 1.45 h). Not excluded by latency alone -> 'VOID for all 6' is an OVERCLAIM for the 2 CI files; correct statement: 'probably not fired; if fired, bounded <= ~0.0005 (PC25-07) on last-sorted clips, same for any CI V_pub and its non-CI rows'.
+- Order argument (3): relies on 743006 unverified 'first private, second public'; stays speculative, fine as hedge.
+- Practical value: ~0. Finals plan {V_pub, #37 or exp75} already does not use F2 runtime-insurance; no decision changes. Proposed info line has a factual error ('10.2 h for CI').
+- 2026-09-29T01:31:34Z final JSON written (refuted=true, overclaim for CI files)

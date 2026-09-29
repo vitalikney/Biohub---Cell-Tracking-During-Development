@@ -1,0 +1,12 @@
+# R30M-7 verification notes (2026-09-29T01:29:42Z)
+- No prior answer file existed; started fresh.
+- CONTEXT.md l.1671-1672: R8 text verified (new mechanisms until 27.09 12:00; after 29.09 02:00 only emergency repeat, hard edge 10:00).
+- CONTEXT 12:25Z 28 Sep: standing override verified (after 02:00Z an E10 copy needs the user's yes for that notebook).
+- CONTEXT 14:12Z MORNING TABLE v1.1 (0)(i): exclusions READMIT 0.92/0.90, TAU 0.7, DIS 1.75, IDW<0.4, caps != 6 verified. (2)/(3): UNUSED is the honest default; A-M1 exp89l only on P '+'/'0u'; A-M2 exp89s on DIS '+' else exp89q on Rr '+'.
+- exp89t (K+DIS+CI) / exp89u only with the user's prior yes (defaults: no) -> whitelist 'used up' holds in practice.
+- Duplicate check: round28/v_hyp_prefreeze_r28p-11.json (not refuted, 20:30Z) and round29/v_hyp_cardfix_r29cf-7.json (not refuted) state the same honest null; IDEAS.md l.42 (I-320) logs it. New content in R30M-7 = the morning-brief line only.
+- Feed: experiments/discussions/digest_20260929T0057Z.md: 16 topics, 0 new topics, 0 new comments, E10 FLAG none, best public notebook 0.953 (newer than the 23:27Z digest cited by the finding). feed_loop.log 00:57:54Z same.
+- E10 P1: experiments/e10_watch/20260929T0113Z.txt: no new notebook above 0.953; round30/scan_browser.json: nothing actionable, no disclosed knob.
+- Nit on claim (1): under the Q3 conditional (freeze item 6), exp89s is a named P1 candidate, so an exp89s read could carry finals value. It stays gated by the pre-registered DIS '+' route; outside it the read is a public knob ladder (R9) and a 0.001 pick between near-copies (R7). The conclusion holds, the wording '>= 0.960 only' is overstated.
+- Claim (2) correct: a re-submit gets a later timestamp; the tie order cannot improve.
+- Verdict: not refuted (info-only null, accurate); fix = log as a pointer to R28P-11/R29CF-7 + the brief line.

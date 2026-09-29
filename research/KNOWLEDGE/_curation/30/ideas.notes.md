@@ -1,0 +1,4 @@
+- 01:46:44Z 2026-09-29 start: no _curation/30/ideas.json -> incremental run over curation 29 (534 ideas). Reuse scratchpad patch29.py/gen_md29.py pattern.
+- 01:50Z sources since c29: git e42769c..afebb5d (6dc7088 round29, a9c6d41 P51=0.959, f156067 exp89l PASS, ca8f729, 59b1cf5 FREEZE, 775d484/afebb5d night batch 52-54); CONTEXT 4154->4293 l. (entries 21:11Z..00:47Z, l.4134-4272, Literature l.4273); round30/ untracked (report.json 01:44Z R30-A1..A5, 4 scans, 9 verdicts, no REPORT.md); poll/ledger 01:44Z (3 night refs PENDING); e10 to 0141Z, digest 0057Z null. RESULTS.md unchanged. Plan: patch30.py -> ideas_c30.json, gen_md30.py.
+- 01:55Z ideas.json (542 ideas, 57 change records) + IDEAS.md (1007 lines) WRITTEN from patch30.py/gen_md30.py; verify below.
+- 01:57Z verify OK (gen.py rows 542 bad 0; gen2.py body+rank equal). _curation/30/ideas.json written (7 alerts). DONE.

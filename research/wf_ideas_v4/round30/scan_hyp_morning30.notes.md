@@ -1,0 +1,10 @@
+# scan_hyp_morning30 notes
+- 2026-09-29T01:13:50Z start; round30 folder created
+- 01:15Z (bash date -u) Read CONTEXT l.3880-4272 (MORNING TABLE v1.1 14:12Z l.3931-3955; GAP RULE v2 l.4009-4020; 21:11Z precedence l.4147-4150; 23:34Z freeze l.4174-4253; night done l.4254-4272), R26-A4 text (round26/report.json), R25-A1 (round25/report.json), night_checklist.md (2b442e87), tools/uptest.py, R29-A6.
+- FACT (local, e10 snapshots): our LB row at 01:13Z = rank 132, 0.959, SubmissionCount 53, LastSubmissionDate 2026-09-28 12:14:57 -> pending night subs (52-54) are NOT counted; count and date move only on scoring. LastSubmissionDate = max submit time among SCORED subs (e.g. 0722Z count 49 date 00:06:09; 1017Z count 51 at 0.957 date still 00:50:37).
+- FINDING: our row is 0.959 (exp87a). A 0.958 exp89p cannot move it -> P '0u' structurally unreachable (UP test BLIND by construction); P 0.958 = '0' -> A-M1 UNUSED. R29-A6 (written pre-51) assumed row 0.958.
+- FINDING: conflict cell P=0.958 ('0') & exp89r=0.960: DIS dd=(0.960-0.958)-0.001=0.001 -> '?' -> 21:11Z precedence gives A-M2 exp89q (has SEC), but 23:34Z freeze (9) says 'SEC 0 or - removes SEC from every morning file'.
+- Kernel ids: exp89l vitaliineibauer/biohub-exp89l-k2cap6-k-sec-ci (sha8 cad1d47f), exp89s vitaliineibauer/biohub-exp89s-k2cap6-k-dis225 (8ed72e32), exp89q vitaliineibauer/biohub-exp89q-k2cap6-k-sec-dis225 (b80dae26); families safetail_ci / safetail / safetail; exp_token parses 'probe 55: exp89l = ...' -> exp89l.
+- 01:22:18Z Our LB row history (e10_watch leaderboard_rows): 28Sep 0722Z c49 date 00:06:09 0.956; 0822Z c50 00:50:37; 1017Z c51 00:50:37 0.957; 1222Z c52 05:02:30 0.958; 2141Z c53 12:14:57 0.959; 29Sep 0113Z c53 12:14:57 0.959 rank 132 (night subs pending, not counted).
+- Conflict cell only at (P 0.958, R 0.960); grids in JSON R30M-3. Stale timer texts: 07:23Z build exp89l (already PASS 22:16Z); 08:30Z vs A-M1 08:40Z header / 08:45Z cutoff.
+- Nothing reaches R8 (CONTEXT l.1671). No web search (local-rule task). Final JSON written: research/wf_ideas_v4/round30/scan_hyp_morning30.json (8 findings).

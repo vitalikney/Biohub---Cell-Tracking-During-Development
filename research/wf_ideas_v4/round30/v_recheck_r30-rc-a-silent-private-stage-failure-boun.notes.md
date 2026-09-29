@@ -1,0 +1,13 @@
+# v_recheck R30-RC-A (silent private-only stage failure) - skeptic notes
+- 2026-09-29 ~04:35Z start; no prior json/notes for this slug.
+- tools/coordinject_patch.py read: worker per-video try/except (FAILED -> continue, no npz), deadline SKIP of shard tail, rewrite -> tmp + line-count check -> os.replace; outer try/except unlinks tmp, CSV unchanged. Only rows of refined videos are touched. CONFIRMED.
+- CI wrong-but-no-exception case: move capped by MAX_UM 3.0 x ALPHA 0.5 (exp89r env) -> <= 1.5 um per node; ids/edges untouched. Bounded.
+- exp89r notebook dumped (scratchpad c0..c14). SEC: _find_secondary_artifact_root raises FileNotFoundError on sha miss (cell 3); inference shards: _wait_for_prediction_shards raises CalledProcessError on any non-zero shard, _merge_prediction_shards raises on missing geff (cell 4 ~l.378-440) -> any SEC/inference failure = hard ERROR, visible. SINGLE-SEED msg (cell 14) is only a manifest print, global. CONFIRMED.
+- Timed per-dataset silent paths the finding did not list: ILP timeout 1200 s/dataset (SCIP incumbent), REPAIR deadline 34200 s, DIVINS deadline 28800 s (cell 0 l.72-116, cell 7 l.30-66). Checked whether K/DIS/SEC/CI move them:
+  - ILP times dummy (4 videos): exp85a 21.3/23.9/7.2/76.1 s; exp87a 20.8/27.1/5.1/82.9 s; exp89r (DIS 2.25) 18.2/25.5/4.2/76.2 s at 76k nodes -> DIS does not change solve time, ~15x headroom to 1200 s.
+  - CI runs post-writer (cell 8) -> cannot push DIVINS/REPAIR deadlines. SEC n2a = same-architecture secondary weights -> same runtime.
+  - ledger.md: exp85a L (7.01,7.19] h, exp87a (9.30,9.48], exp79a (9.27,9.45] vs exp70g (7.49,7.67] -> CI adds ~1.6-2.5 h after the tracking loop; pre-CI part ~7.0-7.7 h < 8.0 h DIVINS deadline (not strictly proven for CI runs, but CI cannot cause it). Deadline paths are shared by every safetail candidate incl. #37.
+- Dummy logs _dl/ (exp75, 79a, 87a, 89r, 89l, 83c): COORDINJECT_WORKER FAILED 0, REPAIR FAILED 0, DIVINS FAILED/SKIPPED 0, DEADLINE 0, COORDINJECT FAILED 0; SUMMARY 4/4, replaced 0.913-0.917. CONFIRMED.
+- Frame check: hidden rerun is one run over public+private; scores for all finals candidates are already fixed; nothing to change -> info only is correct.
+- Verdict: NOT refuted. Small wording fix: add timed paths (ILP 1200 s, DIVINS 28800 s, REPAIR 34200 s) to the info line as shared and unmoved by SEC/K/DIS/CI; '<= ~0.001' = CI's PUBLIC step, private CI gain unknown (loss = CI's private gain on the affected videos, sign unknown).
+- 01:32Z wrote json (refuted=false)

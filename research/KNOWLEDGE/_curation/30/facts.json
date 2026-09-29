@@ -1,0 +1,81 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/FACTS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/DECISIONS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/30/facts.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/30/facts.json"
+ ],
+ "alerts": [
+  {
+   "kind": "contradiction",
+   "what": "The tie order at an equal top display (0.959) is read two ways. Card v5 l.21 and CONTEXT l.3181, read literally, keep exp87a when exp89p reads 0.959 with k = 0, because exp87a's UP 12 was earned at 0.958. R26-A4 (d), which the freeze (5) keeps in force, makes that pair unresolved, and then rule (2) non-CI picks exp89p. This decides the V_pub final.",
+   "evidence": "FACTS C-250; research/wf_ideas_v4/round30/report.json R30-A1 (2), plan_issues (a); research/wf_ideas_v4/round30/v_plancheck_pc30-01.json; CONTEXT 23:34 l.4218-4225",
+   "suggested_action": "Log exactly one reading pre-score: the R30-A1 (2) running champion or the conservative 'keep exp87a on a k = 0 tie'. Log it before the first poll header with 56657612 terminal (earliest ~07:38Z), ideally by the 07:23Z prep.",
+   "urgency": "today"
+  },
+  {
+   "kind": "contradiction",
+   "what": "A-M2 has one cell where two logged texts disagree: P 0.958 ('0') with exp89r 0.960 gives DIS '?' and Rr '+'. CONTEXT 21:11 (6) sends exp89q, which carries SEC. Freeze (9) and card v5 l.59 say that a SEC read of 0 removes SEC from every morning file.",
+   "evidence": "FACTS C-251; CONTEXT 21:11 l.4147-4150 vs 23:34 l.4243-4250; research/wf_ideas_v4/round30/v_plancheck_pc30-02.json; round30/report.json R30-A1 (3)",
+   "suggested_action": "Resolve it in the same pre-score R30-A1 entry, before any P display. R30-A1 (3) proposes that A-M2 goes UNUSED in that cell; the alternative is exp89q, logged explicitly.",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "The texts written when our row was 0.958 are stale now that it is 0.959. P '0u' is unreachable, because a 0.958 exp89p cannot move a 0.959 row (the row shows the best over all scored submissions, and the count covers scored submissions only). Freeze (9)'s 'V_pub stays exp85a' is also stale. A count-rule UP test would wrongly MASK an exp89r UP when exp75 completes in the same window.",
+   "evidence": "FACTS F-RUL-26, C-252, C-253; research/wf_ideas_v4/round30/scan_hyp_morning30.notes.md 01:22:18Z; round30/report.json R30-A1 (1), R30-A3",
+   "suggested_action": "Apply the R30-A1 (1) text: A-M1 goes only on P >= 0.959, and P 0.958 means UNUSED with no uptest call. Apply the R30-A3 protocol: an LB download only on a top-display tie, and S1_P is valid only with count 54 and LastSubmissionDate 00:46:36.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "The 07:23Z timer still says 'build/dummy exp89l'. exp89l already PASSED as v1 at 22:16Z, and nb_try hard-codes '-v 1'. A rebuild or re-push would create v2, and the submit would then send the wrong, ungated version.",
+   "evidence": "FACTS C-247, F-RUN-46; CONTEXT 22:16 l.4168-4173; research/wf_ideas_v4/round30/report.json R30-A2",
+   "suggested_action": "At 07:23Z, prep only: run G5 for exp89l / exp89s / exp89q, then paste the R30-A2 (a)-(c) table, ids and -m texts. Rebuild or re-push nothing.",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "The power/poll watchdog (PID 10576) and the read watcher (PID 13516) are one-shot. The watchdog dies at the 05:10-06:00Z travel sleep. The read watcher fires only on the first night ref to turn terminal, so nothing watches exp89r, whose terminal header is the A-M2 decision header.",
+   "evidence": "FACTS F-RUN-45; research/wf_ideas_v4/round30/report.notes.md 01:36Z; round30/report.json R30-A4",
+   "suggested_action": "At 06:07Z, once on AC, re-arm the watchdog. When 13516 fires, chain watchers on the remaining refs and on each morning submit ref.",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "The morning decisions follow MORNING TABLE v1.1, branch A. A-M1 (exp89l) is decided at exp89p's first terminal header (expected 07:47-07:58Z, latest 08:40Z) and must be submitted by 08:45Z. A-M2 (exp89s / exp89q) is decided at exp89r's terminal header (~09:25-09:35Z, latest 11:00Z) and must be submitted by 11:30Z. 2 submits are left on 29 Sep.",
+   "evidence": "DECISIONS P54, P55-P56 rows; experiments/lb_poll/ledger.md 01:54:06Z (all 3 night refs PENDING); CONTEXT 00:47 l.4265-4272",
+   "suggested_action": "Submit at the decision header, not at the cutoff. At the 08:30Z timer, if exp89p is still PENDING, wait for the 08:40Z header.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "Card v5 (aadead83) is the logged fill source, but it still says 'основным остаётся exp85a' (l.59), holds exp87a 'PENDING at 20:13:02Z' (l.106) and exp89l 'not built yet' (l.114), and uses the disputed tie wording (l.21).",
+   "evidence": "FACTS C-255, F-RUL-22; research/wf_ideas_v4/round30/report.notes.md 01:35Z",
+   "suggested_action": "Make the R30-A1 card edits and record the new sha8 in the same CONTEXT entry, before the 12:03Z fill.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "contradiction",
+   "what": "The 18:37Z / 19:43Z / 21:05Z timer texts say 'the recommended pair', but card v5 step 11 forbids 'рекомендую'.",
+   "evidence": "FACTS C-254; research/wf_ideas_v4/round30/scan_plancheck.json PC30-08",
+   "suggested_action": "Word the finals message as 'the pair by the card (P3/P1/P2 by the logged rules)' (R30-A5 (2)).",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "stale",
+   "what": "experiments/RESULTS.md still has no rows for P47-P51 (0.955 / 0.957 / 0.955 / 0.958 / 0.959) or for the pending P52-P54. It was last changed in 59e14e2 at 05:03Z on 28 Sep.",
+   "evidence": "FACTS C-118; git log -- experiments/RESULTS.md; experiments/lb_poll/ledger.md 01:54:06Z",
+   "suggested_action": "Add the rows after the night reads, before the finals message.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "risk",
+   "what": "Runtime insurance does not separate the finals pairs. A deadline degrade is proven absent only for the non-CI files; for the CI files (exp79a, exp87a, L_hi <= 9.48 h) it is probably, not provably, absent, with a loss of <= ~0.0005 if it fired. The R30-RC-B 'void for all 6' claim overstates this, and R30-RC-C (a dataset watch plus a build trigger) was refuted.",
+   "evidence": "FACTS F-TRN-62, C-256, C-257; research/wf_ideas_v4/round30/report.json rejected, R30-A5 (3)",
+   "suggested_action": "Use the two R30-A5 (3) info lines on the card. Do not cite a '10.2 h mark' as proof for CI.",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 30 (01:50 UTC 29 Sep) is an incremental pass over curation 29 (21:02Z). It adds 7 new CONTEXT entries (l.4134-4272; commits 6dc7088..afebb5d): the round-29 texts were logged at 21:11 (checklist 2b442e87, template dcdfeebc, card v5, A-M2 precedence). P51 exp87a read 0.959 at 21:43Z: code '+', UP 12, rank 128. That makes exp87a V_pub (a CI file) and puts us in branch A. exp89l was built at 21:45Z and passed its gate at 22:16Z. The W4 FREEZE was logged at 23:34Z (CODE '+', STACK exp89r). The night batch went out on time: P52 exp89r 56656147 at 00:05:28Z, P53 exp75 56656157 at 00:05:34Z and P54 exp89p 56657612 at 00:46:36Z, all PENDING at 01:54Z, with 2 submits left. We are #132 of 3,979 at 01:42Z. The finals are still ticked #37 + #38. FACTS adds the rows F-LB-30 (P51 read + LB), F-RUN-47 (night execution), F-RUL-26 (LB row mechanics: 0u is unreachable), F-MOD-51 (exp89l + code-path audit) and F-TRN-62 (CI transfer and deadlines). It adds [c30] notes to 13 rows and updates C-118, C-209, C-225, C-230 and C-238..C-249 (most now RESOLVED or MOOT). New contradictions C-250..C-258 cover the tie order, the A-M2 SEC/Rr cell, stale 0u / V_pub texts, the UP count rule, 'recommended' wording, card placeholders, the RC-B overclaim, the RC-C refutation and morning time wording. DECISIONS gets [c30] cells in P51-P56, a build table, a finals paragraph and a 01:50Z snapshot, an E10 line, and in §2h the R28-A3 / R29-A1..A8 statuses plus rows R30-A1..A5 (all PROPOSED). In §3 it adds [c30] status on R1-R10, §f, MORNING TABLE, the partner rule, GAP RULE v2, the exp89l gate, the fallback and the timers, plus 5 new rows (21:11 texts, P51 read, W4 FREEZE, round-30 proposals, round-30 rejections). All tables were validated."
+}

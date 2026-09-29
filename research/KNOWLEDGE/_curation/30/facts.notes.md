@@ -1,0 +1,7 @@
+- 2026-09-29T01:46Z start round 30 FACTS/DECISIONS curation; no 30/facts.json -> incremental over c29 (21:05Z 28 Sep). New commits since c29 HEAD e42769c: 6dc7088 a9c6d41 f156067 ca8f729 59b1cf5 775d484 afebb5d
+- 01:48Z sources: CONTEXT +6 entries (21:11 l.4134, 21:45 x2, 22:16, 23:34 FREEZE, 00:06, 00:47); Lit now l.4273?; ledger 01:44:04Z 497 polls, P52-54 PENDING; e10 RUN 37 01:42Z #132/0.959; round30 report.json 01:44Z R30-A1..A5 (none logged); digest 0057Z null; RESULTS.md still stale (59e14e2)
+- 01:49Z structure mapped: FACTS max IDs F-LB-29 F-RUN-46 F-RUL-25 F-MOD-50 F-TRN-61 C-249; DECISIONS P51-P56 rows l.193-197, build table l.516, finals snapshot [c29] l.907, E10 l.1195, 2h R29 rows l.1404-1411, s3 rows l.1513-1514, closing l.1706. Writing c30 patch scripts in scratchpad
+- 01:52Z FACTS.md patched via scratchpad c30_facts.py (header; 13 [c30] appends; F-LB-30, F-RUN-47, F-RUL-26, F-MOD-51, F-TRN-62; C-118/209/225/230/238..249 updated; new C-250..C-258). Next: validate, then DECISIONS
+- 01:54Z FACTS validated (all [c30] rows have header col counts). Writing c30_dec.py
+- 01:56Z DECISIONS.md patched via c30_dec.py (header; P51-P56 [c30] cells; [c30] build table; finals paragraph + snapshot 01:50Z; E10 line; 2h R28-A3/R29-A1..A8 status + 5 rows R30-A1..A5; s3 R1-R10, s-f, morning/partner/gap/gate/fallback/timers/R29 row appends + 5 new rows; closing). Next: validate, facts.json
+- 01:57Z re-checked ledger 01:54:06Z (52-54 still PENDING; no new CONTEXT entry). facts.json written (10 alerts). Done.

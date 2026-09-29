@@ -1,0 +1,13 @@
+# round30 scan_plancheck notes
+- 2026-09-29T01:14:09Z start. round30 folder created (empty before). Read CONTEXT l.3717-4273, round29/report.json.
+- 01:20Z facts: poll header 01:13:57Z; night refs 56656147 exp89r / 56656157 exp75 / 56657612 exp89p PENDING. E10 snapshot experiments/e10_watch/20260929T0113Z.txt: rank 132, 0.959, SubmissionCount 53 (count = SCORED only; 3 pending not counted), 18/22 in 0.959 block; >=0.960: 114 teams; E10 none; x138 block 406 at 0.953. E10 loop ends 2026-09-29T12:00Z (watch_loop.log START line).
+- P '0u' is mechanically unreachable: LB shows max public over ALL submissions (SELECTED = #37/#38 yet LB 0.959); exp89p 0.958 < best 0.959 cannot move our row -> k = 0 by construction. Codes reachable: '+' (>=0.959), '0' (0.958), '-', '?'.
+- Card v5 tie order (1) text ('file after which we passed teams; 0 = undecided') vs R26-A4 (d) ('an attributable UP chains by completion order; 0/MASKED/BLIND unresolved, never lower'): differ when exp89p reads 0.959 with k=0 (literal card -> exp87a because it has UP 12; R26-A4 (d) -> unresolved -> (2) non-CI -> exp89p). Also when 2+ files at 0.959 have UPs (card: undecided -> (2); R26-A4 (d): the last UP wins).
+- nb_try (round29/night_checklist.md l.62) hard-codes '-v 1'. exp89l dummy = v1 (CONTEXT l.4164). exp89q v1 (freeze (4) 'all kernels COMPLETE at v1'). exp89s: version never logged.
+- Read watcher PIDs 13516/16292: until any of 56656147|56656157|56657612 COMPLETE|ERROR -> fires ONCE (first completion, exp89p ~07:38Z); nothing re-arms for exp75/exp89r.
+- CONFLICT: freeze 23:34Z item (9) 'SEC ... 0 or - removes SEC from every morning file' (CONTEXT l.4247; card v5 l.59 same) vs 21:11Z item (6) precedence 'Rr + with DIS ? -> exp89q' (K+SEC+DIS). Conflict cell: P = 0.958 ('0') and exp89r = 0.960 -> dd = (0.960-0.958)-0.001 = 0.001 -> DIS '?' ; Rr '+' -> exp89q carries a SEC that read '0'. (P 0.957 & r 0.960 -> dd 0.002 -> DIS '+' -> exp89s, no conflict.)
+- Versions: round27/scan_hyp_nightdry.json: current_version_number = 1 for exp89r/q, exp75, exp89p, exp83c, exp89s; exp89l pushed once 21:44:59Z (v1). nb_try -v 1 is correct for all morning files.
+- Watchdog PIDs 10576/25988 'break' on first battery/stale alarm -> one-shot; will die at the 05:10Z battery sleep.
+- Feed loop runs to 23:59Z (90 min); E10 loop exits 12:00Z. Digest 0057Z: 0 new; 743929 new comment 20:46Z John Taylor 'very true brother' (no values). E10 FLAG none. No disclosed knob -> nothing to build.
+- Ledger: exp89p family safetail, insertion gate 8.0 h (08:46:36Z); exp75/exp89r safetail_ci gate 10.2 h (10:17Z).
+- 2026-09-29T01:25:53Z wrote round30/scan_plancheck.json (8 findings PC30-01..08)

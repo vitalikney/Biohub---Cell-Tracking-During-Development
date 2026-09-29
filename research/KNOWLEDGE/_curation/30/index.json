@@ -1,0 +1,88 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/INDEX.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/CHANGES.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/30/index.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/30/index.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "urgency": "now",
+   "what": "R30-A1 / W298: log one pre-score CONTEXT entry covering the A-M1 trigger (P >= 0.959; '0u' is unreachable), exactly one tie-order reading, and exactly one reading for the A-M2 SEC/Rr cell (UNUSED or exp89q). Fold in the W279 (1) DET_THRESHOLD line and the W297 'cron defect, not battery' correction.",
+   "evidence": "research/wf_ideas_v4/round30/report.json R30-A1; FACTS.md C-250..C-253; WATCHLIST.md l.72; CONTEXT.md l.3181, l.4147-4150, l.4243-4250",
+   "suggested_action": "Put the entry above '## 9. Literature', not in freeze-header shape, quoting a header with all 3 night refs PENDING. Hard limit: the first poll header with 56657612 terminal (earliest 07:38Z); ideally by the 07:23Z prep."
+  },
+  {
+   "kind": "stale",
+   "urgency": "now",
+   "what": "The E10 runbook still triggers at SC >= 0.958; the trigger is now >= 0.960 because OUR = 0.959.",
+   "evidence": "research/wf_ideas_v4/e10v3/runbook.notes.md l.66; CONTEXT.md l.4159-4160; WATCHLIST.md W286 (2)",
+   "suggested_action": "Fix it before the 02:41Z E10 read."
+  },
+  {
+   "kind": "stale",
+   "urgency": "today",
+   "what": "Card v5 (aadead83) has 4 stale lines: l.21 (tie wording), l.59 ('основным остаётся exp85a'), l.106 (exp87a PENDING) and l.114 (exp89l not built). It also lacks the R30-A5 info lines.",
+   "evidence": "FACTS.md C-255; research/wf_ideas_v4/round30/report.json R30-A1 edit list, R30-A5; research/wf_ideas_v4/round29/finals_card_v5_ru.md",
+   "suggested_action": "Edit the card and record the new sha8 in the R30-A1 entry, before the 12:03Z fill."
+  },
+  {
+   "kind": "risk",
+   "urgency": "today",
+   "what": "The 07:23Z timer text says 'build/dummy exp89l', but exp89l PASSED as v1 at 22:16Z. nb_try hard-codes '-v 1', so a rebuild would create an ungated v2.",
+   "evidence": "CONTEXT.md l.4168-4173; research/wf_ideas_v4/round30/report.json R30-A2; FACTS.md C-247, F-RUN-46",
+   "suggested_action": "Prep only: run G5 for exp89l / exp89s / exp89q and paste the R30-A2 grid, ids and -m strings."
+  },
+  {
+   "kind": "risk",
+   "urgency": "today",
+   "what": "The watchdog (PID 10576) and the read watcher (PID 13516) are one-shot, so exp89r (the A-M2 decision header) goes unwatched. The E10 loop exits at 12:00Z.",
+   "evidence": "research/wf_ideas_v4/round30/report.json R30-A4; FACTS.md F-RUN-45; WATCHLIST.md I353/W301",
+   "suggested_action": "At 06:07Z, once on AC, re-arm the watchdog, chain watchers per ref and per morning submit, and use uptest.py save (<= 3 calls) after 12:00Z."
+  },
+  {
+   "kind": "deadline",
+   "urgency": "today",
+   "what": "A-M1 exp89l is decided at exp89p's terminal header (latest 08:40Z) and must be submitted by 08:45Z. A-M2 exp89s/exp89q is decided at exp89r's terminal header (latest 11:00Z) and must be submitted by 11:30Z.",
+   "evidence": "research/wf_ideas_v4/round30/report.json R30-A2 (a)(c); DECISIONS.md l.197-198; experiments/lb_poll/ledger.md 01:54:06Z",
+   "suggested_action": "Submit at the decision header, not at the cutoff. If exp89p is still PENDING at the 08:30Z timer, wait for the 08:40Z header."
+  },
+  {
+   "kind": "risk",
+   "urgency": "today",
+   "what": "A count-rule UP test would MASK an exp89r UP when exp75 completes in the same window.",
+   "evidence": "research/wf_ideas_v4/round30/report.json R30-A3; FACTS.md F-RUL-26, C-253",
+   "suggested_action": "Download the LB only on a top-display tie. S1_P is valid only with count 54 and LastSubmissionDate 00:46:36. Log that exp75 is exempt, and never delay a submit."
+  },
+  {
+   "kind": "forgotten",
+   "urgency": "today",
+   "what": "experiments/RESULTS.md has no rows for P47-P51 (the latest being 0.959) or P52-P54. round29/REPORT.md and round30/REPORT.md are missing, and round 30 is uncommitted.",
+   "evidence": "experiments/RESULTS.md l.79; FACTS.md C-118; WATCHLIST.md W126, W296/W303",
+   "suggested_action": "Add the rows and both REPORT.md files (from report_md_ru) before the 12:03Z card fill."
+  },
+  {
+   "kind": "contradiction",
+   "urgency": "before-finals",
+   "what": "The 18:37Z/19:43Z/21:05Z timer texts say 'recommended pair', but card v5 step 11 forbids that wording. There is also no MSK morning brief yet.",
+   "evidence": "FACTS.md C-254; research/wf_ideas_v4/round30/scan_plancheck.json PC30-08; research/wf_ideas_v4/round30/report.json R30-A5",
+   "suggested_action": "Say 'the pair by the card (P3/P1/P2)'. Send the MSK brief at 06:07-07:23Z. The session never ticks; the user ticks by 20:00Z."
+  },
+  {
+   "kind": "orphan-idea",
+   "urgency": "before-finals",
+   "what": "Carried orphans: I-336 (hindsight guard, before 23:00Z), I-233 (strict orphan), I-516, I-448, I-252 and I-407.",
+   "evidence": "research/KNOWLEDGE/IDEAS.md ORPHANS l.875 ff.",
+   "suggested_action": "Push I-336 before 23:00Z and close the others with one line each."
+  },
+  {
+   "kind": "risk",
+   "urgency": "info",
+   "what": "Runtime insurance does not separate the finals pairs. A deadline degrade is probably, but not provably, absent for the CI files. R30-RC-C (a dataset watch as a build trigger) is refuted.",
+   "evidence": "FACTS.md F-TRN-62, C-256, C-257; research/wf_ideas_v4/round30/report.json rejected",
+   "suggested_action": "Use the R30-A5 (3) card info lines. Never cite the 10.2 h mark as proof for CI."
+  }
+ ],
+ "summary": "Curation 30 of the knowledge base, as of ~02:00Z on 29 Sep. INDEX.md is rewritten (71 lines) and CHANGES.md has a new '## 30' section.\n\nNew state:\n- P51 exp87a scored 0.959, a new best (UP 12). V_pub is now exp87a, a CI file, and the plan is on branch A.\n- The night batch submitted P52 exp89r, P53 exp75 and P54 exp89p. All three were PENDING at 01:54Z, and 2 submits are left today.\n- exp89l passed its gate at 22:16Z, and the freeze was logged at 23:34Z.\n\nIdeas: 542 in the ledger (I-535..I-542 new; I-438 is now lb-tested).\n\nThe top alerts, deduplicated to 11:\n- Now: the R30-A1 pre-score entry (tie order, '0u' unreachable, the A-M2 cell), with a hard limit of the first header where exp89p is terminal (earliest 07:38Z).\n- Now: the E10 runbook trigger at l.66 is stale (it should be 0.960).\n- Today: the card v5 edits, prep-only at 07:23Z (no rebuild), re-arming the watchers at 06:07Z, the morning decision windows (08:45Z and 11:30Z), the UP-test masking, and the missing RESULTS rows and REPORT.md files."
+}

@@ -1,0 +1,11 @@
+# v_plancheck PC30-01 notes (2026-09-29T01:29:38Z)
+- 04:3xZ 29 Sep. Sources: research/wf_ideas_v4/round29/finals_card_v5_ru.md l.20-24 (tie order (1)-(4): "(1) file after which WE passed teams; 0 = undecided"), step 4 ("k=0/MASKED/BLIND -> undecided, not lower"), step 9 (swap = ">= V_pub+0.001 or equal WITH attributable UP -> becomes V_pub", i.e. sequential chaining already implied for PENDING swaps).
+- round26/report.json R26-A4 (a): V_pub ties "attributable UP > non-CI > fewer levers > earlier submit"; (d): "An attributable UP chains by completion order; '0'/MASKED/BLIND are unresolved, never 'lower'".
+- CONTEXT l.3181: "Ties: the last attributable UP at that display, then non-CI, ..." -- literal reading could keep exp87a (its UP 12 is the last UP that reached 0.959) in case 1 => even logged rules are ambiguous.
+- CONTEXT freeze (9) (23:34Z): exp89p vs exp85a at 0.958 with code 0 -> "V_pub stays exp85a (fewer levers)"; with 0u -> order (1) -> exp89p. Precedent: an older file's lower-display UP does NOT decide (1); decision falls to (3). Supports the finding's reading.
+- CONTEXT 21:45Z: probe 51 exp87a = 0.959, UP 12 (0.958 -> 0.959), V_pub = exp87a (CI). Night: 52 exp89r 56656147, 53 exp75 56656157, 54 exp89p 56657612; none read yet (exp89p window 07:38-08:35Z) -> still pre-score.
+- e10_watch 20260929T0113Z: 0.959 block present (~22 teams) -> k=0 at equal display plausible.
+- Case 2 real: two later equal-display UP files -> card (1) as a boolean ties them -> (2) non-CI picks exp89p although exp89r's UP proves exp89r unrounded > exp89p. R26-A4(d)/step 9 chaining pick exp89r.
+- FLAW in the proposed pairwise wording: can cycle. Ex: exp89r UP (dominates exp87a), later exp89l k=0: exp89l > exp89r by (3) 4<5 levers, exp87a > exp89l by (3) 3<4, exp89r > exp87a by UP -> no top. Fix = running-champion (sequential) form, same as card step 9.
+- Cost: 1 CONTEXT line + card edit (sha8 change), 0 GPU, 0 submits, 0 Kaggle calls. Value: process only (removes an ambiguous final pick), no expected score gain by itself.
+- 2026-09-29T01:31:30Z final JSON written (refuted=false, fix = running-champion wording)

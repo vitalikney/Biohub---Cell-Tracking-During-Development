@@ -1,0 +1,60 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/ideas.json",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/IDEAS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/30/ideas.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/30/ideas.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "what": "The round-30 pre-score entry (R30-A1) is not in CONTEXT yet. It covers three items. (1) The tie order becomes the running champion: card l.21 and CONTEXT l.3181 contradict R26-A4 (d), which freeze (5) keeps in force. (2) A-M1 is read from exp89p's display alone, because a 0.958 cannot move our 0.959 row, so '0u' cannot occur. (3) The A-M2 cell P 0.958 / exp89r 0.960 / DIS '?', where freeze (9) contradicts 21:11Z (6). Any choice made after exp89p displays would be post-hoc.",
+   "evidence": "research/wf_ideas_v4/round30/report.json R30-A1, plan_issues (a)-(c)(h); research/wf_ideas_v4/round30/v_plancheck_pc30-01.json; research/wf_ideas_v4/round30/v_plancheck_pc30-02.json; research/wf_ideas_v4/round30/v_hyp_morning30_r30m-1.json; CONTEXT.md l.3181, l.4147-4150, l.4243-4250; research/KNOWLEDGE/ideas.json I-535, I-536, I-537",
+   "suggested_action": "Log ONE entry above '## 9. Literature' before the first poll header with 56657612 (exp89p) terminal: earliest 07:38Z (10:38 MSK), ideally by the 07:23Z prep. Do not use the freeze header shape. Quote a header that still shows all 3 night refs PENDING. Pick exactly one tie reading: running champion, or the conservative 'keep exp87a on a k = 0 tie'. Pick exactly one reading for the cell: UNUSED or exp89q.",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "Card v5 (sha8 aadead83) is stale for the 12:03Z and 18:37Z fills. l.21 has the old tie order. l.59 says 'основным остаётся exp85a', but V_pub has been exp87a 0.959 since 21:45Z. l.106 still shows exp87a 'PENDING at 20:13:02Z'. l.114 says exp89l is 'not built yet', but its dummy passed at 22:16Z (CSV 2c1868375972). The two round-30 info lines (silent private failure, deadline degrade) are missing.",
+   "evidence": "research/wf_ideas_v4/round30/report.json R30-A1 edit list, new_facts (8); research/wf_ideas_v4/round30/report.notes.md 01:35Z; research/wf_ideas_v4/round29/finals_card_v5_ru.md l.21, l.59, l.106, l.114; CONTEXT.md l.4153-4173; research/KNOWLEDGE/ideas.json I-526, I-539",
+   "suggested_action": "Apply the R30-A1 card edits: l.21, l.59, step 5, l.106, l.114, and the info lines in section 4. Record the new sha8 in the same CONTEXT entry. Do not cite a '10.2 h mark' as proof for CI files.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "The 07:23Z timer text says 'build/dummy exp89l', but exp89l was built at 21:45Z and passed as v1 at 22:16Z. nb_try hard-codes '-v 1'. A rebuild or re-push would create an ungated v2 and burn ~30 GPU-min. No stored morning command block (ids, -m strings) exists.",
+   "evidence": "CONTEXT.md l.4161-4173; research/wf_ideas_v4/round30/report.json R30-A2, new_facts (9); research/wf_ideas_v4/round30/scan_hyp_morning30.json R30M-5, R30M-6; research/KNOWLEDGE/ideas.json I-485, I-538",
+   "suggested_action": "At 07:23Z (10:23 MSK), do the prep only: run G5 for exp89l, exp89s and exp89q, and paste the R30-A2 grid and exact commands into the prep entry. Submit A-M1 exp89l only if exp89p displays >= 0.959 (latest the 08:40Z header, submit by 08:45Z). Run A-M2 by the grid at exp89r's terminal header (latest 11:00Z, submit by 11:30Z).",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "Both watchers are one-shot. The power/poll watchdog (PID 10576) exits on its first ON-BATTERY or POLL-STALE alarm, so it dies during the 05:10-06:00Z trip. The read watcher (PID 13516) fires only on the first night ref, so nothing then watches exp89r, whose terminal header is the A-M2 decision header. The E10 loop also exits at 12:00Z.",
+   "evidence": "research/wf_ideas_v4/round30/report.json R30-A4, new_facts (9); research/wf_ideas_v4/round30/scan_plancheck.json PC30-04; research/wf_ideas_v4/round30/report.notes.md 01:36Z; research/KNOWLEDGE/ideas.json I-497, I-529, I-517",
+   "suggested_action": "At 06:07Z (09:07 MSK), once on AC, re-arm the watchdog with run_in_background. Each time a read watcher fires, arm the next one on the remaining refs, and add one per morning submit. After 12:00Z, use uptest.py save (<= 3 calls).",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "The 18:37Z, 19:43Z and 21:05Z timer texts say 'the recommended pair'. Card v5 step 11 forbids 'рекомендую', and the user agreed to {V_pub, #37 / exp75}. No morning MSK brief exists yet saying that both morning slots may end UNUSED by rule.",
+   "evidence": "research/wf_ideas_v4/round30/scan_plancheck.json PC30-08; research/wf_ideas_v4/round30/report.json R30-A5 (2)(4); research/wf_ideas_v4/round29/finals_card_v5_ru.md step 11; research/KNOWLEDGE/ideas.json I-540, I-229",
+   "suggested_action": "Send the MSK brief at 06:07-07:23Z. Word the evening messages as 'the pair by the card (P3/P1/P2)', with the other pairs listed as trades. The session never ticks.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "forgotten",
+   "what": "Three items are still not recorded. (1) The corrected user message (the cron defect, not the battery; keep VS Code open, no reload or update) is missing from the new entries l.4134-4272. (2) experiments/RESULTS.md has no rows for probes 47-51, including the new best of 0.959. (3) round29 (committed) and round30 (untracked) have no REPORT.md.",
+   "evidence": "research/wf_ideas_v4/round28/report.json R28-A1 (3); CONTEXT.md l.4134-4272; experiments/RESULTS.md l.72-79; research/wf_ideas_v4/round30/report.json report_md_ru_note; research/KNOWLEDGE/ideas.json I-510, I-232",
+   "suggested_action": "Include the correction line in the morning brief. After the morning decisions, add RESULTS rows 47-51 and write REPORT.md for rounds 29 and 30 from report_md_ru.",
+   "urgency": "today"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "13 ideas are at risk. New: I-535..I-540 (all from round 30, none logged). Carried: I-516 (truncation line), I-448 (builder hardening), I-336 (hindsight guard before the first private score), I-252 and I-407 (post-private reads), plus I-526 and I-529. Not orphans but still unlogged: I-309 (DET revisit void, due before the 07:23Z prep). I-233 (error_description in the poller) is still the only strict orphan.",
+   "evidence": "research/KNOWLEDGE/IDEAS.md ORPHANS; research/KNOWLEDGE/ideas.json meta.curations[n=30]",
+   "suggested_action": "Close the round-30 items with the R30-A1 entry and the 07:23Z prep. Push the I-336 hindsight guard before 23:00Z. Close I-233 with one line.",
+   "urgency": "before-finals"
+  }
+ ],
+ "summary": "Curation 30 (~02:10 UTC 29 Sep, HEAD afebb5d) is an incremental pass over curation 29. New sources: 7 commits, CONTEXT.md l.4134-4272 (entries 21:11Z-00:47Z), round 30 (untracked; report.json R30-A1..A5 written 01:44Z, 4 scans, 9 verdicts), the ledger at 01:44Z, and E10/feed to 01:41Z (null). Key fact: probe 51 exp87a (K + CI) = 0.959, a NEW BEST (UP 12), so V_pub = exp87a and the night ran branch A. I-438 moves to lb-tested and I-324 gets P51. Round 29's fixes were applied and logged at 21:11Z; exp89l was built and passed its gate at 22:16Z; the freeze was logged at 23:34Z. The night batch sent 52 exp89r, 53 exp75 and 54 exp89p with no duplicate; all three are PENDING. The ledger now has 542 ideas: 8 new (I-535..I-542) and 57 change records. Six new ideas are in-plan and at-risk: running-champion tie order, A-M1 from exp89p's display alone, the SEC/Rr cell -> UNUSED, the 07:23Z prep with no rebuild, the card info lines, and the MSK brief with 'pair by the card' wording. Two are refuted: the disclosure-harvest / dataset-watch trigger (from v3, re-proposed as R30-RC-C) and re-submitting a file to win the tie order. Counts: lb-tested 61->62, in-plan 138->143, refuted 258->260. At-risk ideas went 16->13: 9 left the list as logged or applied, and 6 new ones joined. Strict orphan: I-233 only. The gen.py/gen2.py checks passed (542/542 rows; body and ranking equal)."
+}

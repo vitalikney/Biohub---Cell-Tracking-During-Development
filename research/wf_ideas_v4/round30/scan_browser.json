@@ -1,0 +1,37 @@
+{
+ "summary": "Round-30 delta scan, 01:13-01:19 UTC 29 Sep (04:13-04:19 MSK), compared with round 29 (20:18-20:23Z 28 Sep). Nothing is actionable. There is no new notebook, no public score above 0.953 (E10 FLAG none in all four digests), no new discussion topic, no disclosed knob and no host announcement. The one new comment is a no-content reply on 743929. Ours: probe 51 exp87a scored 0.959, so we are at 0.959, #132 of 3,979 (was 0.958 #140). 115 = 1 + teams strictly above; we are 18th of 22 in the 0.959 block (ranks 115-136). The night batch (52 exp89r, 53 exp75, 54 exp89p) is submitted but not scored: our SubmissionCount is still 53. E10 P1: experiments/e10_watch/20260929T0113Z.txt has CHANGES=8, all of them leaderboard lines; the largest P2 group is 1. LB counts 2018Z->0113Z: 0.953 411->406, 0.954 139->138, 0.955 107->113, 0.956 98->111, 0.957 44->46, 0.958 22->20, 0.959 21->22, 0.960 16->20, >=0.960 106->114. The top-4 are unchanged. Overview: 94,010 submissions (+621). Nothing pulled.",
+ "findings": [
+  {
+   "id": "r30-probe51-read-ours",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "Probe 51 exp87a (ref 56640366) scored 0.959. The first COMPLETE header was 21:43:19Z, with L in (9.30, 9.48] h, so the GAP RULE does not apply. The CONTEXT 23:34Z W4 FREEZE applied branch A. The LB at 01:14Z shows D: Discipline at #132, 0.959, LastSubmissionDate 2026-09-28 12:14:57, SubmissionCount 53. The night probes 52 exp89r (56656147, 00:05:28Z), 53 exp75 (56656157, 00:05:34Z) and 54 exp89p (56657612, 00:46:36Z) are submitted and not yet scored. Our strictly-better count is 114, so rank-by-score is 115. We are 18th of 22 in the 0.959 block. The in-block position has drifted from 128 to 132 because later-dated teams ranked ahead of us on ties. That is the LB's own ordering; 'earlier submission' tie-breaking would favour our 12:14Z row, but the CSV rank does not show that.",
+   "evidence": "experiments/e10_watch/20260929T0113Z.txt (row '132,16810638,D: Discipline,2026-09-28 12:14:57,0.959,53'; 'rank 132 ... 1 + teams with a strictly better 3-decimal score = 115; position 18 of 22 in the 0.959 block (ranks 115-136)'); CONTEXT.md 2026-09-28 23:34 UTC W4 FREEZE (1), 2026-09-29 00:06/00:47 UTC NIGHT BATCH entries",
+   "action": "None. The read windows are unchanged: exp89p ~07:38-08:35Z, exp75 ~09:05-10:05Z, exp89r ~09:25-09:35Z. MORNING TABLE v1.1 runs with KEY = exp89r (branch A)."
+  },
+  {
+   "id": "r30-e10-p1-null",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "E10 P1 at 01:13Z shows CHANGES=8 against 0041Z, all of them leaderboard lines. comp_dateRun, comp_scoreDescending, user anvithpothula (the live slug biohub-0-953-lb-original, status COMPLETE, no change), thtennant, amanatar and both statuses report 'no change'. The hourly watch_loop runs 32-36 (2041Z-0041Z) logged 'signals 0'. Their per-window P2 look-check maxima were 0/2/2/0/4, all below the threshold of 5. All four feed digests since r29 (2027Z, 2157Z, 2327Z, 0057Z) have best_public_score top 0.953 (kunaldesale2408, amanatar, raunakdey07, anvithpothula) and 'E10 FLAG: none'.",
+   "evidence": "experiments/e10_watch/20260929T0113Z.txt DIFF; experiments/e10_watch/watch_loop.log RUN 32-36; experiments/discussions/digest_20260929T0057Z.md",
+   "action": "None. E10 is not met (trigger >= 0.959 public notebook), and there is nothing to run through tools/e10_port_gate.py."
+  },
+  {
+   "id": "r30-lb-delta",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "The LB snapshot at 01:14Z, compared with r29's at 20:19Z, shows 3,979 teams (+5). Counts: 0.953 411->406, 0.954 139->138, 0.955 107->113, 0.956 98->111, 0.957 44->46, 0.958 22->20, 0.959 21->22, 0.960 16->20, >=0.955 398->426, >=0.960 106->114, >=0.970 10->10. The top-4 are unchanged: yu4u 0.978, Sergio Alvarez 0.976, Gabriel 0.975, taiseiu 0.974. In the top-20, umizora went 0.966->0.969 (#13), Corwin 0.968->0.969 (#19), and Yaroslav (0.969) dropped to #21. Other movers: ibyyue 0.961->0.964, Oleksandr Parfionov 0.959->0.963, RicardoLopez 0.961->0.963, zhuo wamg 0.956->0.962, Agnes and DrFranklinH 0.959->0.961, Thomas Greissler 0.958->0.960, tofu1002 0.957->0.960, Kito and Mositaku 0.959->0.960. Nine teams moved from <=0.953 or new straight to 0.956: fheizz, jaysefh26, 불, Jun Liu, Sung Heo, Roy Lo TW, Pirhosseinlou, Dilyorbek Muhammadjonov and Misha Shikhov. They were spread over 5 hourly windows (max 4 per window), with submissions timed 13:36-18:21Z. This is the same daily burst that r25 measured and refuted as a signal (v_browser_r25-hyp-0956-crowd-source) and that r28 logged. Scoring lag: most newly scored rows were submitted 13-18Z, and yeming151's row is dated 00:00:21Z.",
+   "evidence": "experiments/e10_watch/20260928T2018Z.txt vs 20260929T0113Z.txt (leaderboard_rows TeamId diff, histogram); research/wf_ideas_v4/round25/v_browser_r25-hyp-0956-crowd-source.json",
+   "action": "None; the plan is unchanged. Following the r25 verdict, do not re-propose a 'crowd 0.956 source' hypothesis."
+  },
+  {
+   "id": "r30-discussion-code-overview-null",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "Discussion: there are 0 new topics since r29. The one new comment is on 743929, by 'John Taylor (AI)' at 2026-09-28 20:46Z: \"very true brother, Until a man has spoken, his flaws and talents remain hidden.\" It discloses no knob or technique, so there is nothing for AGGRESSIVE MODE to build. In Chrome (Recent Comments, 01:17Z) the list order is unchanged: 743929 (last comment 4 hours ago), 744093 float centroids (posted 9h ago, no comments), the beginner split thread (13h), and 'A few question for top 100' (a day ago); the pinned topics are also unchanged. Code tab (Recently Created): no new notebook; the newest unpinned one is still 'Robust Cell Tracking During Development via Chan.' (5d). Overview: 'A DAY TO GO'; 13,475 entrants, 4,563 participants (+5), 3,979 teams (+5), 94,010 submissions (+621 vs 93,389 at r29). The timeline is unchanged ('September 29, 2026 - Final Submission Deadline', 11:59 PM UTC), and there is no host announcement. The newest digest (0057Z) was 16 min old, under the 100-min limit, so kaggle_feed.py was not re-run.",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/743929 ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion?sort=recent-comments ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/code?sortBy=dateCreated ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/overview ; experiments/discussions/digest_20260928T2157Z.md",
+   "action": "None. The finals tick is still for the user by 20:00Z (23:00 MSK)."
+  }
+ ]
+}

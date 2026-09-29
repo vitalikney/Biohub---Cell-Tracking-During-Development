@@ -1,0 +1,5 @@
+- 01:58Z start: index.json absent; reading INDEX.md, CHANGES.md tail, curator notes
+- 02:00Z sources checked: CONTEXT l.4134-4272, ledger 01:54:06Z (52-54 PENDING), E10 RUN 37; writing INDEX.md
+- 02:03Z INDEX.md written (71 lines, paths verified); appending CHANGES (30)
+- 02:05Z CHANGES (30) appended; writing index.json
+- 02:06Z index.json written (11 alerts). DONE.
