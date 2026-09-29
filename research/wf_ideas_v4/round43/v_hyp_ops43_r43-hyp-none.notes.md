@@ -1,0 +1,9 @@
+# v_hyp_ops43 r43-hyp-none skeptic notes (29 Sep 2026, 16:25Z = 19:25 MSK)
+- 16:25Z: no earlier v_hyp_ops43_r43-hyp-none.json existed; started fresh. 0 Kaggle calls, no browser.
+- Source finding: round43/scan_hyp_ops43.json (last finding).
+- R40-A1 (round40/report.json l.4-5, CONTEXT l.4618): dummy start edges 14:10Z default / 15:50Z / 16:50Z absolute (verbatim-x138 runtime only, submit by ~17:30Z); must finish scoring by 23:59Z (thread 744250, Chris Deotte 12:57Z); any such file reads after the 20:00Z (23:00 MSK) tick; after 14:10Z an E10 flag is info only unless the user names the notebook. -> Now 16:25Z, 25 min to the absolute edge, and no candidate exists.
+- round43/scan_browser.json (16:13-16:20Z Chrome): no public notebook >= 0.954, no new notebook, no new topic, no disclosed knob (AGGRESSIVE MODE has nothing to build); 744250 has two new user questions (kostopr4v 02:00 UTC release; Selina Wu 'does selection lock at 23:59 UTC?'), no host answer, no knobs.
+- research/KNOWLEDGE/IDEAS.md l.251: 'any new build / E10 copy / slot-2 use (R41D-11 upheld null)'; I-593 (cap-6 partner) etc. cover the finals-pair alternatives; l.54 says the 29-Sep ideas sweep refuted all 16 candidates.
+- round43/scan_recheck.json: exp11/exp14/exp15 rechecks and the CI-gate recheck yield no build, dummy, slot or pair change (consistent with null).
+- Tried to refute: (a) a verbatim-x138-runtime E10 copy before 16:50Z -> no source notebook qualifies (scan_browser), and any read lands after the tick (R38-A2 (d)); (b) finals-pair swap -> I-593/I-599/I-608 + decision B already settle it; (c) closed lines (edge filter, float output, etc.) -> not re-proposable. Null upheld.
+- Scope caveat: 'keep the evening chain as armed' must not be read as waving off the same round's ops issues (PC43-01 watchdog blind to error headers, PC43-02 orphan jobs, PC43-03 first-terminal --hdr, R43-PI-1 missing 'ins-tail?' footnote). Those are plan fixes, not hypotheses; they stay open.

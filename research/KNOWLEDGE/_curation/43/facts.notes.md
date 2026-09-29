@@ -1,0 +1,7 @@
+- 2026-09-29T16:38Z start curation 43 (facts.json absent -> fresh run); prior curation 41 (~14:50Z); HEAD 369b065 (15:59:25Z); CONTEXT 4698 lines, Literature l.4678
+- 16:39Z sources read: CONTEXT 14:59Z R41 APPLIED + 15:59Z OPS (l.4643-4677); round43/report.json (16:36Z, R43-A1..A8 PROPOSED) + notes; poll.log newest header 16:34:55Z l.32351 exp89t PENDING
+- 16:40Z round prompt l.20 carries R41-A6 (#151, a19e1bd6, w36816 killed) but still 'status polls every 5 min' + 'S0 tags pre_exp89t'; l.37 still lists pre_exp89t + 'FIRST run e10_snapshot.py'; round42 = scan_browser only (Chrome down 15:14Z)
+- 16:47Z anchors: CONTEXT 14:59 R41 APPLIED l.4643-4667, 15:59 OPS l.4668-4677, Literature l.4678; ledger 16:34:57Z (585 polls, 11 empty, 9 failed-attempt, same 3 gaps; exp89t L > 7.57 h); commits 55ec8ab 14:59:59Z, 369b065 15:59:25Z; no _curation/42 (curation 42 lost with round 42)
+- plan FACTS: state line; new F-LB-42, F-RUN-63, F-RUN-64, F-RUL-43, F-RUL-44, F-TRN-79; [c43] notes F-LB-41, F-RUN-61, F-RUN-62, F-RUL-42, C-327, C-331, C-335..C-338, C-342, C-343; new C-344..C-354
+- plan DECISIONS: state line; P55 cells; §1 [c43] para; §2 [c43] tick para + [c43] snapshot; R1-R10/§f [c43]; §3 notes on R40 APPLIED / R41 proposals rows + new rows (R41 APPLIED, OPS 15:59, round 42 partial, FEED 15:59Z, R43 proposals, rejected r43); changelog
+- 16:43Z FACTS.md patched (c43_facts.py): state, 6 new F rows, 13 [c43] notes, C-344..C-354

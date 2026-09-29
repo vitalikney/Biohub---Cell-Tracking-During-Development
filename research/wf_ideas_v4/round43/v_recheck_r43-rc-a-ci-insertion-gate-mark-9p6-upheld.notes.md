@@ -1,0 +1,7 @@
+# R43-RC-A notes (2026-09-29T16:25:00Z)
+- 16:25Z: ledger.md rows re-read. L bounds: exp89r (9.04,9.22], exp89p (7.02,7.20], exp75 (8.88,9.05], #37 (7.36,7.54], exp87a (9.30,9.48], exp85a (7.01,7.19], exp79a (9.27,9.45], exp78b (7.27,7.45]. exp89t 56669888 PENDING at 16:24:52Z, L > 7.40.
+- dL checks: 89r-89p 1.84-2.20 OK; 75-89p 1.68-2.03 OK; 75-#37 1.34-1.69 OK; 79a-78b 1.82-2.18 OK. Extra same-base pair not in finding: exp87a vs exp85a (K, no CI, 7 h apart same day) 2.11-2.47.
+- Code check experiments/exp87a_k2cap6_div04_ra094_ci notebook: divins gate per dataset (safetail_divins_allowed, elapsed >= DIVINS_DEADLINE_S 28800) inside the per-video loop (~l.4679); coordinject_run() is called at l.5116, after the loop and stats.to_csv, i.e. CI runs strictly AFTER all insertions -> 'L_hi - CI time' model is structurally correct.
+- Caveats: dL between separate submissions is an estimate, not a lower bound on CI time in a given run (queue/hardware drift); min observed dL is 1.34 (cross-day), so '9.48-1.68 = 7.80 -> provably ran' is overclaimed. Robust argument instead: same-base non-CI siblings finish (queue included) at <= 7.2-7.5 h, so the pre-CI workload reaches the last insertion check well under 8.0 h unless hardware is ~10% slower.
+- tools/runtime_ledger.py l.59: safetail_ci divins_h=10.2, deadline 10.75 (unchanged). GAP RULE v2 (CONTEXT l.4014) footnote keys on L_lo > 9.6 h; PC25-07 text (l.3750) keys on L_hi -> finding's L_lo usage matches the later rule.
+- Verdict: not refuted; info-only, no code or rule change; 0 GPU, 0 Kaggle calls.

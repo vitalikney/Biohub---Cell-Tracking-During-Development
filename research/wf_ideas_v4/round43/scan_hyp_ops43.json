@@ -1,0 +1,53 @@
+{
+ "summary": "OPS CHECK r43 (16:13-16:20Z = 19:13-19:20 MSK; 0 Kaggle calls). (1) mk_card_1837.py sha8 a19e1bd6; --dry-all rc 0, 35 ok; T1/T2 with --disp 0.959 are rejected (code/disp mismatch -> T3KEEP). (2) No pre_exp89t.sh process. (3) Alive: poller w37016; manual_admit as one chain (29032->13708->3028, waits for 19:44:30Z); old exp89t watcher 29636->30864; feed stop job 24584 (stops 20892/10924 after the first feed run >= 17:20Z, fallback 17:35Z; last feed run 15:59:14Z, next ~17:29Z); plus the new-session jobs (terminal waiter 9016, t7_trigger 16748, timers 17:13/18:13/18:37/19:43/21:05/00:07Z, watchdog 22680). Newest poller header 16:04:47Z = 9.4 min old at 16:14Z. (4) BatteryStatus 2 = on AC (65%). (5) No CONTEXT text after 13:34Z promotes exp89t on 0.959; every 0.959 path is T3KEEP, keep exp87a, or the info-only post_exp89t save. (6) The error blocks are 15:19:43Z, 15:31:24Z and 15:43:04Z (3; the 15:59Z entry names 2). They carry no rows, and later PENDING polls reset them, so exp89t L_lo is 7.07 h from 16:04:47Z. Simulated COMPLETE at 18:20Z: L_hi 9.33 h, or 9.45 h with 2 failed attempts on that header. The 210 s slack applies only on the terminal header: no defect. Housekeeping: my T3KEEP test wrote scratchpad card_1837_T3KEEP.txt with a fake 18:20Z header; I deleted it, and no card_1837_* file exists. Hypotheses: nothing reaches R8. The reserve slot is closed (last dummy start 16:50Z, and any file reads after the 20:00Z tick); finals-pair ideas are exhausted (I-593/I-599/I-608). No concrete defect, so no fix is proposed.",
+ "findings": [
+  {
+   "id": "r43-ops-card",
+   "kind": "recheck-old",
+   "what": "mk_card_1837.py is intact and self-tests pass; decision B is enforced in code",
+   "evidence": "<SP>/mk_card_1837.py sha256[:8]=a19e1bd6; --dry-all rc0, 35 'ok'; 'T1 --disp 0.959' and 'T2 --disp 0.959 --lhi 10.30' -> AssertionError ('code/disp mismatch', ..., 'T3KEEP')",
+   "action": "None. At 18:37Z build as R41-A4. Note: a real (non --dry) run writes <SP>/card_1837_<CODE>.txt; the simulated test file from this round was deleted.",
+   "urgency": "info"
+  },
+  {
+   "id": "r43-ops-procs",
+   "kind": "recheck-old",
+   "what": "All watcher processes the evening chain needs are alive, with no duplicates; pre_exp89t.sh is gone",
+   "evidence": "Win32_Process ~16:14Z: poller 37016; manual_admit chain 29032->13708->3028 (only one); old exp89t watcher 29636->30864; feed stop job 24584->32220 (T0 17:20Z, T1 17:35Z); feed loop 10924/20892 (last run 15:59:14Z rc=0); waiter 9016; t7_trigger 16748 (one); watchdog 22680; 0 pre_exp89t processes",
+   "action": "None (report only; nothing killed). The 17:13Z liveness census should expect the feed loop gone after ~17:29:30Z, and the feed stop job then exits.",
+   "urgency": "info"
+  },
+  {
+   "id": "r43-ops-poll-power",
+   "kind": "new-fact",
+   "what": "The poller is fresh and the laptop is back on AC",
+   "evidence": "poll.log newest header 2026-09-29T16:04:47Z, 9.4 min old at 16:14:12Z; Win32_Battery BatteryStatus=2, 65% (CONTEXT 15:59Z had battery 67% at 15:57Z)",
+   "action": "None; the watchdog 22680 covers battery or a poll gap > 25 min.",
+   "urgency": "info"
+  },
+  {
+   "id": "r43-ops-decisionB-text",
+   "kind": "recheck-old",
+   "what": "No CONTEXT text after 13:34Z promotes exp89t on a 0.959 read",
+   "evidence": "CONTEXT.md l.4607-4677: every 0.959 mention -> T3KEEP / exp87a stays / post_exp89t save (info). T2 and manual-admit use >= 0.960 only",
+   "action": "None.",
+   "urgency": "info"
+  },
+  {
+   "id": "r43-ops-ledger",
+   "kind": "recheck-old",
+   "what": "The poll.log error blocks do not break the runtime_ledger L_hi for exp89t; there were 3 error blocks, not 2",
+   "evidence": "Error headers 15:19:43Z, 15:31:24Z, 15:43:04Z (each 3x '[empty stdout', no rows). tools/runtime_ledger.py (--out to scratchpad): exp89t safetail_ci, last_pending 16:04:47Z, L_lo 7.07 h, empty_between []. Sim COMPLETE at 18:20Z -> L_hi 9.33 h; with 2 failed attempts on that header -> 9.45 h (+420 s); ADMIT (a) <= 10.75 h, gate 10.2 h not fired",
+   "action": "None. Optional wording fix at the next CONTEXT write: the 15:59Z entry should list the error blocks as 15:19:43Z/15:31:24Z/15:43:04Z.",
+   "urgency": "later"
+  },
+  {
+   "id": "r43-hyp-none",
+   "kind": "new-hypothesis",
+   "what": "Honest answer: no new inference, post-processing or finals idea reaches R8 at 16:17Z",
+   "evidence": "R40-A1: the reserve slot is closed (dummy by 16:50Z at the latest, and any file reads after the 20:00Z tick); IDEAS.md I-593/I-599/I-608 already cover the finals-pair alternatives; the round-42 scan found no disclosed knobs (744357 farewell only)",
+   "action": "None; keep the evening chain as armed.",
+   "urgency": "info"
+  }
+ ]
+}

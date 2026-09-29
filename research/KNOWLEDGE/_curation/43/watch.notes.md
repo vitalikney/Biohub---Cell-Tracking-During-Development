@@ -1,0 +1,6 @@
+- 2026-09-29 16:38Z start round 43 watch; no prior 43/watch.json
+- 16:39Z read CONTEXT l.4643-4677 (14:59Z R41 applied, 15:59Z R42 lost/restart), round43/report.json (16:36Z, R43-A1..A8, not applied)
+- 16:39Z census: blind watchdog 22680->5024 STILL alive (R43-A1 not applied); no R43-A2 reader process; timers 32396/30820/29184/20960/24260/21232 alive; orphans 30864/3028/32220 alive; mk_card a19e1bd6; battery AC 79%; poll newest 16:34:55Z PENDING; prompt still '5 min', 'S0 tags pre_exp89t', 'T7 ~19:20Z'
+- 16:40Z mapping: W373/W375/W377/W378/W381 done (CONTEXT l.4643-4667, 55ec8ab); W380 partial; W379->R43-A6; new W383-W390 = R43-A1..A8; C24-C30; I462-I473; writing WATCHLIST
+- 16:42Z WATCHLIST.md written; verifying refs
+- 16:43Z watch.json written (12 alerts) + validated; done

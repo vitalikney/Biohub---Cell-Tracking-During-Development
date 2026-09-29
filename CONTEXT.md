@@ -4675,6 +4675,23 @@ Mention it to the user in one line (R9-A8 item 6).
   waiter). Kept untouched (they call Kaggle): the poller (w37016), manual_admit (w3028, 19:44:45Z, 1 call), the old
   exp89t watcher (w30864, post_exp89t save on 0.959), the feed loop and its 17:29Z stop job. exp89t 56669888 still
   PENDING at 15:54:45Z. Laptop on battery (67%) at 15:57Z; the user is asked again to plug in.
+- 2026-09-29 16:43 UTC, ROUND 43 APPLIED (A1-A5, A7; A6 at 17:13Z; A8 at 00:07Z)
+  Report research/wf_ideas_v4/round43/report.json. (A1) watchdog replaced: alerts on battery or on NO CLEAN poll.log
+  header (error blocks excluded) for > 25 min. (A2) manual-admit reader armed: waits for the old manual_admit output
+  file (task b2rmui3gc.output) or 19:47Z, then prints it, the [manual-admit] header and the FIRST terminal header of
+  56669888 -> code per R41-A2 (>= 0.960 T2; 0.959 T3KEEP '(после 22:12 МСК)'; <= 0.958 T5 late) after 1 SELECTED read;
+  still PENDING or call FAILED -> log, T8 path at the next clean header. (A3) SELECTED READ RULE: output without
+  'SELECTED at HH:MM:SSZ: N ->' = FAILED READ -> wait 60 s, retry once (max 2 calls per check); only a successful read
+  with N != 2 or refs outside the R39-A4 comparator triggers the push; if both fail, push 'Не смог проверить отметку
+  финалов ... проверьте сами: «2 of 2 selected» — exp87a 56640366 и #37 56563521' and build the card with the last
+  good read (12:37:31Z). (A4) --hdr for the read = awk first terminal header of 56669888 in poll.log (not the waiter
+  echo); T1 with L_lo > 9.6 h gets the manual 'ins-tail?' note; code unchanged. (A5) card rank line = newest Chrome
+  read before 17:30Z (Chrome 16:15Z: #154 of 4 003, 0.959 block ends at #158, we are 5th from its bottom). (A7) SLOT 2
+  CLOSED UNUSED from ~16:50Z (R40-A1 edge): a new file cannot finish by 23:59Z; no round proposes a submit/build any
+  more; flags are report-only. Poller cadence ~10 min 2-3 s: projected clean headers 18:15:20, 18:25:22, 18:35:25Z; T7
+  ~19:15:35Z; last header before the admit edge ~19:35:40Z, next ~19:45:42Z -> the 19:44:45Z manual-admit list is the
+  only record in between. poll.log error blocks after the 15:08Z battery event: 15:19:43, 15:31:24, 15:43:04Z. 744250:
+  two unanswered participant questions on when selection locks / private release.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

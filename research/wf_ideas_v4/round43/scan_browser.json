@@ -1,0 +1,37 @@
+{
+ "summary": "Round-43 delta scan, 16:13-16:20 UTC on 29 Sep (19:13-19:20 MSK). Chrome was back (it was down in r42). This agent made 0 Kaggle CLI/API calls and did not run e10_snapshot (R39-A6). There is nothing to act on. No public notebook is >= 0.954 and no new notebook appeared. No new topic was posted and nothing discloses a knob, so AGGRESSIVE MODE has nothing to build. The Overview has no change and no host announcement. Leaderboard: we are #154 of 4,003 (was #151 at 14:19Z). The banner says exp89t is still being scored. The 0.959 block now ends at #158 and we are 5th from its bottom. Three more teams now rank above us, one of them Micchi's token thieves, which moved up from below us. At the top, Samuel Sundararaman rose to 0.972 and Adeptus Overfiticus to 0.971. Rows 50-143 could not be expanded in Chrome, so the size of the 0.959 block and the count above 0.959 were not measured. Poller: 15:31Z and 15:43Z hit SSL EOF errors, then it recovered at 15:54Z; at 16:04:47Z exp89t 56669888 was still pending. Feed digest 1559Z: 0 new topics, 1 new comment (744250), E10 FLAG none.",
+ "findings": [
+  {
+   "id": "r43-lb-rank-154",
+   "kind": "new-fact",
+   "urgency": "today",
+   "what": "Chrome public LB at ~16:15Z (header '8 HOURS TO GO', 4,003 rows, was 3,999). Our row: '154 D: Discipline 0.959 56', with the banner 'Your latest submission is being scored. Your best score is 0.959.' (exp89t). At 14:19Z we were #151, 18th of 23 in the 0.959 block. Rows #144-#158 are all 0.959, and #159 (Umesh Arampath) is the first 0.958. Only 4 teams are now below us in the block (Manish, kkunizaw, enddl22, RyotaroAbe); at 14:19Z there were 5. Micchi's token thieves (0.959, 10 entries, #155 at 14:19Z) is gone from #144-#158, so it moved above us. The other two extra teams above us could not be identified because rows 50-143 would not expand ('See 94 More' clicks had no effect). Top-20 movers since 14:19Z: Samuel Sundararaman 0.971 -> 0.972 (#8 -> #5, 84 -> 85 entries, last 8h); Adeptus Overfiticus 0.969 -> 0.971 (#19 -> #10, 310 -> 311 entries, last 5h). #1-#4 are unchanged (yu4u 0.978, Gabriel 0.976, Sergio Alvarez 0.976, taiseiu 0.974). Entry counts rose inside the 0.959 block: maesaer 110 -> 112, Amin 178 -> 182, rogerrogerroger3r 84 -> 85, OTkm_tn 34 -> 35.",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/leaderboard (read ~16:14-16:16Z); previous rows in scratchpad lb41.txt; research/wf_ideas_v4/round43/scan_browser.notes.md",
+   "action": "For the 18:37Z card rank line (a Chrome read taken before 17:30Z is allowed), quote 'Chrome 19:15 MSK: #154 of 4,003, 0.959 block ends at #158, 5th from the bottom of the block'. The block size and the count above 0.959 were not measured. This is not a signal and does not touch the finals plan or decision B. Do not use the Kaggle CLI to fill in rows 50-143 (R39-A6)."
+  },
+  {
+   "id": "r43-744250-selection-lock-question",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "Thread 744250 'Time of publishing private results' has two new participant comments. The feed digest 1559Z has kostopr4v at 14:58:54Z: 'Are private results going to be immediately released at 02:00 UTC?'. Chrome shows one more, about 13 min before ~16:17Z, from Selina Wu: 'when does submission selection lock? does it also lock at Sep 29, 23:59 UTC?'. Neither has a host answer yet. The only host statement is still Chris Deotte at 12:57Z: 'It must finish before 23:59 UTC, otherwise it is not eligible nor can we select it.' No knobs or techniques. No other thread has new comments: shakeup 744273 last 4h ago (You WeiLin), workshop 5h ago, farewell 744357 8 votes and 0 comments. No new topic.",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/744250 ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion?sort=recent-comments ; experiments/discussions/digest_20260929T1559Z.md ; experiments/discussions/744250.md",
+   "action": "None for the plan: our tick deadline is 20:00Z (23:00 MSK) and does not change. If a host answer on when selection locks appears, the last feed run at ~17:29Z or round 44 should quote it verbatim. Selection could lock later than 23:59Z; the user's 20:00Z plan stays."
+  },
+  {
+   "id": "r43-code-overview-unchanged",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "Code tab by Public Score is unchanged. The top 4 are all 0.953: Harmonic Fusion V3 (246 votes), optimized-biohub-max-score (83, was 82), Biohub Cell Tracking (254) and x138 'Biohub 0.953 LB | ORIGINAL' (237, was 235). Next is Geometric Fusion at 0.948. Recently Created is unchanged: the newest unpinned notebook is still 'Robust Cell Tracking During Development via Chan.' (6d, score 0.1). Digest 1559Z agrees: best_public_score top is 4x 0.953, E10 FLAG none. Nothing is >= 0.954 and there is no new idea, so nothing was pulled into experiments/ext_*. The Overview has no announcement, and the timeline, evaluation and code requirements (<= 12 h) are unchanged. Counts: 13,475 entrants (unchanged), 4,585 participants (+4), 4,000 teams (+4), 96,432 submissions (+325 since 14:20Z).",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/code?sortBy=scoreDescending ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/code?sortBy=dateCreated ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/overview ; experiments/discussions/digest_20260929T1559Z.md",
+   "action": "None. E10 P1 needs no action: no public notebook is above 0.959."
+  },
+  {
+   "id": "r43-poller-ssl-blips",
+   "kind": "new-fact",
+   "urgency": "today",
+   "what": "The local poll.log shows two failed polls. At 15:31:24Z and 15:43:04Z every ListSubmissions attempt ended with 'SSLError(SSLEOFError ... UNEXPECTED_EOF', rc=1. The next polls at 15:54:45Z and 16:04:47Z worked, and at 16:04:47Z 56669888 exp89t still had no status or score, so it is pending. The ~12-min gap stays under the 25-min watchdog stale limit, but the same kind of network blip near the ~18:17-18:29Z exp89t read, or near the 19:43Z / 21:05Z SELECTED reads, would delay them.",
+   "evidence": "experiments/lb_poll/poll.log lines ~32103-32171 (headers 2026-09-29T15:31:24Z, 15:43:04Z, 15:54:45Z, 16:04:47Z)",
+   "action": "The main session should check that the exp89t watcher, t7_trigger.sh and the SELECTED readers retry after an SSL EOF error and do not treat it as a final state. Nothing new is needed if they already retry."
+  }
+ ]
+}

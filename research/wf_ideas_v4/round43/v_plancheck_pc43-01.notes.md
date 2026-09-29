@@ -1,0 +1,7 @@
+- 16:24Z start verify PC43-01 (watchdog blind to network loss)
+- 16:27Z Win32_Process: 5024 (child of 22680, created 19:09:28 MSK = 16:09:28Z) cmd = grep "^===" poll.log | tail -1 | cut -c5-24; age>25 -> 'POLL STALE' then break; battery st=1 -> break. One-shot confirmed (both branches break).
+- poll.log: error headers l.32101 15:19:43Z, l.32103 15:31:24Z, l.32105 15:43:04Z (SSLEOFError, no data rows); clean 15:09:39Z -> 15:54:45Z = 45 min without data, max header age ~11.7 min -> old watchdog never trips. Same pattern 29 Sep 05:34:41/05:46:17Z. 9 error headers total since 25 Sep.
+- lb_poll.py: while True, 3 tries x 30 s, note appended to header, sleep 600; never exits -> 'no clean poll >25 min' has no designed false-alarm source. Single isolated error -> clean-gap ~21.5 min + 2 min sleep < 25 -> no false alarm; two in a row -> alarm (correct).
+- Tested proposed filter: h=2026-09-29T16:24:52Z, age 0; BatteryStatus prints '2\r\n' (tr strips \r) -> OK. 0 Kaggle calls.
+- Caveat: during a real outage the Claude session itself is offline, so the alert is read only after reconnect (post-hoc awareness: re-check t7/timer/waiter outputs, re-arm). Still cheap and correct. Not refuted; gain = ops safety only, 0 LB.
+- 16:26Z wrote v_plancheck_pc43-01.json (refuted=false; grep -v '\[ERROR' written as grep -vF '[ERROR' to avoid escape issues)

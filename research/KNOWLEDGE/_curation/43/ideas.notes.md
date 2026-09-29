@@ -1,0 +1,2 @@
+- 16:38:43Z 2026-09-29 start: no _curation/43/ideas.json (no 42 either) -> incremental run over curation 41 (608 ideas). Reuse scratchpad patch41.py/gen_md41.py.
+- 16:40Z sources since c41 (2fcbedd): 55ec8ab (14:59Z ROUND 41 APPLIED A1-A4, A6; CONTEXT l.4643-4666), 369b065 (15:59Z OPS round 42 lost, session restart, jobs re-armed; l.4667-4677; digest 1559Z 744250 kostopr4v); uncommitted round42/ (scan_browser only, Chrome not connected), round43/ (report.json R43-A1..A8 16:36Z, 4 scans, 12 verdicts all upheld); ledger 16:34:57Z exp89t PENDING L>7.57h.

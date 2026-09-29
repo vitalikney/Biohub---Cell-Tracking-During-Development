@@ -1,0 +1,8 @@
+- 16:25Z start PC43-06 check; no prior json
+- 16:27Z mk_card_1837.py sha8 a19e1bd6 confirmed. Rank line built at l.~73-78: uptest.load(--lb, default e10_20260929T1141Z), lbt = max mtime of _lb/e10_20260929T1141Z = lb.csv 14:45:16 local (11:45Z) -> label '14:45 МСК', '#141 из 3 994' (default --teams 3994). Confirmed stale.
+- R41-A4 (6) (round41/report.json) made the Chrome replacement OPTIONAL; latest was Chrome 17:19 МСК #151/3 999, 18 of 23.
+- NEW: round43/scan_browser.json r43-lb-rank-154: Chrome ~16:15Z (19:15 МСК) = #154 of 4,003, 0.959 block ends #158, we are 5th from the bottom; block TOP / size q NOT measured (rows 50-143 would not expand). => finding's template 'из 3 999' is already false and 'место p из q' is unfillable from this read.
+- In-script token checks (validate block after build) do not touch the rank line; a hand overwrite after the build is not covered by them -> needs its own grep check.
+- Promo case (T1/T2): a pre-17:30Z Chrome read predates the exp89t read; the template's 'лучший паблик 0.959' is false once exp89t reads 0.960 -> the builder's own ', до чтения exp89t' qualifier must be kept.
+- Value: 0 effect on score/finals (plan and decision B do not depend on rank); pure card accuracy vs what the user has seen (#151/#152/#154). Cost: 0 Kaggle API calls (the 16:15Z Chrome read already exists).
+- 16:30Z json written

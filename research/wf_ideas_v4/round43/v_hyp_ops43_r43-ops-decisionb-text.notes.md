@@ -1,0 +1,5 @@
+- 2026-09-29T16:24:59Z start recheck: grep 0.959/promote/exp89t in CONTEXT l.4560-4698
+- 16:25Z (now per date -u): CONTEXT.md is 4698 lines; entries after 13:34Z = l.4607-4677 (13:34 decision B, 13:58 R40, 14:59 R41, 15:59 ops). grep 'promot|0.959.*UP' there: only the withdrawal text (l.4610-4611) and T1/T2 >= 0.960. Pre-13:34 l.4604-4606 'Default until the user answers = the logged rule' is superseded by 13:34Z.
+- scratchpad acabaea6.../mk_card_1837.py sha8 a19e1bd6 (matches R41-A3): code guard l.53 allows only PENDING/T1/T2/T3KEEP/T5/T6/T8; l.60 disp 0.959 -> T3KEEP only (T1/T2 need >= 0.9595). --dry-all ok; rendered T3KEEP:a card l.63 says 'при 0.959 основной остаётся exp87a'; rule (1) text carries the decision-B clause. Leftover UPWAIT/T3/T4 dict strings are dead code (guard).
+- manual_admit.sh (mtime 10:53Z, pre-decision) and t7_trigger.sh: read-only, contain no promotion logic; they only append/print the status -> no conflict with B.
+- Residual (not in CONTEXT): round40 scan_hyp_exp89tmsg40.json still holds T3_promotion/UPWAIT texts, but R41-A2 lists them as 'never sent'. Verdict: finding confirmed, info only.

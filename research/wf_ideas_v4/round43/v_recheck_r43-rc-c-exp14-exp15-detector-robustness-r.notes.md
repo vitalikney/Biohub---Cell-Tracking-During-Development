@@ -1,0 +1,11 @@
+# v_recheck R43-RC-C (exp14/exp15 detector robustness) - skeptic notes, 2026-09-29
+- No prior JSON for this task in round43/.
+- experiments/RESULTS.md l.31 exp14: hold12 0.9345, det loss 0.017 vs 0.0022 (7.7x ~ "8x") -> confirmed. l.14 exp03B 0.9575 -> baseline confirmed.
+- RESULTS.md l.84 exp15: raw 0.9708 vs 0.9820 -> confirmed.
+- CONTEXT.md l.156-181 table A: probe 2 +0.004 (A1), 5 -0.002 (A4), 7 -0.016 (A18), 10 -0.025 (A22), 13 -0.007 (A26), 16 -0.009 (A25 re-test; Z-flip views in edge-feature TTA = network-side TTA, borderline "detector-side"), 17 -0.004 (A27 soup) -> confirmed.
+- Tally omits probe 11 (exp30, exp03B primary on TTA stack, -0.003, A24) and probe 12 (tie): undercount of the negatives, strengthens the verdict.
+- CONTEXT l.4394 / l.4449: probe 54 exp89p (K+SEC) 0.956 vs exp85a (cap6+K) 0.958 = -0.002 -> confirmed.
+- CI (coordinject) up-reads (probe 48 +0.001, 51 +, 53 +) are a coordinate lever (CONTEXT l.4245-4248), correctly excluded from the detector tally; already in exp87a.
+- Ledger experiments/lb_poll/ledger.md: exp89p 0.956, exp89r 0.957 COMPLETE with SEC (n2a secondary) -> only complete different-detector files; both carry cap6+K -> not an independent hedge. Confirmed.
+- Feasibility: action None. Any retrain now is impossible anyway (slot 2 closed after ~14:10Z, R40-A1; last dummy start 16:50Z). Nothing to build/submit.
+- Verdict: not refuted (info-only; facts check out; minor tally incompleteness noted).

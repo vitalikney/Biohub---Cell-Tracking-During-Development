@@ -1,0 +1,29 @@
+{
+ "summary": "Round-42 delta scan at 15:13-15:16 UTC on 29 Sep (18:13-18:16 MSK). Chrome was NOT available: tabs_context_mcp answered 'Browser extension is not connected' twice. After 12:00Z the Kaggle CLI fallback is forbidden (R39-A6), so this round has NO leaderboard, Code-tab or Overview read. 0 Kaggle CLI/API calls were made, e10_snapshot was not run and WebFetch was not used. The only sources were the local feed digest and the poller. There is nothing to act on. Since round 41 (14:13-14:20Z) there is one new digest (1428Z). It has one new topic, 744357 'Farewell and Thanks to the Kaggle community!' by nusrati, which is a thank-you note with no knobs. It has 0 new comments, E10 FLAG none, and the public notebook top is still 4x 0.953. Nothing was pulled into experiments/ext_*. The poller header at 15:09:39Z shows exp89t 56669888 still PENDING (L > 6.15 h, read expected ~18:17-18:29Z). The rank wording stays as in r41: #151 of 3,999, 18th of 23 in the 0.959 block (Chrome, 14:19Z).",
+ "findings": [
+  {
+   "id": "r42-chrome-down-no-lb",
+   "kind": "plan-issue",
+   "urgency": "today",
+   "what": "The Claude-in-Chrome extension is disconnected: 'Browser extension is not connected' on two tabs_context_mcp calls at ~15:14Z. Because of R39-A6 (0 Kaggle CLI/API after 12:00Z) and the 17:30-20:00Z quiet window, no agent can now read the leaderboard, the Code tab or the Overview until Chrome is back. Round 42 therefore has no LB delta: counts at 0.953-0.956/>=0.96, top-20 movers and our rank were not measured. The last LB read is still Chrome 14:19Z: #151 of 3,999, 18th of 23 in the 0.959 block, 133 teams above 0.959.",
+   "evidence": "tabs_context_mcp error at 15:14Z (research/wf_ideas_v4/round42/scan_browser.notes.md); previous read research/wf_ideas_v4/round41/scan_browser.json r41-lb-rank-151",
+   "action": "Optional: ask the user to reopen Chrome / reconnect the Claude extension if a fresh rank is wanted before 17:30Z (the rule says the card rank line may use a Chrome read made before 17:30Z). Otherwise keep quoting 'Chrome 17:19 MSK: #151 of 3,999, 18th of 23' or the 1141Z CSV (#141 of 3,994) in mk_card_1837.py. Do NOT fall back to the Kaggle CLI (R39-A6). This does not touch the finals plan."
+  },
+  {
+   "id": "r42-digest-1428-farewell",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "Feed digest 20260929T1428Z (loop run 14:29:04Z rc=0; 15 topics checked, 1 new topic, 0 new comments, E10 FLAG none) is the only new feed output since r41. The new topic is 744357 'Farewell and Thanks to the Kaggle community!' by nusrati (14:19Z, 4 votes). It thanks a list of Kagglers and says 'I might not secure a medal but surely got some good exposure.' It discloses no knob, value, dataset or technique, so AGGRESSIVE MODE has nothing to turn into a build. Public notebooks by best score are unchanged: 0.953 x4 (kunaldesale2408 'Biohub Cell Tracking', amanatar 'optimized-biohub-max-score', raunakdey07 'Harmonic Fusion V3', anvithpothula x138), then 0.948 Geometric Fusion, then the 0.947 group. Nothing is >= 0.954 and there is no new idea, so nothing was pulled.",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/744357 ; experiments/discussions/digest_20260929T1428Z.md ; experiments/discussions/744357.md ; experiments/discussions/feed_loop.log",
+   "action": "None. The loop's ~15:59Z run and its last run at ~17:29Z are for rounds 43/44 to read. The feed stops at ~17:29Z (quiet window)."
+  },
+  {
+   "id": "r42-exp89t-pending-1509",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "Local poller (no new API call by this agent): the poll.log header 2026-09-29T15:09:39Z shows 56669888 exp89t SubmissionStatus.PENDING. Ledger 15:09:43Z: L > 6.15 h, family safetail_ci deadline 10.75 h, insertion gate 10.2 h open. The poller is fresh (10-min cadence, headers at 14:49/14:59/15:09Z), so the watchdog stale condition is not met. The read is still expected at ~18:17-18:29Z (21:17-21:29 MSK) under the R38-A5/R41-A2 decision-B playbook.",
+   "evidence": "experiments/lb_poll/poll.log (lines ~32040-32043) ; experiments/lb_poll/ledger.md",
+   "action": "None. The evening chain is unchanged: exp89t read -> 18:37Z card (mk_card_1837.py a19e1bd6) -> T7 ~19:20Z -> manual-admit 19:44:45Z -> SELECTED checks."
+  }
+ ]
+}
