@@ -4535,6 +4535,15 @@ Mention it to the user in one line (R9-A8 item 6).
   (scratchpad manual_admit.sh): at 19:44:45Z, unless exp89t is already terminal or a poller header is >= 19:44:30Z,
   one read-only 'competitions submissions' call appended to poll.log as '=== <ts> [manual-admit]'; single attempt;
   odds it matters ~0.1-0.15%. (A7) Round prompt KEY FACTS refreshed (best 0.959 exp87a, E10 >= 0.960, feed 90 min).
+- 2026-09-29 11:10 UTC, 11:10Z TIMER (pointer, R38-A2 (b)): A-M2 UNUSED (exp89r 0.957 < 0.958; the user's 12:00Z hold governs slot 2). No submit.
+  Round 39 launched (light; slot-2 window lens) so its report lands before the 11:50Z slot-2 message.
+- 2026-09-29 11:39 UTC, DISCUSSION 744273 RE-READ (user asked)
+  744273 re-read in Chrome at the user's request: 3 comments now (Satwik 09:06Z, Yassine 09:13Z, NEW Civitasmass
+  ~11:35Z, 368th: 'I've tried numerous methods locally, but on the public LB, the gains are either negligible or even
+  negative'). No knob, value or technique disclosed -> nothing to build (aggressive mode has nothing to act on).
+  Reading for us: same pattern as our edge filter (+0.016 local, 0 on LB, probes 29/30) and SEC; our public gains (cap
+  6 +0.002, K +0.002, CI +0.001) are exactly the LB-tuned kind, so the planned pair keeps a hedge without cap 6 and K
+  (#37 or exp75); running-champion rule unchanged; slot-2 recommendation stays UNUSED.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
