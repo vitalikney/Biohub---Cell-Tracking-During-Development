@@ -4576,6 +4576,9 @@ Mention it to the user in one line (R9-A8 item 6).
   SELECTED, rank (#141 of 3 994, 17th of 22, e10 11:41Z) and the slot-2 'в запасе' clause; token checks pass. API SELECTED at 12:04:34Z =
   {56563534 #38, 56563521 #37} (read-only, scratchpad read_selected.py: kagglesdk list_submissions group=SUBMISSION_GROUP_SELECTED;
   use it for every later SELECTED read). The user still has to tick the chosen pair (П3 or П2).
+- 2026-09-29 12:37 UTC, USER RE-TICKED: API SELECTED at 12:37:31Z = {56640366 exp87a (0.959), 56563521 #37 (0.954)} = П3 (card v3 first choice).
+  The user asks whether exp75 (П2) is better than #37; answered in chat (the choice is the sign of CI on the private; either passes the
+  R39-A4 comparator).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
