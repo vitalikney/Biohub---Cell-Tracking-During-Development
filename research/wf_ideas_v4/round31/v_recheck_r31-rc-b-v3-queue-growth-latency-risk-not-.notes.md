@@ -1,0 +1,9 @@
+- 2026-09-29 02:30Z start verify R31-RC-B (queue latency). Reading ledger.md, CONTEXT tail.
+- 02:35Z ledger.md (02:25:51Z regen) checked row by row: non-CI safetail L 6.87-7.81 h (exp70a/exp78a 6.87-7.04 .. exp70q 7.64-7.81); exp58n noins 6.69-6.87; CI exp79a 9.27-9.45 (00:06Z), exp87a 9.30-9.48 (12:14Z). Numbers in the finding CONFIRMED. Count: 15 COMPLETE rows fall on 26-28 Sep (17 only if exp57/exp57b of 25 Sep are included) - minor.
+- Time of day: 00:0xZ submits 7.27-7.58 non-CI; 11:15Z 7.49-7.67; 14:37Z 7.64-7.81; 05:02Z 7.01-7.19. At most ~+0.2 h daytime drift, confounded by build content. CI 00:06Z vs 12:14Z: +0.03 h. 'No time-of-day effect' holds within ~0.3 h.
+- Same-family jitter: exp70g 7.49-7.67 vs exp85a (exp70g + 2 knobs) 7.01-7.19 = 0.48 h; exp78b vs exp78a (same night) 0.40 h. So a '> 0.5 h vs parent' trigger sits at the noise edge.
+- exp89p margin: submit 00:46:36Z; 08:40Z header => L_hi <= 7.89 h. vs exp85a L_hi 7.19 margin 0.70 h (as claimed), but vs family max 7.81 only ~0.08 h. Freeze read window already 07:38-08:35Z (CONTEXT 23:34Z (4)); late => P '?' => A-M1 UNUSED (R30-A1 (1)). exp89p dummy 1,313 s vs exp85a dummy - SEC does not add compute.
+- 07:23Z prep timing: at 07:23Z none of the night files is terminal (exp89p expected 07:38-08:35Z, exp89r ~09:25-09:35Z, exp75 ~09:05-10:05Z) -> 'log each night L at 07:23Z' only yields pending lower bounds; the delta test must run at each file's terminal header.
+- 19:40Z in the proposed card line conflicts with the user-logged 'every file that may become a final must read by ~19:30 UTC' (CONTEXT 28 Sep 10:19Z) and the 19:43Z reminder; keep 19:30Z.
+- Prior rounds: round21 REPORT l.38-39 (kernel/dummy queue, not LB scoring latency) and round5 l.48 (concurrent scoring) - not the same claim; no duplicate.
+- Real final-day surge would be concentrated near 23:59Z (after the 20:00Z tick); morning submits 07:40-11:30Z predate it. Value to private score: 0 (ops only).

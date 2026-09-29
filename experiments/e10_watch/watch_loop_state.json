@@ -1,7 +1,7 @@
 {
  "version": 1,
- "last_run_utc": "2026-09-29T01:41:53Z",
- "runs": 37,
+ "last_run_utc": "2026-09-29T02:41:53Z",
+ "runs": 38,
  "signals": 1,
  "streak_429": 0,
  "good": {
@@ -54,7 +54,7 @@
      "title": "Biohub: Harmonic Fusion V3",
      "author": "Raunak Dey",
      "lastRunTime": "2026-09-25 09:09:04.280000",
-     "totalVotes": "226"
+     "totalVotes": "228"
     },
     {
      "ref": "denpugovkin/biohub-exp003-two-embryos",
@@ -154,7 +154,7 @@
      "title": "Biohub: Harmonic Fusion V3",
      "author": "Raunak Dey",
      "lastRunTime": "2026-09-25 09:09:04.280000",
-     "totalVotes": "226"
+     "totalVotes": "228"
     },
     {
      "ref": "amanatar/optimized-biohub-max-score",
@@ -175,7 +175,7 @@
      "title": "Biohub 0.953 LB | ORIGINAL \u2b50\ufe0f\u2b50\ufe0f\u2b50\ufe0f\u2b50\ufe0f\u2b50\ufe0f",
      "author": "Anvith Pothula",
      "lastRunTime": "2026-09-21 09:47:58.620000",
-     "totalVotes": "228"
+     "totalVotes": "229"
     },
     {
      "ref": "amanatar/biohub-geometric-fusion",
@@ -303,7 +303,7 @@
      "title": "Biohub 0.953 LB | ORIGINAL \u2b50\ufe0f\u2b50\ufe0f\u2b50\ufe0f\u2b50\ufe0f\u2b50\ufe0f",
      "author": "Anvith Pothula",
      "lastRunTime": "2026-09-21 09:47:58.620000",
-     "totalVotes": "228"
+     "totalVotes": "229"
     },
     {
      "ref": "anvithpothula/divqc-ground-truth-free-division-qc",
@@ -443,6 +443,13 @@
      "totalVotes": "1"
     },
     {
+     "ref": "amanatar/rsna-knee-abnormality-detection",
+     "title": "RSNA Knee Abnormality Detection",
+     "author": "Aman Atar",
+     "lastRunTime": "2026-09-28 14:57:51.570000",
+     "totalVotes": "1"
+    },
+    {
      "ref": "amanatar/rsna-knee-super-ensemble-0920",
      "title": "RSNA Knee Super Ensemble 0920",
      "author": "Aman Atar",
@@ -497,13 +504,6 @@
      "author": "Aman Atar",
      "lastRunTime": "2026-09-19 02:31:11.953000",
      "totalVotes": "34"
-    },
-    {
-     "ref": "amanatar/s6e9-smart-titan-meta-blend",
-     "title": "S6E9: Smart Titan Meta-Blend",
-     "author": "Aman Atar",
-     "lastRunTime": "2026-09-16 11:25:12.097000",
-     "totalVotes": "4"
     }
    ]
   },
@@ -513,12 +513,12 @@
   }
  },
  "good_from": {
-  "comp_dateRun": "20260929T0141Z.txt",
-  "comp_scoreDescending": "20260929T0141Z.txt",
-  "user_anvithpothula": "20260929T0141Z.txt",
-  "user_thtennant": "20260929T0141Z.txt",
-  "user_amanatar": "20260929T0141Z.txt",
-  "status_amanatar__optimized-biohub-max-score": "20260929T0141Z.txt",
-  "status_anvithpothula__biohub-0-953-lb-original": "20260929T0141Z.txt"
+  "comp_dateRun": "20260929T0241Z.txt",
+  "comp_scoreDescending": "20260929T0241Z.txt",
+  "user_anvithpothula": "20260929T0241Z.txt",
+  "user_thtennant": "20260929T0241Z.txt",
+  "user_amanatar": "20260929T0241Z.txt",
+  "status_amanatar__optimized-biohub-max-score": "20260929T0241Z.txt",
+  "status_anvithpothula__biohub-0-953-lb-original": "20260929T0241Z.txt"
  }
 }

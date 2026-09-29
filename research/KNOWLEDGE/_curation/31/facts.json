@@ -1,0 +1,60 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/FACTS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/DECISIONS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/31/facts.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/31/facts.json"
+ ],
+ "alerts": [
+  {
+   "kind": "contradiction",
+   "what": "The R30-A2 (a) A-M2 bullet that CONTEXT 02:02 (5) tells the 07:23Z prep to paste drops the Rr '+' condition. Pasted as written, it would send exp89q (K+SEC+DIS, non-CI) in cells where MORNING TABLE v1.1 says UNUSED, e.g. d_R = d_P = 0.959, or exp89r ERROR/late with P '+'/'?'.",
+   "evidence": "FACTS C-259; research/wf_ideas_v4/round31/v_plancheck_pc31-01.json (CONFIRMED); CONTEXT 14:12 l.3946-3948, 21:11 l.4147-4150, 02:02 l.4273-4293 (3),(5); round31/report.json R31-A1 (1)",
+   "suggested_action": "Log R31-A1 (1) (A-M2 function + grid rows d_R 0.959 / <= 0.958 -> UNUSED) in one pre-score CONTEXT entry quoting a header with all 3 night refs PENDING; paste it instead of the R30-A2 (a) A-M2 bullets at 07:23Z",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "The '08:40Z header' named in the logged A-M1 trigger may not exist: the poller runs ~601.7 s/cycle, so its headers land at ~08:35:1x and ~08:45:1x. An exp89p read at 08:35-08:40Z would first appear after the A-M1 limit (exp89p margin ~0.1-0.7 h at the family max 7.81 h).",
+   "evidence": "FACTS C-261, F-RUN-48; poll.log headers 01:13:57-02:44:13Z; round31/report.notes.md self-check PC31-03; round31/report.json R31-A1 (2)",
+   "suggested_action": "Log the definition 'last poll.log header <= 08:40:36Z' and, at the 08:30Z timer with 56657612 PENDING, arm one waiter that lists once at 08:40:00Z ('[manual-A-M1]'); on >= 0.959 run nb_try exp89l at once (cutoff 08:45Z)",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "If the laptop sleeps after the 05:10-06:00Z trip, the A-M1 slot is lost (acceptable), and so is A-M2 if it sleeps through ~11:30Z; the 12:03Z card then goes out late. Watchdog 10576 is one-shot, and the hourly 07:13-10:13Z timers still launch full ~27-min rounds over the decision windows.",
+   "evidence": "FACTS F-RUN-45, F-RUN-46, C-262; round31/report.json R31-A2, R31-A1 (3); round31/v_plancheck_pc31-05.json",
+   "suggested_action": "Send the R31-A2 Russian push at 04:13Z (charge + lid open, MSK decision times); at 06:07Z re-push if on battery and re-arm a battery-tolerant watchdog; log that 07:13-10:13Z rounds are read-only checks of <= 5 min",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "Card v5 (now aab8801a after d6deab5) still has three problems. (1) Its model numbers were computed for V_pub exp85a on the 28 Sep field; l.39 gives П2 bronze 0.75-0.93 and l.46 gives the ticked pair 0.48-0.66, but the re-run for exp87a on the 02:14Z field gives 0.63-0.85 and 0.20-0.58. (2) l.17 and l.124 allow a non-CI file only up to L_hi <= 8.0 h, while the logged rule allows 9.0 h. (3) l.114 still reads '+/0u'.",
+   "evidence": "FACTS C-260, C-263, F-TRN-63, F-RUL-22; research/wf_ideas_v4/round29/finals_card_v5_ru.md l.17, l.39, l.46-47, l.114, l.124; round31/report.json R31-A1 (4), R31-A4",
+   "suggested_action": "Apply the R31-A1 (4) card edits with a new sha8 in the same CONTEXT entry; put the R31-A4 numbers, the medal-line rank line and the silver caveat into the 12:03Z fill, and re-run mc31v.py only if V_pub changes",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "deadline",
+   "what": "Morning decisions follow MORNING TABLE v1.1 branch A, with R30-A1 logged 02:02Z. A-M1 (exp89l) needs exp89p >= 0.959 at the 08:40Z header, submit by 08:45Z. A-M2 is decided at exp89r's terminal header (~09:25-09:35Z, latest 11:00Z), submit by 11:30Z. exp87a stays V_pub unless a later file shows >= 0.960 or earns its own attributable UP at 0.959. 2 submits left on 29 Sep; finals are still ticked #37 + #38, and the user ticks by 20:00Z.",
+   "evidence": "DECISIONS P54, P55-P56 rows and the [c31] snapshot; CONTEXT 02:02 l.4273-4293; experiments/lb_poll/poll.log header 02:44:13Z (3 refs PENDING)",
+   "suggested_action": "Submit at the decision header rather than the cutoff; word the finals message 'the pair by the card', never 'рекомендую'",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "experiments/RESULTS.md still has no rows for P47-P51 (0.955/0.957/0.955/0.958/0.959) or for the pending P52-P54. It was last changed in 59e14e2 (05:03Z 28 Sep).",
+   "evidence": "FACTS C-118; git log -- experiments/RESULTS.md",
+   "suggested_action": "Add the rows after the night reads, before the finals message",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "risk",
+   "what": "R30-A3 (UP-test protocol), R30-A4 (watchers) and R30-A5 (card-fill wording and info lines) are still PROPOSED and were not in the 02:02 entry.",
+   "evidence": "DECISIONS §2h R30-A3..A5 rows [c31]; FACTS C-253, C-254; CONTEXT 02:02 l.4273-4293",
+   "suggested_action": "Fold them into the same R31-A1 entry, or state explicitly that the 07:23Z prep follows them",
+   "urgency": "today"
+  }
+ ],
+ "summary": "Curation 31 (state 02:47 UTC 29 Sep) is incremental over curation 30. It covers one new commit, d6deab5, and one new CONTEXT entry: 02:02, l.4273-4293, which logged R30-A1 pre-score. That entry sets the A-M1 trigger (P >= 0.959) and the tie order as a running champion under the conservative reading, so exp87a stays V_pub unless a later file shows >= 0.960 or earns its own attributable UP. It also settles the A-M2 SEC/Rr cell, fixes the wording, sets card v5 to sha8 aab8801a, and records 'no rebuild' for the 07:23Z prep. The night probes P52 exp89r, P53 exp75 and P54 exp89p are still PENDING at the 02:44:13Z header. We are #132 of 3,979 at 02:14Z and 02:42Z (17th of 21 at 0.959), and the public medal lines have moved up one block. E10 and the feed are null. Round 31 proposes R31-A1..A5, none of them logged yet. FACTS gets 4 new rows: F-LB-31, F-RUN-48 (latency families, poller phase), F-RUL-27 (the logged 02:02 texts) and F-TRN-63 (the card model re-run for exp87a). 11 existing rows get [c31] notes. C-245, C-247, C-250, C-251 and C-252 are marked resolved; C-118, C-209, C-253, C-255 and C-258 are updated. New contradictions C-259..C-265 cover the A-M2 bullet dropping Rr, card pool L at 8.0 vs 9.0 h, the 08:40Z header, the round schedule, stale card numbers, round-31 overclaims and the late-read trigger. DECISIONS gets [c31] cells in P52-P56, a build update, a finals paragraph and a 02:47Z snapshot, an E10 line, §2h statuses for R30-A1..A5 plus 5 new R31 rows, §3 updates on R1-R10, §f and the morning, GAP and timer rows, 3 new §3 rows, and a closing paragraph. All [c31] table rows were validated against their header column counts."
+}

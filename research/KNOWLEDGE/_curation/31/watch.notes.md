@@ -1,0 +1,3 @@
+- 2026-09-29T02:40Z start; _curation/31/watch.json absent; base = WATCHLIST.md (curation 30, ~01:57Z); new: commit d6deab5 (02:02Z), CONTEXT 4314 lines (Lit l.4294), round31 untracked
+- 02:41Z read CONTEXT l.4265-4293 (02:02Z R30-A1 entry = W298 done, card sha aab8801a), round31 report.json R31-A1..A5 + all scan/verdict notes; poll header 02:34:11Z all 3 PENDING; E10 RUN 37, feed 02:28Z; greps DET_THRESHOLD/int-casting/running champion = 0 (entry says 'RUNNING CHAMPION' uppercase)
+- 02:44Z WATCHLIST.md written (W298 done; new W304-W308, T187-T191, I358-I365); watch.json written (15 alerts, valid JSON); done

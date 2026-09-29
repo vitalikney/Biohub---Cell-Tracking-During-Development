@@ -1,0 +1,11 @@
+# v_plancheck PC31-05 notes (2026-09-29T02:30:08Z)
+- 02:31Z no prior v_plancheck_pc31-05.json; starting fresh.
+- round30/report.json next_focus (4) confirmed: "Keep the hourly rounds at 07:13-11:13Z read-only, or skip them, so that the session is free at the decision headers (A-M1 by 08:45Z, A-M2 by 11:30Z)."
+- CONTEXT.md 02:02Z entry (l.4273-4291): items (1)-(5), no round-schedule clause. Confirmed missing.
+- Win32_Process timer.sh texts (live 02:3xZ): 07:13/08:13/09:13/10:13Z = "HOURLY RESEARCH ROUND (xx:13 MSK): launch the next research round unless one is running." No 11:13Z or 12:13Z hourly timer exists; the 11:10Z M2 timer says "decide M2 ... submit by 11:30 UTC ...; then launch the hourly research round if none is running" (so '11:13Z round' = the 11:10Z tail; already sequenced after M2). 06:07Z post-wake launches a round only if none ran since 05:13Z. 07:23Z MORNING PREP, 08:30Z M1 CI deadline check.
+- CONTEXT 28 Sep 20:13Z (l.4094-4102): crons fire only when session idle; rounds were lost to a busy session; timer completion notifications "queued until the session is free" -> blocking mechanism is logged, real.
+- Round 30 ran 01:13-01:40Z (~27 min) -> a 08:13Z round would occupy ~08:13-08:40Z, overlapping exp89p read window tail (07:38-08:35Z) and the 08:40Z last header / 08:45Z A-M1 cutoff. 07:13Z round overlaps 07:23Z prep and the early exp89p window (expected ~07:47-07:58Z).
+- CI tail: 08:45Z + ~10.9 h = ~19:39Z (card v5 step 9) -> past 18:37Z card. Consistent.
+- R8: no new mechanisms after 02:00Z; E10 copy after 02:00Z needs user's yes -> full rounds 07-11Z have ~0 actionable output; read-only check keeps E10 file inspection. Cost of the clause 0.
+- Verdict: NOT refuted. Minor fixes: name the 11:10Z timer tail instead of '11:13Z'; add that the 06:07Z round (if launched) must not start after 06:45Z; state the timer texts are pointers, CONTEXT governs.
+- 02:34Z final JSON written (refuted=false).

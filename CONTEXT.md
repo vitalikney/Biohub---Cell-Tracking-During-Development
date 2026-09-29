@@ -4291,6 +4291,25 @@ Mention it to the user in one line (R9-A8 item 6).
   sha8 aab8801a. (5) R30-A2 for the 07:23Z prep: do NOT rebuild or re-push exp89l / exp89s / exp89q (submit -v 1 = the
   gated dummy); decision grid and exact nb_try commands per round30/report.json R30-A2 (tokens exp89l; exp89s,exp89q;
   kernel ids KL = vitaliineibauer/biohub-exp89l-k2cap6-k-sec-ci, KS = vitaliineibauer/biohub-exp89s-k2cap6-k-dis225).
+- 2026-09-29 02:53 UTC, A-M2 FUNCTION + 08:40Z HEADER + ROUND SCHEDULE + CARD POOL L (round 31, R31-A1; pre-score: header 02:44:13Z shows the 3 night refs PENDING)
+  (1) A-M2 FUNCTION, branch A (corrects the R30-A2 (a) bullet, which dropped the Rr '+' condition; back to v1.1 (2),
+  21:11Z (6), 02:02Z (3)): 1. DIS '+' -> exp89s. 2. Otherwise, if Rr '+' (exp89r COMPLETE, no ERROR, d_R >= 0.960,
+  first terminal header + 210 s x failed attempts <= 10:50:28Z): DIS '-' -> UNUSED; DIS '?' -> exp89q iff P is '+' or
+  '?'; P '0'/'-' -> UNUSED. 3. Every other case -> UNUSED (d_R <= 0.959, exp89r ERROR, exp89r not terminal by the
+  11:00Z header, or a '0'/'-' read that GAP RULE v2 turns into '?'). Grid rows added: d_R = 0.959 -> UNUSED for every
+  d_P; d_R <= 0.958 -> UNUSED. For A-M2, P = exp89p's status at the A-M2 decision header (a COMPLETE read after 08:40Z
+  counts with its display; P '?' only if still PENDING or ERROR; GAP RULE v2 applies to P). The 08:40Z limit governs
+  A-M1 only. (2) 08:40Z HEADER = the last poll.log header stamped <= 08:40:36Z (exp89p submit 00:46:36Z + 7.9 h). The
+  poller drifts, so at the 08:30Z timer, if 56657612 is still PENDING, ONE background waiter runs a single submissions
+  list at 08:40:00Z and appends it to poll.log as '=== <UTC> [manual-A-M1]' (1 Kaggle call); exp89p COMPLETE >= 0.959
+  there -> nb_try exp89l at once (cutoff 08:45Z). (3) ROUND SCHEDULE: R31-A1 (3) proposed pausing full rounds
+  07:13-10:13Z; NOT ADOPTED: the user asked for hourly research, and a round runs as a background workflow that does
+  not block the session (decision headers, read watchers and the 07:23/08:30/11:10Z steps still take precedence; a
+  round whose report lands during a decision step is read after it). (4) CARD POOL L: card v5 l.17 / l.124 now say
+  non-CI L_hi <= 9.0 h (8.0-9.0 h flagged v), matching CONTEXT l.3179 / L9 (4) / 02:02Z (1); card sha8 a134d5e4. (5)
+  R31-A2: a power reminder push at 04:13Z (07:13 MSK) before the user's 05:10Z trip; at 06:07Z re-push if not on AC
+  and re-arm a battery-tolerant watchdog (notifies only on a poll header > 25 min old). R31-A3: read-time L logging at
+  07:23Z and at each night read.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

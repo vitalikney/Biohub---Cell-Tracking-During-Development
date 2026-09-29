@@ -1,0 +1,9 @@
+- 2026-09-29T02:41Z start round 31 FACTS/DECISIONS curation; no 31/facts.json -> incremental over c30 (01:57Z). New commit since c30: d6deab5 (02:02Z Round 30 resolutions)
+- 02:45Z sources since c30: CONTEXT +1 entry 02:02Z (l.4273-4293, R30-A1 logged, card sha8 aab8801a); ledger 02:34:13Z 502 polls, P52-54 PENDING; e10 0213Z #132/0.959 17th of 21; digest 0227Z null; round31 report.json 02:45Z R31-A1..A5 (none logged); RESULTS.md stale
+- 02:50Z FACTS plan: header; new F-LB-31 F-RUN-48 F-RUL-27 F-TRN-63; [c31] on F-LB-01/02/10 F-RUN-43/45/46 F-RUL-22 F-MOD-51 F-TRN-58/62; C-118/209/245/247/250-252/255/258 upd; new C-259..C-265
+- 02:55Z verified card v5 sha8 aab8801a (d6deab5), checklist 2b442e87; card l.17/l.124 'insertion gate not fired', l.39 bronze 0.75-0.93, l.46 ticked 0.48-0.66, l.47 'exp85a model', l.114 still '+/0u'. Writing c31_facts.py
+- 02:58Z E10 RUN 38 (02:42Z, 0241Z snapshot): #132 unchanged, 17th of 21, >=0.955 434, 0.956 119, signals 0; newest poll header 02:34:11Z (l.27583) all 3 PENDING
+- 03:02Z FACTS.md patched via c31_facts.py; validating
+- 03:10Z DECISIONS.md patched via c31_dec.py; validated
+- 03:12Z (real clock 02:48Z; notes above used estimated times) header 02:44:13Z: night refs still PENDING; stamps in files set to 02:47Z
+- 03:15Z facts.json written (7 alerts). Done.

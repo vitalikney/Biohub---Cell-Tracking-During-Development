@@ -1,0 +1,8 @@
+{
+ "task": "v_hyp_private31_r31p-3",
+ "written_utc": "2026-09-29T02:33Z",
+ "refuted": false,
+ "reason": "The honest null holds on both value and feasibility. (1) There is no hidden actionable disclosure. digest_20260929T0227Z has 0 new topics, 0 new comments and E10 FLAG none (top public notebook 0.953). The r31 scan_browser has no new notebook or knob. 744093 (float centroids) is the closed float-output line. So aggressive mode forces no build. (2) R8 (CONTEXT l.1671) allows only an emergency repeat after 29 Sep 02:00Z, and E10 v3 is not met. (3) Only 2 submits are left on 29 Sep (CONTEXT 00:47Z), both reserved by MORNING TABLE v1.1 (A-M1 exp89l, A-M2 exp89s/exp89q). (4) The cited closures match IDEAS.md: I-444 (l.289), I-476 (l.294) and I-487 (l.296) are all refuted. P2 and the split info row are already on card v5 and need the user's yes. One wording fix: '~11:30Z' is the M2 submit cutoff, not a single read cut. A CI file (L 9.30-9.48 h) sent after ~10:30Z reads after 20:00Z, while a non-CI file (L ~7.0-7.2 h) sent as late as ~12:45Z still reads before 20:00Z. The conclusion does not change.",
+ "fix": "Text only. Replace 'any new file submitted after ~11:30Z reads after the 20:00Z tick deadline' with 'a CI file sent after ~10:30Z, or a non-CI file after ~12:45Z, reads after 20:00Z; in any case both remaining 29-Sep slots are reserved by MORNING TABLE v1.1 and R8 allows no new mechanism after 02:00Z'. No build, dummy, slot or Kaggle call.",
+ "realistic_gain": "0 on the LB. It avoids spending GPU, Kaggle calls or reserved slots on post-hoc private-hedge builds."
+}

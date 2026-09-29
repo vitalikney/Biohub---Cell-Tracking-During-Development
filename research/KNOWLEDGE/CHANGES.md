@@ -1543,3 +1543,28 @@ Curator logs: `research/KNOWLEDGE/_curation/4/`.
 - **New:** R30-A1 pre-score entry (tie order, '0u' unreachable, A-M2 cell) [now]; E10 runbook l.66 trigger 0.958 -> 0.960 [now]; card v5 stale lines + info lines [today]; 07:23Z prep-only, no rebuild [today]; one-shot watchers, re-arm 06:07Z [today]; UP-test count-rule masking (R30-A3) [today]; 'pair by the card' wording + MSK brief [before-finals]; CI deadline degrade not provable, RC-C refuted [info].
 - **Carried over:** RESULTS rows (now P47-P51 + P52-P54); REPORT.md for round 29 and now round 30; W279 (1) DET_THRESHOLD line; W297 battery correction (folded into the R30-A1 entry); orphans I-233, I-336, I-516, I-448, I-252, I-407; finals still #37 + #38.
 - **Curator disagreements settled here:** card v5 edits ideas [today] / facts [before-finals] / watch [now, inside W298] -> [today] with the 12:03Z fill as hard limit; RESULTS rows facts [before-finals] vs ideas/watch [today] -> [today]; tie order and A-M2 cell ideas/watch [now] vs facts [today] -> [now] (one entry, hard limit 07:38Z).
+
+## 31 - 2026-09-29 ~02:55 UTC (curation 31; git HEAD d6deab5 = afebb5d + d6deab5 (round 30 committed, 02:02Z entry, card v5 edits); uncommitted `research/KNOWLEDGE/*` curation-31 edits, `experiments/lb_poll/ledger.md`, `poll.log`, E10/feed logs; untracked `research/wf_ideas_v4/round31/` (no REPORT.md), `experiments/e10_watch/20260929T0213Z.txt`, `20260929T0241Z.txt`, `experiments/discussions/digest_20260929T0227Z.md`, `experiments/lb_poll/_night_subs.csv`)
+
+**Sources since curation 30:** 1 commit (`git log afebb5d..d6deab5`); `CONTEXT.md` 4,293 -> 4,314 lines, 1 new entry 02:02Z MORNING/FINALS TEXT RESOLUTIONS l.4273-4293, `## 9. Literature` l.4294; card v5 sha8 aadead83 -> aab8801a (`git diff afebb5d..d6deab5 -- research/wf_ideas_v4/round29/finals_card_v5_ru.md`). Round 31 `research/wf_ideas_v4/round31/report.json` (R31-A1..A5, new_facts, plan_issues, rejected, next_focus; 02:38Z), 4 `scan_*.json`, 7 `v_*.json`. Ledger 02:34Z; E10 0213Z/0241Z (null); digest 02:27Z (null). `experiments/RESULTS.md` unchanged (ends at P46).
+
+**LB:** no new score; P52 exp89r, P53 exp75, P54 exp89p PENDING at the 02:44:13Z header (`experiments/lb_poll/poll.log` l.27644). Rank #132 of 3,979 at 02:14Z / 02:42Z, 17th of 21 in the 0.959 block; medal lines up one block (bronze ~#398 in 0.955, silver ~#199 in 0.957) (`FACTS.md` F-LB-31 l.257).
+
+**Ideas** (`IDEAS.md` CHANGES (31) l.200; `ideas.json` meta.curations[n=31], 37 records; `_curation/31/ideas.json`):
+- **New I-543..I-549:** in-plan I-543 A-M2 function (Rr '+' restored), I-544 08:40Z header + manual list, I-545 card pool non-CI L_hi <= 9.0 h, I-546 04:13Z wake push + battery-tolerant watchdog, I-547 read-time latency log, I-548 card fill numbers for V_pub exp87a; refuted I-549 ('не медаль' scenario sentence, R31P-2).
+- **Logged since c30 (02:02Z):** I-535 (conservative running champion), I-536 (A-M1 from P's display), I-537 (SEC/Rr -> UNUSED), I-538 (no rebuild), I-540/I-481 wording; card v5 edits (I-526).
+- **Updated (30 records):** I-530 round schedule never logged -> at risk; I-045 WEAKENED on public by CI, stays closed (R31-A5); I-526/I-539 card gaps; I-497 battery-tolerant watchdog; I-528, I-529, I-089, I-092, I-494.
+- **Counts c30 -> c31:** 542 -> 549; in-plan 143 -> 149, refuted 260 -> 261; lb-tested 62, lab-tested 28, deferred 47, open 2 unchanged. At-risk 13 -> 15 (off I-535..I-538; on I-530, I-543..I-546, I-548); strict orphan I-233 (`IDEAS.md` ORPHANS l.884).
+
+**Facts and decisions** (`FACTS.md`, `DECISIONS.md` rows marked [c31]; `_curation/31/facts.json`; state 02:47Z):
+- **New facts:** F-LB-31 LB state (l.257); F-RUN-48 latency families + poller cadence (l.310); F-RUL-27 texts logged 02:02Z (l.342); F-TRN-63 card model re-run for exp87a (l.466). [c31] notes on 11 rows.
+- **Contradictions:** C-245, C-247, C-250, C-251, C-252 RESOLVED; C-118, C-209, C-253, C-255, C-258 updated; new C-259 A-M2 bullet drops Rr '+', C-260 card 8.0 h vs rule 9.0 h, C-261 08:40Z header may not exist, C-262 hourly rounds, C-263 stale card numbers, C-264 round-31 partner overclaims, C-265 late-read trigger (l.730-736).
+- **DECISIONS.md:** §1 P52-P56 cells (l.196-199); [c31] build update (l.540); §2 finals snapshot 02:47Z (l.963-980); §2f E10 line (l.1256); §2h R30-A1 LOGGED, R30-A2..A5 still proposed, new R31-A1..A5 rows (l.1473-1482); §3 [c31] notes + 3 rows.
+
+**Watchlist** (`WATCHLIST.md`, curated ~02:50Z; `_curation/31/watch.json`): done W298 (R30-A1, 02:02Z); new W304-W308, T187-T191, I358-I365; T185 superseded by T189; still open W126, W279 (1), W286 (2), W296/W303 (now rounds 29-31), W297 (l.61-71).
+
+**Alerts** (`INDEX.md` TOP ALERTS, 8 after dedup):
+- **Resolved since curation 30:** R30-A1 pre-score entry (A-M1 trigger, tie reading, A-M2 SEC/Rr cell, '0u' unreachable, no rebuild) logged 02:02Z; card v5 l.21/l.59/l.106 edits.
+- **New:** R31-A1 entry (A-M2 function, 08:40Z header, read-only rounds, card pool L + info lines) [now]; 04:13Z wake push + battery-tolerant watchdog [today]; stale card numbers vs moved medal lines [today]; silver favours {exp87a, exp85a} caveat [before-finals]; I-547 / I-045 notes [info].
+- **Carried over:** E10 runbook l.66 (still 0.958; the 02:41Z run passed with it) [now]; RESULTS rows P47-P54; REPORT.md rounds 29-31; W279 (1) + W297 (not folded into 02:02Z); R30-A3..A5 unlogged (folded into the R31-A1 alert); finals still #37 + #38.
+- **Curator disagreements settled here:** R31-A1 (2) facts [today] vs ideas/watch [now] -> [now] (one entry); card numbers facts [before-finals] vs ideas/watch [today] -> [today] (hard limit 12:03Z); RESULTS rows ideas/facts [before-finals] vs watch [today] -> [today], after the morning decisions and before the 12:03Z card.

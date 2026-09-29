@@ -14,7 +14,7 @@
 Мы на ЛБ: #<RANK> из <TEAMS>, лучший паблик <BEST_DISPLAY>, место <BLOCK_POS> в блоке <BEST_DISPLAY>.
 
 1) ОСНОВНОЙ ФАЙЛ (V_pub) = <V_PUB_FILE> <V_PUB_REF>, паблик <V_PUB_SCORE>, <V_PUB_KIND>.
-   Кандидаты с наибольшим пабликом (COMPLETE; гейт вставки не сработал; для CI: L_hi ≤ 10.2 ч, или чтение «+»/«0u» при L_hi 10.2–10.75 ч с пометкой UNPROVEN-ins; «0»/«−» при L_hi > 10.2 ч = «?», вне пула):
+   Кандидаты с наибольшим пабликом (COMPLETE; без CI: L_hi ≤ 9.0 ч (при L_hi > 8.0 ч суффикс v: паблик засчитывается, в строке пула пометка «гейт вставки мог сработать на последних клипах»); для CI: L_hi ≤ 10.2 ч, или чтение «+»/«0u» при L_hi 10.2–10.75 ч с пометкой UNPROVEN-ins; «0»/«−» при L_hi > 10.2 ч = «?», вне пула):
    <POOL_TABLE>
    (столбцы: файл | ref | паблик | CI | SEC | рычаги | UP-тест | L, ч)
    При равном паблике выбор такой (порядок записан до чтений):
@@ -121,7 +121,7 @@
     {"ph": "<HDR_UTC>", "source": "last '=== ' header in experiments/lb_poll/poll.log (not 429 / not DNS error, <= 15 min old)"},
     {"ph": "<SELECTED>", "source": "read-only API competition_submissions(group=SUBMISSION_GROUP_SELECTED); expected {56563521, 56563534} unless the user re-ticked"},
     {"ph": "<RANK>/<TEAMS>/<BEST_DISPLAY>/<BLOCK_POS>", "source": "newest experiments/e10_watch/<ts>.txt or experiments/lb_poll/_lb/ download; our TeamId row"},
-    {"ph": "<POOL_TABLE>", "source": "all COMPLETE refs at max display (fixed_refs + token_refs) with the insertion gate not fired; CI: L_hi <= 10.2 h, or '+'/'0u' with L_hi 10.2-10.75 h flagged UNPROVEN-ins; '0'/'-' with L_hi > 10.2 h = '?' (out); UP column from tools/uptest.py"},
+    {"ph": "<POOL_TABLE>", "source": "all COMPLETE refs at max display (fixed_refs + token_refs) non-CI: L_hi <= 9.0 h (8.0-9.0 h flagged v); CI: L_hi <= 10.2 h, or '+'/'0u' with L_hi 10.2-10.75 h flagged UNPROVEN-ins; '0'/'-' with L_hi > 10.2 h = '?' (out); UP column from tools/uptest.py"},
     {"ph": "<V_PUB_FILE>/<V_PUB_REF>/<V_PUB_SCORE>/<V_PUB_KIND>", "source": "POOL + tie order (1)-(4); KIND = 'без CI' | 'с CI' (+ ', с SEC') (+ ', UNPROVEN-ins')"},
     {"ph": "<V_NONCI_*>", "source": "same order over COMPLETE non-CI refs: exp85a 56629533, exp89q, exp89p, exp89s, E10 copy; exp70g 56606948 as floor. Equals V_pub when V_pub is non-CI"},
     {"ph": "<V_NONCI_NOSEC_*>", "source": "best COMPLETE non-CI non-SEC ref: exp85a 56629533 or exp89s; used only in the out-of-plan info row"},

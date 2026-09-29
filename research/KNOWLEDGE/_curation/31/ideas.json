@@ -1,0 +1,60 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/ideas.json",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/IDEAS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/31/ideas.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/31/ideas.json"
+ ],
+ "alerts": [
+  {
+   "kind": "contradiction",
+   "what": "The 02:02Z entry (5) tells the 07:23Z prep to paste round30 R30-A2, but R30-A2 (a)'s A-M2 bullet drops the Rr '+' condition. MORNING TABLE v1.1 (2), 21:11Z (6) and 02:02Z (3) all require that condition. Pasted literally, it sends exp89q (SEC + DIS, non-CI, no supporting read) in cells where v1.1 says UNUSED, e.g. d_R = d_P = 0.959, or exp89r ERROR or late while P is '+' or '?' (I-543).",
+   "evidence": "research/wf_ideas_v4/round31/scan_plancheck.json PC31-01; v_plancheck_pc31-01.json (CONFIRMED, ~5-15% chance of preventing a wrong file); research/wf_ideas_v4/round30/report.json R30-A2 (a); CONTEXT.md l.3946-3948, l.4147, l.4273-4293 items (3)(5)",
+   "suggested_action": "Log the R31-A1 (1) A-M2 function in one pre-score entry while all 3 night refs are still PENDING. At 07:23Z, paste the function in place of the R30-A2 (a) A-M2 bullets.",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "The rest of R31-A1 is not in CONTEXT either: the 08:40Z header definition plus one manual list at 08:40:00Z (I-544), the round schedule (I-530) and the card pool L rule for non-CI files (I-545). The round schedule makes the 07:13-10:13Z rounds read-only; the live timers still launch full rounds.",
+   "evidence": "research/wf_ideas_v4/round31/report.json R31-A1 (2)-(4), plan_issues (b)(c)(e); v_plancheck_pc31-05.json; research/wf_ideas_v4/round29/finals_card_v5_ru.md l.17, l.124; CONTEXT.md l.3179, l.2700-2702",
+   "suggested_action": "Log all four items in the same R31-A1 entry before 07:13Z / 07:23Z (10:13 / 10:23 MSK). Edit card v5 l.17 / l.124 and record the new sha8.",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "R31-A2 wake/power push is due at 04:13Z (07:13 MSK), before the 05:10Z trip (I-546). At 06:07Z, if on battery: push again and re-arm the watchdog in a battery-tolerant form. The current watchdog 10576 is one-shot (I-497).",
+   "evidence": "research/wf_ideas_v4/round31/report.json R31-A2, plan_issues (d); scan_plancheck.json PC31-04; CONTEXT.md l.3999-4008, l.4066-4072",
+   "suggested_action": "04:13Z: send one Russian PushNotification with MSK times (do not ask the user to tick). 06:07Z: check BatteryStatus, then re-push and re-arm as needed.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "The model numbers on card v5 (l.37-48) were computed for V_pub exp85a on the 28 Sep 13:18Z field. The public medal lines have since moved up one block: bronze ~#398 is now in the 0.955 block and silver ~#199 in the 0.957 block. The ticked pair {#37, #38} is overstated by ~0.1-0.3 (I-548).",
+   "evidence": "research/wf_ideas_v4/round31/report.json R31-A4, new_facts (2)(5); v_recheck_r31-rc-a-c02-rank-arithmetic-x138-block-no.json; experiments/e10_watch/20260929T0213Z.txt l.1115-1143",
+   "suggested_action": "At the 12:03Z fill (15:03 MSK), use the mc31v numbers, the silver caveat and a medal-line rank line from the newest e10_watch file; refresh at 18:37Z. Re-run mc31v.py only if V_pub changes. Never write 'не медаль'.",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "The two card v5 section-4 info lines (I-539) were left out of the 02:02Z card edits (sha8 aab8801a): silent private failure is bounded, and a deadline degrade is impossible for non-CI files and probably absent for CI files.",
+   "evidence": "git diff afebb5d..d6deab5 -- research/wf_ideas_v4/round29/finals_card_v5_ru.md; CONTEXT.md l.4273-4293 item (4); research/wf_ideas_v4/round30/report.json R30-A5 (3)",
+   "suggested_action": "Add both lines with the R31-A1 (4) card edit (one new sha8).",
+   "urgency": "today"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "Two items are proposed but not yet in the plan text. (a) The R31-A3 read-time latency log (I-547): the v3 (g)6 fear of queue growth was not observed, with non-CI at 6.87-7.81 h and CI at 9.27-9.48 h. (b) The R31-A5 curator note on I-045: the placement-refiner class is WEAKENED on public by CI but stays closed.",
+   "evidence": "research/wf_ideas_v4/round31/report.json R31-A3, R31-A5; v_recheck_r31-rc-b-v3-queue-growth-latency-risk-not-.json; v_recheck_r31-rc-c-i045-precision-localiser-class-re.json; research/wf_ideas_v3/FINAL_REPORT.md l.357",
+   "suggested_action": "07:23Z: log the pending L lower bounds, and log L vs the family range at each first terminal header. Add the I-045 line in any free slot (post-deadline is acceptable).",
+   "urgency": "info"
+  },
+  {
+   "kind": "risk",
+   "what": "Record gaps carried over: rounds 29-31 have no REPORT.md (the harness blocked it; I-232), experiments/RESULTS.md has no rows for probes 47-51, and the corrected 'not the battery' user message is still not recorded (I-510).",
+   "evidence": "research/wf_ideas_v4/round31/report.notes.md 02:38:15Z; experiments/RESULTS.md; research/KNOWLEDGE/IDEAS.md ORPHANS 'Not orphans but easy to lose'",
+   "suggested_action": "After the morning decisions, write round29/30/31 REPORT.md from report.json and add the RESULTS rows 47-51 (low priority).",
+   "urgency": "before-finals"
+  }
+ ],
+ "summary": "Curation 31 (~02:55 UTC 29 Sep, HEAD d6deab5) is an incremental pass over curation 30. New sources: commit d6deab5 (round 30 committed, the CONTEXT 02:02Z entry at l.4273-4293, card v5 edits to sha8 aab8801a), round 31 (untracked; report.json R31-A1..A5 written 02:38Z, 4 scans, 7 verdicts), the ledger at 02:34Z, E10 at 02:13Z and the digest at 02:27Z (both null). There is no new LB score: 52 exp89r, 53 exp75 and 54 exp89p are still PENDING. R30-A1 was logged, taking the running champion in the CONSERVATIVE reading (a k = 0 tie keeps exp87a), so I-535, I-536, I-537 and I-538 leave the at-risk list. There are 7 new ideas: I-543 A-M2 function (restores Rr '+'), I-544 08:40Z header plus one manual list, I-545 card pool L <= 9.0 h for non-CI, I-546 04:13Z wake/power push, I-547 v3 queue-latency risk turned into a read-time log, I-548 card fill numbers for V_pub exp87a on the moved medal lines, and I-549 R31P-2's 'не медаль' scenario sentence (refuted). 30 existing ideas were updated, including I-530 (round schedule not logged; now at-risk) and I-045 (WEAKENED, stays closed). Totals: 549 ideas; lb-tested 62, lab-tested 28, refuted 261, deferred 47, in-plan 149, open-untested 2; 15 at-risk orphans. Verified: gen.py rows 549, bad 0; body and ranking equal."
+}

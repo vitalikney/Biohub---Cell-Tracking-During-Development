@@ -1,0 +1,6 @@
+- 02:40:33Z 2026-09-29 start: no _curation/31/ideas.json -> incremental run over curation 30 (542 ideas). Reuse scratchpad patch30.py/gen_md30.py.
+- 02:41:10Z sources since c30: git afebb5d..d6deab5 (round30 committed, CONTEXT 02:02Z R30-A1 entry l.4273-4293, card v5 sha aab8801a edits); round31/ untracked (report.json 02:38Z); ledger/poll modified; digest 0227Z; e10 0213Z.
+- 02:43:14Z read round31 report.json (R31-A1..A5, 02:38Z), scans, 7 verdicts, CONTEXT 02:02Z entry l.4273-4293 (R30-A1 logged, conservative champion), card v5 diff (aab8801a). Plan: 7 new (I-543..I-549), ~28 updates. Writing patch31.py.
+- 02:45:52Z patch31.py OK: 542 -> 549 ideas, 37 change records, ideas_c31.json in scratchpad. Next gen_md31.py.
+- 02:47:59Z ideas.json (549 ideas, 37 change records) + IDEAS.md (1023 lines) WRITTEN from patch31.py/gen_md31.py; verify below.
+- 02:49:11Z verify OK (gen.py rows 549 bad 0; gen2.py body+rank equal). _curation/31/ideas.json written (7 alerts). DONE.

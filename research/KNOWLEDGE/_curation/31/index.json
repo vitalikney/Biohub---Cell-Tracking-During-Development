@@ -1,0 +1,67 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/INDEX.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/CHANGES.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/31/index.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/31/index.json"
+ ],
+ "alerts": [
+  {
+   "kind": "contradiction",
+   "what": "R31-A1 / W304 pre-score entry is not logged yet. The R30-A2 (a) A-M2 bullet, which 02:02Z (5) says to paste at 07:23Z, drops the Rr '+' condition and would send exp89q where MORNING TABLE v1.1 says UNUSED. The entry must also carry the 08:40Z header definition, read-only rounds 07:13-10:13Z, card l.17/l.124 non-CI L_hi <= 9.0 h plus the I-539 info lines, R30-A3..A5, W279 (1) and W297",
+   "evidence": "research/wf_ideas_v4/round31/report.json R31-A1; research/wf_ideas_v4/round31/v_plancheck_pc31-01.json; research/KNOWLEDGE/FACTS.md C-259..C-262; CONTEXT.md l.4273-4293",
+   "suggested_action": "Log one CONTEXT entry above '## 9. Literature' (l.4294) quoting the 02:44:13Z header (all 3 refs PENDING), plus the card edit and new sha8. Hard limit: first header with a night ref terminal (earliest ~07:38Z), at the latest the 07:23Z prep",
+   "urgency": "now"
+  },
+  {
+   "kind": "stale",
+   "what": "E10 runbook trigger still says SC >= 0.958; it should be >= 0.960 (OUR = 0.959)",
+   "evidence": "research/wf_ideas_v4/e10v3/runbook.notes.md l.66; CONTEXT.md l.4159-4160; research/KNOWLEDGE/WATCHLIST.md W286 (2)",
+   "suggested_action": "Fix before the 03:41Z E10 run",
+   "urgency": "now"
+  },
+  {
+   "kind": "deadline",
+   "what": "Wake/power push (R31-A2) is due at 04:13Z (07:13 MSK). At 06:07Z, if on battery, push again and re-arm a battery-tolerant watchdog (10576 is one-shot)",
+   "evidence": "research/wf_ideas_v4/round31/report.json R31-A2; research/KNOWLEDGE/FACTS.md F-RUN-45, F-RUN-46",
+   "suggested_action": "One Russian PushNotification with MSK times, no tick request; at 06:07Z check BatteryStatus",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "Morning decisions: 07:23Z prep only (no rebuild/re-push); A-M1 exp89l iff exp89p >= 0.959 at the 08:40Z header, submit by 08:45Z; A-M2 by the I-543 function at exp89r's terminal header (latest 11:00Z), submit by 11:30Z; exp87a stays V_pub unless a later file shows >= 0.960 or an attributable UP at 0.959",
+   "evidence": "CONTEXT.md l.4273-4293; research/KNOWLEDGE/DECISIONS.md l.196-199; experiments/lb_poll/poll.log l.27644",
+   "suggested_action": "Submit at the decision header, not the cutoff; at the 08:30Z timer arm one manual list at 08:40:00Z if 56657612 is PENDING",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "Card v5 (aab8801a) model numbers were computed for V_pub exp85a on the 28 Sep field; the medal lines moved up one block and the ticked pair is overstated by ~0.1-0.3",
+   "evidence": "research/KNOWLEDGE/FACTS.md C-263, F-TRN-63; research/wf_ideas_v4/round31/report.json R31-A4; research/wf_ideas_v4/round29/finals_card_v5_ru.md l.37-48",
+   "suggested_action": "At 12:03Z use the mc31v numbers, the silver caveat and a medal-line rank line from the newest e10_watch file; refresh at 18:37Z",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "experiments/RESULTS.md lacks rows P47-P54; REPORT.md missing for rounds 29-31; round 31 uncommitted",
+   "evidence": "experiments/RESULTS.md; research/KNOWLEDGE/FACTS.md C-118; research/KNOWLEDGE/WATCHLIST.md W126, W296/W303",
+   "suggested_action": "After the morning decisions, before the 12:03Z card",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "Finals: card 12:03Z, proposal 18:37Z, reminder 19:43Z, user tick by 20:00Z (23:00 MSK), last call 21:05Z, deadline 23:59Z; still TICKED #37 + #38; say 'the pair by the card', never 'рекомендую' / 'не медаль'; choose the partner by bronze and insurance, not silver",
+   "evidence": "CONTEXT.md l.3851-3855; research/KNOWLEDGE/DECISIONS.md §2 l.963-980; research/KNOWLEDGE/WATCHLIST.md I361; research/KNOWLEDGE/FACTS.md C-264",
+   "suggested_action": "Keep the timers; the session never ticks",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "I-547 read-time latency log and the I-045 'WEAKENED, stays closed' curator line are not in the plan text",
+   "evidence": "research/wf_ideas_v4/round31/report.json R31-A3, R31-A5; research/KNOWLEDGE/IDEAS.md ORPHANS l.884",
+   "suggested_action": "Log L vs family range at each first terminal header; add the I-045 line in any free slot (post-deadline OK)",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 31 (~02:55Z, 29 Sep, HEAD d6deab5). INDEX.md rewritten (68 lines): state in 10 lines (V_pub exp87a 0.959, #132/3,979; night P52-P54 PENDING at 02:44:13Z; R30-A1 logged 02:02Z; open A-M2 Rr '+' bug; R31-A1..A5 unlogged; latency families and poller cadence; stale card v5; decision timeline), refreshed line anchors for IDEAS/FACTS/DECISIONS/WATCHLIST and CONTEXT (4,314 lines, Literature l.4294), 8 top open ideas (I-543, I-544, I-530, I-545/I-539, I-546/I-497, I-548, I-547, carried orphans), 8 deduplicated alerts with curator urgency disagreements settled, and a HOW TO USE map. CHANGES.md got a '## 31' section: sources, no new LB score, 7 new ideas I-543..I-549 (counts 542 -> 549, in-plan 149, refuted 261, at-risk 15), new facts F-LB-31/F-RUN-48/F-RUL-27/F-TRN-63, contradictions C-259..C-265 new and C-245/C-247/C-250..C-252 resolved, watchlist W304-W308/T187-T191/I358-I365, and resolved/new/carried alerts. Nothing committed; Kaggle not touched."
+}

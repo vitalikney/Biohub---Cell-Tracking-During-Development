@@ -1,0 +1,5 @@
+- 02:49Z start curation31 index; no index.json yet
+- 02:50Z gathered anchors (IDEAS/FACTS/DECISIONS/WATCHLIST line numbers, CONTEXT 4314 lines, 02:02Z entry l.4273-4293, Lit l.4294, poll 02:44:13Z all PENDING); writing INDEX.md
+- 02:51Z INDEX.md written (68 lines); appending CHANGES (31)
+- 02:52Z CHANGES (31) appended; writing index.json
+- 02:52Z index.json written; done
