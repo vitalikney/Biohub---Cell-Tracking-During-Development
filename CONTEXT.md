@@ -4456,6 +4456,18 @@ Mention it to the user in one line (R9-A8 item 6).
   744273 (sghwr ~07:40Z): an edge-only post-proc tweak A/B-d twice on public came back flat - an external null
   replication of our edge-filter closure (probes 29/30); no values. OPS: laptop on battery again at 08:50Z (78%); push
   sent; watchdog armed for back-on-AC.
+- 2026-09-29 09:00 UTC, PROBE 55 SUBMITTED: exp89t (K + DIS 2.25 + CI; ref 56669888, 09:00:17Z) - the user's yes; 1 submit left today
+  exp89t dummy v1 COMPLETE 08:59Z. Gate vs the exp87a dummy + topology vs the exp89s dummy: validate ok; 0 errors;
+  DIVINS ENABLED; no n2a secondary; topology identical to exp89s (121,389 / 117,246 / 84; nodes -0.77% vs exp87a
+  122,328); COORDINJECT 4/4 replaced 0.914; integer-coordinate change 0.645; all z/y/x integer; RULE v2.1:
+  whole-kernel 1,984 s <= 2,100 s (compute 1,578 s <= 1,620 s); CSV 6edc1f180116 -> PASS. Guards 09:00Z: G1 header
+  08:58:26Z (1.6 min); G2 used_today 3 [exp89p, exp75, exp89r], exp89t free; G3 ft-weights baseline OK; G5 COMPLETE.
+  nb_try rc 0 '1 submissions remaining today'. -m 'probe 55: exp89t = exp70g (cap 6) + ILP_DIVISION_WEIGHT 0.4 +
+  READMIT_MIN_SCORE 0.94 + ILP_DISAPPEARANCE_WEIGHT 2.25 + coordinject ALPHA 0.5 MAX_UM 3.0 (K + DIS + CI; best +
+  DIS)'. Family safetail_ci; read ~18:17-18:29Z typical (L 9.28-9.48 h; tail ~19:54Z at 10.9 h; the 10.2 h mark =
+  19:12Z, admit 10.75 h = 19:45Z). Read rule: vs exp87a 0.959 (the running champion): '+' >= 0.960 -> new V_pub (CI, 4
+  levers); 0.959 -> V_pub only with an attributable UP (S0 = the newest count-matched save before its header, S1 = a
+  save right after); below -> no change. Slot 2 (the last) held until ~11:50-12:00Z per the user.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
