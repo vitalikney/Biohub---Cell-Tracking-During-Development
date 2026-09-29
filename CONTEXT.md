@@ -4322,6 +4322,10 @@ Mention it to the user in one line (R9-A8 item 6).
   no internal timeout). R32-A3: timer texts are pointers; at 07:23Z do NOT rebuild/re-push exp89l/exp89s/exp89q
   (submit v1 = the gated dummy); at 08:30Z follow 02:53Z (2); at 12:03Z fill round29/finals_card_v5_ru.md (sha8
   a134d5e4), not v4.
+- 2026-09-29 04:10 UTC, R31-A2 POWER PUSH SENT
+  PushNotification (mobile push requested; Remote Control now active): results from ~10:38 MSK, decisions by 11:45 and
+  14:30 MSK, finals card 15:03 MSK; after the trip plug in the charger and keep the lid open; tick the finals by 23:00
+  MSK.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
