@@ -4468,6 +4468,14 @@ Mention it to the user in one line (R9-A8 item 6).
   19:12Z, admit 10.75 h = 19:45Z). Read rule: vs exp87a 0.959 (the running champion): '+' >= 0.960 -> new V_pub (CI, 4
   levers); 0.959 -> V_pub only with an attributable UP (S0 = the newest count-matched save before its header, S1 = a
   save right after); below -> no change. Slot 2 (the last) held until ~11:50-12:00Z per the user.
+- 2026-09-29 09:09 UTC, READ: PROBE 53 exp75 (#37 + CI) = 0.955 (clean; +0.001 vs #37 0.954)
+  Header 09:08:28Z: 56656157 COMPLETE public 0.955 (exp89r 56656147 and exp89t 56669888 PENDING). Ledger: safetail_ci,
+  L in (8.88, 9.05] h, ADMIT (a), insertion gate 10.2 h did NOT fire. CI-RAN: dL = L_hi - 7.54 h (#37) = 1.51 h > 0.5
+  h -> CI ran. Clean = COMPLETE, no ERROR, CI-RAN, L_hi <= 10.2 h. CI now has three positive public reads: +0.001 on
+  exp70g (probe 48), on exp85a (probe 51) and on #37 (probe 53). EXP75 PARTNER RULE v2 with V_pub a CI file (exp87a):
+  (b) the R25 rule -> exp75 >= 0.955 clean -> pair B {exp87a, exp75} is shown as a TRADE ('CI в обоих файлах, CI не
+  застрахован'); the recommended pair stays A/П3 {exp87a 56640366, #37 56563521}. LB save post_exp75 (09:08Z): rank
+  140, 0.959, SubmissionCount 55 (= the S0 for exp89r's UP test at 0.959).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
