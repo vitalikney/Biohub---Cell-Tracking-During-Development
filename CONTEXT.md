@@ -4572,6 +4572,10 @@ Mention it to the user in one line (R9-A8 item 6).
   Kaggle; KEY FACTS tie order fixed; hourly rounds continue. (A7) mk_card_1837.py to be built and dry-run before
   17:40Z. (A8) re-arm the watchdog after any alert; liveness check of all armed jobs at the 17:13Z round. (A9) only if
   asked (cap-6 partner line).
+- 2026-09-29 12:04 UTC, FINALS CARD SENT (12:03Z timer): scratchpad card_1203_sent.txt sha8 4fa899f9 = card v3 ae03f566 + header (poller 11:59Z),
+  SELECTED, rank (#141 of 3 994, 17th of 22, e10 11:41Z) and the slot-2 'в запасе' clause; token checks pass. API SELECTED at 12:04:34Z =
+  {56563534 #38, 56563521 #37} (read-only, scratchpad read_selected.py: kagglesdk list_submissions group=SUBMISSION_GROUP_SELECTED;
+  use it for every later SELECTED read). The user still has to tick the chosen pair (П3 or П2).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
