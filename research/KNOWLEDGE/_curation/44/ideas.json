@@ -1,0 +1,53 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/ideas.json",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/IDEAS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/44/ideas.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/44/ideas.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "what": "Round 44's R44-A1 is not logged: the 18:13Z (21:13 MSK) timer 30820 will announce 'HOURLY RESEARCH ROUND 45: READS-vs-CARD', but round 45 is a NO-OP. A ~30-min round started then would overlap the first exp89t read header (18:15:17Z) and the 18:37Z card. A late fallback round at 18:40-18:45Z runs into T7 (~19:15:31Z) and was rejected, and killing 30820 was rejected too.",
+   "evidence": "research/wf_ideas_v4/round44/report.json R44-A1, rejected; scan_plancheck.json R44-PC-02; v_plancheck_r44-pc-02.json; CONTEXT.md newest entry l.4695-4697 (17:13Z); research/KNOWLEDGE/ideas.json I-617, I-618, I-619",
+   "suggested_action": "Before 21:13 MSK (18:13Z), append the R44-A1 CONTEXT line. When the notification arrives, ignore it. Leave 30820 alive. Keep 22:05-22:50 MSK (19:05-19:50Z) free of rounds.",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "Every evening event (exp89t read, 21:37 MSK card, T7, manual-admit reader, 22:43 / 00:05 MSK checks) now depends on the R44-A2 read-time block, which is not logged. Its guard rules are all manual: (1) run one Bash call with timeout 600000, because the worst case is ~250 s. (2) Source readtime.sh on its own line, never under a pipe, and never define a shell function named 'msg'. (3) A COMPLETE row with an empty score means HOLD. (4) Send every pushtext44 line except 'CONTEXT FIRST', because with failed SELECTED reads line 1 is only the failure notice. (5) Never pass '--lb post_exp89t'.",
+   "evidence": "research/wf_ideas_v4/round44/report.json R44-A2 (a)-(i); report.notes.md 17:33Z dry run + 17:35:44Z guard test; scan_hyp_ops44.json r44-ops-readblock / subshell-state / postexp89t-lb; research/KNOWLEDGE/ideas.json I-620, I-621, I-622, I-611, I-612",
+   "suggested_action": "At the exp89t read (headers 21:15:17 / 21:25:19 / 21:35:22 MSK), use the exact R44-A2 command. Check the READ: line against poll.log. On T1/T2, log RECOMMENDED PAIR in CONTEXT before the push. If anything in r44dry fails, use the manual R43-A4 / R41-A4 path.",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "Round 43 called Chris Deotte's 12:57Z comment ('It must finish before 23:59 UTC') 'the only host statement'. CONTEXT.md (feed 12:58Z: 'a well-known Grandmaster, not the host') and round 44 R44-PC-04 ('2870th in this Competition', no staff tag) say he is a participant. So no host has said when selection locks. Selina Wu's 16:04Z question in 744250 is still unanswered.",
+   "evidence": "research/wf_ideas_v4/round43/scan_browser.json + report.json ('The only host statement is still Chris Deotte'); CONTEXT.md feed 12:58Z line; research/wf_ideas_v4/round44/scan_plancheck.json R44-PC-04; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/744250; research/KNOWLEDGE/ideas.json I-584",
+   "suggested_action": "Never cite Deotte as the host to the user. The plan does not change: tick by 23:00 MSK (20:00Z).",
+   "urgency": "info"
+  },
+  {
+   "kind": "stale",
+   "what": "The round-prompt KEY FACTS in experiments/workflows/biohub-research-round.js (unchanged since 55ec8ab) still say '#151 of 3 999', 'polls every 5 min' and 'slot 2 closed after ~14:10Z'. R44-A4 moves the fix into a CONTEXT OPS line (#154 of 4 005 LB rows at 17:15Z, ~10 min 2 s polls, slot 2 CLOSED UNUSED since ~16:50Z, feed stopped 17:29Z, round 45 NO-OP), but that line is not logged. The 21:37 MSK card rank line must be '#154 из 4 005' (Chrome 20:15 MSK), not the builder's '#141 из 3 994'.",
+   "evidence": "research/wf_ideas_v4/round44/report.json R44-A3, R44-A4; scan_plancheck.json R44-PC-01, R44-PC-05; v_hyp_ops44_r44-ops-rankline-count.json; research/KNOWLEDGE/ideas.json I-613, I-614, I-259",
+   "suggested_action": "Now, log the R44-A4 OPS line. At 21:37 MSK run cardfix with RANKSRC='Chrome 20:15 МСК' and the 4 005 RANKBODY, then log the card sha8 next to a19e1bd6.",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "The 00:07Z (03:07 MSK) post-deadline step is still open, and it now has a stop order. Stop watchdog v2 (30176/16728) FIRST, then poller 37016 and the R43-A8 list (30864, 3028 + wrappers, 29828, 16748, the reader). In the other order a false 'NO CLEAN POLL' alert fires at ~00:32Z (03:32 MSK). Other parts: the final_0007Z save, the git add of round4*/ and _lb/e10_20260929T1141Z/, and a commit with no Co-Authored-By trailer.",
+   "evidence": "research/wf_ideas_v4/round44/report.json R44-A5 (1)-(2); scan_plancheck.json R44-PC-07; research/wf_ideas_v4/round43/report.json R43-A8; research/KNOWLEDGE/ideas.json I-624, I-607, I-600, I-609",
+   "suggested_action": "At 03:07 MSK: stop in the order watchdog v2 -> 37016 -> the rest, and verify each with Get-Process by exact PID. Then check that 'git log -1 --format=%B | grep -ci co-authored' = 0 before the push.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "Post-deadline write-up items exist only in round 44's report.json and could be lost. RC-A: CI makes same-frame node pairs < 2 um (exp87a 67 vs exp85a 17; GT 0), and reverting them scores identically, so if CI is reused the pair count should be a dummy gate. RC-B: exp03B's '+0.0048 real gain' is the best of 2 seeds (seed 7 is -0.0025). RC-C: the dummy-lab signs are 6bba reads, and divset36 is 32/36 6bba. The 44b6 weakness comes from LOEO-44b6.",
+   "evidence": "research/wf_ideas_v4/round44/report.json R44-A5 (3); scan_recheck.json R44-RC-A/B/C; research/KNOWLEDGE/ideas.json I-625, I-097, I-626, I-252",
+   "suggested_action": "30 Sep: add the three lines to the post-deadline lessons (I-252), together with the I-336 hindsight-guard prediction, which must be pushed before the first private score.",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 44 (2026-09-29 ~17:55 UTC / 20:55 MSK; HEAD 19149bf with no new commit; sources: the uncommitted 17:13Z LIVENESS entry CONTEXT.md l.4695-4697, research/wf_ideas_v4/round44/ report.json R44-A1..A5 17:37Z plus 4 scans and 12 verdicts, digest_20260929T1729Z.md, ledger.md 17:45:13Z). This was an incremental pass over curation 43: ideas went from 616 to 626, with 39 change records in ideas.json meta.curations[-1]; IDEAS.md has 1,197 lines, and a verify pass found 0 row mismatches and equal body/ranking. NEW: I-617 round 45 NO-OP at 18:13Z (in-plan, at-risk); I-620 exp89t read-time block readtime.sh with a HOLD guard, 600 s timeout, no-pipe sourcing and all-lines-but-CONTEXT-FIRST (in-plan, at-risk); I-623 log L_hi when F >= 1 (in-plan); I-624 watchdog-first 00:07Z stop order (in-plan, at-risk); I-625 CI same-frame near-pair dummy gate (deferred); refuted: I-618 late round 45, I-619 killing timer 30820, I-621 line-1-only push, I-622 '--lb post_exp89t', I-626 'divset36 flags 44b6'. UPDATED: I-486 (exp89t PENDING 17:45:10Z, L > 8.74 h; projected read headers 18:15:17 / 18:25:19 / 18:35:22Z), I-613 / I-526 (rank #154 of 4 005 LB rows, Chrome 17:15Z), I-614 / I-259 (KEY FACTS still stale; R44-A4 line not logged), I-597 / I-610 (feed stopped cleanly 17:29-17:33Z; (b) dropped, (c) done), I-529 (R43-A6 logged 17:13Z), I-556 (twelfth null round), I-584 (Deotte is not the host), I-134 / I-401 / I-097 / I-098 / I-193 / I-512 / I-513 / I-252 (rechecks RC-A/B/C) and others. No new LB score; decision B and П3 unchanged. The at-risk orphan count is 13 (9 carried over, plus I-614, I-617, I-620, I-624), with 1 strict orphan (I-233)."
+}

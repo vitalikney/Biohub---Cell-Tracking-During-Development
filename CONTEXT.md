@@ -4692,6 +4692,24 @@ Mention it to the user in one line (R9-A8 item 6).
   ~19:15:35Z; last header before the admit edge ~19:35:40Z, next ~19:45:42Z -> the 19:44:45Z manual-admit list is the
   only record in between. poll.log error blocks after the 15:08Z battery event: 15:19:43, 15:31:24, 15:43:04Z. 744250:
   two unanswered participant questions on when selection locks / private release.
+- 2026-09-29 17:13 UTC, LIVENESS (R43-A6, R39-A8): alive = poller 37016, old exp89t watcher 30864, manual_admit 3028 (19:44:45Z), feed stop job 32220,
+  feed loop 10924/20892 (last run ~17:29Z, then stopped); new-session jobs: exp89t waiter, t7_trigger, manual-admit reader, watchdog v2,
+  feed waiter, timers 18:13/18:37/19:43/21:05/00:07Z; pre_exp89t 0 processes; on AC. Round 44 launched (minimal).
+- 2026-09-29 17:54 UTC, ROUND 44 APPLIED (read-time block)
+  Report research/wf_ideas_v4/round44/report.json. (A1) The 18:13Z timer (round 45) is a NO-OP: round 45 is NOT
+  launched at 18:13Z; keep 18:13-19:50Z free for the exp89t read, the 18:37Z card, T7 (~19:15Z), manual-admit
+  (19:44:45Z) and its reader (~19:47Z). (A2) READ-TIME BLOCK = scratchpad r44dry/readtime.sh (sha8 befef6fb) +
+  msg44.py (233e5ba5) + cardfix44.py (af903431); builder mk_card_1837.py a19e1bd6 unchanged. One Bash call per event
+  with timeout 600000: source readtime.sh on its own line (never under a pipe), then 'if COMPLETE without a score ->
+  HOLD else pushtext44', then 'cardcmd && cardfix' at or before the 18:37Z card. Send every pushtext44 line except
+  'CONTEXT FIRST: RECOMMENDED PAIR' (on T1/T2 append that to CONTEXT BEFORE the push). SELECTED reads via selread
+  (timeout 90, one retry after 60 s; 2 failed reads -> the 'Не смог проверить' line, never a wrong-pair alarm). Always
+  the default --lb e10_20260929T1141Z --teams 3994 (post_exp89t does not exist). Header-keyed edges (R41-A3); with F
+  >= 1 failed attempts also log L_hi = hdr + 210 s x F - T0. Live dry run at 17:5xZ on the real poll.log with a mocked
+  SELECTED: code PENDING, case a, correct. (A3) card rank line: RANKSRC 'Chrome 20:15 МСК', RANKBODY '#154 из 4 005,
+  лучший паблик 0.959, 5-е снизу в блоке 0.959 (блок до #158).' (A4) feed loop ran 17:29:24Z (only Selina Wu 744250,
+  already known; E10 none) and stopped cleanly. Laptop on battery again from 17:43Z (user asked in chat; push not
+  delivered - Remote Control inactive).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

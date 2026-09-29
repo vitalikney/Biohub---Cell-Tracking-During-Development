@@ -1,0 +1,4 @@
+- 17:39:10Z 2026-09-29 start: no _curation/44/ideas.json -> incremental run over curation 43 (616 ideas). Reuse scratchpad patch43*.py/gen_md43.py.
+- 17:41:38Z sources since c43 (19149bf): uncommitted CONTEXT l.4695-4697 (17:13Z LIVENESS, R43-A6 done; Literature l.4698); round44/ (report.json R44-A1..A5 17:37Z, 4 scans, 12 v_*); ledger 17:35:10Z exp89t PENDING L>8.58h; digest 1729Z. Plan: patch44.py -> I-617..I-625 + updates; gen_md44.py.
+- 17:45:47Z ideas.json (626 ideas, 39 change records) + IDEAS.md (1197 lines) WRITTEN from patch44.py/gen_md44.py; ledger refreshed to 17:45:13Z (L > 8.74 h); gen.py 626 rows 0 bad, gen2.py body/rank equal; at-risk 13. Next: _curation/44/ideas.json.
+- 17:46:59Z _curation/44/ideas.json written (6 alerts). DONE.

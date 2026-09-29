@@ -1,2 +1,7 @@
 - 16:38:43Z 2026-09-29 start: no _curation/43/ideas.json (no 42 either) -> incremental run over curation 41 (608 ideas). Reuse scratchpad patch41.py/gen_md41.py.
 - 16:40Z sources since c41 (2fcbedd): 55ec8ab (14:59Z ROUND 41 APPLIED A1-A4, A6; CONTEXT l.4643-4666), 369b065 (15:59Z OPS round 42 lost, session restart, jobs re-armed; l.4667-4677; digest 1559Z 744250 kostopr4v); uncommitted round42/ (scan_browser only, Chrome not connected), round43/ (report.json R43-A1..A8 16:36Z, 4 scans, 12 verdicts all upheld); ledger 16:34:57Z exp89t PENDING L>7.57h.
+- 16:45:30Z patch43.py run -> scratchpad ideas_c43.json (608 -> 616). Next: gen_md43.py.
+- 16:47:37Z ideas.json (616 ideas, 41 change records) + IDEAS.md (1182 lines) WRITTEN from patch43.py/gen_md43.py; verify gen.py/gen2.py run. Next: _curation/43/ideas.json.
+- 16:48:29Z _curation/43/ideas.json written (9 alerts). DONE.
+- 16:49:57Z LATE SOURCE: commit 19149bf (16:43Z ROUND 43 APPLIED A1-A5, A7; CONTEXT l.4678-4694; Literature l.4695) appeared mid-run -> patch43b.py: I-609..I-614 logged (off at-risk), I-594/I-575/I-259/I-497/I-529/I-607/I-486 (16:44:57Z, L>7.74h)/I-584/I-232/I-589/I-580 updated; workflow KEY FACTS still '5 min'/'#151'. Regenerating IDEAS.md from IDEAS_c41.md.
+- 16:52:48Z FINAL: ideas.json (616 ideas, 41 change records, head 19149bf) + IDEAS.md (1177 lines) re-written after the late 19149bf pass; gen.py 616 rows 0 bad, gen2.py body/rank equal; at-risk 9; _curation/43/ideas.json rewritten (7 alerts). DONE.

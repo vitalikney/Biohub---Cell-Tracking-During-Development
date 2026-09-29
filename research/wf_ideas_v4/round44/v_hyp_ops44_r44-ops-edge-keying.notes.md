@@ -1,0 +1,8 @@
+# v_hyp_ops44 r44-ops-edge-keying notes (2026-09-29T17:28:12Z)
+- 17:29Z no prior answer file. Sources: scan_hyp_ops44.json (finding), round38/report.json R38-A5 (0)/(7) (L_hi = H + 210 s x F - T0; edges 19:12:17Z / 19:45:17Z), round41/report.json R41-A3 (v2 keys late/T8 on the header as logged), <SP>/mk_card_1837.py sha8 a19e1bd6 l.49 late = (hdr - T0) > 10.2 h, guard base <= 10.75 / T8 base > 10.75, --lhi check -0.02 < lhi - base < 0.2 h.
+- experiments/lb_poll/lb_poll.py: header ts = poll START; up to 3 attempts, each <= 180 s timeout + 30 s sleep (= the 210 s bound). A data block therefore has F in {0,1,2} (3 fails = empty block).
+- poll.log census (all blocks): (F0,data) 576, (F1,data) 1, (F2,data) 2 (25 Sep 19:11:08Z, 28 Sep 15:15:31Z), (F3,empty) 6, (F0,empty) 5. Data blocks with F>=1 = 3/579 = 0.5%.
+- Observed cost of failed attempts: F=3 blocks shift the next header by 694-701 s vs normal ~602 s => ~32 s per failed attempt, far below the 210 s bound -> the header-keyed R41-A3 is closer to the truth than L_hi.
+- CORRECTION to the finding: disagreement windows are (edge - 210F, edge]: F=1 (19:08:47,19:12:17] / (19:41:47,19:45:17]; F=2 (19:05:17,19:12:17] / (19:38:17,19:45:17]. Projected 19:05:28Z IS inside the F=2 late window (11 s margin). Effect only T1 vs T2 (UNPROVEN-ins clause) or T5 'DIS «?»' text; promotion decision unchanged. 19:35:35Z stays outside (2:42 margin; needs >= 2 failed blocks before it to drift in). 19:45:37Z > edge in both keyings -> T8 either way.
+- manual_admit.sh: single attempt, no note -> F = 0 always, no disagreement at 19:44:45Z.
+- Cadence check: headers 17:05:01, 17:15:03, 17:25:06 (+10:02.3) -> 19:05:29, 19:15:31, 19:35:36, 19:45:38 (matches finding within 1 s).

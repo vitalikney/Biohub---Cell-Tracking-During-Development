@@ -1,0 +1,5 @@
+- 17:39Z start curation 44 (facts.json absent -> fresh run); prior curation 43 (16:49Z); HEAD 19149bf 2026-09-29T19:43:52+03:00
+- 17:40Z sources: CONTEXT 17:13 LIVENESS l.4695-4697 (uncommitted), Literature l.4698; round44 report.json 17:37Z R44-A1..A5 PROPOSED; digest 1729Z; poll.log header 17:35:08Z (l.32717) exp89t PENDING; ledger 17:35:10Z 591 polls L > 8.58 h; round prompt js l.20/l.37 unchanged since 14:59Z
+- 17:43Z FACTS.md patched (c44_facts.py): state line, F-LB-43, F-RUN-65, F-RUL-46, F-TRN-80, [c44] notes on 11 rows, C-355..C-365
+- 17:45Z DECISIONS.md patched (c44_dec.py): state, P55 cells, §1 para, §2 tick para + [c44] snapshot (15 rows), R1-R10/§f [c44], R43-applied note + 4 new §3 rows, changelog
+- 17:46Z facts.json written (8 alerts). Done.

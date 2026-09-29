@@ -1,0 +1,5 @@
+- 2026-09-29 17:48Z: start curation-44 index task; no prior index.json in _curation/44; reading INDEX/CHANGES + sources
+- 17:49Z: sources mapped: CONTEXT 4718 l (newest 17:13 LIVENESS l.4695-4697, Lit l.4698); poll.log newest 17:45:10Z l.32778 exp89t PENDING (l.32781); IDEAS 626 (CHANGES l.249, ORPHANS l.1011); FACTS F-LB-43 l.281, F-RUN-65 l.351, F-RUL-46 l.402, F-TRN-80 l.547, C-355..365 l.907-917; DECISIONS §2 [c44] l.1024-1026, §3 rows l.1939-1942, changelog l.2162; WATCHLIST DUE NOW l.54, CONTRA l.66, NEXT l.83, LATER l.106, INSIGHTS l.131
+- 17:53Z: INDEX.md written (curation 44), 73 lines
+- 17:56Z: CHANGES.md section 44 appended
+- 17:58Z: index.json written; done

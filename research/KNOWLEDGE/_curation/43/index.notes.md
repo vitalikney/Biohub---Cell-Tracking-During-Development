@@ -1,0 +1,5 @@
+- 2026-09-29 ~16:57Z: start curation-43 index task; no prior index.json; reading INDEX.md + CHANGES.md tail
+- 16:54Z: local read-only Get-Process: 5024/22680 (blind watchdog) gone, 36816 gone; orphans 3028/30864/32220 + waiters 29828/16748/8364 alive; poller 37016 + feed loop 10924/20892 alive (feed stop due ~17:29Z). poll.log newest 16:44:57Z PENDING. Prompt l.20 still stale (5 min, #151, T7 ~19:20Z, pre_exp89t).
+- 16:58Z: INDEX.md written (curation 43)
+- 17:02Z: CHANGES.md section 43 appended; INDEX.md compacted to <=90 lines
+- 17:04Z: index.json written; done

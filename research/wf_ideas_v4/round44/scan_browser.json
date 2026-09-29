@@ -1,0 +1,37 @@
+{
+ "summary": "Round-44 delta scan, 17:14-17:18 UTC on 29 Sep (20:14-20:18 MSK), done in Chrome only. This agent made 0 Kaggle CLI/API calls and did not run e10_snapshot (R39-A6), and it finished before the 17:30Z quiet window. There is nothing to act on. No public notebook is >= 0.954 and no new notebook appeared. There is no new discussion topic and no new comment since round 43. The 744250 question on when selection locks still has no host answer. No knob is disclosed, so AGGRESSIVE MODE has nothing to build. The Overview has no change and no announcement. Leaderboard: we are still #154, now of 4,005 rows. The banner says exp89t is still being scored, and poll.log at 17:05:01Z also shows 56669888 PENDING. The visible 0.959 rows #144-#158 are the same teams as at 16:15Z. Top movers: Sam Barnett 0.963 -> 0.969 and slime 0.970 -> 0.971. The newest feed digest is still 1559Z; the ~17:29Z run is pending.",
+ "findings": [
+  {
+   "id": "r44-lb-rank-154-steady",
+   "kind": "new-fact",
+   "urgency": "today",
+   "what": "Chrome public LB at ~17:15Z (header '7 HOURS TO GO', rows to 4,005; was 4,003 at 16:15Z). Our row: '154 D: Discipline 0.959 56 16h', with the banner 'Your latest submission is being scored. Your best score is 0.959.' (exp89t 56669888 still pending). Rows #144-#158 are the same 0.959 teams in the same order as at 16:15Z (rogerrogerroger3r 85, John Taylor (AI) 50, maesaer 112, OTkm_tn 35, Takumu Hata, atsukiwi, Matt Goldfield 293, Saravanan, Fanch, Amin 182, us, Manish, kkunizaw, enddl22, RyotaroAbe). #159 Umesh Arampath 0.958 is still the first 0.958. So there is no rank change in the last hour: the 0.959 block still ends at #158 and we are 5th from its bottom. Rows 50-143 stayed collapsed, so the block size and the count above 0.959 were not measured. Top movers since 14:19Z/16:15Z: slime 0.970 -> 0.971 (#12 -> #9, 171 -> 172 entries); Sam Barnett 0.963 -> 0.969 (#63 at 14:19Z -> #25, 15 -> 17 entries); 'que la cuenten como quieran' 0.966 -> 0.967 (#43 -> #37, 35 -> 38 entries, last 5h); Lime1123 is back in the top 49 (#47, 0.965). yu4u has 121 -> 123 entries, still 0.978. #1-#5 are unchanged (yu4u 0.978, Gabriel 0.976, Sergio Alvarez 0.976, taiseiu 0.974, Samuel Sundararaman 0.972).",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/leaderboard (read ~17:15Z); 14:19Z baseline in the scratchpad lb41.txt; research/wf_ideas_v4/round43/scan_browser.json; experiments/lb_poll/poll.log header 2026-09-29T17:05:01Z (56669888 SubmissionStatus.PENDING)",
+   "action": "For the 18:37Z card rank line, the main session may quote 'Chrome 20:15 MSK (17:15Z): #154 of 4,005, 0.959 block ends at #158, 5th from the bottom'. This is the last Chrome read before the 17:30Z quiet window. It is not a signal and does not touch the finals plan or decision B. Do not use the CLI to read rows 50-143."
+  },
+  {
+   "id": "r44-discussion-no-delta",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "Discussion sorted by recent comments at ~17:16Z shows no new topic and no new comment since round 43 (16:17Z). Thread 744250 'Time of publishing private results' still has 3 comments. The last one is Selina Wu's selection-lock question, now shown as '1h ago', and it has no host answer. The only host statement is still Chris Deotte at 12:57Z: 'It must finish before 23:59 UTC, otherwise it is not eligible nor can we select it.' The farewell post 744357 has 9 votes (was 8) and 0 comments. Other threads last moved long ago: workshop 6h, shakeup 744273 5h, new-entrants 9h, JT 21h. Nothing discloses a knob, value, dataset or technique.",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion?sort=recent-comments ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/744250 ; experiments/discussions/digest_20260929T1559Z.md (newest; the feed loop's ~17:29Z run is pending)",
+   "action": "None. Our 20:00Z (23:00 MSK) tick deadline stays whatever the host later says about when selection locks."
+  },
+  {
+   "id": "r44-code-overview-unchanged",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "Code tab by Public Score has the same top 4, all 0.953: Harmonic Fusion V3 (247 votes), optimized-biohub-max-score (84), Biohub Cell Tracking (254) and x138 'Biohub 0.953 LB | ORIGINAL' (238). Next is Geometric Fusion at 0.948. Only vote counts moved (+1 each). Recently Created is unchanged: the newest unpinned notebook is still 'Robust Cell Tracking During Development via Chan.' (6d, 0.1). Nothing is >= 0.954 and nothing is new, so nothing was pulled into experiments/ext_*, and E10 P1 needs no action. The Overview has no announcement, and the timeline, evaluation and code requirements (<= 12 h) are unchanged. Counts: 13,475 entrants (unchanged), 4,588 participants (+3), 4,003 teams (+3), 96,588 submissions (+156 since 16:19Z).",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/code?sortBy=scoreDescending ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/code?sortBy=dateCreated ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/overview",
+   "action": "None."
+  },
+  {
+   "id": "r44-chrome-tabgroup-churn",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "The Chrome MCP tab group was removed once during this scan, right after the leaderboard read (tab 1196280438 vanished), so a new group was created. A second tab (1196280441, Overview) briefly appeared in the new group and then disappeared; this agent did not touch it. The first navigation to the discussion URL landed on the Leaderboard. Some other client may be sharing the Chrome MCP session.",
+   "evidence": "research/wf_ideas_v4/round44/scan_browser.notes.md",
+   "action": "If any other process uses Chrome during the evening chain, the main session should check it is not an agent relying on the MCP tab group persisting. Otherwise none."
+  }
+ ]
+}

@@ -1,0 +1,8 @@
+- 2026-09-29T17:28:09Z start verification of r44-ops-rankline-count
+- round43/scan_browser.notes.md l.3: 16:15Z LB '4,003 teams (was 3,999)' = LB rows; l.11: Overview 16:19Z = 4,000 teams. So r43 '4 003' in the card text = LB rows (confirmed).
+- round44/scan_browser.notes.md l.3: ~17:15Z LB rows to 4,005; l.8: Overview ~17:18Z 4,003 teams (+3 vs 4,000).
+- round44/scan_plancheck.notes.md l.2: LB 17:14:40Z 'Team total not in page text'; l.6: Overview 17:17:53Z 4,003 Teams '(= 16:15Z)' -> that '=' is wrong: it compares Overview (4,003) with r43 LB rows (4,003); Overview at 16:19Z was 4,000. So PC-01 mixes sources; finding correct.
+- Rank #154, block to #158, 5th from bottom: identical in both r44 reads (and r43).
+- scratchpad r44dry/readtime.sh l.53: RANKSRC/RANKBODY use ${VAR:-default} -> an env override set before sourcing (or before cardfix, same Bash call) works. cardfix44.py bad-token regex '#141|3 994|14:45 МСК|#148|17 из 22' -> '4 005' passes; asserts one 'Мы на ЛБ (Chrome' line.
+- Nit: the 4,005 read is ~17:15Z (20:15 MSK); default RANKSRC says 20:14 МСК (plancheck LB read 17:14:40Z). If RANKBODY is overridden, optionally RANKSRC="Chrome 20:15 МСК". Both minutes are within the same read window; cosmetic.
+- Value: 0 on public/private; card text only; 0 Kaggle calls. Not a closed line. Verdict: not refuted (fact holds), cosmetic, optional.

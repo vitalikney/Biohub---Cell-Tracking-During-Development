@@ -1,0 +1,67 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/FACTS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/DECISIONS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/44/facts.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/44/facts.json"
+ ],
+ "alerts": [
+  {
+   "kind": "forgotten",
+   "urgency": "now",
+   "what": "Two round-44 items were not in CONTEXT at 17:40:46Z. R44-A1: the 18:13Z timer 30820 ('HOURLY RESEARCH ROUND 45 (21:13 MSK): READS-vs-CARD') is a NO-OP, and round 45 is skipped by default. R44-A4: the OPS line and the refreshed KEY FACTS. The timer fires 2 min before the first possible exp89t read header (18:15:17Z), so a ~30-min round would overlap both the read push and the 18:37Z card.",
+   "evidence": "FACTS F-RUL-46, C-357; research/wf_ideas_v4/round44/report.json R44-A1, R44-A4; research/wf_ideas_v4/round44/v_plancheck_r44-pc-02.json; CONTEXT ends at the 17:13 LIVENESS entry l.4695-4697",
+   "suggested_action": "Before 18:13Z (21:13 MSK), append the R44-A1 NO-OP line and the R44-A4 OPS/KEY FACTS line to CONTEXT. Ignore the 18:13Z notification, and do not kill 30820."
+  },
+  {
+   "kind": "deadline",
+   "urgency": "before-finals",
+   "what": "exp89t 56669888 was still PENDING at 17:35:08Z (L > 8.58 h). The refined projection (step 10:02.3) puts the read headers at 18:15:17, 18:25:19 and 18:35:22Z, T7 at ~19:15:31Z and the last header before the admit edge at ~19:35:36Z. The next one, ~19:45:38Z, falls after 19:45:17Z, so the 19:44:45Z manual-admit list is the only record in between. Decision B mapping: >= 0.960 -> T1/T2 swap line; 0.959 -> T3KEEP; <= 0.958 -> T5; a first terminal header after 19:45:17Z -> T8.",
+   "evidence": "FACTS F-RUN-65; DECISIONS section 2 [c44] snapshot; experiments/lb_poll/poll.log l.32717; experiments/lb_poll/ledger.md 17:35:10Z",
+   "suggested_action": "Run each event with the R44-A2 block: one Bash call with timeout 600000, sourced without a pipe. Send every pushtext44 line except 'CONTEXT FIRST', which goes into CONTEXT first on T1/T2. If the read lands at 18:35:22Z, one run serves both the push and the card. The user ticks by 20:00Z (23:00 MSK)."
+  },
+  {
+   "kind": "contradiction",
+   "urgency": "today",
+   "what": "Two logged rules conflict with round-44 findings until R44-A2 is logged. (1) The R41-A4 input rule still allows '--lb post_exp89t' when the watcher output contains it, but that folder does not exist and uptest.load would crash (C-358). (2) The awk first-terminal rule together with readtime.sh l.25 codes a COMPLETE row that has an empty score as T5 (C-360). The HOLD guard fixes the push, but at the next header the awk still picks the scoreless row, so a manual R41-A4 read is needed.",
+   "evidence": "FACTS C-358, C-360; CONTEXT 14:59 l.4643-4667; research/wf_ideas_v4/round44/report.json R44-A2 (d), (g); research/wf_ideas_v4/round44/report.notes.md 17:35:44Z",
+   "suggested_action": "Log R44-A2 (d) and (g) in CONTEXT before the first read header (18:15:17Z): always use the default --lb e10_20260929T1141Z; on a scoreless COMPLETE row, HOLD and take the first header with a score by hand."
+  },
+  {
+   "kind": "stale",
+   "urgency": "today",
+   "what": "The round prompt experiments/workflows/biohub-research-round.js (mtime 14:59Z) still says 'Rank #151 of 3 999, 18th of 23' (l.20), 'Slot 2: reserve effectively closed after ~14:10Z' (l.21) and 'status polls every 5 min'. Current values: #154 of 4 005 LB rows (Chrome 17:15Z), slot 2 CLOSED UNUSED since ~16:50Z, polls every ~10 min 2 s. The card rank line also has two possible denominators: 4 003 (Overview teams) and 4 005 (LB rows).",
+   "evidence": "FACTS C-338, C-345, C-352, C-355; research/wf_ideas_v4/round44/v_plancheck_r44-pc-05.json; research/wf_ideas_v4/round44/v_hyp_ops44_r44-ops-rankline-count.json",
+   "suggested_action": "If any later round runs, refresh KEY FACTS per R44-A4. At 18:37Z, run cardfix with RANKSRC 'Chrome 20:15 МСК' and '#154 из 4 005' (R44-A3). Never quote #151, #148, #141, 3 999, 3 994 or '17 из 22'."
+  },
+  {
+   "kind": "deadline",
+   "urgency": "before-finals",
+   "what": "The finals are still ticked as П3 {exp87a 56640366, #37 56563521}; the last good SELECTED read was at 12:37:31Z. SELECTED checks run at 18:37Z, 19:43Z and 21:05Z under the R43-A3 rule. An output with no 'SELECTED at' line counts as a failed read and is retried once after 60 s. A selread timeout of 90 s also counts as failed. At most 2 calls per event.",
+   "evidence": "FACTS F-RUL-45, F-RUL-46; DECISIONS section 2 [c44] tick paragraph; CONTEXT 16:43 l.4678-4694",
+   "suggested_action": "Apply the SELECTED READ RULE at each check. After two failures, send the 'проверьте сами: «2 of 2 selected»' line. The user confirms by 23:00 MSK."
+  },
+  {
+   "kind": "forgotten",
+   "urgency": "info",
+   "what": "R44-A5 changes the order of the 00:07Z post-deadline step. Stop watchdog v2 (30176/16728) FIRST, then the poller 37016, then the rest of the R43-A8 list (30864, 3028 + wrappers, 29828, 16748, awk reader 1364/19012), verifying each by exact PID. Otherwise a false 'NO CLEAN POLL' alert fires at ~00:32Z (03:32 MSK). The git add list should also cover research/wf_ideas_v4/round44/, digest_20260929T1729Z.md and the uncommitted CONTEXT 17:13 LIVENESS entry. Commit as the user with no Co-Authored-By trailer (memory rule).",
+   "evidence": "FACTS C-353, C-361, F-RUN-65; research/wf_ideas_v4/round44/report.json R44-A5; git status (untracked round44/, digest 1729Z)",
+   "suggested_action": "At 03:07 MSK on 30 Sep, run the watchdog-first stop list and check each PID with Get-Process. Then commit and check that 'git log -1 --format=%B | grep -ci co-authored' prints 0."
+  },
+  {
+   "kind": "orphan-idea",
+   "urgency": "info",
+   "what": "In discussion 744250, Selina Wu (16:04:05Z) asks whether selection locks at 23:59 UTC. There was still no host answer at 17:16Z. The only statement so far is from Chris Deotte, a participant with no staff tag: a file must finish before 23:59 UTC.",
+   "evidence": "FACTS F-LB-43, F-RUL-41; experiments/discussions/digest_20260929T1729Z.md; experiments/discussions/744250.md",
+   "suggested_action": "No action; the 23:00 MSK tick plan does not depend on the answer. If a host answer appears, quote it verbatim."
+  },
+  {
+   "kind": "risk",
+   "urgency": "info",
+   "what": "Round-44 rechecks, for the write-up only. CI creates same-frame node pairs closer than 2 um (exp87a 67 vs exp85a 17 on the dummy clips; GT has 0), with no effect on the score. exp03B's '+0.0048 real gain' is within the seed spread. The dummy-lab K-base signs are 6bba reads, and the claim that divset36 flags 44b6 as the hard case was refuted.",
+   "evidence": "FACTS F-TRN-80, C-362, C-363, C-364; research/wf_ideas_v4/round44/scan_recheck.json and v_recheck_r44-*.json",
+   "suggested_action": "Use only the corrected wordings in the post-deadline write-up. If CI is reused, add the near-pair count as a dummy gate."
+  }
+ ],
+ "summary": "Curation 44 (state 17:45 UTC / 20:45 MSK, 29 Sep; HEAD still 19149bf, no commit since curation 43). Sources since 16:45Z: CONTEXT 17:13 LIVENESS (R43-A6 census done; l.4695-4697, uncommitted; Literature now l.4698); round44 report.json 17:37:24Z (R44-A1..A5 PROPOSED, none in CONTEXT at 17:40:46Z) with its scans and skeptic verdicts; digest_20260929T1729Z; poll.log up to header 17:35:08Z (exp89t PENDING, L > 8.58 h); ledger 17:35:10Z (591 polls). FACTS.md: new state line. New rows: F-LB-43 (Chrome 17:15Z: #154; 0.959 block #144-#158; 4,005 LB rows vs 4,003 Overview teams; feed 17:29Z; 744250 unanswered), F-RUN-65 (refined poller projection 18:15:17..19:45:38Z, liveness PIDs, clean feed stop, read-time tooling hashes and traps), F-RUL-46 (LIVENESS 17:13 plus R44-A1..A5) and F-TRN-80 (RC-A/B/C rechecks). [c44] notes on F-LB-42, F-RUN-63, F-RUN-64, F-RUL-45, F-TRN-79, C-338, C-345, C-351 (resolved), C-352, C-353 and C-354 ((c) resolved). New contradictions C-355..C-365: rank denominator, edge-keying windows, round-45 timing, --lb post_exp89t, which pushtext lines to send, scoreless COMPLETE, stop order, B31 premise, exp03B gain, divset36/44b6, null-round count. DECISIONS.md: new state line; P55 cells (PENDING 17:35:08Z, L > 8.58 h, projected headers, R44-A2); section-1 [c44] paragraph; section-2 [c44] tick paragraph and a new [c44] finals snapshot (exp87a V_pub and #37 ticked; exp75 as the П2 option; exp89t pending under decision B; slot 2 closed unused; no detector hedge); [c44] notes on R1-R10 and the finals rule; a note on the ROUND 43 APPLIED row and 4 new section-3 rows (LIVENESS 17:13, FEED 17:29Z + stop, Round-44 proposals, Rejected in round 44); changelog. No probe was scored, built, pushed or submitted, and the tick is unchanged. This curator made no commit and no Kaggle calls."
+}

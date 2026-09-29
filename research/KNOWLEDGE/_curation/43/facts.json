@@ -1,0 +1,67 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/FACTS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/DECISIONS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/43/facts.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/43/facts.json"
+ ],
+ "alerts": [
+  {
+   "kind": "forgotten",
+   "urgency": "now",
+   "what": "The 17:13Z liveness census (R43-A6) is still the only part of round 43 not yet done before the quiet window. The R41-A5 PID list it would otherwise use names processes that died at the 15:59Z re-arm (w29648, w22236, w33156, w30648, w31720, w19388, w24700). Checking against that list would report false deaths and could lead to a duplicate manual_admit or t7_trigger, which means extra Kaggle calls in the 17:30-20:00Z window.",
+   "evidence": "FACTS C-351, F-RUN-64; CONTEXT 16:43 l.4678 (heading: 'A6 at 17:13Z'); research/wf_ideas_v4/round43/report.json R43-A6; research/wf_ideas_v4/round43/report.notes.md 16:30Z",
+   "suggested_action": "At 17:13Z (20:13 MSK), run the census against the R43-A6 list: 37016; 29636->30864; 29032->13708 + 3028; 24584->32220; 10924/20892; 9016->29828; 16748; timers 30820/29184/20960/24260/21232; 13072->8364; the new watchdog and the reader. Match on bash.exe command lines. Log one line and do not re-arm anything that is alive."
+  },
+  {
+   "kind": "forgotten",
+   "urgency": "today",
+   "what": "The 16:43 ROUND 43 APPLIED entry left out three proposed items. R43-A2 (b): at the 18:37Z card, read the orphan watcher output tasks/bud7lhxmi.output for 'post_exp89t: rank' with SubmissionCount 57. R43-A2 (c): after 17:36Z, check by PID that the feed loop is stopped (10924 and 20892 gone, plus b8b41p9da.output); the stop job's own 'run_feed_loop' count is unreliable. R43-A1 (4): the MSK line asking the user to keep the laptop on AC with the lid open and a stable network until 23:00 MSK. The kept jobs are orphans of the dead session, so they will not notify the new one.",
+   "evidence": "FACTS C-354, C-331, F-RUL-45; CONTEXT 16:43 l.4678-4694; research/wf_ideas_v4/round43/report.json R43-A1 (4), R43-A2 (b)/(c)",
+   "suggested_action": "After 17:36Z, run 'Get-Process -Id 10924,20892 -ErrorAction SilentlyContinue' (it must return nothing). At 18:37Z, cat bud7lhxmi.output before choosing --lb. Send the power line once if it has not been sent."
+  },
+  {
+   "kind": "stale",
+   "urgency": "today",
+   "what": "The round prompt KEY FACTS in experiments/workflows/biohub-research-round.js l.20 still say 'Rank #151 of 3 999, 18th of 23' and 'status polls every 5 min'. CONTEXT 16:43 has #154 of 4 003 (5th from the bottom of the 0.959 block) and a cadence of about 10 minutes. l.37 still lists pre_exp89t among the allowed Kaggle callers, although that job was killed at 14:48Z, and still says 'FIRST run tools/e10_snapshot.py'. Rounds 44 (17:13Z) and 45 (18:13Z) will read this stale text.",
+   "evidence": "FACTS C-338, C-345, C-342; experiments/workflows/biohub-research-round.js l.20, l.37; CONTEXT 16:43 l.4678-4694",
+   "suggested_action": "Before the 17:13Z round, refresh l.20: #154 of 4 003 (Chrome 16:15Z), cadence ~10 min, slot 2 CLOSED UNUSED. Remove pre_exp89t and the e10_snapshot instruction from l.37."
+  },
+  {
+   "kind": "deadline",
+   "urgency": "before-finals",
+   "what": "exp89t 56669888 was still PENDING at the 16:44:57Z header (L > 7.74 h). The projected clean headers are 18:15:20, 18:25:22 and 18:35:25Z. T7 is at about 19:15:35Z. The last header before the admit edge is about 19:35:40Z. The next one, about 19:45:42Z, falls after 19:45:17Z, so the 19:44:45Z manual-admit list is the only record in between; the reader armed for it waits until 19:47Z. Decision B mapping: >= 0.960 -> T1/T2 swap line; 0.959 -> T3KEEP; <= 0.958 -> T5; a first terminal header after 19:45:17Z -> T8. --hdr must come from the awk first-terminal one-liner. Add the ins-tail? note by hand for T1 when L_lo > 9.6 h.",
+   "evidence": "FACTS F-RUN-63, F-RUL-43, F-RUL-45; DECISIONS section 2 [c43] snapshot; experiments/lb_poll/poll.log l.32412; experiments/lb_poll/ledger.md 16:44:59Z",
+   "suggested_action": "Follow the logged chain: read -> 18:37Z card (a19e1bd6, Chrome rank line) -> T7 -> manual-admit reader. The user ticks by 20:00Z (23:00 MSK)."
+  },
+  {
+   "kind": "deadline",
+   "urgency": "before-finals",
+   "what": "The finals are still ticked as П3 {exp87a 56640366, #37 56563521}; the last good API read was at 12:37:31Z. SELECTED checks run at 18:37Z, 19:43Z and 21:05Z under the new SELECTED READ RULE. An output with no 'SELECTED at' line counts as a FAILED read: retry once after 60 s, and never send a 'wrong pair' alarm because of it. If both attempts fail, ask the user to check '2 of 2 selected' themselves.",
+   "evidence": "FACTS F-RUL-45, C-349; DECISIONS section 2 [c43] paragraph; CONTEXT 16:43 l.4678-4694 (A3)",
+   "suggested_action": "Apply the R43-A3 rule at each check. Only a successful read with != 2 refs, or with refs outside the R39-A4 comparator, triggers the push."
+  },
+  {
+   "kind": "risk",
+   "urgency": "info",
+   "what": "The 15:08Z switch to battery caused a network loss. Three polls failed (15:19:43, 15:31:24, 15:43:04Z), and round 42 was lost without anyone noticing. Watchdog v2 now alerts on 25 min without a clean poll. During a real outage this session is offline too, so the alert only arrives after the fact. The user's own '2 of 2 selected' check before 23:00 MSK remains the last line of defence.",
+   "evidence": "FACTS F-RUN-63, F-RUL-44, C-344; CONTEXT 15:59 l.4668-4677, 16:43 l.4678-4694; experiments/lb_poll/poll.log l.32101-32107",
+   "suggested_action": "Keep the laptop on AC until 23:00 MSK (it was on AC at 65% at 16:14Z). After any watchdog alert, first read the waiter, t7, timer and reader outputs, then re-arm."
+  },
+  {
+   "kind": "forgotten",
+   "urgency": "info",
+   "what": "The 00:07Z post-deadline step (R41-A7 + R43-A8) must add research/wf_ideas_v4/round4*/ and experiments/lb_poll/_admit_subs.* to git, and keep _night_subs.csv/.err and e10_20260929T1141Z. It must stop 37016, 30864, 3028, 32220, 29828, 16748 and 8364, the reader and watchdog v2, and verify each with Get-Process. Commit as the user with NO Co-Authored-By trailer; the memory rule overrides the harness reminder.",
+   "evidence": "FACTS C-353, C-334; research/wf_ideas_v4/round43/report.json R43-A8; research/wf_ideas_v4/round41/report.json R41-A7; git status (untracked e10_20260929T1141Z, _night_subs.*)",
+   "suggested_action": "At 00:07Z on 30 Sep (03:07 MSK), run the combined R41-A7/R43-A8 list. Then check that 'git log -1 --format=%B | grep -ci co-authored' prints 0, and push."
+  },
+  {
+   "kind": "orphan-idea",
+   "urgency": "info",
+   "what": "Discussion 744250 has two participant questions with no host answer: when selection locks (at 23:59Z too?) and whether private results are released at 02:00Z. The only statement so far is Chris Deotte's 12:57Z line: a file must finish before 23:59 UTC.",
+   "evidence": "FACTS F-LB-42, F-RUL-41; experiments/discussions/digest_20260929T1559Z.md; research/wf_ideas_v4/round43/scan_browser.json r43-744250-selection-lock-question",
+   "suggested_action": "During the round-44 Chrome look (R43-A6), quote any host answer verbatim. The 23:00 MSK tick plan does not change either way."
+  }
+ ],
+ "summary": "Curation 43 (state 16:45 UTC / 19:45 MSK, 29 Sep; HEAD 19149bf). No curation-42 output exists, because round 42 was lost to the 15:08Z battery and network drop. Sources since curation 41: CONTEXT 14:59 ROUND 41 APPLIED (l.4643-4667, 55ec8ab), 15:59 OPS round 42 lost / session restart / jobs re-armed (l.4668-4677, 369b065) and 16:43 ROUND 43 APPLIED (l.4678-4694, 19149bf); round42/scan_browser (Chrome down); round43 report.json, notes, scans and verdicts; digest 1559Z; ledger 16:44:59Z; poll.log up to header 16:44:57Z (exp89t PENDING, L > 7.74 h). Key changes: w36816 was killed at ~14:48Z. The decision-B T7 and manual-admit texts and the builder a19e1bd6 are logged. Three polls failed at 15:19-15:43Z. The watchdog was replaced (clean headers only), a manual-admit reader was armed, the SELECTED READ RULE was added, and --hdr now comes from the awk first-terminal header with a manual ins-tail? note. The card rank line is #154 of 4,003 (Chrome 16:15Z). SLOT 2 is CLOSED UNUSED from ~16:50Z. The poller cadence is about 10 min. The tick is unchanged: П3 {exp87a, #37}; V_pub exp87a 0.959; decision B. FACTS.md: new state line; new rows F-LB-42, F-RUN-63, F-RUN-64, F-RUL-43, F-RUL-44, F-RUL-45, F-TRN-79; [c43] notes on F-LB-41, F-RUN-61, F-RUN-62, F-RUL-42, C-327, C-331, C-335..C-338, C-342, C-343 (C-327, C-335, C-336, C-337, C-343 resolved); new C-344..C-354, of which C-344, C-346..C-350 and C-352 were resolved by the 16:43 entry, C-345 is half resolved (round prompt still says 5 min), C-354 is partly resolved, and C-351 (17:13Z) and C-353 (00:07Z) are open. DECISIONS.md: new state line; P55 cells; section-1 [c43] paragraph; section-2 [c43] tick paragraph and a new [c43] finals snapshot (16:45Z; exp87a V_pub + #37 ticked, exp75 П2 option, exp89t pending under B, slot 2 closed unused, no detector hedge); [c43] notes on R1-R10 and §f; notes on the R40 APPLIED and R41 proposal rows; 6 new section-3 rows (R41 APPLIED, OPS 15:59, FEED 15:59Z, R43 proposals, rejected in r43, R43 APPLIED); changelog. Note: commit 19149bf (made by the main session) swept in the first curation-43 FACTS patch and partial notes; this curator made no commit."
+}

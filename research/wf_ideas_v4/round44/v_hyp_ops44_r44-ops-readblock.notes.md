@@ -1,0 +1,14 @@
+# v_hyp_ops44 r44-ops-readblock notes
+- 17:28Z start; no prior answer file.
+- 17:28Z hashes verified: readtime.sh befef6fb, msg44.py 233e5ba5, cardfix44.py af903431, mk_card_dry.py 08936bdf, real mk_card_1837.py a19e1bd6; no <SP>/card_1837_*.txt exists (real card path untouched).
+- 17:30Z re-ran readtime.sh + pushtext44 (SELMOCK, 0 Kaggle calls) on all 11 fake logs: codes/L values/texts match the finding (T1 9.25/9.42, T1err F=1 9.48, instail L_lo 9.75 note on, T2 10.09/10.26 '~N мин', T3KEEPlate 'после 22:12 МСК', T5 '−0.001 (−0.002..0.000)', T6 '9,4 ч', T8 19:45:42Z, ADMIT->T2 L_hi 10.74, PENDING no push).
+- Real poll.log (PENDING, last clean header 17:25:06Z) + SELMOCK=FAIL: fallback 12:37:31Z, 'Не смог проверить' line, case a. OK.
+- Case b (П2 ticked): T1 -> b_old + П2 swap text; T5 -> П2 ending. N=1 -> case d + 'send steps() line'. OK.
+- DEFECT 1: T1/T2 + 2 failed SELECTED reads -> pushtext44 line 1 = 'Не смог проверить…' and the promotion text is line 2; the rule 'send line 1' would drop the untick/tick instructions. Send all lines except 'CONTEXT FIRST'.
+- DEFECT 2: worst-case wall time 90+60+90 s (+card build) > Bash tool default 120 s timeout -> pass timeout 300000 on that Bash call.
+- DEFECT 3 (edge, fail-loud): COMPLETE with empty score -> awk treats as 0 -> code T5, msg44 float('') crash. 0 such rows in poll.log history; the READ line shows disp=none -> wait for the next poll.
+- Cosmetic: T8 text 'прочитан только в 22:45 МСК … позже края 22:45 МСК' when header 19:45:42Z (minutes rounding).
+- Rank line source OK: scan_plancheck R44-PC-01 Chrome 17:14:40Z (20:14 MSK) #154 of 4 003, block to #158.
+- mk_card guard: --lhi must be within +0.2 h of hdr-T0 -> F<=3 failed attempts ok (F=4 would trip the assert; fail-loud).
+- MY SIDE EFFECT (disclose): a no-write test of cardfix44 failed to patch out the write, so r44dry/card_1837_T1.txt (now with ins-tail note, sha8 2740f42e) and r44dry/card_1837_T3KEEP.txt (20d315a8) were rewritten by cardfix. Dry artefacts only; real <SP>/card_1837_* untouched. Do not treat r44dry cards as evidence.
+- Verdict: not refuted (ops tool, no model/private value claim; pure fail-soft plumbing, 0-2 Kaggle calls/event) with 3 fixes.

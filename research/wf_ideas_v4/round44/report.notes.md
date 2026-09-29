@@ -1,0 +1,12 @@
+- 17:32:22Z round44 report start; report.json absent; inputs = scan_*.json + v_*.json in round44/
+- 17:33Z feed: experiments/discussions/feed_loop.log rc=0 at 17:29:24Z; digest experiments/discussions/digest_20260929T1729Z.md = 1 "new" comment = Selina Wu 744250 16:04:05Z (lock-time question, already seen in R43/R44 browser); public notebooks max 0.953; E10 FLAG none.
+- 17:33:14Z Win32_Process: feed loop 10924/20892 GONE, feed stop job 32220 GONE, 0 processes with kaggle_feed.py -> R44-PC-06 resolved (clean stop, no orphan).
+- 17:33-17:34Z alive: poller 37016; old watcher 30864; manual_admit 3028 (w29032/13708); exp89t waiter 29828; t7_trigger 16748 (w34124/6344); timers 18:13Z 30820 (w18108/28716), 18:37Z 29184 (w12616/30288), 19:43Z 20960 (w37052/21048), 21:05Z 24260 (w9828/22556), 00:07Z 21232 (w23564/35912); watchdog v2 30176/16728; awk reader 1364/19012.
+- poll.log: newest clean header 17:25:06Z, 56669888 PENDING. Clean run since 15:54:45Z (n=10) step 10:02.33 -> projected 17:35:08 17:45:10 17:55:12 18:05:15 18:15:17 18:25:19 18:35:22 18:45:24 18:55:26 19:05:29 19:15:31(T7) 19:25:33 19:35:36 19:45:38Z.
+- poll.log columns: ref,fileName,date,description,status,publicScore,privateScore (readtime.sh DISP grep takes publicScore - correct).
+- r44dry hashes rechecked 17:33Z: readtime.sh befef6fb, msg44.py 233e5ba5, cardfix44.py af903431, mk_card_dry.py 08936bdf; real mk_card_1837.py a19e1bd6; no <SP>/card_1837_*.txt.
+- Dry run (SELMOCK=FAIL, LOG=r44dry/poll_T1.log, 0 calls; output scratchpad r44rep_t1fail.txt): pushtext44 line 1 = 'Не смог проверить отметку финалов…', line 2 = T1 promotion text, line 3 = 'CONTEXT FIRST: RECOMMENDED PAIR…' -> confirms skeptic fix (b): send all lines but CONTEXT FIRST.
+- readtime.sh l.25: DISP empty on COMPLETE -> d+0 = 0 -> T5 (skeptic gap 3). Guard for the main session: after sourcing, if status=COMPLETE and disp=none -> no push / no card, wait next header.
+- Round 43 did not write REPORT.md (subagent rule against report .md files); same here: REPORT_RU goes into next_focus for the main session to save.
+- 17:35:44Z guard dry test OK (scratchpad r44rep_guard.txt: COMPLETE,, -> READ code=T5 disp=none -> HOLD line printed, no push). Caveat: at the next header awk still picks the first (scoreless) COMPLETE row -> manual path needed if HOLD repeats. Writing report.json now.
+- 17:37:24Z report.json written (A1-A5; REPORT_RU in next_focus).

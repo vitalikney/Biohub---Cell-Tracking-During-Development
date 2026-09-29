@@ -5,3 +5,7 @@
 - plan FACTS: state line; new F-LB-42, F-RUN-63, F-RUN-64, F-RUL-43, F-RUL-44, F-TRN-79; [c43] notes F-LB-41, F-RUN-61, F-RUN-62, F-RUL-42, C-327, C-331, C-335..C-338, C-342, C-343; new C-344..C-354
 - plan DECISIONS: state line; P55 cells; §1 [c43] para; §2 [c43] tick para + [c43] snapshot; R1-R10/§f [c43]; §3 notes on R40 APPLIED / R41 proposals rows + new rows (R41 APPLIED, OPS 15:59, round 42 partial, FEED 15:59Z, R43 proposals, rejected r43); changelog
 - 16:43Z FACTS.md patched (c43_facts.py): state, 6 new F rows, 13 [c43] notes, C-344..C-354
+- 16:45Z DECISIONS.md patched (c43_dec.py): state, P55 cells, §1 para, §2 tick para + [c43] snapshot (17 rows), R1-R10/§f [c43], 2 §3 row notes + 5 new §3 rows, changelog; cell counts verified
+- 16:46Z NEW: commit 19149bf (16:43:52Z) 'Round 43 applied' (CONTEXT 16:43 l.4678-4694, A1-A5, A7; A6 at 17:13Z, A8 at 00:07Z; Literature l.4695); it also committed my FACTS.md c43 patch + partial notes; round prompt l.20 still #151 / 'every 5 min'; header 16:44:57Z exp89t PENDING -> follow-up patch c43b
+- 16:48Z c43b follow-up applied (FACTS: state, F-RUN-63/64 notes, new F-RUL-45, C-344..C-354 statuses; DECISIONS: state, P55, §1/§2 paras, snapshot exp89t/slot 2, R5/R7/R8/§f, R43 row, new ROUND 43 APPLIED row, changelog); tables verified
+- 16:49Z facts.json written (8 alerts). Done.

@@ -1863,3 +1863,124 @@ Curator logs: `research/KNOWLEDGE/_curation/4/`.
 - **Curator disagreements settled:**
   - KEY FACTS: ideas and facts [today] vs watch [now] -> [now] (edge 15:13Z);
   - 00:07Z step: ideas [before-finals] vs facts and watch [info] -> [info].
+
+## 43 - 2026-09-29 ~16:55 UTC (curation 43; no curation 42, because round 42 was lost to the 15:08Z network drop; git HEAD 19149bf = 2fcbedd + 55ec8ab (14:59:59Z ROUND 41 APPLIED; round41/ + curation 41 committed; KEY FACTS l.20 refreshed) + 369b065 (15:59:25Z OPS: round 42 lost, session restart, jobs re-armed; digest 1559Z, 744250.md) + 19149bf (16:43:52Z ROUND 43 APPLIED; round42/ + round43/ committed, together with the first curation-43 FACTS patch and the WATCHLIST); uncommitted `research/KNOWLEDGE/*` curation-43 edits, `experiments/lb_poll/ledger.md`, `poll.log`; untracked `research/KNOWLEDGE/_curation/43/*.json`, `experiments/lb_poll/_lb/e10_20260929T1141Z/`, `_night_subs.csv`, `_night_subs.err`)
+
+**Sources since curation 41:** 3 commits (`git log 2fcbedd..19149bf`). `CONTEXT.md` went from 4,663 to 4,715 lines, with 3 new entries: l.4643-4667 (14:59Z ROUND 41 APPLIED), l.4668-4677 (15:59Z OPS) and l.4678-4694 (16:43Z ROUND 43 APPLIED; A6 at 17:13Z, A8 at 00:07Z). `## 9. Literature` is now at l.4695. Round 42 (`research/wf_ideas_v4/round42/`) has only its browser scan; the other 8 agents failed on ECONNRESET / ENOTFOUND. Round 43 is in `research/wf_ideas_v4/round43/report.json` (R43-A1..A8, 16:36Z; 12 verdicts, all upheld; no REPORT.md). Feed: `experiments/discussions/digest_20260929T1559Z.md`. Poll headers run to 16:44:57Z (`experiments/lb_poll/poll.log` l.32412). A local read-only Get-Process census ran at 16:54Z (`_curation/43/index.notes.md`); there were no Kaggle calls.
+
+**LB:** no new score. P55 exp89t (56669888) is PENDING (L > 7.74 h at 16:44:57Z). V_pub stays exp87a at 0.959. Rank moved from #151 of 3,999 to **#154 of 4,003** (Chrome 16:15Z), 5th from the bottom of the 0.959 block (`FACTS.md` F-LB-42 l.279). The poller cadence is ~602 s, not 5 min, so T7 falls at ~19:15:35Z and the last admissible header at ~19:35:40Z (`FACTS.md` F-RUN-63 l.347). The tick is unchanged: П3 {exp87a, #37}.
+
+**User decisions:** none since 13:34Z decision B (`CONTEXT.md` l.4607-4617).
+
+**Ops:** at 15:08Z the laptop went on battery and the network dropped. Polls failed at 15:19:43, 15:31:24 and 15:43:04Z; round 42 was lost and the session restarted. Local jobs were re-armed at ~15:59Z. Poller 37016, manual_admit 3028, old watcher 30864 and feed stop 32220 were kept as orphans of the dead session (`CONTEXT.md` l.4668-4677; `FACTS.md` F-RUL-44 l.397). Slot 2 is CLOSED UNUSED from ~16:50Z (`CONTEXT.md` l.4678-4694 A7).
+
+**Ideas** (`IDEAS.md` CHANGES (43) l.247; `ideas.json` meta.curations[-1], 41 records; `_curation/43/ideas.json`):
+- **New I-609..I-616:**
+  - in-plan, logged 16:43Z: I-609 watchdog v2; I-610 orphan-job readers (only (a) logged); I-611 failed SELECTED read != wrong pair; I-612 awk `--hdr` + ins-tail by hand; I-613 Chrome rank line; I-614 slot 2 closed + cadence facts;
+  - refuted: I-615 exp11 as private evidence for knob levers (R43-RC-B); I-616 detector-side hedge partner (R43-RC-C).
+- **Status moves:**
+  - off the at-risk list (logged 14:59Z): I-601, I-602, I-603, I-604;
+  - updated: I-259 (KEY FACTS still stale), I-497 / I-510 (drop, restart), I-529 (R43-A6 list), I-586 / I-588 / I-597 (re-armed or orphaned), I-486, I-526, I-584 (744250 lock question), I-594 / I-575, I-607 (R43-A8 lists);
+  - rechecks upheld: I-413 / I-500 (CI marks), I-194 (exp11), I-100 / I-155 (detector).
+- **Counts c41 -> c43:** 608 -> 616 ideas; refuted 279 -> 281, in-plan 184 -> 190; lb-tested 65, lab-tested 28, deferred 50 and open 2 unchanged. At-risk 13 -> 9; strict orphan I-233 (`IDEAS.md` ORPHANS l.999).
+
+**Facts and decisions** (`FACTS.md` and `DECISIONS.md` rows marked [c43]; `_curation/43/facts.json`; state 16:45Z):
+- **New facts:** F-LB-42 (l.279); F-RUN-63 pending state, drop, cadence, F-RUN-64 process state (l.347-348); F-RUL-43 R41 APPLIED, F-RUL-44 OPS 15:59, F-RUL-45 R43 APPLIED (l.396-398); F-TRN-79 round-43 rechecks (l.542).
+- **Contradictions:**
+  - resolved: C-327, C-335, C-336, C-337, C-343;
+  - new C-344..C-354 (l.891-901). Resolved at 16:43Z: C-344, C-346..C-350, C-352. Half resolved: C-345 (prompt still says 5 min). Open: C-351 (census 17:13Z), C-353 (00:07Z lists), C-354 (partly; orphan readers (b)/(c)).
+- **DECISIONS.md:** §1 [c43] l.574; §2 [c43] snapshot l.1019-1021 (exp87a + #37 ticked, exp75 the П2 option, exp89t pending under B, slot 2 closed, no detector hedge); §3 [c43] rows l.1908-1913 (R41 APPLIED, OPS 15:59, FEED 15:59Z, R43 proposals, rejected in round 43, R43 APPLIED); changelog l.2131.
+
+**Watchlist** (`WATCHLIST.md`, ~16:45Z; `_curation/43/watch.json`):
+- done: W373, W375, W377, W378, W381 (round 41);
+- partly done: W380 (the prompt still has 3 stale phrases);
+- new: W383-W390 (= R43-A1..A8), W391, T237-T240, C24-C30, I462-I473;
+- still open: W126.
+- The watch curator's snapshot (~16:40Z) predates the 16:43Z entry. Its [now] alerts W383 (blind watchdog) and W384 (reader) and its W391 are closed by `CONTEXT.md` l.4678-4694 and 19149bf; the 16:54Z census found 5024/22680 gone.
+
+**Alerts** (`INDEX.md` TOP ALERTS, 11 after dedup):
+- **Resolved since curation 41:**
+  - kill w36816 (done ~14:48Z; gone at 16:54Z);
+  - builder patch a19e1bd6;
+  - R41-A2 texts;
+  - R41-A4 input rules;
+  - ROUND 41 APPLIED logged;
+  - blind watchdog replaced;
+  - manual-admit reader armed;
+  - ROUND 43 logged and committed;
+  - SLOT 2 CLOSED UNUSED logged;
+  - failed-read rule.
+- **New:**
+  - [now] R43-A6 census with the round-43 PID list;
+  - [today] R43-A2 (b)/(c) and the power line, not logged;
+  - [today] awk `--hdr`, hand-added ins-tail note, Chrome rank line + grep check;
+  - [before-finals] new header timing (T7 ~19:15:35Z, last ~19:35:40Z, manual-admit the only record before the edge);
+  - [before-finals] SELECTED failed-read rule;
+  - [today] 744250 lock question;
+  - [info] network/power risk.
+- **Carried over:**
+  - [now] KEY FACTS refresh (now the third; still stale);
+  - [before-finals] hindsight guard I-336 / I-407 / I-252 / I-516;
+  - [before-finals] 00:07Z step, now R41-A7 + R43-A8 with the orphan PIDs;
+  - [info] RESULTS P47-P55 and REPORT.md for rounds 37-43.
+- **Curator disagreements settled:**
+  - KEY FACTS: [now] (edge 17:13Z);
+  - census: [now];
+  - 744250: [today];
+  - 00:07Z step: [before-finals] (2 of 3 curators).
+
+## 44 - 2026-09-29 ~17:50 UTC (curation 44; git HEAD 19149bf, no commit since curation 43; uncommitted `CONTEXT.md` 17:13 LIVENESS, `research/KNOWLEDGE/*` curation-44 edits, `experiments/lb_poll/ledger.md`, `poll.log`, feed files; untracked `research/wf_ideas_v4/round44/` (no REPORT.md), `research/KNOWLEDGE/_curation/44/`, `experiments/discussions/digest_20260929T1729Z.md`, `experiments/lb_poll/_lb/e10_20260929T1141Z/`, `_night_subs.*`)
+
+**Sources:** `CONTEXT.md` l.4695-4697 (17:13Z LIVENESS, uncommitted; `## 9. Literature` now l.4698); `research/wf_ideas_v4/round44/` (untracked; report.json 17:37:24Z R44-A1..A5, 4 scans, 12 v_*.json, no REPORT.md); `experiments/discussions/digest_20260929T1729Z.md`; `experiments/lb_poll/poll.log` to the 17:45:10Z header (l.32778); `experiments/lb_poll/ledger.md` 17:45:13Z; `research/KNOWLEDGE/_curation/44/{ideas,facts,watch}.json`. Git HEAD is still 19149bf; no commit since curation 43.
+
+**LB:** no new score. P55 exp89t (56669888) is PENDING at 17:45:10Z, L > 8.74 h (`poll.log` l.32781; `IDEAS.md` I-486). Rank is unchanged at #154 (Chrome 17:15Z), but the denominator is now 4,005 LB rows (the Overview shows 4,003 teams) (`FACTS.md` F-LB-43 l.281, C-355). The poller step is refined to 10:02.3: read headers 18:15:17 / 18:25:19 / 18:35:22Z, T7 ~19:15:31Z, last admissible ~19:35:36Z (`FACTS.md` F-RUN-65 l.351). The tick is unchanged: П3 {exp87a, #37}.
+
+**User decisions:** none since 13:34Z decision B (`CONTEXT.md` l.4607-4617).
+
+**Ops:** the 17:13Z LIVENESS census (R43-A6) is logged. The feed ran at 17:29:24Z (rc=0) and stopped cleanly (0 kaggle_feed.py at 17:33:14Z). The laptop is on AC (79% at 17:40Z) (`CONTEXT.md` l.4695-4697; `round44/report.notes.md` 17:33:14Z). Round 44's R44-A1..A5 are PROPOSED and **not in CONTEXT** (`FACTS.md` F-RUL-46 l.402).
+
+**Ideas** (`IDEAS.md` CHANGES (44) l.249; `ideas.json` meta.curations[-1], 39 records; `_curation/44/ideas.json`):
+- **New I-617..I-626:**
+  - in-plan: I-617 round 45 = NO-OP (at risk); I-620 read-time block (at risk); I-623 log L_hi when F >= 1; I-624 watchdog-first 00:07Z stop order (at risk);
+  - deferred: I-625 CI near-pair dummy gate;
+  - refuted: I-618 late round 45; I-619 killing timer 30820; I-621 line-1-only push; I-622 `--lb post_exp89t`; I-626 'divset36 flags 44b6'.
+- **Updated:** I-486, I-613 / I-526, I-614 / I-259, I-597 / I-610, I-529, I-556 (twelfth null round), I-584 (Deotte is not the host), I-611 / I-612 (folded into I-620), I-134 / I-401 / I-097 / I-098 / I-193 / I-512 / I-513 / I-252 (rechecks RC-A/B/C).
+- **Counts c43 -> c44:** 616 -> 626 ideas; refuted 281 -> 286, in-plan 190 -> 194, deferred 50 -> 51; lb-tested 65, lab-tested 28 and open 2 unchanged. At-risk 9 -> 13 (I-614 back on the list, plus I-617, I-620, I-624); strict orphan I-233 (`IDEAS.md` ORPHANS l.1011).
+
+**Facts and decisions** (`FACTS.md` and `DECISIONS.md` rows marked [c44]; `_curation/44/facts.json`; state 17:45Z):
+- **New facts:** F-LB-43 (l.281); F-RUN-65 (l.351); F-RUL-46 (l.402); F-TRN-80 (l.547). [c44] notes on F-LB-42, F-RUN-63, F-RUN-64, F-RUL-45, F-TRN-79.
+- **Contradictions:**
+  - resolved: C-351 (census done 17:13Z); C-354 (c) (feed stop verified);
+  - new C-355..C-365 (l.907-917): rank denominator, edge keying, round-45 timing, `--lb post_exp89t`, which pushtext lines, scoreless COMPLETE, stop order, B31 premise, exp03B gain, divset36/44b6, null-round count;
+  - still open: C-338 / C-345 (prompt KEY FACTS), C-353 (00:07Z lists, now with the order from C-361).
+- **DECISIONS.md:** §1 [c44] l.577; §2 [c44] snapshot l.1024-1026 (exp87a + #37 ticked, exp75 the П2 option, exp89t pending under B, slot 2 closed unused, no detector hedge); §3 [c44] rows l.1939-1942 (LIVENESS 17:13, FEED 17:29Z + stop, round-44 proposals, rejected in round 44); changelog l.2162.
+
+**Watchlist** (`WATCHLIST.md`, ~17:45Z; `_curation/44/watch.json`):
+- done: W383 (watchdog v2), W384 (reader), W388 (census), W391; C26-C28 resolved;
+- partly done: W385 (CONTEXT line in, prompt l.20 / l.37 still stale);
+- new: W392-W397 (= R44-A1..A5 + bookkeeping), T241-T243, C31-C35, I474-I484; T226 and T238 superseded;
+- still open: W126.
+
+**Alerts** (`INDEX.md` TOP ALERTS, 11 after dedup):
+- **Resolved since curation 43:**
+  - R43-A6 census;
+  - feed stop and orphan check (R43-A2 (c));
+  - watchdog v2 and reader confirmed;
+  - R43-A2 (b) `post_exp89t` branch, dropped by R44-A2 (g).
+- **New:**
+  - [now] round 44 not logged before the 18:13Z timer;
+  - [now] read-time block traps;
+  - [today] card inputs (`--lb` default, '#154 из 4 005');
+  - [today] edge keying and the L_hi log;
+  - [before-finals] 00:07Z stop order with watchdog v2 first;
+  - [info] Deotte is not the host;
+  - [info] write-up rechecks RC-A/B/C.
+- **Carried over:**
+  - [before-finals] exp89t timing (new phase, T241);
+  - [before-finals] SELECTED checks;
+  - [before-finals] hindsight guard;
+  - [info] RESULTS P47-P55 and the stale prompt.
+- **Curator disagreements settled:**
+  - read-time block: [now] (first header 18:15:17Z);
+  - 00:07Z step: [before-finals] (2 of 3 curators);
+  - Deotte / 744250: [info] (2 of 3 curators).

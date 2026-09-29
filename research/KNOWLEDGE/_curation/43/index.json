@@ -1,0 +1,74 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/INDEX.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/CHANGES.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/43/index.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/43/index.json"
+ ],
+ "alerts": [
+  {
+   "kind": "stale",
+   "what": "The round-prompt KEY FACTS are still stale. biohub-research-round.js l.20 says 'polls every 5 min', '#151 of 3 999', 'T7 trigger ~19:20Z' and 'S0 tags pre_exp89t'. l.37 allows pre_exp89t and the e10_snapshot fallback. Rounds 44 and 45 would be briefed with these old values.",
+   "evidence": "experiments/workflows/biohub-research-round.js l.20, l.37 (grep 16:54Z); CONTEXT.md l.4678-4694; FACTS.md C-345; WATCHLIST.md C24/C25",
+   "suggested_action": "Before the 17:13Z (20:13 MSK) round: ~10 min cadence, #154 of 4 003 (Chrome 16:15Z), T7 ~19:15:35Z, last admissible header ~19:35:40Z, slot 2 CLOSED UNUSED; drop pre_exp89t and e10_snapshot.",
+   "urgency": "now"
+  },
+  {
+   "kind": "forgotten",
+   "what": "The R43-A6 liveness census is due at 17:13Z. It must use the round-43 PID list. The R41-A5 list names PIDs that died at 15:59Z, so using it would report false deaths and could cause duplicate Kaggle-calling re-arms.",
+   "evidence": "research/wf_ideas_v4/round43/report.json R43-A6; FACTS.md C-351; local census 16:54Z in research/KNOWLEDGE/_curation/43/index.notes.md",
+   "suggested_action": "20:13 MSK (17:13Z): census 37016; 30864, 3028, 32220; 10924/20892; 29828, 16748, 8364; timers 30820/29184/20960/24260/21232; watchdog v2; reader. Log one line and re-arm nothing that is alive.",
+   "urgency": "now"
+  },
+  {
+   "kind": "forgotten",
+   "what": "R43-A2 (b) and (c) and the R43-A1 (4) power line are not in the 16:43Z entry. (b) is reading bud7lhxmi.output before choosing --lb at 18:37Z. (c) is checking by PID after 17:36Z that the feed loop has stopped.",
+   "evidence": "research/wf_ideas_v4/round43/report.json R43-A1 (4), R43-A2; CONTEXT.md l.4678-4694; FACTS.md C-354",
+   "suggested_action": "20:36 MSK: Get-Process -Id 10924,20892 must return nothing. 21:37 MSK: cat bud7lhxmi.output, and pass '--lb post_exp89t' only with 'post_exp89t: rank' and count 57. Send the AC/lid/network line once.",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "Several exp89t read and card safeguards are manual only: take --hdr from the awk first-terminal header, add the ins-tail note by hand, and overwrite the stale '#141 из 3 994' rank line. The header timing has also changed: T7 is at ~19:15:35Z and ~19:35:40Z is the last header before the 19:45:17Z edge, so the manual-admit list is the only record before the edge.",
+   "evidence": "CONTEXT.md l.4678-4694 A4, A5, A7; research/wf_ideas_v4/round43/scan_plancheck.json PC43-03/06; FACTS.md F-RUN-63",
+   "suggested_action": "At the read and the 18:37Z build: awk header, recompute --lhi, ins-tail note only on T1 with L_lo > 9.6 h, Chrome rank line plus grep check, log the sha8.",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "SELECTED checks at 18:37, 19:43 and 21:05Z follow R43-A3: a failed read is retried once and never raises a wrong-pair push. The finals tick stays П3 {exp87a 56640366, #37 56563521}, and the user ticks by 20:00Z. exp89t replaces exp87a only at >= 0.960 (decision B).",
+   "evidence": "CONTEXT.md l.4607-4617, l.4678-4694 A3; DECISIONS.md §2 [c43] l.1019-1021",
+   "suggested_action": "Apply the failed-read rule at each check. If both reads fail, ask the user to check '2 of 2 selected'.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "deadline",
+   "what": "The hindsight-guard items I-336, I-407, I-252 and I-516 are still at risk.",
+   "evidence": "IDEAS.md l.1009-1017; CONTEXT.md l.4593-4606; research/wf_ideas_v4/risk_audit/results.json",
+   "suggested_action": "Before 23:00Z (02:00 MSK), push one prediction commit that quotes the audit grid, plus the I-407 line.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "forgotten",
+   "what": "The 00:07Z post-deadline step (R41-A7 + R43-A8) needs the extended stop list including the orphans, the extended git-add list, and no Co-Authored-By trailer.",
+   "evidence": "research/wf_ideas_v4/round43/report.json R43-A8; FACTS.md C-353; git status (untracked e10_20260929T1141Z, _night_subs.*)",
+   "suggested_action": "03:07 MSK 30 Sep: save final_0007Z, 1 SELECTED read, stop and verify all PIDs, git add the evidence, commit as the user, and check that the grep for co-authored prints 0.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "Discussion 744250 has two unanswered questions: when finals selection locks and whether private results are released at 02:00Z.",
+   "evidence": "experiments/discussions/744250.md; FACTS.md F-LB-42; WATCHLIST.md T239",
+   "suggested_action": "Round-44 Chrome look: quote any host answer verbatim. The tick plan stays unchanged.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "RESULTS.md stops at P46, and rounds 37-43 have no REPORT.md.",
+   "evidence": "experiments/RESULTS.md; research/wf_ideas_v4/round43/ (no REPORT.md)",
+   "suggested_action": "After the tick: add rows P47-P55 and render the REPORT.md files.",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation-43 index is done (~16:55Z / 19:55 MSK; HEAD 19149bf). There is no curation 42, because round 42 was lost to the 15:08Z network drop.\n\nresearch/KNOWLEDGE/INDEX.md was rewritten in 74 lines. It has 10 state lines:\n- the П3 tick is unchanged;\n- exp87a 0.959 is V_pub, rank #154 of 4,003;\n- exp89t is PENDING at 16:44:57Z, L > 7.74 h, with a ~10 min cadence;\n- the decision-B mapping;\n- the 15:08Z drop and the 15:59Z re-arm;\n- round 43 applied at 16:43Z, slot 2 closed unused;\n- the 16:54Z census;\n- the stale round prompt;\n- the audit;\n- a timeline of decision points in MSK and UTC.\nIt also has a map with fresh line anchors, 8 top open ideas and 11 deduplicated alerts. Curator disagreements were settled: KEY FACTS [now], census [now], 744250 [today], 00:07Z step [before-finals].\n\nThe watch curator wrote before the 16:43Z entry. Its [now] alerts W383 (blind watchdog), W384 (reader) and W391 are closed by CONTEXT l.4678-4694 and 19149bf. A read-only Get-Process census at 16:54Z confirms 5024/22680 and 36816 are gone and that the orphans, waiters, poller and feed loop are alive.\n\nThe curation-43 section was appended to research/KNOWLEDGE/CHANGES.md. It covers:\n- ideas: 608 -> 616 (I-609..I-616);\n- counts: refuted 281, in-plan 190; at-risk 13 -> 9;\n- new facts: F-LB-42, F-RUN-63/64, F-RUL-43..45, F-TRN-79;\n- contradictions C-344..C-354;\n- watchlist: W383-W391, T237-T240, C24-C30, I462-I473;\n- alerts resolved, new and carried over.\n\nNo commit, no Kaggle calls, and no other files touched."
+}

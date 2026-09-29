@@ -1,0 +1,6 @@
+- 2026-09-29 17:39Z start round 44 watch; no prior 44/watch.json
+- 17:41Z read CONTEXT l.4640-4697 (16:43Z R43 applied, 17:13Z liveness); poll newest 17:35:08Z PENDING L>8.58h; feed 17:29:24Z; round44 report 17:37Z
+- 17:43Z census (Win32_Process, read-only): matches R44 17:34Z list; feed loop gone; watchdog v2 30176/16728, reader 1364/19012 alive; AC 79%; round prompt l.20 still stale (last change 55ec8ab); round44 report NOT applied (CONTEXT newest 17:13Z)
+- 17:47Z mapping: W383/W384/W388/W391 done (CONTEXT l.4678-4697, 19149bf); W385 partial (CONTEXT done, prompt l.20/37 stale); new W392-W397 = R44-A1..A5 + bookkeeping; C31-C35; I474-I484; T241-T243; writing WATCHLIST
+- 17:42Z WATCHLIST.md written; refs checked
+- 17:43Z watch.json written (12 alerts) + validated; done

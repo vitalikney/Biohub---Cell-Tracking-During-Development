@@ -1,0 +1,9 @@
+- 2026-09-29T17:28:13Z start verify R44-RC-A (B31 dup-node premise on x138/CI)
+- Re-ran scratchpad nn_dup.py: exp85a NN<1/2/3 um 6/34/100, exp87a 24/134/210, exp56 2/18/58 = finding. NB exp85a min NN = 0.00 um (exact same-position pair exists pre-CI too; K/readmit), exp56 min 0.81.
+- Re-ran nn_pairs.py: 67 pairs <2 um, 52 pre-CI >=2, 41 >=3, pre-CI q10/50/90 1.68/3.37/5.03, all in tracks, per clip 4/18/2/43 = finding.
+- Re-ran r44/ci_dup_lab.py (62 s): exp85a vs exp87a vs hyb2.0 (104 reverted) vs hyb3.0 (134): hybrids byte-equal scores to exp87a on all 4 clips (05b6 TP 834 FP 11; 05db TP 1116 FP 93) = finding.
+- Skeptic check: eval_clip matches at max_distance 7.0 um (tools/overlap_lab.py l.252-277, M._evaluate(..., 7.0)), so 'identical hybrid' alone does not prove 'unannotated cells' - a 1-2 um move can keep the same GT match.
+  Direct check scratchpad r44v/gt_near.py: of the 104 reverted (2 um) nodes, only 2 are within 7 um of any same-frame GT node (both 6bba_05db; 1 within 3 um); 0 on 44b6 and 05b6. Random expectation on 05db = 1694/70112 pred nodes near GT = 2.4% x 66 = 1.6 -> consistent with chance. So 'unannotated' holds for 102/104; the 2 annotated ones did not move the score.
+- Size bound: converged nodes = 104-134 of 122,328 (0.09-0.11%); even if hidden embryos were densely annotated and each cost 2 edges, <= ~0.002 edge share, realistic ~0.0003. Slot 2 closed (R40-A1), no build proposed -> no feasibility issue. B31 row RESULTS.md l.130: GT itself has 0/0/2 nodes <1/2/3 um, so CI's <2 um pairs are not biology; logging them as a future CI gate is sensible.
+- Verdict: NOT refuted (premise-false claim reproduces; verdict-upheld / no-action stands). Small wording fix: 'on unannotated cells' -> '102/104 not within 7 um of GT; 2 annotated but score-neutral'.
+- 2026-09-29T17:31:08Z final JSON written (refuted=false)

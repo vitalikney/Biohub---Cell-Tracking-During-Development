@@ -1,0 +1,8 @@
+- 17:28Z start R44-PC-02 verification
+- 17:29Z Win32_Process: timer.sh 30820 alive, args "2026-09-29T18:13:00Z HOURLY RESEARCH ROUND 45 (21:13 MSK): READS-vs-CARD from local files only, 0 Kaggle calls." Also alive: 18:37Z timer 29184, 19:43Z 20960, 21:05Z 24260, 00:07Z 21232, t7_trigger 16748, waiter 29828 (parent 9016).
+- poll.log clean headers 16:04:47 ... 17:15:03, 17:25:06Z (step ~10:02-10:03) -> projected 18:15:2x, 18:25:2x, 18:35:2x; exp89t 56669888 still PENDING at 17:25:06Z (T0 09:00:17Z).
+- CONTEXT 16:43Z entry: round 43 launched 16:13Z, applied 16:43Z (~30 min). Round 44 launched 17:13Z, still running 17:28Z.
+- round43/report.json next_focus: "Round 45 (21:13 MSK / 18:13Z): READS-vs-CARD from local files only; exp89t read expected at the 21:15-21:35 MSK headers" -> the plan itself schedules the lens before its input exists.
+- scan_hyp_ops44 concurs; its readtime.sh already folds reads + R39-A4 comparator + card into one call -> round 45 adds nothing the card step lacks.
+- Flaw in the proposed fix: "launch round 45 at 18:40-18:45Z" + ~30 min = ends ~19:10-19:15Z, overlapping the finding's own 19:05-19:50Z no-round window and T7 (~19:15:3xZ first header >= 19:12:17Z). Amend: skip round 45 (or cap it to <=15 min, hard stop 19:00Z).
+- 17:29Z verdict written: not refuted; amend fallback (skip round 45 / hard stop 19:00Z)
