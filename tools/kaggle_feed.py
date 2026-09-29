@@ -26,7 +26,7 @@ REPO = Path(__file__).resolve().parents[1]
 OUT = REPO / "experiments" / "discussions"
 FORUM = "Biohub - Cell Tracking During Development"
 COMP_URL = "/competitions/biohub-cell-tracking-during-development"
-KERNEL_TITLE_EXCLUDE = ("xgboost", "lgbm", "optuna")  # other competitions whose titles also match 'biohub'
+KERNEL_TITLE_EXCLUDE = ("xgboost", "lgbm", "optuna", "stacking")  # other competitions whose titles also match 'biohub'
 
 
 def _client():

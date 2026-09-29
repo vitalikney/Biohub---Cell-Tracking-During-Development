@@ -4499,6 +4499,13 @@ Mention it to the user in one line (R9-A8 item 6).
   section 5 '... чтение >= 0.960 или 0.959 с приписываемым UP - до 22:45 МСК' and 'пришлю одну строку сразу после
   чтения exp89t (и проверю в 22:43 МСК)'; optional Satwik (744273) line; re-run the token checks. (A5) 11:50Z slot-2
   message; default UNUSED at 12:00Z (DIS 1.75 / exp89e not revived).
+- 2026-09-29 10:00 UTC, FEED E10 FLAG = FALSE POSITIVE (other competition)
+  Feed 09:58Z flagged beraterolelk '[0.982+ SOTA] OOF Meta-Stacking | Golden Feats' (best_public_score 0.9812, updated
+  09:36Z). NOT a biohub notebook: 0.9812 is above our public LB #1 (yu4u 0.978, e10 snapshot 09:41Z), and the
+  competition-scoped kernel list (dateRun, 09:41Z) does not contain it; it is a tabular notebook from another
+  competition whose text matches 'biohub' (same pattern as the xgboost/lgbm/optuna titles). No E10 action.
+  tools/kaggle_feed.py KERNEL_TITLE_EXCLUDE += 'stacking' so the loop stops re-flagging it; tests pass. Best genuine
+  public biohub notebook is still 0.953.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
