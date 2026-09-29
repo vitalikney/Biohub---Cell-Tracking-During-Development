@@ -4710,6 +4710,14 @@ Mention it to the user in one line (R9-A8 item 6).
   лучший паблик 0.959, 5-е снизу в блоке 0.959 (блок до #158).' (A4) feed loop ran 17:29:24Z (only Selina Wu 744250,
   already known; E10 none) and stopped cleanly. Laptop on battery again from 17:43Z (user asked in chat; push not
   delivered - Remote Control inactive).
+- 2026-09-29 18:13 UTC, ROUND 45 LAUNCHED AT THE USER'S REQUEST ('да сейчас запусти ... результат позже узнаем - это ни на что не повлияет'); R44-A1
+  (round 45 = no-op at 18:13Z) is overridden by the user. Lens: last-hours check (code exp89t from local files if read; any evidence-backed
+  reason to change the tick; private-LB reading plan after the deadline). 0 Kaggle calls by agents (quiet window). The exp89t waiter, T7,
+  the 18:37Z card timer, the 19:43Z/21:05Z checks and the manual-admit reader stay armed; the read push goes out as soon as it lands.
+- 2026-09-29 18:37 UTC, 18:37Z FINALS CARD (read-time block): exp89t 56669888 still PENDING at the 18:35:24Z header (L_lo 9.59 h, CI tail;
+  typical 9.3-9.5 h); API SELECTED at 18:37:20Z = {56640366 exp87a, 56563521 #37} = П3, case a (1 read-only call). Card = scratchpad
+  card_1837_PENDING.txt sha8 2e46a239 (builder a19e1bd6, rank line Chrome 20:15 МСК #154 of 4 005). No push needed (PENDING before
+  19:12:17Z). Next: the exp89t read push as soon as it lands; T7 at the first clean header >= 19:12:17Z; 19:43Z check; manual-admit 19:44:45Z.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
