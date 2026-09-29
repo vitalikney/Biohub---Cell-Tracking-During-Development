@@ -4754,6 +4754,11 @@ Mention it to the user in one line (R9-A8 item 6).
   card a later read gets the push only).
 - 2026-09-29 19:07 UTC, USER RE-TICKED (chat 'поставил'): API SELECTED at 19:07:17Z = {56669888 exp89t (0.960), 56563521 #37 (0.954)} = the
   RECOMMENDED PAIR П3 {V_pub = exp89t, #37}; case a under the R39-A4 comparator. Later checks (19:43Z, 21:05Z) log only unless it changes.
+- 2026-09-29 19:10 UTC, USER: 'да всё уже. я с утра посмотрю' -> the optional hourly private-flip check (R45-A5) is NOT armed; after 00:07Z no
+  Kaggle job runs; the private read happens only when the user asks (R45-A4). Remaining tonight: T7 trigger (prints COMPLETE -> ignore),
+  19:43Z SELECTED check (log only unless changed), manual-admit 19:44:45Z (exits without a call: exp89t already terminal) and its
+  reader, 21:05Z last check, 00:07Z post-deadline steps (R41-A7 + R43-A8 + R45-A3). The laptop may hibernate on battery ~23:15-23:40 MSK;
+  then the 00:05/03:07 MSK steps run at the next session instead. Finals ticked: {exp89t 56669888, #37 56563521} (API 19:07:17Z).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
