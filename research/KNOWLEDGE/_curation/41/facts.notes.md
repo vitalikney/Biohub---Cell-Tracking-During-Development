@@ -1,0 +1,8 @@
+- 2026-09-29T14:44Z start round 41 curation (facts.json absent -> fresh run); prior round 40 state 13:45Z, HEAD now 2fcbedd
+- 14:48Z sources read: CONTEXT 13:58 ROUND 40 APPLIED l.4618-4642 (commit 2fcbedd 13:59:01Z; '## 9. Literature' now l.4643); round41/report.json + report.notes.md (14:42:57Z, R41-A1..A8 PROPOSED) + scan_browser/scan_recheck/v_recheck_*; digest_20260929T1428Z.md + 744357.md (farewell, E10 none); ledger 14:39:35Z (574 polls; exp89t PENDING L > 5.65 h); poll.log header 14:39:33Z l.31857
+- 14:49Z curator local check (Get-Process, 0 Kaggle calls): 36816 (pre_exp89t) STILL ALIVE at ~14:45Z; 3028, 20892, 30864, 37016 alive; 20284 (e10-signal waiter) gone
+- 14:50Z plan: FACTS new F-LB-41, F-RUN-61, F-RUN-62, F-RUL-42, F-TRN-78; [c41] notes F-LB-02, F-RUN-59, F-RUN-60, F-RUL-40, F-TRN-76, C-327..C-334; new C-335..C-343. DECISIONS: state, P55, §1 para, §2 para + [c41] snapshot, R1-R10/§f, rows exp89t BUILD/SLOT 2 HOLD/R38 APPLIED/R39/R40 proposals; new §3 rows (R40 APPLIED, feed 14:29Z, R41 proposals, rejected r41); changelog
+- 14:49Z FACTS.md patched (scratchpad c41_facts.py): state, 5 new F rows, [c41] notes, C-335..C-343
+- 14:50Z DECISIONS.md patched (c41_dec.py): state, P55, §1 para, §2 para + [c41] snapshot, R1-R10/§f, 5 rule rows, 4 new §3 rows, changelog; cell counts verified
+- 14:51Z F-RUN-61 amended: header 14:49:35Z (l.31918) exp89t still PENDING (L > 5.82 h); no new commit/CONTEXT entry
+- 14:51Z facts.json written (9 alerts). Done.

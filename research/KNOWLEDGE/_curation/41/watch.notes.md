@@ -1,0 +1,7 @@
+- 14:44Z start curation 41; no watch.json existed; base = _curation/40 WATCHLIST ~13:50Z
+- 14:44Z read CONTEXT l.4607-4642 (13:34Z B, 13:58Z R40 applied); round41/report.json R41-A1..A8 (14:42Z, untracked, NOT yet applied: CONTEXT newest 13:58Z)
+- 14:45Z census 14:45Z: pre_exp89t w36816 (cyg 12542) STILL ALIVE; mk_card_1837.py sha8 59c54168 (R41-A3 patch not applied); feed stop job w32220 alive; FEED SIGNAL waiter w24700/11836; e10 waiter w20284 + old w24352 gone; poll newest 14:39:33Z exp89t PENDING
+- 14:45Z prompt l.20 refreshed (R40-A6 done; C19 gone) but still 'S0 tags pre_exp89t (17:40Z)' + undated OPS; l.37 lists pre_exp89t as allowed caller and fallback 'FIRST run e10_snapshot.py' (new C22). RESULTS.md still ends at probe 46 (l.79).
+- 14:46Z writing WATCHLIST.md curation 41: W373 overdue (=R41-A1), new W375-W381 (=R41-A2..A8), T234-T236, C21-C23, I450-I461; C18/C19 resolved, W364(1)/W366/W367/W369 done (CONTEXT l.4618-4642)
+- 14:48Z WATCHLIST.md written + line refs verified (report.notes l.4 fixed); writing watch.json
+- 14:48Z watch.json written (12 alerts); done

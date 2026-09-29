@@ -1,0 +1,95 @@
+{
+ "task": "round 41 scan_hyp_evedry41: evening dry run of the armed chain (local only, 0 Kaggle calls)",
+ "written_utc": "2026-09-29T14:28Z",
+ "summary": "EVENING DRY RUN at 14:15-14:28Z, local only, 0 Kaggle calls. The chain is mostly sound: date parsing, header timing (T7 fires ~19:20:40Z; manual-admit runs at 19:44:45Z between the ~19:40:42Z and ~19:50:44Z headers), the exp89t watcher, mk_card --dry-all 50/50 and emulated real builds with '--lb e10_20260929T1141Z --teams 3994' all check out, and every armed job is alive. Found and fixable: (1) NOW: the cancelled pre_exp89t.sh is still running (w36816/cyg 12542) and will download the LB at 17:40Z; kill it or log it as kept. (2) Decision B has leaked from the T7 text ('≥ 0.960 или 0.959 с UP' in R38-A5 (6) and the round-40 pack, both case a and b) and from the manual-admit mapping (T3/T4_question); corrected Russian T7 text given. (3) mk_card still accepts T3/UPWAIT/T4 and does not check the code against the display (T3 builds a promotion card on 0.959); add the asserts. (4) '--lb post_exp89t' can crash when a 180 s timeout leaves an empty folder; use it only if the watcher printed 'post_exp89t: rank'. (5) lastok treats '[ERROR' poller blocks as valid and skips valid retry blocks (rare); read the newest block with a ref, line by hand if T7 prints no status. (6) T6 needs --lhi; a SELECTED read with other than 2 refs crashes the builder (push first); --show and Russian prints need PYTHONIOENCODING=utf-8. (7) Cosmetic card wording. (8) 00:07Z: stop lb_poll.py and the watchdog, use a timeout on the save, commit without a Co-Authored-By trailer. No new lever reaches R8.",
+ "findings": [
+  {
+   "id": "R41D-1",
+   "kind": "plan-issue",
+   "urgency": "now",
+   "what": "The cancelled pre_exp89t job is still running. scratchpad pre_exp89t.sh (Windows PID 36816, cygwin 12542, started 10:53:43Z) sleeps in a 30 s loop and fires at 17:40:00Z. It will then make 1-2 LB downloads ('timeout 180 python tools/uptest.py save pre_exp89t', one retry after 5 min) inside the 17:30-20:00Z quiet window. CONTEXT 13:34Z says this job was CANCELLED under decision B.",
+   "evidence": "Win32_Process 36816 cmdline '.../scratchpad/pre_exp89t.sh', CreationDate 29.09 13:53:43 MSK; cygwin 12542 has a live 'sleep' child (ps -ef 17:23:55 MSK); CONTEXT l.4614-4615 ('the 17:40Z pre_exp89t save job was CANCELLED').",
+   "action": "Kill it now: in Git Bash 'kill 12542' (or PowerShell 'Stop-Process -Id 36816 -Force'), then log one CONTEXT OPS line: 'pre_exp89t.sh killed <ts> (cancelled 13:34Z but still armed)'. The alternative is to keep it deliberately, for a fresher rank on the 18:37Z card (mk_card's default --lb is pre_exp89t). In that case log that the job is kept and why. Either way, the log and the process table must agree."
+  },
+  {
+   "id": "R41D-2",
+   "kind": "plan-issue",
+   "urgency": "today",
+   "what": "Decision B has leaked from the T7 message. The pre-registered T7 texts still promote on '0.959 с UP': R38-A5 (6), which CONTEXT R39-A3 points the T7 trigger to, and round40 scan_hyp_exp89tmsg40.json T7 for case (a) and case (b). The pack's manual_admit_COMPLETE mapping also still lists T3 and T4_question, both obsolete under B. The T7 message goes to the user at ~19:20Z (22:20 MSK) if exp89t is still PENDING.",
+   "evidence": "round38/report.json R38-A5 (6) '(a) ... с паблик ≥ 0.960 или 0.959 с UP (пометка UNPROVEN-ins)'; round40/scan_hyp_exp89tmsg40.json messages_case_a_P3.T7 and messages_case_b_P2.T7 '... с пабликом ≥ 0.960 или 0.959 с UP ...'; manual_admit_COMPLETE 'use T2 / T3 (UNPROVEN-ins) / T4_question / T5_late'; CONTEXT l.4563-4564 (R39-A3 -> R38-A5 (6)), l.4607-4617 (decision B).",
+   "action": "Log pre-read (one CONTEXT line, wording under B, no rule change). T7 (a): 'exp89t ещё считается (поллер {МСК} МСК, {UTC} UTC; прошло больше 10,2 ч): основным станет, только если по записи поллера прочитается до 22:45 МСК (19:45 UTC) с пабликом ≥ 0.960 (с пометкой UNPROVEN-ins); при 0.959 по вашему решению B остаётся exp87a; позже 22:45 — не финал при любом паблике; у вас отмечена П3 {exp87a 56640366, #37 56563521} — менять ничего не нужно; если он сменит основной файл, пришлю одну строку (снять exp87a 56640366, отметить exp89t 56669888).' T7 (b): the same change in the first half, then keep the П2 ending. Manual-admit COMPLETE mapping: >= 0.960 -> T2; 0.959 -> T3KEEP with the '(после 22:12 МСК)' note; <= 0.958 -> T5_late."
+  },
+  {
+   "id": "R41D-3",
+   "kind": "plan-issue",
+   "urgency": "today",
+   "what": "mk_card_1837.py still accepts the obsolete codes and does not check the code against the display. With the codes filled by hand at ~21:20 MSK, 'T3' builds a card that promotes exp89t on 0.959 (case a_old, 'снимите exp87a'), and 'T5 --disp 0.959' builds a wrong card; the token asserts pass in both cases.",
+   "evidence": "Emulated build (no file writes): 'T3 --disp 0.959 --k 2 --sel 56640366,56563521' -> OK a_old sha8 ea4f4d5b; 'T5 --disp 0.959' -> OK sha8 57998916. The script still has PROMO = {'T1','T2','T3'}, and --dry-all still builds UPWAIT/T3/T4.",
+   "action": "Patch after line 51 of mk_card_1837.py: assert code in ('PENDING','T1','T2','T3KEEP','T5','T6','T8'), 'obsolete under decision B'; if code in ('T1','T2'): assert float(disp) >= 0.960 and a.lhi <= 10.75; if code == 'T3KEEP': assert disp == '0.959' and a.lhi <= 10.75; if code == 'T5': assert float(disp) <= 0.958 and a.lhi <= 10.75; if code == 'T8': assert a.lhi > 10.75. Drop UPWAIT/T3/T4 from the --dry-all V dict, re-run it (expect 35 ok), and log the new sha8 in place of 59c54168."
+  },
+  {
+   "id": "R41D-4",
+   "kind": "plan-issue",
+   "urgency": "today",
+   "what": "'--lb post_exp89t if that save exists' can crash the 18:37Z build. uptest.save runs mkdir before the download, so if the watcher's 'timeout 180' kills a slow download, the folder post_exp89t exists but is empty or holds a partial zip. mk_card then fails in uptest.load with IndexError (sorted([])[-1]) or BadZipFile. The folder existing is not enough.",
+   "evidence": "tools/uptest.py l.32-39 (d.mkdir, then kaggle download, no internal timeout); exp89t watcher cmdline (win 29636) '... timeout 180 python tools/uptest.py save post_exp89t 2>&1 | tail -1'; emulated '--lb post_exp89t' -> IndexError list index out of range.",
+   "action": "At 18:37Z use '--lb post_exp89t' only if the watcher's output line contains 'post_exp89t: rank' and a SubmissionCount of 57. Otherwise use '--lb e10_20260929T1141Z --teams 3994'. Also note that on a T1/T2 read (>= 0.960) the watcher saves nothing, so the e10 fallback is always the one used there."
+  },
+  {
+   "id": "R41D-5",
+   "kind": "plan-issue",
+   "urgency": "today",
+   "what": "Two cases break lastok() and t7_trigger's header filter, since both only look for '[empty stdout'. (1) The poller writes '[ERROR <exception>]' notes, for example a 180 s TimeoutExpired, x3 with an empty body (lb_poll.py l.17). lastok treats that block as valid, returns an empty block, and T7 prints its header with no status. (2) A block whose header carries '[empty stdout' retry notes but whose body is valid is skipped. That happened in 3 of 571 historical blocks, which delays T7 by one cycle (~10 min) and makes lastok use 10-min-old data.",
+   "evidence": "experiments/lb_poll/lb_poll.py l.11-21; retry-then-success blocks 25 Sep 19:11:08Z, 27 Sep 17:43:34Z, 28 Sep 15:15:31Z; 0 '[ERROR' headers so far. Piped synthetic test: the current awk returns the empty [ERROR block and skips the valid mixed block; the body-based awk returns the 14:19:28Z block and the valid mixed block respectively.",
+   "action": "Cheapest option, with no restart of the armed jobs: if T7 prints a header line with no 'SubmissionStatus' (or manual_admit reports odd output), read the newest poll.log block that contains a '^ref,' line by hand before coding T7/T8. Optional robust fix: lastok(){ awk '/^=== /{if (cur ~ /\\nref,/) blk=cur; cur=\"\"} {cur=cur\"\\n\"$0} END{if (cur ~ /\\nref,/) blk=cur; print blk}' experiments/lb_poll/poll.log; }, and in t7_trigger take h=$(lastok | grep -m1 '^=== ' | cut -c5-24). Running jobs sourced lastok.sh at start, so editing the file changes nothing until t7_trigger.sh and manual_admit.sh are restarted. Given ~0.5% odds per block, prefer the manual rule over restarting armed jobs."
+  },
+  {
+   "id": "R41D-6",
+   "kind": "plan-issue",
+   "urgency": "today",
+   "what": "Three smaller mk_card failure modes. (a) T6 without --lhi fails the '? ч' assert. (b) A SELECTED read with 0, 1 or 3 refs, for example while the user is re-ticking, hits 'SELECTED must be exactly 2 refs', and the text path for a 1-ref case in steps() would print 'сначала снимите , потом ...'. (c) '--show' and any Python print of Russian text crash under the default cp1251 stdout (UnicodeEncodeError on '≤'). Writing the file is fine, because it uses utf-8.",
+   "evidence": "Emulated runs: 'T6 --hdr ...' without --lhi -> AssertionError ['? ч']; '--sel 56640366' / three refs -> AssertionError; 'python mk_card_1837.py --dry-all --show T3KEEP:a' -> UnicodeEncodeError; sys.stdout.encoding = cp1251; PYTHONIOENCODING is unset in the session shell.",
+   "action": "(a) For T6, always pass --lhi (L_hi = H + 210 s x F - 09:00:17Z). (b) If read_selected.py returns anything other than 2 refs, do not run the card builder. Send the R39-A4 push first ('отметьте ровно два: exp87a 56640366 и #37 56563521; проверьте «2 of 2 selected»'), then build the card after the next read. (c) Prefix every mk_card, read_selected or ad-hoc Python call that prints Russian with PYTHONIOENCODING=utf-8."
+  },
+  {
+   "id": "R41D-7",
+   "kind": "plan-issue",
+   "urgency": "later",
+   "what": "Card wording issues, all cosmetic. The PENDING section 5 reads 'основным станет он (при 0.959 по вашему решению B остаётся exp87a) (с CI, 4 рычага) и пары выше…', which is a double parenthesis. The late T3KEEP DIS line says '≈ 0 (от −0.001 до +0.001)', while late T5 says '«?»'. The rank label uses the folder mtime (14:45 MSK) instead of the e10 snapshot time (14:41 MSK). The rank #141 of 3 994 is ~7 h old; Chrome 13:20Z showed #148 of 3 999.",
+   "evidence": "Emulated PENDING and T3KEEP card text; mk_card l.61-64 and l.89; CONTEXT l.4547 (e10 11:41Z), l.4641-4642 (#148 of 3 999).",
+   "action": "Optional. In the PENDING branch, make the new text 'если прочитается ≥ 0.960, основным станет он' and add sub(j, '(с CI, 4 рычага) и пары выше меняются так:', '(с CI, 4 рычага; при 0.959 по вашему решению B остаётся exp87a) и пары выше меняются так:'). Set dis['T3KEEP'] = 'DIS с CI: «?» (exp89t завершился после 22:12 МСК).' when late. Keep the stale rank, since it carries its time label."
+  },
+  {
+   "id": "R41D-8",
+   "kind": "plan-issue",
+   "urgency": "later",
+   "what": "The 00:07Z post-deadline step has gaps. (1) lb_poll.py (w37016) has no end time and would keep calling Kaggle every 10 min indefinitely, which goes against the API-load rule; the watchdog also keeps running. (2) 'uptest.py save' has no internal timeout. (3) The harness reminder asks for a Co-Authored-By trailer, but the user's memory rule says commit as the user with no trailer, and that rule wins. (4) Untracked files will be present: _night_subs.csv/.err, _lb/e10_20260929T1141Z/, and later _admit_subs.csv/.err and post_exp89t. (5) The downloaded LB may be public or private depending on the reveal timing.",
+   "evidence": "experiments/lb_poll/lb_poll.py 'while True' loop; timer win 30668 text 'download the final public LB ..., commit + push as the user'; memory feedback-git-no-coauthor; git status (4 untracked entries at 14:20Z).",
+   "action": "At 00:07Z: 'timeout 180 python tools/uptest.py save final_0007Z'; one read_selected.py call and one submissions list; then stop lb_poll.py (Stop-Process 37016) and the watchdog; log in CONTEXT whether the LB is labelled public or private; git add the _lb folders and the logs; commit without a Co-Authored-By trailer; push."
+  },
+  {
+   "id": "R41D-9",
+   "kind": "recheck-old",
+   "urgency": "info",
+   "what": "The rest of the chain checks out. Date parsing under Git Bash works for every armed time (date -u -d 2026-09-29T19:12:17Z -> 1790709137; note that date -d '' returns midnight with rc 0, which is safe only where there is a -n guard). Header cut -c5-24 is safe with CRLF and with '[manual-admit]' suffixes. At the current drift (~2.3 s per 10-min cycle), T7 fires at the ~19:20:40Z header (22:20 MSK) and manual-admit runs at 19:44:45Z, after a ~19:40:42Z header and before the ~19:50:44Z one. The exp89t watcher's last() (last block including error blocks) just waits on an error block and fires on a [manual-admit] block, and exp89t's description contains no COMPLETE/ERROR token. mk_card --dry-all = 50/50 ok (file sha8 59c54168). Emulated real builds pass for PENDING, T1, T3KEEP, T5, T5-late, T3KEEP-late, T6 (with --lhi) and T8, each with '--lb e10_20260929T1141Z --teams 3994'. The T3KEEP card (sha8 bff20720 at --now 18:37Z) carries decision B in section 1 and section 5, and 'П1', 'держим в запасе' and '15:04 МСК' do not appear. All armed jobs are alive (lb_poll, feed loop and its 17:20-17:35Z stopper, exp89t watcher, watchdog, manual_admit, t7_trigger, 18:37/19:43/21:05/00:07Z timers).",
+   "evidence": "Processes listed at 14:15-14:24Z (Win32_Process and /proc winpid); dry-all output; emulation output; poll.log headers 13:09:12 -> 14:09:26 -> 14:19:28Z.",
+   "action": "No action beyond R41D-1..8."
+  },
+  {
+   "id": "R41D-10",
+   "kind": "recheck-old",
+   "urgency": "info",
+   "what": "The round-prompt KEY FACTS give the OPS times '15:00-15:40Z sleep', 'on AC since 16:29Z' and 'API load cut at 15:57Z' without a date. They are 28 Sep events, so read as today they fall in the future (it is 14:2xZ).",
+   "evidence": "CONTEXT l.3988 (2026-09-28 15:57 UTC ban report), l.4000 (Modern Standby 15:00Z), l.4036 (16:29Z watchdog); today's poll.log headers are continuous every ~10 min.",
+   "action": "Add '28 Sep' to those three times in the round prompt."
+  },
+  {
+   "id": "R41D-11",
+   "kind": "recheck-old",
+   "urgency": "info",
+   "what": "On new levers the honest answer is null: nothing reaches R8. No x138-family file can both finish by 23:59Z (744250) and read before the 20:00Z tick; the R40-A1 default edge of 14:10Z has passed. The best public notebook is 0.953, and no team has disclosed a knob with values. The finals pair {exp87a, #37} and decision B stand. Closed lines (OVERLAP-CONSENSUS, the JT neighbour pair, SEC as a partner, DIS 1.75, exp89s) are not re-proposed.",
+   "evidence": "CONTEXT l.4582-4592, l.4618-4626; round40 R40M-11; IDEAS.md FINALS cluster (I-593, I-526, I-229).",
+   "action": "Build nothing, submit nothing."
+  }
+ ]
+}

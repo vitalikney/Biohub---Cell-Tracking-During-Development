@@ -1,0 +1,67 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/ideas.json",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/IDEAS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/41/ideas.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/41/ideas.json"
+ ],
+ "alerts": [
+  {
+   "kind": "contradiction",
+   "what": "CONTEXT says the 17:40Z pre_exp89t save job was cancelled (13:34Z, and again at 13:58Z), but the process is still running. Windows pid 36816 (bash scratchpad/pre_exp89t.sh, started 10:53:43Z) was alive at 14:32Z and again at the curator's 14:48:09Z check. At 17:40:00Z it will make 1-2 LB downloads inside the 17:30-20:00Z quiet window. Under decision B those downloads have no decision value, and they would create _lb/pre_exp89t.",
+   "evidence": "research/wf_ideas_v4/round41/report.json R41-A1; scan_plancheck.json PC41-01; scan_hyp_evedry41.json R41D-1; v_hyp_evedry41_r41d-1.json; report.notes.md 14:35Z; CONTEXT.md l.4607-4617, l.4618-4642; curator Get-Process -Id 36816 at 14:48:09Z; research/KNOWLEDGE/ideas.json I-601, I-590",
+   "suggested_action": "Now, and before 20:40 MSK (17:40Z) at the latest: run 'Stop-Process -Id 36816 -Force' in PowerShell. Then 'Get-Process -Id 36816' must return nothing and 'Get-Process -Id 3028' (manual_admit) must still be alive. Do not touch w3028, w29648, w30864, w37016, w22236 or w32220. Append the R41-A1 OPS line to CONTEXT.",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "Two pre-registered texts still promote exp89t at '0.959 с UP', which the user's decision B withdrew: the T7 message (fires ~19:20Z, about 40 min before the tick) and the manual-admit COMPLETE mapping (T3 / T4_question). R40-A4 replaced only T3/UPWAIT/T4, so T7 would reach the user at 22:20 MSK with the old promise.",
+   "evidence": "research/wf_ideas_v4/round41/report.json R41-A2; scan_plancheck.json PC41-02; scan_hyp_evedry41.json R41D-2; research/wf_ideas_v4/round40/scan_hyp_exp89tmsg40.json messages_case_a_P3.T7, messages_case_b_P2.T7, manual_admit_COMPLETE; CONTEXT.md l.4607-4617; research/KNOWLEDGE/ideas.json I-602, I-588, I-586",
+   "suggested_action": "Before 21:00 MSK (18:00Z): log the R41-A2 CONTEXT line with the exact T7 (a) and (b) texts ('≥ 0.960 ... при 0.959 по вашему решению B остаётся exp87a'). Use this mapping: ≥ 0.960 -> T2, 0.959 -> T3KEEP '(после 22:12 МСК)', ≤ 0.958 -> T5_late. Never send T3_interim, T3_promotion, T4_k0, T4_BLIND or T4_question.",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "The installed 18:37Z builder (scratchpad mk_card_1837.py, sha8 59c54168 at 14:44Z) still accepts the obsolete codes T3, T4 and UPWAIT, 'T1 --disp 0.959', and a read past the 22:45 MSK admit edge; its token checks pass in all these cases. So a single typing slip at 21:37 MSK would build a card asking the user to swap exp87a for exp89t, against decision B. Round 41's guard patch (sha8 a19e1bd6) is ready but not applied.",
+   "evidence": "research/wf_ideas_v4/round41/report.json R41-A3; report.notes.md block '<<<PATCHR41' .. 'PATCHR41>>>' (program sha8 e6df7fd1); scan_plancheck.json PC41-03; scan_hyp_evedry41.json R41D-3; CONTEXT.md l.4618-4642 (A3 installed 59c54168); curator sha256 check 14:44Z; research/KNOWLEDGE/ideas.json I-603, I-592",
+   "suggested_action": "Before 20:40 MSK (17:40Z): save the PATCHR41 block as <SP>/patch_mk_card_r41.py and run it; it must print 'patched sha8 a19e1bd6'. Run it again with --write. Then run 'PYTHONIOENCODING=utf-8 python <SP>/mk_card_1837.py --dry-all' (35 ok) and log the result. If the patch is skipped, follow the manual rule: T1/T2 only at ≥ 0.960, T3KEEP at 0.959, T5 at ≤ 0.958, and never T3/T4/UPWAIT.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "The round-prompt KEY FACTS refreshed at 13:58Z (R40-A6) are already stale. They say '#148 of 3 999, 17th of 22'; Chrome at 14:19Z shows #151, 18th of 23. The OPS times (standby 15:00-15:40Z, on AC since 16:29Z, API cut 15:57Z) have no date, so they read as today, although they are 28 Sep events. They also say nothing about the 7-team 0.963 cluster, the pre_exp89t kill, the a19e1bd6 patch or the R41-A2 texts.",
+   "evidence": "experiments/workflows/biohub-research-round.js (2fcbedd); research/wf_ideas_v4/round41/report.json R41-A6; v_hyp_evedry41_r41d-10.json; scan_browser.json r41-lb-rank-151, r41-cluster-0963-seven; research/KNOWLEDGE/ideas.json I-259",
+   "suggested_action": "Before the 18:13 MSK (15:13Z) round: apply the R41-A6 items. Rounds 42-43 run Chrome-only with the ops lens and skip the recheck lens (R41-NF: 10 null rounds in a row).",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "The evening chain has crash paths and stale paths that fail silently. (1) '--lb post_exp89t' crashes on the empty folder a timed-out save leaves behind. (2) A SELECTED read with anything other than 2 refs fails. (3) Russian output crashes the cp1251 console unless PYTHONIOENCODING=utf-8 is set. (4) T6 fails without --lhi. (5) lastok can skip a block or accept an empty '[ERROR' block (~0.5% per poll). (6) The card's rank line is 7 h old and carries the wrong time label (14:45 instead of 14:41 МСК).",
+   "evidence": "research/wf_ideas_v4/round41/report.json R41-A4; scan_hyp_evedry41.json R41D-4, R41D-5, R41D-6; scan_plancheck.json PC41-04, PC41-05; research/KNOWLEDGE/ideas.json I-604, I-605, I-588",
+   "suggested_action": "21:37 MSK (18:37Z): use --lb post_exp89t only if the watcher printed 'post_exp89t: rank' with count 57; otherwise use '--lb e10_20260929T1141Z --teams 3994'. Set PYTHONIOENCODING=utf-8 on every call and always pass --lhi for T6. If a T7 or manual-admit header has no status, read poll.log by hand. Do not restart the armed jobs.",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "The 00:07Z post-deadline step is still only a proposal and is not logged. lb_poll.py (w37016) loops forever, which breaks the API-load rule, and the watchdog and waiters keep running. Several items are untracked: the logged S0 fallback folder _lb/e10_20260929T1141Z/, 744357.md, digest_20260929T1428Z.md and _night_subs.*. The commit must carry no Co-Authored-By trailer.",
+   "evidence": "research/wf_ideas_v4/round41/report.json R41-A7; scan_plancheck.json PC41-07; scan_hyp_evedry41.json R41D-8; git status at curation 41; research/KNOWLEDGE/ideas.json I-607, I-600",
+   "suggested_action": "03:07 MSK 30 Sep (00:07Z): run 'timeout 180 python tools/uptest.py save final_0007Z', then 1 SELECTED read and 1 submissions list. Stop w37016, w22236 and the leftover waiters. git add the evidence folders and commit as the user with a plain message. Check that 'git log -1 --format=%B | grep -ci co-authored' = 0, then push.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "deadline",
+   "what": "The post-deadline HINDSIGHT GUARD items are still at-risk: I-336 (a pushed, falsifiable private prediction), I-407 (the cap-family private-read line), I-252 (the H2/H3 lessons) and I-516 (the truncation line). The 13:21Z audit grid is ready to quote.",
+   "evidence": "CONTEXT.md l.4593-4606; research/wf_ideas_v4/risk_audit/results.json, answer_ru.md; research/KNOWLEDGE/ideas.json I-336, I-407, I-252, I-516; research/KNOWLEDGE/IDEAS.md ORPHANS",
+   "suggested_action": "After the 23:00 MSK tick and before 02:00 MSK 30 Sep (23:00Z): push one prediction commit that quotes the audit grid, and add the I-407 line.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "stale",
+   "what": "The bookkeeping is still behind. experiments/RESULTS.md has no rows for probes 47-55. Rounds 37-41 have no REPORT.md: round40 was committed without one in 2fcbedd, and round41 is untracked. Round 41's Russian report exists only inside report.json next_focus.",
+   "evidence": "experiments/RESULTS.md (last probe row 46); git show --stat 2fcbedd; research/wf_ideas_v4/round41/report.notes.md 14:42Z (3); research/KNOWLEDGE/ideas.json I-232",
+   "suggested_action": "After the finals tick: add RESULTS rows 47-55, render REPORT.md for rounds 37-41 from report.json, and commit round41/.",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 41 (2026-09-29 ~14:55 UTC / 17:55 MSK, HEAD 2fcbedd) was an incremental pass over curation 40: 600 -> 608 ideas, 35 change records. Sources: commit 2fcbedd, whose 13:58Z ROUND 40 APPLIED entry is CONTEXT l.4618-4642 (A1 edges; A3 builder installed as 59c54168 with T3KEEP; A4 message set; A6 KEY FACTS; A2 = decision B; A5 = feed stop at ~17:29Z); round 41 (untracked, report.json R41-A1..A8 at 14:42:57Z, 4 scans, 7 verdicts, no REPORT.md); the 14:28Z feed digest (744357 farewell, E10 none); the ledger at 14:39:35Z; and read-only curator checks (mk_card sha8 59c54168 at 14:44Z; pre_exp89t w36816 alive at 14:48:09Z). There is no new LB score: exp89t is PENDING with L > 5.65 h. Rank is #151 of 3,999, 18th of 23. New ideas: I-601 kill the still-running cancelled pre_exp89t job (at-risk, edge 17:40Z); I-602 decision-B T7 and manual-admit texts (at-risk, before 18:00Z); I-603 builder guard patch a19e1bd6 (at-risk, before 17:40Z); I-604 evening input rules (at-risk); I-605 lastok restart (refuted); I-606 'the audit K is a floor' (R41-RC-B, refuted); I-607 the 00:07Z step (at-risk); I-608 only-if-asked lines (conditional). I-592, I-594, I-596 and I-597 were logged at 13:58Z, so they are off the at-risk list. Other updates: I-590, I-600, I-259, I-529, I-497, I-588, I-586, I-580, I-595 (R41-RC-A upheld), I-486, I-577, I-575, I-584, I-364 (0.963 cluster = 7), I-526, I-432, I-556 (10 null recheck rounds), I-232, I-313, I-062 (R41-RC-C upheld), I-431, I-233, I-591. Counts: lb-tested 65, lab-tested 28, refuted 279, deferred 50, in-plan 184, open-untested 2. At-risk: 13 (12 -> 13). Strict: 1 (I-233). Cluster order is unchanged. Verification: gen.py 608 rows, 0 bad; gen2.py body and ranking equal; IDs unique."
+}

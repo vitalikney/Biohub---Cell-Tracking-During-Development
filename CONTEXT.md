@@ -4640,6 +4640,31 @@ Mention it to the user in one line (R9-A8 item 6).
   (below). (A5) at ~17:29Z stop the feed loop after its run (quiet window 17:30-20:00Z); the e10-signal waiter is dead
   (e10 loop ended 12:00Z). LB (Chrome 13:20Z): #148 of 3 999, 17th of 22 in the 0.959 block; five teams jumped
   together to 0.963 (one private pipeline, nothing public).
+- 2026-09-29 14:59 UTC, ROUND 41 APPLIED (R41-A1..A4, A6; A5 at the 17:13Z round; A7 at 00:07Z)
+  Report research/wf_ideas_v4/round41/report.json. (A1) OPS: scratchpad pre_exp89t.sh (win 36816) was still alive
+  after the 13:34Z TaskStop (TaskStop ended only the wrapper); killed with Stop-Process at ~14:48Z; manual_admit
+  (w3028), t7_trigger (w29648), the exp89t watcher (w30864), the poller (w37016), the watchdog (w22236) and the feed
+  stop job untouched; 0 Kaggle calls at 17:40Z. LESSON: after TaskStop of a script-file job, verify the Windows bash
+  process is gone. (A2) exp89t T7 + MANUAL-ADMIT UNDER DECISION B (replaces R38-A5 (6) and the round-40 pack T7 /
+  manual_admit_COMPLETE). T7 (a, П3 ticked) = «exp89t ещё считается (поллер ЧЧ:ММ МСК, ЧЧ:ММ UTC; прошло больше 10,2
+  ч): основным станет, только если по записи поллера прочитается до 22:45 МСК (19:45 UTC) с пабликом ≥ 0.960 (с
+  пометкой UNPROVEN-ins); при 0.959 по вашему решению B остаётся exp87a; позже 22:45 — не финал при любом паблике; у
+  вас отмечена П3 {exp87a 56640366, #37 56563521} — менять ничего не нужно; если он сменит основной файл, пришлю одну
+  строку (снять exp87a 56640366, отметить exp89t 56669888).» T7 (b, П2 ticked) = the same with «у вас П2 {exp87a
+  56640366, exp75 56656157} — допустимый обмен, менять не обязательно; для П3 снимите exp75 56656157, отметьте #37
+  56563521». MANUAL-ADMIT COMPLETE (19:44:45Z block): >= 0.960 -> T2; 0.959 -> T3KEEP with '(после 22:12 МСК)'; <=
+  0.958 -> T5 late; post_exp89t save only on 0.959 (info). T3_interim, T3_promotion, T4_k0, T4_BLIND, T4_question,
+  UPWAIT are never sent. 1 fresh SELECTED read + the R39-A4 comparator before each send. (A3) mk_card_1837.py patched:
+  sha8 a19e1bd6 replaces 59c54168 (backup .59c54168.bak); codes PENDING/T1/T2/T3KEEP/T5/T6/T8 only; T1/T2 need display
+  >= 0.960, T3KEEP 0.959, T5 <= 0.958; late (UNPROVEN-ins) = read header > 19:12:17Z; T1/T2/T3KEEP/T5 need a read
+  header <= 19:45:17Z, T8 one after it; --lhi must agree with --hdr (-0.02 < L_hi - (hdr - T0) < 0.2 h); --hdr = the
+  poller header that first showed exp89t terminal (PENDING: the newest header); defaults --lb e10_20260929T1141Z
+  --teams 3994; dry-all 35/35 ok; 'T1 --disp 0.959' is rejected (tested). (A4) INPUT RULES: '--lb post_exp89t' only if
+  the watcher output has 'post_exp89t: rank' with SubmissionCount 57, else the default; SELECTED must be exactly 2
+  refs (else R39-A4 push first); PYTHONIOENCODING=utf-8 on every Russian-printing call; always --lhi for T6; if a
+  trigger shows a header with no SubmissionStatus, read the newest poll.log block with a '^ref,' line by hand; the
+  card rank line may be replaced by a Chrome read made before 17:30Z with its time (latest: Chrome 17:19 МСК #151 of 3
+  999, 18th of 23); never quote '#148' or '17 из 22' now.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

@@ -1796,3 +1796,70 @@ Curator logs: `research/KNOWLEDGE/_curation/4/`.
 - **Carried over:** finals SELECTED checks 18:37 / 19:43 / 21:05Z [before-finals]; I-336 / I-407 / I-252 / I-516 before 23:00Z, now with the audit grid [before-finals]; RESULTS P47-P55, REPORT.md rounds 37-40, commit round40/ + fallback csv [before-finals / info].
 - **Dropped from the top list:** c39 slot-2 11:50Z / 12:00Z UNUSED alerts (superseded by 'held in reserve'); card v3 12:03Z (sent); T7 trigger / comparator (logged); one-shot watchdog (folded into the 17:13Z liveness line, `WATCHLIST.md` W361); cap-6 headline (no curator re-raised it; stays in `FACTS.md` C-321).
 - **Curator disagreements settled here:** round 40 vs B: ideas [today] vs facts [now] vs watch [today] -> [now] for not sending R40-A2, [today] for the builder patch; KEY FACTS: ideas [today] vs facts / watch [now] -> [now] (edge 14:13Z); 00:07Z trailer: ideas [today] vs facts / watch [info] -> [info].
+
+## 41 - 2026-09-29 ~14:55 UTC (curation 41; git HEAD 2fcbedd = ec3c5fb + 2fcbedd (13:59:01Z ROUND 40 APPLIED, round40/ + curation 40 committed, round-prompt KEY FACTS refreshed); uncommitted `research/KNOWLEDGE/*` curation-41 edits, `experiments/lb_poll/ledger.md`, `poll.log`, `experiments/discussions/feed_loop.log`, `state.json`; untracked `research/wf_ideas_v4/round41/` (no REPORT.md), `research/KNOWLEDGE/_curation/41/`, `experiments/lb_poll/_lb/e10_20260929T1141Z/`, `experiments/discussions/744357.md`, `digest_20260929T1428Z.md`, `experiments/lb_poll/_night_subs.csv`, `_night_subs.err`)
+
+**Sources since curation 40:** 1 commit (`git log ec3c5fb..2fcbedd`). `CONTEXT.md` went from 4,638 to 4,663 lines, with 1 new entry: l.4618-4642, 13:58Z ROUND 40 APPLIED (R40-A1, A3, A4, A6; A2 answered by B; A5 at ~17:29Z). `## 9. Literature` is now at l.4643. Round 41 is in `research/wf_ideas_v4/round41/report.json` (R41-A1..A8, 14:42:57Z, PROPOSED, not applied) with `report.notes.md` (the PATCHR41 block), 4 `scan_*.json` and 7 `v_*.json`. Feed: `experiments/discussions/digest_20260929T1428Z.md` and `744357.md` (a farewell post; E10 none). Poll headers run to 14:49:35Z (`experiments/lb_poll/poll.log` l.31918). Curators also ran local read-only checks (no Kaggle calls): `mk_card_1837.py` sha8 59c54168 at 14:44Z; Get-Process at 14:45Z, 14:48Z and 14:55:18Z (`_curation/41/*.notes.md`).
+
+**LB:** no new score. P55 exp89t (56669888) is PENDING (L > 5.82 h at 14:49:35Z). V_pub stays exp87a 0.959 (~0.95875 unrounded, `research/wf_ideas_v4/round41/scan_recheck.notes.md` l.8). Rank moved from #148 / 17th of 22 to **#151 of 3,999 / 18th of 23**, and the 0.963 cluster now has 7 teams (`research/wf_ideas_v4/round41/scan_browser.json`; `FACTS.md` F-LB-41 l.277). The tick is unchanged: П3 {exp87a, #37}.
+
+**User decisions:** none since 13:34Z decision B (`CONTEXT.md` l.4607-4617).
+
+**Ideas** (`IDEAS.md` CHANGES (41) l.243; `ideas.json` meta.curations[-1], 35 records; `_curation/41/ideas.json`):
+- **New I-601..I-608:**
+  - in-plan at-risk: I-601 kill pre_exp89t (R41-A1), I-602 decision-B T7 / manual-admit texts (R41-A2), I-603 builder guard patch a19e1bd6 (R41-A3), I-604 evening input rules (R41-A4), I-607 00:07Z step (R41-A7);
+  - in-plan conditional: I-608 only-if-asked lines (R41-A8);
+  - refuted: I-605 lastok restart, I-606 'the audit's K is a floor' (R41-RC-B).
+- **Status moves:**
+  - I-592, I-594, I-596 and I-597 were logged at 13:58Z and are off the at-risk list;
+  - I-590: the job is still alive, handed to I-601;
+  - I-588 / I-586: the texts predate B, handed to I-602;
+  - I-600 is extended by I-607;
+  - I-259: R40-A6 done, R41-A6 due;
+  - I-595 (R41-RC-A) and I-062 (R41-RC-C) upheld;
+  - I-364: the 0.963 cluster is 7 teams;
+  - I-556: 10 null recheck rounds in a row.
+- **Counts c40 -> c41:** 600 -> 608 ideas; refuted 277 -> 279, in-plan 178 -> 184; lb-tested 65, lab-tested 28, deferred 50 and open 2 unchanged. At-risk 12 -> 13; strict orphan I-233 (`IDEAS.md` ORPHANS l.987).
+
+**Facts and decisions** (`FACTS.md` and `DECISIONS.md` rows marked [c41]; `_curation/41/facts.json`; state 14:50Z):
+- **New facts:** F-LB-41 (l.277); F-RUN-61 pending state and armed jobs, F-RUN-62 builder and evening inputs (l.343-344); F-RUL-42 ROUND 40 APPLIED (l.391); F-TRN-78 round-41 rechecks (l.534).
+- **Contradictions:**
+  - resolved: C-328, C-329, C-332, C-333; C-327 partly;
+  - new C-335..C-343 (l.874-882): pre_exp89t alive despite the cancel (C-335), T7 / manual-admit pre-B (C-336), builder lacks guards (C-337), stale KEY FACTS / rank label (C-338, C-342), audit wording (C-339..C-341), unsafe `--lb post_exp89t` (C-343).
+- **DECISIONS.md:** §1 [c41] l.571; §2 [c41] snapshot l.1014-1016; §3 [c41] rows l.1879-1882 (R40 APPLIED, FEED 14:29Z, R41 proposals, rejected in round 41); changelog l.2098.
+
+**Watchlist** (`WATCHLIST.md`, ~14:50Z; `_curation/41/watch.json`):
+- done: W364 (1), W366, W367, W369, W374;
+- resolved: C18, C19, C20;
+- overdue: W373 (= R41-A1);
+- new: W375-W381, T234-T236, C21-C23, I450-I461;
+- still open: W126 (RESULTS rows).
+
+**Alerts** (`INDEX.md` TOP ALERTS, 12 after dedup):
+- **Resolved since curation 40:**
+  - R40-A1 / A3 / A4 / A6 applied and committed (2fcbedd);
+  - R40-A2 answered by B;
+  - reserve-slot 14:10Z edge passed (slot 2 expires unused);
+  - e10 waiter w20284 gone.
+- **New:**
+  - [now] kill w36816 (still alive at 14:55:18Z);
+  - [now] second KEY FACTS refresh (R41-A6) plus the l.37 fallback (C22);
+  - [today] builder patch a19e1bd6 before 17:40Z;
+  - [today] R41-A2 T7 / manual-admit texts before 18:00Z;
+  - [today] evening input rules and stale test cards;
+  - [today] 0.959 -> T3KEEP is the likely default;
+  - [info] only-if-asked lines (R41-A8);
+  - [today] log ROUND 41 APPLIED (W381).
+- **Carried over:**
+  - [today] 17:13Z census and the feed stop after ~17:29Z;
+  - [before-finals] SELECTED checks at 18:37 / 19:43 / 21:05Z;
+  - [before-finals] I-336 / I-407 / I-252 / I-516 before 23:00Z;
+  - [info] 00:07Z step, now R41-A7 with the poller stop;
+  - [info] RESULTS P47-P55 and REPORT.md for rounds 37-41.
+- **Dropped:**
+  - 'do not send R40-A2' (moot);
+  - the reserve-slot line (logged);
+  - the {exp75, #37} ready answer (folded into I-608).
+- **Curator disagreements settled:**
+  - KEY FACTS: ideas and facts [today] vs watch [now] -> [now] (edge 15:13Z);
+  - 00:07Z step: ideas [before-finals] vs facts and watch [info] -> [info].

@@ -1,0 +1,5 @@
+- 14:54Z start curation-41 index; no index.json existed
+- 14:55Z anchors gathered (IDEAS l.243/987, FACTS l.277/343-344/391/534/874-882, DEC l.571/1014-1016/1879-1882/2098, WATCH l.74/85/97/128/153, CONTEXT 4663 l., Lit l.4643, poll 14:49:35Z l.31918); local Get-Process 14:55:18Z: 36816 3028 20892 37016 32220 24700 alive. Writing INDEX.md
+- 14:57Z INDEX.md written (78 lines, 12 alerts). Appending CHANGES.md ## 41
+- 14:57Z CHANGES.md ## 41 appended
+- 14:57Z index.json written (12 alerts). DONE

@@ -1,0 +1,37 @@
+{
+ "summary": "Round-41 delta scan, 14:13-14:20 UTC 29 Sep (17:13-17:20 MSK). It used Chrome and the local digests only, with 0 Kaggle CLI/API calls and no e10_snapshot (R39-A6). There is nothing to act on: no public notebook is above 0.953, no knob or value was disclosed, there is no new discussion comment, and there is no host announcement. The only change is on the leaderboard. Our public rank fell from #148 to #151 of 3,999 (1141Z CSV baseline: #141 of 3,994). Teams above 0.959 went from 131 to 133 because two more teams joined the private 0.963 cluster: UNETPLUS (0.956->0.963) and skyleads (the former 'draw a lottery', 0.956->0.963). The cluster is now 7 teams, all with generated-looking member handles and all starting from 0.956/0.957. Kamal Kadakara (0.956->0.959) entered the 0.959 block at its top, above us. The block is now #134-#156 = 23 rows, and we are 18th of 23 (was 17th of 22). The banner 'Your latest submission is being scored' is consistent with exp89t 56669888 still pending. The Code tab is unchanged (top 4x 0.953) and nothing was pulled. Overview: 96,107 submissions (+160), timeline unchanged. The newest digest is still 1258Z; the loop's next run is ~14:28Z.",
+ "findings": [
+  {
+   "id": "r41-lb-rank-151",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "Chrome public LB (~14:17-14:19Z, ranks 1-160 read; 0 API) against the 1141Z CSV and the r40 read (13:20Z). Our row is '151 D: Discipline 0.959 56 entries 13h' (was #148 at 13:20Z, #141 at 11:41Z). The banner reads 'Your latest submission is being scored. Your best score is 0.959.' (exp89t 56669888 pending). Rows: 3,999. Teams > 0.959: 131 -> 133 (the last 0.960 row is #133 Médéric Hurier). The 0.959 block is #134-#156 = 23 rows (was 22), and we are 18th of 23 (was 17th of 22). New in the block above us: Kamal Kadakara 0.956->0.959 at #134 (the top of the block, so its unrounded score is higher; 28->29 entries, last 6h). Below us, unchanged: Manish, kkunizaw, enddl22, Micchi's token thieves, RyotaroAbe. 0.958 starts at #157 (Umesh Arampath). The top 20 is unchanged since r40 (yu4u 0.978; The Boys #9 0.971, 314 entries; Corwin #10). Renames only: Deniz Özaydın -> 'Consilience' (#22, 0.969) and '寻找队友QQ2593124087' -> 'QQ2593124087'. Counts at 0.953-0.958 were NOT measured: after 12:00Z there is no CSV, the list is virtualized, and Raw Data is a download.",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/leaderboard ; baseline experiments/lb_poll/_lb/e10_20260929T1141Z/lb.csv ; page rows in scratchpad lb41.txt ; research/wf_ideas_v4/round41/scan_browser.notes.md",
+   "action": "Card/log wording from 14:19Z: '#151 of 3,999, 18th of 23 in the 0.959 block' (never '#148' or '17 of 22' after this). The drop comes from other teams passing us or passing 0.959. It does not touch the finals plan (decision B, SELECTED comparator R39-A4). The mk_card_1837.py rank line must use the fresh numbers, or say that the rank is from the 1141Z CSV."
+  },
+  {
+   "id": "r41-cluster-0963-seven",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "Two more teams joined the exact-0.963 cluster since r40, which makes 7. The first is UNETPLUS: 0.956->0.963 (#80, 117->118 entries, last 9h; TeamId 16860095; members gptconver, gradgen, indexdev, knnrun; last sub in the 1141Z CSV was 28 Sep 17:45:23). The second is skyleads: this is the renamed 'draw a lottery', TeamId 16884848 (members skycoding, macroave, livessd; the Chrome avatars show skycoding, Shangshuang Ding and Ave Zhang). It went 0.956->0.963 (#73, 63->65 entries, last 9h; CSV last 28 Sep 17:47:17). The other five ('0.948+ pls', '3D Research', 'Astra Team', 'Biooooohub', 'Tracking Experts') keep 0.963, and four of them added one more entry since 13:20Z (96->97, 96->97, 93->94, 131->132). All seven started at 0.956/0.957 and had last subs at ~17:31-17:59Z on 28 Sep, and the handles look generated (bayesnet/gptkernel/normbox, infocode/knnzeta/mlemin, gptconver/gradgen/indexdev/knnrun). This is one shared private pipeline across many accounts, most likely a multi-account ring. Nothing is public: the Code tab by recency and by score is unchanged, and no post discloses anything.",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/leaderboard (ranks 72-81); 1141Z CSV rows #264/#270/#274 (3D Research 0.956, UNETPLUS 0.956, draw a lottery 0.956)",
+   "action": "None to build. This is not a P2 signal (origin 0.956, not <= 0.953) and there is no public notebook, so port_gate was not run and AGGRESSIVE MODE has nothing to quote. Info only for the user: if Kaggle removes a ring like this before the private LB, our private rank would rise by up to ~7 places. Do not count on it."
+  },
+  {
+   "id": "r41-discussion-code-null",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "Discussion (sort=recent-comments, ~14:14Z; header '10 HOURS TO GO') has no new topic and no new comment since the 1258Z digest and r40. 'Time of publishing private results' (744250) last comment '1h ago by Chris Deotte' (the 12:57Z finish-by-23:59Z one). 744273 shakeup: 5 comments, last '2h ago by You WeiLin'. The workshop thread: last 3h ago (Luna-Xavier). 'If it were possible to allow new entrants': 6h. The JT thread: 17h. Code 'Recently Created' (~14:15Z) is unchanged; the newest unpinned notebook is still 'Robust Cell Tracking During Development via Chan.' (6d, 0.1), and x138 is 0.953 with 235 votes (+1). Code by 'Public Score' (~14:16Z): top = 0.953 x4 (Harmonic Fusion V3 246 votes, optimized-biohub-max-score 82, Biohub Cell Tracking 254, x138 235), then Geometric Fusion 0.948. Nothing is >= 0.954 and there is no new idea, so nothing was pulled into experiments/ext_*. The newest digest is still digest_20260929T1258Z (E10 FLAG none, already logged). It was 75 min old at the start, and after 12:00Z the feed is not run by this agent.",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion?sort=recent-comments ; .../discussion/744250 ; .../discussion/744273 ; .../code?sortBy=dateCreated ; .../code?sortBy=scoreDescending ; experiments/discussions/digest_20260929T1258Z.md",
+   "action": "None. The loop's ~14:28Z feed run (and ~15:58Z, the last before the 17:29Z stop) is for the next round to read."
+  },
+  {
+   "id": "r41-overview",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "Overview (~14:20Z): '10 HOURS TO GO'. 13,475 entrants, 4,581 participants (=), 3,996 teams (the LB shows 3,999 rows), 96,107 submissions (+160 since r40's 95,947 at ~13:20Z). Unchanged: the timeline (Final Submission Deadline September 29, 2026; all deadlines 11:59 PM UTC), the evaluation text and the code requirements ('CPU Notebook <= 12 hours run-time', 'GPU Notebook <= 12 hours run-time'). There is no host announcement.",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/overview",
+   "action": "None. The user ticks the finals by 20:00Z (23:00 MSK). Current SELECTED (API 12:37Z) = {exp87a 56640366, #37 56563521}, which passes R39-A4."
+  }
+ ]
+}

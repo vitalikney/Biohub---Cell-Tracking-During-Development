@@ -1,0 +1,12 @@
+# round41 plancheck notes (14:14Z)
+- 14:15Z pid 36816 pre_exp89t.sh ALIVE (created 10:53Z) though CONTEXT 13:34Z says CANCELLED; would download LB at 17:40Z
+- mk_card_1837.py sha8 59c54168 verified; --dry-all 50/50 ok (14:2xZ). --show crashes on cp1251 console without PYTHONIOENCODING=utf-8 (real run prints ASCII only).
+- mk_card accepts inconsistent inputs (in-memory test, no file written): T1 at 0.959 -> promotion card (breaks decision B); T2 with hdr 19:50Z/lhi 10.84 -> promotion card past the 19:45:17Z edge; T3KEEP after edge; T5 at 0.960; lhi != hdr-T0; obsolete T3 accepted (in PROMO). T1/T2 without --llo -> TypeError. Guard patch tested in memory: 35/35 variants ok, all 6 bad inputs rejected.
+- T7 text (R38-A5 (6); round40 scan_hyp_exp89tmsg40.json messages_case_a_P3.T7) still says '>= 0.960 или 0.959 с UP'; manual_admit_COMPLETE says 'T2 / T3 / T4_question / T5_late' -> contradict decision B (CONTEXT 13:34Z). R40-A4 replaced T3/UPWAIT/T4 only.
+- LB line: e10_20260929T1141Z/lb.csv mtime 11:45:16Z (mk_s0 build) -> card label '14:45 МСК' vs snapshot 11:41Z; data #141/3994 vs Chrome 13:20Z #148/3999. Default --lb pre_exp89t (cancelled). uptest.save mkdirs before download -> an empty post_exp89t dir crashes load().
+- lastok/t7 exclude '[empty stdout' headers, but 2-note headers carry data (poll.log l.23506 28 Sep 15:15:31Z, l.378 25 Sep 19:11:08Z). Impact: T7 10 min late / 1 extra manual call; ~0.5% per poll.
+- Poller cadence 602.0 s (11:48:58->14:09:26, 14 polls): headers ~19:10:26Z, ~19:20:28Z (T7), ~19:40:32Z (< 19:44:30Z -> manual-admit runs), ~19:50:34Z.
+- Feed loop sleep pid 37148 from 12:58:56Z -> runs ~14:29:04, ~15:59:12, ~17:29:20Z; stop job 32220 (17:20-17:35Z) armed, kills 20892/10924.
+- Alive: poller 37016, watcher 30864 (post_exp89t only on 0.959), watchdog 22236, manual_admit 3028, t7 29648, pre_exp89t 36816 (!), timers 15:13/16:13/17:13/18:13, 18:37 33156, 19:43 30648, 21:05 31720, 00:07 19388, FEED SIGNAL waiter 24352.
+- Commits 2fcbedd..fc98fa7 carry no Co-Authored-By (memory rule); untracked _lb/e10_20260929T1141Z/ (the logged S0 fallback) + _night_subs.*.
+- 14:23Z final JSON written (7 findings)

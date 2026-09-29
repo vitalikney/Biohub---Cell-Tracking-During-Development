@@ -1,0 +1,74 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/FACTS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/DECISIONS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/41/facts.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/41/facts.json"
+ ],
+ "alerts": [
+  {
+   "kind": "risk",
+   "what": "Decision B cancelled the pre_exp89t.sh job (w36816, cyg 12542) at 13:34, but the process is still alive: the round-41 census saw it at 14:32Z and a curator Get-Process check saw it again at ~14:45Z. It fires at 17:40:00Z and makes 1-2 LB downloads inside the 17:30-20:00Z zero-call quiet window. It also creates _lb/pre_exp89t.",
+   "evidence": "FACTS C-335, F-RUN-61; CONTEXT 13:34 l.4607-4617; research/wf_ideas_v4/round41/report.json R41-A1; research/KNOWLEDGE/_curation/41/facts.notes.md 14:49Z",
+   "suggested_action": "Apply R41-A1: run 'Stop-Process -Id 36816 -Force' and verify with 'Get-Process -Id 36816' (it must return nothing), not with a CommandLine match. Leave w3028, w29648 and w30864 alone, and log an OPS line.",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "The T7 texts (a and b) and the manual-admit COMPLETE mapping still promise promotion on '0.959 с UP' and still use the codes T3 and T4_question. Decision B withdrew that promotion, and the 13:58 entry made T3KEEP the 0.959 code.",
+   "evidence": "FACTS C-336, C-327; research/wf_ideas_v4/round40/scan_hyp_exp89tmsg40.json T7, manual_admit_COMPLETE; research/wf_ideas_v4/round41/report.json R41-A2",
+   "suggested_action": "Log the R41-A2 texts pre-read, before 18:00Z (T7 ~19:20Z, manual-admit 19:44:45Z). The mapping is: >= 0.960 -> T2, 0.959 -> T3KEEP.",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "The installed card builder (mk_card_1837.py, sha8 59c54168) still accepts T3/T4/UPWAIT and does not check the code against the display. It also keys 'late' on L_hi, which adds 210 s per failed CLI attempt, instead of on the poller header as logged. A hand slip at 18:37Z could therefore build a card that breaks decision B.",
+   "evidence": "FACTS C-337, F-RUN-62; research/wf_ideas_v4/round41/report.notes.md 14:35Z (PATCHR41 block); research/wf_ideas_v4/round41/report.json R41-A3",
+   "suggested_action": "Apply R41-A3 before 17:40Z. The patch must print sha8 a19e1bd6 and --dry-all must give 35/35 ok. Then log the sha8.",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "The 13:58 instruction '--lb post_exp89t if that save exists' is unsafe. A timed-out save leaves an empty folder that 'exists' and crashes the builder. Other gaps: status-less headers are skipped by lastok, a SELECTED read with != 2 refs fails, and the cp1251 console crashes on Russian prints.",
+   "evidence": "FACTS C-343, F-RUN-62; research/wf_ideas_v4/round41/report.json R41-A4",
+   "suggested_action": "Use the R41-A4 input rules at 18:37Z, ~19:20Z and 19:44:45Z. Pass post_exp89t only when the watcher shows 'post_exp89t: rank' with count 57, and set PYTHONIOENCODING=utf-8.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "The KEY FACTS and the card's rank line still quote '#148 of 3,999, 17th of 22'. Chrome at 14:19Z shows #151 of 3,999, 18th of 23. The card's rank label reads 14:45 МСК, which is the folder mtime; the snapshot was taken at 14:41 МСК. The OPS power dates are also undated or stale.",
+   "evidence": "FACTS C-338, C-342, F-LB-41; research/wf_ideas_v4/round41/scan_browser.json r41-lb-rank-151; research/wf_ideas_v4/round41/report.json R41-A6",
+   "suggested_action": "Apply R41-A6 before the 15:13Z round. Optionally take a Chrome rank read before 17:30Z for the card.",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "The feed loop w20892 is still alive. It must be stopped after its ~17:29Z run, because R40-A5 is logged but not executed. The 17:13Z liveness census needs the updated PID list: FEED SIGNAL waiter w24700, w36816 expected gone, w20284 already gone.",
+   "evidence": "FACTS C-331, F-RUN-61; CONTEXT 13:58 l.4618-4642; research/wf_ideas_v4/round41/report.json R41-A5",
+   "suggested_action": "Run the 17:13-17:35Z census line and confirm that stop job w32220 kills 20892/10924 after the ~17:29:20Z run.",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "Finals are ticked as П3 {exp87a 56640366, #37 56563521}. Under decision B they change only if exp89t 56669888 (still PENDING at 14:49:35Z, L > 5.82 h) reads >= 0.960 with a poller header <= 19:45:17Z. Headers after 19:12:17Z are flagged UNPROVEN-ins. The tick deadline is 20:00Z (23:00 MSK).",
+   "evidence": "DECISIONS §2 [c41] snapshot; FACTS F-RUN-61; experiments/lb_poll/poll.log l.31918",
+   "suggested_action": "Run the SELECTED checks at 18:37Z, 19:43Z and 21:05Z with the R39-A4 comparator. On >= 0.960 send the one-line swap; on 0.959 send T3KEEP ('ничего менять не нужно').",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "contradiction",
+   "what": "Round 41's recheck wording was corrected by its skeptics. Do not say that the audit's harsh K value is a 'floor' (R41-RC-B refuted). Do not say that keeping exp87a costs 'at best ~0.0005'; the right statement is ~0 on average, ±0.0007. The insertion evidence on the shipped config is the two public +0.001 reads, not the v1 OOF +0.0019.",
+   "evidence": "FACTS C-339, C-340, C-341, F-TRN-78; research/wf_ideas_v4/round41/v_recheck_*.json",
+   "suggested_action": "If the user asks, use only the R41-A8 answer lines. Log nothing else.",
+   "urgency": "info"
+  },
+  {
+   "kind": "forgotten",
+   "what": "The 00:07Z post-deadline step needs these, in order: a final_0007Z save with a timeout; stop the infinite poller (37016), the watchdog and the waiters; git add the untracked evidence (e10_20260929T1141Z, digests, 744357.md, _night_subs.csv/.err); commit as the user with NO Co-Authored-By trailer.",
+   "evidence": "FACTS C-334; research/wf_ideas_v4/round41/report.json R41-A7; git status (untracked evidence)",
+   "suggested_action": "Follow R41-A7 at 00:07Z on 30 Sep (03:07 MSK).",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 41 (state 14:50 UTC, 29 Sep; HEAD 2fcbedd). Sources since curation 40: CONTEXT 13:58 ROUND 40 APPLIED (l.4618-4642, commit 2fcbedd 13:59:01Z); round41/report.json + notes, scans and verdicts (14:42:57Z, R41-A1..A8 PROPOSED); feed digest 1428Z + 744357.md (farewell, E10 none); ledger 14:39:35Z; poll.log to header 14:49:35Z (exp89t still PENDING, L > 5.82 h); a curator local Get-Process check (0 Kaggle calls). Key changes: R40-A1/A3/A4/A6 were applied at 13:58. That logs the slot-2 edges (default: expires unused; the 14:10Z edge has passed), the builder mk_card_1837.py 59c54168 with T3KEEP, and the decision-B message set. The cancelled pre_exp89t job w36816 is still alive. The T7 and manual-admit texts still carry '0.959 с UP'. The builder lacks code, display and edge guards (R41-A3 patch a19e1bd6). LB #151 of 3,999, 18th of 23; the 0.963 cluster is now 7 teams. Round 41's rechecks upheld B and R2 and refuted the 'K floor' claim. The tick is unchanged: П3 {exp87a, #37}. FACTS.md: new state line; F-LB-41, F-RUN-61, F-RUN-62, F-RUL-42, F-TRN-78; [c41] notes on F-LB-02, F-RUN-59, F-RUN-60, F-RUL-40, F-TRN-76; status updates on C-327..C-334 (C-328, C-329, C-332 and C-333 resolved; C-327 partly); new C-335..C-343. DECISIONS.md: new state line; P55 row; section-1 paragraph; section-2 tick paragraph and a new [c41] finals snapshot; [c41] notes on R1-R10 and §f; updates to the exp89t BUILD, SLOT 2 HOLD, R38 APPLIED, R39 and R40 proposal rows; 4 new section-3 rows (R40 APPLIED, FEED 14:29Z, R41 proposals, rejected in round 41); changelog."
+}

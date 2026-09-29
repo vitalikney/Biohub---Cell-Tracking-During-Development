@@ -1,0 +1,95 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/INDEX.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/CHANGES.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/41/index.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/41/index.json"
+ ],
+ "alerts": [
+  {
+   "kind": "forgotten",
+   "what": "Decision B cancelled the pre_exp89t job w36816, but it is still alive (local Get-Process at 14:55:18Z). At 17:40:00Z it will make 1-2 LB downloads inside the 17:30-20:00Z quiet window.",
+   "evidence": "research/wf_ideas_v4/round41/report.json R41-A1; CONTEXT.md l.4607-4617; FACTS.md C-335 l.874; research/KNOWLEDGE/_curation/41/index.notes.md",
+   "suggested_action": "Run 'Stop-Process -Id 36816 -Force'. Check that 'Get-Process -Id 36816' returns nothing and that w3028 is still alive. Leave w3028, w29648, w30864, w37016, w22236 and w32220 alone. Log the R41-A1 OPS line. Deadline: 17:40Z (20:40 MSK).",
+   "urgency": "now"
+  },
+  {
+   "kind": "stale",
+   "what": "The round-prompt KEY FACTS still say '#148 / 17th of 22' (current: #151 of 3,999 / 18th of 23), give the 28 Sep OPS times without dates, and keep 'S0 tags pre_exp89t'. Separately, l.37 forbids e10_snapshot.py after 12:00Z yet its fallback still says to run it (C22).",
+   "evidence": "experiments/workflows/biohub-research-round.js l.20, l.37; research/wf_ideas_v4/round41/report.json R41-A6; research/wf_ideas_v4/round41/scan_browser.json r41-lb-rank-151; WATCHLIST.md C22 l.91",
+   "suggested_action": "Apply R41-A6 plus the C22 fix before the 18:13 MSK (15:13Z) round. Rounds 42-43 run Chrome-only, with no recheck lens.",
+   "urgency": "now"
+  },
+  {
+   "kind": "risk",
+   "what": "The installed mk_card_1837.py (sha8 59c54168) still accepts the codes T3, T4 and UPWAIT, accepts 'T1 --disp 0.959', and has no admit-edge guard. Round 41's patch (a19e1bd6) has not been applied.",
+   "evidence": "research/wf_ideas_v4/round41/report.json R41-A3; research/wf_ideas_v4/round41/report.notes.md PATCHR41 block; FACTS.md C-337, F-RUN-62 l.344; WATCHLIST.md C23 l.90",
+   "suggested_action": "Before 20:40 MSK (17:40Z): run the PATCHR41 block, expect 'patched sha8 a19e1bd6', then run it with --write and run --dry-all (expect 35 ok); log the sha8. If it is not patched, use the manual rule: T1/T2 only at >= 0.960, T3KEEP at 0.959, never T3/T4/UPWAIT.",
+   "urgency": "today"
+  },
+  {
+   "kind": "contradiction",
+   "what": "The T7 (a/b) texts and the manual-admit COMPLETE mapping still promote exp89t at '0.959 с UP' and use T3 and T4_question. This contradicts decision B and the 13:58Z T3KEEP code.",
+   "evidence": "research/wf_ideas_v4/round41/report.json R41-A2; research/wf_ideas_v4/round40/scan_hyp_exp89tmsg40.json; CONTEXT.md l.4607-4642; FACTS.md C-336; WATCHLIST.md C21 l.89",
+   "suggested_action": "Before 21:00 MSK (18:00Z), log the R41-A2 texts. Mapping: >= 0.960 -> T2; 0.959 -> T3KEEP; <= 0.958 -> T5_late. Never send T3_*, T4_*.",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "The evening chain has crash paths and stale inputs: an empty post_exp89t folder crashes the builder; the cp1251 console crashes on Russian output; T6 fails without --lhi; lastok skips status-less or '[ERROR' blocks; the card's rank label is wrong (14:45 instead of 14:41 МСК); stale test cards card_1837_* may exist.",
+   "evidence": "research/wf_ideas_v4/round41/report.json R41-A4; FACTS.md C-343; WATCHLIST.md I454-I456, I461",
+   "suggested_action": "At 21:37 MSK (18:37Z): pass --lb post_exp89t only if the watcher printed 'post_exp89t: rank' with count 57, else '--lb e10_20260929T1141Z --teams 3994'. Set PYTHONIOENCODING=utf-8 and pass --lhi for T6. Read status-less headers by hand. Build the card fresh.",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "Quiet-window prep: the feed loop w20892 must be stopped after its ~17:29Z run (by stop job w32220). The 17:13Z liveness census needs the updated PID list (FEED SIGNAL waiter w24700/11836; 36816 expected gone).",
+   "evidence": "FACTS.md C-331, F-RUN-61 l.343; research/wf_ideas_v4/round41/report.json R41-A5; WATCHLIST.md W379, T234",
+   "suggested_action": "At 20:13 MSK (17:13Z) run the census. By 20:35 MSK (17:35Z) confirm that 20892/10924 are gone.",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "exp87a is ~0.95875 unrounded, so exp89t needs about +0.00075 public to display 0.960. The likely read is 0.959, which means T3KEEP and no re-tick.",
+   "evidence": "research/wf_ideas_v4/round41/scan_recheck.notes.md l.8; WATCHLIST.md I452; CONTEXT.md l.4607-4642",
+   "suggested_action": "Prepare the T3KEEP message ('ничего менять не нужно') as the default. Swap only on >= 0.960 with a poller header <= 19:45:17Z.",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "Finals are ticked as П3 {exp87a 56640366, #37 56563521}. The tick deadline is 20:00Z (23:00 MSK). The pair changes only if exp89t reads >= 0.960.",
+   "evidence": "DECISIONS.md §2 [c41] l.1014-1016; CONTEXT.md l.4559-4581; experiments/lb_poll/poll.log l.31918",
+   "suggested_action": "Run SELECTED checks at 21:37, 22:43 and 00:05 MSK (18:37, 19:43 and 21:05Z) with the R39-A4 comparator. T7 fires ~22:20 MSK and manual-admit at 22:44:45 MSK.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "deadline",
+   "what": "The hindsight-guard items I-336, I-407, I-252 and I-516 are still at risk (a pushed, falsifiable private prediction).",
+   "evidence": "IDEAS.md ORPHANS l.995-1001; CONTEXT.md l.4593-4606; research/wf_ideas_v4/risk_audit/results.json",
+   "suggested_action": "Before 02:00 MSK 30 Sep (23:00Z): push one prediction commit quoting the audit grid, plus the I-407 line.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "forgotten",
+   "what": "00:07Z post-deadline step (R41-A7): final save, stop the infinite poller w37016, w22236 and the waiters, git add the untracked evidence, and commit with no Co-Authored-By trailer.",
+   "evidence": "research/wf_ideas_v4/round41/report.json R41-A7; FACTS.md C-334; IDEAS.md I-607, I-600; git status",
+   "suggested_action": "At 03:07 MSK 30 Sep (00:07Z): 'timeout 180 python tools/uptest.py save final_0007Z', then 1 SELECTED read and 1 submissions list. Stop the jobs. Commit as the user, check 'git log -1 --format=%B | grep -ci co-authored' = 0, then push.",
+   "urgency": "info"
+  },
+  {
+   "kind": "contradiction",
+   "what": "Round-41 skeptics corrected the recheck wording. The audit's K is NOT a 'floor'. Keeping exp87a costs ~0 on average (±0.0007), not 'at best ~0.0005'.",
+   "evidence": "FACTS.md C-339..C-341, F-TRN-78 l.534; research/wf_ideas_v4/round41/v_recheck_*.json; IDEAS.md I-606, I-608",
+   "suggested_action": "Use only the R41-A8 lines, and only if the user asks.",
+   "urgency": "info"
+  },
+  {
+   "kind": "stale",
+   "what": "Round 41 is neither applied nor logged (CONTEXT has nothing after 13:58Z). RESULTS.md stops at probe 46. Rounds 37-41 have no REPORT.md, and round41/ is untracked.",
+   "evidence": "CONTEXT.md l.4618-4643; experiments/RESULTS.md l.79; WATCHLIST.md W381, W126; IDEAS.md I-232",
+   "suggested_action": "Log 'ROUND 41 APPLIED' once A1-A6 are done (today). After the tick, add RESULTS rows P47-P55 and render REPORT.md for rounds 37-41.",
+   "urgency": "today"
+  }
+ ],
+ "summary": "Curation 41 index, 2026-09-29 ~14:57 UTC (17:57 MSK); HEAD 2fcbedd. INDEX.md was rewritten (78 lines) and CHANGES.md gained a '## 41' section. State: finals are ticked as П3 {exp87a 0.959, #37 0.954}; exp89t is PENDING (14:49:35Z, L > 5.82 h). Decision B means exp89t replaces exp87a only at >= 0.960, and the likely read is 0.959, i.e. T3KEEP. Rank is #151 of 3,999, 18th of 23. Round 40 was applied at 13:58Z. Round 41 (R41-A1..A8) is unapplied. The cancelled pre_exp89t job w36816 was still alive at 14:55:18Z (local Get-Process, read-only). Ideas: 608, at-risk 13. There are 12 deduplicated alerts, with two curator urgency disagreements settled: KEY FACTS -> now, 00:07Z step -> info."
+}
