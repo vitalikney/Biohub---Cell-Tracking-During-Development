@@ -1,0 +1,14 @@
+# round32 scan_plancheck notes (started 2026-09-29T03:13Z)
+- 03:15Z: no round32 json existed; started. poll.log newest header 03:04:17Z: 56656147/56656157/56657612 PENDING, 56640366 COMPLETE 0.959.
+- e10_watch newest 20260929T0241Z.txt: DIFF vs 0213Z = kernels no change; LB 3,979 teams, us #132 0.959 count 53, 17/21 in 0.959 block, >=0.960 = 115. Best public notebook 0.953 (E10 none).
+- feed digest 20260929T0227Z: 16 topics, 0 new topics/comments, E10 FLAG none.
+- 03:17Z: e10 20260929T0313Z: only kernel change = flexonafft lineage-forge lastRunTime 12:57:08->13:02:36 (0.947); LB >=0.960 115, us #132 17/21 count 53. Siblings scan_browser / scan_hyp_external32 (round32) agree: nothing new.
+- Hashes verified locally: card v5 a134d5e4, night_checklist 2b442e87, exp89l cad1d47f, exp89s 8ed72e32, exp89q b80dae26; kernel ids match R30-A2 KL/KS/KQ.
+- Processes (Win32_Process): lb_poll.py 37016, e10_watch_loop.py 18040, feed loop bash 10924, watchdog bash 10576; 63 timer.sh procs, due 04:13,05:13,06:07,07:13,07:23,08:13,08:30,09:13,10:13,11:10,12:03,13:13..18:13,18:37,19:43,21:05, 30 Sep 00:07. BatteryStatus 2 (AC) 77%.
+- 04:13Z timer text = 'launch the next research round' only; R31-A2 power push lives only in CONTEXT 02:53Z (5) -> risk it is skipped before the 05:10Z trip.
+- 08:30Z timer text 'decide now ... missing read = UNUSED' vs CONTEXT 02:53Z (2) (wait for manual list at 08:40:00Z). 12:03Z timer text names card v4 (v5 governs, 21:11Z (5)).
+- Runtime ledger (tools/runtime_ledger.py --print; NOTE it also rewrites experiments/lb_poll/ledger.md, same derived content the poller writes every 10 min): exp79a SEC+CI (9.27,9.45] vs exp87a CI (9.30,9.48] -> SEC ~0 runtime; exp89p expected ~ exp85a (7.01,7.19] -> first COMPLETE ~07:47-07:58Z, margin ~0.7 h to 08:40:36Z. exp75 (8.96-9.72 h) ~09:03-09:49Z, exp89r ~09:23-09:34Z -> may co-complete within one 30-min e10 window (+2 rule CONTEXT l.3125: higher display takes the UP).
+- tools/uptest.py save: subprocess.run without timeout (l.34-36) -> can hang a decision step (freeze (7) says every Kaggle call in timeout). Tested 0-call alternative in scratchpad r32pc: awk-extract leaderboard_rows from e10_watch txt into _lb/<tag>/lb.csv, uptest compare 0241Z vs 0313Z -> 'rank 132 score 0.959 count 53 | ... | TeamIds passed 0 -> no UP' (correct).
+- Card v5 l.133 DIS_READ (dd=(R-P)-(87a-85a) >= 0.002 and R > max(87a,P)) == R30-A2 grid (R-P >= 0.003, R > max(0.959,P)): consistent.
+- lb_poll.py sleeps time.sleep(600) (l.35); on Win 8+ waits may not count standby -> first header after the 05:10-06:00Z sleep can lag wake by up to ~10 min (+180 s CLI timeout); do not restart while 37016 alive (checklist G1/N.4).
+- 03:21Z final JSON written (6 findings).

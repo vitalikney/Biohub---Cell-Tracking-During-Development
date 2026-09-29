@@ -1,0 +1,60 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/FACTS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/DECISIONS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/32/facts.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/32/facts.json"
+ ],
+ "alerts": [
+  {
+   "kind": "forgotten",
+   "what": "Nothing is scheduled to send the R31-A2 power push that CONTEXT 02:53 (5) logged for 04:13Z, before the user's 05:10Z trip. The only 04:13Z timer says 'HOURLY RESEARCH ROUND (07:13 MSK): launch the next research round unless one is running.' No extra 04:1x timer exists.",
+   "evidence": "FACTS C-266, F-RUN-45; live timer.sh command lines (curator read ~03:48Z, 63 timers); research/wf_ideas_v4/round32/v_plancheck_pc32-01.json (skeptic CONFIRMED); round32/report.json R32-A1",
+   "suggested_action": "R32-A1: arm one timer at 04:10:00Z, send ONE PushNotification with the R31-A2 Russian text, log '04:1xZ R31-A2 push sent', then launch round 33. If it is already past 04:10Z, send the push at once.",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "Three live timer texts contradict logged lines. (1) The 07:23Z text says 'build/dummy exp89l only on branch A with P +/0u', but 02:02 (5) says do not rebuild or re-push, and 02:02 (1) makes '0u' unreachable. (2) The 08:30Z text says 'decide now ... a missing read = UNUSED', but 02:53 (2) says to run one '[manual-A-M1]' list at 08:40:00Z. (3) The 12:03Z text names card v4, but card v5 a134d5e4 governs.",
+   "evidence": "FACTS C-247, C-268, C-269, F-RUN-46; CONTEXT 02:02 l.4273-4293 (1), (5); CONTEXT 02:53 l.4294-4312 (2); round32/report.json R32-A3",
+   "suggested_action": "Treat timer texts as pointers only and follow the logged lines at 07:23Z, 08:30Z and 12:03Z (R32-A3). A re-push of exp89l would break byte identity with the gated dummy v1.",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "tools/uptest.py save() calls the Kaggle LB download with no timeout (l.34-36). Freeze (7) says every Kaggle call is wrapped in a timeout, so a hang after a standby could block a decision step. UP tests are needed only if exp89p or exp89r displays 0.959 (the V_pub running champion); A-M1 and exp75 need none.",
+   "evidence": "FACTS C-267, F-RUN-49; tools/uptest.py l.31-40; CONTEXT l.4226, l.3124-3126; round32/report.json R32-A2",
+   "suggested_action": "Run UP tests from the e10 snapshots (count 53 -> 54, then uptest.py compare), which needs 0 API calls. Run any fresh save only as 'timeout 180 python tools/uptest.py save <tag>'.",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "Morning decisions follow MORNING TABLE v1.1 as amended at 02:02 and 02:53. (1) exp89p's first terminal header is expected ~07:47-07:58Z. A-M1 is decided at the last header <= 08:40:36Z (plus one manual list at 08:40:00Z if still PENDING at 08:30Z); on >= 0.959 submit exp89l by 08:45Z. (2) A-M2 follows the 02:53 (1) function at exp89r's terminal header (~09:23-09:34Z, latest 11:00Z); submit by 11:30Z. (3) 2 submits are left on 29 Sep. (4) The finals are still ticked #37 + #38, and the user ticks by 20:00Z.",
+   "evidence": "DECISIONS P54, P55-P56 rows and the [c32] snapshot; FACTS F-RUL-28, F-RUN-48; CONTEXT 02:53 l.4294-4312; experiments/lb_poll/poll.log header 03:44:23Z (3 refs PENDING)",
+   "suggested_action": "Act at the decision header, not at the cutoff. Word the finals message 'the pair by the card', never 'рекомендую'.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "Card v5 (a134d5e4) still has stale parts. (1) l.39 and l.46-47 carry model numbers computed for exp85a (R31-A4 is still PROPOSED). (2) l.114 still says 'only on P +/0u'. (3) l.93, l.138 and l.152 cite dead cron ids (2e9ce42e, ec670938, 64b9bb56, ddc5884d). Separately, card v4 l.1 points at the old v5 sha8 aadead83.",
+   "evidence": "FACTS C-263, C-255, C-269, F-RUL-22; research/wf_ideas_v4/round29/finals_card_v5_ru.md l.39, l.46-47, l.93, l.114, l.138, l.152; research/wf_ideas_v4/round27/finals_card_v4_ru.md l.1",
+   "suggested_action": "At the 12:03Z fill, use the R31-A4 numbers and the 03:13Z medal lines (silver ~#199 in the 0.957 block, bronze ~#398 in the 0.955 block). Optionally make the text-only waiter-id edit with a new sha8.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "stale",
+   "what": "experiments/RESULTS.md still has no rows for P47-P51 (0.955 / 0.957 / 0.955 / 0.958 / 0.959) or for the pending P52-P54. It was last changed in 59e14e2 (05:03Z 28 Sep).",
+   "evidence": "FACTS C-118; git log -- experiments/RESULTS.md",
+   "suggested_action": "Add the rows after the night reads, before the finals message",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "risk",
+   "what": "Several items are still unlogged. R31-A4 (card model numbers) and R31-A5 (the I-045 note) were not in the 02:53 entry. R30-A3..A5 (UP-test protocol, watchers, card-fill wording) were never logged as such. R32-A1..A4 are all PROPOSED.",
+   "evidence": "DECISIONS §3 R31-A4/A5 and R32-A1..A4 rows [c32]; CONTEXT 02:53 l.4294-4312",
+   "suggested_action": "Log R32-A1 now. Fold R32-A2 and R32-A3 into a pre-score line before 07:23Z. R31-A4 can go straight into the 12:03Z fill.",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 32 (state 03:51 UTC 29 Sep) is incremental over curation 31. It covers one new commit, a9ac9ee (02:53Z), and one new CONTEXT entry, 02:53 (l.4294-4312). That entry logged R31-A1 pre-score. The A-M2 function restores the Rr '+' condition, and exp89r at 0.959 or below means UNUSED. The 08:40Z header is defined as the last header stamped <= 08:40:36Z, plus one '[manual-A-M1]' list at 08:40:00Z. The read-only round pause was NOT ADOPTED. The card pool L is non-CI <= 9.0 h, and card v5 is now sha8 a134d5e4. The R31-A2 push and the R31-A3 read-time log were also logged. The night probes P52 exp89r, P53 exp75 and P54 exp89p are still PENDING at the 03:44:23Z header (L > 3.64 / 3.64 / 2.96 h). We are #132 of 3,980 at 0.959 (17th of 21), and 115 teams are at >= 0.960. E10 is null, and nothing has been disclosed. The finals are still ticked #37 + #38. FACTS adds F-LB-32, F-RUN-49, F-RUL-28, F-RUL-29 and F-TRN-64, with [c32] notes on 11 F rows. C-259..C-262 are resolved, and C-118, C-247, C-255, C-258 and C-263 are updated. New contradictions are C-266 (power push has no waiter), C-267 (uptest.py has no timeout), C-268 (08:30Z timer text), C-269 (12:03Z card v4 and dead cron ids), and C-270..C-272 (refuted round-32 claims). DECISIONS updates P52-P56 and adds a new [c32] finals snapshot. It adds R32-A1..A4 rows, the R31-A1 LOGGED row and a round-32 rejected row, marks R31-A1..A3 logged (R31-A1 (3) not adopted), and adds [c32] status on R1-R10 and §f."
+}

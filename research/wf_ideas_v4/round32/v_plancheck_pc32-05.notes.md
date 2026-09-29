@@ -1,0 +1,7 @@
+# PC32-05 verify notes (2026-09-29T03:33:07Z)
+- 03:33Z no prior json. lb_poll.py: ts taken BEFORE poll() (l.25); poll() = 3 attempts x (timeout 180 + sleep 30) -> header can be written up to ~630 s after its own ts; then time.sleep(600) (l.35). Python 3.12.10 (Python312 path of PID 37016).
+- EMPIRICAL TEST (poll.log l.23444/23505): header 14:54:21Z, next header 15:15:31Z [DNS NameResolutionError x2+]. CONTEXT l.4000-4001: Modern Standby from 15:00Z, brief wake 18:15:31 MSK = 15:15:31Z. The loop iteration started on the exact second of the brief wake; sleep(600) begun ~14:54:3x had ~4.5 min left at 15:00Z. If standby were not counted it would have fired ~15:20Z. => the sleep counted standby time for this exact process/python; the claimed ~10 min post-wake lag mechanism is contradicted.
+- 15:41:53Z header is a fresh process (CONTEXT l.3982-3983: all three loops killed/restarted at 15:41Z) -> not evidence either way.
+- Real observed failure mode = DNS failure right after wake + loops hung (CONTEXT l.4070), covered by G1 (<15 min) + post-wake 'restart any stale loop' (CONTEXT l.4071) + N.4 (75/100 min).
+- Processes at 03:3xZ (Win32_Process): exactly one lb_poll.py (37016), one e10_watch_loop.py (18040 under sh 19596), one run_feed_loop.sh (10924); one-instance rule already in W6 (CONTEXT l.2064).
+- Only genuine lag source: header ts = iteration start, written after poll() returns (<= ~630 s later on a cold/hanging network). First night reads ~07:05Z, so a <=11 min lag at 06:07Z has no decision impact.

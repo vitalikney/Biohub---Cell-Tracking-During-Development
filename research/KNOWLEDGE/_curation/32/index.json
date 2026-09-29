@@ -1,0 +1,74 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/INDEX.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/CHANGES.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/32/index.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/32/index.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "what": "R32-A1 / W309: the R31-A2 power push (logged 02:53Z (5), due before the user's 05:10Z trip) has no waiter. The only 04:13Z timer launches a research round.",
+   "evidence": "research/KNOWLEDGE/FACTS.md C-266; research/wf_ideas_v4/round32/report.json R32-A1; research/wf_ideas_v4/round32/v_plancheck_pc32-01.json (CONFIRMED); CONTEXT.md l.4309-4311",
+   "suggested_action": "By 04:09Z arm one timer.sh at 04:10:00Z; at 04:10-04:13Z send ONE Russian PushNotification (verbatim R32-A1 (2)); log '04:1xZ R31-A2 push sent'. If past 04:10Z, push at once before round 33.",
+   "urgency": "now"
+  },
+  {
+   "kind": "stale",
+   "what": "E10 runbook still says SC >= 0.958; the trigger in force is >= 0.960 (OUR = 0.959).",
+   "evidence": "research/wf_ideas_v4/e10v3/runbook.notes.md l.66; CONTEXT.md l.4159-4160; research/KNOWLEDGE/WATCHLIST.md W286 (2)",
+   "suggested_action": "Fix the line before the 04:41Z E10 run.",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "Timer texts contradict logged lines: 07:23Z 'build/dummy exp89l' vs no rebuild/re-push; 08:30Z 'decide now' vs one [manual-A-M1] list at 08:40:00Z; 12:03Z names card v4 vs card v5 a134d5e4.",
+   "evidence": "research/KNOWLEDGE/FACTS.md C-247, C-268, C-269; CONTEXT.md l.4273-4293 (5), l.4294-4312 (2); round32/report.json R32-A3",
+   "suggested_action": "Follow the logged CONTEXT lines at each step; do not kill or re-arm timers.",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "tools/uptest.py save has no timeout (breaks freeze (7)); E10 runs hourly (~xx:42Z), not every ~30 min, so snapshot-based UP tests can lag a header by ~1 h and exp75 + exp89r may land in one window.",
+   "evidence": "tools/uptest.py l.34-36; research/KNOWLEDGE/FACTS.md C-267, F-RUN-49; experiments/e10_watch/watch_loop.log RUN 36-39; round32/report.json R32-A2",
+   "suggested_action": "UP test only for a 0.959 display of exp89p/exp89r, from e10 snapshots; any fresh save as 'timeout 180 python tools/uptest.py save <tag>'; do not edit the tool today.",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "Morning decisions: A-M1 exp89l iff exp89p COMPLETE >= 0.959 at the 08:40Z header (submit by 08:45Z); A-M2 by the 02:53Z (1) function at exp89r's terminal header (latest 11:00Z, submit by 11:30Z); at 06:07Z do not kill a live lb_poll.py within ~11 min of wake.",
+   "evidence": "CONTEXT.md l.4273-4312; research/KNOWLEDGE/DECISIONS.md l.197-200; research/KNOWLEDGE/WATCHLIST.md T193, l.82-87",
+   "suggested_action": "Act at the decision header, not the cutoff.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "Card v5 (a134d5e4) still stale: model numbers for exp85a l.39/l.46-47, l.114 '+/0u', dead cron ids l.93/138/152, I-539 info lines missing; card v4 l.1 cites old sha8 aadead83.",
+   "evidence": "research/wf_ideas_v4/round29/finals_card_v5_ru.md; research/KNOWLEDGE/FACTS.md C-255, C-263, C-269; research/KNOWLEDGE/IDEAS.md I-548, I-539",
+   "suggested_action": "At the 12:03Z fill use R31-A4 numbers, add info lines, rank + medal-line line from newest e10_watch file, record new sha8.",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "Records missing / unlogged: RESULTS.md rows P47-P54, REPORT.md rounds 29-32, round 32 uncommitted, W279 (1) DET_THRESHOLD line, W297 cron-defect correction, I-510 user message, I-045 note, R30-A3..A5 / R31-A4/A5 / R32-A1..A4.",
+   "evidence": "experiments/RESULTS.md (ends at P46); research/KNOWLEDGE/WATCHLIST.md W126, W296/W303, W279, W297, W308; research/KNOWLEDGE/FACTS.md C-118",
+   "suggested_action": "After the morning decisions and before the 12:03Z card.",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "Finals: still ticked #37 + #38; 18:37Z proposal, 19:43Z reminder, user ticks by 20:00Z, 21:05Z last call, deadline 23:59Z; wording 'the pair by the card', never 'рекомендую'.",
+   "evidence": "CONTEXT.md l.3848-3855, l.4041-4050; research/KNOWLEDGE/DECISIONS.md §2 l.968-985",
+   "suggested_action": "The session never ticks; fill card v5, not v4.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "R32-A4 post-deadline division order (graph ranker for claimed daughters; parent-vector head I-121 deferred; merged class under retraining; insert-before-short-filter low) and W313 recheck-lens restriction exist only in round32 report.json and the KB.",
+   "evidence": "research/wf_ideas_v4/round32/report.json R32-A4, plan_issues (d); research/KNOWLEDGE/FACTS.md F-TRN-64; research/KNOWLEDGE/WATCHLIST.md W312, W313",
+   "suggested_action": "Add to the I-252 post-deadline agenda after 20:00Z; apply W313 in the round 33 brief.",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 32 index (~03:55Z 29 Sep, HEAD a9ac9ee). research/KNOWLEDGE/INDEX.md rewritten (69 lines): state (V_pub exp87a 0.959, #132/3,980; P52-P54 PENDING at 03:44:23Z; 02:53Z R31-A1 logged; push has no waiter), updated anchors for CONTEXT (4,333 lines, 02:53Z entry l.4294-4312), IDEAS/FACTS/DECISIONS/WATCHLIST, top 8 open ideas (I-546, I-553, I-552, I-548/I-539, I-547, I-556, I-424/I-121/I-550, carried), 9 deduplicated alerts, resolved list, how-to-use. research/KNOWLEDGE/CHANGES.md: appended section '## 32' (sources, LB, ideas I-550..I-556 and status moves I-530 -> refuted, I-121 -> deferred, counts 549 -> 556, facts F-LB-32/F-RUN-49/F-RUL-28/F-RUL-29/F-TRN-64, C-259..C-262 resolved, C-266..C-272 new, watchlist W309-W313/T192-T194/I366-I373, alerts resolved/new/carried, settled urgency disagreements). Most urgent: arm the R31-A2 push timer by 04:09Z."
+}

@@ -4310,6 +4310,18 @@ Mention it to the user in one line (R9-A8 item 6).
   R31-A2: a power reminder push at 04:13Z (07:13 MSK) before the user's 05:10Z trip; at 06:07Z re-push if not on AC
   and re-arm a battery-tolerant watchdog (notifies only on a poll header > 25 min old). R31-A3: read-time L logging at
   07:23Z and at each night read.
+- 2026-09-29 03:56 UTC, ROUND 32: external delta null + procedure notes (R32-A1..A3; no rule change)
+  External (feed digest 02:27Z, e10 snapshot 03:13Z, Chrome 03:16Z): no new topic / comment / notebook; best public
+  notebook 0.953; no host announcement; '21 HOURS TO GO', 3,980 teams. R32-A1: a dedicated timer at 04:10Z sends the
+  R31-A2 power push before the user's 05:10Z trip. R32-A2 UP-TEST PROCEDURE today: A-M1 needs no UP test (02:02Z (1));
+  an UP test is needed only for the V_pub running champion (a night file at 0.959: exp89p or exp89r); use the e10
+  watch snapshots, 0 API calls: S0 = the newest experiments/e10_watch/<TS>.txt before the file's terminal header with
+  our SubmissionCount = the S0 count, S1 = the first after it with count +1; build experiments/lb_poll/_lb/<TS>/lb.csv
+  from the snapshot's leaderboard_rows block and run 'python tools/uptest.py compare <TS0> <TS1>'; a fresh download
+  only as 'timeout 180 python tools/uptest.py save <tag>' when no suitable snapshot exists (tools/uptest.py save has
+  no internal timeout). R32-A3: timer texts are pointers; at 07:23Z do NOT rebuild/re-push exp89l/exp89s/exp89q
+  (submit v1 = the gated dummy); at 08:30Z follow 02:53Z (2); at 12:03Z fill round29/finals_card_v5_ru.md (sha8
+  a134d5e4), not v4.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

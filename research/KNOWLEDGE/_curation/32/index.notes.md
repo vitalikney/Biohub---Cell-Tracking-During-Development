@@ -1,0 +1,5 @@
+- 03:52:15Z 2026-09-29 start index curation 32; no index.json; base INDEX (c31) + CHANGES §31
+- 03:53:12Z anchors gathered: CONTEXT 4333 l. (02:53Z entry l.4294-4312, Lit l.4313); poll hdr 03:44:23Z l.28010; e10 RUN 39 03:42Z; IDEAS/FACTS/DECISIONS/WATCHLIST anchors; writing INDEX.md
+- 03:54:14Z INDEX.md written; appending CHANGES §32
+- 03:54:38Z CHANGES §32 appended; writing index.json
+- 03:55:04Z index.json written; done

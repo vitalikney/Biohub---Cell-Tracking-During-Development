@@ -1,0 +1,5 @@
+- 2026-09-29T03:44Z start; _curation/32/watch.json absent; base = WATCHLIST.md (curation 31, ~02:55Z); new: commit a9ac9ee (02:53Z)
+- 03:46Z CONTEXT 4333 lines (Lit l.4313); new entry l.4294-4312 (02:53Z R31-A1 logged; (3) NOT ADOPTED; card sha8 a134d5e4); round32 untracked 03:13-03:42Z; poll newest header 03:34:22Z
+- 03:50Z checks: grep DET_THRESHOLD/int-casting/cron defect/I-045 = 0, battery standby 1; RESULTS rows end at 46; runbook l.66 unchanged; REPORT.md absent r29-r32; card sha8 a134d5e4; E10 RUN 39 03:42Z signals 0; feed 02:28Z; round31 committed a9ac9ee, round32 untracked
+- 03:46Z (true UTC; earlier stamps ran ~+5 min) read round32 report.json (R32-A1..A4, plan_issues a-e) + scan/verdict notes; Win32_Process: timers 04:13Z (round only) and 05:13Z, NO 04:10Z push timer; BatteryStatus 2. Writing WATCHLIST: W304 done; T189 superseded (not adopted); new W309-W313, T192-T194, I366-I373
+- 03:53Z WATCHLIST.md written (W304 done; T189 superseded; new W309-W313, T192-T194, I366-I373); watch.json written (14 alerts, valid JSON); done

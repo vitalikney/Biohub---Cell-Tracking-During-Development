@@ -1,0 +1,37 @@
+{
+ "summary": "Round-32 external delta, 03:14-03:25Z on 29 Sep, covering the window since 28 Sep 20:00Z. Nothing is new or actionable. The only item in the window is one comment on 743929 (John Taylor (AI), 28 Sep 20:46Z, 'very true brother...'), which contains no values and no technique. The feed digests at 20:27Z, 21:57Z, 23:27Z, 00:57Z and 02:27Z report 0 new topics and E10 FLAG none. The best public notebook is 0.953. No Biohub notebook was run or created after 12:57Z on 28 Sep (e10_watch snapshot 20260929T0241Z, RUN 38, signals 0), and there is no host announcement. No public notebook is at or above 0.960, so the E10 runbook has no slug. The LB at 02:42Z shows the top-4 unchanged (yu4u 0.978), 115 teams at or above 0.960, and us at #132 with 0.959 and count 53, so probes 52-54 are still unscored. The only movement is the known daily burst in 0.953-0.957. A GitHub WebSearch found only repos already logged in wf_ideas_v3 or low scorers (canakbass 0.863). Chrome was not used, because the task says not to. No hypothesis reaches R8: every candidate derived from the delta maps to a closed or refuted IDEAS.md entry.",
+ "findings": [
+  {
+   "id": "r32x-1-delta-null",
+   "kind": "new-fact",
+   "what": "Nothing new since 28 Sep 20:00Z. There are no new public notebooks, no new topics and no host announcements. One comment has no content: John Taylor (AI) on 743929 at 2026-09-28 20:46:04Z, 'very true brother, Until a man has spoken, his flaws and talents remain hidden.', replying to Cyrus's 'this is overfitting brother. shake up is coming'. JT still says 'the specific settings go in the notebook after the deadline', so no further values will be disclosed before 23:59Z. The disclosed values (ILP_DIVISION_WEIGHT 1.2->0.4 and READMIT_MIN_SCORE 0.965->0.94) are already in exp85a, exp87a, exp89*. AGGRESSIVE MODE therefore has nothing to build.",
+   "evidence": "experiments/discussions/digest_20260928T2157Z.md (the 1 comment); digest_20260928T2027Z / 2327Z / 20260929T0057Z / 0227Z (0 new topics / 0 comments, E10 FLAG none); experiments/discussions/743929.md; feed_loop.log last line 2026-09-29T02:28:02Z rc=0; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/743929",
+   "action": "None. The plan and MORNING TABLE v1.1 stay unchanged.",
+   "urgency": "info"
+  },
+  {
+   "id": "r32x-2-e10-none",
+   "kind": "new-fact",
+   "what": "E10: there is no public notebook at or above 0.960, so there is no slug or version for the runbook. The feed lists best_public_score values of 0.9530 (kunaldesale2408/biohub-cell-tracking, amanatar/optimized-biohub-max-score, raunakdey07/biohub-harmonic-fusion-v3, anvithpothula/biohub-0-953-lb-original), then 0.948 and 0.947. The newest Biohub kernel in the dateRun list is still flexonafft/biohub-lineage-forge-precision-tracking (2026-09-28 12:57:08, public 0.947). The new amanatar kernels (notebookd71800bfae, rsna-knee-abnormality-detection) are not Biohub. LB 02:42Z: 3,979 teams; 0.978/0.976/0.975/0.974 at the top are unchanged; >=0.960: 115; the 0.959 block is 21 teams (ranks 116-136); ours is rank 132, 0.959, last submission 2026-09-28 12:14:57. The 0213Z->0241Z diff shows 7 teams moving within 0.953-0.957, with submissions from 17:31-20:19Z on 28 Sep. That is the daily scoring burst, and the largest P2 group is 1.",
+   "evidence": "experiments/e10_watch/20260929T0241Z.txt (comp_dateRun, comp_scoreDescending, histogram, DIFF); experiments/e10_watch/watch_loop.log RUN 38 'signals 0'; experiments/discussions/digest_20260929T0227Z.md",
+   "action": "None. Do not re-propose a 'crowd 0.956 source' (r25 refuted).",
+   "urgency": "info"
+  },
+  {
+   "id": "r32x-3-e10-latest-useful-submit",
+   "kind": "recheck-old",
+   "what": "Timing arithmetic for any late E10 find, as a reminder only (not a new rule). A CI/x138-family file has runtime L ~9.3-9.5 h (exp87a (9.30, 9.48] h) and a non-CI file ~7.0-7.2 h (exp85a). For its read to exist before the user ticks at 20:00Z, an E10 copy must be submitted by about 20:00 - 9.5 h = 10:30Z (CI-like) or 20:00 - 7.2 h ~ 12:45Z (non-CI-like). Build plus dummy (~30-35 min) come on top, and after 02:00Z the user also has to say yes. The e10_watch loop runs until 12:00Z and the feed loop until 23:59Z, which covers that window. A notebook that appears after ~12:00Z cannot be read before the tick, so it could enter the finals only blind, which the V_pub rule forbids (COMPLETE refs only).",
+   "evidence": "CONTEXT.md 21:45Z entry (exp87a L (9.30, 9.48] h); 23:34Z freeze (9) (exp85a L 7.0-7.2 h); CONTEXT.md 20:07Z (3) (after 02:00Z an E10 copy needs the user's yes); watch_loop.log START line 'until 2026-09-29T12:00:00Z'",
+   "action": "None beyond the existing E10 v3 text. If a 0.960+ public notebook appears after ~11:00Z, report it as information for the user; it is not a finals candidate.",
+   "urgency": "info"
+  },
+  {
+   "id": "r32x-4-no-hypothesis-reaches-r8",
+   "kind": "new-hypothesis",
+   "what": "Honest answer: nothing reaches R8. I checked every candidate the delta could suggest against research/KNOWLEDGE/IDEAS.md. (a) JT's finals advice 'best + closest one-line neighbour' is I-412, rejected (overfitting; the user agreed {V_pub, #37 or exp75} at 16:32Z). (b) 744093 float/truncation variants (floor-vs-round writer, a -0.5 voxel offset) fall under I-028, I-215 and I-516: closed, the lab-calibrated truncation cost is -0.0050, and the z-shift is I-041/I-029, post-deadline. (c) The growth of the 0.956/0.957 blocks is the daily burst (r25 refuted). (d) JT's third knob is not disclosed before the deadline, so there is nothing to port. The GitHub WebSearch returned only repos already in wf_ideas_v3/h_github-intel (JunhaoLiXD, alvaromendizabal 0.947 reproduction, pathik1511, Gluzdov) plus canakbass (LB 0.863) and tanvik7072 (no score), all below x138 0.953. Expected gain of any new build: 0, and it has no slot. The 2 remaining 29 Sep slots belong to MORNING TABLE v1.1.",
+   "evidence": "research/KNOWLEDGE/IDEAS.md I-412, I-028, I-215, I-516, I-041; research/wf_ideas_v3/h_github-intel.json; WebSearch 2026-09-29 ~03:20Z: https://github.com/JunhaoLiXD/Biohub_Cell_Tracking , https://github.com/alvaromendizabal/biohub-cell-tracking-during-development , https://github.com/canakbass/biohub-cell-tracking , https://github.com/tanvik7072/Biohub-Cell-Tracking-During-Development",
+   "action": "Build, dummy and propose nothing. Keep the night reads, MORNING TABLE v1.1 and the finals card v5 as logged.",
+   "urgency": "info"
+  }
+ ]
+}

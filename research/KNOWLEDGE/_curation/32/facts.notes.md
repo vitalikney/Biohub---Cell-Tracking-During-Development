@@ -1,0 +1,8 @@
+- 2026-09-29T03:43:25Z start round 32 facts curation; no prior facts.json
+- 03:44Z sources since c31: CONTEXT +1 entry 02:53Z (l.4294-4312, R31-A1 logged, card sha8 a134d5e4); commit a9ac9ee; poll header 03:34:22Z 3 night refs PENDING (508 polls); e10 RUN 39 0341Z #132 0.959 17/21, >=0.960 115; round32 report.json 03:45Z R32-A1..A4
+- 03:45Z verified: card v5 sha8 a134d5e4, checklist 2b442e87; card l.17/l.124 now 9.0 h; l.93/138/152 dead cron ids; v4 l.1 cites aadead83; uptest.py save l.34-36 no timeout; Win32_Process 63 timer.sh, no 04:1x push timer, 12:03Z text names card v4, 07:23Z/08:30Z texts; BatteryStatus 2
+- 03:46Z header 03:44:23Z (poll.log l.28010) still 3 night refs PENDING (L > 3.64/3.64/2.96 h). Plan FACTS: new F-LB-32, F-RUN-49, F-RUL-28, F-RUL-29, F-TRN-64; [c32] on F-LB-01/02/10, F-RUN-43/45/46/48, F-RUL-22/27, C-118, C-247, C-255, C-259..C-263; new C-266..C-272. Writing c32_facts.py in scratchpad
+- 03:48Z FACTS.md patched via c32_facts.py
+- 03:50Z DECISIONS.md patched via c32_dec.py; validating
+- 03:50Z stamps set to 03:51Z (real clock); newest header still 03:44:23Z; writing facts.json
+- 03:51Z facts.json written (7 alerts). Done.

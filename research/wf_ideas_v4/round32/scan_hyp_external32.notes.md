@@ -1,0 +1,10 @@
+# round32 scan_hyp_external32 notes (started 2026-09-29 ~03:14Z)
+
+- 03:14Z no prior scan_hyp_external32.json -> fresh run. Chrome NOT used (task text: "do NOT use the Chrome browser"; the round32 scan_browser agent does the Chrome look).
+- Feed digests since 28 Sep 20:00Z: digest_20260928T2027Z, 2157Z, 2327Z, 20260929T0057Z, 0227Z (experiments/discussions/). Only content: 2157Z = 1 new comment on 743929 by John Taylor (AI) 2026-09-28 20:46:04Z "very true brother, Until a man has spoken, his flaws and talents remain hidden." (reply to Cyrus 'overfitting, shake up is coming'). No values, no technique. All other runs: 0 new topics / 0 new comments; E10 FLAG none; best_public_score top = 0.9530 (kunaldesale2408, amanatar optimized-biohub-max-score, raunakdey07 HF V3, anvithpothula x138).
+- feed_loop.log last line 2026-09-29T02:28:02Z rc=0, 16 topics, 0/0, E10 FLAG none.
+- e10_watch newest snapshot experiments/e10_watch/20260929T0241Z.txt (RUN 38, CHANGES=4, signals 0). comp_dateRun newest = flexonafft/biohub-lineage-forge-precision-tracking 2026-09-28 12:57:08 (before the 20:00Z cutoff) -> no public Biohub notebook run/created after 28 Sep 20:00Z. amanatar new kernels (notebookd71800bfae 15:43Z, rsna-knee-abnormality-detection) = not Biohub.
+- LB 02:42Z: 3,979 teams; top-4 yu4u .978 / Sergio Alvarez .976 / Gabriel .975 / taiseiu .974 unchanged; >=0.960 = 115; 0.959 block 21 (ranks 116-136); ours rank 132, 0.959, last sub 2026-09-28 12:14:57 (count 53; night probes 52-54 unscored). Diff 0213Z->0241Z: 7 teams moved within 0.953-0.957 (daily burst, submissions 17:31-20:19Z 28 Sep); largest P2 group 1.
+- Host announcements: none in feed (pinned topics unchanged per round31 Chrome scan 02:18Z).
+- IDEAS.md checked: 744093 float/truncation -> I-028/I-215/I-516 closed; 743929 JT process + neighbour finals -> I-412 rejected; crowd 0.956 block -> r25 refuted. Nothing new to map.
+- 03:25Z WebSearch github: all repos known (wf_ideas_v3/h_github-intel) or low (canakbass 0.863, tanvik7072). JSON written; verdict: nothing new, nothing reaches R8.

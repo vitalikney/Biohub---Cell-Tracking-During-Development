@@ -1,0 +1,29 @@
+{
+ "summary": "Round-32 delta scan, 03:13-03:20 UTC 29 Sep (06:13-06:20 MSK), compared with round 31 (02:13-02:22Z). Nothing is actionable. There is no new notebook, no public notebook above 0.953 (E10 FLAG none), no new discussion topic or comment, no disclosed knob and no host announcement. Ours: #132, 0.959, SubmissionCount 53, so night probes 52-54 are still unscored, as expected. 1 + teams strictly above = 116; we are 17th of 21 in the 0.959 block, the same as r31. E10 P1: experiments/e10_watch/20260929T0313Z.txt has CHANGES=8 against 0241Z. The only kernel change is a re-run timestamp on flexonafft lineage-forge, and the largest P2 group is 0. LB counts 0213Z->0313Z: 0.953 406->407, 0.954 136->135, 0.955 111->108, 0.956 115->121, 0.957 49->50, 0.958 20->20, 0.959 21->21, 0.960 20->20, >=0.960 115->115, 3,980 teams (+1). The top-21 scores are unchanged. Overview: 94,203 submissions (+100). Nothing pulled.",
+ "findings": [
+  {
+   "id": "r32-e10-p1-null",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "E10 P1 at 03:13Z shows CHANGES=8 against 0241Z. The only kernel change is flexonafft/biohub-lineage-forge-precision-tracking, whose lastRunTime moved from 2026-09-28 12:57:08 to 13:02:36. That is a re-run of a public 0.947 notebook, it shows in both the dateRun and scoreDescending lists, and its position did not change. The anvithpothula list (live x138 slug biohub-0-953-lb-original), the thtennant and amanatar lists and both statuses report 'no change'. P2 look-check: no team went from <=0.953 to >=0.956, so the largest group is 0. The newest feed digest is 20260929T0227Z (0 new topics, 0 new comments, 'E10 FLAG: none', best_public_score top 0.9530). It was 46 min old, under the 100-min limit, so kaggle_feed.py was not re-run.",
+   "evidence": "experiments/e10_watch/20260929T0313Z.txt DIFF section; experiments/discussions/digest_20260929T0227Z.md; experiments/discussions/feed_loop.log (02:28:02Z rc=0)",
+   "action": "None. E10 is not met, and there is nothing to run through tools/e10_port_gate.py."
+  },
+  {
+   "id": "r32-lb-delta",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "The LB CSV at 03:13:45Z, compared with r31's at 02:14Z, has 13 score changes and 54 rows whose SubmissionCount grew. The only top-100 mover is #75 '銅メダルくれbot ＆ 後輩' 0.961->0.962 (row dated 2026-09-28 19:32:32). The others are Astra Team 0.955->0.957 (#188); skomuro and SAMIUL ISLAM 0.954->0.956; Baimakanov, Barathan Aslan and Дворкин Евгений Владимирович 0.955->0.956 (evgendvorkin is the author of the public 0.947 PROXY_SCORE notebook, and has posted no disclosure); Ari Nakos new->0.956; wennan cao 0.953->0.955; bichonga 0.953->0.954; and three new teams at 0.953 (PengQiu, harrywhalen, AIZOYA). All of these submissions are dated 17:31-20:52Z on 28 Sep, which is the known 6-8 h scoring lag and daily burst (r25 refuted it as a signal). In the top-21 only SubmissionCount changed (Gabriel 32, tatsutaka 118, Tang 199, The Boys 310, z7777 142). Top: yu4u 0.978, Sergio Alvarez 0.976, Gabriel 0.975, taiseiu 0.974. Ours: '132,16810638,D: Discipline,2026-09-28 12:14:57,0.959,53', strictly-better + 1 = 116, 17th of 21 in the 0.959 block (ranks 116-136). SubmissionCount 53 means probes 52 exp89r / 53 exp75 / 54 exp89p have not scored yet. That is consistent with their read windows (exp89p ~07:38-08:35Z, exp75 ~09:05-10:05Z, exp89r ~09:25-09:35Z).",
+   "evidence": "experiments/e10_watch/20260929T0213Z.txt vs 20260929T0313Z.txt (TeamId row diff); histogram in 20260929T0313Z.txt (publicleaderboard-2026-09-29T03:13:45.csv)",
+   "action": "None; the plan and the MORNING TABLE v1.1 are unchanged. Do not re-propose a 'crowd 0.956 source' hypothesis (r25 verdict)."
+  },
+  {
+   "id": "r32-discussion-code-overview-null",
+   "kind": "new-fact",
+   "urgency": "info",
+   "what": "Discussion (Chrome, Recent Comments, 03:16Z): there are 0 new topics and 0 new comments since r31, and the list order is unchanged. 743929 'Public 0.953 to 0.959 in two days...' last comment '6h ago by John Taylor (AI)', 6 comments; 744093 '⚠️ Don't write float centroids' posted 11h ago, no comments; the Public/Private split thread is at 15h; 'A few question for top 100 people?' is at 1d. The pinned topics are unchanged. Code, Recently Created: no new notebook; the newest unpinned one is still 'Robust Cell Tracking During Development via Chan.' (5d, 0.1). x138 has 230 votes (+1) and still scores 0.953. Code sorted by Public Score did not render in Chrome (skeleton rows only). The CLI scoreDescending list covers it (unchanged apart from the flexonafft re-run timestamp), as does the digest best_public_score list (top 0.9530). Nothing is >= 0.954, and there is no new idea, so nothing was pulled. Overview: '21 HOURS TO GO'; 13,475 entrants, 4,564 participants (+1), 3,980 teams (+1), 94,203 submissions (+100 vs 94,103). The timeline is unchanged (Final Submission Deadline September 29, 2026; 'All deadlines are at 11:59 PM UTC'), and there is no host announcement. No team disclosed a knob, so AGGRESSIVE MODE has nothing to build.",
+   "evidence": "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion?sort=recent-comments ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/code?sortBy=dateCreated ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/code?sortBy=scoreDescending ; https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/overview",
+   "action": "None. The finals tick is still for the user by 20:00Z (23:00 MSK)."
+  }
+ ]
+}

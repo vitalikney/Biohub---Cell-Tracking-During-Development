@@ -1,0 +1,8 @@
+# R32-RC-B skeptic notes
+- 2026-09-29T03:33:07Z start; no prior answer file.
+- Old verdict read: research/wf_ideas_v3/v_literature_log-shoulder-hypotheses_value.json (+0.0002, refuted) and _schedule.json (toy 12/60 = 20%).
+- Finding's matcher (scratchpad r32/pairclass.py, merged.py): nearest final node <= 7 um per GT daughter, NOT one-to-one. Re-ran with Hungarian over all GT/pred nodes at t+1 (scratchpad r32b/merged_check.py -> merged_check_out.json): 8/9 are true single-node merges (only 1 pred node within 7 um of each daughter); 6bba_afb141ff t48 has a 2nd node at 6.15 um -> one-to-one gives 'claimed' (3809 from another track), not merged. Class = 8/85 (9.4%), not 9. All 9 parents have exactly 1 child (p_children 1).
+- R7-RC-B (round7/scan_recheck.json l.15-17): MERGED class 31/668 missing GT nodes (4.6%), 30 yx-dominant; verdict 'only detector/coordinate head can reach the residual; retraining = post-deadline'. The 8 merged daughters are a sub-slice of these 31.
+- v3 FINAL_REPORT l.410: mirror daughter / daughter from low peaks ~0.5 TP vs ~1.5 FP public (v_divisions_mirror-daughter-lowdet_*). Same trigger (2nd daughter near the only child at t+1 from sub-threshold map evidence); LoG only changes the peak source.
+- forkblob lab (CONTEXT 25 Sep 20:05Z): one-blob forks s<=5 um on x138 control: 150 vetoed -> evaluable TP 1, FP 6, ignored 143; forkblob value verdict: break-even FP:TP 2.8; x138 one-blob forks 24% of forks vs 2% of GT. A splitter that creates close-sister forks lands in that same population -> expected FP:TP ~6 > 2.8.
+- 2026-09-29 verdict written: refuted=true (closed line in disguise: R7-RC-B merged class + v3 mirror/lowdet; forkblob precision FP:TP 6 > 2.8; count 8 not 9).

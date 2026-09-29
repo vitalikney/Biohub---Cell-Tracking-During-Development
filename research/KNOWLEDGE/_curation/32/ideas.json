@@ -1,0 +1,53 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/ideas.json",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/IDEAS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/32/ideas.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/32/ideas.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "what": "The R31-A2 power push is LOGGED (02:53Z (5)) but nothing will fire it. The only job at 04:13Z is timer.sh 'HOURLY RESEARCH ROUND (07:13 MSK): launch the next research round'. At 03:46Z the curator found no 04:1x push timer in Win32_Process (I-546). If the laptop sleeps on battery after the 05:10Z trip, the A-M1 slot (by ~08:45Z) can be lost, and possibly A-M2 too.",
+   "evidence": "research/wf_ideas_v4/round32/report.json R32-A1, plan_issues (a); v_plancheck_pc32-01.json (CONFIRMED); round32/report.notes.md 03:37Z; CONTEXT.md l.4294-4312 item (5)",
+   "suggested_action": "By 04:09Z (07:09 MSK), arm one timer.sh at 04:10:00Z. At 04:10-04:13Z, send ONE Russian PushNotification with the verbatim R32-A1 (2) text and log '04:1xZ R31-A2 push sent'. If this is read after 04:10Z, push at once, before round 33.",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "Three live timer texts contradict logged lines (I-553). (a) At 07:23Z the timer says 'build/dummy exp89l', but 02:02Z (5) says do NOT rebuild or re-push. (b) At 08:30Z it says 'decide now, a missing read = UNUSED', but 02:53Z (2) says to wait for the 08:40:00Z [manual-A-M1] list. (c) At 12:03Z it names card v4, but card v5 a134d5e4 governs.",
+   "evidence": "research/wf_ideas_v4/round32/report.json R32-A3, plan_issues (c); scan_plancheck.json PC32-04; report.notes.md 03:38Z; CONTEXT.md l.4273-4293 (5), l.4294-4312 (2)",
+   "suggested_action": "At each of these steps, follow the logged line, not the timer text; do not kill or re-arm the timers. At the 12:03Z fill, optionally replace the dead cron ids in card v5 l.93/138/152 and record the new sha8.",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "tools/uptest.py 'save' downloads the LB with no timeout (l.34-36), which breaks freeze (7). R32-A2 proposes a 0-call UP test from e10 snapshots instead (I-552). Curator correction: R32-A2 says the e10 loop downloads the LB every ~30 min, but it runs HOURLY at ~xx:42Z (RUN 36-39; next 04:41:53Z). S1 can therefore arrive up to ~1 h after a terminal header, and exp75 and exp89r (due ~09:03-09:49Z / ~09:23-09:34Z) will probably land in one window, where the +2 rule applies.",
+   "evidence": "research/wf_ideas_v4/round32/report.json R32-A2, new_facts (4); tools/uptest.py l.34-36; experiments/e10_watch/watch_loop.log; experiments/e10_watch/20260929T0341Z.txt DIFF 'window 03:13Z -> 03:41Z'",
+   "suggested_action": "Only a 0.959 display of exp89p or exp89r needs an UP test. Use the e10 snapshots for it, and run any fresh download only as 'timeout 180 python tools/uptest.py save <tag>'. Do not edit the tool today.",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "The card v5 section-4 info lines (I-539) are still missing: the 02:53Z edit (sha8 a134d5e4) changed only l.17 and l.124. The card fill numbers for V_pub exp87a (I-548) are also not on the card. The medal lines have not moved blocks by 03:13Z (silver ~#199 in the 0.957 block, bronze ~#398 in the 0.955 block).",
+   "evidence": "git diff d6deab5..a9ac9ee -- research/wf_ideas_v4/round29/finals_card_v5_ru.md; research/wf_ideas_v4/round32/report.json new_facts (3); experiments/e10_watch/20260929T0313Z.txt",
+   "suggested_action": "At the 12:03Z (15:03 MSK) fill: add both info lines, use the mc31v numbers and a rank line from the newest e10_watch file, then record the new sha8.",
+   "urgency": "today"
+  },
+  {
+   "kind": "orphan-idea",
+   "what": "The R32-A4 post-deadline division order exists only in round32 report.json and in this ledger: (a) graph ranker for claimed daughters (I-424); (b) parent-vector head second, whose v2 drop reason is now void, so it moves to deferred (I-121); (c) merged class under detector retraining, where the -LoG splitter is refuted (I-551); (d) insert-before-short-filter at 3/99, low priority (I-550). The lab cohort is 72, not 85.",
+   "evidence": "research/wf_ideas_v4/round32/report.json R32-A4, rejected; v_recheck_r32-rc-a/-b/-c json",
+   "suggested_action": "Add it to the post-deadline agenda (I-252) after the 20:00Z tick. No action on 29 Sep.",
+   "urgency": "info"
+  },
+  {
+   "kind": "stale",
+   "what": "The record gaps are still there: rounds 29-32 have no REPORT.md (round 32's text is in report.json 'report_md_ru'; I-232), experiments/RESULTS.md has no rows for probes 47-51, and the 'not the battery' user message is not recorded (I-510).",
+   "evidence": "research/wf_ideas_v4/round32/report.notes.md 03:47Z; experiments/RESULTS.md",
+   "suggested_action": "After the morning decisions, write the round29-32 REPORT.md files from report.json and add RESULTS rows 47-51 (low priority).",
+   "urgency": "before-finals"
+  }
+ ],
+ "summary": "Curation 32 (~03:55 UTC 29 Sep, HEAD a9ac9ee) is an incremental pass over curation 31. New sources: commit a9ac9ee (round 31 committed, CONTEXT 02:53Z R31-A1 entry at l.4294-4312, card v5 l.17/l.124 edited to sha8 a134d5e4), round 32 (untracked; report.json R32-A1..A4 written 03:45Z, 4 scans, 7 verdicts), ledger 03:44:25Z, E10 snapshots 03:13Z and 03:41Z (null). There is no new LB score: 52/53/54 are still PENDING, with exp89p expected ~07:47-07:58Z. Logged at 02:53Z: the A-M2 function (I-543), the 08:40Z header (I-544), card pool L (I-545, applied), and the push and read-time log (I-546, I-547). The round pause was NOT adopted: I-530 moves to refuted and hourly background rounds continue. I-121 (linajea parent-vector head) moves from refuted to deferred because its v2 drop reason is void. There are 7 new ideas: I-550 insert-before-short-filter (deferred), I-551 -LoG merged-daughter splitter (refuted), I-552 e10-snapshot UP test with timeout 180 (in-plan, at-risk), I-553 timer texts as pointers (in-plan, at-risk), I-554 post-wake poller lag (refuted), I-555 20:00Z-anchored E10 timing (refuted), and I-556 restricting the recheck lens (in-plan). 36 existing ideas were updated. Totals: 556 ideas; lb-tested 62, lab-tested 28, refuted 264, deferred 49, in-plan 151, open-untested 2; 13 at-risk orphans and 1 strict orphan. The urgent item is that the 04:13Z push has no timer (I-546). Verified: gen.py rows 556, bad 0; body and ranking equal."
+}

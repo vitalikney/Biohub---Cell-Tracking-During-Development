@@ -1,0 +1,5 @@
+- 03:43:38Z 2026-09-29 start: no _curation/32/ideas.json -> incremental run over curation 31 (549 ideas). Reuse scratchpad patch31.py/gen_md31.py.
+- 03:46:15Z sources since c31: a9ac9ee (round31 committed; CONTEXT 02:53Z R31-A1 entry l.4294-4312, card v5 sha8 a134d5e4 l.17/l.124 only), round32/ untracked (report.json R32-A1..A4 03:45Z, 4 scans, 7 verdicts), ledger 03:44:25Z (3 night refs PENDING), e10 0313Z/0341Z (null; loop hourly xx:41Z), no 04:10Z push timer at 03:46Z. Plan: 7 new (I-550..I-556), ~35 updates.
+- 03:48:43Z patch32.py OK: 549 -> 556 ideas, 43 change records, ideas_c32.json in scratchpad. Next gen_md32.py.
+- 03:50:11Z ideas.json (556 ideas, 43 change records) + IDEAS.md (1035 lines) WRITTEN from patch32.py/gen_md32.py; verify below.
+- 03:50:43Z verify OK (gen.py rows 556 bad 0; gen2.py body+rank equal). _curation/32/ideas.json written (6 alerts). DONE.
