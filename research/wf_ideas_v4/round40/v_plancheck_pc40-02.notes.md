@@ -1,0 +1,8 @@
+- 2026-09-29T13:27:27Z start verify PC40-02; reading CONTEXT 12:59Z, 11:54Z, R38-A2(d), ledger, E10 runbook
+- 13:27Z checked: CONTEXT 12:59Z entry gives submit-by from L_hi only (non-CI ~9.0-9.5 h -> 14:30-15:00Z; CI 10.75 h -> 13:15Z). Confirmed.
+- CONTEXT l.2217 E10 PORT RULE P4b(e): dummy gate mandatory before an E10 submit (tools/dummy_gates.validate_csv + node counts within 1%); l.2354 full e10_port_gate run 0 FAIL 0 SKIP before submit. So copy+dummy lead time is real.
+- CONTEXT l.4463 exp89t dummy whole-kernel 1,984 s. Kaggle GPU queue observed up to ~3.3-4 h (l.3065 exp75 dummy ~4 h queue; l.3139) -> 35-45 min is OPTIMISTIC; real cutoff may already be past.
+- ledger.md l.41 exp56 x138 verbatim L (6.29, 6.46] (submitted 08:09:00Z, complete by 14:36Z). 23:59 - 6.46 h = 17:31Z submit; minus ~40 min dummy = ~16:50Z start (finding says ~17:00Z, loose).
+- digest_20260929T1258Z.md l.26 quote 'It must finish before 23:59 UTC, otherwise it is not eligible nor can we select it.' (Chris Deotte, not host) https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/744250
+- E10 ports are verbatim non-CI (P4b; l.4437 'non-CI only'), so the CI clause is moot but harmless. Detection also by the hourly Chrome browser scan, not only the 90-min feed.
+- Verdict: NOT refuted; bookkeeping + one user line; zero Kaggle calls, no rule change; value = prevents a futile late E10 scramble and corrects the user's expectation of the 'в запасе' slot.

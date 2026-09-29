@@ -1,0 +1,13 @@
+# round40 plancheck notes
+- 13:13Z started; no prior json
+- 13:16Z read CONTEXT l.4250-4592 (to 12:59Z entry), round39 report + scan_plancheck, round38 R38-A2/A3/A5.
+- 13:16Z census (/proc cmdline, 0 Kaggle calls): pre_exp89t w36816, manual_admit w3028, t7_trigger w29648, exp89t watcher w30864 (post_exp89t only on COMPLETE 0.959), watchdog w22236, e10-signal waiter w20284 (watch_loop ended 12:00Z -> dead weight), feed-signal waiter w24352, feed loop w20892 (run_feed_loop.sh, sleep 5400), timers 14:13/15:13/16:13/17:13/18:13 hourly, 18:37, 19:43, 21:05, 00:07Z. Battery: BatteryStatus 2 (AC), 78%.
+- poll.log headers 12:29:06, 12:39:08, 12:49:09, 12:59:11, 13:09:12Z -> 601.5 s cadence -> projected ~17:39:53Z (vs pre_exp89t 17:40:00Z), ~19:10:06 / ~19:20:07Z (T7 fires ~19:20Z), ~19:40:10Z (< 19:44:30Z, manual-admit runs unless terminal).
+- scratchpad (13:15Z): NO mk_card_1837.py yet (R39-A7 deadline 17:40Z). card_1203_sent.txt SELECTED line = {#37,#38}; user re-ticked P3 12:37:31Z.
+- feed: digest_20260929T1258Z.md: 744250 Chris Deotte 12:57:37Z 'It must finish before 23:59 UTC, otherwise it is not eligible nor can we select it.' https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/744250 ; 744273 Cyrus/You WeiLin/Civitasmass no knobs; E10 FLAG none; best public 0.953.
+- feed loop: end 12:58:56Z + 5400 s -> runs ~14:29Z, ~16:00Z, ~17:31Z, ~19:02Z, ~20:33Z...; each ~1 search + 16x(get_topic+list_comments) + kernels ~35 calls, _retry tries=6. 17:31Z and 19:02Z runs fall in R39-A6 (2) 17:30-20:00Z 0-agent-call window; feed loop not on the allowed list.
+- ledger: x138 verbatim exp56 L (6.29,6.46]; our non-CI 6.87-7.81 h; CI 8.88-9.48 h. 12:59Z entry submit-by (~14:30-15:00Z non-CI / ~13:15Z CI) omits copy + dummy gate (~35-45 min, RULE v2.1 whole-kernel <= 2,100 s) and user-yes latency.
+- uptest.py compare: TeamIds above us in S0 with S1 rank > ours; missing -> 0 (not counted). LB csv Score rounded to 3 dp. S0 fallback e10_20260929T1141Z: #141, 0.959, count 56, last 00:46:36, 0.959 block ranks 125-146 = 22 rows.
+- git: recent commits have no Co-Authored-By (memory feedback-git-no-coauthor overrides the harness reminder) -> 00:07Z commit must keep that.
+- 13:20Z feed-loop cadence from log ends 09:58:41 -> 11:28:49 -> 12:58:56Z = 5407-5408 s per cycle (run ~7-8 s): next runs ~14:29:04, ~15:59:12, ~17:29:20 (ends before 17:30), ~18:59:28Z (INSIDE the 17:30-20:00Z window, ~35 calls in ~8 s), ~20:29:36Z.
+- 13:20Z wrote scan_plancheck.json (7 findings)

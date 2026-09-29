@@ -1,0 +1,8 @@
+- 2026-09-29T13:42Z start round 40 curation (facts.json absent -> fresh run); prior round 39 state 11:40Z
+- 13:46Z sources read: CONTEXT l.4538-4617 (11:10..13:34Z entries: 744273 reread, S0 fallback 1141Z, slot2 HELD, round39 applied, card sent 12:04Z, USER RE-TICKED P3 12:37Z, feed 12:58Z 744250 finish-by-23:59Z, private-risk audit 13:21Z, USER DECISION B 13:34Z); round40/report.json (R40-A1..A9; written 13:40Z without seeing decision B)
+- 13:50Z also read: poll.log header 13:39:20Z (l.31491), ledger 13:39:22Z (568 polls; exp89t PENDING L > 4.65 h), risk_audit/answer_ru.md + results.json
+- 13:58Z plan: FACTS new F-LB-40, F-RUN-59/60, F-RUL-40/41, F-TRN-76/77; [c40] notes F-LB-02, F-RUL-18/33, F-RUN-58, F-TRN-74, C-118, C-299, C-309, C-316..C-320, C-323, C-324, C-326; new C-327..C-334. DECISIONS: state, P55, §1/§2 paras + [c40] snapshot, R1-R10/§f, rows EXP75 v2/R30-A1/exp89t/SLOT 2 HOLD/R38 APPLIED/R39 proposals; new §3 rows; changelog. CONTEXT entries 9: l.4540-4617
+- 14:08Z FACTS.md patched (scratchpad c40_facts.py): state, 7 new F rows, [c40] notes, C-327..C-334
+- 14:20Z DECISIONS.md patched (c40_dec.py): state, P55, §1 para, §2 para + [c40] snapshot, R1-R10/§f, 6 rule rows, 10 new §3 rows, changelog
+- 13:52Z (clock check: real UTC; the 14:08Z/14:20Z stamps above are wrong, both patches ran ~13:45-13:51Z) newest poll header 13:49:23Z (l.31552) exp89t still PENDING; no new CONTEXT entry or commit after ec3c5fb
+- 13:56Z facts.json written (10 alerts). Done.

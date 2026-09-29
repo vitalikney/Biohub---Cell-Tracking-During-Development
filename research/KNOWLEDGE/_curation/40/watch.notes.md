@@ -1,0 +1,7 @@
+- 2026-09-29 13:42Z start curation 40 watch; no watch.json existed; base = WATCHLIST.md curation 39 (~11:40Z)
+- 13:44Z read CONTEXT l.4536-4617 (11:39Z 744273 re-read; 11:45Z S0 fallback; 11:54Z slot 2 HELD IN RESERVE; 11:54Z R39 applied; 12:04Z card sent; 12:37Z user ticked P3; 12:59Z feed 744250 finish-by-23:59Z; 13:21Z risk audit; 13:34Z USER DECISION B promote only >= 0.960, pre_exp89t CANCELLED)
+- 13:44Z round40/report.json R40-A1..A9 (written 13:37-13:40Z, did NOT see the 13:34Z decision B -> R40-A2 question moot)
+- 13:44Z census: pre_exp89t.sh w36816 STILL ALIVE although CONTEXT 13:34Z says cancelled (new C17); mk_card_1837.py absent from scratchpad; feed loop w20892 + sleep w37148, e10 waiter w20284 alive; timers 18:37 w33156, 19:43 w30648, 21:05 w31720; t7 w29648; manual_admit w3028; watcher w30864; watchdog w22236
+- 13:44Z round prompt: R39-A6 Chrome-only + quiet window + tie order landed (8423ff8, l.20/l.37); KEY FACTS still say '17th of 21' and 'currently ticked {#37, #38}' and PLAN CHECK boilerplate -> R40-A6 open. RESULTS.md still ends at probe 46. poll 13:39:20Z exp89t PENDING.
+- 13:52Z WATCHLIST.md written (curation 40): W364-W374, T230-T233, C17-C20, I440-I449; line refs verified; writing watch.json
+- 13:54Z watch.json written (12 alerts); done

@@ -1,0 +1,81 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/INDEX.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/CHANGES.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/40/index.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/40/index.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "what": "Reserve slot (R40-A1 = W364 = I-594): the RESERVE-SLOT EDGES line is not logged and the user has not been told that the slot is effectively closed",
+   "evidence": "research/wf_ideas_v4/round40/report.json R40-A1; CONTEXT.md l.4582-4592; research/KNOWLEDGE/FACTS.md F-RUN-60",
+   "suggested_action": "Before 17:10 MSK (14:10Z): append the edges line and send the user the R40-A1 line alone, without the R40-A2 question",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "Round 40 predates USER DECISION B (13:34Z): R40-A2 re-asks an answered question; the R40-A3 builder and R40-A4 texts still promote exp89t on 0.959 + UP; R40-A5 still lists pre_exp89t",
+   "evidence": "CONTEXT.md l.4607-4617; research/wf_ideas_v4/round40/report.json R40-A2..A5; research/KNOWLEDGE/FACTS.md C-327; research/KNOWLEDGE/WATCHLIST.md C18",
+   "suggested_action": "Do not send R40-A2; on a 0.959 read send the decision-B text at once (no UPWAIT, no T3); drop pre_exp89t from every checklist",
+   "urgency": "now"
+  },
+  {
+   "kind": "stale",
+   "what": "Round-prompt KEY FACTS still say {#37, #38} ticked, 17th of 21, slot 2 UNUSED, old PLAN CHECK; no decision B",
+   "evidence": "experiments/workflows/biohub-research-round.js l.20; research/wf_ideas_v4/round40/report.json R40-A6; research/KNOWLEDGE/FACTS.md C-329",
+   "suggested_action": "Before 17:13 MSK (14:13Z): SELECTED = П3 (API 12:37:31Z), #148 of 3,999 / 17th of 22, reserve closed, decision B, no pre_exp89t; Chrome-only READS-vs-CARD rounds",
+   "urgency": "now"
+  },
+  {
+   "kind": "forgotten",
+   "what": "mk_card_1837.py is not installed and has no decision-B code; fallback csv has 1,006 rows",
+   "evidence": "research/wf_ideas_v4/round40/scan_hyp_exp89tmsg40.notes.md l.15-184 (sha8 10420089); report.json R40-A3; research/KNOWLEDGE/WATCHLIST.md W366",
+   "suggested_action": "Before 20:40 MSK (17:40Z): install verbatim, add B/T3KEEP, remove UPWAIT/HOLD, --dry-all, log sha8s; at 18:37Z one fresh read_selected.py then --lb e10_20260929T1141Z --teams 3994",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "pre_exp89t w36816 alive though cancelled; feed loop w20892 ~18:59Z run (~35 calls) falls in the 17:30-20:00Z quiet window; e10 waiter w20284 dead weight",
+   "evidence": "research/wf_ideas_v4/round40/report.json R40-A5; research/KNOWLEDGE/WATCHLIST.md W373, W368, C17; research/KNOWLEDGE/FACTS.md C-331",
+   "suggested_action": "Confirm w36816 gone at the 17:13Z liveness line; kill w20892 + sleep child after the ~17:29Z run (by 17:35Z) and w20284, with fresh winpids",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "exp89t read under decision B, typically 18:17-18:29Z; R40-A4 message set not yet logged",
+   "evidence": "CONTEXT.md l.4607-4617; experiments/lb_poll/poll.log l.31552-31555 (PENDING 13:49:23Z); research/KNOWLEDGE/WATCHLIST.md W367",
+   "suggested_action": ">= 0.960: RECOMMENDED PAIR line then push the re-tick steps; 0.959: B text, pair unchanged; log R40-A4 with T3 texts replaced before ~18:00Z",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "Finals already ticked П3; SELECTED checks at 18:37/19:43/21:05Z, T7 ~19:20Z, manual-admit 19:44:45Z, tick deadline 20:00Z",
+   "evidence": "CONTEXT.md l.4559-4581; research/KNOWLEDGE/DECISIONS.md §2 [c40] l.1009",
+   "suggested_action": "One fresh SELECTED read before each message; push only if SELECTED differs from the R39-A4 comparator",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "deadline",
+   "what": "Post-deadline guards I-336 (prediction with audit grid), I-407, I-252, I-516 still at risk",
+   "evidence": "CONTEXT.md l.4593-4606; research/wf_ideas_v4/risk_audit/results.json; research/KNOWLEDGE/IDEAS.md ORPHANS l.977",
+   "suggested_action": "Push one prediction commit quoting the audit grid and the I-407 line before 02:00 MSK 30 Sep (23:00Z)",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "forgotten",
+   "what": "00:07Z post-deadline commit must carry no Co-Authored-By trailer",
+   "evidence": "research/wf_ideas_v4/round40/report.json R40-A7 (b); research/KNOWLEDGE/FACTS.md C-334; I-600",
+   "suggested_action": "Commit as Vitaly Neybauer; check git log -1 --format=%B | grep -ci co-authored = 0 before pushing",
+   "urgency": "info"
+  },
+  {
+   "kind": "stale",
+   "what": "RESULTS.md ends at P46; rounds 37-40 lack REPORT.md; round40/ and the fallback lb.csv are untracked",
+   "evidence": "experiments/RESULTS.md l.79; git status; research/KNOWLEDGE/WATCHLIST.md W374, W126",
+   "suggested_action": "Commit by name with the 00:07Z commit at the latest; backfill P47-P55 and render REPORT.md after the tick",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 40 index pass (29 Sep ~13:55 UTC / 16:55 MSK, HEAD ec3c5fb). INDEX.md rewritten (70 lines): state = П3 {exp87a 56640366, #37 56563521} ticked 12:37:31Z; V_pub exp87a 0.959, #148 of 3,999; exp89t PENDING at 13:49:23Z; USER DECISION B (promote only at >= 0.960, pre_exp89t cancelled); slot 2 in reserve but effectively closed after ~14:10Z (744250); private-risk audit moderate/high; round 40 predates B. Section anchors refreshed for IDEAS (CHANGES (40) l.241, ORPHANS l.977), FACTS (C-327..C-334 l.860-867), DECISIONS ([c40] l.568, l.1009-1011, l.1844-1853), WATCHLIST (l.73-158). Top ideas: I-594, I-592, I-596, I-597, I-595, I-600, I-336/I-407/I-252/I-516, I-233. 11 deduplicated alerts, 3 [now]: reserve-slot line before 14:10Z, do not send R40-A2 / apply B, KEY FACTS refresh before 14:13Z. CHANGES.md gained section '40' (sources, LB, user decisions, ideas 593->600, facts/decisions, watchlist, alerts resolved/new/carried/dropped, severity disagreements settled). No other file edited, nothing committed, no Kaggle calls."
+}

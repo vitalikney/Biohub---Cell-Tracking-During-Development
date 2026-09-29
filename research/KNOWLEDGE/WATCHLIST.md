@@ -1,67 +1,72 @@
 # WATCHLIST: overdue, next 24 h, later, insights at risk
 
-Curated 2026-09-29 ~11:40 UTC (14:40 MSK), curation 39. This updates the curation-38 build of ~10:45Z, which is committed in 75f0efe with a structured copy in `research/KNOWLEDGE/_curation/38/watch.json`. Older predecessors run from `_curation/37/watch.json` down to `_curation/18/watch.json`. Rows not repeated here are unchanged there.
+Curated 2026-09-29 ~13:50 UTC (16:50 MSK), curation 40. This updates the curation-39 build of ~11:40Z, which is committed in 8423ff8 with a structured copy in `research/KNOWLEDGE/_curation/39/watch.json`. Older predecessors run from `_curation/38/watch.json` down to `_curation/18/watch.json`. Rows not repeated here are unchanged there.
 
 **Sources read for this update:**
-- **`CONTEXT.md`:** 4,560 lines; `## 9. Literature` starts at l.4540. Two new entries since curation 38:
-  - l.4509-4537 (**10:54Z, ROUND 38 APPLIED**, R38-A1, A2, A4-A7; A3 conditional). Card v3 = `scratchpad/card_fill_1203_v3.txt` sha8 **ae03f566** (A1). The R37-A6 addendum and the E10-after-11:30Z policy are written (A2, l.4516-4526). pre_exp89t is re-armed (A4, l.4527-4529). The exp89t read playbook is pre-registered (A5, l.4529-4535). manual_admit is armed (A6, l.4535-4537). KEY FACTS are refreshed (A7, l.4537);
-  - l.4538-4539 (**11:10Z**): the timer logged "A-M2 UNUSED ... No submit". Round 39 was launched.
-- **`git log`:** 75f0efe (round 38 applied; commits round38/, `_curation/38`, e10 1013Z/1041Z). **`git status`:**
-  - `M CONTEXT.md` (the 11:10Z entry);
-  - `?? research/wf_ideas_v4/round39/`;
-  - `?? experiments/e10_watch/20260929T1110Z.txt`;
-  - `?? experiments/discussions/digest_20260929T1128Z.md`.
-- **`research/wf_ideas_v4/round39/`** (untracked, 11:10-11:33Z):
-  - `report.json` with **R39-A1..A9**, new_facts (1)-(6), plan_issues (1)-(8) and rejected;
-  - all the `scan_*` and `v_*` notes.
-  - **REPORT.md is missing** again because the harness blocked the write (`round39/report.notes.md` 11:33Z). Only `round36/REPORT.md` exists among rounds 29-39.
-- **`experiments/lb_poll/poll.log`:** newest header **11:28:55Z** (l.30698). exp89t 56669888 is **PENDING** (l.30701).
+- **`CONTEXT.md`:** 4,638 lines; `## 9. Literature` starts at l.4618. Nine new entries since curation 39:
+  - l.4540-4546 (11:39Z): 744273 re-read, no knob;
+  - l.4547-4548 (11:45Z): S0 fallback = `e10_20260929T1141Z` (#141 of 3,994, count 56, 17th of 22);
+  - l.4549-4558 (11:54Z): **SLOT 2 HELD IN RESERVE** (user, chat ~11:56Z);
+  - l.4559-4574 (11:54Z): **ROUND 39 APPLIED** (R39-A1..A6; A7/A8 scheduled);
+  - l.4575-4578 (12:04Z): **finals card sent**, sha8 4fa899f9; SELECTED then = {#38, #37};
+  - l.4579-4581 (12:37Z): **USER RE-TICKED П3** {exp87a 56640366, #37 56563521}, API-verified 12:37:31Z;
+  - l.4582-4592 (12:59Z): feed. 744250: **a file must FINISH scoring by 23:59Z**;
+  - l.4593-4606 (13:21Z): **private-risk audit**. Medal risk moderate, silver risk high; keep the pair;
+  - l.4607-4617 (13:34Z): **USER DECISION B.** exp89t promotes ONLY at >= 0.960. The 17:40Z pre_exp89t job is CANCELLED.
+- **`git log`:** 8423ff8, f54c9b0, fc98fa7, c3a9215, 40cc06d, ec3c5fb (11:54-13:34Z). **`git status`:**
+  - `M experiments/lb_poll/ledger.md` and `poll.log`;
+  - `?? research/wf_ideas_v4/round40/`;
+  - `?? experiments/lb_poll/_lb/e10_20260929T1141Z/`: **the S0 fallback CSV is untracked**;
+  - `?? experiments/lb_poll/_night_subs.csv` / `.err`.
+- **`research/wf_ideas_v4/round40/report.json`** (13:13-13:40Z, untracked): **R40-A1..A9**, new_facts (1)-(9), plan_issues (1)-(10) and rejected. **REPORT.md is missing** (harness-blocked, `round40/report.notes.md` 13:40Z). The Russian text sits in `next_focus` as REPORT_RU.
+  - **Round 40 did NOT see decision B.** Its notes say "no entry after it at 13:34Z" (`round40/report.notes.md` l.2), so R40-A2, A3 and A4 are written for the pre-B rule. See **C18**.
+- **`experiments/lb_poll/poll.log`:** newest header **13:39:20Z** (l.31491). exp89t 56669888 is **PENDING**.
 - **Loops:**
-  - `experiments/e10_watch/watch_loop.log`: **RUN 46 ran at 10:42:07Z** (CHANGES=4, 8/8 OK). RUN 47 is due 11:41:53Z. The loop ends at 12:00Z.
-  - `experiments/discussions/feed_loop.log`: **11:28:49Z**, 0 new topics, 1 new comment, E10 FLAG none. The next run is ~12:58Z.
-- **Rank:** **#141** of 3,992, 0.959, count 56, **17th of 22** in the 0.959 block (ranks 125-146). The block grew from 21 to 22 when Manish joined below us at #142 (`round39/report.json` new_facts (2)).
-- **`grep -c` on CONTEXT.md:**
-  - "count jump" 1, "RECOMMENDED PAIR" 1, "manual-admit" 1, "E10 AFTER" 1 (all from R38 applied);
-  - 0 hits: "COMPARATOR", "t7_trigger", "mk_card_1837", "slot 2 decision", "08:27Z";
-  - `experiments/RESULTS.md` probe rows still end at probe 46 (l.79).
-- **Round prompt:** `experiments/workflows/biohub-research-round.js` still says:
-  - l.20: "ties broken by the EARLIER submission";
-  - l.37: the browser agent "FIRST run `python tools/e10_snapshot.py`" (8 Kaggle calls).
-- **Processes** at 11:30Z (`round39/scan_plancheck.notes.md`; `round39/report.json` new_facts (6)):
-  - pre_exp89t.sh 36816; manual_admit.sh 3028; the exp89t watcher 30864; the poller 37016; the watchdog 22236 (one-shot); the E10-signal watcher 20284; the feed-signal watcher 24728; the e10 loop 18040 (ends 12:00Z);
-  - timers: 11:45Z, 11:50Z, 12:03Z, hourly 13:13-18:13Z, 18:37Z, 19:43Z, 21:05Z, 00:07Z. The old jobs 18408, 35124 and 17304 are gone.
+  - `experiments/e10_watch/watch_loop.log`: RUN 47 11:42:05Z, **END 12:00:00Z** (47 runs);
+  - `experiments/discussions/feed_loop.log`: **12:58:56Z**, 4 new comments, E10 FLAG none. Next runs ~14:29Z, ~15:59Z, ~17:29Z, ~18:59Z (`round40/scan_plancheck.notes.md` 13:20Z).
+- **Round prompt** `experiments/workflows/biohub-research-round.js`:
+  - l.37 now has the R39-A6 text: Chrome only after 12:00Z, no `e10_snapshot.py`, 0 agent Kaggle calls in 17:30-20:00Z;
+  - l.20 has the unrounded tie order and decision B;
+  - but l.20 still says "Rank ~141 ... (17th of 21 ...)" and "currently ticked {#37, #38}". The PLAN CHECK text is the old W1 / 12:00 UTC boilerplate.
+- **`experiments/RESULTS.md`:** probe rows still end at probe 46 (l.79).
+- **Process census, 13:44Z (this curation, `ps -W` + `/proc/*/winpid`, 0 Kaggle calls).** Alive:
+  - **`pre_exp89t.sh` w36816 is still alive** although CONTEXT l.4614 says it was CANCELLED;
+  - `manual_admit.sh` w3028, `t7_trigger.sh` w29648, the exp89t watcher w30864, the watchdog w22236;
+  - timers: 18:37Z w33156, 19:43Z w30648, 21:05Z w31720, 00:07Z w19388;
+  - the feed loop w20892 with `sleep 5400` w37148;
+  - the e10-signal waiter w20284: dead weight, because its log ended at 12:00Z;
+  - the feed-signal waiter w24352 and the poller w37016.
+  - **`mk_card_1837.py` is NOT in the scratchpad.** The files there are `card_1203_sent.txt`, `read_selected.py`, `t7_trigger.sh`, `pre_exp89t.sh`, `manual_admit.sh` and `mk_card_v3.py`.
 
 All times are UTC. The user thinks in MSK = UTC+3 (`CONTEXT.md` l.3683-3687). IDs are stable: W = action, T = time-bound reminder, I = insight, C = contradiction. Status values: done, in progress, overdue, not started, superseded, moot, awaiting user.
 
-**State at ~11:40Z, 29 Sep:**
-- **Best display 0.959**, exp87a 56640366 (probe 51; CI). V_pub = exp87a.
-- **Only PENDING file:** exp89t 56669888 (T0 09:00:17Z). Edges:
-  - early read ~17:53Z; typical read ~18:00-18:30Z;
-  - 10.2 h = **19:12:17Z** (22:12 MSK); admit edge **19:45:17Z** (22:45 MSK);
-  - the first poller header after 19:12:17Z is expected ~19:20:30Z (`round39/report.json` new_facts (6)).
-- **Slots:** 1 left today. **Default UNUSED at 12:00Z.** Round 39 found no candidate (`round39/report.json` R39-A1).
-- **SELECTED** is presumably still {#37 56563521, #38 56563534}, the weaker pair: ~0.49 bronze / ~0.11 silver in every MC run (`round39/report.json` new_facts (4)).
+**State at ~13:50Z, 29 Sep:**
+- **Best display 0.959**, exp87a 56640366 = V_pub.
+- **SELECTED = П3 {exp87a 56640366, #37 56563521}** (API 12:37:31Z, `CONTEXT.md` l.4579-4581). The finals are ticked. The pair changes only if exp89t reads **>= 0.960** (decision B, l.4607-4617).
+- **exp89t 56669888 is PENDING** (T0 09:00:17Z). Edges:
+  - typical read 18:17-18:29Z (21:17-21:29 MSK);
+  - 10.2 h = 19:12:17Z;
+  - admit edge 19:45:17Z (22:45 MSK).
+- **Slot 2:** held in reserve (l.4549-4558). It is effectively dead after ~14:10Z (R40-A1). By default it expires unused at 23:59Z.
+- **Rank:** #148 of 3,999; 17th of 22 in the 0.959 block; 131 teams above 0.959 (Chrome 13:20Z, `round40/report.json` new_facts (1)).
 
-**Changes since ~10:45Z (curation 38):**
+**Changes since ~11:40Z (curation 39):**
 - **Done:**
-  - **W347** (a)-(e): CONTEXT l.4516-4526. Only the slot-2 line remains, now **W354**;
-  - **W349**: re-armed, l.4527-4529, pid 36816;
-  - **W350**: playbook, l.4529-4535;
-  - **W351**: manual-admit armed, l.4535-4537, pid 3028;
-  - **W352**: KEY FACTS, l.4537;
-  - **W353**: the round-38 commit is in 75f0efe. The REPORT.md renders are still missing and move to **W363**;
-  - **C2**: the 11:10Z timer logged "A-M2 UNUSED", l.4538;
-  - **C10 / C12 / C13** resolved;
-  - **T207** RUN 46 at 10:42:07Z;
-  - **T100** feed run at 11:28:49Z (null);
-  - **T210** passed with a null result.
-- **In progress:** **W346**, card v3 ae03f566. It was built; it gets filled and sent at 12:03Z.
+  - W355 (l.4547-4548);
+  - W354: the user overrode UNUSED with HELD IN RESERVE (l.4549-4558);
+  - W346, the card sent (l.4575-4578);
+  - W356, T7 armed (l.4563-4565, w29648 alive);
+  - W357, the comparator (l.4565-4568);
+  - W359 (1), (2) and the tie order (8423ff8; `biohub-research-round.js` l.20, l.37). The rest of it moves to **W369**;
+  - W363, round 39 committed in 8423ff8. The REPORT.md renders move to **W374**;
+  - **T10 (tick) done by the user at 12:37Z**;
+  - C14 and C16 resolved.
+- **Moot:** W358 and T214, because pre_exp89t was cancelled by decision B. The process is still alive: see **C17**.
 - **New:**
-  - actions **W354-W363** (= R39-A1..A9 plus the round-39 commit);
-  - reminders **T224-T228**;
-  - contradictions **C14-C16**;
-  - insights **I430-I439**.
-- **Corrected:** **I428**. Round 39 refuted the "earlier timestamp" reading of Fanch's position (C16).
+  - actions **W364-W374** (= R40-A1..A9 adapted to decision B, plus the ops leftovers);
+  - reminders **T230-T233**;
+  - contradictions **C17-C20**;
+  - insights **I440-I449**.
 
 ---
 
@@ -69,64 +74,63 @@ All times are UTC. The user thinks in MSK = UTC+3 (`CONTEXT.md` l.3683-3687). ID
 
 | ID | Item | Status | Deadline | Evidence |
 |---|---|---|---|---|
-| **W355** (new; = **R39-A2**) | **S0 fallback and card rank fields.** <br>- **11:45Z:** run `python <scratchpad>/mk_s0.py 20260929T1141Z`. <br>- **Fall back to `20260929T1110Z`** if the script raises StopIteration (no leaderboard_rows), the 1141Z file is missing, or our count is not 56. <br>- Log which tag is the S0. <br>- **Card l.8:** position = rank - rows > 0.959; block = rows == 0.959, now **22** (not 21). <br>- **Never** copy the R38 "Fanch ... earlier timestamp" sentence | armed (timer 11:45Z) | **11:45Z** (14:45 MSK) | `round39/report.json` R39-A2, plan_issues (6); `round39/scan_plancheck.notes.md` |
-| **W354** (new; = **R39-A1**; absorbs **T209 / W342**) | **Close slot 2.** <br>- **11:50Z message:** the default is UNUSED. The inputs were already checked: feed 1128Z null; 738833 Luna-Xavier has no knob or values; glance once at the 1141Z e10 file. Do not cite R39S-4 as the reason. <br>- **12:00Z CONTEXT line:** "slot 2 decision = UNUSED (rule (a) failed: exp89r 0.957 < 0.958; no E10 >= 0.960 ...; a non-CI file had to be sent by ~12:33-12:43Z ...)". The slot stays formally open via R38-A2 (d). R38-A3 (the mid_<token> save) applies to **any** slot-2 submit before 12:43Z. <br>- **exp86c line only if asked.** <br>- **Build nothing, submit nothing** | timer 11:50Z (pid 21496) armed; log not written (`grep -c "slot 2 decision"` = 0) | **11:50Z / 12:00Z** (14:50 / 15:00 MSK) | `round39/report.json` R39-A1; `CONTEXT.md` l.4500-4501, l.4538 |
-| **W346** (updated) | **Card v3 ae03f566** (built at 10:54Z). At 12:03Z fill: <br>- the header (newest non-error poll header, MSK first); <br>- SELECTED (1 read-only call); <br>- rank and block from the **W355 S0 (17 of 22 if unchanged)**; <br>- the l.40 SEC slot-2 clause from the W354 log. <br>Then send it. The 12:03Z timer (pid 33456) still names round27 v4: it is a pointer, so send v3. **Never tick.** This card is also the 12:00Z finals-tick reminder | in progress | **12:03Z** (15:03 MSK) | `CONTEXT.md` l.4511-4516, l.4521; `round39/scan_plancheck.notes.md` |
-| **W359** (new; = **R39-A6**) + C14 | **Round prompt from round 40 on.** <br>- **(1)** Browser agent: Chrome only, **no `tools/e10_snapshot.py` after 12:00Z** (8 calls/run). A genuine > 0.959 biohub notebook gets 1 scoped list call by the main session, then a push. <br>- **(2)** 17:30-20:00Z: agents make 0 Kaggle calls. <br>- **(3)** Keep the hourly rounds (the user asked, CONTEXT 02:53Z (3), l.4294). The 18:13Z round uses a READS-vs-CARD lens. <br>- **(4)** KEY FACTS: in-block order = unrounded score; add "slot 2 = UNUSED" and "SELECTED comparator = R39-A4" | not started (`biohub-research-round.js` l.20, l.37 unchanged) | **before 13:13Z** (16:13 MSK) | `round39/report.json` R39-A6, plan_issues (3), (7) |
-| **W363** (new; supersedes the W353 remainder) | **Commit round 39**, `e10_watch/20260929T1110Z.txt`, `digest_20260929T1128Z.md` and the 11:10Z CONTEXT entry, using named paths, as the user, with **no Co-Authored-By**. Render `round37`/`round38`/`round39` REPORT.md from report.json (the Russian text is in the report agent's final message). Rounds 29-35 also lack REPORT.md | not started | with the 12:00Z CONTEXT commit | `git status`; `round39/report.notes.md` 11:33Z; `memory/feedback-git-no-coauthor.md` |
-| W126 (part 2) | Add RESULTS.md rows for probes 47-54: <br>- 47: 0.955; 48: 0.957; 49: 0.955; 50: exp85a 0.958; <br>- 51: exp87a 0.959; 52: exp89r 0.957; 53: exp75 0.955; 54: exp89p 0.956. <br>Then probe 55 (exp89t) when it reads | **overdue** (rows end at 46, l.79) | low; post-deadline OK | `experiments/RESULTS.md` l.79 |
-| W336 | One line saying that the user's 08:27Z / 08:28Z instructions override R8's 10:00Z edge (l.1671) | not started (`grep -c 08:27Z` = 0). Mostly moot: the E10-after-11:30Z policy (l.4521-4524) covers the live case | low | `CONTEXT.md` l.1671, l.4521-4524 |
+| **W364** (new; = **R40-A1**) | **Close the reserve slot in the log and tell the user.** <br>- **(1) One CONTEXT line, "RESERVE-SLOT EDGES".** The 12:59Z "non-CI ~9.0-9.5 h" is the safetail gate, not an observed L. Observed L: non-CI 6.69-7.81 h, CI 8.88-9.48 h, x138 verbatim 6.29-6.46 h. An E10 copy also needs the dummy (~35-45 min, GPU queues of 3-4 h have happened) and the user's yes. <br>- **Dummy-start edges:** default **14:10Z**; x138 7.5 h **15:50Z**; absolute last **16:50Z** (submit by ~17:30Z). After 14:10Z an E10 flag is info only; after 16:50Z say it cannot finish. <br>- **(2) One info line to the user** (text in R40-A1 (2)): "Запасной слот фактически закрыт ... П3 {exp87a 56640366, #37 56563521} остаётся." <br>- **Send it WITHOUT the R40-A2 question**, which decision B already answered (C18) | not started (`grep -c "RESERVE-SLOT EDGES" CONTEXT.md` = 0) | **now; before 14:10Z** (17:10 MSK) | `round40/report.json` R40-A1; `CONTEXT.md` l.4582-4588 |
+| **W369** (new; = **R40-A6**; the rest of W359) | **Round-prompt refresh before round 41.** In KEY FACTS (`biohub-research-round.js` l.20): <br>- replace "Rank ~141 of 3 991 (17th of 21 ...)" with "#148 of 3 999, 17th of 22 (Chrome 13:20Z); S0 fallback e10 11:41Z = #141 of 3 994"; <br>- **delete "currently ticked {#37, #38}"**, which contradicts "The user ticked {exp87a ..., #37 ...}" in the same paragraph (C19); <br>- remove "S0 tags pre_exp89t (17:40Z)" (cancelled); <br>- slot 2 = "reserve effectively closed after ~14:10Z". <br>Also replace the PLAN CHECK boilerplate (W1 reads of probes 47-49, the 12:00 UTC slot, E10 > 0.956, PROPOSAL 12:00/18:00) with the evening chain: B-read → 18:37Z card → T7 ~19:20Z → manual-admit 19:44:45Z → 19:43Z / 21:05Z SELECTED checks → 00:07Z. Rounds 41-43 use an ops / READS-vs-CARD lens | not started (l.20 text verified 13:44Z) | **before 14:13Z** (17:13 MSK) | `round40/report.json` R40-A6, plan_issues (7) |
+| **W373** (new) + **C17** | **Kill `pre_exp89t.sh` w36816, or log why it stays.** CONTEXT l.4614 says the 17:40Z save was CANCELLED, but the process was alive at 13:44Z. If it survives, it makes a Kaggle call at ~17:40Z inside the quiet window. It is on the allowed list, so it breaks no rule, but it contradicts the log. Use `taskkill /PID 36816 /F` after a fresh `/proc/<pid>/winpid` read, then add one CONTEXT line | not started | before **17:40Z** (20:40 MSK); best now | `CONTEXT.md` l.4614; census 13:44Z (`_curation/40/watch.notes.md`) |
+| W126 (part 2) | Add RESULTS.md rows for probes 47-54: <br>- 47: 0.955; 48: 0.957; 49: 0.955; 50: exp85a 0.958; <br>- 51: exp87a 0.959; 52: exp89r 0.957; 53: exp75 0.955; 54: exp89p 0.956. <br>Then probe 55 (exp89t) when it reads | **overdue** (rows end at 46, l.79) | low; post-deadline OK | `experiments/RESULTS.md` l.79; `poll.log` l.31491-31500 |
+| W336 | One line saying that the user's 08:27Z / 08:28Z instructions override R8's 10:00Z edge (l.1671) | not started; moot in practice | low | `CONTEXT.md` l.1671 |
 | W286 / W297 / W202 + W244 / W176 / W177 / W182 / I208 / W57 / W66 / W31 / W72 / W150 / W308 | Older text and cleanup items | overdue, low | H2 29 Sep 23:00Z; post-deadline OK | `_curation/36/watch.json`, `_curation/26/watch.json` |
 
 ## CONTRADICTIONS TO RESOLVE BEFORE THEY FIRE
 
 | ID | Conflict | Which text wins | Evidence |
 |---|---|---|---|
-| **C14** (new) | The round-prompt KEY FACTS (`biohub-research-round.js` l.20) say "ties broken by the EARLIER submission". **Observed:** Fanch's 03:20:41Z file ranks #139 above our older exp87a, and Manish's 04:13:52Z file ranks #142 below it. So order inside a display block is the unrounded score; time breaks only byte-copy ties | **Unrounded order** (v4 FINAL_REPORT §2; R39-RC-C). Fix with W359 (4) before 13:13Z | `round39/scan_recheck.notes.md` 11:21Z; `round39/report.json` new_facts (3) |
-| **C15** (new) | The **18:37Z / 19:43Z / 21:05Z timer texts** push "if not the recommended pair". **Card v3 l.50** says "если отмечено не то, что вы выбрали", and П2 {V_pub, exp75} is an allowed trade (28 Sep 16:32Z plan). The timers would push a deliberate П2 back to П3 | **The R39-A4 comparator** (W357). Treat the timer texts as pointers to it | `round39/report.json` R39-A4, plan_issues (2) |
-| **C16** (new) | R38 new_facts (2) / curation-38 **I428**: "Fanch ... entered at #139 above us" (read as the earlier timestamp winning). R39-RC-C: this is a misattribution | **R39-RC-C.** Never put the Fanch sentence in the card or a message (W355). It never reached CONTEXT or card v3 | `round39/report.json` R39-A2, new_facts (3) |
-| C11 (updated) | R37-A3 "56 -> 58 = MASKED" vs R26-A4 (b) | **R26-A4 (b)** via R38-A3. R39-A1 (2) extends A3 to any slot-2 submit before 12:43Z; after that it is void | `round39/report.json` R39-A1 (2), plan_issues (8) |
-| C7 (updated) | The 12:03Z timer (pid 33456) names round27 v4 | Pointer: send **v3 ae03f566** | `CONTEXT.md` l.4521 |
-| C8 | Card step 9 window vs the observed CI L from 8.88 h | Card v3 l.48 now says ~20:55-21:30 MSK. Watch from ~17:50Z | `round39/scan_plancheck.notes.md` |
-| C9 / C5 / C6 | C9: pre-registered П3 first vs the MC favouring П2. C5: the SEC clause. C6: the R8 10:00Z edge | C9: the pre-registered order stands (R39-A9 is only a reply if asked). C5: set by the W354 log. C6: the user's instructions (W336) | `CONTEXT.md` l.4476-4478; `round39/report.json` R39-A9 |
+| **C18** (new) | Round 40 (written 13:37-13:40Z) predates decision B (13:34Z). **R40-A2** asks the user a question already answered. **R40-A3 / R40-A4** and the embedded `mk_card_1837.py` still follow the pre-B rule: <br>- `PROMO = {"T1","T2","T3"}` (notes l.26); <br>- the T3 body promotes exp89t on 0.959 + UP (l.125); <br>- the PENDING line reads "основным может стать только при ≥ 0.960 или 0.959 с приписываемым UP" (l.114-115); <br>- UPWAIT promises "Если UP подтвердится, пришлю одну строку" (l.134); <br>- the T4 text cites "чемпион по порядку завершения" (l.126). <br>The HOLD rule of R40-A3 (5) has no purpose under B | **Decision B** (`CONTEXT.md` l.4607-4617): <br>- a 0.959 read = the T4 text "exp89t = 0.959 (ЧЧ:ММ МСК): по вашему решению B основной остаётся exp87a 56640366, пара {exp87a, #37} без изменений"; <br>- >= 0.960 = "снимите exp87a 56640366, отметьте exp89t 56669888 (#37 оставьте)". <br>Fix with **W366 / W367**. Never send UPWAIT or T3 | `round40/scan_hyp_exp89tmsg40.notes.md` l.15-184; `round40/report.notes.md` l.2 |
+| **C17** (new) | CONTEXT l.4614 says "the 17:40Z pre_exp89t save job was CANCELLED", but w36816 `pre_exp89t.sh` was alive at 13:44Z. The round-prompt KEY FACTS also still name "pre_exp89t (17:40Z)" | **CONTEXT (cancelled).** Kill it with W373 | census 13:44Z; `biohub-research-round.js` l.20 |
+| **C19** (new) | Round-prompt KEY FACTS l.20 says both "currently ticked {#37, #38}" and "The user ticked {exp87a 56640366, #37 56563521} (API 12:37Z)" | **API 12:37:31Z = П3** (`CONTEXT.md` l.4579). Fix with W369 | `biohub-research-round.js` l.20 |
+| **C20** (new) | The 12:59Z reserve-slot edges ("non-CI ~9.0-9.5 h -> by ~14:30-15:00Z; CI -> by ~13:15Z") vs R40-A1 (gate vs observed L; dummy + yes; 14:10Z / 15:50Z / 16:50Z) | **R40-A1**, as a bookkeeping correction, not a rule change | `CONTEXT.md` l.4585-4588; `round40/report.json` R40-A1, plan_issues (2) |
+| C15 (updated) | The 18:37Z / 19:43Z / 21:05Z timer texts push "if not the recommended pair" (w33156, w30648 and w31720 cmdlines, verified 13:44Z) | **The R39-A4 comparator** (`CONTEXT.md` l.4565-4568). **Today no push:** SELECTED = П3. Push only after exp89t >= 0.960, when V_pub changes | `CONTEXT.md` l.4565-4568, l.4579 |
+| C11 (updated) | mid_<token> scope: R39-A1 (2) "void after 12:43Z" vs CONTEXT 11:54Z "ANY slot-2 submit today" | **CONTEXT 11:54Z** (R40-A7 (a), skeptic upheld) | `CONTEXT.md` l.4557-4558; `round40/v_plancheck_pc40-06.notes.md` |
+| C14 / C16 | Tie order / the Fanch sentence | **Resolved.** The prompt l.20 now says unrounded order; the Fanch line never reached the user (card sent 12:04Z) | `biohub-research-round.js` l.20; `CONTEXT.md` l.4561-4563 |
+| C9 / C5 / C6 / C7 / C8 | Older conflicts | Moot: the user ticked П3 and the card was sent | `_curation/39/watch.json` |
 
-## NEXT 24 H (29 Sep ~11:40Z -> 23:59Z)
+## NEXT 24 H (29 Sep ~13:50Z -> 23:59Z)
 
-| ID | When (UTC) | Item | Status | Evidence / rule |
+| ID | When (UTC / MSK) | Item | Status | Evidence / rule |
 |---|---|---|---|---|
-| T207 | **11:41:53Z** RUN 47; loop END **12:00Z** | The last e10 snapshot. It is the primary S0 fallback (W355). After 12:00Z there are no e10 snapshots | due | `experiments/e10_watch/watch_loop.log` (RUN 46 10:42:07Z) |
-| W355 | **11:45Z** | The S0 build with a named fallback | armed | see OVERDUE |
-| W354 | **11:50Z / 12:00Z** | Slot-2 message and UNUSED log | armed | see OVERDUE |
-| W346 | **12:03Z** (15:03 MSK) | Card v3 = the finals-tick reminder | in progress | see OVERDUE |
-| **W356** (new; = **R39-A3**) | **arm now**, at the latest **18:13Z**; fires ~**19:20Z** (22:20 MSK) | **T7 trigger.** Arm `scratchpad/t7_trigger.sh` with run_in_background (0 Kaggle calls). It waits for the first non-error poll.log header >= 19:12:17Z and then prints the exp89t status. **If PENDING:** make 1 SELECTED call, then send the R38-A5 (6) T7 text for case (a)/(b)/(c)/(d). Log "T7 trigger armed ..." in CONTEXT | not started (`grep -c t7_trigger` = 0; no 19:1x job in the process table) | `round39/report.json` R39-A3, plan_issues (1) |
-| **W357** (new; = **R39-A4**) | log with W356, **before 18:37Z** | **SELECTED CHECK COMPARATOR.** No push iff SELECTED = {V_pub, #37} (П3) or {V_pub, exp75 56656157} (П2), or else the pair the user named in chat. Otherwise push the untick/tick steps | not started (`grep -c COMPARATOR` = 0) | `round39/report.json` R39-A4; C15 |
-| **W358** (new; = **R39-A5**) | log **before 17:40Z** (20:40 MSK) | **pre_exp89t S0 validity guard.** The save is valid only if our row shows count **56** and LastSubmissionDate **2026-09-29 00:46:36**. Otherwise use the e10 fallback S0 flagged stale and say so in the T3 log. Apply it by hand; no script change | not started | `round39/report.json` R39-A5, plan_issues (5) |
-| **W360** (new; = **R39-A7**) | build and dry-run **before 17:40Z**; used **18:37Z** | **`scratchpad/mk_card_1837.py`** from the filled card v3 (0 calls): variants PENDING / T1..T6. Handles the l.3 time, the l.48 PENDING text ("ещё считается на 21:37 МСК ..."), the R38-A5 (1) edits on T1/T3 and the rank label "(ЛБ 20:40 МСК)". Keep the token asserts. Log the sha8s | not started (`grep -c mk_card_1837` = 0) | `round39/report.json` R39-A7, plan_issues (4) |
-| T219 → **T224** (new) | **13:13, 14:13, 15:13, 16:13Z** rounds 40-43 | Apply W359 first. Chrome-only scan with 0 API calls; build W360; no builds or slot work | pending | `round39/report.json` next_focus |
-| T100 | feed **~12:58Z**, then ~14:28, 15:58, 17:28, 18:58, 20:28, 21:58, 23:28Z | E10 v3 trigger >= 0.960. It is the only automatic watcher after 12:00Z and is not scoped to this competition. For any flag: 1 scoped list call, then push. **No copy or submit** without the user's explicit yes | live | `experiments/discussions/feed_loop.log`; `CONTEXT.md` l.4521-4524 |
-| **T225** (new) + **W361** (= **R39-A8**) | **17:13Z** round (20:13 MSK); re-arm on any alert | **Liveness check** of the watchdog 22236 (one-shot: it stops after the first alert), pre_exp89t 36816, manual_admit 3028, the exp89t watcher 30864, the T7 trigger and the poller 37016. Confirm that A3/A4/A5/A7 are logged | pending | `round39/report.json` R39-A8, plan_issues (6) |
-| T213 | all afternoon and evening | Laptop on AC with the lid open (AC, 78% at 11:30Z). Network was lost on battery 28 Sep 15:00-15:40Z and 29 Sep 05:30-05:57Z | watch | `round39/scan_plancheck.notes.md`; `round39/report.json` R39-A8 why |
-| T214 | **17:40Z** (20:40 MSK) | pre_exp89t save (pid 36816, reads the newest non-error block; 1 retry). **Apply the W358 guard** to its output | armed | `CONTEXT.md` l.4527-4529 |
-| T208 + W344 | **~17:53Z** early; typical **18:00-18:30Z**; **19:12:17Z**; **19:45:17Z** | **exp89t read**, coded T1-T8 per the pre-registered playbook (`CONTEXT.md` l.4529-4535): <br>- 1 SELECTED call before each message; <br>- after a promotion, first append "RECOMMENDED PAIR = П3 {exp89t 56669888, #37 56563521}"; <br>- push the user in MSK at once on any V_pub change | pending | `CONTEXT.md` l.4529-4535 |
-| **T226** (new) | **18:13Z** round (21:13 MSK) | READS-vs-CARD round from local files only (poll.log, the pre_/post_exp89t saves, card v3, T-codes). **Do not skip it** | pending | `round39/report.json` R39-A6 (3) |
-| T152 | **18:37Z** (21:37 MSK), timer pid 33156 | FINAL card via `mk_card_1837.py` (W360). Compare SELECTED with the **W357 comparator**, not the literal "recommended pair" | pending | `round39/report.json` R39-A4, R39-A7 |
-| **T227** (new) = T220 | **~19:20:30Z** (22:20 MSK), the first header >= 19:12:17Z | The T7 trigger fires (W356). If exp89t is PENDING, send the T7 text for the SELECTED case. It gives the user ~40 min instead of 17 | pending (the trigger is not armed yet) | `round39/report.json` R39-A3 |
-| T161 + T221 | **19:43Z** timer (pid 30648); **19:44:45Z** manual-admit (pid 3028) | Notify-only V_pub re-check (W357 comparator), then the single-attempt manual list. If exp89t is not terminal after it, push the T8 '?' line | pending | `CONTEXT.md` l.4535-4537 |
-| T10 | **20:00Z (23:00 MSK)** | **The user ticks the finals.** The session never ticks. If the user does nothing, {#37, #38} stay (~0.49 bronze / ~0.11 silver) | pending | `CONTEXT.md` l.3844-3855; `round39/report.json` new_facts (4) |
-| T222 | after 20:00Z until 23:59Z | E10 or exp89t information after the tick: re-selection is allowed until 02:59 MSK. No copy or submit without the user's explicit yes | pending | `CONTEXT.md` l.4521-4524 |
-| T153 / T162 | ~20:00-20:30Z; **21:05Z** timer (pid 31720) | Verify SELECTED against the **W357 comparator**; last-call notify on a mismatch | pending | `CONTEXT.md` l.4092, l.4099; `round39/report.json` R39-A4 |
-| W362 (new; = **R39-A9**) | only if asked, before 20:00Z | The corrected cap-6 partner line: bronze cap 4 > cap 6; silver exp85a > #37 12/12 but exp75 > exp85a 10/12. **Never** say "cap 4 выше в 12 из 12 при любом априоре" | conditional | `round39/report.json` R39-A9, rejected |
-| W177 H2 / T49 | 23:00Z / 23:00-23:45Z | LESSONS H2; the final public LB snapshot. It is not an e10 run: at most 1 call | pending | `_curation/20/watch.json`; `CONTEXT.md` l.2619 |
-| T11 / T163 | **29 Sep 23:59Z** (02:59 MSK 30 Sep) | Deadline. Slot 2 expires unused. No slot reset before it | - | https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/overview |
-| W19 / W73 / W102 / W93 / W165b / W261 / T196 + **T228** (new) | standing | Standing rules: <br>- ONE poller; the header must be < 15 min old; <br>- never resubmit class-C or ERRORed files; <br>- SEC final only as V_pub; <br>- a timeout on every Kaggle call; <br>- light polling. **T228:** 17:30-20:00Z, only the poller, pre_exp89t, the watcher save, manual_admit and the registered SELECTED reads call Kaggle | standing | `CONTEXT.md` l.3331-3335, l.3692-3703; `memory/feedback-kaggle-api-load.md`; `round39/report.json` R39-A6 (2) |
+| W364 | **before 14:10Z** (17:10 MSK) | Reserve-slot edges line + user info line (no R40-A2 question) | not started | see OVERDUE |
+| W369 | **before 14:13Z** (17:13 MSK) | Round-prompt KEY FACTS / PLAN CHECK refresh | not started | see OVERDUE |
+| **T230** (new; follows T224) | **14:13, 15:13, 16:13Z** rounds 41-43; **17:13Z** round 44; **18:13Z** round 45 | Ops / READS-vs-CARD lens, Chrome-only browser, 0 Kaggle API calls. No builds, no slot work | pending | `round40/report.json` next_focus; `biohub-research-round.js` l.37 |
+| **T231** (new; replaces the T100 schedule) | feed **~14:29Z, ~15:59Z, ~17:29Z** | E10 v3 trigger >= 0.960. **After 14:10Z a flag is info only** unless the user names the notebook (W364). **After 16:50Z it cannot finish in time.** No copy or submit without the user's explicit yes | live | `experiments/discussions/feed_loop.log`; `round40/report.json` R40-A1 |
+| W364 edges | **15:50Z / 16:50Z** (18:50 / 19:50 MSK) | The last dummy-start edges for a verbatim-x138-length notebook (only on the user's yes). After 16:50Z: "cannot finish" | pending | `round40/report.json` R40-A1 |
+| **W366** (new; = **R40-A3**, adapted to B) | install + dry-run **before 17:40Z** (20:40 MSK); used **18:37Z** | **Card builder.** <br>- **(1)** Copy l.15-184 of `round40/scan_hyp_exp89tmsg40.notes.md` (text sha8 10420089) to `<scratchpad>/mk_card_1837.py`. <br>- **(2) Patch it for decision B before the dry-run:** T3 must leave PROMO and become a non-promotion 0.959 body with the B text of CONTEXT l.4613-4614; the PENDING line becomes "основным может стать только при ≥ 0.960"; remove UPWAIT or make it unusable; the T4 text becomes the B wording. <br>- **(3)** Run `--dry-all` and log the sha8s. <br>- **(4)** At 18:37Z make 1 fresh SELECTED read (`read_selected.py`). Pass **`--lb e10_20260929T1141Z --teams 3994`** because pre_exp89t is cancelled (I442), or `post_exp89t` if the watcher saved one | **not started** (`mk_card_1837.py` absent at 13:44Z) | `round40/report.json` R40-A3; `CONTEXT.md` l.4607-4617; C18 |
+| **W367** (new; = **R40-A4**, adapted to B) | log **before ~18:00Z** (21:00 MSK) | **exp89t MESSAGE SET** CONTEXT line, pre-score. Use `round40/scan_hyp_exp89tmsg40.json` case (a) П3 / case (b) П2 **with the T3 texts replaced by the B T4 text**. Also log: <br>- a fresh SELECTED read before each send; <br>- after a T1/T2 promotion, "RECOMMENDED PAIR = П3 {exp89t 56669888, #37 56563521}" first; <br>- no MASKED branch today (a count jump of 2 means the user submitted: stop and ask); <br>- the DIS line "от 0.000 до +0.002" | not started (`grep -c "MESSAGE SET"` = 0) | `round40/report.json` R40-A4; C18 |
+| T225 + W361 + **W368** (new; = **R40-A5**) | **17:13Z** round prep; kill **17:29-17:35Z** (20:29-20:35 MSK) | **Liveness check** of: the watchdog 22236 (one-shot: re-arm after any alert), manual_admit 3028, t7 29648, the watcher 30864, the poller 37016 and the timers. <br>**Then stop the feed loop** w20892 and its sleep child after its ~17:29Z run. Also kill the dead e10 waiter w20284. Leave the feed-signal waiter w24352. Log one ops line. Its ~18:59Z run (~35 calls, up to 6 retries) would otherwise land in the quiet window and the read tail | pending | `round40/report.json` R40-A5; `round40/scan_plancheck.notes.md` 13:20Z |
+| T228 | **17:30-20:00Z** (20:30-23:00 MSK) | Quiet window: only the poller, the watcher save, manual_admit, t7 and the SELECTED reads call Kaggle. pre_exp89t is cancelled (W373) | standing | `biohub-research-round.js` l.37; `CONTEXT.md` l.4614 |
+| T213 | all afternoon and evening | Laptop on AC with the lid open. Network was lost on battery 28 Sep 15:00-15:40Z and 29 Sep 05:30-05:57Z | watch | `round39/scan_plancheck.notes.md` |
+| T208 + W344 (**updated for B**) | early **~17:53Z**; typical **18:17-18:29Z**; poller headers ~18:20:14Z / ~18:30:16Z | **exp89t read under decision B:** <br>- **>= 0.960 (T1, or T2 if the poller header is > 19:12:17Z):** promote. First append the RECOMMENDED PAIR line, then push "снимите exp87a 56640366, отметьте exp89t 56669888 (#37 оставьте)" in MSK. <br>- **0.959:** T4-B text; the pair is unchanged. The UP test and post_exp89t are info only. <br>- **<= 0.958 (T5)**, **ERROR (T6):** no resubmit. <br>1 SELECTED read before each message | pending | `CONTEXT.md` l.4529-4535, l.4607-4617 |
+| T226 | **18:13Z** round (21:13 MSK) | READS-vs-CARD from local files only. **Do not skip it** | pending | `round39/report.json` R39-A6 (3) |
+| T152 | **18:37Z** (21:37 MSK), timer w33156 | FINAL card via the B-patched `mk_card_1837.py` (W366). Compare SELECTED with the R39-A4 comparator. The HOLD / UPWAIT branch is moot under B (C18) | pending | `CONTEXT.md` l.4565-4568 |
+| T227 | **~19:20Z** (22:20 MSK), the first header >= 19:12:17Z | The T7 trigger w29648 fires. If exp89t is PENDING, make 1 SELECTED read and send the T7 text | armed | `CONTEXT.md` l.4563-4565 |
+| T161 + T221 | **19:43Z** timer w30648; **19:44:45Z** manual-admit w3028 | Notify-only V_pub re-check with the comparator, then the single-attempt manual list. If exp89t is still not terminal, push the T8 '?' line | armed | `CONTEXT.md` l.4535-4537 |
+| T10 (**updated**) | **20:00Z (23:00 MSK)** | Finals tick. **Already done: П3** (12:37Z). Re-tick only after an exp89t >= 0.960 read. The session never ticks | done unless exp89t >= 0.960 | `CONTEXT.md` l.4579-4581, l.4616-4617 |
+| **T232** (new) | **>= 20:05Z** (23:05 MSK), optional | One manual `PYTHONIOENCODING=utf-8 python tools/kaggle_feed.py --topics 12 --no-kernels`, only if host notices are wanted after the tick | optional | `round40/report.json` R40-A5 |
+| T222 | 20:00-23:59Z | New information after the tick: re-selection is allowed until 02:59 MSK. No copy or submit without the user's explicit yes | pending | `CONTEXT.md` l.4549-4558 |
+| T153 / T162 | ~20:00-20:30Z; **21:05Z** timer w31720 (00:05 MSK) | Verify SELECTED against the comparator; last-call notify on a mismatch | armed | `CONTEXT.md` l.4565-4568 |
+| W362 / **W371** (= **R40-A8**) | only if asked, before 20:00Z | The cap-6 partner line (R39-A9). The exp51 / exp52 / exp48 partner line: "+0 to +0.0002, оставляем П3" | conditional | `round39/report.json` R39-A9; `round40/report.json` R40-A8 |
+| W370 (a) (new; = **R40-A7** (a)) | only on a slot-2 submit | Arm `timeout 180 python tools/uptest.py save mid_<token>` at the first terminal of {56669888, slot-2 ref}, whatever the time | conditional | `round40/report.json` R40-A7 |
+| W177 H2 / T49 | 23:00Z / 23:00-23:45Z | LESSONS H2; the final public LB snapshot (at most 1 call) | pending | `_curation/20/watch.json`; `CONTEXT.md` l.2619 |
+| T11 / T163 | **29 Sep 23:59Z** (02:59 MSK 30 Sep) | Deadline. Files must FINISH scoring by then (744250). Slot 2 expires unused by default | - | https://www.kaggle.com/competitions/biohub-cell-tracking-during-development/discussion/744250 |
+| W19 / W73 / W102 / W93 / W165b / W261 / T196 | standing | Standing rules: <br>- ONE poller; the header must be < 15 min old; <br>- never resubmit class-C or ERRORed files; <br>- SEC final only as V_pub; <br>- a timeout on every Kaggle call; <br>- light polling | standing | `CONTEXT.md` l.3331-3335, l.3692-3703; `memory/feedback-kaggle-api-load.md` |
 
 ## LATER (after 29 Sep 23:59Z)
 
 | ID | When (UTC) | Item | Evidence |
 |---|---|---|---|
-| T155 | 30 Sep 00:07Z, timer | POST-DEADLINE job: private read v2 + L1-L7 | `CONTEXT.md` l.3714-3715 |
-| T216 / T223 | post-deadline | Lesson checks: Satwik's "few public divisions" (I413, I423); the lab sign record on CI and DIS (I419, I420) | `_curation/38/watch.json` |
-| **T229** (new) | post-deadline | Lesson check: the R39-RC-B C-prior MC predicted П2 >= П3 on silver 12/12. Compare with the private exp75 vs #37 once private scores are visible | `round39/report.json` new_facts (4) |
+| T155 + **W370 (b)** | 30 Sep **00:07Z** (03:07 MSK), timer w19388 | POST-DEADLINE job: private read v2 + L1-L7. **Commit as Vitaly Neybauer with no Co-Authored-By.** Check `git log -1 --format=%B \| grep -ci co-authored` = 0 | `CONTEXT.md` l.3714-3715; `round40/report.json` R40-A7 (b); `memory/feedback-git-no-coauthor.md` |
+| **W374** (new; supersedes the W363 remainder) | with the 00:07Z commit, or earlier | Commit `round40/` and **`experiments/lb_poll/_lb/e10_20260929T1141Z/lb.csv`** (the S0 fallback, untracked: I448). Render `round37`-`round40` REPORT.md; round 40's text is REPORT_RU in `report.json` next_focus | `git status` 13:42Z; `round40/report.notes.md` 13:40Z |
+| **W372** (new; = **R40-A9**) | post-deadline, optional | Annotate the `RESULTS.md` l.20 "exp07+pp+steal ... keep steal off" row: superseded by the DaughterNet-ranked steal. Write "steal on in all three finals files; steal_cap 3 vs 2; the cap never binds" | `round40/report.json` R40-A9 |
+| T216 / T223 / T229 + **T233** (new) | post-deadline | Lesson checks: <br>- I413 / I423 (few public divisions), I419 / I420 (the lab sign record); <br>- T229 (the MC П2 vs П3); <br>- **T233:** the audit's claim that ">= 4 thousandths (cap 6, K) are public-only" (I441), against the private exp87a vs exp75 vs #37 | `_curation/39/watch.json`; `CONTEXT.md` l.4596-4604 |
 | W317 / W321 / W326 / W312 / W295 / W29 | post-deadline | Older research follow-ups; a kaggle_feed.py plausibility filter (I429) | `_curation/38/watch.json` |
 | T133 / T170 | 3 Oct | GPU quota refresh | `CONTEXT.md` l.4239-4241 |
 
@@ -136,36 +140,39 @@ All times are UTC. The user thinks in MSK = UTC+3 (`CONTEXT.md` l.3683-3687). ID
   - the 28 Sep 12:00Z consolidation was superseded;
   - the R8 29 Sep 10:00Z edge passed.
 - **Today:**
-  - round 38 applied 10:54Z;
-  - timer 11:10Z logged (l.4538);
-  - the last slot-2 sighting moment (T210, ~11:15Z) passed with a null result;
-  - feed 11:28Z null;
-  - round 39 report at 11:33Z.
+  - the S0 fallback 11:45Z (l.4547);
+  - the slot-2 decision 11:54Z (l.4549);
+  - R39 applied 11:54Z (l.4559);
+  - the finals card sent 12:04Z (l.4575);
+  - the user tick 12:37Z (l.4579);
+  - feed 12:58Z (l.4582);
+  - the risk audit 13:21Z (l.4593);
+  - decision B 13:34Z (l.4607);
+  - the e10 loop END 12:00Z (`watch_loop.log`).
 - **Friend replies:** none awaited (`CONTEXT.md` l.2175-2176).
 - **Standing notes:**
   - **T156:** 20:00 UTC = 23:00 MSK. Always write the zone.
-  - **T204:** poller cadence 601-603 s.
+  - **T204:** poller cadence ~601.5 s.
   - **T205:** LB `LastSubmissionDate` = the max submit time among SCORED files.
 
 ## INSIGHTS AT RISK OF BEING FORGOTTEN
 
 | ID | Insight (quoted or close paraphrase) | Where | Why it matters / plan gap |
 |---|---|---|---|
-| **I430** (new) | "Fanch sub #58 submitted 2026-09-29 03:20:41 -> 0.959 ... ranks 139 ABOVE us ... our 0.959 file exp87a submitted 28 Sep 12:14:57, 15 h earlier ... Manish sub #18 04:13:52 -> 0.959 ranks 142 BELOW us ... unrounded ordering confirmed" | `round39/scan_recheck.notes.md` 11:21Z | It kills the "EARLIER submission" tie folklore still in the round prompt (C14). Any 0.959 file that ties us on display can rank either side of us. I-542 (re-submit for tie order) stays refuted. |
-| **I431** (new) | "mk_s0.py has no try/except around the leaderboard_rows lookup; the e10 loop LB fetch can fail (RUN 41 05:41Z)" | `round39/report.json` R39-A2 why | Without the named 1110Z fallback, the exp89t UP test could start with no count-56 S0. The fallback is lost for good after the 12:00Z loop end. |
-| **I432** (new) | "watchdog 22236 'break's on the first ON-BATTERY or POLL-STALE alert" | `round39/scan_plancheck.notes.md` 11:30Z; `round39/report.json` R39-A8 | After one transient alert, the whole 17:40-19:50Z chain runs unwatched. Re-arm after every alert. |
-| **I433** (new) | "exp89t watcher (win 30864; uses last() incl. error blocks; post_exp89t only on COMPLETE 0.959)" | `round39/scan_plancheck.notes.md` | This is the same error-block pattern that R38-A4 fixed for pre_exp89t, and no round fixed it for the watcher. An error block at read time may delay or skip the watcher's reaction. Read poll.log by hand at each header after ~17:50Z rather than trusting the watcher alone. |
-| **I434** (new) | "If exp89t completes in the ~10 min between the poller header and the 17:40Z save (L 8.66 h; P ~1-3%) the S0 already contains it -> count check S0 -> S1 reads +0 -> spurious lag re-save -> BLIND with k = 0; a genuine UP is lost" | `round39/report.json` R39-A5 why | This is why W358 exists. It is a hand check, so it is easy to forget at 17:40Z. |
-| **I435** (new) | "tools/e10_snapshot.py = 8 CLI calls per run (5 kernel lists, 2 statuses, 1 LB download)" and the round prompt tells the browser agent to run it FIRST | `round39/scan_plancheck.notes.md`; `biohub-research-round.js` l.37 | Five more rounds would make ~40 calls that overlap the single-attempt 19:44:45Z manual-admit, and the user reported a ban on 28 Sep. W359 must land before 13:13Z. |
-| **I436** (new) | "{#37,#38} ticked: bronze 0.487-0.488 silver 0.106-0.110 in all runs"; "P2 >= P3 on silver 12/12 ... bronze within 0.011" | `round39/scan_recheck.notes.md` 11:20Z; `round39/report.json` new_facts (4) | Leaving the default tick costs roughly 0.25 bronze probability, so the card's "отметьте сейчас" line matters more than the П2/П3 choice. The П2 edge is judgmental (mc26 on one embryo) and does not change the card (rejected list). |
-| **I437** (new) | "non-CI safetail L (7.03, 7.19] h -> latest submit reading by 19:45:17Z = 12:33:53Z; CI -> latest 10:15-10:52Z = already passed. New build ... ~35-45 min" | `round39/scan_hyp_slot2last39.notes.md` 11:14Z | This is the arithmetic behind "slot 2 is dead after ~12:43Z". If the user asks at 13:00Z+ to "try one more thing", the answer is that it cannot read before the tick (T222 path only). |
-| **I438** (new) | "Luna-Xavier (738833, 10:51Z): nuclear marker H2A.F/Z-mCherry only? same for 44b6/6bba/test? rescaled/normalised/deconvolved/fused/bleach-corrected?" with no host answer | `round39/report.json` new_facts (1); `experiments/discussions/digest_20260929T1128Z.md` | Info only: x138 preprocessing is fixed. A host answer claiming different test preprocessing would matter for the post-deadline lessons, not for tonight. |
-| **I439** (new) | "exp86c ... dummy lab -0.0001 vs exp85a with identical TP/FP/FN (2049/99/78) ... only live branch would swap the CI V_pub for a non-CI public-fit file" | `round39/scan_recheck.notes.md` 11:19Z | The canned reply if the user asks "why not READMIT 0.92" (R39-A1 (3)). Do not quote "-0.0005" (rejected as unsourced). |
-| I428 (**corrected**) | Fanch entered the 0.959 block at #139 above us. **Not because of an earlier timestamp** (C16): the order is by unrounded score | `round39/report.json` new_facts (3) | The card rank line must not explain a block position by time. |
-| I427 | "No CI file ever > 9.5 h" | `round38/v_hyp_exp89tread38_r38t-h1.notes.md` | exp89t still PENDING at ~18:40Z is anomalous; the T7 trigger (W356) covers 19:12Z. |
-| I426 | The weaker {#37, #38} is ticked | `round38/report.json` R38-A1 | Addressed by card v3 section 5. The 12:03Z send is still pending. |
-| I424 | "#38 лучше #37 только если сама базовая вставка делений вредит на привате (P ~0.1–0.2)" | `round38/report.json` new_facts (6) | Still not in CONTEXT. Keep it ready for chat. |
-| I423 / I420 | Public division evidence = 1-2 fork events; lab CI sign wrong (-0.00509 vs three public +0.001) | `round38/scan_recheck.notes.md`; `round38/v_recheck_r38-rc-a-...notes.md` | I419 reached CONTEXT (l.4524-4526). **I420 and I423 are still not in CONTEXT** (post-deadline lessons T216 / T223). |
-| I422 | "timer.sh ... only prints a message; its notification is queued until the session is free" | `round38/v_hyp_exp89tread38_r38t-h1.notes.md` | W356 follows it: t7_trigger.sh runs with run_in_background so its exit wakes the session. The 18:37Z, 19:43Z and 21:05Z timers are still plain timers. |
-| I410 / I411 | `mk_s0.py`, `mk_card_v3.py`, `card_fill_1203_v3.txt`, `pre_exp89t.sh`, `manual_admit.sh`, `lastok.sh` and soon `t7_trigger.sh` / `mk_card_1837.py` live **only in the session scratchpad** | `round39/report.json` R39-A3, R39-A7; `CONTEXT.md` l.4511, l.4527, l.4535 | If the session restarts, all armed jobs die. After a restart, re-arm from the CONTEXT l.4509-4537 text and the round39 R39-A3 script body. |
-| I419, I421, I425, I429, I409, I413, I416, I417/I418, I412/I414/I415/I402/I403 and older | Unchanged or now in CONTEXT (I409 → l.4517-4518; I413 → l.4519; I419 → l.4524-4526; I429 → l.4521-4524) | `_curation/38/watch.json` ... `_curation/27/watch.json` | - |
+| **I440** (new) | The embedded card builder has `PROMO = {"T1", "T2", "T3"}`. Its PENDING line says "основным может стать только при ≥ 0.960 или 0.959 с приписываемым UP", and UPWAIT adds "Если UP подтвердится, пришлю одну строку" | `round40/scan_hyp_exp89tmsg40.notes.md` l.26, l.114-115, l.134 | If it is copied verbatim per R40-A3 (1), the 18:37Z card would contradict decision B in front of the user. R40-A3 (4) calls the PENDING clause "cosmetic", but under B it is **wrong** (W366, C18). |
+| **I441** (new) | "Of exp87a's +0.006 over x138, >= 4 thousandths (cap 6, K) are public-only; no lever has an out-of-embryo check ... #37 alone (0.954) ranks ~#489 today (below bronze ~#399)" | `CONTEXT.md` l.4596-4600; `research/wf_ideas_v4/risk_audit/results.json` | The hedge keeps bronze only if rival forks also lose their public gains. This is the main post-deadline lesson (T233). |
+| **I442** (new) | "The e10 fallback CSV has 1,006 rows, which would print '#141 из 1 006'"; "pass '--lb e10_20260929T1141Z --teams 3994'" | `round40/report.json` R40-A3 (6), plan_issues (4) | pre_exp89t is now cancelled, so the fallback is the **default** LB input for the 18:37Z card, not an edge case. |
+| **I443** (new) | "feed loop ... ~18:59:28Z (INSIDE the 17:30-20:00Z window, ~35 calls in ~8 s)"; "_retry tries=6" | `round40/scan_plancheck.notes.md` 13:20Z | Nobody wrote a stop into a script. It relies on the main session killing w20892 at 17:29-17:35Z (W368). |
+| **I444** (new) | "The user ticks in the Kaggle web UI, so 'no chat message since' does not mean 'SELECTED unchanged'" (R40M-9 rejected) | `round40/report.json` rejected | Always make a fresh `read_selected.py` call before each message and card. |
+| **I445** (new) | "T4 has no MASKED branch today: slot 2 is unused and only 56669888 is PENDING, so the count can move only 56 -> 57; a jump of 2 means the user submitted something, so stop and ask" | `round40/report.json` R40-A4 | This is an anomaly detector for the info-only UP compare. It is not yet in CONTEXT (W367). |
+| **I446** (new) | "Five teams jumped together from 0.956-0.957 to exactly 0.963 ... looks like one private pipeline"; we fell #141 → #148 because 124 → 131 teams now sit above 0.959 | `round40/report.json` new_facts (1), (2); `round40/scan_browser.notes.md` | Compare the exp89t S0/S1 by count and score, never by rank. Rank drift is not a finals signal. |
+| **I447** (new) | Observed L: "non-CI 6.69-7.81 h, CI 8.88-9.48 h, verbatim x138 (exp56) 6.29-6.46 h"; the 12:59Z "~9.0-9.5 h" is the safetail gate | `round40/report.json` R40-A1; `experiments/lb_poll/ledger.md` | Needed to answer "can we still send X?" after the tick (C20, W364). |
+| **I448** (new) | `experiments/lb_poll/_lb/e10_20260929T1141Z/lb.csv` is **untracked** in git | `git status` 13:42Z; `CONTEXT.md` l.4547-4548 | It is the only S0 for the info-only UP compare and the card rank. A clean or checkout would lose it. Commit it with W374. |
+| **I449** (new) | "UPWAIT text 'не позже 22:50 МСК' ... if the user answers 'keep exp87a even with UP', UPWAIT's promise line must be dropped - UP becomes info-only" | `round40/v_hyp_exp89tmsg40_r40m-8.notes.md` caveats (1)-(3) | The user did answer B (keep), so this caveat is now live. Folded into W366. |
+| I436 (**updated**) | The ticked pair changed from {#37, #38} (~0.49 bronze / ~0.11 silver) to **П3 {exp87a, #37}** (audit default ~0.79 / ~0.58; ~0.56 / ~0.19 if cap 6 + K are -0.001 on private) | `CONTEXT.md` l.4579, l.4600-4602 | The card's main goal was met at 12:37Z. |
+| I437 (updated) | The slot-2 edge arithmetic. It is now superseded by the stricter W364 edges (14:10Z / 15:50Z / 16:50Z) | `round40/report.json` R40-A1 | - |
+| I433 | "exp89t watcher ... uses last() incl. error blocks; post_exp89t only on COMPLETE 0.959" | `round39/scan_plancheck.notes.md` | Under B, post_exp89t is info only. Still read poll.log by hand at each header after ~17:50Z. |
+| I432 | "watchdog 22236 'break's on the first ON-BATTERY or POLL-STALE alert" | `round39/scan_plancheck.notes.md` | Re-arm after any alert (T225). |
+| I424 / I420 / I423 | "#38 лучше #37 только если ... (P ~0.1–0.2)"; the lab CI sign was wrong; public division evidence = 1-2 fork events | `round38/report.json`; `round38/scan_recheck.notes.md` | Still not in CONTEXT. Post-deadline lessons (T216 / T223). |
+| I410 / I411 | `read_selected.py`, `t7_trigger.sh`, `manual_admit.sh`, `card_1203_sent.txt` and soon `mk_card_1837.py` live **only in the session scratchpad** | `CONTEXT.md` l.4563-4565, l.4575-4578 | If the session restarts, the armed jobs die. After a restart, re-arm from CONTEXT l.4559-4617 and the round39/round40 report texts. |
+| I430, I431, I434, I435, I438, I439, I427, I428, I422, I419, I421, I425, I429 and older | Resolved, in CONTEXT or moot (I434 is moot: pre_exp89t is cancelled; I435 is fixed in prompt l.37) | `_curation/39/watch.json` ... `_curation/27/watch.json` | - |

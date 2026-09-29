@@ -1,0 +1,9 @@
+- 2026-09-29T13:27:00Z v_recheck started; no prior json. Verifying ledger rows, E[D+] model (R33), 12:37Z tick, exp51 composition.
+- ledger.md l.38/43/44/47: 56563521 #37 0.954, 56534391 exp52 0.950, 56527239 exp51 0.950, 56510845 exp48 0.948, all COMPLETE -> claims OK.
+- E[D+] recomputed by hand (mu=-g*rho, sd=s): #37 .49/.21/.09e-3; exp51 s.004 .72/.26/.10e-3; s.006 1.44/.79/.45e-3 -> table OK. Matched-rho gain range 0..+0.23e-3 only at s .004; at s .006 & rho .25 it is +0.95e-3 (needs s 2.4x #37's, a guess).
+- digest_20260929T1258Z.md l.13-20: Cyrus 11:53:18Z, You WeiLin 12:24:52Z quotes OK; Cyrus names no knob -> nothing actionable under AGGRESSIVE MODE.
+- CONTEXT.md l.4579: 12:37Z SELECTED = {56640366, 56563521} = P3 -> OK (task KEY FACTS 'ticked {#37,#38}' is stale).
+- IMPRECISIONS (do not flip verdict): (a) 'never weighed as partners' is wrong: v3 had F2 = exp52/exp51; R15-RC-C (diverse F2 loses on P(above x138 block)) and R17 scan_recheck (two-tail consensus, 'hedge free from F2=exp52/exp51' stale) weighed and dropped them. (b) 'No off-public comparison of tails' is slightly overstated: lens_mine-old.json l.7 has a 4 dummy train-video comparison (leaky, pilkwang saw train): x138 TP 2045/FN 82, K2 2047/80, exp51 2027/100 -> x138 tail better, supports verdict.
+- Extra support: exp51/exp48 carry the same DaughterNet insertion+steal (probe 28) and pilkwang weights as #37, so they do not hedge the insertion-failure mode R15-RC-C scores; exp51 at 0.950 sits below the 0.953 x138 block on the one embryo we see.
+- Verdict: finding NOT refuted; no action, feasibility trivially fine (no build/slot).
+- 2026-09-29T13:28:29Z wrote final json (refuted=false)

@@ -1,0 +1,67 @@
+{
+ "files_written": [
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/ideas.json",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/IDEAS.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/40/ideas.notes.md",
+  "C:/Users/vital/Documents/kAGGLE/Biohub - Cell Tracking During Development/research/KNOWLEDGE/_curation/40/ideas.json"
+ ],
+ "alerts": [
+  {
+   "kind": "deadline",
+   "what": "The reserve-slot line (R40-A1, I-594) has not been logged or sent to the user. By the user's 11:56Z hold, slot 2 is still 'в запасе'. Discussion 744250 says a file must finish scoring by 23:59Z, and a copy also needs the dummy gate, so in practice the slot closes once the dummy can no longer start by ~14:10Z. The absolute last start is 16:50Z, and only for a verbatim-x138 runtime.",
+   "evidence": "research/wf_ideas_v4/round40/report.json R40-A1; v_plancheck_pc40-02.json; v_recheck_r40-rc-c-late-slot-edges-v3-10z-upheld-125.json; CONTEXT.md l.4549-4558 (11:54Z held in reserve), l.4582-4592 (12:59Z 744250); research/KNOWLEDGE/ideas.json I-594, I-575",
+   "suggested_action": "Now, before 17:10 MSK (14:10Z): append the R40-A1 CONTEXT edges line and send the user the R40-A1 Russian line ('Запасной слот фактически закрыт ...'). Send it alone: the R40-A2 question it was bundled with is already answered by decision B.",
+   "urgency": "now"
+  },
+  {
+   "kind": "contradiction",
+   "what": "Round 40 wrote its report at 13:40Z but had read CONTEXT only up to the 13:21Z entry, so it missed the 13:34Z USER DECISION B (exp89t promotes only at >= 0.960). Four of its items conflict with B. R40-A2 re-asks a question the user already answered. The R40-A3 builder still has T3 promotion, UPWAIT and the HOLD rule for 0.959 + UP. The R40-A4 message set still has T3_interim and T3_promotion texts. R40-A5 and next_focus still say 'confirm pre_exp89t at 17:40Z', but that job was cancelled.",
+   "evidence": "CONTEXT.md l.4607-4617 (13:34Z decision B, commit ec3c5fb); research/wf_ideas_v4/round40/report.notes.md 13:32Z (read to 13:21Z, 'no entry after it at 13:34Z'); report.json R40-A2..A5, next_focus; research/KNOWLEDGE/ideas.json I-595, I-592, I-596, I-590",
+   "suggested_action": "Before any round-40 text is logged or used, treat a 0.959 read as the B message sent at once: 'по вашему решению B основной остаётся exp87a 56640366, пара {exp87a, #37} без изменений'. Do not wait for UP, do not send UPWAIT, do not send a T3 promotion. Drop pre_exp89t from every checklist. Log R40-A4 with 'T3 texts replaced by the decision-B text'.",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "The 18:37Z card builder mk_card_1837.py (I-592) is still not in the scratchpad at 13:44Z; only mk_card_v2.py and mk_card_v3.py are there. Round 40 wrote and verified it inside the scan notes (45/45 dry-run ok), but as written it has no decision-B code. Its '--lb pre_exp89t' source will not exist, and the 1,006-row fallback CSV needs --teams 3994. card_1203_sent.txt has 8 stale spots and must not be re-sent.",
+   "evidence": "research/wf_ideas_v4/round40/scan_hyp_exp89tmsg40.notes.md l.15-184 (sha8 10420089); scan_hyp_exp89tmsg40.json R40M-4, R40M-5, R40M-6, R40M-8; report.json R40-A3; CONTEXT.md l.4559-4574 (A7 scheduled), l.4607-4617; research/KNOWLEDGE/ideas.json I-592, I-583",
+   "suggested_action": "During rounds 41-42, before 20:40 MSK (17:40Z): copy the script verbatim and check sha8 10420089. Add a B/T3KEEP code for 0.959, remove UPWAIT/HOLD for 0.959, run --dry-all and log the sha8s. At 21:37 MSK (18:37Z): make 1 fresh read_selected.py call, then run it with --lb e10_20260929T1141Z --teams 3994 or post_exp89t.",
+   "urgency": "today"
+  },
+  {
+   "kind": "risk",
+   "what": "The feed loop (w20892) runs every ~5,407 s, so its ~18:59Z run falls inside the 17:30-20:00Z window with 0 agent Kaggle calls. That run makes about 35 calls in ~8 s, next to the exp89t read tail and the single-attempt 19:44:45Z manual-admit list. The e10-signal waiter w20284 is dead weight. pre_exp89t w36816 was alive at 13:33Z, one minute before decision B cancelled it.",
+   "evidence": "research/wf_ideas_v4/round40/scan_plancheck.json PC40-01, PC40-04; report.json R40-A5, new_facts (6); report.notes.md 13:33Z census; CONTEXT.md l.4559-4574 (R39-A6 (2)), l.4607-4617 (pre_exp89t cancelled); research/KNOWLEDGE/ideas.json I-597, I-590, I-529",
+   "suggested_action": "In the 20:13 MSK (17:13Z) liveness line, confirm that pre_exp89t w36816 is gone. Between 20:29 and 20:35 MSK (17:29-17:35Z), after the ~17:29Z feed run, kill w20892 and its sleep child (fresh winpids from /proc/<pid>/winpid). Kill w20284 at any time.",
+   "urgency": "today"
+  },
+  {
+   "kind": "stale",
+   "what": "The round-prompt KEY FACTS are stale (R40-A6, I-259). They still say '{#37, #38} ticked', '17th of 21' and 'slot 2 UNUSED', and they carry the old W1/E10 PLAN CHECK boilerplate. They also lack decision B, and the R40-A6 draft itself still lists 'pre_exp89t 17:40Z' in the evening chain.",
+   "evidence": "research/wf_ideas_v4/round40/report.json R40-A6; scan_plancheck.json PC40-05; scan_browser.json r40-lb-rank-148 (#148 of 3,999); CONTEXT.md l.4579-4581, l.4607-4617; research/KNOWLEDGE/ideas.json I-259",
+   "suggested_action": "Before the 17:13 MSK (14:13Z) round, set these KEY FACTS: SELECTED = П3 {exp87a 56640366, #37 56563521} (API 12:37:31Z); rank #148 of 3,999, 17th of 22; reserve slot effectively closed; exp89t 0.959 rule = decision B (promote only at >= 0.960). Set the evening chain without pre_exp89t. Rounds 41-43 use the ops / READS-vs-CARD lens, Chrome only.",
+   "urgency": "today"
+  },
+  {
+   "kind": "forgotten",
+   "what": "The 00:07Z post-deadline commit must have no Co-Authored-By trailer (R40-A7 (b), I-600). This session's harness reminder asks for such a trailer, but the user's no-coauthor memory rule overrides it. Every commit in 75f0efe..ec3c5fb is clean so far.",
+   "evidence": "research/wf_ideas_v4/round40/report.json R40-A7; scan_plancheck.json PC40-06; v_plancheck_pc40-06.json; git log 75f0efe..ec3c5fb (grep co-authored = 0); research/KNOWLEDGE/ideas.json I-600",
+   "suggested_action": "03:07 MSK 30 Sep (00:07Z): commit as Vitaly Neybauer with a plain message. Before pushing, check that 'git log -1 --format=%B | grep -ci co-authored' is 0.",
+   "urgency": "today"
+  },
+  {
+   "kind": "deadline",
+   "what": "Four post-deadline items are still at-risk. I-336 is the HINDSIGHT GUARD, a pushed falsifiable private prediction. I-407 is the cap-family private-read line. I-252 is the H2/H3 lessons. I-516 is the truncation line. The 13:21Z private-risk audit now supplies ready numbers for the prediction (П3 ~0.79/0.58 by default; cap 6 + K at -0.001 -> ~0.56/0.19; field keeps its gains -> ~0.38/0.08; exp87a ~#217 if only cap 6 fails).",
+   "evidence": "CONTEXT.md l.4593-4606; research/wf_ideas_v4/risk_audit/results.json, answer_ru.md; research/KNOWLEDGE/ideas.json I-336, I-407, I-252, I-516; research/KNOWLEDGE/IDEAS.md ORPHANS",
+   "suggested_action": "After the 23:00 MSK tick and before 02:00 MSK 30 Sep (23:00Z): push one prediction commit quoting the audit grid, and add the single I-407 line.",
+   "urgency": "before-finals"
+  },
+  {
+   "kind": "stale",
+   "what": "The bookkeeping is still behind. experiments/RESULTS.md has no rows for probes 47-55. Rounds 37-40 have no REPORT.md; round 40's Russian text sits in report.json next_focus (REPORT_RU). round40/ is untracked.",
+   "evidence": "experiments/RESULTS.md (last probe row 46); research/wf_ideas_v4/round40/report.notes.md 13:40Z; git status (?? research/wf_ideas_v4/round40/); research/KNOWLEDGE/ideas.json I-232, I-068 (R40-A9)",
+   "suggested_action": "After the finals tick: commit round40/, add RESULTS rows 47-55 and render REPORT.md for rounds 37-40 from report.json. Optional: annotate the RESULTS l.20 steal row (R40-A9).",
+   "urgency": "info"
+  }
+ ],
+ "summary": "Curation 40 (2026-09-29 ~13:55 UTC / 16:55 MSK, HEAD ec3c5fb) was an incremental pass over curation 39: 593 -> 600 ideas, 45 change records. Sources: 7 commits 75f0efe..ec3c5fb, CONTEXT l.4547-4618, round 40 (untracked; report.json R40-A1..A9 written 13:40Z before it saw decision B; 4 scans; 10 verdicts), risk_audit/ and the ledger at 13:39:22Z. No new LB score: exp89t (P55) is PENDING, L > 4.65 h. The user held slot 2 in reserve at 11:54Z, ticked П3 {exp87a, #37} at 12:37:31Z, and at 13:34Z chose DECISION B: exp89t promotes only at >= 0.960, and pre_exp89t is cancelled. New ideas: I-594 reserve-slot edges (R40-A1, at-risk, due before 14:10Z); I-595 decision B (logged); I-596 exp89t message set (R40-A4, at-risk; its T3 texts are void under B); I-597 feed-loop stop for the quiet window (R40-A5, at-risk); I-598 shared SELECTED read (R40M-9, refuted); I-599 {exp75, #37} pair from the audit (not adopted); I-600 no-trailer 00:07Z commit (R40-A7 (b), at-risk). I-590 is now moot, so its status changed from in-plan to refuted. Now logged, so off the at-risk list: I-588, I-589 and I-591 (logged 11:54Z); I-575 (held in reserve); I-526 (card sent 12:04Z); I-581 (answered in chat). I-592 (18:37Z builder) is still not installed and needs a B code. Other updates: I-577, I-583/I-578/I-576, I-227/I-229/I-258, I-494, I-535/I-580/I-486, I-585, I-584/I-364/I-541/I-582/I-432, I-407/I-336, I-259/I-556/I-232, I-068 (R40-RC-B), I-254 (R40-RC-A), I-497/I-529/I-586/I-313, I-548. Counts: lb-tested 65, lab-tested 28, refuted 277, deferred 50, in-plan 178, open-untested 2. At-risk: 12 (7 off, 4 on). Strict: 1 (I-233). Cluster order is unchanged. Verification: gen.py 600 rows, 0 bad; gen2.py body and ranking equal; IDs unique."
+}

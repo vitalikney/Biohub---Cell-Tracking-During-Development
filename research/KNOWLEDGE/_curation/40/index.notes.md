@@ -1,0 +1,5 @@
+- 13:53Z start index curation 40; no index.json yet
+- 13:54Z anchors gathered (IDEAS CHANGES(40) l.241, ORPHANS l.977; FACTS F-*40 rows, C-327..C-334 l.860-867; DECISIONS [c40] l.568, l.1009-1011, l.1844-1853; WATCHLIST l.73/84/97/126/158); writing INDEX
+- 13:55Z INDEX.md written (70 lines); CHANGES.md section 40 appended
+- 13:56Z fixed watch done/new lists (C20, T230-T233); writing index.json
+- 13:56Z index.json written; done

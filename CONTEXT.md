@@ -4615,6 +4615,31 @@ Mention it to the user in one line (R9-A8 item 6).
   window); the exp89t watcher may still save post_exp89t on 0.959 (1 call, info only); the fallback S0
   e10_20260929T1141Z stays for an info-only compare. On >= 0.960 the message is 'снимите exp87a 56640366, отметьте
   exp89t 56669888 (#37 оставьте)'. Current tick (API 12:37Z) = {exp87a, #37}.
+- 2026-09-29 13:58 UTC, ROUND 40 APPLIED (R40-A1, A3, A4, A6; A2 answered by decision B; A5 at ~17:29Z)
+  Report research/wf_ideas_v4/round40/report.json. (A1) RESERVE-SLOT EDGES (corrects the 12:59Z arithmetic): the
+  9.0-9.5 h figure is the safetail gate, not an observed L. Observed L: non-CI 6.69-7.81 h, CI 8.88-9.48 h, verbatim
+  x138 (exp56) 6.29-6.46 h. An E10 copy also needs the P4b dummy (~35-45 min without a GPU queue; 3-4 h queues have
+  happened) and the user's explicit yes. A file must finish by 23:59Z (744250), so the dummy must start by ~14:10Z
+  (17:10 MSK) at the pool limit L_hi 9.0 h (default edge), ~15:50Z at 7.5 h, ~16:50Z (19:50 MSK) absolute latest for a
+  verbatim-x138-like runtime. Any such file reads after the 23:00 MSK tick (a final only if the user re-ticks before
+  02:59 MSK). After 14:10Z an E10 flag is info only unless the user asks for that notebook by name; after 16:50Z it
+  cannot finish. Default: slot 2 expires unused. (A2) Answered before the read: decision B (13:34Z entry). (A3)
+  scratchpad mk_card_1837.py installed from round40 notes l.15-184 (sha8 10420089 verified), patched for decision B:
+  new code T3KEEP (0.959 -> exp87a stays; DIS line '≈ 0 (от −0.001 до +0.001)'), PENDING text says '≥ 0.960' only,
+  section-1 tie rule notes decision B; patched sha8 59c54168; --dry-all 50/50 ok. UPWAIT/T3/T4 are obsolete under B (a
+  0.959 read is T3KEEP whatever k is; late 0.959 is T3KEEP with the '(после 22:12 МСК)' note). HOLD rule moot under B.
+  At 18:37Z: 1 fresh SELECTED read (read_selected.py), then 'python <SP>/mk_card_1837.py CODE --hdr <UTC> --disp <x>
+  --llo <h> --lhi <h> --sel <refs> --seltime <UTC> --lb post_exp89t' if that save exists, else '--lb
+  e10_20260929T1141Z --teams 3994' (pre_exp89t was cancelled). (A4) exp89t MESSAGE SET =
+  research/wf_ideas_v4/round40/scan_hyp_exp89tmsg40.json (case a = П3 now ticked; case b = П2, П2-first steps), with
+  T3KEEP replacing T3_interim/T3_promotion/UPWAIT/T4: 'exp89t = 0.959 (ЧЧ:ММ МСК, ЧЧ:ММ UTC) — как у exp87a; по вашему
+  решению B основной остаётся exp87a 56640366, пара П3 {exp87a 56640366, #37 56563521} уже отмечена — ничего менять не
+  нужно.' 1 fresh SELECTED read before each send; after a T1/T2 promotion first append RECOMMENDED PAIR = П3 {exp89t
+  56669888, #37 56563521}. MASKED impossible today (only 56669888 pending); a count jump of 2 = the user submitted
+  something -> stop and ask. T1/T2 DIS range 'от 0.000 до +0.002 (не включая концы)'. (A6) round prompt refreshed
+  (below). (A5) at ~17:29Z stop the feed loop after its run (quiet window 17:30-20:00Z); the e10-signal waiter is dead
+  (e10 loop ended 12:00Z). LB (Chrome 13:20Z): #148 of 3 999, 17th of 22 in the 0.959 block; five teams jumped
+  together to 0.963 (one private pipeline, nothing public).
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt

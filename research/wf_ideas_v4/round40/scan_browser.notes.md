@@ -1,0 +1,12 @@
+﻿# round40 scan_browser notes (29 Sep, start 13:13Z / 16:13 MSK)
+- 13:13Z scan_browser.json absent -> fresh run. After 12:00Z: no e10_snapshot, 0 Kaggle API calls; Chrome + local digests only.
+
+- digests since r39: 1128Z (738833 Luna-Xavier Q, already in r39) and 1258Z (744273 Civitasmass 11:32Z, Cyrus 11:53Z, You WeiLin 12:24Z; 744250 Chris Deotte 12:57Z finish-by-23:59Z). E10 FLAG none both. Best genuine public 0.953.
+- ~13:14Z Chrome discussion?sort=recent-comments: '11 HOURS TO GO'; 744250 last comment 17m ago Chris Deotte (1 comment); 744273 5 comments last 1h ago You WeiLin; 738833 last 2h ago Luna-Xavier (5 comments); nothing beyond the 1258Z digest.
+- ~13:15Z Code Recently Created: unchanged (newest unpinned 'Robust Cell Tracking ... via Chan.' 6d, 0.1); x138 0.953 votes 234.
+- ~13:16Z Code Public Score: top = 4x 0.953 (Harmonic Fusion V3 243 votes, optimized-biohub-max-score 82, Biohub Cell Tracking 252, x138 234), then 0.948 Geometric Fusion; nothing >= 0.954; nothing pulled.
+- ~13:17-13:20Z Chrome LB (public, ranks 1-157 read via expand+scroll; 0 API): header '11 HOURS TO GO', 3,999 teams (1141Z CSV 3,994). Ours #148 0.959 56 entries, banner 'Your latest submission is being scored' (exp89t). >0.959 teams 124->131; 0.959 block 132-153 = 22 rows (unchanged size), we are 17th of 22. Rank 141->148 = +7 teams above 0.959.
+- Movers into >0.959: 5-team cluster to exactly 0.963, all 'Last 9h' (~04:xxZ subs, count +1 each): '0.948+ pls' 0.957->0.963 (#72), '3D Research' 0.956->0.963 (#74), 'Astra Team' 0.957->0.963 (#75), 'Biooooohub' 0.957->0.963 (#77), 'Tracking Experts' 0.957->0.963 (#79). Also Mthem77 0.958->0.961 (#96, 6h, 49 subs), MTADA 0.959->0.960 (#116, 5h, 79). atsukiwi 0.955->0.959 (#143, 8h, 45) entered the block above us. zhuo wamg renamed 'zhuo wamg + AibePC' (0.962, 139 subs). Top-10: The Boys 0.970->0.971 (#10->#9, 314 subs, 3h); Corwin #13->#10 (0.970, 110). Agnes 0.961 n 7->9, last 29m. Artalmaz31 0.962 n 163 last 1h. P2 check: the 5-team cluster came from 0.956/0.957, not <=0.953 -> not a formal P2 signal; no public notebook -> port_gate not run.
+- ~13:20Z Overview: 13,475 entrants, 4,581 participants (+6), 3,996 teams (LB rows 3,999), 95,947 submissions (+316 vs r39 95,631); timeline unchanged (June 29 / Sept 22 / Sept 29, 11:59 PM UTC); no announcement.
+- LB counts at 0.953-0.958 NOT measured (no CSV after 12:00Z; 'Raw Data' is a file download = not done; virtualized list). Tab closed ~13:21Z.
+

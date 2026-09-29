@@ -1,0 +1,11 @@
+# R40M-9 skeptic notes (2026-09-29, ~16:30Z)
+- No prior answer json existed; started fresh.
+- Source finding: round40/scan_hyp_exp89tmsg40.json findings R40M-9.
+- R38-A5 (0) (round38/report.json): "Before any message make 1 read-only SELECTED call"; T1/T2/T3 texts tell the user to untick/tick (e.g. (c) 'снимите #38, отметьте exp89t'); T7 (c)/(d) 'Отметьте уже сейчас П3'.
+- R39-A6 (2) (round39/report.json): 17:30-20:00Z agents make 0 calls; "Only the poller, pre_exp89t, the exp89t watcher save, manual_admit and the registered SELECTED reads call Kaggle" -> SELECTED reads are ALREADY allowed in the window; the premise of a quiet-window violation is false.
+- R39-A4 / CONTEXT l.4565: 18:37Z/19:43Z/21:05Z checks compare SELECTED vs {V_pub,#37}|{V_pub,exp75}; purpose = verify the user acted.
+- CONTEXT 12:37Z entry: user re-tick detected by API SELECTED read (read_selected.py, 1 call, kagglesdk list_submissions group SELECTED). Ticks happen in the Kaggle web UI, not in chat -> "no chat message since" is not a proxy for "SELECTED unchanged".
+- mk_card_1837 spec l.7: 'Сейчас отмечены (API, {seltime})' -> a reused pre-T read would print the pre-action state right after the T message asked for an action.
+- Load: poller every 5 min = ~30 calls in 17:30-20:00Z + saves; saving 1 call = ~3%, spaced >= 8 min from the T read; no 429 relevance. Private-score value = 0.
+- Timing: T read typical 18:17-18:29Z, card 18:37Z -> gap 8-20 min; the 15-min branch fires only sometimes -> extra branch in a pre-registered playbook at the busiest minute.
+- Verdict: refuted (value ~0, introduces a stale-state failure exactly when state is expected to change).

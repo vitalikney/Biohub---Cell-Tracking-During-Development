@@ -1,0 +1,6 @@
+- 2026-09-29T13:26:53Z start verify R40-RC-B (exp07 steal-off superseded)
+- Verified experiments/RESULTS.md l.20 exp07+pp+steal row: 0.9710/0.9717/0.9693 vs 0.9728, 'keep steal off', not annotated. l.61 probe 28 exp48 = insertion WITH steal (CONFIRMATION +0.0019, TP +4/FP +11); l.68 probe 35 exp57b +0.001 LB (12 forks, 5 steals).
+- Verified experiments/exp60_trainlab/results.md l.25-36: ins35 44b6/ALL +0.0058 (2/8/9), nosteal0 +0.0000 (1/8/10); 6bba/ALL +0.0065 (23/23/65) vs +0.0046 (21/23/67). l.80/l.258 ADDENDUM L5: in-sample upper bound, nosteal0 CLOSED under R2.
+- FACTS F-MOD-14 (#37 = twin + 12 inserted - 5 stolen), F-MOD-33 (steal_cap = floor(cap/2)). CONTEXT l.2009: #38 = twin exp58n = K2 without insertion. round38 R38-RC-C upheld (#38 out).
+- Skeptic points: 44b6 'only TP via steal' = 1 TP, in-sample (DaughterNet 4/5 folds saw clips) -> weak evidence, but not load-bearing: no action. Imprecision: V_pub exp87a is cap 6 -> steal_cap 3 vs #37/exp75 cap 4 -> steal_cap 2, so 'same steal' is not byte-identical; round20 says the steal cap never binds, so effect ~0 and it is a cap difference already priced in P3/P2, not a steal on/off difference.
+- Verdict: NOT refuted (recheck upheld, zero-action). No Kaggle API calls.
