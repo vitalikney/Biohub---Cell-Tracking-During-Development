@@ -4801,6 +4801,18 @@ Mention it to the user in one line (R9-A8 item 6).
   pre-registration banned retraining; public targets (22 Sep) and aggressive mode (27 Sep) pushed knob ladders.
   Estimate: the heads-first route = 2-4 weeks of one person + 10-20 GPU-h; fits in 20 days only if started in week 1
   and staffed continuously; plausible private ~0.925 (0.918-0.935), silver ~coin flip.
+- 2026-09-30 08:04 UTC, 3RD PLACE COMPARISON (user asked)
+  3rd place write-up (yu4u, CV 0.978 / public 0.977 / private 0.967) read in Chrome and compared with our pipeline;
+  section 'Сравнение с 3-м местом' added to research/postmortem/POSTMORTEM_ru.md. Their stack: own 2.5D
+  (EfficientNetV2-L/B7, pretrained encoders) + 3D SegResNet detectors in 5 video folds with a sparse-label loss (DoG
+  exclusion mask, separate positive/background averaging), dense flow, learned matcher, parent/pre/post division
+  models with flow alignment, a x q calibration (LR / LightGBM+XGBoost), joint LP/MILP (HiGHS) with a metric
+  surrogate, gap closing, short-component removal, affine coordinate refinement (+0.006 CV). Main gain: divisions +
+  calibration + joint optimisation (0.902 -> 0.964). Why not us: no own GPU / late start for the detector base; our 6
+  Sep idea 'sparse-label detector loss, ignore unlabelled voxels, ~45 min fine-tune' (CTX l.140, IDEAS I-113) was
+  never run and later blocked by the retraining ban; without own detectors no honest OOF base. CPU-feasible parts we
+  skipped: affine coordinate refinement, calibration + joint LP. They also probed that the private test embryo is much
+  sparser than the public one.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
