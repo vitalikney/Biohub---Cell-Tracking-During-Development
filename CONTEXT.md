@@ -4813,6 +4813,16 @@ Mention it to the user in one line (R9-A8 item 6).
   never run and later blocked by the retraining ban; without own detectors no honest OOF base. CPU-feasible parts we
   skipped: affine coordinate refinement, calibration + joint LP. They also probed that the private test embryo is much
   sparser than the public one.
+- 2026-09-30 08:25 UTC, NEXT COMPETITION SURVEY
+  User asked to survey all active/upcoming Kaggle competitions and pick. Workflow kaggle-next-competition (discover
+  via CLI + Chrome, page reads, 5 assessors, judge; read-only, no joins/submits/downloads): research/next_competition/
+  (recommendation_ru.md, judge.md, raw.json). PICK: Enveda CASMI 2026 - Molecule ID From Mass Spectra (Featured code
+  competition, medals, $50k, deadline 14 Dec 23:59 UTC, entry/merger 7 Dec; MRR@25 on InChIKey14; notebooks <= 9 h
+  CPU/GPU, no internet): retrieval + ranking, mostly CPU (LightGBM LambdaRank), GPU ~20-60 h (estimate), honest CV
+  from enveda-np-examples with three masks; best public notebook 0.386 vs LB #1 0.464; estimated bronze ~30-40%,
+  silver ~10%. WATCH: Gemma 4 Developer Agent (decide ~20 Oct MSK). SKIP: ARC-AGI-2/3 (fork lotteries, no honest CV),
+  RSNA Knee (570 GB DICOM, heavy GPU, 22 days), paper tracks / Playground / Community (no medals). The user must
+  accept the rules manually on the site.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
