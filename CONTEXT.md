@@ -4788,6 +4788,19 @@ Mention it to the user in one line (R9-A8 item 6).
   embryo-level CV in week 1; treat +-0.001-0.003 public as noise; judge fork-adding levers by precision vs each
   embryo's J/(1+J); diff inherited defaults on a base switch; keep the demoted file when promoting on +1 public at the
   last minute (hindsight); invest in trained downstream models; ops on a server / AC.
+- 2026-09-30 07:26 UTC, WHY NO TRAINED MODELS (user question)
+  User asked why we did not invest in trained models and how long it takes. Workflow biohub-why-no-trained-models (4
+  lenses + skeptic + answer; 0 Kaggle calls): research/postmortem/why_no_trained_models_ru.md (+ _skeptic.md,
+  _lenses.json). Findings: we DID train (~55-60 GPU-h: 9 in-sample fine-tunes 5-7 Sep, friend A's scratch detector
+  ~35-36 h on the 5070 Ti, DaughterNet 23-24 Sep, the V1284 head retrain, SEC 27 Sep), but on the expensive/in-sample
+  kinds; nothing was trained 11-22 Sep (people absent); the cheap route of #12/#18 (learned heads on the public
+  detector with honest folds) started only on 23 Sep; a learned edge re-ranker was never attempted. Why: the only
+  honest validator considered was a from-scratch detector (stalled at 0.68 LOEO); the LB was made the only judge on 6
+  Sep and early model swaps read negative there; teammates were largely absent 10-22 Sep; public shortcuts (sjlee TTA,
+  DivNet, x138) pulled focus; compute was cited as a reason several times though the quota never ran out; the 25 Sep
+  pre-registration banned retraining; public targets (22 Sep) and aggressive mode (27 Sep) pushed knob ladders.
+  Estimate: the heads-first route = 2-4 weeks of one person + 10-20 GPU-h; fits in 20 days only if started in week 1
+  and staffed continuously; plausible private ~0.925 (0.918-0.935), silver ~coin flip.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
