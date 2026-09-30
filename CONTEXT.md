@@ -4759,6 +4759,22 @@ Mention it to the user in one line (R9-A8 item 6).
   19:43Z SELECTED check (log only unless changed), manual-admit 19:44:45Z (exits without a call: exp89t already terminal) and its
   reader, 21:05Z last check, 00:07Z post-deadline steps (R41-A7 + R43-A8 + R45-A3). The laptop may hibernate on battery ~23:15-23:40 MSK;
   then the 00:05/03:07 MSK steps run at the next session instead. Finals ticked: {exp89t 56669888, #37 56563521} (API 19:07:17Z).
+- 2026-09-30 06:21 UTC, RESULT: PRIVATE LB #346 of 4 020, 0.920 (bronze zone, preliminary)
+  PRIVATE LEADERBOARD (preliminary, Chrome ~06:25Z 30 Sep; 'finalized after the results are verified'; ~71% of the
+  test): D: Discipline #346 of 4 020, private 0.920 (57 entries). Medal lines on N = 4 020: gold <= 18, silver <= 201,
+  bronze <= 402 -> BRONZE zone (56 places of margin). Top: Sergio Alvarez 0.977, Soheil Ayati 0.970, yu4u 0.967, z7777
+  0.962. Our submissions (CLI list, experiments/lb_poll/_final_subs.csv): finals exp89t 56669888 pub 0.960 / priv
+  0.920 and #37 56563521 pub 0.954 / priv 0.920. Best private of all ours: exp70j 56598763 (probe 43) 0.922 (pub
+  0.954); then exp87a 56640366, exp70q, exp70k 0.921. PRE-REGISTERED PRIVATE SIGN PAIRS (rounded, one step = 0.001):
+  insertion (our DaughterNet, held-out-video OOF) = #37 0.920 vs #38 0.917 and probe 35 0.920 vs x138 probe 34 0.917
+  -> +0.003 private (public +0.001): the one CV-backed lever carried the private gain. Stack cap 6 + K + CI = exp87a
+  0.921 vs #37 0.920 -> +0.001 (public +0.005). cap 6: exp70g 0.920 vs #37 0.920 -> 0 (cap 8 0.920, cap 12 0.919). K:
+  exp85a 0.920 vs exp70g 0.920 -> 0 (public +0.002). CI: exp87a 0.921 vs exp85a 0.920 -> +0.001; exp75 vs #37 0 /
+  exp79a vs exp70g 0. DIS: exp89t 0.920 vs exp87a 0.921 -> -0.001 (decision B promoted it on a public 0.960; keeping
+  exp87a would have given 0.921). SEC: exp89p 0.920 vs exp85a 0.920 -> 0 (public -0.002). Edge filter probes 29/30:
+  0.911/0.910 vs exp39 0.912 -> negative on private too. The downloaded LB csv and the API get_leaderboard (even
+  override_public=True) return the PUBLIC board (#136, 0.960); the private rank comes only from the web page.
+  Post-deadline jobs: the poller died with the laptop's sleep at ~20:37Z; no leftover processes at 06:2xZ.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
