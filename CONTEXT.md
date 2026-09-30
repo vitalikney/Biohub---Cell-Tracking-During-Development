@@ -4775,6 +4775,19 @@ Mention it to the user in one line (R9-A8 item 6).
   0.911/0.910 vs exp39 0.912 -> negative on private too. The downloaded LB csv and the API get_leaderboard (even
   override_public=True) return the PUBLIC board (#136, 0.960); the private rank comes only from the web page.
   Post-deadline jobs: the poller died with the laptop's sleep at ~20:37Z; no leftover processes at 06:2xZ.
+- 2026-09-30 06:56 UTC, POST-MORTEM
+  POST-MORTEM written (user asked): research/postmortem/POSTMORTEM_ru.md (Russian, for the team), with skeptic.md and
+  lenses.json (workflow biohub-postmortem: 5 lenses + skeptic + writer; 0 Kaggle calls). Headlines: the only lever
+  that transferred was our DaughterNet insertion (public +0.001 x3, private +0.005/+0.003/+0.003; the one lever with a
+  held-out-video OOF, although it failed its own gate); the public-tuned knobs on x138 (cap 6/8/12, K, CI x3, DIS)
+  summed public +0.010 vs private -0.001 (stack exp87a vs #37 +5/+1, exp89t vs #37 +6/0); public beat our in-sample
+  labs on sign, but only the OOF sized the insertion right; within-era public/private Spearman ~0 at 3-decimal
+  resolution (x138 family 0.487, slope 0.25); DC 0.20 (our pre-x138 default, silently changed to 0.25 by the x138
+  switch) would have kept 0.922; decision B cost one display step (0.921 -> 0.920); the hedge #37 never raised the
+  team score; leaders above ~0.93 trained their own division/link models with off-public validation. Lessons: build
+  embryo-level CV in week 1; treat +-0.001-0.003 public as noise; judge fork-adding levers by precision vs each
+  embryo's J/(1+J); diff inherited defaults on a base switch; keep the demoted file when promoting on +1 public at the
+  last minute (hindsight); invest in trained downstream models; ops on a server / AC.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
