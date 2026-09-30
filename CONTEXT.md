@@ -4823,6 +4823,19 @@ Mention it to the user in one line (R9-A8 item 6).
   silver ~10%. WATCH: Gemma 4 Developer Agent (decide ~20 Oct MSK). SKIP: ARC-AGI-2/3 (fork lotteries, no honest CV),
   RSNA Knee (570 GB DICOM, heavy GPU, 22 days), paper tracks / Playground / Community (no medals). The user must
   accept the rules manually on the site.
+- 2026-09-30 08:43 UTC, NEXT COMPETITION: COMPUTE PLAN (Enveda)
+  User added compute (friend's 5070 Ti sometimes, Colab, GPU rental) and a budget of $100-200/month (~$250-500 to 14
+  Dec). Workflow next-competition-compute-plan (Enveda deep-dive, others re-check, compute economics, skeptic,
+  answer): research/next_competition/compute_plan_ru.md (+ _skeptic.md, _lenses.json). Verdict: Enveda odds rise
+  modestly (estimate): bronze 30-40% -> ~35-45%, silver ~10% -> ~12-15%, gold < 3%; compute was not the binding
+  constraint (attention/ownership, domain ramp-up, honest CV are). Second competition: still no (Gemma watch to ~20
+  Oct; RSNA/ARC blockers are time / no honest CV, not GPU). New key risks: np-examples masks leak (remove by
+  InChIKey14 across ALL libraries); pretrained weights (MIST/ICEBERG/FRIGID/DreaMS on MassSpecGym =
+  GNPS/MoNA/MassBank) leak into our CV panels -> gate 0 = leakage audit; rented GPU is best spent retraining from
+  scratch on our masked data. Bottleneck on the LB: isomer ranking (same formula ~98%), so ranker + structure-aware
+  (fragmentation) features. Rules: NIST or NIST-trained = disqualification; commercial-use licences; host allows
+  training in a private cloud. Budget plan: start ~$50, cap ~$150 after gates (well inside the user's budget); every
+  rental, submission and public dataset needs the user's yes; tokens set by the user.
 ## 9. Literature
 `research/survey_detection_sparse_labels.md`, `research/survey_linking_divisions.md`, `research/discussions_summary.md`.
 - 2026-09-25 14:05 UTC, T1 SAFETAIL DONE (cloud session; its only task - everything else moves to the local chat, prompt
